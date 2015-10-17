@@ -1,0 +1,74 @@
+﻿/*  This class is the pot is the container for all the main elements of buildings
+ *  Contains the controller that controls the input, the control, and the saveLoad functions
+ */
+
+using UnityEngine;
+using System.Collections;
+
+//This class is instantiatedon InputMain and has a real obj on scene so the start and update works
+
+public class BuildingPot : Pot 
+{
+    private static InputBuilding _input;
+    private static BuildingController _control;
+    private static BuildingSaveLoad _saveLoad = new BuildingSaveLoad();
+    private static bool isToLoadBuildings;
+
+    public static InputBuilding InputU
+    {
+        get { return _input; }
+        set { _input = value; }
+    }
+
+    public static BuildingController Control
+    {
+        get { return _control; }
+        set { _control = value; }
+    }
+
+    public static BuildingSaveLoad SaveLoad
+    {
+        get { return _saveLoad; }
+        set { _saveLoad = value; }
+    }
+
+    /// <summary>
+    /// None, or Building or Placing 
+    /// </summary>
+    public static Mode InputMode { get; set; }
+   
+    /// <summary>
+    /// Current building that is being built. The one is being hovered right now
+    /// </summary>
+    public static H DoingNow { get; set; }
+
+    private void Start()
+    {
+        _input = (InputBuilding)Create(Root.inputBuilder, container: Program.ClassContainer.transform);
+    }
+
+    private void Update()
+    {
+        if (Control == null)
+        {
+            _control = (BuildingController)Create(Root.builderController, container: Program.ClassContainer.transform);
+        }
+
+        //load the buildings
+        if (Control != null && isToLoadBuildings)
+        {
+            isToLoadBuildings = false;
+            _saveLoad.Load();
+        }
+
+        _saveLoad.Update();
+    }
+
+    /// <summary>
+    /// will make load buildins 
+    /// </summary>
+    public static void LoadBuildingsNow()
+    {
+        isToLoadBuildings = true;
+    }
+}
