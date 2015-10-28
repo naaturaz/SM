@@ -55,14 +55,28 @@ public class PersonWindow : GUIElement {
         _invBtnRect = GetRectFromBoxCollider2D(invBtn);
     }
 
+
+    private Person oldPerson;
+    void CheckIfIsDiffNewPerson()
+    {
+        if (_person != oldPerson)
+        {
+            Person.UnselectPerson();
+        }
+        oldPerson = _person;
+    }
+
     public void Show(Person val)
     {
         _person = val;
+        CheckIfIsDiffNewPerson();
 
         LoadMenu();
         MakeAlphaColorZero(_inv);
 
         transform.position = iniPos;
+
+        _person.SelectPerson();
     }
 
     private void LoadMenu()
@@ -98,4 +112,10 @@ public class PersonWindow : GUIElement {
         }
     }
 
+    public override void Hide()
+    {
+        base.Hide();
+
+        Person.UnselectPerson();
+    }
 }

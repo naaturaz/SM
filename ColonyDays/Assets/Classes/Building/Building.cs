@@ -501,8 +501,8 @@ public class Building : General, Iinfo
 
     #region Bad Ass
 
-
-    private MyProjector _projector;
+    private static MyProjector _projector;
+    private static General _light;
 
     /// <summary>
     /// this is the projector that hover when creating a nw building, or the current selected building
@@ -515,9 +515,10 @@ public class Building : General, Iinfo
 
     public void CreateProjector()
     {
-        if (Category != Ca.None && Projector == null && !MyId.Contains(H.Shack.ToString()))
+        if (Category != Ca.None && Projector == null && !MyId.Contains("Dummy"))
         {
             Projector = (MyProjector) Create(Root.projector, container: transform);
+            _light = Create(Root.lightCil, transform.position, container: transform);
         }
     }
 
@@ -528,6 +529,9 @@ public class Building : General, Iinfo
             Projector.SwitchColorLight(true);
             Projector.Destroy();
             Projector = null;
+
+            _light.Destroy();
+            _light = null;
         }
     }
 

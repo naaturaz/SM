@@ -69,13 +69,6 @@ public class MouseListener : InputMain
         LoadMainGUI();
     }
 
-
-
-
-
-
-
-
     /// <summary>
     /// Mian  input method
     /// </summary>
@@ -120,6 +113,8 @@ public class MouseListener : InputMain
 
             _personSelect = clicked.GetComponent<Person>();
             _personWindow.Show(_personSelect);
+
+            UnselectingBuild();
 
             _buildingWindow.Hide();
             return true;

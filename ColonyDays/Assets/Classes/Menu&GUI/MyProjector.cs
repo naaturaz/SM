@@ -1,9 +1,7 @@
-﻿using System.IO.IsolatedStorage;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MyProjector : General
 {
-    public Color initialColor;
     float height = 10f;
 
     private float _initialXRot = 90;
@@ -55,7 +53,6 @@ public class MyProjector : General
 	        SwitchColorLight(true);
             Destroy();
 	    }
-
     }
 
     void MoveToThere(Vector3 to)
@@ -71,7 +68,7 @@ public class MyProjector : General
     {
         if (isGood)
         {
-            engineProjector.material.color = initialColor;
+            engineProjector.material.color = Color.white;
         }
         else
         {

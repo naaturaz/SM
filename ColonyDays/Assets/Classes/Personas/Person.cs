@@ -1575,4 +1575,61 @@ public class Person : General
     }
 
 #endregion
+
+
+
+
+
+
+    #region Bad Ass
+
+    internal void SelectPerson()
+    {
+        CreateProjector();
+    }
+
+    /// <summary>
+    /// This is here bz when a building is unselected the proj has to be destroyed
+    /// </summary>
+    public static void UnselectPerson()
+    {
+        DestroyProjector();
+    }
+
+    private static General _projector;
+    private static General _light;
+
+    /// <summary>
+    /// this is the projector that hover when creating a nw building, or the current selected building
+    /// </summary>
+    public General Projector
+    {
+        get { return _projector; }
+        set { _projector = value; }
+    }
+
+    public void CreateProjector()
+    {
+        if (_light == null)
+        {
+            Vector3 projNewP = new Vector3(0,6,0) + transform.position;
+            Projector = Create(Root.projectorPerson, projNewP, container: transform);
+            Projector.transform.Rotate(new Vector3(90, 0, 0));
+
+            _light = Create(Root.lightCilPerson, transform.position, container: transform);
+        }
+    }
+
+    static void DestroyProjector()
+    {
+        if (_light != null)
+        {
+            _projector.Destroy();
+            _projector = null;
+
+            _light.Destroy();
+            _light = null;
+        }
+    }
+    #endregion
 }
