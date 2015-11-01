@@ -37,13 +37,13 @@ public class StillElement : TerrainRamdonSpawner {
         var bou = FindBounds(_min, _max);
         Anchors = FindAnchors(bou);
 
-        PersonController.CrystalManager1.Add(this);
+        MeshController.CrystalManager1.Add(this);
     }
 
 	// Update is called once per frame
 	protected void Update () 
     {
-	    if (addCrystals && PersonController.CrystalManager1.CrystalRegions.Count>0)
+	    if (addCrystals && MeshController.CrystalManager1.CrystalRegions.Count>0)
 	    {
 	        addCrystals = false;
             AddCrystals();

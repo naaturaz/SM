@@ -214,7 +214,6 @@ public class Structure : StructureParent
             //Will destroy the current obj if in Building._isOrderToDestroy is set to true
             //and PersonController is -1
             DestroyOrdered();
-
 	    }
         else if (PositionFixed && CurrentStage == 0)
         {

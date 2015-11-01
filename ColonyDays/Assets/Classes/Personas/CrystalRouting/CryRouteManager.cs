@@ -111,6 +111,13 @@ public class CryRouteManager
 
     private void Init()
     {
+        //will stop a lot of instances where the landzone is not being initiated
+        if (_one.LandZone == "" || _two.LandZone == "")
+        {
+            return;
+        }
+
+
         if (_one.LandZone != _two.LandZone)
         {
             _cryBridgeRoute = new CryBridgeRoute(_ini, _fin, _person, _destinyKey);

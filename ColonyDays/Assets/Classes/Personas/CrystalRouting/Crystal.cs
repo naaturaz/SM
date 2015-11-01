@@ -414,7 +414,7 @@ public class Crystal
 
         if (_pool.Count == 0)
         {
-            PersonController.CrystalManager1.StopLinking(_type);
+            MeshController.CrystalManager1.StopLinking(_type);
         }
         if (index >= _pool.Count)
         {
@@ -649,7 +649,7 @@ public class Crystal
 
         Line tLine = new Line(this, nextCrystal, false);
 
-        return !PersonController.CrystalManager1.DoIIntersectAnyLine(tLine, Position, H.WaterObstacle);
+        return !MeshController.CrystalManager1.DoIIntersectAnyLine(tLine, Position, H.WaterObstacle);
     }
 
     /// <summary>
@@ -743,13 +743,13 @@ public class Crystal
 
         if (_type == H.Poll)
         {
-            PersonController.CrystalManager1.RemoveCrystalPoll();
+            MeshController.CrystalManager1.RemoveCrystalPoll();
             return;
         }
 
         if (_type != H.LinkRect && _type != H.LandZone)
         {
-            PersonController.CrystalManager1.RemoveCrystal(this, _type);
+            MeshController.CrystalManager1.RemoveCrystal(this, _type);
         }
         
         SetPositionAfterLines();

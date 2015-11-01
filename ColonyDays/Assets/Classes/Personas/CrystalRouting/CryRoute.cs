@@ -266,7 +266,7 @@ public class CryRoute
 
         _prevHistoRegions = _historicRegions;
         //_historicCrystals = PersonController.CrystalManager1.GiveAllCrystalsInTheseRegionsExcludLinkRects(_historicRegions);
-        _historicCrystals = PersonController.CrystalManager1.GiveAllTerraCrystalsInTheseRegionsPlsObsta(_historicRegions);
+        _historicCrystals = MeshController.CrystalManager1.GiveAllTerraCrystalsInTheseRegionsPlsObsta(_historicRegions);
     }
 
     /// <summary>
@@ -292,7 +292,7 @@ public class CryRoute
     /// </summary>
     private void DefineCrystalsMyRectIntersects()
     {
-        var thisCrys = PersonController.CrystalManager1.ReturnCrystalsRectIntersect(_currRect.TheRect, _historicRegions);
+        var thisCrys = MeshController.CrystalManager1.ReturnCrystalsRectIntersect(_currRect.TheRect, _historicRegions);
 
         _crystals.AddRange(thisCrys);
         _crystals = _crystals.Distinct().ToList();
@@ -756,7 +756,7 @@ public class CryRoute
     /// <param name="position"></param>
     void AddToHistoricalRegions(Vector3 position)
     {
-        var newRegions = PersonController.CrystalManager1.ReturnMySurroundRegions(U2D.FromV3ToV2(position));
+        var newRegions = MeshController.CrystalManager1.ReturnMySurroundRegions(U2D.FromV3ToV2(position));
 
         for (int i = 0; i < newRegions.Count; i++)
         {
@@ -770,7 +770,7 @@ public class CryRoute
 
     void AddRegionToHistoCrystals(int regionIndx)
     {
-        _historicCrystals.AddRange(PersonController.CrystalManager1.GiveAllCrystalsInTheseRegionsExcludLinkRects(regionIndx));
+        _historicCrystals.AddRange(MeshController.CrystalManager1.GiveAllCrystalsInTheseRegionsExcludLinkRects(regionIndx));
     }
 
     private int count = 0;
@@ -817,17 +817,17 @@ public class CryRoute
     /// <returns></returns>
     bool Intersect(Line nLine)
     {
-        return PersonController.CrystalManager1.DoIIntersectAnyLine(nLine, _historicRegions);
+        return MeshController.CrystalManager1.DoIIntersectAnyLine(nLine, _historicRegions);
     }
 
     int IntersectCount(Line nLine)
     {
-        return PersonController.CrystalManager1.CountLinesIIntersect(nLine, _historicRegions);
+        return MeshController.CrystalManager1.CountLinesIIntersect(nLine, _historicRegions);
     }
 
     List<Line> LinesIIntersect(Line nLine)
     {
-        return PersonController.CrystalManager1.LinesIIntersect(nLine, _historicRegions);
+        return MeshController.CrystalManager1.LinesIIntersect(nLine, _historicRegions);
     }
 
     /// <summary>

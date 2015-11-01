@@ -117,7 +117,7 @@ public class TerrainSpawnerController : ControllerParent
     // Update is called once per frame
     void Update()
     {
-        if (PersonController.CrystalManager1 == null || PersonController.CrystalManager1.CrystalRegions.Count==0)
+        if (MeshController.CrystalManager1 == null || MeshController.CrystalManager1.CrystalRegions.Count==0)
         {
             return;
         }
@@ -209,7 +209,7 @@ public class TerrainSpawnerController : ControllerParent
                     int rootToSpawnIndex = ReturnRandomRootIndex(typePass);
                     bool isOnTheStartZone = UMesh.Contains(AllVertexs[index], voidNWCorner, voidSECorner);
                     bool regionContainTerraCry =
-                        PersonController.CrystalManager1.DoesMyRegionHasTerraCrystal(AllVertexs[index]);
+                        MeshController.CrystalManager1.DoesMyRegionHasTerraCrystal(AllVertexs[index]);
 
                     if (AllVertexs[index].y > minHeightToSpawn && AllVertexs[index].y < maxHeightToSpawn &&
                         !usedVertexPos[index] && !isOnTheStartZone && !regionContainTerraCry)

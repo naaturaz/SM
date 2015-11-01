@@ -94,8 +94,6 @@ public class CrystalManager  {
         {
             CreateAndAddPolyCrystal(st.SpawnPoint.transform.position, null, st.MyId, -100, true);
         }
-
-        
     }
 
     /// <summary>
@@ -965,6 +963,8 @@ public class CrystalManager  {
         }
         else
         {
+            isFullyLoaded = true;
+
             for (int i = 0; i < CrystalRegions.Count; i++)
             {
                 //CrystalRegions[i].DebugHere();
@@ -1105,6 +1105,11 @@ public class CrystalManager  {
 #endregion
 
 
+    private bool isFullyLoaded;
+    internal bool IsFullyLoaded()
+    {
+        return isFullyLoaded;
+    }
 }
 
 

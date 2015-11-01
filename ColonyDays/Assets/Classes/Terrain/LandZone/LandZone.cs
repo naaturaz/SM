@@ -90,7 +90,7 @@ public class LandZone : Crystal
             return false;
         }
 
-        if (PersonController.CrystalManager1.ReturnMyRegion(_cuRect.Position) == -1)
+        if (MeshController.CrystalManager1.ReturnMyRegion(_cuRect.Position) == -1)
         {
             return false;
         }
@@ -110,11 +110,11 @@ public class LandZone : Crystal
             return false;
         }
 
-        if (PersonController.CrystalManager1.DoIContainAnyCrystal(_cuRect.Rect1, _cuRect.Position))
+        if (MeshController.CrystalManager1.DoIContainAnyCrystal(_cuRect.Rect1, _cuRect.Position))
         {
             return false;
         }
-        if (PersonController.CrystalManager1.DoIIntersectAnyLine(_cuRect.Rect1, _cuRect.Position))
+        if (MeshController.CrystalManager1.DoIIntersectAnyLine(_cuRect.Rect1, _cuRect.Position))
         {
             return false;
         }
@@ -127,10 +127,10 @@ public class LandZone : Crystal
     {
         for (int i = 0; i < _linkRects.Count; i++)
         {
-            PersonController.CrystalManager1.AddCrystal(_linkRects[i]);
+            MeshController.CrystalManager1.AddCrystal(_linkRects[i]);
         }
 
-        PersonController.CrystalManager1.LinkCrystals();
+        MeshController.CrystalManager1.LinkCrystals();
 
     }
 

@@ -97,7 +97,7 @@ public class LandZoneManager
         else
         {
             AddAllLandZonesLinkRectsToItsRegions();
-            PersonController.CrystalManager1.DefineRegionLandZone();
+            MeshController.CrystalManager1.DefineRegionLandZone();
 
             Save();
             DebugShowNames();
@@ -115,7 +115,7 @@ public class LandZoneManager
             {
                 var crysta = LandZones[i].LinkRects[j];
 
-                PersonController.CrystalManager1.AddCrystalToItsRegion(crysta);
+                MeshController.CrystalManager1.AddCrystalToItsRegion(crysta);
             }
         }
     }
@@ -128,9 +128,9 @@ public class LandZoneManager
         for (int i = 0; i < _landZones.Count; i++)
         {
             _landZones[i].SetCrystalProps();
-            PersonController.CrystalManager1.AddCrystal(_landZones[i]);
+            MeshController.CrystalManager1.AddCrystal(_landZones[i]);
         }
-        PersonController.CrystalManager1.LinkCrystals();
+        MeshController.CrystalManager1.LinkCrystals();
     }
 
     /// <summary>

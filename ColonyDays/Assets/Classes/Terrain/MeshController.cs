@@ -62,6 +62,18 @@ public class MeshController : ControllerParent
     WaterBound _waterBound = new WaterBound();
     LandZoneManager _landZoneManager = new LandZoneManager();
 
+
+
+    private static CrystalManager _crystalManager = new CrystalManager();
+    
+    public static CrystalManager CrystalManager1
+    {
+        get { return _crystalManager; }
+        set { _crystalManager = value; }
+    }
+
+
+
     public List<Lot> Lots
     {
         get { return _lots; }
@@ -149,6 +161,7 @@ public class MeshController : ControllerParent
 
         _waterBound.Update();
         _landZoneManager.Update();
+        CrystalManager1.Update();
     }
 
     /// <summary>

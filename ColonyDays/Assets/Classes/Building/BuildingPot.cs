@@ -55,7 +55,11 @@ public class BuildingPot : Pot
         }
 
         //load the buildings
-        if (Control != null && isToLoadBuildings)
+
+        //PersonController.CrystalManager1.IsFullyLoaded() needs to be here so when loading the buildings
+        //they can get theyir landingZone
+
+        if (Control != null && isToLoadBuildings && MeshController.CrystalManager1.IsFullyLoaded())
         {
             isToLoadBuildings = false;
             _saveLoad.Load();

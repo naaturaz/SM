@@ -30,14 +30,7 @@ public class PersonController : PersonPot
 
     RoutesCache _routesCache = new RoutesCache();
 
-    static CrystalManager _crystalManager = new CrystalManager();
 
-
-    public static CrystalManager CrystalManager1
-    {
-        get { return _crystalManager; }
-        set { _crystalManager = value; }
-    }
 
     public List<Person> All
     {
@@ -110,7 +103,7 @@ public class PersonController : PersonPot
     void Map()
     {
         int multiplier = 100;
-        int factor = 10;
+        int factor = 100;
         int ini = multiplier*factor;
 
         StartingCondition newbie = new StartingCondition(1, ini, ini, ini, ini, ini, ini, 100000);
@@ -122,16 +115,22 @@ public class PersonController : PersonPot
         Conditions = new StartingCondition[] {newbie, easy, med, hard, insane};
     }
 
+    private bool init;
     public void Initialize()
     {
+        if (!MeshController.CrystalManager1.IsFullyLoaded())
+        {
+            return;
+        }
+
+        init = false;
+
         PersonData pData = XMLSerie.ReadXMLPerson();
         //brand new game
         if (pData == null)
         {
             SpawnIniPersonas();
             GameController.LoadStartingConditions(conditions[Difficulty]);
-
-
         }
         //loading from file 
         else
@@ -197,7 +196,9 @@ public class PersonController : PersonPot
     void Start()
     {
         Map();
-        Initialize();
+
+        init = true;
+        //Initialize();
 
         UVisHelp.CreateHelpers(Program.gameScene.controllerMain.MeshController.wholeMalla, Root.redSphereHelp);
 
@@ -205,7 +206,7 @@ public class PersonController : PersonPot
     }
 
 	// Update is called once per frame
-	void FixedUpdate ()
+	void Update ()
 	{
 	    Debug();
         Count();
@@ -216,7 +217,10 @@ public class PersonController : PersonPot
         CheckIfSystemHasRoom();
         //CheckIfPersonIsBeingOnSystemTooLong();
 
-        CrystalManager1.Update();
+        if (init)
+        {
+            Initialize();
+        }
 	}
 
     private void UpdateOnScreen()
@@ -522,7 +526,7 @@ public class PersonController : PersonPot
     private List<CheckedIn> _onSystemNow = new List<CheckedIn>();
     private int _systemCap = 4;//2
     private int _allowOnSystem = 8;//seconds
-   // private float _intervalOnSystem = 3f;//the time they stay on System list
+    // private float _intervalOnSystem = 3f;//the time they stay on System list
 
     public List<string> Waiting
     {

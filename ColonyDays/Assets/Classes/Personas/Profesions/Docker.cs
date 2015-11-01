@@ -59,7 +59,7 @@ public class Docker : Profession
 
     private void PickUpOrder()
     {
-        var t = _person.Work.Dispatch1.ExpImpOrders;
+        //var t = _person.Work.Dispatch1.ExpImpOrders;
 
         Order1 = _person.Work.Dispatch1.GiveMeOrder(_person);
         _person.PrevOrder = Order1;

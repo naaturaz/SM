@@ -224,10 +224,7 @@ public class Brain
 
         if (dummyIdle == null || dummyIdle.transform.position == new Vector3())
         {
-           // dummyIdle = Program.gameScene.GimeMeUnusedDummy();
-            
-            dummyIdle = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy,
-    container: Program.ClassContainer.transform);
+            CreateDummyIdle();
         }
 
         dummyIdle.transform.position = _idlePoint;
@@ -237,6 +234,23 @@ public class Brain
         _routerIdle = new CryRouteManager(_person.Home, dummyIdle, _person, finDoor:false);
 
         idleRouteStart = true;
+    }
+
+    void CreateDummyIdle()
+    {
+        // dummyIdle = Program.gameScene.GimeMeUnusedDummy();
+
+        dummyIdle = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy,
+            container: Program.ClassContainer.transform);
+    }
+
+    void ResetDummyIdle()
+    {
+        if (dummyIdle == null)
+        {
+            return;
+        }
+        dummyIdle.transform.position = new Vector3();
     }
 
     void DefineReligionRoute()
@@ -1230,7 +1244,7 @@ public class Brain
         }
         if (idleRouteStart && _routerIdle.IsRouteReady && _idleRoute.CheckPoints.Count == 0)
         {
-            dummyIdle.transform.position=new Vector3();
+            ResetDummyIdle();
 
             _idleRoute = _routerIdle.TheRoute;
             CheckIfGoMindReady();

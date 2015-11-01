@@ -139,7 +139,7 @@ public class WaterBound  {
         {
             counter = 0;
             addMarine = false;
-            PersonController.CrystalManager1.LinkCrystals();
+            MeshController.CrystalManager1.LinkCrystals();
         }
     }
 
@@ -147,7 +147,7 @@ public class WaterBound  {
     {
         Crystal crystal = new Crystal(pos, typeCrys, parentID);
 
-        PersonController.CrystalManager1.AddCrystal(crystal);
+        MeshController.CrystalManager1.AddCrystal(crystal);
     }
     
     void RenderMarineBounds()
@@ -336,7 +336,7 @@ public class WaterBound  {
         {
             counter = 0;
             addMount = false;
-            PersonController.CrystalManager1.LinkCrystals();
+            MeshController.CrystalManager1.LinkCrystals();
         }
     }
 

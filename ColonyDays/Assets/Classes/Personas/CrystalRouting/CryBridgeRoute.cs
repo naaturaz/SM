@@ -53,9 +53,6 @@ public class CryBridgeRoute
     }
 
 
-
-
-
     private void Init()
     {
         _bridgePsuedoPath = BuildingPot.Control.BridgeManager1.ReturnBestPath(_one, _two);

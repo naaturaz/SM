@@ -430,6 +430,8 @@ public class Building : General, Iinfo
         StartCoroutine("ThirtySecUpdate");
 
         LoadingFromFileActions();
+
+        
     }
 
     /// <summary>
@@ -444,10 +446,10 @@ public class Building : General, Iinfo
 
         var sP = ReturnCurrentStructureParent();
 
-        if (sP.StartingStage == H.Done)
-        {
-            isToFindLandZone = true;
-        }
+        //if (sP.StartingStage == H.Done)
+        //{
+            LandZoneLoader();
+        //}
     }
 
     /// <summary>
@@ -515,7 +517,8 @@ public class Building : General, Iinfo
 
     public void CreateProjector()
     {
-        if (Category != Ca.None && Projector == null && !MyId.Contains("Dummy"))
+        if (Category != Ca.None && Projector == null && !MyId.Contains("Dummy") &&
+            !MyId.Contains("Shack"))
         {
             Projector = (MyProjector) Create(Root.projector, container: transform);
             _light = Create(Root.lightCil, transform.position, container: transform);
@@ -556,30 +559,24 @@ public class Building : General, Iinfo
 
     #endregion
 
+    /// <summary>
+    /// Loads the land Zone and adds the Crystals of this Building to Crystal Manager 
+    /// </summary>
     void LandZoneLoader()
     {
-        if (isToFindLandZone && PersonController.CrystalManager1 != null
-            && PersonController.CrystalManager1.CrystalRegions.Count > 0)
-        {
-            isToFindLandZone = false;
-            Debug.Log("Building LandZone Loaded ");
-            //bz they need to be added when loading a building 
+        Debug.Log(MyId + ": LandZone Loaded ");
 
-            ////they are mannyually set on the ShackBuilder.cs
-            //if (HType == H.Shack)
-            //{
-            //    return;
-            //}
+        //so it can add the corners on CrystalManager 
+        Anchors = GetAnchors();
 
-            HandleLandZoning();
-            PersonController.CrystalManager1.Add(this);
-        }
+        HandleLandZoning();
+        MeshController.CrystalManager1.Add(this);
     }
 
     //this need to be called in derived classes 
     protected new void Update()
     {
-        LandZoneLoader();
+        //LandZoneLoader();
 
         LoadingWillBeDestroyBuild();
 
@@ -1752,7 +1749,7 @@ public class Building : General, Iinfo
     void PrivHandleZoningAddCrystals()
     {
         HandleLandZoning();
-        PersonController.CrystalManager1.Add(this);
+        MeshController.CrystalManager1.Add(this);
     }
 
 
@@ -1770,7 +1767,7 @@ public class Building : General, Iinfo
         if (!MyId.Contains("Bridge"))
         {
             var sp = ReturnCurrentStructureParent();
-            var landZonName = PersonController.CrystalManager1.ReturnLandingZone(sp.SpawnPoint.transform.position);
+            var landZonName = MeshController.CrystalManager1.ReturnLandingZone(sp.SpawnPoint.transform.position);
 
             LandZone1.Add(new VectorLand(landZonName, sp.SpawnPoint.transform.position));
         }
@@ -1779,13 +1776,11 @@ public class Building : General, Iinfo
 
     void LandZoningBridge()
     {
-
-
         Bridge br = (Bridge)this;
         var ends = br.GiveTwoEnds();
 
-        var zone1 = PersonController.CrystalManager1.ReturnLandingZone(ends[0]);
-        var zone2 = PersonController.CrystalManager1.ReturnLandingZone(ends[1]);
+        var zone1 = MeshController.CrystalManager1.ReturnLandingZone(ends[0]);
+        var zone2 = MeshController.CrystalManager1.ReturnLandingZone(ends[1]);
 
         BuildingPot.Control.BridgeManager1.AddBridge(zone1, zone2, br);
 
