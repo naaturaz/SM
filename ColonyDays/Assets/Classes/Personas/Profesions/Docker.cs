@@ -59,6 +59,10 @@ public class Docker : Profession
 
     private void PickUpOrder()
     {
+        _person.Work.MyId = "hahaha";
+        _destinyBuild = _sourceBuild;
+
+
         //var t = _person.Work.Dispatch1.ExpImpOrders;
 
         Order1 = _person.Work.Dispatch1.GiveMeOrder(_person);
