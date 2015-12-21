@@ -1853,6 +1853,11 @@ public class Brain
         //shack builders can not look into this. Othr wise they will stay on Limbo once better home found 
         if (thereIsABetterHome && _person.ProfessionProp.ProfDescription != Job.ShackBuilder)
         {
+            if (_person.MyId.Contains("Llaava"))
+            {
+                var t = this;
+            }
+
             var oldHomeP = PullOldHome();
             var s = Realtor.GiveMeTheBetterHome(_person);
 
@@ -1866,6 +1871,9 @@ public class Brain
                     MoveToNewHome.OldHomeKey = "";
                     MoveToNewHome.RouteToNewHome.CheckPoints.Clear();
                 }
+
+      
+
                 AddToPeopleList(s.MyId);
                 _person.Home = s;
                 //needs to be call here in case this person is the one ocpied the slot 

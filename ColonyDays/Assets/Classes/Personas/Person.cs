@@ -669,9 +669,9 @@ public class Person : General
     /// </summary>
     void ReachAgeMajority()
     {
-        if (debug >= 4)
+        if (debug >= 3)
         {
-            Program.gameScene.GameSpeed = 0;
+            //Program.gameScene.GameSpeed = 0;
             var t = this;
         }
 

@@ -161,7 +161,7 @@ public class Realtor
                 return true;
             }
         }
-        //person doest have family
+        //person does't have family
         else
         {
             var canI = CanIMoveFamilyToNewHome(newHome);
@@ -224,8 +224,19 @@ public class Realtor
     /// </summary>
     public static void BookMyFamilyToNewBuild(Person person, Building newHome, Family toBeBooked = null)
     {
-        Family myFamily = toBeBooked;
+        //if doesnt have at least 1 family virgin.
+        //means no booking is needed.
+        if (!newHome.AtLeastHasOneVirginFamily())
+        {
+            return;
+        }
 
+        if (person.MyId.Contains("Scott"))
+        {
+            var t = "a";
+        }
+
+        Family myFamily = toBeBooked;
         if (person.Home != null && toBeBooked == null)
         {
             myFamily = person.Home.FindMyFamily(person);
@@ -238,10 +249,14 @@ public class Realtor
             myFamily.FamilyId = "Family:" + person.MyId;
             person.FamilyId = myFamily.FamilyId; 
         }
+
+        
         
         myFamily.State = H.MovingToNewHome;
+        //seeting person as the first person in the family
+        myFamily.CanGetAnotherAdult(person);
         newHome.BookedHome1 = new BookedHome(newHome.MyId, myFamily);
-//      Debug.Log("Booked " + newHome.MyId + " by: " + person.MyId);
+        //Debug.Log("Booked " + newHome.MyId + " by: " + person.MyId);
 
         BuildingPot.Control.Registro.ResaveOnRegistro(newHome.MyId);
 

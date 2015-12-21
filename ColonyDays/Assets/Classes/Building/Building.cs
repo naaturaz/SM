@@ -1277,7 +1277,8 @@ public class Building : General, Iinfo
     }
 
     /// <summary>
-    /// Will find the family of the person asking 
+    /// Will find the family of the person asking .
+    /// If not found will return null
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
@@ -2169,6 +2170,8 @@ public class Building : General, Iinfo
 
         newP.IsBooked = false;
         AssignBookedRole(newP, toBeFill);
+        toBeFill.Home = MyId;//bz the id if is booked is not saved 
+
         newP.transform.parent = transform;
 
         //so families are resaved 

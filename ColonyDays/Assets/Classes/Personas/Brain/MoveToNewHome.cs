@@ -192,7 +192,16 @@ public class MoveToNewHome : Brain
     /// </summary>
     private void SearchForNewHomeAgain()
     {
-        while (old == _person.Home)
+        var oldFam = old.FindMyFamily(_person);
+
+        if (oldFam == null)
+        {
+            return;
+        }
+
+        //if is still in the same house and same family. then can Search again.
+        //this functionity was left here so address what is explain in the summary
+        while (old == _person.Home && _person.FamilyId == oldFam.FamilyId)
         {
             SearchForNewHome();
         }

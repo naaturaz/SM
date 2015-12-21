@@ -138,11 +138,17 @@ public class Family
 
     void Set1stAdult(Person adult)
     {
+        string debug = "M";//mother 
         if (adult.Gender == H.Male)
         {
             _father = adult.MyId;
+            debug = "F";
         }
-        else {_mother = adult.MyId;}
+        else
+        {
+            _mother = adult.MyId;
+        }
+
         adult.transform.parent = BuildingPot.Control.Registro.AllBuilding[_home].transform;
 
         if (string.IsNullOrEmpty(adult.FamilyId))
@@ -150,6 +156,7 @@ public class Family
             FamilyId = "Family:" + adult.MyId;
             adult.FamilyId = FamilyId;    
         }
+        Debug.Log(adult.MyId + " inscribed on " + FamilyId + " as " + debug);
     }
 
     //tis is if has already a adult we have to try to marry them
@@ -244,18 +251,44 @@ public class Family
         }
     }
 
+    /// <summary>
+    /// Will set the Adult as a Father or Mother in Family 
+    /// field and it will set the adult family id to this family
+    /// </summary>
+    void SetAdultInFamily(Person adult, string momOrDad)
+    {
+        if (momOrDad == "M")
+        {
+            Mother = adult.MyId;
+        }
+        else if (momOrDad == "F")
+        {
+            Father = adult.MyId;
+        }
+
+        adult.FamilyId = FamilyId;
+
+        adult.transform.parent = BuildingPot.Control.Registro.AllBuilding[_home].transform;
+        Debug.Log(adult.MyId + " inscribed on " + FamilyId +" as " + momOrDad);
+    }
+
     private void MakeAdultFatherOfKids(Person newP)
     {
+        SetAdultInFamily(newP, "F");
+
         for (int i = 0; i < Kids.Count; i++)
         {
             var kid = FindPerson(Kids[i]);
             kid.Father = newP.MyId;
             kid.FamilyId = FamilyId;
         }
+        
     }
 
     private void MakeAdultMotherOfKids(Person newP)
     {
+        SetAdultInFamily(newP, "M");
+
         for (int i = 0; i < Kids.Count; i++)
         {
             var kid = FindPerson(Kids[i]);
