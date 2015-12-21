@@ -618,7 +618,7 @@ public class Person : General
         }
 
         CheckHappiness();
-        DidIDie();
+        //DidIDie();
         CheckIfEmmigrate();
     }
 
@@ -661,6 +661,7 @@ public class Person : General
     }
 
     static int debug = 0;
+    public PersonReport PersonReport = new PersonReport();
 
     /// <summary>
     /// Will contain all the functions to execute for a person when reach the Age Majority 
@@ -1672,4 +1673,10 @@ public class Person : General
         }
     }
     #endregion
+}
+
+public class PersonReport
+{
+    public string whoGreenMeToBecomeMajor;
+    public string whoDeniedMeAHouse;
 }

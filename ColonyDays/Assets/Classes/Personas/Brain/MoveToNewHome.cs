@@ -137,7 +137,7 @@ public class MoveToNewHome : Brain
         SearchForNewHome();
         if (!newHomeRouteStart)
         {
-            SearchForNewHomeAgain();
+            //SearchForNewHomeAgain();
 
             //_person.Home == null person is in the proccess of getting a new house   
             if (_person.Home == null)
@@ -220,13 +220,15 @@ public class MoveToNewHome : Brain
         _brain.SearchAgain(true);
         searchedNewHome++;
 
-        if (searchedNewHome > 9)
+        if (searchedNewHome > 50)
         {
+            Debug.Log("whoGreenMeToBecomeMajor: " +_person.PersonReport.whoGreenMeToBecomeMajor);
             var t = this;
         }
 
-        //then search again next year 
-        if (searchedNewHome > 10)
+        //at 11x , 100 was fine. So I leave it like this 
+        //what happens is that ask too many times close to each other and breaks 
+        if (searchedNewHome > 100)// * Program.gameScene.GameSpeed)
         {
             //searchedNewHome = 0;
             //buildRouteToNewHome = false;
@@ -236,8 +238,7 @@ public class MoveToNewHome : Brain
             ////_person.Home = null;
 
             ////BuildShacks();
-
-            throw new Exception("House never should be searched more than 10 times since was initiated" +
+            throw new Exception("House never should be searched more than 100 times since was initiated" +
                                 "bz was confirmed that a house exist for this person to move in" +
                                 "pls check in condintions that initatied : InitValForNewHome()");
         }

@@ -1323,6 +1323,7 @@ public class Building : General, Iinfo
         {
             if (Families[i].WouldAdultFitInThisFamily(asker))
             {
+                asker.PersonReport.whoGreenMeToBecomeMajor = MyId;
                 return true;
             }
         }
