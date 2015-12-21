@@ -669,7 +669,7 @@ public class Person : General
         RemoveMeFromOldHome();
 
         _isMajor = true;
-        Brain.MarkMajorityAgeReached();
+        Brain.MajorAge.MarkMajorityAgeReached();
     }
 
     /// <summary>
@@ -688,7 +688,7 @@ public class Person : General
                 family.RemovePersonFromFamily(this);    
             }
 
-            Brain.OldHomeKey = "";//so he doesnt pull that family as its old family when creating Shack or moving to new home 
+            Brain.MoveToNewHome.OldHomeKey = "";//so he doesnt pull that family as its old family when creating Shack or moving to new home 
             BuildingPot.Control.AddToHousesWithSpace(Home.MyId);
 
             //so families are resaved 

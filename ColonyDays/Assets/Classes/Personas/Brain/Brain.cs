@@ -33,6 +33,10 @@ public class Brain
 
     private bool _isAllSet;//is true when person has all buildings
 
+    //breaing down 2700 lines of codes in subclasses
+    private readonly MoveToNewHome _moveToNewHome;
+    private readonly MajorityAgeReached _majorAge;
+    
     public HPers CurrentTask
     {
         get { return _currentTask; }
@@ -45,10 +49,32 @@ public class Brain
         set { _previousTask = value; }
     }
 
-    public Brain() { }
+    public MoveToNewHome MoveToNewHome
+    {
+        get { return _moveToNewHome; }
+    }
+
+    public MajorityAgeReached MajorAge
+    {
+        get { return _majorAge; }
+    }
+
+    public Person Person1
+    {
+        get { return _person; }
+        set { _person = value; }
+    }
+
+    public Brain()
+    {
+        _majorAge = new MajorityAgeReached(this);
+        _moveToNewHome = new MoveToNewHome(this);
+    }
 
     public Brain(Person person)
     {
+        _majorAge = new MajorityAgeReached(this);
+        _moveToNewHome = new MoveToNewHome(this);
         Init(person);
     }
 
@@ -59,6 +85,8 @@ public class Brain
     /// <param name="pF"></param>
     public Brain(Person person, PersonFile pF)
     {
+        _majorAge = new MajorityAgeReached(this);
+        _moveToNewHome = new MoveToNewHome(this);
         Init(person);
         LoadFromFile(pF);
     }
@@ -100,8 +128,8 @@ public class Brain
         _routerChill.IsRouteReady = true;
 
         _generalOldKeysList = pF._brain.GeneralOldKeysList;
-        _homeOldKeysList = pF._brain.HomeOldKeysList;
-        _oldHomeKey = pF._brain.OldHomeKey;
+        MoveToNewHome.HomeOldKeysList = pF._brain.MoveToNewHome.HomeOldKeysList;
+        MoveToNewHome.OldHomeKey = pF._brain.MoveToNewHome.OldHomeKey;
 
         //is a shackBuilder , or its house was destroyed and father or mom is buiding shack
         if (_person.Home == null)
@@ -188,13 +216,12 @@ public class Brain
         _routerChill = new CryRouteManager();
     }
 
-
-
     private DateTime askWork = new DateTime();
     private DateTime askFood = new DateTime();
     private DateTime askIdle = new DateTime();
     private DateTime askReligion = new DateTime();
     private DateTime askChill = new DateTime();
+
     void DefineWorkRoute()
     {
         AddToGenOldKeyIfAOldRouteHasOneOldBridgeOnIt(_workRoute);
@@ -643,9 +670,9 @@ public class Brain
     private void GoToNewHome()
     {
         if (CurrentTask == HPers.MovingToNewHome && _person.Body.Location == HPers.Home && _person.Body.GoingTo == HPers.Home
-            && _routeToNewHome.CheckPoints.Count > 0)
+            && MoveToNewHome.RouteToNewHome.CheckPoints.Count > 0)
         {
-            _person.Body.WalkRoutine(_routeToNewHome, HPers.MovingToNewHome);
+            _person.Body.WalkRoutine(MoveToNewHome.RouteToNewHome, HPers.MovingToNewHome);
         }
         else if (CurrentTask == HPers.MovingToNewHome && _person.Body.Location == HPers.MovingToNewHome)
         {
@@ -679,18 +706,18 @@ public class Brain
         _person.DropFoodAtHome();
 
         //will add Home to avail spot if can
-        var oldHomeH = GetStructureFromKey(OldHomeKey);
+        var oldHomeH = GetStructureFromKey(MoveToNewHome.OldHomeKey);
         if (oldHomeH !=  null)
         {
             AddOldHomeToAvailHomeIfHasSpace(oldHomeH);
         }
 
 //        Debug.Log("got to new home:" + _person.MyId);
-        GetMyNameOutOfOldHomePeopleList();
-        CleanUpRouteToNewHome();
+        MoveToNewHome.GetMyNameOutOfOldHomePeopleList();
+        MoveToNewHome.CleanUpRouteToNewHome();
 
         //will add to genOldKeys since he wont use that route ever again. 
-        AddToList(_generalOldKeysList, _routeToNewHome.BridgeKey);
+        AddToList(_generalOldKeysList, MoveToNewHome.RouteToNewHome.BridgeKey);
 
         CheckIfClearBlackList();
     }
@@ -704,6 +731,13 @@ public class Brain
     //says if we ask for new routes. Created to stop the goMindState until the new routes are finished
     //this bool will hold the idle until the goStateMind is true. Then will release the idle 
     private bool _routesWereStarted;
+
+    public bool RoutesWereStarted
+    {
+        get { return _routesWereStarted; }
+        set { _routesWereStarted = value; }
+    }
+
     /// <summary>
     /// Idle Action 
     /// </summary>
@@ -727,12 +761,12 @@ public class Brain
         }
     }
 
-    void RealeaseIdle(HPers nextTask)
+    public void RealeaseIdle(HPers nextTask)
     {
         _currentTask = nextTask;
         startIdleTime = 0;
         _idleTime = 0.5f;
-        GoMindTrue();
+        MoveToNewHome.GoMindTrue();
         _isIdleHomeNow = false;
     }
 
@@ -796,7 +830,7 @@ public class Brain
         //if (_wating)
         //{ return; }
 
-        BuildRouteToNewHomeRoutine();
+        MoveToNewHome.BuildRouteToNewHomeRoutine();
         SearchAgain();
 
         if (!PersonPot.Control.Locked && _person.Home != null)
@@ -942,7 +976,7 @@ public class Brain
     /// <returns></returns>
     bool IHaveOldKeys()
     {
-        if (_generalOldKeysList.Count > 0 || _homeOldKeysList.Count > 0)
+        if (_generalOldKeysList.Count > 0 || MoveToNewHome.HomeOldKeysList.Count > 0)
         {
             return true;
         }
@@ -1127,77 +1161,11 @@ public class Brain
     }
 
     /// <summary>
-    /// Cleans and remove people from the lists in each building listed in 'list' param
-    /// </summary>
-    void CleanOldKeyList(List<string> list)
-    {
-        if (HasOldKeyOfCurrentPlaceAndPlaceWillBeDestroyed(list))
-        { return; }
-
-        while (list.Count > 0)
-        {
-            var oldBuild = list[0];
-            RemovePeopleList(oldBuild);
-            DestroyOldBuildIfEmptyOrShack(oldBuild);
-            list.RemoveAt(0);
-        }
-        list.Clear();
-    }
-
-    /// <summary>
-    /// Will tell u if current person still belown to one of the buildins passed in the list 
-    /// 
-    /// To avoid people to destroy a building they are in 
-    /// 
-    /// Address to the case where a person keeps the current building old key but that buildign 
-    /// wont be destroy 
-    /// </summary>
-    bool HasOldKeyOfCurrentPlaceAndPlaceWillBeDestroyed(List<string> list)
-    {
-        for (int i = 0; i < allPlaces.Length; i++)
-        {
-            SetCurrents(allPlaces[i]);
-
-            for (int j = 0; j < list.Count; j++)
-            {
-                if (currStructure == null)
-                {
-                    return false;
-                }
-
-                if (currStructure.MyId == list[j] && currStructure.Instruction == H.WillBeDestroy)
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    /// <summary>
-    /// Removing people from the 'oldBuild' Building object  PeopleDict Dictionary
-    /// So we can destroy that building 
-    /// </summary>
-    void RemovePeopleList(string oldBuild)
-    {
-        if (!BuildingPot.Control.Registro.AllBuilding.ContainsKey(oldBuild))
-        {
-            return;
-        }
-
-        //if the person was in the PeopleDict of the oldbuilding gets removed 
-        if (BuildingPot.Control.Registro.AllBuilding[oldBuild].PeopleDict.Contains(_person.MyId))
-        {
-            BuildingPot.Control.Registro.AllBuilding[oldBuild].PeopleDict.Remove(_person.MyId);
-        }
-    }
-
-    /// <summary>
     /// Checks if build was emptied and if was is destroyed... for all builds ...
     /// 
     /// If build was emptied and was a shack will be destroyed  
     /// </summary>
-    private void DestroyOldBuildIfEmptyOrShack(string oldBuild)
+    public void DestroyOldBuildIfEmptyOrShack(string oldBuild)
     {
         if (!BuildingPot.Control.Registro.AllBuilding.ContainsKey(oldBuild))
         {
@@ -1212,6 +1180,14 @@ public class Brain
         }
 
         //GameScene.print(_person.MyId + "."+oldBuild + ".Count:" + s.PeopleDict.Count);
+    }
+
+
+
+    public bool GoMindState
+    {
+        get { return goMindState; }
+        set { goMindState = value; }
     }
 
     //if is true the Brain will executed the MindStates()
@@ -1261,7 +1237,7 @@ public class Brain
         DefineIfIsAllSet();
         if (_isAllSet)
         {
-            GoMindTrue();
+            MoveToNewHome.GoMindTrue();
         }
     }
 
@@ -1328,16 +1304,24 @@ public class Brain
     #region Brain Checker - MAIN REGION OF THIS CLASS
 
     private List<string> orderedFoodSources = new List<string>();
+    HPers[] allPlaces = new HPers[] { HPers.Home, HPers.Work, HPers.FoodSource, HPers.Religion, HPers.Chill };
+    
+    public HPers[] AllPlaces
+    {
+        get { return allPlaces; }
+        set { allPlaces = value; }
+    }
+
     /// <summary>
     /// MAIN METHOD ON THIS CLASS
     /// Is called so often from a courutine in the Person.cs
     /// </summary>
     public void CheckConditions()
     {
-        CheckIfMajorityRecentlyReached();
+        MajorAge.CheckIfMajorityRecentlyReached();
         CheckIfABridgeIUseIsMarked();
         //CheckOnGenOldKeys();//here just bz it kill the .exe with 250 people if i called in the update()
-        CheckOnOldKeysList();
+        MoveToNewHome.CheckOnOldKeysList();
 
         bool ifIsgettingOutOfBuild = CheckIfAnyOfMyBuildsWillBeDestroyAndGetOut();
         if (ifIsgettingOutOfBuild) { return; }
@@ -1360,7 +1344,6 @@ public class Brain
         }
     }
 
-    HPers[] allPlaces = new HPers[] { HPers.Home, HPers.Work, HPers.FoodSource, HPers.Religion, HPers.Chill };
     /// <summary>
     /// If one of the buildings he is will be destroy then he need to get out of there 
     /// </summary>
@@ -1496,7 +1479,7 @@ public class Brain
         _person.Home = (Structure)shack;
 
         //means he moved from an old house  tht was destroyed 
-        if (_homeOldKeysList.Count > 0)
+        if (MoveToNewHome.HomeOldKeysList.Count > 0)
         {
             GoToNewHomeTail();
         }
@@ -1600,6 +1583,13 @@ public class Brain
     #region Check Closest Build
     private Structure currStructure;
     private List<string> currListOfBuild;
+
+    public Structure CurrStructure
+    {
+        get { return currStructure; }
+        set { currStructure = value; }
+    }
+
     /// <summary>
     /// Checks, and defined the colsest building of a type
     /// </summary>
@@ -1639,7 +1629,7 @@ public class Brain
     /// <summary>
     /// Set 'currStructure' and 'currListOfBuild'
     /// </summary>
-    void SetCurrents(HPers which)
+    public void SetCurrents(HPers which)
     {
         if (which == HPers.Home)
         {
@@ -1881,9 +1871,9 @@ public class Brain
                 {
                     //Debug.Log("my old home added:" + oldHomeP.MyId + "." + _person.MyId);
 
-                    AddToHomeOldKeysList(oldHomeP.MyId);
-                    _oldHomeKey = "";
-                    _routeToNewHome.CheckPoints.Clear();
+                    MoveToNewHome.AddToHomeOldKeysList(oldHomeP.MyId);
+                    MoveToNewHome.OldHomeKey = "";
+                    MoveToNewHome.RouteToNewHome.CheckPoints.Clear();
                 }
                 AddToPeopleList(s.MyId);
                 _person.Home = s;
@@ -1891,13 +1881,13 @@ public class Brain
                 //Debug.Log("my new home:" + s.MyId + "." + _person.MyId);
 
                 _isIdleHomeNow = true;
-                CheckOnOldKeysList();
+                MoveToNewHome.CheckOnOldKeysList();
             }
         }
         UnivCounter(HPers.Home);
     }
 
-    Structure PullOldHome()
+    public Structure PullOldHome()
     {
         //if (_person.Home != null)
         //{
@@ -2004,7 +1994,7 @@ public class Brain
             PersonPot.Control.ClearPeopleCheck();
 
             //called here bz here I know the Checked on PersonPot was full and clear 
-            CheckIfShacksAreNeed();
+            //CheckIfShacksAreNeed();
 
             if (!BuildingPot.Control.IsfoodSourceChange && !BuildingPot.Control.AreNewWorkPos &&
                 !BuildingPot.Control.IsNewHouseSpace && !BuildingPot.Control.IsNewReligion &&
@@ -2077,7 +2067,7 @@ public class Brain
         SetCurrents(whichType);
         if (whichType == HPers.Home)
         {
-            AddToHomeOldKeysList();
+            MoveToNewHome.AddToHomeOldKeysList();
         }
         else
         {
@@ -2092,12 +2082,17 @@ public class Brain
     //who activiated the searchAgain . created to address bugg where finds everyone 
     //eveytime is called 
     private HPers who;
+    public HPers Who
+    {
+        get { return who; }
+        set { who = value; }
+    }
     /// <summary>
     /// Will search for the specific type of building on the var 'who'.
     /// 
     /// Will search again if is at home and searchAgain true... or if 'now' is true
     /// </summary>
-    void SearchAgain(bool now = false)
+    public void SearchAgain(bool now = false)
     {
         if ((IAmHomeNow() && searchAgain) || now)
         {
@@ -2152,267 +2147,6 @@ public class Brain
         else if (which == HPers.Chill)
         {
             _isChill = val;
-        }
-    }
-
-    #endregion
-
-    #region Moving to new Home
-
-    private string _oldHomeKey = "";
-    public string OldHomeKey
-    {
-        get { return _oldHomeKey; }
-        set { _oldHomeKey = value; }
-    }
-
-    //so i dont overwrite old keys 
-    List<string> _homeOldKeysList = new List<string>();
-
-    public List<string> HomeOldKeysList
-    {
-        get { return _homeOldKeysList; }
-        set { _homeOldKeysList = value; }
-    }
-
-    private bool buildRouteToNewHome;
-    private bool newHomeRouteStart;
-    private RouterManager _newHomeRouter = new RouterManager();
-    private int searchedNewHome;//counter of new search for a home 
-    private Structure old;
-    TheRoute _routeToNewHome = new TheRoute();
-
-    /// <summary>
-    /// MAIN METHOD for moving to nw Home 
-    /// 
-    /// It has the logic to build the route and everytjhing while moving to new house
-    /// </summary>
-    private void BuildRouteToNewHomeRoutine()
-    {
-        if (!buildRouteToNewHome) { return; }
-        _newHomeRouter.Update();
-
-        SearchForNewHome();
-        if (!newHomeRouteStart)
-        {
-            SearchForNewHomeAgain();
-
-            //_person.Home == null person is creating shack 
-            if (_person.Home == null)
-            {
-                return;
-            }
-
-            _newHomeRouter = new RouterManager(old, _person.Home, _person, HPers.NewHome);
-            newHomeRouteStart = true;
-        }
-        if (_newHomeRouter.IsRouteReady && _routeToNewHome.CheckPoints.Count == 0
-            && IAmHomeNow())
-        {
-        //    Debug.Log(_person.MyId + " setting to new home");
-
-            _routeToNewHome = _newHomeRouter.TheRoute;
-            _currentTask = HPers.MovingToNewHome;
-            GoMindTrue();
-            _routesWereStarted = false;
-            _person.Body.Location = HPers.Home;
-            RealeaseIdle(HPers.MovingToNewHome);
-        }
-    }
-
-    void GoMindTrue()
-    {
-        goMindState = true;
-        //if not wauting and cant reroute now then im done 
-        //PersonPot.Control.DoneReRoute(_person.MyId);
-    }
-
-
-    /// <summary>
-    /// Will keep searching for new home until old is not = to Person.Home
-    /// 
-    /// This is here to address the case in where a persons home is destroyed twice or more
-    /// </summary>
-    void SearchForNewHomeAgain()
-    {
-        while (old == _person.Home)
-        {
-            SearchForNewHome();
-        }
-    }
-
-    /// <summary>
-    /// Search for new home 
-    /// </summary>
-    void SearchForNewHome()
-    {
-        //childs dont look for new homes here 
-        if (newHomeRouteStart)
-        { return; }
-
-        who = HPers.Home;
-        SearchAgain(true);
-        searchedNewHome++;
-        if (searchedNewHome > 10)
-        {
-            searchedNewHome = 0;
-            buildRouteToNewHome = false;
-//            Debug.Log(_person.MyId + " searched over 10 times buildRouteToNewHome = false");
-
-            AddToHomeOldKeysList();
-            _person.Home = null;
-
-            BuildShacks();
-        }
-    }
-
-    /// <summary>
-    /// Will create the shck manager. If is not being initiated yet 
-    /// </summary>
-    private void BuildShacks()
-    {
-        if (ShacksManager.State == H.None)
-        {
-            GameScene.print("State == H.None true called ");
-            ShacksManager.Start();
-        }
-    }
-
-    /// <summary>
-    /// Will create shack if is full and current person the last one doesnt have a house 
-    /// 
-    /// Every time people come from emigration or somehow are without house I have to marked 
-    /// PersonController.UnivCounter=0 and BuilderPot.Control.IsNewHouseSpace=true
-    /// </summary>
-    private void CheckIfShacksAreNeed()
-    {
-        var oneHomeLess = ShacksManager.IsAtLeast1HomeLess();
-        //GameScene.print("CheckIfShacksAreNeed() called ");
-
-        if (oneHomeLess)
-        {
-            //GameScene.print("oneHomeLess true called ");
-            BuildShacks();
-        }
-    }
-
-    void CleanUpRouteToNewHome()
-    {
-        newHomeRouteStart = false;
-        _newHomeRouter.IsRouteReady = true;
-        _routeToNewHome.CheckPoints.Clear();
-
-        //Debug.Log("CleanUpRouteToNewHome goMindState");
-        searchedNewHome = 0;
-        buildRouteToNewHome = false;
-    }
-
-    void GetMyNameOutOfOldHomePeopleList()
-    {
-        var t = new List<string>() { _homeOldKeysList[0] };
-        _homeOldKeysList.RemoveAt(0);
-
-        CleanOldKeyList(t);
-        _oldHomeKey = "";
-    }
-
-    /// <summary>
-    /// Will add currrent home to _homeOldKeysList so the InitValForNewHome() gets initiated 
-    /// </summary>
-    void AddToHomeOldKeysList(string oldHomeP = "")
-    {
-        if (_person.Home == null && oldHomeP != "")
-        {
-            if (!_homeOldKeysList.Contains(oldHomeP))
-            {
-                _homeOldKeysList.Add(oldHomeP);
-            }
-            return;
-        }
-
-        if (_person.Home == null)
-        {
-            return;
-        }
-
-        if (!_homeOldKeysList.Contains(_person.Home.MyId))
-        {
-            _homeOldKeysList.Add(_person.Home.MyId);
-        }
-    }
-
-
-    #region Major Age Reached
-
-    private bool majorityAgeRecentReached;
-    public void MarkMajorityAgeReached()
-    {
-        majorityAgeRecentReached = true;
-    }
-
-    /// <summary>
-    /// Actions to execute on Brain once the majority of age was reached
-    /// </summary>
-    void PersonReachMajorityAgeAction()
-    {
-        _person.IsBooked = false;
-
-        AddToHomeOldKeysList();
-        _person.transform.parent = null;
-        _person.FamilyId = "";
-
-        ShacksManager.NewAdultIsUp();
-        //Debug.Log(_person.MyId +" reached majority");
-
-        PersonPot.Control.RestartControllerForPerson(_person.MyId);
-    }
-
-    void CheckIfMajorityRecentlyReached()
-    {
-        if (majorityAgeRecentReached && IAmHomeNow())
-        {
-            majorityAgeRecentReached = false;
-            PersonReachMajorityAgeAction();
-        }
-    }
-
-    #endregion
-
-
-    /// <summary>
-    /// This is the method that starts the process to moving to new home
-    /// </summary>
-    void InitValForNewHome()
-    {
-        goMindState = false;
-//        Debug.Log(_person.MyId + " InitValForNewHome()");
-        
-        _oldHomeKey = PullOldHome().MyId;
-
-        var firstKeyOnList = _homeOldKeysList[0];
-        old = BuildingPot.Control.Registro.AllBuilding[firstKeyOnList] as Structure;
-        buildRouteToNewHome = true;
-    }
-
-    /// <summary>
-    /// Aaddress the case where we have some old keys on the list waiting to be proccesssed
-    /// </summary>
-    void CheckOnOldKeysList(bool inHomeForce = false)
-    {
-        //if the oldHomeKey was cleared and homeOldKeysList has more than one means that we have
-        //olds key to address 
-        if (_oldHomeKey == "" && _homeOldKeysList.Count > 0 && _routeToNewHome.CheckPoints.Count == 0 &&
-            IAmHomeNow())
-        {
-            InitValForNewHome();
-        }
-    }
-
-    void CheckOnGenOldKeys()
-    {
-        if (_generalOldKeysList.Count > 0 && IAmHomeNow())
-        {
-            CleanOldKeyList(_generalOldKeysList);
         }
     }
 
@@ -2704,14 +2438,20 @@ public class Brain
     }
     #endregion
 
-#region Die Related
+    #region Die Related
 
     private bool _partido;
+
+
+
     public bool Partido
     {
         get { return _partido; }
         set { _partido = value; }
     }
+
+ 
+
 
     void CheckIfDie()
     {

@@ -2823,7 +2823,7 @@ public class BookedHome
     /// </summary>
     private void MakeOldHomeFamilyVarVirgin(Person toRemove)
     {
-        var oldHome = Brain.GetBuildingFromKey(toRemove.Brain.OldHomeKey);
+        var oldHome = Brain.GetBuildingFromKey(toRemove.Brain.MoveToNewHome.OldHomeKey);
         //Debug.Log("Make virgin on");
 
         if (oldHome!= null)

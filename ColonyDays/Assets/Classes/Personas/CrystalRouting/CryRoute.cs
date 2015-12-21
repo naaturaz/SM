@@ -456,7 +456,7 @@ public class CryRoute
     /// <returns></returns>
     bool IsCrystalPartOfOldHome(Crystal c)
     {
-        var cIsOldHomeCry = _person.Brain.OldHomeKey == c.ParentId && !string.IsNullOrEmpty(c.ParentId);
+        var cIsOldHomeCry = _person.Brain.MoveToNewHome.OldHomeKey == c.ParentId && !string.IsNullOrEmpty(c.ParentId);
 
         var isInside = IsCurrInsideOldHome(c);
 
@@ -473,7 +473,7 @@ public class CryRoute
     {
         bool isInside = false;
 
-        var oldHome = Brain.GetBuildingFromKey(_person.Brain.OldHomeKey);
+        var oldHome = Brain.GetBuildingFromKey(_person.Brain.MoveToNewHome.OldHomeKey);
         if (oldHome != null && oldHome != _person.Home)
         {
             var oldHomRect = U2D.FromPolyToRect(oldHome.Anchors);

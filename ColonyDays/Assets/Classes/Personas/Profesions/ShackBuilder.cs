@@ -29,7 +29,7 @@ public class ShackBuilder : Profession
         LoadAttributes(pF.ProfessionProp);
         
         //needs to redo the Family on _constructing
-        var oldBuild = Brain.GetBuildingFromKey(_person.Brain.OldHomeKey);
+        var oldBuild = Brain.GetBuildingFromKey(_person.Brain.MoveToNewHome.OldHomeKey);
         var myFamily = oldBuild.FindMyFamily(_person);
 
         var newFam = new Family(3, _constructing.MyId);
@@ -115,13 +115,13 @@ public class ShackBuilder : Profession
     void BookShack()
     {
         //this is for new Adults 
-        if (string.IsNullOrEmpty(_person.Brain.OldHomeKey))
+        if (string.IsNullOrEmpty(_person.Brain.MoveToNewHome.OldHomeKey))
         {
             return;
         }
 
         Family myFamily = null;
-        var oldHome = Brain.GetStructureFromKey(_person.Brain.OldHomeKey);
+        var oldHome = Brain.GetStructureFromKey(_person.Brain.MoveToNewHome.OldHomeKey);
         myFamily = oldHome.FindMyFamily(_person);
 
         //is bz im a recently 16 years guy or moved from empty house 
