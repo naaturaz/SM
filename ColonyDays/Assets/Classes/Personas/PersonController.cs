@@ -30,7 +30,7 @@ public class PersonController : PersonPot
 
     RoutesCache _routesCache = new RoutesCache();
 
-
+    
 
     public List<Person> All
     {
@@ -102,7 +102,7 @@ public class PersonController : PersonPot
 
     void Map()
     {
-        int multiplier = 100;
+        int multiplier = 1000;
         int factor = 100;
         int ini = multiplier*factor;
 
@@ -192,6 +192,34 @@ public class PersonController : PersonPot
         Person t = Person.CreatePersonKid(iniPos);
         All.Add(t); 
     }
+
+    #region MovingToNewHome Related
+
+    //means that a person is moving from one hose to another 
+    //if this is on. No One can move 
+    //TODO needs to be SaveLoad
+    private string _isAPersonHomeLessNow;
+
+    public string IsAPersonHomeLessNow
+    {
+        get { return _isAPersonHomeLessNow; }
+        set { _isAPersonHomeLessNow = value; }
+    }
+
+    /// <summary>
+    /// Will clean the homeless slot if the person asking for it is the one that
+    /// ocupied 
+    /// </summary>
+    /// <param name="personId"></param>
+    public void CleanHomeLessSlot(string personId)
+    {
+        if (personId == _isAPersonHomeLessNow)
+        {
+            _isAPersonHomeLessNow = "";
+        }
+    }
+
+    #endregion
 
     void Start()
     {
@@ -374,8 +402,7 @@ public class PersonController : PersonPot
     }
 
     #endregion
-
-
+    
     #region CoolDown 
 
     //the amount of cooldown has to be wait to be able to a person check again 
@@ -429,8 +456,7 @@ public class PersonController : PersonPot
     }
 
     #endregion
-
-
+    
     #region Local Counter Will be Looping all the time so a person will check stuff at the time
 
     private int _peopleCounter;
@@ -516,8 +542,7 @@ public class PersonController : PersonPot
     }
 
     #endregion
-
-
+    
     #region People ReRouting System
     //People will reroute if they had not reroute already in this cycle and 
     //if queue has space. Other wise person should wait at home 
@@ -539,6 +564,8 @@ public class PersonController : PersonPot
         get { return _onSystemNow; }
         set { _onSystemNow = value; }
     }
+
+  
 
     public void CheckMeOnSystem(string id)
     {
@@ -657,9 +684,7 @@ public class PersonController : PersonPot
 
 
 #endregion
-
-
-
+    
     /// <summary>
     /// Average of overall happiness
     /// </summary>
@@ -675,8 +700,6 @@ public class PersonController : PersonPot
 
         return (total/_all.Count).ToString("n2") + " / 5";
     }
-
-
 }
 
 public class CheckedIn

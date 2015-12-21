@@ -2,12 +2,21 @@
  * All actions related to moving to a new home 
  * this was a section in Brain . Decided to make it a class for readability etc
  * 
- */ 
+ */
 
+using System;
 using UnityEngine;
 using System.Collections.Generic;
 
-public class MoveToNewHome  {
+/// <summary>
+/// Is inheritng from Brain just to access the field:
+///  _person 
+///  currStructure 
+/// 
+/// It couldnt be public bz XML serializer will find redundancy
+/// </summary>
+public class MoveToNewHome : Brain
+{
 
     private Brain _brain;
     private string _oldHomeKey = "";
@@ -19,9 +28,16 @@ public class MoveToNewHome  {
     private Structure old;
     private TheRoute _routeToNewHome = new TheRoute();
 
-    public MoveToNewHome(Brain brain)
+    private Person _person;
+    private Structure currStructure;
+
+    public MoveToNewHome() { }
+
+    public MoveToNewHome(Brain brain, Person person, Structure currStructure)
     {
         _brain = brain;
+        _person = person;
+        this.currStructure = currStructure;
     }
 
     public string OldHomeKey
@@ -76,12 +92,12 @@ public class MoveToNewHome  {
 
             for (int j = 0; j < list.Count; j++)
             {
-                if (_brain.CurrStructure == null)
+                if (currStructure == null)
                 {
                     return false;
                 }
 
-                if (_brain.CurrStructure.MyId == list[j] && _brain.CurrStructure.Instruction == H.WillBeDestroy)
+                if (currStructure.MyId == list[j] && currStructure.Instruction == H.WillBeDestroy)
                 {
                     return true;
                 }
@@ -102,9 +118,9 @@ public class MoveToNewHome  {
         }
 
         //if the person was in the PeopleDict of the oldbuilding gets removed 
-        if (BuildingPot.Control.Registro.AllBuilding[oldBuild].PeopleDict.Contains(_brain.Person1.MyId))
+        if (BuildingPot.Control.Registro.AllBuilding[oldBuild].PeopleDict.Contains(_person.MyId))
         {
-            BuildingPot.Control.Registro.AllBuilding[oldBuild].PeopleDict.Remove(_brain.Person1.MyId);
+            BuildingPot.Control.Registro.AllBuilding[oldBuild].PeopleDict.Remove(_person.MyId);
         }
     }
 
@@ -123,26 +139,26 @@ public class MoveToNewHome  {
         {
             SearchForNewHomeAgain();
 
-            //Person1.Home == null person is creating shack 
-            //if (Person1.Home == null)
-            //{
-            //    return;
-            //}
+            //_person.Home == null person is in the proccess of getting a new house   
+            if (_person.Home == null)
+            {
+                return;
+            }
 
-            _newHomeRouter = new RouterManager(old, _brain.Person1.Home, _brain.Person1, HPers.NewHome);
+            _newHomeRouter = new RouterManager(old, _person.Home, _person, HPers.NewHome);
             newHomeRouteStart = true;
         }
         //person getting ready to move to new home 
         if (_newHomeRouter.IsRouteReady && _routeToNewHome.CheckPoints.Count == 0
             && _brain.IAmHomeNow())
         {
-            //    Debug.Log(Person1.MyId + " setting to new home");
+            //    Debug.Log(_person.MyId + " setting to new home");
 
             _routeToNewHome = _newHomeRouter.TheRoute;
             _brain.CurrentTask = HPers.MovingToNewHome;
             GoMindTrue();
             _brain.RoutesWereStarted = false;
-            _brain.Person1.Body.Location = HPers.Home;
+            _person.Body.Location = HPers.Home;
             _brain.RealeaseIdle(HPers.MovingToNewHome);
         }
     }
@@ -153,7 +169,7 @@ public class MoveToNewHome  {
     private void InitValForNewHome()
     {
         _brain.GoMindState = false;
-        //        Debug.Log(Person1.MyId + " InitValForNewHome()");
+        //        Debug.Log(_person.MyId + " InitValForNewHome()");
 
         _oldHomeKey = _brain.PullOldHome().MyId;
 
@@ -166,7 +182,7 @@ public class MoveToNewHome  {
     {
         _brain.GoMindState = true;
         //if not wauting and cant reroute now then im done 
-        //PersonPot.Control.DoneReRoute(Person1.MyId);
+        //PersonPot.Control.DoneReRoute(_person.MyId);
     }
 
     /// <summary>
@@ -176,7 +192,7 @@ public class MoveToNewHome  {
     /// </summary>
     private void SearchForNewHomeAgain()
     {
-        while (old == _brain.Person1.Home)
+        while (old == _person.Home)
         {
             SearchForNewHome();
         }
@@ -194,18 +210,27 @@ public class MoveToNewHome  {
         _brain.Who = HPers.Home;
         _brain.SearchAgain(true);
         searchedNewHome++;
-        
+
+        if (searchedNewHome > 9)
+        {
+            var t = this;
+        }
+
         //then search again next year 
         if (searchedNewHome > 10)
         {
             //searchedNewHome = 0;
-            buildRouteToNewHome = false;
-            Debug.Log(_brain.Person1.MyId + " searched over 10 times buildRouteToNewHome = false");
+            //buildRouteToNewHome = false;
+            //Debug.Log(_person.MyId + " searched over 10 times buildRouteToNewHome = false");
 
-            //AddToHomeOldKeysList();
-            //Person1.Home = null;
+            ////AddToHomeOldKeysList();
+            ////_person.Home = null;
 
-            //BuildShacks();
+            ////BuildShacks();
+
+            throw new Exception("House never should be searched more than 10 times since was initiated" +
+                                "bz was confirmed that a house exist for this person to move in" +
+                                "pls check in condintions that initatied : InitValForNewHome()");
         }
     }
 
@@ -252,7 +277,7 @@ public class MoveToNewHome  {
     /// </summary>
     public void AddToHomeOldKeysList(string oldHomeP = "")
     {
-        if (_brain.Person1.Home == null && oldHomeP != "")
+        if (_person.Home == null && oldHomeP != "")
         {
             if (!_homeOldKeysList.Contains(oldHomeP))
             {
@@ -261,14 +286,14 @@ public class MoveToNewHome  {
             return;
         }
 
-        if (_brain.Person1.Home == null)
+        if (_person.Home == null)
         {
             return;
         }
 
-        if (!_homeOldKeysList.Contains(_brain.Person1.Home.MyId))
+        if (!_homeOldKeysList.Contains(_person.Home.MyId))
         {
-            _homeOldKeysList.Add(_brain.Person1.Home.MyId);
+            _homeOldKeysList.Add(_person.Home.MyId);
         }
     }
 

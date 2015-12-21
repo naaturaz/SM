@@ -145,7 +145,7 @@ public class Family
         else {_mother = adult.MyId;}
         adult.transform.parent = BuildingPot.Control.Registro.AllBuilding[_home].transform;
 
-        if (string.IsNullOrEmpty( adult.FamilyId))
+        if (string.IsNullOrEmpty(adult.FamilyId))
         {
             FamilyId = "Family:" + adult.MyId;
             adult.FamilyId = FamilyId;    
@@ -462,10 +462,35 @@ public class Family
         {
             res.Add(dad);
         }
- 
 
         return res;
     }
 
+    /// <summary>
+    /// Created so a person that could reach majority of age knows if can find a place where to 
+    /// live or not 
+    /// </summary>
+    /// <param name="asker"></param>
+    /// <returns></returns>
+    public bool WouldAdultFitInThisFamily(Person newPerson)
+    {
+        if (Adults() >= 2)
+        {
+            return false;
+        }
 
+        if (Adults() == 0)
+        {
+            return true;
+        }
+
+        Person inFamily = FindCurrentAdult();
+        //2nd question is to check that other person is not Married already , etc
+        if (inFamily.WouldUMarryMe(newPerson) && newPerson.WouldUMarryMe(inFamily))
+        {
+            return true;
+        }
+
+        return false;
+    }
 }

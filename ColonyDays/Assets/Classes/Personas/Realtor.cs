@@ -75,6 +75,8 @@ public class Realtor
             //if is booked and im not on it will return null bz that building is booked already
             return null;
         }
+
+        BookMyFamilyToNewBuild(person, newhome);
         //if is not booked
         return newhome;
     }
@@ -148,8 +150,7 @@ public class Realtor
     static bool DoesFamilyFit(Person person, Building newHome)
     {
         var personHasFamily = person.HasFamily();
-
-      //  Debug.Log(person.MyId);
+        //Debug.Log(person.MyId);
 
         if (personHasFamily)
         {
@@ -159,6 +160,16 @@ public class Realtor
                 BookMyFamilyToNewBuild(person, newHome);
                 return true;
             }
+        }
+        //person doest have family
+        else
+        {
+            var canI = CanIMoveFamilyToNewHome(newHome);
+            if (canI)
+            {
+                BookMyFamilyToNewBuild(person, newHome);
+                return true;
+            }     
         }
         return false;
     }
@@ -219,21 +230,25 @@ public class Realtor
         {
             myFamily = person.Home.FindMyFamily(person);
         }
-
-        var all = BuildingPot.Control.Registro.AllBuilding;
-
+        else if (toBeBooked == null)
+        {
+            //todo get right amt of kids
+            //TODO create constructor that get right amt of kids and sets Id, and id on person
+            myFamily = new Family(2, newHome.MyId);
+            myFamily.FamilyId = "Family:" + person.MyId;
+            person.FamilyId = myFamily.FamilyId; 
+        }
+        
         myFamily.State = H.MovingToNewHome;
         newHome.BookedHome1 = new BookedHome(newHome.MyId, myFamily);
-//        Debug.Log("Booked " + newHome.MyId + " by: " + person.MyId);
+//      Debug.Log("Booked " + newHome.MyId + " by: " + person.MyId);
 
         BuildingPot.Control.Registro.ResaveOnRegistro(newHome.MyId);
-  
 
         MarkTheFamilyBooking(true, myFamily);
         MarkOneVirginFamilySpotOnNewHome(newHome, person);
 
         RestartControllerForMyFamily(myFamily, person);
-
     }
 
     /// <summary>
@@ -259,7 +274,7 @@ public class Realtor
     }
 
     /// <summary>
-    /// Will mark on new House a Family spot tht is virign as the new one 
+    /// Will mark on new House a Family spot tht is virign, as the new Family Id  
     /// </summary>
     /// <param name="newHome"></param>
     /// <param name="person"></param>
@@ -361,7 +376,7 @@ public class Realtor
     }
 
     /// <summary>
-    /// Will return true if is a better home than the current one and will define field 'theBetterHome'
+    /// Will return true if is a better home than the current one 
     /// </summary>
     static bool ThereIsABetterHome(Person person, List<BuildRank> list)
     {
@@ -413,8 +428,6 @@ public class Realtor
         return myCurrentHomeScore;
     }
 
-
-
     /// <summary>
     /// Mark everyone on the Family as booked 
     /// </summary>
@@ -433,9 +446,6 @@ public class Realtor
         {
             tFather.IsBooked = makeIt;     
         }
-
-       
-
 
         var tMother = Family.FindPerson(family.Mother);
         if (tMother != null)

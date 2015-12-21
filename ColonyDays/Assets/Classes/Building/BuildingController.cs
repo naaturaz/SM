@@ -397,7 +397,7 @@ public class BuildingController : BuildingPot
 
     public void RemoveFromHousesWithSpace(string houseToRemove)
     {
-//        print("Removed " + houseToRemove);
+//      print("Removed " + houseToRemove);
         HousesWithSpace.Remove(houseToRemove);
     }
 
@@ -508,7 +508,6 @@ public class BuildingController : BuildingPot
         return Brain.GetStructureFromKey(clostKey);
     }
 
-
     /// <summary>
     /// Will find the closest of the type form the point 'fromPos'
     /// </summary>
@@ -555,8 +554,6 @@ public class BuildingController : BuildingPot
         return distances;
     }
 
-
-
     /// <summary>
     /// Will find the first building of the type asked  
     /// </summary>
@@ -583,6 +580,4 @@ public class BuildingController : BuildingPot
 
         return list[rand];
     }
-
-
 }

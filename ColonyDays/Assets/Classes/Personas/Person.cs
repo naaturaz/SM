@@ -660,16 +660,56 @@ public class Person : General
         return false;
     }
 
+    static int debug = 0;
+
     /// <summary>
     /// Will contain all the functions to execute for a person when reach the Age Majority 
+    /// 
+    /// Call once a birthday if is old enough until, _isMajor = true
     /// </summary>
     void ReachAgeMajority()
     {
-        //print("Age Major: " + MyId);
-        RemoveMeFromOldHome();
+        if (debug >= 4)
+        {
+            Program.gameScene.GameSpeed = 0;
+            var t = this;
+        }
 
-        _isMajor = true;
-        Brain.MajorAge.MarkMajorityAgeReached();
+        //will only will mark as majority age reached if he could fit a house 
+        if (WouldIFindAPlaceToLive())
+        {
+            //print("Age Major: " + MyId);
+            RemoveMeFromOldHome();
+            _isMajor = true;
+            Brain.MajorAge.MarkMajorityAgeReached();
+            PersonPot.Control.IsAPersonHomeLessNow = MyId;
+            debug++;
+        }
+    }
+
+    /// <summary>
+    /// Will retrun true if a house was find that can fit a Adult 
+    /// </summary>
+    /// <returns></returns>
+    private bool WouldIFindAPlaceToLive()
+    {
+        //means that anotehr person is ins the process of finding a new home 
+        if (!string.IsNullOrEmpty(PersonPot.Control.IsAPersonHomeLessNow))
+        {
+            return false;
+        }
+
+        var buildings = UBuilding.ReturnBuildings(BuildingPot.Control.HousesWithSpace);
+
+        for (int i = 0; i < buildings.Count; i++)
+        {
+            if (buildings[i].WouldAdultFitInThisHouseInAFamily(this))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -847,7 +887,7 @@ public class Person : General
             _profession.Update();     
 	    }
 	    
-        //TimeChecks();
+        TimeChecks();
         Program.gameScene.GameTime1.FixedUpdate();
 	    LODCheck();
 	}

@@ -1312,6 +1312,23 @@ public class Building : General, Iinfo
     }
 
     /// <summary>
+    /// Will tell if the person asking could fit in any of the families of the building 
+    /// </summary>
+    /// <param name="asker"></param>
+    /// <returns></returns>
+    public bool WouldAdultFitInThisHouseInAFamily(Person asker)
+    {
+        for (int i = 0; i < Families.Length; i++)
+        {
+            if (Families[i].WouldAdultFitInThisFamily(asker))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
     /// Will return true if at least one family is empty in this building 
     /// </summary>
     /// <returns></returns>

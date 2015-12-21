@@ -5,14 +5,25 @@
  */ 
 using UnityEngine;
 
-public class MajorityAgeReached : MonoBehaviour {
+/// <summary>
+/// Is inheritng from Brain just to access the field _person. 
+/// It couldnt be public bz XML serializer will find redundancy
+/// </summary>
+public class MajorityAgeReached  {
 
-  private Brain _brain;
+    private Brain _brain;
     private bool majorityAgeRecentReached;
+    private Person _person;
+    private MoveToNewHome _moveToNewHome;
 
-    public MajorityAgeReached(Brain brain)
+
+    public MajorityAgeReached() { }
+
+    public MajorityAgeReached(Brain brain, Person person , MoveToNewHome moveToNewHome)
     {
+        _person = person;
         _brain = brain;
+        _moveToNewHome = moveToNewHome;
     }
 
     public void MarkMajorityAgeReached()
@@ -25,16 +36,22 @@ public class MajorityAgeReached : MonoBehaviour {
     /// </summary>
     private void PersonReachMajorityAgeAction()
     {
-        _brain.Person1.IsBooked = false;
+        _person.IsBooked = false;
 
-        _brain.MoveToNewHome.AddToHomeOldKeysList();
-        _brain.Person1.transform.parent = null;
-        _brain.Person1.FamilyId = "";
+        _moveToNewHome.AddToHomeOldKeysList();
+        _person.transform.parent = null;
+        _person.FamilyId = "";
+        _person.Home = null;
 
-        ShacksManager.NewAdultIsUp();
-        //Debug.Log(_person.MyId +" reached majority");
+        if (_person.MyId.Contains("460"))
+        {
+            var t = this;
+        }
 
-        PersonPot.Control.RestartControllerForPerson(_brain.Person1.MyId);
+        //ShacksManager.NewAdultIsUp();
+        Debug.Log(_person.MyId + " reached majority");
+
+        PersonPot.Control.RestartControllerForPerson(_person.MyId);
     }
 
     public void CheckIfMajorityRecentlyReached()

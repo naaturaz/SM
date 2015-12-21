@@ -740,7 +740,7 @@ public class CryRoute
 
         if (closeEnogh || closeAndTerraObs)
         {
-            Debug.Log("Rect grow");
+            //Debug.Log("Rect grow");
             grow *= 2;
             //_currRect.Grow();
             return true;

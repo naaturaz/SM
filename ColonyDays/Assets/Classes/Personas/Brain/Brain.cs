@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Serialization;
 using UnityEngine;
 
 //Person Brain more complicated clas so far apr 14 2015
@@ -34,8 +35,8 @@ public class Brain
     private bool _isAllSet;//is true when person has all buildings
 
     //breaing down 2700 lines of codes in subclasses
-    private readonly MoveToNewHome _moveToNewHome;
-    private readonly MajorityAgeReached _majorAge;
+    private MoveToNewHome _moveToNewHome;
+    private MajorityAgeReached _majorAge;
     
     public HPers CurrentTask
     {
@@ -52,29 +53,24 @@ public class Brain
     public MoveToNewHome MoveToNewHome
     {
         get { return _moveToNewHome; }
+        set { _moveToNewHome = value; }
     }
 
     public MajorityAgeReached MajorAge
     {
         get { return _majorAge; }
-    }
-
-    public Person Person1
-    {
-        get { return _person; }
-        set { _person = value; }
+        set { _majorAge = value; }
     }
 
     public Brain()
     {
-        _majorAge = new MajorityAgeReached(this);
-        _moveToNewHome = new MoveToNewHome(this);
     }
 
     public Brain(Person person)
     {
-        _majorAge = new MajorityAgeReached(this);
-        _moveToNewHome = new MoveToNewHome(this);
+        _moveToNewHome = new MoveToNewHome(this, person, currStructure);
+        _majorAge = new MajorityAgeReached(this, person, MoveToNewHome);
+
         Init(person);
     }
 
@@ -85,8 +81,9 @@ public class Brain
     /// <param name="pF"></param>
     public Brain(Person person, PersonFile pF)
     {
-        _majorAge = new MajorityAgeReached(this);
-        _moveToNewHome = new MoveToNewHome(this);
+        _moveToNewHome = new MoveToNewHome(this, person, currStructure);
+        _majorAge = new MajorityAgeReached(this, person, MoveToNewHome) ;
+
         Init(person);
         LoadFromFile(pF);
     }
@@ -1581,14 +1578,8 @@ public class Brain
     }
 
     #region Check Closest Build
-    private Structure currStructure;
+    Structure currStructure;
     private List<string> currListOfBuild;
-
-    public Structure CurrStructure
-    {
-        get { return currStructure; }
-        set { currStructure = value; }
-    }
 
     /// <summary>
     /// Checks, and defined the colsest building of a type
@@ -1877,8 +1868,10 @@ public class Brain
                 }
                 AddToPeopleList(s.MyId);
                 _person.Home = s;
+                //needs to be call here in case this person is the one ocpied the slot 
+                PersonPot.Control.CleanHomeLessSlot(_person.MyId);
 
-                //Debug.Log("my new home:" + s.MyId + "." + _person.MyId);
+                Debug.Log("my new home:" + s.MyId + "." + _person.MyId);
 
                 _isIdleHomeNow = true;
                 MoveToNewHome.CheckOnOldKeysList();
