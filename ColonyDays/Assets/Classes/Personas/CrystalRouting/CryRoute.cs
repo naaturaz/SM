@@ -193,12 +193,17 @@ public class CryRoute
             Recursive();
         }
     }
-    
-    /// <summary>
-    /// Recursive main call
-    /// </summary>
+
+
+
     private void Recursive()
     {
+        if (_ini.MyId.Contains("285") || _ini.MyId.Contains("367") ||
+       _ini.MyId.Contains("375") || _ini.MyId.Contains("359"))
+        {
+            var t = this;
+        }
+
         if (prevLoop == "")
         {
             _checkPoints.Add(new CheckPoint(U2D.FromV2ToV3(_curr.Position)));
@@ -512,8 +517,7 @@ public class CryRoute
 
         if (loopCount < _eval.Count)
         {
-            //
-            _eval[i].CalculateWeight(_curr.Position, U2D.FromV3ToV2(_two.Position));
+            //_eval[i].CalculateWeight(_curr.Position, U2D.FromV3ToV2(_two.Position));
             //_eval[i].CalculateWeight(U2D.FromV3ToV2(_curr.Position));
 
             loopCount++;
@@ -521,7 +525,7 @@ public class CryRoute
         }
         else
         {
-            _eval = _eval.OrderBy(a => a.CalcWeight).ToList();
+            //_eval = _eval.OrderBy(a => a.CalcWeight).ToList();
             ResetLoop();
 
             return false;//so let Recursive Keeps it course 

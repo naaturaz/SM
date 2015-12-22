@@ -214,12 +214,6 @@ public class Crystal
         _calcWeight = (_baseWeight * weightFactor) + Distance;
     }
 
-    internal void CalculateWeight(Vector2 vector2)
-    {
-        Distance = Vector2.Distance(_position, vector2);
-        _calcWeight = (_baseWeight * weightFactor) + Distance;
-    }
-
     private float CalcPilotDistance(Vector2 curr, Vector2 final)
     {
         var dist = Vector2.Distance(curr, final);
@@ -241,7 +235,11 @@ public class Crystal
         return medi;
     }
 
-
+    internal void CalculateWeight(Vector2 vector2)
+    {
+        Distance = Vector2.Distance(_position, vector2);
+        _calcWeight = (_baseWeight * weightFactor) + Distance;
+    }
 
     /// <summary>
     /// Depending on the type will define base weight 
