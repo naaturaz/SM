@@ -36,6 +36,7 @@ public class PersonSaveLoad : PersonPot {
         return res;
     }
 
+    //saving
     PersonControllerSaveLoad GetAllFromPersonController()
     {
         PersonControllerSaveLoad res = new PersonControllerSaveLoad();
@@ -51,6 +52,7 @@ public class PersonSaveLoad : PersonPot {
 
         res.Waiting = Control.Waiting;
         res.OnSystemNow1 = Control.OnSystemNow1;
+        res.IsAPersonHomeLessNow = Control.IsAPersonHomeLessNow;
 
         return res;
     }

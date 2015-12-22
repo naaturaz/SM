@@ -144,10 +144,7 @@ public class Crystal
     public Crystal(Vector3 pos, H type, string parId, bool isDoor = false, bool setIdAndName = true)
     {
         _type = type;
-
         SetPosition(new Vector2(pos.x, pos.z));
-
-
         
         _parentId = parId;
         DefineBaseWeight();
@@ -160,7 +157,6 @@ public class Crystal
             Id = Person.GiveRandomID();
             Name = Person.GiveRandomName();
         }
-
     }
 
     private void DefineMaxAmtLines()
@@ -193,13 +189,6 @@ public class Crystal
         }
 
         _position = pos;
-    }
-
-
-
-    public float ReturnCalculateDistance(Vector2 otherPos)
-    {
-        return Vector2.Distance(_position, otherPos);
     }
 
     /// <summary>

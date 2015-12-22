@@ -305,20 +305,16 @@ public class Structure : StructureParent
         Hide(Geometry);
     }
 
-
     void Hide(GameObject gP)
     {
-        Renderer r = gP.GetComponent<Renderer>();
-        r.enabled = false;
+        gP.SetActive(false);
     }
 
-    //implement
+    //todo
     internal bool HasEnoughToCoverOrder(Order _order)
     {
         return true;
     }
-
-
 
     /// <summary>
     /// the Farm zone of a farm

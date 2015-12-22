@@ -147,6 +147,10 @@ public class PersonController : PersonPot
         Program.MyScreen1.LoadingScreenIsDone();
     }
 
+    /// <summary>
+    /// Loads the PersonController from file
+    /// </summary>
+    /// <param name="pData"></param>
     void LoadFromFile(PersonData pData)
     {
         //persons
@@ -170,6 +174,7 @@ public class PersonController : PersonPot
 
         Waiting = pData.PersonControllerSaveLoad.Waiting;
         OnSystemNow1 = pData.PersonControllerSaveLoad.OnSystemNow1;
+        IsAPersonHomeLessNow = pData.PersonControllerSaveLoad.IsAPersonHomeLessNow;
     }
 
     private Person tempPerson;
@@ -197,7 +202,6 @@ public class PersonController : PersonPot
 
     //means that a person is moving from one hose to another 
     //if this is on. No One can move 
-    //TODO needs to be SaveLoad
     private string _isAPersonHomeLessNow;
 
     public string IsAPersonHomeLessNow
@@ -768,4 +772,5 @@ public class PersonControllerSaveLoad
     public List<string> Waiting = new List<string>();
     public List<CheckedIn> OnSystemNow1 = new List<CheckedIn>();
 
+    public string IsAPersonHomeLessNow;
 }
