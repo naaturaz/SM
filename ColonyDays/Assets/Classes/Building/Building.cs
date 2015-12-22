@@ -448,7 +448,7 @@ public class Building : General, Iinfo
 
         //if (sP.StartingStage == H.Done)
         //{
-            LandZoneLoader();
+            //LandZoneLoader();
         //}
     }
 
@@ -564,7 +564,7 @@ public class Building : General, Iinfo
     //this need to be called in derived classes 
     protected new void Update()
     {
-        //LandZoneLoader();
+        LandZoneLoader();
 
         LoadingWillBeDestroyBuild();
 
@@ -1752,21 +1752,30 @@ public class Building : General, Iinfo
 
     #region LandZoning
 
+    private bool landZoneLoaded;
     /// <summary>
-    /// Loads the land Zone and adds the Crystals of this Building to Crystal Manager 
+    /// In Loading Adds the Crystals of this Building to Crystal Manager 
+    /// 
     /// </summary>
     void LandZoneLoader()
     {
-        //will load the Landing zone if is not loading from file 
-        if (!IsLoadingFromFile)
+        if (landZoneLoaded || !PositionFixed || !IsLoadingFromFile)//if is moving around still wont put in on land 
         {
-            Debug.Log(MyId + ": LandZone Loaded ");
-            HandleLandZoning();
+            return;
         }
+
+        ////will load the Landing zone if is not loading from file 
+        //if (!IsLoadingFromFile)
+        //{
+        //    Debug.Log(MyId + ": LandZone Loaded ");
+        //    HandleLandZoning();
+        //}
 
         //so it can add the corners on CrystalManager 
         Anchors = GetAnchors();
+        UVisHelp.CreateHelpers(Anchors, Root.yellowCube);
         MeshController.CrystalManager1.Add(this);
+        landZoneLoaded = true;
     }
 
     /// <summary>
@@ -1783,6 +1792,7 @@ public class Building : General, Iinfo
     void PrivHandleZoningAddCrystals()
     {
         HandleLandZoning();
+        UVisHelp.CreateHelpers(Anchors, Root.largeBlueCube);
         MeshController.CrystalManager1.Add(this);
     }
 
