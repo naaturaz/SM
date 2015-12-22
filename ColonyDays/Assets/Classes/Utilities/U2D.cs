@@ -101,7 +101,7 @@ public class U2D : MonoBehaviour {
 
 
     /// <summary>
-    /// Will make Y:  m.IniTerr.MathCenter.y
+    /// Will make Y:  m.IniTerr.MathCenter.y. and z: will be vector2.y
     /// </summary> 
     /// <param name="a"></param>
     /// <returns></returns>

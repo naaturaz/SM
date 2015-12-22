@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -147,8 +148,6 @@ public class Crystal
 
         SetPosition(new Vector2(pos.x, pos.z));
 
-
-        
         _parentId = parId;
         DefineBaseWeight();
         DefineMaxAmtLines();
@@ -160,7 +159,6 @@ public class Crystal
             Id = Person.GiveRandomID();
             Name = Person.GiveRandomName();
         }
-
     }
 
     private void DefineMaxAmtLines()
@@ -195,8 +193,6 @@ public class Crystal
         _position = pos;
     }
 
-
-
     public float ReturnCalculateDistance(Vector2 otherPos)
     {
         return Vector2.Distance(_position, otherPos);
@@ -211,7 +207,16 @@ public class Crystal
         _distance = Vector2.Distance(_position, otherPos);
     }
 
-    private int weightFactor = 10;
+
+    private int weightFactor = 1;
+    private int sineFactor = 5;
+    internal void CalculateWeight(Vector2 vector2)
+    {
+        Distance = Vector2.Distance(_position, vector2);
+        _calcWeight = (_baseWeight * weightFactor) + Distance;
+    }
+
+    
     /// <summary>
     /// Will set the _calcWeight on the Cristal from 'otherPos'
     /// </summary>
@@ -221,9 +226,60 @@ public class Crystal
         var pilotDistance = CalcPilotDistance(curr, final);
         var pilot = Vector2.MoveTowards(curr, final, pilotDistance);
 
-        Distance = Vector2.Distance(_position, pilot);
-        _calcWeight = (_baseWeight * weightFactor) + Distance;
+        var angle = AbsoluteAngleFrom3PointsInDegrees(final, curr, Position);
+        var sine = (float)Math.Sin(ConvertToRadians(angle));
+        //Debug.Log("Angle: " + angle);
+
+        Distance = Vector2.Distance(_position, pilot);//pilot
+        _calcWeight = (_baseWeight * weightFactor) + Distance + (sine * sineFactor);
+       
+
+        //Debug.Log("_calcWeight: " + _calcWeight);
+        //Debug.Log("sine * sineFactor: " + sine * sineFactor);
+        //Debug();
     }
+
+    double ConvertToRadians(double angle)
+    {
+        return (Math.PI / 180) * angle;
+    }
+
+    private static float yDebug ;
+    static Vector3 oldPos = new Vector3();
+    void Debug()
+    {
+        var pos = new Vector3(_position.x, yDebug, _position.y);
+        if (Vector3.Distance(oldPos, pos) < 0.2f)
+        {
+            yDebug += 0.2f;
+        }
+        else
+        {
+            yDebug = m.IniTerr.MathCenter.y + 0.2f;
+        }
+        pos = new Vector3(_position.x, yDebug, _position.y);
+        oldPos = pos;
+
+        UVisHelp.CreateHelpers(pos, Root.largeBlueCube);
+        UVisHelp.CreateText(pos, _calcWeight.ToString("F1"), 40);
+    }
+
+
+    public float AbsoluteAngleFrom3PointsInDegrees(Vector2 oldPoint, Vector2 centerPoint, Vector2 newPoint)
+    {
+        double a = centerPoint.x - oldPoint.x;
+        double b = centerPoint.y - oldPoint.y;
+        double c = newPoint.x - centerPoint.x;
+        double d = newPoint.y - centerPoint.y;
+
+        double atanA = Math.Atan2(a, b);
+        double atanB = Math.Atan2(c, d);
+
+        return (float)Math.Abs((atanA - atanB) * (-180 / Math.PI));
+        // if Second line is counterclockwise from 1st line angle is 
+        // positive, else negative
+    }
+
 
     private float CalcPilotDistance(Vector2 curr, Vector2 final)
     {
@@ -246,11 +302,7 @@ public class Crystal
         return medi;
     }
 
-    internal void CalculateWeight(Vector2 vector2)
-    {
-        Distance = Vector2.Distance(_position, vector2);
-        _calcWeight = (_baseWeight * weightFactor) + Distance;
-    }
+
 
     /// <summary>
     /// Depending on the type will define base weight 

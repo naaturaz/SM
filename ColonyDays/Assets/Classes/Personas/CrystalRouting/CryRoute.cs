@@ -210,7 +210,7 @@ public class CryRoute
             //
             if (CheckIfDone())
             {
-                CanIReach2PointAfter();
+                //CanIReach2PointAfter();
                 Ready();
                 return;
             }
@@ -517,7 +517,7 @@ public class CryRoute
 
         if (loopCount < _eval.Count)
         {
-            //_eval[i].CalculateWeight(_curr.Position, U2D.FromV3ToV2(_two.Position));
+            _eval[i].CalculateWeight(_curr.Position, U2D.FromV3ToV2(_two.Position));
             //_eval[i].CalculateWeight(U2D.FromV3ToV2(_curr.Position));
 
             loopCount++;
@@ -525,7 +525,7 @@ public class CryRoute
         }
         else
         {
-            //_eval = _eval.OrderBy(a => a.CalcWeight).ToList();
+            _eval = _eval.OrderBy(a => a.CalcWeight).ToList();
             ResetLoop();
 
             return false;//so let Recursive Keeps it course 
@@ -677,8 +677,8 @@ public class CryRoute
     }
 
     private Crystal _oldCurr;
-    private const float GROWC = 3f;
-    private float grow = 3f;//1
+    private const float GROWC = 9f;
+    private float grow = 9f;//3
     /// <summary>
     /// This is the area we gonna be looking at to evaluate crystals 
     /// </summary>
