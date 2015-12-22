@@ -506,6 +506,7 @@ public class CrystalManager  {
                 var lineOnCrys = crystals[i].Lines[j];
                 if (line.IsIntersecting((lineOnCrys)))
                 {
+                    Debug.Log("inter parId:"+crystals[i].ParentId);
                     lineOnCrys.DebugRender(Color.red);
                     res++;
                 }

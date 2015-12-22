@@ -209,34 +209,60 @@ public class Crystal
 
 
     private int weightFactor = 1;
-    private int sineFactor = 5;
+    private int sineFactor = 10;
     internal void CalculateWeight(Vector2 vector2)
     {
         Distance = Vector2.Distance(_position, vector2);
         _calcWeight = (_baseWeight * weightFactor) + Distance;
     }
 
-    
+    public static DebugCrystal DebugCrystal = new DebugCrystal();
     /// <summary>
     /// Will set the _calcWeight on the Cristal from 'otherPos'
     /// </summary>
     /// <param name="otherPos"></param>
-    public void CalculateWeight(Vector2 curr, Vector2 final)
+    public void CalculateWeight(Vector2 curr, Vector2 final, string cryId)//loopCount only use for debug purpose
     {
         var pilotDistance = CalcPilotDistance(curr, final);
-        var pilot = Vector2.MoveTowards(curr, final, pilotDistance);
+        //var pilot = Vector2.MoveTowards(curr, final, pilotDistance);
 
         var angle = AbsoluteAngleFrom3PointsInDegrees(final, curr, Position);
-        var sine = (float)Math.Sin(ConvertToRadians(angle));
+        var sine =  Math.Abs( (float)Math.Sin(ConvertToRadians(angle)));
         //Debug.Log("Angle: " + angle);
 
-        Distance = Vector2.Distance(_position, pilot);//pilot
-        _calcWeight = (_baseWeight * weightFactor) + Distance + (sine * sineFactor);
-       
+        var furtherWeight = CheckIfFurtherThanCurr(curr, final);
 
-        //Debug.Log("_calcWeight: " + _calcWeight);
-        //Debug.Log("sine * sineFactor: " + sine * sineFactor);
-        //Debug();
+        Distance = Vector2.Distance(_position, final);//pilot
+        //_calcWeight = (_baseWeight * weightFactor) + Distance + (sine * sineFactor);
+       //   _calcWeight = Distance + (sine * sineFactor);
+        _calcWeight = Distance + furtherWeight;
+
+        var msg = "1st";
+        if (cryId != null)
+        {
+            msg = cryId.Substring(0, 3);
+        }
+
+        //DebugCrystal.AddNewCrystals(msg + " : " + _calcWeight.ToString("F1") + "", Position);
+    }
+
+    /// <summary>
+    /// If the position of the crystal we are now is further than curr to Final will 
+    /// return a 100
+    /// </summary>
+    /// <param name="curr"></param>
+    /// <param name="final"></param>
+    /// <returns></returns>
+    int CheckIfFurtherThanCurr(Vector2 curr, Vector2 final)
+    {
+        var distToFinalFromCurr = Vector2.Distance(final, curr);
+        var distToFinalFromPosit = Vector2.Distance(final, Position);
+
+        if (distToFinalFromPosit > distToFinalFromCurr)
+        {
+            return 1000;
+        }
+        return 0;
     }
 
     double ConvertToRadians(double angle)
@@ -918,4 +944,78 @@ public class Crystal
             }
         }
     }
+}
+
+public class DebugCrystal
+{
+    SMe m = new SMe();
+    public string Info;
+    public Vector3 _position;
+
+    List<DebugCrystal> debug = new List<DebugCrystal>();
+
+    public DebugCrystal() { }
+
+    public DebugCrystal(string info, Vector3 pos)
+    {
+        Info = info;
+        _position = pos;
+    }
+
+
+    public void AddNewCrystals( string addInfo, Vector3 pos)
+    {
+        var index = IsHereAlready(pos);
+
+        if (index == -1)
+        {
+            debug.Add(new DebugCrystal(addInfo, pos));
+        }
+        else
+        {
+            debug[index].Info = addInfo + "\n" + debug[index].Info;
+        }
+    }
+
+    public void ShowNow()
+    {
+        for (int i = 0; i < debug.Count; i++)
+        {
+            ShowEach(debug[i]);
+        }
+        Debug.Log(debug.Count+" debuc ct");
+    }
+
+    void ShowEach(DebugCrystal each)
+    {
+        var locPos = each._position;
+        var locInf = each.Info;
+
+        var yDebug = m.IniTerr.MathCenter.y + 0.2f;
+        var pos3 = new Vector3(locPos.x, yDebug, locPos.y);
+
+        UVisHelp.CreateHelpers(pos3, Root.largeBlueCube);
+        UVisHelp.CreateText(pos3, locInf, 40);
+    }
+
+    /// <summary>
+    /// Will return position on List if exist other wise will return -1
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <returns></returns>
+    int IsHereAlready(Vector3 pos)
+    {
+        for (int i = 0; i < debug.Count; i++)
+        {
+            if (Vector3.Distance(debug[i]._position, pos) < 0.2f)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+
+
+
 }

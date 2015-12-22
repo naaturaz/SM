@@ -198,20 +198,15 @@ public class CryRoute
 
     private void Recursive()
     {
-        if (_ini.MyId.Contains("285") || _ini.MyId.Contains("367") ||
-       _ini.MyId.Contains("375") || _ini.MyId.Contains("359"))
-        {
-            var t = this;
-        }
-
         if (prevLoop == "")
         {
             _checkPoints.Add(new CheckPoint(U2D.FromV2ToV3(_curr.Position)));
             //
             if (CheckIfDone())
             {
-                //CanIReach2PointAfter();
+                CanIReach2PointAfter();
                 Ready();
+                Crystal.DebugCrystal.ShowNow();
                 return;
             }
 
@@ -240,7 +235,7 @@ public class CryRoute
         else if (prevLoop == "OrderEvalByWeight")
         {
             ClearPrevLoop();
-            PushAwayToLastOnEval();
+            //PushAwayToLastOnEval();
             InsertFinDoor();
             TryReachEval();
         }
@@ -310,6 +305,7 @@ public class CryRoute
             {
                 //UVisHelp.CreateHelpers (U2D.FromV2ToV3( _eval[i].Position), Root.yellowCube);
                 Line aLine = new Line(U2D.FromV2ToV3(_curr.Position), U2D.FromV2ToV3(_eval[i].Position), durationOfLines);
+
                 var linesIntersected = IntersectCount(aLine);
                 var isIntersectingOnlyTheDoorSide = IsCrystalOnDoorCorners(_eval[i]) && linesIntersected == 1;
                 var isCryFromOld = IsCrystalPartOfOldHome(_eval[i]);
@@ -517,7 +513,7 @@ public class CryRoute
 
         if (loopCount < _eval.Count)
         {
-            _eval[i].CalculateWeight(_curr.Position, U2D.FromV3ToV2(_two.Position));
+            _eval[i].CalculateWeight(_curr.Position, U2D.FromV3ToV2(_two.Position), _curr.Id);
             //_eval[i].CalculateWeight(U2D.FromV3ToV2(_curr.Position));
 
             loopCount++;
@@ -677,8 +673,8 @@ public class CryRoute
     }
 
     private Crystal _oldCurr;
-    private const float GROWC = 9f;
-    private float grow = 9f;//3
+    private const float GROWC = 3f;
+    private float grow = 3f;//3
     /// <summary>
     /// This is the area we gonna be looking at to evaluate crystals 
     /// </summary>
@@ -818,6 +814,11 @@ public class CryRoute
         return MeshController.CrystalManager1.DoIIntersectAnyLine(nLine, _historicRegions);
     }
 
+    /// <summary>
+    /// Return 0 if none was intersected 
+    /// </summary>
+    /// <param name="nLine"></param>
+    /// <returns></returns>
     int IntersectCount(Line nLine)
     {
         return MeshController.CrystalManager1.CountLinesIIntersect(nLine, _historicRegions);

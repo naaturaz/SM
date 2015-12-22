@@ -309,8 +309,9 @@ public class Structure : StructureParent
 
     void Hide(GameObject gP)
     {
-        Renderer r = gP.GetComponent<Renderer>();
-        r.enabled = false;
+        gP.SetActive(false);
+        //Renderer r = gP.GetComponent<Renderer>();
+        //r.enabled = false;
     }
 
     //implement
