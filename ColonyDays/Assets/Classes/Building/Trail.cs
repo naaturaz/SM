@@ -265,6 +265,7 @@ public class Trail : Way
             transform.position, 
             Inventory,  
             PeopleDict,
+            LandZone1,
             polyHoriz: BoundsHoriz, tilePosVert: TilePosVert, tilePosHor: TilePosHor, planesOnAirPos: PlanesOnAirPos, tileScale: TileScale, parts: PartsOnAir, dominantSide: _dominantSide,
             startingStage: _startingStageForPieces,
             materialKey: MaterialKey, planesOnSoilPos: _planesOnSoil, partsOnSoil: _partsOnSoil,
@@ -297,7 +298,7 @@ public class Trail : Way
         BuildingPot.Control.Registro.AddBuildToAll(MyId, HType,  activeBound, Category,
             transform.position,
             Inventory,  
-            PeopleDict,
+            PeopleDict, LandZone1,
             polyHoriz: null , tilePosVert: TilePosVert, tilePosHor: TilePosHor, planesOnAirPos: PlanesOnAirPos, 
             tileScale: TileScale, parts: PartsOnAir, dominantSide: _dominantSide,
             startingStage: _startingStageForPieces, materialKey: MaterialKey, planesOnSoilPos: _planesOnSoil, partsOnSoil: _partsOnSoil

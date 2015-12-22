@@ -398,7 +398,7 @@ public class Connection
 /// </summary>
 public class BridgePsuedoPath
 {
-    List<LandZoneLinker> _bridges = new List<LandZoneLinker>();
+    private List<LandZoneLinker> _bridges = new List<LandZoneLinker>();
     private float _distance;
 
 
@@ -485,9 +485,9 @@ public class BridgePsuedoPath
     /// <param name="pos2"></param>
     /// <param name="bridge"></param>
     /// <returns></returns>
-    Vector3 ReturnInZonePos(VectorLand pos1, VectorLand pos2, LandZoneLinker bridge)
+    private Vector3 ReturnInZonePos(VectorLand pos1, VectorLand pos2, LandZoneLinker bridge)
     {
-        List<string > temp = new List<string>(){pos1.LandZone, pos2.LandZone, bridge.Zone1, bridge.Zone2};
+        List<string> temp = new List<string>() {pos1.LandZone, pos2.LandZone, bridge.Zone1, bridge.Zone2};
         var common = UString.ReturnMostCommonName(temp);
 
         //if the common is the one is pos1.LandZone
@@ -497,29 +497,20 @@ public class BridgePsuedoPath
         }
         return pos2.Position;
     }
-
-
-
-
-
-
-
-
-
 }
 
 /// <summary>
 /// So a Position asked for and a LandZone are kept tpghetejhr this is important to calculate distance 
+/// and basically use to know if when going from point A to B a brdige is gonna be needed
 /// properluy
 /// </summary>
 public class VectorLand
 {
     public string LandZone;
     public Vector3 Position;
-    public Building MyBuild;//use to legs in the CryBridgeRoute. Bz I need to know tht for CryRoute
+    public string MyBuildKey;//use to legs in the CryBridgeRoute. Bz I need to know tht for CryRoute
 
-
-
+    public VectorLand() { }
 
     public VectorLand(string landzon, Vector3 pos)
     {
@@ -531,6 +522,13 @@ public class VectorLand
     {
         LandZone = landzon;
         Position = pos;
-        MyBuild = st;
+        MyBuildKey = st.MyId;
+    }
+
+    //use to legs in the CryBridgeRoute. Bz I need to know tht for CryRoute
+    //for serializations requirements
+    public Building MyBuild()
+    {
+        return Brain.GetBuildingFromKey(MyBuildKey);
     }
 }

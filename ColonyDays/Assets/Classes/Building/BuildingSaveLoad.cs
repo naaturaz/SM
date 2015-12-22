@@ -166,7 +166,7 @@ public class BuildingSaveLoad : BuildingPot
 
         s.Dispatch1 = regFile.Dispatch1;
         s.Families = regFile.Familes;
-
+        s.LandZone1 = regFile.LandZone1;
 
 
         Control.Registro.Structures.Add(s.MyId, Control.CurrentSpawnBuild as Structure);
@@ -209,6 +209,7 @@ public class BuildingSaveLoad : BuildingPot
         trail.name = regFile.MyId;
         trail.MyId = regFile.MyId;
         trail.PeopleDict = regFile.PeopleDict;
+        trail.LandZone1 = regFile.LandZone1;
         trail.Instruction = regFile.Instruction;
 
         //if is not a bridge

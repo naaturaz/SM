@@ -37,6 +37,8 @@ public class RegFile  {
 
     private List<string> _peopleDict = new List<string>(); 
 
+    public List<VectorLand> LandZone1 = new List<VectorLand>();
+
     public List<int> PartsOnSoil
     {
         get { return _partsOnSoil; }
@@ -169,13 +171,14 @@ public class RegFile  {
     public RegFile(string myId, H type, Rect dimOnMap, Ca category, Vector3 iniPosition, 
         Inventory InventoryP, 
         List<string> PeopleDict,
+        List<VectorLand> LandZone1,
         Rect dimOnMapHor = new Rect(),
         List<Vector3> tilePosVert = null, List<Vector3> tilePosHor = null, List<Vector3> planesOnAirPos = null,
         Vector3 tileScale = new Vector3(), List<int> partsOnAir = null,
         H dominantSide = H.None, H startingStage = H.None, int rotationFacerIndex = -1, string materialKey = "",
         List<Vector3> planesOnSoilPos = null, List<int> partsOnSoil = null, Vector3 min = new Vector3(), 
         Vector3 max = new Vector3(), H instructionP = H.None , BookedHome bookedHome = null, int positionsFilled = 0,
-        Dispatch dispatch = null, Family[] familes =  null
+        Dispatch dispatch = null, Family[] familes = null 
         )
     {
         MyId = myId;
@@ -231,10 +234,4 @@ public class RegFile  {
         }
         return false;
     }
-
-	// Use this for initialization
-	void Start () {}
-	
-	// Update is called once per frame
-	void Update () {}
 }

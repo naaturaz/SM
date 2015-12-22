@@ -267,6 +267,7 @@ public class Registro : MonoBehaviour
     public void AddBuildToAll(string myId, H type, List<Vector3> poly, Ca categ, Vector3 iniPosition,
         Inventory inventory, 
         List<string> PeopleDict,
+        List<VectorLand> LandZone1,
         List<Vector3> polyHoriz = null,
         List<Vector3> tilePosVert = null, List<Vector3> tilePosHor = null, List<Vector3> planesOnAirPos = null,
         Vector3 tileScale = new Vector3(), List<int> parts = null,
@@ -297,11 +298,11 @@ public class Registro : MonoBehaviour
         //ading to All
         RegFile regFile = new RegFile(myId, type, to, categ,iniPosition,
             inventory, 
-            PeopleDict,
-            toHoriz, tilePosVert, tilePosHor,
-            planesOnAirPos, tileScale, parts, dominantSide, startingStage, rotationFacerIndex, 
-            materialKey, planesOnSoilPos, partsOnSoil, min, max,
-            instructionP,  BookedHome1, PositionsFilled, dispatch, Families);
+            PeopleDict, LandZone1,
+            toHoriz, tilePosVert: tilePosVert, tilePosHor: tilePosHor,
+            planesOnAirPos: planesOnAirPos, tileScale: tileScale, partsOnAir: parts, dominantSide: dominantSide, startingStage: startingStage, rotationFacerIndex: rotationFacerIndex, 
+            materialKey: materialKey, planesOnSoilPos: planesOnSoilPos, partsOnSoil: partsOnSoil, min: min, max: max,
+            instructionP: instructionP,  bookedHome: BookedHome1, positionsFilled: PositionsFilled, dispatch: dispatch, familes: Families);
 
         AddToAll(regFile);
 

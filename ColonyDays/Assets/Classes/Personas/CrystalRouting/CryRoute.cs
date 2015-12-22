@@ -83,8 +83,8 @@ public class CryRoute
 
     public CryRoute(VectorLand uno, VectorLand dos, Person person, bool iniDoor = true, bool finDoor = true)
     {
-        _origenKey = uno.MyBuild.MyId;
-        _destinyKey = dos.MyBuild.MyId;
+        _origenKey = uno.MyBuild().MyId;
+        _destinyKey = dos.MyBuild().MyId;
 
         _iniDoor = iniDoor;
         _finDoor = finDoor;
@@ -93,13 +93,11 @@ public class CryRoute
         _one = uno;
         _two = dos;
 
-        _ini = uno.MyBuild;
-        _fin = dos.MyBuild;
+        _ini = uno.MyBuild();
+        _fin = dos.MyBuild();
 
         ClearOldVars();
         Init();
-
-      
     }
 
     private void Init()

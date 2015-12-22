@@ -559,19 +559,7 @@ public class Building : General, Iinfo
 
     #endregion
 
-    /// <summary>
-    /// Loads the land Zone and adds the Crystals of this Building to Crystal Manager 
-    /// </summary>
-    void LandZoneLoader()
-    {
-        Debug.Log(MyId + ": LandZone Loaded ");
-
-        //so it can add the corners on CrystalManager 
-        Anchors = GetAnchors();
-
-        HandleLandZoning();
-        MeshController.CrystalManager1.Add(this);
-    }
+   
 
     //this need to be called in derived classes 
     protected new void Update()
@@ -1760,6 +1748,27 @@ public class Building : General, Iinfo
         }
     }
 
+    #endregion
+
+    #region LandZoning
+
+    /// <summary>
+    /// Loads the land Zone and adds the Crystals of this Building to Crystal Manager 
+    /// </summary>
+    void LandZoneLoader()
+    {
+        //will load the Landing zone if is not loading from file 
+        if (!IsLoadingFromFile)
+        {
+            Debug.Log(MyId + ": LandZone Loaded ");
+            HandleLandZoning();
+        }
+
+        //so it can add the corners on CrystalManager 
+        Anchors = GetAnchors();
+        MeshController.CrystalManager1.Add(this);
+    }
+
     /// <summary>
     /// Created to be called from ShackBuilder.cs
     /// </summary>
@@ -1776,8 +1785,6 @@ public class Building : General, Iinfo
         HandleLandZoning();
         MeshController.CrystalManager1.Add(this);
     }
-
-
 
     private bool isToFindLandZone;
     /// <summary>
@@ -1796,7 +1803,7 @@ public class Building : General, Iinfo
 
             LandZone1.Add(new VectorLand(landZonName, sp.SpawnPoint.transform.position));
         }
-        else{ LandZoningBridge();}
+        else { LandZoningBridge(); }
     }
 
     void LandZoningBridge()
@@ -1807,14 +1814,13 @@ public class Building : General, Iinfo
         var zone1 = MeshController.CrystalManager1.ReturnLandingZone(ends[0]);
         var zone2 = MeshController.CrystalManager1.ReturnLandingZone(ends[1]);
 
+        //todo clear black list when fully built a new bridge 
         BuildingPot.Control.BridgeManager1.AddBridge(zone1, zone2, br);
 
         LandZone1.Add(new VectorLand(zone1, ends[0]));
         LandZone1.Add(new VectorLand(zone2, ends[1]));
     }
-
     #endregion
-
 
     #region Production
     /// <summary>

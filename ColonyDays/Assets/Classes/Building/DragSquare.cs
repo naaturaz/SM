@@ -162,6 +162,7 @@ public class DragSquare : Trail
         BuildingPot.Control.Registro.AddBuildToAll(MyId, HType, localOnScreenPoly, Category, middleOfGameObj, 
             Inventory,  
             PeopleDict,
+            LandZone1,
             planesOnAirPos: soil, tileScale: Program.gameScene.ScaleSmallRoadUnitFarm);
     }
 

@@ -72,10 +72,7 @@ public class Structure : StructureParent
         //startin satge is save on ReSaveStartinStage()
         BuildingPot.Control.Registro.AddBuildToAll(MyId, HType, scale, Category, transform.position,
             Inventory,
-            PeopleDict,
-            rotationFacerIndex: RotationFacerIndex, materialKey: MaterialKey,
-            instructionP: Instruction, BookedHome1: BookedHome1, PositionsFilled: PositionsFilled,
-            dispatch: Dispatch1, Families: Families);
+            PeopleDict, LandZone1);
     }
 
 
