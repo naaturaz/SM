@@ -1539,13 +1539,10 @@ public class Building : General, Iinfo
     }
     #endregion
 
-    /// <summary>
-    /// This is the final Method that calls the Destroction of a building 
-    /// </summary>
     public void DestroidHiddenBuild()
     {
         //the invetory needs to be empty to be destroyed  
-        if (Inventory != null && !Inventory.IsEmpty())
+        if (Inventory != null && !Inventory.IsEmpty() )
         {
             return;
         }
@@ -1565,9 +1562,6 @@ public class Building : General, Iinfo
 
         //so people can Reroutes if new build fell in the midle of one
         PersonPot.Control.Queues.AddToDestroyBuildsQueue(Anchors);
-        
-        //So the Crystal obstacles are removed from Terrain 
-        MeshController.CrystalManager1.Delete(this);
     }
 
     /// <summary>

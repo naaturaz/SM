@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Serialization;
 using UnityEngine;
 
 //Person Brain more complicated clas so far apr 14 2015
@@ -708,7 +709,7 @@ public class Brain
             AddOldHomeToAvailHomeIfHasSpace(oldHomeH);
         }
 
-        //Debug.Log("got to new home:" + _person.MyId);
+//        Debug.Log("got to new home:" + _person.MyId);
         MoveToNewHome.GetMyNameOutOfOldHomePeopleList();
         MoveToNewHome.CleanUpRouteToNewHome();
 
@@ -2352,6 +2353,8 @@ public class Brain
         set { _blackList = value; }
     }
 
+
+
     /// <summary>
     /// 
     /// </summary>
@@ -2401,7 +2404,9 @@ public class Brain
     /// </summary>
     void CheckIfClearBlackList()
     {
-        if (_blackList.Count > 0)
+        if (
+            //ThereIsALeast1BuiltBridge() && 
+            _blackList.Count > 0)
         {
             ClearEachBlackListedBuilding();
             //GameScene.print("Black List Cleared");

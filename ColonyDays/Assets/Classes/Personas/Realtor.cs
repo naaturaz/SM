@@ -231,6 +231,11 @@ public class Realtor
             return;
         }
 
+        if (person.MyId.Contains("Scott"))
+        {
+            var t = "a";
+        }
+
         Family myFamily = toBeBooked;
         if (person.Home != null && toBeBooked == null)
         {
@@ -238,10 +243,14 @@ public class Realtor
         }
         else if (toBeBooked == null)
         {
-            myFamily = new Family(newHome, person);
-            //myFamily.FamilyId = "Family:" + person.MyId;
+            //todo get right amt of kids
+            //TODO create constructor that get right amt of kids and sets Id, and id on person
+            myFamily = new Family(2, newHome.MyId);
+            myFamily.FamilyId = "Family:" + person.MyId;
             person.FamilyId = myFamily.FamilyId; 
         }
+
+        
         
         myFamily.State = H.MovingToNewHome;
         //seeting person as the first person in the family

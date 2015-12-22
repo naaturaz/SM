@@ -26,45 +26,6 @@ public class Family
         _home = homeKey;
     }
 
-    /// <summary>
-    /// get right amt of kids
-    /// create constructor that get right amt of kids and sets Id
-    /// 
-    /// This is useful when creating a brand new family and the new place is known too
-    /// </summary>
-    /// <param name="newHome">the new home of the new family</param>
-    /// <param name="firstPerson">The person is initiaint this family</param>
-    public Family(Building newHome, Person firstPerson)
-    {
-        _kidsMax = TellMeHowManyKidsThisHouseSupport(newHome.HType);
-        FamilyId = "Family:" + firstPerson.MyId;
-        _home = newHome.MyId;
-    }
-
-    int TellMeHowManyKidsThisHouseSupport(H HType)
-    {
-        //can hhave 1 famili with 3 kids
-        if (HType == H.HouseA || HType == H.HouseB)
-        {
-            return 3;
-
-        }
-        //can hhave 2 famili with 3 kids each
-        else if (HType == H.HouseAWithTwoFloor)
-        {
-            return 3;
-        }
-        //can hhave 1 famili with 5 kids
-        else if (HType == H.HouseMedA || HType == H.HouseMedB || HType == H.HouseC || HType == H.HouseD)
-        {
-            return 5;
-        }
-        //else if (HType == H.Shack)
-        //{
-            return 3;
-        //}
-    }
-
     public List<string> Kids
     {
         get { return _kids; }
@@ -186,11 +147,6 @@ public class Family
         else
         {
             _mother = adult.MyId;
-        }
-
-        if (!BuildingPot.Control.Registro.AllBuilding.ContainsKey(_home))
-        {
-            var t = this;
         }
 
         adult.transform.parent = BuildingPot.Control.Registro.AllBuilding[_home].transform;

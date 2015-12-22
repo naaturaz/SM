@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
 
 /// <summary>
 /// The terrain is gonna be divided in varius regions and they will have the
@@ -122,23 +121,26 @@ public class CrystalRegion
         return "No";
     }
 
+
+
+
     /// <summary>
-    /// Add crystals to TerraCrystal or _obstaCrystals
+    /// Add crystals to TerraCrystal
     /// </summary>
     /// <param name="c"></param>
     internal void AddCrystal(Crystal c)
     {
         if (c.Type1 == H.WaterObstacle || c.Type1 == H.MountainObstacle || c.Type1 == H.LinkRect)
         {
-            AddToTerraCrystals(c);
-        }
-        else if (c.Type1 == H.Obstacle || c.Type1 == H.Door)
-        {
-            if (c.Type1 == H.Door)
+            if (c.Type1 == H.LinkRect)
             {
                 var t = this;
             }
 
+            AddToTerraCrystals(c);
+        }
+        else if (c.Type1 == H.Obstacle)
+        {
             AddToObstacleCrystals(c);
         }
     }
@@ -197,20 +199,5 @@ public class CrystalRegion
         }
 
         return res;
-    }
-
-    /// <summary>
-    /// Will remove all crsutals in the region that match the parentID
-    /// </summary>
-    /// <param name="parentId"></param>
-    internal void RemoveCrystal(string parentId)
-    {
-        var crystals = _obstaCrystals.Where(a => a.ParentId == parentId).ToList();
-
-        for (int i = 0; i < crystals.Count; i++)
-        {
-            _obstaCrystals.Remove(crystals[i]);
-            Debug.Log("Crystal removed: " + parentId);
-        }
     }
 }
