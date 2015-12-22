@@ -206,6 +206,7 @@ public class RegFile  {
 
         Inventory = InventoryP;
         _peopleDict = PeopleDict;
+        this.LandZone1 = LandZone1;
         BookedHome1 = bookedHome;
         PositionsFilled = positionsFilled;
 

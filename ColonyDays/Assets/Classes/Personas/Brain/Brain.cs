@@ -834,7 +834,6 @@ public class Brain
         {
             ExecuteSlowCheckUp();
         }
-        ShacksManager.Update();
 
         CheckIfDie();
     }

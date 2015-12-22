@@ -159,11 +159,6 @@ public class BuildingSaveLoad : BuildingPot
         s.PositionsFilled = regFile.PositionsFilled;
 
 
-        if (s.HType == H.Shack)
-        {
-            var t = this;
-        }
-
         s.Dispatch1 = regFile.Dispatch1;
         s.Families = regFile.Familes;
         s.LandZone1 = regFile.LandZone1;

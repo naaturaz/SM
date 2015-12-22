@@ -48,6 +48,8 @@ public class Building : General, Iinfo
     /// <summary>
     /// Geograpihcally is in the spawnpoint of a building . If is a Bridge will have two
     /// each in each Bottom Middile
+    /// 
+    /// IMPORTANT: IF LANDZONES ARE NOT SET THE ROUTING SYSTEM WONT WORK
     /// </summary>
     public List<VectorLand> LandZone1
     {
@@ -448,7 +450,7 @@ public class Building : General, Iinfo
 
         //if (sP.StartingStage == H.Done)
         //{
-            LandZoneLoader();
+            //LandZoneLoader();
         //}
     }
 
@@ -564,7 +566,7 @@ public class Building : General, Iinfo
     //this need to be called in derived classes 
     protected new void Update()
     {
-        //LandZoneLoader();
+        LandZoneLoader();
 
         LoadingWillBeDestroyBuild();
 
@@ -1746,21 +1748,29 @@ public class Building : General, Iinfo
 
     #region LandZoning
 
+    private bool landZoneLoaded;
     /// <summary>
     /// Loads the land Zone and adds the Crystals of this Building to Crystal Manager 
     /// </summary>
     void LandZoneLoader()
     {
-        //will load the Landing zone if is not loading from file 
-        if (!IsLoadingFromFile)
+        if (landZoneLoaded || !PositionFixed ||!IsLoadingFromFile)
         {
-            Debug.Log(MyId + ": LandZone Loaded ");
-            HandleLandZoning();
+            return;
         }
 
-        //so it can add the corners on CrystalManager 
+        ////will load the Landing zone if is not loading from file 
+        //if (!IsLoadingFromFile)
+        //{
+        //    Debug.Log(MyId + ": LandZone Loaded ");
+        //    HandleLandZoning();
+        //}
+
+        //so it can add the corners on CrystalManager
         Anchors = GetAnchors();
+        //UVisHelp.CreateHelpers(Anchors, Root.largeBlueCube);
         MeshController.CrystalManager1.Add(this);
+        landZoneLoaded = true;
     }
 
     /// <summary>
@@ -1777,6 +1787,7 @@ public class Building : General, Iinfo
     void PrivHandleZoningAddCrystals()
     {
         HandleLandZoning();
+        //UVisHelp.CreateHelpers(Anchors, Root.yellowCube);
         MeshController.CrystalManager1.Add(this);
     }
 

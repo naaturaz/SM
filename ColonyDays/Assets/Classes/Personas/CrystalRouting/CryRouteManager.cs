@@ -1,4 +1,9 @@
-﻿
+﻿/*
+ * IMPORTANT: IF LANDZONES ARE NOT SET THE ROUTING SYSTEM WONT WORK
+ * 
+ * 
+ */
+
 public class CryRouteManager
 {
     private HPers _routeType;
