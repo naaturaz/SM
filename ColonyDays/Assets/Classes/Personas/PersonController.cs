@@ -549,9 +549,8 @@ public class PersonController : PersonPot
 
     List<string> _waiting = new List<string>();
     private List<CheckedIn> _onSystemNow = new List<CheckedIn>();
-    private int _systemCap = 4;//2
+    private int _systemCap = 20;//2//4
     private int _allowOnSystem = 8;//seconds
-    // private float _intervalOnSystem = 3f;//the time they stay on System list
 
     public List<string> Waiting
     {
@@ -639,28 +638,28 @@ public class PersonController : PersonPot
         }
     }
 
-    /// <summary>
-    /// Will be taken out and put inwaiting list. to address person taking forever to ReDoRoutes
-    /// </summary>
-    void CheckIfPersonIsBeingOnSystemTooLong()
-    {
-        for (int i = 0; i < _onSystemNow.Count; i++)
-        {
-            if (Time.time > _onSystemNow[i].Time  +_allowOnSystem)
-            {
-                var idP = _onSystemNow[i].Id;
-                var pers = Family.FindPerson(idP);
+    ///// <summary>
+    ///// Will be taken out and put inwaiting list. to address person taking forever to ReDoRoutes
+    ///// </summary>
+    //void CheckIfPersonIsBeingOnSystemTooLong()
+    //{
+    //    for (int i = 0; i < _onSystemNow.Count; i++)
+    //    {
+    //        if (Time.time > _onSystemNow[i].Time  +_allowOnSystem)
+    //        {
+    //            var idP = _onSystemNow[i].Id;
+    //            var pers = Family.FindPerson(idP);
 
-                if (!pers.Brain.IAmHomeNow())
-                {
-                    _onSystemNow.RemoveAt(i);
-                    Family.FindPerson(idP).Brain.PlaceMeOnWaiting();
-                }
+    //            if (!pers.Brain.IAmHomeNow())
+    //            {
+    //                _onSystemNow.RemoveAt(i);
+    //                Family.FindPerson(idP).Brain.PlaceMeOnWaiting();
+    //            }
 
-                return;
-            }
-        }
-    }
+    //            return;
+    //        }
+    //    }
+    //}
 
 
     /// <summary>

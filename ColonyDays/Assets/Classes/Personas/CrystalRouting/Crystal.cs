@@ -20,10 +20,16 @@ public class Crystal
     //who is the parent Id of this crystal
     private string _parentId;
 
+    
+    //Section use to order the routing 
+
     //the base weight for a crystal
     private int _baseWeight = 1000;
     //this like distance is calculated from other Vector3 and is only good if was recently set up
     private float _calcWeight;
+
+    private float _sine;
+
 
     private bool _isDoor;
 
@@ -105,6 +111,12 @@ public class Crystal
         set { _calcWeight = value; }
     }
 
+    public float Sine
+    {
+        get { return _sine; }
+        set { _sine = value; }
+    }
+
     public bool IsDoor
     {
         get { return _isDoor; }
@@ -138,6 +150,8 @@ public class Crystal
     {
         get { return _siblings; }
     }
+
+
 
 
     public Crystal() { }
@@ -217,6 +231,7 @@ public class Crystal
     }
 
     public static DebugCrystal DebugCrystal = new DebugCrystal();
+    public static List<string> passes = new List<string>(); 
     /// <summary>
     /// Will set the _calcWeight on the Cristal from 'otherPos'
     /// </summary>
@@ -226,24 +241,37 @@ public class Crystal
         var pilotDistance = CalcPilotDistance(curr, final);
         //var pilot = Vector2.MoveTowards(curr, final, pilotDistance);
 
-        var angle = AbsoluteAngleFrom3PointsInDegrees(final, curr, Position);
+        var angle = AbsoluteAngleFrom3PointsInDegrees(final, Position, curr);
         var sine =  Math.Abs( (float)Math.Sin(ConvertToRadians(angle)));
         //Debug.Log("Angle: " + angle);
 
         var furtherWeight = CheckIfFurtherThanCurr(curr, final);
 
-        Distance = Vector2.Distance(_position, final);//pilot
-        //_calcWeight = (_baseWeight * weightFactor) + Distance + (sine * sineFactor);
-       //   _calcWeight = Distance + (sine * sineFactor);
-        _calcWeight = Distance + furtherWeight;
+        //var posiToFin = Math.Abs( Vector2.Distance(Position, final));
+        //var currToPosit =  Math.Abs(Vector2.Distance(curr, Position));
+
+        var posiToFin = Math.Abs( Vector3.Distance(U2D.FromV2ToV3(Position), U2D.FromV2ToV3(final)));
+        
+        var currToPosit =  Math.Abs(Vector3.Distance(U2D.FromV2ToV3(curr), U2D.FromV2ToV3(Position)));
+
+        //Distance = 3 * Vector2.Distance(_position, curr);//pilot
+        Distance =  ( posiToFin + currToPosit );//pilot
+
+        _calcWeight = // sine * sineFactor + 
+            (Distance) 
+            //+ furtherWeight
+            ;
 
         var msg = "1st";
         if (cryId != null)
         {
             msg = cryId.Substring(0, 3);
         }
+        passes.Add(msg);
+        passes = passes.Distinct().ToList();
 
-        //DebugCrystal.AddNewCrystals(msg + " : " + _calcWeight.ToString("F1") + "", Position);
+        //DebugCrystal.AddNewCrystals(passes.Count + ":: " + sine.ToString("F2") + " | " + angle.ToString("F1") + " | "
+        //    + Distance.ToString("F1") + " |w: " +_calcWeight.ToString("f1"), Position);
     }
 
     /// <summary>
@@ -953,6 +981,9 @@ public class DebugCrystal
     public Vector3 _position;
 
     List<DebugCrystal> debug = new List<DebugCrystal>();
+    List<General> gameObjects = new List<General>();
+
+    private bool shownNow;
 
     public DebugCrystal() { }
 
@@ -965,6 +996,11 @@ public class DebugCrystal
 
     public void AddNewCrystals( string addInfo, Vector3 pos)
     {
+        //if (shownNow)
+        //{
+        //    Restart();
+        //}
+
         var index = IsHereAlready(pos);
 
         if (index == -1)
@@ -984,6 +1020,7 @@ public class DebugCrystal
             ShowEach(debug[i]);
         }
         Debug.Log(debug.Count+" debuc ct");
+        //shownNow = true;
     }
 
     void ShowEach(DebugCrystal each)
@@ -994,8 +1031,19 @@ public class DebugCrystal
         var yDebug = m.IniTerr.MathCenter.y + 0.2f;
         var pos3 = new Vector3(locPos.x, yDebug, locPos.y);
 
-        UVisHelp.CreateHelpers(pos3, Root.largeBlueCube);
-        UVisHelp.CreateText(pos3, locInf, 40);
+        gameObjects.Add( UVisHelp.CreateHelpers(pos3, Root.largeBlueCube));
+        gameObjects.Add(UVisHelp.CreateText(pos3, locInf, 15));
+    }
+
+    public void Restart()
+    {
+        debug.Clear();
+
+        for (int i = 0; i < gameObjects.Count; i++)
+        {
+            gameObjects[i].Destroy();
+        }
+        gameObjects.Clear();
     }
 
     /// <summary>
@@ -1007,7 +1055,7 @@ public class DebugCrystal
     {
         for (int i = 0; i < debug.Count; i++)
         {
-            if (Vector3.Distance(debug[i]._position, pos) < 0.2f)
+            if (Vector3.Distance(debug[i]._position,  pos) < 1f)
             {
                 return i;
             }
@@ -1015,7 +1063,10 @@ public class DebugCrystal
         return -1;
     }
 
-
+    public void AddGameObjInPosition(Vector3 pos, string root)
+    {
+        gameObjects.Add(UVisHelp.CreateHelpers(pos, root));
+    }
 
 
 }

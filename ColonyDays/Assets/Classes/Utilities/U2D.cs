@@ -122,6 +122,11 @@ public class U2D : MonoBehaviour {
         return res;
     }
 
+    /// <summary>
+    /// return new Vector2(a.x,  a.z) 
+    /// </summary>
+    /// <param name="a"></param>
+    /// <returns></returns>
     public static Vector2 FromV3ToV2(Vector3 a)
     {
         return new Vector2(a.x,  a.z);

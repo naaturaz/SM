@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Linq;
 
 public class CryRoute
@@ -104,8 +103,18 @@ public class CryRoute
     {
         _curr.Position = U2D.FromV3ToV2(_one.Position);
         loop = true;
+
+        ClearDebugLocal();
+
         _finCrystal = new Crystal(_two.Position, H.Door, _fin.MyId, true, false);
     }
+
+    void ClearDebugLocal()
+    {
+        Crystal.DebugCrystal.Restart();
+        Crystal.passes.Clear();
+    }
+
 
     private void ClearOldVars()
     {
@@ -206,7 +215,13 @@ public class CryRoute
             {
                 CanIReach2PointAfter();
                 Ready();
-                Crystal.DebugCrystal.ShowNow();
+
+                if (_finDoor)
+                {
+                    Crystal.DebugCrystal.ShowNow();
+                }
+                
+                
                 return;
             }
 
@@ -321,6 +336,7 @@ public class CryRoute
                     //make current _eval[i] and loop 
                     _curr = _eval[i];
                     loop = true;
+                    //Crystal.DebugCrystal.AddGameObjInPosition(U2D.FromV2ToV3(_curr.Position), Root.yellowSphereHelp);
 
                     ResetLoop();
                     ClearPrevLoop();//so can restart Recursive()
@@ -865,17 +881,18 @@ public class CryRoute
     /// </summary>
     void AddAnglesToRoute()
     {
-        GameScene.dummyBlue.transform.position = _checkPoints[0].Point;
+        var myDummy = Program.gameScene.GimeMeUnusedDummy();
+
+        myDummy.transform.position = _checkPoints[0].Point;
 
         for (int i = 0; i < _checkPoints.Count - 1; i++)
         {
-            GameScene.dummyBlue.transform.position = _checkPoints[i].Point;
-            GameScene.dummyBlue.transform.LookAt(_checkPoints[i + 1].Point);
-            _checkPoints[i].QuaterniRotation = GameScene.dummyBlue.transform.rotation;
+            myDummy.transform.position = _checkPoints[i].Point;
+            myDummy.transform.LookAt(_checkPoints[i + 1].Point);
+            _checkPoints[i].QuaterniRotation = myDummy.transform.rotation;
         }
 
-        //GameScene.dummyBlue.transform.position = new Vector3();
-        GameScene.ResetDummyBlue();
+        Program.gameScene.ReturnUsedDummy(myDummy);
     }
 
     void CreateTheRouteObj()

@@ -24,7 +24,7 @@ public class GameScene : General {
     public static General dummyBlue;//for help everywhere()
     public static General dummyRed;//for help everywhere()
     List<Structure> dummiesSpwnPoint = new List<Structure>();//for help everywhere()
-    private bool createDummySpawn;
+
 
     private GameTime _gameTime = new GameTime();
     GameController _gameController = new GameController();
@@ -277,7 +277,7 @@ public class GameScene : General {
     #region Dummy Pool
 
     private int poolSize = 30;
-
+    private bool createDummySpawn = true;
 
     void CreateDummySpawnPoint()
     {
@@ -308,6 +308,11 @@ public class GameScene : General {
             }
         }
         return null;
+    }
+
+    internal void ReturnUsedDummy(Structure usedDummy)
+    {
+        usedDummy.transform.position = new Vector3();
     }
 
 
