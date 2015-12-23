@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// The terrain is gonna be divided in varius regions and they will have the
@@ -199,5 +200,20 @@ public class CrystalRegion
         }
 
         return res;
+    }
+
+    /// <summary>
+    /// Will remove all crsutals in the region that match the parentID
+    /// </summary>
+    /// <param name="parentId"></param>
+    internal void RemoveCrystal(string parentId)
+    {
+        var crystals = _obstaCrystals.Where(a => a.ParentId == parentId).ToList();
+
+        for (int i = 0; i < crystals.Count; i++)
+        {
+            _obstaCrystals.Remove(crystals[i]);
+            Debug.Log("Crystal removed: " + parentId);
+        }
     }
 }

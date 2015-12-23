@@ -1,4 +1,10 @@
-﻿using System.Collections.Generic;
+﻿﻿/*
+ * IMPORTANT: IF LANDZONES ARE NOT SET THE ROUTING SYSTEM WONT WORK
+ * 
+ * 
+ */
+
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -25,36 +31,77 @@ public class CrystalManager  {
         load = true;
     }
 
+    /// <summary>
+    /// Will remove the crystals from _crystalRegions
+    /// </summary>
+    /// <param name="building"></param>
     public void Delete(Building building)
     {
-        if (building.MyId.Contains("Bridge"))
-        {
-            DeleteBridge((Bridge)building);
-        }
-        else DeleteBuilding(building);
-    }
-
-    private void DeleteBridge(Bridge bridge)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    private void DeleteBuilding(Building building)
-    {
-        Structure st = (Structure)building;
-
-        DeleteCrystals(st.SpawnPoint.transform.position, st.MyId);
+        DeleteCrystals(building);
     }
 
     /// <summary>
-    /// Will delete all crystals related to tht parent . The 'vector3' is the door pos
+    /// Will delete all crystals related to tht building 
     /// </summary>
-    /// <param name="vector3"></param>
-    /// <param name="p"></param>
-    private void DeleteCrystals(Vector3 vector3, string p)
+    private void DeleteCrystals(Building building)
     {
-        var myRegionIndex = ReturnMyRegion(vector3);
+        //search _crystalRegions points are
+        var indexes = ReturnRegionsOfPointsInStructure(building);
+        //remove from each _crystalRegion
+        for (int i = 0; i < indexes.Count; i++)
+        {
+            var indexLoc = indexes[i];
+            CrystalRegions[indexLoc].RemoveCrystal(building.MyId);
+        }
+        //dont need to resave bz the adding of a build is done once is spwaned 
     }
+
+    /// <summary>
+    /// Will return the region index where all the Structure points are
+    /// </summary>
+    /// <param name="building"></param>
+    /// <returns></returns>
+    List<int> ReturnRegionsOfPointsInStructure(Building building)
+    {
+        var points = PassAnchorsGetPositionForCrystals(building.Anchors);
+
+        //for buildings
+        if (!building.MyId.Contains("Bridge"))
+        {
+            Structure st = (Structure)building;
+            if (st.SpawnPoint != null)
+            {
+                points.Add(st.SpawnPoint.transform.position);
+            }
+        }
+        //for bridges
+        if (building.MyId.Contains("Bridge"))
+        {
+            var entries = GetBridgeEntries((Bridge)building);
+
+            points.Add(U2D.FromV2ToV3(entries[0].Position));
+            points.Add(U2D.FromV2ToV3(entries[1].Position));
+        }
+
+        List<int> res = new List<int>();
+        for (int i = 0; i < points.Count; i++)
+        {
+            res.Add(ReturnMyRegion(U2D.FromV3ToV2(points[i])));
+        }
+        return res.Distinct().ToList();
+    }
+
+    //the bridges entries will act like doors 
+    List<Crystal> GetBridgeEntries(Bridge b)
+    {
+        List<Crystal> re = new List<Crystal>();
+
+        re.Add(new Crystal(b.LandZone1[0].Position, H.Obstacle, b.MyId, true));
+        re.Add(new Crystal(b.LandZone1[1].Position, H.Obstacle, b.MyId, true));
+
+        return re;
+    }
+ 
 
 
 
@@ -131,7 +178,6 @@ public class CrystalManager  {
     }
 
 
-    private float polyScale = 0.04f;
     /// <summary>
     /// Adding a polygon type of object to crystalss used for Buildings and StillElement
     /// </summary>
@@ -140,12 +186,9 @@ public class CrystalManager  {
     void AddPoly(List<Vector3> anchors, string parentId)
     {
         var lines = U2D.FromPolyToLines(anchors);
-
-        //pushing them way from building center 
-        var scale = UPoly.ScalePoly(anchors, polyScale);//0.04
+        var scale = PassAnchorsGetPositionForCrystals(anchors);
 
         //UVisHelp.CreateHelpers(scale, Root.yellowCube);
-
         for (int i = 0; i < lines.Count; i++)
         {
             CreateAndAddPolyCrystal(scale[i], lines[i], parentId, i);
@@ -153,6 +196,15 @@ public class CrystalManager  {
 
         SetSiblings();
     }
+
+    private float polyScale = 0.04f;
+    //pushing them way from building center
+    List<Vector3> PassAnchorsGetPositionForCrystals(List<Vector3> anchors)
+    {
+        //pushing them way from building center
+        return UPoly.ScalePoly(anchors, polyScale);//0.04
+    }
+
 
     /// <summary>
     /// This is to create and add to its respective Region a Crystal tht is part of a building or a
