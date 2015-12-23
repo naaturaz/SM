@@ -474,7 +474,7 @@ public class CrystalManager  {
     /// <param name="line"></param>
     /// <param name="pos"></param>
     /// <returns></returns>
-    public bool DoIIntersectAnyLine(Line line, List<int> histoRegions)
+    public bool DoIIntersectAnyLine(Line line, List<int> histoRegions, CryRoute cryRoute)
     {
         var crystals = GiveAllCrystalsInTheseRegionsExcludLinkRects(histoRegions);
 
@@ -485,6 +485,10 @@ public class CrystalManager  {
                 var lineOnCrys = crystals[i].Lines[j];
                 if (line.IsIntersecting((lineOnCrys)))
                 {
+                    Vector3 intersection = U2D.FromV2ToV3(line.FindIntersection(lineOnCrys));
+                    //add key to explorer on the CryRoute
+                    cryRoute.AddKeyToExplorer(crystals[i].ParentId, intersection);
+
                     lineOnCrys.DebugRender(Color.red);
                     return true;
                 }
@@ -506,7 +510,7 @@ public class CrystalManager  {
                 var lineOnCrys = crystals[i].Lines[j];
                 if (line.IsIntersecting((lineOnCrys)))
                 {
-                    Debug.Log("inter parId:"+crystals[i].ParentId);
+//                    Debug.Log("inter parId:"+crystals[i].ParentId);
                     lineOnCrys.DebugRender(Color.red);
                     res++;
                 }

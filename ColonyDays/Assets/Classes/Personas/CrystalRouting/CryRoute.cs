@@ -42,6 +42,8 @@ public class CryRoute
     private Crystal _finCrystal;
     private string _destinyKey;//to be added to TheRoute obj
 
+    Explorer _explorer = new Explorer();
+
     public bool IsRouteReady
     {
         get { return _isRouteReady; }
@@ -138,6 +140,8 @@ public class CryRoute
         if (looping == "TryReachEval")
         {
             TryReachEval();
+
+           
         }
         else if (looping == "OrderEvalByWeight")
         {
@@ -179,10 +183,12 @@ public class CryRoute
         prevLoop = "";
     }
 
-
-
     #endregion
 
+    public void AddKeyToExplorer(string key, Vector3 intersection)
+    {
+        _explorer.AddKey(key, intersection, _curr.Position, _two.Position);
+    }
 
     internal void Update()
     {
@@ -190,10 +196,8 @@ public class CryRoute
         if (looping != "")
         {
             CallSpecLoop();
-
             return;
         }
-
 
 
         if (loop)
@@ -204,34 +208,51 @@ public class CryRoute
     }
 
 
-
+    //u can explore only once for a _curr
+    private bool canIExplore = true;
     private void Recursive()
     {
         if (prevLoop == "")
         {
+            //tha adding of a good point to the Route 
             _checkPoints.Add(new CheckPoint(U2D.FromV2ToV3(_curr.Position)));
-            //
+            
             if (CheckIfDone())
             {
-                CanIReach2PointAfter();
+                //CanIReach2PointAfter();
                 Ready();
-
-                if (_finDoor)
-                {
-                    Crystal.DebugCrystal.ShowNow();
-                }
-                
-                
+                //if (_finDoor)
+                //{
+                //    Crystal.DebugCrystal.ShowNow();
+                //}
                 return;
             }
 
             CreateCryRect();
-            //if (TryToReachC()){return;}
 
-            DefineHistoCrys();
+            if (canIExplore && ExploreToFin())
+            {
+                return;
+            }
 
-            DefineCrystalsOnMyRect();
-            //DefineCrystalsMyRectIntersects();
+            //behavoiur if a build was hit 
+            if (_explorer.WasABuildingHit())
+            {
+                Debug.Log("was hit:"+_explorer.Result.Key+" ct:"+_explorer.Result.Crystals.Count);
+                _eval.AddRange(_explorer.Result.Crystals);
+                
+                //should jump to TryReachEval()
+                ResetLoop();
+                prevLoop = "OrderEvalByWeight";
+                loop = true;
+            }
+            //if not building was hit 
+            else
+            {
+                DefineHistoCrys();
+                DefineCrystalsOnMyRect();
+            }
+
         }
         else if (prevLoop == "DefineCrystalsOnMyRect")
         {
@@ -251,7 +272,7 @@ public class CryRoute
         {
             ClearPrevLoop();
             //PushAwayToLastOnEval();
-            InsertFinDoor();
+            //InsertFinDoor();
             TryReachEval();
         }
     }
@@ -335,6 +356,8 @@ public class CryRoute
 
                     //make current _eval[i] and loop 
                     _curr = _eval[i];
+                    ResetExplorer();
+
                     loop = true;
                     //Crystal.DebugCrystal.AddGameObjInPosition(U2D.FromV2ToV3(_curr.Position), Root.yellowSphereHelp);
 
@@ -342,6 +365,14 @@ public class CryRoute
                     ClearPrevLoop();//so can restart Recursive()
                     return true;
                 }
+
+                //case that we are hitting a builing 
+                //bz only has 4 _evals to work with 
+                if (_explorer.WasABuildingHit())
+                {
+                    loop = true;
+                }
+
                 loopCount++;
             }
             CheckIfIsToBlackList();
@@ -354,6 +385,14 @@ public class CryRoute
         }
     }
 
+    /// <summary>
+    /// bz a new _curr is set and a new exploration needs to be done 
+    /// </summary>
+    void ResetExplorer()
+    {
+        canIExplore = true;//
+        _explorer.Restart();
+    }
 
 
     /// <summary>
@@ -673,18 +712,25 @@ public class CryRoute
         }
     }
 
-    private bool TryToReachC()
+    /// <summary>
+    /// Will try to reach Final and will set explorer object that will tell if are 
+    /// Buidings in the middle or not
+    /// </summary>
+    /// <returns></returns>
+    private bool ExploreToFin()
     {
-        Line line = new Line(U2D.FromV2ToV3(_curr.Position), U2D.FromV2ToV3(_currRect.C), durationOfLines);
+        Debug.Log("Exploring");
+        canIExplore = false;
+        Line line = new Line(U2D.FromV2ToV3(_curr.Position), U2D.FromV2ToV3(_two.Position), durationOfLines);
 
-        //if reach C will make it the current so it loops 
         if (!Intersect(line))
         {
-            _curr = new Crystal(U2D.FromV2ToV3(_currRect.C), H.Obstacle, "", setIdAndName: false);
+            _curr = new Crystal(_two.Position, H.Obstacle, "", setIdAndName: false);
 
             loop = true;
             return true;
         }
+
         return false;
     }
 
@@ -827,7 +873,7 @@ public class CryRoute
     /// <returns></returns>
     bool Intersect(Line nLine)
     {
-        return MeshController.CrystalManager1.DoIIntersectAnyLine(nLine, _historicRegions);
+        return MeshController.CrystalManager1.DoIIntersectAnyLine(nLine, _historicRegions, this);
     }
 
     /// <summary>
@@ -900,6 +946,10 @@ public class CryRoute
         TheRoute = new TheRoute(_checkPoints, _origenKey, _destinyKey);
     }
 
+    /// <summary>
+    /// Will return true if _curr and _two are really close 
+    /// </summary>
+    /// <returns></returns>
     bool CheckIfDone()
     {
         if (UMath.nearEqualByDistance(U2D.FromV2ToV3(_curr.Position), _two.Position, 0.1f))

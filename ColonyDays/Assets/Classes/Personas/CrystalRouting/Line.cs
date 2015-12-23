@@ -90,6 +90,58 @@ public class Line
         return (r >= 0 && r <= 1) && (s >= 0 && s <= 1);
     }
 
+    //http://csharphelper.com/blog/2014/08/determine-where-two-lines-intersect-in-c/
+    /// <summary>
+    /// This line and the line two 
+    /// 
+    /// Find the point of intersection between
+    /// the lines p1 --> p2 and p3 --> p4.
+    /// </summary>
+    /// <param name="two">the other line </param>
+    /// <param name="lines_intersect"></param>
+    /// <param name="intersection"></param>
+    /// <returns></returns>
+    public Vector2 FindIntersection(Line two)
+    {
+        bool lines_intersect;
+        Vector2 intersection;
+
+        Vector2 p1 = A1;
+        Vector2 p2 = B1;
+
+        Vector2 p3 = two.A1;
+        Vector2 p4 = two.B1;
+
+        // Get the segments' parameters.
+        float dx12 = p2.x - p1.x;
+        float dy12 = p2.y - p1.y;
+        float dx34 = p4.x - p3.x;
+        float dy34 = p4.y - p3.y;
+
+        // Solve for t1 and t2
+        float denominator = (dy12*dx34 - dx12*dy34);
+
+        float t1 =
+            ((p1.x - p3.x)*dy34 + (p3.y - p1.y)*dx34)
+            /denominator;
+        if (float.IsInfinity(t1))
+        {
+            // The lines are parallel (or close enough to it).
+            lines_intersect = false;
+            intersection = new Vector2(float.NaN, float.NaN);
+            return new Vector2();
+        }
+        lines_intersect = true;
+
+        float t2 =
+            ((p3.x - p1.x)*dy12 + (p1.y - p3.y)*dx12)
+            /-denominator;
+
+        // Find the point of intersection.
+        intersection = new Vector2(p1.x + dx12*t1, p1.y + dy12*t1);
+        return intersection;
+    }
+
     SMe m = new SMe();
     public void DebugRender(float duration = 500f)
     {
@@ -106,6 +158,7 @@ public class Line
 
         Debug.DrawLine(a, b, colorH, duration);
     }
+
 
     public void DeleteRender()
     {
