@@ -57,6 +57,45 @@ public class CrystalManager  {
     }
 
     /// <summary>
+    /// Will return the Crystals that belong to the building pass aas param
+    /// </summary>
+    public List<Crystal> ReturnCrystalsThatBelongTo(Building building, bool includeDoor)
+    {
+        List<Crystal> res =new List<Crystal>();
+        //search _crystalRegions points are
+        var indexes = ReturnRegionsOfPointsInStructure(building);
+        for (int i = 0; i < indexes.Count; i++)
+        {
+            var indexLoc = indexes[i];
+            res.AddRange(CrystalRegions[indexLoc].ObstaCrystals);
+        }
+
+        var type = WhichType(includeDoor);
+
+        if (res.Count > 0)
+        {
+            res = res.Where(a => a.ParentId == building.MyId && a.Type1 == type).ToList();
+        }
+        return res;
+    }
+
+    /// <summary>
+    /// Will return H.Door if include door was marked on
+    /// </summary>
+    /// <param name="includeDoor"></param>
+    /// <returns></returns>
+    H WhichType(bool includeDoor)
+    {
+        if (includeDoor)
+        {
+            return H.Door;
+        }
+        return H.Obstacle;
+    }
+
+    //todo add door when adding building 
+
+    /// <summary>
     /// Will return the region index where all the Structure points are
     /// </summary>
     /// <param name="building"></param>
@@ -537,9 +576,7 @@ public class CrystalManager  {
                 var lineOnCrys = crystals[i].Lines[j];
                 if (line.IsIntersecting((lineOnCrys)))
                 {
-                    Vector3 intersection = U2D.FromV2ToV3(line.FindIntersection(lineOnCrys));
-                    //add key to explorer on the CryRoute
-                    cryRoute.AddKeyToExplorer(crystals[i].ParentId, intersection);
+
 
                     lineOnCrys.DebugRender(Color.red);
                     return true;
@@ -550,7 +587,7 @@ public class CrystalManager  {
     }
 
 
-    public int CountLinesIIntersect(Line line, List<int> histoRegions)
+    public int CountLinesIIntersect(Line line, List<int> histoRegions, CryRoute cryRoute)
     {
         int res = 0;
         var crystals = GiveAllCrystalsInTheseRegionsExcludLinkRects(histoRegions);
@@ -562,8 +599,12 @@ public class CrystalManager  {
                 var lineOnCrys = crystals[i].Lines[j];
                 if (line.IsIntersecting((lineOnCrys)))
                 {
-//                    Debug.Log("inter parId:"+crystals[i].ParentId);
-                    lineOnCrys.DebugRender(Color.red);
+                    Debug.Log("Intersected:  " + crystals[i].ParentId);
+                    Vector3 intersection = U2D.FromV2ToV3(line.FindIntersection(lineOnCrys));
+                    //add key to explorer on the CryRoute
+                    cryRoute.AddKeyToExplorer(crystals[i].ParentId, intersection);  
+
+                    lineOnCrys.DebugRender(Color.black);
                     res++;
                 }
             }
@@ -584,7 +625,7 @@ public class CrystalManager  {
                 var lineOnCrys = crystals[i].Lines[j];
                 if (line.IsIntersecting((lineOnCrys)))
                 {
-                    lineOnCrys.DebugRender(Color.red);
+                    lineOnCrys.DebugRender(Color.blue);
                     res.Add(lineOnCrys);
                 }
             }

@@ -32,7 +32,7 @@ public class Explorer
 
         if (_units.Count > 0)
         {
-            doesExistKey = (ExplorerUnit)_units.Find(a => a.Key == key);
+            doesExistKey = _units.Find(a => a.Key == key);
         }
             
         //so it doesnt add duplicates keys
@@ -87,8 +87,10 @@ public class ExplorerUnit
 
     public ExplorerUnit(string key, Vector3 intersect, Vector3 currPosition, Vector3 final)//the curr Position of the Crystal reaching Final
     {
+        Final = final;
         Key = key;
         Intersection = intersect;
+        UVisHelp.CreateHelpers(Intersection, Root.yellowCube);
 
         Distance = Mathf.Abs(Vector3.Distance(intersect, currPosition));
         Building = Brain.GetBuildingFromKey(Key);
@@ -117,14 +119,16 @@ public class ExplorerUnit
         Crystals = ReturnPriorityToFin(anchorOrder);
     }
 
-    VectorM[] ReturnOrderedAnchors()
+    List<Crystal> ReturnOrderedAnchors()
     {
-        VectorM[] anchorOrdered = new VectorM[4];
-        for (int i = 0; i < Building.Anchors.Count; i++)
+        List<Crystal> anchorOrdered = new List<Crystal>();
+        anchorOrdered = MeshController.CrystalManager1.ReturnCrystalsThatBelongTo(Building, false);
+
+        for (int i = 0; i < 4; i++)
         {
-            anchorOrdered[i] = new VectorM(Building.Anchors[i], Final);
+            anchorOrdered[i].Distance = Mathf.Abs(Vector3.Distance(U2D.FromV2ToV3(anchorOrdered[i].Position), Final));
         }
-        anchorOrdered = anchorOrdered.OrderBy(a => a.Distance).ToArray();
+        anchorOrdered = anchorOrdered.OrderBy(a => a.Distance).ToList();
 
         return anchorOrdered;
     }
@@ -134,30 +138,29 @@ public class ExplorerUnit
     /// 
     /// Pls interseection
     /// </summary>
-    List<Crystal> ReturnPriorityToFin(VectorM[] anchorOrdered)
+    List<Crystal> ReturnPriorityToFin(List<Crystal> res)
     {
-        List<Crystal> res = new List<Crystal>();
-
         //-1 bz only need the first 3 
-        for (int i = 0; i < anchorOrdered.Length - 1; i++)
-        {
-            res.Add( new Crystal(anchorOrdered[i].Point, H.None, "", setIdAndName: false));
-        }
-        res.Add(ReturnIntersectionFixed());
+        res.RemoveAt(res.Count-1);
+        var last = new Crystal(Intersection, H.None, "", setIdAndName: false);
+        res.Add(last);
+        //res.Add(ReturnCrystalAwayFromBuild(last));
 
         return res;
     }
 
     /// <summary>
-    /// Bz intersection needs to be moved a bit away from Buildign
+    /// Bz they needs to be moved a bit away from Buildign
     /// </summary>
     /// <returns></returns>
-    Crystal ReturnIntersectionFixed()
+    Crystal ReturnCrystalAwayFromBuild(Crystal crystal)
     {
         var person = PersonPot.Control.All.FirstOrDefault();
-        float moveBy = person.PersonDim * 2;
+        float moveBy = person.PersonDim * 3;
 
-        var movedInter = Vector3.MoveTowards(Intersection, Building.transform.position, -moveBy);
-        return new Crystal(movedInter, H.None, "", setIdAndName: false);
+        var moved = Vector3.MoveTowards(U2D.FromV2ToV3(crystal.Position), Building.transform.position, -moveBy);
+        crystal.Position = U2D.FromV3ToV2(moved);
+
+        return crystal;
     }
 }

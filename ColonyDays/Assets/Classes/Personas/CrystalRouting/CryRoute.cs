@@ -187,7 +187,7 @@ public class CryRoute
 
     public void AddKeyToExplorer(string key, Vector3 intersection)
     {
-        _explorer.AddKey(key, intersection, _curr.Position, _two.Position);
+        _explorer.AddKey(key, intersection, U2D.FromV2ToV3(_curr.Position), _two.Position);
     }
 
     internal void Update()
@@ -235,24 +235,10 @@ public class CryRoute
                 return;
             }
 
-            //behavoiur if a build was hit 
-            if (_explorer.WasABuildingHit())
-            {
-                Debug.Log("was hit:"+_explorer.Result.Key+" ct:"+_explorer.Result.Crystals.Count);
-                _eval.AddRange(_explorer.Result.Crystals);
-                
-                //should jump to TryReachEval()
-                ResetLoop();
-                prevLoop = "OrderEvalByWeight";
-                loop = true;
-            }
-            //if not building was hit 
-            else
-            {
-                DefineHistoCrys();
-                DefineCrystalsOnMyRect();
-            }
+            DefineHistoCrys();
+            DefineCrystalsOnMyRect();
 
+            
         }
         else if (prevLoop == "DefineCrystalsOnMyRect")
         {
@@ -336,10 +322,17 @@ public class CryRoute
         if (!canI) { return false; }//means tht another llop is running now 
         var i = loopCount;
 
+        if (_explorer.WasABuildingHit())
+        {
+            //case that we are hitting a builing 
+            //bz only has 4 _evals to work with 
+            return TryReachBuilding();
+        }
+
         if (loopCount < _eval.Count)
         {
             {
-                //UVisHelp.CreateHelpers (U2D.FromV2ToV3( _eval[i].Position), Root.yellowCube);
+                //
                 Line aLine = new Line(U2D.FromV2ToV3(_curr.Position), U2D.FromV2ToV3(_eval[i].Position), durationOfLines);
 
                 var linesIntersected = IntersectCount(aLine);
@@ -356,23 +349,16 @@ public class CryRoute
 
                     //make current _eval[i] and loop 
                     _curr = _eval[i];
-                    ResetExplorer();
 
                     loop = true;
                     //Crystal.DebugCrystal.AddGameObjInPosition(U2D.FromV2ToV3(_curr.Position), Root.yellowSphereHelp);
+                    canIExplore = true;
+                    UVisHelp.CreateHelpers(U2D.FromV2ToV3(_eval[i].Position), Root.blueCube);
 
                     ResetLoop();
                     ClearPrevLoop();//so can restart Recursive()
                     return true;
                 }
-
-                //case that we are hitting a builing 
-                //bz only has 4 _evals to work with 
-                if (_explorer.WasABuildingHit())
-                {
-                    loop = true;
-                }
-
                 loopCount++;
             }
             CheckIfIsToBlackList();
@@ -383,6 +369,36 @@ public class CryRoute
             ResetLoop();
             return false;
         }
+    }
+
+    bool TryReachBuilding()
+    {
+        Debug.Log("TryReachBuilding() called");
+        loop = true;
+
+        for (int i = 0; i < _eval.Count; i++)
+        {
+            if (i == 3)
+            {
+                UVisHelp.CreateHelpers(U2D.FromV2ToV3(_curr.Position), Root.blueCube);
+            }
+
+            Line aLine = new Line(U2D.FromV2ToV3(_curr.Position), U2D.FromV2ToV3(_eval[i].Position), durationOfLines);
+            var linesIntersected = IntersectCount(aLine);
+
+            if (linesIntersected == 0 && !IsOnTheRoute(_eval[i].Position))
+            {
+                Debug.Log("TryReachBuilding() _curr set");
+
+                ResetExplorer();
+                _curr = _eval[i];
+                //UVisHelp.CreateHelpers(U2D.FromV2ToV3(_curr.Position), Root.yellowCube);
+                ResetLoop();
+                ClearPrevLoop();//so can restart Recursive()
+                return true;
+            }
+        }
+        return false;
     }
 
     /// <summary>
@@ -673,7 +689,28 @@ public class CryRoute
         {
             InnerLoop();
         }
-        else ResetLoop();
+        else
+        {
+            ResetLoop();
+            RoutineIfBuildWasHit();
+        }
+    }
+
+    void RoutineIfBuildWasHit()
+    {
+        //behavoiur if a build was hit 
+        if (_explorer.WasABuildingHit())
+        {
+            _eval.Clear();
+            Debug.Log("was hit:" + _explorer.Result.Key + " ct:" + _explorer.Result.Crystals.Count);
+
+            _eval.AddRange(_explorer.Result.Crystals);
+
+            //should jump to TryReachEval()
+            ResetLoop();
+            prevLoop = "OrderEvalByWeight";
+            loop = true;
+        }
     }
 
     /// <summary>
@@ -712,6 +749,7 @@ public class CryRoute
         }
     }
 
+    private static int counterr;
     /// <summary>
     /// Will try to reach Final and will set explorer object that will tell if are 
     /// Buidings in the middle or not
@@ -721,16 +759,16 @@ public class CryRoute
     {
         Debug.Log("Exploring");
         canIExplore = false;
-        Line line = new Line(U2D.FromV2ToV3(_curr.Position), U2D.FromV2ToV3(_two.Position), durationOfLines);
+        Line line = new Line(U2D.FromV2ToV3(_curr.Position), _two.Position, durationOfLines);
+        var interCount = IntersectCount(line);
 
-        if (!Intersect(line))
+        if (interCount==0)
         {
             _curr = new Crystal(_two.Position, H.Obstacle, "", setIdAndName: false);
 
             loop = true;
             return true;
         }
-
         return false;
     }
 
@@ -796,6 +834,8 @@ public class CryRoute
 
         if (closeEnogh || closeAndTerraObs)
         {
+            Debug.Log("closeEnogh:" + closeEnogh + " closeAndTerraObs:" + closeAndTerraObs);
+
             //Debug.Log("Rect grow");
             grow *= 2;
             //_currRect.Grow();
@@ -883,7 +923,7 @@ public class CryRoute
     /// <returns></returns>
     int IntersectCount(Line nLine)
     {
-        return MeshController.CrystalManager1.CountLinesIIntersect(nLine, _historicRegions);
+        return MeshController.CrystalManager1.CountLinesIIntersect(nLine, _historicRegions, this);
     }
 
     List<Line> LinesIIntersect(Line nLine)

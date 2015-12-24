@@ -549,7 +549,7 @@ public class PersonController : PersonPot
 
     List<string> _waiting = new List<string>();
     private List<CheckedIn> _onSystemNow = new List<CheckedIn>();
-    private int _systemCap = 20;//2//4
+    private int _systemCap = 4;//2//4
     private int _allowOnSystem = 8;//seconds
 
     public List<string> Waiting
