@@ -40,6 +40,12 @@ public class Explorer
         {
             _units.Add(new ExplorerUnit(key, intersection, currPosition, final));
         }
+        //bz a line can have diff intersections in a building. usually 2 
+        //if exist will add Intersection 
+        else
+        {
+            doesExistKey.AddIntersection(intersection);
+        }
     }
 
     /// <summary>
@@ -75,7 +81,7 @@ public class Explorer
 public class ExplorerUnit
 {
     public string Key;
-    public Vector3 Intersection;
+    public List<Vector3> Intersections = new List<Vector3>();
     public Building Building;
     //the 4 crystals to be eval in CryRoute
     public List<Crystal> Crystals = new List<Crystal>();
@@ -89,8 +95,8 @@ public class ExplorerUnit
     {
         Final = final;
         Key = key;
-        Intersection = intersect;
-        UVisHelp.CreateHelpers(Intersection, Root.yellowCube);
+        Intersections.Add(intersect);
+        
 
         Distance = Mathf.Abs(Vector3.Distance(intersect, currPosition));
         Building = Brain.GetBuildingFromKey(Key);
@@ -142,10 +148,17 @@ public class ExplorerUnit
     {
         //-1 bz only need the first 3 
         res.RemoveAt(res.Count-1);
-        var last = new Crystal(Intersection, H.None, "", setIdAndName: false);
-        res.Add(last);
-        //res.Add(ReturnCrystalAwayFromBuild(last));
 
+        for (int i = 0; i < Intersections.Count; i++)
+        {
+            var last = new Crystal(Intersections[i], H.None, "", setIdAndName: false);
+            res.Add(ReturnCrystalAwayFromBuild(last));
+            //res.Add(last);
+        }
+
+        UVisHelp.CreateHelpers(Intersections, Root.yellowCube);
+
+        
         return res;
     }
 
@@ -156,11 +169,17 @@ public class ExplorerUnit
     Crystal ReturnCrystalAwayFromBuild(Crystal crystal)
     {
         var person = PersonPot.Control.All.FirstOrDefault();
-        float moveBy = person.PersonDim * 3;
+        float moveBy = person.PersonDim * 1.5f;
 
         var moved = Vector3.MoveTowards(U2D.FromV2ToV3(crystal.Position), Building.transform.position, -moveBy);
         crystal.Position = U2D.FromV3ToV2(moved);
 
         return crystal;
+    }
+
+    internal void AddIntersection(Vector3 intersection)
+    {
+        Intersections.Add(intersection);
+        Intersections = Intersections.Distinct().ToList();
     }
 }

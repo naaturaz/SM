@@ -378,9 +378,9 @@ public class CryRoute
 
         for (int i = 0; i < _eval.Count; i++)
         {
-            if (i == 3)
+            if (i == 3 || i == 4)
             {
-                UVisHelp.CreateHelpers(U2D.FromV2ToV3(_curr.Position), Root.blueCube);
+                UVisHelp.CreateHelpers(U2D.FromV2ToV3(_eval[i].Position), Root.blueCube);
             }
 
             Line aLine = new Line(U2D.FromV2ToV3(_curr.Position), U2D.FromV2ToV3(_eval[i].Position), durationOfLines);
@@ -584,7 +584,7 @@ public class CryRoute
 
         if (loopCount < _eval.Count)
         {
-            _eval[i].CalculateWeight(_curr.Position, U2D.FromV3ToV2(_two.Position), _curr.Id);
+            //_eval[i].CalculateWeight(_curr.Position, U2D.FromV3ToV2(_two.Position), _curr.Id);
             //_eval[i].CalculateWeight(U2D.FromV3ToV2(_curr.Position));
 
             loopCount++;
@@ -592,7 +592,7 @@ public class CryRoute
         }
         else
         {
-            _eval = _eval.OrderBy(a => a.CalcWeight).ToList();
+            //_eval = _eval.OrderBy(a => a.CalcWeight).ToList();
             ResetLoop();
 
             return false;//so let Recursive Keeps it course 
