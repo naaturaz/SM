@@ -775,6 +775,7 @@ public class CryRoute
     private Crystal _oldCurr;
     private const float GROWC = 3f;
     private float grow = 3f;//3
+    private float howFarIsRectC = 20f;
     /// <summary>
     /// This is the area we gonna be looking at to evaluate crystals 
     /// </summary>
@@ -791,12 +792,31 @@ public class CryRoute
         }
 
         //the C Vector on the Rect
-        Vector3 cVect = Vector3.MoveTowards(curr, two, 20f);//20
+        Vector3 cVect = Vector3.MoveTowards(curr, two, howFarIsRectC);//20
         _currRect = new CryRect(U2D.FromV2ToV3(_curr.Position), cVect, _two.Position, grow);
         _oldCurr = _curr;
 
         AddToHistoricalRegions(cVect);
         AddToHistoricalRegions(U2D.FromV2ToV3(_curr.Position));
+    }
+
+    /// <summary>
+    /// if closer intersection is closer to _current thant C value then the building
+    /// section can be used 
+    /// 
+    /// needs so the section of the cryRoute that works better to open teerain can work
+    /// other wise never fires bz always is gonna be a building in the end
+    /// </summary>
+    /// <returns></returns>
+    bool IsClosestInterCloserThanC()
+    {
+        //find closest intersection in _explores
+
+        //compare it 
+        
+        
+        return true;
+
     }
 
     /// <summary>
