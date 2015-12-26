@@ -83,6 +83,17 @@ public class TerrainSpawnerController : ControllerParent
     List<StillElement> ornaList = new List<StillElement>();
     List<StillElement> grassList = new List<StillElement>();
 
+    public StillElement FindThis(string key)
+    {
+        StillElement res = null;
+        if (key.Contains("Gold"))
+        {
+            res = stoneList.Find(a => a.MyId == key);
+        }
+
+        return res;
+    }
+
     public bool IsToSave;
     public bool IsToLoadFromFile;
 

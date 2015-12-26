@@ -602,7 +602,7 @@ public class CrystalManager  {
                     Debug.Log("Intersected:  " + crystals[i].ParentId);
                     Vector3 intersection = U2D.FromV2ToV3(line.FindIntersection(lineOnCrys));
                     //add key to explorer on the CryRoute
-                    cryRoute.AddKeyToExplorer(crystals[i].ParentId, intersection);  
+                    cryRoute.AddKeyToExplorer(crystals[i], intersection);  
 
                     lineOnCrys.DebugRender(Color.black);
                     res++;

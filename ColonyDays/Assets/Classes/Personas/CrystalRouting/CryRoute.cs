@@ -72,12 +72,6 @@ public class CryRoute
 
         ClearOldVars();
         Init();
-
-        if (ini.MyId.Contains("285") || ini.MyId.Contains("367") ||
-            ini.MyId.Contains("375") || ini.MyId.Contains("359"))
-        {
-            var t = this;
-        }
     }
 
     public CryRoute() { }
@@ -125,8 +119,6 @@ public class CryRoute
         _historicRegions.Clear();
     }
 
-
-
     #region Loop on Update
 
     //the Method is looping now 
@@ -140,8 +132,6 @@ public class CryRoute
         if (looping == "TryReachEval")
         {
             TryReachEval();
-
-           
         }
         else if (looping == "OrderEvalByWeight")
         {
@@ -185,7 +175,7 @@ public class CryRoute
 
     #endregion
 
-    public void AddKeyToExplorer(string key, Vector3 intersection)
+    public void AddKeyToExplorer(Crystal key, Vector3 intersection)
     {
         _explorer.AddKey(key, intersection, U2D.FromV2ToV3(_curr.Position), _two.Position);
     }
@@ -230,15 +220,15 @@ public class CryRoute
 
             CreateCryRect();
 
-            if (canIExplore && ExploreToFin())
+            //will return only if is Done. Other wise needs to be going so _crystals are set 
+            //if is BuildingRouting then can return so a new _curr is added and we can keep going 
+            if (canIExplore && ExploreToFin() && (CheckIfDone() || _explorer.IsBuildingRouting))
             {
                 return;
             }
 
             DefineHistoCrys();
             DefineCrystalsOnMyRect();
-
-            
         }
         else if (prevLoop == "DefineCrystalsOnMyRect")
         {
@@ -322,45 +312,45 @@ public class CryRoute
         if (!canI) { return false; }//means tht another llop is running now 
         var i = loopCount;
 
-        if (_explorer.WasABuildingHit())
+        if (_explorer.IsBuildingRouting)
         {
             //case that we are hitting a builing 
             //bz only has 4 _evals to work with 
             return TryReachBuilding();
         }
 
+        Debug.Log("Terrain Routing ");
         if (loopCount < _eval.Count)
         {
+            Line aLine = new Line(U2D.FromV2ToV3(_curr.Position), U2D.FromV2ToV3(_eval[i].Position), durationOfLines);
+
+            var linesIntersected = IntersectCount(aLine);
+            var isIntersectingOnlyTheDoorSide = IsCrystalOnDoorCorners(_eval[i]) && linesIntersected == 1;
+            var isCryFromOld = IsCrystalPartOfOldHome(_eval[i]);
+
+            //is the crystal in the door side and only interset 1 line
+            if ((!Intersect(aLine) || isIntersectingOnlyTheDoorSide || isCryFromOld)
+                && !IsOnTheRoute(_eval[i].Position)) //they cant be the same 
             {
-                //
-                Line aLine = new Line(U2D.FromV2ToV3(_curr.Position), U2D.FromV2ToV3(_eval[i].Position), durationOfLines);
+                //will reset black vount if 1 is true
+                blackCount = 0;
+                //UVisHelp.CreateText(U2D.FromV2ToV3(_curr.Position), _curr.CalcWeight+"");
 
-                var linesIntersected = IntersectCount(aLine);
-                var isIntersectingOnlyTheDoorSide = IsCrystalOnDoorCorners(_eval[i]) && linesIntersected == 1;
-                var isCryFromOld = IsCrystalPartOfOldHome(_eval[i]);
+                //make current _eval[i] and loop 
+                _curr = _eval[i];
 
-                //is the crystal in the door side and only interset 1 line
-                if ((!Intersect(aLine) || isIntersectingOnlyTheDoorSide || isCryFromOld)
-                    && !IsOnTheRoute(_eval[i].Position)) //they cant be the same 
-                {
-                    //will reset black vount if 1 is true
-                    blackCount = 0;
-                    //UVisHelp.CreateText(U2D.FromV2ToV3(_curr.Position), _curr.CalcWeight+"");
+                loop = true;
+                //Crystal.DebugCrystal.AddGameObjInPosition(U2D.FromV2ToV3(_curr.Position), Root.yellowSphereHelp);
+               
+                ResetExplorer();
+                UVisHelp.CreateHelpers(U2D.FromV2ToV3(_eval[i].Position), Root.blueCube);
 
-                    //make current _eval[i] and loop 
-                    _curr = _eval[i];
-
-                    loop = true;
-                    //Crystal.DebugCrystal.AddGameObjInPosition(U2D.FromV2ToV3(_curr.Position), Root.yellowSphereHelp);
-                    canIExplore = true;
-                    UVisHelp.CreateHelpers(U2D.FromV2ToV3(_eval[i].Position), Root.blueCube);
-
-                    ResetLoop();
-                    ClearPrevLoop();//so can restart Recursive()
-                    return true;
-                }
-                loopCount++;
+                ResetLoop();
+                ClearPrevLoop();//so can restart Recursive()
+                return true;
             }
+            loopCount++;
+            
             CheckIfIsToBlackList();
             return false;
         }
@@ -409,7 +399,6 @@ public class CryRoute
         canIExplore = true;//
         _explorer.Restart();
     }
-
 
     /// <summary>
     /// Will tell u if the 'aLine' is only intersecting the door side of the buildin g
@@ -699,10 +688,11 @@ public class CryRoute
     void RoutineIfBuildWasHit()
     {
         //behavoiur if a build was hit 
-        if (_explorer.WasABuildingHit())
+        if (_explorer.IsBuildingRouting)
         {
             _eval.Clear();
             Debug.Log("was hit:" + _explorer.Result.Key + " ct:" + _explorer.Result.Crystals.Count);
+            Debug.Log("is building routing");
 
             _eval.AddRange(_explorer.Result.Crystals);
 
@@ -731,12 +721,16 @@ public class CryRoute
 
             if (_currRect.TheRect.Contains(histoCry.Position) && histoCry.Type1 != H.LinkRect)
             {
+                _explorer.AddCrystalOfRectC(histoCry);
                 _crystals.Add(histoCry);
                 AddToCrystalsIfNotThere(histoCry.Siblings);
             }
             loopCount++;
         }
     }
+
+
+ 
 
     void AddToCrystalsIfNotThere(List<Crystal> sibling)
     {
@@ -749,24 +743,47 @@ public class CryRoute
         }
     }
 
-    private static int counterr;
     /// <summary>
-    /// Will try to reach Final and will set explorer object that will tell if are 
+    /// Depending on _curr position will return Final or C.
+    /// So when Im explirng to Final takes in account that we are hitting the sea or a mountain 
+    /// in some RectC
+    /// </summary>
+    /// <returns></returns>
+    Vector3 ReturnCorFinal()
+    {
+        var curr = U2D.FromV2ToV3(_curr.Position);
+        var two = _two.Position;
+        Vector3 cVect = Vector3.MoveTowards(curr, two, howFarIsRectC);//20
+
+        var distToFin = Vector3.Distance(curr, two);
+
+        //if dist To Final greater that howFarIsRectC, then return C
+        if (distToFin > howFarIsRectC)
+        {
+            return cVect;
+        }
+        return two;
+    }
+
+    /// <summary>
+    /// Will try to reach RectC or Final and will set explorer object that will tell if are 
     /// Buidings in the middle or not
     /// </summary>
     /// <returns></returns>
     private bool ExploreToFin()
     {
+        var stepFinalPos = ReturnCorFinal();
+
         Debug.Log("Exploring");
         canIExplore = false;
-        Line line = new Line(U2D.FromV2ToV3(_curr.Position), _two.Position, durationOfLines);
+        Line line = new Line(U2D.FromV2ToV3(_curr.Position), stepFinalPos, durationOfLines);
         var interCount = IntersectCount(line);
 
         if (interCount==0)
         {
-            _curr = new Crystal(_two.Position, H.Obstacle, "", setIdAndName: false);
-
+            _curr = new Crystal(stepFinalPos, H.None, "", setIdAndName: false);
             loop = true;
+            canIExplore = true;//needs to be able to keep exploring
             return true;
         }
         return false;
@@ -811,6 +828,8 @@ public class CryRoute
     bool IsClosestInterCloserThanC()
     {
         //find closest intersection in _explores
+
+        //find that only obstacles crystals are in the C rect
 
         //compare it 
         

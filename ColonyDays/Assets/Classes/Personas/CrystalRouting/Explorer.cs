@@ -9,43 +9,69 @@
  * to see what is on front 
  */
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 public class Explorer 
 {
     List<ExplorerUnit> _units = new List<ExplorerUnit>();
     public ExplorerUnit Result;//the one will contain the Unit for work for the CryRoute
+    //is building routing if is true we can use 
+    private bool _isBuildingRouting = true;
+
+    //says if from curr to Final are only bulidings or still elemtents intersectin 
+    private bool _isIntersectingOnlyObstacles = true;
+
+    /// <summary>
+    /// is building routing if is true we can use 
+    /// </summary>
+    public bool IsBuildingRouting
+    {
+        //ios calling WasABuildingHit() mainly to set the object Result
+        //at the same time must have being intersecting only obstacles
+        get
+        {
+            if (_isBuildingRouting && _isIntersectingOnlyObstacles)
+            {
+                WasAObstacleHit();
+                return true;
+            }
+
+            return false;
+        }
+    }
 
     public Explorer() { }
 
     /// <summary>
     /// Adds a key to the explorer 
     /// </summary>
-    /// <param name="key">Key of the Parent ID with intersect with</param>
+    /// <param name="crystal">Key of the Parent ID with intersect with</param>
     /// <param name="intersection">The point where we intersect</param>
     /// <param name="currPosition">the curr Position of the Crystal reaching Final</param>
-    public void AddKey(string key, Vector3 intersection, Vector3 currPosition, Vector3 final)
+    public void AddKey(Crystal crystal, Vector3 intersection, Vector3 currPosition, Vector3 final)
     {
         ExplorerUnit doesExistKey = null;
 
         if (_units.Count > 0)
         {
-            doesExistKey = _units.Find(a => a.Key == key);
+            doesExistKey = _units.Find(a => a.Key == crystal.ParentId);
         }
             
         //so it doesnt add duplicates keys
         if (doesExistKey == null)
         {
-            _units.Add(new ExplorerUnit(key, intersection, currPosition, final));
+            _units.Add(new ExplorerUnit(crystal, intersection, currPosition, final));
         }
         //bz a line can have diff intersections in a building. usually 2 
         //if exist will add Intersection 
         else
         {
-            doesExistKey.AddIntersection(intersection);
+            doesExistKey.AddIntersection(intersection, crystal);
         }
+
+        SetIfIsIntersectingOnlyObstacles(crystal);
     }
 
     /// <summary>
@@ -53,20 +79,34 @@ public class Explorer
     /// </summary>
     /// <param name="result"></param>
     /// <returns></returns>
-    public bool WasABuildingHit()
+    bool WasAObstacleHit()
     {
+        bool res = false;
         _units = _units.OrderBy(a => a.Distance).ToList();
 
         for (int i = 0; i < _units.Count; i++)
         {
-            if (_units[i].IsHasAValidBuilding)
+            if (_units[i].IsHasAValidObstacle)
             {
                 _units[i].Create4Crystals();//so the crystals are ready
                 Result = _units[i];
                 return true;
             }
         }
-        return false;
+        return res;
+    }
+
+    /// <summary>
+    /// sets for saying if from curr to Final are only bulidings or still elemtents intersectin 
+    /// </summary>
+    /// <param name="c"></param>
+    void SetIfIsIntersectingOnlyObstacles(Crystal c)
+    {
+        if (_isIntersectingOnlyObstacles && c.Type1 != H.Obstacle)
+        {        
+            //intersected something was not a obstacle 
+            _isIntersectingOnlyObstacles = false;
+        }
     }
 
     /// <summary>
@@ -75,6 +115,22 @@ public class Explorer
     public void Restart()
     {
         _units.Clear();
+        _isBuildingRouting = true;
+        _isIntersectingOnlyObstacles = true;
+    }
+
+    /// <summary>
+    /// Adding the Crystals contain in RectC so if one Crystal is not obstacle then we cannnot use the 
+    /// Building Routing system
+    /// </summary>
+    /// <param name="c"></param>
+    public void AddCrystalOfRectC(Crystal c)
+    {
+        //as soon one is found that is not type obstacle then we cant use Building Routing 
+        if (_isBuildingRouting && c.Type1 != H.Obstacle)
+        {
+            _isBuildingRouting = false;
+        }
     }
 }
 
@@ -83,27 +139,36 @@ public class ExplorerUnit
     public string Key;
     public List<Vector3> Intersections = new List<Vector3>();
     public Building Building;
+    private TerrainRamdonSpawner _ramdonSpawner;
+
     //the 4 crystals to be eval in CryRoute
     public List<Crystal> Crystals = new List<Crystal>();
 
     //distance to currPosition of Crystal Reaching final and intersect 
     public float Distance; 
     public Vector3 Final;//the final point of the Route 
-    public bool IsHasAValidBuilding;
+    public bool IsHasAValidObstacle;
 
-    public ExplorerUnit(string key, Vector3 intersect, Vector3 currPosition, Vector3 final)//the curr Position of the Crystal reaching Final
+    public ExplorerUnit(Crystal crystal, Vector3 intersect, Vector3 currPosition, Vector3 final)//the curr Position of the Crystal reaching Final
     {
         Final = final;
-        Key = key;
+        Key = crystal.ParentId;
         Intersections.Add(intersect);
-        
 
         Distance = Mathf.Abs(Vector3.Distance(intersect, currPosition));
         Building = Brain.GetBuildingFromKey(Key);
 
+        _ramdonSpawner =
+            Program.gameScene.controllerMain.TerraSpawnController.FindThis(crystal.ParentId);
+
         if (Building != null)
         {
-            IsHasAValidBuilding = true;
+            IsHasAValidObstacle = true;
+        }
+        else if (_ramdonSpawner != null)
+        {
+            Debug.Log("Hey hit random: " + _ramdonSpawner.MyId);
+            IsHasAValidObstacle = true;
         }
         else
         {
@@ -157,8 +222,6 @@ public class ExplorerUnit
         }
 
         UVisHelp.CreateHelpers(Intersections, Root.yellowCube);
-
-        
         return res;
     }
 
@@ -177,7 +240,12 @@ public class ExplorerUnit
         return crystal;
     }
 
-    internal void AddIntersection(Vector3 intersection)
+    /// <summary>
+    /// ADds the intersection we hit and the crystal that belongs to
+    /// </summary>
+    /// <param name="intersection"></param>
+    /// <param name="crystal"></param>
+    internal void AddIntersection(Vector3 intersection, Crystal crystal)
     {
         Intersections.Add(intersection);
         Intersections = Intersections.Distinct().ToList();
