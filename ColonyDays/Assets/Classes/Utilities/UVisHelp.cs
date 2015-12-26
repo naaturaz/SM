@@ -45,6 +45,11 @@ public class UVisHelp : MonoBehaviour {
     public static General CreateHelpers(Vector3 pos, string root)
     {
         return General.Create(root, pos);
+    }   
+    
+    public static General CreateHelpers(Vector2 pos, string root)
+    {
+        return General.Create(root, U2D.FromV2ToV3(pos));
     }
 
     public static List<General> CreateHelpers(List<Line> lines, string root)
@@ -162,4 +167,6 @@ public class UVisHelp : MonoBehaviour {
         }
         return res;
     }
+
+  
 }

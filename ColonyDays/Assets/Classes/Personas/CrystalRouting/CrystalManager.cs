@@ -599,7 +599,7 @@ public class CrystalManager  {
                 var lineOnCrys = crystals[i].Lines[j];
                 if (line.IsIntersecting((lineOnCrys)))
                 {
-                    Debug.Log("Intersected:  " + crystals[i].ParentId);
+//                    Debug.Log("Intersected: " + crystals[i].ParentId + " tp: " +crystals[i].Type1);
                     Vector3 intersection = U2D.FromV2ToV3(line.FindIntersection(lineOnCrys));
                     //add key to explorer on the CryRoute
                     cryRoute.AddKeyToExplorer(crystals[i], intersection);  
@@ -710,9 +710,9 @@ public class CrystalManager  {
         List<Crystal> res = new List<Crystal>();
         for (int i = 0; i < regions.Count; i++)
         {
-            var index = regions[i];
-            res.AddRange(CrystalRegions[index].TerraCrystals);
-            res.AddRange(CrystalRegions[index].ObstaCrystals);
+            var locIndex = regions[i];
+            res.AddRange(CrystalRegions[locIndex].TerraCrystals);
+            res.AddRange(CrystalRegions[locIndex].ObstaCrystals);
         }
         return res;
     }

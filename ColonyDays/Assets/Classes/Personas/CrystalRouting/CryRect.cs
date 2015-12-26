@@ -14,6 +14,7 @@ public class CryRect
 
     private H _growIn = H.None;//if a rect needs to grow will grow only in 1 axis 
     private float growFactor=1;
+    private static Vector3 _prevIni;//if prev ini was less than 10f to current growFactor will grow
 
     private Crystal _aCrystal;
     private Crystal _bCrystal;
@@ -80,12 +81,16 @@ public class CryRect
     /// </summary>
     /// <param name="ini"></param>
     /// <param name="end"></param>
+    /// <param name="minimuSize">must have one side with a mimunum side like 10f
+    /// this is to allow Mountain Routing to happen</param>
     /// <param name="grow">The grow of the rect on scale to make sure contain first and last </param>
-    /// <param name="lastPoint">The last point of the route is need to find 'D'</param>
-    public CryRect(Vector3 ini, Vector3 end, Vector3 lastPoint, float grow)
+    public CryRect(Vector3 ini, Vector3 end, float grow, bool minimuSize=true)
     {
         _a = U2D.FromV3ToV2(ini);
-        
+
+        //HandleGrowFactor(ini);
+        _prevIni = ini;
+
         //eliminated bz uses blue RayCast 
         //var poly = Registro.FromALotOfVertexToPoly(new List<Vector3>() {ini, end});
         
@@ -98,12 +103,55 @@ public class CryRect
         _b = FindB();
         _d = FindD();
 
-        RectifyCorners(poly);
+        if (minimuSize)
+        {
+            //when calling this is really importat bz this solved the Mountain Routing problem
+            //Dec 26 2015
+            ApplyMinimumSize(); 
+        }
 
-        UVisHelp.CreateDebugLines(TheRect, Color.magenta, 5f);
+        var newPoly = 
+            new List<Vector3>()
+            {
+                U2D.FromV2ToV3(_a), U2D.FromV2ToV3(_b), 
+                U2D.FromV2ToV3(_c), U2D.FromV2ToV3(_d)
+            };
 
+        _theRect = Registro.FromALotOfVertexToRect(newPoly);
+
+        //RectifyCorners(poly);
+        UVisHelp.CreateDebugLines(TheRect, Color.magenta, 50f);
         SetCrystals();
     }
+
+    /// <summary>
+    /// Onmce a new route starts can reset all grow fields 
+    /// </summary>
+    //public static void ResetGrow()
+    //{
+    //    growFactor = 1;
+    //    maxDistToPrev = 10;
+    //}
+
+    static float maxDistToPrev = 10f;
+    /// <summary>
+    /// Handles the grow factor if  _prevIni was closer than maxDistToPrev then will grow 
+    /// and maxDistToPrev grows too
+    /// </summary>
+    //static void HandleGrowFactor(Vector3 iniP)
+    //{
+    //    var dist = Mathf.Abs(Vector3.Distance(_prevIni, iniP));
+    //    if (dist < maxDistToPrev)
+    //    {
+    //        growFactor += 2;
+    //        maxDistToPrev += 10;
+    //    }
+    //    else
+    //    {
+    //        growFactor = 1;
+    //        maxDistToPrev = 10;
+    //    }
+    //}
 
     private void SetCrystals()
     {
@@ -121,7 +169,7 @@ public class CryRect
     private void RectifyCorners(List<Vector3> poly)
     {
         _a = FindClosestToMe(_a, poly);
-        _b= FindClosestToMe(_b,poly);
+        _b = FindClosestToMe(_b, poly);
         _c = FindClosestToMe(_c, poly);
         _d = FindClosestToMe(_d, poly);
     }
@@ -181,23 +229,31 @@ public class CryRect
         return y;
     }
 
-
-
     /// <summary>
     /// Will make the Rect grow in the side he is smaller 
     /// </summary>
-    internal void Grow()
+    internal void ApplyMinimumSize()
     {
-        growFactor *= 2;
+        Debug.Log("smaller side: " + ReturnSizeOfSmallerSide());
+
+        //this is important too other wise some rects that are abt regular size get huge
+        //so if the diff is bigger than 10f minimun size doenst need to be applied 
+        if (ReturnSizeOfSmallerSide() > 20f)
+        {
+            return;
+        }
+
+        //4 is important too. 2 wont make it Rects needs to be wide enough if they are getting to narrow
+        growFactor *= 4;
         DefineGrowAxis();
 
         if (_growIn == H.Width)
         {
-            PushThemAway(H.X);
+            PushThemAwayInAxis(H.X);
         }
-        else { PushThemAway(H.Y); }
+        else { PushThemAwayInAxis(H.Y); }
 
-        UVisHelp.CreateDebugLines(TheRect, Color.magenta, 5f);
+        UVisHelp.CreateDebugLines(TheRect, Color.red, 25f);
     }
 
     /// <summary>
@@ -206,7 +262,7 @@ public class CryRect
     /// This is how grows, we need to specifically grow this vectors bz thouse are the ones used in the routing 
     /// </summary>
     /// <param name="h"></param>
-    private void PushThemAway(H axis)
+    private void PushThemAway()
     {
         List<Vector2> lis = new List<Vector2>(){_a,_b,_c,_d};
 
@@ -223,6 +279,14 @@ public class CryRect
         _d = MoveAwayFromCenterInAxis(_d);
     }
 
+    private void PushThemAwayInAxis(H axis)
+    {
+        _a = MoveAwayFromCenterInAxis(_a, axis);
+        _b = MoveAwayFromCenterInAxis(_b, axis);
+        _c = MoveAwayFromCenterInAxis(_c, axis);
+        _d = MoveAwayFromCenterInAxis(_d, axis);
+    }
+
     /// <summary>
     /// Move each vector2 pass away from center only in the axis asked for 
     /// 
@@ -237,8 +301,6 @@ public class CryRect
 
         //so its moves away from center
         Vector2 newVal = Vector2.MoveTowards(vector2, TheRect.center, -(Mathf.Abs(dist))  * growFactor);
-
-
         if (axis == H.None)
         {
             return newVal;
@@ -248,6 +310,7 @@ public class CryRect
         {
             return new Vector2(newVal.x, vector2.y);
         }
+        //Y case
         return new Vector2(vector2.x, newVal.y);
     }
 
@@ -266,5 +329,14 @@ public class CryRect
         }
     }
 
+    private float ReturnSizeOfSmallerSide()
+    {
+        if (_theRect.width > _theRect.height)
+        {
+
+            return _theRect.height;
+        }
+        return _theRect.width;
+    }
 
 }

@@ -97,6 +97,7 @@ public class CryRoute
 
     private void Init()
     {
+       // CryRect.ResetGrow();
         _curr.Position = U2D.FromV3ToV2(_one.Position);
         loop = true;
 
@@ -263,10 +264,10 @@ public class CryRoute
 
     private void DefineHistoCrys()
     {
-        if (_prevHistoRegions == _historicRegions)
-        {
-            return;
-        }
+        //if (_prevHistoRegions == _historicRegions)
+        //{
+        //    return;
+        //}
         //Debug.Log("Set HistoCrys");
 
         _prevHistoRegions = _historicRegions;
@@ -279,10 +280,10 @@ public class CryRoute
     /// </summary>
     private void AddToEvalFromRect()
     {
-        if (grow == GROWC && blackCount == 0)
-        {
-            return;
-        }
+        //if (grow == GROWC && blackCount == 0)
+        //{
+        //    return;
+        //}
 
         //is added as an obstacle bz is where we are heding to so i will give less weight 
         _eval.Add(_currRect.CCrystal);
@@ -319,7 +320,7 @@ public class CryRoute
             return TryReachBuilding();
         }
 
-        Debug.Log("Terrain Routing ");
+        Debug.Log("Terrain Routing. loopCount: " + loopCount);
         if (loopCount < _eval.Count)
         {
             Line aLine = new Line(U2D.FromV2ToV3(_curr.Position), U2D.FromV2ToV3(_eval[i].Position), durationOfLines);
@@ -338,6 +339,7 @@ public class CryRoute
 
                 //make current _eval[i] and loop 
                 _curr = _eval[i];
+                Debug.Log("_curr set on Terrain Routing");
 
                 loop = true;
                 //Crystal.DebugCrystal.AddGameObjInPosition(U2D.FromV2ToV3(_curr.Position), Root.yellowSphereHelp);
@@ -438,7 +440,7 @@ public class CryRoute
 
     private int blackCount;
     //the rect will be allow to grow only 10 times. then will be black list tht building if was not reach
-    private int maxGrows = 155;
+    private int maxGrows = 15;
     void CheckIfIsToBlackList()
     {
         blackCount++;
@@ -575,13 +577,14 @@ public class CryRoute
         {
             //_eval[i].CalculateWeight(_curr.Position, U2D.FromV3ToV2(_two.Position), _curr.Id);
             //_eval[i].CalculateWeight(U2D.FromV3ToV2(_curr.Position));
+            _eval[i].CalculateWeight(_two.Position);
 
             loopCount++;
             return true;//will cut Recursive Path intentionally, bz i need to finish this loop
         }
         else
         {
-            //_eval = _eval.OrderBy(a => a.CalcWeight).ToList();
+            _eval = _eval.OrderBy(a => a.CalcWeight).ToList();
             ResetLoop();
 
             return false;//so let Recursive Keeps it course 
@@ -674,6 +677,7 @@ public class CryRoute
             _crystals.Clear();
         }
 
+        
         if (i < _historicCrystals.Count)
         {
             InnerLoop();
@@ -718,6 +722,7 @@ public class CryRoute
             }
 
             var histoCry = _historicCrystals[i];
+            //UVisHelp.CreateHelpers(histoCry.Position, Root.blueCube);
 
             if (_currRect.TheRect.Contains(histoCry.Position) && histoCry.Type1 != H.LinkRect)
             {
@@ -792,7 +797,7 @@ public class CryRoute
     private Crystal _oldCurr;
     private const float GROWC = 3f;
     private float grow = 3f;//3
-    private float howFarIsRectC = 20f;
+    private float howFarIsRectC = 40f;//20 . 20 was too small bz will go trhu mountains
     /// <summary>
     /// This is the area we gonna be looking at to evaluate crystals 
     /// </summary>
@@ -803,6 +808,7 @@ public class CryRoute
 
         if (CheckIfNeedGrow())
         {
+            maxGrows++;
             //curr = PushAwayFromCurrRectCenter(curr);
             //two = PushAwayFromCurrRectCenter(two);
             //return;
@@ -810,32 +816,11 @@ public class CryRoute
 
         //the C Vector on the Rect
         Vector3 cVect = Vector3.MoveTowards(curr, two, howFarIsRectC);//20
-        _currRect = new CryRect(U2D.FromV2ToV3(_curr.Position), cVect, _two.Position, grow);
+        _currRect = new CryRect(U2D.FromV2ToV3(_curr.Position), cVect, grow);
         _oldCurr = _curr;
 
         AddToHistoricalRegions(cVect);
         AddToHistoricalRegions(U2D.FromV2ToV3(_curr.Position));
-    }
-
-    /// <summary>
-    /// if closer intersection is closer to _current thant C value then the building
-    /// section can be used 
-    /// 
-    /// needs so the section of the cryRoute that works better to open teerain can work
-    /// other wise never fires bz always is gonna be a building in the end
-    /// </summary>
-    /// <returns></returns>
-    bool IsClosestInterCloserThanC()
-    {
-        //find closest intersection in _explores
-
-        //find that only obstacles crystals are in the C rect
-
-        //compare it 
-        
-        
-        return true;
-
     }
 
     /// <summary>
@@ -899,6 +884,7 @@ public class CryRoute
             {
                 _historicRegions.Add(newRegions[i]);
                 //AddRegionToHistoCrystals(i);
+//                Debug.Log("added: _historicRegions.ct:" + _historicRegions.Count);
             }
         }
     }

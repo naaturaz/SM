@@ -224,10 +224,11 @@ public class Crystal
 
     private int weightFactor = 1;
     private int sineFactor = 10;
-    internal void CalculateWeight(Vector2 vector2)
+    internal void CalculateWeight(Vector3 vector3)
     {
-        Distance = Vector2.Distance(_position, vector2);
-        _calcWeight = (_baseWeight * weightFactor) + Distance;
+        Distance = Vector3.Distance(U2D.FromV2ToV3(_position), vector3);
+       // _calcWeight = (_baseWeight * weightFactor) + Distance;
+        _calcWeight = _baseWeight + Distance;
     }
 
     public static DebugCrystal DebugCrystal = new DebugCrystal();
@@ -386,7 +387,7 @@ public class Crystal
         //will rather to go to a RectCorner thn a TerraObstacle 
         else if (_type == H.RectCorner)
         {
-            _baseWeight = 50;
+            _baseWeight = 200;
         }    
         // bz always should be the 1st to try 
         else if (_type == H.Door)
