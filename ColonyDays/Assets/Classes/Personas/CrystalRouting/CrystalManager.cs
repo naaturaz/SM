@@ -77,6 +77,26 @@ public class CrystalManager  {
             res = res.Where(a => a.ParentId == building.MyId && a.Type1 == type).ToList();
         }
         return res;
+    }  
+    
+    public List<Crystal> ReturnCrystalsThatBelongTo(StillElement still, bool includeDoor)
+    {
+        List<Crystal> res =new List<Crystal>();
+        //search _crystalRegions points are
+        var indexes = ReturnRegionsOfPointsInStillElement(still);
+        for (int i = 0; i < indexes.Count; i++)
+        {
+            var indexLoc = indexes[i];
+            res.AddRange(CrystalRegions[indexLoc].ObstaCrystals);
+        }
+
+        var type = WhichType(includeDoor);
+
+        if (res.Count > 0)
+        {
+            res = res.Where(a => a.ParentId == still.MyId && a.Type1 == type).ToList();
+        }
+        return res;
     }
 
     /// <summary>
@@ -121,6 +141,23 @@ public class CrystalManager  {
             points.Add(U2D.FromV2ToV3(entries[0].Position));
             points.Add(U2D.FromV2ToV3(entries[1].Position));
         }
+
+        List<int> res = new List<int>();
+        for (int i = 0; i < points.Count; i++)
+        {
+            res.Add(ReturnMyRegion(U2D.FromV3ToV2(points[i])));
+        }
+        return res.Distinct().ToList();
+    }
+
+    /// <summary>
+    /// Will return the region index where all the Structure points are
+    /// </summary>
+    /// <param name="building"></param>
+    /// <returns></returns>
+    List<int> ReturnRegionsOfPointsInStillElement(StillElement still)
+    {
+        var points = PassAnchorsGetPositionForCrystals(still.Anchors);
 
         List<int> res = new List<int>();
         for (int i = 0; i < points.Count; i++)

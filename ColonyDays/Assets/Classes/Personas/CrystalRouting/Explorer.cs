@@ -8,6 +8,8 @@
  * Explorer is used once a new _curr is set on CryRoute. A explorations needs to be done
  * to see what is on front 
  */
+
+using System;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
@@ -138,8 +140,9 @@ public class ExplorerUnit
 {
     public string Key;
     public List<Vector3> Intersections = new List<Vector3>();
+    
     public Building Building;
-    private TerrainRamdonSpawner _ramdonSpawner;
+    public StillElement StillElement;
 
     //the 4 crystals to be eval in CryRoute
     public List<Crystal> Crystals = new List<Crystal>();
@@ -158,16 +161,16 @@ public class ExplorerUnit
         Distance = Mathf.Abs(Vector3.Distance(intersect, currPosition));
         Building = Brain.GetBuildingFromKey(Key);
 
-        _ramdonSpawner =
+        StillElement =
             Program.gameScene.controllerMain.TerraSpawnController.FindThis(crystal.ParentId);
 
         if (Building != null)
         {
             IsHasAValidObstacle = true;
         }
-        else if (_ramdonSpawner != null)
+        else if (StillElement != null)
         {
-            Debug.Log("Hey hit random: " + _ramdonSpawner.MyId);
+            Debug.Log("Hey hit random: " + StillElement.MyId);
             IsHasAValidObstacle = true;
         }
         else
@@ -193,7 +196,17 @@ public class ExplorerUnit
     List<Crystal> ReturnOrderedAnchors()
     {
         List<Crystal> anchorOrdered = new List<Crystal>();
-        anchorOrdered = MeshController.CrystalManager1.ReturnCrystalsThatBelongTo(Building, false);
+
+        //for building
+        if (Building != null)
+        {
+            anchorOrdered = MeshController.CrystalManager1.ReturnCrystalsThatBelongTo(Building, false);
+        }
+        //for still elemtnt
+        else if (StillElement != null)
+        {
+            anchorOrdered = MeshController.CrystalManager1.ReturnCrystalsThatBelongTo(StillElement, false);
+        }
 
         for (int i = 0; i < 4; i++)
         {
@@ -217,7 +230,7 @@ public class ExplorerUnit
         for (int i = 0; i < Intersections.Count; i++)
         {
             var last = new Crystal(Intersections[i], H.None, "", setIdAndName: false);
-            res.Add(ReturnCrystalAwayFromBuild(last));
+            res.Add(ReturnCrystalAwayFromBuild(last, AwayFrom()));
             //res.Add(last);
         }
 
@@ -225,16 +238,30 @@ public class ExplorerUnit
         return res;
     }
 
+    Vector3 AwayFrom()
+    {
+        if (Building != null)
+        {
+            return Building.transform.position;
+            
+        }
+        else if (StillElement != null)
+        {
+            return StillElement.transform.position;
+        }
+        throw new Exception("One most be not null");
+    }
+
     /// <summary>
     /// Bz they needs to be moved a bit away from Buildign
     /// </summary>
     /// <returns></returns>
-    Crystal ReturnCrystalAwayFromBuild(Crystal crystal)
+    Crystal ReturnCrystalAwayFromBuild(Crystal crystal, Vector3 awayFrom)
     {
         var person = PersonPot.Control.All.FirstOrDefault();
         float moveBy = person.PersonDim * 1.5f;
 
-        var moved = Vector3.MoveTowards(U2D.FromV2ToV3(crystal.Position), Building.transform.position, -moveBy);
+        var moved = Vector3.MoveTowards(U2D.FromV2ToV3(crystal.Position), awayFrom, -moveBy);
         crystal.Position = U2D.FromV3ToV2(moved);
 
         return crystal;

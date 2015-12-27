@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class TerrainSpawnerController : ControllerParent
 {
@@ -12,7 +13,7 @@ public class TerrainSpawnerController : ControllerParent
     float minHeightToSpawn;//min height to spawn obj on terrain
     private float maxHeightToSpawn;
 
-    private int multiplier = 75;//75
+    private int multiplier = 10;//75
 
     int howManyTreesToSpawn = 20;//50
     int howManyStonesToSpawn =3;
@@ -85,11 +86,10 @@ public class TerrainSpawnerController : ControllerParent
 
     public StillElement FindThis(string key)
     {
+        var list = AllRandomObjList.ToList();
+
         StillElement res = null;
-        if (key.Contains("Gold"))
-        {
-            res = stoneList.Find(a => a.MyId == key);
-        }
+        res = (StillElement)list.Find(a => a.MyId == key);
 
         return res;
     }

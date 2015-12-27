@@ -14,7 +14,6 @@ public class CryRect
 
     private H _growIn = H.None;//if a rect needs to grow will grow only in 1 axis 
     private float growFactor=1;
-    private static Vector3 _prevIni;//if prev ini was less than 10f to current growFactor will grow
 
     private Crystal _aCrystal;
     private Crystal _bCrystal;
@@ -87,12 +86,6 @@ public class CryRect
     public CryRect(Vector3 ini, Vector3 end, float grow, bool minimuSize=true)
     {
         _a = U2D.FromV3ToV2(ini);
-
-        //HandleGrowFactor(ini);
-        _prevIni = ini;
-
-        //eliminated bz uses blue RayCast 
-        //var poly = Registro.FromALotOfVertexToPoly(new List<Vector3>() {ini, end});
         
         var poly = Registro.FromALotOfVertexToPolyMathCenterY(new List<Vector3>() {ini, end});
         poly = UPoly.ScalePoly(poly, grow);
@@ -124,41 +117,11 @@ public class CryRect
         SetCrystals();
     }
 
-    /// <summary>
-    /// Onmce a new route starts can reset all grow fields 
-    /// </summary>
-    //public static void ResetGrow()
-    //{
-    //    growFactor = 1;
-    //    maxDistToPrev = 10;
-    //}
-
-    static float maxDistToPrev = 10f;
-    /// <summary>
-    /// Handles the grow factor if  _prevIni was closer than maxDistToPrev then will grow 
-    /// and maxDistToPrev grows too
-    /// </summary>
-    //static void HandleGrowFactor(Vector3 iniP)
-    //{
-    //    var dist = Mathf.Abs(Vector3.Distance(_prevIni, iniP));
-    //    if (dist < maxDistToPrev)
-    //    {
-    //        growFactor += 2;
-    //        maxDistToPrev += 10;
-    //    }
-    //    else
-    //    {
-    //        growFactor = 1;
-    //        maxDistToPrev = 10;
-    //    }
-    //}
-
     private void SetCrystals()
     {
         _cCrystal = new Crystal(U2D.FromV2ToV3(C), H.RectCorner, "", setIdAndName:false);
         _dCrystal = new Crystal(U2D.FromV2ToV3(D), H.RectCorner, "", setIdAndName: false);
         _bCrystal = new Crystal(U2D.FromV2ToV3(B), H.RectCorner, "", setIdAndName: false);
-
     }
 
     /// <summary>
@@ -188,8 +151,6 @@ public class CryRect
         var closest = lis[0].Point;
         return U2D.FromV3ToV2(closest);
     }
-
-
 
     /// <summary>
     /// Will find wht is the other poiunt in the rect tht is closer to LastPoint
@@ -234,7 +195,7 @@ public class CryRect
     /// </summary>
     internal void ApplyMinimumSize()
     {
-        Debug.Log("smaller side: " + ReturnSizeOfSmallerSide());
+//        Debug.Log("smaller side: " + ReturnSizeOfSmallerSide());
 
         //this is important too other wise some rects that are abt regular size get huge
         //so if the diff is bigger than 10f minimun size doenst need to be applied 
@@ -253,7 +214,7 @@ public class CryRect
         }
         else { PushThemAwayInAxis(H.Y); }
 
-        UVisHelp.CreateDebugLines(TheRect, Color.red, 25f);
+        //UVisHelp.CreateDebugLines(TheRect, Color.red, 25f);
     }
 
     /// <summary>

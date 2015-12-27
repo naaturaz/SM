@@ -97,7 +97,6 @@ public class CryRoute
 
     private void Init()
     {
-       // CryRect.ResetGrow();
         _curr.Position = U2D.FromV3ToV2(_one.Position);
         loop = true;
 
@@ -695,7 +694,7 @@ public class CryRoute
         if (_explorer.IsBuildingRouting)
         {
             _eval.Clear();
-            Debug.Log("was hit:" + _explorer.Result.Key + " ct:" + _explorer.Result.Crystals.Count);
+//            Debug.Log("was hit:" + _explorer.Result.Key + " ct:" + _explorer.Result.Crystals.Count);
             Debug.Log("is building routing");
 
             _eval.AddRange(_explorer.Result.Crystals);
