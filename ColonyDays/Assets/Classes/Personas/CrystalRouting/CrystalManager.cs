@@ -177,12 +177,12 @@ public class CrystalManager  {
 
         return re;
     }
- 
 
 
 
 
 
+    //private string _info;//info that will be added to the crystal
     //the siblings of current crustal
     List<Crystal> _siblings = new List<Crystal>(); 
 
@@ -199,6 +199,7 @@ public class CrystalManager  {
 
     public void Add(StillElement still)
     {
+        //_info = "Still";
         _siblings.Clear();
         AddPoly(still.Anchors, still.MyId);
     }
@@ -310,6 +311,7 @@ public class CrystalManager  {
         var crystalType = CrystaType(isDoor);
 
         Crystal c = new Crystal(pos, crystalType, parentID, isDoor);
+
         c.AnchorIndex = i;
 
         if (line != null)

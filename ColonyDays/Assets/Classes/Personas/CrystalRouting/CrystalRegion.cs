@@ -133,14 +133,10 @@ public class CrystalRegion
     {
         if (c.Type1 == H.WaterObstacle || c.Type1 == H.MountainObstacle || c.Type1 == H.LinkRect)
         {
-            if (c.Type1 == H.LinkRect)
-            {
-                var t = this;
-            }
-
             AddToTerraCrystals(c);
         }
-        else if (c.Type1 == H.Obstacle)
+        //if is way or obstacle will put it here
+        else if (c.Type1 == H.Obstacle || c.Type1.ToString().Contains("Way"))
         {
             AddToObstacleCrystals(c);
         }

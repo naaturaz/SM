@@ -13,7 +13,6 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 
 public class Explorer 
 {
@@ -25,21 +24,27 @@ public class Explorer
     //says if from curr to Final are only bulidings or still elemtents intersectin 
     private bool _isIntersectingOnlyObstacles = true;
 
+    //use to say. if is intersecting only stills then IsBuildingRouting is false. So
+    //way routing can work
+    private bool _isIntersectingOnlyStills = true;
+
     /// <summary>
     /// is building routing if is true we can use 
     /// </summary>
     public bool IsBuildingRouting
     {
-        //ios calling WasABuildingHit() mainly to set the object Result
+        //is calling WasABuildingHit() mainly to set the object Result
         //at the same time must have being intersecting only obstacles
+
+        //and is not only intersecting stills. bz if so BuidingRouting is false
+        //so way routing can happen 
         get
         {
-            if (_isBuildingRouting && _isIntersectingOnlyObstacles)
+            if (_isBuildingRouting && _isIntersectingOnlyObstacles && !_isIntersectingOnlyStills)
             {
                 WasAObstacleHit();
                 return true;
             }
-
             return false;
         }
     }
@@ -83,7 +88,6 @@ public class Explorer
     /// <returns></returns>
     bool WasAObstacleHit()
     {
-        bool res = false;
         _units = _units.OrderBy(a => a.Distance).ToList();
 
         for (int i = 0; i < _units.Count; i++)
@@ -95,7 +99,7 @@ public class Explorer
                 return true;
             }
         }
-        return res;
+        return false;
     }
 
     /// <summary>
@@ -108,6 +112,22 @@ public class Explorer
         {        
             //intersected something was not a obstacle 
             _isIntersectingOnlyObstacles = false;
+            _isIntersectingOnlyStills = false;
+        }
+        //is intersecting only obstacles 
+        else
+        {
+            //if is intersecting only stills
+            if (_isIntersectingOnlyStills)
+            {
+                Building val = Brain.GetBuildingFromKey(c.ParentId);
+
+                //if one ParentId is a buiding then _isIntersectingOnlyStills = false
+                if (val != null)
+                {
+                    _isIntersectingOnlyStills = false;
+                }
+            }
         }
     }
 

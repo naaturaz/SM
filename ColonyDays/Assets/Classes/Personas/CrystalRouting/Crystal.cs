@@ -366,7 +366,7 @@ public class Crystal
     {
         if (_type == H.Obstacle)
         {
-            _baseWeight = 20;
+            _baseWeight = 40;
         }
         else if (_type == H.MountainObstacle || _type == H.WaterObstacle)
         {
