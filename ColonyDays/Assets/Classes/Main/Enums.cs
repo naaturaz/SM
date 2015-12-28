@@ -258,9 +258,9 @@ public enum H
 
     Obstacle, MountainObstacle, WaterObstacle,
 
-    Way5,
-    Way4,
     Way3,
+    Way2,
+    Way1,
     Gold,
     Enviroment,
     LinkRect,

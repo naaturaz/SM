@@ -210,8 +210,8 @@ public class BuildingSaveLoad : BuildingPot
         //if is not a bridge
         if (!regFile.HType.ToString().Contains(H.Bridge.ToString()))
         {
-            trail.PlanesListVertic = CreatePlanesVertAndHor(regFile, H.Vertic, trail.transform);
-            trail.PlanesListHor = CreatePlanesVertAndHor(regFile, H.Horiz, trail.transform);
+            trail.PlanesListVertic = CreatePlanesVertAndHor(regFile, H.Vertic, trail.transform, trail);
+            trail.PlanesListHor = CreatePlanesVertAndHor(regFile, H.Horiz, trail.transform, trail);
         }
         else
         {
@@ -270,7 +270,7 @@ public class BuildingSaveLoad : BuildingPot
     }
 
     //this cretes planes vertically and horizontally
-    List<CreatePlane> CreatePlanesVertAndHor(RegFile regFile, H which, Transform containerP)
+    List<CreatePlane> CreatePlanesVertAndHor(RegFile regFile, H which, Transform containerP, Trail trail)
     {
         List<CreatePlane> res = new List<CreatePlane>();
         if (which == H.Vertic)
@@ -279,6 +279,9 @@ public class BuildingSaveLoad : BuildingPot
             {
                 res.Add(CreatePlane.CreatePlan(Root.createPlane, Root.RetMaterialRoot(regFile.MaterialKey),
                     regFile.TilePosVert[i], scale: regFile.TileScale, container: containerP));
+
+                Trail.AddToCrystals(H.PlanesVertic, i, regFile.TilePosVert[i], regFile.TilePosVert.Count,
+                    regFile.TilePosHor.Count, trail);
             }
         }
         else if (which == H.Horiz)
@@ -287,6 +290,9 @@ public class BuildingSaveLoad : BuildingPot
             {
                 res.Add(CreatePlane.CreatePlan(Root.createPlane, Root.RetMaterialRoot(regFile.MaterialKey),
                     regFile.TilePosHor[i], scale: regFile.TileScale, container: containerP));
+
+                Trail.AddToCrystals(H.PlanesHor, i, regFile.TilePosHor[i], regFile.TilePosVert.Count,
+                    regFile.TilePosHor.Count, trail);
             }
         }
         return res;

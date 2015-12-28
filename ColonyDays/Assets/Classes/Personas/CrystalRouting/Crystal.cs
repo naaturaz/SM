@@ -372,17 +372,17 @@ public class Crystal
         {
             _baseWeight = 100;
         }
-        else if (_type == H.Way5)
+        else if (_type == H.Way3)//best way
         {
-            _baseWeight = 7;
+            _baseWeight = 5;
         }
-        else if (_type == H.Way4)
+        else if (_type == H.Way2)
         {
             _baseWeight = 6;
         }
-        else if (_type == H.Way3)
+        else if (_type == H.Way1)//worst way
         {
-            _baseWeight = 5;
+            _baseWeight = 7;
         }       
         //will rather to go to a RectCorner thn a TerraObstacle 
         else if (_type == H.RectCorner)

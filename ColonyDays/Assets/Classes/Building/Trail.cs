@@ -374,7 +374,10 @@ public class Trail : Way
                     makeWayInvisible = false; 
                 }
                 PlanesListVertic[_counter].UpdatePos(_planesDimVertic[_counter], makeThisInvisible: makeWayInvisible);
-                
+
+                AddToCrystals(CurrentLoop, _counter,
+                    PlanesListVertic[_counter].transform.position, _planesDimVertic.Count, _planesDimHor.Count, this);
+
                 _counter++;
             }
             else
@@ -389,19 +392,54 @@ public class Trail : Way
             {
                 PlanesListHor.Add((CreatePlane.CreatePlan(rootPlane, Root.matGravilla, m.HitMouseOnTerrain.point, 
                     container: transform, mat: baseMat)));
-                   
+
                 //if is the last one I will show it even if is set to be not seen like I do in bridges
                 if (_counter == _planesDimHor.Count - 1 || _counter == 0)
                 {
                     makeWayInvisible = false;
                 }
                 PlanesListHor[_counter].UpdatePos(_planesDimHor[_counter], makeThisInvisible: makeWayInvisible);
-                
+
+                AddToCrystals(CurrentLoop, _counter,
+                  PlanesListHor[_counter].transform.position, _planesDimVertic.Count, _planesDimHor.Count, this);
+
                 _counter++;
             }
             else
             {
                 DoneWithLoop();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Will add to crystals manager
+    /// 
+    /// Done public static so can be accessed when loading a trail 
+    /// </summary>
+    /// <param name="currentLoop">If is vertic or hor</param>
+    /// <param name="counter">The counter of the loop</param>
+    /// <param name="pos">The position the Cristal goes. Plane.transform.position</param>
+    /// <param name="verticCount">The count of the List for Vertic planes</param>
+    /// <param name="horCount">The count of the List for Hor planes</param>
+    public static void AddToCrystals(H currentLoop, int counter, Vector3 pos, int verticCount, int horCount, Trail trail)
+    {
+        if (currentLoop == H.PlanesVertic)
+        {
+            //1st, last, and 10 multiples
+            if (counter == 0 || counter == verticCount - 1 || counter % 10 == 0)
+            {
+                //UVisHelp.CreateHelpers(pos, Root.blueCube);
+                MeshController.CrystalManager1.Add(pos, trail);
+            }
+        }
+        else if (currentLoop == H.PlanesHor)
+        {
+            //1st, last, and 10 multiples
+            if (counter == 0 || counter == horCount - 1 || counter % 10 == 0)
+            {
+                //UVisHelp.CreateHelpers(pos, Root.yellowSphereHelp);
+                MeshController.CrystalManager1.Add(pos, trail);
             }
         }
     }

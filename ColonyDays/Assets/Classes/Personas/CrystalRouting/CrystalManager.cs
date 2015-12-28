@@ -204,6 +204,25 @@ public class CrystalManager  {
     }
 
     /// <summary>
+    /// For adding ways 
+    /// </summary>
+    /// <param name="wayPos">The position</param>
+    public void Add(Vector3 wayPos, Trail trail)
+    {
+        //if (_siblings.Count > 0 && _siblings[0].ParentId != trail.MyId)
+        //{
+        //    _siblings.Clear();
+        //}
+
+        Crystal c = new Crystal(wayPos, H.Way1, trail.MyId, false);
+
+        AddCrystalToItsRegion(c);
+
+        Debug.Log("Crys added:" + trail.MyId);
+        //_siblings.Add(c);
+    }
+
+    /// <summary>
     /// When adding a building Crystals to its region
     /// </summary>
     /// <param name="building"></param>

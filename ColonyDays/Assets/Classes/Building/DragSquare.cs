@@ -203,7 +203,13 @@ public class DragSquare : Trail
             true);
 
         createSoilNow = true;
+        UVisHelp.CreateHelpers(soil, Root.blueCube);
     }
+
+
+
+
+
 
     /// <summary>
     /// Called from Update if createSoilNow = true

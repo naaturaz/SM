@@ -430,28 +430,6 @@ public class Building : General, Iinfo
         InitJobRelated();
 
         StartCoroutine("ThirtySecUpdate");
-
-        LoadingFromFileActions();
-
-        
-    }
-
-    /// <summary>
-    /// If is loading from file will do this 
-    /// </summary>
-    private void LoadingFromFileActions()
-    {
-        if (!IsLoadingFromFile)
-        {
-            return;
-        }
-
-        var sP = ReturnCurrentStructureParent();
-
-        //if (sP.StartingStage == H.Done)
-        //{
-            //LandZoneLoader();
-        //}
     }
 
     /// <summary>
@@ -566,7 +544,13 @@ public class Building : General, Iinfo
     //this need to be called in derived classes 
     protected new void Update()
     {
-        LandZoneLoader();
+        //if is way not need to know this.
+        //bz we will be going btw buildings 
+        if (Category != Ca.Way)
+        {
+            LandZoneLoader(); 
+        }
+        
 
         LoadingWillBeDestroyBuild();
 
