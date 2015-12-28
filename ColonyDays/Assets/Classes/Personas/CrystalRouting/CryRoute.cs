@@ -209,7 +209,7 @@ public class CryRoute
             
             if (CheckIfDone())
             {
-                //CanIReach2PointAfter();
+                CanIReach2PointAfter();
                 Ready();
                 //if (_finDoor)
                 //{
@@ -344,7 +344,7 @@ public class CryRoute
                 //Crystal.DebugCrystal.AddGameObjInPosition(U2D.FromV2ToV3(_curr.Position), Root.yellowSphereHelp);
                
                 ResetExplorer();
-                UVisHelp.CreateHelpers(U2D.FromV2ToV3(_eval[i].Position), Root.blueCube);
+                //UVisHelp.CreateHelpers(U2D.FromV2ToV3(_eval[i].Position), Root.blueCube);
 
                 ResetLoop();
                 ClearPrevLoop();//so can restart Recursive()
@@ -371,7 +371,7 @@ public class CryRoute
         {
             if (i == 3 || i == 4)
             {
-                UVisHelp.CreateHelpers(U2D.FromV2ToV3(_eval[i].Position), Root.blueCube);
+                //UVisHelp.CreateHelpers(U2D.FromV2ToV3(_eval[i].Position), Root.blueCube);
             }
 
             Line aLine = new Line(U2D.FromV2ToV3(_curr.Position), U2D.FromV2ToV3(_eval[i].Position), durationOfLines);

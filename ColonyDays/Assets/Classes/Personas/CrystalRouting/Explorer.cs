@@ -234,7 +234,7 @@ public class ExplorerUnit
             //res.Add(last);
         }
 
-        UVisHelp.CreateHelpers(Intersections, Root.yellowCube);
+        //UVisHelp.CreateHelpers(Intersections, Root.yellowCube);
         return res;
     }
 
