@@ -453,14 +453,14 @@ public class CryRoute
     void CheckIfIsToBlackList()
     {
         blackCount++;
-        Debug.Log("blackCount:"+blackCount);
+//        Debug.Log("blackCount:"+blackCount);
 
         if (blackCount > maxCounts)
         {
             BlackList();
         }
         //is being a minute since started then can be blaclisted
-        else if (Time.time > _timeStamp + 30f)
+        else if (Time.time > _timeStamp + 30f)//maybe can add someFactor with PC Ram and CPU Speed
         {
             BlackList();
         }

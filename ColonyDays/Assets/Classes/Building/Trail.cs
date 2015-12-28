@@ -128,7 +128,9 @@ public class Trail : Way
                 _planesListHor[i].Destroy();
             }
         }
+        
         BuildingPot.Control.Registro.RemoveItem(Category, MyId);
+        MeshController.CrystalManager1.Delete(this);
         //_isOrderToDestroy = true;
         //DestroyOrdered();
     }

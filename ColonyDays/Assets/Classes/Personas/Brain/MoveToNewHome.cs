@@ -23,7 +23,7 @@ public class MoveToNewHome : Brain
     private List<string> _homeOldKeysList = new List<string>();
     private bool buildRouteToNewHome;//main bool here to build route to new Home 
     private bool newHomeRouteStart;
-    private RouterManager _newHomeRouter = new RouterManager();
+    private CryRouteManager _newHomeRouter = new CryRouteManager();
     private int searchedNewHome;//counter of new search for a home 
     private Structure old;
     private TheRoute _routeToNewHome = new TheRoute();
@@ -145,7 +145,7 @@ public class MoveToNewHome : Brain
                 return;
             }
 
-            _newHomeRouter = new RouterManager(old, _person.Home, _person, HPers.NewHome);
+            _newHomeRouter = new CryRouteManager(old, _person.Home, _person, HPers.NewHome);
             newHomeRouteStart = true;
         }
         //person getting ready to move to new home 

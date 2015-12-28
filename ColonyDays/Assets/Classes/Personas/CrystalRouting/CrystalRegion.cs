@@ -14,7 +14,7 @@ public class CrystalRegion
     private Rect _region;
 
     List<Crystal> _terraCrystals = new List<Crystal>(); 
-    List<Crystal> _obstaCrystals = new List<Crystal>(); 
+    List<Crystal> _obstaCrystals = new List<Crystal>();
 
     private string _landZoneID;
 
@@ -211,5 +211,10 @@ public class CrystalRegion
             _obstaCrystals.Remove(crystals[i]);
             Debug.Log("Crystal removed: " + parentId);
         }
+    }
+
+    public List<Crystal> QueryObstaCrystals(string parentIdP)
+    {
+        return ObstaCrystals.Where(a => a.ParentId == parentIdP).ToList();
     }
 }

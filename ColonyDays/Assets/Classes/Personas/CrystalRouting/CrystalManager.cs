@@ -19,6 +19,10 @@ public class CrystalManager  {
 
     //all the crystals on the regions . for GC purpose
     List<Crystal> _all = new List<Crystal>(); 
+    
+    //only use for finding them 
+    List<Crystal> _allObstas = new List<Crystal>(); 
+
 
     public List<CrystalRegion> CrystalRegions
     {
@@ -54,6 +58,8 @@ public class CrystalManager  {
             CrystalRegions[indexLoc].RemoveCrystal(building.MyId);
         }
         //dont need to resave bz the adding of a build is done once is spwaned 
+
+
     }
 
     /// <summary>
@@ -122,10 +128,16 @@ public class CrystalManager  {
     /// <returns></returns>
     List<int> ReturnRegionsOfPointsInStructure(Building building)
     {
-        var points = PassAnchorsGetPositionForCrystals(building.Anchors);
+        //nt for Trails 
+        List<Vector3> points = new List<Vector3>();
+        if (!building.MyId.Contains("Trail"))
+        {
+            points = PassAnchorsGetPositionForCrystals(building.Anchors);
+        }
+
 
         //for buildings
-        if (!building.MyId.Contains("Bridge"))
+        if (!building.MyId.Contains("Bridge") && !building.MyId.Contains("Trail"))
         {
             Structure st = (Structure)building;
             if (st.SpawnPoint != null)
@@ -140,6 +152,17 @@ public class CrystalManager  {
 
             points.Add(U2D.FromV2ToV3(entries[0].Position));
             points.Add(U2D.FromV2ToV3(entries[1].Position));
+        }       
+        //for Ways that are Trails
+        if (building.MyId.Contains("Trail"))
+        {
+            var obstas = _allObstas.Where(a=>a.ParentId==building.MyId).ToList();
+
+            for (int i = 0; i < obstas.Count; i++)
+            {
+                points.Add(U2D.FromV2ToV3( obstas[i].Position));
+                _allObstas.Remove(obstas[i]);
+            }
         }
 
         List<int> res = new List<int>();
@@ -321,6 +344,8 @@ public class CrystalManager  {
 
         AddCrystalToItsRegion(c);
         _siblings.Add(c);
+
+        
 
         //UVisHelp.CreateHelpers(U2D.FromV2ToV3(c.Position), Root.blueCube);
         //if (isDoor)
@@ -1078,6 +1103,17 @@ public class CrystalManager  {
         }
 
         _crystalRegions[myRegionIndex].AddCrystal(c);
+
+
+        AddToAllObstas(c);
+    }
+
+    void AddToAllObstas(Crystal c)
+    {
+        if (c.Type1 == H.Obstacle || c.Type1.ToString().Contains("Way"))
+        {
+            _allObstas.Add(c);
+        }
     }
 
     private void OrganizeByDist()
