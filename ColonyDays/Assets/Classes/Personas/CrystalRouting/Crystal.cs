@@ -366,7 +366,7 @@ public class Crystal
     {
         if (_type == H.Obstacle)
         {
-            _baseWeight = 40;
+            _baseWeight = 20;
         }
         else if (_type == H.MountainObstacle || _type == H.WaterObstacle)
         {
@@ -374,15 +374,15 @@ public class Crystal
         }
         else if (_type == H.Way3)//best way
         {
-            _baseWeight = 5;
+            _baseWeight = 0;
         }
         else if (_type == H.Way2)
         {
-            _baseWeight = 6;
+            _baseWeight = 1;
         }
         else if (_type == H.Way1)//worst way
         {
-            _baseWeight = 7;
+            _baseWeight = 2;
         }       
         //will rather to go to a RectCorner thn a TerraObstacle 
         else if (_type == H.RectCorner)

@@ -879,7 +879,7 @@ public class Brain
     void ReRoutesDealer()
     {
         //so things get started 
-        if (IJustSpawn() || IAmHomeNow())
+        if (IJustSpawn() || IAmHomeNow() || IsInLimbo())
         {
             ////there is room for me to check now on System
             //if (PersonPot.Control.CanIReRouteNow(_person.MyId))
@@ -895,6 +895,22 @@ public class Brain
             //    //PersonPot.Control.AddToWaiting(_person.MyId);
             //}
         }
+    }
+
+    /// <summary>
+    /// When at home but location says none and is going to home 
+    /// 
+    /// So blacklisting works 
+    /// </summary>
+    /// <returns></returns>
+    private bool IsInLimbo()
+    {
+        if (_person.Body.Location == HPers.None && _person.Body.GoingTo == HPers.Home)
+        {
+            //print("Just Spawn:"+Person.MyId);generalOldKeysList
+            return true;
+        }
+        return false;
     }
     
     public void YourTurnToReRoute()
@@ -2352,8 +2368,6 @@ public class Brain
         set { _blackList = value; }
     }
 
-
-
     /// <summary>
     /// 
     /// </summary>
@@ -2365,9 +2379,14 @@ public class Brain
     /// i could not find any bridge</param>
     internal void BlackListBuild(string p)
     {
+        if (_blackList.Contains(p))
+        {
+            return;
+        }
+
         //Debug.Log("Blaclisted:"+p);
-        BridgeMarkedAction(p);
         _blackList = AddToList(_blackList, p);
+        BridgeMarkedAction(p);
     }
 
     /// <summary>

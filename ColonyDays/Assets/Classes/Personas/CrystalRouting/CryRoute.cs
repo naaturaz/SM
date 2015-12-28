@@ -44,6 +44,8 @@ public class CryRoute
 
     Explorer _explorer = new Explorer();
 
+    private float _timeStamp;//when the Route was started 
+
     public bool IsRouteReady
     {
         get { return _isRouteReady; }
@@ -58,6 +60,7 @@ public class CryRoute
 
     public CryRoute(Structure ini, Structure fin, Person person, string destinyKey, bool iniDoor = true, bool finDoor = true)
     {
+        _timeStamp = Time.time;
         _destinyKey = destinyKey;
 
         _iniDoor = iniDoor;
@@ -194,6 +197,13 @@ public class CryRoute
         {
             loop = false;
             Recursive();
+        }
+
+        //something went wrong so must likely isnt able to reach the _fin
+        //so hence is BlackLIsted 
+        if (_checkPoints.Count > 0 && loop == false && !IsRouteReady)
+        {
+            CheckIfIsToBlackList();
         }
     }
 
@@ -439,12 +449,18 @@ public class CryRoute
 
     private int blackCount;
     //the rect will be allow to grow only 10 times. then will be black list tht building if was not reach
-    private int maxGrows = 15;
+    private int maxCounts = 100;
     void CheckIfIsToBlackList()
     {
         blackCount++;
+        Debug.Log("blackCount:"+blackCount);
 
-        if (blackCount > maxGrows)
+        if (blackCount > maxCounts)
+        {
+            BlackList();
+        }
+        //is being a minute since started then can be blaclisted
+        else if (Time.time > _timeStamp + 30f)
         {
             BlackList();
         }
@@ -452,7 +468,7 @@ public class CryRoute
 
     private void BlackList()
     {
-        Debug.Log("BlackList");
+        Debug.Log("BlackListed: " + _fin.MyId);
         _person.Brain.BlackListBuild(_fin.MyId);
     }
 
@@ -807,7 +823,7 @@ public class CryRoute
 
         if (CheckIfNeedGrow())
         {
-            maxGrows++;
+            maxCounts++;
             //curr = PushAwayFromCurrRectCenter(curr);
             //two = PushAwayFromCurrRectCenter(two);
             //return;

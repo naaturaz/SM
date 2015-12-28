@@ -195,7 +195,7 @@ public class CryRect
     /// </summary>
     internal void ApplyMinimumSize()
     {
-//        Debug.Log("smaller side: " + ReturnSizeOfSmallerSide());
+        Debug.Log("smaller side: " + ReturnSizeOfSmallerSide());
 
         //this is important too other wise some rects that are abt regular size get huge
         //so if the diff is bigger than 10f minimun size doenst need to be applied 
@@ -205,7 +205,8 @@ public class CryRect
         }
 
         //4 is important too. 2 wont make it Rects needs to be wide enough if they are getting to narrow
-        growFactor *= 4;
+        //growFactor *= 4;
+        growFactor = 4;
         DefineGrowAxis();
 
         if (_growIn == H.Width)
@@ -214,7 +215,7 @@ public class CryRect
         }
         else { PushThemAwayInAxis(H.Y); }
 
-        //UVisHelp.CreateDebugLines(TheRect, Color.red, 25f);
+        UVisHelp.CreateDebugLines(TheRect, Color.red, 25f);
     }
 
     /// <summary>
@@ -258,10 +259,10 @@ public class CryRect
     /// <returns></returns>
     private Vector2 MoveAwayFromCenterInAxis(Vector2 vector2, H axis = H.None)
     {
-        var dist = Vector2.Distance(TheRect.center, vector2);//distnace to center of the rect 
+        var dist = Mathf.Abs(Vector2.Distance(TheRect.center, vector2));//distnace to center of the rect 
 
         //so its moves away from center
-        Vector2 newVal = Vector2.MoveTowards(vector2, TheRect.center, -(Mathf.Abs(dist))  * growFactor);
+        Vector2 newVal = Vector2.MoveTowards(vector2, TheRect.center, -(dist * growFactor));
         if (axis == H.None)
         {
             return newVal;
