@@ -450,9 +450,18 @@ public class Building : General, Iinfo
             AssignLayer(0);//Default
             RemovePeople();
 
-            //so the action of demolish happens again 
-            var b = (Structure)this;
-            b.Demolish();
+            if (Category != Ca.Way)
+            {
+                //so the action of demolish happens again 
+                var b = (Structure)this;
+                b.Demolish();
+            }
+            else
+            {
+                var b = (Trail)this;
+                b.Demolish();
+            }
+
 
             //so dont call this method anymore
             IsLoadingFromFile = false;
@@ -2604,6 +2613,13 @@ public class Building : General, Iinfo
     /// <returns></returns>
     internal bool IsBuildingCapAtMax()
     {
+        //for ways 
+        if (Inventory == null)
+        {
+            //true so the btn for addding more capacity hides 
+            return true;
+        }
+
         var baseCap = Book.GiveMeStat(HType).Capacity;
 
         return Inventory.Capacity == baseCap + FirstUpgradeAmt() + SecondUpgradeAmt();

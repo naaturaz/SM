@@ -219,7 +219,7 @@ public class CrystalManager  {
 
         AddCrystalToItsRegion(c);
 
-        Debug.Log("Crys added:" + trail.MyId);
+//        Debug.Log("Crys added:" + trail.MyId);
         //_siblings.Add(c);
     }
 

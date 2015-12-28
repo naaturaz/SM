@@ -163,6 +163,9 @@ public class Trail : Way
             _currentLoop = H.TerraSpawn;
 
             DestroyBigPrevBoxes();
+
+            //so people reroute 
+            PersonPot.Control.Queues.AddToNewBuildsQueue(OnScreenPoly);
         }
         else if(!IsWayOk)
         {

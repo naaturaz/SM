@@ -152,7 +152,10 @@ public class MouseListener : InputMain
                 Ca cat = DefineCategory(typeL);
                 Program.InputMain.InputMouse.Select(cat, names[i]);
 
-                return true;
+                if (BuildingPot.Control.Registro.SelectBuilding != null)
+                {
+                    return true;
+                }
             }
         }
         return false;

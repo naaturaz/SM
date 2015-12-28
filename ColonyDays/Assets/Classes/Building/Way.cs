@@ -905,6 +905,9 @@ public class Way : Building
         DestroyBigPrevBoxes();
         DestroyProjector();
 
+        //so people reroute 
+        PersonPot.Control.Queues.AddToDestroyBuildsQueue(OnScreenPoly);
+
         Destroy();
     }
 

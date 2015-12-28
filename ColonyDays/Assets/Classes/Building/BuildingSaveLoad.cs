@@ -206,6 +206,7 @@ public class BuildingSaveLoad : BuildingPot
         trail.PeopleDict = regFile.PeopleDict;
         trail.LandZone1 = regFile.LandZone1;
         trail.Instruction = regFile.Instruction;
+        trail.MaterialKey = regFile.MaterialKey;
 
         //if is not a bridge
         if (!regFile.HType.ToString().Contains(H.Bridge.ToString()))

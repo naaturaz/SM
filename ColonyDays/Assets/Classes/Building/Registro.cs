@@ -127,7 +127,7 @@ public class Registro : MonoBehaviour
         var build = Brain.GetBuildingFromKey(myIdP);
 
         //the building was destroy before was fully built 
-        if (build == null)
+        if (build == null || build.Category == Ca.Way)
         {
             return;
         }
@@ -152,6 +152,14 @@ public class Registro : MonoBehaviour
     public void RemoveFromAllRegFile(string myId)
     {
         int index = AllRegFile.FindIndex(a => a.MyId == myId);
+
+        //bz when destroying Way this method is called at least two times. 
+        //the 2nd time doesnt find the index bz was removed already
+        if (index == -1)
+        {
+            return;
+        }
+        
         AllRegFile.RemoveAt(index);
     }
 
@@ -398,6 +406,12 @@ public class Registro : MonoBehaviour
     {
         var build = AllBuilding[myIdP];
         int index = AllRegFile.FindIndex(a => a.MyId == myIdP);
+
+        //bz when destroying Way this method is called
+        if (index == -1)
+        {
+            return;
+        }
 
         AllRegFile[index].BookedHome1 = build.BookedHome1;
         AllRegFile[index].Instruction = build.Instruction;
