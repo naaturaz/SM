@@ -2190,6 +2190,7 @@ public class Brain
             slowCheckUp = false;
 
             _person.Work = JobManager.ThereIsABetterJob(_person);
+            UpdateBlackListing();
         }
     }
 
@@ -2322,13 +2323,13 @@ public class Brain
         var checkReligion = false;
         var checkChill = false;
 
-        if (_person.Home != null && (buildFunc == HPers.Home || _person.Home.MyId == key))
+        if ((buildFunc == HPers.Home ))
         {
             _person.Home = null;
             checkHome = true;
             oldHome = "";
         }
-        else if (_person.Work != null && (buildFunc == HPers.Work || _person.Work.MyId == key))
+        else if ((buildFunc == HPers.Work ))
         {
             _person.Work = null;
             _person.ProfessionProp = new Profession();//so it cleans profession
@@ -2337,19 +2338,19 @@ public class Brain
             oldWork = "";
 
         }
-        else if (_person.FoodSource != null && (buildFunc == HPers.FoodSource || _person.FoodSource.MyId == key))
+        else if ((buildFunc == HPers.FoodSource ))
         {
             _person.FoodSource = null;
             checkFood = true;
             oldFoodSrc = "";
         }
-        else if (_person.Religion != null && (buildFunc == HPers.Religion || _person.Religion.MyId == key))
+        else if ((buildFunc == HPers.Religion ))
         {
             _person.Religion = null;
             checkReligion = true;
             oldReligion = "";
         }
-        else if (_person.Chill != null && (buildFunc == HPers.Chill || _person.Chill.MyId == key))
+        else if ((buildFunc == HPers.Chill ))
         {
             _person.Chill = null;
             checkChill = true;
@@ -2361,13 +2362,35 @@ public class Brain
 
     #region BlackListing
     //contains all buildings I can currently reach. Since all builignds in a piece of land should be reacheable
-    //this list will clear if one bridge is built 
+    //this list will clear if one bridge is built or moved to a new hose
+    //this is not saved or loaded
     List<string> _blackList = new List<string>();
+
+    //the amt of bridges 
+    //used to know if a new bridge was built.
+    //if so blackList can be clear 
+    private int bridgesCount;
 
     public List<string> BlackList
     {
-        get { return _blackList; }
-        set { _blackList = value; }
+        get{return _blackList;}
+        set{_blackList = value;}
+    }
+
+    /// <summary>
+    /// Will handle the changes of BlackListing
+    /// if new bridge is built willclear blackList
+    /// </summary>
+    private void UpdateBlackListing()
+    {
+        var newBridges = HowManyBuiltBridges();
+        if (bridgesCount != newBridges)
+        {
+            bridgesCount = newBridges;
+            
+            
+            CheckIfClearBlackList();
+        }
     }
 
     /// <summary>
@@ -2406,17 +2429,18 @@ public class Brain
         MakeStructureNull(build);
     }
 
-    bool ThereIsALeast1BuiltBridge()
+    int HowManyBuiltBridges()
     {
+        int res = 0;
         for (int i = 0; i < BuildingPot.Control.Registro.Ways.Count; i++)
         {
-            Bridge way = (Bridge)BuildingPot.Control.Registro.Ways.ElementAt(i).Value;
-            if (way.name.Contains(H.Bridge.ToString()) && way.Pieces[0].CurrentStage == 4)
+            var b = (Trail)BuildingPot.Control.Registro.Ways.ElementAt(i).Value;
+            if (b.MyId.Contains(H.Bridge.ToString()) && b.Pieces[0].CurrentStage == 4)
             {
-                return true;
+                res++;
             }
         }
-        return false;
+        return res;
     }
 
     /// <summary>
@@ -2424,12 +2448,10 @@ public class Brain
     /// </summary>
     void CheckIfClearBlackList()
     {
-        if (
-            //ThereIsALeast1BuiltBridge() && 
-            _blackList.Count > 0)
+        if (_blackList.Count > 0)
         {
             ClearEachBlackListedBuilding();
-            //GameScene.print("Black List Cleared");
+            Debug.Log(_person.MyId+" cleared blackList");
         }
     }
 

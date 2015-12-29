@@ -113,7 +113,7 @@ public class CryRect
         _theRect = Registro.FromALotOfVertexToRect(newPoly);
 
         //RectifyCorners(poly);
-        UVisHelp.CreateDebugLines(TheRect, Color.magenta, 50f);
+        UVisHelp.CreateDebugLines(TheRect, Color.magenta, 20f);
         SetCrystals();
     }
 
@@ -215,7 +215,7 @@ public class CryRect
         }
         else { PushThemAwayInAxis(H.Y); }
 
-        UVisHelp.CreateDebugLines(TheRect, Color.red, 25f);
+        //UVisHelp.CreateDebugLines(TheRect, Color.red, 25f);
     }
 
     /// <summary>

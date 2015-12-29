@@ -187,6 +187,11 @@ public class CryRoute
 
     internal void Update()
     {
+        if (wasBlackListed)
+        {
+            return;
+        }
+
         //so loops thru a specific loop and when is done then can move on to call Recursive again
         if (looping != "")
         {
@@ -481,6 +486,7 @@ public class CryRoute
         return false;
     }
 
+    private bool wasBlackListed;
     private int blackCount;
     //the rect will be allow to grow only 10 times. then will be black list tht building if was not reach
     private int maxCounts = 100;
@@ -494,7 +500,7 @@ public class CryRoute
             BlackList();
         }
         //is being a minute since started then can be blaclisted
-        else if (Time.time > _timeStamp + 30f)//maybe can add someFactor with PC Ram and CPU Speed
+        else if (Time.time > _timeStamp + 90f)//maybe can add someFactor with PC Ram and CPU Speed
         {
             BlackList();
         }
@@ -502,8 +508,9 @@ public class CryRoute
 
     private void BlackList()
     {
-        Debug.Log("BlackListed: " + _fin.MyId);
+        Debug.Log("BlackListed: " + _fin.MyId + " by: "+_person.MyId);
         _person.Brain.BlackListBuild(_fin.MyId);
+        wasBlackListed = true;
     }
 
     /// <summary>
