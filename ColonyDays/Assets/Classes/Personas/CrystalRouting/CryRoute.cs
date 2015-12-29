@@ -232,15 +232,19 @@ public class CryRoute
 
             CreateCryRect();
 
+            DefineHistoCrys();
+            DefineCrystalsOnMyRect();
+
             //will return only if is Done. Other wise needs to be going so _crystals are set 
             //if is BuildingRouting then can return so a new _curr is added and we can keep going 
-            if (canIExplore && ExploreToFin() && (CheckIfDone() || _explorer.IsBuildingRouting))
+            if (canIExplore && ExploreToFin() 
+                //&& (CheckIfDone() || _explorer.IsBuildingRouting)
+                )
             {
                 return;
             }
 
-            DefineHistoCrys();
-            DefineCrystalsOnMyRect();
+            RoutineIfBuildWasHit();
         }
         else if (prevLoop == "DefineCrystalsOnMyRect")
         {
@@ -376,7 +380,8 @@ public class CryRoute
 
     bool TryReachBuilding()
     {
-        Debug.Log("TryReachBuilding() called");
+//        Debug.Log("TryReachBuilding() called");
+
         loop = true;
 
         for (int i = 0; i < _eval.Count; i++)
@@ -391,7 +396,7 @@ public class CryRoute
 
             if (linesIntersected == 0 && !IsOnTheRoute(_eval[i].Position))
             {
-                Debug.Log("TryReachBuilding() _curr set");
+//                Debug.Log("TryReachBuilding() _curr set");
 
                 ResetExplorer();
                 _curr = _eval[i];
@@ -401,6 +406,16 @@ public class CryRoute
                 return true;
             }
         }
+
+        //so the explorer is set again
+        //to prevent loops in where he couldnt reach any point of the other
+        //building therefore the explorer needs to be used again so a new 
+        //set of points are used 
+        ResetExplorer();
+        ResetLoop();
+        ClearPrevLoop();
+        Debug.Log("TryReachBuilding() not reach. Hence Reseted");
+
         return false;
     }
 
@@ -702,7 +717,7 @@ public class CryRoute
         else
         {
             ResetLoop();
-            RoutineIfBuildWasHit();
+            
         }
     }
 
@@ -713,7 +728,7 @@ public class CryRoute
         {
             _eval.Clear();
 //            Debug.Log("was hit:" + _explorer.Result.Key + " ct:" + _explorer.Result.Crystals.Count);
-            Debug.Log("is building routing");
+//            Debug.Log("is building routing");
 
             _eval.AddRange(_explorer.Result.Crystals);
 
@@ -796,16 +811,22 @@ public class CryRoute
     {
         var stepFinalPos = ReturnCorFinal();
 
-        Debug.Log("Exploring");
+//        Debug.Log("Exploring");
         canIExplore = false;
         Line line = new Line(U2D.FromV2ToV3(_curr.Position), stepFinalPos, durationOfLines);
         var interCount = IntersectCount(line);
 
         if (interCount==0)
         {
+//            Debug.Log("Exploring went good ");
             _curr = new Crystal(stepFinalPos, H.None, "", setIdAndName: false);
             loop = true;
-            canIExplore = true;//needs to be able to keep exploring
+            //canIExplore = true;//needs to be able to keep exploring
+            ResetExplorer();
+            
+            ResetLoop();
+            ClearPrevLoop();
+            
             return true;
         }
         return false;

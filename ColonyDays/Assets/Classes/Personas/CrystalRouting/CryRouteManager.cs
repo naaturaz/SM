@@ -127,12 +127,12 @@ public class CryRouteManager
 
         if (_one.LandZone != _two.LandZone)
         {
-            Debug.Log("Bridge Routing");
+ //           Debug.Log("Bridge Routing");
             _cryBridgeRoute = new CryBridgeRoute(_ini, _fin, _person, _destinyKey);
         }
         else
         {
-            Debug.Log("Smple Routing");
+//            Debug.Log("Smple Routing");
             _cryRoute = new CryRoute(_ini, _fin, _person, _destinyKey, _iniDoor, _finDoor);
         }
     }

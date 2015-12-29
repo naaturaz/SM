@@ -168,12 +168,17 @@ public class ExplorerUnit
     public List<Crystal> Crystals = new List<Crystal>();
 
     //distance to currPosition of Crystal Reaching final and intersect 
-    public float Distance; 
+    public float Distance;
+
+    //the current point on the route
+    //the intersections should be moved towards this 
+    public Vector3 Current;
     public Vector3 Final;//the final point of the Route 
     public bool IsHasAValidObstacle;
 
     public ExplorerUnit(Crystal crystal, Vector3 intersect, Vector3 currPosition, Vector3 final)//the curr Position of the Crystal reaching Final
     {
+        Current = currPosition;
         Final = final;
         Key = crystal.ParentId;
         Intersections.Add(intersect);
@@ -228,7 +233,7 @@ public class ExplorerUnit
             anchorOrdered = MeshController.CrystalManager1.ReturnCrystalsThatBelongTo(StillElement, false);
         }
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < anchorOrdered.Count; i++)
         {
             anchorOrdered[i].Distance = Mathf.Abs(Vector3.Distance(U2D.FromV2ToV3(anchorOrdered[i].Position), Final));
         }
@@ -244,16 +249,25 @@ public class ExplorerUnit
     /// </summary>
     List<Crystal> ReturnPriorityToFin(List<Crystal> res)
     {
+        //so i keep it since it can be use in certain circumstances 
+        //var temp = res[res.Count - 1];
+
         //-1 bz only need the first 3 
+        
         res.RemoveAt(res.Count-1);
 
         for (int i = 0; i < Intersections.Count; i++)
         {
-            var last = new Crystal(Intersections[i], H.None, "", setIdAndName: false);
-            res.Add(ReturnCrystalAwayFromBuild(last, AwayFrom()));
+            var inter = new Crystal(Intersections[i], H.None, "", setIdAndName: false);
+
+            //must be moved closer to Current/Origin so in tight towns can be reached
+            //bz if is moved Away from center of the building can be too far to be 
+            //reached 
+            res.Add(ReturnCrystalCloserTo(inter, Current));
             //res.Add(last);
         }
 
+        //res.Add(temp);
         //UVisHelp.CreateHelpers(Intersections, Root.yellowCube);
         return res;
     }
@@ -276,12 +290,12 @@ public class ExplorerUnit
     /// Bz they needs to be moved a bit away from Buildign
     /// </summary>
     /// <returns></returns>
-    Crystal ReturnCrystalAwayFromBuild(Crystal crystal, Vector3 awayFrom)
+    Crystal ReturnCrystalCloserTo(Crystal crystal, Vector3 closerTo)
     {
         var person = PersonPot.Control.All.FirstOrDefault();
         float moveBy = person.PersonDim * 1.5f;
 
-        var moved = Vector3.MoveTowards(U2D.FromV2ToV3(crystal.Position), awayFrom, -moveBy);
+        var moved = Vector3.MoveTowards(U2D.FromV2ToV3(crystal.Position), closerTo, moveBy);
         crystal.Position = U2D.FromV3ToV2(moved);
 
         return crystal;
