@@ -93,5 +93,16 @@ public class StillElement : TerrainRamdonSpawner {
         return res;
     }
 
-    
+    public override void DestroyCool()
+    {
+        //cool stuff
+
+        //remove from CrystalManager
+        MeshController.CrystalManager1.Delete(this);
+
+        base.DestroyCool();
+
+        //save data
+        Program.gameScene.controllerMain.TerraSpawnController.SaveData();
+    }
 }

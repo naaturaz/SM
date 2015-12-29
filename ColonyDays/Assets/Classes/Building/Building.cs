@@ -786,6 +786,9 @@ public class Building : General, Iinfo
         still.IsMarkToMine = true;
         InputMain.InputMeshSpawnObj.ToMineSelectList.Add(still);
         InputMain.InputMeshSpawnObj.AddVisHelpList(true, still);
+
+        //so they disappear, remove Crystals and Routing can work properly
+        still.DestroyCool();
     }
 
     /// <summary>

@@ -195,7 +195,7 @@ public class ExplorerUnit
         }
         else if (StillElement != null)
         {
-            Debug.Log("Hey hit random: " + StillElement.MyId);
+            //Debug.Log("Hey hit random: " + StillElement.MyId);
             IsHasAValidObstacle = true;
         }
         else
@@ -249,25 +249,22 @@ public class ExplorerUnit
     /// </summary>
     List<Crystal> ReturnPriorityToFin(List<Crystal> res)
     {
-        //so i keep it since it can be use in certain circumstances 
-        //var temp = res[res.Count - 1];
+        if (res.Count==0)
+        {
+            var t = this;
+        }
 
         //-1 bz only need the first 3 
-        
         res.RemoveAt(res.Count-1);
 
         for (int i = 0; i < Intersections.Count; i++)
         {
             var inter = new Crystal(Intersections[i], H.None, "", setIdAndName: false);
-
             //must be moved closer to Current/Origin so in tight towns can be reached
             //bz if is moved Away from center of the building can be too far to be 
             //reached 
             res.Add(ReturnCrystalCloserTo(inter, Current));
-            //res.Add(last);
         }
-
-        //res.Add(temp);
         //UVisHelp.CreateHelpers(Intersections, Root.yellowCube);
         return res;
     }

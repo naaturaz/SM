@@ -41,26 +41,58 @@ public class CrystalManager  {
     /// <param name="building"></param>
     public void Delete(Building building)
     {
-        DeleteCrystals(building);
+        //search _crystalRegions points are
+        var indexes = ReturnRegionsOfPointsInStructure(building);
+        DeleteCrystals(indexes, building.MyId);
+    }   
+    
+    public void Delete(StillElement still)
+    {
+        //search _crystalRegions points are
+        var indexes = ReturnRegionsOfPointsInStructure(still);
+        DeleteCrystals(indexes, still.MyId);
     }
 
     /// <summary>
     /// Will delete all crystals related to tht building 
     /// </summary>
-    private void DeleteCrystals(Building building)
+    private void DeleteCrystals(List<int> indexes, string myIdP)
     {
-        //search _crystalRegions points are
-        var indexes = ReturnRegionsOfPointsInStructure(building);
         //remove from each _crystalRegion
         for (int i = 0; i < indexes.Count; i++)
         {
             var indexLoc = indexes[i];
-            CrystalRegions[indexLoc].RemoveCrystal(building.MyId);
+            CrystalRegions[indexLoc].RemoveCrystal(myIdP);
         }
         //dont need to resave bz the adding of a build is done once is spwaned 
-
-
     }
+
+
+
+    /// <summary>
+    /// Will return the region index where all the StillElement points are
+    /// </summary>
+    /// <param name="still"></param>
+    /// <returns></returns>
+    List<int> ReturnRegionsOfPointsInStructure(StillElement still)
+    {
+        List<Vector3> points = new List<Vector3>();
+
+        var obstas = _allObstas.Where(a => a.ParentId == still.MyId).ToList();
+        for (int i = 0; i < obstas.Count; i++)
+        {
+            points.Add(U2D.FromV2ToV3(obstas[i].Position));
+            _allObstas.Remove(obstas[i]);
+        }
+
+        List<int> res = new List<int>();
+        for (int i = 0; i < points.Count; i++)
+        {
+            res.Add(ReturnMyRegion(U2D.FromV3ToV2(points[i])));
+        }
+        return res.Distinct().ToList();
+    }
+
 
     /// <summary>
     /// Will return the Crystals that belong to the building pass aas param
@@ -118,8 +150,6 @@ public class CrystalManager  {
         }
         return H.Obstacle;
     }
-
-    //todo add door when adding building 
 
     /// <summary>
     /// Will return the region index where all the Structure points are

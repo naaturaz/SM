@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -406,6 +407,9 @@ public class CryRoute
                 return true;
             }
         }
+
+        throw new Exception("At least the intersection should be reached. Go and investigate but at least once should " +
+                            "pass this if all fail pls investigate");
 
         //so the explorer is set again
         //to prevent loops in where he couldnt reach any point of the other

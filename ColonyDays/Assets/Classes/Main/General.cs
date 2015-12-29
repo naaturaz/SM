@@ -462,7 +462,7 @@ public class General : MonoBehaviour
         }
     }
 
-    public void DestroyCool() { Destroy(gameObject); }
+    public virtual void DestroyCool() { Destroy(gameObject); }
 
 
     /////Persons and Buldlings Share 

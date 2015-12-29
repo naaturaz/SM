@@ -248,7 +248,7 @@ public class Brain
 
         if (dummyIdle == null || dummyIdle.transform.position == new Vector3())
         {
-            CreateDummyIdle();
+            dummyIdle = CreateDummyIdle();
         }
 
         dummyIdle.transform.position = _idlePoint;
@@ -260,12 +260,12 @@ public class Brain
         idleRouteStart = true;
     }
 
-    void CreateDummyIdle()
+    Structure CreateDummyIdle()
     {
-        // dummyIdle = Program.gameScene.GimeMeUnusedDummy();
+        return Program.gameScene.GimeMeUnusedDummy();
 
-        dummyIdle = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy,
-            container: Program.ClassContainer.transform);
+        //dummyIdle = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy,
+        //    container: Program.ClassContainer.transform);
     }
 
     void ResetDummyIdle()
@@ -274,7 +274,9 @@ public class Brain
         {
             return;
         }
-        dummyIdle.transform.position = new Vector3();
+        Program.gameScene.ReturnUsedDummy(dummyIdle);
+        dummyIdle = null;
+        //dummyIdle.transform.position = new Vector3();
     }
 
     void DefineReligionRoute()

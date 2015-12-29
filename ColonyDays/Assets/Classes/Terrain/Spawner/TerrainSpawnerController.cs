@@ -377,9 +377,15 @@ public class TerrainSpawnerController : ControllerParent
                 isMarkToMineLocal = still.IsMarkToMine;
             }
 
-            tempList.Add(new SpawnedData(
-                AllRandomObjList[i].transform.position, AllRandomObjList[i].transform.rotation, AllSpawnedDataList[i].Type,
-                isMarkToMineLocal, AllSpawnedDataList[i].RootStringIndex, AllSpawnedDataList[i].AllVertexIndex));
+            //if is null was deelleted by user 
+            if (AllRandomObjList[i] != null)
+            {
+                tempList.Add(new SpawnedData(
+                AllRandomObjList[i].transform.position, AllRandomObjList[i].transform.rotation, 
+                AllSpawnedDataList[i].Type,
+                isMarkToMineLocal, AllSpawnedDataList[i].RootStringIndex, 
+                AllSpawnedDataList[i].AllVertexIndex));
+            }
         }
 
         ClearCurrentFileAndList();
