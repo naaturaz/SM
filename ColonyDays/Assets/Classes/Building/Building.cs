@@ -783,9 +783,10 @@ public class Building : General, Iinfo
     protected void MarkTerraSpawn(TerrainRamdonSpawner obj)
     {
         StillElement still = (StillElement)obj;
-        still.IsMarkToMine = true;
-        InputMain.InputMeshSpawnObj.ToMineSelectList.Add(still);
-        InputMain.InputMeshSpawnObj.AddVisHelpList(true, still);
+        
+        //still.IsMarkToMine = true;
+        //InputMain.InputMeshSpawnObj.ToMineSelectList.Add(still);
+        //InputMain.InputMeshSpawnObj.AddVisHelpList(true, still);
 
         //so they disappear, remove Crystals and Routing can work properly
         still.DestroyCool();

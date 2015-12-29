@@ -807,6 +807,7 @@ public class CheckPoint
     private Quaternion _quaterniRotation;//this is the rotation needed to be in the exact good position
     private Quaternion _quaterniRotationInv;
     private bool _inverseWasSet;
+    private float _speed = 1f;
 
     public Vector3 Point
     {
@@ -832,6 +833,16 @@ public class CheckPoint
         set { _inverseWasSet = value; }
     }
 
+    /// <summary>
+    /// The speed of a checkPoint. Ways are faster than grass
+    /// </summary>
+    public float Speed
+    {
+        get { return _speed; }
+        set { _speed = value; }
+    }
+
+
     public CheckPoint() { }
 
     public CheckPoint(Vector3 point)
@@ -839,10 +850,38 @@ public class CheckPoint
         Point = point;
     }
 
-    public CheckPoint(Vector3 point, Quaternion quaternion)
+    /// <summary>
+    /// This one is use to set the Speed of the CheckPoint right away
+    /// </summary>
+    /// <param name="point"></param>
+    /// <param name="crystalType"></param>
+    public CheckPoint(Vector3 point, H crystalType)
     {
-       _point = point;
-       _quaterniRotation = quaternion;
+        Point = point;
+        Speed = SetSpeed(crystalType);
+    }
+
+    /// <summary>
+    /// Sets the speed of the CheckPoint base on the Type of Crystal we are using 
+    /// </summary>
+    /// <param name="_type"></param>
+    /// <returns></returns>
+    float SetSpeed(H _type)
+    {
+        if (_type == H.Way3)//best way
+        {
+            return 1.4f;
+        }
+        else if (_type == H.Way2)
+        {
+            return 1.2f;
+        }
+        else if (_type == H.Way1)//worst way
+        {
+            return 1.1f;
+        }       
+
+        return 1f;
     }
 }
 

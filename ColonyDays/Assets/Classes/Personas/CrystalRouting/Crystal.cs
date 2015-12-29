@@ -226,8 +226,14 @@ public class Crystal
     private int sineFactor = 10;
     internal void CalculateWeight(Vector3 vector3)
     {
-        Distance = Vector3.Distance(U2D.FromV2ToV3(_position), vector3);
-       // _calcWeight = (_baseWeight * weightFactor) + Distance;
+        Distance = Mathf.Abs(Vector3.Distance(U2D.FromV2ToV3(_position), vector3));
+
+        //we are going to substract then 
+        if (Type1.ToString().Contains("Way"))
+        {
+            Distance *= -1;
+        }
+
         _calcWeight = _baseWeight + Distance;
     }
 

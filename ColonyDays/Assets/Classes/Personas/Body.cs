@@ -549,7 +549,7 @@ public class Body //: MonoBehaviour //: General
         }
 
         _person.transform.position = Vector3.MoveTowards(_person.transform.position, _routePoins[_currentRoutePoint].Point,
-            _speed * Program.gameScene.GameSpeed * Time.deltaTime);
+            _speed * Program.gameScene.GameSpeed * Time.deltaTime * _routePoins[_currentRoutePoint].Speed);
     }
 
 	/// <summary>

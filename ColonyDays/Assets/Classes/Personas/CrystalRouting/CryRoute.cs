@@ -19,7 +19,6 @@ public class CryRoute
 
     private CryRect _currRect;//the current rect we are working with right now 
     List<Crystal> _crystals = new List<Crystal>();//the cryustals contain on my rect
-    //    IEnumerable<Crystal> _crystals = new List<Crystal>();//the cryustals contain on my rect
 
     //this are the crystals tht will be evaluated to be move to .
     //here u will see the 2 crystals tht are closer to '_curr' being evaluated 
@@ -210,6 +209,29 @@ public class CryRoute
         }
     }
 
+    /// <summary>
+    /// Will say if has a useful way 
+    /// </summary>
+    /// <returns></returns>
+    bool ItHasAWay()
+    {
+        var stepFinalPos = ReturnCorFinal();
+        if (Vector3.Distance(stepFinalPos, _two.Position) < 0.1f)
+        {
+            //means can reach the final position already
+            return false;
+        }
+
+        var wayCrystals = _crystals.Where(a => a.Type1.ToString().Contains("Way"));
+
+        //if is a way crytal
+        if (wayCrystals.Any())
+        {
+            return true;
+        }
+        return false;
+    }
+
 
     //u can explore only once for a _curr
     private bool canIExplore = true;
@@ -218,7 +240,7 @@ public class CryRoute
         if (prevLoop == "")
         {
             //tha adding of a good point to the Route 
-            _checkPoints.Add(new CheckPoint(U2D.FromV2ToV3(_curr.Position)));
+            _checkPoints.Add(new CheckPoint(U2D.FromV2ToV3(_curr.Position), _curr.Type1));
             
             if (CheckIfDone())
             {
@@ -236,16 +258,7 @@ public class CryRoute
             DefineHistoCrys();
             DefineCrystalsOnMyRect();
 
-            //will return only if is Done. Other wise needs to be going so _crystals are set 
-            //if is BuildingRouting then can return so a new _curr is added and we can keep going 
-            if (canIExplore && ExploreToFin() 
-                //&& (CheckIfDone() || _explorer.IsBuildingRouting)
-                )
-            {
-                return;
-            }
-
-            RoutineIfBuildWasHit();
+         
         }
         else if (prevLoop == "DefineCrystalsOnMyRect")
         {
@@ -351,7 +364,6 @@ public class CryRoute
             {
                 //will reset black vount if 1 is true
                 blackCount = 0;
-                //UVisHelp.CreateText(U2D.FromV2ToV3(_curr.Position), _curr.CalcWeight+"");
 
                 //make current _eval[i] and loop 
                 _curr = _eval[i];
@@ -362,6 +374,7 @@ public class CryRoute
                
                 ResetExplorer();
                 //UVisHelp.CreateHelpers(U2D.FromV2ToV3(_eval[i].Position), Root.blueCube);
+                //UVisHelp.CreateText(U2D.FromV2ToV3(_curr.Position), _curr.CalcWeight + "");
 
                 ResetLoop();
                 ClearPrevLoop();//so can restart Recursive()
@@ -613,13 +626,23 @@ public class CryRoute
         {
             //_eval[i].CalculateWeight(_curr.Position, U2D.FromV3ToV2(_two.Position), _curr.Id);
             //_eval[i].CalculateWeight(U2D.FromV3ToV2(_curr.Position));
-            _eval[i].CalculateWeight(_two.Position);
+
+            //if (ItHasAWay())
+            //{
+            //    _eval[i].CalculateWeight(_curr.Position);
+            //}
+            //else
+            //{
+                _eval[i].CalculateWeight(_two.Position);
+            //}
+            
 
             loopCount++;
             return true;//will cut Recursive Path intentionally, bz i need to finish this loop
         }
         else
         {
+
             _eval = _eval.OrderBy(a => a.CalcWeight).ToList();
             ResetLoop();
 
@@ -701,8 +724,10 @@ public class CryRoute
 
     /// <summary>
     /// Will define '_crystals' whicih is the Crystals on the rect 
+    /// 
+    /// Will return true when is done so Way Routing works 
     /// </summary>
-    private void DefineCrystalsOnMyRect()
+    private void  DefineCrystalsOnMyRect()
     {
         var canI = CanPrepareLoop("DefineCrystalsOnMyRect");
         if (!canI) { return; }//means tht another llop is running now 
@@ -721,7 +746,34 @@ public class CryRoute
         else
         {
             ResetLoop();
-            
+            Reach();//Calling here so way routing works. Its slower like this but way routing will work bz will see if has
+            //crystaks tht have way
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// 
+    /// All the body of this method used to be called in recursive 
+    /// </summary>
+    private void Reach()
+    {
+        //will return only if is Done. Other wise needs to be going so _crystals are set 
+        //if is BuildingRouting then can return so a new _curr is added and we can keep going 
+
+        //if doesnt have a way cna do this 
+        if (canIExplore && !ItHasAWay() && ExploreToFin()
+            //&& (CheckIfDone() || _explorer.IsBuildingRouting)
+            )
+        {
+            return;
+        }
+
+        //if doesnt have a way cna do this 
+        //if has a way will go trhu the way 
+        if (!ItHasAWay())
+        {
+            RoutineIfBuildWasHit();
         }
     }
 
@@ -865,22 +917,22 @@ public class CryRoute
         AddToHistoricalRegions(U2D.FromV2ToV3(_curr.Position));
     }
 
-    /// <summary>
-    /// Will push the 'val' away from the center of the '_currRect.TheRect.center'
-    /// Use to grow the rectagle . Is needed when addressing delta routing 
-    /// </summary>
-    /// <param name="val"></param>
-    /// <returns></returns>
-    Vector3 PushAwayFromCurrRectCenter(Vector3 val)
-    {
+    ///// <summary>
+    ///// Will push the 'val' away from the center of the '_currRect.TheRect.center'
+    ///// Use to grow the rectagle . Is needed when addressing delta routing 
+    ///// </summary>
+    ///// <param name="val"></param>
+    ///// <returns></returns>
+    //Vector3 PushAwayFromCurrRectCenter(Vector3 val)
+    //{
 
-        var center = U2D.FromV2ToV3(_currRect.TheRect.center);
-        var dist = Vector3.Distance(center, val);//distnace to center of the rect 
+    //    var center = U2D.FromV2ToV3(_currRect.TheRect.center);
+    //    var dist = Vector3.Distance(center, val);//distnace to center of the rect 
 
-        //so its moves away from center
-        Vector3 res = Vector3.MoveTowards(val, center, -grow * dist);
-        return res;
-    }
+    //    //so its moves away from center
+    //    Vector3 res = Vector3.MoveTowards(val, center, -grow * dist);
+    //    return res;
+    //}
 
     /// <summary>
     /// Will check if _currRect needs to grow bz _curr didnt change . 
@@ -946,6 +998,14 @@ public class CryRoute
     /// </summary>
     private void CanIReach2PointAfter()
     {
+        var wayChecks = _checkPoints.Where(a => a.Speed > 1f);
+        if (wayChecks.Any())
+        {
+            //means it has way Crystals on it 
+            return;
+        }
+
+
         if (_checkPoints.Count - 1 < count + 2)
         {
             count = 0;
