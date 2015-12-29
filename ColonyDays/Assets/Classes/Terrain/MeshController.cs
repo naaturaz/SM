@@ -115,6 +115,9 @@ public class MeshController : ControllerParent
         SubPolyr = new SubPolyr();
         subMesh = new SubMeshData();
         IsLoading = true;
+
+        //bz is static and if a new game is started needs to clean up and start again 
+        CrystalManager1 = new CrystalManager();
     }
 
     void Update()

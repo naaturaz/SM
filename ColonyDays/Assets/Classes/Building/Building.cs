@@ -1804,7 +1804,10 @@ public class Building : General, Iinfo
         else { LandZoningBridge(); }
     }
 
-    void LandZoningBridge()
+    /// <summary>
+    /// Is made public so when is loding is called 
+    /// </summary>
+    public void LandZoningBridge()
     {
         Bridge br = (Bridge)this;
         var ends = br.GiveTwoEnds();

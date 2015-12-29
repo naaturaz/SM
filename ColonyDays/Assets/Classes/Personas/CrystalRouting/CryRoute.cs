@@ -60,7 +60,7 @@ public class CryRoute
 
     public CryRoute(Structure ini, Structure fin, Person person, string destinyKey, bool iniDoor = true, bool finDoor = true)
     {
-        _timeStamp = Time.time;
+        
         _destinyKey = destinyKey;
 
         _iniDoor = iniDoor;
@@ -100,6 +100,8 @@ public class CryRoute
 
     private void Init()
     {
+        _timeStamp = Time.time;
+
         _curr.Position = U2D.FromV3ToV2(_one.Position);
         loop = true;
 
@@ -453,7 +455,7 @@ public class CryRoute
     void CheckIfIsToBlackList()
     {
         blackCount++;
-//        Debug.Log("blackCount:"+blackCount);
+        Debug.Log("blackCount:"+blackCount);
 
         if (blackCount > maxCounts)
         {
