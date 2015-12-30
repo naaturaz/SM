@@ -145,6 +145,9 @@ public class PersonController : PersonPot
 
         //so the loading screen is kill and gui loaded 
         Program.MyScreen1.LoadingScreenIsDone();
+
+        //so its loaded to the right Screen resolution 
+        Program.MouseListener.ApplyChangeScreenResolution();
     }
 
     void LoadFromFile(PersonData pData)

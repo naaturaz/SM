@@ -162,12 +162,9 @@ public class GameScene : General {
     {
         if (Input.GetKeyUp(KeyCode.Keypad1))
         {
-           Program.MouseListener.  ApplyChangeScreenResolution();
+           Program.MouseListener.ApplyChangeScreenResolution();
         }
     }
-
-
-
 
     private bool _hideText = true;
     private void DebugInput()
