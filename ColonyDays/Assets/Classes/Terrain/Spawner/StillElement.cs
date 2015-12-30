@@ -102,7 +102,6 @@ public class StillElement : TerrainRamdonSpawner {
 
         base.DestroyCool();
 
-        //save data
-        Program.gameScene.controllerMain.TerraSpawnController.SaveData();
+        //save data must be saved by user
     }
 }
