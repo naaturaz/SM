@@ -8,13 +8,13 @@ public class Registro : MonoBehaviour
     //all bulidings
     private List<RegFile> _allRegFile = new List<RegFile>();
     //hovered buildings
-    List<RegFile> _hover = new List<RegFile>();
+    private List<RegFile> _hover = new List<RegFile>();
 
-    List<Vector3> _locHoverVert = new List<Vector3>();//poly of the area hovered 
-    Rect _hoverVertexRect = new Rect();//poly of the area hovered , the rect
+    private List<Vector3> _locHoverVert = new List<Vector3>(); //poly of the area hovered 
+    private Rect _hoverVertexRect = new Rect(); //poly of the area hovered , the rect
     public static List<Rect> toDraw = new List<Rect>();
     public static Rect curr = new Rect();
-    SMe m = new SMe();
+    private SMe m = new SMe();
 
     private Dictionary<string, Structure> _structures = new Dictionary<string, Structure>();
     private Dictionary<string, Way> _ways = new Dictionary<string, Way>();
@@ -41,28 +41,19 @@ public class Registro : MonoBehaviour
     public Dictionary<string, Structure> Structures
     {
         get { return _structures; }
-        set
-        {
-            _structures = value;
-        }
+        set { _structures = value; }
     }
 
     public Dictionary<string, Way> Ways
     {
         get { return _ways; }
-        set
-        {
-            _ways = value;
-        }
+        set { _ways = value; }
     }
 
     public Dictionary<string, DragSquare> Farms
     {
         get { return _farms; }
-        set
-        {
-            _farms = value;
-        }
+        set { _farms = value; }
     }
 
     public Building SelectBuilding
@@ -72,11 +63,11 @@ public class Registro : MonoBehaviour
     }
 
 
+    public Registro() { }
 
-    
 
 
-    /// <summary>
+/// <summary>
     /// Remove item from All, and its spefic list
     /// </summary>
     /// <param name="cat">item category</param>

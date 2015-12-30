@@ -13,7 +13,10 @@ public class InputMouse : InputParent
     }
 	
 	// Update is called once per frame
-    public void Update()    {    }
+    public void Update()
+    {
+        DebugFullConstructedBuilding();
+    }
 
     public void UnSelectRoutine(List<string> names, Transform clicked)
     {
@@ -26,6 +29,20 @@ public class InputMouse : InputParent
                 UnSelectCurrent();
                 Program.MouseListener.DestroyForm();
             }
+        }
+    }
+
+    //Will get fully built
+    void DebugFullConstructedBuilding()
+    {
+        if (BuildingPot.Control == null)
+        {
+            return;
+        }
+
+        if (BuildingPot.Control.Registro.SelectBuilding != null && Input.GetKeyUp(KeyCode.Z))
+        {
+            BuildingPot.Control.Registro.SelectBuilding.AddToConstruction(10000);
         }
     }
 
