@@ -149,11 +149,24 @@ public class Builder : Profession
         {
             if (_constructing.Anchors.Count > 0)
             {
-                //todo Add this when building Dock
                 return Brain.ReturnClosestVector3(_person.Work.transform.position, _constructing.Anchors);
             }
-            return new Vector3();
         }
+        else if (_constructing.HType.ToString().Contains("Dock") || _constructing.HType.ToString().Contains("DryDock"))
+        {
+            if (_constructing.Anchors.Count > 0)
+            {
+                //return the closest anchor to SpawnPoint 
+                var sp = (StructureParent) _constructing;
+                return Brain.ReturnClosestVector3(sp.SpawnPoint.transform.position, _constructing.Anchors);
+            }
+        }
+
+        //so will take a break
+        if (_constructing.Anchors.Count == 0)
+        { return new Vector3();}
+
+        //for all other cases 
         return _constructing.Anchors[UMath.GiveRandom(0, 4)];
     }
 
