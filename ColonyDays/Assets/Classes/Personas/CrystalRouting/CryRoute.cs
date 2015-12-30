@@ -634,14 +634,8 @@ public class CryRoute
             //_eval[i].CalculateWeight(_curr.Position, U2D.FromV3ToV2(_two.Position), _curr.Id);
             //_eval[i].CalculateWeight(U2D.FromV3ToV2(_curr.Position));
 
-            //if (ItHasAWay())
-            //{
-            //    _eval[i].CalculateWeight(_curr.Position);
-            //}
-            //else
-            //{
-                _eval[i].CalculateWeight(_two.Position);
-            //}
+            _eval[i].CalculateWeight(_two.Position, U2D.FromV2ToV3(_curr.Position));
+
             
 
             loopCount++;

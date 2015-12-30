@@ -97,7 +97,8 @@ public class BuildingSaveLoad : BuildingPot
     void CreateDraggableSquare(RegFile regFile)
     {
         Control.CurrentSpawnBuild = Way.CreateWayObj(Root.farm, regFile.IniPos,
-            previewObjRoot: Root.previewTrail, hType: regFile.HType, isLoadingFromFile: true);
+            previewObjRoot: Root.previewTrail, hType: regFile.HType, isLoadingFromFile: true
+            , container: Program.BuildsContainer.transform);
 
         DragSquare f = (DragSquare) Control.CurrentSpawnBuild;
         f.PlanesSoil = CreatePlanes(regFile.PlaneOnAirPos, f.transform, regFile.TileScale, regFile.MaterialKey);
@@ -133,7 +134,8 @@ public class BuildingSaveLoad : BuildingPot
     void CreateStructure(RegFile regFile)
     {
         Control.CurrentSpawnBuild = Building.CreateBuild(Root.RetBuildingRoot(regFile.HType), regFile.IniPos, 
-            regFile.HType, isLoadingFromFile: true, materialKey: regFile.MaterialKey);
+            regFile.HType, isLoadingFromFile: true, materialKey: regFile.MaterialKey
+            , container: Program.BuildsContainer.transform);
             
         //this is part of the Reduce Draw calls experiment
         //Material n = Batcher.BuildsStatic[H.Tavern + "." + Ma.matBuildBase];
@@ -177,20 +179,23 @@ public class BuildingSaveLoad : BuildingPot
         if (regFile.HType == H.Trail)
         {
             trail = (Trail)Way.CreateWayObj(Root.trail, regFile.IniPos,
-                previewObjRoot: Root.previewTrail, hType: H.Trail, isLoadingFromFile: true);
+                previewObjRoot: Root.previewTrail, hType: H.Trail, isLoadingFromFile: true
+                , container: Program.BuildsContainer.transform);
         }
         else if (regFile.HType == H.BridgeTrail)
         {
              trail = (Bridge)
                 Way.CreateWayObj(Root.bridge, regFile.IniPos, previewObjRoot: Root.previewTrail,
-                hType: H.BridgeTrail, isLoadingFromFile: true);
+                hType: H.BridgeTrail, isLoadingFromFile: true
+                , container: Program.BuildsContainer.transform);
         }
         else if (regFile.HType == H.BridgeRoad)
         {
             trail = (Bridge)
                 Way.CreateWayObj(Root.bridge, regFile.IniPos, previewObjRoot: Root.previewRoad,
                 hType: H.BridgeRoad, wideSquare: 5, radius: 5f, planeScale: 0.11f, maxStepsWay: 20,
-                isLoadingFromFile: true);
+                isLoadingFromFile: true
+                , container: Program.BuildsContainer.transform);
         }
 
         trail.CurrentLoop = H.Done;

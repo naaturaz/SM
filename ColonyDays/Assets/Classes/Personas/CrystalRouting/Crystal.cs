@@ -224,17 +224,18 @@ public class Crystal
 
     private int weightFactor = 1;
     private int sineFactor = 10;
-    internal void CalculateWeight(Vector3 vector3)
+    internal void CalculateWeight(Vector3 final, Vector3 curr)
     {
-        Distance = Mathf.Abs(Vector3.Distance(U2D.FromV2ToV3(_position), vector3));
+        Distance = Mathf.Abs(Vector3.Distance(U2D.FromV2ToV3(_position), final));
+        var furtherWeight = CheckIfFurtherThanCurr(curr, final);
 
         //we are going to substract then 
         if (Type1.ToString().Contains("Way"))
         {
-            Distance *= -1;
+            Distance = Mathf.Abs(Vector3.Distance(U2D.FromV2ToV3(_position), curr));
         }
 
-        _calcWeight = _baseWeight + Distance;
+        _calcWeight = _baseWeight + Distance + furtherWeight;
     }
 
     public static DebugCrystal DebugCrystal = new DebugCrystal();

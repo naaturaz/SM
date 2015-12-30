@@ -388,12 +388,15 @@ public class InputBuilding : BuildingPot {
     private void BuildDragSquare(H buildWhat, Vector3 iniPos)
     {
         Control.CurrentSpawnBuild = Way.CreateWayObj(Root.farm, iniPos,
-            previewObjRoot: Root.previewTrail, hType: buildWhat, materialKey: buildWhat + "." + Ma.matBuildBase);
+            previewObjRoot: Root.previewTrail, hType: buildWhat, materialKey: buildWhat + "." + Ma.matBuildBase
+            , container: Program.BuildsContainer.transform);
     }
 
     void BuildStructure(H buildWhat, Vector3 iniPos)
     {
-        Control.CurrentSpawnBuild = Building.CreateBuild(Root.RetBuildingRoot(buildWhat), iniPos, buildWhat, materialKey: buildWhat + "." + Ma.matBuildBase);
+        Control.CurrentSpawnBuild = Building.CreateBuild(Root.RetBuildingRoot(buildWhat), iniPos, buildWhat,
+            materialKey: buildWhat + "." + Ma.matBuildBase
+            , container: Program.BuildsContainer.transform);
 
         AssignSharedMaterial();
     }
@@ -403,7 +406,8 @@ public class InputBuilding : BuildingPot {
         if (buildWhat == H.Trail)
         {
             Control.CurrentSpawnBuild = (Trail)Way.CreateWayObj(Root.trail, iniPos,
-                previewObjRoot: Root.previewTrail, hType: H.Trail, materialKey: H.Trail + "." + Ma.matBuildBase);
+                previewObjRoot: Root.previewTrail, hType: H.Trail, materialKey: H.Trail + "." + Ma.matBuildBase
+                , container: Program.BuildsContainer.transform);
         }
         //else if (buildWhat == H.Road)
         //{
@@ -416,14 +420,16 @@ public class InputBuilding : BuildingPot {
         {
             Control.CurrentSpawnBuild = (Bridge)
                     Way.CreateWayObj(Root.bridge, iniPos, previewObjRoot: Root.previewTrail,
-                        hType: H.BridgeTrail, materialKey: H.BridgeTrail + "." + Ma.matBuildBase);
+                        hType: H.BridgeTrail, materialKey: H.BridgeTrail + "." + Ma.matBuildBase
+                        , container: Program.BuildsContainer.transform);
         }
         else if (buildWhat == H.BridgeRoad)
         {
             Control.CurrentSpawnBuild = (Bridge)
                     Way.CreateWayObj(Root.bridge, iniPos, previewObjRoot: Root.previewRoad,
                         hType: H.BridgeRoad, wideSquare: 5, radius: 5f, planeScale: 0.11f, maxStepsWay: 20,
-                        materialKey: H.BridgeRoad + "." + Ma.matBuildBase);
+                        materialKey: H.BridgeRoad + "." + Ma.matBuildBase
+                        , container: Program.BuildsContainer.transform);
         }
 
         //AssignSharedMaterial();

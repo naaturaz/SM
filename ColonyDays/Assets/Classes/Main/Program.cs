@@ -16,6 +16,9 @@ public class Program : MonoBehaviour {
     // a empty gameObj in game hieratchy are under the same obj
     public static General ClassContainer;
 
+    //cointains all the buildings as childs 
+    public static General BuildsContainer;
+
     //statics vars
     public static Vector3 VIEWPOS;//use to grab mouse view position
     public static Transform MOUSEOVERTHIS = null;
@@ -55,6 +58,9 @@ public class Program : MonoBehaviour {
 
         MouseListener.Start();
 	    ClassContainer = General.Create(Root.classesContainer);
+
+	    BuildsContainer = General.Create(Root.classesContainer, name: "BuildsContainer");
+
         if (Application.loadedLevelName == "Lobby")
         {
             Settings.PlayMusic();
@@ -114,6 +120,7 @@ public class Program : MonoBehaviour {
     public static void KillGame()
     {
         ClassContainer.Destroy();
+        BuildsContainer.Destroy();
         gameScene.Destroy();
         gameScene = null;
         InputMain.Destroy();
@@ -124,15 +131,6 @@ public class Program : MonoBehaviour {
     public static void CreateGame()
     {
         start = true;
-        
     }
 
-
-
-
-    internal void CreateNewGame(string terraName, string diff, string townName)
-    {
-        //so restarts
-        Camera.main.transform.position = new Vector3();
-    }
 }

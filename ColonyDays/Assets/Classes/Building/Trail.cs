@@ -432,7 +432,7 @@ public class Trail : Way
         if (currentLoop == H.PlanesVertic)
         {
             //1st, last, and 10 multiples
-            if (counter == 0 || counter == verticCount - 1 || counter % 10 == 0)
+            if (counter == 0 || counter == verticCount - 1 || counter % 4 == 0)
             {
                 //UVisHelp.CreateHelpers(pos, Root.blueCube);
                 MeshController.CrystalManager1.Add(pos, trail);
@@ -441,7 +441,7 @@ public class Trail : Way
         else if (currentLoop == H.PlanesHor)
         {
             //1st, last, and 10 multiples
-            if (counter == 0 || counter == horCount - 1 || counter % 10 == 0)
+            if (counter == 0 || counter == horCount - 1 || counter % 4 == 0)
             {
                 //UVisHelp.CreateHelpers(pos, Root.yellowSphereHelp);
                 MeshController.CrystalManager1.Add(pos, trail);
