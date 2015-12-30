@@ -634,16 +634,14 @@ public class CryRoute
             //_eval[i].CalculateWeight(_curr.Position, U2D.FromV3ToV2(_two.Position), _curr.Id);
             //_eval[i].CalculateWeight(U2D.FromV3ToV2(_curr.Position));
 
-            _eval[i].CalculateWeight(_two.Position, U2D.FromV2ToV3(_curr.Position));
-
-            
+            var finOrC = ReturnCorFinal();
+            _eval[i].CalculateWeight(finOrC, _two.Position, U2D.FromV2ToV3(_curr.Position));
 
             loopCount++;
             return true;//will cut Recursive Path intentionally, bz i need to finish this loop
         }
         else
         {
-
             _eval = _eval.OrderBy(a => a.CalcWeight).ToList();
             ResetLoop();
 

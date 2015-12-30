@@ -380,8 +380,9 @@ public class Trail : Way
                 }
                 PlanesListVertic[_counter].UpdatePos(_planesDimVertic[_counter], makeThisInvisible: makeWayInvisible);
 
-                AddToCrystals(CurrentLoop, _counter,
-                    PlanesListVertic[_counter].transform.position, _planesDimVertic.Count, _planesDimHor.Count, this);
+                //to Refine
+                //AddToCrystals(CurrentLoop, _counter,
+                //    PlanesListVertic[_counter].transform.position, _planesDimVertic.Count, _planesDimHor.Count, this);
 
                 _counter++;
             }
@@ -405,8 +406,9 @@ public class Trail : Way
                 }
                 PlanesListHor[_counter].UpdatePos(_planesDimHor[_counter], makeThisInvisible: makeWayInvisible);
 
-                AddToCrystals(CurrentLoop, _counter,
-                  PlanesListHor[_counter].transform.position, _planesDimVertic.Count, _planesDimHor.Count, this);
+                //to Refine
+                //AddToCrystals(CurrentLoop, _counter,
+                //  PlanesListHor[_counter].transform.position, _planesDimVertic.Count, _planesDimHor.Count, this);
 
                 _counter++;
             }
@@ -432,7 +434,7 @@ public class Trail : Way
         if (currentLoop == H.PlanesVertic)
         {
             //1st, last, and 10 multiples
-            if (counter == 0 || counter == verticCount - 1 || counter % 4 == 0)
+            if (counter == 0 || counter == verticCount - 1 || counter % 10 == 0)
             {
                 //UVisHelp.CreateHelpers(pos, Root.blueCube);
                 MeshController.CrystalManager1.Add(pos, trail);
@@ -441,7 +443,7 @@ public class Trail : Way
         else if (currentLoop == H.PlanesHor)
         {
             //1st, last, and 10 multiples
-            if (counter == 0 || counter == horCount - 1 || counter % 4 == 0)
+            if (counter == 0 || counter == horCount - 1 || counter % 10 == 0)
             {
                 //UVisHelp.CreateHelpers(pos, Root.yellowSphereHelp);
                 MeshController.CrystalManager1.Add(pos, trail);

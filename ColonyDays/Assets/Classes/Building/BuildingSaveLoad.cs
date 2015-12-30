@@ -287,8 +287,9 @@ public class BuildingSaveLoad : BuildingPot
                 res.Add(CreatePlane.CreatePlan(Root.createPlane, Root.RetMaterialRoot(regFile.MaterialKey),
                     regFile.TilePosVert[i], scale: regFile.TileScale, container: containerP));
 
-                Trail.AddToCrystals(H.PlanesVertic, i, regFile.TilePosVert[i], regFile.TilePosVert.Count,
-                    regFile.TilePosHor.Count, trail);
+                //to Refine
+                //Trail.AddToCrystals(H.PlanesVertic, i, regFile.TilePosVert[i], regFile.TilePosVert.Count,
+                //    regFile.TilePosHor.Count, trail);
             }
         }
         else if (which == H.Horiz)
@@ -298,8 +299,9 @@ public class BuildingSaveLoad : BuildingPot
                 res.Add(CreatePlane.CreatePlan(Root.createPlane, Root.RetMaterialRoot(regFile.MaterialKey),
                     regFile.TilePosHor[i], scale: regFile.TileScale, container: containerP));
 
-                Trail.AddToCrystals(H.PlanesHor, i, regFile.TilePosHor[i], regFile.TilePosVert.Count,
-                    regFile.TilePosHor.Count, trail);
+                //to Refine
+                //Trail.AddToCrystals(H.PlanesHor, i, regFile.TilePosHor[i], regFile.TilePosVert.Count,
+                //    regFile.TilePosHor.Count, trail);
             }
         }
         return res;

@@ -96,6 +96,10 @@ public class CryRect
         _b = FindB();
         _d = FindD();
 
+        //so Rect Grows 
+        //so way routing works 
+        //PushThemAway();
+
         if (minimuSize)
         {
             //when calling this is really importat bz this solved the Mountain Routing problem
@@ -195,7 +199,7 @@ public class CryRect
     /// </summary>
     internal void ApplyMinimumSize()
     {
-//        Debug.Log("smaller side: " + ReturnSizeOfSmallerSide());
+//      Debug.Log("smaller side: " + ReturnSizeOfSmallerSide());
 
         //this is important too other wise some rects that are abt regular size get huge
         //so if the diff is bigger than 10f minimun size doenst need to be applied 
@@ -226,15 +230,6 @@ public class CryRect
     /// <param name="h"></param>
     private void PushThemAway()
     {
-        List<Vector2> lis = new List<Vector2>(){_a,_b,_c,_d};
-
-        //for (int i = 0; i < lis.Count; i++)
-        //{
-        //    lis[i] = MoveAwayFromCenterInAxis(lis[i], axis);
-        //}
-
-        //var aa = _a;
-
         _a = MoveAwayFromCenterInAxis(_a);
         _b = MoveAwayFromCenterInAxis(_b);
         _c = MoveAwayFromCenterInAxis(_c);

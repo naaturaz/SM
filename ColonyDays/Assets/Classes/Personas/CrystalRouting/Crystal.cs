@@ -224,10 +224,13 @@ public class Crystal
 
     private int weightFactor = 1;
     private int sineFactor = 10;
-    internal void CalculateWeight(Vector3 final, Vector3 curr)
+    internal void CalculateWeight(Vector3 finOrC, Vector3 final, Vector3 curr)
     {
         Distance = Mathf.Abs(Vector3.Distance(U2D.FromV2ToV3(_position), final));
         var furtherWeight = CheckIfFurtherThanCurr(curr, final);
+
+        //can't be further than C
+        furtherWeight += CheckIfFurtherThanCurr(curr, finOrC);
 
         //we are going to substract then 
         if (Type1.ToString().Contains("Way"))
