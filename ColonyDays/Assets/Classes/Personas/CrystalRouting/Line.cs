@@ -24,7 +24,6 @@ public class Line
         set { _Id = value; }
     }
 
-
     public Line() { }
 
     public Line(Vector2 a, Vector2 b, bool debugRender = true)
@@ -38,7 +37,7 @@ public class Line
         }
     }
 
-    public Line(Vector3 a, Vector3 b, float duration,  bool debugRender=true )
+    public Line(Vector3 a, Vector3 b, float duration, bool debugRender=true)
     {
         _a = U2D.FromV3ToV2( a);
         _b = U2D.FromV3ToV2( b);
@@ -147,6 +146,8 @@ public class Line
     {
         var a = new Vector3(A1.x, m.IniTerr.MathCenter.y, A1.y);
         var b =new Vector3(B1.x, m.IniTerr.MathCenter.y, B1.y);
+
+
 
         Debug.DrawLine(a, b, Color.white, duration);
     }

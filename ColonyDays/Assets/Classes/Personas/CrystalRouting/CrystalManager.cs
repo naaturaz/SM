@@ -1332,6 +1332,88 @@ public class CrystalManager  {
     {
         return isFullyLoaded;
     }
+
+    /// <summary>
+    /// Will tell if those 'poly' intersect any line btw them and the 'iniPos'
+    /// </summary>
+    /// <param name="points"></param>
+    /// <returns></returns>
+    public bool IntersectAnyLine(List<Vector3> points, Vector3 iniPos)
+    {
+        //get the indexes of regions the poly is 
+        var indexes = ReturnPolySurroundingRegions(points);
+        //lines formed from iniPos to each points elements
+        var lines = ReturnAllLines(points, iniPos);
+
+        for (int i = 0; i < lines.Count; i++)
+        {
+            //means one the lines is intesecting a line 
+            if (DoIIntersectAnyLine(lines[i], indexes, new CryRoute()))
+            {
+                return true;
+            }
+        }
+        return false;
+    } 
+    
+    ///<summary>
+    /// Will tell if those 'poly' intersect any line btw them and the 'iniPos'
+    /// 
+    /// Final is the final position
+    /// </summary>
+    public bool IntersectAnyLine(Vector3 final, Vector3 iniPos)
+    {
+        List<Vector3> points = new List<Vector3>() { final, iniPos };
+
+        //get the indexes of regions the poly is 
+        var indexes = ReturnPolySurroundingRegions(points);
+        //lines formed from iniPos to each points elements
+        Line line = new Line(final, iniPos, 20f);
+
+        if (DoIIntersectAnyLine(line, indexes, new CryRoute()))
+        {
+            return true;
+        }
+        
+        return false;
+    }
+
+    /// <summary>
+    /// Will return all lines formed from 'ini' to each point of poly
+    /// </summary>
+    /// <param name="points"></param>
+    /// <param name="iniPos"></param>
+    /// <returns></returns>
+    List<Line> ReturnAllLines(List<Vector3> points, Vector3 iniPos)
+    {
+        List<Line> res = new List<Line>();
+
+        for (int i = 0; i < points.Count; i++)
+        {
+            res.Add(new Line(points[i], iniPos, 10f));
+        }
+
+        return res;
+    }
+
+        /// <summary>
+    /// Return the regions surrouding each point of the poly 
+    /// </summary>
+    /// <param name="poly"></param>
+    /// <returns></returns>
+    List<int> ReturnPolySurroundingRegions(List<Vector3> poly)
+    {
+        List<int> res = new List<int>();
+
+        for (int i = 0; i < poly.Count; i++)
+        {
+            var currRegion = ReturnMyRegion(U2D.FromV3ToV2(poly[i]));
+
+            res.AddRange(ReturnCurrentSurroundIndexRegions(currRegion, 3));    
+        }
+
+        return res.Distinct().ToList();
+    }
 }
 
 

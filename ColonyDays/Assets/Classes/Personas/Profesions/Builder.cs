@@ -132,7 +132,7 @@ public class Builder : Profession
         MoveTowOrigin = -0.01f;
 
         //moving the route point a bit away from the origin 
-        FinRoutePoint = Vector3.MoveTowards(FinRoutePoint, _constructing.transform.position, MoveTowOrigin);
+        //FinRoutePoint = Vector3.MoveTowards(FinRoutePoint, _constructing.transform.position, MoveTowOrigin);
 
         MoveTowOrigin = -0.05f;//when looks at on Profession works properly
 
@@ -149,6 +149,7 @@ public class Builder : Profession
         {
             if (_constructing.Anchors.Count > 0)
             {
+                //todo Add this when building Dock
                 return Brain.ReturnClosestVector3(_person.Work.transform.position, _constructing.Anchors);
             }
             return new Vector3();
@@ -160,8 +161,13 @@ public class Builder : Profession
     {
         _routerActive = true;
 
+        //dummy = Program.gameScene.GimeMeUnusedDummy();
         dummy = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy);
         dummy.transform.position = FinRoutePoint;
+
+        //so SpwanPoint doesnt fall inside building
+        dummy.transform.LookAt(_constructing.transform.position);
+
         dummy.HandleLandZoning();
 
         Router1 = new CryRouteManager(_person.Work, dummy, _person, finDoor:false);

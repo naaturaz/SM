@@ -9,34 +9,35 @@ public class Person : General
     private List<General> _debugList = new List<General>();
 
     private int _age;
-    
-    private bool _isMajor;//says if a person is major age 
+
+    private bool _isMajor; //says if a person is major age 
 
     //Birthday Related
-    private int _lastBDYear;//the year I had the last birthday. So i dont have more thn 1 BD a Year 
-    private int _birthMonth;//the birthday of the person
-    private int _unHappyYears;//if is over X amount will emmigrate
+    private int _lastBDYear; //the year I had the last birthday. So i dont have more thn 1 BD a Year 
+    private int _birthMonth; //the birthday of the person
+    private int _unHappyYears; //if is over X amount will emmigrate
 
     private int _lifeLimit;
     private string _name;
     private EducationLevel _educationLevel;
     private double _happinnes = 5, _prosperity = 5;
     private H _gender;
-    
+
     //only for females
     private bool _isPregnant;
-    private int _lastNewBornYear = -10;//the last pregnancy she had, when was the birth year 
+    private int _lastNewBornYear = -10; //the last pregnancy she had, when was the birth year 
     //once pregnant will tell u the due date 
     private int _dueMonth;
     private int _dueYear;
-    
+
     //how well feed is a person. 100 is max. 
     //if person eat adds to this. This will be removed by one every : checkFoodElapsed
-    float _nutritionLevel = 50;
+    private float _nutritionLevel = 50;
 
     ///Variables to allow the class be independet 
     //how often will check if obj has eaten
     private float checkFoodElapsed = 7.5f;
+
     private float startFoodTime;
 
     //Places
@@ -48,26 +49,26 @@ public class Person : General
     private Vector3 _idlePlace;
 
     //Techincal
-    List<Vector3> _personBounds = new List<Vector3>();
-    private float _personDim = 0.0925f;//used to naviagte btw buildigns 
+    private List<Vector3> _personBounds = new List<Vector3>();
+    private float _personDim = 0.0925f; //used to naviagte btw buildigns 
 
     //Person Own Objects and fields
     private Brain _brain;
     private Body _body;
-    private string spouse ="";
-    private bool isWidow;//if is wont get married again
+    private string spouse = "";
+    private bool isWidow; //if is wont get married again
 
-    private bool _isStudent;//true if found a school as being a student bz is in student age 
+    private bool _isStudent; //true if found a school as being a student bz is in student age 
 
     //mother and father of a person
-    private string _familyId ="";//the id of a Family will be used to ease the process of moving 
+    private string _familyId = ""; //the id of a Family will be used to ease the process of moving 
     private string _father;
     private string _mother;
 
-    private bool _isBooked;//says if the person is Booked in a building to be his new home
-    private string _homerFoodSrc;//where the Homer will grab the food  
+    private bool _isBooked; //says if the person is Booked in a building to be his new home
+    private string _homerFoodSrc; //where the Homer will grab the food  
 
-    private bool _isLoading;//use to know if person is being loaded from file 
+    private bool _isLoading; //use to know if person is being loaded from file 
 
     public bool IsBooked
     {
@@ -83,7 +84,9 @@ public class Person : General
 
     #region Initializing Obj
 
-    public Person() { }
+    public Person()
+    {
+    }
 
     public Structure Home
     {
@@ -265,20 +268,20 @@ public class Person : General
     /// <summary>
     /// Intended to be used For the first load of people spawned
     /// </summary>
-    static public Person CreatePerson(Vector3 iniPos = new Vector3())
+    public static Person CreatePerson(Vector3 iniPos = new Vector3())
     {
         Person obj = null;
 
         if (PersonController.GenderLast == H.Male)
         {
-            obj = (Person)Resources.Load(Root.personaFeMale1, typeof(Person));
+            obj = (Person) Resources.Load(Root.personaFeMale1, typeof (Person));
         }
         else if (PersonController.GenderLast == H.Female)
         {
-            obj = (Person)Resources.Load(Root.personaMale1, typeof(Person));
+            obj = (Person) Resources.Load(Root.personaMale1, typeof (Person));
         }
 
-        int iniAge = General.GiveRandom(28, 29);//5, 29
+        int iniAge = General.GiveRandom(28, 29); //5, 29
 
         //will assign ramdom pos if has none 
         if (iniPos == new Vector3())
@@ -287,11 +290,11 @@ public class Person : General
         }
 
 
-        obj = (Person)Instantiate(obj, iniPos, Quaternion.identity);
+        obj = (Person) Instantiate(obj, iniPos, Quaternion.identity);
         obj.Gender = obj.OtherGender();
-        obj.InitObj(iniAge);//5,29
+        obj.InitObj(iniAge); //5,29
         obj.Geometry.GetComponent<Renderer>().sharedMaterial = Resources.Load(Root.personGuy1) as Material;
-        
+
         //this to when Person dont have where to leave and then they find a place the teletranport effect
         //wont be seeable bz there are spawneed hidden. 
         //obj.Body.Hide();
@@ -302,16 +305,20 @@ public class Person : General
     /// <summary>
     /// Intended to be used while loading persons from file 
     /// </summary>
-    static public Person CreatePersonFromFile(PersonFile pF)
+    public static Person CreatePersonFromFile(PersonFile pF)
     {
         Person obj = null;
 
         if (pF._gender == H.Male)
-        {obj = (Person)Resources.Load(Root.personaMale1, typeof(Person));}
+        {
+            obj = (Person) Resources.Load(Root.personaMale1, typeof (Person));
+        }
         else if (pF._gender == H.Female)
-        {obj = (Person)Resources.Load(Root.personaFeMale1, typeof(Person));}
+        {
+            obj = (Person) Resources.Load(Root.personaFeMale1, typeof (Person));
+        }
 
-        obj = (Person)Instantiate(obj, obj.AssignRandomIniPosition(), Quaternion.identity);
+        obj = (Person) Instantiate(obj, obj.AssignRandomIniPosition(), Quaternion.identity);
 
         obj.IsLoading = true;
         obj.InitLoadedPerson(pF);
@@ -340,20 +347,20 @@ public class Person : General
     /// Intented to create  kids
     /// </summary>
     /// <param name="typePerson"></param>
-    static public Person CreatePersonKid(Vector3 iniPos)
+    public static Person CreatePersonKid(Vector3 iniPos)
     {
         Person obj = null;
 
         if (PersonController.GenderLast == H.Male)
         {
-            obj = (Person)Resources.Load(Root.personaFeMale1, typeof(Person));
+            obj = (Person) Resources.Load(Root.personaFeMale1, typeof (Person));
         }
         else if (PersonController.GenderLast == H.Female)
         {
-            obj = (Person)Resources.Load(Root.personaMale1, typeof(Person));
+            obj = (Person) Resources.Load(Root.personaMale1, typeof (Person));
         }
 
-        obj = (Person)Instantiate(obj, obj.AssignRandomIniPosition(), Quaternion.identity);
+        obj = (Person) Instantiate(obj, obj.AssignRandomIniPosition(), Quaternion.identity);
         obj.Gender = obj.OtherGender();
         obj.InitObj(1);
         obj.Geometry.GetComponent<Renderer>().sharedMaterial = Resources.Load(Root.personGuy1) as Material;
@@ -365,7 +372,7 @@ public class Person : General
         return obj;
     }
 
-	/// <summary>
+    /// <summary>
     /// Init for a loaded person
     /// </summary>
     public void InitLoadedPerson(PersonFile pers)
@@ -375,8 +382,8 @@ public class Person : General
         _isMajor = pers.IsMajor;
 
         //Birthday
-        _lastBDYear = pers.LastBDYear;//the year I had the last birthday. So i dont have more thn 1 BD a Year 
-        _birthMonth = pers.BirthMonth;//the birthday of the person
+        _lastBDYear = pers.LastBDYear; //the year I had the last birthday. So i dont have more thn 1 BD a Year 
+        _birthMonth = pers.BirthMonth; //the birthday of the person
         UnHappyYears = pers.UnHappyYears;
 
         _name = pers._name;
@@ -385,7 +392,7 @@ public class Person : General
         Gender = pers._gender;
 
 
-        _lastNewBornYear = pers.LastNewBornYear;//the last pregnancy she had, when was the birth year 
+        _lastNewBornYear = pers.LastNewBornYear; //the last pregnancy she had, when was the birth year 
         //once pregnant will tell u the due date 
         _dueMonth = pers.DueMonth;
         _dueYear = pers.DueYear;
@@ -399,7 +406,7 @@ public class Person : General
 
         Inventory = pers.Inventory;
 
-	    FamilyId = pers.FamilyId;
+        FamilyId = pers.FamilyId;
         Spouse = pers._spouse;
 
         _body = new Body(this, pers);
@@ -410,13 +417,15 @@ public class Person : General
         RecreateProfession(pers);
 
         //bz loading ends here 
-	    IsLoading = false;
+        IsLoading = false;
     }
 
-    void RecreateProfession(PersonFile pF)
+    private void RecreateProfession(PersonFile pF)
     {
-        if(string.IsNullOrEmpty(pF._work))
-        {return;}
+        if (string.IsNullOrEmpty(pF._work))
+        {
+            return;
+        }
 
         //will create the type of class we need
         CreateProfession(pF.ProfessionProp.ProfDescription, pF);
@@ -436,7 +445,7 @@ public class Person : General
         InitGeneralStuff();
     }
 
-    void InitGeneralStuff()
+    private void InitGeneralStuff()
     {
         NameTransform();
         DefineColliders();
@@ -465,12 +474,12 @@ public class Person : General
         }
     }
 
-    void NameTransform()
+    private void NameTransform()
     {
         transform.name = MyId + "...|" + Age + "|" + Gender;
     }
-  
-    string BuildRandomName()
+
+    private string BuildRandomName()
     {
         Naming n = new Naming(Gender);
         return n.NewName();
@@ -489,6 +498,8 @@ public class Person : General
         return GiveRandomID() + "." + numb;
     }
 
+
+    private Vector3 originalPoint;
     /// <summary>
     /// Returns Random position from origin. If fell inside a building will find another spot
     /// until is in a clear zone
@@ -503,19 +514,58 @@ public class Person : General
             origin = CamControl.CAMRTS.hitFront.point;
         }
 
-        float x = UMath.Random(-howFar, howFar);
-        float z = UMath.Random(-howFar, howFar);
-        origin = new Vector3(origin.x + x, origin.y, origin.z + z);
+        //so origin is not changed in every recursive
+        if (originalPoint == new Vector3())
+        {
+            originalPoint = origin;
+            origin = ReturnRandomPos(origin, howFar);
+        }
+        else
+        {
+            origin = ReturnRandomPos(originalPoint, howFar);
+        }
 
-        _personBounds.Clear();
-        _personBounds = UPoly.CreatePolyFromVector3(origin, PersonDim, PersonDim);
+        //_personBounds.Clear();
+        ////*4 so Dummy with SwpanPoint has room to spawn 
+        //_personBounds = UPoly.CreatePolyFromVector3(origin, PersonDim*4, PersonDim*4);
         //UVisHelp.CreateHelpers(_personBounds, Root.blueCube);
         //if bound collide will recurse
-        if (BuildingPot.Control.Registro.IsCollidingWithExisting(_personBounds) || !IsOnTerrain(origin))
+
+        //if (BuildingPot.Control.Registro.IsCollidingWithExisting(_personBounds) || !IsOnTerrain(origin))
+        if (MeshController.CrystalManager1.IntersectAnyLine(ReturnIniPos(), origin)
+            || !IsOnTerrain(origin))
         {
             origin = AssignRandomIniPosition(origin);
         }
+        originalPoint = new Vector3();
         return origin;
+    }
+
+    private Vector3 ReturnRandomPos(Vector3 origin, float howFar)
+    {
+        float x = UMath.Random(-howFar, howFar);
+        float z = UMath.Random(-howFar, howFar);
+        origin = new Vector3(origin.x + x, origin.y, origin.z + z);
+        return origin;
+    }
+
+    /// <summary>
+    /// Will return house position if not null. otherwise person current pos
+    /// </summary>
+    /// <returns></returns>
+    Vector3 ReturnIniPos()
+    {
+        if (Home != null)
+        {
+            return Home.SpawnPoint.transform.position;
+        }
+
+        if (IsOnTerrain(transform.position))
+        {
+            return transform.position;
+        }
+        return CamControl.CAMRTS.hitFront.point;
+
     }
 
     /// <summary>

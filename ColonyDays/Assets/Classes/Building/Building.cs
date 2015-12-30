@@ -1818,8 +1818,7 @@ public class Building : General, Iinfo
 
         var zone1 = MeshController.CrystalManager1.ReturnLandingZone(ends[0]);
         var zone2 = MeshController.CrystalManager1.ReturnLandingZone(ends[1]);
-
-        //todo clear black list when fully built a new bridge 
+        
         BuildingPot.Control.BridgeManager1.AddBridge(zone1, zone2, br);
 
         LandZone1.Add(new VectorLand(zone1, ends[0]));

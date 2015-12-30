@@ -427,7 +427,8 @@ public class CryRoute
         }
 
         throw new Exception("At least the intersection should be reached. Go and investigate but at least once should " +
-                            "pass this if all fail pls investigate");
+                            "pass this if all fail pls investigate" + 
+                            "\n ini:"+_ini.MyId+" mid:"+_eval[0].ParentId+" end:"+_fin.MyId+" person:"+_person.MyId);
 
         //so the explorer is set again
         //to prevent loops in where he couldnt reach any point of the other
@@ -1041,6 +1042,8 @@ public class CryRoute
     {
         return MeshController.CrystalManager1.DoIIntersectAnyLine(nLine, _historicRegions, this);
     }
+
+
 
     /// <summary>
     /// Return 0 if none was intersected 

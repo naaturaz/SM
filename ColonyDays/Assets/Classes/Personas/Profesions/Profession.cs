@@ -334,6 +334,7 @@ public class Profession  {
     {
         if (dummy!=null)
         {
+         //   Program.gameScene.ReturnUsedDummy(dummy);
             dummy.DestroySafe();
         }
     }
