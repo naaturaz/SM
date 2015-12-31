@@ -320,7 +320,7 @@ public class BuildingSaveLoad : BuildingPot
 	    }
 	}
 
-
+    #region Save Load 
     //Save Load Building Controller .cs
 
     //For Saving
@@ -342,11 +342,8 @@ public class BuildingSaveLoad : BuildingPot
         res.IsChillChanged = Control.IsNewChill;
         res.DispatchManager1 = Control.DispatchManager1;
 
-
-
         res._GameTime = Program.gameScene.GameTime1;
         res._GameController = Program.gameScene.GameController1;
-
 
         return res;
     }
@@ -371,10 +368,6 @@ public class BuildingSaveLoad : BuildingPot
         {
             Control.DispatchManager1 = BuildingData.BuildingControllerData.DispatchManager1;    
         }
-        
-
-
-
         if (BuildingData.BuildingControllerData._GameTime != null)
         {
             Program.gameScene.GameTime1 = BuildingData.BuildingControllerData._GameTime;    
@@ -383,6 +376,6 @@ public class BuildingSaveLoad : BuildingPot
         {
             Program.gameScene.GameController1 = BuildingData.BuildingControllerData._GameController;
         }
-        
     }
+    #endregion
 }

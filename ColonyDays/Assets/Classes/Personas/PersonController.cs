@@ -106,7 +106,7 @@ public class PersonController : PersonPot
         int factor = 100;
         int ini = multiplier*factor;
 
-        StartingCondition newbie = new StartingCondition(1, ini, ini, ini, ini, ini, ini, 100000);
+        StartingCondition newbie = new StartingCondition(1, ini, ini, ini, ini, ini, ini, 1000000);
         StartingCondition easy = new StartingCondition(18, 900, 900, 900, 900, 900, 900, 900);
         StartingCondition med = new StartingCondition(16, 800, 800, 800, 800, 800, 800, 800);
         StartingCondition hard = new StartingCondition(14, 700, 700, 700, 700, 700, 700, 700);
@@ -270,7 +270,7 @@ public class PersonController : PersonPot
             "Brick:" + GameController.Inventory1.ReturnAmtOfItemOnInv(P.Brick) + " | " +
             "Iron:" + GameController.Inventory1.ReturnAmtOfItemOnInv(P.Iron) + " | " +
             "Gold:" + GameController.Inventory1.ReturnAmtOfItemOnInv(P.Gold) + " | " +
-            "Dollar:" + GameController.Dollars.ToString("C0", new CultureInfo(0x0816)) + 
+            "Dollar:" + Program.gameScene.GameController1.Dollars.ToString("C0", new CultureInfo(0x0816)) + 
             "\nSpeed:" + Program.gameScene.GameSpeed + "x"
                 ;
 

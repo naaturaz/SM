@@ -81,7 +81,7 @@ public class ExportImport
     public void Sale(P prod, int amt)
     {
         var trans = CalculateTransaction(prod, amt);
-        GameController.Dollars += trans;
+        Program.gameScene.GameController1.Dollars += trans;
     }
 
     /// <summary>
@@ -94,7 +94,7 @@ public class ExportImport
     public void Buy(P prod, int amt)
     {
         var trans = CalculateTransaction(prod, amt);
-        GameController.Dollars -= trans;
+        Program.gameScene.GameController1.Dollars -= trans;
     }
 
     int CalculateTransaction(P prod, int amt)

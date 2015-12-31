@@ -477,7 +477,7 @@ public class StructureParent : Building {
     /// </summary>
     private void NextStageFee()
     {
-        GameController.Dollars -= ReturnFee(HType);
+        Program.gameScene.GameController1.Dollars -= ReturnFee(HType);
     }
 
     int ReturnFee(H typeP)

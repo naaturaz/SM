@@ -58,7 +58,7 @@ public class MyText : MonoBehaviour
 
         if (name == "Dollars")
         {
-            thisText.text = GameController.Dollars.ToString("C0");
+            thisText.text = Program.gameScene.GameController1.Dollars.ToString("C0");
         }
     }
 	

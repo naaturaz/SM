@@ -180,7 +180,7 @@ public class BuildersManager
         bool brick = GameController.Inventory1.ReturnAmtOfItemOnInv(P.Brick) >= stat.Brick;
         bool iron = GameController.Inventory1.ReturnAmtOfItemOnInv(P.Iron) >= stat.Iron;
         bool gold = GameController.Inventory1.ReturnAmtOfItemOnInv(P.Gold) >= stat.Gold;
-        bool dollar = GameController.Dollars >= stat.Dollar;
+        bool dollar = Program.gameScene.GameController1.Dollars >= stat.Dollar;
 
         return wood && stone && brick && iron && gold && dollar;
     }

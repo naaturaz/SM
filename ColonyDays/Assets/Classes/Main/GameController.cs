@@ -3,7 +3,7 @@
  * Holds the inventory of the game
  * 
  * 
- * Controls the game in the sense too which Scene with BUilding with Person Load.
+ * Controls the game in the sense to which Scene with BUilding with Person Load.
  * Or create new game 
  */
 public class GameController  {
@@ -13,7 +13,7 @@ public class GameController  {
     //is a total inventory. Representing all tht is in those inventories 
     static ResumenInventory _inventory = new ResumenInventory();
 
-    private static int _dollars = 100000;//the dollars the player has 
+    private int _dollars;//the dollars the player has 
     private static StartingCondition _startingCondition;
 
     static public ResumenInventory Inventory1
@@ -26,7 +26,7 @@ public class GameController  {
         }
     }
 
-    public static int Dollars
+    public int Dollars
     {
         get { return _dollars; }
         set
@@ -53,7 +53,7 @@ public class GameController  {
         //LoadIntoInv(inv);
     }
 
-    static Inventory CreateInitialInv(StartingCondition startingCondition)
+    Inventory CreateInitialInv(StartingCondition startingCondition)
     {
         Dollars += startingCondition.iniDollar;
         Inventory inv = new Inventory();
@@ -91,7 +91,7 @@ public class GameController  {
     /// <summary>
     /// The first Storage will call this so the first Lote is get into there 
     /// </summary>
-    static public void SetInitialLote()
+    public void SetInitialLote()
     {
         var inv = CreateInitialInv(_startingCondition);
         LoadIntoInv(inv);

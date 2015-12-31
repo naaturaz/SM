@@ -1204,7 +1204,7 @@ public class Building : General, Iinfo
             Inventory.Add(P.Pork, amtFood);
 
 
-            GameController.SetInitialLote();
+            Program.gameScene.GameController1.SetInitialLote();
 
 
             UpdateInfo();
@@ -2672,7 +2672,7 @@ public class Building : General, Iinfo
     /// </summary>
     private void PayUpgradeFee(int fee)
     {
-        GameController.Dollars -= fee;
+        Program.gameScene.GameController1.Dollars -= fee;
     }
 
 
