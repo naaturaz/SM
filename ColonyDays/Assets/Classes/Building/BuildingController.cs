@@ -206,7 +206,7 @@ public class BuildingController : BuildingPot
         else
         {
             AddToCurrent(MyIdP);
-            UpdateOnPersonController(MyIdP);
+            //UpdateOnPersonController(MyIdP);
         }
         SetFlag(buildFunc, true);
         UpdateCurrent(buildFunc);//updates the correspondent list
@@ -228,11 +228,10 @@ public class BuildingController : BuildingPot
     /// <summary>
     /// Updates variables on PersonController
     /// </summary>
-    void UpdateOnPersonController(string MyIdP)
+    public void AddToQueuesRestartPersonControl(string MyIdP)
     {
-        int index = PersonController.UnivCounter;
-        Building b = SetLocalCurrent(MyIdP);
-
+        Building b = ReturnLocalCurrent(MyIdP);
+        //needs to be restarted to people 
         PersonPot.Control.RestartController();
 
         if (PersonPot.Control == null || b==null)
@@ -256,7 +255,7 @@ public class BuildingController : BuildingPot
     /// I used to only use the 'CurrentSpawnBuild' but for brdige need to use the 'Registro.AllBuilding'
     /// since Brdige call this function only when all its parts are built
     /// </summary>
-    Building SetLocalCurrent(string MyIdP)
+    Building ReturnLocalCurrent(string MyIdP)
     {
         if (Registro.AllBuilding.ContainsKey(MyIdP))
         {

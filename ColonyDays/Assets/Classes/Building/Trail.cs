@@ -168,6 +168,8 @@ public class Trail : Way
 
             //so people reroute 
             PersonPot.Control.Queues.AddToNewBuildsQueue(OnScreenPoly);
+            
+
         }
         else if(!IsWayOk)
         {
@@ -262,6 +264,8 @@ public class Trail : Way
             }
         }
         BuildingPot.InputU.MouseUp();
+
+
     }
 
     public void AddWayToRegistro()

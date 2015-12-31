@@ -1190,7 +1190,7 @@ public class Brain
         if (s.PeopleDict.Count == 0 && 
             (s.Instruction == H.WillBeDestroy || s.HType == H.Shack))
         {
-            s.DestroidHiddenBuild();
+            s.DestroydHiddenBuild();
         }
 
         //GameScene.print(_person.MyId + "."+oldBuild + ".Count:" + s.PeopleDict.Count);

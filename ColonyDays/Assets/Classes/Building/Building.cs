@@ -691,12 +691,17 @@ public class Building : General, Iinfo
         LayerRoutine("done");
         PositionFixed = true;
 
-
         if (!HType.ToString().Contains("Unit") && !IsLoadingFromFile)
         {
             PrivHandleZoningAddCrystals(); ;
         }
-        
+
+        if (IsLoadingFromFile)
+        {
+            return;
+        }
+
+        BuildingPot.Control.AddToQueuesRestartPersonControl(MyId);
     }
 
     /// <summary>
@@ -1493,7 +1498,7 @@ public class Building : General, Iinfo
         Instruction = H.WillBeDestroy;
         if (PeopleDict.Count == 0)//no one is registered on the build
         {
-            DestroidHiddenBuild();
+            DestroydHiddenBuild();
         }
     }
 
@@ -1538,7 +1543,7 @@ public class Building : General, Iinfo
     }
     #endregion
 
-    public void DestroidHiddenBuild()
+    public void DestroydHiddenBuild()
     {
         //the invetory needs to be empty to be destroyed  
         if (Inventory != null && !Inventory.IsEmpty() )
@@ -1756,13 +1761,6 @@ public class Building : General, Iinfo
             return;
         }
 
-        ////will load the Landing zone if is not loading from file 
-        //if (!IsLoadingFromFile)
-        //{
-        //    Debug.Log(MyId + ": LandZone Loaded ");
-        //    HandleLandZoning();
-        //}
-
         //so it can add the corners on CrystalManager
         Anchors = GetAnchors();
         //UVisHelp.CreateHelpers(Anchors, Root.largeBlueCube);
@@ -1770,18 +1768,7 @@ public class Building : General, Iinfo
         landZoneLoaded = true;
     }
 
-    /// <summary>
-    /// Created to be called from ShackBuilder.cs
-    /// </summary>
-    public void HandleZoningAddCrystals()
-    {
-        //so anchors get set 
-        CheckIfIsEvenRoutine();
-
-        PrivHandleZoningAddCrystals();
-    }
-
-    void PrivHandleZoningAddCrystals()
+    protected void PrivHandleZoningAddCrystals()
     {
         HandleLandZoning();
         //UVisHelp.CreateHelpers(Anchors, Root.yellowCube);
@@ -1805,7 +1792,10 @@ public class Building : General, Iinfo
 
             LandZone1.Add(new VectorLand(landZonName, sp.SpawnPoint.transform.position));
         }
-        else { LandZoningBridge(); }
+        else
+        {
+            LandZoningBridge();
+        }
     }
 
     /// <summary>
@@ -1814,7 +1804,7 @@ public class Building : General, Iinfo
     public void LandZoningBridge()
     {
         Bridge br = (Bridge)this;
-        var ends = br.GiveTwoEnds();
+        var ends = br.GiveTwoRoughEnds();
 
         var zone1 = MeshController.CrystalManager1.ReturnLandingZone(ends[0]);
         var zone2 = MeshController.CrystalManager1.ReturnLandingZone(ends[1]);
@@ -2065,7 +2055,7 @@ public class Building : General, Iinfo
     {
         if (Instruction == H.WillBeDestroy && !Inventory.IsItemOnInv(prod))
         {
-            DestroidHiddenBuild();
+            DestroydHiddenBuild();
         }
     }
 

@@ -762,7 +762,7 @@ public class CryRoute
         //if is BuildingRouting then can return so a new _curr is added and we can keep going 
 
         //if doesnt have a way cna do this 
-        if (canIExplore && !ItHasAWay() && ExploreToFin()
+        if (canIExplore && ExploreToFin()
             //&& (CheckIfDone() || _explorer.IsBuildingRouting)
             )
         {
@@ -771,10 +771,7 @@ public class CryRoute
 
         //if doesnt have a way cna do this 
         //if has a way will go trhu the way 
-        if (!ItHasAWay())
-        {
-            RoutineIfBuildWasHit();
-        }
+        RoutineIfBuildWasHit();
     }
 
     void RoutineIfBuildWasHit()

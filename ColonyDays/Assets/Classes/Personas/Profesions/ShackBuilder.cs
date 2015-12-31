@@ -17,7 +17,7 @@ public class ShackBuilder : Profession
         ProfDescription = Job.ShackBuilder;
         MyAnimation = "isHammer";
         _person = person;
-        CreateShack();
+        //CreateShack();
         BookShack();
 
         Init();
@@ -64,24 +64,24 @@ public class ShackBuilder : Profession
         //Debug.Log("shck created dummy ");
     }
 
-    private void CreateShack()
-    {
-        _constructing = (Structure)Building.CreateBuild(Root.RetBuildingRoot(H.Shack), _person.transform.position, 
-            H.Shack, materialKey: H.Shack.ToString() + "." + Ma.matBuildBase);
+    //private void CreateShack()
+    //{
+    //    _constructing = (Structure)Building.CreateBuild(Root.RetBuildingRoot(H.Shack), _person.transform.position, 
+    //        H.Shack, materialKey: H.Shack.ToString() + "." + Ma.matBuildBase);
 
-        ConstructingKey = _constructing.MyId;
+    //    ConstructingKey = _constructing.MyId;
 
-        RotateShack();
+    //    RotateShack();
 
-        AssignRandomIniPosition(_constructing.transform.position, _constructing);
-        FixBuildingToGround();
+    //    AssignRandomIniPosition(_constructing.transform.position, _constructing);
+    //    FixBuildingToGround();
 
 
-        StructureParent sp = (StructureParent) _constructing;
-        sp.ResetedSpawnPoint();
+    //    StructureParent sp = (StructureParent) _constructing;
+    //    sp.ResetedSpawnPoint();
 
-        _constructing.HandleZoningAddCrystals();
-    }
+    //    _constructing.HandleZoningAddCrystals();
+    //}
 
     void RotateShack()
     {

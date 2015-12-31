@@ -290,6 +290,11 @@ public class Bridge : Trail
             createAirPartsNow = false;
             loopCounter = 0;
             createSoilPartsNow = true;
+
+
+            //so crystals are added to ground right away
+            //MeshController.CrystalManager1.Add(this);
+            PrivHandleZoningAddCrystals();
         }
     }
     /// <summary>
@@ -592,11 +597,31 @@ public class Bridge : Trail
     //</summary>
     public List<Vector3> GetBridgeAnchors()
     {
-        var p12 = GiveTheTwoParts12();
-        var anchors1 = p12[0].GetAnchors();
-        var anchors2 = p12[1].GetAnchors();
-        anchors1.AddRange(anchors2);
-        return Registro.FromALotOfVertexToPoly(anchors1);
+        //var p12 = GiveTheTwoParts12();
+        //var anchors1 = p12[0].GetAnchors();
+        //var anchors2 = p12[1].GetAnchors();
+        //anchors1.AddRange(anchors2);
+        //return Registro.FromALotOfVertexToPoly(anchors1);
+
+        if (BoundsHoriz.Count > 0)
+        {
+            return Registro.FromALotOfVertexToPoly(BoundsHoriz);
+        }
+
+        else if (BoundsVertic.Count > 0)
+        {
+            return Registro.FromALotOfVertexToPoly(BoundsVertic);
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// Used to find LandZones
+    /// </summary>
+    /// <returns></returns>
+    public List<Vector3> GiveTwoRoughEnds()
+    {
+        return new List<Vector3>(){_firstWayPoint, _secondWayPoint};
     }
 
     /// <summary>
