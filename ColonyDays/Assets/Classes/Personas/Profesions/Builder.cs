@@ -113,7 +113,6 @@ public class Builder : Profession
 
         if (_person.Work == null)
         {
-            
             throw new Exception("Work cant be null");
             return;
         }
@@ -127,12 +126,14 @@ public class Builder : Profession
             return;
         }
 
+        UVisHelp.CreateHelpers(FinRoutePoint, Root.yellowCube);
+
         //bz I want '_finRoutePoint' to be moved away from building and affects too that it will look towards the 
         //building when is performng the action of buildign 
         MoveTowOrigin = -0.01f;
 
         //moving the route point a bit away from the origin 
-        //FinRoutePoint = Vector3.MoveTowards(FinRoutePoint, _constructing.transform.position, MoveTowOrigin);
+        FinRoutePoint = Vector3.MoveTowards(FinRoutePoint, _constructing.transform.position, MoveTowOrigin);
 
         MoveTowOrigin = -0.05f;//when looks at on Profession works properly
 
@@ -145,6 +146,7 @@ public class Builder : Profession
     /// <returns></returns>
     Vector3 FindFinRoutePoint()
     {
+        //bridge
         if (_constructing.HType.ToString().Contains(H.Bridge.ToString()))
         {
             if (_constructing.Anchors.Count > 0)
@@ -167,7 +169,8 @@ public class Builder : Profession
         { return new Vector3();}
 
         //for all other cases 
-        return _constructing.Anchors[UMath.GiveRandom(0, 4)];
+        //forcing geting the anchors was giving anchors really far appart sometimes 
+        return _constructing.GetAnchors(true)[UMath.GiveRandom(0, 4)];
     }
 
     void InitRoute()
