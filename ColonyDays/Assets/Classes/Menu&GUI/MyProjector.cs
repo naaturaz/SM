@@ -11,6 +11,9 @@ public class MyProjector : General
 
     private Vector3 heightCompound;
 
+    //trying to address a Null ref exception on SwitchColor()
+    private bool wasInit;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -34,11 +37,19 @@ public class MyProjector : General
                 BuildingPot.Control.Registro.SelectBuilding.Min.y;
         }
         heightCompound = new Vector3(0, (height + buildingHeight) * 1.5f, 0);
+
+        wasInit = true;
     }
 
 	// Update is called once per frame
 	void Update () 
     {
+        //to address a Null Ref Excp
+	    if (!wasInit)
+	    {
+	        return;
+	    }
+
         if (BuildingPot.Control.CurrentSpawnBuild != null) 
         {
             MoveToThere(BuildingPot.Control.CurrentSpawnBuild.ClosestSubMeshVert);
@@ -66,6 +77,11 @@ public class MyProjector : General
 
     public void SwitchColorLight(bool isGood)
     {
+        if (!wasInit)
+        {
+            Start();
+        }
+
         if (isGood)
         {
             engineProjector.material.color = Color.white;
