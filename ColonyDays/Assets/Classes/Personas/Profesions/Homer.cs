@@ -145,8 +145,11 @@ public class Homer : Profession
 
     private void CheckWhenDone()
     {
+        //person its at home
         if (_person.Body.Location == HPers.Home && _person.Body.GoingTo == HPers.Home)
         {
+            _person.HomeActivities();
+
 //            Debug.Log(_person.MyId + " not homer anymore now will be a: " + _person.PrevJob);
 
             if (_person.PrevJob == Job.WheelBarrow || _person.PrevJob == Job.Builder)
