@@ -110,6 +110,12 @@ public class PersonWindow : GUIElement {
             MakeAlphaColorMax(_inv);
             MakeAlphaColorZero(_info);
         }
+
+        //then update inv info all the time 
+        if (_person != null && _inv != null && !string.IsNullOrEmpty(_inv.text))
+        {
+            _inv.text = BuildStringInv(_person);
+        }
     }
 
     public override void Hide()

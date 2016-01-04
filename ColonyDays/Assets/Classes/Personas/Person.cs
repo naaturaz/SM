@@ -1224,13 +1224,6 @@ public class Person : General
 
     private void Eat()
     {
-        //wont get anymore food is his house is full
-        if (Home != null && Home.Inventory != null && Home.Inventory.IsFull())
-        {
-            //UnityEngine.Debug.Log(MyId+" my house inv is full");
-            return;
-        }
-
         P item = Home.Inventory.GiveBestFood();
         if (item == P.None)
         {

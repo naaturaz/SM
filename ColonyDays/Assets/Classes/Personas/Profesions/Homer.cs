@@ -37,11 +37,25 @@ public class Homer : Profession
         MyFoodSrc = _person.FoodSource;
 //        Debug.Log(_person.MyId + " new Homer");
 
+        FinRoutePoint = DefineFinRoute();
         ProfDescription = Job.Homer;
-        //FinRoutePoint = _person.transform.position;
-        FinRoutePoint = MyFoodSrc.SpawnPoint.transform.position;
 
         InitRoute();
+    }
+
+    Vector3 DefineFinRoute()
+    {
+        if (_person.Work.HType.ToString().Contains("Dock"))
+        {
+            return _person.Work.SpawnPoint.transform.position;
+        }
+        else
+        {
+            return MyFoodSrc.SpawnPoint.transform.position;
+        }
+        
+        //
+        //throw new Exception("Not address homer init yet. So far homer only used ");
     }
 
     void InitRoute()
@@ -70,20 +84,28 @@ public class Homer : Profession
 //        Debug.Log(_person.MyId+ ".Prev job:" + _person.PrevJob);
         IsRouterBackUsed = true;
 
-        if (_person.PrevJob == Job.WheelBarrow)
-        {
-            Structure building = Brain.GetStructureFromKey(_person.PrevOrder.DestinyBuild);
-            Router1 = new CryRouteManager(building, MyFoodSrc, _person);
-            //Router1 = new RouterManager(building, MyFoodSrc, _person, HPers.InWork);
+        //if (_person.PrevJob == Job.WheelBarrow)
+        //{
+        Structure building = Brain.GetStructureFromKey(_person.PrevOrder.DestinyBuild);
 
-            RouterBack = new CryRouteManager(MyFoodSrc, _person.Home, _person,  HPers.InWork);
-        }
-        else
+        if (building == null //&& ProfDescription == Job.Docker
+            )
         {
-            Router1 = new CryRouteManager(dummy, MyFoodSrc, _person);
-            //Router1 = new RouterManager(dummy, MyFoodSrc, _person, HPers.InWork, false, true);
-            RouterBack = new CryRouteManager(MyFoodSrc, _person.Home, _person, HPers.InWork);
+            //exporting will finish at destiny build is null(not sure)
+            building = _person.Work;
         }
+
+        Router1 = new CryRouteManager(building, MyFoodSrc, _person);
+        //Router1 = new RouterManager(building, MyFoodSrc, _person, HPers.InWork);
+
+        RouterBack = new CryRouteManager(MyFoodSrc, _person.Home, _person,  HPers.InWork);
+        //}
+        //else
+        //{
+        //    Router1 = new CryRouteManager(dummy, MyFoodSrc, _person);
+        //    //Router1 = new RouterManager(dummy, MyFoodSrc, _person, HPers.InWork, false, true);
+        //    RouterBack = new CryRouteManager(MyFoodSrc, _person.Home, _person, HPers.InWork);
+        //}
     }
 
     /// <summary>
