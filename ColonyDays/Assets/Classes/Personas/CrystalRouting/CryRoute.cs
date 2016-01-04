@@ -486,7 +486,7 @@ public class CryRoute
     void CheckIfIsToBlackList()
     {
         blackCount++;
-        Debug.Log("blackCount:"+blackCount);
+//        Debug.Log("blackCount:"+blackCount);
 
         if (blackCount > maxCounts)
         {
