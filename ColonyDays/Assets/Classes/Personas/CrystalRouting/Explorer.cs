@@ -136,9 +136,11 @@ public class Explorer
     /// </summary>
     public void Restart()
     {
+        Result = null;
         _units.Clear();
         _isBuildingRouting = true;
         _isIntersectingOnlyObstacles = true;
+        _isIntersectingOnlyStills = true;
     }
 
     /// <summary>

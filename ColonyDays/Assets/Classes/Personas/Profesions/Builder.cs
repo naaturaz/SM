@@ -126,7 +126,7 @@ public class Builder : Profession
             return;
         }
 
-        UVisHelp.CreateHelpers(FinRoutePoint, Root.yellowCube);
+        //UVisHelp.CreateHelpers(FinRoutePoint, Root.yellowCube);
 
         //bz I want '_finRoutePoint' to be moved away from building and affects too that it will look towards the 
         //building when is performng the action of buildign 

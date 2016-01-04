@@ -122,6 +122,7 @@ public class CryRoute
         grow = GROWC;
         _checkPoints.Clear();
         _historicRegions.Clear();
+        ResetExplorer();
     }
 
     #region Loop on Update
@@ -428,17 +429,8 @@ public class CryRoute
 
         throw new Exception("At least the intersection should be reached. Go and investigate but at least once should " +
                             "pass this if all fail pls investigate" + 
-                            "\n ini:"+_ini.MyId+" mid:"+_eval[0].ParentId+" end:"+_fin.MyId+" person:"+_person.MyId);
-
-        //so the explorer is set again
-        //to prevent loops in where he couldnt reach any point of the other
-        //building therefore the explorer needs to be used again so a new 
-        //set of points are used 
-        ResetExplorer();
-        ResetLoop();
-        ClearPrevLoop();
-        Debug.Log("TryReachBuilding() not reach. Hence Reseted");
-
+                            "\n ini:"+_ini.MyId+" mid:"+_eval[0].ParentId+" end:"+_fin.MyId+" person:"+_person.MyId+" " +
+                            "eval ct:" +_eval.Count);
         return false;
     }
 

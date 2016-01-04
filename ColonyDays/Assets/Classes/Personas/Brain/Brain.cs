@@ -262,10 +262,12 @@ public class Brain
 
     Structure CreateDummyIdle()
     {
-        return Program.gameScene.GimeMeUnusedDummy();
+        //return Program.gameScene.GimeMeUnusedDummy();
 
-        //dummyIdle = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy,
-        //    container: Program.ClassContainer.transform);
+        dummyIdle = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy,
+            container: Program.ClassContainer.transform);
+
+        return dummyIdle;
     }
 
     void ResetDummyIdle()
@@ -274,9 +276,8 @@ public class Brain
         {
             return;
         }
-        Program.gameScene.ReturnUsedDummy(dummyIdle);
-        dummyIdle = null;
-        //dummyIdle.transform.position = new Vector3();
+        //Program.gameScene.ReturnUsedDummy(dummyIdle);
+        dummyIdle.Destroy();
     }
 
     void DefineReligionRoute()
