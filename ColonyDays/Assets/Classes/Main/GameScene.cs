@@ -290,7 +290,7 @@ public class GameScene : General {
     {
         for (int i = 0; i < poolSize; i++)
         {
-            dummiesSpwnPoint.Add((Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy, 
+            dummiesSpwnPoint.Add((Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPointUnTimed, new Vector3(), H.Dummy, 
                 container: Program.ClassContainer.transform));
         }
     }

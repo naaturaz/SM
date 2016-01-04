@@ -178,6 +178,7 @@ public class Root : MonoBehaviour
     public static string dummyBuild = "Prefab/Building/DummyBuild";
     public static string dummyBuildCollider = "Prefab/Building/DummyBuild_With_Collider";
     public static string dummyBuildWithSpawnPoint = "Prefab/Building/DummyBuild_With_SpawnPoint";
+    public static string dummyBuildWithSpawnPointUnTimed = "Prefab/Building/DummyBuild_With_SpawnPoint_UnTimed";
     
 
 

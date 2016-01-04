@@ -938,7 +938,7 @@ public class Person : General
             _profession.Update();     
 	    }
 	    
-        TimeChecks();
+        //TimeChecks();
         Program.gameScene.GameTime1.FixedUpdate();
 	    LODCheck();
 	}
