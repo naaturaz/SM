@@ -118,17 +118,19 @@ public class Farmer : Profession
         {
             ExecuteNow = false;
 
-            if (_person.Work == null || !_person.Work.MyId.Contains("Farm"))
-            {
-                return;
-            }
+            base.Execute();
 
-            Produce();
+            //if (_person.Work == null || !_person.Work.MyId.Contains("Farm"))
+            //{
+            //    return;
+            //}
+
+            //Produce();
         }
     }
 
     private void Produce()
     {
-        _person.Work.AddWorkToFarm();
+        
     }
 }

@@ -1830,7 +1830,16 @@ public class Building : General, Iinfo
 
         if (doIHaveInput && (hasStorageRoom || hasThisBuildRoom))
         {
-            Inventory.Add(CurrentProd, amt);
+            //if is a farm
+            if (MyId.Contains("Farm"))
+            {
+                var farm = (Structure)this;
+                farm.AddWorkToFarm();
+            }
+            else
+            {
+                Inventory.Add(CurrentProd, amt);
+            }
         }
         else if (!hasStorageRoom && !hasThisBuildRoom && person.FoodSource != null)
         {

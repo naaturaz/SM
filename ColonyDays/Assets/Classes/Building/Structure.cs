@@ -281,7 +281,6 @@ public class Structure : StructureParent
             return;
         }
 
-
         if (MyId.Contains("FieldFarm"))
         {
             _farm.AddWorkToFarm();
