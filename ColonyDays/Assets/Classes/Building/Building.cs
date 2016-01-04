@@ -1835,7 +1835,7 @@ public class Building : General, Iinfo
         else if (!hasStorageRoom && !hasThisBuildRoom && person.FoodSource != null)
         {
             AddEvacuationOrder();
-//            Debug.Log("Both full" + person.FoodSource.MyId + ".and." + MyId);
+            Debug.Log("Both full" + person.FoodSource.MyId + ".and." + MyId + " AddEvacuationOrder() called");
         }
         else if (!doIHaveInput)
         {

@@ -34,12 +34,12 @@ public class Homer : Profession
 
     private void Init()
     {
-        //MyFoodSrc = Brain.GetStructureFromKey(_person.HomerFoodSrc);
         MyFoodSrc = _person.FoodSource;
 //        Debug.Log(_person.MyId + " new Homer");
 
         ProfDescription = Job.Homer;
-        FinRoutePoint = _person.transform.position;
+        //FinRoutePoint = _person.transform.position;
+        FinRoutePoint = MyFoodSrc.SpawnPoint.transform.position;
 
         InitRoute();
     }
