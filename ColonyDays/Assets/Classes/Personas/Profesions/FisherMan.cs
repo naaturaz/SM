@@ -31,9 +31,26 @@ public class FisherMan : Profession {
     {
         //when get a number here is defined by wht worker is this on the building 
         //workers will be numbered on buildingsB
-        FinRoutePoint = _person.Work.InBuildWorkPoint01;
+        FinRoutePoint = ReturnRandomFinalPoint();
 
         InitRoute();
+    }
+
+    /// <summary>
+    /// Bz the Fisher site has varius endings 
+    /// </summary>
+    /// <returns></returns>
+    Vector3 ReturnRandomFinalPoint()
+    {
+        List<Vector3> list = new List<Vector3>()
+        {
+            _person.Work.InBuildWorkPoint01,
+            _person.Work.InBuildWorkPoint02,
+            _person.Work.InBuildWorkPoint03
+        };
+
+        var ind = Random.Range(0, list.Count);
+        return list[ind];
     }
 
     void InitRoute()
@@ -44,11 +61,20 @@ public class FisherMan : Profession {
 
     void ConformInBuildRoute()
     {
+        Router1 = new CryRouteManager();
+
         var inBuildPoints = DefineInBuildPoint();
+        UVisHelp.CreateHelpers(inBuildPoints, Root.yellowCube);
         var TheRoute = ReachBean.RouteVector3s(inBuildPoints);
+
+        //so they go trhu on Profession 
+        TheRoute.OriginKey = "PointIniFish";
+        TheRoute.DestinyKey = "PointFinFish";
 
         Router1.TheRoute=TheRoute;
         Router1.IsRouteReady = true;
+
+        
     }
 
     List<Vector3> DefineInBuildPoint()
