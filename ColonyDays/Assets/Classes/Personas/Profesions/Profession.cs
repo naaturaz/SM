@@ -1,5 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+/*
+ * 
+ * on Brain.cs, void GoWork() there is interactin with Docker, WheelBarrow, Homer, Forester 
+ * 
+ * 
+ */
 
 public class Profession  {
 
@@ -265,6 +271,12 @@ public class Profession  {
     {
         _person.Brain.CurrentTask = HPers.None;
         GameScene.print("Done work:" + _person.MyId);
+
+        //bz job foreseter drops things when gets at work
+        if (ProfDescription == Job.Forester)
+        {
+            DropGoods(_person.Work);
+        }
     }
 
     /// <summary>
@@ -405,7 +417,8 @@ public class Profession  {
         else if (_person.Body.Location == HPers.Work && _workerTask == HPers.DoneAtWork &&
              _person.Body.GoingTo == HPers.Work)
         {
-            _person.Brain.CurrentTask = HPers.None;
+            DoneWork();
+            //_person.Brain.CurrentTask = HPers.None;
             ResetMiniMindState();
         }
         //for wheelbarrowers alone
@@ -596,7 +609,7 @@ public class Profession  {
     /// <summary>
     /// Address to produce the selected prod in the work and the amount per shift defined in 'ProdXShift'
     /// </summary>
-    public void Execute()
+    public void Execute(string instruct = "")
     {
         if (UPerson.IsWorkingAtSchool(_person))
         {
@@ -609,8 +622,7 @@ public class Profession  {
             return;
         }
 
-        Produce();
-
+        Produce(instruct);
     }
 
     private int amtCarrying;
@@ -628,19 +640,54 @@ public class Profession  {
             prodCarrying = _person.Work.CurrentProd;
             amtCarrying = ProdXShift;
         }
+    }  
+    
+    /// <summary>
+    /// The action of producing goods 
+    /// </summary>
+    void Produce(string instruct)
+    {
+        //if has not instructions is normal Produce()
+        if (string.IsNullOrEmpty(instruct))
+        {
+            Produce();
+            return;
+        }
+
+        //if has instructions is so far from a : Forester
+        //they want to physically bring prod back and then drop it at they place 
+        //dont want to added to building invetory he has to drop it there when he gets there 
+        _person.Work.Produce(ProdXShift, _person, false);
+        prodCarrying = _person.Work.CurrentProd;
+        amtCarrying = ProdXShift;
     }
 
     /// <summary>
     /// Will drop goods produced in its respective Work into a Storage 
     /// </summary>
-    public void DropGoods()
+    public void DropGoods(Structure where = null)
     {
+        if (_person.ProfessionProp.ProfDescription == Job.Forester)
+        {
+            var t = this;
+        }
+
         if (_person == null || _person.FoodSource == null)
         {
             return;
         }
 
-        _person.ExchangeInvetoryItem(_person, _person.FoodSource, prodCarrying, amtCarrying);
+        if (where == null)
+        {
+            _person.ExchangeInvetoryItem(_person, _person.FoodSource, prodCarrying, amtCarrying);
+            
+        }
+        else
+        {
+            _person.ExchangeInvetoryItem(_person, where, prodCarrying, amtCarrying);
+
+        }
+
     }
 
     /// <summary>

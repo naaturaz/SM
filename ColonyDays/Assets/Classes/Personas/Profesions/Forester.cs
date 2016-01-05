@@ -5,6 +5,7 @@ using UnityEngine;
 public class Forester : Profession
 {
     private List<TerrainRamdonSpawner> _treesList = new List<TerrainRamdonSpawner>();//save implem
+    private Vector3 _treeCenterPos;
 
     public Forester(Person person, PersonFile pF)
     {
@@ -18,7 +19,7 @@ public class Forester : Profession
     void CreatingNew(Person person)
     {
         ProfDescription = Job.Forester;
-        IsRouterBackUsed = true;
+        //IsRouterBackUsed = true;
         MyAnimation = "isSummon";
         _person = person;
         Lock();
@@ -44,14 +45,25 @@ public class Forester : Profession
                 _takeABreakNow = true;
                 return;
             }
-
+            _treeCenterPos = DefineMiddlePos(OrderedSites);
 
             FinRoutePoint = OrderedSites[0].Point;
-            //moving the route point a bit towards the origin so when chopping tree its not insed the tree 
-            FinRoutePoint = Vector3.MoveTowards(FinRoutePoint, _person.Work.transform.position, MoveTowOrigin);
+            //moving the route point a bit towards the origin so when chopping tree its not inside the tree 
+            FinRoutePoint = Vector3.MoveTowards(FinRoutePoint, _person.Work.transform.position, MoveTowOrigin * 2.5f);
 
             InitRoute();
         }
+    }
+
+    Vector3 DefineMiddlePos(List<VectorM> list)
+    {
+        Vector3 res = new Vector3();
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            res += list[i].Point;
+        }
+        return res/list.Count;
     }
 
     void InitRoute()
@@ -60,10 +72,12 @@ public class Forester : Profession
 
         dummy = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy);
         dummy.transform.position = FinRoutePoint;
+        dummy.transform.LookAt(_treeCenterPos);
         dummy.HandleLandZoning();
 
-        Router1 = new CryRouteManager(_person.Work, dummy, _person);
-        RouterBack = new CryRouteManager(dummy, _person.FoodSource, _person,  HPers.InWorkBack, false, true);
+        //so it doesnt add like a door at the end when gets to tree
+        Router1 = new CryRouteManager(_person.Work, dummy, _person, HPers.None, true, false);
+        //RouterBack = new CryRouteManager(dummy, _person.FoodSource, _person,  HPers.InWorkBack, false, true);
     }
 
     void FindTreeToCut()
@@ -129,8 +143,16 @@ public class Forester : Profession
         if (ExecuteNow)
         {
             ExecuteNow = false;
-            base.Execute();
-            //do stuff
+
+            if (!_person.Work.Inventory.IsFull())
+            {
+                base.Execute(Job.Forester.ToString());
+            }
+            else
+            {
+                _person.Work.AddEvacuationOrderMost();
+                Debug.Log("AddEvacuationOrder from Forester");
+            }
         }
     }
 

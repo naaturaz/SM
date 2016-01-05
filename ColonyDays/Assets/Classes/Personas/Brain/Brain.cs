@@ -358,21 +358,21 @@ public class Brain
         //RemoveFromSystemIfNeed();
 
 
-        PromptIdleInHome();
+        SkipIdleInHome();
         GoIdleInHome();//to clear and check stuff in case is not doing it like when is only working 
 
-        PromptWork();
+        SkipWork();
         GoWork();
 
-        PromptFood();
+        SkipFood();
         GoGetFood();
 
         GoIdle();
 
-        PromptReligion();
+        SkipReligion();
         GoToReligion();
 
-        PromptChill();
+        SkipChill();
         GoChill();
 
         GoToNewHome();
@@ -391,20 +391,23 @@ public class Brain
      * If the person is ready to move to a new state and that building we are going to is not null is all good...
      * But if is null the promt will make Brain vars equal so next condition can be executed . and so on 
      */
-    private void PromptIdleInHome()
+    private void SkipIdleInHome()
     {
         //doesnt need anything bz need to execute IdleInHome() Always 
     }
 
-    void PromptWork()
+    void SkipWork()
     {
-        if (ReadyToWork() && _person.Work == null)
+
+        if ((ReadyToWork() && _person.Work == null)) //||
+            //and can not take out any prod and the inventory at work is full can skip work 
+            //(!_person.Work.CanTakeItOut(_person) && _person.Work.Inventory.IsFull()))
         {
             ReadyToGetFood(true);
         }
     }
 
-    private void PromptFood()
+    private void SkipFood()
     {
         if (ReadyToGetFood() && (_person.FoodSource == null || _person.Age < JobManager.startSchool))
         {
@@ -412,7 +415,7 @@ public class Brain
         }
     }
 
-    private void PromptReligion()
+    private void SkipReligion()
     {
         if (ReadyToGoToReligion() && _person.Religion == null)
         {
@@ -423,7 +426,7 @@ public class Brain
     /// <summary>
     /// If is a minor will prompted to work
     /// </summary>
-    private void PromptChill()
+    private void SkipChill()
     {
         if (ReadyToGoChill() && (_person.Chill == null || !UPerson.IsMajor(_person.Age)))
         {
@@ -564,7 +567,8 @@ public class Brain
         else if (CurrentTask == HPers.None && _person.Body.Location == HPers.Work)
         {
             //to avoid jump to dock and then back to current building 
-            if (_person.PrevJob == Job.Docker && _person.ProfessionProp.ProfDescription == Job.Homer)
+            if (_person.PrevJob == Job.Docker && 
+                _person.ProfessionProp.ProfDescription == Job.Homer)
             {
                 return;
             }
@@ -590,6 +594,11 @@ public class Brain
         }
         else if (CurrentTask == HPers.Walking && _person.Body.Location == HPers.FoodSource && _person.Body.GoingTo == HPers.FoodSource)
         {
+            if (_person.ProfessionProp.ProfDescription == Job.Forester)
+            {
+                var t = this;
+            }
+
             _person.ProfessionProp.DropGoods();
             _person.GetFood(_person.FoodSource);
             _person.Body.WalkRoutine(_foodRoute, HPers.Home, true);

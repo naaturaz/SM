@@ -1822,7 +1822,7 @@ public class Building : General, Iinfo
     /// 
     /// 'amt' the amount the person calling this can produce in a shift 
     /// </summary>
-    internal void Produce(int amt, Person person)
+    internal void Produce(int amt, Person person, bool addToBuildInv = true)
     {
         var doIHaveInput = DoBuildHaveRawResources();
         var hasStorageRoom = DoesStorageHaveCapacity(person);
@@ -1836,9 +1836,13 @@ public class Building : General, Iinfo
                 var farm = (Structure)this;
                 farm.AddWorkToFarm();
             }
-            else
+            else if (addToBuildInv && !MyId.Contains("Farm"))
             {
                 Inventory.Add(CurrentProd, amt);
+            }
+            else if (!addToBuildInv && !MyId.Contains("Farm"))
+            {
+                person.Inventory.Add(CurrentProd, amt);
             }
         }
         else if (!hasStorageRoom && !hasThisBuildRoom && person.FoodSource != null)
@@ -1891,6 +1895,23 @@ public class Building : General, Iinfo
     }
 
     /// <summary>
+    /// Custom product. use so far by Forester:
+    /// 
+    /// Will find the product it has the most amount of units and will add the evacuation orders 
+    /// with that Product
+    /// </summary>
+    /// <param name="prod"></param>
+    public void AddEvacuationOrderMost()
+    {
+        //order the Products by amout
+        var prods = Inventory.InventItems.OrderBy(a => a.Amount).ToList();
+
+        //uses the one prod has the most to be added on the Evac Order
+        Order t = new Order(prods[0].Key, "", MyId);
+        AddToClosestWheelBarrowAsOrder(t, H.Evacuation);
+    }
+
+    /// <summary>
     /// Will tell worker if can take products out of the biulding
     /// 
     /// Used to express if a person can take goods out of building to a Storage or should leave it here in this building 
@@ -1898,7 +1919,7 @@ public class Building : General, Iinfo
     /// <returns></returns>
     public bool CanTakeItOut(Person person)
     {
-        return person.FoodSource != null && DoesStorageHaveCapacity(person) ;
+        return (person.FoodSource != null && DoesStorageHaveCapacity(person));
     }
 
     /// <summary>
