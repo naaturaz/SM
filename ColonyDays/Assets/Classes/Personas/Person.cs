@@ -600,7 +600,7 @@ public class Person : General
     void CheckOnNutrition()
     {
         ChangeNutritionLvl(-1);
-        KillStarve();
+        //KillStarve();
     }
 
     /// <summary>
@@ -845,7 +845,8 @@ public class Person : General
 	void Start () 
     {
         base.Start();
-        //StartCoroutine("FiveSecUpdate");
+        
+        StartCoroutine("FiveSecUpdate");
         StartCoroutine("RandomUpdate1020");
         StartCoroutine("QuickUpdate");
         //StartCoroutine("QuickUpdate2");
@@ -938,7 +939,7 @@ public class Person : General
             _profession.Update();     
 	    }
 	    
-        //TimeChecks();
+        TimeChecks();
         Program.gameScene.GameTime1.FixedUpdate();
 	    LODCheck();
 	}

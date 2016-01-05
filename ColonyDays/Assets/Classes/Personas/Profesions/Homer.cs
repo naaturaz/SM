@@ -149,8 +149,9 @@ public class Homer : Profession
         if (_person.Body.Location == HPers.Home && _person.Body.GoingTo == HPers.Home)
         {
             _person.HomeActivities();
+            UVisHelp.CreateText(_person.transform.position, "Home Now");
 
-//            Debug.Log(_person.MyId + " not homer anymore now will be a: " + _person.PrevJob);
+//          Debug.Log(_person.MyId + " not homer anymore now will be a: " + _person.PrevJob);
 
             if (_person.PrevJob == Job.WheelBarrow || _person.PrevJob == Job.Builder)
             {

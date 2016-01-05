@@ -88,13 +88,8 @@ public class Docker : Profession
 
     void InitRoute()
     {
-        //to avoid go in and out again in the Dock 
-        //when importing 
-        //if (_person.Work != _sourceBuild)
-        //{
-            _routerActive = true;
-            Router1 = new CryRouteManager(_person.Work, _sourceBuild, _person);
-        //}
+        _routerActive = true;
+        Router1 = new CryRouteManager(_person.Work, _sourceBuild, _person);
 
         IsRouterBackUsed = true;
         RouterBack = new CryRouteManager(_sourceBuild, _destinyBuild, _person, HPers.InWorkBack);

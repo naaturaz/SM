@@ -359,6 +359,7 @@ public class Profession  {
             }
             //when is importing something
             //so the Work is the same as _sourceBuild
+            //to avoid go in and out again in the Dock
             else
             {
                 PreparePersonToGetBackToOffice();
