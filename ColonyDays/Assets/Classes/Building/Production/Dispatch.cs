@@ -224,10 +224,12 @@ public class Dispatch
 
         for (int i = 0; i < currOrders.Count; i++)
         {
+            //export first priority
             if (currOrders[i].TypeOrder == H.None)
             {
                 return RegularOrder(person, currOrders[i]);
             }
+            //import second priority
             else if (currOrders[i].TypeOrder == H.Evacuation)
             {
                 return EvacuationOrder(person, currOrders[i]);
@@ -292,7 +294,11 @@ public class Dispatch
 
 
 
-
+    /// <summary>
+    /// Will return the Dispatch amount based on the type of person carrying and the volume
+    /// of the product 
+    /// </summary>
+    /// <returns></returns>
     int DispatchAmount()
     {
         return 5000;

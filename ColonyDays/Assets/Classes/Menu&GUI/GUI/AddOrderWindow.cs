@@ -160,7 +160,7 @@ public class AddOrderWindow : GUIElement {
         else if (_orderType == "Import")
         {
             Order order = new Order(_prodSelect, "", "Ship");
-            order.Amount = 1;
+            order.Amount = _amt;
             _dock.Import(order);
         }
 
