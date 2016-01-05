@@ -611,15 +611,15 @@ public class Dispatch
     /// <param name="i"></param>
     void HandleThatExport(Building dock, int i)
     {
-        var list = ReturnCurrentList();
+        //var list = ReturnCurrentList();
 
-        if (i >= list.Count)
-        {
-            throw new Exception("If happen after dock is delete then u need to delete the dispatch related to the dock");
-            return;
-        }
-        
-        var ord = list[i];
+        //if (i >= list.Count)
+        //{
+        //    throw new Exception("If happen after dock is delete then u need to delete the dispatch related to the dock");
+        //    return;
+        //}
+
+        var ord = ExpImpOrders[i];
 
         int initialAmtNeed = ord.Amount;
         ord = dock.Inventory.ManageExportOrder(ord);
@@ -631,10 +631,12 @@ public class Dispatch
         if (ord.Amount == 0)
         {
             Debug.Log("Exported of:" + ord.Product + " done");
-            list.RemoveAt(i);
 
-            //here remove from :ExpImpOrders.RemoveAt(i);
-            ExpImpOrders.RemoveAt(i);
+            //Removig from all. Could be in orders or in   RecycledOrders and always in   ExpImpOrders
+            Orders.Remove(ord);
+            RecycledOrders.Remove(ord);
+            ExpImpOrders.Remove(ord);
+ 
             return;
         }
 
