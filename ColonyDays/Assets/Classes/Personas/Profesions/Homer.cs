@@ -53,9 +53,6 @@ public class Homer : Profession
         {
             return MyFoodSrc.SpawnPoint.transform.position;
         }
-        
-        //
-        //throw new Exception("Not address homer init yet. So far homer only used ");
     }
 
     void InitRoute()
@@ -84,8 +81,6 @@ public class Homer : Profession
 //        Debug.Log(_person.MyId+ ".Prev job:" + _person.PrevJob);
         IsRouterBackUsed = true;
 
-        //if (_person.PrevJob == Job.WheelBarrow)
-        //{
         Structure building = Brain.GetStructureFromKey(_person.PrevOrder.DestinyBuild);
 
         if (building == null //&& ProfDescription == Job.Docker
@@ -97,15 +92,7 @@ public class Homer : Profession
 
         Router1 = new CryRouteManager(building, MyFoodSrc, _person);
         //Router1 = new RouterManager(building, MyFoodSrc, _person, HPers.InWork);
-
         RouterBack = new CryRouteManager(MyFoodSrc, _person.Home, _person,  HPers.InWork);
-        //}
-        //else
-        //{
-        //    Router1 = new CryRouteManager(dummy, MyFoodSrc, _person);
-        //    //Router1 = new RouterManager(dummy, MyFoodSrc, _person, HPers.InWork, false, true);
-        //    RouterBack = new CryRouteManager(MyFoodSrc, _person.Home, _person, HPers.InWork);
-        //}
     }
 
     /// <summary>
@@ -149,7 +136,7 @@ public class Homer : Profession
         if (_person.Body.Location == HPers.Home && _person.Body.GoingTo == HPers.Home)
         {
             _person.HomeActivities();
-            UVisHelp.CreateText(_person.transform.position, "Home Now");
+            //UVisHelp.CreateText(_person.transform.position, "Home Now");
 
 //          Debug.Log(_person.MyId + " not homer anymore now will be a: " + _person.PrevJob);
 

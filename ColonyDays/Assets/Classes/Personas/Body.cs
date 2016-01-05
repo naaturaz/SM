@@ -392,6 +392,13 @@ public class Body //: MonoBehaviour //: General
         //GameScene.print("_currentRoutePoint:" + _currentRoutePoint + ".Count:" + _currRoute.Count +
         //    ".Loaded" + _pFile._body.CurrentRoutePoint);
 	    _currentRoutePoint = CorrectBounds(_currentRoutePoint, 0, _routePoins.Count - 1);
+
+        if (_person.Work != null && _person.Work.HType == H.Dock)
+        {
+            var t = this;
+            Debug.Log("Moved "+ _person.Name);
+        }
+
         _person.transform.position = _routePoins[_currentRoutePoint].Point;
 
         //if (!_inverse)
