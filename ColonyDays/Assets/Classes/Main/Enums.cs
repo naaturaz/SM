@@ -272,6 +272,8 @@ public enum H
     Width,
     RectCorner,
     Door,
+    IniPos_Import_OnProcess,
+    IniPos_Export_OnProcess,
 
 
 

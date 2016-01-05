@@ -28,7 +28,10 @@ public class BuildingWindow : GUIElement {
     private GameObject _upgrades;
 
     private Vector3 _importIniPos;
-    private Vector3 _exportIniPos;
+    private Vector3 _exportIniPos;    
+    
+    private Vector3 _importIniPosOnProcess;
+    private Vector3 _exportIniPosOnProcess;
 
     List<Toggle> toggles=new List<Toggle>() ; 
 
@@ -56,7 +59,12 @@ public class BuildingWindow : GUIElement {
             if (transform.position == iniPos)
             {
                 LoadMenu();
-                //print("Reloaded");
+
+                //then orders need to be reloaded from dispatch and shown on Tab
+                if (_orders.gameObject.activeSelf == _orders)
+                {
+                    ShowOrders();
+                }
             }
         }
     }
@@ -94,6 +102,9 @@ public class BuildingWindow : GUIElement {
 
         _importIniPos = GetGrandChildCalled(H.IniPos_Import).transform.position;
         _exportIniPos = GetGrandChildCalled(H.IniPos_Export).transform.position;
+
+        _importIniPosOnProcess = GetGrandChildCalled(H.IniPos_Import_OnProcess).transform.position;
+        _exportIniPosOnProcess = GetGrandChildCalled(H.IniPos_Export_OnProcess).transform.position;
 
 
 
@@ -342,13 +353,24 @@ public class BuildingWindow : GUIElement {
         DestroyAndCleanShownOrders();
 
         ShowImportOrders();
-        ShowExmportOrders();
+        ShowImportOrdersOnProcess();
+
+        ShowExportOrders();
+        ShowExportOrdersOnProcess();
     }
 
-    private void ShowExmportOrders()
+
+
+    private void ShowExportOrders()
     {
         var expOrd = _building.Dispatch1.ReturnRegularOrders();
-        DisplayOrders(expOrd, _exportIniPos);
+        DisplayOrders(expOrd, _exportIniPos, Root.orderShowClose);
+    }
+
+    void ShowExportOrdersOnProcess()
+    {
+        var expOrd  =  _building.Dispatch1.ReturnRegularOrdersOnProcess();
+        DisplayOrders(expOrd, _exportIniPosOnProcess, Root.orderShow);
     }
 
     /// <summary>
@@ -357,7 +379,14 @@ public class BuildingWindow : GUIElement {
     void ShowImportOrders()
     {
         var impOrd = _building.Dispatch1.ReturnEvacuaOrders();
-        DisplayOrders(impOrd, _importIniPos);
+        impOrd.AddRange(_building.Dispatch1.ReturnEvacOrdersOnProcess());
+        DisplayOrders(impOrd, _importIniPos, Root.orderShowClose);
+    }
+
+    private void ShowImportOrdersOnProcess()
+    {
+        var impOrd = _building.Dispatch1.ReturnEvacOrdersOnProcess();
+        DisplayOrders(impOrd, _importIniPosOnProcess, Root.orderShow);
     }
 
     /// <summary>
@@ -365,11 +394,11 @@ public class BuildingWindow : GUIElement {
     /// </summary>
     /// <param name="list"></param>
     /// <param name="iniPosP"></param>
-    void DisplayOrders(List<Order> list, Vector3 iniPosP)
+    void DisplayOrders(List<Order> list, Vector3 iniPosP, string root)
     {
         for (int i = 0; i < list.Count; i++)
         {
-            Display1Order(i, list[i], iniPosP);
+            Display1Order(i, list[i], iniPosP, root);
         }
     }
 
@@ -382,12 +411,12 @@ public class BuildingWindow : GUIElement {
     /// <param name="i"></param>
     /// <param name="order"></param>
     /// <param name="iniPosP"></param>
-    void Display1Order(int i, Order order, Vector3 iniPosP)
+    void Display1Order(int i, Order order, Vector3 iniPosP, string root)
     {
-        var orderShow = OrderShow.Create(Root.orderShow, _orders.transform);
+        var orderShow = OrderShow.Create(root, _orders.transform);
         orderShow.Show(order);
 
-        orderShow.Reset(i, order.TypeOrder);
+        orderShow.Reset(i, order.TypeOrder, _importIniPos, _importIniPosOnProcess);
 
         _showOrders.Add(orderShow);
     }

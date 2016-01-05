@@ -200,6 +200,7 @@ public class Root : MonoBehaviour
     public static string mainGUI = "Prefab/GUI/Forms/MainGUI";
 
     //shows the orders on the Dock 
+    public static string orderShowClose = "Prefab/GUI/Forms/Order_Show_Close";
     public static string orderShow = "Prefab/GUI/Forms/Order_Show";
     
 

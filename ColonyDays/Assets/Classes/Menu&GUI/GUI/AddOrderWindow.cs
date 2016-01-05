@@ -181,6 +181,10 @@ public class AddOrderWindow : GUIElement {
         return true;
     }
 
+    /// <summary>
+    /// Actions received from the Form 
+    /// </summary>
+    /// <param name="feed"></param>
     public void FeedFromForm(string feed)
     {
         //remove the 'AddOrder.'

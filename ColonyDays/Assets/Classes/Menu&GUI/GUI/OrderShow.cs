@@ -15,13 +15,22 @@ public class OrderShow : GUIElement
 
     private Text _title;
 
-    private UnityEngine.UI.Button _button;
+    private UnityEngine.UI.Button _button;//
 
 	// Use this for initialization
 	void Start ()
     {
         _title = GetChildCalled(H.Title).GetComponent<Text>();
-        _button = GetChildCalled(H.Remove_Order_Btn). GetComponent<UnityEngine.UI.Button>();
+
+	    var rawBtn = GetChildCalled(H.Remove_Order_Btn);
+
+        //check for the type or OrderShow that doesnt have the Close btn. 
+	    if (rawBtn != null)
+	    {
+            _button = rawBtn.GetComponent<UnityEngine.UI.Button>();
+	    }
+
+        
     }
 	
 	// Update is called once per frame
@@ -51,6 +60,11 @@ public class OrderShow : GUIElement
         _title.text = _prod + " : " + _amt;
         transform.name = _title.text + " | " + Id;
 
+        if (_button == null)
+        {
+            return;
+        }
+
         _button.onClick.AddListener(() => Program.MouseClickListenerSt("AddOrder.Remove."+order.ID));
     }
 
@@ -59,7 +73,7 @@ public class OrderShow : GUIElement
     /// </summary>
     /// <param name="i"></param>
     /// <param name="type"></param>
-    internal void Reset(int i, H type)
+    internal void Reset(int i, H type, Vector3 orderPos, Vector3 onProcessOrderPos)
     {
         var rectT = GetComponent<RectTransform>();
         rectT.position = new Vector3();
@@ -71,9 +85,26 @@ public class OrderShow : GUIElement
             x = ReturnPixelsToTheRight();
         }
 
-        rectT.localPosition = new Vector3(x, -4 * i, 0);
+        //bz if is on process goes down
+        var yPls = AddYSpaceIfIsOnProcess(orderPos, onProcessOrderPos);
+
+        rectT.localPosition = new Vector3(x, (-4 * i) - yPls, 0);
 
         transform.localScale = new Vector3(1,1,1);
+    }
+
+
+    float AddYSpaceIfIsOnProcess(Vector3 orderPos, Vector3 onProcessOrderPos)
+    {
+        //order that is not on process yet
+        if (_button!=null)
+        {
+            return 0f;
+        }
+
+        //on Process order 
+        //var yDiff = Mathf.Abs(orderPos.y - onProcessOrderPos.y);
+        return 62f;
     }
 
     /// <summary>

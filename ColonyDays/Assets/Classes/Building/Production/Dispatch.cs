@@ -704,7 +704,7 @@ public class Dispatch
                 _orders.RemoveAt(i);
                 CheckIfExportAndStillOnDockStorage();
 
-                return;
+                break;
             }
         }
 
@@ -727,6 +727,24 @@ public class Dispatch
     void CheckIfExportAndStillOnDockStorage()
     {
         
+    }
+
+    /// <summary>
+    /// Regular is Export
+    /// </summary>
+    /// <returns></returns>
+    public List<Order> ReturnRegularOrdersOnProcess()
+    {
+        return _expImpOrders.Where(a=>a.TypeOrder==H.None).ToList();
+    }
+
+    /// <summary>
+    /// Evacuation is Import
+    /// </summary>
+    /// <returns></returns>
+    public List<Order> ReturnEvacOrdersOnProcess()
+    {
+        return _expImpOrders.Where(a => a.TypeOrder == H.Evacuation).ToList();
     }
 }
 
