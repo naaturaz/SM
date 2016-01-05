@@ -352,7 +352,7 @@ public class Profession  {
         if (_person.Body.Location == HPers.Work && _workerTask == HPers.None)
         {
 
-            if (_person.Work != _sourceBuild)
+            if (_router.TheRoute.OriginKey != _router.TheRoute.DestinyKey)//so doesnt go in and out in the same building
             {
                 _person.Body.WalkRoutine(_router.TheRoute, HPers.InWork, hideThisTime: false);
                 _workerTask = HPers.WalkingToJobSite;
@@ -437,7 +437,6 @@ public class Profession  {
         }
 
         //so work Profession Mini States
-        _person.Body.Location = HPers.Work;
         _person.Body.Location = HPers.Work;
         _workerTask = HPers.None;
 

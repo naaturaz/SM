@@ -60,7 +60,7 @@ public class CryRoute
 
     public CryRoute(Structure ini, Structure fin, Person person, string destinyKey, bool iniDoor = true, bool finDoor = true)
     {
-        
+        _origenKey = ini.MyId;
         _destinyKey = destinyKey;
 
         _iniDoor = iniDoor;

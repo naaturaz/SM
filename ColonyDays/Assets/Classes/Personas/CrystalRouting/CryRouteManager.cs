@@ -25,6 +25,7 @@ public class CryRouteManager
     private bool _finDoor;
 
     private string _destinyKey;//to be added to TheRoute obj
+    private string _originKey;//to be added to TheRoute obj
 
     void SetIsRouteReady(bool val)
     {
@@ -55,6 +56,7 @@ public class CryRouteManager
     public CryRouteManager(Structure ini, Structure fin, Person person,
         HPers routeType = HPers.None, bool iniDoor = true, bool finDoor = true)
     {
+        _originKey = ini.MyId;
         _destinyKey = fin.MyId;
         
         _iniDoor = iniDoor;

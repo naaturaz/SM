@@ -396,7 +396,7 @@ public class Body //: MonoBehaviour //: General
         if (_person.Work != null && _person.Work.HType == H.Dock)
         {
             var t = this;
-            Debug.Log("Moved "+ _person.Name);
+            Debug.Log("Moved "+ _person.Name + " to:"  + _routePoins[_currentRoutePoint].Point);
         }
 
         _person.transform.position = _routePoins[_currentRoutePoint].Point;

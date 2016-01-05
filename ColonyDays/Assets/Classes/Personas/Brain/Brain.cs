@@ -563,6 +563,12 @@ public class Brain
         }
         else if (CurrentTask == HPers.None && _person.Body.Location == HPers.Work)
         {
+            //to avoid jump to dock and then back to current building 
+            if (_person.PrevJob == Job.Docker && _person.ProfessionProp.ProfDescription == Job.Homer)
+            {
+                return;
+            }
+
             //print("back home now");
             _person.Body.WalkRoutine(_workRoute, HPers.Home, true);
             _currentTask = HPers.Walking;
