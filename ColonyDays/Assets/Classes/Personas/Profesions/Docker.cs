@@ -2,8 +2,7 @@
 
 public class Docker : Profession
 {
-    private Structure _destinyBuild;
-    private Structure _sourceBuild;
+
 
     public Docker(Person person, PersonFile pF)
     {
@@ -89,9 +88,13 @@ public class Docker : Profession
 
     void InitRoute()
     {
-        _routerActive = true;
-        Router1 = new CryRouteManager(_person.Work, _sourceBuild, _person);
-        //Router1 = new RouterManager(_person.Work, _sourceBuild, _person, HPers.InWork);
+        //to avoid go in and out again in the Dock 
+        //when importing 
+        //if (_person.Work != _sourceBuild)
+        //{
+            _routerActive = true;
+            Router1 = new CryRouteManager(_person.Work, _sourceBuild, _person);
+        //}
 
         IsRouterBackUsed = true;
         RouterBack = new CryRouteManager(_sourceBuild, _destinyBuild, _person, HPers.InWorkBack);

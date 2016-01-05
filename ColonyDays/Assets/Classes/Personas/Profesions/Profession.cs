@@ -51,6 +51,9 @@ public class Profession  {
     protected string _sourceBuildKey;//from where taking the load 
     protected string _destinyBuildKey;//where taking load 
 
+    protected Structure _destinyBuild;
+    protected Structure _sourceBuild;
+
     public Job ProfDescription
     {
         get { return _profDescription; }
@@ -348,8 +351,19 @@ public class Profession  {
         //walking toward the job site for forester walking towards a tree 
         if (_person.Body.Location == HPers.Work && _workerTask == HPers.None)
         {
-            _person.Body.WalkRoutine(_router.TheRoute, HPers.InWork, hideThisTime: false);
-            _workerTask = HPers.WalkingToJobSite;
+
+            if (_person.Work != _sourceBuild)
+            {
+                _person.Body.WalkRoutine(_router.TheRoute, HPers.InWork, hideThisTime: false);
+                _workerTask = HPers.WalkingToJobSite;
+            }
+            //when is importing something
+            //so the Work is the same as _sourceBuild
+            else
+            {
+                PreparePersonToGetBackToOffice();
+            }
+
         }
         //called here so animation of iddle can be fully transitioned to
         else if (_person.Body.Location == HPers.InWork && _workerTask == HPers.WalkingToJobSite && !_person.Body.MovingNow)
