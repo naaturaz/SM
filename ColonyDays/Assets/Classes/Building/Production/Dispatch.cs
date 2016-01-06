@@ -247,7 +247,7 @@ public class Dispatch
             Order temp = new Order();
             temp = Order.Copy(order);
 
-            temp.Amount = DispatchAmount();
+            temp.Amount = DispatchAmount(order.Amount);
             temp.DestinyBuild = destinFoodSrc;
             var sourceBuild = Brain.GetBuildingFromKey(temp.SourceBuild);
 
@@ -281,7 +281,7 @@ public class Dispatch
             temp = Order.Copy( order);
             OrderFound(order);
 
-            temp.Amount = DispatchAmount();
+            temp.Amount = DispatchAmount(order.Amount);
             temp.SourceBuild = foodSrc;
             return temp;
         }
@@ -299,8 +299,13 @@ public class Dispatch
     /// of the product 
     /// </summary>
     /// <returns></returns>
-    int DispatchAmount()
+    int DispatchAmount(int amtOnOrder)
     {
+        //if (amtOnOrder < 5000)
+        //{
+        //    return amtOnOrder;
+        //}
+
         return 5000;
     }
 

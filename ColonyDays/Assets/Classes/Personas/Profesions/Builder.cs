@@ -91,6 +91,11 @@ public class Builder : Profession
     /// </summary>
     void CheckHowManyNothingToBuild()
     {
+        if (_person == null || _person.Brain == null)
+        {
+            return;
+        }
+
         if (_nothingToBuildCounter > 40 && _person.Brain.IAmHomeNow())
         {
             _nothingToBuildCounter = 0;
