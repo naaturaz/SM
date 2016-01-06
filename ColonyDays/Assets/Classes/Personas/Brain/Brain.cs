@@ -567,7 +567,8 @@ public class Brain
         else if (CurrentTask == HPers.None && _person.Body.Location == HPers.Work)
         {
             //to avoid jump to dock and then back to current building 
-            if (_person.PrevJob == Job.Docker && 
+            if (
+                //_person.PrevJob == Job.Docker && 
                 _person.ProfessionProp.ProfDescription == Job.Homer)
             {
                 return;
