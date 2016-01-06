@@ -6,6 +6,10 @@ public class WheelBarrow : Profession
     private Structure _destinyBuild;
     private Structure _sourceBuild;
 
+    //indicates that this intances of Profession was loaded from file 
+    //so never has to be Init() bz all values were loaded 
+    private bool _wasLoaded;
+
     public WheelBarrow(Person person, PersonFile pF)
     {
         if (pF == null)
@@ -24,7 +28,7 @@ public class WheelBarrow : Profession
 
     void LoadingFromFile(Person person, PersonFile pF)
     {
-        wasLoaded = true;
+        _wasLoaded = true;
 
         _person = person;
         LoadAttributes(pF.ProfessionProp);
@@ -46,12 +50,11 @@ public class WheelBarrow : Profession
         InitRoute();
     }
 
-    private bool wasLoaded;
 
     void Init()
     {
         //so loads 
-        if (wasLoaded)
+        if (_wasLoaded)
         {
             InitForLoading();    
             return;

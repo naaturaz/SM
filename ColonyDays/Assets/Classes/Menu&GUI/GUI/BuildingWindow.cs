@@ -379,7 +379,6 @@ public class BuildingWindow : GUIElement {
     void ShowImportOrders()
     {
         var impOrd = _building.Dispatch1.ReturnEvacuaOrders();
-        impOrd.AddRange(_building.Dispatch1.ReturnEvacOrdersOnProcess());
         DisplayOrders(impOrd, _importIniPos, Root.orderShowClose);
     }
 
