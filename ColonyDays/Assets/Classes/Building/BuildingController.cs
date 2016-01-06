@@ -213,21 +213,22 @@ public class BuildingController : BuildingPot
     }
 
     /// <summary>
-    /// Will return true if a House with a virigin family is found
+    /// Will return add 1 for each Virgin family found in houses
     /// </summary>
     /// <returns></returns>
-    public bool ThereIsAtLeastOneVirginFamilyHouse()
+    public int HowManyVirginFamilies()
     {
+        int res = 0;
         for (int i = 0; i < _housesWithSpace.Count; i++)
         {
             var house = Brain.GetBuildingFromKey(_housesWithSpace[i]);
 
             if (house.AtLeastHasOneVirginFamily())
             {
-                return true;
+                res++;
             }
         }
-        return false;
+        return res;
     }
 
     /// <summary>

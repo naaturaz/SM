@@ -99,6 +99,7 @@ public class QueuesContainer
         if (buidingsWhenStartChecking == _newBuildsQueue.Elements.Count + _destroyBuildsQueue.Elements.Count)
         {
             PersonPot.Control.BuildersManager1.AddGreenLightKeys(_newBuildsQueue);
+            FinalForcedDestroy();
 
             _newBuildsQueue.Elements.Clear();
             _destroyBuildsQueue.Elements.Clear();
@@ -106,6 +107,28 @@ public class QueuesContainer
         buidingsWhenStartChecking = 0;
         //always is clear here 
         _peopleChecked.Clear();
+    }
+
+    /// <summary>
+    /// Because some Structure dont get destroy bz UnivCounter is not in -1 
+    /// when is called then here we finally destory them Bz all people checked on this 
+    /// for rerouting purposes
+    /// 
+    /// this can be done bz once a building is in this list is that went tru everything
+    /// the only thing stopped it to be deleted was the UnivCounter
+    /// </summary>
+    void FinalForcedDestroy()
+    {
+        for (int i = 0; i < _destroyBuildsQueue.Elements.Count; i++)
+        {
+            var build = Brain.GetBuildingFromKey(_destroyBuildsQueue.Elements[i].Key);
+
+            //bz could have been destroyed already
+            if (build != null)
+            {
+                build.DestroyOrderedForced();   
+            }
+        }
     }
 
 

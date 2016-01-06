@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Structure : StructureParent
@@ -296,10 +297,11 @@ public class Structure : StructureParent
         //if is a house need to know 
         if (MyId.Contains("House") || MyId.Contains("Shack"))
         {
-            if (BuildingPot.Control.ThereIsAtLeastOneVirginFamilyHouse())
+            if (BuildingPot.Control.HowManyVirginFamilies() >= Families.Length)
             {
-                //book my family there
+                //book each Family now
                 //todo and test
+                
                 StartDemolishProcess();
             }
             else

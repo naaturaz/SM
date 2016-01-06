@@ -577,21 +577,6 @@ public class Building : General, Iinfo
         {
             _debugShip.Update();    
         }
-        
-        CheckIfDestroyOrdered();
-    }
-
-    /// <summary>
-    /// Bz a building will stay forever after destroyed without being destroyed 
-    /// </summary>
-    private void CheckIfDestroyOrdered()
-    {
-        //below bool is set to true on DestroydHiddenBuild() so that means that went trhu all and still needs to 
-        //be taken care of 
-        if (_isOrderToDestroy)
-        {
-            DestroyOrdered();
-        }
     }
 
     /// <summary>
@@ -743,11 +728,11 @@ public class Building : General, Iinfo
     /// Will destroy the current obj and, the _isOrderToDestroy is set in Building.cs
     /// but the call comes from child 
     /// </summary>
-    protected virtual void DestroyOrdered()
+    protected virtual void DestroyOrdered(bool forced = false)
     {
-        if (_isOrderToDestroy            
+        if ((_isOrderToDestroy            
             //this is for addres the problem where routing is happening and a Building is destroyed
-            && PersonController.UnivCounter == -1)
+            && PersonController.UnivCounter == -1) || forced)
         {
             if (_arrow != null)
             {
@@ -762,6 +747,14 @@ public class Building : General, Iinfo
             DestroyProjector();
             Destroy();
         }
+    }
+
+    /// <summary>
+    /// To be used by the queues
+    /// </summary>
+    public void DestroyOrderedForced()
+    {
+        DestroyOrdered(true);   
     }
 
     #region Mark Terra Spawn Obj When Create Building
