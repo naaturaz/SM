@@ -98,7 +98,13 @@ public class Forester : Profession
 
     List<VectorM> OrderTrees(List<TerrainRamdonSpawner> treeListP)
     {
-        var loc = new List<VectorM>();
+        List<VectorM> loc = new List<VectorM>();
+
+        if (treeListP == null)
+        {
+            _takeABreakNow = true;
+            return loc;
+        }
 
         for (int i = 0; i < treeListP.Count; i++)
         {

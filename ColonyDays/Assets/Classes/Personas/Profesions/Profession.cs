@@ -665,7 +665,7 @@ public class Profession  {
     /// <summary>
     /// Will drop goods produced in its respective Work into a Storage 
     /// </summary>
-    public void DropGoods(Structure where = null)
+    public void DropGoods()
     {
         if (_person.ProfessionProp.ProfDescription == Job.Forester)
         {
@@ -676,18 +676,8 @@ public class Profession  {
         {
             return;
         }
-
-        if (where == null)
-        {
-            _person.ExchangeInvetoryItem(_person, _person.FoodSource, prodCarrying, amtCarrying);
-            
-        }
-        else
-        {
-            _person.ExchangeInvetoryItem(_person, where, prodCarrying, amtCarrying);
-
-        }
-
+ 
+        _person.ExchangeInvetoryItem(_person, _person.FoodSource, prodCarrying, amtCarrying);
     }
 
     /// <summary>

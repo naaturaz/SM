@@ -258,7 +258,7 @@ public class Builder : Profession
 
     public override void AnyChange()
     {
-        if (!_person.Brain.IAmHomeNow() )
+        if (_person == null || _person.Brain == null || !_person.Brain.IAmHomeNow() )
         {
             return;
         }
