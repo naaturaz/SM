@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Net;
 
 /*This class manage wich buildings need to be built next and which has already
  * the resources assigned and ready to built
@@ -11,6 +12,9 @@ public class BuildersManager
     List<Construction> _constructions = new List<Construction>();//constructions on list waiting to be greenlit
     List<Construction> _greenLight = new List<Construction>();//constrtucyions that have receive the resources already 
 
+    //the buildings that were on Queue and are not anymore so all person checked on them 
+    List<string> _passedQueue = new List<string>();
+
     public List<Construction> Constructions
     {
         get { return _constructions; }
@@ -21,6 +25,12 @@ public class BuildersManager
     {
         get { return _greenLight; }
         set { _greenLight = value; }
+    }
+
+    public List<string> PassedQueue
+    {
+        get { return _passedQueue; }
+        set { _passedQueue = value; }
     }
 
     public BuildersManager() { }
@@ -171,9 +181,9 @@ public class BuildersManager
     /// 
     /// </summary>
     /// <returns></returns>
-    bool CanGreenLight(H hTypeP)
+    bool CanGreenLight(Construction cons)
     {
-        var stat = Book.GiveMeStat(hTypeP);
+        var stat = Book.GiveMeStat(cons.HType);
 
         bool wood = GameController.Inventory1.ReturnAmtOfItemOnInv(P.Wood) >= stat.Wood;
         bool stone = GameController.Inventory1.ReturnAmtOfItemOnInv(P.Stone) >= stat.Stone;
@@ -181,8 +191,14 @@ public class BuildersManager
         bool iron = GameController.Inventory1.ReturnAmtOfItemOnInv(P.Iron) >= stat.Iron;
         bool gold = GameController.Inventory1.ReturnAmtOfItemOnInv(P.Gold) >= stat.Gold;
         bool dollar = Program.gameScene.GameController1.Dollars >= stat.Dollar;
+        bool passedQue = _passedQueue.Contains(cons.Key);
 
-        return wood && stone && brick && iron && gold && dollar;
+        if (passedQue)
+        {
+            _passedQueue.Remove(cons.Key);
+        }
+
+        return wood && stone && brick && iron && gold && dollar && passedQue;
     }
 
     public void Update()
@@ -198,7 +214,7 @@ public class BuildersManager
         if (_constructions.Count == 0)
         { return; }
 
-        var isGreen = CanGreenLight(_constructions[0].HType);
+        var isGreen = CanGreenLight(_constructions[0]);
 
         if (isGreen)
         {
@@ -240,6 +256,24 @@ public class BuildersManager
     public bool IsAtLeastOneBuildUp()
     {
         return _greenLight.Count > 0;
+    }
+
+    /// <summary>
+    /// Called from QueuesContainer when all clearing a list of new builds
+    /// 
+    /// Its adding buildings that are being checked to _passedQueue list
+    /// </summary>
+    /// <param name="_newBuildsQueue"></param>
+    internal void AddGreenLightKeys(QueueTask newBuildsQueue)
+    {
+        for (int i = 0; i < newBuildsQueue.Elements.Count; i++)
+        {
+            var key = newBuildsQueue.Elements[i].Key;
+            if (!string.IsNullOrEmpty(key))
+            {
+                _passedQueue.Add(key);
+            }
+        }
     }
 }
 

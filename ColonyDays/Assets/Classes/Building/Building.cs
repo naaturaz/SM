@@ -1565,7 +1565,7 @@ public class Building : General, Iinfo
         DestroyOrdered();
 
         //so people can Reroutes if new build fell in the midle of one
-        PersonPot.Control.Queues.AddToDestroyBuildsQueue(Anchors);
+        PersonPot.Control.Queues.AddToDestroyBuildsQueue(Anchors, MyId);
     }
 
     /// <summary>

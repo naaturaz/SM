@@ -240,11 +240,11 @@ public class BuildingController : BuildingPot
         //so people can routes if new build fell in the midle of one
         if (b.HType.ToString().Contains(H.Bridge.ToString()))
         {
-            PersonPot.Control.Queues.AddToNewBuildsQueue(b.Anchors);
+            PersonPot.Control.Queues.AddToNewBuildsQueue(b.Anchors, MyIdP);
         }
         else
         {
-            PersonPot.Control.Queues.AddToNewBuildsQueue(b.GetAnchors());
+            PersonPot.Control.Queues.AddToNewBuildsQueue(b.GetAnchors(), MyIdP);
         }
     }
 

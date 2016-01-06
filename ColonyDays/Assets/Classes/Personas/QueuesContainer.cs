@@ -4,7 +4,9 @@ using System.Collections.Generic;
 
 public class QueuesContainer 
 {
+    //new buildings built
     private QueueTask _newBuildsQueue = new QueueTask();
+    //building that are order to be destroyed
     private QueueTask _destroyBuildsQueue = new QueueTask();
 
     List<string> _peopleChecked = new List<string>();
@@ -31,18 +33,18 @@ public class QueuesContainer
     /// <summary>
     /// Add the param 'objP' to _newBuildsAnchors and clears the _peopleChecked list
     /// </summary>
-    public void AddToNewBuildsQueue(List<Vector3> objP)
+    public void AddToNewBuildsQueue(List<Vector3> objP, string key)
     {
-        _newBuildsQueue.AddToQueue(objP);
+        _newBuildsQueue.AddToQueue(objP, key);
         RestartPeopleChecked();
     }
 	
 	/// <summary>
     /// Add the param 'objP' to _destroyedBuildsAnchors and clears the _peopleChecked list
     /// </summary>	
-    public void AddToDestroyBuildsQueue(List<Vector3> objP)
+    public void AddToDestroyBuildsQueue(List<Vector3> objP, string key)
     {
-        _destroyBuildsQueue.AddToQueue(objP);
+        _destroyBuildsQueue.AddToQueue(objP, key);
         RestartPeopleChecked();
     }
 
@@ -96,6 +98,8 @@ public class QueuesContainer
         //then all where check
         if (buidingsWhenStartChecking == _newBuildsQueue.Elements.Count + _destroyBuildsQueue.Elements.Count)
         {
+            PersonPot.Control.BuildersManager1.AddGreenLightKeys(_newBuildsQueue);
+
             _newBuildsQueue.Elements.Clear();
             _destroyBuildsQueue.Elements.Clear();
         }

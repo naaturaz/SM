@@ -12,9 +12,9 @@ public class QueueTask : IComparable {
         set { _elements = value; }
     }
 
-    internal void AddToQueue(List<Vector3> objP)
+    internal void AddToQueue(List<Vector3> objP, string key)
     {
-        _elements.Add(new QueueElement(objP));
+        _elements.Add(new QueueElement(objP, key));
     }
     
     public bool Contains(Rect other, int index)
@@ -56,11 +56,20 @@ public class QueueElement
     public List<Vector3> Poly = new List<Vector3>();
     public DateTime DateTime1;//created to compare in Queues when A route is needed to be redone or not 
 
-    public QueueElement(List<Vector3> eList)
+    private string _key;
+
+    public QueueElement(List<Vector3> eList, string key)
     {
+        _key = key;
         Poly = eList;
         DateTime1=DateTime.Now;
     }
 
     public QueueElement() { }
+
+    public string Key
+    {
+        get { return _key; }
+        set { _key = value; }
+    }
 }

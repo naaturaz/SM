@@ -167,7 +167,7 @@ public class Trail : Way
             DestroyBigPrevBoxes();
 
             //so people reroute 
-            PersonPot.Control.Queues.AddToNewBuildsQueue(OnScreenPoly);
+            PersonPot.Control.Queues.AddToNewBuildsQueue(OnScreenPoly, MyId);
             
 
         }

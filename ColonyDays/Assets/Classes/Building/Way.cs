@@ -906,7 +906,7 @@ public class Way : Building
         DestroyProjector();
 
         //so people reroute 
-        PersonPot.Control.Queues.AddToDestroyBuildsQueue(OnScreenPoly);
+        PersonPot.Control.Queues.AddToDestroyBuildsQueue(OnScreenPoly, MyId);
 
         Destroy();
     }
