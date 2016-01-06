@@ -165,7 +165,14 @@ public class Profession  {
     public Order Order1
     {
         get { return _order; }
-        set { _order = value; }
+        set
+        {
+            if (_order != null && _person.Name.Contains("Sona") && value == null)
+            {
+                Debug.Log("Who reWrote Order1");
+            }
+            _order = value;
+        }
     }
 
     public string SourceBuildKey

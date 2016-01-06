@@ -65,6 +65,10 @@ public class PersonFile  {
 
     //WheelBarrower
     public Order Order;//the order of a wheelBarrower
+
+    public Order PrevOrder;
+
+
     public string SourceBuildKey;//from where taking the load 
     public string DestinyBuildKey;//where taking load 
 
@@ -123,6 +127,8 @@ public class PersonFile  {
         HomerFoodSrc = pers.HomerFoodSrc;
 
         Order = pers.ProfessionProp.Order1;
+        PrevOrder = pers.PrevOrder;
+
         DestinyBuildKey = pers.ProfessionProp.DestinyBuildKey;
         SourceBuildKey = pers.ProfessionProp.SourceBuildKey;
 

@@ -375,46 +375,48 @@ public class Person : General
     /// <summary>
     /// Init for a loaded person
     /// </summary>
-    public void InitLoadedPerson(PersonFile pers)
+    public void InitLoadedPerson(PersonFile pF)
     {
-        Age = pers._age;
+        Age = pF._age;
 
-        _isMajor = pers.IsMajor;
+        _isMajor = pF.IsMajor;
 
         //Birthday
-        _lastBDYear = pers.LastBDYear; //the year I had the last birthday. So i dont have more thn 1 BD a Year 
-        _birthMonth = pers.BirthMonth; //the birthday of the person
-        UnHappyYears = pers.UnHappyYears;
+        _lastBDYear = pF.LastBDYear; //the year I had the last birthday. So i dont have more thn 1 BD a Year 
+        _birthMonth = pF.BirthMonth; //the birthday of the person
+        UnHappyYears = pF.UnHappyYears;
 
-        _name = pers._name;
-        _lifeLimit = pers._lifeLimit;
-        MyId = pers.MyId;
-        Gender = pers._gender;
+        _name = pF._name;
+        _lifeLimit = pF._lifeLimit;
+        MyId = pF.MyId;
+        Gender = pF._gender;
 
 
-        _lastNewBornYear = pers.LastNewBornYear; //the last pregnancy she had, when was the birth year 
+        _lastNewBornYear = pF.LastNewBornYear; //the last pregnancy she had, when was the birth year 
         //once pregnant will tell u the due date 
-        _dueMonth = pers.DueMonth;
-        _dueYear = pers.DueYear;
+        _dueMonth = pF.DueMonth;
+        _dueYear = pF.DueYear;
 
-        IsStudent = pers.IsStudent;
-        Father = pers.Father;
-        Mother = pers.Mother;
+        IsStudent = pF.IsStudent;
+        Father = pF.Father;
+        Mother = pF.Mother;
 
-        IsBooked = pers.IsBooked;
-        HomerFoodSrc = pers.HomerFoodSrc;
+        IsBooked = pF.IsBooked;
+        HomerFoodSrc = pF.HomerFoodSrc;
 
-        Inventory = pers.Inventory;
+        Inventory = pF.Inventory;
 
-        FamilyId = pers.FamilyId;
-        Spouse = pers._spouse;
+        FamilyId = pF.FamilyId;
+        Spouse = pF._spouse;
 
-        _body = new Body(this, pers);
-        Brain = new Brain(this, pers);
+        PrevOrder = pF.PrevOrder;
+
+        _body = new Body(this, pF);
+        Brain = new Brain(this, pF);
 
         InitGeneralStuff();
 
-        RecreateProfession(pers);
+        RecreateProfession(pF);
 
         //bz loading ends here 
         IsLoading = false;

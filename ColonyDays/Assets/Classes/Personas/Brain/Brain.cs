@@ -125,6 +125,7 @@ public class Brain
         _routerChill.IsRouteReady = true;
 
         _generalOldKeysList = pF._brain.GeneralOldKeysList;
+
         MoveToNewHome.HomeOldKeysList = pF._brain.MoveToNewHome.HomeOldKeysList;
         MoveToNewHome.OldHomeKey = pF._brain.MoveToNewHome.OldHomeKey;
 
@@ -595,11 +596,6 @@ public class Brain
         }
         else if (CurrentTask == HPers.Walking && _person.Body.Location == HPers.FoodSource && _person.Body.GoingTo == HPers.FoodSource)
         {
-            if (_person.ProfessionProp.ProfDescription == Job.Forester)
-            {
-                var t = this;
-            }
-
             _person.ProfessionProp.DropGoods();
             _person.GetFood(_person.FoodSource);
             _person.Body.WalkRoutine(_foodRoute, HPers.Home, true);
@@ -728,7 +724,7 @@ public class Brain
             AddOldHomeToAvailHomeIfHasSpace(oldHomeH);
         }
 
-//        Debug.Log("got to new home:" + _person.MyId);
+        Debug.Log("got to new home:" + _person.MyId);
         MoveToNewHome.GetMyNameOutOfOldHomePeopleList();
         MoveToNewHome.CleanUpRouteToNewHome();
 

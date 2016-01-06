@@ -24,13 +24,39 @@ public class WheelBarrow : Profession
 
     void LoadingFromFile(Person person, PersonFile pF)
     {
+        wasLoaded = true;
+
         _person = person;
         LoadAttributes(pF.ProfessionProp);
-        Init();
+        InitForLoading();
     }
+
+    /// <summary>
+    /// This Init is for Loading since the other was ReWriting loaded Values such as Order1
+    /// </summary>
+    void InitForLoading()
+    {
+        //if did not load a order will return, and take a break now  
+        if (Order1 == null || _destinyBuild == null)
+        {
+            _takeABreakNow = true;
+            return; 
+        }
+
+        InitRoute();
+    }
+
+    private bool wasLoaded;
 
     void Init()
     {
+        //so loads 
+        if (wasLoaded)
+        {
+            InitForLoading();    
+            return;
+        }
+
         //so its not using the same order over and over again in case the Dispatch is finding nothing 
         CleanOldVars();
 
@@ -84,7 +110,11 @@ public class WheelBarrow : Profession
             throw new Exception();
         }
 
-        //Order1 = BuildingPot.Control.Dispatch1.GiveMeOrder(_person);
+        if (_person.Name.Contains("Ni"))
+        {
+            var t = this;
+        }
+
         Order1 = _person.Work.Dispatch1.GiveMeOrder(_person);
 
         _person.PrevOrder = Order1;
@@ -108,7 +138,6 @@ public class WheelBarrow : Profession
     {
         if (_sourceBuild == null)
         {
-            var t = Order1;
             _sourceBuild = Brain.GetStructureFromKey(Order1.SourceBuild);
         }
 
