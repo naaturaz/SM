@@ -154,7 +154,8 @@ public class Builder : Profession
                 return Brain.ReturnClosestVector3(_person.Work.transform.position, _constructing.Anchors);
             }
         }
-        else if (_constructing.HType.ToString().Contains("Dock") || _constructing.HType.ToString().Contains("DryDock"))
+        else if (_constructing.HType.ToString().Contains("Dock") || _constructing.HType.ToString().Contains("DryDock")
+            || _constructing.HType.ToString().Contains("Fish"))
         {
             if (_constructing.Anchors.Count > 0)
             {
