@@ -19,7 +19,7 @@ public class Forester : Profession
     void CreatingNew(Person person)
     {
         ProfDescription = Job.Forester;
-        //IsRouterBackUsed = true;
+        IsRouterBackUsed = true;
         MyAnimation = "isSummon";
         _person = person;
         Lock();
@@ -77,7 +77,7 @@ public class Forester : Profession
 
         //so it doesnt add like a door at the end when gets to tree
         Router1 = new CryRouteManager(_person.Work, dummy, _person, HPers.None, true, false);
-        //RouterBack = new CryRouteManager(dummy, _person.FoodSource, _person,  HPers.InWorkBack, false, true);
+        RouterBack = new CryRouteManager(dummy, _person.FoodSource, _person,  HPers.InWorkBack, false, true);
     }
 
     void FindTreeToCut()
@@ -144,14 +144,15 @@ public class Forester : Profession
         {
             ExecuteNow = false;
 
-            if (!_person.Work.Inventory.IsFull())
+            if (_person.Work.CanTakeItOut(_person))
             {
                 base.Execute(Job.Forester.ToString());
             }
             else
             {
-                _person.Work.AddEvacuationOrderMost();
-                Debug.Log("AddEvacuationOrder from Forester");
+                //_person.Work.AddEvacuationOrderMost();
+                //todo add to notify //Forester didnt work bz its Home Storage is full
+                Debug.Log(_person.MyId +", Forester didnt work bz its Home Storage is full");
             }
         }
     }

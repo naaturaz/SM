@@ -272,11 +272,11 @@ public class Profession  {
         _person.Brain.CurrentTask = HPers.None;
         GameScene.print("Done work:" + _person.MyId);
 
-        //bz job foreseter drops things when gets at work
-        if (ProfDescription == Job.Forester)
-        {
-            DropGoods(_person.Work);
-        }
+        ////bz job foreseter drops things when gets at work
+        //if (ProfDescription == Job.Forester)
+        //{
+        //    DropGoods(_person.Work);
+        //}
     }
 
     /// <summary>
