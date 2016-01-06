@@ -293,8 +293,30 @@ public class Structure : StructureParent
 
     public void Demolish()
     {
+        //if is a house need to know 
+        if (MyId.Contains("House") || MyId.Contains("Shack"))
+        {
+            if (BuildingPot.Control.ThereIsAtLeastOneVirginFamilyHouse())
+            {
+                //book my family there
+                //todo and test
+                StartDemolishProcess();
+            }
+            else
+            {
+                //todo notify
+                Debug.Log("People in this house have no where to go. Please build something at least a shack and try" +
+                           " again deleting this building");
+                _isOrderToDestroy = false;
+            }
+        }
+        else StartDemolishProcess();
+    }
+
+    void StartDemolishProcess()
+    {
         BuildingPot.Control.Registro.RemoveItem(Category, MyId);
-        HideAll();
+        HideAll();   
     }
 
 

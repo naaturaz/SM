@@ -578,6 +578,20 @@ public class Building : General, Iinfo
             _debugShip.Update();    
         }
         
+        CheckIfDestroyOrdered();
+    }
+
+    /// <summary>
+    /// Bz a building will stay forever after destroyed without being destroyed 
+    /// </summary>
+    private void CheckIfDestroyOrdered()
+    {
+        //below bool is set to true on DestroydHiddenBuild() so that means that went trhu all and still needs to 
+        //be taken care of 
+        if (_isOrderToDestroy)
+        {
+            DestroyOrdered();
+        }
     }
 
     /// <summary>
@@ -733,7 +747,7 @@ public class Building : General, Iinfo
     {
         if (_isOrderToDestroy            
             //this is for addres the problem where routing is happening and a Building is destroyed
-            && PersonController.UnivCounter == -1 && !ShacksManager.AtLeastBuilding1ShackNow())
+            && PersonController.UnivCounter == -1)
         {
             if (_arrow != null)
             {
@@ -741,7 +755,9 @@ public class Building : General, Iinfo
                 _arrow = null;
             }
 
+            BuildingPot.Control.Registro.RemoveItem(Category, MyId);
             BuildingPot.Control.Registro.AllBuilding.Remove(MyId);
+            MeshController.CrystalManager1.Delete(this);
 
             DestroyProjector();
             Destroy();

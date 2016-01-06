@@ -667,11 +667,6 @@ public class Profession  {
     /// </summary>
     public void DropGoods()
     {
-        if (_person.ProfessionProp.ProfDescription == Job.Forester)
-        {
-            var t = this;
-        }
-
         if (_person == null || _person.FoodSource == null)
         {
             return;
