@@ -148,7 +148,7 @@ public class Dispatch
 
     /// <summary>
     /// Will return true if the 'prod' param was found in the 'list' as having the same 'Product and 
-    /// (DestinyBuild or SourceBuild)'
+    /// (DestinyBuild or SourceBuild) and ID'
     /// </summary>
     bool ListContains(List<Order> list, Order prod)
     {
@@ -156,11 +156,11 @@ public class Dispatch
         {
             //regular orders
             if (list[i].Product == prod.Product && list[i].DestinyBuild == prod.DestinyBuild 
-                && list[i].TypeOrder == H.None
+                && list[i].TypeOrder == H.None && list[i].ID == prod.ID
 
                 //evacutaion orders
                 || (list[i].Product == prod.Product && list[i].SourceBuild == prod.SourceBuild 
-                && list[i].TypeOrder == H.Evacuation))
+                && list[i].TypeOrder == H.Evacuation && list[i].ID == prod.ID))
             {
                 return true;
             }
@@ -809,12 +809,14 @@ public class Order
         string dest = aOrder.DestinyBuild;
         string src = aOrder.SourceBuild;
         float amt = aOrder.Amount;
+        string id = aOrder.ID;
 
         res.TypeOrder = type;
         res.Product = prod;
         res.DestinyBuild = dest;
         res.SourceBuild = src;
         res.Amount = amt;
+        res.ID = id;
 
         return res;
     }

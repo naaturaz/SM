@@ -281,6 +281,7 @@ public class AddOrderWindow : GUIElement {
         }
     }
 
+    //todo validation
     bool IsTextValid(string text)
     {
         int temp = 0;
