@@ -116,6 +116,8 @@ public class Production  {
     private void LoadInputProductsStats()
     {
         //Loading each prodcut input 
+        GunPodwer();
+        
         Axe();
         Sword();
 
@@ -134,6 +136,14 @@ public class Production  {
         PaperNewsAndBook();
 
         Sugar();
+
+        
+    }
+
+    //sulfur, charcoal, and potassium 
+    private void GunPodwer()
+    {
+
     }
 
 
@@ -176,8 +186,10 @@ public class Production  {
     private void Cigar()
     {
         InputElement element = new InputElement(P.Tobacco, 15);
-        List<InputElement> prod = new List<InputElement>() { element };
-        _inputProducts.Add(new ProductInfo(P.Cigar, prod));
+        List<InputElement> prodFormu1 = new List<InputElement>() { element, _eleWoodComb };
+        List<InputElement> prodFormu2 = new List<InputElement>() { element, _eleCoalComb};
+        _inputProducts.Add(new ProductInfo(P.Cigar, prodFormu1));
+        _inputProducts.Add(new ProductInfo(P.Cigar, prodFormu2));
     }
 
 
@@ -199,31 +211,50 @@ public class Production  {
 
     private void Fabric()
     {
+
+
         InputElement element = new InputElement(P.Cotton, 10);
-        List<InputElement> prod = new List<InputElement>() { element };
-        _inputProducts.Add(new ProductInfo(P.Fabric, prod));
+        List<InputElement> prodForm1 = new List<InputElement>() { element, _eleWoodComb };
+        List<InputElement> prodForm2 = new List<InputElement>() { element, _eleCoalComb };
+        _inputProducts.Add(new ProductInfo(P.Fabric, prodForm1));
+        _inputProducts.Add(new ProductInfo(P.Fabric, prodForm2));
     }
 
-
+    InputElement _eleWoodComb = new InputElement(P.Wood, 2);
+    InputElement _eleCoalComb = new InputElement(P.Coal, 1);
 
 
     private void PaperNewsAndBook()
     {
+        //good sample Paper:
         //paper
-        InputElement ele = new InputElement(P.Wood, 10);
-        List<InputElement> inp = new List<InputElement>() { ele };
-        _inputProducts.Add(new ProductInfo(P.Paper, inp));
+        InputElement eleInputWood = new InputElement(P.Wood, 10);
+        InputElement eleWoodComb = new InputElement(P.Wood, 2);
+        InputElement eleCoalComb = new InputElement(P.Coal, 1);
+
+        //1 formula that do paper
+        List<InputElement> formula1 = new List<InputElement>() { eleInputWood, eleWoodComb };
+        //2nd forumala that do paper 
+        List<InputElement> formula2 = new List<InputElement>() { eleInputWood, eleCoalComb };
+        _inputProducts.Add(new ProductInfo(P.Paper, formula1));
+        _inputProducts.Add(new ProductInfo(P.Paper, formula2));
 
 
         //paper news
         InputElement paper1 = new InputElement(P.Paper, 10);
-        List<InputElement> paper = new List<InputElement>() { paper1 };
-        _inputProducts.Add(new ProductInfo(P.PaperNews, paper));
+        List<InputElement> paperForm1 = new List<InputElement>() { paper1, eleWoodComb};
+        List<InputElement> paperForm2 = new List<InputElement>() { paper1, eleCoalComb};
+        _inputProducts.Add(new ProductInfo(P.PaperNews, paperForm1));
+        _inputProducts.Add(new ProductInfo(P.PaperNews, paperForm2));
+
 
         //books
         InputElement paper2 = new InputElement(P.Paper, 100);
-        List<InputElement> book = new List<InputElement>() { paper2 };
-        _inputProducts.Add(new ProductInfo(P.Books, book));
+        InputElement leather = new InputElement(P.Leather, 1);
+        List<InputElement> bookForm1 = new List<InputElement>() { paper2, leather, eleWoodComb };
+        List<InputElement> bookForm2 = new List<InputElement>() { paper2, leather, eleCoalComb };
+        _inputProducts.Add(new ProductInfo(P.Books, bookForm1));
+        _inputProducts.Add(new ProductInfo(P.Books, bookForm2));
     }
 
 
@@ -231,8 +262,10 @@ public class Production  {
     private void Sugar()
     {
         InputElement element = new InputElement(P.SugarCane, 10);
-        List<InputElement> prod = new List<InputElement>() { element };
-        _inputProducts.Add(new ProductInfo(P.Sugar, prod));
+        List<InputElement> prodFormu1 = new List<InputElement>() { element, _eleWoodComb };
+        List<InputElement> prodFormu2 = new List<InputElement>() { element, _eleCoalComb };
+        _inputProducts.Add(new ProductInfo(P.Sugar, prodFormu1));
+        _inputProducts.Add(new ProductInfo(P.Sugar, prodFormu2));
     }
 
 

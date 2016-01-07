@@ -119,6 +119,7 @@ public enum P
     //other not defined yet
     Person, Food, Dollar,
     Salt,
+    Coal,
 
 }
 

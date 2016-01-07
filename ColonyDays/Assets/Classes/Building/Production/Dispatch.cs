@@ -238,7 +238,7 @@ public class Dispatch
             {
                 //todo Notify
                 Debug.Log("Inv full to DestBuild:"+currOrders[i].DestinyBuild+"|for prod:"+currOrders[i].Product);
-                break;
+                continue;
             }
 
             //export first priority

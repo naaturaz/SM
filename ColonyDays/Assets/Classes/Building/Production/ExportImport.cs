@@ -33,6 +33,8 @@ public class ExportImport
     {
         _prodSpecs.Add(new ProdSpec(P.Bean, 90, 368, 100));
         _prodSpecs.Add(new ProdSpec(P.Potato, 70, 380, 100));
+        _prodSpecs.Add(new ProdSpec(P.Coal, 20, 180, 70));
+
         _prodSpecs.Add(new ProdSpec(P.SugarCane, 50, 200.2f, 100));
         _prodSpecs.Add(new ProdSpec(P.Corn, 60, 540, 120));
 
