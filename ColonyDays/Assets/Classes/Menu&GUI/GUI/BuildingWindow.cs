@@ -378,6 +378,7 @@ public class BuildingWindow : GUIElement {
     /// </summary>
     void ShowImportOrders()
     {
+        //todo not show orders to cancel when on Dock Inventory
         var impOrd = _building.Dispatch1.ReturnEvacuaOrders();
         DisplayOrders(impOrd, _importIniPos, Root.orderShowClose);
     }

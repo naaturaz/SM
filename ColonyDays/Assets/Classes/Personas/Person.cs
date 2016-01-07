@@ -1138,7 +1138,6 @@ public class Person : General
         if (jType == Job.Forester)
         {
             _profession = new Forester(this, pF);
-            
         }
         else if (jType == Job.Docker)
         {
@@ -1176,6 +1175,10 @@ public class Person : General
         {
             _profession = new Farmer(this, pF);
         }
+        else if(jType == Job.SaltMiner)
+        {
+            _profession = new SaltMiner(this, pF);
+        }
     }
 
     /// <summary>
@@ -1202,6 +1205,10 @@ public class Person : General
         else if ( Work.HType.ToString().Contains(H.Farm.ToString()))
         {
             return Job.Farmer;
+        }
+        else if ( Work.HType.ToString().Contains(H.SaltMine.ToString()))
+        {
+            return Job.SaltMiner;
         }
         return Job.Insider;
     }

@@ -55,6 +55,8 @@ public class Production  {
 
         _products.Add(new List<H>() { H.BlackSmith }, new List<P>() { P.Axe, P.Tool, P.Sword });
 
+        _products.Add(new List<H>() { H.SaltMine }, new List<P>() { P.Salt});
+
         _products.Add(new List<H>() { H.Brick }, new List<P>() { P.Brick });
 
         _products.Add(new List<H>() { H.Carpintery }, new List<P>() { P.Tonel });

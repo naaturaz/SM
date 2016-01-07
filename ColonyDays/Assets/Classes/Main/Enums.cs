@@ -12,7 +12,8 @@ public enum Job
     None,
     WheelBarrow,
     Homer,
-    Farmer
+    Farmer,
+    SaltMiner
 }
 
 public enum TaskE //to be use for the person class
@@ -74,7 +75,7 @@ public enum Role
 public enum P
 {
     //Farm
-    Bean, Potato, SugarCane, Corn, Tobacco, Cotton, 
+    Bean, Potato, SugarCane, Corn, Tobacco, Cotton,
     Banana, Coconut,
     //Animal Farm
     Chicken, Egg, Pork, Beef, Leather,
@@ -117,7 +118,8 @@ public enum P
 
     //other not defined yet
     Person, Food, Dollar,
-    
+    Salt,
+
 }
 
 /// <summary>
@@ -143,10 +145,16 @@ public enum H
 
     Bridge, BridgeRoadUnit, BridgeTrailUnit, Wheel, Storage,
 
+
+    //ADDING A NEW STRUCTURE INSTRUCTIONS:
     /////////////////anything u change BELOW HERE SHOULD BE ADDED IN THEIR SPECIFIC ENUM USED TO MAP KEYBOARD
     /// and added on Root.cs and 
     /// stats should be added on Book.cs. thts all 
+    /// add the type of Product produces on Production.cs
+    /// if Category will be diff than structure set on General.DefineCategory()
     /// 
+    /// if is a Double bound structure such as Dock or MountainMine needs to be added on 
+    /// List: doubleBounds on Building.cs
     //Structures Categores
     Infrastructure, Housing, Farming, Raw, Production, Industry, Trade, GovServices, Other,
 
@@ -159,7 +167,7 @@ public enum H
     AnimalFarmSmall, AnimalFarmMed, AnimalFarmLarge, AnimalFarmXLarge,
     FieldFarmSmall, FieldFarmMed, FieldFarmLarge, FieldFarmXLarge,
     //raw F4
-    Clay, FishSmall, FishRegular, Mine, MountainMine, Resin, Wood, BlackSmith,
+    Clay, FishSmall, FishRegular, Mine, MountainMine, Resin, Wood, BlackSmith, SaltMine,
     //prod F5
     Brick, Carpintery, Cigars, Mill, Slat, Tilery,
     //industry F6
@@ -314,7 +322,7 @@ public enum StFarm
 public enum StRaw //for structures game structure.cs 
 {
     //Raw
-    Clay, FishSmall, FishRegular, Mine, MountainMine, Resin, Wood, BlackSmith,
+    Clay, FishSmall, FishRegular, Mine, MountainMine, Resin, Wood, BlackSmith, SaltMine
 }
 
 public enum StProd //for structures game structure.cs 

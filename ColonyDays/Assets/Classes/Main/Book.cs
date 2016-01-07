@@ -102,6 +102,9 @@ public class Book : General
         Build.Add(new BuildStat(H.Wood, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.BlackSmith, 400, 15, 5, 25, 5, maxPeople: 5));
 
+        Build.Add(new BuildStat(H.SaltMine, 400, 15, 5, 25, 5, maxPeople: 5));
+
+
         //Prod
         Build.Add(new BuildStat(H.Brick, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.Carpintery, 400, 15, 5, 25, 5, maxPeople: 5));

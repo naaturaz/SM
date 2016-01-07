@@ -42,6 +42,7 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Beef, 300, 881, 60));
 
         _prodSpecs.Add(new ProdSpec(P.Fish, 300, 932, 70));
+        _prodSpecs.Add(new ProdSpec(P.Salt, 30, 900, 85));
 
         _prodSpecs.Add(new ProdSpec(P.Sugar, 50, 900, 70));
 

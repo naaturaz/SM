@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class General : MonoBehaviour
@@ -171,6 +172,12 @@ public class General : MonoBehaviour
 	static public General Create(string root, Vector3 origen = new Vector3(), string name = "", Transform container = null,
         H hType = H.None)
 	{
+	    if (root.Contains("Salt"))
+	    {
+	        var t = 2;
+            Debug.Log("Salt spwner caller");
+	    }
+
         WAKEUP = true;
 		General obj = null;
 		obj = (General)Resources.Load(root, typeof(General));
@@ -195,7 +202,8 @@ public class General : MonoBehaviour
         {
             res = Ca.DraggableSquare;
         }
-        else if (hTypeP == H.Dock || hTypeP == H.DryDock || hTypeP == H.FishSmall || hTypeP == H.FishRegular)
+        else if (hTypeP == H.Dock || hTypeP == H.DryDock || hTypeP == H.FishSmall || hTypeP == H.FishRegular
+            || hTypeP == H.SaltMine)
         {
             res = Ca.Shore;
         }

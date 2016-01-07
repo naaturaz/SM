@@ -269,6 +269,8 @@ public class Root : MonoBehaviour
 
     public static string beefMat1 = "Prefab/Mats/Animals/Animals";
 
+   
+
     static void LoadMatDict()
     {
         matDict.Add(H.Trail+"."+Ma.matBuildBase, matGravilla);
@@ -491,6 +493,8 @@ public class Root : MonoBehaviour
         buildsRoot.Add(H.Resin, "Prefab/Building/Raw/Resin");
         buildsRoot.Add(H.Wood, "Prefab/Building/Raw/Wood");
         buildsRoot.Add(H.BlackSmith, "Prefab/Building/Raw/BlackSmith");
+        buildsRoot.Add(H.SaltMine, "Prefab/Building/Raw/SaltMine");
+
 
         //Prod
         buildsRoot.Add(H.Brick, "Prefab/Building/Prod/Brick");
@@ -533,9 +537,15 @@ public class Root : MonoBehaviour
 
     }
 
-    public static Dictionary<P, string> productsRoot = new Dictionary<P, string>(); //for key and root
+    private static Dictionary<P, string> _productsRoot = new Dictionary<P, string>();
 
+//for key and root
 
+    public static Dictionary<P, string> productsRoot
+    {
+        get { return _productsRoot; }
+        set { _productsRoot = value; }
+    }
 
 
 
