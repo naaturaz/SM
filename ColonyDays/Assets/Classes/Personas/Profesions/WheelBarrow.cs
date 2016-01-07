@@ -113,11 +113,6 @@ public class WheelBarrow : Profession
             throw new Exception();
         }
 
-        if (_person.Name.Contains("Ni"))
-        {
-            var t = this;
-        }
-
         Order1 = _person.Work.Dispatch1.GiveMeOrder(_person);
 
         _person.PrevOrder = Order1;

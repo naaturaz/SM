@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
+
 /*
  * Each person and building will have one inventory
 */
@@ -214,6 +216,44 @@ public class Inventory  {
             return true;
         }
         return false;
+    }
+
+    /// <summary>
+    /// Will tell u if inventory is full for this prod
+    /// </summary>
+    /// <param name="prodP"></param>
+    /// <returns></returns>
+    public bool IsFullForThisProd(P prodP)
+    {
+        var invItem = _inventItems.Find(a => a.Key == prodP);
+
+        if (invItem == null)
+        {
+            return false;
+        }
+
+        var total = invItem.Volume;
+        var parts = ReturnPartThatBelongToThisProdInThisBuilding(prodP);
+
+        if (total > _capacityVol / parts)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    int ReturnPartThatBelongToThisProdInThisBuilding(P prod)
+    {
+        var build = Brain.GetBuildingFromKey(LocMyId);
+
+        if (build == null)
+        {
+            Debug.Log("building not found:"+LocMyId);
+            return 1;
+        }
+
+        var parts = BuildingPot.Control.ProductionProp.ReturnPartOfStorageThatBelongsToThisProd(build.HType, prod);
+        return parts;
     }
 
     public float CurrentVolumeOcuppied()

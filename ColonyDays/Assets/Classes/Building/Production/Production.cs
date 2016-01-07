@@ -270,6 +270,94 @@ public class Production  {
     }
 
     /// <summary>
+    /// Will tell u how many ingredients this building will take maximun
+    /// needs to split the storage area of an Building so storage is not fillOut
+    /// only with one ingredient(input)
+    /// </summary>
+    /// <param name="hTypeP"></param>
+    /// <returns></returns>
+    int ReturnAllInputsThisBuildingTake(H hTypeP)
+    {
+        //products that could be created in that vbuilding
+        var products = _products.Where(a => a.Key.Contains(hTypeP)).ToList();
+        int amt=0;
+        List<InputElement> allInputIngredients = new List<InputElement>();
+
+        for (int i = 0; i < products.Count(); i++)
+        {
+            for (int j = 0; j < products[i].Value.Count; j++)
+            {
+                var prodKey = products[i].Value[j];
+
+                //the inputs for 1 product. 1 product could have many inputs like Axe
+                var inputs = _inputProducts.Where(a => a.Product == prodKey).ToList();
+
+                for (int k = 0; k < inputs.Count; k++)
+                {
+                    allInputIngredients.AddRange(inputs[k].Ingredients);
+                }
+            }
+        }
+        amt = ReturnTheAmountOfUniqueProducts(allInputIngredients);
+
+        return amt;
+    }
+
+    int ReturnTheAmountOfUniqueProducts(List<InputElement> list)
+    {
+        List<P> prod = new List<P>();
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            prod.Add(list[i].Element);
+        }
+
+        return prod.Distinct().ToList().Count;
+    }
+
+
+
+
+    /// <summary>
+    /// bz if is an input will get half of the storage divided by the amount of ingredients
+    /// for ex for Axe: the input is wood and iron.
+    /// 
+    /// If axe is pass will return a 2 so half of the storage
+    /// if wood is pass will return a 4 so a quater of the storage
+    /// if iron is pass will return a 4 ...
+    /// </summary>
+    /// <param name="hTypeP"></param>
+    /// <param name="prod"></param>
+    /// <returns></returns>
+    public int ReturnPartOfStorageThatBelongsToThisProd(H hTypeP, P prod)
+    {
+        var inputsAmt = ReturnAllInputsThisBuildingTake(hTypeP);
+
+        //a building without inputs then 
+        if (inputsAmt == 0)
+        {
+            //the whole storage
+            //ex: Dock, Wood, SaltMine
+            return 1;
+        }
+
+        //prod we create in this buildng 
+        var products = _products.Where(a => a.Key.Contains(hTypeP)).ToList();
+        var prodFound = products.Find(a => a.Value.Contains(prod));
+
+        //the prod sent is something we manufactur un that place then can take half of building 
+        if (prodFound.Value != null && prodFound.Value.Count > 0)
+        {
+            return 2;
+        }
+
+        //else is just an ingredint 
+        return inputsAmt*2;
+    }
+
+
+
+    /// <summary>
     /// Given a product will return the list of ingrediets needed 
     /// </summary>
     /// <param name="product"></param>

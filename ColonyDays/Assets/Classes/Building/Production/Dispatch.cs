@@ -234,10 +234,10 @@ public class Dispatch
         for (int i = 0; i < currOrders.Count; i++)
         {
             //if the Inventory of destiny build is full will skip that order 
-            if (IsDestinyBuildInvFull(currOrders[i]))
+            if (IsDestinyBuildInvFullForThisProd(currOrders[i]))
             {
                 //todo Notify
-                Debug.Log("Inv full to DestBuild:"+currOrders[i].DestinyBuild);
+                Debug.Log("Inv full to DestBuild:"+currOrders[i].DestinyBuild+"|for prod:"+currOrders[i].Product);
                 break;
             }
 
@@ -255,6 +255,22 @@ public class Dispatch
         return null;      
     }
 
+    bool IsDestinyBuildInvFullForThisProd(Order order)
+    {
+        var destBuild = Brain.GetBuildingFromKey(order.DestinyBuild);
+
+        if (destBuild == null)
+        {
+            return false;
+        }
+
+        if (destBuild.Inventory.IsFullForThisProd(order.Product))
+        {
+            return true;
+        }
+        return false;
+    }  
+    
     bool IsDestinyBuildInvFull(Order order)
     {
         var destBuild = Brain.GetBuildingFromKey(order.DestinyBuild);
@@ -270,6 +286,8 @@ public class Dispatch
         }
         return false;
     }
+
+
 
     private Order EvacuationOrder(Person person, Order order)
     {

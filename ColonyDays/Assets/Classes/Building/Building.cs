@@ -1833,6 +1833,12 @@ public class Building : General, Iinfo
     /// </summary>
     internal void Produce(int amt, Person person, bool addToBuildInv = true)
     {
+        if (MyId.Contains("Paper"))
+        {
+            var t = this;
+        }
+
+
         var doIHaveInput = DoBuildHaveRawResources();
         var hasStorageRoom = DoesStorageHaveCapacity(person);
         var hasThisBuildRoom = DoWeHaveCapacityInThisBuilding();
