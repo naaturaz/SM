@@ -596,7 +596,7 @@ public class Person : General
 
     void ChangeNutritionLvl(int change)
     {
-        _nutritionLevel += change;
+        _nutritionLevel += change * Program.gameScene.GameTime1.TimeFactorInclSpeed();
     }
 
     void CheckOnNutrition()

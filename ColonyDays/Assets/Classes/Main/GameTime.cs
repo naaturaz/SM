@@ -56,8 +56,21 @@ public class GameTime
 
     public void FixedUpdate()
     {
-        _accumDays += Program.gameScene.GameSpeed * _timeFactor * ( (Program.gameScene.GameSpeed));
+        _accumDays += TimeFactorInclSpeed();
         CheckIfNewDay();
+    }
+
+    /// <summary>
+    /// The amount of time that pass. Includes the Speed of the game
+    /// 
+    /// This is the ref for all things that need a Time Factor included or Speed
+    /// 
+    /// return Program.gameScene.GameSpeed*_timeFactor*Program.gameScene.GameSpeed; 
+    /// </summary>
+    /// <returns></returns>
+    public float TimeFactorInclSpeed()
+    {
+        return Program.gameScene.GameSpeed*_timeFactor*Program.gameScene.GameSpeed;
     }
 
     private void CheckIfNewDay()
