@@ -10,64 +10,73 @@
 
 public class ExportImport
 {
-    List<ProdPrice> _prodPrices = new List<ProdPrice>(); 
+    List<ProdSpec> _prodPrices = new List<ProdSpec>(); 
 
     public ExportImport()
     {
         LoadBasePrices();
     }
 
+    //Densities
+    //http://www.engineeringtoolbox.com/foods-materials-bulk-density-d_1819.html
+    //http://www.sugartech.co.za/density/
+    //http://go.key.net/rs/key/images/Bulk%20Density%20Averages%20100630.pdf
+    //http://www.simetric.co.uk/si_materials.htm
+    //http://www.engineeringtoolbox.com/density-materials-d_1652.html
+
+    //Glass; Density kg/m3, 2400-2800
+
     /// <summary>
     /// Will load the base price of each prod
     /// </summary>
     private void LoadBasePrices()
     {
-        _prodPrices.Add(new ProdPrice(P.Bean, 900));
-        _prodPrices.Add(new ProdPrice(P.Potato, 700));
-        _prodPrices.Add(new ProdPrice(P.SugarCane, 500));
-        _prodPrices.Add(new ProdPrice(P.Corn, 600));
+        _prodPrices.Add(new ProdSpec(P.Bean, 90, 368, 100));
+        _prodPrices.Add(new ProdSpec(P.Potato, 70, 380, 100));
+        _prodPrices.Add(new ProdSpec(P.SugarCane, 50, 200.2f, 100));
+        _prodPrices.Add(new ProdSpec(P.Corn, 60, 540, 120));
 
-        _prodPrices.Add(new ProdPrice(P.Chicken, 2000));
-        _prodPrices.Add(new ProdPrice(P.Egg, 1500));
-        _prodPrices.Add(new ProdPrice(P.Pork, 2000));
-        _prodPrices.Add(new ProdPrice(P.Beef, 3000));
+        _prodPrices.Add(new ProdSpec(P.Chicken, 200, 881, 80));
+        _prodPrices.Add(new ProdSpec(P.Egg, 150, 400, 100));
+        _prodPrices.Add(new ProdSpec(P.Pork, 200, 881, 70));
+        _prodPrices.Add(new ProdSpec(P.Beef, 300, 881, 60));
 
-        _prodPrices.Add(new ProdPrice(P.Fish, 3000));
+        _prodPrices.Add(new ProdSpec(P.Fish, 300, 932, 70));
 
-        _prodPrices.Add(new ProdPrice(P.Sugar, 500));
+        _prodPrices.Add(new ProdSpec(P.Sugar, 50, 900, 70));
 
-        _prodPrices.Add(new ProdPrice(P.Tobacco, 500));
-        _prodPrices.Add(new ProdPrice(P.Cotton, 500));
-        _prodPrices.Add(new ProdPrice(P.Leather, 500));
-
-
+        _prodPrices.Add(new ProdSpec(P.Tobacco, 50, 300, 90));
+        _prodPrices.Add(new ProdSpec(P.Cotton, 40, 360, 120));
+        _prodPrices.Add(new ProdSpec(P.Leather, 70, 570, 20));
 
 
-        _prodPrices.Add(new ProdPrice(P.Clay, 100));
-        _prodPrices.Add(new ProdPrice(P.Gold, 5000));
-        _prodPrices.Add(new ProdPrice(P.Stone, 500));
-        _prodPrices.Add(new ProdPrice(P.Iron, 1500));
 
 
-        _prodPrices.Add(new ProdPrice(P.Resin, 100));
-        _prodPrices.Add(new ProdPrice(P.Wood, 100));
-        _prodPrices.Add(new ProdPrice(P.Axe, 500));
-        _prodPrices.Add(new ProdPrice(P.Tool, 1500));
-        _prodPrices.Add(new ProdPrice(P.Sword, 1500));
+        _prodPrices.Add(new ProdSpec(P.Clay, 10, 100, 10));//ceramic
+        _prodPrices.Add(new ProdSpec(P.Gold, 500, 19300, 5));
+        _prodPrices.Add(new ProdSpec(P.Stone, 50, 2515, 20));
+        _prodPrices.Add(new ProdSpec(P.Iron, 150, 7874, 15));
 
 
-        _prodPrices.Add(new ProdPrice(P.Brick, 500));
-        _prodPrices.Add(new ProdPrice(P.Tonel, 600));
-        _prodPrices.Add(new ProdPrice(P.Cigar, 2000));
-        _prodPrices.Add(new ProdPrice(P.Slat, 400));
-        _prodPrices.Add(new ProdPrice(P.Tile, 600));
+        _prodPrices.Add(new ProdSpec(P.Resin, 10, 30));
+        _prodPrices.Add(new ProdSpec(P.Wood, 10, 500, 90));
+        _prodPrices.Add(new ProdSpec(P.Axe, 50, 2500, 10));
+        _prodPrices.Add(new ProdSpec(P.Tool, 150, 3000, 15));
+        _prodPrices.Add(new ProdSpec(P.Sword, 150, 6000, 8));
 
 
-        _prodPrices.Add(new ProdPrice(P.Fabric, 1000));
-        _prodPrices.Add(new ProdPrice(P.GunPowder, 1000));
-        _prodPrices.Add(new ProdPrice(P.Paper, 1500));
-        _prodPrices.Add(new ProdPrice(P.Books, 3000));
-        _prodPrices.Add(new ProdPrice(P.Silk, 1500));
+        _prodPrices.Add(new ProdSpec(P.Brick, 50, 2000, 100));
+        _prodPrices.Add(new ProdSpec(P.Tonel, 60, 50, 50));
+        _prodPrices.Add(new ProdSpec(P.Cigar, 200, 700, 50));
+        _prodPrices.Add(new ProdSpec(P.Slat, 40, 600, 70));
+        _prodPrices.Add(new ProdSpec(P.Tile, 60, 2100, 90));
+
+
+        _prodPrices.Add(new ProdSpec(P.Fabric, 100, 400, 20));
+        _prodPrices.Add(new ProdSpec(P.GunPowder, 100, 1281, 60));
+        _prodPrices.Add(new ProdSpec(P.Paper, 150, 192, 30));
+        _prodPrices.Add(new ProdSpec(P.Books, 300, 500, 5));
+        _prodPrices.Add(new ProdSpec(P.Silk, 150, 1300, 5));
     }
 
 
@@ -97,30 +106,58 @@ public class ExportImport
         Program.gameScene.GameController1.Dollars -= trans;
     }
 
-    int CalculateTransaction(P prod, int amt)
+    float CalculateTransaction(P prod, int amt)
     {
         return ReturnPrice(prod) * amt;
     }
 
-    int ReturnPrice(P prod)
+    float ReturnPrice(P prod)
     {
         return _prodPrices.Find(a => a.Product == prod).Price;
     }
 }
 
 /// <summary>
-/// Will hold the product and its base price 
+/// Will hold the product and its base price
+/// Also the Density of the product 
+/// and the produce factor:  Producing item factor. Can produce more KG of rice than Ceramic
 /// </summary>
-public class ProdPrice
+public class ProdSpec
 {
     public P Product;
-    public int Price;
+    public float Price;
 
-    public ProdPrice(){}
+    private float _density;
+    private float _produceFactor;
 
-    public ProdPrice(P prod, int price)
+    /// <summary>
+    /// The amount of Cubic Meters Needed to fit one KG of this Product
+    /// 
+    /// Density in kg/m3
+    /// </summary>
+    public float Density
+    {
+        get { return _density; }
+        set { _density = value; }
+    }
+
+    /// <summary>
+    /// Producing item factor. Can produce more KG of rice than Ceramic
+    /// This Factor is the one that reflects that . For ex Rice might be 10 and ceramic 5
+    /// </summary>
+    public float ProduceFactor
+    {
+        get { return _produceFactor; }
+        set { _produceFactor = value; }
+    }
+
+    public ProdSpec(){}
+
+    public ProdSpec(P prod, float price, float density = 1, float produceFactor = 1)
     {
         Product = prod;
         Price = price;
+        Density = density;
+        ProduceFactor = produceFactor;
     }
 }

@@ -13,7 +13,7 @@ public class GameController  {
     //is a total inventory. Representing all tht is in those inventories 
     static ResumenInventory _inventory = new ResumenInventory();
 
-    private int _dollars;//the dollars the player has 
+    private float _dollars;//the dollars the player has 
     private static StartingCondition _startingCondition;
 
     static public ResumenInventory Inventory1
@@ -26,7 +26,7 @@ public class GameController  {
         }
     }
 
-    public int Dollars
+    public float Dollars
     {
         get { return _dollars; }
         set
