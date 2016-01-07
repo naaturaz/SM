@@ -191,6 +191,16 @@ public class Profession  {
     {
         CleanOldProf();
         CleanOldVars();
+        SetProdXShift();
+    }
+
+    /// <summary>
+    /// Will set the ProdXShift Needs to account on:
+    /// Age, School Years, Product to produce now, Genre
+    /// </summary>
+    private void SetProdXShift()
+    {
+
     }
 
     /// <summary>
