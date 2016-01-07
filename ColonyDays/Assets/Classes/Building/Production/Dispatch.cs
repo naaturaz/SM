@@ -33,7 +33,9 @@ public class Dispatch
     List<Order> _dormantOrders = new List<Order>();
     private H _type = H.None;//type of Dispatch. So for there is the Regular one and Dock
 
-    List<Order> _expImpOrders = new List<Order>(); 
+    List<Order> _expImpOrders = new List<Order>();
+    private int maxAmtOfExpImpOrders = 10;
+
 
     public bool IsUsingPrimary
     {
@@ -111,7 +113,9 @@ public class Dispatch
     {
         var list = ReturnCurrentList();
         _isUsingPrimary = DefineUsingPrimary(list);
-        return list;
+
+        //ordering them by time placed so first placed is given always first 
+        return list.OrderBy(a=>a.PlacedTime).ToList();
     }
 
     /// <summary>
@@ -570,7 +574,7 @@ public class Dispatch
                 var ord = ExpImpOrders[i];
 
                 //100 units is at least wht is needed go make an imnport
-                if (dock.Inventory.HasEnoughtCapacityToStoreThis(100))
+                if (dock.Inventory.HasEnoughtCapacityToStoreThis(ord.Product, ord.Amount))
                 {
                     HandleThatImport(dock, ord);
                 }
@@ -585,9 +589,11 @@ public class Dispatch
     /// <param name="ord"></param>
     void HandleThatImport(Building dock, Order ord)
     {
-        var maxAmtCanTake = dock.Inventory.MaxAmtCanTakeOfAProd(ord.Product);
+        var maxAmtCanTake = dock.Inventory.MaxAmtOnKGCanTakeOfAProd(ord.Product);
         AddEvacuationOrder(ord);
 
+        //if can handle the import right away
+        //will added to invent and will remove it from ExpImpOrders
         if (maxAmtCanTake > ord.Amount)
         {
             Debug.Log("Imported:" + ord.Product + " . " + ord.Amount+" Done" );
@@ -596,6 +602,8 @@ public class Dispatch
             dock.Inventory.Add(ord.Product, ord.Amount);
             ExpImpOrders.Remove(ord);
         }
+        //if cant handle right away will import as much it can and will keep the order there
+        //so its handled later
         else
         {
             Debug.Log("Imported:" + ord.Product + " . " + maxAmtCanTake);
@@ -685,7 +693,16 @@ public class Dispatch
 
     internal void AddToExpImpOrders(Order order)
     {
-        ExpImpOrders.Add(order);
+        if (ExpImpOrders.Count < maxAmtOfExpImpOrders)
+        {
+            ExpImpOrders.Add(order);
+            
+        }
+        else
+        {
+            //todo notify
+            Debug.Log("Will not handle over 10 Export Import orders at the same time . 10 is the max");
+        }
     }
 
 
@@ -797,6 +814,7 @@ public class Order
     public string DestinyBuild;
     public string SourceBuild;
     public float Amount;//the amount dispatched in an order
+    public DateTime PlacedTime;
 
     public string ID;//the id of an order. Used to find and removed
 
@@ -810,6 +828,7 @@ public class Order
         string src = aOrder.SourceBuild;
         float amt = aOrder.Amount;
         string id = aOrder.ID;
+        DateTime pTime = aOrder.PlacedTime;
 
         res.TypeOrder = type;
         res.Product = prod;
@@ -817,6 +836,7 @@ public class Order
         res.SourceBuild = src;
         res.Amount = amt;
         res.ID = id;
+        res.PlacedTime = pTime;
 
         return res;
     }
@@ -830,6 +850,7 @@ public class Order
         Amount = amt;
 
         ID = Product + ":" + amt + "|" + TypeOrder + "|" + DateTime.Now;
+        PlacedTime = DateTime.Now;
     }
 
     /// <summary>
@@ -845,6 +866,7 @@ public class Order
         TypeOrder = H.Evacuation;
 
         ID = Product + ":" + Amount + "|" + TypeOrder + "|" + DateTime.Now;
+        PlacedTime = DateTime.Now;
     }
 
  

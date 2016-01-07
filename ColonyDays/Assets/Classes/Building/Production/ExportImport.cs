@@ -10,7 +10,7 @@ using UnityEngine;
 
 public class ExportImport
 {
-    List<ProdSpec> _prodPrices = new List<ProdSpec>(); 
+    List<ProdSpec> _prodSpecs = new List<ProdSpec>(); 
 
     public ExportImport()
     {
@@ -31,52 +31,52 @@ public class ExportImport
     /// </summary>
     private void LoadBasePrices()
     {
-        _prodPrices.Add(new ProdSpec(P.Bean, 90, 368, 100));
-        _prodPrices.Add(new ProdSpec(P.Potato, 70, 380, 100));
-        _prodPrices.Add(new ProdSpec(P.SugarCane, 50, 200.2f, 100));
-        _prodPrices.Add(new ProdSpec(P.Corn, 60, 540, 120));
+        _prodSpecs.Add(new ProdSpec(P.Bean, 90, 368, 100));
+        _prodSpecs.Add(new ProdSpec(P.Potato, 70, 380, 100));
+        _prodSpecs.Add(new ProdSpec(P.SugarCane, 50, 200.2f, 100));
+        _prodSpecs.Add(new ProdSpec(P.Corn, 60, 540, 120));
 
-        _prodPrices.Add(new ProdSpec(P.Chicken, 200, 881, 80));
-        _prodPrices.Add(new ProdSpec(P.Egg, 150, 400, 100));
-        _prodPrices.Add(new ProdSpec(P.Pork, 200, 881, 70));
-        _prodPrices.Add(new ProdSpec(P.Beef, 300, 881, 60));
+        _prodSpecs.Add(new ProdSpec(P.Chicken, 200, 881, 80));
+        _prodSpecs.Add(new ProdSpec(P.Egg, 150, 400, 100));
+        _prodSpecs.Add(new ProdSpec(P.Pork, 200, 881, 70));
+        _prodSpecs.Add(new ProdSpec(P.Beef, 300, 881, 60));
 
-        _prodPrices.Add(new ProdSpec(P.Fish, 300, 932, 70));
+        _prodSpecs.Add(new ProdSpec(P.Fish, 300, 932, 70));
 
-        _prodPrices.Add(new ProdSpec(P.Sugar, 50, 900, 70));
+        _prodSpecs.Add(new ProdSpec(P.Sugar, 50, 900, 70));
 
-        _prodPrices.Add(new ProdSpec(P.Tobacco, 50, 300, 90));
-        _prodPrices.Add(new ProdSpec(P.Cotton, 40, 360, 120));
-        _prodPrices.Add(new ProdSpec(P.Leather, 70, 570, 20));
-
-
+        _prodSpecs.Add(new ProdSpec(P.Tobacco, 50, 300, 90));
+        _prodSpecs.Add(new ProdSpec(P.Cotton, 40, 360, 120));
+        _prodSpecs.Add(new ProdSpec(P.Leather, 70, 570, 20));
 
 
-        _prodPrices.Add(new ProdSpec(P.Clay, 10, 100, 10));//ceramic
-        _prodPrices.Add(new ProdSpec(P.Gold, 500, 19300, 5));
-        _prodPrices.Add(new ProdSpec(P.Stone, 50, 2515, 20));
-        _prodPrices.Add(new ProdSpec(P.Iron, 150, 7874, 15));
 
 
-        _prodPrices.Add(new ProdSpec(P.Resin, 10, 30));
-        _prodPrices.Add(new ProdSpec(P.Wood, 10, 500, 90));
-        _prodPrices.Add(new ProdSpec(P.Axe, 50, 2500, 10));
-        _prodPrices.Add(new ProdSpec(P.Tool, 150, 3000, 15));
-        _prodPrices.Add(new ProdSpec(P.Sword, 150, 6000, 8));
+        _prodSpecs.Add(new ProdSpec(P.Clay, 10, 100, 10));//ceramic
+        _prodSpecs.Add(new ProdSpec(P.Gold, 500, 19300, 5));
+        _prodSpecs.Add(new ProdSpec(P.Stone, 50, 2515, 20));
+        _prodSpecs.Add(new ProdSpec(P.Iron, 150, 7874, 15));
 
 
-        _prodPrices.Add(new ProdSpec(P.Brick, 50, 2000, 100));
-        _prodPrices.Add(new ProdSpec(P.Tonel, 60, 50, 50));
-        _prodPrices.Add(new ProdSpec(P.Cigar, 200, 700, 50));
-        _prodPrices.Add(new ProdSpec(P.Slat, 40, 600, 70));
-        _prodPrices.Add(new ProdSpec(P.Tile, 60, 2100, 90));
+        _prodSpecs.Add(new ProdSpec(P.Resin, 10, 30));
+        _prodSpecs.Add(new ProdSpec(P.Wood, 10, 500, 90));
+        _prodSpecs.Add(new ProdSpec(P.Axe, 50, 2500, 10));
+        _prodSpecs.Add(new ProdSpec(P.Tool, 150, 3000, 15));
+        _prodSpecs.Add(new ProdSpec(P.Sword, 150, 6000, 8));
 
 
-        _prodPrices.Add(new ProdSpec(P.Fabric, 100, 400, 20));
-        _prodPrices.Add(new ProdSpec(P.GunPowder, 100, 1281, 60));
-        _prodPrices.Add(new ProdSpec(P.Paper, 150, 192, 30));
-        _prodPrices.Add(new ProdSpec(P.Books, 300, 500, 5));
-        _prodPrices.Add(new ProdSpec(P.Silk, 150, 1300, 5));
+        _prodSpecs.Add(new ProdSpec(P.Brick, 50, 2000, 100));
+        _prodSpecs.Add(new ProdSpec(P.Tonel, 60, 50, 50));
+        _prodSpecs.Add(new ProdSpec(P.Cigar, 200, 700, 50));
+        _prodSpecs.Add(new ProdSpec(P.Slat, 40, 600, 70));
+        _prodSpecs.Add(new ProdSpec(P.Tile, 60, 2100, 90));
+
+
+        _prodSpecs.Add(new ProdSpec(P.Fabric, 100, 400, 20));
+        _prodSpecs.Add(new ProdSpec(P.GunPowder, 100, 1281, 60));
+        _prodSpecs.Add(new ProdSpec(P.Paper, 150, 192, 30));
+        _prodSpecs.Add(new ProdSpec(P.Books, 300, 500, 5));
+        _prodSpecs.Add(new ProdSpec(P.Silk, 150, 1300, 5));
     }
 
     /// <summary>
@@ -87,7 +87,7 @@ public class ExportImport
     /// <returns></returns>
     public float CalculateVolume(P prod, float mass)
     {
-        var prodLo = _prodPrices.Find(a => a.Product == prod);
+        var prodLo = _prodSpecs.Find(a => a.Product == prod);
 
         if (prodLo == null)
         {
@@ -98,6 +98,25 @@ public class ExportImport
         var dens = prodLo.Density;
 
         return mass/dens;
+    }
+
+    /// <summary>
+    /// For a Cubic Meter . How much can be store in a Cubic Meter
+    /// </summary>
+    /// <param name="prod"></param>
+    /// <returns></returns>
+    public float CalculateMass(P prod, float cubicMeters)
+    {
+        var prodLo = _prodSpecs.Find(a => a.Product == prod);
+
+        if (prodLo == null)
+        {
+            Debug.Log("prod not found!:" + prod);
+            return 0;
+        }
+
+        //returns the Mass
+        return prodLo.Density*cubicMeters;
     }
 
 
@@ -134,7 +153,7 @@ public class ExportImport
 
     float ReturnPrice(P prod)
     {
-        return _prodPrices.Find(a => a.Product == prod).Price;
+        return _prodSpecs.Find(a => a.Product == prod).Price;
     }
 }
 

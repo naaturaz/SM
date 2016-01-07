@@ -173,12 +173,46 @@ public class AddOrderWindow : GUIElement {
     /// </summary>
     private void OrderNotComplete()
     {
-        throw new NotImplementedException();
+        //todo notify
+        Debug.Log(_errorMsg);
     }
 
+    private string _errorMsg;
     bool IsOrderComplete()
     {
+        if (!WasProdSelected())
+        {
+            _errorMsg = "Prd not select";
+            return false;
+        }
+        if (_amt == 0)
+        {
+            _errorMsg = "amt cant be 0";
+            return false;
+        }
+        if (!ThereIsSpaceRequiredAvail())
+        {
+            _errorMsg = "ur load wont fit in our storage area";
+            return false;
+        }
+        _errorMsg = "";
         return true;
+    }
+
+    bool WasProdSelected()
+    {
+        if (_prodSelect == P.None)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    bool ThereIsSpaceRequiredAvail()
+    {
+        var dock = BuildingPot.Control.Registro.SelectBuilding;
+
+        return dock.Inventory.HasEnoughtCapacityToStoreThis(_prodSelect, _amt);
     }
 
     /// <summary>
@@ -248,14 +282,21 @@ public class AddOrderWindow : GUIElement {
         else _inputPrice.text = "";
     }
 
+    /// <summary>
+    /// Amt selected 
+    /// </summary>
     private void AmtSelected()
     {
         if (IsTextValid(_inputAmt.text))
         {
+
+
             _amt = int.Parse(_inputAmt.text);
         }
         else _inputAmt.text = "";
     }
+
+
 
     void ProdSelected(string prod)
     {

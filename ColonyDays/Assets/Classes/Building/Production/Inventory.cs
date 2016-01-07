@@ -371,25 +371,21 @@ public class Inventory  {
         MyText.ManualUpdate();
     }
 
-    internal bool HasEnoughtCapacityToStoreThis(int amt)
+    /// <summary>
+    /// Will tell u if the inventory has enought capacity to store this Load
+    /// </summary>
+    /// <param name="prod"></param>
+    /// <param name="amt"></param>
+    /// <returns></returns>
+    internal bool HasEnoughtCapacityToStoreThis( P prod, float amt)
     {
-        if (CurrentStoreUsage() + amt > CapacityVol)
+        var volOfLoad = Program.gameScene.ExportImport1.CalculateVolume(prod, amt);
+
+        if (CurrentVolumeOcuppied() + volOfLoad > CapacityVol)
         {
             return false;
         }
         return true;
-    }
-
-    float CurrentStoreUsage()
-    {
-        float curr = 0;
-
-        for (int i = 0; i < _inventItems.Count; i++)
-        {
-            curr += _inventItems[i].Amount;
-        }
-
-        return curr;
     }
 
     /// <summary>
@@ -416,27 +412,23 @@ public class Inventory  {
     }
 
     /// <summary>
-    /// Will tell u the max amnt of a prod can take now the nventory
+    /// Will tell u the max amnt of a prod can take now the nventory on KG
     /// </summary>
     /// <param name="p"></param>
     /// <returns></returns>
-    internal float MaxAmtCanTakeOfAProd(P p)
+    internal float MaxAmtOnKGCanTakeOfAProd(P p)
     {
-        var vol = ReturnProdVolume(p);
-        var spaceNow = CapacityVol - CurrentStoreUsage();
+        var spaceAvailNow = CapacityVol - CurrentVolumeOcuppied();
 
-        return spaceNow * vol;
+        if (spaceAvailNow < 0)
+        {
+            return 0;
+        }
+
+        return Program.gameScene.ExportImport1.CalculateMass(p, spaceAvailNow);
     }
 
-    /// <summary>
-    /// Return how many units of one product can be stored on one unit of Volume wich could be metric cube
-    /// </summary>
-    /// <param name="p"></param>
-    /// <returns></returns>
-    int ReturnProdVolume(P p)
-    {
-        return 1;
-    }
+
 }
 
 public class InvItem
