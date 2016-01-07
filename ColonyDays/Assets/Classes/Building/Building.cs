@@ -2657,7 +2657,7 @@ public class Building : General, Iinfo
 
         var baseCap = Book.GiveMeStat(HType).Capacity;
 
-        return Inventory.Capacity == baseCap + FirstUpgradeAmt() + SecondUpgradeAmt();
+        return Inventory.CapacityVol == baseCap + FirstUpgradeAmt() + SecondUpgradeAmt();
     }
 
     int FirstUpgradeAmt()
@@ -2678,14 +2678,14 @@ public class Building : General, Iinfo
     {
         var baseCap = Book.GiveMeStat(HType).Capacity;
 
-        if (Inventory.Capacity == baseCap)
+        if (Inventory.CapacityVol == baseCap)
         {
-            Inventory.Capacity += FirstUpgradeAmt();
+            Inventory.CapacityVol += FirstUpgradeAmt();
             PayUpgradeFee(FirstUpgradeAmt());
         }
-        else if (Inventory.Capacity == baseCap + FirstUpgradeAmt())
+        else if (Inventory.CapacityVol == baseCap + FirstUpgradeAmt())
         {
-            Inventory.Capacity += SecondUpgradeAmt();
+            Inventory.CapacityVol += SecondUpgradeAmt();
             PayUpgradeFee(SecondUpgradeAmt());
         }
 

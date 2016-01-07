@@ -16,11 +16,11 @@ public class ResumenInventory {
     /// </summary>
     /// <param name="pCat"></param>
     /// <returns></returns>
-    public int ReturnAmountOnCategory(PCat pCat)
+    public float ReturnAmountOnCategory(PCat pCat)
     {
         var storages = BuildingController.FindAllStructOfThisTypeContain(H.Storage);
 
-        int res = 0;
+        float res = 0;
 
         for (int i = 0; i < storages.Count; i++)
         {
@@ -38,11 +38,11 @@ public class ResumenInventory {
     /// </summary>
     /// <param name="item"></param>
     /// <returns></returns>
-    public int ReturnAmtOfItemOnInv(P item)
+    public float ReturnAmtOfItemOnInv(P item)
     {
         var storages = BuildingController.FindAllStructOfThisTypeContain(H.Storage);
 
-        int res = 0;
+        float res = 0;
 
         for (int i = 0; i < storages.Count; i++)
         {
@@ -100,7 +100,7 @@ public class ResumenInventory {
     /// <summary>
     /// Will remove from the 'building' and will tell u how much is left to be removed 
     /// </summary>
-    int LeftToRemove(P item, int amt, Structure building)
+    float LeftToRemove(P item, int amt, Structure building)
     {
         if (building.Inventory.IsItemOnInv(item))
         {

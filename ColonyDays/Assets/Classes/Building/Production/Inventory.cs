@@ -8,7 +8,9 @@ public class Inventory  {
     private List<InvItem> _inventItems =  new List<InvItem>();
     private string _info;
     private string _locMyId;
-    private int _capacity;//how many units of good can hold a building
+
+    //Cubic meters of a Inventory
+    private float _capacityVol;
 
     public List<InvItem> InventItems
     {
@@ -22,10 +24,10 @@ public class Inventory  {
         set { _locMyId = value; }
     }
 
-    public int Capacity
+    public float CapacityVol
     {
-        get { return _capacity; }
-        set { _capacity = value; }
+        get { return _capacityVol; }
+        set { _capacityVol = value; }
     }
 
     public Inventory(){}
@@ -34,7 +36,7 @@ public class Inventory  {
     {
         //LoadFromFile();
         _locMyId = myId;
-        Capacity = Book.GiveMeStat(hTypeP).Capacity;
+        CapacityVol = Book.GiveMeStat(hTypeP).Capacity;
     }
 
     /// <summary>
@@ -42,7 +44,7 @@ public class Inventory  {
     /// </summary>
     /// <param name="Key"></param>
     /// <returns></returns>
-    public int ReturnAmtOfItemOnInv(P Key)
+    public float ReturnAmtOfItemOnInv(P Key)
     {
         for (int i = 0; i < _inventItems.Count; i++)
         {
@@ -59,7 +61,7 @@ public class Inventory  {
     /// </summary>
     /// <param name="Key"></param>
     /// <returns></returns>
-    public void SetAmtWithKey(P Key, int newVal)
+    public void SetAmtWithKey(P Key, float newVal)
     {
         for (int i = 0; i < _inventItems.Count; i++)
         {
@@ -112,11 +114,16 @@ public class Inventory  {
         }
     }
 
-    public void Add(P key, int amt)
+    /// <summary>
+    /// The add of an item to the Inventory
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="amt"></param>
+    public void Add(P key, float amt)
     {
         if (IsItemOnInv(key))
         {
-            int intT = ReturnAmtOfItemOnInv(key) + amt;
+            float intT = ReturnAmtOfItemOnInv(key) + amt;
             SetAmtWithKey(key, intT);
         }
         else
@@ -128,7 +135,11 @@ public class Inventory  {
         ResaveOnRegistro();
         UpdateOnGameController(H.Add, key, amt);
     }
-
+    
+    /// <summary>
+    /// The add of more that one item to the inventory
+    /// </summary>
+    /// <param name="items"></param>
     public void AddItems(List<InvItem> items)
     {
         for (int i = 0; i < items.Count; i++)
@@ -146,21 +157,21 @@ public class Inventory  {
     /// <param name="key"></param>
     /// <param name="amt"></param>
     /// <returns></returns>
-    public int Remove(P key, int amt)
+    public float Remove(P key, float amt)
     {
         if (IsItemOnInv(key))
         {
             //it means it can cover the amount asked to be removed
             if (ReturnAmtOfItemOnInv(key) - amt > 0)
             {
-                int intT = ReturnAmtOfItemOnInv(key) - amt;
+                float intT = ReturnAmtOfItemOnInv(key) - amt;
                 SetAmtWithKey(key, intT);
 
                 //UpdateInfo();
                 return amt;
             }
             //other wise will depleted
-            int t = ReturnAmtOfItemOnInv(key);
+            float t = ReturnAmtOfItemOnInv(key);
 
             SetAmtWithKey(key, 0);
 
@@ -192,13 +203,13 @@ public class Inventory  {
 
     public bool IsFull()
     {
-        var total = 0;
+        var total = 0f;
         for (int i = 0; i < _inventItems.Count; i++)
         {
-            total += _inventItems[i].Amount;
+            total += _inventItems[i].Volume;
         }
 
-        if (total > _capacity)
+        if (total > _capacityVol)
         {
             return true;
         }
@@ -282,10 +293,10 @@ public class Inventory  {
     /// </summary>
     /// <param name="pCat"></param>
     /// <returns></returns>
-    public int ReturnAmountOnCategory(PCat pCat)
+    public float ReturnAmountOnCategory(PCat pCat)
     {
         List<P> foodItems = ReturnListOfCatOfProd(pCat);
-        int res = 0;
+        float res = 0;
 
         for (int i = 0; i < foodItems.Count; i++)
         {
@@ -338,7 +349,7 @@ public class Inventory  {
     /// on GUI
     /// </summary>
     /// <param name="action"></param>
-    void UpdateOnGameController(H action, P item, int amt )
+    void UpdateOnGameController(H action, P item, float amt)
     {
         //building containing thsi inventory must be a Food Scr
         if (!BuildingPot.Control.FoodSources.Contains(LocMyId))
@@ -351,16 +362,16 @@ public class Inventory  {
 
     internal bool HasEnoughtCapacityToStoreThis(int amt)
     {
-        if (CurrentStoreUsage() + amt > Capacity)
+        if (CurrentStoreUsage() + amt > CapacityVol)
         {
             return false;
         }
         return true;
     }
 
-    int CurrentStoreUsage()
+    float CurrentStoreUsage()
     {
-        int curr = 0;
+        float curr = 0;
 
         for (int i = 0; i < _inventItems.Count; i++)
         {
@@ -377,7 +388,7 @@ public class Inventory  {
     /// <param name="order"></param>
     internal Order ManageExportOrder(Order order)
     {
-        int amtTaken = Remove(order.Product, order.Amount);
+        float amtTaken = Remove(order.Product, order.Amount);
 
         //not all of the order was taken
         if (amtTaken < order.Amount)
@@ -398,10 +409,10 @@ public class Inventory  {
     /// </summary>
     /// <param name="p"></param>
     /// <returns></returns>
-    internal int MaxAmtCanTakeOfAProd(P p)
+    internal float MaxAmtCanTakeOfAProd(P p)
     {
         var vol = ReturnProdVolume(p);
-        var spaceNow = Capacity - CurrentStoreUsage();
+        var spaceNow = CapacityVol - CurrentStoreUsage();
 
         return spaceNow * vol;
     }
@@ -420,13 +431,41 @@ public class Inventory  {
 public class InvItem
 {
     public P Key;
-    public int Amount;
+    private float _amount;
+    private float _volume;
 
-    public InvItem(P KeyP, int amtP)
+    /// <summary>
+    /// How many KG of this Item 
+    /// 
+    /// Everytime is set.
+    /// Will recalculte the Volume
+    /// </summary>
+    public float Amount
+    {
+        get { return _amount; }
+        set
+        {
+            _amount = value;
+            Volume = Program.gameScene.ExportImport1.CalculateVolume(Key, Amount);
+        }
+    }
+
+    /// <summary>
+    /// The Volume this item ocuppies
+    /// </summary>
+    public float Volume
+    {
+        get { return _volume; }
+        set { _volume = value; }
+    }
+
+    public InvItem(P KeyP, float amtP)
     {
         Key = KeyP;
         Amount = amtP;
+        Volume = Program.gameScene.ExportImport1.CalculateVolume(Key, amtP);
     }
 
     public InvItem() { }
+
 }

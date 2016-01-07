@@ -44,9 +44,9 @@ public class ProductInfo
 public class InputElement
 {
     public P Element;//the element
-    public int Units;//how many units
+    public float Units;//how many units
 
-    public InputElement(P element, int units)
+    public InputElement(P element, float units)
     {
         Element = element;
         Units = units;

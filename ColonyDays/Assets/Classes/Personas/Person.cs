@@ -610,7 +610,7 @@ public class Person : General
     /// </summary>
     /// <param name="amt"></param>
     /// <param name="item"></param>
-    void Nutrive(int amt, P item)
+    void Nutrive(float amt, P item)
     {
         var nutriValue = BuildingPot.Control.ProductionProp.Food1.NValues.Find(a => a.Nutrient == item).NutritionVal;
         _nutritionLevel += (amt * nutriValue);
@@ -1233,8 +1233,8 @@ public class Person : General
             return;
         }
 
-        int amt = (int)HowMuchINeedToBe100PointsFeed(item);
-        int gotAmt = Home.Inventory.Remove(item, amt);
+        float amt = (int)HowMuchINeedToBe100PointsFeed(item);
+        float gotAmt = Home.Inventory.Remove(item, amt);
 
         ChangeHappinesBy(0.1);
         Nutrive(gotAmt, item);
@@ -1296,13 +1296,13 @@ public class Person : General
         //UnityEngine.Debug.Log(MyId+" took food:"+item);
     }
 
-    public void ExchangeInvetoryItem(General takenFrom, General givenTo, P product, int amt)
+    public void ExchangeInvetoryItem(General takenFrom, General givenTo, P product, float amt)
     {
         //to address when food Src is destroyed when person on its way 
         if (takenFrom == null)
         { return; }
 
-        int amtTook = takenFrom.Inventory.Remove(product, amt);
+        float amtTook = takenFrom.Inventory.Remove(product, amt);
         givenTo.Inventory.Add(product, amtTook);
     }
 

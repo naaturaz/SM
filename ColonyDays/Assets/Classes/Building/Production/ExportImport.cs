@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+using UnityEngine;
 /*
  * Here will be the price Base for all products and the variability they will have 
  * 
@@ -79,6 +79,27 @@ public class ExportImport
         _prodPrices.Add(new ProdSpec(P.Silk, 150, 1300, 5));
     }
 
+    /// <summary>
+    /// Will calculate the volume of a Product given the mass in KG 
+    /// </summary>
+    /// <param name="prod"></param>
+    /// <param name="mass"></param>
+    /// <returns></returns>
+    public float CalculateVolume(P prod, float mass)
+    {
+        var prodLo = _prodPrices.Find(a => a.Product == prod);
+
+        if (prodLo == null)
+        {
+            Debug.Log("prod not found!:"+prod);
+            return 0;
+        }
+
+        var dens = prodLo.Density;
+
+        return mass/dens;
+    }
+
 
     /// <summary>
     /// The action of selling a Product and the amount
@@ -87,7 +108,7 @@ public class ExportImport
     /// </summary>
     /// <param name="prod"></param>
     /// <param name="amt"></param>
-    public void Sale(P prod, int amt)
+    public void Sale(P prod, float amt)
     {
         var trans = CalculateTransaction(prod, amt);
         Program.gameScene.GameController1.Dollars += trans;
@@ -100,13 +121,13 @@ public class ExportImport
     /// </summary>
     /// <param name="prod"></param>
     /// <param name="amt"></param>
-    public void Buy(P prod, int amt)
+    public void Buy(P prod, float amt)
     {
         var trans = CalculateTransaction(prod, amt);
         Program.gameScene.GameController1.Dollars -= trans;
     }
 
-    float CalculateTransaction(P prod, int amt)
+    float CalculateTransaction(P prod, float amt)
     {
         return ReturnPrice(prod) * amt;
     }

@@ -11,7 +11,7 @@ using Button = UnityEngine.UI.Button;
 public class OrderShow : GUIElement
 {
     private P _prod;
-    private int _amt;
+    private float _amt;
 
     private Text _title;
 

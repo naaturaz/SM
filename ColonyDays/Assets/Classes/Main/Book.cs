@@ -69,13 +69,13 @@ public class Book : General
 
 
         //houses 
-        Build.Add(new BuildStat(H.HouseA, 400, 15, 5, 25, 5, maxPeople: 5, capacity: 1000));
-        Build.Add(new BuildStat(H.HouseB, 400, 15, 5, 25, 5, maxPeople: 5, capacity: 1000));
-        Build.Add(new BuildStat(H.HouseAWithTwoFloor, 800, 30, 5, 50, 5, maxPeople: 10, capacity: 2000));
-        Build.Add(new BuildStat(H.HouseMedA, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 2000));
-        Build.Add(new BuildStat(H.HouseMedB, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 2000));
-        Build.Add(new BuildStat(H.HouseC, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 3000));
-        Build.Add(new BuildStat(H.HouseD, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 4000));
+        Build.Add(new BuildStat(H.HouseA, 400, 15, 5, 25, 5, maxPeople: 5, capacity: 10));
+        Build.Add(new BuildStat(H.HouseB, 400, 15, 5, 25, 5, maxPeople: 5, capacity: 10));
+        Build.Add(new BuildStat(H.HouseAWithTwoFloor, 800, 30, 5, 50, 5, maxPeople: 10, capacity: 20));
+        Build.Add(new BuildStat(H.HouseMedA, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 20));
+        Build.Add(new BuildStat(H.HouseMedB, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 20));
+        Build.Add(new BuildStat(H.HouseC, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 30));
+        Build.Add(new BuildStat(H.HouseD, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 40));
 
 
         Build.Add(new BuildStat(H.Shack, 50, maxPeople: 5, capacity: 500));
@@ -126,11 +126,11 @@ public class Book : General
         Build.Add(new BuildStat(H.Dock, 600, 80, 20, 0, 5, maxPeople: 10));
         Build.Add(new BuildStat(H.DryDock, 600, 80, 20, 0, 5, maxPeople: 10));
 
-        Build.Add(new BuildStat(H.StorageSmall, 400, 80, 20, 0, 5, maxPeople: 0, capacity: 30000));
-        Build.Add(new BuildStat(H.StorageMed, 600, 80, 20, 0, 5, maxPeople: 0, capacity: 45000));
-        Build.Add(new BuildStat(H.StorageBig, 600, 80, 20, 0, 5, maxPeople: 0, capacity: 60000));
-        Build.Add(new BuildStat(H.StorageBigTwoDoors, 600, 80, 20, 0, 5, maxPeople: 0, capacity: 60000));
-        Build.Add(new BuildStat(H.StorageExtraBig, 600, 80, 20, 0, 5, maxPeople: 0, capacity: 85000));
+        Build.Add(new BuildStat(H.StorageSmall, 400, 80, 20, 0, 5, maxPeople: 0, capacity: 300));
+        Build.Add(new BuildStat(H.StorageMed, 600, 80, 20, 0, 5, maxPeople: 0, capacity: 450));
+        Build.Add(new BuildStat(H.StorageBig, 600, 80, 20, 0, 5, maxPeople: 0, capacity: 600));
+        Build.Add(new BuildStat(H.StorageBigTwoDoors, 600, 80, 20, 0, 5, maxPeople: 0, capacity: 600));
+        Build.Add(new BuildStat(H.StorageExtraBig, 600, 80, 20, 0, 5, maxPeople: 0, capacity: 850));
 
         //Gov
         Build.Add(new BuildStat(H.Clinic, 400, 15, 5, 25, 5, maxPeople: 5));
@@ -211,7 +211,9 @@ public class BuildStat
     private int _iron;
     private int _gold;
     private int _dollar;//Money 
-    private int _capacity;//how many units of good can hold a building
+
+    //Cubic Meters of storage for a build
+    private int _capacity;
 
     //In game prop
     private int _maxPeople;//max amt of peope can leave in a house or can work in a place
@@ -221,7 +223,7 @@ public class BuildStat
     private string _root;
 
     public BuildStat(H hType, int amountOfLabour = 0, int wood = 0, int stone = 0, int brick = 0, int iron = 0,
-        int gold = 0, int colonyDollar = 0, int maxPeople = 0, int capacity = 10000)
+        int gold = 0, int colonyDollar = 0, int maxPeople = 0, int capacity = 100)
     {
         AmountOfLabour = amountOfLabour;
         HType = hType;

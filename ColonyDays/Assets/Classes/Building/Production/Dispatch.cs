@@ -299,7 +299,7 @@ public class Dispatch
     /// of the product 
     /// </summary>
     /// <returns></returns>
-    int DispatchAmount(int amtOnOrder)
+    int DispatchAmount(float amtOnOrder)
     {
         //if (amtOnOrder < 5000)
         //{
@@ -632,10 +632,10 @@ public class Dispatch
 
         var ord = ExpImpOrders[i];
 
-        int initialAmtNeed = ord.Amount;
+        float initialAmtNeed = ord.Amount;
         ord = dock.Inventory.ManageExportOrder(ord);
-        int leftOnOrder = ord.Amount;
-        int amtExpThisTime = (initialAmtNeed - leftOnOrder);
+        float leftOnOrder = ord.Amount;
+        float amtExpThisTime = (initialAmtNeed - leftOnOrder);
 
         Program.gameScene.ExportImport1.Sale(ord.Product, amtExpThisTime);
 
@@ -767,7 +767,7 @@ public class Order
     public P Product;
     public string DestinyBuild;
     public string SourceBuild;
-    public int Amount;//the amount dispatched in an order
+    public float Amount;//the amount dispatched in an order
 
     public string ID;//the id of an order. Used to find and removed
 
@@ -779,7 +779,7 @@ public class Order
         P prod = aOrder.Product;
         string dest = aOrder.DestinyBuild;
         string src = aOrder.SourceBuild;
-        int amt = aOrder.Amount;
+        float amt = aOrder.Amount;
 
         res.TypeOrder = type;
         res.Product = prod;

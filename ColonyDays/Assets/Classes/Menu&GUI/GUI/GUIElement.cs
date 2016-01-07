@@ -73,14 +73,15 @@ public class GUIElement : General {
             return "Just bugs";
         }
 
-        var res = "Inventory Cap:" + obj.Inventory.Capacity+"\n";
+        var res = "Inventory Cap:" + obj.Inventory.CapacityVol+  " m3 \n";
         var invItems = obj.Inventory.InventItems;
 
         for (int i = 0; i < invItems.Count; i++)
         {
             if (invItems[i].Amount > 0)
             {
-                res += invItems[i].Key + ":" + invItems[i].Amount + "\n";
+                res += invItems[i].Key + ":" + invItems[i].Amount.ToString("F1")
+                    + " kg. v(m3):" + invItems[i].Volume.ToString("F1") + "\n";
             }
         }
 
