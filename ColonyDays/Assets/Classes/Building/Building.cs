@@ -2326,7 +2326,7 @@ public class Building : General, Iinfo
 
 
 
-    #region Farm
+    #region AnimalFarm
 
 
     List<Animal> _animals = new List<Animal>();//the animals in a AnimalFarm 

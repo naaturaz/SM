@@ -218,12 +218,25 @@ public class Dispatch
         _recycledOrders.Add(temp);
     }
 
+    /// <summary>
+    /// Main method where Docker and WheelBarrow as for an order
+    /// </summary>
+    /// <param name="person"></param>
+    /// <returns></returns>
     public Order GiveMeOrder(Person person)
     {
         var currOrders = ReturnCurrentListAndDefinePrimary();
 
         for (int i = 0; i < currOrders.Count; i++)
         {
+            //if the Inventory of destiny build is full will skip that order 
+            if (IsDestinyBuildInvFull(currOrders[i]))
+            {
+                //todo Notify
+                Debug.Log("Inv full to DestBuild:"+currOrders[i].DestinyBuild);
+                break;
+            }
+
             //export first priority
             if (currOrders[i].TypeOrder == H.None)
             {
@@ -236,6 +249,22 @@ public class Dispatch
             }
         }
         return null;      
+    }
+
+    bool IsDestinyBuildInvFull(Order order)
+    {
+        var destBuild = Brain.GetBuildingFromKey(order.DestinyBuild);
+
+        if (destBuild == null)
+        {
+            return false;
+        }
+
+        if (destBuild.Inventory.IsFull())
+        {
+            return true;
+        }
+        return false;
     }
 
     private Order EvacuationOrder(Person person, Order order)

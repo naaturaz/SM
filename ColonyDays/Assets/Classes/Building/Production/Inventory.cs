@@ -216,6 +216,17 @@ public class Inventory  {
         return false;
     }
 
+    public float CurrentVolumeOcuppied()
+    {
+        var total = 0f;
+        for (int i = 0; i < _inventItems.Count; i++)
+        {
+            total += _inventItems[i].Volume;
+        }
+
+        return total;
+    }
+
     public bool IsHasEnoughToCoverThisIngredient(InputElement ingredient)
     {
         var onInventory = IsItemOnInv(ingredient.Element);

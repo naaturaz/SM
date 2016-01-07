@@ -73,7 +73,14 @@ public class GUIElement : General {
             return "Just bugs";
         }
 
-        var res = "Inventory Cap:" + obj.Inventory.CapacityVol+  " m3 \n";
+        var percentOcup = obj.Inventory.CurrentVolumeOcuppied()/obj.Inventory.CapacityVol;
+        percentOcup = percentOcup*100;
+
+        var res = "Ocuppied:"+obj.Inventory.CurrentVolumeOcuppied().ToString("F1")+
+            ". Inv Cap:" + obj.Inventory.CapacityVol+  " m3 \n"+
+            "Fill: "+percentOcup.ToString("F1") + "% \n";
+
+
         var invItems = obj.Inventory.InventItems;
 
         for (int i = 0; i < invItems.Count; i++)

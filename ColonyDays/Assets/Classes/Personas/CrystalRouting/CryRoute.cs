@@ -355,7 +355,7 @@ public class CryRoute
             return TryReachBuilding();
         }
 
-        Debug.Log("Terrain Routing. loopCount: " + loopCount);
+        //Debug.Log("Terrain Routing. loopCount: " + loopCount);
         if (loopCount < _eval.Count)
         {
             Line aLine = new Line(U2D.FromV2ToV3(_curr.Position), U2D.FromV2ToV3(_eval[i].Position), durationOfLines);
@@ -373,7 +373,7 @@ public class CryRoute
 
                 //make current _eval[i] and loop 
                 _curr = _eval[i];
-                Debug.Log("_curr set on Terrain Routing");
+                //Debug.Log("_curr set on Terrain Routing");
 
                 loop = true;
                 //Crystal.DebugCrystal.AddGameObjInPosition(U2D.FromV2ToV3(_curr.Position), Root.yellowSphereHelp);

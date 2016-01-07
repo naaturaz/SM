@@ -64,7 +64,7 @@ public class FisherMan : Profession {
         Router1 = new CryRouteManager();
 
         var inBuildPoints = DefineInBuildPoint();
-        UVisHelp.CreateHelpers(inBuildPoints, Root.yellowCube);
+        //UVisHelp.CreateHelpers(inBuildPoints, Root.yellowCube);
         var TheRoute = ReachBean.RouteVector3s(inBuildPoints);
 
         //so they go trhu on Profession 

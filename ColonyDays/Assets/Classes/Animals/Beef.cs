@@ -48,15 +48,24 @@ public class Beef : Animal
         if (_lastYearYielded != Program.gameScene.GameTime1.Year && Program.gameScene.GameTime1.Month1 == 12)
         {
             _lastYearYielded = Program.gameScene.GameTime1.Year;
-            YieldGoods();
+
+            //if farm Inventory is not full
+            if (!Spawner.Inventory.IsFull())
+            {
+                YieldGoods();
+            }
+            else
+            {
+                //todo Notify
+                Debug.Log("Not Producing meat(beef) bz Inv is full:"+Spawner.MyId);
+            }
         }
     }
 
     private void YieldGoods()
     {
-        Spawner.Inventory.Add(P.Beef, 5000);
-        Spawner.Inventory.Add(P.Leather, 100);
-
+        Spawner.Inventory.Add(P.Beef, 100);
+        Spawner.Inventory.Add(P.Leather, 2);
 //        Debug.Log("Yielded Goods");
     }
 }
