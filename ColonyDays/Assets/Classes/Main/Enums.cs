@@ -120,6 +120,10 @@ public enum P
     Person, Food, Dollar,
     Salt,
     Coal,
+    Sulfur,
+    Potassium,
+    Silver,
+    Henequen,
 
 }
 

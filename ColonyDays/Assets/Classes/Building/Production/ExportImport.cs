@@ -34,6 +34,8 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Bean, 90, 368, 100));
         _prodSpecs.Add(new ProdSpec(P.Potato, 70, 380, 100));
         _prodSpecs.Add(new ProdSpec(P.Coal, 20, 180, 70));
+        _prodSpecs.Add(new ProdSpec(P.Sulfur, 20, 1960, 70));
+        _prodSpecs.Add(new ProdSpec(P.Potassium, 30, 862, 60));
 
         _prodSpecs.Add(new ProdSpec(P.SugarCane, 50, 200.2f, 100));
         _prodSpecs.Add(new ProdSpec(P.Corn, 60, 540, 120));
@@ -49,6 +51,7 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Sugar, 50, 900, 70));
 
         _prodSpecs.Add(new ProdSpec(P.Tobacco, 50, 300, 90));
+        _prodSpecs.Add(new ProdSpec(P.Henequen, 15, 400, 90));
         _prodSpecs.Add(new ProdSpec(P.Cotton, 40, 360, 120));
         _prodSpecs.Add(new ProdSpec(P.Leather, 70, 570, 20));
 
@@ -57,6 +60,7 @@ public class ExportImport
 
         _prodSpecs.Add(new ProdSpec(P.Clay, 10, 100, 10));//ceramic
         _prodSpecs.Add(new ProdSpec(P.Gold, 500, 19300, 5));
+        _prodSpecs.Add(new ProdSpec(P.Silver, 450, 10490, 8));
         _prodSpecs.Add(new ProdSpec(P.Stone, 50, 2515, 20));
         _prodSpecs.Add(new ProdSpec(P.Iron, 150, 7874, 15));
 

@@ -40,6 +40,7 @@ public class Production  {
                  
                 
                  P.Potato,  P.SugarCane, P.Cotton, P.Tobacco,
+                 P.Henequen
                  
             });
 
@@ -110,8 +111,10 @@ public class Production  {
     #region Inputs for Create a Product
 
     //contains which products are needed in the input to generate 1 unit of the final product
-    List<ProductInfo> _inputProducts = new List<ProductInfo>(); 
+    List<ProductInfo> _inputProducts = new List<ProductInfo>();
 
+    InputElement _eleWoodComb = new InputElement(P.Wood, 2);
+    InputElement _eleCoalComb = new InputElement(P.Coal, 1);
 
     private void LoadInputProductsStats()
     {
@@ -143,7 +146,11 @@ public class Production  {
     //sulfur, charcoal, and potassium 
     private void GunPodwer()
     {
-
+        InputElement sulfur = new InputElement(P.Sulfur, 1);
+        InputElement coal = new InputElement(P.Coal, 1.5f);
+        InputElement potassium = new InputElement(P.Potassium, 7.5f);
+        List<InputElement> one = new List<InputElement>() { sulfur, coal, potassium };
+        _inputProducts.Add(new ProductInfo(P.GunPowder, one));
     }
 
 
@@ -211,8 +218,6 @@ public class Production  {
 
     private void Fabric()
     {
-
-
         InputElement element = new InputElement(P.Cotton, 10);
         List<InputElement> prodForm1 = new List<InputElement>() { element, _eleWoodComb };
         List<InputElement> prodForm2 = new List<InputElement>() { element, _eleCoalComb };
@@ -220,8 +225,7 @@ public class Production  {
         _inputProducts.Add(new ProductInfo(P.Fabric, prodForm2));
     }
 
-    InputElement _eleWoodComb = new InputElement(P.Wood, 2);
-    InputElement _eleCoalComb = new InputElement(P.Coal, 1);
+
 
 
     private void PaperNewsAndBook()
