@@ -60,6 +60,9 @@ public class Profession  {
     protected Structure _destinyBuild;
     protected Structure _sourceBuild;
 
+    //used for forester
+    private string _stillElementID;
+
     public Job ProfDescription
     {
         get { return _profDescription; }
@@ -187,6 +190,12 @@ public class Profession  {
         set { _destinyBuildKey = value; }
     }
 
+    public string StillElementId
+    {
+        get { return _stillElementID; }
+        set { _stillElementID = value; }
+    }
+
     public Profession()
     {
         CleanOldProf();
@@ -246,6 +255,8 @@ public class Profession  {
         Order1 = prof.Order1;
         DestinyBuildKey = prof.DestinyBuildKey;
         SourceBuildKey = prof.SourceBuildKey;
+
+        StillElementId = prof.StillElementId;
     }
 
     private void CleanOldVars()
@@ -626,7 +637,7 @@ public class Profession  {
     /// <summary>
     /// Address to produce the selected prod in the work and the amount per shift defined in 'ProdXShift'
     /// </summary>
-    public void Execute(string instruct = "")
+    public void Execute(string instruct = "", P prod = P.None)
     {
         if (UPerson.IsWorkingAtSchool(_person))
         {
@@ -639,7 +650,7 @@ public class Profession  {
             return;
         }
 
-        Produce(instruct);
+        Produce(instruct, prod);
     }
 
     private int amtCarrying;
@@ -662,7 +673,7 @@ public class Profession  {
     /// <summary>
     /// The action of producing goods 
     /// </summary>
-    void Produce(string instruct)
+    void Produce(string instruct, P prod)
     {
         //if has not instructions is normal Produce()
         if (string.IsNullOrEmpty(instruct))
@@ -674,8 +685,16 @@ public class Profession  {
         //if has instructions is so far from a : Forester
         //they want to physically bring prod back and then drop it at they place 
         //dont want to added to building invetory he has to drop it there when he gets there 
-        _person.Work.Produce(ProdXShift, _person, false);
-        prodCarrying = _person.Work.CurrentProd;
+        _person.Work.Produce(ProdXShift, _person, false, prod);
+
+        //means the prod was sent directly from Profession
+        //Forestert is using this bz he Might mine ore or cut trees
+        if (prod != P.None)
+        {
+            prodCarrying = prod;
+        }
+        else prodCarrying = _person.Work.CurrentProd;    
+        
         amtCarrying = ProdXShift;
     }
 

@@ -102,6 +102,7 @@ public class StillElement : TerrainRamdonSpawner {
 
         base.DestroyCool();
 
-        //save data must be saved by user
+        //removes from List in TerraSpawnerController
+        Program.gameScene.controllerMain.TerraSpawnController.RemoveStillElement(this);
     }
 }

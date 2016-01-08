@@ -78,6 +78,7 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Jewel, 450, 8490, 8));
 
         _prodSpecs.Add(new ProdSpec(P.Stone, 50, 2515, 20));
+        _prodSpecs.Add(new ProdSpec(P.Ore, 70, 4200, 20));
         _prodSpecs.Add(new ProdSpec(P.Iron, 150, 7874, 15));
         _prodSpecs.Add(new ProdSpec(P.Nail, 200, 4874, 20));//for ship repairs
 

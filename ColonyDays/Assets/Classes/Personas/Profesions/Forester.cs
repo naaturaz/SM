@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class Forester : Profession
 {
-    private List<TerrainRamdonSpawner> _treesList = new List<TerrainRamdonSpawner>();//save implem
+    private List<TerrainRamdonSpawner> _spawnersList = new List<TerrainRamdonSpawner>();//save implem
     private Vector3 _treeCenterPos;
+
 
     public Forester(Person person, PersonFile pF)
     {
@@ -34,10 +36,10 @@ public class Forester : Profession
 
     private void Init()
     {
-        if (_treesList.Count == 0)
+        if (_spawnersList.Count == 0)
         {
-            FindTreeToCut();
-            OrderedSites = OrderTrees(_treesList);
+            FindSpawnersToMine();
+            OrderedSites = OrderSpawners(_spawnersList);
 
             //didnt find any tree. That means tht Trees prob have not been loaded yet 
             if (OrderedSites.Count == 0)
@@ -48,6 +50,7 @@ public class Forester : Profession
             _treeCenterPos = DefineMiddlePos(OrderedSites);
 
             FinRoutePoint = OrderedSites[0].Point;
+            StillElementId = OrderedSites[0].LocMyId;
             //moving the route point a bit towards the origin so when chopping tree its not inside the tree 
             FinRoutePoint = Vector3.MoveTowards(FinRoutePoint, _person.Work.transform.position, MoveTowOrigin * 2.5f);
 
@@ -80,7 +83,30 @@ public class Forester : Profession
         RouterBack = new CryRouteManager(dummy, _person.FoodSource, _person,  HPers.InWorkBack, false, true);
     }
 
-    void FindTreeToCut()
+    P FromHEnumToP(H val)
+    {
+        var content = (P)Enum.Parse(typeof(H), val.ToString());
+        return content;
+    }
+
+    P ProcessHTypeSpawnerIntoProduct(H hTypeP)
+    {
+        if (hTypeP == H.Tree)
+        {
+            return P.Wood;
+        }
+
+        if (hTypeP == H.Stone)
+        {
+            return P.Stone;
+        }
+        else
+        {
+            return P.Ore;
+        }
+    }
+    
+    void FindSpawnersToMine()
     {
         var all = Program.gameScene.controllerMain.TerraSpawnController.AllRandomObjList;
 
@@ -88,42 +114,43 @@ public class Forester : Profession
         {
             var t = all[i];
 
-            if (t.HType == H.Tree)
+            if (t.HType == H.Tree || t.HType == H.Stone || t.HType == H.Iron || t.HType == H.Gold)
             {
-                _treesList.Add(t);
+                _spawnersList.Add(t);
             }
         }
-        GameScene.print("trees found:"+_treesList.Count);
+        GameScene.print("spawners found:"+_spawnersList.Count);
     }
 
-    List<VectorM> OrderTrees(List<TerrainRamdonSpawner> treeListP)
+    List<VectorM> OrderSpawners(List<TerrainRamdonSpawner> listP)
     {
         List<VectorM> loc = new List<VectorM>();
 
-        if (treeListP == null)
+        if (listP == null)
         {
             _takeABreakNow = true;
             return loc;
         }
 
-        for (int i = 0; i < treeListP.Count; i++)
+        for (int i = 0; i < listP.Count; i++)
         {
             //means that tree was deleted but the list has not being updated 
-            if (treeListP[i] == null)
+            if (listP[i] == null)
             {
                 continue;
             }
 
-            var pos = treeListP[i].transform.position;
-            var key = treeListP[i].MyId;
+            var pos = listP[i].transform.position;
+            var key = listP[i].MyId;
+            var hType = listP[i].HType;
             var distance = Vector3.Distance(pos, _person.Work.transform.position);
 
-            if (!treeListP[i].IsMarkToMine && distance < Radius)
+            if (!listP[i].IsMarkToMine && distance < Radius)
             {
-                loc.Add(new VectorM(pos, _person.Work.transform.position, key));
+                loc.Add(new VectorM(pos, _person.Work.transform.position, key, hType));
             }
         }
-        GameScene.print("trees found on radius :" + loc.Count);
+        GameScene.print("spawners found on radius :" + loc.Count);
         return loc.OrderBy(a => a.Distance).ToList();
     }
 
@@ -158,7 +185,8 @@ public class Forester : Profession
 
             if (_person.Work.CanTakeItOut(_person))
             {
-                base.Execute(Job.Forester.ToString());
+                P prod = FindProdImMining();
+                base.Execute(Job.Forester.ToString(), prod);
             }
             else
             {
@@ -167,6 +195,14 @@ public class Forester : Profession
                 Debug.Log(_person.MyId +", Forester didnt work bz its Home Storage is full");
             }
         }
+    }
+
+    private P FindProdImMining()
+    {
+        var ele =
+            Program.gameScene.controllerMain.TerraSpawnController.FindThis(StillElementId);
+        
+        return ProcessHTypeSpawnerIntoProduct(ele.HType);
     }
 
 

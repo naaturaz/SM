@@ -890,6 +890,7 @@ public class VectorM
     private Vector3 _point;
     private float _distance;
     private string _locMyId;
+    private H _hType;
 
     public VectorM() { }
 
@@ -901,6 +902,14 @@ public class VectorM
 
     public VectorM(Vector3 pos, Vector3 comparationPoint, string locMyId)
     {
+        Point = pos;
+        Distance = Vector3.Distance(pos, comparationPoint);
+        _locMyId = locMyId;
+    }
+    
+    public VectorM(Vector3 pos, Vector3 comparationPoint, string locMyId, H hType)
+    {
+        _hType = hType;
         Point = pos;
         Distance = Vector3.Distance(pos, comparationPoint);
         _locMyId = locMyId;
@@ -923,6 +932,12 @@ public class VectorM
     {
         get { return _locMyId; }
         set { _locMyId = value; }
+    }
+
+    public H HType
+    {
+        get { return _hType; }
+        set { _hType = value; }
     }
 }
 

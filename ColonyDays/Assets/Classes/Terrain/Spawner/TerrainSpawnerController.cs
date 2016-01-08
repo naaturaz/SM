@@ -84,6 +84,14 @@ public class TerrainSpawnerController : ControllerParent
     List<StillElement> ornaList = new List<StillElement>();
     List<StillElement> grassList = new List<StillElement>();
 
+    public void RemoveStillElement(StillElement ele)
+    {
+        var index = AllRandomObjList.ToList().FindIndex(a=>a.MyId==ele.MyId);
+
+        AllSpawnedDataList.RemoveAt(index);
+        AllRandomObjList.RemoveAt(index);
+    }
+
     public StillElement FindThis(string key)
     {
         var list = AllRandomObjList.ToList();

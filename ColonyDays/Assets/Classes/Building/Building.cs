@@ -1861,19 +1861,32 @@ public class Building : General, Iinfo
     }
     #endregion
 
+
+
     #region Production
+
+    /// <summary>
+    /// Will find out if pass has a val if does will return so. other wise CurrProd
+    /// </summary>
+    /// <param name="pass"></param>
+    /// <returns></returns>
+    P DefineProdHere(P pass)
+    {
+        if (pass != P.None)
+        {
+            return pass;
+        }
+        return CurrentProd;
+    }
+    
     /// <summary>
     /// Produce what this Building is set to. ex Fisherman produce fish
     /// 
     /// 'amt' the amount the person calling this can produce in a shift 
     /// </summary>
-    internal void Produce(int amt, Person person, bool addToBuildInv = true)
+    internal void Produce(int amt, Person person, bool addToBuildInv = true, P prod = P.None)
     {
-        if (MyId.Contains("Paper"))
-        {
-            var t = this;
-        }
-
+        P prodHere = DefineProdHere(prod);
 
         var doIHaveInput = DoBuildHaveRawResources();
         var hasStorageRoom = DoesStorageHaveCapacity(person);
@@ -1889,11 +1902,11 @@ public class Building : General, Iinfo
             }
             else if (addToBuildInv && !MyId.Contains("Farm"))
             {
-                Inventory.Add(CurrentProd, amt);
+                Inventory.Add(prodHere, amt);
             }
             else if (!addToBuildInv && !MyId.Contains("Farm"))
             {
-                person.Inventory.Add(CurrentProd, amt);
+                person.Inventory.Add(prodHere, amt);
             }
         }
         else if (!hasStorageRoom && !hasThisBuildRoom && person.FoodSource != null)

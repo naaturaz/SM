@@ -139,6 +139,7 @@ public enum P
     Cloth,
     Rum,
     Wine,
+    Ore,
 
 }
 
