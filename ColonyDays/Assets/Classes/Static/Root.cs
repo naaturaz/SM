@@ -485,7 +485,7 @@ public class Root : MonoBehaviour
 
 
         //Raw
-        buildsRoot.Add(H.Clay, "Prefab/Building/Raw/Clay");
+        buildsRoot.Add(H.Ceramic, "Prefab/Building/Raw/Ceramic");
         buildsRoot.Add(H.FishSmall, "Prefab/Building/Raw/FishSmall");
         buildsRoot.Add(H.FishRegular, "Prefab/Building/Raw/FishRegular");
         buildsRoot.Add(H.Mine, "Prefab/Building/Raw/Mine");

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class Production  {
 
@@ -44,7 +45,7 @@ public class Production  {
                  
             });
 
-        _products.Add(new List<H>() { H.Clay}, new List<P>() { P.Clay});
+        _products.Add(new List<H>() { H.Ceramic}, new List<P>() { P.Ceramic});
 
         _products.Add(new List<H>() { H.FishSmall, H.FishRegular }, new List<P>() { P.Fish });
 
@@ -118,7 +119,9 @@ public class Production  {
 
     private void LoadInputProductsStats()
     {
-        //Loading each prodcut input 
+        //Loading each prodcut input
+        Rum();
+        Tobbaco();
         Meats();
 
         GunPodwer();
@@ -139,10 +142,25 @@ public class Production  {
         Fabric();
 
         PaperNewsAndBook();
-
         Sugar();
+    }
 
-        
+    private void Rum()
+    {
+        InputElement element = new InputElement(P.SugarCane, 10);
+        InputElement tonelEle = new InputElement(P.Tonel, 1);
+
+        List<InputElement> prodFormu1 = new List<InputElement>() { element, _eleWoodComb, tonelEle };
+        List<InputElement> prodFormu2 = new List<InputElement>() { element, _eleCoalComb, tonelEle };
+        _inputProducts.Add(new ProductInfo(P.Sugar, prodFormu1));
+        _inputProducts.Add(new ProductInfo(P.Sugar, prodFormu2));
+    }
+
+    private void Tobbaco()
+    {
+        InputElement element = new InputElement(P.TobaccoLeaf, 10);
+        List<InputElement> prodFormu1 = new List<InputElement>() { element};
+        _inputProducts.Add(new ProductInfo(P.Tobacco, prodFormu1));
     }
 
     private void Meats()
@@ -190,7 +208,7 @@ public class Production  {
 
     private void Brick()
     {
-        InputElement element = new InputElement(P.Clay, 5);
+        InputElement element = new InputElement(P.Ceramic, 5);
         List<InputElement> prod = new List<InputElement>() { element };
         _inputProducts.Add(new ProductInfo(P.Brick, prod));
     }
@@ -225,7 +243,7 @@ public class Production  {
 
     private void Tile()
     {
-        InputElement element = new InputElement(P.Clay, 10);
+        InputElement element = new InputElement(P.Ceramic, 10);
         List<InputElement> prod = new List<InputElement>() { element };
         _inputProducts.Add(new ProductInfo(P.Tile, prod));
     }

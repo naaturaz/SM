@@ -1136,7 +1136,7 @@ public class Building : General, Iinfo
     /// <returns></returns>
     int BasePay()
     {
-        if (HType == H.Clay)
+        if (HType == H.Ceramic)
         {
             //return  10;
         }

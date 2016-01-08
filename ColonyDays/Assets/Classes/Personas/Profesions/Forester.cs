@@ -108,6 +108,12 @@ public class Forester : Profession
 
         for (int i = 0; i < treeListP.Count; i++)
         {
+            //means that tree was deleted but the list has not being updated 
+            if (treeListP[i] == null)
+            {
+                continue;
+            }
+
             var pos = treeListP[i].transform.position;
             var key = treeListP[i].MyId;
             var distance = Vector3.Distance(pos, _person.Work.transform.position);

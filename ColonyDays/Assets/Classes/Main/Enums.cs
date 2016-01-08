@@ -80,7 +80,7 @@ public enum P
     //Animal Farm
     Chicken, Egg, Pork, Beef, Leather,
     //Clay
-    Clay,
+    Ceramic,
     //Fishes
     Fish,
     //Mines
@@ -124,6 +124,21 @@ public enum P
     Potassium,
     Silver,
     Henequen,
+    HolyWood,
+    Sail,
+    String,
+    Nail,
+    CannonBall,
+    TobaccoLeaf,
+    CoffeeBean,
+    Cacao,
+    Chocolate,
+    Weapon,
+    Diamond,
+    Jewel,
+    Cloth,
+    Rum,
+    Wine,
 
 }
 
@@ -172,7 +187,7 @@ public enum H
     AnimalFarmSmall, AnimalFarmMed, AnimalFarmLarge, AnimalFarmXLarge,
     FieldFarmSmall, FieldFarmMed, FieldFarmLarge, FieldFarmXLarge,
     //raw F4
-    Clay, FishSmall, FishRegular, Mine, MountainMine, Resin, Wood, BlackSmith, SaltMine,
+    Ceramic, FishSmall, FishRegular, Mine, MountainMine, Resin, Wood, BlackSmith, SaltMine,
     //prod F5
     Brick, Carpintery, Cigars, Mill, Slat, Tilery,
     //industry F6
@@ -328,7 +343,7 @@ public enum StFarm
 public enum StRaw //for structures game structure.cs 
 {
     //Raw
-    Clay, FishSmall, FishRegular, Mine, MountainMine, Resin, Wood, BlackSmith, SaltMine
+    Ceramic, FishSmall, FishRegular, Mine, MountainMine, Resin, Wood, BlackSmith, SaltMine
 }
 
 public enum StProd //for structures game structure.cs 

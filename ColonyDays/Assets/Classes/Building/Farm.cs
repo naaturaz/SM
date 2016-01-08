@@ -26,7 +26,7 @@ public class Farm  {
 
         //so its fair bz the amount of time pass is changed by the speed in the power 
         //+info@: GameTime.FixedUpdate()
-        var add = 10 *( Program.gameScene.GameSpeed * Program.gameScene.GameSpeed);
+        var add = 1000 * Program.gameScene.GameTime1.TimeFactorInclSpeed();
         _workAdded += add;
     }
 
