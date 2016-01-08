@@ -55,11 +55,12 @@ public class BuildingWindow : GUIElement {
         StartCoroutine("ThreeSecUpdate");
     }
 
+    private float waitTime = 2;
     private IEnumerator ThreeSecUpdate()
     {
         while (true)
         {
-            yield return new WaitForSeconds(2f); // wait
+            yield return new WaitForSeconds(waitTime); // wait
 
             //means is showing 
             if (transform.position == iniPos)
@@ -428,13 +429,15 @@ public class BuildingWindow : GUIElement {
     void ShowImportOrders()
     {
         //todo not show orders to cancel when on Dock Inventory
-        var impOrd = _building.Dispatch1.ReturnEvacuaOrders();
+        //var impOrd = _building.Dispatch1.ReturnEvacuaOrders();
+        var impOrd = _building.Dispatch1.ReturnEvacOrdersOnProcess();
         DisplayOrders(impOrd, _importIniPos, Root.orderShowClose);
     }
 
     private void ShowImportOrdersOnProcess()
     {
-        var impOrd = _building.Dispatch1.ReturnEvacOrdersOnProcess();
+        //var impOrd = _building.Dispatch1.ReturnEvacOrdersOnProcess();
+        var impOrd = _building.Dispatch1.ReturnEvacuaOrders();
         DisplayOrders(impOrd, _importIniPosOnProcess, Root.orderShow);
     }
 

@@ -246,12 +246,10 @@ public class Dispatch
                 continue;
             }
 
-            //export first priority
             if (currOrders[i].TypeOrder == H.None)
             {
                 return RegularOrder(person, currOrders[i]);
             }
-            //import second priority
             else if (currOrders[i].TypeOrder == H.Evacuation)
             {
                 return EvacuationOrder(person, currOrders[i]);

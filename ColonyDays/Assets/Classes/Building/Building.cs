@@ -2835,11 +2835,18 @@ public class Ship
         }
     }
 
+
+
+    private float lastCheck;
     public void Update()
     {
-        CheckIfImportOrders();
+        if (Time.time > lastCheck + 10f)
+        {
+            CheckIfImportOrders();
+            CheckIfExportOrders();
 
-        CheckIfExportOrders();
+            lastCheck = Time.time;
+        }
     }
 
 
