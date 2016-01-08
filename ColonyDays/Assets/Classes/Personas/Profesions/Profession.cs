@@ -47,7 +47,7 @@ public class Profession  {
     protected Building _constructing;//need to implement  to be saved and loaded 
     public string ConstructingKey;//need to implement  to be saved and loaded 
 
-    private int _prodXShift = 1000;//100 //Wht a person will produce or carry in a shift 
+    private float _prodXShift = 0;//100 //Wht a person will produce or carry in a shift 
 
     //The pos to look at while working if is = new Vector3 the pos of the Work will be used then 
     private Vector3 _lookAtWork;
@@ -153,7 +153,7 @@ public class Profession  {
         set { _routerBack = value; }
     }
 
-    public int ProdXShift
+    public float ProdXShift
     {
         get { return _prodXShift; }
         set { _prodXShift = value; }
@@ -200,16 +200,85 @@ public class Profession  {
     {
         CleanOldProf();
         CleanOldVars();
-        SetProdXShift();
+     
     }
 
     /// <summary>
     /// Will set the ProdXShift Needs to account on:
-    /// Age, School Years, Product to produce now, Genre
+    /// Age, School Years, Product to produce now, Genre, Tool
     /// </summary>
     private void SetProdXShift()
     {
+        if (_person == null)
+        {
+            return;
+        }
 
+        //was set already
+        if (ProdXShift > 0)
+        {
+            return;
+        }
+        var age = AgeFactor();
+        
+        var genre = ReturnGenreVal();
+        var yearSchool = _person.YearsOfSchool*3;
+        var produceFac = GetProduceFactor();
+
+        //Grown man will prod 4.5KG of wood with 10 year of school
+        //              (10 + 10     + 30        + ) * 0.09         = 4.5KG of Wood per shift
+        //              (10 + 10     + 30        + ) * 0.008         = 0.4KG of Weapons per shift
+        ProdXShift = (age + genre + yearSchool) * produceFac/1000;
+    }
+
+    public float HowMuchICanCarry()
+    {
+        var age = AgeFactor();
+        var genre = ReturnGenreVal();
+
+        return age + genre;
+    }
+
+    int AgeFactor()
+    {
+        if (_person.Age > 10 && _person.Age <= 17)
+        {
+            return 4;
+        }
+        if (_person.Age > 17 && _person.Age <= 40)
+        {
+            return 10;
+        }
+        if (_person.Age >= 41 && _person.Age <= 60)
+        {
+            return 8;
+        }
+        if (_person.Age >= 61 && _person.Age <= 80)
+        {
+            return 6;
+        }
+        return 1;
+    }
+
+    float GetProduceFactor()
+    {
+        var prod = _person.Work.CurrentProd;
+
+        if (StillElementId != "")
+        {
+            prod = Forester.FindProdImMining(StillElementId, _person);
+        }
+
+        return Program.gameScene.ExportImport1.ReturnProduceFactor(prod);
+    }
+
+    int ReturnGenreVal()
+    {
+        if (_person.Gender == H.Male)
+        {
+            return 10;
+        }
+        return 8;
     }
 
     /// <summary>
@@ -319,6 +388,8 @@ public class Profession  {
             WorkNow();
         }
         //  GameScene.print("Update on Profession");
+
+        SetProdXShift();
 	}
 
     void RouterDealear()
@@ -653,7 +724,7 @@ public class Profession  {
         Produce(instruct, prod);
     }
 
-    private int amtCarrying;
+    private float amtCarrying;
     P prodCarrying = P.None;
     /// <summary>
     /// The action of producing goods 

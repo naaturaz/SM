@@ -1677,10 +1677,10 @@ public class Building : General, Iinfo
     Book book = new Book();
     BuildStat buildStat = new BuildStat();
 
-    public void AddToConstruction(int amt)
+    public void AddToConstruction(float amt)
     {
         DefineAmtNeeded();
-        constructionAmt += amt;
+        constructionAmt += (int)amt;
         CheckIfNewStageOrDone();
     }
 
@@ -1884,7 +1884,7 @@ public class Building : General, Iinfo
     /// 
     /// 'amt' the amount the person calling this can produce in a shift 
     /// </summary>
-    internal void Produce(int amt, Person person, bool addToBuildInv = true, P prod = P.None)
+    internal void Produce(float amt, Person person, bool addToBuildInv = true, P prod = P.None)
     {
         P prodHere = DefineProdHere(prod);
 

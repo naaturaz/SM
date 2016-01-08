@@ -190,6 +190,18 @@ public class ExportImport
     float ReturnPrice(P prod)
     {
         return _prodSpecs.Find(a => a.Product == prod).Price;
+    }    
+    
+    public float ReturnProduceFactor(P prod)
+    {
+        var prodFound = _prodSpecs.Find(a => a.Product == prod);
+
+        if (prodFound == null)
+        {
+            Debug.Log("Prod Factor asked of not found prod:" + prod);
+            return 0;
+        }
+        return prodFound.ProduceFactor;
     }
 }
 

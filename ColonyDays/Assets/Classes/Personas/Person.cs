@@ -59,6 +59,7 @@ public class Person : General
     private bool isWidow; //if is wont get married again
 
     private bool _isStudent; //true if found a school as being a student bz is in student age 
+    private int _yearsOfSchool; //true if found a school as being a student bz is in student age 
 
     //mother and father of a person
     private string _familyId = ""; //the id of a Family will be used to ease the process of moving 
@@ -140,6 +141,12 @@ public class Person : General
     {
         get { return _gender; }
         set { _gender = value; }
+    }
+
+    public int YearsOfSchool
+    {
+        get { return _yearsOfSchool; }
+        set { _yearsOfSchool = value; }
     }
 
     public Structure Religion
@@ -410,6 +417,7 @@ public class Person : General
         Spouse = pF._spouse;
 
         PrevOrder = pF.PrevOrder;
+        YearsOfSchool = pF.YearsOfSchool;
 
         _body = new Body(this, pF);
         Brain = new Brain(this, pF);
@@ -1701,6 +1709,8 @@ public class Person : General
         get { return _projector; }
         set { _projector = value; }
     }
+
+
 
     public void CreateProjector()
     {

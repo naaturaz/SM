@@ -74,6 +74,8 @@ public class PersonFile  {
 
     public string FamilyId;
 
+    public int YearsOfSchool { get; set; }
+
     public PersonFile(Person pers)
     {
         _age = pers.Age;
@@ -133,10 +135,7 @@ public class PersonFile  {
         SourceBuildKey = pers.ProfessionProp.SourceBuildKey;
 
         FamilyId = pers.FamilyId;
-
-
-
-
+        YearsOfSchool = pers.YearsOfSchool;
     }
 
     void SavePersonStructs(Person pers)
@@ -174,4 +173,6 @@ public class PersonFile  {
     }
 
     public PersonFile() { }
+
+
 }

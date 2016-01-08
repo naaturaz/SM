@@ -83,28 +83,7 @@ public class Forester : Profession
         RouterBack = new CryRouteManager(dummy, _person.FoodSource, _person,  HPers.InWorkBack, false, true);
     }
 
-    P FromHEnumToP(H val)
-    {
-        var content = (P)Enum.Parse(typeof(H), val.ToString());
-        return content;
-    }
 
-    P ProcessHTypeSpawnerIntoProduct(H hTypeP)
-    {
-        if (hTypeP == H.Tree)
-        {
-            return P.Wood;
-        }
-
-        if (hTypeP == H.Stone)
-        {
-            return P.Stone;
-        }
-        else
-        {
-            return P.Ore;
-        }
-    }
     
     void FindSpawnersToMine()
     {
@@ -185,7 +164,7 @@ public class Forester : Profession
 
             if (_person.Work.CanTakeItOut(_person))
             {
-                P prod = FindProdImMining();
+                P prod = FindProdImMining(StillElementId, _person);
                 base.Execute(Job.Forester.ToString(), prod);
             }
             else
@@ -197,12 +176,45 @@ public class Forester : Profession
         }
     }
 
-    private P FindProdImMining()
+    public static P FindProdImMining(string stillElementIdP, Person person)
     {
         var ele =
-            Program.gameScene.controllerMain.TerraSpawnController.FindThis(StillElementId);
+            Program.gameScene.controllerMain.TerraSpawnController.FindThis(stillElementIdP);
+
+        if (ele == null)
+        {
+            if (person == null || person.Work == null)
+            {
+                return P.None;
+            }
+
+            return person.Work.CurrentProd;
+        }
         
         return ProcessHTypeSpawnerIntoProduct(ele.HType);
+    }
+
+    P FromHEnumToP(H val)
+    {
+        var content = (P)Enum.Parse(typeof(H), val.ToString());
+        return content;
+    }
+
+    static P ProcessHTypeSpawnerIntoProduct(H hTypeP)
+    {
+        if (hTypeP == H.Tree)
+        {
+            return P.Wood;
+        }
+
+        if (hTypeP == H.Stone)
+        {
+            return P.Stone;
+        }
+        else
+        {
+            return P.Ore;
+        }
     }
 
 
