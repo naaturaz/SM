@@ -237,7 +237,12 @@ public class Dispatch
             if (IsDestinyBuildInvFullForThisProd(currOrders[i]))
             {
                 //todo Notify
-                Debug.Log("Inv full to DestBuild:"+currOrders[i].DestinyBuild+"|for prod:"+currOrders[i].Product);
+                Debug.Log("Inv full to DestBuild:"+currOrders[i].DestinyBuild+"|for prod:"+currOrders[i].Product+"" +
+                          "|order removed");
+                
+                RemoveOrderByIDExIm(currOrders[i].ID);
+                i--;
+
                 continue;
             }
 
@@ -350,14 +355,16 @@ public class Dispatch
     /// of the product 
     /// </summary>
     /// <returns></returns>
-    int DispatchAmount(float amtOnOrder)
+    float DispatchAmount(float amtOnOrder)
     {
-        //if (amtOnOrder < 5000)
-        //{
-        //    return amtOnOrder;
-        //}
+        if (amtOnOrder < 500)
+        {
+            //the 25Kg is to cover the last bit
+            //is the way that removes the order
+            return amtOnOrder + 25f;
+        }
 
-        return 5000;
+        return 500;
     }
 
     /// <summary>

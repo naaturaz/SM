@@ -119,6 +119,8 @@ public class Production  {
     private void LoadInputProductsStats()
     {
         //Loading each prodcut input 
+        Meats();
+
         GunPodwer();
         
         Axe();
@@ -141,6 +143,19 @@ public class Production  {
         Sugar();
 
         
+    }
+
+    private void Meats()
+    {
+        //this should yeild 5 KG of meat(pork)
+        InputElement salt = new InputElement(P.Salt, 0.25f);
+        InputElement sugar = new InputElement(P.Sugar, 0.01f);
+
+
+        List<InputElement> dryMeatFormu = new List<InputElement>() { salt, sugar};
+        _inputProducts.Add(new ProductInfo(P.Pork, dryMeatFormu));
+        _inputProducts.Add(new ProductInfo(P.Chicken, dryMeatFormu));
+        _inputProducts.Add(new ProductInfo(P.Beef, dryMeatFormu));
     }
 
     //sulfur, charcoal, and potassium 

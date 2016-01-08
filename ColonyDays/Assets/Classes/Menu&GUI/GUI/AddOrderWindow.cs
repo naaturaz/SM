@@ -14,8 +14,8 @@ public class AddOrderWindow : GUIElement {
 
     private Text _prodSelLbl;
     private Text _amtEnterLbl;
-    private Text _frecuencyLbl;
     private Text _priceLbl;
+    private Text _errorMsgLbl;
 
     private string _orderType;//will say if import or export
 
@@ -56,8 +56,11 @@ public class AddOrderWindow : GUIElement {
 
         _prodSelLbl = GetChildThatContains(H.Output_Lbl_Prod).GetComponent<Text>();
         _amtEnterLbl = GetChildThatContains(H.Output_Lbl_Amt).GetComponent<Text>();
-        _frecuencyLbl = GetChildThatContains(H.Output_Lbl_Frec).GetComponent<Text>();
         _priceLbl = GetGrandChildCalled(H.Output_Lbl_Price).GetComponent<Text>();
+
+        _errorMsgLbl = GetChildCalled(H.Output_Error_Msg).GetComponent<Text>();
+        
+        CleanDisplay();
 
 
         var addBtn = GetChildThatContains(H.Add_Btn).transform;
@@ -130,24 +133,34 @@ public class AddOrderWindow : GUIElement {
 
     public void AddOrderClick()
     {
-        AddOrder();
-        Hide();
+        if (AddedOrder())
+        {
+            Hide();
+            CleanDisplay();
+        }
+        
     }
 
     public void CancelOrderClick()
     {
         Hide();
+        CleanDisplay();
+    }
+
+    void CleanDisplay()
+    {
+        _errorMsgLbl.text = "";
     }
 
     /// <summary>
     /// The action of adding an order to the Dock 
     /// </summary>
-    private void AddOrder()
+    private bool AddedOrder()
     {
         if (!IsOrderComplete())
         {
             OrderNotComplete();
-            return;
+            return false;
         }
 
 
@@ -166,6 +179,7 @@ public class AddOrderWindow : GUIElement {
 
         //so orders are updated 
         Program.MouseListener.BuildingWindow1.ShowOrders();
+        return true;
     }
 
     /// <summary>
@@ -174,7 +188,8 @@ public class AddOrderWindow : GUIElement {
     private void OrderNotComplete()
     {
         //todo notify
-        Debug.Log(_errorMsg);
+        //Debug.Log(_errorMsg);
+        _errorMsgLbl.text = _errorMsg;
     }
 
     private string _errorMsg;
@@ -236,10 +251,10 @@ public class AddOrderWindow : GUIElement {
         {
             PriceSelected();
         }
-        else if (sub.Contains("Frec."))
-        {
-            FrecSelected(sub);
-        }
+        //else if (sub.Contains("Frec."))
+        //{
+        //    FrecSelected(sub);
+        //}
         else if (sub.Contains("Remove."))
         {
             RemoveOrderFromDispatch(sub);
@@ -264,14 +279,14 @@ public class AddOrderWindow : GUIElement {
         Program.MouseListener.BuildingWindow1.ShowOrders();
     }
 
-    private void FrecSelected(string feed)
-    {
-        var sub = feed.Substring(5);
+    //private void FrecSelected(string feed)
+    //{
+    //    var sub = feed.Substring(5);
 
-        H MyStatus = (H)Enum.Parse(typeof(H), sub, true);
+    //    H MyStatus = (H)Enum.Parse(typeof(H), sub, true);
 
-        _frecuency = MyStatus;
-    }
+    //    _frecuency = MyStatus;
+    //}
 
     private void PriceSelected()
     {
@@ -314,7 +329,6 @@ public class AddOrderWindow : GUIElement {
     {
         _prodSelLbl.text = _prodSelect.ToString();
         _amtEnterLbl.text = _amt+"";
-        _frecuencyLbl.text = _frecuency + "";
 
         if (_orderType == "Export")
         {

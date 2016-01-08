@@ -287,6 +287,7 @@ public enum H
     Door,
     IniPos_Import_OnProcess,
     IniPos_Export_OnProcess,
+    Output_Error_Msg,
 
 
 

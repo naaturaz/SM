@@ -59,6 +59,7 @@ public class GUIElement : General {
         newPos.y = -400f;
 
         transform.position = newPos;
+        
     }
 
     /// <summary>
