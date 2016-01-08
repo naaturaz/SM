@@ -666,7 +666,7 @@ public class Person : General
 
         if (UPerson.IsMajor(_age) && !_isMajor)
         {
-            ReachAgeMajority();
+            //ReachAgeMajority();
         }
 
         CheckHappiness();
