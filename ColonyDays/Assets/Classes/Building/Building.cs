@@ -45,6 +45,7 @@ public class Building : General, Iinfo
     //the zone this building landed. The bridges have two landing zones and are not kept here
     private List<VectorLand> _landZone = new List<VectorLand>();
 
+
     /// <summary>
     /// Geograpihcally is in the spawnpoint of a building . If is a Bridge will have two
     /// each in each Bottom Middile
@@ -412,6 +413,7 @@ public class Building : General, Iinfo
         }
 
         InitDock();
+        InitDryDock();
         InitWheelBarrow();
 
         //if gives a null ex here ussually is that u forgot a prefab on scene
@@ -431,6 +433,8 @@ public class Building : General, Iinfo
 
         StartCoroutine("ThirtySecUpdate");
     }
+
+
 
     /// <summary>
     /// Address wht to do with a buliding that is marked as  H.WillBeDestroy and is loading from file 
@@ -2458,6 +2462,22 @@ public class Building : General, Iinfo
 #endregion
 
 
+#region DryDock 
+
+    DryDock _dryDock;
+
+    private void InitDryDock()
+    {
+        if (HType != H.DryDock)
+        {
+            return;
+        }
+        _dispatch = new Dispatch();
+        _dryDock = new DryDock(this);
+    }
+
+#endregion
+
 
     #region Dock
 
@@ -2726,6 +2746,8 @@ public class Building : General, Iinfo
 public class Ship
 {
     private Building _dock;
+    Inventory _inventory = new Inventory();
+    private float _size = 20f;
 
     public Building Dock
     {
@@ -2733,11 +2755,21 @@ public class Ship
         set { _dock = value; }
     }
 
+    public Inventory Inventory1
+    {
+        get { return _inventory; }
+        set { _inventory = value; }
+    }
+
+    public float Size
+    {
+        get { return _size; }
+        set { _size = value; }
+    }
+
     public Ship(Building dock)
     {
         _dock = dock;
-
-    
         DebugInit();
     }
 
@@ -2778,17 +2810,6 @@ public class Ship
 
         CheckIfExportOrders();
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 

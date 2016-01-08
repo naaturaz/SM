@@ -468,7 +468,66 @@ public class Inventory  {
         return Program.gameScene.ExportImport1.CalculateMass(p, spaceAvailNow);
     }
 
+    /// <summary>
+    /// Will return the inv items needed to repair a ship of that Volume
+    /// This volume is not the ship invetory volume is certainly bigger than that
+    /// is the Whole Ship volume
+    /// 
+    /// This should refer to the inventory of a DryDock 
+    /// 
+    /// Will remove the items from the invenroty 
+    /// </summary>
+    /// <param name="vol"></param>
+    /// <returns></returns>
+    public List<InvItem> ReturnInvItemsForSize(float vol)
+    {
+        var iniVol = vol;
+        List<InvItem> res = new List<InvItem>();
+        float i = 0;
+        float newI = 0;
 
+        //doing a Pseud While loop
+        for (i = 0; i < iniVol; i=i+newI)
+        {
+            //gets new item
+            var newItem = GiveMeRandomItem(vol);
+            //sets newI so its added to the loop
+            newI = newItem.Volume;
+            //removes vol value so is smaller so next iteration is not the whole thing anymore
+            vol -= newItem.Volume;
+            res.Add(newItem);
+        }
+        return res;
+    }
+
+    /// <summary>
+    /// Will give u a random prod of max amt 'param'
+    /// 
+    /// Will remove the item from the invetory too 
+    /// </summary>
+    /// <param name="maxVol"></param>
+    /// <returns></returns>
+    InvItem GiveMeRandomItem(float maxVol)
+    {
+        //random index of Item
+        var ind = Random.Range(0, InventItems.Count);
+        //random amt
+        var vol = Random.Range(0, InventItems[ind].Volume);
+
+        //capping amt
+        if (vol > maxVol)
+        {
+            vol = maxVol;
+        }
+        //will remove amt of item from Inventory
+        RemoveByVolume(InventItems[ind].Key, vol);
+        return new InvItem(InventItems[ind].Key, vol);
+    }
+
+    private void RemoveByVolume(P p, float vol)
+    {
+        throw new System.NotImplementedException();
+    }
 }
 
 public class InvItem
