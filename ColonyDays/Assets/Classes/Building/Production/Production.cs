@@ -106,6 +106,31 @@ public class Production  {
         return P.None;
     }
 
+    /// <summary>
+    /// Will return the prod the building can produce
+    /// </summary>
+    /// <param name="typeKey"></param>
+    /// <returns></returns>
+    public List<string> ReturnProducts(H typeKey)
+    {
+        List<string> res = new List<string>();
+        for (int i = 0; i < _products.Count; i++)
+        {
+            var ele = _products.ElementAt(i);
+
+            for (int j = 0; j < ele.Key.Count; j++)
+            {
+                var key = ele.Key[j];
+                if (key == typeKey)
+                {
+                    //will return the first value om the values List
+                    res.Add(ele.Value[j]+"");
+                }
+            }
+        }
+        return res;
+    }
+
 
 
 
@@ -494,4 +519,37 @@ public class Production  {
 
 #endregion
 
+}
+
+public class ProdInfo
+{
+    private string _name;
+    private string _namePlsIngred;
+    private string _details;
+
+    public ProdInfo()
+    {
+        
+    }
+
+
+
+
+    public string Name
+    {
+        get { return _name; }
+        set { _name = value; }
+    }
+
+    public string NamePlsIngred
+    {
+        get { return _namePlsIngred; }
+        set { _namePlsIngred = value; }
+    }
+
+    public string Details
+    {
+        get { return _details; }
+        set { _details = value; }
+    }
 }

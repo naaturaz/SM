@@ -434,6 +434,28 @@ public class Building : General, Iinfo
         StartCoroutine("ThirtySecUpdate");
     }
 
+    #region Current Product
+
+    /// <summary>
+    /// Will show all the products this Building can produce 
+    /// </summary>
+    /// <returns></returns>
+    public List<string> ShowProductsOfBuild()
+    {
+        return BuildingPot.Control.ProductionProp.ReturnProducts(HType);
+    }
+
+    /// <summary>
+    /// Will set CurrentProd to 'newProd'
+    /// </summary>
+    /// <param name="newProd"></param>
+    public void SetProductToProduce(string newProd)
+    {
+        
+    }
+
+
+    #endregion
 
 
     /// <summary>

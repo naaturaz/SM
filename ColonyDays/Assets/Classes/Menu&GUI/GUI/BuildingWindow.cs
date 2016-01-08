@@ -9,6 +9,7 @@ public class BuildingWindow : GUIElement {
     private Text _title;
     private Text _info;
     private Text _inv;
+    private Text _displayProdInfo;
 
     private Building _building;
 
@@ -17,6 +18,7 @@ public class BuildingWindow : GUIElement {
     private Rect _genBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
     private Rect _invBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
     private Rect _ordBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
+    private Rect _prdBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
     private Rect _upgBtnRect;
 
     private GameObject _ordBtn;//the btn for orders
@@ -24,14 +26,18 @@ public class BuildingWindow : GUIElement {
     //tabs
     private GameObject _general;
     private GameObject _gaveta;
-    private GameObject _orders;
     private GameObject _upgrades;
+    private GameObject _products;
+    private GameObject _orders;
+
 
     private Vector3 _importIniPos;
     private Vector3 _exportIniPos;    
     
     private Vector3 _importIniPosOnProcess;
     private Vector3 _exportIniPosOnProcess;
+
+    private Vector3 _iniPosForProdList;
 
     List<Toggle> toggles=new List<Toggle>() ; 
 
@@ -76,6 +82,7 @@ public class BuildingWindow : GUIElement {
         _general = GetChildThatContains(H.General);
         _gaveta = GetChildThatContains(H.Gaveta);
         _orders = GetChildThatContains(H.Orders);
+        _products = GetChildThatContains(H.Products);
         _upgrades = GetChildCalled(H.Upgrades);
 
         
@@ -86,18 +93,22 @@ public class BuildingWindow : GUIElement {
         _title = GetChildCalled(H.Title).GetComponent<Text>();
         _info = GetGrandChildCalled(H.Info).GetComponent<Text>();
         _inv = GetGrandChildCalled(H.Bolsa).GetComponent<Text>();//bolsa bz tht algorith has a bugg tht names cannot be the same or start with the same
+        
+        _displayProdInfo = GetGrandChildCalled(H.Display_Lbl).GetComponent<Text>();//bolsa bz tht algorith has a bugg tht names cannot be the same or start with the same
 
 
         var genBtn = GetChildThatContains(H.Gen_Btn).transform;
         var invBtn = GetChildThatContains(H.Inv_Btn).transform;
         _ordBtn = GetChildThatContains(H.Ord_Btn);
         var upgBtn = GetChildCalled(H.Upg_Btn).transform;
+        var prdBtn = GetChildCalled(H.Prd_Btn).transform;
 
 
         _genBtnRect = GetRectFromBoxCollider2D(genBtn);
         _invBtnRect = GetRectFromBoxCollider2D(invBtn);
         _ordBtnRect = GetRectFromBoxCollider2D(_ordBtn.transform);
         _upgBtnRect = GetRectFromBoxCollider2D(upgBtn.transform);
+        _prdBtnRect = GetRectFromBoxCollider2D(prdBtn.transform);
 
 
         _importIniPos = GetGrandChildCalled(H.IniPos_Import).transform.position;
@@ -105,6 +116,8 @@ public class BuildingWindow : GUIElement {
 
         _importIniPosOnProcess = GetGrandChildCalled(H.IniPos_Import_OnProcess).transform.position;
         _exportIniPosOnProcess = GetGrandChildCalled(H.IniPos_Export_OnProcess).transform.position;
+
+        _iniPosForProdList = GetGrandChildCalled(H.IniPos).transform.position;
 
 
 
@@ -315,10 +328,11 @@ public class BuildingWindow : GUIElement {
         {
             MakeThisTabActive(_upgrades);
         }
-
+        else if (_prdBtnRect.Contains(Input.mousePosition) && Input.GetMouseButtonUp(0))
+        {
+            MakeThisTabActive(_products);
+        }
     }
-
-
 
     /// <summary>
     /// Use to swith Tabs on Window. Will hide all and make the pass one as active
@@ -330,6 +344,7 @@ public class BuildingWindow : GUIElement {
         _gaveta.SetActive(false);
         _orders.SetActive(false);
         _upgrades.SetActive(false);
+        _products.SetActive(false);
 
         g.SetActive(true);
 
@@ -338,9 +353,37 @@ public class BuildingWindow : GUIElement {
         {
             ShowOrders();
         }
+        if (g == _products)
+        {
+            ShowProducts();
+        }
     }
 
 
+
+    private void ShowProducts()
+    {
+        var list = _building.ShowProductsOfBuild();
+        DisplayProducts(list, _iniPosForProdList, Root.orderShow);
+    }
+
+    void DisplayProducts(List<string> list, Vector3 iniPosP, string root)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            Display1String(i, list[i], iniPosP, root);
+        }
+    }
+
+    void Display1String(int i, string order, Vector3 iniPosP, string root)
+    {
+        var orderShow = OrderShow.Create(root, _orders.transform);
+        orderShow.ShowToSetCurrentProduct(order, i);
+
+        orderShow.Reset(i, _importIniPos);
+
+        _showOrders.Add(orderShow);
+    }
 
 
     ///Show  Orders on tab

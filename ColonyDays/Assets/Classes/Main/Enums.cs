@@ -303,6 +303,10 @@ public enum H
     IniPos_Import_OnProcess,
     IniPos_Export_OnProcess,
     Output_Error_Msg,
+    Products,
+    IniPos,
+    Display_Lbl,
+    Prd_Btn,
 
 
 

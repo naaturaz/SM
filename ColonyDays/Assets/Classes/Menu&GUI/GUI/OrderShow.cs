@@ -68,6 +68,21 @@ public class OrderShow : GUIElement
         _button.onClick.AddListener(() => Program.MouseClickListenerSt("AddOrder.Remove."+order.ID));
     }
 
+    public void ShowToSetCurrentProduct(string prod, int IdP)
+    {
+        Start();
+
+        _title.text = prod;
+        transform.name = _title.text + " | " + IdP;
+
+        if (_button == null)
+        {
+            return;
+        }
+
+        _button.onClick.AddListener(() => Program.MouseClickListenerSt("Set.Current.Prod." + prod +"."+ IdP));
+    }
+
     /// <summary>
     /// Resets the position of the element 
     /// </summary>
@@ -91,6 +106,23 @@ public class OrderShow : GUIElement
         rectT.localPosition = new Vector3(x, (-4 * i) - yPls, 0);
 
         transform.localScale = new Vector3(1,1,1);
+    }
+
+    /// <summary>
+    /// Resets the position of the element 
+    /// </summary>
+    /// <param name="i"></param>
+    /// <param name="type"></param>
+    internal void Reset(int i, Vector3 orderPos)
+    {
+        var rectT = GetComponent<RectTransform>();
+        rectT.position = new Vector3();
+
+        var x = 0;
+
+        rectT.localPosition = new Vector3(x, (-4 * i), 0);
+
+        transform.localScale = new Vector3(1, 1, 1);
     }
 
 
