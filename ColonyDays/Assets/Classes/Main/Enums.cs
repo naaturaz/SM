@@ -193,7 +193,7 @@ public enum H
     //industry F6
     Cloth, GunPowder, Paper, PrinterSmall, PrinterBig, Silk, SugarMill,
     //Trade F7
-    Dock, DryDock, StorageSmall, StorageMed, StorageBig, StorageBigTwoDoors, StorageExtraBig,
+    Dock, DryDock, Supplier, StorageSmall, StorageMed, StorageBig, StorageBigTwoDoors, StorageExtraBig,
     //gov F8
     Clinic, CommerceChamber, Customs, Library, School, TradesSchool, TownHouse,
     //other F9
@@ -358,7 +358,7 @@ public enum StInd
 public enum StTrade //for structures game structure.cs 
 {
     //Trade
-    Dock, DryDock, StorageSmall, StorageMed, StorageBig, StorageBigTwoDoors, StorageExtraBig,
+    Dock, DryDock, Supplier, StorageSmall, StorageMed, StorageBig, StorageBigTwoDoors, StorageExtraBig,
 }
 
 

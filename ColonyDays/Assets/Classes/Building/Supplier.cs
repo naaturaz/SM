@@ -1,15 +1,11 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections.Generic;
 
-public class Supplier : MonoBehaviour {
+/*
+ * Supplier and DryDock are really similar 
+ * 
+ */
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+public class Supplier
+{
+   
 }

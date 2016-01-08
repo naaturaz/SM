@@ -1,6 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+/*
+ * This class is used by DryDock building 
+ * and supplier building
+ * 
+ * They bigger diff as on now is the diff amount of products each
+ * one can add to they inventory . This is restricted on the AddExport Window
+ * for DryDock and Supplier
+ * 
+ * 
+ * 
+ */
+
 public class DryDock 
 {
     private Ship _currShip;
@@ -12,7 +24,6 @@ public class DryDock
     //so once we are done with it we can place it back there
     private Vector3 _shipSeaPoint;
 
-    private Inventory _inventory;
     //the building we are in
     private Building _building;
 
@@ -23,17 +34,11 @@ public class DryDock
         _building = build;
     }
 
-    public Inventory Inventory1
-    {
-        get { return _inventory; }
-        set { _inventory = value; }
-    }
-
     /// <summary>
     /// After ship asked if he can DryDock then can be placed here
     /// </summary>
     /// <param name="newShip"></param>
-    public void DockMe(Ship newShip)
+    public void ServiceMe(Ship newShip)
     {
         _currShip = newShip;
         //
@@ -45,14 +50,14 @@ public class DryDock
 
     private void PrepareOrder()
     {
-        var items = Inventory1. ReturnInvItemsForSize(_currShip.Size);
+        var items = _building.Inventory.ReturnInvItemsForSize(_currShip.Size);
         Bill(items);
     }
 
     /// <summary>
     /// The action of Billing  a ship
     /// </summary>
-    public void Bill(List<InvItem> list)
+    void Bill(List<InvItem> list)
     {
         for (int i = 0; i < list.Count; i++)
         {
@@ -72,7 +77,7 @@ public class DryDock
     /// </summary>
     /// <param name="newShip"></param>
     /// <returns></returns>
-    public bool CanIDryDock(Ship newShip)
+    public bool CanIBeService(Ship newShip)
     {
         if (_currShip == null)
         {

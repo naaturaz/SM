@@ -413,7 +413,7 @@ public class Building : General, Iinfo
         }
 
         InitDock();
-        InitDryDock();
+        InitDryDockAndSupplier();
         InitWheelBarrow();
 
         //if gives a null ex here ussually is that u forgot a prefab on scene
@@ -846,7 +846,9 @@ public class Building : General, Iinfo
 
     #region Create For Double Bound Strucutres Such as Maritimes and UnderTerra
 
-    List<H> doubleBounds = new List<H>(){H.FishRegular, H.FishSmall, H.Dock, H.DryDock, H.MountainMine, H.SaltMine};
+    List<H> doubleBounds = new List<H>(){H.FishRegular, H.FishSmall, 
+        H.Dock, H.DryDock, H.Supplier,
+        H.MountainMine, H.SaltMine};
     private GameObject _maritimeBound;
     private GameObject _terraBound;
     private GameObject _underTerraBound;
@@ -2462,21 +2464,20 @@ public class Building : General, Iinfo
 #endregion
 
 
-#region DryDock 
+#region DryDock and Supplier 
 
     DryDock _dryDock;
 
-    private void InitDryDock()
+    private void InitDryDockAndSupplier()
     {
-        if (HType != H.DryDock)
+        if (HType == H.DryDock || HType == H.Supplier)
         {
-            return;
+            _dryDock = new DryDock(this);
+            _dispatch = new Dispatch();
         }
-        _dispatch = new Dispatch();
-        _dryDock = new DryDock(this);
     }
 
-#endregion
+    #endregion
 
 
     #region Dock

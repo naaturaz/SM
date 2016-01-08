@@ -21,6 +21,7 @@ public class Root : MonoBehaviour
 
 
 
+
     ///Main Objects///
         public static string classesContainer = "Prefab/Main/ClassesContainer";
         ///Game Scene
@@ -428,7 +429,8 @@ public class Root : MonoBehaviour
     enum WoodAClassyDoor
     {
         Cloth, PrinterSmall, PrinterBig, Carpintery, Cigars, Mill, Slat,
-        Dock, DryDock, StorageSmall, StorageMed, StorageBig, StorageBigTwoDoors, StorageExtraBig,
+        Dock, DryDock, Supplier,
+        StorageSmall, StorageMed, StorageBig, StorageBigTwoDoors, StorageExtraBig,
 
     }
 
@@ -516,6 +518,7 @@ public class Root : MonoBehaviour
         //Trade
         buildsRoot.Add(H.Dock, "Prefab/Building/Trade/Dock");
         buildsRoot.Add(H.DryDock, "Prefab/Building/Trade/DryDock");
+        buildsRoot.Add(H.Supplier, "Prefab/Building/Trade/Supplier");
         buildsRoot.Add(H.StorageSmall, "Prefab/Building/Trade/StorageSmall");
         buildsRoot.Add(H.StorageMed, "Prefab/Building/Trade/StorageMed");
         buildsRoot.Add(H.StorageBig, "Prefab/Building/Trade/StorageBig");

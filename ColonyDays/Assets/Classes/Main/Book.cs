@@ -128,6 +128,7 @@ public class Book : General
         //Trade
         Build.Add(new BuildStat(H.Dock, 600, 80, 20, 0, 5, maxPeople: 10));
         Build.Add(new BuildStat(H.DryDock, 600, 80, 20, 0, 5, maxPeople: 10));
+        Build.Add(new BuildStat(H.Supplier, 600, 80, 20, 0, 5, maxPeople: 10));
 
         Build.Add(new BuildStat(H.StorageSmall, 400, 80, 20, 0, 5, maxPeople: 0, capacity: 150));
         Build.Add(new BuildStat(H.StorageMed, 600, 80, 20, 0, 5, maxPeople: 0, capacity: 200));
