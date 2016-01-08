@@ -203,6 +203,7 @@ public class Root : MonoBehaviour
     //shows the orders on the Dock 
     public static string orderShowClose = "Prefab/GUI/Forms/Order_Show_Close";
     public static string orderShow = "Prefab/GUI/Forms/Order_Show";
+    public static string orderShowGenBtn = "Prefab/GUI/Forms/Order_Show_Generic_Btn";
     
 
     //Menu

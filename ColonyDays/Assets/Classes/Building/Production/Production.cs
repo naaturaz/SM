@@ -123,14 +123,45 @@ public class Production  {
                 var key = ele.Key[j];
                 if (key == typeKey)
                 {
-                    //will return the first value om the values List
-                    res.Add(ele.Value[j]+"");
+                    //will loop thru all values 
+                    for (int k = 0; k < ele.Value.Count; k++)
+                    {
+                        res.Add(ele.Value[k] + "");
+                    }
+
+                    
                 }
             }
         }
         return res;
     }
 
+
+    /// <summary>
+    /// Will return the prod the building can produce
+    /// </summary>
+    /// <param name="typeKey"></param>
+    /// <returns></returns>
+    public P ReturnExactProduct(H typeKey, int index)
+    {
+        List<string> res = new List<string>();
+        for (int i = 0; i < _products.Count; i++)
+        {
+            var ele = _products.ElementAt(i);
+
+            for (int j = 0; j < ele.Key.Count; j++)
+            {
+                var key = ele.Key[j];
+                if (key == typeKey)
+                {
+                    //will return that exact product 
+                    return ele.Value[index];
+                }
+            }
+        }
+        Debug.Log("Prod not found: ReturnExactProduct(). pls check");
+        return P.None;
+    }
 
 
 

@@ -451,7 +451,15 @@ public class Building : General, Iinfo
     /// <param name="newProd"></param>
     public void SetProductToProduce(string newProd)
     {
-        
+        //the newProd comes with the name of the prod a . and a number that is the index of the 
+        //list of where this prod is 
+        //ex Corn.0 
+        //0 is the corresponding item in the list 
+        var split = newProd.Split('.');
+        int index = int.Parse(split[1]);
+        var foundProd = BuildingPot.Control.ProductionProp.ReturnExactProduct(HType, index);
+        CurrentProd = foundProd;
+        Debug.Log("now Prod curr: "+CurrentProd +" on:"+MyId);
     }
 
 

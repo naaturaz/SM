@@ -307,6 +307,8 @@ public enum H
     IniPos,
     Display_Lbl,
     Prd_Btn,
+    Prd_Btns_Pos,
+    Btn,
 
 
 

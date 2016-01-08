@@ -279,7 +279,10 @@ public class MouseListener : InputMain
         {
             _addOrderWindow.FeedFromForm(action);
         }
-
+        else if (action.Contains("BuildingForm."))
+        {
+            _buildingWindow.FeedFromForm(action);
+        }
 
 
 

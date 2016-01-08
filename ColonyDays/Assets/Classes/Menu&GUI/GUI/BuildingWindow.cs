@@ -117,7 +117,7 @@ public class BuildingWindow : GUIElement {
         _importIniPosOnProcess = GetGrandChildCalled(H.IniPos_Import_OnProcess).transform.position;
         _exportIniPosOnProcess = GetGrandChildCalled(H.IniPos_Export_OnProcess).transform.position;
 
-        _iniPosForProdList = GetGrandChildCalled(H.IniPos).transform.position;
+        _iniPosForProdList = GetGrandChildCalled(H.Prd_Btns_Pos).transform.position;
 
 
 
@@ -360,11 +360,13 @@ public class BuildingWindow : GUIElement {
     }
 
 
-
+    //Show Prod on Tab
     private void ShowProducts()
     {
+        DestroyAndCleanShownOrders();
+
         var list = _building.ShowProductsOfBuild();
-        DisplayProducts(list, _iniPosForProdList, Root.orderShow);
+        DisplayProducts(list, _iniPosForProdList, Root.orderShowGenBtn);
     }
 
     void DisplayProducts(List<string> list, Vector3 iniPosP, string root)
@@ -377,13 +379,17 @@ public class BuildingWindow : GUIElement {
 
     void Display1String(int i, string order, Vector3 iniPosP, string root)
     {
-        var orderShow = OrderShow.Create(root, _orders.transform);
+        var orderShow = OrderShow.Create(root, _products.transform);
         orderShow.ShowToSetCurrentProduct(order, i);
 
-        orderShow.Reset(i, _importIniPos);
+        orderShow.Reset(i, _iniPosForProdList);
 
         _showOrders.Add(orderShow);
     }
+
+
+
+
 
 
     ///Show  Orders on tab
@@ -537,5 +543,31 @@ public class BuildingWindow : GUIElement {
         {
             HideUpgCapBtn();
         }
+    }
+
+    /// <summary>
+    /// Called if Mouse listener is called with this : 'BuildingForm.'
+    /// </summary>
+    /// <param name="action"></param>
+    internal void FeedFromForm(string action)
+    {
+        //remove the 'BuildingForm.'
+        var sub = action.Substring(13);
+
+        if (sub.Contains("Set.Current.Prod"))
+        {
+            //remove the 'Set.Current.Prod.'
+            var rem = sub.Substring(17);
+            SetCurrentProduct(rem);
+        }
+    }
+
+    /// <summary>
+    /// Will set current prod on selected buildng
+    /// </summary>
+    /// <param name="product"></param>
+    void SetCurrentProduct(string product)
+    {
+        _building.SetProductToProduce(product);
     }
 }

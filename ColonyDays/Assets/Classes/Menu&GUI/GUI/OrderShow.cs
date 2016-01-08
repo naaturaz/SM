@@ -15,7 +15,8 @@ public class OrderShow : GUIElement
 
     private Text _title;
 
-    private UnityEngine.UI.Button _button;//
+    private UnityEngine.UI.Button _closeBtn;//
+    private UnityEngine.UI.Button _thisBtn;//
 
 	// Use this for initialization
 	void Start ()
@@ -27,9 +28,15 @@ public class OrderShow : GUIElement
         //check for the type or OrderShow that doesnt have the Close btn. 
 	    if (rawBtn != null)
 	    {
-            _button = rawBtn.GetComponent<UnityEngine.UI.Button>();
+            _closeBtn = rawBtn.GetComponent<UnityEngine.UI.Button>();
+            return;
 	    }
 
+        rawBtn = GetChildCalled(H.Btn);
+        if (rawBtn != null)
+        {
+            _thisBtn = rawBtn.GetComponent<UnityEngine.UI.Button>();
+        }
         
     }
 	
@@ -60,12 +67,12 @@ public class OrderShow : GUIElement
         _title.text = _prod + " : " + _amt;
         transform.name = _title.text + " | " + Id;
 
-        if (_button == null)
+        if (_closeBtn == null)
         {
             return;
         }
 
-        _button.onClick.AddListener(() => Program.MouseClickListenerSt("AddOrder.Remove."+order.ID));
+        _closeBtn.onClick.AddListener(() => Program.MouseClickListenerSt("AddOrder.Remove."+order.ID));
     }
 
     public void ShowToSetCurrentProduct(string prod, int IdP)
@@ -73,14 +80,15 @@ public class OrderShow : GUIElement
         Start();
 
         _title.text = prod;
+        transform.position = iniPos;
         transform.name = _title.text + " | " + IdP;
 
-        if (_button == null)
+        if (_thisBtn == null)
         {
             return;
         }
 
-        _button.onClick.AddListener(() => Program.MouseClickListenerSt("Set.Current.Prod." + prod +"."+ IdP));
+        _thisBtn.onClick.AddListener(() => Program.MouseClickListenerSt("BuildingForm.Set.Current.Prod." + prod +"."+ IdP));
     }
 
     /// <summary>
@@ -108,6 +116,9 @@ public class OrderShow : GUIElement
         transform.localScale = new Vector3(1,1,1);
     }
 
+
+    
+
     /// <summary>
     /// Resets the position of the element 
     /// </summary>
@@ -129,7 +140,7 @@ public class OrderShow : GUIElement
     float AddYSpaceIfIsOnProcess(Vector3 orderPos, Vector3 onProcessOrderPos)
     {
         //order that is not on process yet
-        if (_button!=null)
+        if (_closeBtn!=null)
         {
             return 0f;
         }
