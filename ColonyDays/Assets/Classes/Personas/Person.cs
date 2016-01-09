@@ -604,12 +604,12 @@ public class Person : General
 
     void ChangeNutritionLvl(int change)
     {
-        _nutritionLevel += change * Program.gameScene.GameTime1.TimeFactorInclSpeed();
+        _nutritionLevel += change - Program.gameScene.GameTime1.TimeFactorInclSpeed() ;
     }
 
     void CheckOnNutrition()
     {
-        ChangeNutritionLvl(-1);
+        ChangeNutritionLvl(-2);
         //KillStarve();
     }
 

@@ -156,15 +156,15 @@ public class BuildingWindow : GUIElement {
 
 
     /// <summary>
-    /// Will hide it if not Dock
+    /// Will hide it if not Dock or ...
     /// </summary>
     void HandleOrdBtn()
     {
-        if (_building.HType != H.Dock)
+        if (_building.HType != H.Dock || _building.HType != H.DryDock || _building.HType != H.Supplier)
         {
             _ordBtn.SetActive(false);
         }
-        if (_building.HType == H.Dock)
+        if (_building.HType == H.Dock || _building.HType == H.DryDock || _building.HType == H.Supplier)
         {
             _ordBtn.SetActive(true);
         }
@@ -321,7 +321,8 @@ public class BuildingWindow : GUIElement {
             MakeThisTabActive(_gaveta);
         }
         //ig click inv
-        else if (_ordBtnRect.Contains(Input.mousePosition) && Input.GetMouseButtonUp(0) && _building.HType == H.Dock)
+        else if (_ordBtnRect.Contains(Input.mousePosition) && Input.GetMouseButtonUp(0) && 
+            (_building.HType == H.Dock || _building.HType == H.DryDock ||_building.HType == H.Supplier))
         {
             MakeThisTabActive(_orders);
         }

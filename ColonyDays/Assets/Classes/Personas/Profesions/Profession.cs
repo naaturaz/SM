@@ -222,7 +222,7 @@ public class Profession  {
         var age = AgeFactor();
         
         var genre = ReturnGenreVal();
-        var yearSchool = _person.YearsOfSchool*3;
+        var yearSchool = _person.YearsOfSchool;
         var produceFac = GetProduceFactor();
 
         //Grown man will prod 4.5KG of wood with 10 year of school
@@ -243,42 +243,53 @@ public class Profession  {
     {
         if (_person.Age > 10 && _person.Age <= 17)
         {
-            return 4;
+            return 8;
         }
         if (_person.Age > 17 && _person.Age <= 40)
         {
-            return 10;
+            return 20;
         }
         if (_person.Age >= 41 && _person.Age <= 60)
         {
-            return 8;
+            return 16;
         }
         if (_person.Age >= 61 && _person.Age <= 80)
         {
-            return 6;
+            return 12;
         }
-        return 1;
+        return 2;
     }
 
     float GetProduceFactor()
     {
-        var prod = _person.Work.CurrentProd;
+        if (_person == null || _person.Work == null)
+        {
+            return 0;
+        }
 
+        var prod = _person.Work.CurrentProd;
         if (StillElementId != "")
         {
             prod = Forester.FindProdImMining(StillElementId, _person);
         }
 
-        return Program.gameScene.ExportImport1.ReturnProduceFactor(prod);
+        var res = Program.gameScene.ExportImport1.ReturnProduceFactor(prod);
+        if (res == 0)
+        {
+            //for builders
+            res = 100;
+        }
+
+        return res;
     }
 
     int ReturnGenreVal()
     {
         if (_person.Gender == H.Male)
         {
-            return 10;
+            return 20;
         }
-        return 8;
+        return 16;
     }
 
     /// <summary>
