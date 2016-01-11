@@ -147,7 +147,7 @@ public class StillElement : TerrainRamdonSpawner {
         else//ore. stone
         {
             _weight = Random.Range(150, 200);
-            _weight = 50;
+            _weight = 5;
         }
     }
 

@@ -554,22 +554,7 @@ public class Profession  {
         }
     }
 
-    /// <summary>
-    /// If forester Elelemts was removed recently 
-    /// </summary>
-    /// <returns></returns>
-    private bool ForesterHasNullEle()
-    {
-        if (ProfDescription != Job.Forester)
-        {
-            return false;
-        }
-
-        var ele =
-                Program.gameScene.controllerMain.TerraSpawnController.FindThis(StillElementId);
-
-        return ele == null;
-    }
+   
 
     private void ConvertWheelBarrow()
     {
@@ -652,11 +637,47 @@ public class Profession  {
         _workingNow = false;
         _workerTask = HPers.None;
 
-        if (ForesterHasNullEle())
+        //CheckIfProfHasToBeReCreated();
+    }
+
+    protected void CheckIfProfHasToBeReCreated()
+    {
+        if (ForesterHasNullEle() || ForesterCurrentStillEleIsBlackListed())
         {
             _person.CreateProfession();
+        }     
+    }
+
+    /// <summary>
+    /// If Foresetrr has that Still Element blacklisted needs to Recreate Profession
+    /// Otherwise wont look for new StillElements
+    /// </summary>
+    /// <returns></returns>
+    private bool ForesterCurrentStillEleIsBlackListed()
+    {
+        if (ProfDescription != Job.Forester)
+        {
+            return false;
         }
-    
+
+        return _person.Brain.BlackList.Contains(StillElementId);
+    }
+
+    /// <summary>
+    /// If forester Elelemts was removed recently 
+    /// </summary>
+    /// <returns></returns>
+    private bool ForesterHasNullEle()
+    {
+        if (ProfDescription != Job.Forester)
+        {
+            return false;
+        }
+
+        var ele =
+                Program.gameScene.controllerMain.TerraSpawnController.FindThis(StillElementId);
+
+        return ele == null;
     }
 
     private float startIdleTime;

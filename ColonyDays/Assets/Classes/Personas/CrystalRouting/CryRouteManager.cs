@@ -4,6 +4,7 @@
  * 
  */
 
+using System;
 using UnityEngine;
 
 public class CryRouteManager
@@ -123,6 +124,7 @@ public class CryRouteManager
         //will stop a lot of instances where the landzone is not being initiated
         if (_one.LandZone == "" || _two.LandZone == "")
         {
+            throw new Exception("One Routing was stopped bz 1 or more Lanzones were empty");
             Debug.Log("One Routing was stopped bz 1 or more Lanzones were empty");
             return;
         }

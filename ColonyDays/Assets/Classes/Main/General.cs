@@ -79,7 +79,10 @@ public class General : MonoBehaviour
     public static bool WAKEUP = false;
 
     //so it can be seen from the inspector. any sort of info needed to be displayed
-    public string info;
+    public string info;    
+    
+    //if is a dummy here u can place the ID of the real object spawned the Dummy
+    public string DummyIdSpawner;
 
 	////Constructor////
 	public General()

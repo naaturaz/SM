@@ -212,10 +212,21 @@ public class CryBridgeRoute
     /// </summary>
     private void BlackList()
     {
-        _person.Brain.BlackListBuild(_fin.MyId);
+        _person.Brain.BlackListBuild(ExtractRealId(_fin));
     }
 
-
+    /// <summary>
+    /// Used to detect if the _fin object is a dummy
+    /// </summary>
+    /// <returns></returns>
+    public static string ExtractRealId(Structure fin)
+    {
+        if (fin.MyId.Contains("Dummy"))
+        {
+            return fin.DummyIdSpawner;
+        }
+        return fin.MyId;
+    }
 
 
     public void Update()

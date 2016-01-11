@@ -49,26 +49,12 @@ public class Forester : Profession
 
         FinRoutePoint = OrderedSites[0].Point;
         StillElementId = OrderedSites[0].LocMyId;
-        MarkImUsingElement();
 
         //moving the route point a bit towards the origin so when chopping tree its not inside the tree 
         FinRoutePoint = Vector3.MoveTowards(FinRoutePoint, _person.Work.transform.position, MoveTowOrigin * 2.5f);
 
         InitRoute();
     }
-
-    /// <summary>
-    /// So it doest get Drestroy if depleted by other person
-    /// </summary>
-    private void MarkImUsingElement()
-    {
-        var ele =
-            Program.gameScene.controllerMain.TerraSpawnController.FindThis(StillElementId);
-
-        ele.MinedNowBy++;
-    }
-
-
 
     Vector3 DefineMiddlePos(List<VectorM> list)
     {
@@ -89,6 +75,7 @@ public class Forester : Profession
         dummy.transform.position = FinRoutePoint;
         dummy.transform.LookAt(_treeCenterPos);
         dummy.HandleLandZoning();
+        dummy.DummyIdSpawner = StillElementId; 
 
         //so it doesnt add like a door at the end when gets to tree
         Router1 = new CryRouteManager(_person.Work, dummy, _person, HPers.None, true, false);
@@ -105,7 +92,8 @@ public class Forester : Profession
         {
             var t = all[i];
 
-            if (t == null)
+            //or if is blacklisted 
+            if (t == null || _person.Brain.BlackList.Contains(t.MyId))
             {
                 continue;
             }
@@ -152,6 +140,8 @@ public class Forester : Profession
 
     public override void Update()
     {
+        CheckIfShouldReDoProf();
+
         //ReInitIfEleNull();
 
         ////means is done at work already
@@ -175,6 +165,22 @@ public class Forester : Profession
         Execute();
 
         //GameScene.print("Update on Foreset ");
+    }
+
+    /// <summary>
+    /// Bz need to redo Prof if could 
+    /// If StillElement is null
+    /// 
+    /// So people dont go to stare to an non existing tree over and over again
+    /// </summary>
+    private void CheckIfShouldReDoProf()
+    {
+        //seein the spawner list bz if last time was bigger than one I can still find prob another 
+        //stillElement to mine 
+        if (!_workingNow && _spawnersList.Count > 1)
+        {
+            CheckIfProfHasToBeReCreated();
+        }
     }
 
     /// <summary>

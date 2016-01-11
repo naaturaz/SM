@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -509,6 +510,7 @@ public class Person : General
     }
 
 
+    private int secCount;
     private Vector3 originalPoint;
     /// <summary>
     /// Returns Random position from origin. If fell inside a building will find another spot
@@ -541,13 +543,18 @@ public class Person : General
         //UVisHelp.CreateHelpers(_personBounds, Root.blueCube);
         //if bound collide will recurse
 
-        //if (BuildingPot.Control.Registro.IsCollidingWithExisting(_personBounds) || !IsOnTerrain(origin))
-        if (MeshController.CrystalManager1.IntersectAnyLine(ReturnIniPos(), origin)
-            || !IsOnTerrain(origin))
+        if (MeshController.CrystalManager1.IntersectAnyLine(ReturnIniPos(), origin) || !IsOnTerrain(origin))
         {
+            secCount++;
+            if (secCount>1000)
+            {
+                throw new Exception("Infinite loop");
+            }
             origin = AssignRandomIniPosition(origin);
         }
+
         originalPoint = new Vector3();
+        secCount = 0;
         return origin;
     }
 
@@ -574,8 +581,7 @@ public class Person : General
         {
             return transform.position;
         }
-        return CamControl.CAMRTS.hitFront.point;
-
+        return m.MeshController.iniTerr.MathCenter;
     }
 
     /// <summary>
