@@ -528,6 +528,22 @@ public class Inventory  {
     {
         throw new System.NotImplementedException();
     }
+
+    /// <summary>
+    /// Will say if this inventory contains 'prod'
+    /// </summary>
+    /// <param name="prod"></param>
+    /// <returns></returns>
+    internal bool Contains(P prod)
+    {
+        var prodHere = InventItems.Find(a => a.Key == prod);
+
+        if (prodHere == null)
+        {
+            return false;
+        }
+        return true;
+    }
 }
 
 public class InvItem

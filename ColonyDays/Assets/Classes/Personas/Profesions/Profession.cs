@@ -380,6 +380,8 @@ public class Profession  {
         _person.Brain.CurrentTask = HPers.None;
         GameScene.print("Done work:" + _person.MyId);
 
+   
+
         ////bz job foreseter drops things when gets at work
         //if (ProfDescription == Job.Forester)
         //{
@@ -496,6 +498,12 @@ public class Profession  {
         //for forester //ChopWood
         else if (_workerTask == HPers.AniFullyTrans)
         {
+            if (ForesterHasNullEle())
+            {
+                PreparePersonToGetBackToOffice();
+                return;
+            }
+
             _person.Body.TurnCurrentAniAndStartNew(_myAnimation);
             Idle(HPers.WorkingInPlaceNow, _workTime);
         }
@@ -508,12 +516,6 @@ public class Profession  {
         {
             _executeNow = true;
             _doneWorkNow = true;//set here once the ani is fully transioned to
-
-            //they dont need to return anywhere... 
-            if (_profDescription == Job.ShackBuilder)
-            {
-                return;
-            }
 
             ComingBackToOffice();
         }
@@ -550,6 +552,23 @@ public class Profession  {
 
             ResetMiniMindState();
         }
+    }
+
+    /// <summary>
+    /// If forester Elelemts was removed recently 
+    /// </summary>
+    /// <returns></returns>
+    private bool ForesterHasNullEle()
+    {
+        if (ProfDescription != Job.Forester)
+        {
+            return false;
+        }
+
+        var ele =
+                Program.gameScene.controllerMain.TerraSpawnController.FindThis(StillElementId);
+
+        return ele == null;
     }
 
     private void ConvertWheelBarrow()
@@ -631,7 +650,13 @@ public class Profession  {
     void ResetMiniMindState()
     {
         _workingNow = false;
-        _workerTask = HPers.None;    
+        _workerTask = HPers.None;
+
+        if (ForesterHasNullEle())
+        {
+            _person.CreateProfession();
+        }
+    
     }
 
     private float startIdleTime;
@@ -765,7 +790,7 @@ public class Profession  {
         }
 
         //if has instructions is so far from a : Forester
-        //they want to physically bring prod back and then drop it at they place 
+        //they want to physically bring prod back and then drop it at they Storage 
         //dont want to added to building invetory he has to drop it there when he gets there 
         _person.Work.Produce(ProdXShift, _person, false, prod);
 

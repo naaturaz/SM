@@ -36,27 +36,39 @@ public class Forester : Profession
 
     private void Init()
     {
-        if (_spawnersList.Count == 0)
+        FindSpawnersToMine();
+        OrderedSites = OrderSpawners(_spawnersList);
+
+        //didnt find any tree. That means tht Trees prob have not been loaded yet 
+        if (OrderedSites.Count == 0)
         {
-            FindSpawnersToMine();
-            OrderedSites = OrderSpawners(_spawnersList);
-
-            //didnt find any tree. That means tht Trees prob have not been loaded yet 
-            if (OrderedSites.Count == 0)
-            {
-                _takeABreakNow = true;
-                return;
-            }
-            _treeCenterPos = DefineMiddlePos(OrderedSites);
-
-            FinRoutePoint = OrderedSites[0].Point;
-            StillElementId = OrderedSites[0].LocMyId;
-            //moving the route point a bit towards the origin so when chopping tree its not inside the tree 
-            FinRoutePoint = Vector3.MoveTowards(FinRoutePoint, _person.Work.transform.position, MoveTowOrigin * 2.5f);
-
-            InitRoute();
+            _takeABreakNow = true;
+            return;
         }
+        _treeCenterPos = DefineMiddlePos(OrderedSites);
+
+        FinRoutePoint = OrderedSites[0].Point;
+        StillElementId = OrderedSites[0].LocMyId;
+        MarkImUsingElement();
+
+        //moving the route point a bit towards the origin so when chopping tree its not inside the tree 
+        FinRoutePoint = Vector3.MoveTowards(FinRoutePoint, _person.Work.transform.position, MoveTowOrigin * 2.5f);
+
+        InitRoute();
     }
+
+    /// <summary>
+    /// So it doest get Drestroy if depleted by other person
+    /// </summary>
+    private void MarkImUsingElement()
+    {
+        var ele =
+            Program.gameScene.controllerMain.TerraSpawnController.FindThis(StillElementId);
+
+        ele.MinedNowBy++;
+    }
+
+
 
     Vector3 DefineMiddlePos(List<VectorM> list)
     {
@@ -92,6 +104,11 @@ public class Forester : Profession
         for (int i = 0; i < all.Count; i++)
         {
             var t = all[i];
+
+            if (t == null)
+            {
+                continue;
+            }
 
             if (t.HType == H.Tree || t.HType == H.Stone || t.HType == H.Iron || t.HType == H.Gold)
             {
@@ -133,13 +150,21 @@ public class Forester : Profession
         return loc.OrderBy(a => a.Distance).ToList();
     }
 
-    TerrainRamdonSpawner GetFromKey(string keyP)
-    {
-        return Program.gameScene.controllerMain.TerraSpawnController.AllRandomObjList[keyP] ;
-    }
-
     public override void Update()
     {
+        //ReInitIfEleNull();
+
+        ////means is done at work already
+        //if (_person.Body.Location == HPers.Work && _workerTask == HPers.DoneAtWork &&
+        //     _person.Body.GoingTo == HPers.Work &&
+        //    _reInit)
+        //{
+        //    //so reaRouting happens 
+        //    _routerActive = true;
+        //    _reInit = false;
+        //    Init();
+        //}
+
         if (_takeABreakNow)
         {
             TakeABreak();
@@ -164,8 +189,18 @@ public class Forester : Profession
 
             if (_person.Work.CanTakeItOut(_person))
             {
+
+                if (CheckIfStillElementWasDestroy())
+                {
+                    //so it doesnt get a null ref in below methods 
+                    return;
+                }
+                
                 P prod = FindProdImMining(StillElementId, _person);
+                SetProdImMiningWeight();
                 base.Execute(Job.Forester.ToString(), prod);
+                RemoveWeightFromMiningEle(prod);
+                
             }
             else
             {
@@ -174,6 +209,80 @@ public class Forester : Profession
                 Debug.Log(_person.MyId +", Forester didnt work bz its Home Storage is full");
             }
         }
+    }
+
+    private void ReInitIfEleNull()
+    {
+        if (_reInit)
+        {
+            return;
+        }
+
+        var ele =
+           Program.gameScene.controllerMain.TerraSpawnController.FindThis(StillElementId);
+
+        if (ele == null)
+        {
+            //so find a new Object to mine 
+            //do the new Routing etc
+            _reInit = true;
+        }
+    }
+
+    private bool CheckIfStillElementWasDestroy()
+    {
+        if (_person == null)
+        {
+            //here is not really true but can skip all bz _person is null
+            return true;
+        }
+
+        var ele =
+            Program.gameScene.controllerMain.TerraSpawnController.FindThis(StillElementId);
+
+        //when is just on site to play animation of building 
+        if (ele == null)
+        {
+            //so skip all that and goes back to office 
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Remove the weight from the element Im mining 
+    /// </summary>
+    private void RemoveWeightFromMiningEle(P prod)
+    {
+        var ele =
+            Program.gameScene.controllerMain.TerraSpawnController.FindThis(StillElementId);
+
+        ele.MinedNowBy--;
+
+        if (!_person.Inventory.Contains(prod))
+        {
+            //means didnt pick the Prod. Problably bz its Storage is full
+            return;
+        }
+
+        ele.RemoveWeight(ProdXShift);
+    }
+
+    /// <summary>
+    /// Sets the initial weight of the element Im Mining 
+    /// </summary>
+    private void SetProdImMiningWeight()
+    {
+        var ele =
+            Program.gameScene.controllerMain.TerraSpawnController.FindThis(StillElementId);
+
+        //was recently destroyed 
+        if (ele == null)
+        {
+            
+        }
+
+        ele.SetWeight();
     }
 
     public static P FindProdImMining(string stillElementIdP, Person person)
@@ -221,6 +330,7 @@ public class Forester : Profession
     private bool _takeABreakNow;
     private float _breakDuration = 5f;
     private float startIdleTime;
+    private bool _reInit;
     /// <summary>
     /// Used so a person is asking for bridges anchors takes a break and let brdige anchors complete then can 
     /// work on it

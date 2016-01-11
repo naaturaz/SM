@@ -6,12 +6,26 @@ public class StillElement : TerrainRamdonSpawner {
     private Vector3 _max;
     private bool addCrystals;
 
+    //this is not saveLoad
+    private float _weight;//the weight of the element //
+
+    //says how many foreseter are mining this now
+    private int _minedNowBy; 
+
     List<Vector3> _anchors = new List<Vector3>();
+
+
 
     public List<Vector3> Anchors
     {
         get { return _anchors; }
         set { _anchors = value; }
+    }
+
+    public int MinedNowBy
+    {
+        get { return _minedNowBy; }
+        set { _minedNowBy = value; }
     }
 
     // Use this for initialization
@@ -104,5 +118,52 @@ public class StillElement : TerrainRamdonSpawner {
 
         //removes from List in TerraSpawnerController
         Program.gameScene.controllerMain.TerraSpawnController.RemoveStillElement(this);
+    }
+
+    /// <summary>
+    /// So a still element is not mined endessly this 
+    /// gives the elements a weight so when is depleted is deleted 
+    /// and foreseted can move to next item
+    /// </summary>
+    internal void SetWeight()
+    {
+        //was set already
+        if (_weight != 0)
+        {
+            return;
+        }
+
+
+        SetSpecWeight();
+    }
+
+    private void SetSpecWeight()
+    {
+        if (HType.ToString().Contains("Tree"))
+        {
+            _weight = Random.Range(1, 5);
+            _weight = 5;
+        }
+        else//ore. stone
+        {
+            _weight = Random.Range(150, 200);
+            _weight = 50;
+        }
+    }
+
+    /// <summary>
+    /// Called when  a Forester iis has mined 
+    /// </summary>
+    /// <param name="ProdXShift"></param>
+    internal void RemoveWeight(float ProdXShift)
+    {
+        _weight -= ProdXShift;
+        
+        //depleted
+        //mined now only by one person . The person calling this Method 
+        if (_weight < 0)
+        {
+            DestroyCool();
+        }
     }
 }
