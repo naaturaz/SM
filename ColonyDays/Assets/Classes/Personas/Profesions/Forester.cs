@@ -11,6 +11,11 @@ public class Forester : Profession
 
     public Forester(Person person, PersonFile pF)
     {
+        if (person.Name.Contains("Robert"))
+        {
+            var t = this;
+        }
+
         if (pF == null)
         {
             CreatingNew(person);
@@ -32,6 +37,9 @@ public class Forester : Profession
     {
         _person = person;
         LoadAttributes(pF.ProfessionProp);
+
+        //so the detecting CheckIfShouldReDoProf() works 
+        FindSpawnersToMine();
     }
 
     private void Init()
@@ -140,20 +148,14 @@ public class Forester : Profession
 
     public override void Update()
     {
+
+
+        if (_person.Name.Contains("Robert"))
+        {
+            var t = this;
+        }
+
         CheckIfShouldReDoProf();
-
-        //ReInitIfEleNull();
-
-        ////means is done at work already
-        //if (_person.Body.Location == HPers.Work && _workerTask == HPers.DoneAtWork &&
-        //     _person.Body.GoingTo == HPers.Work &&
-        //    _reInit)
-        //{
-        //    //so reaRouting happens 
-        //    _routerActive = true;
-        //    _reInit = false;
-        //    Init();
-        //}
 
         if (_takeABreakNow)
         {
