@@ -187,9 +187,17 @@ public class ExportImport
         return ReturnPrice(prod) * amt;
     }
 
-    float ReturnPrice(P prod)
+    public float ReturnDensityKGM3(P prod)
     {
-        return _prodSpecs.Find(a => a.Product == prod).Price;
+        var prodFound = _prodSpecs.Find(a => a.Product == prod);
+
+        if (prodFound == null)
+        {
+            Debug.Log("ReturnDensityKGM3 asked of not found prod:" + prod);
+            return 0;
+        }
+
+        return _prodSpecs.Find(a => a.Product == prod).Density;
     }    
     
     public float ReturnProduceFactor(P prod)
@@ -202,6 +210,18 @@ public class ExportImport
             return 0;
         }
         return prodFound.ProduceFactor;
+    }   
+ 
+    public float ReturnPrice(P prod)
+    {
+        var prodFound = _prodSpecs.Find(a => a.Product == prod);
+
+        if (prodFound == null)
+        {
+            Debug.Log("ReturnPrice asked of not found prod:" + prod);
+            return 0;
+        }
+        return prodFound.Price;
     }
 }
 

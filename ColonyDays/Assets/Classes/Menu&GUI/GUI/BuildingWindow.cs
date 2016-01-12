@@ -369,9 +369,16 @@ public class BuildingWindow : GUIElement {
 
         var list = _building.ShowProductsOfBuild();
         DisplayProducts(list, _iniPosForProdList, Root.orderShowGenBtn);
+
+        ShowProductDetail();
     }
 
-    void DisplayProducts(List<string> list, Vector3 iniPosP, string root)
+    private void ShowProductDetail()
+    {
+        _displayProdInfo.text = _building.CurrentProd.Details;
+    }
+
+    void DisplayProducts(List<ProductInfo> list, Vector3 iniPosP, string root)
     {
         for (int i = 0; i < list.Count; i++)
         {
@@ -379,10 +386,10 @@ public class BuildingWindow : GUIElement {
         }
     }
 
-    void Display1String(int i, string order, Vector3 iniPosP, string root)
+    void Display1String(int i, ProductInfo pInfo, Vector3 iniPosP, string root)
     {
         var orderShow = OrderShow.Create(root, _products.transform);
-        orderShow.ShowToSetCurrentProduct(order, i);
+        orderShow.ShowToSetCurrentProduct(pInfo);
 
         orderShow.Reset(i, _iniPosForProdList);
 
@@ -573,5 +580,7 @@ public class BuildingWindow : GUIElement {
     void SetCurrentProduct(string product)
     {
         _building.SetProductToProduce(product);
+
+        ShowProductDetail();
     }
 }

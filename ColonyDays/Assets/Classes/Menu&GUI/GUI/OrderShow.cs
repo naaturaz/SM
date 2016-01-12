@@ -75,20 +75,21 @@ public class OrderShow : GUIElement
         _closeBtn.onClick.AddListener(() => Program.MouseClickListenerSt("AddOrder.Remove."+order.ID));
     }
 
-    public void ShowToSetCurrentProduct(string prod, int IdP)
+    public void ShowToSetCurrentProduct(ProductInfo pInfo)
     {
         Start();
 
-        _title.text = prod;
+        _title.text = pInfo.ProductLine;
         transform.position = iniPos;
-        transform.name = _title.text + " | " + IdP;
+        transform.name = _title.text + " | " + pInfo.Id;
 
         if (_thisBtn == null)
         {
             return;
         }
 
-        _thisBtn.onClick.AddListener(() => Program.MouseClickListenerSt("BuildingForm.Set.Current.Prod." + prod +"."+ IdP));
+        _thisBtn.onClick.AddListener(() => Program.MouseClickListenerSt("BuildingForm.Set.Current.Prod." 
+            + pInfo.Product +"."+ pInfo.Id));
     }
 
     /// <summary>

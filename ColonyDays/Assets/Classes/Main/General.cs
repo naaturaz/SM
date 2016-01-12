@@ -252,6 +252,16 @@ public class General : MonoBehaviour
         _id = Program.UNIVERSALID;
 	}
 
+    /// <summary>
+    /// This is a static function not related to General ID
+    /// </summary>
+    /// <returns></returns>
+    public static int GiveMeAutoNumber()
+    {
+        Program.UNIVERSALID++;
+        return Program.UNIVERSALID;
+    }
+
     protected static int GiveRandom(int min, int max)
     {
         min = Random.Range(min, max);

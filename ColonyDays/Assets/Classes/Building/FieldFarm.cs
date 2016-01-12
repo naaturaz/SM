@@ -30,7 +30,7 @@ public class FieldFarm : Farm
     public FieldFarm(Structure building)
     {
         _building = building;
-        _plantType = building.CurrentProd;
+        _plantType = building.CurrentProd.Product;
         Init();
     }
 

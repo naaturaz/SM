@@ -440,7 +440,7 @@ public class Building : General, Iinfo
     /// Will show all the products this Building can produce 
     /// </summary>
     /// <returns></returns>
-    public List<string> ShowProductsOfBuild()
+    public List<ProductInfo> ShowProductsOfBuild()
     {
         return BuildingPot.Control.ProductionProp.ReturnProducts(HType);
     }
@@ -456,12 +456,11 @@ public class Building : General, Iinfo
         //ex Corn.0 
         //0 is the corresponding item in the list 
         var split = newProd.Split('.');
-        int index = int.Parse(split[1]);
-        var foundProd = BuildingPot.Control.ProductionProp.ReturnExactProduct(HType, index);
+        int id = int.Parse(split[1]);
+        var foundProd = BuildingPot.Control.ProductionProp.ReturnExactProduct(id);
         CurrentProd = foundProd;
-        Debug.Log("now Prod curr: "+CurrentProd +" on:"+MyId);
+        Debug.Log("now Prod curr: "+CurrentProd.Product +" on:"+MyId);
     }
-
 
     #endregion
 
@@ -1091,14 +1090,14 @@ public class Building : General, Iinfo
     private List<string> _peopleDict = new List<string>(); 
     private Family[] _families;//the family or famililes living in a house (if is 2 floors)
 
-    private P _currentProd = P.None;//product currently is being created on this building 
+    private ProductInfo _currentProd ;//product currently is being created on this building 
     private int _rationsPay = 2;//the pay in rations to the workers of a building 
     private int _dollarsPay = 5;//in dollars 
 
     private int _confort;//the confort of a house
     private BookedHome _bookedHome;//will hold the information if a
 
-    public P CurrentProd
+    public ProductInfo CurrentProd
     {
         get { return _currentProd; }
         set { _currentProd = value; }
@@ -1876,7 +1875,7 @@ public class Building : General, Iinfo
         {
             return pass;
         }
-        return CurrentProd;
+        return CurrentProd.Product;
     }
     
     /// <summary>
@@ -1931,7 +1930,7 @@ public class Building : General, Iinfo
 
         if (doIHaveInput && hasThisBuildRoom)
         {
-            Inventory.Add(CurrentProd, amt);
+            Inventory.Add(CurrentProd.Product, amt);
         }
         else if (!hasThisBuildRoom)
         {
@@ -1953,7 +1952,7 @@ public class Building : General, Iinfo
     /// </summary>
     void AddEvacuationOrder()
     {
-        Order t = new Order(CurrentProd, "", MyId);
+        Order t = new Order(CurrentProd.Product, "", MyId);
         //BuildingPot.Control.Dispatch1.AddEvacuationOrder(t);
         AddToClosestWheelBarrowAsOrder(t, H.Evacuation);
     }
@@ -2024,7 +2023,7 @@ public class Building : General, Iinfo
     public List<P> OrderedListOfInputNeeded()
     {
         var list = Inventory.InventItems.OrderByDescending(a => a.Amount).ToList();
-        var ingredientsNeeded = BuildingPot.Control.ProductionProp.ReturnIngredients(CurrentProd);
+        var ingredientsNeeded = BuildingPot.Control.ProductionProp.ReturnIngredients(CurrentProd.Product);
 
         List<P> res = new List<P>();
 
@@ -2062,7 +2061,7 @@ public class Building : General, Iinfo
     /// </summary>
     void CheckIfOrdersAreNeeded()
     {
-        var rawsOnNeed = BuildingPot.Control.ProductionProp.ReturnIngredients(CurrentProd);
+        var rawsOnNeed = BuildingPot.Control.ProductionProp.ReturnIngredients(CurrentProd.Product);
 
         if (rawsOnNeed == null)
         {
@@ -2487,7 +2486,7 @@ public class Building : General, Iinfo
     /// <returns></returns>
     int AmountOfAnimalFactor()
     {
-        var animalType = CurrentProd;
+        var animalType = CurrentProd.Product;
 
         if (animalType == P.Chicken)
         {

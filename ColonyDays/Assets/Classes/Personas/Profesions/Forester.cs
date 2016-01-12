@@ -305,7 +305,7 @@ public class Forester : Profession
                 return P.None;
             }
 
-            return person.Work.CurrentProd;
+            return person.Work.CurrentProd.Product;
         }
         
         return ProcessHTypeSpawnerIntoProduct(ele.HType);

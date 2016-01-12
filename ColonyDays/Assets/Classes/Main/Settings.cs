@@ -1,7 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Settings : MonoBehaviour {
+public class Settings : MonoBehaviour
+{
+
+    //imperial or metric
+    private static char _unitSystem = 'm';//'i'
 
     public static bool ISPAUSED;
 
@@ -22,6 +26,45 @@ public class Settings : MonoBehaviour {
         get { return _isMusicOn; }
         set { _isMusicOn = value; }
     }
+
+    public static char UnitSystem
+    {
+        get { return _unitSystem; }
+        set { _unitSystem = value; }
+    }
+
+    public static string ReturnStringInSystem(string param)
+    {
+        if (param == "kg")
+        {
+            if (UnitSystem == 'm')
+            {
+                return param;
+            }
+            return "lbs";
+        }
+        return "nothing from Settings.cs";
+    }
+
+    public static string WeightUnit()
+    {
+        if (UnitSystem == 'm')
+        {
+            return "kg";
+        }
+        return "lb";
+    }  
+    
+    public static string DensityUnit()
+    {
+        if (UnitSystem == 'm')
+        {
+            return "kg/m3";
+        }
+        return "lb/ft3";
+    }
+
+
 
     public static bool ISToAskB4Exit = true;
 

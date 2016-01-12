@@ -267,7 +267,7 @@ public class Profession  {
             return 0;
         }
 
-        var prod = _person.Work.CurrentProd;
+        var prod = _person.Work.CurrentProd.Product;
         if (StillElementId != "")
         {
             prod = Forester.FindProdImMining(StillElementId, _person);
@@ -792,8 +792,8 @@ public class Profession  {
 
         if (_person.Work.CanTakeItOut(_person))
         {
-            _person.ExchangeInvetoryItem(_person.Work, _person, _person.Work.CurrentProd, ProdXShift);
-            prodCarrying = _person.Work.CurrentProd;
+            _person.ExchangeInvetoryItem(_person.Work, _person, _person.Work.CurrentProd.Product, ProdXShift);
+            prodCarrying = _person.Work.CurrentProd.Product;
             amtCarrying = ProdXShift;
         }
     }  
@@ -821,7 +821,7 @@ public class Profession  {
         {
             prodCarrying = prod;
         }
-        else prodCarrying = _person.Work.CurrentProd;    
+        else prodCarrying = _person.Work.CurrentProd.Product;    
         
         amtCarrying = ProdXShift;
     }
