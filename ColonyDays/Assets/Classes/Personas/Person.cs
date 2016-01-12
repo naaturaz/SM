@@ -686,6 +686,18 @@ public class Person : General
         CheckHappiness();
         //DidIDie();
         CheckIfEmmigrate();
+        CheckIfInSchool();
+    }
+
+    /// <summary>
+    /// If is in school will add to the Person Another year on school
+    /// </summary>
+    private void CheckIfInSchool()
+    {
+        if (Work!=null && Work.HType.ToString().Contains("School"))
+        {
+            YearsOfSchool++;
+        }
     }
 
     /// <summary>

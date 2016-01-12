@@ -283,4 +283,6 @@ public class Construction
     public H HType;
     public int Priority;
     public Vector3 Position;
+
+    public Construction() { }
 }
