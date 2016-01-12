@@ -22,6 +22,7 @@ public class BuildingWindow : GUIElement {
     private Rect _upgBtnRect;
 
     private GameObject _ordBtn;//the btn for orders
+    private GameObject _prdBtn;//the btn for 
 
     //tabs
     private GameObject _general;
@@ -101,8 +102,10 @@ public class BuildingWindow : GUIElement {
         var genBtn = GetChildThatContains(H.Gen_Btn).transform;
         var invBtn = GetChildThatContains(H.Inv_Btn).transform;
         _ordBtn = GetChildThatContains(H.Ord_Btn);
+
         var upgBtn = GetChildCalled(H.Upg_Btn).transform;
         var prdBtn = GetChildCalled(H.Prd_Btn).transform;
+        _prdBtn = GetChildThatContains(H.Prd_Btn);
 
 
         _genBtnRect = GetRectFromBoxCollider2D(genBtn);
@@ -140,6 +143,7 @@ public class BuildingWindow : GUIElement {
 
         transform.position = iniPos;
         HandleOrdBtn();
+        HandlePrdBtn();
 
         //in case were inactive 
         _upg_Mat_Btn.SetActive(true);
@@ -152,8 +156,20 @@ public class BuildingWindow : GUIElement {
         Mark1stCheckBox();
     }
 
-
-
+    /// <summary>
+    /// Bz Houses, Gov, Trade Structures, Ways , etc dont have a prod the prod tab must be 
+    /// hidden
+    /// 
+    /// 
+    /// </summary>
+    private void HandlePrdBtn()
+    {
+        //todo add all houses, trade, gov as Cointned in their Enum Cat
+        if (_building.HType.ToString().Contains("House") || _building.Category == Ca.Way)
+        {
+            _prdBtn.SetActive(false);
+        }
+    }
 
     /// <summary>
     /// Will hide it if not Dock or ...

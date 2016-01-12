@@ -140,6 +140,7 @@ public enum P
     Rum,
     Wine,
     Ore,
+    Coin,
 
 }
 
@@ -192,7 +193,7 @@ public enum H
     //prod F5
     Brick, Carpintery, Cigars, Mill, Slat, Tilery,
     //industry F6
-    Cloth, GunPowder, Paper, PrinterSmall, PrinterBig, Silk, SugarMill,
+    Cloth, GunPowder, Paper, Printer, CoinStamp, Silk, SugarMill,
     //Trade F7
     Dock, DryDock, Supplier, StorageSmall, StorageMed, StorageBig, StorageBigTwoDoors, StorageExtraBig,
     //gov F8
@@ -361,7 +362,7 @@ public enum StProd //for structures game structure.cs
 }
 
 public enum StInd
-{ Cloth, GunPowder, Paper, PrinterSmall, PrinterBig, Silk, SugarMill, }
+{ Cloth, GunPowder, Paper, Printer, CoinStamp, Silk, SugarMill, }
 
 public enum StTrade //for structures game structure.cs 
 {

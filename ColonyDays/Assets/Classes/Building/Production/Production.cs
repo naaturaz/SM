@@ -105,9 +105,12 @@ public class Production  {
 
         Fabric();
 
+        Coins();
         PaperNewsAndBook();
         Sugar();
     }
+
+
 
     void InputProdCheckAndAdd(ProductInfo pInfo)
     {
@@ -256,7 +259,26 @@ public class Production  {
     }
 
 
+    /// <summary>
+    /// My Secret Weapon
+    /// 
+    /// Will have to have a lot of Req to be able to build
+    /// </summary>
+    private void Coins()
+    {
+        InputElement go = new InputElement(P.Gold, 1);
+        InputElement si = new InputElement(P.Silver, 1);
 
+        InputElement go2 = new InputElement(P.Silver, 0.5f);
+
+        List<InputElement> prodForm1 = new List<InputElement>() { si, _eleCoalComb };
+        List<InputElement> prodForm2 = new List<InputElement>() { si, go2, _eleCoalComb };
+        List<InputElement> prodForm3 = new List<InputElement>() { go, _eleCoalComb };
+
+        InputProdCheckAndAdd(new ProductInfo(P.Coin, prodForm1, H.CoinStamp));
+        InputProdCheckAndAdd(new ProductInfo(P.Coin, prodForm2, H.CoinStamp));
+        InputProdCheckAndAdd(new ProductInfo(P.Coin, prodForm3, H.CoinStamp));
+    }
 
     private void PaperNewsAndBook()
     {
@@ -278,8 +300,8 @@ public class Production  {
         InputElement paper1 = new InputElement(P.Paper, 10);
         List<InputElement> paperForm1 = new List<InputElement>() { paper1, eleWoodComb};
         List<InputElement> paperForm2 = new List<InputElement>() { paper1, eleCoalComb};
-        InputProdCheckAndAdd(new ProductInfo(P.PaperNews, paperForm1, H.PrinterSmall));
-        InputProdCheckAndAdd(new ProductInfo(P.PaperNews, paperForm2, H.PrinterSmall));
+        InputProdCheckAndAdd(new ProductInfo(P.PaperNews, paperForm1, H.Printer));
+        InputProdCheckAndAdd(new ProductInfo(P.PaperNews, paperForm2, H.Printer));
 
 
         //books
@@ -287,8 +309,8 @@ public class Production  {
         InputElement leather = new InputElement(P.Leather, 1);
         List<InputElement> bookForm1 = new List<InputElement>() { paper2, leather, eleWoodComb };
         List<InputElement> bookForm2 = new List<InputElement>() { paper2, leather, eleCoalComb };
-        InputProdCheckAndAdd(new ProductInfo(P.Books, bookForm1, H.PrinterSmall));
-        InputProdCheckAndAdd(new ProductInfo(P.Books, bookForm2, H.PrinterSmall));
+        InputProdCheckAndAdd(new ProductInfo(P.Books, bookForm1, H.Printer));
+        InputProdCheckAndAdd(new ProductInfo(P.Books, bookForm2, H.Printer));
     }
 
 

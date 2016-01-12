@@ -429,7 +429,7 @@ public class Root : MonoBehaviour
 
     enum WoodAClassyDoor
     {
-        Cloth, PrinterSmall, PrinterBig, Carpintery, Cigars, Mill, Slat,
+        Cloth, Printer, CoinStamp, Carpintery, Cigars, Mill, Slat,
         Dock, DryDock, Supplier,
         StorageSmall, StorageMed, StorageBig, StorageBigTwoDoors, StorageExtraBig,
 
@@ -511,8 +511,8 @@ public class Root : MonoBehaviour
         buildsRoot.Add(H.Cloth, "Prefab/Building/Industry/Cloth");
         buildsRoot.Add(H.GunPowder, "Prefab/Building/Industry/GunPowder");
         buildsRoot.Add(H.Paper, "Prefab/Building/Industry/Paper");
-        buildsRoot.Add(H.PrinterSmall, "Prefab/Building/Industry/PrinterSmall");
-        buildsRoot.Add(H.PrinterBig, "Prefab/Building/Industry/PrinterBig");
+        buildsRoot.Add(H.Printer, "Prefab/Building/Industry/Printer");
+        buildsRoot.Add(H.CoinStamp, "Prefab/Building/Industry/CoinStamp");
         buildsRoot.Add(H.Silk, "Prefab/Building/Industry/Silk");
         buildsRoot.Add(H.SugarMill, "Prefab/Building/Industry/SugarMill");
 
