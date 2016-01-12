@@ -53,6 +53,8 @@ public class Program : MonoBehaviour {
     // Use this for initialization
 	void Start ()
 	{
+	    ProfilerHere();
+
         //loads main menu
         MyScreen1.Start();
 
@@ -76,6 +78,16 @@ public class Program : MonoBehaviour {
 
 
 	}
+
+    private void ProfilerHere()
+    {
+        // write FPS to "profilerLog.txt"
+        Profiler.logFile = Application.persistentDataPath + "/profilerLog.txt";
+
+        // write Profiler Data to "profilerLog.txt.data"                                                                                        
+        Profiler.enableBinaryLog = true;
+        Profiler.enabled = true;
+    }
 
     
     void Update()

@@ -40,7 +40,7 @@ public class Forester : Profession
         OrderedSites = OrderSpawners(_spawnersList);
 
         //didnt find any tree. That means tht Trees prob have not been loaded yet 
-        if (OrderedSites.Count == 0)
+        if (OrderedSites.Count == 0 || _person.FoodSource == null)
         {
             _takeABreakNow = true;
             return;
