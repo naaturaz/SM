@@ -14,9 +14,6 @@ public class Beef : Animal
 	    //SetRandomIdleStart();
     }
 
-
-
-
     /// <summary>
     /// Intended to be used For the first load of people spawned
     /// </summary>
@@ -62,10 +59,5 @@ public class Beef : Animal
         }
     }
 
-    private void YieldGoods()
-    {
-        Spawner.Inventory.Add(P.Beef, 100);
-        Spawner.Inventory.Add(P.Leather, 2);
-//        Debug.Log("Yielded Goods");
-    }
+
 }

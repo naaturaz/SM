@@ -288,6 +288,14 @@ public class Structure : StructureParent
         }
     }
 
+    public void ChangeProduct(P newProd)
+    {
+        if (_farm != null)
+        {
+            var fieldd = (FieldFarm) _farm;
+            fieldd.ChangeProduct(newProd);
+        }
+    }
 
 #endregion
 

@@ -451,15 +451,30 @@ public class Building : General, Iinfo
     /// <param name="newProd"></param>
     public void SetProductToProduce(string newProd)
     {
-        //the newProd comes with the name of the prod a . and a number that is the index of the 
-        //list of where this prod is 
-        //ex Corn.0 
-        //0 is the corresponding item in the list 
+        //the newProd comes with the name of the prod a . and a number that is the ID of the ProductInfo 
         var split = newProd.Split('.');
         int id = int.Parse(split[1]);
         var foundProd = BuildingPot.Control.ProductionProp.ReturnExactProduct(id);
         CurrentProd = foundProd;
         Debug.Log("now Prod curr: "+CurrentProd.Product +" on:"+MyId);
+
+        AddressNewProductOnBuilding();
+    }
+
+    /// <summary>
+    /// So far used by: FieldFarm, and AnimalFarm
+    /// </summary>
+    private void AddressNewProductOnBuilding()
+    {
+        if (MyId.Contains("FieldFarm"))
+        {
+            var st = (Structure) this;
+            st.ChangeProduct(CurrentProd.Product);
+        }
+        else if (MyId.Contains("AnimalFarm"))
+        {
+            RedoAnimalFarmIfNeeded();
+        }
     }
 
     #endregion
@@ -1091,6 +1106,7 @@ public class Building : General, Iinfo
     private Family[] _families;//the family or famililes living in a house (if is 2 floors)
 
     private ProductInfo _currentProd ;//product currently is being created on this building 
+    private ProductInfo _oldProd ;//product currently is being created on this building 
     private int _rationsPay = 2;//the pay in rations to the workers of a building 
     private int _dollarsPay = 5;//in dollars 
 
@@ -1153,6 +1169,8 @@ public class Building : General, Iinfo
         SetHouseConfort();
 
         InitBasePays();
+
+        _oldProd = _currentProd;
     }
 
     #region Salary
@@ -2393,7 +2411,6 @@ public class Building : General, Iinfo
             {
                 InitAnimalFarm();
             }
-        
         }
     }
 
@@ -2415,6 +2432,20 @@ public class Building : General, Iinfo
         {
             SpawnFarmAnimals(H.XLarge);
         } 
+    }
+
+    void RedoAnimalFarmIfNeeded()
+    {
+        if (_oldProd != CurrentProd)
+        {
+            for (int i = 0; i < _animals.Count; i++)
+            {
+                _animals[i].YieldGoods();
+                _animals[i].Destroy();
+            }
+            _animals.Clear();
+            InitAnimalFarm();
+        }
     }
 
     private void SpawnFarmAnimals(H size)
@@ -2448,9 +2479,28 @@ public class Building : General, Iinfo
 
         for (int i = 0; i < amt; i++)
         {
-            Animal t = Beef.CreateBeef(iniPos, this);
+            Animal t = SpawnSpecificAnimal(iniPos);
             _animals.Add(t);
         }
+    }
+
+    Animal SpawnSpecificAnimal(Vector3 iniPos)
+    {
+        Animal t = null;
+        if (CurrentProd.Product == P.Beef)
+        {
+            t = Beef.CreateBeef(iniPos, this);
+        }  
+        else if (CurrentProd.Product == P.Chicken)
+        {
+            t = Beef.CreateBeef(iniPos, this);
+        } 
+        else if (CurrentProd.Product == P.Pork)
+        {
+            t = Beef.CreateBeef(iniPos, this);
+        }
+
+        return t;
     }
 
     /// <summary>

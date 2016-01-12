@@ -66,4 +66,10 @@ public class Animal : General
         myAnimator.Play("Idle", 0, Random.Range(0,2));
     }
 
+    public void YieldGoods()
+    {
+        Spawner.Inventory.Add(P.Beef, 100);
+        Spawner.Inventory.Add(P.Leather, 2);
+        //        Debug.Log("Yielded Goods");
+    }
 }

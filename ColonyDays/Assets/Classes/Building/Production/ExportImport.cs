@@ -106,12 +106,12 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Fabric, 100, 400, 20));
         _prodSpecs.Add(new ProdSpec(P.Cloth, 120, 380, 20));
         _prodSpecs.Add(new ProdSpec(P.Sail, 150, 200, 15));
-        _prodSpecs.Add(new ProdSpec(P.String, 120, 300, 15));
+        _prodSpecs.Add(new ProdSpec(P.String, 120, 321, 15));
 
 
         _prodSpecs.Add(new ProdSpec(P.Paper, 150, 192, 30));
         _prodSpecs.Add(new ProdSpec(P.PaperNews, 50, 292, 50));
-        _prodSpecs.Add(new ProdSpec(P.Books, 300, 500, 5));
+        _prodSpecs.Add(new ProdSpec(P.Books, 300, 502, 5));
         _prodSpecs.Add(new ProdSpec(P.Silk, 150, 1300, 5));
     }
 

@@ -47,6 +47,9 @@ public class FieldFarm : Farm
         
     }
 
+    /// <summary>
+    /// Here depeding on the type of plat will find the seed points 
+    /// </summary>
     private void DefineSpaceBtnPlants()
     {
         _spaceBtwPlants =  Mathf.Abs(m.SubDivide.XSubStep);
@@ -185,5 +188,18 @@ public class FieldFarm : Farm
         }
 
         _building.DestroyFarm();
+    }
+
+    /// <summary>
+    /// Called from Building when a Product was changed
+    /// </summary>
+    public void ChangeProduct(P newProd)
+    {
+        if (newProd != _plantType)
+        {
+            //Will harvest all and will make _farm null in Structure
+            //Structure will handle the rest
+            HarvestNowTheField();
+        }
     }
 }
