@@ -219,46 +219,23 @@ public class Profession  {
         {
             return;
         }
-        var age = AgeFactor();
         
-        var genre = ReturnGenreVal();
         var yearSchool = _person.YearsOfSchool;
         var produceFac = GetProduceFactor();
 
         //Grown man will prod 4.5KG of wood with 10 year of school
         //              (10 + 10     + 30        + ) * 0.09         = 4.5KG of Wood per shift
         //              (10 + 10     + 30        + ) * 0.008         = 0.4KG of Weapons per shift
-        ProdXShift = (age + genre + yearSchool) * produceFac/1000;
+        ProdXShift = (_person.HowMuchICanCarry() + yearSchool) * produceFac/1000;
+
+        //if is zero then will do this//is zero becasue one factor was zero. most likely the produceFac
+        //for builders there is not produceFac
+        if (ProdXShift == 0)
+        {
+            ProdXShift = (_person.HowMuchICanCarry() + yearSchool);
+        }
     }
 
-    public float HowMuchICanCarry()
-    {
-        var age = AgeFactor();
-        var genre = ReturnGenreVal();
-
-        return age + genre;
-    }
-
-    int AgeFactor()
-    {
-        if (_person.Age > 10 && _person.Age <= 17)
-        {
-            return 8;
-        }
-        if (_person.Age > 17 && _person.Age <= 40)
-        {
-            return 20;
-        }
-        if (_person.Age >= 41 && _person.Age <= 60)
-        {
-            return 16;
-        }
-        if (_person.Age >= 61 && _person.Age <= 80)
-        {
-            return 12;
-        }
-        return 2;
-    }
 
     float GetProduceFactor()
     {
@@ -283,14 +260,7 @@ public class Profession  {
         return res;
     }
 
-    int ReturnGenreVal()
-    {
-        if (_person.Gender == H.Male)
-        {
-            return 20;
-        }
-        return 16;
-    }
+ 
 
     /// <summary>
     /// Used to create a Dummy profession instance to save all attrb to file 

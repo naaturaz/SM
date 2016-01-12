@@ -301,7 +301,7 @@ public class Dispatch
             Order temp = new Order();
             temp = Order.Copy(order);
 
-            temp.Amount = DispatchAmount(order.Amount);
+            temp.Amount = DispatchAmount(person, order.Amount);
             temp.DestinyBuild = destinFoodSrc;
             var sourceBuild = Brain.GetBuildingFromKey(temp.SourceBuild);
 
@@ -335,7 +335,7 @@ public class Dispatch
             temp = Order.Copy( order);
             OrderFound(order);
 
-            temp.Amount = DispatchAmount(order.Amount);
+            temp.Amount = DispatchAmount(person, order.Amount);
             temp.SourceBuild = foodSrc;
             return temp;
         }
@@ -346,23 +346,22 @@ public class Dispatch
         return null;        
     }
 
-
-
     /// <summary>
-    /// Will return the Dispatch amount based on the type of person carrying and the volume
-    /// of the product 
+    /// Will return the Dispatch amount based on the type of person carrying 
+    /// 
+    /// Will carry so many KG of that prod bz the person can do it 
     /// </summary>
     /// <returns></returns>
-    float DispatchAmount(float amtOnOrder)
+    float DispatchAmount(Person pers, float amtOnOrder)
     {
-        if (amtOnOrder < 500)
+        //not need for check for null bz this is called from WheelBarrow and Docker
+        if (amtOnOrder < pers.HowMuchICanCarry())
         {
-            //the 25Kg is to cover the last bit
+            //the 5Kg is to cover the last bit
             //is the way that removes the order
-            return amtOnOrder + 25f;
+            return amtOnOrder + 5f;
         }
-
-        return 500;
+        return pers.HowMuchICanCarry();
     }
 
     /// <summary>

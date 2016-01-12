@@ -1311,7 +1311,7 @@ public class Person : General
             return;
         }
 
-        int amt = HowMuchICanCarry(item);
+        var amt = HowMuchICanCarry();
         
         ExchangeInvetoryItem(FoodSource, this, item, amt);
         //UnityEngine.Debug.Log(MyId+" took food:"+item);
@@ -1380,17 +1380,47 @@ public class Person : General
 
     /// <summary>
     /// How much phisically a person can carry. Like goods .lIke Rice
+    /// 
+    /// Age + Genre values 
     /// </summary>
     /// <param name="item"></param>
-    /// <returns></returns>
-    private int HowMuchICanCarry(P item)
+    public float HowMuchICanCarry()
     {
-        if (Age < 21)
-        {
-            return 8 * Age;
-        }
+        var age = AgeFactor();
+        var genre = ReturnGenreVal();
 
-        return 200;
+        return age + genre;
+    }
+
+
+    int ReturnGenreVal()
+    {
+        if (Gender == H.Male)
+        {
+            return 15;
+        }
+        return 10;
+    }
+
+    int AgeFactor()
+    {
+        if (Age > 10 && Age <= 17)
+        {
+            return 3;
+        }
+        if (Age > 17 && Age <= 40)
+        {
+            return 15;
+        }
+        if (Age >= 41 && Age <= 60)
+        {
+            return 11;
+        }
+        if (Age >= 61 && Age <= 80)
+        {
+            return 8;
+        }
+        return 2;
     }
 
     /// <summary>
