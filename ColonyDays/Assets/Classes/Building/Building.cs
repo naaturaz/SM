@@ -1941,7 +1941,7 @@ public class Building : General, Iinfo
     /// Use for plants lie Corn to add produced ammt
     /// </summary>
     /// <param name="amt"></param>
-    internal void Produce(int amt)
+    internal void Produce(float amt)
     {
         var doIHaveInput = DoBuildHaveRawResources();
         var hasThisBuildRoom = DoWeHaveCapacityInThisBuilding();
@@ -2008,7 +2008,7 @@ public class Building : General, Iinfo
     /// has input enough or not 
     /// </summary>
     /// <returns></returns>
-    bool DoBuildHaveRawResources()
+    public bool DoBuildHaveRawResources()
     {
         return BuildingPot.Control.ProductionProp.DoIHaveEnoughOnInvToProdThis(this);
     }
@@ -2440,7 +2440,8 @@ public class Building : General, Iinfo
         {
             for (int i = 0; i < _animals.Count; i++)
             {
-                _animals[i].YieldGoods();
+                //THEY WONT yield anything bz in theory
+                //that meat used to create the new Farm is from the old
                 _animals[i].Destroy();
             }
             _animals.Clear();

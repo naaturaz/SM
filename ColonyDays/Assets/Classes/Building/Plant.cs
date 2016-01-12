@@ -13,7 +13,7 @@ public class Plant : MonoBehaviour
     private int _lifeDuration = 120;//120 is for corn 
 
     //the factor of production a carrots will produce less as a corn. in a plant in kg
-    private int _productionFactor = 10;
+    private float _productionFactor = 10;
 
     //when was seeded
     private MDate _seedDate;
@@ -77,8 +77,16 @@ public class Plant : MonoBehaviour
     private void DefineRottingDays()
     {
         _daysToRotten = 30;
+
+        if (_type == P.Coconut)
+        {
+            _daysToRotten = 120;
+        }
     }
 
+    /// <summary>
+    /// Always in days
+    /// </summary>
     void DefineLifeDuration()
     {
         if (_type == P.Bean)
@@ -101,6 +109,9 @@ public class Plant : MonoBehaviour
     {
         _growGen = Random.Range(90, 100);
         DetermineSeedDate();
+
+        //sets the Production factor of this plant 
+        _productionFactor = Program.gameScene.ExportImport1.ReturnProduceFactor(_type);
     }
 
     private void DetermineSeedDate()
@@ -156,7 +167,7 @@ public class Plant : MonoBehaviour
 
 
 
-    private int checkEverySoManyFrames = 120;
+    private int checkEverySoManyFrames = 240;
     private int count;
 
     void FixedUpdate()
@@ -227,10 +238,7 @@ public class Plant : MonoBehaviour
         }
 
         var amt = WhatIProduce();
-        //_fieldFarm.AddProducedByPlant(amt);
-
         _building.Produce(amt);
-
         DestroyPlant();
     }
 
@@ -251,10 +259,11 @@ public class Plant : MonoBehaviour
     /// The amount this plant produce 
     /// </summary>
     /// <returns></returns>
-    private int WhatIProduce()
+    private float WhatIProduce()
     {
+        //how much grew
         var localScale = gameObject.transform.localScale;
-        return  (int)(localScale.y *10) * _productionFactor;
+        return  localScale.y * 10 * _productionFactor;
     }
 }
 

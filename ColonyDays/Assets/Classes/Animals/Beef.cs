@@ -2,7 +2,6 @@
 
 public class Beef : Animal
 {
-    private int _lastYearYielded;//says the last year Yielded for the Farm some Goods
 
 	// Use this for initialization
 	void Start ()
@@ -37,26 +36,6 @@ public class Beef : Animal
 	    base.FixedUpdate();
 
 	    CheckIfYield();
-    }
-
-    private void CheckIfYield()
-    {
-        //yields on Dec
-        if (_lastYearYielded != Program.gameScene.GameTime1.Year && Program.gameScene.GameTime1.Month1 == 12)
-        {
-            _lastYearYielded = Program.gameScene.GameTime1.Year;
-
-            //if farm Inventory is not full
-            if (!Spawner.Inventory.IsFull())
-            {
-                YieldGoods();
-            }
-            else
-            {
-                //todo Notify
-                Debug.Log("Not Producing meat(beef) bz Inv is full:"+Spawner.MyId);
-            }
-        }
     }
 
 

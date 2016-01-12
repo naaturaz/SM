@@ -423,6 +423,33 @@ public class Production  {
             return true;
         }
         return false;
+    }  
+    
+    public bool DoIHaveEnoughOnInvToProdThis(Building building, P prod)
+    {
+        var ingredients = ReturnIngredients(prod);
+
+        //this is for buildings tht Produce and dont need any input 
+        if (ingredients == null)
+        {
+            return true;
+        }
+
+        int covered = 0;
+
+        for (int i = 0; i < ingredients.Count; i++)
+        {
+            if (building.Inventory.IsHasEnoughToCoverThisIngredient(ingredients[i]))
+            {
+                covered++;
+            }
+        }
+
+        if (covered == ingredients.Count)
+        {
+            return true;
+        }
+        return false;
     }
 
 #endregion

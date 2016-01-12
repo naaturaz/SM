@@ -3,8 +3,11 @@ using UnityEngine;
 
 public class Animal : General
 {
-
     private Building _spawner;//the building spawn me. where I belong to
+
+
+    private int _lastYearYielded;//says the last year Yielded for the Farm some Goods
+
 
     public Building Spawner
     {
@@ -66,10 +69,69 @@ public class Animal : General
         myAnimator.Play("Idle", 0, Random.Range(0,2));
     }
 
+    /// <summary>
+    /// Is multipliued by the amout of peopel working there so if non is working now will be 
+    /// Yieled 
+    /// </summary>
     public void YieldGoods()
     {
-        Spawner.Inventory.Add(P.Beef, 100);
-        Spawner.Inventory.Add(P.Leather, 2);
-        //        Debug.Log("Yielded Goods");
+        if (_spawner.CurrentProd.Product == P.Beef)
+        {
+            AddToBuildingInvIfHasRawResourceToProduceIt(P.Beef, 10 * Spawner.PeopleDict.Count/ 4);
+            AddToBuildingInvIfHasRawResourceToProduceIt(P.Leather, 1 * Spawner.PeopleDict.Count/ 4);
+        }
+        if (_spawner.CurrentProd.Product == P.Chicken)
+        {
+            AddToBuildingInvIfHasRawResourceToProduceIt(P.Chicken, 5 * Spawner.PeopleDict.Count/ 4);
+            AddToBuildingInvIfHasRawResourceToProduceIt(P.Egg, 10 * Spawner.PeopleDict.Count/ 4);
+        }
+        if (_spawner.CurrentProd.Product == P.Pork)
+        {
+            AddToBuildingInvIfHasRawResourceToProduceIt(P.Pork, 15 * Spawner.PeopleDict.Count/ 4);
+        }
     }
+
+    /// <summary>
+    /// Will added to the Building inventory if the building has the Raw Resources to produce this good
+    /// 
+    /// done it so Leather and Eggs for example can be Produced if no Raw inventory existed 
+    /// </summary>
+    /// <param name="prod"></param>
+    /// <param name="amt"></param>
+    void AddToBuildingInvIfHasRawResourceToProduceIt(P prod, float amt)
+    {
+        var itCan = BuildingPot.Control.ProductionProp.DoIHaveEnoughOnInvToProdThis(Spawner, prod);
+        
+        if (itCan)
+        {
+            Spawner.Inventory.Add(prod, amt);
+        }
+    }
+
+    /// <summary>
+    /// Yields on Dec of each year 
+    /// </summary>
+    protected void CheckIfYield()
+    {
+        //yields on Dec
+        if (_lastYearYielded != Program.gameScene.GameTime1.Year && Program.gameScene.GameTime1.Month1 == 12)
+        {
+            _lastYearYielded = Program.gameScene.GameTime1.Year;
+            var st = (Structure) Spawner;
+
+            //if farm Inventory is not full
+            //and Building is done
+            //and I have input to produce this 
+            if (!Spawner.Inventory.IsFull() && st.StartingStage == H.Done)
+            {
+                YieldGoods();
+            }
+            else
+            {
+                //todo Notify
+                //Debug.Log("Not Producing meat(beef) bz Inv is full:"+Spawner.MyId+". or not done");
+            }
+        }
+    }
+
 }

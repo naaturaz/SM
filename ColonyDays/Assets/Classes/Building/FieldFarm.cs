@@ -42,9 +42,7 @@ public class FieldFarm : Farm
     void Init()
     {
         FindWherePlantSeeds();
-        SeedPlants();
-
-        
+        CreatePlants();
     }
 
     /// <summary>
@@ -67,7 +65,7 @@ public class FieldFarm : Farm
     /// <summary>
     /// After we got the Location of the seeds will procede to plant seeds 
     /// </summary>
-    private void SeedPlants()
+    private void CreatePlants()
     {
         for (int i = 0; i < _seedLoc.Count; i++)
         {
@@ -98,14 +96,7 @@ public class FieldFarm : Farm
         {
             DefineSpaceBtnPlants();
         }
-
-        var a = m.SubDivide.XSubStep;
-        var aa = m.SubDivide.ZSubStep;
-
         _seedLoc = RetuFillPoly(_NW, _SE, _spaceBtwPlants, _spaceBtwPlants);
-
-
-
         //UVisHelp.CreateHelpers(_seedLoc, Root.blueCube);
     }
 
@@ -197,9 +188,9 @@ public class FieldFarm : Farm
     {
         if (newProd != _plantType)
         {
-            //Will harvest all and will make _farm null in Structure
+            //will make _farm null in Structure
             //Structure will handle the rest
-            HarvestNowTheField();
+            _building.DestroyFarm();
         }
     }
 }
