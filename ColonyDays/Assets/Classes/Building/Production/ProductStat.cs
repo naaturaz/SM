@@ -73,7 +73,7 @@ public class ProductInfo
         }
 
         //remove last 2 chars
-        _productLine.Substring(0, _productLine.Length - 2);
+        _productLine = _productLine.Substring(0, _productLine.Length - 2);
 
         if (Ingredients != null)
         {

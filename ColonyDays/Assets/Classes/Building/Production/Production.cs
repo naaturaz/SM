@@ -86,7 +86,6 @@ public class Production  {
         FieldFarm();
 
         Rum();
-        Tobbaco();
         Meats();
 
         GunPodwer();
@@ -129,9 +128,7 @@ public class Production  {
 
         InputProdCheckAndAdd(new ProductInfo(P.Wood, null, H.Wood));
         InputProdCheckAndAdd(new ProductInfo(P.Salt, null, H.SaltMine));
-        InputProdCheckAndAdd(new ProductInfo(P.Slat, null, H.Slat));
         InputProdCheckAndAdd(new ProductInfo(P.Tile, null, H.Tilery));
-        InputProdCheckAndAdd(new ProductInfo(P.Fabric, null, H.Cloth));
     }
 
 
@@ -157,15 +154,8 @@ public class Production  {
 
         List<InputElement> prodFormu1 = new List<InputElement>() { element, _eleWoodComb, tonelEle };
         List<InputElement> prodFormu2 = new List<InputElement>() { element, _eleCoalComb, tonelEle };
-        InputProdCheckAndAdd(new ProductInfo(P.Sugar, prodFormu1, H.SugarMill));
-        InputProdCheckAndAdd(new ProductInfo(P.Sugar, prodFormu2, H.SugarMill));
-    }
-
-    private void Tobbaco()
-    {
-        InputElement element = new InputElement(P.TobaccoLeaf, 10);
-        List<InputElement> prodFormu1 = new List<InputElement>() { element};
-        InputProdCheckAndAdd(new ProductInfo(P.Tobacco, prodFormu1, H.None));
+        InputProdCheckAndAdd(new ProductInfo(P.Rum, prodFormu1, H.Rum));
+        InputProdCheckAndAdd(new ProductInfo(P.Rum, prodFormu2, H.Rum));
     }
 
     private void Meats()
@@ -232,7 +222,7 @@ public class Production  {
     private void Cigar()
     {
         //H.Cigar
-        InputElement element = new InputElement(P.Tobacco, 15);
+        InputElement element = new InputElement(P.TobaccoLeaf, 15);
         List<InputElement> prodFormu1 = new List<InputElement>() { element, _eleWoodComb };
         List<InputElement> prodFormu2 = new List<InputElement>() { element, _eleCoalComb};
         InputProdCheckAndAdd(new ProductInfo(P.Cigar, prodFormu1, H.Cigars));
@@ -280,8 +270,8 @@ public class Production  {
         List<InputElement> formula1 = new List<InputElement>() { eleInputWood, eleWoodComb };
         //2nd forumala that do paper 
         List<InputElement> formula2 = new List<InputElement>() { eleInputWood, eleCoalComb };
-        InputProdCheckAndAdd(new ProductInfo(P.Paper, formula1, H.PrinterSmall));
-        InputProdCheckAndAdd(new ProductInfo(P.Paper, formula2, H.PrinterSmall));
+        InputProdCheckAndAdd(new ProductInfo(P.Paper, formula1, H.Paper));
+        InputProdCheckAndAdd(new ProductInfo(P.Paper, formula2, H.Paper));
 
 
         //paper news

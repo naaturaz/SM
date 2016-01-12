@@ -37,7 +37,7 @@ public class BuildingWindow : GUIElement {
     private Vector3 _importIniPosOnProcess;
     private Vector3 _exportIniPosOnProcess;
 
-    private Vector3 _iniPosForProdList;
+    //private Vector3 _iniPosForProdList;
 
     List<Toggle> toggles=new List<Toggle>() ; 
 
@@ -118,7 +118,7 @@ public class BuildingWindow : GUIElement {
         _importIniPosOnProcess = GetGrandChildCalled(H.IniPos_Import_OnProcess).transform.position;
         _exportIniPosOnProcess = GetGrandChildCalled(H.IniPos_Export_OnProcess).transform.position;
 
-        _iniPosForProdList = GetGrandChildCalled(H.Prd_Btns_Pos).transform.position;
+   //     _iniPosForProdList = GetGrandChildCalled(H.Prd_Btns_Pos).transform.position;
 
 
 
@@ -363,35 +363,35 @@ public class BuildingWindow : GUIElement {
 
 
     //Show Prod on Tab
-    private void ShowProducts()
-    {
-        DestroyAndCleanShownOrders();
-
-        var list = _building.ShowProductsOfBuild();
-        DisplayProducts(list, _iniPosForProdList, Root.orderShowGenBtn);
-
-        ShowProductDetail();
-    }
-
     private void ShowProductDetail()
     {
         _displayProdInfo.text = _building.CurrentProd.Details;
     }
 
-    void DisplayProducts(List<ProductInfo> list, Vector3 iniPosP, string root)
+    private void ShowProducts()
+    {
+        DestroyAndCleanShownOrders();
+
+        var list = _building.ShowProductsOfBuild();
+        DisplayProducts(list, Root.orderShowGenBtn);
+
+        ShowProductDetail();
+    }
+
+    void DisplayProducts(List<ProductInfo> list, string root)
     {
         for (int i = 0; i < list.Count; i++)
         {
-            Display1String(i, list[i], iniPosP, root);
+            Display1String(i, list[i], root);
         }
     }
 
-    void Display1String(int i, ProductInfo pInfo, Vector3 iniPosP, string root)
+    void Display1String(int i, ProductInfo pInfo, string root)
     {
         var orderShow = OrderShow.Create(root, _products.transform);
         orderShow.ShowToSetCurrentProduct(pInfo);
 
-        orderShow.Reset(i, _iniPosForProdList);
+        orderShow.Reset(i);
 
         _showOrders.Add(orderShow);
     }

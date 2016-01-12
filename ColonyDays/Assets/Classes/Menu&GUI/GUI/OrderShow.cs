@@ -125,7 +125,7 @@ public class OrderShow : GUIElement
     /// </summary>
     /// <param name="i"></param>
     /// <param name="type"></param>
-    internal void Reset(int i, Vector3 orderPos)
+    internal void Reset(int i)
     {
         var rectT = GetComponent<RectTransform>();
         rectT.position = new Vector3();

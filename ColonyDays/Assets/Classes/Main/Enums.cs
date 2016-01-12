@@ -75,7 +75,7 @@ public enum Role
 public enum P
 {
     //Farm
-    Bean, Potato, SugarCane, Corn, Tobacco, Cotton,
+    Bean, Potato, SugarCane, Corn, Cotton,
     Banana, Coconut,
     //Animal Farm
     Chicken, Egg, Pork, Beef, Leather,
@@ -310,6 +310,7 @@ public enum H
     Prd_Btn,
     Prd_Btns_Pos,
     Btn,
+    Rum,
 
 
 

@@ -63,7 +63,6 @@ public class ExportImport
 
         _prodSpecs.Add(new ProdSpec(P.Sugar, 50, 900, 70));
 
-        _prodSpecs.Add(new ProdSpec(P.Tobacco, 200, 600, 90));
         _prodSpecs.Add(new ProdSpec(P.Henequen, 15, 400, 90));
         _prodSpecs.Add(new ProdSpec(P.Cotton, 40, 360, 120));
         _prodSpecs.Add(new ProdSpec(P.Leather, 70, 570, 20));
@@ -111,6 +110,7 @@ public class ExportImport
 
 
         _prodSpecs.Add(new ProdSpec(P.Paper, 150, 192, 30));
+        _prodSpecs.Add(new ProdSpec(P.PaperNews, 50, 292, 50));
         _prodSpecs.Add(new ProdSpec(P.Books, 300, 500, 5));
         _prodSpecs.Add(new ProdSpec(P.Silk, 150, 1300, 5));
     }
