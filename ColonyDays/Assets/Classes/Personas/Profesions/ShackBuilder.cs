@@ -288,7 +288,7 @@ public class ShackBuilder : Profession
             _workerTask = HPers.None;
            
 //            GameScene.print("Done work on ShackBulider:" + _person.MyId);
-            _person.Brain.ShackBuilderDone(_constructing);
+            //_person.Brain.ShackBuilderDone(_constructing);
         }
     }
 }

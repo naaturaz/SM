@@ -822,11 +822,6 @@ public class Brain
 
     public void Update()
     {
-        //DefineIfWaiting();
-        ////if wating for rerouting must wait at home 
-        //if (_wating)
-        //{return;}
-
         UpdateRouters();
 
         if (goMindState)
@@ -1398,7 +1393,10 @@ public class Brain
     /// </summary>
     private void CheckOnTheQueues()
     {
-        if (!_isAllSet || !IAmHomeNow() || PersonPot.Control.Queues.IsEmpty()) { return; }
+        if (!_isAllSet || !IAmHomeNow() || PersonPot.Control.Queues.IsEmpty())
+        {
+            return;
+        }
         CheckQueuesLoop();
     }
 
@@ -1493,70 +1491,6 @@ public class Brain
         }
     }
     #endregion
-
-    public void ShackBuilderDone(Building shack)
-    {
-        shack.ThisPersonFitInThisHouse(_person);
-       
-        //so families are resaved 
-        BuildingPot.Control.Registro.ResaveOnRegistro(shack.MyId);
-
-        AddToPeopleList(shack.MyId);
-
-        _person.Home = (Structure)shack;
-
-        //means he moved from an old house  tht was destroyed 
-        if (MoveToNewHome.HomeOldKeysList.Count > 0)
-        {
-            GoToNewHomeTail();
-        }
-
-        _person.Work = null;
-        _person.FoodSource = null;
-        _person.Religion = null;
-        _person.Chill = null;
-
-        //so its cleans the profession. bz if not jobs avail will stay as ShackBUilder and thats
-        //not intended. Lead to bugg in ShackManager 
-        _person.ProfessionProp = new Profession();
-
-        ClearAllRoutes();
-
-        oldWork = "";
-        oldFoodSrc = "";
-        oldReligion = "";
-        oldChill = "";
-
-        workRouteStart = false;
-        foodRouteStart = false;
-        religionRouteStart = false;
-        chillRouteStart = false;
-
-        _person.Body.Location = HPers.None;
-        _person.Body.GoingTo = HPers.None;
-        CurrentTask = HPers.None;
-
-        CheckAround(false, true, true, true, true);
-        ShacksManager.ReportShackDone(shack);
-
-        PersonPot.Control.RestartController();
-
-        PersonPot.Control.DoneReRoute(_person.MyId);
-        //so is JustSpawnNow()
-        _person.Body.Location = HPers.None;
-        _person.Body.GoingTo = HPers.None;
-        //bz wont start by himself on Update() bz he is not JustSpawn()
-        //ReRoutesDealer();
-    }
-
-    void ClearAllRoutes()
-    {
-        _workRoute.CheckPoints.Clear();
-        _foodRoute.CheckPoints.Clear();
-        _idleRoute.CheckPoints.Clear();
-        _religionRoute.CheckPoints.Clear();
-        _chillRoute.CheckPoints.Clear();
-    }
 
     /// <summary>
     /// Used to get a NewBorn Child going 
@@ -1868,9 +1802,7 @@ public class Brain
         {
             bool thereIsABetterHome = Realtor.PublicIsABetterHome(_person);
 
-            if (thereIsABetterHome)
-            { }
-            else
+            if (!thereIsABetterHome)
             {
                 UnivCounter(HPers.Home);
                 return;
@@ -1888,13 +1820,8 @@ public class Brain
         bool thereIsABetterHome = Realtor.PublicIsABetterHome(_person);
 
         //shack builders can not look into this. Othr wise they will stay on Limbo once better home found 
-        if (thereIsABetterHome && _person.ProfessionProp.ProfDescription != Job.ShackBuilder)
+        if (thereIsABetterHome)
         {
-            if (_person.MyId.Contains("Llaava"))
-            {
-                var t = this;
-            }
-
             var oldHomeP = PullOldHome();
             var s = Realtor.GiveMeTheBetterHome(_person);
 
@@ -1908,8 +1835,6 @@ public class Brain
                     MoveToNewHome.OldHomeKey = "";
                     MoveToNewHome.RouteToNewHome.CheckPoints.Clear();
                 }
-
-      
 
                 AddToPeopleList(s.MyId);
                 _person.Home = s;
@@ -1927,11 +1852,6 @@ public class Brain
 
     public Structure PullOldHome()
     {
-        //if (_person.Home != null)
-        //{
-        //    return _person.Home;
-        //}
-
         return GetStructureFromKey(oldHome);
     }
 
@@ -1968,8 +1888,6 @@ public class Brain
         {
             FamilyOnOldHome.MakeVirgin();                    
         }
-
-
     }
 
     /// <summary>

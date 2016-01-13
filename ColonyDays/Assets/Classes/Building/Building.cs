@@ -747,7 +747,9 @@ public class Building : General, Iinfo
         {
             return;
         }
-
+        
+        //calling here bz now since Builds are placed on ground need to be seen 
+        //by all
         BuildingPot.Control.AddToQueuesRestartPersonControl(MyId);
     }
 

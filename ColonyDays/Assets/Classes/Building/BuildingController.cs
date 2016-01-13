@@ -207,6 +207,9 @@ public class BuildingController : BuildingPot
         {
             AddToCurrent(MyIdP);
             //UpdateOnPersonController(MyIdP);
+
+            // So people can notice the new added building
+            PersonPot.Control.RestartController();
         }
         SetFlag(buildFunc, true);
         UpdateCurrent(buildFunc);//updates the correspondent list
