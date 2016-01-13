@@ -1837,7 +1837,14 @@ public class Brain
         //isallset is here so will check if closest building exist
         if (!ItHasOneAlready(HPers.Work) || _isAllSet || _person.Work.Instruction == H.WillBeDestroy)
         {
-            _person.Work = JobManager.GiveWork(_person);
+            var newWork =JobManager.GiveWork(_person);
+
+            //if (newWork == null)
+            //{
+            //    throw new Exception("new job null? why");
+            //}
+
+            _person.Work = newWork;
         }
         UnivCounter(HPers.Work);
     }
@@ -2202,9 +2209,27 @@ public class Brain
             CheckOnFoodSourceAvail();
             slowCheckUp = false;
 
-            _person.Work = JobManager.ThereIsABetterJob(_person);
+            HandleNewJobSearch();
             UpdateBlackListing();
         }
+    }
+
+    void HandleNewJobSearch()
+    {
+        //he needs to find a job first to then get a better job 
+        if (_person.Work == null)
+        {
+            return;
+        }
+
+        var newWork = JobManager.ThereIsABetterJob(_person);
+
+        if (newWork == null)
+        {
+            throw new Exception("New work should not be null");
+        }
+      
+        _person.Work = newWork;
     }
 
     private int emptyCount;
@@ -2330,12 +2355,14 @@ public class Brain
     /// </summary>
     void MakeStructureNull(string key, HPers buildFunc = HPers.None)
     {
+        Debug.Log("MakeStructureNull");
         var checkHome = false;
         var checkWork = false;
         var checkFood = false;
         var checkReligion = false;
         var checkChill = false;
 
+        //todo remove person from People Dict of the place will be made null
         if ((buildFunc == HPers.Home ))
         {
             _person.Home = null;
