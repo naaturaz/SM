@@ -104,7 +104,7 @@ public class ResumenInventory {
     {
         if (building.Inventory.IsItemOnInv(item))
         {
-            var removed = building.Inventory.Remove(item, amt);
+            var removed = building.Inventory.RemoveByWeight(item, amt);
             var left = amt - removed;
 
             return left;

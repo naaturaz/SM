@@ -140,8 +140,8 @@ public enum P
     Rum,
     Wine,
     Ore,
-    Coin,
-
+    Crate,
+    CrystalCoin, CaribbeanCoin, SugarCoin,
 }
 
 /// <summary>

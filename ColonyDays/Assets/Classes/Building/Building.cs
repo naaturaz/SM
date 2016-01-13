@@ -1928,12 +1928,14 @@ public class Building : General, Iinfo
         }
         else if (!hasStorageRoom && !hasThisBuildRoom && person.FoodSource != null)
         {
+            //todo show 3d icon
             AddEvacuationOrder();
-            Debug.Log("Both full" + person.FoodSource.MyId + ".and." + MyId + " AddEvacuationOrder() called");
+            //Debug.Log("Both full" + person.FoodSource.MyId + ".and." + MyId + " AddEvacuationOrder() called");
         }
         else if (!doIHaveInput)
         {
-            Debug.Log(MyId+" doesnt have input");
+            //todo show 3d icon
+            //Debug.Log(MyId+" doesnt have input");
         }
     }
 
@@ -1957,7 +1959,8 @@ public class Building : General, Iinfo
         }
         else if (!doIHaveInput)
         {
-            Debug.Log(MyId + " doesnt have input");
+            //todo show 3d icon
+            //Debug.Log(MyId + " doesnt have input");
         }
     }
 
@@ -1975,22 +1978,22 @@ public class Building : General, Iinfo
         AddToClosestWheelBarrowAsOrder(t, H.Evacuation);
     }
 
-    /// <summary>
-    /// Custom product. use so far by Forester:
-    /// 
-    /// Will find the product it has the most amount of units and will add the evacuation orders 
-    /// with that Product
-    /// </summary>
-    /// <param name="prod"></param>
-    public void AddEvacuationOrderMost()
-    {
-        //order the Products by amout
-        var prods = Inventory.InventItems.OrderBy(a => a.Amount).ToList();
+    ///// <summary>
+    ///// Custom product. use so far by Forester:
+    ///// 
+    ///// Will find the product it has the most amount of units and will add the evacuation orders 
+    ///// with that Product
+    ///// </summary>
+    ///// <param name="prod"></param>
+    //public void AddEvacuationOrderMost()
+    //{
+    //    //order the Products by amout
+    //    var prods = Inventory.InventItems.OrderBy(a => a.Amount).ToList();
 
-        //uses the one prod has the most to be added on the Evac Order
-        Order t = new Order(prods[0].Key, "", MyId);
-        AddToClosestWheelBarrowAsOrder(t, H.Evacuation);
-    }
+    //    //uses the one prod has the most to be added on the Evac Order
+    //    Order t = new Order(prods[0].Key, "", MyId);
+    //    AddToClosestWheelBarrowAsOrder(t, H.Evacuation);
+    //}
 
     /// <summary>
     /// Will tell worker if can take products out of the biulding
@@ -2129,26 +2132,10 @@ public class Building : General, Iinfo
         }
     }
 
-
-
-
-
-
-
-
     Structure FindClosestWheelBarrowerOffice()
     {
         return BuildingController.FindTheClosestOfThisType(H.BuildersOffice, transform.position);
     }
-
-
-
-
-
-
-
-
-
 
     private IEnumerator ThirtySecUpdate()
     {
@@ -2172,11 +2159,13 @@ public class Building : General, Iinfo
 
     /// <summary>
     /// Function tht user cam use to delete the Building inventory in case finds he doesnt need it 
+    /// //todo added as a btn in Building Window
     /// </summary>
     public void DeleteBuildingInventory()
     {
         Inventory.Delete();
     }
+
     #endregion
 
     void InitWheelBarrow()

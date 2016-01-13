@@ -1260,18 +1260,22 @@ public class Person : General
 
     private void Eat()
     {
-        P item = Home.Inventory.GiveBestFood();
+        P item = Home.Inventory.GiveRandomFood();
         if (item == P.None)
         {
             return;
         }
 
         float amt = (int)HowMuchINeedToBe100PointsFeed(item);
-        float gotAmt = Home.Inventory.Remove(item, amt);
+        float gotAmt = Home.Inventory.RemoveByWeight(item, amt);
 
         ChangeHappinesBy(0.1);
         Nutrive(gotAmt, item);
     }
+
+
+
+
 
     void ChangeHappinesBy(double by)
     {
@@ -1316,7 +1320,7 @@ public class Person : General
             return;
         }
 
-        P item = theFoodSrc.Inventory.GiveBestFood();
+        P item = theFoodSrc.Inventory.GiveRandomFood();
 
         if (item == P.None)
         {
@@ -1335,7 +1339,7 @@ public class Person : General
         if (takenFrom == null)
         { return; }
 
-        float amtTook = takenFrom.Inventory.Remove(product, amt);
+        float amtTook = takenFrom.Inventory.RemoveByWeight(product, amt);
         givenTo.Inventory.Add(product, amtTook);
     }
 

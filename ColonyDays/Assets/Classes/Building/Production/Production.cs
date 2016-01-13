@@ -219,6 +219,7 @@ public class Production  {
         InputElement wood = new InputElement(P.Wood, 10);
         List<InputElement> tonel = new List<InputElement>() { wood };
         InputProdCheckAndAdd(new ProductInfo(P.Tonel, tonel, H.Carpintery));
+        InputProdCheckAndAdd(new ProductInfo(P.Crate, tonel, H.Carpintery));
     }
 
 
@@ -269,15 +270,15 @@ public class Production  {
         InputElement go = new InputElement(P.Gold, 1);
         InputElement si = new InputElement(P.Silver, 1);
 
-        InputElement go2 = new InputElement(P.Silver, 0.5f);
+        InputElement go2 = new InputElement(P.Gold, 0.5f);
 
         List<InputElement> prodForm1 = new List<InputElement>() { si, _eleCoalComb };
         List<InputElement> prodForm2 = new List<InputElement>() { si, go2, _eleCoalComb };
         List<InputElement> prodForm3 = new List<InputElement>() { go, _eleCoalComb };
 
-        InputProdCheckAndAdd(new ProductInfo(P.Coin, prodForm1, H.CoinStamp));
-        InputProdCheckAndAdd(new ProductInfo(P.Coin, prodForm2, H.CoinStamp));
-        InputProdCheckAndAdd(new ProductInfo(P.Coin, prodForm3, H.CoinStamp));
+        InputProdCheckAndAdd(new ProductInfo(P.CrystalCoin, prodForm1, H.CoinStamp));
+        InputProdCheckAndAdd(new ProductInfo(P.CaribbeanCoin, prodForm2, H.CoinStamp));
+        InputProdCheckAndAdd(new ProductInfo(P.SugarCoin, prodForm3, H.CoinStamp));
     }
 
     private void PaperNewsAndBook()
@@ -394,9 +395,10 @@ public class Production  {
             //ex: Dock, Wood, SaltMine
             return 1;
         }
-        
         return inputsAmt*2;
     }
+
+
 
     /// <summary>
     /// Given a product will return the list of ingrediets needed 

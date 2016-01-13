@@ -76,6 +76,14 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Silver, 450, 10490, 8));
         _prodSpecs.Add(new ProdSpec(P.Jewel, 450, 8490, 8));
 
+        
+        _prodSpecs.Add(new ProdSpec(P.CrystalCoin, 1000, 8120, 5));
+        _prodSpecs.Add(new ProdSpec(P.CaribbeanCoin, 1500, 11441, 5));
+        _prodSpecs.Add(new ProdSpec(P.SugarCoin, 2000, 14550, 5));
+
+
+
+
         _prodSpecs.Add(new ProdSpec(P.Stone, 50, 2515, 20));
         _prodSpecs.Add(new ProdSpec(P.Ore, 70, 4200, 20));
         _prodSpecs.Add(new ProdSpec(P.Iron, 150, 7874, 15));
@@ -97,7 +105,8 @@ public class ExportImport
 
 
         _prodSpecs.Add(new ProdSpec(P.Brick, 50, 2000, 100));
-        _prodSpecs.Add(new ProdSpec(P.Tonel, 60, 50, 50));
+        _prodSpecs.Add(new ProdSpec(P.Tonel, 60, 20, 50));
+        _prodSpecs.Add(new ProdSpec(P.Crate, 40, 20, 50));
         _prodSpecs.Add(new ProdSpec(P.Cigar, 200, 700, 50));
         _prodSpecs.Add(new ProdSpec(P.Slat, 40, 600, 70));
         _prodSpecs.Add(new ProdSpec(P.Tile, 60, 2100, 90));
@@ -138,10 +147,11 @@ public class ExportImport
 
     /// <summary>
     /// For a Cubic Meter . How much can be store in a Cubic Meter
+    /// Returing Weitg KG
     /// </summary>
     /// <param name="prod"></param>
     /// <returns></returns>
-    public float CalculateMass(P prod, float cubicMeters)
+    public float CalculateMass(P prod, float cubicMetersVol)
     {
         var prodLo = _prodSpecs.Find(a => a.Product == prod);
 
@@ -152,7 +162,7 @@ public class ExportImport
         }
 
         //returns the Mass
-        return prodLo.Density*cubicMeters;
+        return prodLo.Density*cubicMetersVol;
     }
 
 

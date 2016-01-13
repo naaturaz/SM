@@ -157,20 +157,20 @@ public class Inventory  {
     /// Then item will be removed from inventory
     /// </summary>
     /// <param name="key"></param>
-    /// <param name="amt"></param>
+    /// <param name="kg"></param>
     /// <returns></returns>
-    public float Remove(P key, float amt)
+    public float RemoveByWeight(P key, float kg)
     {
         if (IsItemOnInv(key))
         {
             //it means it can cover the amount asked to be removed
-            if (ReturnAmtOfItemOnInv(key) - amt > 0)
+            if (ReturnAmtOfItemOnInv(key) - kg > 0)
             {
-                float intT = ReturnAmtOfItemOnInv(key) - amt;
+                float intT = ReturnAmtOfItemOnInv(key) - kg;
                 SetAmtWithKey(key, intT);
 
                 //UpdateInfo();
-                return amt;
+                return kg;
             }
             //other wise will depleted
             float t = ReturnAmtOfItemOnInv(key);
@@ -181,7 +181,7 @@ public class Inventory  {
 
             //UpdateInfo();
             ResaveOnRegistro();
-            UpdateOnGameController(H.Remove, key, amt);
+            UpdateOnGameController(H.Remove, key, kg);
             return t;
         }
         return 0;
@@ -191,7 +191,7 @@ public class Inventory  {
     {
         for (int i = 0; i < items.Count; i++)
         {
-            Remove(items[i].Key, items[i].Amount);
+            RemoveByWeight(items[i].Key, items[i].Amount);
         }
     }
 
@@ -286,7 +286,27 @@ public class Inventory  {
     }
 
     /// <summary>
-    /// People will ask at their FoodSrc for this and once their are home too
+    /// Random is better so people get ramd stuff from Storages
+    /// </summary>
+    /// <returns></returns>
+    public P GiveRandomFood()
+    {
+        var listOfFoodPrd = ReturnListOfCatOfProd(PCat.Food);
+
+        if (listOfFoodPrd.Count == 0)
+        {
+            return P.None;
+        }
+
+        return listOfFoodPrd[Random.Range(0, listOfFoodPrd.Count)];
+    }
+
+
+
+    
+
+    /// <summary>
+    /// Gives the best food
     /// </summary>
     /// <returns></returns>
     public P GiveBestFood()
@@ -302,6 +322,7 @@ public class Inventory  {
 
         return order[0];
     }
+
 
     PCat CategorizeProd(P prod)
     {
@@ -435,7 +456,7 @@ public class Inventory  {
     /// <param name="order"></param>
     internal Order ManageExportOrder(Order order)
     {
-        float amtTaken = Remove(order.Product, order.Amount);
+        float amtTaken = RemoveByWeight(order.Product, order.Amount);
 
         //not all of the order was taken
         if (amtTaken < order.Amount)
@@ -524,9 +545,16 @@ public class Inventory  {
         return new InvItem(InventItems[ind].Key, vol);
     }
 
+    /// <summary>
+    /// will remove by volume
+    /// finds the weight and then removes by weight 
+    /// </summary>
+    /// <param name="p"></param>
+    /// <param name="vol"></param>
     private void RemoveByVolume(P p, float vol)
     {
-        throw new System.NotImplementedException();
+        var amt = Program.gameScene.ExportImport1.CalculateMass(p, vol);
+        RemoveByWeight(p, amt);
     }
 
     /// <summary>
@@ -543,6 +571,15 @@ public class Inventory  {
             return false;
         }
         return true;
+    }
+
+    bool IfSpecialItem(P prod)
+    {
+        if (prod == P.Tool || prod == P.Cloth || prod == P.Ceramic || prod == P.Tonel || prod == P.Crate)
+        {
+            return true;
+        }
+        return false;
     }
 }
 
