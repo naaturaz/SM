@@ -14,6 +14,14 @@ public class QueueTask : IComparable {
 
     internal void AddToQueue(List<Vector3> objP, string key)
     {
+        //Building can be only once on queus
+        var ele = _elements.Find(a => a.Key == key);
+
+        if (ele != null)
+        {//was added already
+            return;
+        }
+
         _elements.Add(new QueueElement(objP, key));
     }
     

@@ -354,13 +354,15 @@ public class Dispatch
     /// <returns></returns>
     float DispatchAmount(Person pers, float amtOnOrder)
     {
-        //not need for check for null bz this is called from WheelBarrow and Docker
-        if (amtOnOrder < pers.HowMuchICanCarry())
-        {
-            //the 5Kg is to cover the last bit
-            //is the way that removes the order
-            return amtOnOrder + 5f;
-        }
+        ////not need for check for null bz this is called from WheelBarrow and Docker
+        //if (amtOnOrder < pers.HowMuchICanCarry())
+        //{
+       
+
+        //    //the 5Kg is to cover the last bit
+        //    //is the way that removes the order
+        //    return amtOnOrder + 5f;
+        //}
         return pers.HowMuchICanCarry();
     }
 
@@ -463,15 +465,20 @@ public class Dispatch
     /// Will remove the Evacuation order from Orders or _dormantOrders
     /// </summary>
     /// <param name="order"></param>
-    public void RemoveEvacuationOrder(Order order)
+    public void RemoveEvacuationOrder(string orderId)
     {
-        if (ListContains(Orders, order))
+        var index = Orders.FindIndex(a => a.ID == orderId);
+
+        if (index > -1)
         {
-            RemoveOrderFromTheList(Orders, order);
+            Orders.RemoveAt(index);
         }
-        else if (ListContains(_dormantOrders, order))
+
+        index = DormantOrders.FindIndex(a => a.ID == orderId);
+
+        if (index > -1)
         {
-            RemoveOrderFromTheList(_dormantOrders, order);
+            DormantOrders.RemoveAt(index);
         }
     }
 
@@ -508,7 +515,7 @@ public class Dispatch
         if (building != null && building.Inventory != null &&
             !building.Inventory.IsHasEnoughToCoverThisIngredient(ing))
         {
-            RemoveEvacuationOrder(new Order(order.Product, "", building.MyId));
+            RemoveEvacuationOrder(order.ID);
 
             Debug.Log("Removed evac order:" + order.Product);
         }
@@ -554,6 +561,8 @@ public class Dispatch
             }
         }
     }
+
+    #region Dock Related
 
     internal bool HasImportOrders()
     {
@@ -651,7 +660,7 @@ public class Dispatch
         if(!dock.Inventory.IsItemOnInv(ord.Product) && !ExpImpOrders.Contains(ord))
         {
             Debug.Log("Docker removed the evac order:"+ord.Product);
-            RemoveEvacuationOrder(ord);
+            RemoveEvacuationOrder(ord.ID);
             
         }
     }
@@ -732,6 +741,8 @@ public class Dispatch
     {
         return true;
     }
+
+#endregion
 
     /// <summary>
     /// Only on _orders list 

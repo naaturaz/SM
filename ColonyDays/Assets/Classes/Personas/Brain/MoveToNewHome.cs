@@ -184,6 +184,11 @@ public class MoveToNewHome : Brain
     /// </summary>
     private void InitValForNewHome()
     {
+        if (_brain.PullOldHome() != null && _brain.PullOldHome() == _person.Home)
+        {   //means is moving towards the same house 
+            return;
+        }
+
         _brain.GoMindState = false;
         //        Debug.Log(_person.MyId + " InitValForNewHome()");
 

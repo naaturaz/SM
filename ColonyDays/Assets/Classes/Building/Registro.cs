@@ -122,18 +122,8 @@ public class Registro : MonoBehaviour
         {
             return;
         }
-        
-        
-        var inv = build.Inventory.InventItems;
-
-        for (int i = 0; i < inv.Count; i++)
-        {
-            Debug.Log("Evac order added src"+myIdP+".prd:"+inv[i].Key);
-            Order t = new Order(inv[i].Key, "", myIdP);
-            
-            //BuildingPot.Control.Dispatch1.AddEvacuationOrder(t);
-            build.AddToClosestWheelBarrowAsOrder(t, H.Evacuation);
-        }
+ 
+        build.AddToClosestWheelBarrowAsOrderEvacuateAllInv();
     }
 
     /// <summary>

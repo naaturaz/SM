@@ -2109,6 +2109,7 @@ public class Building : General, Iinfo
     }
 
 
+
     /// <summary>
     /// Will find closest WheelBarrow office from here and will add the order 
     /// </summary>
@@ -2133,6 +2134,41 @@ public class Building : General, Iinfo
             closWheelBarr.Dispatch1.AddEvacuationOrder(order);
         }
     }
+
+
+    private bool evacAll;
+    /// <summary>
+    /// Bz when a building is set to be destroyed u need to remove all items on it 
+    /// 
+    /// this mtehod can be only once
+    /// </summary>
+    internal void AddToClosestWheelBarrowAsOrderEvacuateAllInv()
+    {
+        //created to address when destroyig a building adddng the same order twice 
+        if (evacAll)
+        {
+            return;
+        }
+
+        var closWheelBarr = FindClosestWheelBarrowerOffice();
+
+        //only for debug bz a WheelBarrow always should be up
+        if (closWheelBarr == null)
+        {
+            return;
+        }
+
+        evacAll = true;
+        var orders = Inventory.CreateOrderToEvacWholeInv();
+
+        for (int i = 0; i < orders.Count; i++)
+        {
+            closWheelBarr.Dispatch1.AddEvacuationOrder(orders[i]);
+        }
+    }
+
+
+
 
     Structure FindClosestWheelBarrowerOffice()
     {
@@ -2822,7 +2858,9 @@ public class Building : General, Iinfo
 
 
 
-    
+
+
+
 }
 
 /// <summary>

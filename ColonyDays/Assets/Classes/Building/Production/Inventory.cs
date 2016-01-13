@@ -581,6 +581,23 @@ public class Inventory  {
         }
         return false;
     }
+
+    /// <summary>
+    /// Will create a list of Evacation Orders . 
+    /// So this Building invetory is all evacuated 
+    /// </summary>
+    /// <returns></returns>
+    public List<Order> CreateOrderToEvacWholeInv()
+    {
+        List<Order> res = new List<Order>();
+
+        for (int i = 0; i < InventItems.Count; i++)
+        {
+            Order order = new Order(InventItems[i].Key, "", LocMyId);
+            res.Add(order);            
+        }
+        return res;
+    }
 }
 
 public class InvItem
