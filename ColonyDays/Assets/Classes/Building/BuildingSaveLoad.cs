@@ -164,7 +164,7 @@ public class BuildingSaveLoad : BuildingPot
         s.Dispatch1 = regFile.Dispatch1;
         s.Families = regFile.Familes;
         s.LandZone1 = regFile.LandZone1;
-
+        s.DollarsPay = regFile.DollarsPay;
 
         Control.Registro.Structures.Add(s.MyId, Control.CurrentSpawnBuild as Structure);
         Control.Registro.AllBuilding.Add(s.MyId, Control.CurrentSpawnBuild);

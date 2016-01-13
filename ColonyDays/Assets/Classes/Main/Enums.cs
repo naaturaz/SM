@@ -142,6 +142,9 @@ public enum P
     Ore,
     Crate,
     CrystalCoin, CaribbeanCoin, SugarCoin,
+    CannonPart,
+    Cocoa,
+    Ink,
 }
 
 /// <summary>
@@ -191,9 +194,9 @@ public enum H
     //raw F4
     Ceramic, FishSmall, FishRegular, Mine, MountainMine, Resin, Wood, BlackSmith, SaltMine,
     //prod F5
-    Brick, Carpintery, Cigars, Mill, Slat, Tilery,
+    Brick, Carpintery, Cigars, Mill, Slat, Tilery, CannonParts, Rum, Chocolate, Ink,
     //industry F6
-    Cloth, GunPowder, Paper, Printer, CoinStamp, Silk, SugarMill,
+    Cloth, GunPowder, Paper, Printer, CoinStamp, Silk, SugarMill, Foundry,
     //Trade F7
     Dock, DryDock, Supplier, StorageSmall, StorageMed, StorageBig, StorageBigTwoDoors, StorageExtraBig,
     //gov F8
@@ -311,11 +314,6 @@ public enum H
     Prd_Btn,
     Prd_Btns_Pos,
     Btn,
-    Rum,
-
-
-
-
 
 
 }
@@ -358,11 +356,11 @@ public enum StRaw //for structures game structure.cs
 public enum StProd //for structures game structure.cs 
 {
     //Production
-    Brick,Carpintery,Cigars,Mill,Slat,Tilery,
+    Brick, Carpintery, Cigars, Mill, Slat, Tilery, CannonParts, Rum, Chocolate, Ink,
 }
 
 public enum StInd
-{ Cloth, GunPowder, Paper, Printer, CoinStamp, Silk, SugarMill, }
+{ Cloth, GunPowder, Paper, Printer, CoinStamp, Silk, SugarMill, Foundry }
 
 public enum StTrade //for structures game structure.cs 
 {

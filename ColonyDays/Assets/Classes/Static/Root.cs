@@ -507,6 +507,11 @@ public class Root : MonoBehaviour
         buildsRoot.Add(H.Slat, "Prefab/Building/Prod/Slat");
         buildsRoot.Add(H.Tilery, "Prefab/Building/Prod/Tilery");
 
+        buildsRoot.Add(H.CannonParts, "Prefab/Building/Prod/CannonParts");
+        buildsRoot.Add(H.Rum, "Prefab/Building/Prod/Rum");
+        buildsRoot.Add(H.Chocolate, "Prefab/Building/Prod/Chocolate");
+        buildsRoot.Add(H.Ink, "Prefab/Building/Prod/Ink");
+
         //Industry
         buildsRoot.Add(H.Cloth, "Prefab/Building/Industry/Cloth");
         buildsRoot.Add(H.GunPowder, "Prefab/Building/Industry/GunPowder");
@@ -515,6 +520,8 @@ public class Root : MonoBehaviour
         buildsRoot.Add(H.CoinStamp, "Prefab/Building/Industry/CoinStamp");
         buildsRoot.Add(H.Silk, "Prefab/Building/Industry/Silk");
         buildsRoot.Add(H.SugarMill, "Prefab/Building/Industry/SugarMill");
+
+        buildsRoot.Add(H.Foundry, "Prefab/Building/Industry/CoinStamp");
 
         //Trade
         buildsRoot.Add(H.Dock, "Prefab/Building/Trade/Dock");

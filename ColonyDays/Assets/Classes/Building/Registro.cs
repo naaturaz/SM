@@ -273,7 +273,8 @@ public class Registro : MonoBehaviour
         H dominantSide = H.None, H startingStage = H.None, int rotationFacerIndex = -1, string materialKey = "",
         List<Vector3> planesOnSoilPos = null, List<int> partsOnSoil = null, Vector3 min = new Vector3(),
         Vector3 max = new Vector3(), H instructionP = H.None, BookedHome BookedHome1 = null, int PositionsFilled = 0,
-        Dispatch dispatch = null, Family[] Families = null
+        Dispatch dispatch = null, Family[] Families = null,
+        int dollarsPay = 0
         )
     {
         // 12 hours to find this OMG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -301,7 +302,8 @@ public class Registro : MonoBehaviour
             toHoriz, tilePosVert: tilePosVert, tilePosHor: tilePosHor,
             planesOnAirPos: planesOnAirPos, tileScale: tileScale, partsOnAir: parts, dominantSide: dominantSide, startingStage: startingStage, rotationFacerIndex: rotationFacerIndex, 
             materialKey: materialKey, planesOnSoilPos: planesOnSoilPos, partsOnSoil: partsOnSoil, min: min, max: max,
-            instructionP: instructionP,  bookedHome: BookedHome1, positionsFilled: PositionsFilled, dispatch: dispatch, familes: Families);
+            instructionP: instructionP,  bookedHome: BookedHome1, positionsFilled: PositionsFilled, dispatch: dispatch, familes: Families,
+            dollarsPay: dollarsPay);
 
         AddToAll(regFile);
 

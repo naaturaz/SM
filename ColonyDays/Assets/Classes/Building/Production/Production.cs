@@ -79,13 +79,25 @@ public class Production  {
     InputElement _eleWoodComb = new InputElement(P.Wood, 2);
     InputElement _eleCoalComb = new InputElement(P.Coal, 1);
 
+
+    void InputProdCheckAndAdd(ProductInfo pInfo)
+    {
+        _inputProducts.Add(pInfo);
+    }
+
     private void LoadInputProductsStats()
     {
         //Loading each prodcut input
         LoadAllGenerics();
         FieldFarm();
 
+        CannonParts();
         Rum();
+        Chocolate();
+        Ink();
+        Foundry();
+
+
         Meats();
 
         GunPodwer();
@@ -111,11 +123,64 @@ public class Production  {
     }
 
 
-
-    void InputProdCheckAndAdd(ProductInfo pInfo)
+    private void CannonParts()
     {
-        _inputProducts.Add(pInfo);
+        InputElement iron = new InputElement(P.Iron, 10);
+        List<InputElement> i1 = new List<InputElement>() { iron, _eleWoodComb };
+        List<InputElement> i2 = new List<InputElement>() { iron, _eleCoalComb };
+        InputProdCheckAndAdd(new ProductInfo(P.CannonPart, i1, H.CannonParts));
+        InputProdCheckAndAdd(new ProductInfo(P.CannonPart, i2, H.CannonParts));
+
+        InputProdCheckAndAdd(new ProductInfo(P.CannonBall, i1, H.CannonParts));
+        InputProdCheckAndAdd(new ProductInfo(P.CannonBall, i2, H.CannonParts));
     }
+
+    private void Rum()
+    {
+        InputElement element = new InputElement(P.SugarCane, 10);
+        InputElement tonelEle = new InputElement(P.Tonel, 1);
+
+        List<InputElement> prodFormu1 = new List<InputElement>() { element, _eleWoodComb, tonelEle };
+        List<InputElement> prodFormu2 = new List<InputElement>() { element, _eleCoalComb, tonelEle };
+        InputProdCheckAndAdd(new ProductInfo(P.Rum, prodFormu1, H.Rum));
+        InputProdCheckAndAdd(new ProductInfo(P.Rum, prodFormu2, H.Rum));
+    }
+    private void Chocolate()
+    {
+        InputElement elementS = new InputElement(P.Sugar, 5);
+        InputElement elementC = new InputElement(P.Cocoa, 5);
+
+        List<InputElement> prodFormu1 = new List<InputElement>() { elementS, _eleWoodComb, elementC };
+        List<InputElement> prodFormu2 = new List<InputElement>() { elementS, _eleCoalComb, elementC };
+        InputProdCheckAndAdd(new ProductInfo(P.Chocolate, prodFormu1, H.Chocolate));
+        InputProdCheckAndAdd(new ProductInfo(P.Chocolate, prodFormu2, H.Chocolate));
+    }
+    private void Ink()
+    {
+        List<InputElement> prodFormu1 = new List<InputElement>() { _eleCoalComb};
+        InputProdCheckAndAdd(new ProductInfo(P.Ink, prodFormu1, H.Ink));
+    }
+
+    private void Foundry()
+    {
+        InputElement elementS = new InputElement(P.Ore, 5);
+
+        List<InputElement> prodFormu1 = new List<InputElement>() { elementS, _eleWoodComb };
+        List<InputElement> prodFormu2 = new List<InputElement>() { elementS, _eleCoalComb };
+        InputProdCheckAndAdd(new ProductInfo(P.Gold, prodFormu1, H.Foundry));
+        InputProdCheckAndAdd(new ProductInfo(P.Gold, prodFormu2, H.Foundry));
+
+        InputProdCheckAndAdd(new ProductInfo(P.Silver, prodFormu1, H.Foundry));
+        InputProdCheckAndAdd(new ProductInfo(P.Silver, prodFormu2, H.Foundry));
+
+        //InputProdCheckAndAdd(new ProductInfo(P.Diamond, prodFormu1, H.Foundry));
+        //InputProdCheckAndAdd(new ProductInfo(P.Diamond, prodFormu2, H.Foundry));
+    }
+
+ 
+
+
+
 
     //todo replace mine as Foundry, silk
     //todo check Resin
@@ -150,16 +215,7 @@ public class Production  {
         InputProdCheckAndAdd(new ProductInfo(P.Henequen, null, listH));
     }
 
-    private void Rum()
-    {
-        InputElement element = new InputElement(P.SugarCane, 10);
-        InputElement tonelEle = new InputElement(P.Tonel, 1);
-
-        List<InputElement> prodFormu1 = new List<InputElement>() { element, _eleWoodComb, tonelEle };
-        List<InputElement> prodFormu2 = new List<InputElement>() { element, _eleCoalComb, tonelEle };
-        InputProdCheckAndAdd(new ProductInfo(P.Rum, prodFormu1, H.Rum));
-        InputProdCheckAndAdd(new ProductInfo(P.Rum, prodFormu2, H.Rum));
-    }
+   
 
     private void Meats()
     {

@@ -77,7 +77,6 @@ public class Book : General
         Build.Add(new BuildStat(H.HouseC, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 15));
         Build.Add(new BuildStat(H.HouseD, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 20));
 
-
         Build.Add(new BuildStat(H.Shack, 50, maxPeople: 5, capacity: 500));
 
         //farming
@@ -114,6 +113,11 @@ public class Book : General
         Build.Add(new BuildStat(H.Slat, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.Tilery, 400, 15, 5, 25, 5, maxPeople: 5));
 
+        Build.Add(new BuildStat(H.CannonParts, 400, 15, 5, 25, 5, maxPeople: 5));
+        Build.Add(new BuildStat(H.Rum, 400, 15, 5, 25, 5, maxPeople: 5));
+        Build.Add(new BuildStat(H.Chocolate, 400, 15, 5, 25, 5, maxPeople: 5));
+        Build.Add(new BuildStat(H.Ink, 400, 15, 5, 25, 5, maxPeople: 5));
+
         //Industry
         Build.Add(new BuildStat(H.Cloth, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.GunPowder, 400, 15, 5, 25, 5, maxPeople: 5));
@@ -123,6 +127,8 @@ public class Book : General
         Build.Add(new BuildStat(H.CoinStamp, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.Silk, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.SugarMill, 400, 15, 5, 25, 5, maxPeople: 5));
+
+        Build.Add(new BuildStat(H.Foundry, 400, 15, 5, 25, 5, maxPeople: 5));
 
 
         //Trade

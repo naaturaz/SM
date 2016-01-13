@@ -77,7 +77,9 @@ public class Structure : StructureParent
             LandZone1,
             rotationFacerIndex: RotationFacerIndex, materialKey: MaterialKey,
             instructionP: Instruction, BookedHome1: BookedHome1, PositionsFilled: PositionsFilled,
-            dispatch: Dispatch1, Families: Families);
+            dispatch: Dispatch1, Families: Families,
+            dollarsPay: DollarsPay
+            );
             
     }
 
