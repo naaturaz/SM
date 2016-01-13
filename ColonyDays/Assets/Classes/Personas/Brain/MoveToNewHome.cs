@@ -145,7 +145,8 @@ public class MoveToNewHome : Brain
                 return;
             }
 
-            _newHomeRouter = new CryRouteManager(old, _person.Home, _person, HPers.NewHome);
+            _newHomeRouter = new CryRouteManager(ReturnCorrectInitStructure(), 
+                _person.Home, _person, HPers.NewHome);
             newHomeRouteStart = true;
         }
         //person getting ready to move to new home 
@@ -155,12 +156,27 @@ public class MoveToNewHome : Brain
             //    Debug.Log(_person.MyId + " setting to new home");
 
             _routeToNewHome = _newHomeRouter.TheRoute;
-            _brain.CurrentTask = HPers.MovingToNewHome;
             GoMindTrue();
             _brain.RoutesWereStarted = false;
             _person.Body.Location = HPers.Home;
-            _brain.RealeaseIdle(HPers.MovingToNewHome);
+
         }
+    }
+
+    Structure ReturnCorrectInitStructure()
+    {
+        Structure dummy = null;
+
+        if (old != null)
+        {
+            return old;
+        }
+        //will create a dummy where the person is now
+        dummy = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy);
+        dummy.transform.position = _person.transform.position;
+        dummy.transform.LookAt(_person.Home.transform);
+        dummy.HandleLandZoning();
+        return dummy;
     }
 
     /// <summary>
@@ -176,7 +192,23 @@ public class MoveToNewHome : Brain
         var firstKeyOnList = _homeOldKeysList[0];
         old = BuildingPot.Control.Registro.AllBuilding[firstKeyOnList] as Structure;
         buildRouteToNewHome = true;
+
+        //so that state happens 
+        _brain.CurrentTask = HPers.MovingToNewHome;
+        //_brain.RealeaseIdle(HPers.MovingToNewHome);
     }
+
+    void InitValForNewHomeForNewSpawned()
+    {
+        _brain.GoMindState = false;
+        buildRouteToNewHome = true;
+        _brain.CurrentTask = HPers.MovingToNewHome;
+
+        //so the states works
+        _person.Body.GoingTo = HPers.Home;
+    }
+
+
 
     public void GoMindTrue()
     {
@@ -275,6 +307,12 @@ public class MoveToNewHome : Brain
 
     public void GetMyNameOutOfOldHomePeopleList()
     {
+        //addressing when is a brand new spwaned
+        if (_homeOldKeysList.Count==0)
+        {
+            return;
+        }
+
         var t = new List<string>() { _homeOldKeysList[0] };
         _homeOldKeysList.RemoveAt(0);
 
@@ -317,6 +355,11 @@ public class MoveToNewHome : Brain
         if (_oldHomeKey == "" && _homeOldKeysList.Count > 0 && _routeToNewHome.CheckPoints.Count == 0 && _brain.IAmHomeNow())
         {
             InitValForNewHome();
+        }
+
+        if (_person.Brain.JustSpawned() && _person.Home != null)
+        {
+            InitValForNewHomeForNewSpawned();
         }
     }
 

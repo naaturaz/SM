@@ -169,7 +169,7 @@ public class Realtor
             {
                 BookMyFamilyToNewBuild(person, newHome);
                 return true;
-            }     
+            }
         }
         return false;
     }
@@ -226,14 +226,10 @@ public class Realtor
     {
         //if doesnt have at least 1 family virgin.
         //means no booking is needed.
+        //todo change below
         if (!newHome.AtLeastHasOneVirginFamily())
         {
             return;
-        }
-
-        if (person.MyId.Contains("Scott"))
-        {
-            var t = "a";
         }
 
         Family myFamily = toBeBooked;
@@ -250,8 +246,6 @@ public class Realtor
             person.FamilyId = myFamily.FamilyId; 
         }
 
-        
-        
         myFamily.State = H.MovingToNewHome;
         //seeting person as the first person in the family
         myFamily.CanGetAnotherAdult(person);
@@ -264,6 +258,11 @@ public class Realtor
         MarkOneVirginFamilySpotOnNewHome(newHome, person);
 
         RestartControllerForMyFamily(myFamily, person);
+    }
+
+    public void BookNewPersonInNewHome(Person pers, Building building)
+    {
+        
     }
 
     /// <summary>

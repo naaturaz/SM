@@ -2543,4 +2543,15 @@ public class Brain
     }
 
 #endregion
+
+    internal bool JustSpawned()
+    {
+        if (_person.Body.Location==HPers.None && _person.Body.GoingTo==HPers.None &&
+            _person.Work == null && _person.FoodSource == null && _person.Religion == null &&
+            _person.Chill == null)
+        {
+            return true;
+        }
+        return false;
+    }
 }
