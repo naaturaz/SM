@@ -99,7 +99,15 @@ public class Person : General
     public Structure Work
     {
         get { return _work; }
-        set { _work = value; }
+        set
+        {
+            if (_work != null && value == null)
+            {
+                 Debug.Log("I calling to make work null.."+MyId);
+            }
+
+            _work = value;
+        }
     }
 
     public Structure FoodSource

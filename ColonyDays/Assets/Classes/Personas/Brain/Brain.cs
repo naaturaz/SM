@@ -1839,11 +1839,11 @@ public class Brain
         {
             var newWork =JobManager.GiveWork(_person);
 
-            //if (newWork == null)
-            //{
-            //    throw new Exception("new job null? why");
-            //}
-
+            //wont allow a null assignment if has a job already
+            if (newWork == null && _person.Work != null)
+            {
+                return;
+            }
             _person.Work = newWork;
         }
         UnivCounter(HPers.Work);
@@ -1955,7 +1955,7 @@ public class Brain
             BuildingPot.Control.AddToHousesWithSpace(oldHomeP.MyId);
 
             PersonPot.Control.RestartController();
-//            Debug.Log("Home added :" + oldHomeP.MyId);
+            Debug.Log("Home added :" + oldHomeP.MyId);
         }
     }
 

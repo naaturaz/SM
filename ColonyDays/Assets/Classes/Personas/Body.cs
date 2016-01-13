@@ -550,7 +550,7 @@ public class Body //: MonoBehaviour //: General
     {
         LoadPosition();
 
-        if (_routePoins.Count == 0)
+        if (_routePoins.Count == 0 || _currentRoutePoint > _routePoins.Count - 1)
         {
             var t = this;
         }
