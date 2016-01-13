@@ -53,7 +53,7 @@ public class Program : MonoBehaviour {
     // Use this for initialization
 	void Start ()
 	{
-	    ProfilerHere();
+	    //ProfilerHere();
 
         //loads main menu
         MyScreen1.Start();

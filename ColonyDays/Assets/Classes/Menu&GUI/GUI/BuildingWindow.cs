@@ -389,7 +389,7 @@ public class BuildingWindow : GUIElement {
         DestroyAndCleanShownOrders();
 
         var list = _building.ShowProductsOfBuild();
-        DisplayProducts(list, Root.orderShowGenBtn);
+        DisplayProducts(list, Root.showGenBtnLarge);
 
         ShowProductDetail();
     }
