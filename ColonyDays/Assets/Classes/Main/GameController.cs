@@ -16,6 +16,8 @@ public class GameController  {
     private float _dollars;//the dollars the player has 
     private static StartingCondition _startingCondition;
 
+    private int _lastYearWorkersSalaryWasPaid;
+
     static public ResumenInventory Inventory1
     {
         get { return _inventory; }
@@ -36,6 +38,14 @@ public class GameController  {
         }
     }
 
+    /// <summary>
+    /// Says the last year the salaray was paid 
+    /// </summary>
+    public int LastYearWorkersSalaryWasPaid
+    {
+        get { return _lastYearWorkersSalaryWasPaid; }
+        set { _lastYearWorkersSalaryWasPaid = value; }
+    }
 
 
     static public void LoadStartingConditions(StartingCondition startingCondition)
@@ -99,5 +109,20 @@ public class GameController  {
     {
         var inv = CreateInitialInv(_startingCondition);
         LoadIntoInv(inv);
+    }
+
+    public void Update()
+    {
+        CheckIfSalariesNeedToBePaid();
+    }
+
+    private void CheckIfSalariesNeedToBePaid()
+    {
+        if (LastYearWorkersSalaryWasPaid < Program.gameScene.GameTime1.Year
+            && Program.gameScene.GameTime1.Month1 == 1)
+        {
+            LastYearWorkersSalaryWasPaid = Program.gameScene.GameTime1.Year;
+            Dollars -= BuildingPot.Control.Registro.ReturnYearSalary();
+        }
     }
 }

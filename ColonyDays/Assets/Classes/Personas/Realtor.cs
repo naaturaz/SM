@@ -241,7 +241,8 @@ public class Realtor
         {
             //todo get right amt of kids
             //TODO create constructor that get right amt of kids and sets Id, and id on person
-            myFamily = new Family(2, newHome.MyId);
+            //for bokking purposes is ok like that this is a person that doesnt have any family
+            myFamily = new Family(3, newHome.MyId);
             myFamily.FamilyId = "Family:" + person.MyId;
             person.FamilyId = myFamily.FamilyId; 
         }
@@ -260,10 +261,34 @@ public class Realtor
         RestartControllerForMyFamily(myFamily, person);
     }
 
-    public void BookNewPersonInNewHome(Person pers, Building building)
+    /// <summary>
+    /// Books a a Person that doesnt have any family into a new place
+    /// 
+    /// so far used by Teens moving out of home 
+    /// </summary>
+    /// <param name="person"></param>
+    /// <param name="newHome"></param>
+    public static void BookNewPersonInNewHome(Person person, Building newHome)
     {
-        
+          //for bokking purposes is ok like that this is a person that doesnt have any family
+        var myFamily = new Family(3, newHome.MyId);
+        myFamily.FamilyId = "Family:" + person.MyId;
+        person.FamilyId = myFamily.FamilyId;
+
+        myFamily.State = H.MovingToNewHome;
+        //seeting person as the first person in the family
+        myFamily.CanGetAnotherAdult(person);
+        newHome.BookedHome1 = new BookedHome(newHome.MyId, myFamily);
+
+        BuildingPot.Control.Registro.ResaveOnRegistro(newHome.MyId);
+
+        MarkTheFamilyBooking(true, myFamily);
+        //MarkOneVirginFamilySpotOnNewHome(newHome, person);
+
+        RestartControllerForMyFamily(myFamily, person);
     }
+
+
 
     /// <summary>
     /// Will uncheck them from the controller so they can see their new Home Booked so theu can move there

@@ -136,7 +136,7 @@ public class ExportImport
 
         if (prodLo == null)
         {
-            Debug.Log("prod not found!:"+prod);
+            //Debug.Log("prod not found!:"+prod);
             return 0;
         }
 
@@ -157,7 +157,7 @@ public class ExportImport
 
         if (prodLo == null)
         {
-            Debug.Log("prod not found!:" + prod);
+            //Debug.Log("prod not found!:" + prod);
             return 0;
         }
 
@@ -203,7 +203,7 @@ public class ExportImport
 
         if (prodFound == null)
         {
-            Debug.Log("ReturnDensityKGM3 asked of not found prod:" + prod);
+            //Debug.Log("ReturnDensityKGM3 asked of not found prod:" + prod);
             return 0;
         }
 
@@ -216,7 +216,7 @@ public class ExportImport
 
         if (prodFound == null)
         {
-            Debug.Log("Prod Factor asked of not found prod:" + prod);
+            //Debug.Log("Prod Factor asked of not found prod:" + prod);
             return 0;
         }
         return prodFound.ProduceFactor;
@@ -228,7 +228,7 @@ public class ExportImport
 
         if (prodFound == null)
         {
-            Debug.Log("ReturnPrice asked of not found prod:" + prod);
+            //Debug.Log("ReturnPrice asked of not found prod:" + prod);
             return 0;
         }
         return prodFound.Price;

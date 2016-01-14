@@ -137,6 +137,7 @@ public class GameScene : General {
             return;
         }
 
+        GameController1.Update();
         CreateDummySpawnPoint();
 
         //var onS = PersonPot.PersonController.All.ElementAt(0).Value.Geometry.GetComponent<OnScreen>();

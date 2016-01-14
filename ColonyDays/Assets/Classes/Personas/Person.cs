@@ -334,7 +334,8 @@ public class Person : General
             obj = (Person) Resources.Load(Root.personaFeMale1, typeof (Person));
         }
 
-        obj = (Person) Instantiate(obj, obj.AssignRandomIniPosition(), Quaternion.identity);
+        SMe me = new SMe();
+        obj = (Person) Instantiate(obj, me.IniTerr.MathCenter, Quaternion.identity);
 
         obj.IsLoading = true;
         obj.InitLoadedPerson(pF);
@@ -526,11 +527,10 @@ public class Person : General
     /// If origin is not specified will assume is CamControl.CAMRTS.hitFront.point the center of terrain
     /// </summary>
     /// <param name="howFar">How far will go</param>
-    public Vector3 AssignRandomIniPosition(Vector3 origin = new Vector3(), int howFar = 8)
+    public Vector3 AssignRandomIniPosition(Vector3 origin = new Vector3(), float howFar = 1)
     {
         if (origin == new Vector3())
         {
-            //origin = m.IniTerr.MathCenter;
             origin = ReturnIniPos();
         }
 
@@ -545,7 +545,7 @@ public class Person : General
             origin = ReturnRandomPos(originalPoint, howFar);
         }
         //will add one unit to how far so can move further
-        howFar+=1;
+        howFar+=0.1f;
 
         if (MeshController.CrystalManager1.IntersectAnyLine(ReturnIniPos(), origin) || !IsOnTerrain(origin))
         {
@@ -589,18 +589,25 @@ public class Person : General
 
         if (build != null)
         {
-            return build.transform.position;
+            return build.SpawnPoint.transform.position;
         }
         build = BuildingPot.Control.Registro.ReturnFirstThatContains("Storage");
         if (build != null)
         {
-            return build.transform.position;
+            return build.SpawnPoint.transform.position;
         }
         //all houses shoud contain House 
         //if bug null ref
         //is bz the buildigns houses are all shacks
+        //or still on dev 
         build = BuildingPot.Control.Registro.ReturnFirstThatContains("House");
-        return build.transform.position;
+        if (build != null)
+        {
+            return build.SpawnPoint.transform.position;
+        }
+        //just here bz small town still not spwaning
+        //todo remove after small town is implemented 
+        return m.IniTerr.MathCenter;
     }
 
     /// <summary>
@@ -699,7 +706,7 @@ public class Person : General
 
         if (UPerson.IsMajor(_age) && !_isMajor)
         {
-            //ReachAgeMajority();
+            ReachAgeMajority();
         }
 
         CheckHappiness();
@@ -773,10 +780,13 @@ public class Person : General
             var t = this;
         }
 
+        var place = PlaceWhereIWillLiveToLive();
         //will only will mark as majority age reached if he could fit a house 
-        if (WouldIFindAPlaceToLive())
+        if (place != null)
         {
-            //print("Age Major: " + MyId);
+            Realtor.BookNewPersonInNewHome(this, place);
+
+            print("Age Major: " + MyId);
             RemoveMeFromOldHome();
             _isMajor = true;
             Brain.MajorAge.MarkMajorityAgeReached();
@@ -789,12 +799,12 @@ public class Person : General
     /// Will retrun true if a house was find that can fit a Adult 
     /// </summary>
     /// <returns></returns>
-    private bool WouldIFindAPlaceToLive()
+    private Building PlaceWhereIWillLiveToLive()
     {
         //means that anotehr person is ins the process of finding a new home 
         if (!string.IsNullOrEmpty(PersonPot.Control.IsAPersonHomeLessNow))
         {
-            return false;
+            return null;
         }
 
         var buildings = UBuilding.ReturnBuildings(BuildingPot.Control.HousesWithSpace);
@@ -803,11 +813,11 @@ public class Person : General
         {
             if (buildings[i].WouldAdultFitInThisHouseInAFamily(this))
             {
-                return true;
+                return buildings[i];
             }
         }
 
-        return false;
+        return null;
     }
 
     /// <summary>

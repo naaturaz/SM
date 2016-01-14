@@ -17,9 +17,12 @@ public class Food
 
     private void LoadNutriVals()
     {
+        //todo add all
         _nValues.Add(new NutritionValue(P.Bean, 0.9f));
         _nValues.Add(new NutritionValue(P.Potato, 0.7f));
         _nValues.Add(new NutritionValue(P.SugarCane, 0.5f));
+        _nValues.Add(new NutritionValue(P.Sugar, 0.5f));
+
         _nValues.Add(new NutritionValue(P.Corn, 0.6f));
 
         _nValues.Add(new NutritionValue(P.Chicken, 2f));
@@ -29,7 +32,6 @@ public class Food
 
         _nValues.Add(new NutritionValue(P.Fish, 3f));
 
-        _nValues.Add(new NutritionValue(P.Sugar, 0.5f));
 
         _nValues.OrderBy(a => a.NutritionVal).ToList();
     }

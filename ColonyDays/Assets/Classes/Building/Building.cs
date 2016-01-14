@@ -2980,6 +2980,8 @@ public class BookedHome
     /// </summary>
     public void ClearBooking()
     {
+
+
         Family.State = H.None;
         Building = "";
         Family.DeleteFamily();
@@ -3038,6 +3040,7 @@ public class BookedHome
             }
             
             //just addressingn a bugg tht book can happen 
+            Debug.Log("Book cleared:"+personToRemove.MyId);
             ClearBooking();
             MakeOldHomeFamilyVarVirgin(personToRemove);
 

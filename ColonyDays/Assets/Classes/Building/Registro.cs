@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.CodeDom;
+using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -75,7 +76,26 @@ public class Registro : MonoBehaviour
     /// <returns></returns>
     public Structure ReturnFirstThatContains(string param)
     {
-        return (Structure)AllBuilding.First(a => a.Value.MyId.Contains(param)).Value;
+        var list = AllBuilding.ToList();
+        return (Structure)list.Find(a => a.Value.MyId.Contains(param)).Value;
+    }
+
+    public float ReturnYearSalary()
+    {
+        var works = AllBuilding.Where(
+            a => a.Value.MyId.Contains("House") == false &&
+                a.Value.MyId.Contains("Storage") == false &&
+                a.Value.MyId.Contains("Church") == false).ToList();
+
+        if (works.Count==0)
+        {
+            return 0;
+        }
+
+        var avg = works.Average(a => a.Value.DollarsPay);
+        var workers = works.Sum(a => a.Value.PeopleDict.Count);
+
+        return (float)avg*workers;
     }
 
 
