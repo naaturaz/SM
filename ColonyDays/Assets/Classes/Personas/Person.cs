@@ -440,6 +440,11 @@ public class Person : General
         IsLoading = false;
     }
 
+    public void ReloadBodyLight()
+    {
+        _body.ReloadLight();
+    }
+
     private void RecreateProfession(PersonFile pF)
     {
         if (string.IsNullOrEmpty(pF._work))
@@ -764,9 +769,7 @@ public class Person : General
         return false;
     }
 
-    static int debug = 0;
     public PersonReport PersonReport = new PersonReport();
-
     /// <summary>
     /// Will contain all the functions to execute for a person when reach the Age Majority 
     /// 
@@ -774,24 +777,18 @@ public class Person : General
     /// </summary>
     void ReachAgeMajority()
     {
-        if (debug >= 3)
-        {
-            //Program.gameScene.GameSpeed = 0;
-            var t = this;
-        }
-
         var place = PlaceWhereIWillLiveToLive();
         //will only will mark as majority age reached if he could fit a house 
         if (place != null)
         {
+            RemoveMeFromOldHome();
+
             Realtor.BookNewPersonInNewHome(this, place);
 
             print("Age Major: " + MyId);
-            RemoveMeFromOldHome();
             _isMajor = true;
             Brain.MajorAge.MarkMajorityAgeReached();
             PersonPot.Control.IsAPersonHomeLessNow = MyId;
-            debug++;
         }
     }
 

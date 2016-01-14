@@ -15,7 +15,7 @@ using System.Collections.Generic;
 /// 
 /// It couldnt be public bz XML serializer will find redundancy
 /// </summary>
-public class MoveToNewHome : Brain
+public class MoveToNewHome
 {
 
     private Brain _brain;
@@ -30,6 +30,7 @@ public class MoveToNewHome : Brain
 
     private Person _person;
     private Structure currStructure;
+    private bool _isLoadingFromFile;
 
     public MoveToNewHome() { }
 
@@ -74,6 +75,16 @@ public class MoveToNewHome : Brain
             list.RemoveAt(0);
         }
         list.Clear();
+    }
+
+    public void ActionsLoading()
+    {
+        ////then needs to redo the route
+        //if (_brain.CurrentTask == HPers.MovingToNewHome)
+        //{
+        //    _isLoadingFromFile = true;
+        //    InitValForLoad();
+        //}
     }
 
     /// <summary>
@@ -137,8 +148,6 @@ public class MoveToNewHome : Brain
         SearchForNewHome();
         if (!newHomeRouteStart)
         {
-            //SearchForNewHomeAgain();
-
             //_person.Home == null person is in the proccess of getting a new house   
             if (_person.Home == null)
             {
@@ -151,7 +160,7 @@ public class MoveToNewHome : Brain
         }
         //person getting ready to move to new home 
         if (_newHomeRouter.IsRouteReady && _routeToNewHome.CheckPoints.Count == 0
-            && _brain.IAmHomeNow())
+            && (_brain.IAmHomeNow() || _isLoadingFromFile))
         {
             //    Debug.Log(_person.MyId + " setting to new home");
 
@@ -160,7 +169,15 @@ public class MoveToNewHome : Brain
             _brain.RoutesWereStarted = false;
             _person.Body.Location = HPers.Home;
 
+            AddressFinalStepOfLoading();
         }
+    }
+
+    private void AddressFinalStepOfLoading()
+    {
+        _isLoadingFromFile = false;
+        //body needs to be reloaded bz lost all its stuff 
+        _person.ReloadBodyLight();
     }
 
     Structure ReturnCorrectInitStructure()
@@ -179,11 +196,26 @@ public class MoveToNewHome : Brain
         return dummy;
     }
 
+    private void InitValForLoad()
+    {
+        _brain.GoMindState = false;
+
+        var firstKeyOnList = _homeOldKeysList[0];
+        old = BuildingPot.Control.Registro.AllBuilding[firstKeyOnList] as Structure;
+        buildRouteToNewHome = true;
+
+        //so that state happens 
+        _brain.CurrentTask = HPers.MovingToNewHome;
+    }
+
     /// <summary>
     /// This is the method that starts the process to moving to new home
     /// </summary>
     private void InitValForNewHome()
     {
+        _routeToNewHome.CheckPoints.Clear();
+
+
         if (_brain.PullOldHome() != null && _brain.PullOldHome() == _person.Home)
         {   //means is moving towards the same house 
             return;
@@ -200,11 +232,13 @@ public class MoveToNewHome : Brain
 
         //so that state happens 
         _brain.CurrentTask = HPers.MovingToNewHome;
-        //_brain.RealeaseIdle(HPers.MovingToNewHome);
     }
 
     void InitValForNewHomeForNewSpawned()
     {
+        _routeToNewHome.CheckPoints.Clear();
+
+
         _brain.GoMindState = false;
         buildRouteToNewHome = true;
         _brain.CurrentTask = HPers.MovingToNewHome;
@@ -213,35 +247,10 @@ public class MoveToNewHome : Brain
         _person.Body.GoingTo = HPers.Home;
     }
 
-
-
     public void GoMindTrue()
     {
         _brain.GoMindState = true;
         //if not wauting and cant reroute now then im done 
-        //PersonPot.Control.DoneReRoute(_person.MyId);
-    }
-
-    /// <summary>
-    /// Will keep searching for new home until old is not = to Person.Home
-    /// 
-    /// This is here to address the case in where a persons home is destroyed twice or more
-    /// </summary>
-    private void SearchForNewHomeAgain()
-    {
-        var oldFam = old.FindMyFamily(_person);
-
-        if (oldFam == null)
-        {
-            return;
-        }
-
-        //if is still in the same house and same family. then can Search again.
-        //this functionity was left here so address what is explain in the summary
-        while (old == _person.Home && _person.FamilyId == oldFam.FamilyId)
-        {
-            SearchForNewHome();
-        }
     }
 
     /// <summary>
@@ -303,7 +312,6 @@ public class MoveToNewHome : Brain
     {
         newHomeRouteStart = false;
         _newHomeRouter.IsRouteReady = true;
-        _routeToNewHome.CheckPoints.Clear();
 
         //Debug.Log("CleanUpRouteToNewHome goMindState");
         searchedNewHome = 0;

@@ -128,6 +128,7 @@ public class Brain
 
         MoveToNewHome.HomeOldKeysList = pF._brain.MoveToNewHome.HomeOldKeysList;
         MoveToNewHome.OldHomeKey = pF._brain.MoveToNewHome.OldHomeKey;
+        MoveToNewHome.ActionsLoading();
 
         //is a shackBuilder , or its house was destroyed and father or mom is buiding shack
         if (_person.Home == null)
