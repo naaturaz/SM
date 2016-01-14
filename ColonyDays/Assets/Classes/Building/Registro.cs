@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 //mono only use to print. can be remove
 //this class used to be Rectangle.cs
@@ -65,6 +66,17 @@ public class Registro : MonoBehaviour
 
     public Registro() { }
 
+    /// <summary>
+    /// Will return the first Structure that cointains param
+    /// 
+    /// So if u pass as param 'dock' will try to find the first dock
+    /// </summary>
+    /// <param name="param"></param>
+    /// <returns></returns>
+    public Structure ReturnFirstThatContains(string param)
+    {
+        return (Structure)AllBuilding.First(a => a.Value.MyId.Contains(param)).Value;
+    }
 
 
 /// <summary>

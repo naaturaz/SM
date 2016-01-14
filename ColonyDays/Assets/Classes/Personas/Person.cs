@@ -376,7 +376,7 @@ public class Person : General
             obj = (Person) Resources.Load(Root.personaMale1, typeof (Person));
         }
 
-        obj = (Person) Instantiate(obj, obj.AssignRandomIniPosition(), Quaternion.identity);
+        obj = (Person)Instantiate(obj, iniPos, Quaternion.identity);
         obj.Gender = obj.OtherGender();
         obj.InitObj(1);
         obj.Geometry.GetComponent<Renderer>().sharedMaterial = Resources.Load(Root.personGuy1) as Material;
@@ -531,7 +531,7 @@ public class Person : General
         if (origin == new Vector3())
         {
             //origin = m.IniTerr.MathCenter;
-            origin = CamControl.CAMRTS.hitFront.point;
+            origin = ReturnIniPos();
         }
 
         //so origin is not changed in every recursive
@@ -544,12 +544,8 @@ public class Person : General
         {
             origin = ReturnRandomPos(originalPoint, howFar);
         }
-
-        //_personBounds.Clear();
-        ////*4 so Dummy with SwpanPoint has room to spawn 
-        //_personBounds = UPoly.CreatePolyFromVector3(origin, PersonDim*4, PersonDim*4);
-        //UVisHelp.CreateHelpers(_personBounds, Root.blueCube);
-        //if bound collide will recurse
+        //will add one unit to how far so can move further
+        howFar+=1;
 
         if (MeshController.CrystalManager1.IntersectAnyLine(ReturnIniPos(), origin) || !IsOnTerrain(origin))
         {
@@ -558,7 +554,7 @@ public class Person : General
             {
                 throw new Exception("Infinite loop");
             }
-            origin = AssignRandomIniPosition(origin);
+            origin = AssignRandomIniPosition(origin, howFar);
         }
 
         originalPoint = new Vector3();
@@ -584,12 +580,27 @@ public class Person : General
         {
             return Home.SpawnPoint.transform.position;
         }
+        return ReturnFirstDockOrFirstStorage();
+    }
 
-        if (IsOnTerrain(transform.position))
+    Vector3 ReturnFirstDockOrFirstStorage()
+    {
+        var build = BuildingPot.Control.Registro.ReturnFirstThatContains("Dock");
+
+        if (build != null)
         {
-            return transform.position;
+            return build.transform.position;
         }
-        return m.MeshController.iniTerr.MathCenter;
+        build = BuildingPot.Control.Registro.ReturnFirstThatContains("Storage");
+        if (build != null)
+        {
+            return build.transform.position;
+        }
+        //all houses shoud contain House 
+        //if bug null ref
+        //is bz the buildigns houses are all shacks
+        build = BuildingPot.Control.Registro.ReturnFirstThatContains("House");
+        return build.transform.position;
     }
 
     /// <summary>

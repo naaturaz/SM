@@ -2289,6 +2289,8 @@ public class Brain
         }
         else if ((buildFunc == HPers.Work ))
         {
+            RemoveAndAddPositionsToJob();
+
             _person.Work = null;
             _person.ProfessionProp = new Profession();//so it cleans profession
 
@@ -2367,6 +2369,7 @@ public class Brain
             return;
         }
 
+        MoveToNewHome.RemovePeopleDict(p);
         //Debug.Log("Blaclisted:"+p);
         _blackList = AddToList(_blackList, p);
         BridgeMarkedAction(p);
@@ -2465,6 +2468,8 @@ public class Brain
         {
             Partido = false;
             RemoveFromAllPeopleDict();
+            _person.DestroySafe();
+            PersonPot.Control.All.Remove(_person);
         }
     }
 
@@ -2483,8 +2488,6 @@ public class Brain
                 DestroyOldBuildIfEmptyOrShack(all[i].MyId);
             }
         }
-        _person.DestroySafe();
-        PersonPot.Control.All.Remove(_person);
     }
 
 #endregion

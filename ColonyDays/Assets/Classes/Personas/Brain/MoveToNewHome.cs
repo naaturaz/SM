@@ -69,7 +69,7 @@ public class MoveToNewHome : Brain
         while (list.Count > 0)
         {
             var oldBuild = list[0];
-            RemovePeopleList(oldBuild);
+            RemovePeopleDict(oldBuild);
             _brain.DestroyOldBuildIfEmptyOrShack(oldBuild);
             list.RemoveAt(0);
         }
@@ -110,7 +110,7 @@ public class MoveToNewHome : Brain
     /// Removing people from the 'oldBuild' Building object  PeopleDict Dictionary
     /// So we can destroy that building 
     /// </summary>
-    private void RemovePeopleList(string oldBuild)
+    public void RemovePeopleDict(string oldBuild)
     {
         if (!BuildingPot.Control.Registro.AllBuilding.ContainsKey(oldBuild))
         {
