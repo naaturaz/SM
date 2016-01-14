@@ -379,15 +379,6 @@ public class Brain
         GoToNewHome();
     }
 
-    void RemoveFromSystemIfNeed()
-    {   
-        //so they dont leave home and hold the System until they come back
-        if (!IAmHomeNow())
-        {
-            PersonPot.Control.DoneReRoute(_person.MyId);
-        }
-    }
-
     /*Promts are created with the purpose of allow to be able to move arond only with 2 builds
      * If the person is ready to move to a new state and that building we are going to is not null is all good...
      * But if is null the promt will make Brain vars equal so next condition can be executed . and so on 
@@ -822,7 +813,16 @@ public class Brain
 
     public void Update()
     {
+        DefineIfWaiting();
+
         UpdateRouters();
+
+        //if wating for rerouting must wait at home
+        if (_waiting)
+        {
+            ReRoutesDealer();
+            return;
+        }
 
         if (goMindState)
         { MindState(); }
@@ -831,11 +831,6 @@ public class Brain
 
         StartRoutes();
         SetFinalRoutes();
-
-        ReRoutesDealer();
-        //if wating for rerouting must wait at home
-        //if (_wating)
-        //{ return; }
 
         MoveToNewHome.BuildRouteToNewHomeRoutine();
         SearchAgain();
@@ -856,54 +851,42 @@ public class Brain
 
 
     private int _timesCall;
-    private bool _wating;//waiting to reroute 
+
+    //u are only waiting if u are checked in ready to reroute
+    private bool _waiting;//waiting to reroute 
 
     /// <summary>
     /// Created to the Update doesnt run and ruins the Raoutes Start Booleans
     /// </summary>
     private void DefineIfWaiting()
     {
+        if (_waiting)
+        {
+            return;
+        }
+
         if (IJustSpawn() || IAmHomeNow())
         {
-            if (PersonPot.Control.CanIReRouteNow(_person.MyId))
+            if (PersonPot.Control.CanIReRouteNow())
             {
-
-            }
-            else
-            {
-                PlaceMeOnWaiting();
+                PersonPot.Control.CheckMeOnSystem(_person.MyId);
+                _waiting = true;
             }
         }
     }
-
-    /// <summary>
-    /// will place paerson on Wiaint list, and wiaint true
-    /// </summary>
-    public void PlaceMeOnWaiting()
-    {
-        _wating = true;
-        PersonPot.Control.AddToWaiting(_person.MyId);
-    }
-
 
     void ReRoutesDealer()
     {
         //so things get started 
         if (IJustSpawn() || IAmHomeNow() || IsInLimbo())
         {
-            ////there is room for me to check now on System
-            //if (PersonPot.Control.CanIReRouteNow(_person.MyId))
-            //{
+            //there is room for me to check now on System
+            if (PersonPot.Control.OnSystemNow(_person.MyId) && _waiting)
+            {
                 //redo routes to see if some change 
                 ReRoutes();
-            //    ReRouteCallsCounter();
-            //}
-            //else
-            //{
-            //    _timesCall = 0;
-            //    //_wating = true;
-            //    //PersonPot.Control.AddToWaiting(_person.MyId);
-            //}
+                ReRouteCallsCounter();
+            }
         }
     }
 
@@ -925,27 +908,22 @@ public class Brain
     
     public void YourTurnToReRoute()
     {
-        
-        _wating = false;
         Update();
     }
 
     /// <summary>
-    /// So a person is not forver in the System
+    /// So a person can ask twice for rerouting then thats it 
     /// </summary>
     void ReRouteCallsCounter()
     {
         _timesCall++;
-        if (!_wating && _timesCall > 100)
+        if (_waiting && _timesCall > 2)
         {
             PersonPot.Control.DoneReRoute(_person.MyId);//so another people can use the Spot 
             _timesCall = 0;
+            _waiting = false;
         }
     }
-
-
-
-
 
 #endregion
 

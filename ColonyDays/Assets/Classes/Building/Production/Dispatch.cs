@@ -516,7 +516,8 @@ public class Dispatch
             !building.Inventory.IsHasEnoughToCoverThisIngredient(ing))
         {
             RemoveEvacuationOrder(order.ID);
-            Debug.Log("Removed evac order:" + order.Product);
+            Debug.Log("Removed evac order:" + order.Product+".date"+
+                Program.gameScene.GameTime1.TodayYMD());
 
             //so people pass check in with Queues and this building finnaly gets removed 
             if (building.Inventory.IsEmpty())

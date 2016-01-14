@@ -36,6 +36,10 @@ public class PersonSaveLoad : PersonPot {
         return res;
     }
 
+    /// <summary>
+    /// Gathering data to savePerson Controller
+    /// </summary>
+    /// <returns></returns>
     PersonControllerSaveLoad GetAllFromPersonController()
     {
         PersonControllerSaveLoad res = new PersonControllerSaveLoad();
@@ -49,7 +53,6 @@ public class PersonSaveLoad : PersonPot {
         res.BuildersManager = PersonPot.Control.BuildersManager1;
         res.RoutesCache = Control.RoutesCache1;
 
-        res.Waiting = Control.Waiting;
         res.OnSystemNow1 = Control.OnSystemNow1;
 
         return res;

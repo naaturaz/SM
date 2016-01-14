@@ -150,6 +150,11 @@ public class PersonController : PersonPot
         Program.MouseListener.ApplyChangeScreenResolution();
     }
 
+
+    /// <summary>
+    /// Loads Person controller
+    /// </summary>
+    /// <param name="pData"></param>
     void LoadFromFile(PersonData pData)
     {
         //persons
@@ -171,7 +176,6 @@ public class PersonController : PersonPot
 
         RoutesCache1 = pData.PersonControllerSaveLoad.RoutesCache;
 
-        Waiting = pData.PersonControllerSaveLoad.Waiting;
         OnSystemNow1 = pData.PersonControllerSaveLoad.OnSystemNow1;
     }
 
@@ -245,7 +249,7 @@ public class PersonController : PersonPot
 
         _buildersManager.Update();
 
-        CheckIfSystemHasRoom();
+        //CheckIfSystemHasRoom();
         //CheckIfPersonIsBeingOnSystemTooLong();
 
         if (init)
@@ -550,27 +554,27 @@ public class PersonController : PersonPot
     //People will reroute if they had not reroute already in this cycle and 
     //if queue has space. Other wise person should wait at home 
 
-    List<string> _waiting = new List<string>();
     private List<CheckedIn> _onSystemNow = new List<CheckedIn>();
-    private int _systemCap = 4;//2//4
-    private int _allowOnSystem = 8;//seconds
-
-    public List<string> Waiting
-    {
-        get { return _waiting; }
-        set { _waiting = value; }
-    }
-
+    
+    //the number is not inclusinve so if u put a 3 will alow 2
+    private int _systemCap = 2;//2//4//amt of person
+    
     public List<CheckedIn> OnSystemNow1
     {
         get { return _onSystemNow; }
         set { _onSystemNow = value; }
     }
 
-  
-
     public void CheckMeOnSystem(string id)
     {
+        var find = _onSystemNow.Find(a => a.Id == id);
+
+        if (find != null)
+        {
+            //was checked in already
+            return;
+        }
+
         _onSystemNow.Add(new CheckedIn(id, Time.time));
     }
 
@@ -579,7 +583,7 @@ public class PersonController : PersonPot
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    bool OnSystemNow(string id)
+    public bool OnSystemNow(string id)
     {
         for (int i = 0; i < _onSystemNow.Count; i++)
         {
@@ -592,14 +596,6 @@ public class PersonController : PersonPot
         return false;
     }
 
-    public void AddToWaiting(string id)
-    {
-        if (!_waiting.Contains(id) && !OnSystemNow(id))
-        {
-            _waiting.Add(id);
-        }
-    }
-
     public void DoneReRoute(string p)
     {
         for (int i = 0; i < _onSystemNow.Count; i++)
@@ -607,81 +603,14 @@ public class PersonController : PersonPot
             if (_onSystemNow[i].Id == p)
             {
                 _onSystemNow.RemoveAt(i);
-                _waiting.Remove(p);//in case was there duplicated 
                 return;
             }
         }
-        CheckIfSystemHasRoom();
     }
 
-    /// <summary>
-    /// If system Has room will pull person from _waiting list
-    /// </summary>
-    private void CheckIfSystemHasRoom()
+    internal bool CanIReRouteNow()
     {
-        if (_onSystemNow.Count < _systemCap)
-        {
-            for (int i = 0; i < _waiting.Count; i++)
-            {
-                if (i < _systemCap && _onSystemNow.Count < _systemCap)
-                {
-                    CheckMeOnSystem(_waiting[i]);
-                    PersonTurn(_waiting[i]);
-
-                    if (i >= _waiting.Count)
-                    {
-                        return;
-                    }
-
-                    _waiting.RemoveAt(i);
-                    i--;
-                }
-                else return;
-            }
-        }
-    }
-
-    ///// <summary>
-    ///// Will be taken out and put inwaiting list. to address person taking forever to ReDoRoutes
-    ///// </summary>
-    //void CheckIfPersonIsBeingOnSystemTooLong()
-    //{
-    //    for (int i = 0; i < _onSystemNow.Count; i++)
-    //    {
-    //        if (Time.time > _onSystemNow[i].Time  +_allowOnSystem)
-    //        {
-    //            var idP = _onSystemNow[i].Id;
-    //            var pers = Family.FindPerson(idP);
-
-    //            if (!pers.Brain.IAmHomeNow())
-    //            {
-    //                _onSystemNow.RemoveAt(i);
-    //                Family.FindPerson(idP).Brain.PlaceMeOnWaiting();
-    //            }
-
-    //            return;
-    //        }
-    //    }
-    //}
-
-
-    /// <summary>
-    /// Will call the Person.Brain to Reroute 
-    /// </summary>
-    /// <param name="idP"></param>
-    void PersonTurn(string idP)
-    {
-        var pers = Family.FindPerson(idP);
-
-        if (pers!=null)
-        {
-            pers.Brain.YourTurnToReRoute();
-        }
-    }
-
-    internal bool CanIReRouteNow(string p)
-    {
-        return OnSystemNow(p);
+        return OnSystemNow1.Count < _systemCap;
     }
 
 

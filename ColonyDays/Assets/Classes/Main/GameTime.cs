@@ -259,6 +259,11 @@ public class GameTime
     }
 
 
+
+    internal string TodayYMD()
+    {
+        return Year + "-" + Month1 + "-" + Day;
+    }
 }
 
 /// <summary>
