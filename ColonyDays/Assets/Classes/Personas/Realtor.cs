@@ -268,11 +268,20 @@ public class Realtor
     /// </summary>
     /// <param name="person"></param>
     /// <param name="newHome"></param>
-    public static void BookNewPersonInNewHome(Person person, Building newHome)
+    public static void BookNewPersonInNewHome(Person person, Building newHome, string familyIDP)
     {
-          //for bokking purposes is ok like that this is a person that doesnt have any family
+        //for bokking purposes is ok like that this is a person that doesnt have any family
         var myFamily = new Family(3, newHome.MyId);
-        myFamily.FamilyId = "Family:" + person.MyId;
+
+        //if is empty will create one
+        if (string.IsNullOrEmpty(familyIDP))
+        {
+            myFamily.FamilyId = "Family:" + person.MyId;
+        }//other wise will used passed val
+        else myFamily.FamilyId = familyIDP; 
+
+        
+        
         person.FamilyId = myFamily.FamilyId;
 
         myFamily.State = H.MovingToNewHome;
@@ -302,14 +311,11 @@ public class Realtor
             PersonPot.Control.RestartControllerForPerson(myFamily.Kids[i]);
         }
 
-        if (personB.MyId != myFamily.Mother)
-        {
+       
             PersonPot.Control.RestartControllerForPerson(myFamily.Mother);
-        }
-        else if (personB.MyId != myFamily.Father)
-        {
+      
             PersonPot.Control.RestartControllerForPerson(myFamily.Father);
-        }
+        
     }
 
     /// <summary>

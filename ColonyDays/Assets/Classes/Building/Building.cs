@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using Random = UnityEngine.Random;
 
@@ -1373,12 +1374,13 @@ public class Building : General, Iinfo
     /// </summary>
     /// <param name="asker"></param>
     /// <returns></returns>
-    public bool WouldAdultFitInThisHouseInAFamily(Person asker)
+    public bool WouldAdultFitInThisHouseInAFamily(Person asker, ref string familyID)
     {
         for (int i = 0; i < Families.Length; i++)
         {
             if (Families[i].WouldAdultFitInThisFamily(asker))
             {
+                familyID = Families[i].FamilyId;
                 asker.PersonReport.whoGreenMeToBecomeMajor = MyId;
                 return true;
             }
@@ -2308,14 +2310,21 @@ public class Building : General, Iinfo
         var familyID = newHome.BookedHome1.Family.FamilyId;
         Family toBeFill = ReturnFamilyByID(familyID);
 
+        //means he is a teen.
+        //if he booked here is bz he either fits in an exisitng family
+        //or a emptyVirign family exist here 
+
+        //if this is null is bz that family doesnt exist in that building so
+        //u can select a virgin family in that building then 
         if (toBeFill == null)
         {
-            throw new Exception(newP.MyId + " . " +newHome.MyId);
+            //toBeFill = newHome.BookedHome1.Family;
+            //throw new Exception(newP.MyId + " . " +newHome.MyId);
         }
 
         newP.IsBooked = false;
-        AssignBookedRole(newP, toBeFill);
-        toBeFill.Home = MyId;//bz the id if is booked is not saved 
+        AssignBookedRole(newP, toBeFill, familyID);
+        //toBeFill.Home = MyId;//bz the id if is booked is not saved 
 
         newP.transform.parent = transform;
 
@@ -2323,16 +2332,18 @@ public class Building : General, Iinfo
         BuildingPot.Control.Registro.ResaveOnRegistro(MyId);
     }
 
-    void AssignBookedRole(Person newP, Family toBeFill)
+    void AssignBookedRole(Person newP, Family toBeFill, string familyID)
     {
-//        print("BookedRole:" + newP.MyId);
-
         if (toBeFill == null)
         {
-            print("toBeFill == nul :" + newP.MyId);
-            //return;
+            toBeFill = FindVirginFamily();
+            if (toBeFill == null)
+            {
+                print("toBeFill == nul :" + newP.MyId);
+                throw new Exception("At least a family should be Virgin");
+            }
         }
-
+        toBeFill.FamilyId = familyID;
 
         for (int i = 0; i < BookedHome1.Family.Kids.Count; i++)
         {
@@ -2341,7 +2352,6 @@ public class Building : General, Iinfo
                 toBeFill.Kids.Add(newP.MyId);
             }
         }
-
         if (newP.MyId == BookedHome1.Family.Father)
         {
             toBeFill.Father = newP.MyId;

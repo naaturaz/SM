@@ -40,17 +40,9 @@ public class MajorityAgeReached  {
 
         _moveToNewHome.AddToHomeOldKeysList();
         _person.transform.parent = null;
-        _person.FamilyId = "";
         _person.Home = null;
 
-        if (_person.MyId.Contains("460"))
-        {
-            var t = this;
-        }
-
-        //ShacksManager.NewAdultIsUp();
         Debug.Log(_person.MyId + " reached majority");
-
         PersonPot.Control.RestartControllerForPerson(_person.MyId);
     }
 

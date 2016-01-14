@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Security.Policy;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -777,13 +779,17 @@ public class Person : General
     /// </summary>
     void ReachAgeMajority()
     {
-        var place = PlaceWhereIWillLiveToLive();
+        //the family ID of the place he is gonna be booked
+        //will be empty if is Virgin Family
+        var familyID = "";//will be returned below 
+
+        var place = PlaceWhereIWillLiveToLive(ref familyID);
         //will only will mark as majority age reached if he could fit a house 
         if (place != null)
         {
             RemoveMeFromOldHome();
 
-            Realtor.BookNewPersonInNewHome(this, place);
+            Realtor.BookNewPersonInNewHome(this, place, familyID);
 
             print("Age Major: " + MyId);
             _isMajor = true;
@@ -796,7 +802,7 @@ public class Person : General
     /// Will retrun true if a house was find that can fit a Adult 
     /// </summary>
     /// <returns></returns>
-    private Building PlaceWhereIWillLiveToLive()
+    private Building PlaceWhereIWillLiveToLive(ref string familyID)
     {
         //means that anotehr person is ins the process of finding a new home 
         if (!string.IsNullOrEmpty(PersonPot.Control.IsAPersonHomeLessNow))
@@ -808,7 +814,10 @@ public class Person : General
 
         for (int i = 0; i < buildings.Count; i++)
         {
-            if (buildings[i].WouldAdultFitInThisHouseInAFamily(this))
+            //need to see if will fit there and if is not booked 
+            if (buildings[i].WouldAdultFitInThisHouseInAFamily(this, ref familyID) && 
+                //if is null is bz is brand new 
+                (buildings[i].BookedHome1 == null || !buildings[i].BookedHome1.IsBooked()))
             {
                 return buildings[i];
             }
