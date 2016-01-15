@@ -2262,6 +2262,11 @@ public class Brain
         //todo remove person from People Dict of the place will be made null
         if ((buildFunc == HPers.Home ))
         {
+            if (_person.Home.BookedHome1 != null)
+            {
+                _person.Home.BookedHome1.ClearBooking();
+            }
+
             _person.Home = null;
             checkHome = true;
             oldHome = "";

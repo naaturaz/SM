@@ -176,7 +176,7 @@ public class PersonController : PersonPot
 
         RoutesCache1 = pData.PersonControllerSaveLoad.RoutesCache;
 
-        OnSystemNow1 = pData.PersonControllerSaveLoad.OnSystemNow1;
+        //OnSystemNow1 = pData.PersonControllerSaveLoad.OnSystemNow1;
     }
 
     private Person tempPerson;
@@ -559,6 +559,9 @@ public class PersonController : PersonPot
     //the number is not inclusinve so if u put a 3 will alow 2
     private int _systemCap = 2;//2//4//amt of person
     
+    /// <summary>
+    /// This doesnt need to be SaveLoad. Will give probl
+    /// </summary>
     public List<CheckedIn> OnSystemNow1
     {
         get { return _onSystemNow; }
@@ -697,6 +700,6 @@ public class PersonControllerSaveLoad
     public RoutesCache RoutesCache = new RoutesCache();
 
     public List<string> Waiting = new List<string>();
-    public List<CheckedIn> OnSystemNow1 = new List<CheckedIn>();
+    //public List<CheckedIn> OnSystemNow1 = new List<CheckedIn>();
 
 }

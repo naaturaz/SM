@@ -213,7 +213,7 @@ public class MoveToNewHome
     /// </summary>
     private void InitValForNewHome()
     {
-        _routeToNewHome.CheckPoints.Clear();
+        //_routeToNewHome.CheckPoints.Clear();
 
 
         if (_brain.PullOldHome() != null && _brain.PullOldHome() == _person.Home)
@@ -236,7 +236,7 @@ public class MoveToNewHome
 
     void InitValForNewHomeForNewSpawned()
     {
-        _routeToNewHome.CheckPoints.Clear();
+        //_routeToNewHome.CheckPoints.Clear();
 
 
         _brain.GoMindState = false;
@@ -313,9 +313,10 @@ public class MoveToNewHome
         newHomeRouteStart = false;
         _newHomeRouter.IsRouteReady = true;
 
-        //Debug.Log("CleanUpRouteToNewHome goMindState");
+        Debug.Log("CleanUpRouteToNewHome"+_person.MyId);
         searchedNewHome = 0;
         buildRouteToNewHome = false;
+        _routeToNewHome.CheckPoints.Clear();
     }
 
     public void GetMyNameOutOfOldHomePeopleList()

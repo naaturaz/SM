@@ -309,9 +309,6 @@ public class Structure : StructureParent
         {
             if (BuildingPot.Control.HowManyVirginFamilies() >= Families.Length)
             {
-                //book each Family now
-                //todo and test
-                
                 StartDemolishProcess();
             }
             else

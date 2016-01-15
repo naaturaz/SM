@@ -182,8 +182,6 @@ public class Production  {
 
 
 
-    //todo replace mine as Foundry, silk
-    //todo check Resin
     private void LoadAllGenerics()
     {
         InputProdCheckAndAdd(new ProductInfo(P.Ceramic, null, H.Ceramic));

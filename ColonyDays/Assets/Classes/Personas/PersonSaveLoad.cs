@@ -53,7 +53,7 @@ public class PersonSaveLoad : PersonPot {
         res.BuildersManager = PersonPot.Control.BuildersManager1;
         res.RoutesCache = Control.RoutesCache1;
 
-        res.OnSystemNow1 = Control.OnSystemNow1;
+        //res.OnSystemNow1 = Control.OnSystemNow1;
 
         return res;
     }
