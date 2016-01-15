@@ -814,6 +814,7 @@ public class Brain
 
     public void Update()
     {
+        DefineIfIsAllSet();
         DefineIfWaiting();
 
         UpdateRouters();
@@ -827,8 +828,6 @@ public class Brain
 
         if (goMindState)
         { MindState(); }
-
-        DefineIfIsAllSet();
 
         StartRoutes();
         SetFinalRoutes();

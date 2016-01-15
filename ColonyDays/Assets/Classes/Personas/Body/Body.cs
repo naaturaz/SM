@@ -37,6 +37,8 @@ public class Body //: MonoBehaviour //: General
     private string _currentAni;
     private string _loadedAni;
 
+    private PersonalObject _personalObject;
+
     public HPers Location
     {
         get { return _location; }
@@ -106,6 +108,8 @@ public class Body //: MonoBehaviour //: General
 
     public Body(Person person)
     {
+        _personalObject = new PersonalObject(person);
+
         Init(person);
     }
 
@@ -115,6 +119,8 @@ public class Body //: MonoBehaviour //: General
     /// </summary>
     public Body(Person person, PersonFile pF)
     {
+        _personalObject = new PersonalObject(person, pF._body.CurrentAni);
+
         _pFile = pF;
         Init(person);
 
@@ -137,6 +143,7 @@ public class Body //: MonoBehaviour //: General
         {
             WalkRoutineLoad(pF._body.CurrTheRoute, GoingTo, pF._body.CurrentRoutePoint, _inverse, _whichRoute); 
         }
+
     }
 
     public void Init(Person person)
@@ -219,16 +226,62 @@ public class Body //: MonoBehaviour //: General
     }
 
     private Animator myAnimator;
+    /// <summary>
+    /// Here is when u set the new Animation
+    /// </summary>
+    /// <param name="animationPass"></param>
+    /// <param name="oldAnimation"></param>
     public void SetCurrentAni(string animationPass, string oldAnimation)
     {
+        Debug.Log("SetCurrAni nw:"+animationPass+".old:"+oldAnimation);
+
         _currentAni = animationPass;
         myAnimator.SetBool(animationPass, true);
         myAnimator.SetBool(oldAnimation, false);
+
+        _personalObject.AddressNewAni(animationPass);
     }
 
     public void TurnCurrentAniAndStartNew(string animationPass)
     {
+        Debug.Log("TurnCurrent nw:" + animationPass + ".old:" + _currentAni);
+
         SetCurrentAni(animationPass, _currentAni);
+    }
+
+    private void ReLoadSameAnimation()
+    {
+        SetCurrentAni(_currentAni, "isIdle");
+    }
+    
+    /// <summary>
+    /// Walkable animations so far:
+    /// Walk, Carry
+    /// Carry is way slower thatn walk
+    /// </summary>
+    private void DefineSpeed()
+    {
+        if (_currentAni == "isCarry")
+        {
+            _speed = .1f;
+        }
+        else _speed = .5f;
+    }
+
+    private void DefineAnimation(TheRoute route)
+    {
+        if (!string.IsNullOrEmpty(_loadedAni))
+        {
+            return;
+        }
+
+        if (
+            //route == _person.Brain._foodRoute && 
+            !_person.Inventory.IsEmpty() && _loadedAni != "isCarry")
+        {
+            //defines _loadedAni so will be taken care of in InitWalk
+            _loadedAni = "isCarry";
+        }
     }
 
     /// <summary>
@@ -241,8 +294,12 @@ public class Body //: MonoBehaviour //: General
     /// <param name="loadCurrentPoint">Use to load person last aprox position </param>
     void InitWalk(TheRoute route, bool inverse, int loadCurrentPoint = -1 )
     {
+        DefineAnimation(_currTheRoute);
+
         FindIfAAniIsSaved();
-        
+
+        DefineSpeed();
+
         _inverse = inverse;
         _currTheRoute = route;
         _routePoins = route.CheckPoints;
@@ -276,13 +333,19 @@ public class Body //: MonoBehaviour //: General
     /// </summary>
     void FindIfAAniIsSaved()
     {
-        if (string.IsNullOrEmpty(_loadedAni))
+        //_loadedAni == "isIdle" for people that were saved idling.
+        //for debug puporses or people that was in the dock waiting to get into 
+        //the city as new immigrant 
+        if (string.IsNullOrEmpty(_loadedAni) 
+            //|| _loadedAni == "isIdle"
+            )
         {
             SetCurrentAni("isWalk", "isIdle");
         }
         else
         {
-            SetCurrentAni(_loadedAni, "isIdle");
+            TurnCurrentAniAndStartNew(_loadedAni);
+         //   SetCurrentAni(_loadedAni, "isIdle");
             _loadedAni = "";//so its used only once 
         }
     }
@@ -442,6 +505,7 @@ public class Body //: MonoBehaviour //: General
     public void WalkRoutine(TheRoute route, HPers goingTo ,bool inverse = false, HPers whichRouteP = HPers.None,
         bool hideThisTime = true)
     {
+
         _hideThisTime = hideThisTime;
 
         if (!hideThisTime)
@@ -452,6 +516,8 @@ public class Body //: MonoBehaviour //: General
         InitWalk(route, inverse);
         WalkRoutineTail(goingTo, whichRouteP);
     }
+
+
 
     public void WalkRoutineLoad(TheRoute route, HPers goingTo, int loadInitCurrentPoint,
         bool inverse, HPers whichRouteP)
@@ -627,12 +693,32 @@ public class Body //: MonoBehaviour //: General
         }
     }
 
+    private float _walkDoneAt;
 	//Called when the last point of a route was reached
     void WalkDone()
     {
         _location = GoingTo;
         _movingNow = false;
-        SetCurrentAni("isIdle","isWalk");
+        SetCurrentAni("isIdle",_currentAni);//_current ani could be walk or carry
+        _walkDoneAt = Time.time;
+    }
+
+    /// <summary>
+    /// bz sometimes loads to fast an anmation and still the old one is being transited to
+    /// 
+    /// 
+    /// </summary>
+    private void ReSetAnimation()
+    {
+        if (_walkDoneAt == 0)
+        {
+            return;
+        }
+        if (Time.time + 1 > _walkDoneAt)
+        {
+            _walkDoneAt = 0;
+            ReLoadSameAnimation();
+        }
     }
 
     public void Show()
@@ -662,6 +748,8 @@ public class Body //: MonoBehaviour //: General
 	    {WalkHandler();}
 	    CheckOnGameSpeed();
         CheckIfGoingIntoBuild();
+
+	    //ReSetAnimation();
     }
 
     /// <summary>

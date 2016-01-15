@@ -263,7 +263,15 @@ public class Root : MonoBehaviour
     public static string personaMale1  = "Prefab/Personas/PersonaMale1";
     public static string personaFeMale1 = "Prefab/Personas/PersonaFeMale1";
 
-
+    //Personal Objects// objects person carry around or use
+    public static string coal = "Prefab/Personas/PersonalObject/Coal";
+    public static string crate = "Prefab/Personas/PersonalObject/Crate";
+    public static string guataca = "Prefab/Personas/PersonalObject/Guataca";
+    public static string hammer = "Prefab/Personas/PersonalObject/Hammer";
+    public static string ore = "Prefab/Personas/PersonalObject/Ore";
+    public static string tonel = "Prefab/Personas/PersonalObject/Tonel";
+    public static string vara = "Prefab/Personas/PersonalObject/Vara";
+    public static string wood = "Prefab/Personas/PersonalObject/Wood";
 
 
     /// <summary>

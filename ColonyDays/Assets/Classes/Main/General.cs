@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class General : MonoBehaviour
 {
@@ -306,6 +309,8 @@ public class General : MonoBehaviour
     }
 
 
+
+
     /// <summary>
     /// Get the grand child obj called "" in this Transform
     /// </summary>
@@ -362,7 +367,7 @@ public class General : MonoBehaviour
     /// Get the child obj called "" in this Transform
     /// </summary>
     /// <returns></returns>
-    protected GameObject GetChildCalledOnThis(string childName, GameObject thisGameOb)
+    public static GameObject GetChildCalledOnThis(string childName, GameObject thisGameOb)
     {
         for (int i = 0; i < thisGameOb.transform.childCount; i++)
         {
@@ -374,6 +379,7 @@ public class General : MonoBehaviour
         //print("Obj doesnt have a child called: " + childName );
         return null;
     }
+
 
 
 
@@ -498,7 +504,6 @@ public class General : MonoBehaviour
         set { _inventory = value; }
     }
 
-    
 
 
 
@@ -508,9 +513,61 @@ public class General : MonoBehaviour
 
 
 
+    #region Search GameObj in GameObject until find it
 
 
+    static private int count;
+    static List<GameObject> list = new List<GameObject>();
+    private static string toFind;
+    private static GameObject result;
+
+    public static GameObject FindGameObjectInHierarchy( string find,GameObject gameO)
+    {
+        toFind = find;
+        AddToList(gameO);
+        RecuLoop();
+
+        return result;
+    }
+
+    private static void AddToList(GameObject gameO)
+    {
+        for (int i = 0; i < gameO.transform.childCount; i++)
+        {
+            list.Add(gameO.transform.GetChild(i).gameObject);
+        }
+    }
+
+    private static void RecuLoop()
+    {
+        if (count > 1000){throw new Exception("infinete loop general.cs");}
+
+        if (count < list.Count)
+        {
+            if (list[count].transform.childCount>0)
+            {
+                AddToList(list[count]);
+            }
+            count++;
+            //recursive
+            RecuLoop();
+        }
+        else
+        {
+            FindResult();
+        }
+    }
+
+    private static void FindResult()
+    {
+        result = list.Find(a => a.transform.name == toFind);
+
+        count = 0;
+        list.Clear();
+        toFind = "";
+    }
+
+    #endregion
 
 
- 
 }
