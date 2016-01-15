@@ -88,6 +88,7 @@ public class Production  {
     private void LoadInputProductsStats()
     {
         //Loading each prodcut input
+
         LoadAllGenerics();
         FieldFarm();
 
@@ -96,7 +97,7 @@ public class Production  {
         Chocolate();
         Ink();
         Foundry();
-
+        SteelFoundry();
 
         Meats();
 
@@ -121,6 +122,7 @@ public class Production  {
         PaperNewsAndBook();
         Sugar();
     }
+
 
 
     private void CannonParts()
@@ -148,7 +150,7 @@ public class Production  {
     private void Chocolate()
     {
         InputElement elementS = new InputElement(P.Sugar, 5);
-        InputElement elementC = new InputElement(P.Cocoa, 5);
+        InputElement elementC = new InputElement(P.Cacao, 5);
 
         List<InputElement> prodFormu1 = new List<InputElement>() { elementS, _eleWoodComb, elementC };
         List<InputElement> prodFormu2 = new List<InputElement>() { elementS, _eleCoalComb, elementC };
@@ -163,24 +165,24 @@ public class Production  {
 
     private void Foundry()
     {
+        InputElement elementI = new InputElement(P.Iron, 5);
+        InputElement elementC = new InputElement(P.Coal, 5);
+
+        List<InputElement> prodFormu1 = new List<InputElement>() { elementI, elementC, _eleWoodComb };
+        List<InputElement> prodFormu2 = new List<InputElement>() {  elementI, elementC, _eleCoalComb };
+        InputProdCheckAndAdd(new ProductInfo(P.Steel, prodFormu1, H.SteelFoundry));
+        InputProdCheckAndAdd(new ProductInfo(P.Steel, prodFormu2, H.SteelFoundry));
+    }
+
+    private void SteelFoundry()
+    {
         InputElement elementS = new InputElement(P.Ore, 5);
 
         List<InputElement> prodFormu1 = new List<InputElement>() { elementS, _eleWoodComb };
         List<InputElement> prodFormu2 = new List<InputElement>() { elementS, _eleCoalComb };
-        InputProdCheckAndAdd(new ProductInfo(P.Gold, prodFormu1, H.Foundry));
-        InputProdCheckAndAdd(new ProductInfo(P.Gold, prodFormu2, H.Foundry));
-
-        InputProdCheckAndAdd(new ProductInfo(P.Silver, prodFormu1, H.Foundry));
-        InputProdCheckAndAdd(new ProductInfo(P.Silver, prodFormu2, H.Foundry));
-
-        //InputProdCheckAndAdd(new ProductInfo(P.Diamond, prodFormu1, H.Foundry));
-        //InputProdCheckAndAdd(new ProductInfo(P.Diamond, prodFormu2, H.Foundry));
+        InputProdCheckAndAdd(new ProductInfo(P.Random, prodFormu1, H.Foundry));
+        InputProdCheckAndAdd(new ProductInfo(P.Random, prodFormu2, H.Foundry));
     }
-
- 
-
-
-
 
     private void LoadAllGenerics()
     {
@@ -188,6 +190,7 @@ public class Production  {
 
         InputProdCheckAndAdd(new ProductInfo(P.Fish, null, new List<H>() { H.FishSmall, H.FishRegular }));
 
+        InputProdCheckAndAdd(new ProductInfo(P.Random, null, H.MountainMine));
         InputProdCheckAndAdd(new ProductInfo(P.Ore, null, H.MountainMine));
         InputProdCheckAndAdd(new ProductInfo(P.Coal, null, H.MountainMine));
         InputProdCheckAndAdd(new ProductInfo(P.Stone, null, H.MountainMine));

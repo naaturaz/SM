@@ -533,6 +533,7 @@ public class Root : MonoBehaviour
         buildsRoot.Add(H.SugarMill, "Prefab/Building/Industry/SugarMill");
 
         buildsRoot.Add(H.Foundry, "Prefab/Building/Industry/CoinStamp");
+        buildsRoot.Add(H.SteelFoundry, "Prefab/Building/Industry/CoinStamp");
 
         //Trade
         buildsRoot.Add(H.Dock, "Prefab/Building/Trade/Dock");

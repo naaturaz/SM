@@ -744,11 +744,12 @@ public class Building : General, Iinfo
             PrivHandleZoningAddCrystals(); ;
         }
 
-        if (IsLoadingFromFile)
+        //the brdige was calling since a brand new was not even set to ground yet
+        if (IsLoadingFromFile || MyId.Contains("Bridge"))
         {
             return;
         }
-        
+
         //calling here bz now since Builds are placed on ground need to be seen 
         //by all
         BuildingPot.Control.AddToQueuesRestartPersonControl(MyId);

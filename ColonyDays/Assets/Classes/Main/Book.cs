@@ -129,6 +129,7 @@ public class Book : General
         Build.Add(new BuildStat(H.SugarMill, 400, 15, 5, 25, 5, maxPeople: 5));
 
         Build.Add(new BuildStat(H.Foundry, 400, 15, 5, 25, 5, maxPeople: 5));
+        Build.Add(new BuildStat(H.SteelFoundry, 400, 15, 5, 25, 5, maxPeople: 5));
 
 
         //Trade

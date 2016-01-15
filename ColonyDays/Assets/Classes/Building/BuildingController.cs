@@ -262,7 +262,8 @@ public class BuildingController : BuildingPot
         //so people can routes if new build fell in the midle of one
         if (b.HType.ToString().Contains(H.Bridge.ToString()))
         {
-            PersonPot.Control.Queues.AddToNewBuildsQueue(b.Anchors, MyIdP);
+            //b.MyId so doesnt add units 
+            PersonPot.Control.Queues.AddToNewBuildsQueue(b.Anchors, b.MyId);
         }
         else
         {

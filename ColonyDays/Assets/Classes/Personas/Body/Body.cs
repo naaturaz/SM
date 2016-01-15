@@ -233,7 +233,7 @@ public class Body //: MonoBehaviour //: General
     /// <param name="oldAnimation"></param>
     public void SetCurrentAni(string animationPass, string oldAnimation)
     {
-        Debug.Log("SetCurrAni nw:"+animationPass+".old:"+oldAnimation);
+        //Debug.Log("SetCurrAni nw:"+animationPass+".old:"+oldAnimation);
 
         _currentAni = animationPass;
         myAnimator.SetBool(animationPass, true);
@@ -244,7 +244,7 @@ public class Body //: MonoBehaviour //: General
 
     public void TurnCurrentAniAndStartNew(string animationPass)
     {
-        Debug.Log("TurnCurrent nw:" + animationPass + ".old:" + _currentAni);
+        //Debug.Log("TurnCurrent nw:" + animationPass + ".old:" + _currentAni);
 
         SetCurrentAni(animationPass, _currentAni);
     }

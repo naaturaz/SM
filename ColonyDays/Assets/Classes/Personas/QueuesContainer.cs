@@ -35,6 +35,11 @@ public class QueuesContainer
     /// </summary>
     public void AddToNewBuildsQueue(List<Vector3> objP, string key)
     {
+        if (key.Contains("Bridge"))
+        {
+            Debug.Log("Called:"+key);
+        }
+
         _newBuildsQueue.AddToQueue(objP, key);
         RestartPeopleChecked();
     }

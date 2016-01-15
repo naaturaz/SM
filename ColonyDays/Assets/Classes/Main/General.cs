@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -178,12 +177,6 @@ public class General : MonoBehaviour
 	static public General Create(string root, Vector3 origen = new Vector3(), string name = "", Transform container = null,
         H hType = H.None)
 	{
-	    if (root.Contains("Salt"))
-	    {
-	        var t = 2;
-            Debug.Log("Salt spwner caller");
-	    }
-
         WAKEUP = true;
 		General obj = null;
 		obj = (General)Resources.Load(root, typeof(General));

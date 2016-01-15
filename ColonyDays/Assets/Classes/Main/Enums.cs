@@ -143,8 +143,9 @@ public enum P
     Crate,
     CrystalCoin, CaribbeanCoin, SugarCoin,
     CannonPart,
-    Cocoa,
     Ink,
+    Random,
+    Steel,
 }
 
 /// <summary>
@@ -196,7 +197,7 @@ public enum H
     //prod F5
     Brick, Carpintery, Cigars, Mill, Slat, Tilery, CannonParts, Rum, Chocolate, Ink,
     //industry F6
-    Cloth, GunPowder, Paper, Printer, CoinStamp, Silk, SugarMill, Foundry,
+    Cloth, GunPowder, Paper, Printer, CoinStamp, Silk, SugarMill, Foundry, SteelFoundry,
     //Trade F7
     Dock, DryDock, Supplier, StorageSmall, StorageMed, StorageBig, StorageBigTwoDoors, StorageExtraBig,
     //gov F8
@@ -359,8 +360,9 @@ public enum StProd //for structures game structure.cs
     Brick, Carpintery, Cigars, Mill, Slat, Tilery, CannonParts, Rum, Chocolate, Ink,
 }
 
+//Ind
 public enum StInd
-{ Cloth, GunPowder, Paper, Printer, CoinStamp, Silk, SugarMill, Foundry }
+{ Cloth, GunPowder, Paper, Printer, CoinStamp, Silk, SugarMill, Foundry, SteelFoundry }
 
 public enum StTrade //for structures game structure.cs 
 {
