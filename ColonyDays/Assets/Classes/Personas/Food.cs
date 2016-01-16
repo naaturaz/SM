@@ -18,20 +18,19 @@ public class Food
     private void LoadNutriVals()
     {
         //todo add all
-        _nValues.Add(new NutritionValue(P.Bean, 0.9f));
-        _nValues.Add(new NutritionValue(P.Potato, 0.7f));
-        _nValues.Add(new NutritionValue(P.SugarCane, 0.5f));
-        _nValues.Add(new NutritionValue(P.Sugar, 0.5f));
+        _nValues.Add(new NutritionValue(P.Bean, 1.8f));
+        _nValues.Add(new NutritionValue(P.Potato, 1.4f));
+        _nValues.Add(new NutritionValue(P.SugarCane, .5f));
+        _nValues.Add(new NutritionValue(P.Sugar, 1f));
 
-        _nValues.Add(new NutritionValue(P.Corn, 0.6f));
+        _nValues.Add(new NutritionValue(P.Corn, 1.2f));
 
-        _nValues.Add(new NutritionValue(P.Chicken, 2f));
-        _nValues.Add(new NutritionValue(P.Egg, 1.5f));
-        _nValues.Add(new NutritionValue(P.Pork, 2f));
-        _nValues.Add(new NutritionValue(P.Beef, 3f));
+        _nValues.Add(new NutritionValue(P.Chicken, 4f));
+        _nValues.Add(new NutritionValue(P.Egg, 3f));
+        _nValues.Add(new NutritionValue(P.Pork, 4f));
+        _nValues.Add(new NutritionValue(P.Beef, 6f));
 
-        _nValues.Add(new NutritionValue(P.Fish, 3f));
-
+        _nValues.Add(new NutritionValue(P.Fish, 6f));
 
         _nValues.OrderBy(a => a.NutritionVal).ToList();
     }

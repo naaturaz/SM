@@ -618,6 +618,7 @@ public class Body //: MonoBehaviour //: General
 
         if (_routePoins.Count == 0 || _currentRoutePoint > _routePoins.Count - 1)
         {
+            Debug.Log("Called in body exp");
             var t = this;
         }
 

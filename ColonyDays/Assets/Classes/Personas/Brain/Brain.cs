@@ -128,7 +128,6 @@ public class Brain
 
         MoveToNewHome.HomeOldKeysList = pF._brain.MoveToNewHome.HomeOldKeysList;
         MoveToNewHome.OldHomeKey = pF._brain.MoveToNewHome.OldHomeKey;
-        MoveToNewHome.ActionsLoading();
 
         //is a shackBuilder , or its house was destroyed and father or mom is buiding shack
         if (_person.Home == null)
@@ -137,24 +136,6 @@ public class Brain
         }
 
         _person.transform.parent = _person.Home.transform;
-
-        //if (_person.Home.ThisPersonFitInThisHouse(_person) 
-        //    || _person.Home.Instruction == H.WillBeDestroy
-        //    || _person.Home.IsLoadingFromFile
-        //    || _person.IsLoading
-        //    )
-        //{
-        //    //all good wil be added to Family and should be in right sequence since
-        //    //that was done when the game was started at 1st
-
-        //    //if will be destroy father or mother booked something already
-        //}
-        ////if the exp is trhw, posible causes is that the building was not found in the building.xml
-        ////or the building.xml was modified,
-        ////or the person.xml was modified,
-        ////basically is this excp is trhow the saves files are corrupted 
-
-        //else throw new Exception("The Person:" + _person.MyId + " must be able to fit in:" + _person.Home.MyId);
     }
 
     /// <summary>
@@ -770,7 +751,7 @@ public class Brain
         _currentTask = nextTask;
         startIdleTime = 0;
         _idleTime = 0.5f;
-        MoveToNewHome.GoMindTrue();
+        GoMindState = true;
         _isIdleHomeNow = false;
     }
 
@@ -860,7 +841,8 @@ public class Brain
     /// </summary>
     private void DefineIfWaiting()
     {
-        if (_waiting)
+        //if is in process of moving dont need to deal with this
+        if (MoveToNewHome.RouteToNewHome.CheckPoints.Count > 0 || _waiting)
         {
             return;
         }
@@ -1237,7 +1219,7 @@ public class Brain
         DefineIfIsAllSet();
         if (_isAllSet)
         {
-            MoveToNewHome.GoMindTrue();
+            GoMindState = true;
         }
     }
 

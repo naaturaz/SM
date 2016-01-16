@@ -30,7 +30,6 @@ public class MoveToNewHome
 
     private Person _person;
     private Structure currStructure;
-    private bool _isLoadingFromFile;
 
     public MoveToNewHome() { }
 
@@ -75,16 +74,6 @@ public class MoveToNewHome
             list.RemoveAt(0);
         }
         list.Clear();
-    }
-
-    public void ActionsLoading()
-    {
-        ////then needs to redo the route
-        //if (_brain.CurrentTask == HPers.MovingToNewHome)
-        //{
-        //    _isLoadingFromFile = true;
-        //    InitValForLoad();
-        //}
     }
 
     /// <summary>
@@ -160,7 +149,7 @@ public class MoveToNewHome
         }
         //person getting ready to move to new home 
         if (_newHomeRouter.IsRouteReady && _routeToNewHome.CheckPoints.Count == 0
-            && (_brain.IAmHomeNow() || _isLoadingFromFile))
+            && _brain.IAmHomeNow())
         {
             //    Debug.Log(_person.MyId + " setting to new home");
 
@@ -168,16 +157,7 @@ public class MoveToNewHome
             GoMindTrue();
             _brain.RoutesWereStarted = false;
             _person.Body.Location = HPers.Home;
-
-            AddressFinalStepOfLoading();
         }
-    }
-
-    private void AddressFinalStepOfLoading()
-    {
-        _isLoadingFromFile = false;
-        //body needs to be reloaded bz lost all its stuff 
-        _person.ReloadBodyLight();
     }
 
     Structure ReturnCorrectInitStructure()
@@ -247,7 +227,7 @@ public class MoveToNewHome
         _person.Body.GoingTo = HPers.Home;
     }
 
-    public void GoMindTrue()
+    void GoMindTrue()
     {
         _brain.GoMindState = true;
         //if not wauting and cant reroute now then im done 
