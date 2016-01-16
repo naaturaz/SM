@@ -835,27 +835,22 @@ public class Building : General, Iinfo
         collidWith = CleanList(p.TerraSpawnController.AllRandomObjList, collidWith);
         for (int i = 0; i < collidWith.Count; i++)
         {
-            MarkTerraSpawn(p.TerraSpawnController.AllRandomObjList[collidWith[i]]);
+            var key = collidWith[i];
+            DestroySpawn(key);
         }
         if (listFrom == null && from == new Vector3())
         { print("Error: Both obj passed were null. Building.MarkTerraSpawnRoutine"); }
     }
 
-    /// <summary>
-    /// Will mark the TerrainRamdonSpawner pass. Will added to the InputMain.InputMeshSpawnObj.ToMineSelectList list
-    /// and will create visual help so can be seen that was mark to be mined
-    /// </summary>
-    /// <param name="obj">TerrainRamdonSpawner obj to be mark</param>
-    protected void MarkTerraSpawn(TerrainRamdonSpawner obj)
+   protected void DestroySpawn(string key)
     {
-        StillElement still = (StillElement)obj;
-        
-        //still.IsMarkToMine = true;
-        //InputMain.InputMeshSpawnObj.ToMineSelectList.Add(still);
-        //InputMain.InputMeshSpawnObj.AddVisHelpList(true, still);
-
-        //so they disappear, remove Crystals and Routing can work properly
-        still.DestroyCool();
+        if (p.TerraSpawnController.AllRandomObjList.Contains(key))
+        {
+            StillElement still = (StillElement)p.TerraSpawnController.AllRandomObjList[key];
+            //so they disappear, remove Crystals and Routing can work properly
+            still.DestroyCool();
+        }
+        else Debug.Log("key not cointained in AllRandomObjList." + key);
     }
 
     /// <summary>
