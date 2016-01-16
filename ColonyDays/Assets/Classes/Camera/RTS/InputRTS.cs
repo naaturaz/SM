@@ -9,8 +9,8 @@ public class InputRTS : GenericCameraComponent
     List<RTSData> list = new List<RTSData>();
 
     public static bool isFollowingPersonNow;
-    Transform personToFollow;
     Vector3 storedPos;
+    private Transform personToFollow;
 
     // Use this for initialization
     void Start() { InitializeList(); }
@@ -36,6 +36,11 @@ public class InputRTS : GenericCameraComponent
     /// <param name="personToFollow"></param>
     void CamFollowAction(Transform personToFollow)
     {
+        if (personToFollow == null)
+        {
+            return;
+        }
+
         Vector3 compPos = personToFollow.position;
         compPos.y = storedPos.y;
         CamControl.CAMRTS.centerTarget.transform.position = personToFollow.position;
@@ -189,9 +194,11 @@ public class InputRTS : GenericCameraComponent
     /// </summary>
     void FollowPersonCam()
     {
-        //make personToFollow CurrentSelected Person on PersonWindow.cs
-
-        //personToFollow = GameScene.man.transform;
+        personToFollow = GetSelectedPerson();
+        if (personToFollow == null)
+        {
+            return;
+        }
         
         if (Input.GetKeyUp(KeyCode.O) && !isFollowingPersonNow)
         {
@@ -210,5 +217,21 @@ public class InputRTS : GenericCameraComponent
             CamControl.CAMRTS.CleanUpRotHelp();
             isFollowingPersonNow = false;
         }
+    }
+
+    Transform GetSelectedPerson()
+    {
+        if (Program.MouseListener == null || Program.MouseListener.PersonWindow1 == null)
+        {
+            return null;
+        }
+
+        var person = Program.MouseListener.PersonWindow1.Person1;
+
+        if (person==null )
+        {
+            return null;
+        }
+        return person.transform;
     }
 }

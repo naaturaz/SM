@@ -138,6 +138,13 @@ public class WheelBarrow : Profession
         {
             _sourceBuild = Brain.GetStructureFromKey(Order1.SourceBuild);
         }
+        //if still null after this 
+        if (_sourceBuild == null)
+        {
+            Debug.Log("srcBuild null whelbarr:" + _person.MyId + ".orderSrcBld:" + Order1.SourceBuild);
+            _takeABreakNow = true;
+            return;
+        }
 
         _routerActive = true;
         Router1 = new CryRouteManager(_person.Work, _sourceBuild, _person);

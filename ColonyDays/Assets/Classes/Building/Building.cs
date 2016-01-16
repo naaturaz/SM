@@ -413,7 +413,7 @@ public class Building : General, Iinfo
             IfShackResaveInventoryOnRegistro();
         }
 
-        InitDock();
+        InitDockDryDockSupplier();
         InitDryDockAndSupplier();
         InitWheelBarrow();
 
@@ -2616,13 +2616,11 @@ public class Building : General, Iinfo
         set { _dispatch = value; }
     }
 
-
-
     private Ship _debugShip;
 
-    private void InitDock()
+    private void InitDockDryDockSupplier()
     {
-        if (HType!=H.Dock)
+        if (HType != H.Dock && HType != H.DryDock && HType != H.Supplier)
         {
             return;
         }

@@ -1251,7 +1251,7 @@ public class Person : General
         {
             return Job.Forester;
         }
-        else if (Work.HType == H.Dock)
+        else if (Work.HType == H.Dock || Work.HType == H.DryDock || Work.HType == H.Supplier)
         {
             return Job.Docker;
         }

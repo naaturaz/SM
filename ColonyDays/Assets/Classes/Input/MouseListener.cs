@@ -16,6 +16,12 @@ public class MouseListener : InputMain
         set { _buildingWindow = value; }
     }
 
+    public PersonWindow PersonWindow1
+    {
+        get { return _personWindow; }
+        set { _personWindow = value; }
+    }
+
 
     // Use this for initialization
     public void Start()

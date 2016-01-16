@@ -15,6 +15,12 @@ public class PersonWindow : GUIElement {
     private Rect _genBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
     private Rect _invBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
 
+    public Person Person1
+    {
+        get { return _person; }
+        set { _person = value; }
+    }
+
     // Use this for initialization
     void Start()
     {
