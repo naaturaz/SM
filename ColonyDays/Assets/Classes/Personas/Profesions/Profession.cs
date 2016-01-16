@@ -63,6 +63,10 @@ public class Profession  {
     //used for forester
     private string _stillElementID;
 
+    //indicates that this intances of Profession was loaded from file 
+    //so never has to be Init() bz all values were loaded 
+    protected bool _wasLoaded;
+
     public Job ProfDescription
     {
         get { return _profDescription; }
@@ -170,9 +174,9 @@ public class Profession  {
         get { return _order; }
         set
         {
-            if (_order != null && _person.Name.Contains("Sona") && value == null)
+            if (_order != null && value == null)
             {
-                Debug.Log("Who reWrote Order1");
+                Debug.Log("Who reWrote Order1."+_person.MyId+".");
             }
             _order = value;
         }
@@ -309,6 +313,9 @@ public class Profession  {
         Order1 = prof.Order1;
         DestinyBuildKey = prof.DestinyBuildKey;
         SourceBuildKey = prof.SourceBuildKey;
+
+        _destinyBuild = Brain.GetStructureFromKey(DestinyBuildKey);
+        _sourceBuild = Brain.GetStructureFromKey(SourceBuildKey);
 
         StillElementId = prof.StillElementId;
     }
@@ -557,9 +564,13 @@ public class Profession  {
 
         var destinyBuild = GetStructureSrcAndDestiny(_destinyBuildKey, _person);
 
-    //    Debug.Log(_person.MyId + " " + ProfDescription + " Dropped load in:" + destinyBuild.MyId +
-    //".prod:" + _order.Product);
-
+        if (destinyBuild == null)
+        {
+            Debug.Log("destinyBuild null whelbarr:" + _person.MyId + "._destinyBuildKey:" + _destinyBuildKey);
+            _person.Inventory.Delete();
+            return;
+        }
+        
         _person.ExchangeInvetoryItem(_person, destinyBuild, _order.Product, _order.Amount);
     }
 

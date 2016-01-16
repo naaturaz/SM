@@ -223,7 +223,7 @@ public class BuildingSaveLoad : BuildingPot
         {
             trail = CreateBridgePlanes(trail, regFile);
             trail.AddBoxCollider(regFile.Min, regFile.Max);
-            trail.LandZoningBridge();
+            //trail.LandZoningBridge();
         }
         
         Control.CurrentSpawnBuild = trail;

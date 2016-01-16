@@ -1865,17 +1865,32 @@ public class Building : General, Iinfo
     /// </summary>
     public void LandZoningBridge()
     {
+        if (_isLoadingFromFile)
+        {
+            LoadLandZonesIntoBridgeManager();
+            return;
+        }
+
         Bridge br = (Bridge)this;
         var ends = br.GiveTwoRoughEnds();
 
         var zone1 = MeshController.CrystalManager1.ReturnLandingZone(ends[0]);
         var zone2 = MeshController.CrystalManager1.ReturnLandingZone(ends[1]);
         
-        BuildingPot.Control.BridgeManager1.AddBridge(zone1, zone2, br);
+        BuildingPot.Control.BridgeManager1.AddBridge(zone1, zone2, transform.position, MyId);
 
         LandZone1.Add(new VectorLand(zone1, ends[0]));
         LandZone1.Add(new VectorLand(zone2, ends[1]));
     }
+
+    /// <summary>
+    /// Some how is not working when loading 
+    /// </summary>
+    private void LoadLandZonesIntoBridgeManager()
+    {
+        BuildingPot.Control.BridgeManager1.AddBridge(LandZone1[0].LandZone, LandZone1[1].LandZone, transform.position, MyId);
+    }
+
     #endregion
 
 

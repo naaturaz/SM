@@ -81,9 +81,9 @@ public class BridgeManager
     /// <param name="zone1"></param>
     /// <param name="zone2"></param>
     /// <param name="b"></param>
-    public void AddBridge(string zone1, string zone2, Bridge b)
+    public void AddBridge(string zone1, string zone2, Vector3 bridgePos, string bridgeID)
     {
-        LandZoneLinker land = new LandZoneLinker(zone1, zone2, b.transform.position, b.MyId);
+        LandZoneLinker land = new LandZoneLinker(zone1, zone2, bridgePos, bridgeID);
 
         CreateNewConnection(zone1, zone2, land);
     }

@@ -15,20 +15,33 @@ public class Docker : Profession
 
     void CreatingNew(Person person)
     {
-
         _person = person;
         Init();
     }
 
     void LoadingFromFile(Person person, PersonFile pF)
     {
+        _wasLoaded = true;
+
         _person = person;
         LoadAttributes(pF.ProfessionProp);
-        Init();
+
+        if (_destinyBuild == null || _sourceBuild == null)
+        {
+            _takeABreakNow = true;
+            return;
+        }
+
+        InitRoute();
     }
 
     void Init()
     {
+        if (_wasLoaded)
+        {
+            return;
+        }
+
         //so its not using the same order over and over again in case the Dispatch is finding nothing 
         CleanOldVars();
 
@@ -59,6 +72,12 @@ public class Docker : Profession
     private void PickUpOrder()
     {
         _destinyBuild = _sourceBuild;
+
+        if (_person.Work)
+        {
+            _destinyBuild = null;
+            return;
+        }
 
         Order1 = _person.Work.Dispatch1.GiveMeOrder(_person);
         _person.PrevOrder = Order1;
@@ -140,7 +159,5 @@ public class Docker : Profession
             startIdleTime = 0;
             Init();
         }
-
-
     }
 }

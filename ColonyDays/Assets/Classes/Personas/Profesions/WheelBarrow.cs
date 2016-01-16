@@ -6,10 +6,6 @@ public class WheelBarrow : Profession
     private Structure _destinyBuild;
     private Structure _sourceBuild;
 
-    //indicates that this intances of Profession was loaded from file 
-    //so never has to be Init() bz all values were loaded 
-    private bool _wasLoaded;
-
     public WheelBarrow(Person person, PersonFile pF)
     {
         if (pF == null)

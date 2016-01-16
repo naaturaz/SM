@@ -43,7 +43,7 @@ public class Bridge : Trail
 
     private void Loading()
     {
-        if (IsLoadingFromFile && Anchors.Count == 0)
+        if (IsLoadingFromFile && (Anchors==null || Anchors.Count == 0))
         {
             SetBridgeAnchors();
         }
@@ -617,6 +617,9 @@ public class Bridge : Trail
 
     /// <summary>
     /// Used to find LandZones
+    /// return new List<Vector3>(){_firstWayPoint, _secondWayPoint};
+    /// 
+    /// but those above are not save loaded
     /// </summary>
     /// <returns></returns>
     public List<Vector3> GiveTwoRoughEnds()
