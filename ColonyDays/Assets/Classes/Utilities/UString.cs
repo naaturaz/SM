@@ -76,8 +76,8 @@ public class UString : MonoBehaviour {
                 Count = g.Count()
             };
 
-        var groupsSorted = groupsWithCounts.OrderByDescending(g => g.Count);
-        string mostFrequest = groupsSorted.First().Item;
+        var groupsSorted = groupsWithCounts.OrderByDescending(g => g.Count).ToList();
+        string mostFrequest = groupsSorted[0].Item;
 
         return mostFrequest;
     }

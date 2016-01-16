@@ -50,8 +50,12 @@ public class BuildersManager
         if (hTypeP == H.Shack)
         {return;}
 
-        //Brain.GetStructureFromKey(key) == null is a way
-        if (Brain.GetStructureFromKey(key) == null ||   Brain.GetStructureFromKey(key).StartingStage == H.Done)
+        //Brain.GetStructureFromKey(key) == null is a way and is not a brdige 
+        if (Brain.GetStructureFromKey(key) == null && !key.Contains("Bridge"))
+        {
+            return;
+        }
+        if (Brain.GetStructureFromKey(key)!=null && Brain.GetStructureFromKey(key).StartingStage == H.Done)
         {
             return;
         }
@@ -232,13 +236,12 @@ public class BuildersManager
         _constructions.Remove(construction);
        
         Structure st = Brain.GetStructureFromKey(construction.Key);
-        if (st.StartingStage != H.Done)
-        {
 
+        //if is null is a brdige 
+        if (st == null || st.StartingStage != H.Done)
+        {
             _greenLight.Add(construction);
         }
-        
-       
     }
 
     void RemoveFromGameController(H hTypeP)

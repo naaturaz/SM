@@ -300,13 +300,13 @@ public class PersonController : PersonPot
         //make sure when execute this a least oneempty house exst 
         if (Input.GetKeyUp(KeyCode.M))
         {
-            DebugSpawnMorePeople(25);
+            DebugSpawnMorePeople(5);
         }
         //make sure when execute this a least oneempty house exst 
         if (Input.GetKeyUp(KeyCode.N))
         {
 
-            DebugSpawnMorePeople(10);
+            DebugSpawnMorePeople(1);
         }
     }
 

@@ -298,7 +298,7 @@ public class Trail : Way
 
     public void AddBridgeToRegistro()
     {
-        Debug.Log("AddBridgeToRegistro()");
+        Debug.Log("!AddBridgeToRegistro()!");
 
         var activeBound = GetActiveBound();
 
@@ -313,6 +313,8 @@ public class Trail : Way
             startingStage: _startingStageForPieces, materialKey: MaterialKey, planesOnSoilPos: _planesOnSoil, partsOnSoil: _partsOnSoil
             , min: activeBound[1], max: activeBound[3] ,
             instructionP: Instruction);
+
+        BuildingPot.Control.AddToQueuesRestartPersonControl(MyId);
     }
 
 	// Use this for initialization

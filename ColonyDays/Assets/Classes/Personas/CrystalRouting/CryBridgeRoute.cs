@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 
 public class CryBridgeRoute
@@ -117,6 +118,13 @@ public class CryBridgeRoute
     VectorLand CreateAndAddToLegs(Vector3 pos, string bridgeId, bool add=true)
     {
         var bridge = Brain.GetBuildingFromKey(bridgeId);
+
+        //todo
+        if (bridge == null)
+        {
+            throw new Exception("Fix");
+        }
+
         VectorLand newVectorLand = new VectorLand("", pos, bridge);
 
         if (add)
