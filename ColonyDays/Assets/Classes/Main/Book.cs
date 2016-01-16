@@ -141,7 +141,7 @@ public class Book : General
         Build.Add(new BuildStat(H.StorageMed, 600, 80, 20, 0, 5, maxPeople: 0, capacity: 200));
         Build.Add(new BuildStat(H.StorageBig, 600, 80, 20, 0, 5, maxPeople: 0, capacity: 300));
         Build.Add(new BuildStat(H.StorageBigTwoDoors, 600, 80, 20, 0, 5, maxPeople: 0, capacity: 300));
-        Build.Add(new BuildStat(H.StorageExtraBig, 600, 80, 20, 0, 5, maxPeople: 0, capacity: 420));
+        Build.Add(new BuildStat(H.StorageExtraBig, 600, 80, 20, 0, 5, maxPeople: 0, capacity: 4200));
 
         //Gov
         Build.Add(new BuildStat(H.Clinic, 400, 15, 5, 25, 5, maxPeople: 5));

@@ -39,6 +39,7 @@ public class Insider : Profession {
 
     public override void Update()
     {
+        base.Update();
         Execute();
     }
 

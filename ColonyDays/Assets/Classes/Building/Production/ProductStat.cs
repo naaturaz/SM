@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 public class ProductInfo
 {
@@ -11,6 +12,8 @@ public class ProductInfo
     private string _productLine;
     //the details of a prduct
     private string _details;
+
+    List<ElementWeight> _randomWeightsOutput = new List<ElementWeight>(); 
 
     public ProductInfo(P product, List<InputElement> ingredients, H buildHType)
     {
@@ -30,6 +33,38 @@ public class ProductInfo
         _hType = buildHType;
 
         BuildStrings();
+    }
+
+    /// <summary>
+    /// So far only use by mine and foundry
+    /// </summary>
+    /// <param name="ele"></param>
+    public void AddRandomOutput(ElementWeight ele)
+    {
+        _randomWeightsOutput.Add(ele);
+    }
+
+    public List<InvItem> DecomposeRandomLoad(float kg)
+    {
+        List<InvItem> res = new List<InvItem>();
+
+        for (int i = 0; i < RandomWeightsOutput.Count; i++)
+        {
+            var amt = GetAmount(RandomWeightsOutput[i].Weight, kg);
+            res.Add(new InvItem(RandomWeightsOutput[i].Element, amt));
+        }
+        return res;
+    }
+
+    float GetAmount(float weight, float loadKG)
+    {
+        //decrease 5%
+        var five = loadKG*0.05f;
+        loadKG -= five;
+
+        var ttlWeight = RandomWeightsOutput.Sum(a => a.Weight);
+        var divLoadByTtlWg = loadKG/ttlWeight;
+        return weight*divLoadByTtlWg;
     }
 
     private void BuildStrings()
@@ -120,6 +155,12 @@ public class ProductInfo
         get { return _details; }
         set { _details = value; }
     }
+
+    public List<ElementWeight> RandomWeightsOutput
+    {
+        get { return _randomWeightsOutput; }
+        set { _randomWeightsOutput = value; }
+    }
 }
 
 
@@ -133,6 +174,18 @@ public class InputElement
     {
         Element = element;
         Units = units;
+    }
+}
+
+public class ElementWeight
+{
+    public P Element;//the element
+    public float Weight;//the weight of the element 
+
+    public ElementWeight(P element, float weight)
+    {
+        Element = element;
+        Weight = weight;
     }
 }
 

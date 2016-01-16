@@ -1374,8 +1374,32 @@ public class Person : General
         if (takenFrom == null)
         { return; }
 
+        if (product.ToString().Contains("Random"))
+        {
+            DealWithRandom(takenFrom, givenTo, product, amt);
+            return;
+        }
+
         float amtTook = takenFrom.Inventory.RemoveByWeight(product, amt);
         givenTo.Inventory.Add(product, amtTook);
+    }
+
+    /// <summary>
+    /// If the product is random has to actually decomposed and give that to him 
+    /// </summary>
+    /// <param name="takenFrom"></param>
+    /// <param name="givenTo"></param>
+    /// <param name="product"></param>
+    /// <param name="amt"></param>
+    private void DealWithRandom(General takenFrom, General givenTo, P product, float amt)
+    {
+        var prdInfo = BuildingPot.Control.ProductionProp.ReturnProdInfoWithOutput(product);
+        var listItems = prdInfo.DecomposeRandomLoad(amt);
+
+        for (int i = 0; i < listItems.Count; i++)
+        {
+            ExchangeInvetoryItem(takenFrom, givenTo, listItems[i].Key, listItems[i].Amount);
+        }
     }
 
     /// <summary>

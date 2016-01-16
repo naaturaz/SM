@@ -121,6 +121,10 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.PaperNews, 50, 292, 50));
         _prodSpecs.Add(new ProdSpec(P.Books, 300, 502, 5));
         _prodSpecs.Add(new ProdSpec(P.Silk, 150, 1300, 5));
+
+
+        _prodSpecs.Add(new ProdSpec(P.RandomMineOutput, 150, 4100, 100));
+        _prodSpecs.Add(new ProdSpec(P.RandomFoundryOutput, 150, 4100, 100));
     }
 
     /// <summary>
@@ -215,7 +219,7 @@ public class ExportImport
 
         if (prodFound == null)
         {
-            //Debug.Log("Prod Factor asked of not found prod:" + prod);
+            Debug.Log("Prod Factor asked of not found prod:" + prod);
             return 0;
         }
         return prodFound.ProduceFactor;

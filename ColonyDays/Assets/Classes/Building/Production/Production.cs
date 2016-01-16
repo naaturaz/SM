@@ -69,7 +69,23 @@ public class Production  {
         return null;
     }
 
+    /// <summary>
+    /// To work the element u are passing as param mus be unique!
+    /// </summary>
+    /// <param name="output"></param>
+    /// <returns></returns>
+    public ProductInfo ReturnProdInfoWithOutput(P output)
+    {
+        var prod = _inputProducts.Find(a => a.Product == output);
 
+        if (prod != null)
+        {
+            return prod;
+        }
+
+        Debug.Log("Prod not found: ReturnProdInfoWithOutput(). pls check");
+        return null;
+    }
 
     #region Inputs for Create a Product
 
@@ -90,14 +106,16 @@ public class Production  {
         //Loading each prodcut input
 
         LoadAllGenerics();
+        Mine();
+        
         FieldFarm();
 
         CannonParts();
         Rum();
         Chocolate();
         Ink();
-        Foundry();
         SteelFoundry();
+        Foundry();
 
         Meats();
 
@@ -163,7 +181,7 @@ public class Production  {
         InputProdCheckAndAdd(new ProductInfo(P.Ink, prodFormu1, H.Ink));
     }
 
-    private void Foundry()
+    private void SteelFoundry()
     {
         InputElement elementI = new InputElement(P.Iron, 5);
         InputElement elementC = new InputElement(P.Coal, 5);
@@ -172,16 +190,33 @@ public class Production  {
         List<InputElement> prodFormu2 = new List<InputElement>() {  elementI, elementC, _eleCoalComb };
         InputProdCheckAndAdd(new ProductInfo(P.Steel, prodFormu1, H.SteelFoundry));
         InputProdCheckAndAdd(new ProductInfo(P.Steel, prodFormu2, H.SteelFoundry));
+
+
+
     }
 
-    private void SteelFoundry()
+    private void Foundry()
     {
         InputElement elementS = new InputElement(P.Ore, 5);
 
         List<InputElement> prodFormu1 = new List<InputElement>() { elementS, _eleWoodComb };
         List<InputElement> prodFormu2 = new List<InputElement>() { elementS, _eleCoalComb };
-        InputProdCheckAndAdd(new ProductInfo(P.Random, prodFormu1, H.Foundry));
-        InputProdCheckAndAdd(new ProductInfo(P.Random, prodFormu2, H.Foundry));
+
+        ProductInfo productInfo1 = new ProductInfo(P.RandomFoundryOutput, prodFormu1, H.MountainMine);
+        ProductInfo productInfo2 = new ProductInfo(P.RandomFoundryOutput, prodFormu2, H.MountainMine);
+
+        productInfo1.AddRandomOutput(new ElementWeight(P.Iron, 2));
+        productInfo1.AddRandomOutput(new ElementWeight(P.Coal, 1));
+        productInfo1.AddRandomOutput(new ElementWeight(P.Stone, 1));
+        productInfo1.AddRandomOutput(new ElementWeight(P.Sulfur, .5f));
+        productInfo1.AddRandomOutput(new ElementWeight(P.Gold, .05f));
+        productInfo1.AddRandomOutput(new ElementWeight(P.Silver, 0.1f));
+        productInfo1.AddRandomOutput(new ElementWeight(P.Diamond, 0.01f));
+
+        productInfo2.RandomWeightsOutput = productInfo1.RandomWeightsOutput;
+
+        InputProdCheckAndAdd(productInfo1);
+        InputProdCheckAndAdd(productInfo2);
     }
 
     private void LoadAllGenerics()
@@ -190,14 +225,22 @@ public class Production  {
 
         InputProdCheckAndAdd(new ProductInfo(P.Fish, null, new List<H>() { H.FishSmall, H.FishRegular }));
 
-        InputProdCheckAndAdd(new ProductInfo(P.Random, null, H.MountainMine));
-        InputProdCheckAndAdd(new ProductInfo(P.Ore, null, H.MountainMine));
-        InputProdCheckAndAdd(new ProductInfo(P.Coal, null, H.MountainMine));
-        InputProdCheckAndAdd(new ProductInfo(P.Stone, null, H.MountainMine));
+
 
         InputProdCheckAndAdd(new ProductInfo(P.Wood, null, H.Wood));
         InputProdCheckAndAdd(new ProductInfo(P.Salt, null, H.SaltMine));
         InputProdCheckAndAdd(new ProductInfo(P.Tile, null, H.Tilery));
+    }
+
+    private void Mine()
+    {
+        //this should yeild 5 KG of meat(pork)
+        ProductInfo productInfo = new ProductInfo(P.RandomMineOutput, null, H.MountainMine);
+        productInfo.AddRandomOutput(new ElementWeight(P.Ore, 2));
+        productInfo.AddRandomOutput(new ElementWeight(P.Coal, 1));
+        productInfo.AddRandomOutput(new ElementWeight(P.Stone, 1));
+
+        InputProdCheckAndAdd(productInfo);
     }
 
 

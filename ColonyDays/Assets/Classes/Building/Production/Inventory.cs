@@ -123,6 +123,13 @@ public class Inventory  {
     /// <param name="amt"></param>
     public void Add(P key, float amt)
     {
+        if (key.ToString().Contains("Random"))
+        {
+            Debug.Log("trace random");
+            DealWithRandomOutput(key, amt);
+            return;
+        }
+
         if (IsItemOnInv(key))
         {
             float intT = ReturnAmtOfItemOnInv(key) + amt;
@@ -136,6 +143,19 @@ public class Inventory  {
         //UpdateInfo();
         ResaveOnRegistro();
         UpdateOnGameController(H.Add, key, amt);
+    }
+
+    /// <summary>
+    /// Bz if is random has to be decompose 
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="amt"></param>
+    private void DealWithRandomOutput(P key, float amt)
+    {
+        var prdInfo = BuildingPot.Control.ProductionProp.ReturnProdInfoWithOutput(key);
+        var listItems = prdInfo.DecomposeRandomLoad(amt);
+
+        AddItems(listItems);
     }
     
     /// <summary>

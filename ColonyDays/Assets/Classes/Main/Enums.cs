@@ -144,8 +144,8 @@ public enum P
     CrystalCoin, CaribbeanCoin, SugarCoin,
     CannonPart,
     Ink,
-    Random,
     Steel,
+    RandomMineOutput, RandomFoundryOutput
 }
 
 /// <summary>
