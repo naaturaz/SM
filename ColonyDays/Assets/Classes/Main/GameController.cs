@@ -78,8 +78,8 @@ public class GameController  {
         inv.Add(P.Gold, startingCondition.iniGold);
 
         //todo remove when release
-        inv.Add(P.Coal, 100000);
-        inv.Add(P.Sugar, 100000);
+        //inv.Add(P.Coal, 100000);
+        //inv.Add(P.Sugar, 100000);
 
         return inv;
     }

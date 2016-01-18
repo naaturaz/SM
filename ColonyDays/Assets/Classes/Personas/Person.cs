@@ -299,7 +299,7 @@ public class Person : General
             obj = (Person) Resources.Load(Root.personaMale1, typeof (Person));
         }
 
-        int iniAge = General.GiveRandom(28, 29); //5, 29
+        int iniAge = General.GiveRandom(69, 70); //5, 29
 
         //will assign ramdom pos if has none 
         if (iniPos == new Vector3())
@@ -648,8 +648,8 @@ public class Person : General
 
     void CheckOnNutrition()
     {
-        ChangeNutritionLvl(-2);
-        //KillStarve();
+        ChangeNutritionLvl(-2);//-2
+        KillStarve();
     }
 
     /// <summary>
@@ -677,8 +677,9 @@ public class Person : General
         }
         if (_nutritionLevel < -45)
         {
+            print("Too hungry and died:" + MyId);
+
             ActionOfDisappear();
-            print("Too hungry and died:"+MyId);
         }
     }
 
@@ -717,7 +718,7 @@ public class Person : General
         }
 
         CheckHappiness();
-        //DidIDie();
+        DidIDie();
         CheckIfEmmigrate();
         CheckIfInSchool();
     }
@@ -857,8 +858,8 @@ public class Person : General
     {
         if (Age > _lifeLimit)
         {
-          print(MyId + " gone , se partio");
-          ActionOfDisappear();
+            print(MyId + " gone , se partio.To old");
+            ActionOfDisappear();
         }
     }
 

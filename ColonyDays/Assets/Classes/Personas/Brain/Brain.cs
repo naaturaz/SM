@@ -2437,16 +2437,22 @@ public class Brain
 
     void CheckIfDie()
     {
-        if (!IAmHomeNow())
+        if (Partido 
+           // && (IAmHomeNow() || IJustSpawn())
+            )
         {
-            return;
-        }
+            //people can die. in the port, when just spwan or at home
+            if (_person.Home != null)
+            {
+                var fam = _person.Home.FindMyFamily(_person);
+                fam.RemovePersonFromFamily(_person);
+                RemoveFromAllPeopleDict();
+            }
 
-        if (Partido)
-        {
             Partido = false;
-            RemoveFromAllPeopleDict();
-            _person.DestroySafe();
+            //so person goes to heaven, and ray is sent from Sky to take him
+            //or angels take him 
+            _person.DestroyCool();
             PersonPot.Control.All.Remove(_person);
         }
     }

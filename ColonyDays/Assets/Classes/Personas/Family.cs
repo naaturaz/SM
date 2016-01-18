@@ -183,9 +183,10 @@ public class Family
     {
         Person inFamily = FindCurrentAdult();
 
+        //means that CurrentAdult person died recently
         if (inFamily == null)
         {
-            var t = this;
+            return true;
         }
 
         //2nd question is to check that other person is not Married already , etc
@@ -418,6 +419,8 @@ public class Family
     /// Used to move one family booked to the final destination 
     /// 
     /// Or to remove kid tht reach majority
+    /// 
+    /// Now used too , with person that dies
     /// </summary>
     public void RemovePersonFromFamily(Person personToRemove)
     {
@@ -426,7 +429,7 @@ public class Family
             if (Kids[i] == personToRemove.MyId)
             {
                 Kids.RemoveAt(i);
-                break;
+                return;
             }
         }
 
