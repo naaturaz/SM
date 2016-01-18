@@ -68,8 +68,8 @@ public class QueuesContainer
         InitVal();
         if (_peopleChecked.Contains(personMyID)){return false;}
 
-        var onNewB = IsOnQueue(theRoute, _newBuildsQueue);
-        var onDesB = IsOnQueue(theRoute, _destroyBuildsQueue);
+        var onNewB = IsOnQueue(theRoute, _newBuildsQueue, personMyID);
+        var onDesB = IsOnQueue(theRoute, _destroyBuildsQueue, personMyID);
 
         //print("onNewBlds:" + onNewB + ".elem.Count:" + _newBuildsAnchors.Elements.Count);
         //print("onDstBlds:" + onDesB + ".elem.Count:" + _destroyedBuildsAnchors.Elements.Count);
@@ -129,7 +129,8 @@ public class QueuesContainer
             var build = Brain.GetBuildingFromKey(_destroyBuildsQueue.Elements[i].Key);
 
             //bz could have been destroyed already
-            if (build != null && !_destroyBuildsQueue.Elements[i].WasUsedToGreenLightOrDestroy)
+            if (build != null && !_destroyBuildsQueue.Elements[i].WasUsedToGreenLightOrDestroy &&
+                _destroyBuildsQueue.Elements[i].IsCheckedByAll())
             {
                 _destroyBuildsQueue.Elements[i].WasUsedToGreenLightOrDestroy = true;
                 build.DestroyOrderedForced();   
@@ -154,7 +155,7 @@ public class QueuesContainer
     /// 
     /// and if the element on the queue was added after the route was created 
     /// </summary>
-    bool IsOnQueue(TheRoute theRoute, QueueTask queueTask)
+    bool IsOnQueue(TheRoute theRoute, QueueTask queueTask, string personID)
     {
         for (int i = 0; i < queueTask.Elements.Count; i++)
         {
@@ -163,11 +164,11 @@ public class QueuesContainer
 
             int result = DateTime.Compare(date1, date2);
 
-            //if they intersect and 
-            //the queue element was created later than the route then need to reroute
-            if (queueTask.Contains(theRoute.AreaRect, i) 
-                && result > 0
-                )
+            //can be called here bz a person when call the Queues to check in goes trhu all of them 
+            queueTask.Elements[i].CheckPersonIn(personID);
+
+            //if they intersect and //the queue element was created later than the route then need to reroute
+            if (queueTask.Contains(theRoute.AreaRect, i) && result > 0)
             {
                 _currenTime = queueTask.Elements[i].DateTime1;
                 return true;

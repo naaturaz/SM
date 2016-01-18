@@ -72,6 +72,10 @@ public class QueueElement
 
     private string _key;
 
+    //people that has checked this Element
+    //when all had u can proceed to be used to Greenlight or destryo
+    List<string> _personChecked = new List<string>(); 
+
     public bool WasUsedToGreenLightOrDestroy
     {
         get { return _wasUsedToGreenLightOrDestroy; }
@@ -91,5 +95,28 @@ public class QueueElement
     {
         get { return _key; }
         set { _key = value; }
+    }
+
+    public List<string> PersonChecked
+    {
+        get { return _personChecked; }
+        set { _personChecked = value; }
+    }
+
+    internal void CheckPersonIn(string personID)
+    {
+        if (!_personChecked.Contains(personID))
+        {
+            _personChecked.Add(personID);
+        }
+    }
+
+    /// <summary>
+    /// Will tell if all person had being checked in
+    /// </summary>
+    /// <returns></returns>
+    public bool IsCheckedByAll()
+    {
+        return _personChecked.Count == PersonPot.Control.All.Count;
     }
 }
