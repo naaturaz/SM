@@ -2247,16 +2247,6 @@ public class Building : General, Iinfo
     #region Job Related
 
     private int _maxPeople;//max people this builging can hold. workers 
-    private int _positionsFilled;//positions filled in this building as a job 
-    public int PositionsFilled
-    {
-        get { return _positionsFilled; }
-        set
-        {
-            _positionsFilled = value; 
-            BuildingPot.Control.Registro.ResaveOnRegistro(MyId);
-        }
-    }
 
     private void InitJobRelated()
     {
@@ -2268,7 +2258,6 @@ public class Building : General, Iinfo
     /// </summary>
     public void FillPosition()
     {
-        PositionsFilled++;
         CheckIfNoOpenPosLeftThenRemoveFromList();
     }
 
@@ -2278,7 +2267,7 @@ public class Building : General, Iinfo
     /// </summary>
     void CheckIfNoOpenPosLeftThenRemoveFromList()
     {
-        if (PositionsFilled >= _maxPeople)
+        if (PeopleDict.Count >= _maxPeople)
         {
             BuildingPot.Control.WorkOpenPos.Remove(MyId);
 //            Debug.Log(MyId+" removed from curr Jobs");
@@ -2290,8 +2279,6 @@ public class Building : General, Iinfo
     /// </summary>
     public void RemovePosition()
     {
-        PositionsFilled--;
-
         if (Instruction == H.WillBeDestroy)
         {
             return;
@@ -2305,7 +2292,7 @@ public class Building : General, Iinfo
     /// </summary>
     void CheckIfNeedsToBeAddedToList()
     {
-        if (PositionsFilled >= _maxPeople)
+        if (PeopleDict.Count >= _maxPeople)
         {
             return;   
         }
@@ -2326,7 +2313,7 @@ public class Building : General, Iinfo
     /// <returns></returns>
     internal bool HasOpenPositions()
     {
-        return PositionsFilled < _maxPeople;
+        return PeopleDict.Count < _maxPeople;
     }
 
 

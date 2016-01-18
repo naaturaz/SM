@@ -200,7 +200,7 @@ public class BuildingWindow : GUIElement {
         //is not a house 
         if (!_building.HType.ToString().Contains("House"))
         {
-            res = "Type:" + _building.HType + " Workers:" + _building.PositionsFilled
+            res = "Type:" + _building.HType + " Workers:" + _building.PeopleDict.Count
                      + " ID:" + _building.MyId;
         }
         else

@@ -76,7 +76,7 @@ public class Structure : StructureParent
             PeopleDict, 
             LandZone1,
             rotationFacerIndex: RotationFacerIndex, materialKey: MaterialKey,
-            instructionP: Instruction, BookedHome1: BookedHome1, PositionsFilled: PositionsFilled,
+            instructionP: Instruction, BookedHome1: BookedHome1, 
             dispatch: Dispatch1, Families: Families,
             dollarsPay: DollarsPay
             );

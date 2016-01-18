@@ -294,7 +294,7 @@ public class Registro : MonoBehaviour
         Vector3 tileScale = new Vector3(), List<int> parts = null,
         H dominantSide = H.None, H startingStage = H.None, int rotationFacerIndex = -1, string materialKey = "",
         List<Vector3> planesOnSoilPos = null, List<int> partsOnSoil = null, Vector3 min = new Vector3(),
-        Vector3 max = new Vector3(), H instructionP = H.None, BookedHome BookedHome1 = null, int PositionsFilled = 0,
+        Vector3 max = new Vector3(), H instructionP = H.None, BookedHome BookedHome1 = null, 
         Dispatch dispatch = null, Family[] Families = null,
         int dollarsPay = 0
         )
@@ -324,7 +324,7 @@ public class Registro : MonoBehaviour
             toHoriz, tilePosVert: tilePosVert, tilePosHor: tilePosHor,
             planesOnAirPos: planesOnAirPos, tileScale: tileScale, partsOnAir: parts, dominantSide: dominantSide, startingStage: startingStage, rotationFacerIndex: rotationFacerIndex, 
             materialKey: materialKey, planesOnSoilPos: planesOnSoilPos, partsOnSoil: partsOnSoil, min: min, max: max,
-            instructionP: instructionP,  bookedHome: BookedHome1, positionsFilled: PositionsFilled, dispatch: dispatch, familes: Families,
+            instructionP: instructionP,  bookedHome: BookedHome1, dispatch: dispatch, familes: Families,
             dollarsPay: dollarsPay);
 
         AddToAll(regFile);
@@ -441,7 +441,6 @@ public class Registro : MonoBehaviour
         AllRegFile[index].Familes = build.Families;
         AllRegFile[index].Inventory = build.Inventory;
         AllRegFile[index].PeopleDict = build.PeopleDict;
-        AllRegFile[index].PositionsFilled = build.PositionsFilled;
     }
 
     /// <summary>

@@ -163,7 +163,6 @@ public class RegFile  {
     public Inventory Inventory;
     public H Instruction;
     public BookedHome BookedHome1;//only save and loaded for Structures and Shore Types.
-    public int PositionsFilled;
 
     public Dispatch Dispatch1;
     public Family[] Familes;
@@ -179,7 +178,7 @@ public class RegFile  {
         Vector3 tileScale = new Vector3(), List<int> partsOnAir = null,
         H dominantSide = H.None, H startingStage = H.None, int rotationFacerIndex = -1, string materialKey = "",
         List<Vector3> planesOnSoilPos = null, List<int> partsOnSoil = null, Vector3 min = new Vector3(), 
-        Vector3 max = new Vector3(), H instructionP = H.None , BookedHome bookedHome = null, int positionsFilled = 0,
+        Vector3 max = new Vector3(), H instructionP = H.None , BookedHome bookedHome = null, 
         Dispatch dispatch = null, Family[] familes = null ,
         int dollarsPay = 0
         )
@@ -211,7 +210,6 @@ public class RegFile  {
         _peopleDict = PeopleDict;
         this.LandZone1 = LandZone1;
         BookedHome1 = bookedHome;
-        PositionsFilled = positionsFilled;
 
         Dispatch1 = dispatch;
         Familes = familes;

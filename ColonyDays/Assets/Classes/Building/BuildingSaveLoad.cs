@@ -158,7 +158,6 @@ public class BuildingSaveLoad : BuildingPot
         s.Instruction = regFile.Instruction;
         s.PeopleDict = regFile.PeopleDict;
         s.BookedHome1 = regFile.BookedHome1;
-        s.PositionsFilled = regFile.PositionsFilled;
 
 
         s.Dispatch1 = regFile.Dispatch1;
