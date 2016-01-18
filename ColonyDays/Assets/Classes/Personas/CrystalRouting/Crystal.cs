@@ -224,6 +224,15 @@ public class Crystal
 
     private int weightFactor = 1;
     private int sineFactor = 10;
+
+
+    internal void CalculateWeight(Vector3 vector3)
+    {
+        Distance = Vector3.Distance(U2D.FromV2ToV3(_position), vector3);
+        // _calcWeight = (_baseWeight * weightFactor) + Distance;
+        _calcWeight = _baseWeight + Distance;
+    }
+
     internal void CalculateWeight(Vector3 finOrC, Vector3 final, Vector3 curr)
     {
         Distance = Mathf.Abs(Vector3.Distance(U2D.FromV2ToV3(_position), final));
@@ -378,28 +387,27 @@ public class Crystal
         {
             _baseWeight = 20;
         }
-        //TerraObstacle
         else if (_type == H.MountainObstacle || _type == H.WaterObstacle)
         {
-            _baseWeight = 400;
+            _baseWeight = 100;
         }
-        else if (_type == H.Way3)//best way
+        else if (_type == H.Way1)
         {
-            _baseWeight = 0;
+            _baseWeight = 7;
         }
         else if (_type == H.Way2)
         {
-            _baseWeight = 1;
+            _baseWeight = 6;
         }
-        else if (_type == H.Way1)//worst way
+        else if (_type == H.Way3)
         {
-            _baseWeight = 2;
-        }       
-        //should rather to go to a RectCorner thn a TerraObstacle 
+            _baseWeight = 5;
+        }
+        //will rather to go to a RectCorner thn a TerraObstacle 
         else if (_type == H.RectCorner)
         {
             _baseWeight = 200;
-        }    
+        }
         // bz always should be the 1st to try 
         else if (_type == H.Door)
         {

@@ -6,11 +6,14 @@ public class QueueTask : IComparable {
     
     List<QueueElement> _elements = new List<QueueElement>();
 
+
     public List<QueueElement> Elements
     {
         get { return _elements; }
         set { _elements = value; }
     }
+
+  
 
     internal void AddToQueue(List<Vector3> objP, string key)
     {
@@ -64,7 +67,16 @@ public class QueueElement
     public List<Vector3> Poly = new List<Vector3>();
     public DateTime DateTime1;//created to compare in Queues when A route is needed to be redone or not 
 
+    //will tell if this queue element was used already for destroy or greelight a building
+    private bool _wasUsedToGreenLightOrDestroy;
+
     private string _key;
+
+    public bool WasUsedToGreenLightOrDestroy
+    {
+        get { return _wasUsedToGreenLightOrDestroy; }
+        set { _wasUsedToGreenLightOrDestroy = value; }
+    }
 
     public QueueElement(List<Vector3> eList, string key)
     {

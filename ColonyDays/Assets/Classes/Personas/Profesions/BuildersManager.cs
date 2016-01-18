@@ -272,9 +272,11 @@ public class BuildersManager
         for (int i = 0; i < newBuildsQueue.Elements.Count; i++)
         {
             var key = newBuildsQueue.Elements[i].Key;
-            if (!string.IsNullOrEmpty(key))
+            if (!string.IsNullOrEmpty(key) && !newBuildsQueue.Elements[i].WasUsedToGreenLightOrDestroy)
             {
                 _passedQueue.Add(key);
+                //so its not readded here again later 
+                newBuildsQueue.Elements[i].WasUsedToGreenLightOrDestroy = true;
             }
         }
     }

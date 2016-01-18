@@ -100,15 +100,15 @@ public class QueuesContainer
     /// </summary>
     void ClearAllQueues()
     {
+        PersonPot.Control.BuildersManager1.AddGreenLightKeys(_newBuildsQueue);
+        FinalForcedDestroy();
         //then all where check
         if (buidingsWhenStartChecking == _newBuildsQueue.Elements.Count + _destroyBuildsQueue.Elements.Count)
         {
-            PersonPot.Control.BuildersManager1.AddGreenLightKeys(_newBuildsQueue);
-            FinalForcedDestroy();
-
             _newBuildsQueue.Elements.Clear();
             _destroyBuildsQueue.Elements.Clear();
         }
+
         buidingsWhenStartChecking = 0;
         //always is clear here 
         _peopleChecked.Clear();
@@ -129,8 +129,9 @@ public class QueuesContainer
             var build = Brain.GetBuildingFromKey(_destroyBuildsQueue.Elements[i].Key);
 
             //bz could have been destroyed already
-            if (build != null)
+            if (build != null && !_destroyBuildsQueue.Elements[i].WasUsedToGreenLightOrDestroy)
             {
+                _destroyBuildsQueue.Elements[i].WasUsedToGreenLightOrDestroy = true;
                 build.DestroyOrderedForced();   
             }
         }
