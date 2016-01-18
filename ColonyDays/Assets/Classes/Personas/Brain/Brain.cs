@@ -654,7 +654,10 @@ public class Brain
 
     private void GoToNewHome()
     {
-        if (CurrentTask == HPers.MovingToNewHome && _person.Body.Location == HPers.Home && _person.Body.GoingTo == HPers.Home
+        if (CurrentTask == HPers.MovingToNewHome
+            //none is if person is just spwaneed and foudn new home 
+            && (_person.Body.Location == HPers.Home || _person.Body.Location == HPers.None) && 
+            _person.Body.GoingTo == HPers.Home
             && MoveToNewHome.RouteToNewHome.CheckPoints.Count > 0)
         {
             _person.Body.WalkRoutine(MoveToNewHome.RouteToNewHome, HPers.MovingToNewHome);
@@ -800,6 +803,22 @@ public class Brain
 
         UpdateRouters();
 
+
+
+        //used to be below mindState
+        StartRoutes();
+        SetFinalRoutes();
+        MoveToNewHome.BuildRouteToNewHomeRoutine();
+        SearchAgain();
+        if (!PersonPot.Control.Locked && _person.Home != null)
+        {
+            ExecuteSlowCheckUp();
+        }
+        CheckIfDie();
+
+
+
+
         //if wating for rerouting must wait at home
         if (_waiting)
         {
@@ -810,18 +829,6 @@ public class Brain
         if (goMindState)
         { MindState(); }
 
-        StartRoutes();
-        SetFinalRoutes();
-
-        MoveToNewHome.BuildRouteToNewHomeRoutine();
-        SearchAgain();
-
-        if (!PersonPot.Control.Locked && _person.Home != null)
-        {
-            ExecuteSlowCheckUp();
-        }
-
-        CheckIfDie();
     }
 
 
@@ -836,6 +843,11 @@ public class Brain
     //u are only waiting if u are checked in ready to reroute
     private bool _waiting;//waiting to reroute 
 
+    //last time I got into Checkin for new routes OnSystem
+    //here so people when is the one of the first are not getting in all the time 
+    private float _lastTimeICheckedInOnSystem;
+    private float _delayToGetIntoOnSystem = 5f;
+
     /// <summary>
     /// Created to the Update doesnt run and ruins the Raoutes Start Booleans
     /// </summary>
@@ -849,9 +861,10 @@ public class Brain
 
         if (IJustSpawn() || IAmHomeNow())
         {
-            if (PersonPot.Control.CanIReRouteNow())
+            if (PersonPot.Control.CanIReRouteNow() && Time.time > _lastTimeICheckedInOnSystem + _delayToGetIntoOnSystem)
             {
                 PersonPot.Control.CheckMeOnSystem(_person.MyId);
+                _lastTimeICheckedInOnSystem = Time.time;
                 _waiting = true;
             }
         }

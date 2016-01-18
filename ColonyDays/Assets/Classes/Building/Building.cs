@@ -1133,7 +1133,12 @@ public class Building : General, Iinfo
     public List<string> PeopleDict
     {
         get { return _peopleDict; }
-        set { _peopleDict = value; }
+        set
+        {
+            _peopleDict = value;
+            //so its update it there so when SaveLoad is current
+            BuildingPot.Control.Registro.ResaveOnRegistro(MyId);
+        }
     }
 
     public int RationsPay
@@ -1350,14 +1355,18 @@ public class Building : General, Iinfo
 
     /// <summary>
     /// Will find the family by ID 
+    /// 
+    /// Will see if pers.MyId or pers.Spouse is contained in any of this building Family ID, 
+    /// bz families get one or other spouse ID
     /// </summary>
     /// <param name="pers"></param>
     /// <returns></returns>
-    internal Family FindFamilyById(Person pers)
+    internal Family FindOldFamilyById(Person pers)
     {
         for (int i = 0; i < Families.Length; i++)
         {
-            if (Families[i].FamilyId == pers.FamilyId)
+            if ((Families[i].FamilyId.Contains(pers.MyId)) ||
+                (!string.IsNullOrEmpty(pers.Spouse) && Families[i].FamilyId.Contains(pers.Spouse)))
             {
                 return Families[i];
             }
@@ -3081,14 +3090,15 @@ public class BookedHome
         if (oldHome!= null)
         {
             //Debug.Log("Make virgin on oldHome!= null");
-            var fam = oldHome.FindFamilyById(toRemove);
+            //is good enoguh bz as long as the first perso moving out do this 
+            var fam = oldHome.FindOldFamilyById(toRemove);
 
             if (fam != null)
             {
                 fam.DeleteFamily();
                 fam.MakeVirgin();
 
-                Debug.Log("Made family virgin on");
+                Debug.Log("Made family virgin on:");
 
                 //so families are resaved 
                 //BuildingPot.Control.Registro.UpdateOnRegistro(oldHome.MyId);

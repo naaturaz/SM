@@ -416,6 +416,7 @@ public class Registro : MonoBehaviour
     /// Instruction
     /// Families
     /// Invetory
+    /// PeopleDict
     /// </summary>
     public void ResaveOnRegistro(string myIdP)
     {
@@ -432,6 +433,7 @@ public class Registro : MonoBehaviour
         AllRegFile[index].Instruction = build.Instruction;
         AllRegFile[index].Familes = build.Families;
         AllRegFile[index].Inventory = build.Inventory;
+        AllRegFile[index].PeopleDict = build.PeopleDict;
     }
 
     /// <summary>

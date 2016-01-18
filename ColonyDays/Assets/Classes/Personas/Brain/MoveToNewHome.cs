@@ -204,9 +204,11 @@ public class MoveToNewHome
         _brain.GoMindState = false;
         //        Debug.Log(_person.MyId + " InitValForNewHome()");
 
-        _oldHomeKey = _brain.PullOldHome().MyId;
+        //_oldHomeKey = _brain.PullOldHome().MyId;
 
         var firstKeyOnList = _homeOldKeysList[0];
+        _oldHomeKey = firstKeyOnList;
+
         old = BuildingPot.Control.Registro.AllBuilding[firstKeyOnList] as Structure;
         buildRouteToNewHome = true;
 

@@ -24,6 +24,11 @@ public class Family
     {
         _kidsMax = kidsMax;
         _home = homeKey;
+
+        if (homeKey == "")
+        {
+            Debug.Log("Home set here");
+        }
     }
 
     public List<string> Kids
@@ -35,7 +40,15 @@ public class Family
     public string Home
     {
         get { return _home; }
-        set { _home = value; }
+        set
+        {
+            if (_home != "" && value == "")
+            {
+                Debug.Log("Home set here");
+
+            }
+            _home = value; 
+        }
     }
 
     public H State
@@ -391,7 +404,9 @@ public class Family
 
     public void DeleteFamily()
     {
-        Home = "";
+        //gonna remove it since IsEmptyFamily() doesnt talk abt HomeKey
+        //ask abt the amt of family memenrs 
+        //Home = "";
         State = H.None;
 
         Kids.Clear();
