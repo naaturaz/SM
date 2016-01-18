@@ -1136,6 +1136,12 @@ public class Building : General, Iinfo
         set
         {
             _peopleDict = value;
+
+            //no need if is loading from file now 
+            if (IsLoadingFromFile)
+            {
+                return;
+            }
             //so its update it there so when SaveLoad is current
             BuildingPot.Control.Registro.ResaveOnRegistro(MyId);
         }
@@ -2245,10 +2251,12 @@ public class Building : General, Iinfo
     public int PositionsFilled
     {
         get { return _positionsFilled; }
-        set { _positionsFilled = value; }
+        set
+        {
+            _positionsFilled = value; 
+            BuildingPot.Control.Registro.ResaveOnRegistro(MyId);
+        }
     }
-
-
 
     private void InitJobRelated()
     {
@@ -2260,7 +2268,7 @@ public class Building : General, Iinfo
     /// </summary>
     public void FillPosition()
     {
-        _positionsFilled++;
+        PositionsFilled++;
         CheckIfNoOpenPosLeftThenRemoveFromList();
     }
 
@@ -2270,7 +2278,7 @@ public class Building : General, Iinfo
     /// </summary>
     void CheckIfNoOpenPosLeftThenRemoveFromList()
     {
-        if (_positionsFilled == _maxPeople)
+        if (PositionsFilled >= _maxPeople)
         {
             BuildingPot.Control.WorkOpenPos.Remove(MyId);
 //            Debug.Log(MyId+" removed from curr Jobs");
@@ -2282,7 +2290,7 @@ public class Building : General, Iinfo
     /// </summary>
     public void RemovePosition()
     {
-        _positionsFilled--;
+        PositionsFilled--;
 
         if (Instruction == H.WillBeDestroy)
         {
@@ -2297,7 +2305,7 @@ public class Building : General, Iinfo
     /// </summary>
     void CheckIfNeedsToBeAddedToList()
     {
-        if (_positionsFilled >= _maxPeople)
+        if (PositionsFilled >= _maxPeople)
         {
             return;   
         }
@@ -2312,7 +2320,14 @@ public class Building : General, Iinfo
 //        Debug.Log(MyId + " Added to curr Jobs");
     }
 
-
+    /// <summary>
+    /// Willreturn if PositionsFilled < maxPeople
+    /// </summary>
+    /// <returns></returns>
+    internal bool HasOpenPositions()
+    {
+        return PositionsFilled < _maxPeople;
+    }
 
 
 #endregion
@@ -2882,6 +2897,7 @@ public class Building : General, Iinfo
 
 
     #endregion
+
 
 
 

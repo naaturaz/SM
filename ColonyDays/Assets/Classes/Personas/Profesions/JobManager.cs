@@ -88,9 +88,10 @@ public class JobManager
         {
             //to address if building was deleted and not updated on the list 
             string key = currListOfBuild[i];
+            var build = Brain.GetBuildingFromKey(key);
 
-            if (!person.Brain.BlackList.Contains(key) && 
-                BuildingPot.Control.Registro.AllBuilding.ContainsKey(key))//to avoid checking on deleted building 
+            if (!person.Brain.BlackList.Contains(key) && BuildingPot.Control.Registro.AllBuilding.ContainsKey(key)
+                && build != null && build.HasOpenPositions())//to avoid checking on deleted building 
             {
                 Vector3 pos = BuildingPot.Control.Registro.AllBuilding[key].transform.position;
                 loc.Add(new VectorM(pos, person.Home.transform.position, key));

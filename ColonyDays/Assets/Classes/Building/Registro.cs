@@ -416,10 +416,17 @@ public class Registro : MonoBehaviour
     /// Instruction
     /// Families
     /// Invetory
-    /// PeopleDict
+    /// PeopleDic
+    /// PositionFilled
     /// </summary>
     public void ResaveOnRegistro(string myIdP)
     {
+        //for when Building is loading and writing PeopleDict 
+        if (!AllBuilding.ContainsKey(myIdP))
+        {
+            return;
+        }
+
         var build = AllBuilding[myIdP];
         int index = AllRegFile.FindIndex(a => a.MyId == myIdP);
 
@@ -434,6 +441,7 @@ public class Registro : MonoBehaviour
         AllRegFile[index].Familes = build.Families;
         AllRegFile[index].Inventory = build.Inventory;
         AllRegFile[index].PeopleDict = build.PeopleDict;
+        AllRegFile[index].PositionsFilled = build.PositionsFilled;
     }
 
     /// <summary>
