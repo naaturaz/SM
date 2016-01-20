@@ -168,6 +168,10 @@ public class MoveToNewHome
         {
             return old;
         }
+        //todo
+        //The real solution is to find the closest building in MoveToNEwHome
+        return Brain.GetStructureFromKey(Person.StartingBuild);
+
         //will create a dummy where the person is now
         dummy = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy);
         dummy.transform.position = _person.transform.position;
@@ -293,7 +297,7 @@ public class MoveToNewHome
     public void CleanUpRouteToNewHome()
     {
         newHomeRouteStart = false;
-        _newHomeRouter.IsRouteReady = true;
+        //_newHomeRouter.IsRouteReady = true;
 
         Debug.Log("CleanUpRouteToNewHome"+_person.MyId);
         searchedNewHome = 0;

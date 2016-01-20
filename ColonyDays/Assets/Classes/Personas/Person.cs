@@ -49,6 +49,7 @@ public class Person : General
     private Structure _foodSource;
     private Structure _religion;
     private Structure _chill;
+    private static string _startingBuild = "";
     private Vector3 _idlePlace;
 
     //Techincal
@@ -118,6 +119,28 @@ public class Person : General
         set { _foodSource = value; }
     }
 
+    /// <summary>
+    /// If person was ramdon assig a position and if was set close 
+    /// to a building like Storage or Dock . That building will be set here 
+    /// 
+    /// Not implement SaveLoad
+    /// 
+    /// Created to solve CryBridgeRoute.cs 125
+    /// 
+    /// The real solution is to find the closest building in MoveToNEwHome
+    /// </summary>
+    public static string StartingBuild
+    {
+        get { return _startingBuild; }
+        set
+        {
+            if (string.IsNullOrEmpty(_startingBuild))
+            {
+                _startingBuild = value;
+            }
+        }
+    }
+    
     public List<General> DebugList
     {
         get { return _debugList; }
@@ -299,7 +322,7 @@ public class Person : General
             obj = (Person) Resources.Load(Root.personaMale1, typeof (Person));
         }
 
-        int iniAge = General.GiveRandom(69, 70); //5, 29
+        int iniAge = General.GiveRandom(25, 26); //5, 29
 
         //will assign ramdom pos if has none 
         if (iniPos == new Vector3())
@@ -596,11 +619,14 @@ public class Person : General
 
         if (build != null)
         {
+            StartingBuild = build.MyId;
             return build.SpawnPoint.transform.position;
         }
         build = BuildingPot.Control.Registro.ReturnFirstThatContains("Storage");
         if (build != null)
         {
+            StartingBuild = build.MyId;
+
             return build.SpawnPoint.transform.position;
         }
         //all houses shoud contain House 
@@ -610,6 +636,8 @@ public class Person : General
         build = BuildingPot.Control.Registro.ReturnFirstThatContains("House");
         if (build != null)
         {
+            StartingBuild = build.MyId;
+
             return build.SpawnPoint.transform.position;
         }
         //just here bz small town still not spwaning
@@ -1823,7 +1851,6 @@ public class Person : General
     }
 
 
-
     public void CreateProjector()
     {
         if (_light == null)
@@ -1848,6 +1875,8 @@ public class Person : General
         }
     }
     #endregion
+
+
 }
 
 public class PersonReport

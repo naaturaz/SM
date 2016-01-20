@@ -122,10 +122,18 @@ public class CryBridgeRoute
         //todo
         if (bridge == null)
         {
+            Debug.Log("Called with null brdige:" + bridgeId);
             throw new Exception("Fix");
         }
 
-        VectorLand newVectorLand = new VectorLand("", pos, bridge);
+        VectorLand newVectorLand = new VectorLand();
+        //if (bridge == null)
+        //{
+        //    newVectorLand = new VectorLand("", pos);
+        //}
+        //else 
+            
+        newVectorLand = new VectorLand("", pos, bridge);
 
         if (add)
         {
@@ -135,12 +143,9 @@ public class CryBridgeRoute
         return newVectorLand;
     }
 
-
-
-    void Debug()
+    void DebugLoc()
     {
         //UVisHelp.CreateHelpers(_legs, Root.yellowCube);
-
         for (int i = 0; i < _legs.Count; i++)
         {
             UVisHelp.CreateText(_legs[i].Position, i + "");
