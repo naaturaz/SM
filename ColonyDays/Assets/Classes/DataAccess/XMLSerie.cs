@@ -113,14 +113,33 @@ public class XMLSerie
 
     public static BuildingData ReadXMLBuilding()
     {
-        var loaded =
-            DataContainer.Load(Path.Combine(dataPath, "building.xml"));
+        var loaded = DataContainer.Load(Path.Combine(dataPath, "building.xml"));
 
         BuildingData res = null;
-        if (loaded != null) { res = loaded.BuildingData; }
+        if (loaded != null)
+        {
+            res = loaded.BuildingData;
+        }
+        //if not saved town found will load Deffault town         
+        else res = LoadDefaultTown();
 
         return res;
     }
+
+    private static BuildingData LoadDefaultTown()
+    {
+        string locPath = @"\Resources\Town";
+
+        BuildingData res = new BuildingData();
+        var difficulty = 0;
+        if (difficulty == 0)
+        {
+            res = DataContainer.Load(Path.Combine(dataPath+locPath, "fourHouse.xml")).BuildingData;
+        }
+        return res;
+    }
+
+
 
     public static void WriteXMLPerson(PersonData personData)
     {
