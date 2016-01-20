@@ -1302,6 +1302,13 @@ public class CrystalManager  {
     {
         var res = ReturnCrystalsLinksLandZones(_bounds[0]);
 
+        //Crystal hhad no link 
+        //if (res.Count==0)
+        //{
+        //    pollResult = "";
+        //    return;
+        //}
+
         var mostCommom = UString.ReturnMostCommonName(res);
         pollResult = mostCommom;
     }

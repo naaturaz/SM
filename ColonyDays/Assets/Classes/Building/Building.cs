@@ -1889,8 +1889,13 @@ public class Building : General, Iinfo
         Bridge br = (Bridge)this;
         var ends = br.GiveTwoRoughEnds();
 
-        var zone1 = MeshController.CrystalManager1.ReturnLandingZone(ends[0]);
-        var zone2 = MeshController.CrystalManager1.ReturnLandingZone(ends[1]);
+        //will move the ends a bit away from buidliing so if the bridge is too close
+        //to rivers edges can link to the LinkRects are deeper in land 
+        var end0 = Vector3.MoveTowards(ends[0], transform.position, -8f);
+        var end1 = Vector3.MoveTowards(ends[1], transform.position, -8f);
+
+        var zone1 = MeshController.CrystalManager1.ReturnLandingZone(end0);
+        var zone2 = MeshController.CrystalManager1.ReturnLandingZone(end1);
         
         BuildingPot.Control.BridgeManager1.AddBridge(zone1, zone2, transform.position, MyId);
 

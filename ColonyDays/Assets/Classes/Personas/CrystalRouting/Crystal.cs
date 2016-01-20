@@ -187,7 +187,7 @@ public class Crystal
         }
         if (_type == H.Poll)
         {
-            _maxAmtLines = 4;
+            _maxAmtLines = 8;
         }
     }
 
@@ -581,7 +581,7 @@ public class Crystal
 
 
 
-        Line tLine = new Line(this, nextCrystal, render);
+        Line tLine = new Line(this, nextCrystal, true);
 
         AssignLine(tLine);
         nextCrystal.AssignLine(tLine);

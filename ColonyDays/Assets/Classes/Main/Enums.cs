@@ -329,8 +329,11 @@ public enum StCat //strucutre categories
 public enum StInfr //for structures game structure.cs 
 {
     //Infrastructure
-    Trail, Road, BridgeTrail, BridgeRoad,
-    CoachMan, LightHouse, WheelBarrow, StockPile, BuildersOffice
+    //Trail, Road, 
+    BridgeTrail, BridgeRoad,
+    CoachMan, LightHouse, WheelBarrow, 
+    //b4StockPile, 
+    BuildersOffice
 }
 
 public enum StHous //for structures game structure.cs 
