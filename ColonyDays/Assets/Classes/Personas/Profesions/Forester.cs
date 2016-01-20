@@ -268,7 +268,7 @@ public class Forester : Profession
             return;
         }
 
-        ele.RemoveWeight(ProdXShift);
+        ele.RemoveWeight(ProdXShift, _person);
     }
 
     /// <summary>

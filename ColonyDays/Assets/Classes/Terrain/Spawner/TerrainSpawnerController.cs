@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using TreeEditor;
 
 public class TerrainSpawnerController : ControllerParent
 {
@@ -98,6 +99,7 @@ public class TerrainSpawnerController : ControllerParent
 
         AllSpawnedDataList[index].TreeHeight = ele.Height;
         AllSpawnedDataList[index].SeedDate = ele.SeedDate;
+        AllSpawnedDataList[index].MaxHeight = ele.MaxHeight;
     }
 
     public StillElement FindThis(string key)
@@ -250,24 +252,41 @@ public class TerrainSpawnerController : ControllerParent
         }
     }
 
+    /// <summary>
+    /// Call to replant a tree
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <param name="pers"></param>
+    public void SpawnRandomTreeAroundThisPos(Person pers)
+    {
+        //a position ard his Job. his job place is a forester place 
+        Vector3 finaPos = pers.AssignRandomIniPosition(pers.Work.transform.position, 5);
+        int rootToSpawnIndex = ReturnRandomRootIndex(H.Tree);
+
+        //so is saved and created
+        IsToSave = true;
+        CreateObjAndAddToMainList(H.Tree, finaPos, rootToSpawnIndex, 0, replantedTree: true);
+        IsToSave = false;
+    }
+
     //Creates the main type of objects and add them to AllRandomObjList, at the end if IsToSave is true will save it on
     //SaveOnListData
     public void CreateObjAndAddToMainList(H typePass, Vector3 pos, 
-        int rootToSpawnIndex, int index, Quaternion rot = new Quaternion())
+        int rootToSpawnIndex, int index, Quaternion rot = new Quaternion(), bool replantedTree = false)
     {
         string root = ReturnRoot(typePass, rootToSpawnIndex);
         TerrainRamdonSpawner temp = null;
         if (IsToSave)
         {
             temp = TerrainRamdonSpawner.CreateTerraSpawn(root, pos, index, typePass, typePass.ToString() + ":" + index,
-                transform);
+                transform, replantedTree: replantedTree);
             temp.transform.Rotate(new Vector3(0, rand.Next(0, 360), 0));
             usedVertexPos[index] = true;
         }
         else if (IsToLoadFromFile)
         {
             temp = TerrainRamdonSpawner.CreateTerraSpawn(root, pos, index, typePass, typePass.ToString() + ":" + index,
-                transform);
+                transform, replantedTree: replantedTree);
             temp.transform.rotation = rot;
         }
 

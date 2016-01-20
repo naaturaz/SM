@@ -295,7 +295,7 @@ public class MDate
 
     public MDate() { }
 
-public MDate(int day, int mon, int year)
+    public MDate(int day, int mon, int year)
     {
         _day = day;
         _month = mon;

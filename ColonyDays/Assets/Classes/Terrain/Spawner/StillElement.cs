@@ -46,7 +46,26 @@ public class StillElement : TerrainRamdonSpawner {
 	{
 	    addCrystals = true;
         base.Start();//intended to call TerrainRandomSpawner.cs
+
+	    if (ReplantedTree)
+	    {
+	        ReplantThisTree();
+	    }
+
+	    LoadGrowingTree();
 	}
+
+    /// <summary>
+    /// To address the loading of a growing tree
+    /// </summary>
+    private void LoadGrowingTree()
+    {
+        if (!ReadyToMine())
+        {
+            ScaleGameObjectToZero();
+            SetGameObjectScaleTo(Height);
+        }
+    }
 
     void AddCrystals()
     {
@@ -166,7 +185,7 @@ public class StillElement : TerrainRamdonSpawner {
     /// Called when  a Forester iis has mined 
     /// </summary>
     /// <param name="ProdXShift"></param>
-    internal void RemoveWeight(float ProdXShift)
+    internal void RemoveWeight(float ProdXShift, Person pers)
     {
         _weight -= ProdXShift;
         
@@ -174,8 +193,13 @@ public class StillElement : TerrainRamdonSpawner {
         //mined now only by one person . The person calling this Method 
         if (_weight < 0)
         {
-            ReplantThisTree();
-            //DestroyCool();
+            DestroyCool();
+
+            if (HType==H.Tree)
+            {
+                Program.gameScene.controllerMain.TerraSpawnController.
+                    SpawnRandomTreeAroundThisPos(pers);
+            }
         }
     }
 
@@ -207,7 +231,6 @@ public class StillElement : TerrainRamdonSpawner {
         Height = 0;
         _maxHeight = gameObject.transform.localScale.y;
         ScaleGameObjectToZero();
-        SetSpecWeight();
 
         Program.gameScene.controllerMain.TerraSpawnController.ReSaveStillElement(this);
     }
@@ -252,6 +275,12 @@ public class StillElement : TerrainRamdonSpawner {
         var singleZ = localScale.z + toAdd;
 
         var newScale = new Vector3(singleX, singleY, singleZ);
+        gameObject.transform.localScale = newScale;
+    }
+
+    void SetGameObjectScaleTo(float val)
+    {
+        var newScale = new Vector3(val, val, val);
         gameObject.transform.localScale = newScale;
     }  
     

@@ -17,6 +17,7 @@ public class SpawnedData {
     public float TreeHeight = 1;
 
     public MDate SeedDate;
+    public float MaxHeight;
 
 
     public SpawnedData(Vector3 posP, Quaternion rotP, H typeP,  int rootStringIndexP,

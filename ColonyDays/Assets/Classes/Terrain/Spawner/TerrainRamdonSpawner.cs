@@ -2,10 +2,10 @@
 
 public class TerrainRamdonSpawner : General {
 
-   // public H Instruction { get; set; }
+    public bool ReplantedTree { get; set; }
 
     static public TerrainRamdonSpawner CreateTerraSpawn(string root, Vector3 origen, int indexAllVertex, H hType,
-        string name = "", Transform container = null)
+        string name = "", Transform container = null, bool replantedTree = false)
     {
         WAKEUP = true;
         TerrainRamdonSpawner obj = null;
@@ -17,6 +17,8 @@ public class TerrainRamdonSpawner : General {
         obj.HType = hType;
         obj.MyId = obj.Rename(name, obj.Id, obj.HType);
         obj.transform.name = obj.MyId;
+
+        obj.ReplantedTree = replantedTree;
 
         return obj;
     }
