@@ -130,11 +130,16 @@ public class XMLSerie
     {
         string locPath = @"\Resources\Town";
 
-        BuildingData res = new BuildingData();
+        BuildingData res = null;
         var difficulty = 0;
         if (difficulty == 0)
         {
-            res = DataContainer.Load(Path.Combine(dataPath+locPath, "fourHouse.xml")).BuildingData;
+            var file = DataContainer.Load(Path.Combine(dataPath + locPath, "fourHouse.xml"));
+            if (file!=null)
+            {
+                res = file.BuildingData;
+            }
+
         }
         return res;
     }

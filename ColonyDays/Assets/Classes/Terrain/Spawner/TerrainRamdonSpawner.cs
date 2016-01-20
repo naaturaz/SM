@@ -4,13 +4,6 @@ public class TerrainRamdonSpawner : General {
 
    // public H Instruction { get; set; }
 
-    bool _isMarkToMine;
-    public bool IsMarkToMine
-    {
-        get { return _isMarkToMine; }
-        set { _isMarkToMine = value; }
-    }
-
     static public TerrainRamdonSpawner CreateTerraSpawn(string root, Vector3 origen, int indexAllVertex, H hType,
         string name = "", Transform container = null)
     {
@@ -41,4 +34,10 @@ public class TerrainRamdonSpawner : General {
 	}
 
 
+
+    internal bool Grown()
+    {
+        var ele = Program.gameScene.controllerMain.TerraSpawnController.FindThis(MyId);
+        return ele.ReadyToMine();
+    }
 }

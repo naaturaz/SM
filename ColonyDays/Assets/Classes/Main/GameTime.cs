@@ -271,8 +271,8 @@ public class GameTime
 /// </summary>
 public class MDate
 {
-    private int _day ;
-    private int _month ;
+    private int _day;
+    private int _month;
     private int _year;
 
     public int Day
@@ -293,7 +293,9 @@ public class MDate
         set { _year = value; }
     }
 
-    public MDate(int day, int mon, int year)
+    public MDate() { }
+
+public MDate(int day, int mon, int year)
     {
         _day = day;
         _month = mon;

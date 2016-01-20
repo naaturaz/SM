@@ -11,11 +11,6 @@ public class Forester : Profession
 
     public Forester(Person person, PersonFile pF)
     {
-        if (person.Name.Contains("Robert"))
-        {
-            var t = this;
-        }
-
         if (pF == null)
         {
             CreatingNew(person);
@@ -101,7 +96,7 @@ public class Forester : Profession
             var t = all[i];
 
             //or if is blacklisted 
-            if (t == null || _person.Brain.BlackList.Contains(t.MyId))
+            if (t == null || _person.Brain.BlackList.Contains(t.MyId) || !t.Grown())
             {
                 continue;
             }
@@ -127,7 +122,7 @@ public class Forester : Profession
         for (int i = 0; i < listP.Count; i++)
         {
             //means that tree was deleted but the list has not being updated 
-            if (listP[i] == null)
+            if (listP[i] == null || !listP[i].Grown())
             {
                 continue;
             }
@@ -137,7 +132,7 @@ public class Forester : Profession
             var hType = listP[i].HType;
             var distance = Vector3.Distance(pos, _person.Work.transform.position);
 
-            if (!listP[i].IsMarkToMine && distance < Radius)
+            if (distance < Radius)
             {
                 loc.Add(new VectorM(pos, _person.Work.transform.position, key, hType));
             }

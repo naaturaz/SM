@@ -93,13 +93,11 @@ public class InputMeshSpawn : InputParent {
 
             if (isSpawnObjOnSelRect && isRightType)
             {
-                still.IsMarkToMine = true;
                 res.Add(still);
                 AddVisHelpList(true, still);
             }
             else if (isSpawnObjOnSelRect && typePass == H.RemoveSelection)
             {
-                still.IsMarkToMine = false;
                 AddVisHelpList(false, still);
             }
         }

@@ -14,6 +14,13 @@ public class StillElement : TerrainRamdonSpawner {
 
     List<Vector3> _anchors = new List<Vector3>();
 
+    /// <summary>
+    /// the height of the elements they start always with 1. if a tree is replanted is 
+    /// set to zero and has to reegrow
+    /// </summary>
+    public float _height = .25f;
+
+    private float _maxHeight;
 
 
     public List<Vector3> Anchors
@@ -28,15 +35,17 @@ public class StillElement : TerrainRamdonSpawner {
         set { _minedNowBy = value; }
     }
 
+    public float Height
+    {
+        get { return _height; }
+        set { _height = value; }
+    }
+
     // Use this for initialization
 	protected void Start ()
 	{
 	    addCrystals = true;
-
         base.Start();//intended to call TerrainRandomSpawner.cs
-
-
-
 	}
 
     void AddCrystals()
@@ -62,6 +71,8 @@ public class StillElement : TerrainRamdonSpawner {
 	        addCrystals = false;
             AddCrystals();
 	    }
+
+        CheckIfCanGrow();
 	}
 
     protected void UpdateMinAndMaxVar()
@@ -163,7 +174,96 @@ public class StillElement : TerrainRamdonSpawner {
         //mined now only by one person . The person calling this Method 
         if (_weight < 0)
         {
-            DestroyCool();
+            ReplantThisTree();
+            //DestroyCool();
         }
     }
+
+    #region Grow
+    //when was seeded
+    private MDate _seedDate;
+    private int _lifeDuration = 1800;//5 years to be fully grown 
+    public MDate SeedDate
+    {
+        get { return _seedDate; }
+        set { _seedDate = value; }
+    }
+
+    public float MaxHeight
+    {
+        get { return _maxHeight; }
+        set { _maxHeight = value; }
+    }
+
+
+    void ReplantThisTree()
+    {
+        if (HType != H.Tree)
+        {
+            return;
+        }
+
+        _seedDate = Program.gameScene.GameTime1.CurrentDate();
+        Height = 0;
+        _maxHeight = gameObject.transform.localScale.y;
+        ScaleGameObjectToZero();
+        SetSpecWeight();
+
+        Program.gameScene.controllerMain.TerraSpawnController.ReSaveStillElement(this);
+    }
+
+    void CheckIfCanGrow()
+    {
+        if (_seedDate==null)
+        {
+            return;
+        }
+
+        var timeInSoil = Program.gameScene.GameTime1.ElapsedDateInDaysToDate(_seedDate);
+        float advance = (float)timeInSoil / (float)_lifeDuration;
+
+        if (advance > Height)
+        {
+            GrowPlantNow();
+        }
+    }
+
+    /// <summary>
+    /// So the grows looks cool and smooth
+    /// </summary>
+    private void GrowPlantNow()
+    {
+        if (Height > _maxHeight)
+        {
+            return;
+        }
+
+        Height += 0.01f;
+
+        ScaleGameObject(0.01f);
+        Program.gameScene.controllerMain.TerraSpawnController.ReSaveStillElement(this);
+    }
+
+    void ScaleGameObject(float toAdd)
+    {
+        var localScale = gameObject.transform.localScale;
+        var singleX = localScale.x + toAdd;
+        var singleY = localScale.y + toAdd;
+        var singleZ = localScale.z + toAdd;
+
+        var newScale = new Vector3(singleX, singleY, singleZ);
+        gameObject.transform.localScale = newScale;
+    }  
+    
+    void ScaleGameObjectToZero()
+    {
+        var newScale = new Vector3(0, 0, 0);
+        gameObject.transform.localScale = newScale;
+    }
+
+    internal bool ReadyToMine()
+    {
+        return Height >= MaxHeight;
+    }
+    #endregion
 }

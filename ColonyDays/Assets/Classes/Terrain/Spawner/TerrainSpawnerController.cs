@@ -92,6 +92,14 @@ public class TerrainSpawnerController : ControllerParent
         AllRandomObjList.RemoveAt(index);
     }
 
+    public void ReSaveStillElement(StillElement ele)
+    {
+        var index = AllRandomObjList.ToList().FindIndex(a => a.MyId == ele.MyId);
+
+        AllSpawnedDataList[index].TreeHeight = ele.Height;
+        AllSpawnedDataList[index].SeedDate = ele.SeedDate;
+    }
+
     public StillElement FindThis(string key)
     {
         var list = AllRandomObjList.ToList();
@@ -245,7 +253,7 @@ public class TerrainSpawnerController : ControllerParent
     //Creates the main type of objects and add them to AllRandomObjList, at the end if IsToSave is true will save it on
     //SaveOnListData
     public void CreateObjAndAddToMainList(H typePass, Vector3 pos, 
-        int rootToSpawnIndex, int index, Quaternion rot = new Quaternion(), bool isMarkToMine = false)
+        int rootToSpawnIndex, int index, Quaternion rot = new Quaternion())
     {
         string root = ReturnRoot(typePass, rootToSpawnIndex);
         TerrainRamdonSpawner temp = null;
@@ -261,15 +269,6 @@ public class TerrainSpawnerController : ControllerParent
             temp = TerrainRamdonSpawner.CreateTerraSpawn(root, pos, index, typePass, typePass.ToString() + ":" + index,
                 transform);
             temp.transform.rotation = rot;
-            if (typePass == H.Tree || typePass == H.Stone || typePass == H.Iron)
-            {
-                StillElement still = (StillElement)temp;
-                if (isMarkToMine)
-                {
-                    temp.IsMarkToMine = true;
-                    InputMain.InputMeshSpawnObj.AddVisHelpList(true, temp);
-                }
-            }
         }
 
         //AssignSharedMaterial(temp);
@@ -300,12 +299,12 @@ public class TerrainSpawnerController : ControllerParent
         if (obj is StillElement)
         {
             StillElement temp = (StillElement) obj;
-            SpawnedData sData = new SpawnedData(obj.transform.position, obj.transform.rotation, typeP, temp.IsMarkToMine, rootToSpawnIndex, indexPass);
+            SpawnedData sData = new SpawnedData(obj.transform.position, obj.transform.rotation, typeP, rootToSpawnIndex, indexPass);
             AllSpawnedDataList.Add(sData);
         }
         else
         {
-            SpawnedData sData = new SpawnedData(obj.transform.position, obj.transform.rotation, typeP, false, rootToSpawnIndex,
+            SpawnedData sData = new SpawnedData(obj.transform.position, obj.transform.rotation, typeP, rootToSpawnIndex,
                 indexPass);
             AllSpawnedDataList.Add(sData);
         }
@@ -362,7 +361,6 @@ public class TerrainSpawnerController : ControllerParent
             if(AllRandomObjList[i].IndexAllVertex == newObj.IndexAllVertex)
             {
                 AllRandomObjList[i] = newObj;
-                AllSpawnedDataList[i].IsMarkToMine = newObj.IsMarkToMine;
             }
         }
         CreateOrUpdateSpecificsList(newObj.HType, newObj, H.Update);
@@ -382,7 +380,6 @@ public class TerrainSpawnerController : ControllerParent
             {
                 print("ReSaveData() stillEle");
                 StillElement still = (StillElement)AllRandomObjList[i];
-                isMarkToMineLocal = still.IsMarkToMine;
             }
 
             //if is null was deelleted by user 
@@ -390,8 +387,7 @@ public class TerrainSpawnerController : ControllerParent
             {
                 tempList.Add(new SpawnedData(
                 AllRandomObjList[i].transform.position, AllRandomObjList[i].transform.rotation, 
-                AllSpawnedDataList[i].Type,
-                isMarkToMineLocal, AllSpawnedDataList[i].RootStringIndex, 
+                AllSpawnedDataList[i].Type, AllSpawnedDataList[i].RootStringIndex, 
                 AllSpawnedDataList[i].AllVertexIndex));
             }
         }
@@ -469,7 +465,7 @@ public class TerrainSpawnerController : ControllerParent
         p.TerraSpawnController.CreateObjAndAddToMainList(AllSpawnedDataList[loadingIndex].Type,
             AllSpawnedDataList[loadingIndex].Pos,
             AllSpawnedDataList[loadingIndex].RootStringIndex, AllSpawnedDataList[loadingIndex].AllVertexIndex,
-            AllSpawnedDataList[loadingIndex].Rot, AllSpawnedDataList[loadingIndex].IsMarkToMine);
+            AllSpawnedDataList[loadingIndex].Rot);
 
         //will restart the value of this array so I know which ones are being used
         usedVertexPos = new bool[spawnedData.TerraMshCntrlAllVertexIndexCount];
