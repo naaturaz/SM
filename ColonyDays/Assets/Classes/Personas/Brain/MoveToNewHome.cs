@@ -180,18 +180,6 @@ public class MoveToNewHome
         return dummy;
     }
 
-    private void InitValForLoad()
-    {
-        _brain.GoMindState = false;
-
-        var firstKeyOnList = _homeOldKeysList[0];
-        old = BuildingPot.Control.Registro.AllBuilding[firstKeyOnList] as Structure;
-        buildRouteToNewHome = true;
-
-        //so that state happens 
-        _brain.CurrentTask = HPers.MovingToNewHome;
-    }
-
     /// <summary>
     /// This is the method that starts the process to moving to new home
     /// </summary>
@@ -218,6 +206,8 @@ public class MoveToNewHome
 
         //so that state happens 
         _brain.CurrentTask = HPers.MovingToNewHome;
+
+        _brain.CheckMeOnSystemNow();
     }
 
     void InitValForNewHomeForNewSpawned()
@@ -231,6 +221,8 @@ public class MoveToNewHome
 
         //so the states works
         _person.Body.GoingTo = HPers.Home;
+
+        _brain.CheckMeOnSystemNow();
     }
 
     void GoMindTrue()
@@ -362,27 +354,4 @@ public class MoveToNewHome
             InitValForNewHomeForNewSpawned();
         }
     }
-
-    //so i dont overwrite old keys 
-
-    ///// <summary>
-    ///// Will create the shck manager. If is not being initiated yet 
-    ///// </summary>
-    //private void BuildShacks()
-    //{
-    //    if (ShacksManager.State == H.None)
-    //    {
-    //        GameScene.print("State == H.None true called ");
-    //        //ShacksManager.Start();
-    //    }
-    //}
-
-    //void CheckOnGenOldKeys()
-    //{
-    //    if (_generalOldKeysList.Count > 0 && IAmHomeNow())
-    //    {
-    //        CleanOldKeyList(_generalOldKeysList);
-    //    }
-    //}
-
 }

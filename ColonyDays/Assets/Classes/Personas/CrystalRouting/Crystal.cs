@@ -581,7 +581,7 @@ public class Crystal
 
 
 
-        Line tLine = new Line(this, nextCrystal, true);
+        Line tLine = new Line(this, nextCrystal, render);
 
         AssignLine(tLine);
         nextCrystal.AssignLine(tLine);

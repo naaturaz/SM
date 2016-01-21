@@ -41,7 +41,15 @@ public class Brain
     public HPers CurrentTask
     {
         get { return _currentTask; }
-        set { _currentTask = value; }
+        set
+        {
+            if (_currentTask == HPers.MovingToNewHome && value != HPers.Restarting)
+            {
+                Debug.Log("CurrTask called:"+_person.MyId);
+                return;
+            }
+            _currentTask = value;
+        }
     }
 
     public HPers PreviousTask
@@ -97,7 +105,7 @@ public class Brain
         _person.Religion = GetStructureFromKey(pF._religion);
         _person.Chill = GetStructureFromKey(pF._chill);
 
-        _currentTask = pF._brain.CurrentTask;
+        CurrentTask = pF._brain.CurrentTask;
         _previousTask = pF._brain.PreviousTask;
 
         _workRoute = pF._brain._workRoute;
@@ -476,12 +484,12 @@ public class Brain
         if (makeItTrue)
         {
             _previousTask = HPers.Praying;
-            _currentTask = HPers.IdleInHome;
+            CurrentTask = HPers.IdleInHome;
             _person.Body.Location = HPers.Home;
             _person.Body.GoingTo = HPers.Home;
         }
 
-        return _previousTask == HPers.Praying && _currentTask == HPers.IdleInHome &&
+        return _previousTask == HPers.Praying && CurrentTask == HPers.IdleInHome &&
                _person.Body.Location == HPers.Home && _person.Body.GoingTo == HPers.Home;
     }
 
@@ -490,12 +498,12 @@ public class Brain
         if (makeItTrue)
         {
             _previousTask = HPers.Chilling;
-            _currentTask = HPers.IdleInHome;
+            CurrentTask = HPers.IdleInHome;
             _person.Body.Location = HPers.Home;
             _person.Body.GoingTo = HPers.Home;
         }
 
-        return _previousTask == HPers.Chilling && _currentTask == HPers.IdleInHome
+        return _previousTask == HPers.Chilling && CurrentTask == HPers.IdleInHome
                && _person.Body.Location == HPers.Home && _person.Body.GoingTo == HPers.Home
                ;
     }
@@ -522,11 +530,11 @@ public class Brain
         if (ReadyToWork() && _routerWork.IsRouteReady && _workRoute.CheckPoints.Count > 0)
         {
             _person.Body.WalkRoutine(_workRoute, HPers.Work);
-            _currentTask = HPers.Walking;
+            CurrentTask = HPers.Walking;
         }
         else if (CurrentTask == HPers.Walking && _person.Body.Location == HPers.Work && _person.Body.GoingTo == HPers.Work)
         {
-            _currentTask = HPers.Working;
+            CurrentTask = HPers.Working;
         }
         //("work now")
         else if (CurrentTask == HPers.Working && _person.Body.Location == HPers.Work)
@@ -550,7 +558,7 @@ public class Brain
 
             //print("back home now");
             _person.Body.WalkRoutine(_workRoute, HPers.Home, true);
-            _currentTask = HPers.Walking;
+            CurrentTask = HPers.Walking;
         }
     }
 
@@ -558,21 +566,21 @@ public class Brain
     {   //get food
         if (ReadyToGetFood())
         {
-            _currentTask = HPers.GettingFood;
+            CurrentTask = HPers.GettingFood;
         }
         else if (CurrentTask == HPers.GettingFood && _person.Body.Location == HPers.Home && _routerFood.IsRouteReady
             && _foodRoute.CheckPoints.Count > 0)
         {
             //print("getting food now");
             _person.Body.WalkRoutine(_foodRoute, HPers.FoodSource);
-            _currentTask = HPers.Walking;
+            CurrentTask = HPers.Walking;
         }
         else if (CurrentTask == HPers.Walking && _person.Body.Location == HPers.FoodSource && _person.Body.GoingTo == HPers.FoodSource)
         {
             _person.ProfessionProp.DropGoods();
             _person.GetFood(_person.FoodSource);
             _person.Body.WalkRoutine(_foodRoute, HPers.Home, true);
-            _currentTask = HPers.IdleSpot;//to idle
+            CurrentTask = HPers.IdleSpot;//to idle
         }
         else if (CurrentTask == HPers.IdleSpot && _person.Body.Location == HPers.Home && _person.Body.GoingTo == HPers.Home)
         {
@@ -587,7 +595,7 @@ public class Brain
         if (ReadyToGoIdle() && _idleRoute.CheckPoints.Count > 0)
         {
             _person.Body.WalkRoutine(_idleRoute, HPers.IdleSpot, false, HPers.IdleSpot);
-            _currentTask = HPers.IdleSpot;
+            CurrentTask = HPers.IdleSpot;
         }
         else if (CurrentTask == HPers.IdleSpot && _person.Body.Location == HPers.IdleSpot)
         {
@@ -598,7 +606,7 @@ public class Brain
         {
             //HomeActivities();
             _person.Body.WalkRoutine(_idleRoute, HPers.Home, true, HPers.IdleSpot);
-            _currentTask = HPers.Praying;
+            CurrentTask = HPers.Praying;
         }
         else if (CurrentTask == HPers.Praying && _person.Body.Location == HPers.Home && _person.Body.GoingTo == HPers.Home)
         {
@@ -611,19 +619,19 @@ public class Brain
     {
         if (ReadyToGoToReligion() && _religionRoute.CheckPoints.Count > 0)
         {
-            _currentTask = HPers.Praying;
+            CurrentTask = HPers.Praying;
             _person.Body.WalkRoutine(_religionRoute, HPers.Religion);
         }
         else if (CurrentTask == HPers.Praying && _person.Body.Location == HPers.Religion)
         {
             //print("at religion now");
             //Idle(HPers.Homing);
-            _currentTask = HPers.Homing;
+            CurrentTask = HPers.Homing;
         }
         else if (CurrentTask == HPers.Homing && _person.Body.Location == HPers.Religion && _person.Body.GoingTo == HPers.Religion)
         {
             _person.Body.WalkRoutine(_religionRoute, HPers.Home, true);
-            _currentTask = HPers.Chilling;
+            CurrentTask = HPers.Chilling;
         }
         else if (CurrentTask == HPers.Chilling && _person.Body.Location == HPers.Home && _person.Body.GoingTo == HPers.Home)
         {
@@ -636,19 +644,19 @@ public class Brain
     {
         if (ReadyToGoChill() && _chillRoute.CheckPoints.Count > 0)
         {
-            _currentTask = HPers.Chilling;
+            CurrentTask = HPers.Chilling;
             _person.Body.WalkRoutine(_chillRoute, HPers.Chill);
         }
         else if (CurrentTask == HPers.Chilling && _person.Body.Location == HPers.Chill)
         {
             //print("at chill now");
             //Idle(HPers.Homing);
-            _currentTask = HPers.Homing;
+            CurrentTask = HPers.Homing;
         }
         else if (CurrentTask == HPers.Homing && _person.Body.Location == HPers.Chill && _person.Body.GoingTo == HPers.Chill)
         {
             _person.Body.WalkRoutine(_chillRoute, HPers.Home, true);
-            _currentTask = HPers.None;//so reset the cycle
+            CurrentTask = HPers.None;//so reset the cycle
         }
     }
 
@@ -664,11 +672,11 @@ public class Brain
         }
         else if (CurrentTask == HPers.MovingToNewHome && _person.Body.Location == HPers.MovingToNewHome)
         {
-            _currentTask = HPers.Restarting;//so reset the cycle;
+            CurrentTask = HPers.Restarting;//so reset the cycle;
         }
         else if (CurrentTask == HPers.Restarting && _person.Body.Location == HPers.MovingToNewHome && _person.Body.GoingTo == HPers.MovingToNewHome)
         {
-            _currentTask = HPers.None;//so reset the cycle
+            CurrentTask = HPers.None;//so reset the cycle
             _person.Body.Location = HPers.Home;
             _person.Body.GoingTo = HPers.Home;//Home
 
@@ -751,7 +759,7 @@ public class Brain
 
     public void RealeaseIdle(HPers nextTask)
     {
-        _currentTask = nextTask;
+        CurrentTask = nextTask;
         startIdleTime = 0;
         _idleTime = 0.5f;
         GoMindState = true;
@@ -859,21 +867,38 @@ public class Brain
             return;
         }
 
-        if (IJustSpawn() || IAmHomeNow())
+        if (IJustSpawn() || IAmHomeNow() || LocatedAtHomeNow())
         {
             if (PersonPot.Control.CanIReRouteNow() && Time.time > _lastTimeICheckedInOnSystem + _delayToGetIntoOnSystem)
             {
-                PersonPot.Control.CheckMeOnSystem(_person.MyId);
-                _lastTimeICheckedInOnSystem = Time.time;
-                _waiting = true;
+                CheckMeOnSystemNow();
             }
         }
+    }
+
+    /// <summary>
+    /// So when reroute to new home needs to reroute all other as well
+    /// </summary>
+    public void CheckMeOnSystemNow()
+    {
+        PersonPot.Control.CheckMeOnSystem(_person.MyId);
+        _lastTimeICheckedInOnSystem = Time.time;
+        _waiting = true;
+    }
+
+    private bool LocatedAtHomeNow()
+    {
+        if (_person.Body.Location == HPers.Home && _person.Body.GoingTo == HPers.Home)
+        {
+            return true;
+        }
+        return false;
     }
 
     void ReRoutesDealer()
     {
         //so things get started 
-        if (IJustSpawn() || IAmHomeNow() || IsInLimbo())
+        if (IJustSpawn() || IAmHomeNow() || IsInLimbo() || LocatedAtHomeNow())
         {
             //there is room for me to check now on System
             if (PersonPot.Control.OnSystemNow(_person.MyId) && _waiting)
@@ -1761,6 +1786,12 @@ public class Brain
     /// </summary>
     void CheckHome()
     {
+        //to avoid the jump of house when doenst have got to the first one yet 
+        if (_person.Body.MovingNow)
+        {
+            return;
+        }
+
         //set to check for a new home 
         if (_person.Home != null && _person.Home.Instruction == H.WillBeDestroy)
         {
@@ -1793,7 +1824,8 @@ public class Brain
         bool thereIsABetterHome = Realtor.PublicIsABetterHome(_person);
 
         //shack builders can not look into this. Othr wise they will stay on Limbo once better home found 
-        if (thereIsABetterHome)
+        if (thereIsABetterHome 
+            )
         {
             var oldHomeP = PullOldHome();
             var s = Realtor.GiveMeTheBetterHome(_person);
@@ -2448,6 +2480,7 @@ public class Brain
 
                 if (fam==null)
                 {
+                    Debug.Log("CheckIfDie null family");
                     var t = this;
                     fam = _person.Home.FindMyFamily(_person);
                 }
