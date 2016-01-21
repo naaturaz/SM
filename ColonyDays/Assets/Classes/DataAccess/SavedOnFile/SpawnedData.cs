@@ -21,13 +21,17 @@ public class SpawnedData {
 
 
     public SpawnedData(Vector3 posP, Quaternion rotP, H typeP,  int rootStringIndexP,
-        int allVertexIndexP)
+        int allVertexIndexP, float treeHeight=0, MDate seedDate=null, float maxHeight=0)
     {
         Pos = posP;
         Rot = rotP;
         Type = typeP;
         RootStringIndex = rootStringIndexP;
         AllVertexIndex = allVertexIndexP;
+
+        TreeHeight = treeHeight;
+        SeedDate = seedDate;
+        MaxHeight = maxHeight;
     }
 
     public SpawnedData(){}

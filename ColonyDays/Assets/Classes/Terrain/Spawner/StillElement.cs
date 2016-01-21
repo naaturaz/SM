@@ -14,13 +14,6 @@ public class StillElement : TerrainRamdonSpawner {
 
     List<Vector3> _anchors = new List<Vector3>();
 
-    /// <summary>
-    /// the height of the elements they start always with 1. if a tree is replanted is 
-    /// set to zero and has to reegrow
-    /// </summary>
-    public float _height = .25f;
-
-    private float _maxHeight;
 
 
     public List<Vector3> Anchors
@@ -33,12 +26,6 @@ public class StillElement : TerrainRamdonSpawner {
     {
         get { return _minedNowBy; }
         set { _minedNowBy = value; }
-    }
-
-    public float Height
-    {
-        get { return _height; }
-        set { _height = value; }
     }
 
     // Use this for initialization
@@ -205,20 +192,7 @@ public class StillElement : TerrainRamdonSpawner {
 
     #region Grow
     //when was seeded
-    private MDate _seedDate;
     private int _lifeDuration = 1800;//5 years to be fully grown 
-    public MDate SeedDate
-    {
-        get { return _seedDate; }
-        set { _seedDate = value; }
-    }
-
-    public float MaxHeight
-    {
-        get { return _maxHeight; }
-        set { _maxHeight = value; }
-    }
-
 
     void ReplantThisTree()
     {
@@ -227,9 +201,9 @@ public class StillElement : TerrainRamdonSpawner {
             return;
         }
 
-        _seedDate = Program.gameScene.GameTime1.CurrentDate();
+        SeedDate = Program.gameScene.GameTime1.CurrentDate();
         Height = 0;
-        _maxHeight = gameObject.transform.localScale.y;
+        MaxHeight = gameObject.transform.localScale.y;
         ScaleGameObjectToZero();
 
         Program.gameScene.controllerMain.TerraSpawnController.ReSaveStillElement(this);
@@ -237,12 +211,12 @@ public class StillElement : TerrainRamdonSpawner {
 
     void CheckIfCanGrow()
     {
-        if (_seedDate==null)
+        if (SeedDate==null)
         {
             return;
         }
 
-        var timeInSoil = Program.gameScene.GameTime1.ElapsedDateInDaysToDate(_seedDate);
+        var timeInSoil = Program.gameScene.GameTime1.ElapsedDateInDaysToDate(SeedDate);
         float advance = (float)timeInSoil / (float)_lifeDuration;
 
         if (advance > Height)
@@ -256,7 +230,7 @@ public class StillElement : TerrainRamdonSpawner {
     /// </summary>
     private void GrowPlantNow()
     {
-        if (Height > _maxHeight)
+        if (Height > MaxHeight)
         {
             return;
         }

@@ -2,10 +2,22 @@
 
 public class TerrainRamdonSpawner : General {
 
+    //the tree height 
+    //used when a tree is replanted 
+    /// <summary>
+    /// the height of the elements they start always with 1. if a tree is replanted is 
+    /// set to zero and has to reegrow
+    /// </summary>
+    public float Height = .25f;
+
+    public MDate SeedDate;
+    public float MaxHeight;
+
     public bool ReplantedTree { get; set; }
 
     static public TerrainRamdonSpawner CreateTerraSpawn(string root, Vector3 origen, int indexAllVertex, H hType,
-        string name = "", Transform container = null, bool replantedTree = false)
+        string name = "", Transform container = null, bool replantedTree = false,
+        float height = 0, MDate seedDate = null, float maxHeight = 0)
     {
         WAKEUP = true;
         TerrainRamdonSpawner obj = null;
@@ -19,6 +31,9 @@ public class TerrainRamdonSpawner : General {
         obj.transform.name = obj.MyId;
 
         obj.ReplantedTree = replantedTree;
+        obj.Height = height;
+        obj.SeedDate = seedDate;
+        obj.MaxHeight = maxHeight;
 
         return obj;
     }

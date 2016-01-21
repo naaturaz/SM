@@ -271,21 +271,22 @@ public class TerrainSpawnerController : ControllerParent
     //Creates the main type of objects and add them to AllRandomObjList, at the end if IsToSave is true will save it on
     //SaveOnListData
     public void CreateObjAndAddToMainList(H typePass, Vector3 pos, 
-        int rootToSpawnIndex, int index, Quaternion rot = new Quaternion(), bool replantedTree = false)
+        int rootToSpawnIndex, int index, Quaternion rot = new Quaternion(), bool replantedTree = false,
+        float treeHeight = 0, MDate seedDate = null, float maxHeight = 0)
     {
         string root = ReturnRoot(typePass, rootToSpawnIndex);
         TerrainRamdonSpawner temp = null;
         if (IsToSave)
         {
             temp = TerrainRamdonSpawner.CreateTerraSpawn(root, pos, index, typePass, typePass.ToString() + ":" + index,
-                transform, replantedTree: replantedTree);
+                transform, replantedTree, treeHeight, seedDate, maxHeight);
             temp.transform.Rotate(new Vector3(0, rand.Next(0, 360), 0));
             usedVertexPos[index] = true;
         }
         else if (IsToLoadFromFile)
         {
             temp = TerrainRamdonSpawner.CreateTerraSpawn(root, pos, index, typePass, typePass.ToString() + ":" + index,
-                transform, replantedTree: replantedTree);
+                transform, replantedTree, treeHeight, seedDate, maxHeight);
             temp.transform.rotation = rot;
         }
 
@@ -386,7 +387,9 @@ public class TerrainSpawnerController : ControllerParent
 
     //***************************************************
 
-    //resave data into file
+    /// <summary>
+    /// The data is recreated here from  AllRandomObjList
+    /// </summary>
     public void ReSaveData()
     {
         List<SpawnedData> tempList = new List<SpawnedData>();
@@ -406,12 +409,12 @@ public class TerrainSpawnerController : ControllerParent
                 tempList.Add(new SpawnedData(
                 AllRandomObjList[i].transform.position, AllRandomObjList[i].transform.rotation, 
                 AllSpawnedDataList[i].Type, AllSpawnedDataList[i].RootStringIndex, 
-                AllSpawnedDataList[i].AllVertexIndex));
+                AllSpawnedDataList[i].AllVertexIndex,
+                AllSpawnedDataList[i].TreeHeight, AllSpawnedDataList[i].SeedDate, AllSpawnedDataList[i].MaxHeight));
             }
         }
 
-        ClearCurrentFileAndList();
-
+        AllSpawnedDataList.Clear();
         AllSpawnedDataList = tempList;
         SaveData();
     }
@@ -450,6 +453,8 @@ public class TerrainSpawnerController : ControllerParent
 
     public void SaveData()
     {
+        Debug.Log("Called SaveData");
+
         spawnedData = new SpawnedData();
         spawnedData.AllSpawnedObj = AllSpawnedDataList;
         spawnedData.TerraMshCntrlAllVertexIndexCount = p.MeshController.AllVertexs.Count;
@@ -480,10 +485,19 @@ public class TerrainSpawnerController : ControllerParent
 
     public void LoadFromFile()
     {
+        if (loadingIndex == 335)
+        {
+            var t = this;
+        }
+
         p.TerraSpawnController.CreateObjAndAddToMainList(AllSpawnedDataList[loadingIndex].Type,
             AllSpawnedDataList[loadingIndex].Pos,
             AllSpawnedDataList[loadingIndex].RootStringIndex, AllSpawnedDataList[loadingIndex].AllVertexIndex,
-            AllSpawnedDataList[loadingIndex].Rot);
+            AllSpawnedDataList[loadingIndex].Rot, 
+            
+            false, 
+            AllSpawnedDataList[loadingIndex].TreeHeight, AllSpawnedDataList[loadingIndex].SeedDate, 
+            AllSpawnedDataList[loadingIndex].MaxHeight);
 
         //will restart the value of this array so I know which ones are being used
         usedVertexPos = new bool[spawnedData.TerraMshCntrlAllVertexIndexCount];

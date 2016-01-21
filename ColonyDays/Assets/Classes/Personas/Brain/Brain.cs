@@ -2445,6 +2445,13 @@ public class Brain
             if (_person.Home != null)
             {
                 var fam = _person.Home.FindMyFamily(_person);
+
+                if (fam==null)
+                {
+                    var t = this;
+                    fam = _person.Home.FindMyFamily(_person);
+                }
+
                 fam.RemovePersonFromFamily(_person);
                 RemoveFromAllPeopleDict();
             }
