@@ -39,7 +39,7 @@ public class BuildingWindow : GUIElement {
     private Vector3 _exportIniPosOnProcess;
 
     //private Vector3 _iniPosForProdList;
-
+    private GameObject _salary;
     List<Toggle> toggles=new List<Toggle>() ; 
 
     //upg btns
@@ -87,8 +87,8 @@ public class BuildingWindow : GUIElement {
         _products = GetChildThatContains(H.Products);
         _upgrades = GetChildCalled(H.Upgrades);
 
-        
-        
+
+        _salary = General.FindGameObjectInHierarchy("Salary", _general);
 
 
 
@@ -153,7 +153,20 @@ public class BuildingWindow : GUIElement {
         CheckIfCapMaxOut();
 
         InitToggles();//in case they have not been set yet
+        HideSalaryIfHouseOrStorage();
         Mark1stCheckBox();
+    }
+
+    private void HideSalaryIfHouseOrStorage()
+    {
+        if (_building.MyId.Contains("House") || _building.MyId.Contains("Storage"))
+        {
+           _salary.SetActive(false);
+        }
+        else
+        {
+            _salary.SetActive(true);
+        }
     }
 
     /// <summary>
@@ -227,6 +240,7 @@ public class BuildingWindow : GUIElement {
     {
         if (toggles.Count > 0)
         {
+            UnMarkAllCheckBoxes();
             return;
         }
 
@@ -266,8 +280,6 @@ public class BuildingWindow : GUIElement {
         {
             ToggleThisOne(i, false);
         }
-        
-
     }
 
     void MarkCheckBox(string action)
