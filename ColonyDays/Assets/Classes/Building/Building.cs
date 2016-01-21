@@ -1381,7 +1381,27 @@ public class Building : General, Iinfo
     }
 
     /// <summary>
-    /// Will tell if the person asking could fit in any of the families of the building 
+    /// Will find the family by ID 
+    /// 
+    /// Used by teens moving out 
+    /// IF they were given a family ID then then should get into that one
+    /// </summary>
+    /// <param name="pers"></param>
+    /// <returns></returns>
+    internal Family FindFamilyById(string famID)
+    {
+        for (int i = 0; i < Families.Length; i++)
+        {
+            if ((Families[i].FamilyId == famID))
+            {
+                return Families[i];
+            }
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// Will tell if the person asking could fit in any of the families of the building
     /// </summary>
     /// <param name="asker"></param>
     /// <returns></returns>

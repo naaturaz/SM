@@ -186,13 +186,13 @@ public class Family
         //means that CurrentAdult person died recently
         if (inFamily == null)
         {
-            return true;
+            return false;
         }
 
         //2nd question is to check that other person is not Married already , etc
         if (inFamily.WouldUMarryMe(newPerson) && newPerson.WouldUMarryMe(inFamily))
         {
-//            Debug.Log(inFamily.MyId + " accepted " + newPerson.MyId);
+           Debug.Log(inFamily.MyId + " :accepted: " + newPerson.MyId);
 
             inFamily.Marriage(newPerson.MyId);
             newPerson.Marriage(inFamily.MyId);
@@ -525,10 +525,10 @@ public class Family
     /// <returns></returns>
     public bool WouldAdultFitInThisFamily(Person newPerson)
     {
-        if (Adults() >= 2)
-        {
-            return false;
-        }
+        //if (Adults() >= 2)
+        //{
+        //    return false;
+        //}
 
         if (Adults() == 0)
         {
@@ -537,11 +537,15 @@ public class Family
 
         Person inFamily = FindCurrentAdult();
         //2nd question is to check that other person is not Married already , etc
-        if (inFamily.WouldUMarryMe(newPerson) && newPerson.WouldUMarryMe(inFamily))
-        {
-            return true;
-        }
+        //if (inFamily.WouldUMarryMe(newPerson) && newPerson.WouldUMarryMe(inFamily))
+        //{
 
-        return false;
+
+        //    return true;
+        //}
+
+        //return false;
+
+        return WasDatingGood(newPerson) || AreTheyMarriedAlready(newPerson);
     }
 }

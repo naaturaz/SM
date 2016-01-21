@@ -277,10 +277,13 @@ public class Realtor
         if (string.IsNullOrEmpty(familyIDP))
         {
             myFamily.FamilyId = "Family:" + person.MyId;
-        }//other wise will used passed val
-        else myFamily.FamilyId = familyIDP; 
-
-        
+        } //other wise will used passed val
+        else
+        {
+            //myFamily cnt be null. 
+            //myFamily = newHome.FindFamilyById(familyIDP);
+            myFamily.FamilyId = familyIDP;
+        } 
         
         person.FamilyId = myFamily.FamilyId;
 
@@ -290,14 +293,9 @@ public class Realtor
         newHome.BookedHome1 = new BookedHome(newHome.MyId, myFamily);
 
         BuildingPot.Control.Registro.ResaveOnRegistro(newHome.MyId);
-
         MarkTheFamilyBooking(true, myFamily);
-        //MarkOneVirginFamilySpotOnNewHome(newHome, person);
-
         RestartControllerForMyFamily(myFamily, person);
     }
-
-
 
     /// <summary>
     /// Will uncheck them from the controller so they can see their new Home Booked so theu can move there
