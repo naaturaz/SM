@@ -159,13 +159,15 @@ public class JobManager
 
     static public Structure ThereIsABetterJob(Person person)
     {
-        if (person.Work==null || person.Home == null)
+        if (person.Home == null)
         {return null;}
 
         //if new positions are up will return the same so it doesnt affect the flow of finding job
         //this method is only intended to work once no new positions are up 
-        if (person.Work != null && BuildingPot.Control.AreNewWorkPos)
-        {return person.Work;}
+        //if (person.Work != null 
+        //    && BuildingPot.Control.AreNewWorkPos
+        //    )
+        //{return person.Work;}
 
         if (!UPerson.IsMajor(person.Age))
         {
@@ -181,8 +183,11 @@ public class JobManager
     /// <returns></returns>
     static Structure BetterWork(Person person)
     {
-        if (BuildingPot.Control.WorkOpenPos.Count == 0 || person.Work.Instruction == H.WillBeDestroy)
-        { return person.Work; }
+        if (BuildingPot.Control.WorkOpenPos.Count == 0 ||
+            (person.Work != null && person.Work.Instruction == H.WillBeDestroy))
+        {
+            return person.Work;
+        }
 
         var betterPlaceKey = DefineIfIsABetterJob(person);
         var res = Brain.GetStructureFromKey(betterPlaceKey);
@@ -233,6 +238,11 @@ public class JobManager
     /// <returns></returns>
     static float ScoreABuild(Building building, Vector3 comparePoint)
     {
+        if (building==null)
+        {
+            return -1000;
+        }
+
         var distToWork = Vector3.Distance(building.transform.position, comparePoint);
         var rations = building.RationsPay*rationsWeight;
         var dollars = building.DollarsPay*dollarsWeight;

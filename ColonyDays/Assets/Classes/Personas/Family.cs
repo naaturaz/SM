@@ -332,6 +332,12 @@ public class Family
     {
         Person inFamily = FindCurrentAdult();
 
+        //addressing if person die Recenlty
+        if (inFamily == null)
+        {
+            return false;
+        }
+
         if (inFamily.Spouse == newPerson.MyId)
         {
             AssignNewPersonToCurrentFamilyAndHome(newPerson);

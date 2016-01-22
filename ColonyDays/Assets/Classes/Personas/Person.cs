@@ -1581,7 +1581,13 @@ public class Person : General
         bool happy = AmIHappy();
         bool bodyReady = Mathf.Abs( _lastNewBornYear - Program.gameScene.GameTime1.Year ) > 1;
 
-        return nutrida && hasSpace && happy && bodyReady && Age < 45;
+        return nutrida && hasSpace && happy && bodyReady && Age < 45 && IsSpouseAlive();
+    }
+
+    bool IsSpouseAlive()
+    {
+        var spouseFound = PersonPot.Control.All.Find(a => a.MyId == Spouse);
+        return spouseFound != null;
     }
 
     /// <summary>

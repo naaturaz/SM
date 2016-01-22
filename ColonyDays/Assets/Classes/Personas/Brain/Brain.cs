@@ -990,18 +990,6 @@ public class Brain
         return false;
     }
 
-    /// <summary>
-    /// Teel u if person has old key from buidings he used to be on 
-    /// </summary>
-    /// <returns></returns>
-    bool IHaveOldKeys()
-    {
-        if (_generalOldKeysList.Count > 0 || MoveToNewHome.HomeOldKeysList.Count > 0)
-        {
-            return true;
-        }
-        return false;
-    }
 
     private string oldHome;
     private string oldWork;
@@ -1135,7 +1123,8 @@ public class Brain
             {
                 if (!_generalOldKeysList.Contains(oldBuildKey.MyId))
                 {
-                    _generalOldKeysList.Add(oldBuildKey.MyId);
+                    //_generalOldKeysList.Add(oldBuildKey.MyId);
+                    RemoveFromPeopleDict(oldBuildKey.MyId);
                 }
             }
         }
@@ -1361,6 +1350,40 @@ public class Brain
             CheckAround(BuildingPot.Control.IsNewHouseSpace, BuildingPot.Control.AreNewWorkPos,
                 BuildingPot.Control.IsfoodSourceChange, BuildingPot.Control.IsNewReligion,
                 BuildingPot.Control.IsNewChill);
+        }
+    }
+
+
+    /// <summary>
+    /// Teel u if person has old key from buidings he used to be on 
+    /// </summary>
+    /// <returns></returns>
+    bool IHaveOldKeys()
+    {
+        if (_generalOldKeysList.Count > 0 || MoveToNewHome.HomeOldKeysList.Count > 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private void CheckOnGenOldKeys()
+    {
+        if (IHaveOldKeys())
+        {
+            for (int i = 0; i < _generalOldKeysList.Count; i++)
+            {
+                RemoveFromPeopleDict(_generalOldKeysList[i]);
+            }
+        }
+    }
+
+    void RemoveFromPeopleDict(string key)
+    {
+        var build = GetBuildingFromKey(key);
+        if (build!=null)
+        {
+            build.PeopleDict.Remove(_person.MyId);
         }
     }
 
@@ -2146,16 +2169,17 @@ public class Brain
     void HandleNewJobSearch()
     {
         //he needs to find a job first to then get a better job 
-        if (_person.Work == null)
-        {
-            return;
-        }
+        //if (_person.Work == null)
+        //{
+        //    return;
+        //}
 
         var newWork = JobManager.ThereIsABetterJob(_person);
 
         if (newWork == null)
         {
-            throw new Exception("New work should not be null");
+            Debug.Log("New work should not be null");
+            //throw new Exception("New work should not be null");
         }
       
         _person.Work = newWork;
