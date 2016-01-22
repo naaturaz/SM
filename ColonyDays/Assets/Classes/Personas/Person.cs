@@ -819,16 +819,22 @@ public class Person : General
     {
         //the family ID of the place he is gonna be booked
         //will be empty if is Virgin Family
-        var familyID = "";//will be returned below 
+        var newFamilyID = "";//will be returned below 
+        //wnna keep it  here bz will be lost once past PlaceWhereIWillLiveToLive()
+        //dont really needed bz the new one is stored in 'newFamilyID' the old one is needed
+        //to be removed from it 
+        var myOldFamID = FamilyId;
 
-        var place = PlaceWhereIWillLiveToLive(ref familyID);
+        var place = PlaceWhereIWillLiveToLive(ref newFamilyID);
         //will only will mark as majority age reached if he could fit a house 
         if (place != null)
         {
-            
+            FamilyId = myOldFamID;
             RemoveMeFromOldHome();
+            //removing person from Home PeopleDict here 
+            Home.PeopleDict.Remove(MyId);
 
-            Realtor.BookNewPersonInNewHome(this, place, familyID);
+            Realtor.BookNewPersonInNewHome(this, place, newFamilyID);
 
             print("Age Major: " + MyId);
             _isMajor = true;
@@ -877,10 +883,10 @@ public class Person : General
         {
             var family = Home.FindMyFamily(this);
 
-            if (family != null)
-            {
+            //if (family != null)
+            //{
                 family.RemovePersonFromFamily(this);    
-            }
+            //}
 
             Brain.MoveToNewHome.OldHomeKey = "";//so he doesnt pull that family as its old family when creating Shack or moving to new home 
             BuildingPot.Control.AddToHousesWithSpace(Home.MyId);

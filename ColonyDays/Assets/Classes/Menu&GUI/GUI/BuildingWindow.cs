@@ -182,6 +182,10 @@ public class BuildingWindow : GUIElement {
         {
             _prdBtn.SetActive(false);
         }
+        else
+        {
+            _prdBtn.SetActive(true);
+        }
     }
 
     /// <summary>
