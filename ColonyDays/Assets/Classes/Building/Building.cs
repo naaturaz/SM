@@ -59,6 +59,13 @@ public class Building : General, Iinfo
         set { _landZone = value; }
     }
 
+    protected H _startingStage = H.None;//this is is  used to load structure class from file
+    public H StartingStage
+    {
+        get { return _startingStage; }
+        set { _startingStage = value; }
+    }
+
     public string MaterialKey
     {
         get { return _materialKey; }
@@ -110,7 +117,16 @@ public class Building : General, Iinfo
     public List<Vector3> Anchors
     {
         get { return _anchors; }
-        set { _anchors = value; }
+        set
+        {
+            var oldAnc = _anchors;
+            _anchors = value;
+
+            if ((oldAnc == null || oldAnc.Count == 0) && !IsLoadingFromFile)
+            {
+                BuildingPot.Control.Registro.ResaveOnRegistro(MyId);
+            }
+        }
     }
 
     public Vector3 Max
@@ -1883,6 +1899,10 @@ public class Building : General, Iinfo
         MeshController.CrystalManager1.Add(this);
     }
 
+    /// <summary>
+    /// Can only be called when brdige is being current spawn in this session 
+    /// bz uses var that are not saveLoad
+    /// </summary>
     protected void PrivHandleZoningAddCrystalsForBridge()
     {
         LandZoningBridge();
@@ -1911,14 +1931,8 @@ public class Building : General, Iinfo
     /// <summary>
     /// Is made public so when is loding is called 
     /// </summary>
-    public void LandZoningBridge()
+    void LandZoningBridge()
     {
-        if (_isLoadingFromFile)
-        {
-            //LoadLandZonesIntoBridgeManager();
-            return;
-        }
-
         Bridge br = (Bridge)this;
         var ends = br.GiveTwoRoughEnds();
 
@@ -1927,11 +1941,16 @@ public class Building : General, Iinfo
         var end0 = Vector3.MoveTowards(ends[0], transform.position, -8f);
         var end1 = Vector3.MoveTowards(ends[1], transform.position, -8f);
 
-        var zone1 = MeshController.CrystalManager1.ReturnLandingZone(end0);
-        var zone2 = MeshController.CrystalManager1.ReturnLandingZone(end1);
+        var zone0 = MeshController.CrystalManager1.ReturnLandingZone(end0);
+        var zone1 = MeshController.CrystalManager1.ReturnLandingZone(end1);
 
-        LandZone1.Add(new VectorLand(zone1, ends[0]));
-        LandZone1.Add(new VectorLand(zone2, ends[1]));
+        //bz they were being save loaded in Poly Anchors
+        //this is really pointless bz somehow if u move the bottom gameObj in Part12 of brdigeTrails works 
+        var end0bit = Vector3.MoveTowards(ends[0], transform.position, -0f);
+        var end1bit = Vector3.MoveTowards(ends[1], transform.position, -0f);
+
+        LandZone1.Add(new VectorLand(zone0, end0bit));
+        LandZone1.Add(new VectorLand(zone1, end1bit));
     }
 
     /// <summary>

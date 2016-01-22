@@ -163,7 +163,8 @@ public class DragSquare : Trail
             Inventory,  
             PeopleDict,
             LandZone1,
-            planesOnAirPos: soil, tileScale: Program.gameScene.ScaleSmallRoadUnitFarm);
+            planesOnAirPos: soil, tileScale: Program.gameScene.ScaleSmallRoadUnitFarm,
+            anchors: Anchors);
     }
 
     /// <summary>

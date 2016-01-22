@@ -21,7 +21,7 @@ public class StructureParent : Building {
     //stages that a building goes trhuewhile is being buiild
     //1 Plane in the ground, 2 fundition, 3 paredes palos, 4 all geometry
     protected int _currentStage;
-    protected H _startingStage = H.None;//this is is  used to load structure class from file
+
 
     private Material _stagesMaterial;
 
@@ -153,11 +153,7 @@ public class StructureParent : Building {
         _behindMainDoorPoint = newVa;
     }
 
-    public H StartingStage
-    {
-        get { return _startingStage; }
-        set { _startingStage = value; }
-    }
+
 
     public Material StagesMaterial
     {

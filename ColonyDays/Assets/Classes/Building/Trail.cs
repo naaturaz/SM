@@ -278,7 +278,8 @@ public class Trail : Way
             polyHoriz: BoundsHoriz, tilePosVert: TilePosVert, tilePosHor: TilePosHor, planesOnAirPos: PlanesOnAirPos, tileScale: TileScale, parts: PartsOnAir, dominantSide: _dominantSide,
             startingStage: _startingStageForPieces,
             materialKey: MaterialKey, planesOnSoilPos: _planesOnSoil, partsOnSoil: _partsOnSoil,
-            instructionP: Instruction);
+            instructionP: Instruction,
+            anchors: Anchors);
     }
 
     List<Vector3> GetActiveBound()
@@ -312,7 +313,8 @@ public class Trail : Way
             tileScale: TileScale, parts: PartsOnAir, dominantSide: _dominantSide,
             startingStage: _startingStageForPieces, materialKey: MaterialKey, planesOnSoilPos: _planesOnSoil, partsOnSoil: _partsOnSoil
             , min: activeBound[1], max: activeBound[3] ,
-            instructionP: Instruction);
+            instructionP: Instruction,
+            anchors: Anchors);
 
         BuildingPot.Control.AddToQueuesRestartPersonControl(MyId);
     }

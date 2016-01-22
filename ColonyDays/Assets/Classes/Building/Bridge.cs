@@ -21,13 +21,6 @@ public class Bridge : Trail
 	void Start ()
     {
         base.Start();
-
-        //if bridge is done will load this into BridgeManager 
-	    if (IsLoadingFromFile && Pieces[0].StartingStage == H.Done)
-	    {
-            BuildingPot.Control.BridgeManager1.AddBridge(LandZone1[0].LandZone, LandZone1[1].LandZone,
-                 transform.position, MyId);   
-	    }
 	}
 	
 	// Update is called once per frame
@@ -48,11 +41,30 @@ public class Bridge : Trail
 	    Loading();
     }
 
+    private bool loaded;
     private void Loading()
     {
-        if (IsLoadingFromFile && (Anchors==null || Anchors.Count == 0))
+        if (loaded)
         {
-            SetBridgeAnchors();
+            return;
+        }
+
+        if (IsLoadingFromFile)
+        {
+            //so crystals are added to ground right away
+            //PrivHandleZoningAddCrystalsForBridge();
+
+            //bz we have the Anchors already loaded 
+            MeshController.CrystalManager1.Add(this);
+            loaded = true;
+
+            //if bridge is done will load this into BridgeManager 
+            var b = (Building)this;
+            if (b.StartingStage == H.Done)
+            {
+                BuildingPot.Control.BridgeManager1.AddBridge(LandZone1[0].LandZone, LandZone1[1].LandZone,
+                     transform.position, MyId);
+            }
         }
     }
 
@@ -303,9 +315,10 @@ public class Bridge : Trail
             createAirPartsNow = false;
             loopCounter = 0;
             createSoilPartsNow = true;
-            
+
             //so crystals are added to ground right away
             PrivHandleZoningAddCrystalsForBridge();
+
         }
     }
     /// <summary>
@@ -608,6 +621,11 @@ public class Bridge : Trail
     //</summary>
     public List<Vector3> GetBridgeAnchors()
     {
+        if (Anchors.Count>0)
+        {
+            return Anchors;
+        }
+
         if (BoundsHoriz.Count > 0)
         {
             return Registro.FromALotOfVertexToPoly(BoundsHoriz);

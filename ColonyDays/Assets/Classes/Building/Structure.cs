@@ -78,7 +78,8 @@ public class Structure : StructureParent
             rotationFacerIndex: RotationFacerIndex, materialKey: MaterialKey,
             instructionP: Instruction, BookedHome1: BookedHome1, 
             dispatch: Dispatch1, Families: Families,
-            dollarsPay: DollarsPay
+            dollarsPay: DollarsPay,
+            anchors: Anchors
             );
             
     }

@@ -168,6 +168,7 @@ public class RegFile  {
     public Family[] Familes;
 
     public int DollarsPay;
+    public List<Vector3> Anchors;
 
     public RegFile(string myId, H type, Rect dimOnMap, Ca category, Vector3 iniPosition, 
         Inventory InventoryP, 
@@ -180,7 +181,8 @@ public class RegFile  {
         List<Vector3> planesOnSoilPos = null, List<int> partsOnSoil = null, Vector3 min = new Vector3(), 
         Vector3 max = new Vector3(), H instructionP = H.None , BookedHome bookedHome = null, 
         Dispatch dispatch = null, Family[] familes = null ,
-        int dollarsPay = 0
+        int dollarsPay = 0,
+        List<Vector3> anchors = null
         )
     {
         MyId = myId;
@@ -214,6 +216,7 @@ public class RegFile  {
         Dispatch1 = dispatch;
         Familes = familes;
         DollarsPay = dollarsPay;
+        Anchors = anchors;
     }
 
     public RegFile() { }

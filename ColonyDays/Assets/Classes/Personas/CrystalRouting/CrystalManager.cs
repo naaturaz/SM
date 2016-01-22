@@ -306,7 +306,6 @@ public class CrystalManager  {
     void AddBridge(Bridge b)
     {
         AddPoly(b.GetBridgeAnchors(), b.MyId);
-
         AddBridgeEnds(b);
     }
 

@@ -296,7 +296,8 @@ public class Registro : MonoBehaviour
         List<Vector3> planesOnSoilPos = null, List<int> partsOnSoil = null, Vector3 min = new Vector3(),
         Vector3 max = new Vector3(), H instructionP = H.None, BookedHome BookedHome1 = null, 
         Dispatch dispatch = null, Family[] Families = null,
-        int dollarsPay = 0
+        int dollarsPay = 0,
+        List<Vector3> anchors = null 
         )
     {
         // 12 hours to find this OMG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -325,7 +326,8 @@ public class Registro : MonoBehaviour
             planesOnAirPos: planesOnAirPos, tileScale: tileScale, partsOnAir: parts, dominantSide: dominantSide, startingStage: startingStage, rotationFacerIndex: rotationFacerIndex, 
             materialKey: materialKey, planesOnSoilPos: planesOnSoilPos, partsOnSoil: partsOnSoil, min: min, max: max,
             instructionP: instructionP,  bookedHome: BookedHome1, dispatch: dispatch, familes: Families,
-            dollarsPay: dollarsPay);
+            dollarsPay: dollarsPay, 
+            anchors: anchors);
 
         AddToAll(regFile);
 
@@ -418,6 +420,7 @@ public class Registro : MonoBehaviour
     /// Invetory
     /// PeopleDic
     /// PositionFilled
+    /// Anchors
     /// </summary>
     public void ResaveOnRegistro(string myIdP)
     {
@@ -441,6 +444,7 @@ public class Registro : MonoBehaviour
         AllRegFile[index].Familes = build.Families;
         AllRegFile[index].Inventory = build.Inventory;
         AllRegFile[index].PeopleDict = build.PeopleDict;
+        AllRegFile[index].Anchors = build.Anchors;
     }
 
     /// <summary>
