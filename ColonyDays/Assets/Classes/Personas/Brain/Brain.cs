@@ -937,7 +937,7 @@ public class Brain
     void ReRouteCallsCounter()
     {
         _timesCall++;
-        if (_waiting && _timesCall > 2)
+        if (_waiting && _timesCall > 20)
         {
             PersonPot.Control.DoneReRoute(_person.MyId);//so another people can use the Spot 
             _timesCall = 0;
@@ -1391,11 +1391,17 @@ public class Brain
     /// </summary>
     private void CheckOnTheQueues()
     {
-        if (!_isAllSet || !IAmHomeNow() || PersonPot.Control.Queues.IsEmpty())
+        if (!_isAllSet || PersonPot.Control.Queues.IsEmpty())
         {
             return;
         }
-        CheckQueuesLoop();
+
+        //bz IAmHomeNow() sometimes is too short of a time
+        //with 3x is fine. just added LocatedAtHomeNow() so extends the changces of getting call
+        if (IAmHomeNow() || LocatedAtHomeNow())
+        {
+            CheckQueuesLoop();
+        }
     }
 
     //Rect[] _debugRect = new Rect[5];
