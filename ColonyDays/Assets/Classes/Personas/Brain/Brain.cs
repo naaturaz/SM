@@ -45,8 +45,8 @@ public class Brain
         {
             if (_currentTask == HPers.MovingToNewHome && value != HPers.Restarting)
             {
-                Debug.Log("CurrTask called:"+_person.MyId);
-                return;
+                Debug.Log("CurrTask called:" + _person.MyId + ".new:" + value);
+                //return;
             }
             _currentTask = value;
         }
