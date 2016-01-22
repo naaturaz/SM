@@ -879,7 +879,7 @@ public class Person : General
     {
         if (Home != null)
         {
-            var family = Home.FindMyFamily(this);
+            var family = Home.FindMyFamilyChecksFamID(this);
             family.RemovePersonFromFamily(this);    
 
             Brain.MoveToNewHome.OldHomeKey = "";//so he doesnt pull that family as its old family when creating Shack or moving to new home 
@@ -1469,7 +1469,7 @@ public class Person : General
         {
             return false;
         }
-        Family myFamily = Home.FindMyFamily(this);
+        Family myFamily = Home.FindMyFamilyChecksFamID(this);
 
         if (myFamily == null)
         {
@@ -1569,7 +1569,7 @@ public class Person : General
             return false;
         }
 
-        var family = Home.FindMyFamily(this);
+        var family = Home.FindMyFamilyChecksFamID(this);
         if (family == null)
         {
             return false;
@@ -1647,7 +1647,7 @@ public class Person : General
     /// <param name="newBorn"></param>
     void MoveNewBornToHome(Person newBorn)
     {
-        var family = Home.FindMyFamily(this);
+        var family = Home.FindMyFamilyChecksFamID(this);
         family.Kids.Add(newBorn.MyId);
 
         newBorn.transform.parent = Home.transform;
@@ -1726,7 +1726,7 @@ public class Person : General
             return;
         }
 
-        var fam = Home.FindMyFamily(this);
+        var fam = Home.FindMyFamilyChecksFamID(this);
         if (fam == null)
         {
             return;
@@ -1751,7 +1751,7 @@ public class Person : General
             return;
         }
 
-        var fam = homeH.FindMyFamily(this);
+        var fam = homeH.FindMyFamilyChecksFamID(this);
         if (fam == null)
         {
             return;

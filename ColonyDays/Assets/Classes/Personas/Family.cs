@@ -345,7 +345,7 @@ public class Family
     /// </summary>
     /// <param name="askPerson"></param>
     /// <returns></returns>
-    public bool DoIBelongToThisFamily(Person askPerson)
+    public bool DoIBelongToThisFamilyChecksFamID(Person askPerson)
     {
         for (int i = 0; i < _kids.Count; i++)
         {
@@ -356,6 +356,24 @@ public class Family
         }
 
         if ((askPerson.MyId == _father || askPerson.MyId == _mother)  && askPerson.FamilyId == FamilyId)
+        {
+            return true;
+        }
+
+        return false;
+    }  
+    
+    public bool DoIBelongToThisFamily(Person askPerson)
+    {
+        for (int i = 0; i < _kids.Count; i++)
+        {
+            if (askPerson.MyId == _kids[i])
+            {
+                return true;
+            }
+        }
+
+        if ((askPerson.MyId == _father || askPerson.MyId == _mother))
         {
             return true;
         }

@@ -1346,6 +1346,18 @@ public class Building : General, Iinfo
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
+    public Family FindMyFamilyChecksFamID(Person person)
+    {
+        for (int i = 0; i < Families.Length; i++)
+        {
+            if (Families[i].DoIBelongToThisFamilyChecksFamID(person))
+            {
+                return Families[i];
+            }
+        }
+        return null;
+    }    
+    
     public Family FindMyFamily(Person person)
     {
         for (int i = 0; i < Families.Length; i++)
@@ -1356,7 +1368,6 @@ public class Building : General, Iinfo
             }
         }
         return null;
-
     }
 
     /// <summary>
@@ -1872,6 +1883,12 @@ public class Building : General, Iinfo
         MeshController.CrystalManager1.Add(this);
     }
 
+    protected void PrivHandleZoningAddCrystalsForBridge()
+    {
+        LandZoningBridge();
+        MeshController.CrystalManager1.Add(this);
+    }
+
     private bool isToFindLandZone;
     /// <summary>
     /// This will return the land zone a given point of a build is
@@ -1889,10 +1906,6 @@ public class Building : General, Iinfo
 
             LandZone1.Add(new VectorLand(landZonName, sp.SpawnPoint.transform.position));
         }
-        else
-        {
-            LandZoningBridge();
-        }
     }
 
     /// <summary>
@@ -1902,7 +1915,7 @@ public class Building : General, Iinfo
     {
         if (_isLoadingFromFile)
         {
-            LoadLandZonesIntoBridgeManager();
+            //LoadLandZonesIntoBridgeManager();
             return;
         }
 
@@ -1916,8 +1929,6 @@ public class Building : General, Iinfo
 
         var zone1 = MeshController.CrystalManager1.ReturnLandingZone(end0);
         var zone2 = MeshController.CrystalManager1.ReturnLandingZone(end1);
-        
-        BuildingPot.Control.BridgeManager1.AddBridge(zone1, zone2, transform.position, MyId);
 
         LandZone1.Add(new VectorLand(zone1, ends[0]));
         LandZone1.Add(new VectorLand(zone2, ends[1]));
@@ -3050,7 +3061,7 @@ public class BookedHome
     /// <returns></returns>
     public bool IAmBookedHere(Person person)
     {
-        return Family.DoIBelongToThisFamily(person) && 
+        return Family.DoIBelongToThisFamilyChecksFamID(person) && 
             !string.IsNullOrEmpty(Building) //if is "" or null is not booked here. Spent a whole day trying to find where the 
                                             //person write in another house BookedHome1 without being able too and with people on it
                                             //i found do that everytime tht doesnt doesnt put a Building. So thts it

@@ -1892,7 +1892,7 @@ public class Brain
 
     void MakeOldFamilyVirgin(Structure oldHomeP)
     {
-        var FamilyOnOldHome = oldHomeP.FindMyFamily(_person);
+        var FamilyOnOldHome = oldHomeP.FindMyFamilyChecksFamID(_person);
         //so can be booked in Realtor properly
 
         if (FamilyOnOldHome != null)
@@ -1909,7 +1909,7 @@ public class Brain
     {
 
         //the var family on old home needs to be make it virgin 
-        var FamilyOnOldHome = oldHomeP.FindMyFamily(_person);
+        var FamilyOnOldHome = oldHomeP.FindMyFamilyChecksFamID(_person);
 
         if (FamilyOnOldHome == null)
         {
@@ -2482,13 +2482,13 @@ public class Brain
             //people can die. in the port, when just spwan or at home
             if (_person.Home != null)
             {
-                var fam = _person.Home.FindMyFamily(_person);
+                var fam = _person.Home.FindMyFamilyChecksFamID(_person);
 
                 if (fam==null)
                 {
                     Debug.Log("CheckIfDie null family");
                     var t = this;
-                    fam = _person.Home.FindMyFamily(_person);
+                    fam = _person.Home.FindMyFamilyChecksFamID(_person);
                 }
 
                 fam.RemovePersonFromFamily(_person);

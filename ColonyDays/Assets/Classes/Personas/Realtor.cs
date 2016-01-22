@@ -235,7 +235,7 @@ public class Realtor
         Family myFamily = toBeBooked;
         if (person.Home != null && toBeBooked == null)
         {
-            myFamily = person.Home.FindMyFamily(person);
+            myFamily = person.Home.FindMyFamilyChecksFamID(person);
         }
         else if (toBeBooked == null)
         {

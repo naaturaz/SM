@@ -21,6 +21,13 @@ public class Bridge : Trail
 	void Start ()
     {
         base.Start();
+
+        //if bridge is done will load this into BridgeManager 
+	    if (IsLoadingFromFile && Pieces[0].StartingStage == H.Done)
+	    {
+            BuildingPot.Control.BridgeManager1.AddBridge(LandZone1[0].LandZone, LandZone1[1].LandZone,
+                 transform.position, MyId);   
+	    }
 	}
 	
 	// Update is called once per frame
@@ -74,7 +81,6 @@ public class Bridge : Trail
 
     protected void SetBridgeAnchors()
     {
-        var a = GetBridgeAnchors();
         Anchors = GetBridgeAnchors();
         //    UVisHelp.CreateHelpers(Anchors, Root.redSphereHelp);
     }
@@ -101,6 +107,13 @@ public class Bridge : Trail
         }
         else
         {
+            if (Pieces[0].StartingStage == H.Done)
+            {
+                //will be added to BrdigeManager only when is fully built 
+                BuildingPot.Control.BridgeManager1.AddBridge(LandZone1[0].LandZone, LandZone1[1].LandZone,
+                    transform.position, MyId);
+            }
+
             StructureParent sP = new StructureParent();
             sP.ResaveOnRegistro(Pieces[0].StartingStage, MyId);
             showNextStage = false;
@@ -290,11 +303,9 @@ public class Bridge : Trail
             createAirPartsNow = false;
             loopCounter = 0;
             createSoilPartsNow = true;
-
-
+            
             //so crystals are added to ground right away
-            //MeshController.CrystalManager1.Add(this);
-            PrivHandleZoningAddCrystals();
+            PrivHandleZoningAddCrystalsForBridge();
         }
     }
     /// <summary>
@@ -597,12 +608,6 @@ public class Bridge : Trail
     //</summary>
     public List<Vector3> GetBridgeAnchors()
     {
-        //var p12 = GiveTheTwoParts12();
-        //var anchors1 = p12[0].GetAnchors();
-        //var anchors2 = p12[1].GetAnchors();
-        //anchors1.AddRange(anchors2);
-        //return Registro.FromALotOfVertexToPoly(anchors1);
-
         if (BoundsHoriz.Count > 0)
         {
             return Registro.FromALotOfVertexToPoly(BoundsHoriz);

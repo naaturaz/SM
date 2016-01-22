@@ -30,7 +30,7 @@ public class ShackBuilder : Profession
         
         //needs to redo the Family on _constructing
         var oldBuild = Brain.GetBuildingFromKey(_person.Brain.MoveToNewHome.OldHomeKey);
-        var myFamily = oldBuild.FindMyFamily(_person);
+        var myFamily = oldBuild.FindMyFamilyChecksFamID(_person);
 
         var newFam = new Family(3, _constructing.MyId);
         newFam.FamilyId = person.FamilyId;
@@ -122,7 +122,7 @@ public class ShackBuilder : Profession
 
         Family myFamily = null;
         var oldHome = Brain.GetStructureFromKey(_person.Brain.MoveToNewHome.OldHomeKey);
-        myFamily = oldHome.FindMyFamily(_person);
+        myFamily = oldHome.FindMyFamilyChecksFamID(_person);
 
         //is bz im a recently 16 years guy or moved from empty house 
         if (myFamily == null)
