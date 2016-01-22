@@ -15,7 +15,12 @@ public class Family
     public string FamilyId
     {
         get { return _familyId; }
-        set { _familyId = value; }
+        set
+        {
+
+            
+            _familyId = value;
+        }
     }
 
     public Family() { }

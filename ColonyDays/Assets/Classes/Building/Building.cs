@@ -3133,4 +3133,15 @@ public class BookedHome
             }
         }
     }
+
+
+
+    internal bool MySpouseBooked(string Spouse)
+    {
+        if (Family.Mother == Spouse || Family.Father == Spouse)
+        {
+            return true;
+        }
+        return false;
+    }
 }

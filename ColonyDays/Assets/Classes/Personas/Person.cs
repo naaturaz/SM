@@ -291,7 +291,16 @@ public class Person : General
     public string FamilyId
     {
         get { return _familyId; }
-        set { _familyId = value; }
+        set
+        {
+            if (_familyId.Contains("Camila") && !value.Contains("Camila") && MyId.Contains("Carlos"))
+            {
+                Debug.Log("Who screew carlos famID ");
+                var t = this;
+            }
+            
+            _familyId = value;
+        }
     }
 
     public int UnHappyYears
@@ -816,6 +825,7 @@ public class Person : General
         //will only will mark as majority age reached if he could fit a house 
         if (place != null)
         {
+            
             RemoveMeFromOldHome();
 
             Realtor.BookNewPersonInNewHome(this, place, familyID);
@@ -846,7 +856,8 @@ public class Person : General
             //need to see if will fit there and if is not booked 
             if (buildings[i].WouldAdultFitInThisHouseInAFamily(this, ref familyID) && 
                 //if is null is bz is brand new 
-                (buildings[i].BookedHome1 == null || !buildings[i].BookedHome1.IsBooked()))
+                (buildings[i].BookedHome1 == null || !buildings[i].BookedHome1.IsBooked()
+                || buildings[i].BookedHome1.MySpouseBooked(Spouse)))
             {
                 return buildings[i];
             }
