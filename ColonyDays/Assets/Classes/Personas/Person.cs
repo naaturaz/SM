@@ -874,19 +874,13 @@ public class Person : General
 
     /// <summary>
     /// bz when new adult needs to get out of old home .
-    /// 
-    /// 
     /// </summary>
     void RemoveMeFromOldHome()
     {
         if (Home != null)
         {
             var family = Home.FindMyFamily(this);
-
-            //if (family != null)
-            //{
-                family.RemovePersonFromFamily(this);    
-            //}
+            family.RemovePersonFromFamily(this);    
 
             Brain.MoveToNewHome.OldHomeKey = "";//so he doesnt pull that family as its old family when creating Shack or moving to new home 
             BuildingPot.Control.AddToHousesWithSpace(Home.MyId);
