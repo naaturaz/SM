@@ -146,7 +146,7 @@ public class Family
         } 
     }
 
-    int Adults()
+    public int Adults()
     {
         int res = 0;
         if (_mother != "") { res++; }
@@ -333,10 +333,10 @@ public class Family
         Person inFamily = FindCurrentAdult();
 
         //addressing if person die Recenlty
-        if (inFamily == null)
-        {
-            return false;
-        }
+        //if (inFamily == null)
+        //{
+        //    return false;
+        //}
 
         if (inFamily.Spouse == newPerson.MyId)
         {
@@ -576,5 +576,45 @@ public class Family
         //return false;
 
         return WasDatingGood(newPerson) || AreTheyMarriedAlready(newPerson);
+    }
+
+    /// <summary>
+    /// Call once both parent had passed away
+    /// </summary>
+    internal void RedoFamily()
+    {
+        CleanFamily();
+        AddressOldKids();
+    }
+
+    /// <summary>
+    /// Addressing kids that are major but never found a house 
+    /// 
+    /// Will make the first kid major and head of the house 
+    /// </summary>
+    private void AddressOldKids()
+    {
+        if (Kids.Count==0)
+        {
+            return;
+        }
+        
+        var kid = FindPerson(Kids[0]);
+        kid.IsMajor = true;
+
+        if (CanGetAnotherAdult(kid))
+        {
+            Kids.Remove(kid.MyId);
+        }
+    }
+
+    void CleanFamily()
+    {
+        FamilyId = "";
+        for (int i = 0; i < Kids.Count; i++)
+        {
+            var kid = FindPerson(Kids[i]);
+            kid.FamilyId = "";
+        }
     }
 }

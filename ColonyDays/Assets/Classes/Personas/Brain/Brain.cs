@@ -2517,6 +2517,7 @@ public class Brain
 
                 fam.RemovePersonFromFamily(_person);
                 RemoveFromAllPeopleDict();
+                CleanFamilyIfImLastMajor(fam);
             }
 
             Partido = false;
@@ -2524,6 +2525,14 @@ public class Brain
             //or angels take him 
             _person.DestroyCool();
             PersonPot.Control.All.Remove(_person);
+        }
+    }
+
+    private void CleanFamilyIfImLastMajor(Family fam)
+    {
+        if (fam.Adults() == 0)
+        {
+            fam.RedoFamily();
         }
     }
 

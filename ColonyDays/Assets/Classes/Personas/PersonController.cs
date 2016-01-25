@@ -194,9 +194,9 @@ public class PersonController : PersonPot
         }
     }
 
-    public void HaveNewKid(Vector3 iniPos)
+    public void HaveNewKid(Vector3 iniPos,string mother, string father)
     {
-        Person t = Person.CreatePersonKid(iniPos);
+        Person t = Person.CreatePersonKid(iniPos, mother, father);
         All.Add(t); 
     }
 
