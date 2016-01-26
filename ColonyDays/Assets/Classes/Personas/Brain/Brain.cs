@@ -2499,26 +2499,32 @@ public class Brain
 
     void CheckIfDie()
     {
-        if (Partido 
-           // && (IAmHomeNow() || IJustSpawn())
-            )
+        if (Partido)
         {
+            Family fam = null;
+
             //people can die. in the port, when just spwan or at home
             if (_person.Home != null)
             {
-                var fam = _person.Home.FindMyFamilyChecksFamID(_person);
+                fam = _person.Home.FindMyFamily(_person);
 
                 if (fam==null)
                 {
                     Debug.Log("CheckIfDie null family");
-                    var t = this;
-                    fam = _person.Home.FindMyFamilyChecksFamID(_person);
+                    fam = _person.FindMeInAllFamiliesAndRemoveMeFromMine();
                 }
-
-                fam.RemovePersonFromFamily(_person);
-                RemoveFromAllPeopleDict();
-                CleanFamilyIfImLastMajor(fam);
+                else
+                {
+                    fam.RemovePersonFromFamily(_person);
+                }
             }
+            else
+            {
+                fam = _person.FindMeInAllFamiliesAndRemoveMeFromMine();
+            }
+
+            RemoveFromAllPeopleDict();
+            CleanFamilyIfImLastMajor(fam);
 
             Partido = false;
             //so person goes to heaven, and ray is sent from Sky to take him
@@ -2530,6 +2536,11 @@ public class Brain
 
     private void CleanFamilyIfImLastMajor(Family fam)
     {
+        if (fam == null)
+        {
+            return;
+        }
+
         if (fam.Adults() == 0)
         {
             fam.RedoFamily();

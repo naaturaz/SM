@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Globalization;
 
 public class Family
 {
@@ -36,10 +37,54 @@ public class Family
         }
     }
 
+
+
     public List<string> Kids
     {
-        get { return _kids; }
+        get
+        {
+            //VerifyKids();
+            return _kids;
+        }
         set { _kids = value; }
+    }
+
+    private int count;
+    private void VerifyKids()
+    {
+        count++;
+        if (count < 5)
+        {
+            return;
+        }
+        count = 0;
+
+
+        for (int i = 0; i < Kids.Count; i++)
+        {
+            KidVerification(Kids[i]);
+        }
+    }
+
+    /// <summary>
+    /// If is not found or famId not equal ours will let him go from here 
+    /// </summary>
+    /// <param name="idP"></param>
+    void KidVerification(string idP)
+    {
+        var per = FindPerson(idP);
+
+        if (per == null)
+        {
+            Kids.Remove(idP);
+        }
+        else
+        {
+            if (per.FamilyId != FamilyId)
+            {
+                Kids.Remove(idP);
+            }
+        }
     }
 
     public string Home
@@ -65,13 +110,19 @@ public class Family
     public string Mother
     {
         get { return _mother; }
-        set { _mother = value; }
+        set
+        {
+            _mother = value;
+        }
     }
 
     public string Father
     {
         get { return _father; }
-        set { _father = value; }
+        set
+        {
+            _father = value;
+        }
     }
 
     public int KidsMax
@@ -146,12 +197,55 @@ public class Family
         } 
     }
 
+    /// <summary>
+    /// Will make sure they are still alive 
+    /// </summary>
+    /// <returns></returns>
     public int Adults()
     {
+        MakeSureAllFamilyIsUsingSameFamID();
         int res = 0;
-        if (_mother != "") { res++; }
-        if (_father != "") { res++; }
+        if (Mother != "")
+        {
+            if (PersonStillAlive(_mother))
+            {
+                res++;
+            }
+            //means that CurrentAdult person died and did not remove him self from family
+            else
+            {
+                Mother = "";
+                res -= 5;
+            }
+        }
+        if (Father != "")
+        {
+            if (PersonStillAlive(Father))
+            {
+                res++;
+            }
+            //means that CurrentAdult person died and did not remove him self from family
+            else
+            {
+                Father = "";
+                res -= 5;
+            }
+        }
+
+        //both parent are gone. and a least one was deteected now in this method call
+        //if at least one is alive wont go true bz will be -4 or 1
+        if (res == -5 || res == -10)
+        {
+            //in case still a kid in there 
+            RedoFamily();
+        }
+
         return res;
+    }
+
+    bool PersonStillAlive(string person)
+    {
+        return FindPerson(person) != null;
     }
 
     void Set1stAdult(Person adult)
@@ -175,6 +269,7 @@ public class Family
             adult.FamilyId = FamilyId;    
         }
         Debug.Log(adult.MyId + " inscribed on " + FamilyId + " as " + debug);
+        MakeSureAllFamilyIsUsingSameFamID();
     }
 
     //tis is if has already a adult we have to try to marry them
@@ -188,11 +283,12 @@ public class Family
     {
         Person inFamily = FindCurrentAdult();
 
-        //means that CurrentAdult person died recently
-        if (inFamily == null)
-        {
-            return false;
-        }
+        //means that CurrentAdult person died and did not remove him self from family
+        //if (inFamily == null)
+        //{
+        //    ClearAdults();
+        //    return false;
+        //}
 
         //2nd question is to check that other person is not Married already , etc
         if (inFamily.WouldUMarryMe(newPerson) && newPerson.WouldUMarryMe(inFamily))
@@ -207,6 +303,16 @@ public class Family
             return true;
         }
         return false;
+    }
+
+
+    /// <summary>
+    /// To address bugg in where a person died and didnt remove from family
+    /// </summary>
+    void ClearAdults()
+    {
+        Mother = "";
+        Father = "";
     }
 
     /// <summary>
@@ -276,6 +382,8 @@ public class Family
     /// </summary>
     void SetAdultInFamily(Person adult, string momOrDad)
     {
+        MakeSureAllFamilyIsUsingSameFamID();
+
         if (momOrDad == "M")
         {
             Mother = adult.MyId;
@@ -289,6 +397,38 @@ public class Family
 
         adult.transform.parent = BuildingPot.Control.Registro.AllBuilding[_home].transform;
         Debug.Log(adult.MyId + " inscribed on " + FamilyId +" as " + momOrDad);
+    }
+
+    /// <summary>
+    /// When the father is coming here all people has to addopt his FamID regardless
+    /// 
+    /// The father FamID could be the 'Family:Mothername.888' but that is ok. bz
+    /// the purpose of this is that all in the family has the same ID 
+    /// </summary>
+    private void MakeSureAllFamilyIsUsingSameFamID()
+    {
+        UpdateAllPeopleInFamilyWithFamID();
+    }
+
+    void UpdateAllPeopleInFamilyWithFamID()
+    {
+        var fatherO = FindPerson(Father);
+        var momO = FindPerson(Mother);
+        List<Person> list = new List<Person>(){fatherO, momO};
+
+        for (int i = 0; i < Kids.Count; i++)
+        {
+            list.Add(FindPerson(Kids[i]));
+        }
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            if (list[i] != null)
+            {
+                list[i].FamilyId = FamilyId;
+            }
+        }
+        //Debug.Log("All adopted famID:"+FamilyId+".ct:"+list.Count);
     }
 
     private void MakeAdultFatherOfKids(Person newP)
@@ -363,6 +503,15 @@ public class Family
 
         if ((askPerson.MyId == _father || askPerson.MyId == _mother)  && askPerson.FamilyId == FamilyId)
         {
+            return true;
+        }
+
+        //familyId is spouseID 
+        var spouseC = FindPerson(askPerson.Spouse);
+        if ((askPerson.MyId == _father || askPerson.MyId == _mother)
+            && spouseC != null && askPerson.FamilyId == spouseC.FamilyId)
+        {
+            MakeSureAllFamilyIsUsingSameFamID();
             return true;
         }
 
@@ -554,27 +703,17 @@ public class Family
     /// <returns></returns>
     public bool WouldAdultFitInThisFamily(Person newPerson)
     {
-        //if (Adults() >= 2)
-        //{
-        //    return false;
-        //}
+        var adults = Adults();
 
-        if (Adults() == 0)
+        if (adults == 0)
         {
             return true;
         }
-
-        Person inFamily = FindCurrentAdult();
-        //2nd question is to check that other person is not Married already , etc
-        //if (inFamily.WouldUMarryMe(newPerson) && newPerson.WouldUMarryMe(inFamily))
-        //{
-
-
-        //    return true;
-        //}
-
-        //return false;
-
+        //means that a person had to be removed from family bz was dead and not removed 
+        if (adults < 0)
+        {
+            return false;
+        }
         return WasDatingGood(newPerson) || AreTheyMarriedAlready(newPerson);
     }
 
@@ -584,7 +723,7 @@ public class Family
     internal void RedoFamily()
     {
         CleanFamily();
-        AddressOldKids();
+        HouseHeadPerson();
     }
 
     /// <summary>
@@ -592,7 +731,7 @@ public class Family
     /// 
     /// Will make the first kid major and head of the house 
     /// </summary>
-    private void AddressOldKids()
+    private void HouseHeadPerson()
     {
         if (Kids.Count==0)
         {

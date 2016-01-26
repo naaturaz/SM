@@ -528,4 +528,15 @@ public class Registro : MonoBehaviour
         }
         return res;
     }
- }
+
+    internal List<Family> AllFamilies()
+    {
+        List<Family>  res = new List<Family>();
+
+        for (int i = 0; i < AllRegFile.Count; i++)
+        {
+            res.AddRange(AllRegFile[i].Familes);
+        }
+        return res;
+    }
+}

@@ -833,8 +833,7 @@ public class Person : General
         {
             FamilyId = myOldFamID;
             RemoveMeFromOldHome();
-            //removing person from Home PeopleDict here 
-            Home.PeopleDict.Remove(MyId);
+            PeopleDictMatters(place);
 
             Realtor.BookNewPersonInNewHome(this, place, newFamilyID);
 
@@ -843,6 +842,18 @@ public class Person : General
             Brain.MajorAge.MarkMajorityAgeReached();
             PersonPot.Control.IsAPersonHomeLessNow = MyId;
         }
+    }
+
+    void PeopleDictMatters(Building newPlace)
+    {
+        //dont need to remove if new place is same as current home 
+        if (Home!= null && newPlace == Home)
+        {
+            return;
+        }
+
+        //removing person from Home PeopleDict here 
+        Home.PeopleDict.Remove(MyId);
     }
 
     /// <summary>
@@ -882,7 +893,21 @@ public class Person : General
         if (Home != null)
         {
             var family = Home.FindMyFamilyChecksFamID(this);
-            family.RemovePersonFromFamily(this);    
+
+            if (family == null)
+            {
+                family = Home.FindMyFamily(this);
+            }
+
+            if (family != null)
+            {
+                family.RemovePersonFromFamily(this);
+            }
+            else
+            {
+                FindMeInAllFamiliesAndRemoveMeFromMine();
+                throw new Exception("family null:"+MyId);
+            }
 
             Brain.MoveToNewHome.OldHomeKey = "";//so he doesnt pull that family as its old family when creating Shack or moving to new home 
             BuildingPot.Control.AddToHousesWithSpace(Home.MyId);
@@ -890,6 +915,23 @@ public class Person : General
             //so families are resaved 
             BuildingPot.Control.Registro.ResaveOnRegistro(Home.MyId);
         }
+    }
+
+    /// <summary>
+    /// Last resource when havent found the family of a person
+    /// willlook trhu all buildings and see if can find this person in any family and if so will remove it from there 
+    /// </summary>
+    public Family FindMeInAllFamiliesAndRemoveMeFromMine()
+    {
+        var fams = BuildingPot.Control.Registro.AllFamilies();
+        var myFam = fams.Find(a => a.Kids.Contains(MyId) || a.Father == MyId || a.Mother == MyId);
+
+        if (myFam!=null)
+        {
+            myFam.RemovePersonFromFamily(this);
+            return myFam;
+        }
+        return null;
     }
 
     /// <summary>
@@ -931,6 +973,12 @@ public class Person : General
     public void Marriage(string spouseMyId)
     {
         spouse = spouseMyId;
+
+        //if (Gender==H.Female)
+        //{
+        //    var spouseLoc = Family.FindPerson(spouse);
+        //    FamilyId = spouseLoc.FamilyId;
+        //}
     }
 
 	/// <summary>
@@ -1583,7 +1631,8 @@ public class Person : General
         bool happy = AmIHappy();
         bool bodyReady = Mathf.Abs( _lastNewBornYear - Program.gameScene.GameTime1.Year ) > 1;
 
-        return nutrida && hasSpace && happy && bodyReady && Age < 45 && IsSpouseAlive();
+        //have to check Age>14 in case lost both parent really young and was made Family.HouseHeadPerson() on House 
+        return nutrida && hasSpace && happy && bodyReady && Age > 14 && Age < 45 && IsSpouseAlive();
     }
 
     bool IsSpouseAlive()
@@ -1643,8 +1692,13 @@ public class Person : General
         IsPregnant = false;
 
         Happinnes = 5;
-        var spouse = Family.FindPerson(Spouse);
-        spouse.Happinnes = 5;
+        var spouseLo = Family.FindPerson(Spouse);
+
+        //in case spoise die during preganancy
+        if (spouseLo!=null)
+        {
+            spouseLo.Happinnes = 5;
+        }
 
         PersonPot.Control.RestartControllerForPerson(kid.MyId);
     }
