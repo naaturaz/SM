@@ -224,9 +224,7 @@ public class Realtor
     /// </summary>
     public static void BookMyFamilyToNewBuild(Person person, Building newHome, Family toBeBooked = null)
     {
-        //if doesnt have at least 1 family virgin.
-        //means no booking is needed.
-        //todo change below
+        //if doesnt have at least 1 family virgin.//means no booking is needed.
         if (!newHome.AtLeastHasOneVirginFamily())
         {
             return;
@@ -243,7 +241,6 @@ public class Realtor
             person.FamilyId = myFamily.FamilyId; 
         }
 
-        myFamily.State = H.MovingToNewHome;
         //seeting person as the first person in the family
         myFamily.CanGetAnotherAdult(person);
         newHome.BookedHome1 = new BookedHome(newHome.MyId, myFamily);
@@ -264,13 +261,14 @@ public class Realtor
     public static void BookNewPersonInNewHome(Person person, Building newHome, string familyIDP)
     {
         var myFamily = newHome.FindFamilyById(familyIDP);
-
         person.FamilyId = myFamily.FamilyId;
-
-        myFamily.State = H.MovingToNewHome;
-        //seeting person as the first person in the family
         myFamily.CanGetAnotherAdult(person);
-        newHome.BookedHome1 = new BookedHome(newHome.MyId, myFamily);
+
+        //so i dont pull the existing family memebers and book them . whn they are actually already in the house
+        Family famToBook = new Family();
+        famToBook.SetDummyFirstAdult(person);
+        famToBook.FamilyId = person.FamilyId;
+        newHome.BookedHome1 = new BookedHome(newHome.MyId, famToBook);
 
         BuildingPot.Control.Registro.ResaveOnRegistro(newHome.MyId);
         MarkTheFamilyBooking(true, myFamily);

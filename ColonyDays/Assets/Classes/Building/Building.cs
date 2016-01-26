@@ -1320,25 +1320,25 @@ public class Building : General, Iinfo
         if (HType == H.HouseA || HType == H.HouseB)
         {
             Families = new Family[1];
-            Families[0] = new Family(3, MyId);
+            Families[0] = new Family(3, MyId, 0);
         }
         //can hhave 2 famili with 3 kids each
         else if (HType == H.HouseAWithTwoFloor)
         {
             Families = new Family[2];
-            Families[0] = new Family(3, MyId);
-            Families[1] = new Family(3, MyId);
+            Families[0] = new Family(3, MyId,0);
+            Families[1] = new Family(3, MyId,1);
         }
         //can hhave 1 famili with 5 kids
         else if (HType == H.HouseMedA || HType == H.HouseMedB || HType == H.HouseC || HType == H.HouseD)
         {
             Families = new Family[1];
-            Families[0] = new Family(5, MyId);
+            Families[0] = new Family(5, MyId,0);
         }
         else if (HType == H.Shack)
         {
             Families = new Family[1];
-            Families[0] = new Family(3, MyId);
+            Families[0] = new Family(3, MyId,0);
         }
         //resave familie
         BuildingPot.Control.Registro.ResaveOnRegistro(MyId);
@@ -3028,14 +3028,20 @@ public class Ship
 public class BookedHome
 {
     public string Building;//the key of the building there are booked to
-    public Family Family;//the family tht booked this building
+    
+    public Family Family = new Family();//the family tht booked this building
 
     public BookedHome() { }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="building"></param>
+    /// <param name="family">It doesnt hold the ref. cretes a copy object of family</param>
     public BookedHome(string building, Family family)
     {
         Building = building;
-        Family = family;
+        Family =  new Family(family);
     }
 
     /// <summary>

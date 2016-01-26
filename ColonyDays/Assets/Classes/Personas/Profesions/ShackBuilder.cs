@@ -32,8 +32,8 @@ public class ShackBuilder : Profession
         var oldBuild = Brain.GetBuildingFromKey(_person.Brain.MoveToNewHome.OldHomeKey);
         var myFamily = oldBuild.FindMyFamilyChecksFamID(_person);
 
-        var newFam = new Family(3, _constructing.MyId);
-        _constructing.Families = new Family[]{newFam};
+        //var newFam = new Family(3, _constructing.MyId);
+        //_constructing.Families = new Family[]{newFam};
     }
 
     private void Init()
@@ -122,23 +122,23 @@ public class ShackBuilder : Profession
         //is bz im a recently 16 years guy or moved from empty house 
         if (myFamily == null)
         {
-            myFamily = CreateNewFamily(myFamily);
+            //myFamily = CreateNewFamily(myFamily);
         }
         
         Realtor.BookMyFamilyToNewBuild(_person, _constructing, myFamily);
 
     }
 
-    Family CreateNewFamily(Family myFamily = null)
-    {
-        myFamily = new Family(3, _constructing.MyId);
+    //Family CreateNewFamily(Family myFamily = null)
+    //{
+    //    myFamily = new Family(3, _constructing.MyId);
 
-        if (string.IsNullOrEmpty(_person.FamilyId))
-        {
-            _person.FamilyId = "Family:" + _person.MyId;
-        }
-        return myFamily;
-    }
+    //    if (string.IsNullOrEmpty(_person.FamilyId))
+    //    {
+    //        _person.FamilyId = "Family:" + _person.MyId;
+    //    }
+    //    return myFamily;
+    //}
 
     private int counter;
     /// <summary>

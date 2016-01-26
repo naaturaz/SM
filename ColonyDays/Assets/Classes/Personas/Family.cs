@@ -14,6 +14,7 @@ public class Family
     H _state = H.None;
 
     private string _familyId;
+    private Family family;
     public string FamilyId
     {
         get { return _familyId; }
@@ -22,19 +23,35 @@ public class Family
 
     public Family() { }
 
-    public Family(int kidsMax, string homeKey)
+    public Family(int kidsMax, string homeKey, int indexInFamilyArray)
     {
         _kidsMax = kidsMax;
         _home = homeKey;
 
-        SetId(homeKey);
+        SetId(homeKey, indexInFamilyArray);
+    }
+
+    /// <summary>
+    /// Copyng values one by one. to cut refernce 
+    /// </summary>
+    /// <param name="family"></param>
+    public Family(Family family)
+    {
+        KidsMax = family.KidsMax;
+        Kids = family.Kids;
+        Mother = family.Mother;
+        Father = family.Father;
+        Home = family.Home;
+        State = family.State;
+
+        FamilyId = family.FamilyId;
     }
 
     /// <summary>
     /// The Id is set once and thats all. when a house spwn the families
     /// </summary>
     /// <param name="homeKey"></param>
-    private void SetId(string homeKey)
+    private void SetId(string homeKey, int indexInFamilyArray)
     {
         var bui = Brain.GetBuildingFromKey(homeKey);
 
@@ -44,7 +61,7 @@ public class Family
         }
         else
         {
-            _familyId = "Family:" + homeKey + "." + bui.Families.Length;
+            _familyId = "Family:" + homeKey + "." + indexInFamilyArray;
         }
     }
 
@@ -216,6 +233,22 @@ public class Family
         }
         Debug.Log(adult.MyId + " inscribed on " + FamilyId + " as " + debug);
         MakeSureAllFamilyIsUsingSameFamID();
+    }
+
+    /// <summary>
+    /// For bookking puposes
+    /// </summary>
+    /// <param name="adult"></param>
+    public void SetDummyFirstAdult(Person adult)
+    {
+        if (adult.Gender == H.Male)
+        {
+            _father = adult.MyId;
+        }
+        else
+        {
+            _mother = adult.MyId;
+        }
     }
 
     //tis is if has already a adult we have to try to marry them
@@ -711,13 +744,13 @@ public class Family
 
     public string InfoShow()
     {
-        var res = " \n Id:" + FamilyId +
-               "\n Dad:" + Father +
-               "\n Mom:" + Mother;
+        var res = "\n\n Id : " + FamilyId +
+               "\n   Dad : " + Father +
+               "\n   Mom : " + Mother;
 
         for (int i = 0; i < Kids.Count; i++)
         {
-            res = res + "\n kid#"+i+":" +Kids[i] ;
+            res = res + "\n     Kid#"+i+" : " +Kids[i] ;
         }
         return res;
     }
