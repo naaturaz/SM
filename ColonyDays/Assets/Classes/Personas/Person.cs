@@ -291,16 +291,7 @@ public class Person : General
     public string FamilyId
     {
         get { return _familyId; }
-        set
-        {
-            if (_familyId.Contains("Camila") && !value.Contains("Camila") && MyId.Contains("Carlos"))
-            {
-                Debug.Log("Who screew carlos famID ");
-                var t = this;
-            }
-            
-            _familyId = value;
-        }
+        set {_familyId = value;}
     }
 
     public int UnHappyYears
@@ -754,7 +745,7 @@ public class Person : General
         }
 
         CheckHappiness();
-        DidIDie();
+        //DidIDie();
         CheckIfEmmigrate();
         CheckIfInSchool();
     }

@@ -1926,22 +1926,10 @@ public class Brain
 
         if (oldHomeP.IsALeastOneFamilyEmpty() && oldHomeIsEmptyOrNull)
         {
-            MakeOldFamilyVirgin(oldHomeP);
             BuildingPot.Control.AddToHousesWithSpace(oldHomeP.MyId);
 
             PersonPot.Control.RestartController();
             Debug.Log("Home added :" + oldHomeP.MyId);
-        }
-    }
-
-    void MakeOldFamilyVirgin(Structure oldHomeP)
-    {
-        var FamilyOnOldHome = oldHomeP.FindMyFamilyChecksFamID(_person);
-        //so can be booked in Realtor properly
-
-        if (FamilyOnOldHome != null)
-        {
-            FamilyOnOldHome.MakeVirgin();                    
         }
     }
 
@@ -1961,8 +1949,6 @@ public class Brain
         }
         return FamilyOnOldHome.IsFamilyEmpty();
     }
-
-
 
     /// <summary>
     /// This methd is what stops the person checking again and again.. bz this eventally
@@ -2526,7 +2512,7 @@ public class Brain
             //people can die anywhere
             if (_person.Home != null)
             {
-                fam = _person.Home.FindMyFamily(_person);
+                fam = _person.Home.FindFamilyById(_person.FamilyId);
                 fam.RemovePersonFromFamily(_person);
                 fam.LockDownFamily(_person.MyId);
             }

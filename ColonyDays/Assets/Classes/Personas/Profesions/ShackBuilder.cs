@@ -33,12 +33,7 @@ public class ShackBuilder : Profession
         var myFamily = oldBuild.FindMyFamilyChecksFamID(_person);
 
         var newFam = new Family(3, _constructing.MyId);
-        newFam.FamilyId = person.FamilyId;
         _constructing.Families = new Family[]{newFam};
-        //_constructing.Families[0] = myFamily;
-
-      
-        //Realtor.BookMyFamilyToNewBuild(_person, _constructing, myFamily);
     }
 
     private void Init()
@@ -142,7 +137,6 @@ public class ShackBuilder : Profession
         {
             _person.FamilyId = "Family:" + _person.MyId;
         }
-        myFamily.FamilyId = _person.FamilyId;
         return myFamily;
     }
 

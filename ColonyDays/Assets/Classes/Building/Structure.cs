@@ -56,6 +56,7 @@ public class Structure : StructureParent
             {
                 AddOnRegistro();
             }
+            InitHouseProp();
         }
         else if (!IsEven) { GameScene.ScreenPrint("Can't place here: uneven terrain! Struc"); }
         else if (IsColliding) { GameScene.ScreenPrint("Can't place here: colli"); }

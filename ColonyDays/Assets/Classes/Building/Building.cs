@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Linq;
 using Random = UnityEngine.Random;
 
@@ -752,6 +751,8 @@ public class Building : General, Iinfo
             return;
         }
 
+
+
         LayerRoutine("done");
         PositionFixed = true;
 
@@ -1189,8 +1190,6 @@ public class Building : General, Iinfo
 
     void Init()
     {
-        InitHouseProp();
-        FirstFamilyWasMarked();
 
         SetHouseConfort();
 
@@ -1310,7 +1309,7 @@ public class Building : General, Iinfo
         info = Inventory.Info();
     }
 
-    void InitHouseProp()
+    protected void InitHouseProp()
     {
         if (IsLoadingFromFile)
         {
@@ -1341,19 +1340,8 @@ public class Building : General, Iinfo
             Families = new Family[1];
             Families[0] = new Family(3, MyId);
         }
-    }
-
-    /// <summary>
-    /// If the 1st family was marked to be booked before the 'Familes' were created then will do so
-    /// with the first one 
-    /// </summary>
-    void FirstFamilyWasMarked()
-    {
-        if (!string.IsNullOrEmpty( markTheFirstFamily))
-        {
-            Families[0].FamilyId = markTheFirstFamily;
-            markTheFirstFamily = "";
-        }
+        //resave familie
+        BuildingPot.Control.Registro.ResaveOnRegistro(MyId);
     }
 
     /// <summary>
@@ -1850,6 +1838,7 @@ public class Building : General, Iinfo
     /// </summary>
     protected void HandleLastStage()
     {
+
         PersonPot.Control.BuildersManager1.RemoveConstruction(MyId);
 
         //if is a Unit from a bridge doesnt need to be added there 
@@ -2420,7 +2409,6 @@ public class Building : General, Iinfo
                 throw new Exception("At least a family should be Virgin");
             }
         }
-        toBeFill.FamilyId = familyID;
 
         for (int i = 0; i < BookedHome1.Family.Kids.Count; i++)
         {
@@ -2472,17 +2460,6 @@ public class Building : General, Iinfo
             }
         }
         return null;
-    }
-
-    private string markTheFirstFamily;
-
-    /// <summary>
-    /// Use to mark the first family , is done bz when was asked the first time the 'Familes' were
-    /// not created yet
-    /// </summary>
-    public void MarkFirstFamily(string famID)
-    {
-        markTheFirstFamily = famID;
     }
 
     /// <summary>
@@ -3154,9 +3131,8 @@ public class BookedHome
             if (fam != null)
             {
                 fam.DeleteFamily();
-                fam.MakeVirgin();
 
-                Debug.Log("Made family virgin on:");
+                Debug.Log("deleted virgin on:");
 
                 //so families are resaved 
                 //BuildingPot.Control.Registro.UpdateOnRegistro(oldHome.MyId);

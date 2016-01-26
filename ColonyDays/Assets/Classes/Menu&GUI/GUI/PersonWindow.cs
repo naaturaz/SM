@@ -94,9 +94,10 @@ public class PersonWindow : GUIElement {
 
     string BuildPersonInfo()
     {
-        string res = "Age:" + _person.Age + " Gender:" + _person.Gender
-                     + " Nutrition:" + _person.NutritionLevel + " Profession:" + _person.ProfessionProp.ProfDescription
-                     + " ID:" + _person.MyId;
+        string res = "\n Age:" + _person.Age + "\n Gender:" + _person.Gender
+                     + "\n Nutrition:" + _person.NutritionLevel + "\n Profession:" + _person.ProfessionProp.ProfDescription
+                     + "\n ID:" + _person.MyId
+                     + "\n FamID:" + _person.FamilyId;
 
         return res;
     }

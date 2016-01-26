@@ -239,11 +239,7 @@ public class Realtor
         }
         else if (toBeBooked == null)
         {
-            //todo get right amt of kids
-            //TODO create constructor that get right amt of kids and sets Id, and id on person
-            //for bokking purposes is ok like that this is a person that doesnt have any family
-            myFamily = new Family(3, newHome.MyId);
-            myFamily.FamilyId = "Family:" + person.MyId;
+            myFamily = newHome.ReturnEmptyFamily();
             person.FamilyId = myFamily.FamilyId; 
         }
 
@@ -254,10 +250,7 @@ public class Realtor
         //Debug.Log("Booked " + newHome.MyId + " by: " + person.MyId);
 
         BuildingPot.Control.Registro.ResaveOnRegistro(newHome.MyId);
-
         MarkTheFamilyBooking(true, myFamily);
-        MarkOneVirginFamilySpotOnNewHome(newHome, person);
-
         RestartControllerForMyFamily(myFamily, person);
     }
 
@@ -270,21 +263,8 @@ public class Realtor
     /// <param name="newHome"></param>
     public static void BookNewPersonInNewHome(Person person, Building newHome, string familyIDP)
     {
-        //for bokking purposes is ok like that this is a person that doesnt have any family
-        var myFamily = new Family(3, newHome.MyId);
+        var myFamily = newHome.FindFamilyById(familyIDP);
 
-        //if is empty will create one
-        if (string.IsNullOrEmpty(familyIDP))
-        {
-            myFamily.FamilyId = "Family:" + person.MyId;
-        } //other wise will used passed val
-        else
-        {
-            //myFamily cnt be null. 
-            //myFamily = newHome.FindFamilyById(familyIDP);
-            myFamily.FamilyId = familyIDP;
-        } 
-        
         person.FamilyId = myFamily.FamilyId;
 
         myFamily.State = H.MovingToNewHome;
@@ -314,30 +294,6 @@ public class Realtor
       
             PersonPot.Control.RestartControllerForPerson(myFamily.Father);
         
-    }
-
-    /// <summary>
-    /// Will mark on new House a Family spot tht is virign, as the new Family Id  
-    /// </summary>
-    /// <param name="newHome"></param>
-    /// <param name="person"></param>
-    public static void MarkOneVirginFamilySpotOnNewHome(Building newHome, Person person)
-    {
-        if (newHome.ThereIsAFamilyMarkedAlreadyWithMyId(person.FamilyId))
-        {
-            return;   
-        }
-
-        Family t = newHome.FindVirginFamily();
-
-        //Shack booking happens before Building obj is spawned 
-        if (t == null && newHome.HType == H.Shack)
-        {
-            newHome.MarkFirstFamily(person.FamilyId);
-            return;
-        }
-        
-        t.FamilyId = person.FamilyId;
     }
 
     /// <summary>

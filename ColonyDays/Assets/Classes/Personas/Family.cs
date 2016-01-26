@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Runtime.InteropServices;
 
 public class Family
 {
@@ -16,12 +17,7 @@ public class Family
     public string FamilyId
     {
         get { return _familyId; }
-        set
-        {
-
-            
-            _familyId = value;
-        }
+        set { _familyId = value; }
     }
 
     public Family() { }
@@ -31,9 +27,24 @@ public class Family
         _kidsMax = kidsMax;
         _home = homeKey;
 
-        if (homeKey == "")
+        SetId(homeKey);
+    }
+
+    /// <summary>
+    /// The Id is set once and thats all. when a house spwn the families
+    /// </summary>
+    /// <param name="homeKey"></param>
+    private void SetId(string homeKey)
+    {
+        var bui = Brain.GetBuildingFromKey(homeKey);
+
+        if (bui.Families==null)
         {
-            Debug.Log("Home set here");
+            _familyId = "Family:" + homeKey + "."+0;
+        }
+        else
+        {
+            _familyId = "Family:" + homeKey + "." + bui.Families.Length;
         }
     }
 
@@ -47,44 +58,6 @@ public class Family
             return _kids;
         }
         set { _kids = value; }
-    }
-
-    private int count;
-    private void VerifyKids()
-    {
-        count++;
-        if (count < 5)
-        {
-            return;
-        }
-        count = 0;
-
-
-        for (int i = 0; i < Kids.Count; i++)
-        {
-            KidVerification(Kids[i]);
-        }
-    }
-
-    /// <summary>
-    /// If is not found or famId not equal ours will let him go from here 
-    /// </summary>
-    /// <param name="idP"></param>
-    void KidVerification(string idP)
-    {
-        var per = FindPerson(idP);
-
-        if (per == null)
-        {
-            Kids.Remove(idP);
-        }
-        else
-        {
-            if (per.FamilyId != FamilyId)
-            {
-                Kids.Remove(idP);
-            }
-        }
     }
 
     public string Home
@@ -239,7 +212,6 @@ public class Family
 
         if (string.IsNullOrEmpty(adult.FamilyId))
         {
-            FamilyId = "Family:" + adult.MyId;
             adult.FamilyId = FamilyId;    
         }
         Debug.Log(adult.MyId + " inscribed on " + FamilyId + " as " + debug);
@@ -625,11 +597,6 @@ public class Family
         return false;
     }
 
-    internal void MakeVirgin()
-    {
-        FamilyId = "";
-    }
-
     /// <summary>
     /// Will return a list of the active members as a person object each 
     /// </summary>
@@ -738,8 +705,20 @@ public class Family
         if (MembersOfAFamily()==0)
         {
             DeleteFamily();
-            MakeVirgin();
         }
         else State=H.LockDown; 
+    }
+
+    public string InfoShow()
+    {
+        var res = " \n Id:" + FamilyId +
+               "\n Dad:" + Father +
+               "\n Mom:" + Mother;
+
+        for (int i = 0; i < Kids.Count; i++)
+        {
+            res = res + "\n kid#"+i+":" +Kids[i] ;
+        }
+        return res;
     }
 }
