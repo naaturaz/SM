@@ -137,7 +137,7 @@ public class Family
     /// </summary>
     public bool CanGetAnotherKid(Person newP)
     {
-        if (Kids.Count + 1 > _kidsMax)
+        if (Kids.Count + 1 > _kidsMax || State == H.LockDown)
         {
             return false;
         }
@@ -197,6 +197,7 @@ public class Family
         } 
     }
 
+
     /// <summary>
     /// Will make sure they are still alive 
     /// </summary>
@@ -207,39 +208,12 @@ public class Family
         int res = 0;
         if (Mother != "")
         {
-            if (PersonStillAlive(_mother))
-            {
-                res++;
-            }
-            //means that CurrentAdult person died and did not remove him self from family
-            else
-            {
-                Mother = "";
-                res -= 5;
-            }
+           res++;
         }
         if (Father != "")
         {
-            if (PersonStillAlive(Father))
-            {
-                res++;
-            }
-            //means that CurrentAdult person died and did not remove him self from family
-            else
-            {
-                Father = "";
-                res -= 5;
-            }
+           res++;  
         }
-
-        //both parent are gone. and a least one was deteected now in this method call
-        //if at least one is alive wont go true bz will be -4 or 1
-        if (res == -5 || res == -10)
-        {
-            //in case still a kid in there 
-            RedoFamily();
-        }
-
         return res;
     }
 
@@ -284,11 +258,10 @@ public class Family
         Person inFamily = FindCurrentAdult();
 
         //means that CurrentAdult person died and did not remove him self from family
-        //if (inFamily == null)
-        //{
-        //    ClearAdults();
-        //    return false;
-        //}
+        if (inFamily == null)
+        {
+            return false;
+        }
 
         //2nd question is to check that other person is not Married already , etc
         if (inFamily.WouldUMarryMe(newPerson) && newPerson.WouldUMarryMe(inFamily))
@@ -344,6 +317,11 @@ public class Family
 
     public bool CanGetAnotherAdult(Person newPerson)
     {
+        if (State==H.LockDown)
+        {
+            return false;
+        }
+
         if (Adults() == 0)
         {
             Set1stAdult(newPerson);
@@ -396,7 +374,7 @@ public class Family
         adult.FamilyId = FamilyId;
 
         adult.transform.parent = BuildingPot.Control.Registro.AllBuilding[_home].transform;
-        Debug.Log(adult.MyId + " inscribed on " + FamilyId +" as " + momOrDad);
+        //Debug.Log(adult.MyId + " inscribed on " + FamilyId +" as " + momOrDad);
     }
 
     /// <summary>
@@ -473,10 +451,10 @@ public class Family
         Person inFamily = FindCurrentAdult();
 
         //addressing if person die Recenlty
-        //if (inFamily == null)
-        //{
-        //    return false;
-        //}
+        if (inFamily == null)
+        {
+            return false;
+        }
 
         if (inFamily.Spouse == newPerson.MyId)
         {
@@ -500,21 +478,10 @@ public class Family
                 return true;
             }
         }
-
         if ((askPerson.MyId == _father || askPerson.MyId == _mother)  && askPerson.FamilyId == FamilyId)
         {
             return true;
         }
-
-        //familyId is spouseID 
-        var spouseC = FindPerson(askPerson.Spouse);
-        if ((askPerson.MyId == _father || askPerson.MyId == _mother)
-            && spouseC != null && askPerson.FamilyId == spouseC.FamilyId)
-        {
-            MakeSureAllFamilyIsUsingSameFamID();
-            return true;
-        }
-
         return false;
     }  
     
@@ -703,6 +670,11 @@ public class Family
     /// <returns></returns>
     public bool WouldAdultFitInThisFamily(Person newPerson)
     {
+        if (State==H.LockDown)
+        {
+            return false;
+        }
+
         var adults = Adults();
 
         if (adults == 0)
@@ -720,10 +692,13 @@ public class Family
     /// <summary>
     /// Call once both parent had passed away
     /// </summary>
-    internal void RedoFamily()
+    internal void LockDownFamily(string debugCaller)
     {
-        CleanFamily();
-        HouseHeadPerson();
+        Debug.Log("LockDown called on:" + debugCaller);
+        UnLockFamily();
+        HandleKids();
+
+        LockToggleFamily();
     }
 
     /// <summary>
@@ -731,29 +706,40 @@ public class Family
     /// 
     /// Will make the first kid major and head of the house 
     /// </summary>
-    private void HouseHeadPerson()
+    private void HandleKids()
     {
-        if (Kids.Count==0)
-        {
-            return;
-        }
-        
-        var kid = FindPerson(Kids[0]);
-        kid.IsMajor = true;
-
-        if (CanGetAnotherAdult(kid))
-        {
-            Kids.Remove(kid.MyId);
-        }
-    }
-
-    void CleanFamily()
-    {
-        FamilyId = "";
+        //u will be able to fit only two kids in the family now as adults 
         for (int i = 0; i < Kids.Count; i++)
         {
             var kid = FindPerson(Kids[i]);
-            kid.FamilyId = "";
+
+            if (CanGetAnotherAdult(kid))
+            {
+                kid.IsMajor = true;
+                Kids.Remove(kid.MyId);
+                i--;
+            }
         }
+    }
+
+    /// <summary>
+    /// So only people from within the family can get into this family
+    /// </summary>
+    void UnLockFamily()
+    {
+        State = H.None;
+    }
+
+    /// <summary>
+    /// Will release family if no members are found. othwe wise will lockitDown
+    /// </summary>
+    void LockToggleFamily()
+    {
+        if (MembersOfAFamily()==0)
+        {
+            DeleteFamily();
+            MakeVirgin();
+        }
+        else State=H.LockDown; 
     }
 }

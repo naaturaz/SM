@@ -13,7 +13,7 @@ public class TerrainSpawnerController : ControllerParent
     float minHeightToSpawn;//min height to spawn obj on terrain
     private float maxHeightToSpawn;
 
-    private int multiplier = 80;//75 //10
+    private int multiplier = 10;//75
 
     int howManyTreesToSpawn = 20;//50
     int howManyStonesToSpawn =3;

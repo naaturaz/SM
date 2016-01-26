@@ -102,7 +102,7 @@ public class Builder : Profession
             //Convert to wheel Barrow worker
             _wheelBarrowNow = true;
             
-            Debug.Log("Now wheelbarrow ");
+            //Debug.Log("Now wheelbarrow ");
             _person.CreateProfession(Job.WheelBarrow);
         }
     }

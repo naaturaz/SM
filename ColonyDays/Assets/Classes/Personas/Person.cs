@@ -398,7 +398,7 @@ public class Person : General
     /// Intented to create  kids
     /// </summary>
     /// <param name="typePerson"></param>
-    public static Person CreatePersonKid(Vector3 iniPos, string mother, string father)
+    public static Person CreatePersonKid(Vector3 iniPos)
     {
         Person obj = null;
 
@@ -413,10 +413,8 @@ public class Person : General
 
         obj = (Person)Instantiate(obj, iniPos, Quaternion.identity);
         obj.Gender = obj.OtherGender();
-        obj.InitObj(10);//1
+        obj.InitObj(10);
         obj.Geometry.GetComponent<Renderer>().sharedMaterial = Resources.Load(Root.personGuy1) as Material;
-        obj.Mother = mother;
-        obj.Father = father;
 
         //this to when Person dont have where to leave and then they find a place the teletranport effect
         //wont be seeable bz there are spawneed hidden. 
@@ -717,7 +715,6 @@ public class Person : General
         if (_nutritionLevel < -45)
         {
             print("Too hungry and died:" + MyId);
-
             ActionOfDisappear();
         }
     }
@@ -966,6 +963,7 @@ public class Person : General
 
             sp.IsWidow = true;
         }
+        //Brain.Die();
     }
 
     #endregion
@@ -1675,7 +1673,7 @@ public class Person : General
 
     void GiveBirth()
     {
-        PersonPot.Control.HaveNewKid(Home.transform.position, MyId, Spouse);
+        PersonPot.Control.HaveNewKid(Home.transform.position);
         Person kid = PersonPot.Control.All[PersonPot.Control.All.Count - 1];
         kid.Mother = this.MyId;
         kid.Father = Spouse;
