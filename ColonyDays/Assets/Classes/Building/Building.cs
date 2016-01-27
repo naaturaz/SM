@@ -2919,9 +2919,22 @@ public class Building : General, Iinfo
 
 
 
-
-
-
+    /// <summary>
+    /// Will add a 1000 if a adult will find love in this building 
+    /// </summary>
+    /// <param name="person"></param>
+    /// <returns></returns>
+    internal int WouldFindLoveInThisBuilding(Person person)
+    {
+        for (int i = 0; i < Families.Length; i++)
+        {
+            if (Families[i].WouldIFoundLoveHere(person))
+            {
+                return 1000;
+            }
+        }
+        return 0;
+    }
 }
 
 /// <summary>

@@ -2515,8 +2515,7 @@ public class Brain
             if (_person.Home != null)
             {
                 RemoveFromOldFamily();
-                //fam.LockDownFamily(_person.MyId);
-                BuildingPot.Control.HousesWithSpace.Add(_person.Home.MyId);
+                BuildingPot.Control.AddToHousesWithSpace(_person.Home.MyId);
                 PersonPot.Control.RestartController();
             }
             RemoveFromAllPeopleDict();
@@ -2539,6 +2538,8 @@ public class Brain
         //    fam = newHome.FindFamilyById(_person.FamilyId);
         //}
         fam.RemovePersonFromFamily(_person);
+        fam.LockDownFamily(_person.MyId);
+
     }
 
     /// <summary>

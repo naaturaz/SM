@@ -117,7 +117,11 @@ public class PersonWindow : GUIElement {
         var res = "\n___________\n GoMindState:" + _person.Brain.GoMindState +
                   "\n fdRouteChks:" + _person.Brain._foodRoute.CheckPoints.Count
                      + "\n CurTask:" + _person.Brain.CurrentTask
-                     + "\n IsBooked:" + _person.IsBooked;
+                     + "\n PrevTask:" + _person.Brain.PreviousTask
+                     + "\n IsBooked:" + _person.IsBooked
+                     + "\n Major:" + _person.IsMajor
+                     + "\n BodyLoc:" + _person.Body.Location
+                     + "\n BodyGngTo:" + _person.Body.GoingTo;
 
 
         if (_person.FoodSource != null)
@@ -126,6 +130,11 @@ public class PersonWindow : GUIElement {
         }
         else res += "\n FoodSrc:null";
 
+        if (_person.Work != null)
+        {
+            res += "\n Work:" + _person.Work.MyId;
+        }
+        else res += "\n Work:null";
 
         return res;
     }

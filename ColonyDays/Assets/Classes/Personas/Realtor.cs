@@ -397,12 +397,15 @@ public class Realtor
     /// <param name="building"></param>
     /// <param name="person"></param>
     /// <returns></returns>
-    static float ScoreABuild(Building building, Vector3 comparePoint)
+    static float ScoreABuild(Building building, Vector3 comparePoint,Person person)
     {
         var distToNewHome = Vector3.Distance(building.transform.position, comparePoint);
         var confort = building.Confort * confortWeight;
 
-        return confort - distToNewHome;
+        //so the marriage rate increase
+        var love = building.WouldFindLoveInThisBuilding(person);
+
+        return love + confort - distToNewHome;
     }
 
     /// <summary>
@@ -427,7 +430,7 @@ public class Realtor
                 continue;
             }
 
-            var score = ScoreABuild(struc, comparePoint);
+            var score = ScoreABuild(struc, comparePoint,person);
 
             if (struc.Instruction != H.WillBeDestroy && !person.Brain.BlackList.Contains(key) && score > above
                 //&& !IsBuildBooked(struc)
@@ -488,7 +491,7 @@ public class Realtor
         var myCurrentHomeScore = -10000f;
         if (person.Home != null && person.Home.Instruction != H.WillBeDestroy)
         {
-            myCurrentHomeScore = ScoreABuild(person.Home, person.Home.transform.position);
+            myCurrentHomeScore = ScoreABuild(person.Home, person.Home.transform.position, person);
         }
         return myCurrentHomeScore;
     }

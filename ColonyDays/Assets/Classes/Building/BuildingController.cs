@@ -129,6 +129,7 @@ public class BuildingController : BuildingPot
         set { _housesWithSpace = value; }
     }
 
+
     public List<string> ReligiousBuilds
     {
         get { return _religiousBuilds; }

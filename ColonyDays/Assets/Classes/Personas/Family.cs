@@ -328,6 +328,23 @@ public class Family
         return res;
     }
 
+    public bool WouldIFoundLoveHere(Person pers)
+    {
+        if (Adults()==0 || Adults()==2)
+        {
+            return false;
+        }
+        var curr = FindCurrentAdult();
+
+        //might have just died
+        if (curr==null)
+        {
+            return false;
+        }
+
+        return curr.WouldUMarryMe(pers);
+    }
+
     public bool CanGetAnotherAdult(Person newPerson)
     {
         if (State==H.LockDown)
@@ -706,7 +723,7 @@ public class Family
         //UnLockFamily();
         HandleKids();
 
-        LockToggleFamily();
+       // LockToggleFamily();
     }
 
     /// <summary>

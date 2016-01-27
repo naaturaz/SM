@@ -739,7 +739,7 @@ public class Person : General
 
         AgeAction();
 
-        if (UPerson.IsMajor(_age) && !_isMajor && Brain.GoMindState && string.IsNullOrEmpty(IsBooked))
+        if (UPerson.IsMajor(_age) && !_isMajor && string.IsNullOrEmpty(IsBooked) && Brain.GoMindState)
         {
             ReachAgeMajority();
         }
@@ -829,9 +829,10 @@ public class Person : General
             _isMajor = true;
             Brain.MajorAge.MarkMajorityAgeReached();
             PersonPot.Control.IsAPersonHomeLessNow = MyId;
-
             AddressIsBooked(place);
         }
+        //so gets back its original famID
+        //else FamilyId = myOldFamID;
     }
 
     private void AddressIsBooked(Building newPlace)
