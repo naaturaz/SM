@@ -124,11 +124,11 @@ public static class ShacksManager
         List<Person> res = new List<Person>();
         for (int i = 0; i < PersonPot.Control.All.Count; i++)
         {
-            var person = PersonPot.Control.All[i];
-            if (person.Home == null && !person.IsBooked)
-            {
-                res.Add(person);
-            }
+            //var person = PersonPot.Control.All[i];
+            //if (person.Home == null && !person.IsBooked)
+            //{
+                //res.Add(person);
+            //}
         }
         return res;
     }

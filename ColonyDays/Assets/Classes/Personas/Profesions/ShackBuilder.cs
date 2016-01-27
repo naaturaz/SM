@@ -125,7 +125,7 @@ public class ShackBuilder : Profession
             //myFamily = CreateNewFamily(myFamily);
         }
         
-        Realtor.BookMyFamilyToNewBuild(_person, _constructing, myFamily);
+        //Realtor.BookMyFamilyToNewBuild(_person, _constructing, myFamily);
 
     }
 

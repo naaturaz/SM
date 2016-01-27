@@ -634,6 +634,26 @@ public class PersonController : PersonPot
 
         return (total/_all.Count).ToString("n2") + " / 5";
     }
+
+    public void SetIsBookedToPerson(string id, string isBooked)
+    {
+        var index = All.FindIndex(a => a.MyId == id);
+        if (index == -1)
+        {
+            return;
+        }
+        All[index].IsBooked = isBooked;
+    }
+
+    public void SetFamIDToPerson(string id, string famId)
+    {
+        var index = All.FindIndex(a => a.MyId == id);
+        if (index == -1)
+        {
+            return;
+        }
+        All[index].FamilyId = famId;
+    }
 }
 
 public class CheckedIn

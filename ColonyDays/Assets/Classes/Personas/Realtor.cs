@@ -9,8 +9,15 @@ public class Realtor
 
     public static Structure GiveMeTheBetterHome(Person person)
     {
-        var key = LoopThruAllBetterHomes(person);
+        var key = "";
+        if (!string.IsNullOrEmpty(person.IsBooked))
+        {
+            //if they are booked somewhere need to handle that first
+            var bookedHome = Brain.GetStructureFromKey(person.IsBooked);
+            return bookedHome;
+        }
 
+        key = LoopThruAllBetterHomes(person);
         if (string.IsNullOrEmpty(key))
         {
             return null;
@@ -63,9 +70,7 @@ public class Realtor
         if (newhome.BookedHome1 != null && newhome.BookedHome1.IsBooked())
         {
             //and im booked on it 
-            if (newhome.BookedHome1.IAmBookedHere(person)
-                //&& newhome.BookedHome1.Family.Home != ""
-                )
+            if (newhome.BookedHome1.IAmBookedHere(person))
             {
                 //so its added to the family
                 newhome.MovePersonToFamilySpot(person, newhome);
@@ -219,42 +224,73 @@ public class Realtor
         return false;
     }
 
+    static Family FindCurrentFamily(Person person)
+    {
+        if (person.Home==null)
+        {
+            return null;
+        }
+        else
+        {
+            return  person.Home.FindMyFamilyChecksFamID(person);
+        }
+    }
+
     /// <summary>
     /// Will book family to new building 
     /// </summary>
-    public static void BookMyFamilyToNewBuild(Person person, Building newHome, Family toBeBooked = null)
+    public static void BookMyFamilyToNewBuild(Person person, Building newHome)
     {
-        //if doesnt have at least 1 family virgin.//means no booking is needed.
-        if (!newHome.AtLeastHasOneVirginFamily())
-        {
-            return;
-        }
+        //if doesnt have at least 1 family empty.//means no booking is needed.
+        if (newHome.ReturnEmptyFamily() == null)
+        {return;}
 
-        Family myFamily = toBeBooked;
-        if (person.Home != null && toBeBooked == null)
-        {
-            myFamily = person.Home.FindMyFamilyChecksFamID(person);
-        }
-        else if (toBeBooked == null)
-        {
-            myFamily = newHome.ReturnEmptyFamily();
-            person.FamilyId = myFamily.FamilyId; 
-        }
+        var famIDInBookedHome = "";
 
+        Family curFamily = FindCurrentFamily(person);
+        if (curFamily == null)
+        {
+            curFamily = newHome.ReturnEmptyFamily();
+            person.FamilyId = curFamily.FamilyId;
+            famIDInBookedHome = curFamily.FamilyId;
+        }
+        else
+        {
+            var familyToBeTransferTo = SetFirstPersonInNewFamily(curFamily, newHome, person);
+            IdEveryOneOnTheFamily(familyToBeTransferTo.FamilyId ,curFamily);
+            famIDInBookedHome = familyToBeTransferTo.FamilyId;
+        }
+        BookMyFamilyToNewBuildTail(person, newHome, curFamily, famIDInBookedHome);
+    }
+
+    static void BookMyFamilyToNewBuildTail(Person person, Building newHome, Family myFamily, string famIDInBookedHome)
+    {
         //seeting person as the first person in the family
         myFamily.CanGetAnotherAdult(person);
         newHome.BookedHome1 = new BookedHome(newHome.MyId, myFamily);
-        //Debug.Log("Booked " + newHome.MyId + " by: " + person.MyId);
+        
+        //the booking is a copy dull of the Family but the ID must match the family we are going into
+        newHome.BookedHome1.Family.FamilyId = famIDInBookedHome;
 
         BuildingPot.Control.Registro.ResaveOnRegistro(newHome.MyId);
-        MarkTheFamilyBooking(true, myFamily);
+        MarkTheFamilyBooking(newHome.MyId, myFamily);
         RestartControllerForMyFamily(myFamily, person);
+    }
+
+    private static Family SetFirstPersonInNewFamily(Family curFamily, Building newHome, Person newPerson)
+    {
+        var fam = newHome.ReturnEmptyFamily();
+        //seeting person as the first person in the family
+        fam.CanGetAnotherAdult(newPerson);
+
+        return fam;
     }
 
     /// <summary>
     /// Books a a Person that doesnt have any family into a new place
     /// 
     /// so far used by Teens moving out of home 
+    /// and now for just spwnred people
     /// </summary>
     /// <param name="person"></param>
     /// <param name="newHome"></param>
@@ -266,12 +302,13 @@ public class Realtor
 
         //so i dont pull the existing family memebers and book them . whn they are actually already in the house
         Family famToBook = new Family();
-        famToBook.SetDummyFirstAdult(person);
         famToBook.FamilyId = person.FamilyId;
+        famToBook.Home = newHome.MyId;
+        famToBook.CanGetAnotherAdult(person);
         newHome.BookedHome1 = new BookedHome(newHome.MyId, famToBook);
 
         BuildingPot.Control.Registro.ResaveOnRegistro(newHome.MyId);
-        MarkTheFamilyBooking(true, myFamily);
+        MarkTheFamilyBooking(newHome.MyId, myFamily);
         RestartControllerForMyFamily(myFamily, person);
     }
 
@@ -303,7 +340,7 @@ public class Realtor
     {
         bool isBooked = IsBuildBooked(newHome);
 
-        return newHome.AtLeastHasOneVirginFamily() && !isBooked;
+        return newHome.ReturnEmptyFamily()!=null && !isBooked;
     }
 
     /// <summary>
@@ -430,25 +467,23 @@ public class Realtor
     /// </summary>
     /// <param name="makeIt"></param>
     /// <param name="family"></param>
-    static void MarkTheFamilyBooking(bool makeIt, Family family)
+    static void MarkTheFamilyBooking(string booking, Family family)
     {
         for (int i = 0; i < family.Kids.Count; i++)
         {
-            var tKid = Family.FindPerson(family.Kids[i]);
-            tKid.IsBooked = makeIt;
+            PersonPot.Control.SetIsBookedToPerson(family.Kids[i], booking);
         }
+        PersonPot.Control.SetIsBookedToPerson(family.Father, booking);
+        PersonPot.Control.SetIsBookedToPerson(family.Mother, booking);
+    }
 
-        var tFather = Family.FindPerson(family.Father);
-        if (tFather != null)
+    static void IdEveryOneOnTheFamily(string newFamId, Family family)
+    {
+        for (int i = 0; i < family.Kids.Count; i++)
         {
-            tFather.IsBooked = makeIt;     
+            PersonPot.Control.SetFamIDToPerson(family.Kids[i], newFamId);
         }
-
-        var tMother = Family.FindPerson(family.Mother);
-        if (tMother != null)
-        {
-            tMother.IsBooked = makeIt;    
-        }
-        
+        PersonPot.Control.SetFamIDToPerson(family.Father, newFamId);
+        PersonPot.Control.SetFamIDToPerson(family.Mother, newFamId);
     }
 }

@@ -70,12 +70,12 @@ public class Person : General
     private string _father;
     private string _mother;
 
-    private bool _isBooked; //says if the person is Booked in a building to be his new home
+    private string _isBooked; //says if the person is Booked in a building to be his new home
     private string _homerFoodSrc; //where the Homer will grab the food  
 
     private bool _isLoading; //use to know if person is being loaded from file 
 
-    public bool IsBooked
+    public string IsBooked
     {
         get { return _isBooked; }
         set { _isBooked = value; }
@@ -1669,7 +1669,7 @@ public class Person : General
         kid.Mother = this.MyId;
         kid.Father = Spouse;
         kid.FamilyId = FamilyId;
-        kid.IsBooked = true;
+        kid.IsBooked = Home.MyId;
 
         MoveNewBornToHome(kid);
 

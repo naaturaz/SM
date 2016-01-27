@@ -36,8 +36,6 @@ public class MajorityAgeReached  {
     /// </summary>
     private void PersonReachMajorityAgeAction()
     {
-        _person.IsBooked = false;
-
         _moveToNewHome.AddToHomeOldKeysList();
         _person.transform.parent = null;
         _person.Home = null;

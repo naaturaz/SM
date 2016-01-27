@@ -309,7 +309,7 @@ public class Structure : StructureParent
         //if is a house need to know 
         if (MyId.Contains("House") || MyId.Contains("Shack"))
         {
-            if (BuildingPot.Control.HowManyVirginFamilies() >= Families.Length)
+            if (BuildingPot.Control.HowManyEmptyFamilies() >= Families.Length)
             {
                 StartDemolishProcess();
             }

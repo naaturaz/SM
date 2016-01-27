@@ -1450,16 +1450,16 @@ public class Building : General, Iinfo
         return false;
     }
 
-    public bool AtLeastHasOneVirginFamily()
-    {
-        var vFam = FindVirginFamily();
+    //public bool AtLeastHasOneVirginFamily()
+    //{
+    //    var vFam = FindVirginFamily();
 
-        if (vFam == null)
-        {
-            return false;
-        }
-        return true;
-    }
+    //    if (vFam == null)
+    //    {
+    //        return false;
+    //    }
+    //    return true;
+    //}
 
     /// <summary>
     /// </summary>
@@ -2388,10 +2388,8 @@ public class Building : General, Iinfo
             //throw new Exception(newP.MyId + " . " +newHome.MyId);
         }
 
-        newP.IsBooked = false;
+        //newP.IsBooked = false;
         AssignBookedRole(newP, toBeFill, familyID);
-        //toBeFill.Home = MyId;//bz the id if is booked is not saved 
-
         newP.transform.parent = transform;
 
         //so families are resaved 
@@ -2402,7 +2400,7 @@ public class Building : General, Iinfo
     {
         if (toBeFill == null)
         {
-            toBeFill = FindVirginFamily();
+            toBeFill = ReturnEmptyFamily();
             if (toBeFill == null)
             {
                 print("toBeFill == nul :" + newP.MyId);
@@ -2466,23 +2464,23 @@ public class Building : General, Iinfo
     /// Will return a family that is empty and has not ID set yet 
     /// </summary>
     /// <returns></returns>
-    internal Family FindVirginFamily()
-    {
-        if (Families == null)
-        {
+    //internal Family FindVirginFamily()
+    //{
+    //    if (Families == null)
+    //    {
             
-            return null;
-        }
+    //        return null;
+    //    }
 
-        for (int i = 0; i < Families.Length; i++)
-        {
-            if (Families[i].IsFamilyEmpty() && string.IsNullOrEmpty(Families[i].FamilyId))
-            {
-                return Families[i];
-            }
-        }
-        return null;
-    }
+    //    for (int i = 0; i < Families.Length; i++)
+    //    {
+    //        if (Families[i].IsFamilyEmpty() && string.IsNullOrEmpty(Families[i].FamilyId))
+    //        {
+    //            return Families[i];
+    //        }
+    //    }
+    //    return null;
+    //}
 
 #endregion
 
@@ -3044,6 +3042,16 @@ public class BookedHome
         Family =  new Family(family);
     }
 
+    public BookedHome(string building, Family family, Person person)
+    {
+        Building = building;
+        Family = new Family(family);
+
+        //so deletes all the people . bz could have being people that was alreayd in the buildng 
+        Family.DeleteFamily();
+        Family.SetDummyFirstAdult(person);
+    }
+
     /// <summary>
     /// Clears all the information of the bopoking so is unbooked 
     /// </summary>
@@ -3092,7 +3100,7 @@ public class BookedHome
     public void RemovePersonFromBooking(Person personToRemove)
     {
         Family.RemovePersonFromFamily(personToRemove);
-        personToRemove.IsBooked = false;
+        personToRemove.IsBooked = "";
 
         //everyone was added to the new place and the boking is clear 
         if (Family.IsFamilyEmpty())

@@ -60,7 +60,7 @@ public class PersonFile  {
     public string Father;
     public string Mother;
 
-    public bool IsBooked;
+    public string IsBooked;
     public string HomerFoodSrc;
 
     //WheelBarrower

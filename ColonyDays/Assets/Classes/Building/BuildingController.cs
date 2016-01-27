@@ -216,20 +216,16 @@ public class BuildingController : BuildingPot
     }
 
     /// <summary>
-    /// Will return add 1 for each Virgin family found in houses
+    /// Will return all empty  family found in houses
     /// </summary>
     /// <returns></returns>
-    public int HowManyVirginFamilies()
+    public int HowManyEmptyFamilies()
     {
         int res = 0;
         for (int i = 0; i < _housesWithSpace.Count; i++)
         {
             var house = Brain.GetBuildingFromKey(_housesWithSpace[i]);
-
-            if (house.AtLeastHasOneVirginFamily())
-            {
-                res++;
-            }
+            res += house.EmptyFamilies();
         }
         return res;
     }
