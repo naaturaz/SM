@@ -504,7 +504,8 @@ public class Brain
         }
 
         return _previousTask == HPers.Chilling && CurrentTask == HPers.IdleInHome
-               && _person.Body.Location == HPers.Home && _person.Body.GoingTo == HPers.Home
+               && (_person.Body.Location == HPers.Home || _person.Body.Location == HPers.None)
+               && _person.Body.GoingTo == HPers.Home
                ;
     }
 

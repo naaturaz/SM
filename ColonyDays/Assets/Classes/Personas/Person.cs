@@ -433,7 +433,7 @@ public class Person : General
         MyId = pF.MyId;
         Gender = pF._gender;
 
-
+        IsPregnant = pF._isPregnant;
         _lastNewBornYear = pF.LastNewBornYear; //the last pregnancy she had, when was the birth year 
         //once pregnant will tell u the due date 
         _dueMonth = pF.DueMonth;
@@ -739,7 +739,7 @@ public class Person : General
 
         AgeAction();
 
-        if (UPerson.IsMajor(_age) && !_isMajor && Brain.GoMindState && Brain.IAmHomeNow())
+        if (UPerson.IsMajor(_age) && !_isMajor && Brain.GoMindState && string.IsNullOrEmpty(IsBooked))
         {
             ReachAgeMajority();
         }
@@ -1669,7 +1669,8 @@ public class Person : General
 
     void CheckIfReadyForGiveBirth()
     {
-        if (IsMyDueDate())
+        //bz is is moving should noy give birth
+        if (IsPregnant && IsMyDueDateOrPast() && string.IsNullOrEmpty(IsBooked))
         {
             GiveBirth();
         }
@@ -1724,10 +1725,20 @@ public class Person : General
     /// Will return true if is due date 
     /// </summary>
     /// <returns></returns>
-    bool IsMyDueDate()
+    bool IsMyDueDateOrPast()
     {
-        return _dueMonth == Program.gameScene.GameTime1.Month1 
-            && _dueYear == Program.gameScene.GameTime1.Year;
+        if (_dueMonth <= Program.gameScene.GameTime1.Month1
+            && _dueYear <= Program.gameScene.GameTime1.Year)
+        {
+            return true;
+        }
+        if (_dueYear < Program.gameScene.GameTime1.Year)
+            //so in case it missed bz moving to newer home took forever will deliver as soon get to new Place 
+        {
+            return true;
+        }
+
+        return false;
     }
 
     /// <summary>
