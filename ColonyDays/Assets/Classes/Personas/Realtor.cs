@@ -14,7 +14,7 @@ public class Realtor
         {
             //if they are booked somewhere need to handle that first
             var bookedHome = Brain.GetStructureFromKey(person.IsBooked);
-            return bookedHome;
+            return HandleBooking(person, bookedHome);
         }
 
         key = LoopThruAllBetterHomes(person);

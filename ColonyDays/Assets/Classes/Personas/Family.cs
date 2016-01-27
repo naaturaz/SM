@@ -703,7 +703,7 @@ public class Family
     internal void LockDownFamily(string debugCaller)
     {
         Debug.Log("LockDown called on:" + debugCaller);
-        UnLockFamily();
+        //UnLockFamily();
         HandleKids();
 
         LockToggleFamily();
@@ -747,7 +747,7 @@ public class Family
         {
             DeleteFamily();
         }
-        else State=H.LockDown; 
+        //else State=H.LockDown; 
     }
 
     public string InfoShow()

@@ -677,7 +677,7 @@ public class Person : General
     void CheckOnNutrition()
     {
         ChangeNutritionLvl(-2);//-2
-        KillStarve();
+        //KillStarve();
     }
 
     /// <summary>
@@ -745,7 +745,7 @@ public class Person : General
         }
 
         CheckHappiness();
-        //DidIDie();
+        DidIDie();
         CheckIfEmmigrate();
         CheckIfInSchool();
     }
@@ -829,6 +829,8 @@ public class Person : General
             _isMajor = true;
             Brain.MajorAge.MarkMajorityAgeReached();
             PersonPot.Control.IsAPersonHomeLessNow = MyId;
+
+            //gameObject.transform.parent = place.transform;
         }
     }
 

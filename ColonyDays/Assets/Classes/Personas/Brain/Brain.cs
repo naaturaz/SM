@@ -2508,13 +2508,13 @@ public class Brain
     {
         if (Partido)
         {
-            Family fam = null;
             //people can die anywhere
             if (_person.Home != null)
             {
-                fam = _person.Home.FindFamilyById(_person.FamilyId);
-                fam.RemovePersonFromFamily(_person);
-                fam.LockDownFamily(_person.MyId);
+                RemoveFromOldFamily();
+                //fam.LockDownFamily(_person.MyId);
+                BuildingPot.Control.HousesWithSpace.Add(_person.Home.MyId);
+                PersonPot.Control.RestartController();
             }
             RemoveFromAllPeopleDict();
             Partido = false;
@@ -2522,6 +2522,20 @@ public class Brain
             _person.DestroyCool();
             PersonPot.Control.All.Remove(_person);
         }
+    }
+
+    void RemoveFromOldFamily()
+    {
+        var fam = _person.Home.FindFamilyById(_person.FamilyId);
+        //my be moving to new home 
+        if (fam == null)
+        {
+            var newHome = GetBuildingFromKey(_person.IsBooked);
+            //the person needs to be removed from newHome booking 
+            newHome.BookedHome1.Family.RemovePersonFromFamily(_person);
+            fam = newHome.FindFamilyById(_person.FamilyId);
+        }
+        fam.RemovePersonFromFamily(_person);
     }
 
     /// <summary>

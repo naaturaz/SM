@@ -97,7 +97,13 @@ public class PersonWindow : GUIElement {
         string res = "\n Age:" + _person.Age + "\n Gender:" + _person.Gender
                      + "\n Nutrition:" + _person.NutritionLevel + "\n Profession:" + _person.ProfessionProp.ProfDescription
                      + "\n ID:" + _person.MyId
-                     + "\n FamID:" + _person.FamilyId;
+                     + "\n FamID:" + _person.FamilyId
+                     + "\n CurTask:" + _person.Brain.CurrentTask;
+
+        if (_person.Home!=null)
+        {
+            res+= "\n Home:" + _person.Home.MyId;
+        }
 
         return res;
     }
