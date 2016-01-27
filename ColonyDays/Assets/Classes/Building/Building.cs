@@ -3100,17 +3100,13 @@ public class BookedHome
     public void RemovePersonFromBooking(Person personToRemove)
     {
         Family.RemovePersonFromFamily(personToRemove);
-        personToRemove.IsBooked = "";
-
         //everyone was added to the new place and the boking is clear 
         if (Family.IsFamilyEmpty())
         {
             //so is not there anymore as a house with space to get new people. This hose is already
             //ocuppied by a family... and the family is formed then can be removed
-
             var building = Brain.GetBuildingFromKey(Building);
 
-            //if (!building.IsALeastOneFamilyEmpty() && building.AllFamiliesFormed())
             if (building != null && building.AllFamiliesFull())
             {
                 BuildingPot.Control.RemoveFromHousesWithSpace(Building);
@@ -3124,8 +3120,6 @@ public class BookedHome
             //so Individuals tht asked and where denied get a chancee to see this building unbooked
             PersonPot.Control.RestartController();
         }
-
-        
     }
 
     /// <summary>
@@ -3142,14 +3136,15 @@ public class BookedHome
             //is good enoguh bz as long as the first perso moving out do this 
             var fam = oldHome.FindOldFamilyById(toRemove);
 
+            if (fam == null)
+            {
+                fam = oldHome.FindMyFamily(toRemove);
+            }
+
             if (fam != null)
             {
                 fam.DeleteFamily();
-
-                Debug.Log("deleted virgin on:");
-
-                //so families are resaved 
-                //BuildingPot.Control.Registro.UpdateOnRegistro(oldHome.MyId);
+                Debug.Log("deleted family on:");
             }
         }
     }

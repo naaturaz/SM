@@ -38,7 +38,15 @@ public class Family
     public Family(Family family)
     {
         KidsMax = family.KidsMax;
-        Kids = family.Kids;
+
+        for (int i = 0; i < family.Kids.Count; i++)
+        {
+            Kids.Add(family.Kids[i]);
+            
+        }
+
+        
+        
         Mother = family.Mother;
         Father = family.Father;
         Home = family.Home;
@@ -65,16 +73,23 @@ public class Family
         }
     }
 
-
-
     public List<string> Kids
     {
         get
         {
-            //VerifyKids();
             return _kids;
         }
-        set { _kids = value; }
+        set
+        {
+
+            if (_kids.Count>0 && value.Count==0)
+            {
+                Debug.Log("who is doing this to Kids ");
+            }
+
+            _kids = value;
+            
+        }
     }
 
     public string Home
@@ -82,11 +97,6 @@ public class Family
         get { return _home; }
         set
         {
-            if (_home != "" && value == "")
-            {
-                Debug.Log("Home set here");
-
-            }
             _home = value; 
         }
     }

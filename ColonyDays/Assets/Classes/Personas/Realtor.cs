@@ -252,38 +252,69 @@ public class Realtor
         {
             curFamily = newHome.ReturnEmptyFamily();
             person.FamilyId = curFamily.FamilyId;
-            famIDInBookedHome = curFamily.FamilyId;
+            //seeting person as the first person in the family
+            curFamily.CanGetAnotherAdult(person);
+            BookMyFamilyToNewBuildTail(person, newHome, curFamily);
         }
         else
         {
-            var familyToBeTransferTo = SetFirstPersonInNewFamily(curFamily, newHome, person);
-            IdEveryOneOnTheFamily(familyToBeTransferTo.FamilyId ,curFamily);
-            famIDInBookedHome = familyToBeTransferTo.FamilyId;
+            var familyToBeTransferTo = TransferInToNewFamily(curFamily, newHome, person);
+            BookMyFamilyToNewBuildTail(person, newHome, familyToBeTransferTo);
         }
-        BookMyFamilyToNewBuildTail(person, newHome, curFamily, famIDInBookedHome);
     }
 
-    static void BookMyFamilyToNewBuildTail(Person person, Building newHome, Family myFamily, string famIDInBookedHome)
+    static void BookMyFamilyToNewBuildTail(Person person, Building newHome, Family myFamily)
     {
-        //seeting person as the first person in the family
-        myFamily.CanGetAnotherAdult(person);
         newHome.BookedHome1 = new BookedHome(newHome.MyId, myFamily);
-        
-        //the booking is a copy dull of the Family but the ID must match the family we are going into
-        newHome.BookedHome1.Family.FamilyId = famIDInBookedHome;
-
         BuildingPot.Control.Registro.ResaveOnRegistro(newHome.MyId);
         MarkTheFamilyBooking(newHome.MyId, myFamily);
         RestartControllerForMyFamily(myFamily, person);
     }
 
-    private static Family SetFirstPersonInNewFamily(Family curFamily, Building newHome, Person newPerson)
+    private static Family TransferInToNewFamily(Family curFamily, Building newHome, Person newPerson)
     {
         var fam = newHome.ReturnEmptyFamily();
+
+        IdEveryOneOnTheFamily(fam.FamilyId, curFamily);
+
         //seeting person as the first person in the family
         fam.CanGetAnotherAdult(newPerson);
+        curFamily.RemovePersonFromFamily(newPerson);
+
+        TransferFromCurrToNewFam(curFamily, fam, newPerson, newHome);
 
         return fam;
+    }
+
+    /// <summary>
+    /// Will set them into the family
+    /// will set new transform.parent
+    /// will remove from old family
+    /// </summary>
+    /// <param name="curFamily"></param>
+    /// <param name="fam"></param>
+    private static void TransferFromCurrToNewFam(Family curFamily, Family newFam, Person newPerson, Building newHome)
+    {
+        if (!string.IsNullOrEmpty( newPerson.Spouse))
+        {
+            var spouse = Family.FindPerson(newPerson.Spouse);
+            if (spouse!= null)
+            {
+                newFam.CanGetAnotherAdult(spouse);
+                curFamily.RemovePersonFromFamily(spouse);
+            }
+        }
+
+        for (int i = 0; i < curFamily.Kids.Count; i++)
+        {
+            var kid = Family.FindPerson(curFamily.Kids[i]);
+            kid.transform.parent = newHome.transform;
+
+            var temp = kid.MyId;
+            newFam.Kids.Add(temp);
+
+            curFamily.RemovePersonFromFamily(kid);
+        }
     }
 
     /// <summary>

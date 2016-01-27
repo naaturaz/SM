@@ -690,6 +690,8 @@ public class Brain
     void GoToNewHomeTail()
     {
         //unbook
+        _person.IsBooked = "";
+        
         if (_person.Home.BookedHome1 != null)
         {
             //this is important here. They will be removed from Booking only when phisically are in the new home.
@@ -697,8 +699,6 @@ public class Brain
             //again and agin until are phisically in it
             _person.Home.BookedHome1.RemovePersonFromBooking(_person);
         }
-        
-        //in case he kept some invetory bz his last trip was to FoodSrc 
         _person.DropFoodAtHome();
 
         //will add Home to avail spot if can
