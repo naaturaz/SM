@@ -45,8 +45,6 @@ public class Family
             
         }
 
-        
-        
         Mother = family.Mother;
         Father = family.Father;
         Home = family.Home;
