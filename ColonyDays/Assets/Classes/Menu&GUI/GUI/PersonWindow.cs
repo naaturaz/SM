@@ -94,16 +94,38 @@ public class PersonWindow : GUIElement {
 
     string BuildPersonInfo()
     {
-        string res = "\n Age:" + _person.Age + "\n Gender:" + _person.Gender
-                     + "\n Nutrition:" + _person.NutritionLevel + "\n Profession:" + _person.ProfessionProp.ProfDescription
+        string res = "Age:" + _person.Age + "\n Gender:" + _person.Gender
+                     + "\n Nutrition:" + _person.NutritionLevel + "\n Profession:" +
+                     _person.ProfessionProp.ProfDescription
                      + "\n ID:" + _person.MyId
-                     + "\n FamID:" + _person.FamilyId
-                     + "\n CurTask:" + _person.Brain.CurrentTask;
+                     + "\n FamID:" + _person.FamilyId;
 
         if (_person.Home!=null)
         {
             res+= "\n Home:" + _person.Home.MyId;
         }
+        else res += "\n Home:null";
+
+
+        res += DebugInfo();
+
+        return res;
+    }
+
+    string DebugInfo()
+    {
+        var res = "\n___________\n GoMindState:" + _person.Brain.GoMindState +
+                  "\n fdRouteChks:" + _person.Brain._foodRoute.CheckPoints.Count
+                     + "\n CurTask:" + _person.Brain.CurrentTask
+                     + "\n IsBooked:" + _person.IsBooked;
+
+
+        if (_person.FoodSource != null)
+        {
+            res += "\n FoodSrc:" + _person.FoodSource.MyId;
+        }
+        else res += "\n FoodSrc:null";
+
 
         return res;
     }

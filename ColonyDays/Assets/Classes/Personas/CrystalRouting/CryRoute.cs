@@ -427,6 +427,10 @@ public class CryRoute
             }
         }
 
+        UVisHelp.CreateHelpers(_eval, Root.blueCube);
+        UVisHelp.CreateHelpers(_curr.Position, Root.yellowCube);
+        UVisHelp.CreateHelpers(_two.Position, Root.yellowCube);
+
         throw new Exception("At least the intersection should be reached. Go and investigate but at least once should " +
                             "pass this if all fail pls investigate" +
                             "\n ini:" + _ini.MyId + " mid:" + _eval[0].ParentId + " end:" + _fin.MyId + " person:" + _person.MyId + " " +

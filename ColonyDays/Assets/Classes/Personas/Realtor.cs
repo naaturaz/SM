@@ -321,7 +321,6 @@ public class Realtor
     /// Books a a Person that doesnt have any family into a new place
     /// 
     /// so far used by Teens moving out of home 
-    /// and now for just spwnred people
     /// </summary>
     /// <param name="person"></param>
     /// <param name="newHome"></param>
@@ -338,8 +337,9 @@ public class Realtor
         famToBook.CanGetAnotherAdult(person);
         newHome.BookedHome1 = new BookedHome(newHome.MyId, famToBook);
 
+        person.IsBooked = newHome.MyId;
+
         BuildingPot.Control.Registro.ResaveOnRegistro(newHome.MyId);
-        MarkTheFamilyBooking(newHome.MyId, myFamily);
         RestartControllerForMyFamily(myFamily, person);
     }
 

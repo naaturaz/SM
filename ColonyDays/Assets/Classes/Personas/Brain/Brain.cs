@@ -1524,6 +1524,8 @@ public class Brain
     /// </summary>
     public void SetNewHouseFound()
     {
+        //so can reroutre and stuff
+        CheckMeOnSystemNow();
         CheckAround(false,false,false,false,false,true);
     }
 
@@ -2506,7 +2508,7 @@ public class Brain
     /// </summary>
     public void Die()
     {
-        if (Partido)
+        if (Partido && string.IsNullOrEmpty(_person.IsBooked))
         {
             //people can die anywhere
             if (_person.Home != null)
@@ -2528,13 +2530,13 @@ public class Brain
     {
         var fam = _person.Home.FindFamilyById(_person.FamilyId);
         //my be moving to new home 
-        if (fam == null)
-        {
-            var newHome = GetBuildingFromKey(_person.IsBooked);
-            //the person needs to be removed from newHome booking 
-            newHome.BookedHome1.Family.RemovePersonFromFamily(_person);
-            fam = newHome.FindFamilyById(_person.FamilyId);
-        }
+        //if (fam == null)
+        //{
+        //    var newHome = GetBuildingFromKey(_person.IsBooked);
+        //    //the person needs to be removed from newHome booking 
+        //    newHome.BookedHome1.Family.RemovePersonFromFamily(_person);
+        //    fam = newHome.FindFamilyById(_person.FamilyId);
+        //}
         fam.RemovePersonFromFamily(_person);
     }
 

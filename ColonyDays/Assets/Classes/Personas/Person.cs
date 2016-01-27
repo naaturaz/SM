@@ -70,7 +70,7 @@ public class Person : General
     private string _father;
     private string _mother;
 
-    private string _isBooked; //says if the person is Booked in a building to be his new home
+    private string _isBooked = ""; //says if the person is Booked in a building to be his new home
     private string _homerFoodSrc; //where the Homer will grab the food  
 
     private bool _isLoading; //use to know if person is being loaded from file 
@@ -739,7 +739,7 @@ public class Person : General
 
         AgeAction();
 
-        if (UPerson.IsMajor(_age) && !_isMajor)
+        if (UPerson.IsMajor(_age) && !_isMajor && Brain.GoMindState && Brain.IAmHomeNow())
         {
             ReachAgeMajority();
         }
@@ -830,9 +830,19 @@ public class Person : General
             Brain.MajorAge.MarkMajorityAgeReached();
             PersonPot.Control.IsAPersonHomeLessNow = MyId;
 
-            //gameObject.transform.parent = place.transform;
+            AddressIsBooked(place);
         }
     }
+
+    private void AddressIsBooked(Building newPlace)
+    {
+        if (Home!= null && newPlace == Home)
+        {
+            IsBooked = "";
+        }
+    }
+
+
 
     void PeopleDictMatters(Building newPlace)
     {
@@ -1600,7 +1610,8 @@ public class Person : General
     /// <returns></returns>
     bool CanIHaveANewKid()
     {
-        if (IsPregnant || IsWidow || Gender == H.Male || string.IsNullOrEmpty(Spouse) || Home == null)
+        if (IsPregnant || IsWidow || Gender == H.Male || string.IsNullOrEmpty(Spouse) || Home == null 
+            || !string.IsNullOrEmpty(IsBooked))
         {
             return false;
         }
@@ -1703,6 +1714,7 @@ public class Person : General
         var family = Home.FindMyFamilyChecksFamID(this);
         family.Kids.Add(newBorn.MyId);
 
+        newBorn.IsBooked = "";
         newBorn.transform.parent = Home.transform;
         newBorn.Home = Home;
         newBorn.Brain.SetNewHouseFound();

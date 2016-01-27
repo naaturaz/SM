@@ -168,5 +168,16 @@ public class UVisHelp : MonoBehaviour {
         return res;
     }
 
-  
+
+
+    internal static List<General> CreateHelpers(List<Crystal> _eval, string root)
+    {
+        List<General> res = new List<General>();
+
+        for (int i = 0; i < _eval.Count; i++)
+        {
+            res.Add(General.Create(root, U2D.FromV2ToV3(_eval[i].Position)));
+        }
+        return res;
+    }
 }
