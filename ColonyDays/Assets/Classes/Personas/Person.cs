@@ -745,7 +745,7 @@ public class Person : General
         }
 
         CheckHappiness();
-        DidIDie();
+        //DidIDie();
         CheckIfEmmigrate();
         CheckIfInSchool();
     }
@@ -832,7 +832,6 @@ public class Person : General
             AddressIsBooked(place);
         }
         //so gets back its original famID
-        //else FamilyId = myOldFamID;
     }
 
     private void AddressIsBooked(Building newPlace)
@@ -842,8 +841,6 @@ public class Person : General
             IsBooked = "";
         }
     }
-
-
 
     void PeopleDictMatters(Building newPlace)
     {
@@ -873,11 +870,10 @@ public class Person : General
 
         for (int i = 0; i < buildings.Count; i++)
         {
-            //need to see if will fit there and if is not booked 
-            if (buildings[i].WouldAdultFitInThisHouseInAFamily(this, ref familyID) && 
-                //if is null is bz is brand new 
-                (buildings[i].BookedHome1 == null || !buildings[i].BookedHome1.IsBooked()
-                || buildings[i].BookedHome1.MySpouseBooked(Spouse)))
+            if ((buildings[i].BookedHome1 == null || buildings[i].BookedHome1.MySpouseBooked(Spouse) ||
+                !buildings[i].BookedHome1.IsBooked()) 
+                &&
+                buildings[i].WouldAdultFitInThisHouseInAFamily(this, ref familyID))
             {
                 return buildings[i];
             }
@@ -975,12 +971,6 @@ public class Person : General
     public void Marriage(string spouseMyId)
     {
         spouse = spouseMyId;
-
-        //if (Gender==H.Female)
-        //{
-        //    var spouseLoc = Family.FindPerson(spouse);
-        //    FamilyId = spouseLoc.FamilyId;
-        //}
     }
 
 	/// <summary>
@@ -992,6 +982,11 @@ public class Person : General
         if (isWidow) { return false;}
         if (other.Gender == Gender) { return false;}
         if (Mathf.Abs(other.Age - _age) > 15) { return false;}
+
+        if (Age < 16 || other.Age < 16)
+        {
+            return false;
+        }
 
         return true;
     }
@@ -1612,7 +1607,7 @@ public class Person : General
     bool CanIHaveANewKid()
     {
         if (IsPregnant || IsWidow || Gender == H.Male || string.IsNullOrEmpty(Spouse) || Home == null 
-            || !string.IsNullOrEmpty(IsBooked))
+            || !string.IsNullOrEmpty(IsBooked) || !IsMajor)
         {
             return false;
         }
@@ -1677,6 +1672,8 @@ public class Person : General
         }
     }
 
+    public string DebugBornInfo;
+
     void GiveBirth()
     {
         PersonPot.Control.HaveNewKid(Home.transform.position);
@@ -1688,7 +1685,8 @@ public class Person : General
 
         MoveNewBornToHome(kid);
 
-        Debug.Log(MyId + " give birth to:" + kid.MyId);
+        Debug.Log(MyId + " give birth to:" + kid.MyId+". inscribed on:"+FamilyId);
+        DebugBornInfo = FamilyId+".home:"+Home.MyId;
 
         _lastNewBornYear = _dueYear;
         _dueMonth = 0;

@@ -279,10 +279,14 @@ public class Family
         //2nd question is to check that other person is not Married already , etc
         if (inFamily.WouldUMarryMe(newPerson) && newPerson.WouldUMarryMe(inFamily))
         {
-           Debug.Log(inFamily.MyId + " :accepted: " + newPerson.MyId);
+            Debug.Log(inFamily.MyId + " :accepted: " + newPerson.MyId);
 
             inFamily.Marriage(newPerson.MyId);
             newPerson.Marriage(inFamily.MyId);
+
+            //so they do thing prop. and person in case of reahcing major will try to find something else 
+            inFamily.IsMajor = true;
+            newPerson.IsMajor = true;
 
             AssignNewPersonToCurrentFamilyAndHome(newPerson);
 
@@ -362,6 +366,10 @@ public class Family
 
         if (WasDatingGood(newPerson) || AreTheyMarriedAlready(newPerson))
         {
+            //newPerson.transform.parent = BuildingPot.Control.Registro.AllBuilding[_home].transform;
+            //newPerson.FamilyId = FamilyId;
+            //newPerson.Home = BuildingPot.Control.Registro.AllBuilding[_home] as Structure;
+
             MakeAdultFatherOrMotherOfKids(newPerson);
             return true;
         }
@@ -695,11 +703,6 @@ public class Family
     /// <returns></returns>
     public bool WouldAdultFitInThisFamily(Person newPerson)
     {
-        if (State==H.LockDown)
-        {
-            return false;
-        }
-
         var adults = Adults();
 
         if (adults == 0)
@@ -715,44 +718,43 @@ public class Family
     }
 
     /// <summary>
+    /// Call once both parent had passed away
+    /// </summary>
+    internal void LockDownFamily(string debugCaller)
+    {
+        Debug.Log("LockDown called on:" + debugCaller);
+        //UnLockFamily();
+        HandleKids();
+
+       // LockToggleFamily();
+    }
+
+    /// <summary>
     /// Addressing kids that are major but never found a house 
     /// 
     /// Will make the first kid major and head of the house 
     /// </summary>
-    public void HandleKids()
+    private void HandleKids()
     {
+        if (Adults() > 0)
+        {
+            return;
+        }
+
         //u will be able to fit only two kids in the family now as adults 
         for (int i = 0; i < Kids.Count; i++)
         {
             var kid = FindPerson(Kids[i]);
 
-            if (CanGetAnotherAdult(kid))
+            if (Adults()==0)
             {
+                Set1stAdult(kid);
+
                 kid.IsMajor = true;
                 Kids.Remove(kid.MyId);
                 i--;
             }
         }
-    }
-
-    /// <summary>
-    /// So only people from within the family can get into this family
-    /// </summary>
-    void UnLockFamily()
-    {
-        State = H.None;
-    }
-
-    /// <summary>
-    /// Will release family if no members are found. othwe wise will lockitDown
-    /// </summary>
-    void LockToggleFamily()
-    {
-        if (MembersOfAFamily()==0)
-        {
-            DeleteFamily();
-        }
-        //else State=H.LockDown; 
     }
 
     public string InfoShow()

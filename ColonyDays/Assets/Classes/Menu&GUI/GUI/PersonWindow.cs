@@ -114,14 +114,15 @@ public class PersonWindow : GUIElement {
 
     string DebugInfo()
     {
-        var res = "\n___________\n GoMindState:" + _person.Brain.GoMindState +
+        var res = "\n_________________________________\n GoMindState:" + _person.Brain.GoMindState +
                   "\n fdRouteChks:" + _person.Brain._foodRoute.CheckPoints.Count
                      + "\n CurTask:" + _person.Brain.CurrentTask
                      + "\n PrevTask:" + _person.Brain.PreviousTask
                      + "\n IsBooked:" + _person.IsBooked
                      + "\n Major:" + _person.IsMajor
                      + "\n BodyLoc:" + _person.Body.Location
-                     + "\n BodyGngTo:" + _person.Body.GoingTo;
+                     + "\n BodyGngTo:" + _person.Body.GoingTo
+                     + "\n BornInfo:" + _person.DebugBornInfo;
 
 
         if (_person.FoodSource != null)

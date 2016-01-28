@@ -675,9 +675,7 @@ public class Brain
         {
             CurrentTask = HPers.Restarting;//so reset the cycle;
         }
-        else if (CurrentTask == HPers.Restarting && 
-            (_person.Body.Location == HPers.MovingToNewHome || _person.Body.Location == HPers.Home)
-            && _person.Body.GoingTo == HPers.MovingToNewHome)
+        else if (CurrentTask == HPers.Restarting && _person.Body.Location == HPers.MovingToNewHome && _person.Body.GoingTo == HPers.MovingToNewHome)
         {
             CurrentTask = HPers.None;//so reset the cycle
             _person.Body.Location = HPers.Home;
@@ -694,7 +692,6 @@ public class Brain
     {
         //unbook
         _person.IsBooked = "";
-        
         if (_person.Home.BookedHome1 != null)
         {
             //this is important here. They will be removed from Booking only when phisically are in the new home.
@@ -709,16 +706,27 @@ public class Brain
         if (oldHomeH !=  null)
         {
             AddOldHomeToAvailHomeIfHasSpace(oldHomeH);
+            RemoveMeFromOldHomeFamily(oldHomeH);
+
         }
 
         Debug.Log("got to new home:" + _person.MyId);
         MoveToNewHome.GetMyNameOutOfOldHomePeopleList();
         MoveToNewHome.CleanUpRouteToNewHome();
 
+
         //will add to genOldKeys since he wont use that route ever again. 
         AddToList(_generalOldKeysList, MoveToNewHome.RouteToNewHome.BridgeKey);
 
         CheckIfClearBlackList();
+    }
+
+    private void RemoveMeFromOldHomeFamily(Structure oldHomeH)
+    {
+        for (int i = 0; i < oldHomeH.Families.Length; i++)
+        {
+            oldHomeH.Families[i].RemovePersonFromFamily(_person);
+        }
     }
 
     #endregion
@@ -1043,26 +1051,16 @@ public class Brain
                 }
                 oldHome = _person.Home.MyId;
             }
-
-            //work
-            if (_person.Work!=null || !string.IsNullOrEmpty(oldWork))
-            {
-                if (_person.Work != null && _person.Work.MyId == oldWork)
-                {
-                    return;
-                }
-
-                RemoveAndAddPositionsToJob();
-            }
             if (_person.Work != null && oldWork != _person.Work.MyId)
             {
                 _person.CreateProfession();//if a new job was found need to create a profession 
                 workRouteStart = false;
 
+                RemoveAndAddPositionsToJob();
+
                 RestartVarsAndAddToGenList();
                 oldWork = _person.Work.MyId;
             }
-
             if (_person.FoodSource != null && oldFoodSrc != _person.FoodSource.MyId)
             {
                 foodRouteStart = false;
@@ -1859,26 +1857,7 @@ public class Brain
         CheckHomeLoop();
     }
 
-    /// <summary>
-    /// Wil tell u if current ur family on lockDown. if 
-    ///  ur fam is in lockdown wont move out 
-    /// </summary>
-    /// <returns></returns>
-    bool IsMyFamilyOnLockDown()
-    {
-        //in case has not fam yet. Jst Spawned 
-        if (_person.Home==null)
-        {
-            return false;
-        }
-        var fam = _person.Home.FindMyFamilyChecksFamID(_person);
-        if (fam!=null)
-        {
-            return fam.State == H.LockDown;
-        }
-        Debug.Log( "didnt find family IsMyFamilyOnLockDown()."+_person.MyId+".f:"+_person.FamilyId);
-        return false;
-    }
+  
 
     /// <summary>
     /// Looks thru all the 'BuilderPot.Control.HousesWithSpace' items to see if this person can find
@@ -1889,7 +1868,7 @@ public class Brain
         bool thereIsABetterHome = Realtor.PublicIsABetterHome(_person);
 
         //shack builders can not look into this. Othr wise they will stay on Limbo once better home found 
-        if (thereIsABetterHome || !string.IsNullOrEmpty(_person.IsBooked))
+        if (thereIsABetterHome)
         {
             var oldHomeP = PullOldHome();
             var s = Realtor.GiveMeTheBetterHome(_person);
@@ -1904,6 +1883,8 @@ public class Brain
                     MoveToNewHome.OldHomeKey = "";
                     MoveToNewHome.RouteToNewHome.CheckPoints.Clear();
                 }
+
+
 
                 AddToPeopleList(s.MyId);
                 _person.Home = s;
@@ -2507,6 +2488,8 @@ public class Brain
 
     private bool _partido;
 
+
+
     public bool Partido
     {
         get { return _partido; }
@@ -2527,7 +2510,7 @@ public class Brain
                 BuildingPot.Control.AddToHousesWithSpace(_person.Home.MyId);
                 PersonPot.Control.RestartController();
             }
-            RemoveFromAllPeopleDictAndJobPos();
+            RemoveFromAllPeopleDict();
             Partido = false;
             //so person goes to heaven, and ray is sent from Sky to take him //or angels take him 
             _person.DestroyCool();
@@ -2538,14 +2521,23 @@ public class Brain
     void RemoveFromOldFamily()
     {
         var fam = _person.Home.FindFamilyById(_person.FamilyId);
+        //my be moving to new home 
+        //if (fam == null)
+        //{
+        //    var newHome = GetBuildingFromKey(_person.IsBooked);
+        //    //the person needs to be removed from newHome booking 
+        //    newHome.BookedHome1.Family.RemovePersonFromFamily(_person);
+        //    fam = newHome.FindFamilyById(_person.FamilyId);
+        //}
         fam.RemovePersonFromFamily(_person);
-        fam.HandleKids();
+        fam.LockDownFamily(_person.MyId);
+
     }
 
     /// <summary>
     /// Will remove the person from all PeoplesDict he might be on . Will call destroy building if is marked or is a shack
     /// </summary>
-    void RemoveFromAllPeopleDictAndJobPos()
+    void RemoveFromAllPeopleDict()
     {
         List<Structure> all = new List<Structure>(){_person.Home, _person.Work, _person.FoodSource, _person.Religion, _person.Chill};
 
@@ -2558,7 +2550,7 @@ public class Brain
             }
         }
 
-        if (_person.Work != null)
+        if (_person.Work!=null)
         {
             _person.Work.RemovePosition();
         }

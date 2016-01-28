@@ -2,10 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 
+/*
+ * SEALED CLASS AS JAN 28 2016
+ */
+
 public class Realtor
 {
-    private static int confortWeight = 100;
+    //its not well implemented so Im dropping confomrt to people get better home 
+    private static int confortWeight = 0;//100
 
+    private static string familyID="";
 
     public static Structure GiveMeTheBetterHome(Person person)
     {
@@ -14,6 +20,9 @@ public class Realtor
         {
             //if they are booked somewhere need to handle that first
             var bookedHome = Brain.GetStructureFromKey(person.IsBooked);
+
+            //so its added to the family and transform.parent
+            bookedHome.MovePersonToFamilySpot(person, bookedHome);
             return bookedHome;
         }
 
@@ -24,6 +33,7 @@ public class Realtor
         }
 
         var newhome = BuildingPot.Control.Registro.AllBuilding[key] as Structure;
+
         return HandleBooking(person, newhome);
     }
 
@@ -65,27 +75,27 @@ public class Realtor
             return null;
         }
 
-        //if is booked
-        if (newhome.BookedHome1 != null && newhome.BookedHome1.IsBooked())
-        {
-            //and im booked on it 
-            if (newhome.BookedHome1.IAmBookedHere(person))
-            {
-                //so its added to the family
-                //newhome.MovePersonToFamilySpot(person, newhome);
-                //Debug.Log(person.MyId + " added to: " + newhome.MyId + " bz was booked");
-                return newhome;
-            }
-            //if is booked and im not on it will return null bz that building is booked already
-            return null;
-        }
+        BookToNewBuild(person, newhome);
+        //if is not booked
+        return newhome;
+    }
 
-        //if can book that home
-        //if (BookMyFamilyToNewBuild(person, newhome))
-        //{
-            return newhome;
-        //}
-        return null;
+    /// <summary>
+    /// Will handle if is to a Family or a individual
+    /// </summary>
+    /// <param name="person"></param>
+    /// <param name="newHome"></param>
+    static void BookToNewBuild(Person person, Structure newHome)
+    {
+        if (familyID=="Empty")
+        {
+            BookMyFamilyToNewBuild(person, newHome);
+        }
+        else
+        {
+            BookNewPersonInNewHome(person, newHome, familyID);
+            familyID = "";
+        }
     }
 
     /// <summary>
@@ -164,7 +174,7 @@ public class Realtor
             var canI = CanIMoveFamilyToNewHome(newHome);
             if (canI)
             {
-                BookMyFamilyToNewBuild(person, newHome);
+                familyID = "Empty";
                 return true;
             }
         }
@@ -174,7 +184,7 @@ public class Realtor
             var canI = CanIMoveFamilyToNewHome(newHome);
             if (canI)
             {
-                BookMyFamilyToNewBuild(person, newHome);
+                familyID = "Empty";
                 return true;
             }
         }
@@ -212,6 +222,9 @@ public class Realtor
             Structure s = (Structure)newHome;
             if (s.ThisPersonFitInThisHouse(person, ref famID))
             {
+                familyID = famID;
+                //person.PersonGotMarriedAffairs(newHome);
+
                 //so families are resaved 
                 BuildingPot.Control.Registro.ResaveOnRegistro(newHome.MyId);
 
@@ -221,7 +234,6 @@ public class Realtor
                 {
                     BuildingPot.Control.RemoveFromHousesWithSpace(newHome.MyId);
                 }
-                BookNewPersonInNewHome(person, newHome, famID);
                 return true;
             }
         }
@@ -243,11 +255,11 @@ public class Realtor
     /// <summary>
     /// Will book family to new building 
     /// </summary>
-    public static bool BookMyFamilyToNewBuild(Person person, Building newHome)
+    public static void BookMyFamilyToNewBuild(Person person, Building newHome)
     {
         //if doesnt have at least 1 family empty.//means no booking is needed.
         if (newHome.ReturnEmptyFamily() == null)
-        {return false;}
+        {return;}
 
         var famIDInBookedHome = "";
 
@@ -265,7 +277,6 @@ public class Realtor
             var familyToBeTransferTo = TransferInToNewFamily(curFamily, newHome, person);
             BookMyFamilyToNewBuildTail(person, newHome, familyToBeTransferTo);
         }
-        return true;
     }
 
     static void BookMyFamilyToNewBuildTail(Person person, Building newHome, Family myFamily)
@@ -279,8 +290,6 @@ public class Realtor
     private static Family TransferInToNewFamily(Family curFamily, Building newHome, Person newPerson)
     {
         var fam = newHome.ReturnEmptyFamily();
-
- 
 
         IdEveryOneOnTheFamily(fam.FamilyId, curFamily);
 

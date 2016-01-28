@@ -420,6 +420,7 @@ public class Registro : MonoBehaviour
     /// PeopleDic
     /// PositionFilled
     /// Anchors
+    /// DollarsPay
     /// </summary>
     public void ResaveOnRegistro(string myIdP)
     {
@@ -444,6 +445,7 @@ public class Registro : MonoBehaviour
         AllRegFile[index].Inventory = build.Inventory;
         AllRegFile[index].PeopleDict = build.PeopleDict;
         AllRegFile[index].Anchors = build.Anchors;
+        AllRegFile[index].DollarsPay = build.DollarsPay;
     }
 
     /// <summary>

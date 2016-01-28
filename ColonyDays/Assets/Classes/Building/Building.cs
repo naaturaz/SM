@@ -1258,6 +1258,7 @@ public class Building : General, Iinfo
         {
             DollarsPay = BasePay() + 2;
         }
+        BuildingPot.Control.Registro.ResaveOnRegistro(MyId);
     }
 
     /// <summary>
@@ -1330,9 +1331,8 @@ public class Building : General, Iinfo
         //can hhave 2 famili with 3 kids each
         else if (HType == H.HouseAWithTwoFloor)
         {
-            Families = new Family[2];
-            Families[0] = new Family(3, MyId,0);
-            Families[1] = new Family(3, MyId,1);
+            Families = new Family[1];
+            Families[0] = new Family(5, MyId,0);
         }
         //can hhave 1 famili with 5 kids
         else if (HType == H.HouseMedA || HType == H.HouseMedB || HType == H.HouseC || HType == H.HouseD)
@@ -1545,7 +1545,7 @@ public class Building : General, Iinfo
         }
     }
 
-    public bool ThisPersonFitInThisHouse(Person newPerson, ref  string famID)
+    public bool ThisPersonFitInThisHouse(Person newPerson, ref string famID)
     {
         //means another person is asking for this buiding before hit the Start()
         //is addressing the case when a lot of people is getting out of a house to a Shack
@@ -1556,9 +1556,9 @@ public class Building : General, Iinfo
 
         if(!UPerson.IsMajor(newPerson.Age))
         {
-            return ANewKidFitsInThisHouse(newPerson,ref famID);
+            return ANewKidFitsInThisHouse(newPerson, ref famID);
         }
-        return ANewAdultFitsInThisHouse(newPerson,ref famID);
+        return ANewAdultFitsInThisHouse(newPerson, ref famID);
     }
 
 
@@ -1566,7 +1566,7 @@ public class Building : General, Iinfo
 
 
 
-    bool ANewKidFitsInThisHouse(Person newP, ref  string famID)
+    bool ANewKidFitsInThisHouse(Person newP, ref string famID)
     {
         for (int i = 0; i < Families.Length; i++)
         {
@@ -1579,7 +1579,7 @@ public class Building : General, Iinfo
         return false;
     }
 
-    bool ANewAdultFitsInThisHouse(Person newP, ref  string famID)
+    bool ANewAdultFitsInThisHouse(Person newP, ref string famID)
     {
         for (int i = 0; i < Families.Length; i++)
         {
@@ -1592,6 +1592,7 @@ public class Building : General, Iinfo
             if (Families[i].CanGetAnotherAdult(newP))
             {
                 famID = Families[i].FamilyId;
+
                 return true;
             }
         }
@@ -2355,7 +2356,7 @@ public class Building : General, Iinfo
 
         //add to list 
         BuildingPot.Control.WorkOpenPos.Add(MyId);
-        Debug.Log(MyId + " Added to curr Jobs");
+//        Debug.Log(MyId + " Added to curr Jobs");
     }
 
     /// <summary>
@@ -2942,23 +2943,6 @@ public class Building : General, Iinfo
         }
         return 0;
     }
-
-    /// <summary>
-    /// Will find a family in where he can fit  marriying someOne
-    /// </summary>
-    /// <param name="person"></param>
-    /// <returns></returns>
-    internal Family FindLoveFamily(Person person)
-    {
-        for (int i = 0; i < Families.Length; i++)
-        {
-            if (Families[i].WouldIFoundLoveHere(person))
-            {
-             return   Families[i];
-            }
-        }
-        return null;
-    }
 }
 
 /// <summary>
@@ -3079,23 +3063,11 @@ public class BookedHome
         Family =  new Family(family);
     }
 
-    public BookedHome(string building, Family family, Person person)
-    {
-        Building = building;
-        Family = new Family(family);
-
-        //so deletes all the people . bz could have being people that was alreayd in the buildng 
-        Family.DeleteFamily();
-        Family.SetDummyFirstAdult(person);
-    }
-
     /// <summary>
     /// Clears all the information of the bopoking so is unbooked 
     /// </summary>
     public void ClearBooking()
     {
-
-
         Family.State = H.None;
         Building = "";
         Family.DeleteFamily();
@@ -3152,39 +3124,39 @@ public class BookedHome
             //just addressingn a bugg tht book can happen 
             Debug.Log("Book cleared:"+personToRemove.MyId);
             ClearBooking();
-            MakeOldHomeFamilyVarVirgin(personToRemove);
+            //MakeOldHomeFamilyVarVirgin(personToRemove);
 
             //so Individuals tht asked and where denied get a chancee to see this building unbooked
             PersonPot.Control.RestartController();
         }
     }
 
-    /// <summary>
-    /// Will make the old Home Family var virign so can be booked properly on realtor 
-    /// </summary>
-    private void MakeOldHomeFamilyVarVirgin(Person toRemove)
-    {
-        var oldHome = Brain.GetBuildingFromKey(toRemove.Brain.MoveToNewHome.OldHomeKey);
-        //Debug.Log("Make virgin on");
+    ///// <summary>
+    ///// Will make the old Home Family var virign so can be booked properly on realtor 
+    ///// </summary>
+    //private void MakeOldHomeFamilyVarVirgin(Person toRemove)
+    //{
+    //    var oldHome = Brain.GetBuildingFromKey(toRemove.Brain.MoveToNewHome.OldHomeKey);
+    //    //Debug.Log("Make virgin on");
 
-        if (oldHome!= null)
-        {
-            //Debug.Log("Make virgin on oldHome!= null");
-            //is good enoguh bz as long as the first perso moving out do this 
-            var fam = oldHome.FindOldFamilyById(toRemove);
+    //    if (oldHome!= null)
+    //    {
+    //        //Debug.Log("Make virgin on oldHome!= null");
+    //        //is good enoguh bz as long as the first perso moving out do this 
+    //        var fam = oldHome.FindOldFamilyById(toRemove);
 
-            if (fam == null)
-            {
-                fam = oldHome.FindMyFamily(toRemove);
-            }
+    //        if (fam == null)
+    //        {
+    //            fam = oldHome.FindMyFamily(toRemove);
+    //        }
 
-            if (fam != null)
-            {
-                fam.DeleteFamily();
-                Debug.Log("deleted family on:");
-            }
-        }
-    }
+    //        if (fam != null)
+    //        {
+    //            fam.DeleteFamily();
+    //            Debug.Log("deleted family on:");
+    //        }
+    //    }
+    //}
 
 
 
