@@ -2395,8 +2395,10 @@ public class Building : General, Iinfo
             //throw new Exception(newP.MyId + " . " +newHome.MyId);
         }
 
+        //newP.IsBooked = false;
         AssignBookedRole(newP, toBeFill, familyID);
         newP.transform.parent = transform;
+
         //so families are resaved 
         BuildingPot.Control.Registro.ResaveOnRegistro(MyId);
     }
@@ -2417,8 +2419,7 @@ public class Building : General, Iinfo
         {
             if (newP.MyId == BookedHome1.Family.Kids[i])
             {
-                //calls AddANewKid() bz kids were added already to the family when comng from a worse home
-                toBeFill.AddANewKid(newP.MyId);
+                toBeFill.Kids.Add(newP.MyId);
             }
         }
         if (newP.MyId == BookedHome1.Family.Father)

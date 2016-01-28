@@ -129,21 +129,13 @@ public class Family
         set { _kidsMax = value; }
     }
 
-    public void AddANewKid(string kidId)
-    {
-        if (!Kids.Contains(kidId))
-        {
-            Kids.Add(kidId);
-        }
-    }
-
     /// <summary>
     /// Here will teel u if were successeful at getting a new kid i the famili and will 
     /// include it in the family and will take care of adoption and all, transform.parent, etc
     /// </summary>
     public bool CanGetAnotherKid(Person newP)
     {
-        if (Kids.Count + 1 > _kidsMax)
+        if (Kids.Count + 1 > _kidsMax || State == H.LockDown)
         {
             return false;
         }
