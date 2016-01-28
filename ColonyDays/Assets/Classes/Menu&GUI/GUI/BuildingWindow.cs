@@ -237,10 +237,21 @@ public class BuildingWindow : GUIElement {
             res = "Type:" + _building.HType + " In House:" + amt
                 + " ID:" + _building.MyId;
 
+            if (_building.BookedHome1!=null)
+            {
+                res += "\n IsBooked:" + _building.BookedHome1.IsBooked();
+            }
+            else
+            {
+                res += "\n IsBooked:null";
+            }
+
             for (int i = 0; i < _building.Families.Count(); i++)
             {
                 res += _building.Families[i].InfoShow();
             }
+
+
         }
 
         return res;

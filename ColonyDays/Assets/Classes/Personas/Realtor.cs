@@ -14,7 +14,7 @@ public class Realtor
         {
             //if they are booked somewhere need to handle that first
             var bookedHome = Brain.GetStructureFromKey(person.IsBooked);
-            return HandleBooking(person, bookedHome);
+            return bookedHome;
         }
 
         key = LoopThruAllBetterHomes(person);
@@ -24,7 +24,6 @@ public class Realtor
         }
 
         var newhome = BuildingPot.Control.Registro.AllBuilding[key] as Structure;
-
         return HandleBooking(person, newhome);
     }
 
@@ -73,7 +72,7 @@ public class Realtor
             if (newhome.BookedHome1.IAmBookedHere(person))
             {
                 //so its added to the family
-                newhome.MovePersonToFamilySpot(person, newhome);
+                //newhome.MovePersonToFamilySpot(person, newhome);
                 //Debug.Log(person.MyId + " added to: " + newhome.MyId + " bz was booked");
                 return newhome;
             }
@@ -81,9 +80,12 @@ public class Realtor
             return null;
         }
 
-        BookMyFamilyToNewBuild(person, newhome);
-        //if is not booked
-        return newhome;
+        //if can book that home
+        //if (BookMyFamilyToNewBuild(person, newhome))
+        //{
+            return newhome;
+        //}
+        return null;
     }
 
     /// <summary>
@@ -206,8 +208,9 @@ public class Realtor
         var isBooked = IsBuildBooked(newHome);
         if (!isBooked)
         {
+            string famID = "";
             Structure s = (Structure)newHome;
-            if (s.ThisPersonFitInThisHouse(person))
+            if (s.ThisPersonFitInThisHouse(person, ref famID))
             {
                 //so families are resaved 
                 BuildingPot.Control.Registro.ResaveOnRegistro(newHome.MyId);
@@ -218,6 +221,7 @@ public class Realtor
                 {
                     BuildingPot.Control.RemoveFromHousesWithSpace(newHome.MyId);
                 }
+                BookNewPersonInNewHome(person, newHome, famID);
                 return true;
             }
         }
@@ -239,11 +243,11 @@ public class Realtor
     /// <summary>
     /// Will book family to new building 
     /// </summary>
-    public static void BookMyFamilyToNewBuild(Person person, Building newHome)
+    public static bool BookMyFamilyToNewBuild(Person person, Building newHome)
     {
         //if doesnt have at least 1 family empty.//means no booking is needed.
         if (newHome.ReturnEmptyFamily() == null)
-        {return;}
+        {return false;}
 
         var famIDInBookedHome = "";
 
@@ -261,6 +265,7 @@ public class Realtor
             var familyToBeTransferTo = TransferInToNewFamily(curFamily, newHome, person);
             BookMyFamilyToNewBuildTail(person, newHome, familyToBeTransferTo);
         }
+        return true;
     }
 
     static void BookMyFamilyToNewBuildTail(Person person, Building newHome, Family myFamily)
@@ -274,6 +279,8 @@ public class Realtor
     private static Family TransferInToNewFamily(Family curFamily, Building newHome, Person newPerson)
     {
         var fam = newHome.ReturnEmptyFamily();
+
+ 
 
         IdEveryOneOnTheFamily(fam.FamilyId, curFamily);
 

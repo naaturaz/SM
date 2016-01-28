@@ -675,7 +675,9 @@ public class Brain
         {
             CurrentTask = HPers.Restarting;//so reset the cycle;
         }
-        else if (CurrentTask == HPers.Restarting && _person.Body.Location == HPers.MovingToNewHome && _person.Body.GoingTo == HPers.MovingToNewHome)
+        else if (CurrentTask == HPers.Restarting && 
+            (_person.Body.Location == HPers.MovingToNewHome || _person.Body.Location == HPers.Home)
+            && _person.Body.GoingTo == HPers.MovingToNewHome)
         {
             CurrentTask = HPers.None;//so reset the cycle
             _person.Body.Location = HPers.Home;
@@ -1885,10 +1887,9 @@ public class Brain
     void CheckHomeLoop()
     {
         bool thereIsABetterHome = Realtor.PublicIsABetterHome(_person);
-        bool onLock = IsMyFamilyOnLockDown();
 
         //shack builders can not look into this. Othr wise they will stay on Limbo once better home found 
-        if (thereIsABetterHome && !onLock)
+        if (thereIsABetterHome || !string.IsNullOrEmpty(_person.IsBooked))
         {
             var oldHomeP = PullOldHome();
             var s = Realtor.GiveMeTheBetterHome(_person);

@@ -1545,7 +1545,7 @@ public class Building : General, Iinfo
         }
     }
 
-    public bool ThisPersonFitInThisHouse(Person newPerson)
+    public bool ThisPersonFitInThisHouse(Person newPerson, ref  string famID)
     {
         //means another person is asking for this buiding before hit the Start()
         //is addressing the case when a lot of people is getting out of a house to a Shack
@@ -1556,9 +1556,9 @@ public class Building : General, Iinfo
 
         if(!UPerson.IsMajor(newPerson.Age))
         {
-            return ANewKidFitsInThisHouse(newPerson);
+            return ANewKidFitsInThisHouse(newPerson,ref famID);
         }
-        return ANewAdultFitsInThisHouse(newPerson);
+        return ANewAdultFitsInThisHouse(newPerson,ref famID);
     }
 
 
@@ -1566,19 +1566,20 @@ public class Building : General, Iinfo
 
 
 
-    bool ANewKidFitsInThisHouse(Person newP)
+    bool ANewKidFitsInThisHouse(Person newP, ref  string famID)
     {
         for (int i = 0; i < Families.Length; i++)
         {
             if (Families[i].CanGetAnotherKid(newP))
             {
+                famID = Families[i].FamilyId;
                 return true;
             }
         }
         return false;
     }
 
-    bool ANewAdultFitsInThisHouse(Person newP)
+    bool ANewAdultFitsInThisHouse(Person newP, ref  string famID)
     {
         for (int i = 0; i < Families.Length; i++)
         {
@@ -1590,6 +1591,7 @@ public class Building : General, Iinfo
 
             if (Families[i].CanGetAnotherAdult(newP))
             {
+                famID = Families[i].FamilyId;
                 return true;
             }
         }
@@ -2938,6 +2940,23 @@ public class Building : General, Iinfo
             }
         }
         return 0;
+    }
+
+    /// <summary>
+    /// Will find a family in where he can fit  marriying someOne
+    /// </summary>
+    /// <param name="person"></param>
+    /// <returns></returns>
+    internal Family FindLoveFamily(Person person)
+    {
+        for (int i = 0; i < Families.Length; i++)
+        {
+            if (Families[i].WouldIFoundLoveHere(person))
+            {
+             return   Families[i];
+            }
+        }
+        return null;
     }
 }
 
