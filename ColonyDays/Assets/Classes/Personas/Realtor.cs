@@ -305,9 +305,10 @@ public class Realtor
             }
         }
 
-        for (int i = 0; i < curFamily.Kids.Count; i++)
+        var tempArra = curFamily.Kids.ToArray();
+        for (int i = 0; i < tempArra.Length; i++)
         {
-            var kid = Family.FindPerson(curFamily.Kids[i]);
+            var kid = Family.FindPerson(tempArra[i]);
             kid.transform.parent = newHome.transform;
 
             var temp = kid.MyId;
