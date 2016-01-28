@@ -218,7 +218,13 @@ public class BuildingWindow : GUIElement {
         if (!_building.HType.ToString().Contains("House"))
         {
             res = "Type:" + _building.HType + " Workers:" + _building.PeopleDict.Count
-                     + " ID:" + _building.MyId;
+                     + " ID:" + _building.MyId + 
+                     "\n Workers:";
+
+            for (int i = 0; i < _building.PeopleDict.Count; i++)
+            {
+                res += "\n" + _building.PeopleDict[i];
+            }
         }
         else
         {

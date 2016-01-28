@@ -1205,6 +1205,11 @@ public class Building : General, Iinfo
     /// </summary>
     private void InitBasePays()
     {
+        if (IsLoadingFromFile)
+        {
+            return;
+        }
+
         _dollarsPay = BasePay();
     }
 
@@ -2336,7 +2341,7 @@ public class Building : General, Iinfo
     /// </summary>
     void CheckIfNeedsToBeAddedToList()
     {
-        if (PeopleDict.Count >= _maxPeople)
+        if (!HasOpenPositions())
         {
             return;   
         }
@@ -2348,7 +2353,7 @@ public class Building : General, Iinfo
 
         //add to list 
         BuildingPot.Control.WorkOpenPos.Add(MyId);
-//        Debug.Log(MyId + " Added to curr Jobs");
+        Debug.Log(MyId + " Added to curr Jobs");
     }
 
     /// <summary>

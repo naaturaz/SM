@@ -715,23 +715,11 @@ public class Family
     }
 
     /// <summary>
-    /// Call once both parent had passed away
-    /// </summary>
-    internal void LockDownFamily(string debugCaller)
-    {
-        Debug.Log("LockDown called on:" + debugCaller);
-        //UnLockFamily();
-        HandleKids();
-
-       // LockToggleFamily();
-    }
-
-    /// <summary>
     /// Addressing kids that are major but never found a house 
     /// 
     /// Will make the first kid major and head of the house 
     /// </summary>
-    private void HandleKids()
+    public void HandleKids()
     {
         //u will be able to fit only two kids in the family now as adults 
         for (int i = 0; i < Kids.Count; i++)

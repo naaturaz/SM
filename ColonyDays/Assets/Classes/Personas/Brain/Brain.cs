@@ -1041,16 +1041,26 @@ public class Brain
                 }
                 oldHome = _person.Home.MyId;
             }
+
+            //work
+            if (_person.Work!=null || !string.IsNullOrEmpty(oldWork))
+            {
+                if (_person.Work != null && _person.Work.MyId == oldWork)
+                {
+                    return;
+                }
+
+                RemoveAndAddPositionsToJob();
+            }
             if (_person.Work != null && oldWork != _person.Work.MyId)
             {
                 _person.CreateProfession();//if a new job was found need to create a profession 
                 workRouteStart = false;
 
-                RemoveAndAddPositionsToJob();
-
                 RestartVarsAndAddToGenList();
                 oldWork = _person.Work.MyId;
             }
+
             if (_person.FoodSource != null && oldFoodSrc != _person.FoodSource.MyId)
             {
                 foodRouteStart = false;
@@ -2496,8 +2506,6 @@ public class Brain
 
     private bool _partido;
 
-
-
     public bool Partido
     {
         get { return _partido; }
@@ -2518,7 +2526,7 @@ public class Brain
                 BuildingPot.Control.AddToHousesWithSpace(_person.Home.MyId);
                 PersonPot.Control.RestartController();
             }
-            RemoveFromAllPeopleDict();
+            RemoveFromAllPeopleDictAndJobPos();
             Partido = false;
             //so person goes to heaven, and ray is sent from Sky to take him //or angels take him 
             _person.DestroyCool();
@@ -2529,23 +2537,14 @@ public class Brain
     void RemoveFromOldFamily()
     {
         var fam = _person.Home.FindFamilyById(_person.FamilyId);
-        //my be moving to new home 
-        //if (fam == null)
-        //{
-        //    var newHome = GetBuildingFromKey(_person.IsBooked);
-        //    //the person needs to be removed from newHome booking 
-        //    newHome.BookedHome1.Family.RemovePersonFromFamily(_person);
-        //    fam = newHome.FindFamilyById(_person.FamilyId);
-        //}
         fam.RemovePersonFromFamily(_person);
-        fam.LockDownFamily(_person.MyId);
-
+        fam.HandleKids();
     }
 
     /// <summary>
     /// Will remove the person from all PeoplesDict he might be on . Will call destroy building if is marked or is a shack
     /// </summary>
-    void RemoveFromAllPeopleDict()
+    void RemoveFromAllPeopleDictAndJobPos()
     {
         List<Structure> all = new List<Structure>(){_person.Home, _person.Work, _person.FoodSource, _person.Religion, _person.Chill};
 
@@ -2556,6 +2555,11 @@ public class Brain
                 all[i].PeopleDict.Remove(_person.MyId);
                 DestroyOldBuildIfEmptyOrShack(all[i].MyId);
             }
+        }
+
+        if (_person.Work != null)
+        {
+            _person.Work.RemovePosition();
         }
     }
 
