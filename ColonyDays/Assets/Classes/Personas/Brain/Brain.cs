@@ -285,7 +285,7 @@ public class Brain
         AddToGenOldKeyIfAOldRouteHasOneOldBridgeOnIt(_chillRoute);
 
         //_routerChill = new RouterManager(_person.Home, _person.Chill, _person, HPers.Chill, askDateTime: askChill);
-        _routerChill = new CryRouteManager(_person.Home, _person.Religion, _person);
+        _routerChill = new CryRouteManager(_person.Home, _person.Chill, _person);
         chillRouteStart = true;
     }
 
@@ -2376,6 +2376,10 @@ public class Brain
     void MakeStructureNull(string key)
     {
         var build = GetStructureFromKey(key);
+        if (build == null)
+        {
+            return;
+        }
         //the function this  building has 
         var buildFunc = BuildingController.ReturnBuildingFunction(build.HType);
 

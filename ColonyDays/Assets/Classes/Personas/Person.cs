@@ -1225,7 +1225,7 @@ public class Person : General
 
     private Profession _profession = new Profession();
 
-    Job _prevJob;//wht was the prev Job
+    Job _prevJob = Job.None;//wht was the prev Job
     Order _prevOrder;//previous order, this so far is only of use of Wheel Barrowers
 
     public Profession ProfessionProp

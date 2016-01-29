@@ -127,7 +127,7 @@ public class Dispatch
     /// <param name="prod">The product/ingredient  is needed</param>
     public void AddToOrders(Order prod)
     {
-        if (!ListContains(Orders, prod))
+        if (!ListContainsCheckID(Orders, prod))
         {
             Debug.Log("Order Added:" + prod.Product + ".placed by:" + prod.DestinyBuild);
 
@@ -140,13 +140,26 @@ public class Dispatch
     /// This is the order added onces user is ordering to Destroy an non empty FoodSrc
     /// and is use too if a Factory has stopped producing bz workers have ther FoodSrc full and
     /// Factory inventor is full too
+    /// 
+    /// Evac orders in dock are all unique
     /// </summary>
     /// <param name="evacOrder"></param>
-    public void AddEvacuationOrder(Order evacOrder)
+    public void AddEvacuationOrderInDock(Order evacOrder)
+    {
+        if (!ListContainsCheckID(Orders, evacOrder) && !ListContainsCheckID(_dormantOrders, evacOrder))
+        {
+            Orders.Insert(0, evacOrder);          
+        }
+    }
+    /// <summary>
+    /// Evac order in a wheelbacrrow will overwrite if they are from the same place and same prod 
+    /// </summary>
+    /// <param name="evacOrder"></param>
+    public void AddEvacuationOrderToWheelBarrow(Order evacOrder)
     {
         if (!ListContains(Orders, evacOrder) && !ListContains(_dormantOrders, evacOrder))
         {
-            Orders.Insert(0, evacOrder);          
+            Orders.Insert(0, evacOrder);
         }
     }
 
@@ -154,7 +167,7 @@ public class Dispatch
     /// Will return true if the 'prod' param was found in the 'list' as having the same 'Product and 
     /// (DestinyBuild or SourceBuild) and ID'
     /// </summary>
-    bool ListContains(List<Order> list, Order prod)
+    bool ListContainsCheckID(List<Order> list, Order prod)
     {
         for (int i = 0; i < list.Count; i++)
         {
@@ -165,6 +178,29 @@ public class Dispatch
                 //evacutaion orders
                 || (list[i].Product == prod.Product && list[i].SourceBuild == prod.SourceBuild 
                 && list[i].TypeOrder == H.Evacuation && list[i].ID == prod.ID))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// domnt check id
+    /// </summary>
+    /// <param name="list"></param>
+    /// <param name="prod"></param>
+    /// <returns></returns>
+    bool ListContains(List<Order> list, Order prod)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            //regular orders
+            if (list[i].Product == prod.Product && list[i].DestinyBuild == prod.DestinyBuild
+
+                //evacutaion orders
+                || (list[i].Product == prod.Product && list[i].SourceBuild == prod.SourceBuild
+                ))
             {
                 return true;
             }
@@ -204,7 +240,7 @@ public class Dispatch
     {
         RemoveOrderFromTheList(Orders, prod);
 
-        if (!ListContains(_recycledOrders, prod))
+        if (!ListContainsCheckID(_recycledOrders, prod))
         {
             _recycledOrders.Add(prod);    
         }
@@ -310,7 +346,7 @@ public class Dispatch
         }
         else//could nt find any Food Source
         {
-            if (!ListContains(_dormantOrders, order))
+            if (!ListContainsCheckID(_dormantOrders, order))
             {
                 _dormantOrders.Add(order);
             }
@@ -627,7 +663,7 @@ public class Dispatch
     void HandleThatImport(Building dock, Order ord)
     {
         var maxAmtCanTake = dock.Inventory.MaxAmtOnKGCanTakeOfAProd(ord.Product);
-        AddEvacuationOrder(ord);
+        AddEvacuationOrderInDock(ord);
 
         //if can handle the import right away
         //will added to invent and will remove it from ExpImpOrders

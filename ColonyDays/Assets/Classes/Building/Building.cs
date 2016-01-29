@@ -2247,7 +2247,7 @@ public class Building : General, Iinfo
         }
         else if (typeOfOrder == H.Evacuation)
         {
-            closWheelBarr.Dispatch1.AddEvacuationOrder(order);
+            closWheelBarr.Dispatch1.AddEvacuationOrderToWheelBarrow(order);
         }
     }
 
@@ -2279,7 +2279,7 @@ public class Building : General, Iinfo
 
         for (int i = 0; i < orders.Count; i++)
         {
-            closWheelBarr.Dispatch1.AddEvacuationOrder(orders[i]);
+            closWheelBarr.Dispatch1.AddEvacuationOrderToWheelBarrow(orders[i]);
         }
     }
 
