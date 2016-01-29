@@ -9,7 +9,6 @@
  * to see what is on front 
  */
 
-using System;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
@@ -184,6 +183,7 @@ public class ExplorerUnit
         Final = final;
         Key = crystal.ParentId;
         Intersections.Add(intersect);
+        OrderIntersections();
 
         Distance = Mathf.Abs(Vector3.Distance(intersect, currPosition));
         Building = Brain.GetBuildingFromKey(Key);
@@ -209,6 +209,14 @@ public class ExplorerUnit
     }
 
     /// <summary>
+    /// So i know wich one is closer to Current 
+    /// </summary>
+    private void OrderIntersections()
+    {
+        
+    }
+
+    /// <summary>
     /// Will be call only if was the select building to be route trhu
     /// 
     /// Will set the Crystals
@@ -224,16 +232,7 @@ public class ExplorerUnit
     {
         List<Crystal> anchorOrdered = new List<Crystal>();
 
-        //for building
-        if (Building != null)
-        {
-            anchorOrdered = MeshController.CrystalManager1.ReturnCrystalsThatBelongTo(Building, false);
-        }
-        //for still elemtnt
-        else if (StillElement != null)
-        {
-            anchorOrdered = MeshController.CrystalManager1.ReturnCrystalsThatBelongTo(StillElement, false);
-        }
+        anchorOrdered = ReturnScaledAnchorsFromBuildingOrStillElement();
 
         for (int i = 0; i < anchorOrdered.Count; i++)
         {
@@ -244,57 +243,79 @@ public class ExplorerUnit
         return anchorOrdered;
     }
 
-    /// <summary>
+    float scale = 0.04f;//5
+    List<Crystal> ReturnScaledAnchorsFromBuildingOrStillElement()
+    {
+        List<Crystal> res = new List<Crystal>();
+
+        //for building
+        if (Building != null)
+        {
+            res = ReturnScaledAnchors(Building.Anchors.ToArray(), Building.MyId);
+        }
+        //for still elemtnt
+        else if (StillElement != null)
+        {
+            res = ReturnScaledAnchors(StillElement.Anchors.ToArray(), StillElement.MyId);
+        }
+        return res;
+    }
+
+    List<Crystal> ReturnScaledAnchors(Vector3[] anchors, string myIDP)
+    {
+        List<Crystal> res = new List<Crystal>();
+        anchors = UPoly.ScalePoly(anchors, scale);
+
+        for (int i = 0; i < anchors.Length; i++)
+        {
+            res.Add(new Crystal(anchors[i], H.Obstacle, myIDP, setIdAndName: false));
+        }
+        return res;
+    }
+
+
+        /// <summary>
     /// Ordering to be closer to _fin
     /// 
     /// Pls interseection
     /// </summary>
     List<Crystal> ReturnPriorityToFin(List<Crystal> res)
     {
-        if (res.Count==0)
-        {
-            var t = this;
-        }
-
-        //-1 bz only need the first 3 
-        res.RemoveAt(res.Count-1);
-
+        var obstaMidPos = ReturnTransformPosOfBuildingOrStillEle();
         for (int i = 0; i < Intersections.Count; i++)
         {
             var inter = new Crystal(Intersections[i], H.None, "", setIdAndName: false);
             //must be moved closer to Current/Origin so in tight towns can be reached
             //bz if is moved Away from center of the building can be too far to be 
             //reached 
-            res.Add(ReturnCrystalCloserTo(inter, Current));
+            res.Add(ReturnCrystalFurtherTo(inter, obstaMidPos));
         }
         //UVisHelp.CreateHelpers(Intersections, Root.yellowCube);
         return res;
     }
 
-    Vector3 AwayFrom()
+    Vector3 ReturnTransformPosOfBuildingOrStillEle()
     {
-        if (Building != null)
+        if (Building!=null)
         {
             return Building.transform.position;
-            
         }
-        else if (StillElement != null)
+        if (StillElement!=null)
         {
             return StillElement.transform.position;
         }
-        throw new Exception("One most be not null");
+        return new Vector3();
     }
 
     /// <summary>
     /// Bz they needs to be moved a bit away from Buildign
     /// </summary>
     /// <returns></returns>
-    Crystal ReturnCrystalCloserTo(Crystal crystal, Vector3 closerTo)
+    Crystal ReturnCrystalFurtherTo(Crystal crystal, Vector3 closerTo)
     {
-        var person = PersonPot.Control.All.FirstOrDefault();
-        float moveBy = person.PersonDim * 1.5f;
+        float moveBy = 0.1f;
 
-        var moved = Vector3.MoveTowards(U2D.FromV2ToV3(crystal.Position), closerTo, moveBy);
+        var moved = Vector3.MoveTowards(U2D.FromV2ToV3(crystal.Position), Current, moveBy);
         crystal.Position = U2D.FromV3ToV2(moved);
 
         return crystal;

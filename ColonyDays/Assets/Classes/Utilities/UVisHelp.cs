@@ -22,6 +22,20 @@ public class UVisHelp : MonoBehaviour {
         return res;
     }
 
+    internal static List<General> CreateTextEnumarate(List<Crystal> _eval, string p, string texto = "", int fontSize = 120)
+    {
+        List<General> res = new List<General>();
+        for (int i = 0; i < _eval.Count; i++)
+        {
+            General g = General.Create(Root.texto3d, U2D.FromV2ToV3(_eval[i].Position));
+            TextMesh textObject = g.transform.GetComponent<TextMesh>();
+            textObject.fontSize = fontSize;
+            textObject.text = texto + "." + i;
+            res.Add(g);
+        }
+        return res;
+    }
+
     public static General CreateText(Vector3 iniPos, string texto, int fontSize = 120)
     {
         General g = General.Create(Root.texto3d, iniPos);
@@ -180,4 +194,6 @@ public class UVisHelp : MonoBehaviour {
         }
         return res;
     }
+
+  
 }

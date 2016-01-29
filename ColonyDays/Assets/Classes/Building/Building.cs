@@ -118,13 +118,10 @@ public class Building : General, Iinfo
         get { return _anchors; }
         set
         {
-            var oldAnc = _anchors;
             _anchors = value;
 
-            if ((oldAnc == null || oldAnc.Count == 0) && !IsLoadingFromFile)
-            {
-                BuildingPot.Control.Registro.ResaveOnRegistro(MyId);
-            }
+           
+            
         }
     }
 
@@ -612,11 +609,26 @@ public class Building : General, Iinfo
 
     #endregion
 
-   
 
+
+
+    private void DebugShowAnchors()
+    {
+        if (debugShowAnchors)
+        {
+            return;
+        }
+        debugShowAnchors = true;
+
+        UVisHelp.CreateHelpers(GetAnchors(), Root.blueCube);
+    }
+
+    private bool debugShowAnchors;
     //this need to be called in derived classes 
     protected new void Update()
     {
+        //DebugShowAnchors();
+
         //if is way not need to know this.
         //bz we will be going btw buildings 
         if (Category != Ca.Way)
@@ -642,6 +654,8 @@ public class Building : General, Iinfo
             _debugShip.Update();    
         }
     }
+
+   
 
     /// <summary>
     /// Updates all from Bounds to anchors 

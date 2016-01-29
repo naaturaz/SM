@@ -1,7 +1,9 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using Debug = UnityEngine.Debug;
 
 public class CryRoute
 {
@@ -398,26 +400,21 @@ public class CryRoute
         }
     }
 
+    private int counter1Debug;
     bool TryReachBuilding()
     {
-        //        Debug.Log("TryReachBuilding() called");
-
+        counter1Debug++;
         loop = true;
+
+        //UVisHelp.CreateTextEnumarate(_eval, Root.blueCube, counter1+"", 60);
 
         for (int i = 0; i < _eval.Count; i++)
         {
-            if (i == 3 || i == 4)
-            {
-                //UVisHelp.CreateHelpers(U2D.FromV2ToV3(_eval[i].Position), Root.blueCube);
-            }
-
             Line aLine = new Line(U2D.FromV2ToV3(_curr.Position), U2D.FromV2ToV3(_eval[i].Position), durationOfLines);
             var linesIntersected = IntersectCount(aLine);
 
             if (linesIntersected == 0 && !IsOnTheRoute(_eval[i].Position))
             {
-                //                Debug.Log("TryReachBuilding() _curr set");
-
                 ResetExplorer();
                 _curr = _eval[i];
                 //UVisHelp.CreateHelpers(U2D.FromV2ToV3(_curr.Position), Root.yellowCube);

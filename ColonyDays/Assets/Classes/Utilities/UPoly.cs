@@ -217,6 +217,15 @@ public class UPoly
         return polyPass;
     }
 
+    public static Vector3[] ScalePoly(Vector3[] polyPass, float by)
+    {
+        polyPass[0] = new Vector3(polyPass[0].x - by, polyPass[0].y, polyPass[0].z + by);
+        polyPass[1] = new Vector3(polyPass[1].x + by, polyPass[1].y, polyPass[1].z + by);
+        polyPass[2] = new Vector3(polyPass[2].x + by, polyPass[2].y, polyPass[2].z - by);
+        polyPass[3] = new Vector3(polyPass[3].x - by, polyPass[3].y, polyPass[3].z - by);
+        return polyPass;
+    }
+
     //the Vector3 list must have this order: NW, NE, SE, SW
     //this one is used for instances that dont need to ref the 'list' passed 
     public static List<Vector3> ScalePolyNewList(List<Vector3> polyPass, float by)

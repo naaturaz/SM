@@ -109,7 +109,7 @@ public class BuildingSaveLoad : BuildingPot
         f.AddBoxCollider(regFile);
         f.PositionFixed = true;
         f.PeopleDict = regFile.PeopleDict;
-        f.Anchors = regFile.Anchors;
+        //f.Anchors = regFile.Anchors;
 
         Control.Registro.Farms.Add(regFile.MyId, Control.CurrentSpawnBuild as DragSquare);
         Control.Registro.AllBuilding.Add(regFile.MyId, Control.CurrentSpawnBuild);
