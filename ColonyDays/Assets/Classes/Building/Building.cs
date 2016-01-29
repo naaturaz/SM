@@ -1152,6 +1152,12 @@ public class Building : General, Iinfo
         get { return _peopleDict; }
         set
         {
+
+            if (MyId.Contains("Farm"))
+            {
+                var t = this;
+            }
+
             _peopleDict = value;
 
             //no need if is loading from file now 

@@ -1051,16 +1051,18 @@ public class Brain
                 }
                 oldHome = _person.Home.MyId;
             }
+
+            //work related
             if (_person.Work != null && oldWork != _person.Work.MyId)
             {
                 _person.CreateProfession();//if a new job was found need to create a profession 
                 workRouteStart = false;
 
-                RemoveAndAddPositionsToJob();
-
                 RestartVarsAndAddToGenList();
                 oldWork = _person.Work.MyId;
             }
+
+
             if (_person.FoodSource != null && oldFoodSrc != _person.FoodSource.MyId)
             {
                 foodRouteStart = false;
@@ -1086,6 +1088,8 @@ public class Brain
             }
         }
     }
+
+   
 
     /// <summary>
     /// To address when a person changes FoodSrc , must change The whole Routes in Profession 
@@ -1139,13 +1143,13 @@ public class Brain
                 }
             }
         }
-        AddToPeopleList(newBuildKey);
+        AddToPeopleDict(newBuildKey);
     }
 
     /// <summary>
     /// The person gets added to the building peoples Dict
     /// </summary>
-    void AddToPeopleList(string keyP)
+    void AddToPeopleDict(string keyP)
     {
         if (keyP == "")
         { return; }
@@ -1809,16 +1813,11 @@ public class Brain
     void CheckWork()
     {
         //isallset is here so will check if closest building exist
-        if (!ItHasOneAlready(HPers.Work) || _isAllSet || _person.Work.Instruction == H.WillBeDestroy)
+        if (!ItHasOneAlready(HPers.Work) || _person.Work.Instruction == H.WillBeDestroy)
         {
             var newWork =JobManager.GiveWork(_person);
-
-            //wont allow a null assignment if has a job already
-            if (newWork == null && _person.Work != null)
-            {
-                return;
-            }
             _person.Work = newWork;
+            WorkPositionsUpdate();
         }
         UnivCounter(HPers.Work);
     }
@@ -1882,7 +1881,7 @@ public class Brain
                     MoveToNewHome.RouteToNewHome.CheckPoints.Clear();
                 }
 
-                AddToPeopleList(s.MyId);
+                AddToPeopleDict(s.MyId);
                 _person.Home = s;
                 //needs to be call here in case this person is the one ocpied the slot 
                 PersonPot.Control.CleanHomeLessSlot(_person.MyId);
@@ -2164,22 +2163,38 @@ public class Brain
 
     void HandleNewJobSearch()
     {
-        //he needs to find a job first to then get a better job 
-        //if (_person.Work == null)
-        //{
-        //    return;
-        //}
-
         var newWork = JobManager.ThereIsABetterJob(_person);
-
         if (newWork == null)
         {
-            Debug.Log("New work should not be null");
-            //throw new Exception("New work should not be null");
+            //Debug.Log("New work should not be null");
         }
-      
         _person.Work = newWork;
+        WorkPositionsUpdate();
     }
+
+    private string oldJob="";
+    private void WorkPositionsUpdate()
+    {
+        var currWork = oldJob;
+
+        if (_person.Work != null)
+        {
+            currWork = _person.Work.MyId;
+        }
+        //in case got a null new work
+        else currWork = "";
+
+        if (currWork != oldJob)
+        {
+            RemoveFromPeopleDict(oldJob);
+
+            AddToPeopleDict(currWork);
+            RemoveAndAddPositionsToJob();
+        }
+        //in case we have a job
+        oldJob = currWork;
+    }
+
 
     private int emptyCount;
     /// <summary>
@@ -2520,7 +2535,7 @@ public class Brain
         {
             var i = this;
             throw new Exception("Die():"+_person.MyId+" sp:"+_person.Spouse+
-                " bInfo:"+_person.DebugBornInfo+" homeID:"+_person.Home.MyId);
+                " bInfo:"+_person.DebugBornInfo+" homeID:"+_person.Home.MyId+" famID:"+_person.FamilyId);
         }
 
         fam.RemovePersonFromFamily(_person);

@@ -293,10 +293,9 @@ public class Person : General
         get { return _familyId; }
         set
         {
-
-            if (MyId.Contains("Richard"))
+            if (Home!=null && _familyId.Contains(Home.MyId) && !value.Contains(Home.MyId))
             {
-                var t = this;
+                Debug.Log(MyId + " Changing from:" + _familyId + " to:" + value + " while on:" + Home.MyId);
             }
 
             _familyId = value;

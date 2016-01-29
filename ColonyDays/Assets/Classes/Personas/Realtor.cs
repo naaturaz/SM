@@ -342,13 +342,9 @@ public class Realtor
     /// <param name="newHome"></param>
     public static void BookNewPersonInNewHome(Person person, Building newHome, string familyIDP)
     {
+        RemoveFromOldHomeFamily(person);
         var myFamily = newHome.FindFamilyById(familyIDP);
-
-        if (myFamily==null)
-        {
-            var t = 1;
-        }
-
+        
         person.FamilyId = myFamily.FamilyId;
         myFamily.CanGetAnotherAdult(person);
 
@@ -363,6 +359,23 @@ public class Realtor
 
         BuildingPot.Control.Registro.ResaveOnRegistro(newHome.MyId);
         RestartControllerForMyFamily(myFamily, person);
+    }
+
+    /// <summary>
+    /// In case is being called from In Here Realtor. 
+    /// </summary>
+    /// <param name="person"></param>
+    static void RemoveFromOldHomeFamily(Person person)
+    {
+        if (person.Home == null || person.Home.Families == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < person.Home.Families.Length; i++)
+        {
+            person.Home.Families[i].RemovePersonFromFamily(person);
+        }
     }
 
     /// <summary>

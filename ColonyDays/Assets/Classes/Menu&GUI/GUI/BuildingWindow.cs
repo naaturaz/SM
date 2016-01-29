@@ -217,8 +217,9 @@ public class BuildingWindow : GUIElement {
         //is not a house 
         if (!_building.HType.ToString().Contains("House"))
         {
-            res = "Type:" + _building.HType + " Workers:" + _building.PeopleDict.Count
-                  + " ID:" + _building.MyId
+            res = "Type:" + _building.HType + "\n Workers:" + _building.PeopleDict.Count
+                  + "\n ID:" + _building.MyId
+                  + "\n MaxWorkers:" + Book.GiveMeStat(_building.HType).MaxPeople
                   + "\n Workers:";
 
             for (int i = 0; i < _building.PeopleDict.Count; i++)

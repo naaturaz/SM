@@ -18,13 +18,11 @@ public class JobManager
     public static Structure GiveWork(Person person)
     {
         var key = DecideBasedOnAge(person);
-        person.Brain.AddToNewBuildRemoveFromOld(person.Work, key);
 
         if (UPerson.IsWorkingAtSchool(person) && !UPerson.IsMajor(person.Age))
         {
             person.IsStudent = true;
         }
-
         return Brain.GetStructureFromKey(key);
     }
 
@@ -222,7 +220,6 @@ public class JobManager
 
         if (isABetterJob)
         {
-            person.Brain.AddToNewBuildRemoveFromOld(person.Work, list[0].Key);
             return list[0].Key;
         }
         return "";
