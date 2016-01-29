@@ -52,6 +52,18 @@ public class CryRouteManager
         set { SetTheRoute(value); }//so This class can be saved and loaded
     }
 
+    public string DestinyKey
+    {
+        get { return _destinyKey; }
+        set { _destinyKey = value; }
+    }
+
+    public string OriginKey
+    {
+        get { return _originKey; }
+        set { _originKey = value; }
+    }
+
     public CryRouteManager(){}
 
     public CryRouteManager(Structure ini, Structure fin, Person person,

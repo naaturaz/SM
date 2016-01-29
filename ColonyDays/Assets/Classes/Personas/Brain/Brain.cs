@@ -317,7 +317,7 @@ public class Brain
     /// </summary>
     void AddToGenOldKeyIfAOldRouteHasOneOldBridgeOnIt(TheRoute theRoute)
     {
-        goMindState = false;
+        GoMindState = false;
         //Debug.Log("AddToGenOldKey goMindState");
 
         if (String.IsNullOrEmpty(theRoute.BridgeKey))
@@ -718,7 +718,7 @@ public class Brain
         //will add to genOldKeys since he wont use that route ever again. 
         AddToList(_generalOldKeysList, MoveToNewHome.RouteToNewHome.BridgeKey);
 
-        CheckIfClearBlackList();
+        //CheckIfClearBlackList();
     }
 
     private void RemoveMeFromOldHomeFamily(Structure oldHomeH)
@@ -805,7 +805,7 @@ public class Brain
     {
         if (IAmHomeNow() && _routesWereStarted)
         {
-            goMindState = false;
+            GoMindState = false;
             _idleTime++;
         }
 
@@ -1180,7 +1180,7 @@ public class Brain
     /// Restart the 'goMindState' 
     void RestartVarsAndAddToGenList()
     {
-        goMindState = false;
+        GoMindState = false;
         //Debug.Log("RestartVarsAndAddToGenList goMindState");
     }
 
@@ -1211,7 +1211,26 @@ public class Brain
     public bool GoMindState
     {
         get { return goMindState; }
-        set { goMindState = value; }
+        set
+        {
+            if (goMindState && !value)
+            {
+                var t = 1;
+                Debug.Log(_person.MyId+" goMind false");
+            }
+            
+            goMindState = value;
+        }
+    }
+
+
+    bool DefineIfRouterHasABlackListedBuild(CryRouteManager router)
+    {
+        if (router == null)
+        {
+            return false;
+        }
+        return BlackList.Contains(router.OriginKey) || BlackList.Contains(router.DestinyKey);
     }
 
     //if is true the Brain will executed the MindStates()
@@ -1222,26 +1241,63 @@ public class Brain
     /// </summary>
     void SetFinalRoutes()
     {
+        //this is so Person dont stay stuff there bz has some bacl listed buildings
+        //what happens is that in ChangesBuildings this is start but never ended bz
+        //then Building becomes null 
+        var religBlack = DefineIfRouterHasABlackListedBuild(_routerReligion);
+        var workBlack = DefineIfRouterHasABlackListedBuild(_routerWork);
+        var foodBlack = DefineIfRouterHasABlackListedBuild(_routerFood);
+        var chillBlack = DefineIfRouterHasABlackListedBuild(_routerChill);
+
+
         if (workRouteStart && _routerWork.IsRouteReady && _workRoute.CheckPoints.Count == 0)
         {
             _workRoute = _routerWork.TheRoute;
             CheckIfGoMindReady();
         }
+        if (workRouteStart && workBlack)
+        {
+            workRouteStart = false;
+            CheckIfGoMindReady();
+        }
+
+
         if (foodRouteStart && _routerFood.IsRouteReady && _foodRoute.CheckPoints.Count == 0)
         {
             _foodRoute = _routerFood.TheRoute;
             CheckIfGoMindReady();
         }
+        if (foodRouteStart && foodBlack)
+        {
+            foodRouteStart = false;
+            CheckIfGoMindReady();
+        }
+
+
         if (religionRouteStart && _routerReligion.IsRouteReady && _religionRoute.CheckPoints.Count == 0)
         {
             _religionRoute = _routerReligion.TheRoute;
             CheckIfGoMindReady();
         }
+        if (religionRouteStart && religBlack)
+        {
+            religionRouteStart = false;
+            CheckIfGoMindReady();
+        }
+
+
         if (chillRouteStart && _routerChill.IsRouteReady && _chillRoute.CheckPoints.Count == 0)
         {
             _chillRoute = _routerChill.TheRoute;
             CheckIfGoMindReady();
         }
+        if (chillRouteStart && chillBlack)
+        {
+            chillRouteStart = false;
+            CheckIfGoMindReady();
+        }
+
+
         if (idleRouteStart && _routerIdle.IsRouteReady && _idleRoute.CheckPoints.Count == 0)
         {
             ResetDummyIdle();
@@ -2317,8 +2373,13 @@ public class Brain
     /// place again ... it will be the same key value so and wont start to create new routes
     /// that why here i mke old value = "" so it will start new route even if the same key
     /// </summary>
-    void MakeStructureNull(string key, HPers buildFunc = HPers.None)
+    void MakeStructureNull(string key)
     {
+        var build = GetStructureFromKey(key);
+        //the function this  building has 
+        var buildFunc = BuildingController.ReturnBuildingFunction(build.HType);
+
+
         Debug.Log("MakeStructureNull");
         var checkHome = false;
         var checkWork = false;
@@ -2398,8 +2459,8 @@ public class Brain
         if (bridgesCount != newBridges)
         {
             bridgesCount = newBridges;
-            
-            
+
+
             CheckIfClearBlackList();
         }
     }
@@ -2474,20 +2535,14 @@ public class Brain
     /// </summary>
     void ClearEachBlackListedBuilding()
     {
-        var list = new List<string>();
-        list.AddRange(_blackList);
+        string[] arr = _blackList.ToArray();
         _blackList.Clear();
-        //GameScene.print(" List count"+list.Count);
 
-        for (int i = 0; i < list.Count; i++)
+        for (int i = 0; i < arr.Length; i++)
         {
-            var key = list[i];
-            if (BuildingPot.Control.Registro.AllBuilding.ContainsKey(key))
+            if (BuildingPot.Control.Registro.AllBuilding.ContainsKey(arr[i]))
             {
-                var build = BuildingPot.Control.Registro.AllBuilding[key];
-                //the function this BlackListed building has 
-                var func = BuildingController.ReturnBuildingFunction(build.HType);
-                MakeStructureNull("", func);
+                MakeStructureNull(arr[i]);
             }
         }
     }
