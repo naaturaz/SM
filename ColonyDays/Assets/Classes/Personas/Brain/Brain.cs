@@ -690,6 +690,8 @@ public class Brain
     /// </summary>
     void GoToNewHomeTail()
     {
+        Debug.Log("1 got to new home:" + _person.MyId + ".famID" + _person.FamilyId);
+
         //unbook
         _person.IsBooked = "";
         if (_person.Home.BookedHome1 != null)
@@ -707,13 +709,11 @@ public class Brain
         {
             AddOldHomeToAvailHomeIfHasSpace(oldHomeH);
             RemoveMeFromOldHomeFamily(oldHomeH);
-
         }
 
-        Debug.Log("got to new home:" + _person.MyId);
+        Debug.Log("2 got to new home:" + _person.MyId+".famID"+_person.FamilyId);
         MoveToNewHome.GetMyNameOutOfOldHomePeopleList();
         MoveToNewHome.CleanUpRouteToNewHome();
-
 
         //will add to genOldKeys since he wont use that route ever again. 
         AddToList(_generalOldKeysList, MoveToNewHome.RouteToNewHome.BridgeKey);
@@ -1868,7 +1868,7 @@ public class Brain
         bool thereIsABetterHome = Realtor.PublicIsABetterHome(_person);
 
         //shack builders can not look into this. Othr wise they will stay on Limbo once better home found 
-        if (thereIsABetterHome)
+        if (thereIsABetterHome || !string.IsNullOrEmpty(_person.IsBooked))
         {
             var oldHomeP = PullOldHome();
             var s = Realtor.GiveMeTheBetterHome(_person);
@@ -1877,21 +1877,15 @@ public class Brain
             {
                 if (oldHomeP != null)
                 {
-                    //Debug.Log("my old home added:" + oldHomeP.MyId + "." + _person.MyId);
-
                     MoveToNewHome.AddToHomeOldKeysList(oldHomeP.MyId);
                     MoveToNewHome.OldHomeKey = "";
                     MoveToNewHome.RouteToNewHome.CheckPoints.Clear();
                 }
 
-
-
                 AddToPeopleList(s.MyId);
                 _person.Home = s;
                 //needs to be call here in case this person is the one ocpied the slot 
                 PersonPot.Control.CleanHomeLessSlot(_person.MyId);
-
-                //Debug.Log("my new home:" + s.MyId + "." + _person.MyId);
 
                 _isIdleHomeNow = true;
                 MoveToNewHome.CheckOnOldKeysList();
@@ -2454,7 +2448,7 @@ public class Brain
         if (_blackList.Count > 0)
         {
             ClearEachBlackListedBuilding();
-            Debug.Log(_person.MyId+" cleared blackList");
+            Debug.Log(_person.MyId+" cleared blackList .famID"+_person.FamilyId);
         }
     }
 
@@ -2521,17 +2515,16 @@ public class Brain
     void RemoveFromOldFamily()
     {
         var fam = _person.Home.FindFamilyById(_person.FamilyId);
-        //my be moving to new home 
-        //if (fam == null)
-        //{
-        //    var newHome = GetBuildingFromKey(_person.IsBooked);
-        //    //the person needs to be removed from newHome booking 
-        //    newHome.BookedHome1.Family.RemovePersonFromFamily(_person);
-        //    fam = newHome.FindFamilyById(_person.FamilyId);
-        //}
-        fam.RemovePersonFromFamily(_person);
-        fam.LockDownFamily(_person.MyId);
 
+        if (fam == null)
+        {
+            var i = this;
+            throw new Exception("Die():"+_person.MyId+" sp:"+_person.Spouse+
+                " bInfo:"+_person.DebugBornInfo+" homeID:"+_person.Home.MyId);
+        }
+
+        fam.RemovePersonFromFamily(_person);
+        //fam.HandleKids();
     }
 
     /// <summary>

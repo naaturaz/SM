@@ -291,7 +291,16 @@ public class Person : General
     public string FamilyId
     {
         get { return _familyId; }
-        set {_familyId = value;}
+        set
+        {
+
+            if (MyId.Contains("Richard"))
+            {
+                var t = this;
+            }
+
+            _familyId = value;
+        }
     }
 
     public int UnHappyYears
@@ -745,7 +754,7 @@ public class Person : General
         }
 
         CheckHappiness();
-        //DidIDie();
+        DidIDie();
         CheckIfEmmigrate();
         CheckIfInSchool();
     }
@@ -838,7 +847,8 @@ public class Person : General
     {
         if (Home!= null && newPlace == Home)
         {
-            IsBooked = "";
+            Debug.Log("Become major in same place:"+MyId);
+            //IsBooked = "";
         }
     }
 
@@ -1686,7 +1696,7 @@ public class Person : General
         MoveNewBornToHome(kid);
 
         Debug.Log(MyId + " give birth to:" + kid.MyId+". inscribed on:"+FamilyId);
-        DebugBornInfo = FamilyId+".home:"+Home.MyId;
+        kid.DebugBornInfo = FamilyId+".home:"+Home.MyId+".mom:"+MyId;
 
         _lastNewBornYear = _dueYear;
         _dueMonth = 0;

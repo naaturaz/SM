@@ -3122,9 +3122,10 @@ public class BookedHome
             }
             
             //just addressingn a bugg tht book can happen 
-            Debug.Log("Book cleared:"+personToRemove.MyId);
+            Debug.Log("Book to clear:"+personToRemove.MyId+ " famId b4:"+personToRemove.FamilyId);
             ClearBooking();
-            //MakeOldHomeFamilyVarVirgin(personToRemove);
+            Debug.Log("Book Cleared:" + personToRemove.MyId + " famId b4:" + personToRemove.FamilyId);
+
 
             //so Individuals tht asked and where denied get a chancee to see this building unbooked
             PersonPot.Control.RestartController();

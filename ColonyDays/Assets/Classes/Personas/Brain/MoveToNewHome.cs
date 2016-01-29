@@ -254,35 +254,9 @@ public class MoveToNewHome
         //what happens is that ask too many times close to each other and breaks 
         if (searchedNewHome > 100)// * Program.gameScene.GameSpeed)
         {
-            //searchedNewHome = 0;
-            //buildRouteToNewHome = false;
-            //Debug.Log(_person.MyId + " searched over 10 times buildRouteToNewHome = false");
-
-            ////AddToHomeOldKeysList();
-            ////_person.Home = null;
-
-            ////BuildShacks();
             throw new Exception("House never should be searched more than 100 times since was initiated" +
                                 "bz was confirmed that a house exist for this person to move in" +
                                 "pls check in condintions that initatied : InitValForNewHome()");
-        }
-    }
-
-    /// <summary>
-    /// Will create shack if is full and current person the last one doesnt have a house 
-    /// 
-    /// Every time people come from emigration or somehow are without house I have to marked 
-    /// PersonController.UnivCounter=0 and BuilderPot.Control.IsNewHouseSpace=true
-    /// </summary>
-    private void CheckIfShacksAreNeed()
-    {
-        var oneHomeLess = ShacksManager.IsAtLeast1HomeLess();
-        //GameScene.print("CheckIfShacksAreNeed() called ");
-
-        if (oneHomeLess)
-        {
-            //GameScene.print("oneHomeLess true called ");
-            //BuildShacks();
         }
     }
 
@@ -291,7 +265,7 @@ public class MoveToNewHome
         newHomeRouteStart = false;
         //_newHomeRouter.IsRouteReady = true;
 
-        Debug.Log("CleanUpRouteToNewHome"+_person.MyId);
+        Debug.Log("CleanUpRouteToNewHome "+_person.MyId +" famID:"+_person.FamilyId);
         searchedNewHome = 0;
         buildRouteToNewHome = false;
         _routeToNewHome.CheckPoints.Clear();

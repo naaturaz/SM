@@ -202,7 +202,6 @@ public class Family
     /// <returns></returns>
     public int Adults()
     {
-        MakeSureAllFamilyIsUsingSameFamID();
         int res = 0;
         if (Mother != "")
         {
@@ -215,10 +214,6 @@ public class Family
         return res;
     }
 
-    bool PersonStillAlive(string person)
-    {
-        return FindPerson(person) != null;
-    }
 
     void Set1stAdult(Person adult)
     {
@@ -234,29 +229,8 @@ public class Family
         }
 
         adult.transform.parent = BuildingPot.Control.Registro.AllBuilding[_home].transform;
-
-        if (string.IsNullOrEmpty(adult.FamilyId))
-        {
-            adult.FamilyId = FamilyId;    
-        }
+        adult.FamilyId = FamilyId;    
         Debug.Log(adult.MyId + " inscribed on " + FamilyId + " as " + debug);
-        MakeSureAllFamilyIsUsingSameFamID();
-    }
-
-    /// <summary>
-    /// For bookking puposes
-    /// </summary>
-    /// <param name="adult"></param>
-    public void SetDummyFirstAdult(Person adult)
-    {
-        if (adult.Gender == H.Male)
-        {
-            _father = adult.MyId;
-        }
-        else
-        {
-            _mother = adult.MyId;
-        }
     }
 
     //tis is if has already a adult we have to try to marry them
@@ -279,8 +253,6 @@ public class Family
         //2nd question is to check that other person is not Married already , etc
         if (inFamily.WouldUMarryMe(newPerson) && newPerson.WouldUMarryMe(inFamily))
         {
-            Debug.Log(inFamily.MyId + " :accepted: " + newPerson.MyId);
-
             inFamily.Marriage(newPerson.MyId);
             newPerson.Marriage(inFamily.MyId);
 
@@ -288,11 +260,30 @@ public class Family
             inFamily.IsMajor = true;
             newPerson.IsMajor = true;
 
-            AssignNewPersonToCurrentFamilyAndHome(newPerson);
+            AddNewPersonToFamily(newPerson);
+
+            Debug.Log(inFamily.MyId + " .famId:" + inFamily.FamilyId + " :accepted: " + newPerson.MyId 
+                + " .famId:" + newPerson.FamilyId);
 
             return true;
         }
         return false;
+    }
+
+    void AddNewPersonToFamily(Person newPerson)
+    {
+        if (newPerson.Gender==H.Male)
+        {
+            Father = newPerson.MyId;
+        }
+        else if (newPerson.Gender==H.Female)
+        {
+            Mother = newPerson.MyId;
+        }
+
+        newPerson.transform.parent = BuildingPot.Control.Registro.AllBuilding[_home].transform;
+        newPerson.FamilyId = FamilyId;
+        
     }
 
 
@@ -398,8 +389,6 @@ public class Family
     /// </summary>
     void SetAdultInFamily(Person adult, string momOrDad)
     {
-        MakeSureAllFamilyIsUsingSameFamID();
-
         if (momOrDad == "M")
         {
             Mother = adult.MyId;
@@ -415,38 +404,6 @@ public class Family
         //Debug.Log(adult.MyId + " inscribed on " + FamilyId +" as " + momOrDad);
     }
 
-    /// <summary>
-    /// When the father is coming here all people has to addopt his FamID regardless
-    /// 
-    /// The father FamID could be the 'Family:Mothername.888' but that is ok. bz
-    /// the purpose of this is that all in the family has the same ID 
-    /// </summary>
-    private void MakeSureAllFamilyIsUsingSameFamID()
-    {
-        UpdateAllPeopleInFamilyWithFamID();
-    }
-
-    void UpdateAllPeopleInFamilyWithFamID()
-    {
-        var fatherO = FindPerson(Father);
-        var momO = FindPerson(Mother);
-        List<Person> list = new List<Person>(){fatherO, momO};
-
-        for (int i = 0; i < Kids.Count; i++)
-        {
-            list.Add(FindPerson(Kids[i]));
-        }
-
-        for (int i = 0; i < list.Count; i++)
-        {
-            if (list[i] != null)
-            {
-                list[i].FamilyId = FamilyId;
-            }
-        }
-        //Debug.Log("All adopted famID:"+FamilyId+".ct:"+list.Count);
-    }
-
     private void MakeAdultFatherOfKids(Person newP)
     {
         SetAdultInFamily(newP, "F");
@@ -454,6 +411,13 @@ public class Family
         for (int i = 0; i < Kids.Count; i++)
         {
             var kid = FindPerson(Kids[i]);
+
+            //in case kid die 
+            if (kid == null)
+            {
+                continue;
+            }
+
             kid.Father = newP.MyId;
             kid.FamilyId = FamilyId;
         }
@@ -467,6 +431,13 @@ public class Family
         for (int i = 0; i < Kids.Count; i++)
         {
             var kid = FindPerson(Kids[i]);
+
+            //in case kid die 
+            if (kid == null)
+            {
+                continue;
+            }
+
             kid.Mother = newP.MyId;
             kid.FamilyId = FamilyId;
         }
@@ -718,23 +689,11 @@ public class Family
     }
 
     /// <summary>
-    /// Call once both parent had passed away
-    /// </summary>
-    internal void LockDownFamily(string debugCaller)
-    {
-        Debug.Log("LockDown called on:" + debugCaller);
-        //UnLockFamily();
-        HandleKids();
-
-       // LockToggleFamily();
-    }
-
-    /// <summary>
     /// Addressing kids that are major but never found a house 
     /// 
     /// Will make the first kid major and head of the house 
     /// </summary>
-    private void HandleKids()
+    public void HandleKids()
     {
         if (Adults() > 0)
         {

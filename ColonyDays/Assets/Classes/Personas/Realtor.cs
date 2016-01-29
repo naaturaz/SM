@@ -343,6 +343,12 @@ public class Realtor
     public static void BookNewPersonInNewHome(Person person, Building newHome, string familyIDP)
     {
         var myFamily = newHome.FindFamilyById(familyIDP);
+
+        if (myFamily==null)
+        {
+            var t = 1;
+        }
+
         person.FamilyId = myFamily.FamilyId;
         myFamily.CanGetAnotherAdult(person);
 

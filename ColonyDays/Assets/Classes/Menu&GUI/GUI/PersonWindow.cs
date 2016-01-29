@@ -98,7 +98,8 @@ public class PersonWindow : GUIElement {
                      + "\n Nutrition:" + _person.NutritionLevel + "\n Profession:" +
                      _person.ProfessionProp.ProfDescription
                      + "\n ID:" + _person.MyId
-                     + "\n FamID:" + _person.FamilyId;
+                     + "\n FamID:" + _person.FamilyId
+                     + "\n Spouse:" + _person.Spouse;
 
         if (_person.Home!=null)
         {
