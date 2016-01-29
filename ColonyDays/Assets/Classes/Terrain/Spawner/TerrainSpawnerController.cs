@@ -13,7 +13,7 @@ public class TerrainSpawnerController : ControllerParent
     float minHeightToSpawn;//min height to spawn obj on terrain
     private float maxHeightToSpawn;
 
-    private int multiplier = 30;//75 /80  10
+    private int multiplier = 80;//75 /80  10
 
     int howManyTreesToSpawn = 20;//50
     int howManyStonesToSpawn =3;
@@ -36,21 +36,25 @@ public class TerrainSpawnerController : ControllerParent
 
     List<string> allStones = new List<string>()
     {
-        Root.stone0, Root.stone1, Root.stone2, Root.stone3,
-        Root.stone4, Root.stone5, Root.stone6, Root.stone7,
+        //Root.stone0, 
+        Root.stone1, Root.stone2
+        //, Root.stone3,
+        //Root.stone4, Root.stone5, Root.stone6, Root.stone7,
     };
 
     List<string> allIron = new List<string>()
     {
-        Root.iron1, Root.iron2, Root.iron3 ,Root.iron4,Root.iron5
+        Root.iron1
+        //, Root.iron2, Root.iron3 ,Root.iron4,Root.iron5
     
     };
     //gold stones here 
     List<string> allGold = new List<string>()
     {
-        Root.gold0, Root.gold1, Root.gold2, Root.gold3,
-        Root.gold4
-    
+        //Root.gold0
+         Root.gold1
+        //Root.gold2, Root.gold3,
+        //Root.gold4
     };
 
     List<string> allOrna = new List<string>()
@@ -242,7 +246,9 @@ public class TerrainSpawnerController : ControllerParent
                     if (AllVertexs[index].y > minHeightToSpawn && AllVertexs[index].y < maxHeightToSpawn &&
                         !usedVertexPos[index] && !isOnTheStartZone && !regionContainTerraCry)
                     {
-                        CreateObjAndAddToMainList(typePass, AllVertexs[index], rootToSpawnIndex, index);
+                        Vector3 finaPos = AssignRandomIniPosition(AllVertexs[index], 0);
+                        
+                        CreateObjAndAddToMainList(typePass, finaPos, rootToSpawnIndex, index);
                     }
                     else i--;
                 }
@@ -259,7 +265,7 @@ public class TerrainSpawnerController : ControllerParent
     public void SpawnRandomTreeAroundThisPos(Person pers)
     {
         //a position ard his Job. his job place is a forester place 
-        Vector3 finaPos = pers.AssignRandomIniPosition(pers.Work.transform.position, 5);
+        Vector3 finaPos = pers.AssignRandomIniPosition(pers.Work.transform.position, 15);
         int rootToSpawnIndex = ReturnRandomRootIndex(H.Tree);
 
         //so is saved and created
@@ -519,4 +525,107 @@ public class TerrainSpawnerController : ControllerParent
         AllSpawnedDataList.Clear();
         SaveData();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private static int secCount;
+    private static Vector3 originalPoint;
+    /// <summary>
+    /// Returns Random position from origin. If fell inside a building will find another spot
+    /// until is in a clear zone
+    /// 
+    /// If origin is not specified will use MeshController.AllVertexs.Count
+    /// 
+    /// Will throw new Exception("Cant be use if MeshController.AllVertexs.Count == 0");
+    /// </summary>
+    /// <param name="howFar">How far will go</param>
+    public static Vector3 AssignRandomIniPosition(Vector3 origin = new Vector3(), float howFar = 1)
+    {
+        if (origin == new Vector3())
+        {
+            origin = ReturnIniPos();
+        }
+
+        //so origin is not changed in every recursive
+        if (originalPoint == new Vector3())
+        {
+            originalPoint = origin;
+            origin = ReturnRandomPos(origin, howFar);
+        }
+        else
+        {
+            origin = ReturnRandomPos(originalPoint, howFar);
+        }
+        //will add one unit to how far so can move further
+        howFar += 0.1f;
+
+        //to check if the poly ard it is free of obstacles 
+        var polyToCheck = UPoly.CreatePolyFromVector3(origin, 1f, 1f);
+
+        if (MeshController.CrystalManager1.IntersectAnyLine(polyToCheck, origin) || !IsOnTerrain(origin))
+        {
+            secCount++;
+            if (secCount > 1000)
+            {
+                throw new Exception("Infinite loop terraSpawContrl");
+            }
+            origin = AssignRandomIniPosition(origin, howFar);
+        }
+
+        originalPoint = new Vector3();
+        secCount = 0;
+        return origin;
+    }
+
+    
+
+    private static Vector3 ReturnIniPos()
+    {
+        SPr pp = new SPr();
+
+        if (pp.MeshController.AllVertexs.Count == 0)
+        {
+            throw new Exception("Cant be use if MeshController.AllVertexs.Count == 0");
+        }
+
+        return pp.MeshController.AllVertexs[UMath.GiveRandom(0, pp.MeshController.AllVertexs.Count)];
+    }
+
+    private static Vector3 ReturnRandomPos(Vector3 origin, float howFar)
+    {
+        float x = UMath.Random(-howFar, howFar);
+        float z = UMath.Random(-howFar, howFar);
+        origin = new Vector3(origin.x + x, origin.y, origin.z + z);
+        return origin;
+    }
+
+    /// <summary>
+    /// Will say if origin is on terrain 
+    /// </summary>
+    /// <param name="origin"></param>
+    /// <returns></returns>
+    public static bool IsOnTerrain(Vector3 origin)
+    {
+        SMe mm = new SMe();
+        var hit = mm.SubDivide.FindYValueOnTerrain(origin.x, origin.z);
+        var terrCenter = mm.IniTerr.MathCenter;
+
+        if (Mathf.Abs(terrCenter.y - hit) < 0.1f)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
 }

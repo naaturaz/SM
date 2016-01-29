@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
+using Random = UnityEngine.Random;
 
 public class StillElement : TerrainRamdonSpawner {
     private Vector3 _min;
@@ -13,8 +15,6 @@ public class StillElement : TerrainRamdonSpawner {
     private int _minedNowBy; 
 
     List<Vector3> _anchors = new List<Vector3>();
-
-
 
     public List<Vector3> Anchors
     {
@@ -31,7 +31,17 @@ public class StillElement : TerrainRamdonSpawner {
     // Use this for initialization
 	protected void Start ()
 	{
+        UpdateMinAndMaxVar();
+        var bou = FindBounds(_min, _max);
+        Anchors = FindAnchors(bou);
+
+	    if (!AmIValid())
+	    {
+	        return;
+	    }
+
 	    addCrystals = true;
+        AddCrystalsStart();
         base.Start();//intended to call TerrainRandomSpawner.cs
 
 	    if (ReplantedTree)
@@ -41,6 +51,37 @@ public class StillElement : TerrainRamdonSpawner {
 
 	    LoadGrowingTree();
 	}
+
+    /// <summary>
+    /// Will tel if anchors are colliding with anyohter obstacle on Scene . if so will remove it 
+    /// This is only need to be done the first time the obj is spwaning if is loadin from file is not needed
+    /// </summary>
+    /// <returns></returns>
+    private bool AmIValid()
+    {
+        if (HType == H.Ornament || HType == H.Grass)
+        {
+            return true;
+        }
+
+        if (MeshController.CrystalManager1.IntersectAnyLine(Anchors, transform.position))
+        {
+            Destroy();
+            Program.gameScene.controllerMain.TerraSpawnController.RemoveStillElement(this);
+
+            return false;
+        }
+        return true;
+    }
+
+    void AddCrystalsStart()
+    {
+        if (addCrystals && MeshController.CrystalManager1.CrystalRegions.Count > 0)
+        {
+            addCrystals = false;
+            AddCrystals();
+        }
+    }
 
     /// <summary>
     /// To address the loading of a growing tree
@@ -62,9 +103,6 @@ public class StillElement : TerrainRamdonSpawner {
             return;
         }
 
-        UpdateMinAndMaxVar();
-        var bou = FindBounds(_min, _max);
-        Anchors = FindAnchors(bou);
 
         MeshController.CrystalManager1.Add(this);
     }
@@ -72,12 +110,6 @@ public class StillElement : TerrainRamdonSpawner {
 	// Update is called once per frame
 	protected void Update () 
     {
-	    if (addCrystals && MeshController.CrystalManager1.CrystalRegions.Count>0)
-	    {
-	        addCrystals = false;
-            AddCrystals();
-	    }
-
         CheckIfCanGrow();
 	}
 
@@ -118,7 +150,8 @@ public class StillElement : TerrainRamdonSpawner {
         List<Vector3> res = new List<Vector3>();
         for (int i = 0; i < list.Count; i++)
         {
-            res.Add(m.Vertex.BuildVertexWithXandZ(list[i].x, list[i].z));
+            //res.Add(m.Vertex.BuildVertexWithXandZ(list[i].x, list[i].z));
+            res.Add(new Vector3( list[i].x, m.IniTerr.MathCenter.y, list[i].z));
         }
         //UVisHelp.CreateHelpers(res, Root.blueCube);
         return res;

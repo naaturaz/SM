@@ -8,7 +8,11 @@ public class InitializerTerrain : General
     public float StepZ;//how far in Z a real vertices is from another
     public int Columns = 0;//how many columns the mesh has
     public int Rows = 0;//how many rows the mesh has
-    public Vector3 MathCenter;//center of terrain on real Y
+
+    //center of terrain on real Y
+    private Vector3 _mathCenter;
+
+
 
     //of the malla the whole terrain 
     private float _lenght;
@@ -23,6 +27,13 @@ public class InitializerTerrain : General
     {
         get { return _height; }
     }
+
+    public Vector3 MathCenter
+    {
+        get { return _mathCenter; }
+        set { _mathCenter = value; }
+    }
+
 
     //initializes the Vector3[] vertices and the Mesh 
     public void Initializer(ref Vector3[] vertices, ref Mesh mesh)

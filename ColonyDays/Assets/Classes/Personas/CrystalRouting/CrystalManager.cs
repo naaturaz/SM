@@ -1301,13 +1301,6 @@ public class CrystalManager  {
     {
         var res = ReturnCrystalsLinksLandZones(_bounds[0]);
 
-        //Crystal hhad no link 
-        //if (res.Count==0)
-        //{
-        //    pollResult = "";
-        //    return;
-        //}
-
         var mostCommom = UString.ReturnMostCommonName(res);
         pollResult = mostCommom;
     }
@@ -1363,7 +1356,6 @@ public class CrystalManager  {
     } 
     
     ///<summary>
-    /// Will tell if those 'poly' intersect any line btw them and the 'iniPos'
     /// 
     /// Final is the final position
     /// </summary>

@@ -338,7 +338,9 @@ public class Building : General, Iinfo
         List<Vector3> res = new List<Vector3>();
         for (int i = 0; i < list.Count; i++)
         {
-            res.Add(m.Vertex.BuildVertexWithXandZ(list[i].x, list[i].z));
+            res.Add(new Vector3(list[i].x, m.IniTerr.MathCenter.y, list[i].z));
+
+            //res.Add(m.Vertex.BuildVertexWithXandZ(list[i].x, list[i].z));
         }
         //UVisHelp.CreateHelpers(res, Root.blueCube);
         return res;
