@@ -307,6 +307,14 @@ public class Way : Building
         }
     }
 
+    public void DestroyWayFromUserRightClick()
+    {
+        DestroyBigPrevBoxes();
+        ClearPrevWay();
+        _firstWayPoint = new Vector3();
+
+    }
+
     /// <summary>
     /// Destroys the list passed as arg
     /// </summary>

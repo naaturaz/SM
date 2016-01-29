@@ -200,7 +200,7 @@ public class InputMain : InputParent {
         Way fWay = BuildingPot.Control.CurrentSpawnBuild as Way;
         if (fWay != null)
         {
-            fWay.DestroyBigPrevBoxes();
+            fWay.DestroyWayFromUserRightClick();
         }
     }
 

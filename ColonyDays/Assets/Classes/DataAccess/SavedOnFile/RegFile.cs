@@ -168,6 +168,8 @@ public class RegFile  {
     public Family[] Familes;
 
     public int DollarsPay;
+
+    //all ways load this but  is only save it by bridges. 
     public List<Vector3> Anchors;
 
     public RegFile(string myId, H type, Rect dimOnMap, Ca category, Vector3 iniPosition, 

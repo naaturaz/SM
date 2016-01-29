@@ -95,6 +95,7 @@ public class Bridge : Trail
     {
         Anchors = GetBridgeAnchors();
         //    UVisHelp.CreateHelpers(Anchors, Root.redSphereHelp);
+        BuildingPot.Control.Registro.ResaveOnRegistro(MyId);
     }
 
     /// <summary>

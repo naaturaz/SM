@@ -109,7 +109,6 @@ public class BuildingSaveLoad : BuildingPot
         f.AddBoxCollider(regFile);
         f.PositionFixed = true;
         f.PeopleDict = regFile.PeopleDict;
-        //f.Anchors = regFile.Anchors;
 
         Control.Registro.Farms.Add(regFile.MyId, Control.CurrentSpawnBuild as DragSquare);
         Control.Registro.AllBuilding.Add(regFile.MyId, Control.CurrentSpawnBuild);
@@ -165,7 +164,6 @@ public class BuildingSaveLoad : BuildingPot
         s.Families = regFile.Familes;
         s.LandZone1 = regFile.LandZone1;
         s.DollarsPay = regFile.DollarsPay;
-        s.Anchors = regFile.Anchors;
 
         Control.Registro.Structures.Add(s.MyId, Control.CurrentSpawnBuild as Structure);
         Control.Registro.AllBuilding.Add(s.MyId, Control.CurrentSpawnBuild);

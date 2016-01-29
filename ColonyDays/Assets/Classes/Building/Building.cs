@@ -763,11 +763,25 @@ public class Building : General, Iinfo
         //bz this action needs to be immediate 
         if (action == H.Cancel)
         {
+            if (MyId.Contains(H.Bridge+""))
+            {
+                Trail t = (Trail) this;
+                //means the brdige is currenty being built at the time by the class
+                if (t.CurrentLoop!=H.None)
+                {
+                    return;
+                }
+            }
+
+            if (Category==Ca.Way)
+            {
+                Way t = (Way)this;
+            
+            }
+
             DestroyCool();
             return;
         }
-
-
 
         LayerRoutine("done");
         PositionFixed = true;
