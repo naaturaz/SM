@@ -35,7 +35,7 @@ public class PersonWindow : GUIElement {
     {
         while (true)
         {
-            yield return new WaitForSeconds(2f); // wait
+            yield return new WaitForSeconds(0.1f); // wait
 
             //means is showing 
             if (transform.position == iniPos)

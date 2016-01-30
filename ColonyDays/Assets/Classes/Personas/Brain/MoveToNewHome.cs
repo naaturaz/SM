@@ -152,11 +152,15 @@ public class MoveToNewHome
             && _brain.IAmHomeNow())
         {
             //    Debug.Log(_person.MyId + " setting to new home");
-
             _routeToNewHome = _newHomeRouter.TheRoute;
             GoMindTrue();
             _brain.RoutesWereStarted = false;
-            _person.Body.Location = HPers.Home;
+
+            //bz was overwritting that and people would be stuck on home after tey moved in
+            if (_person.Body.Location != HPers.MovingToNewHome)
+            {
+                _person.Body.Location = HPers.Home;
+            }
         }
     }
 

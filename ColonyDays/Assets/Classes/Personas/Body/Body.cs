@@ -42,7 +42,16 @@ public class Body //: MonoBehaviour //: General
     public HPers Location
     {
         get { return _location; }
-        set { _location = value; }
+        set
+        {
+            if (_location == HPers.MovingToNewHome && value != HPers.Restarting)
+            {
+                Debug.Log("Ret Body Location: "+_person.MyId);
+                //return;
+            }
+
+            _location = value;
+        }
     }
 
     public HPers GoingTo
