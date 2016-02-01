@@ -105,11 +105,11 @@ public class Root : MonoBehaviour
         public static string stone6 = "Prefab/Terrain/Spawner/Stone/Stone 6";
         public static string stone7 = "Prefab/Terrain/Spawner/Stone/Stone 7";
         
-        public static string iron1 = "Prefab/Terrain/Spawner/Iron/Iron";
-        public static string iron2 = "Prefab/Terrain/Spawner/Iron/Iron 1";
-        public static string iron3 = "Prefab/Terrain/Spawner/Iron/Iron 2";
-        public static string iron4 = "Prefab/Terrain/Spawner/Iron/Iron 3";
-        public static string iron5 = "Prefab/Terrain/Spawner/Iron/Iron 4";
+        public static string iron0 = "Prefab/Terrain/Spawner/Iron/Iron";
+        public static string iron1 = "Prefab/Terrain/Spawner/Iron/Iron 1";
+        public static string iron2 = "Prefab/Terrain/Spawner/Iron/Iron 2";
+        public static string iron3 = "Prefab/Terrain/Spawner/Iron/Iron 3";
+        public static string iron4 = "Prefab/Terrain/Spawner/Iron/Iron 4";
 
 
         public static string gold0 = "Prefab/Terrain/Spawner/Gold/Gold";

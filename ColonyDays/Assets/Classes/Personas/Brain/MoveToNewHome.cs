@@ -246,7 +246,12 @@ public class MoveToNewHome
 
         _brain.Who = HPers.Home;
         _brain.SearchAgain(true);
-        searchedNewHome++;
+
+        //only will be added if is not moving bz in Brain.CheckHome() we wont allow the search if is moving 
+        if (!_person.Body.MovingNow)
+        {
+            searchedNewHome++;
+        }
 
         if (searchedNewHome > 50)
         {

@@ -117,6 +117,7 @@ public class PersonWindow : GUIElement {
     {
         var res = "\n_________________________________\n GoMindState:" + _person.Brain.GoMindState +
                   "\n fdRouteChks:" + _person.Brain._foodRoute.CheckPoints.Count
+                  + "\n movToNwHomRtChks:" + _person.Brain.MoveToNewHome.RouteToNewHome.CheckPoints.Count
                      + "\n CurTask:" + _person.Brain.CurrentTask
                      + "\n PrevTask:" + _person.Brain.PreviousTask
                      + "\n IsBooked:" + _person.IsBooked

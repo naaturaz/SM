@@ -224,8 +224,11 @@ public class ExplorerUnit
     /// </summary>
     public void Create4Crystals()
     {
+        Crystals.Clear();
         var anchorOrder = ReturnOrderedAnchors();
-        Crystals = ReturnPriorityToFin(anchorOrder);
+     
+        Crystals.AddRange(anchorOrder);
+        Crystals.AddRange(ReturnIntersectionsPriorityToFin());
     }
 
     List<Crystal> ReturnOrderedAnchors()
@@ -279,8 +282,11 @@ public class ExplorerUnit
     /// 
     /// Pls interseection
     /// </summary>
-    List<Crystal> ReturnPriorityToFin(List<Crystal> res)
+    //List<Crystal> ReturnPriorityToFin(List<Crystal> res)
+    List<Crystal> ReturnIntersectionsPriorityToFin()
     {
+        List<Crystal> res = new List<Crystal>();
+
         var obstaMidPos = ReturnTransformPosOfBuildingOrStillEle();
         for (int i = 0; i < Intersections.Count; i++)
         {

@@ -54,7 +54,7 @@ public class Forester : Profession
         StillElementId = OrderedSites[0].LocMyId;
 
         //moving the route point a bit towards the origin so when chopping tree its not inside the tree 
-        FinRoutePoint = Vector3.MoveTowards(FinRoutePoint, _person.Work.transform.position, MoveTowOrigin * 2.5f);
+        FinRoutePoint = Vector3.MoveTowards(FinRoutePoint, _person.Work.transform.position, MoveTowOrigin * 4f);//2,5
 
         InitRoute();
     }

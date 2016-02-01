@@ -208,6 +208,26 @@ public class BuildersManager
     public void Update()
     {
         CheckIfAnyToGreenLight();
+        RemoveFullyBuiltOrRemoved();
+    }
+
+    /// <summary>
+    /// Bz if they are fuly built sometimes they stay in the _constructions
+    /// 
+    /// So if is fully built or being removed can be removed from _constructions 
+    /// </summary>
+    private void RemoveFullyBuiltOrRemoved()
+    {
+        if (_constructions.Count == 0)
+        { return; }
+
+        var st = Brain.GetStructureFromKey(Constructions[0].Key);
+
+        if (st==null || st.StartingStage==H.Done)
+        {
+            PassedQueue.Remove(_constructions[0].Key);
+            Constructions.RemoveAt(0);
+        }
     }
 
     /// <summary>

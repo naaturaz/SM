@@ -2200,6 +2200,12 @@ public class Building : General, Iinfo
     /// </summary>
     void CheckIfOrdersAreNeeded()
     {
+        //only order inpu twhen is has workers
+        if (PeopleDict.Count==0)
+        {
+            return;
+        }
+
         var rawsOnNeed = BuildingPot.Control.ProductionProp.ReturnIngredients(CurrentProd.Product);
 
         if (rawsOnNeed == null)
@@ -2214,12 +2220,10 @@ public class Building : General, Iinfo
             if (!HaveThisProdOnInv(prod))
             {
                 //use 10000 to put a large number of units needed
-                Order prodNeed = new Order(prod, MyId, 10000);
+                Order prodNeed = new Order(prod, MyId, 100);
 
                 //BuildingPot.Control.Dispatch1.AddToOrders(prodNeed);
-
                 AddToClosestWheelBarrowAsOrder(prodNeed, H.None);
-             
             }
         }
     }
@@ -2242,8 +2246,7 @@ public class Building : General, Iinfo
 
         if (typeOfOrder == H.None)
         {
-
-            closWheelBarr.Dispatch1.AddToOrders(order);            
+            closWheelBarr.Dispatch1.AddToOrdersToWheelBarrow(order);            
         }
         else if (typeOfOrder == H.Evacuation)
         {
@@ -2752,7 +2755,7 @@ public class Building : General, Iinfo
         //so Dockers starts looking for this in the Storage Buildings 
         Order local = new Order();
         local = order;
-        _dispatch.AddToOrders(local);
+        _dispatch.AddToOrdersToDock(local);
     }
 
 

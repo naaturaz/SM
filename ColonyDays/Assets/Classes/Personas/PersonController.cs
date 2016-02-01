@@ -102,7 +102,7 @@ public class PersonController : PersonPot
 
     void Map()
     {
-        int multiplier = 1000;
+        int multiplier = 10;
         int factor = 100;
         int ini = multiplier*factor;
 

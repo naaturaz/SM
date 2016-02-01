@@ -373,8 +373,8 @@ public class BuildingWindow : GUIElement {
         {
             MakeThisTabActive(_gaveta);
         }
-        //ig click inv
-        else if (_ordBtnRect.Contains(Input.mousePosition) && Input.GetMouseButtonUp(0) && 
+        //if click ord
+        else if (_building!=null && _ordBtnRect.Contains(Input.mousePosition) && Input.GetMouseButtonUp(0) && 
             (_building.HType == H.Dock || _building.HType == H.DryDock ||_building.HType == H.Supplier))
         {
             MakeThisTabActive(_orders);

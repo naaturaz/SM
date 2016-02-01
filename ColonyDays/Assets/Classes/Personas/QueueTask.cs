@@ -117,6 +117,7 @@ public class QueueElement
     /// <returns></returns>
     public bool IsCheckedByAll()
     {
-        return _personChecked.Count == PersonPot.Control.All.Count;
+        //> is bz some people had die in the process so will be bigger that current 
+        return _personChecked.Count >= PersonPot.Control.All.Count;
     }
 }

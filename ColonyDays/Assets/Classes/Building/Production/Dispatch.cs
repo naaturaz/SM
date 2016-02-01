@@ -125,9 +125,24 @@ public class Dispatch
     /// in  any Storage 
     /// </summary>
     /// <param name="prod">The product/ingredient  is needed</param>
-    public void AddToOrders(Order prod)
+    public void AddToOrdersToDock(Order prod)
     {
         if (!ListContainsCheckID(Orders, prod))
+        {
+            Debug.Log("Order Added:" + prod.Product + ".placed by:" + prod.DestinyBuild);
+
+            Orders.Add(prod);
+            _recycledOrders.Remove(prod);
+        }
+    }
+
+    /// <summary>
+    /// Bz they dont need to check ID if building place a order of a material should wait until is completed 
+    /// </summary>
+    /// <param name="prod"></param>
+    public void AddToOrdersToWheelBarrow(Order prod)
+    {
+        if (!ListContains(Orders, prod))
         {
             Debug.Log("Order Added:" + prod.Product + ".placed by:" + prod.DestinyBuild);
 
