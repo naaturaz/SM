@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -514,7 +515,7 @@ public class General : MonoBehaviour
     private static string toFind;
     private static GameObject result;
 
-    public static GameObject FindGameObjectInHierarchy( string find,GameObject gameO)
+    public static GameObject FindGameObjectInHierarchy(string find,GameObject gameO)
     {
         toFind = find;
         AddToList(gameO);
@@ -553,6 +554,7 @@ public class General : MonoBehaviour
 
     private static void FindResult()
     {
+        allChilds = list.ToArray();
         result = list.Find(a => a.transform.name == toFind);
 
         count = 0;
@@ -560,7 +562,37 @@ public class General : MonoBehaviour
         toFind = "";
     }
 
+
+
+    static GameObject[] allChilds; 
+    //--
+    public static GameObject[] FindAllChildsGameObjectInHierarchy(GameObject gameO)
+    {
+        AddToList(gameO);
+        RecuLoop();
+
+        return allChilds;
+    }
+
+
+
+    public void AssignToAllGeometryAsSharedMat(GameObject gameO, string MaterialKey)
+    {
+        var childs = FindAllChildsGameObjectInHierarchy(gameObject);
+
+        for (int i = 0; i < childs.Length; i++)
+        {
+            var obj = childs[i];
+            var render = obj.GetComponent<Renderer>();
+
+            if (render != null)
+            {
+                render.sharedMaterial = Resources.Load(Root.RetMaterialRoot(MaterialKey)) as Material;
+            }
+        }
+    }
     #endregion
 
 
 }
+

@@ -13,12 +13,12 @@ public class TerrainSpawnerController : ControllerParent
     float minHeightToSpawn;//min height to spawn obj on terrain
     private float maxHeightToSpawn;
 
-    private int multiplier = 85;//75 /80  10
+    private int multiplier = 10;//75 /80  10
 
     int howManyTreesToSpawn = 20;//50
-    int howManyStonesToSpawn =3;
-    int howManyIronToSpawn = 3;
-    int howManyGoldToSpawn = 3;
+    int howManyStonesToSpawn =3;//3
+    int howManyIronToSpawn = 3;//3
+    int howManyGoldToSpawn = 3;//3
     int howManyOrnaToSpawn = 20;//50
     int howManyGrassToSpawn = 10;
 
@@ -297,6 +297,7 @@ public class TerrainSpawnerController : ControllerParent
         }
 
         //AssignSharedMaterial(temp);
+        //temp.AssignToAllGeometryAsSharedMat(temp.gameObject, "Enviroment");
 
         AllRandomObjList.Add(temp);
         if(IsToSave){SaveOnListData(temp, typePass, rootToSpawnIndex, index);}

@@ -158,10 +158,13 @@ public class Building : General, Iinfo
         {materialKey = hType + "." + Ma.matBuildBase;}
 
         obj.MaterialKey = materialKey;
-        //obj.Geometry.GetComponent<Renderer>().sharedMaterial = Resources.Load(Root.RetMaterialRoot(materialKey)) as Material;
+
+        //obj.AssignToAllGeometryAsSharedMat(obj.gameObject, materialKey);
 
         return obj;
     }
+
+
 
     /// <summary>
     /// Checks if Terrain below the build _isEven or _isColliding, and is tall enough
