@@ -1,11 +1,18 @@
 ﻿/*Handles funtions related to vertex operations 
  */
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Vertexer : General//only to use print()
 {
     private List<int> _indexesHover = new List<int>();//the lots indexes hovered
+
+    /// <summary>
+    /// Will hold the list of int and corresponendt of Vector 3 for CurrentVertexs asked for MeshController
+    /// This is implemented fot GC
+    /// </summary>
+    Dictionary<int, List<Vector3>> _vertexBank = new Dictionary<int, List<Vector3>>(); 
 
     public List<int> IndexesHover
     {
@@ -28,17 +35,42 @@ public class Vertexer : General//only to use print()
             print("Malla pass had not lots assgined");
             return new List<Vector3>();
         }
+
+        //for GC
+        var indexMiddle = UMesh.ReturnIndexContain(hitMouseOnTerrain.point, mallaPass.Lots);
+        if (IsOnBankAlready(indexMiddle))
+        {
+            return _vertexBank[indexMiddle];
+        }
+
         List<Vector3> objects = new List<Vector3>();
         objects = UMesh.ReturnThePos(hitMouseOnTerrain.point, stepX, stepZ, columns, rows);
         
         _indexesHover = UMesh.ReturnIndexesContain(objects, mallaPass.Lots);
-        return UMesh.ReturnCurrentLotsVertex(IndexesHover, mallaPass.Lots);
+        var res = UMesh.ReturnCurrentLotsVertex(IndexesHover, mallaPass.Lots);
+
+        AddToBank(indexMiddle, res);
+        return res;
     }
+
+
+    void AddToBank(int indexMiddle, List<Vector3> vertexes)
+    {
+        _vertexBank.Add(indexMiddle, vertexes);
+    }
+
+    bool IsOnBankAlready(int indexMiddle)
+    {
+        return _vertexBank.ContainsKey(indexMiddle);
+    }
+
+
+
 
     //Given x and z Build a fake vertex where the terrain hits on Y... 
     public Vector3 BuildVertexWithXandZ(float x, float z)
     {
-//        Debug.Log("BlueRay");
+//       Debug.Log("BlueRay");
         return new Vector3(x, m.SubDivide.FindYValueOnTerrain(x, z), z);
     }
 

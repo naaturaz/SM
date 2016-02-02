@@ -146,13 +146,15 @@ public class PersonalObject
         if (_current != null && renderer == null)
         {
             var gO = General.FindGameObjectInHierarchy("Geometry", _current.gameObject);
-            renderer = gO.GetComponent<Renderer>();
+            if (gO != null)
+            {
+                renderer = gO.GetComponent<Renderer>();
+            }
         }
 
         if (renderer != null)
         {
             renderer.enabled = true;
-
         }
     }
 
@@ -161,14 +163,15 @@ public class PersonalObject
         if (_current != null && renderer == null)
         {
             var gO = General.FindGameObjectInHierarchy("Geometry", _current.gameObject);
-            renderer = gO.GetComponent<Renderer>();
+            if (gO != null)
+            {
+                renderer = gO.GetComponent<Renderer>();
+            }
         }
 
         if (renderer!=null)
         {
             renderer.enabled = false;
-            
         }
-
     }
 }

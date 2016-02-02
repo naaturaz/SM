@@ -76,7 +76,7 @@ public class Brain
 
     public Brain(Person person)
     {
-        _moveToNewHome = new MoveToNewHome(this, person, currStructure);
+        _moveToNewHome = new MoveToNewHome(this, person);
         _majorAge = new MajorityAgeReached(this, person, MoveToNewHome);
 
         Init(person);
@@ -89,7 +89,7 @@ public class Brain
     /// <param name="pF"></param>
     public Brain(Person person, PersonFile pF)
     {
-        _moveToNewHome = new MoveToNewHome(this, person, currStructure);
+        _moveToNewHome = new MoveToNewHome(this, person);
         _majorAge = new MajorityAgeReached(this, person, MoveToNewHome) ;
 
         Init(person);
@@ -1318,6 +1318,7 @@ public class Brain
         if (_isAllSet)
         {
             GoMindState = true;
+            UpdateBridgeKeyListMarked();
         }
     }
 
@@ -1466,15 +1467,15 @@ public class Brain
         bool res = false;
         for (int i = 0; i < allPlaces.Length; i++)
         {
-            SetCurrents(allPlaces[i]);
-            if (currStructure == null) { return false; }
+            //SetCurrents(allPlaces[i]);
+            if (ReturnCurrStructure(allPlaces[i]) == null) { return false; }
 
-            if (currStructure.Instruction == H.WillBeDestroy)
+            if (ReturnCurrStructure(allPlaces[i]).Instruction == H.WillBeDestroy)
             {
                 GetOutOfBuild(allPlaces[i]);
                 res = true;
             }
-            UpdateCurrent(allPlaces[i]);
+            //UpdateCurrent(allPlaces[i]);
         }
         return res;
     }
@@ -1642,21 +1643,21 @@ public class Brain
     }
 
     #region Check Closest Build
-    Structure currStructure;
-    private List<string> currListOfBuild;
+    //Structure currStructure;
+    //private List<string> currListOfBuild;
 
     /// <summary>
     /// Checks, and defined the colsest building of a type
     /// </summary>
     private void CheckClosestBuildRoutine(HPers which)
     {
-        SetCurrents(which);
+        //SetCurrents(which);
 
         //isallset is here so will check if closest building exist
-        if (!ItHasOneAlready(which) || _isAllSet || currStructure.Instruction == H.WillBeDestroy)
+        if (!ItHasOneAlready(which) || _isAllSet || ReturnCurrStructure(which).Instruction == H.WillBeDestroy)
         {
             DefineClosestBuild(which);
-            UpdateCurrent(which);
+            //UpdateCurrent(which);
         }
         UnivCounter(which);
     }
@@ -1681,50 +1682,100 @@ public class Brain
         return false;
     }
 
-    /// <summary>
-    /// Set 'currStructure' and 'currListOfBuild'
-    /// </summary>
-    public void SetCurrents(HPers which)
+    
+
+
+    public Structure ReturnCurrStructure(HPers which)
     {
         if (which == HPers.Home)
         {
-            currStructure = _person.Home;
-            currListOfBuild = new List<string>();
+            return _person.Home;
         }
         else if (which == HPers.FoodSource)
         {
-            currStructure = _person.FoodSource;
-            currListOfBuild = new List<string>();
+            return _person.FoodSource;
         }
         else if (which == HPers.Work)
         {
-            currStructure = _person.Work;
-            currListOfBuild = BuildingPot.Control.WorkOpenPos;
+            return _person.Work;
         }
         else if (which == HPers.Religion)
         {
-            currStructure = _person.Religion;
-            currListOfBuild = BuildingPot.Control.ReligiousBuilds;
+            return _person.Religion;
         }
         else if (which == HPers.Chill)
         {
-            currStructure = _person.Chill;
-            currListOfBuild = BuildingPot.Control.ChillBuilds;
+            return _person.Chill;
         }
+        return null;
     }
+
+    private Structure AssignCurrStructure(HPers which, Structure st)
+    {
+        if (which == HPers.Home)
+        {
+            _person.Home = st;
+            return _person.Home;
+        }
+        else if (which == HPers.FoodSource)
+        {
+            _person.FoodSource = st;
+
+            return _person.FoodSource;
+        }
+        else if (which == HPers.Work)
+        {
+            _person.Work = st;
+
+            return _person.Work;
+        }
+        else if (which == HPers.Religion)
+        {
+            _person.Religion = st;
+
+            return _person.Religion;
+        }
+        else if (which == HPers.Chill)
+        {
+            _person.Chill = st;
+
+            return _person.Chill;
+        }
+        return null;
+    }
+
+
+    List<string> ReturnCurrListOfBuilds(HPers which)
+    {
+        if (which == HPers.Work)
+        {
+            return BuildingPot.Control.WorkOpenPos;
+        }
+        else if (which == HPers.Religion)
+        {
+            return BuildingPot.Control.ReligiousBuilds;
+        }
+        else if (which == HPers.Chill)
+        {
+            return BuildingPot.Control.ChillBuilds;
+        }
+        return  new List<string>();
+    }
+
+
 
     /// <summary>
     /// Define the closest build of a type. Will defined in the 'currStructure'
     /// </summary>
     private void DefineClosestBuild(HPers which)
     {
-        int size = currListOfBuild.Count;
+        int size = ReturnCurrListOfBuilds(which).Count;
         List<VectorM> loc = new List<VectorM>();
 
         for (int i = 0; i < size; i++)
         {
             //to address if building was deleted and not updated on the list 
-            string key = currListOfBuild[i];
+            string key = ReturnCurrListOfBuilds(which)[i];
             Structure building = GetStructureFromKey(key);
 
             if (!_blackList.Contains(key))
@@ -1750,13 +1801,13 @@ public class Brain
             }
         }
 
-        DefineClosestBuildTail(loc, index);
+        DefineClosestBuildTail(loc, index, which);
     }
 
     /// <summary>
     /// Created for modularity
     /// </summary>
-    void DefineClosestBuildTail(List<VectorM> loc, int index)
+    void DefineClosestBuildTail(List<VectorM> loc, int index, HPers which)
     {
         string closestKey = "";
         if (index != -1 && loc.Count > 0)
@@ -1765,41 +1816,41 @@ public class Brain
         }
 
         //b4 is reassigned
-        AddToNewBuildRemoveFromOld(currStructure, closestKey);
+        AddToNewBuildRemoveFromOld(ReturnCurrStructure(which), closestKey);
 
         if (closestKey != "")
         {
-            currStructure = (Structure)BuildingPot.Control.Registro.AllBuilding[closestKey];
+            AssignCurrStructure(which,(Structure)BuildingPot.Control.Registro.AllBuilding[closestKey] )  ;
         }
-        else currStructure = null;
+        else AssignCurrStructure(which,null);
     }
 
-    /// <summary>
-    /// bz the Person obj needs to be updated 
-    /// </summary>
-    private void UpdateCurrent(HPers which)
-    {
-        if (which == HPers.Home)
-        {
-            _person.Home = currStructure;
-        }
-        else if (which == HPers.FoodSource)
-        {
-            _person.FoodSource = currStructure;
-        }
-        else if (which == HPers.Work)
-        {
-            _person.Work = currStructure;
-        }
-        else if (which == HPers.Religion)
-        {
-            _person.Religion = currStructure;
-        }
-        else if (which == HPers.Chill)
-        {
-            _person.Chill = currStructure;
-        }
-    }
+    ///// <summary>
+    ///// bz the Person obj needs to be updated 
+    ///// </summary>
+    //private void UpdateCurrent(HPers which)
+    //{
+    //    if (which == HPers.Home)
+    //    {
+    //        _person.Home = currStructure;
+    //    }
+    //    else if (which == HPers.FoodSource)
+    //    {
+    //        _person.FoodSource = currStructure;
+    //    }
+    //    else if (which == HPers.Work)
+    //    {
+    //        _person.Work = currStructure;
+    //    }
+    //    else if (which == HPers.Religion)
+    //    {
+    //        _person.Religion = currStructure;
+    //    }
+    //    else if (which == HPers.Chill)
+    //    {
+    //        _person.Chill = currStructure;
+    //    }
+    //}
     #endregion
 
     /// <summary>
@@ -2105,7 +2156,7 @@ public class Brain
     /// <param name="whichType">The type of building</param>
     public void GetOutOfBuild(HPers whichType)
     {
-        SetCurrents(whichType);
+        //SetCurrents(whichType);
         if (whichType == HPers.Home)
         {
             MoveToNewHome.AddToHomeOldKeysList();
@@ -2115,7 +2166,7 @@ public class Brain
             searchAgain = true;
             who = whichType;
         }
-        UpdateCurrent(whichType);
+        //UpdateCurrent(whichType);
     }
 
 
@@ -2309,7 +2360,6 @@ public class Brain
     {
         if (!IAmHomeNow() || !goMindState) { return; }
 
-        CreateBridgeKeyListMarked();
         for (int i = 0; i < brigdesKeyRoutes.Count; i++)
         {
             var bridgeKey = brigdesKeyRoutes[i].BridgeKey;
@@ -2330,17 +2380,27 @@ public class Brain
     /// <summary>
     /// Will create a list with all  the routes that have brdiges  if is any
     /// </summary>
-    private void CreateBridgeKeyListMarked()
+    private void UpdateBridgeKeyListMarked()
     {
-        brigdesKeyRoutes.Clear();
-        var allRoutes = new List<TheRoute>() { _workRoute, _foodRoute, _idleRoute, _religionRoute, _chillRoute };
-
-        for (int i = 0; i < allRoutes.Count; i++)
+        if (_workRoute.BridgeKey != "")
         {
-            if (allRoutes[i].BridgeKey != "")
-            {
-                brigdesKeyRoutes.Add(allRoutes[i]);
-            }
+            brigdesKeyRoutes.Add(_workRoute);
+        }
+        if (_foodRoute.BridgeKey != "")
+        {
+            brigdesKeyRoutes.Add(_foodRoute);
+        }
+        if (_idleRoute.BridgeKey != "")
+        {
+            brigdesKeyRoutes.Add(_idleRoute);
+        }
+        if (_religionRoute.BridgeKey != "")
+        {
+            brigdesKeyRoutes.Add(_religionRoute);
+        }
+        if (_chillRoute.BridgeKey != "")
+        {
+            brigdesKeyRoutes.Add(_chillRoute);
         }
     }
 
@@ -2528,6 +2588,7 @@ public class Brain
         if (_blackList.Count > 0)
         {
             ClearEachBlackListedBuilding();
+            brigdesKeyRoutes.Clear();
            //Debug.Log(_person.MyId+" cleared blackList .famID"+_person.FamilyId);
         }
     }

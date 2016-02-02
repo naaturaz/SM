@@ -111,11 +111,11 @@ public class Dispatch
     /// <returns></returns>
     List<Order> ReturnCurrentListAndDefinePrimary()
     {
-        var list = ReturnCurrentList();
-        _isUsingPrimary = DefineUsingPrimary(list);
+        _isUsingPrimary = DefineUsingPrimary(ReturnCurrentList());
 
-        //ordering them by time placed so first placed is given always first 
-        return list.OrderBy(a=>a.PlacedTime).ToList();
+
+        return ReturnCurrentList();
+
     }
 
     /// <summary>
@@ -132,6 +132,9 @@ public class Dispatch
             Debug.Log("Order Added:" + prod.Product + ".placed by:" + prod.DestinyBuild);
 
             Orders.Add(prod);
+            OrderByPlacedTime(Orders);
+
+
             _recycledOrders.Remove(prod);
         }
     }
@@ -148,7 +151,15 @@ public class Dispatch
 
             Orders.Add(prod);
             _recycledOrders.Remove(prod);
+
+            OrderByPlacedTime(Orders);
         }
+    }
+
+    //ordering them by time placed so first placed is given always first 
+    void OrderByPlacedTime(List<Order> list)
+    {
+        list = list.OrderBy(a => a.PlacedTime).ToList();
     }
 
     /// <summary>
@@ -163,7 +174,11 @@ public class Dispatch
     {
         if (!ListContainsCheckID(Orders, evacOrder) && !ListContainsCheckID(_dormantOrders, evacOrder))
         {
-            Orders.Insert(0, evacOrder);          
+            Orders.Insert(0, evacOrder);
+
+
+            OrderByPlacedTime(Orders);
+
         }
     }
     /// <summary>
@@ -175,6 +190,8 @@ public class Dispatch
         if (!ListContains(Orders, evacOrder) && !ListContains(_dormantOrders, evacOrder))
         {
             Orders.Insert(0, evacOrder);
+
+            OrderByPlacedTime(Orders);
         }
     }
 

@@ -122,6 +122,8 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Books, 300, 502, 5));
         _prodSpecs.Add(new ProdSpec(P.Silk, 150, 1300, 5));
 
+        //so far 47 Products 
+
 
         _prodSpecs.Add(new ProdSpec(P.RandomMineOutput, 150, 4100, 100));
         _prodSpecs.Add(new ProdSpec(P.RandomFoundryOutput, 150, 4100, 100));

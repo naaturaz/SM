@@ -123,4 +123,23 @@ public class UMesh : MonoBehaviour {
         }
         return vertexs;
     }
+
+
+    /// <summary>
+    /// Will return the index of the Square we are on
+    /// </summary>
+    /// <param name="posList"></param>
+    /// <param name="squares"></param>
+    /// <returns></returns>
+    public static int ReturnIndexContain(Vector3 posList, List<Lot> squares)
+    {
+        for (int i = 0; i < squares.Count; i++)
+        {
+            if (Contains(posList, squares[i].squareStart, squares[i].squareEnd))
+            {
+                return squares[i].IndexOfCurrentLotBeingHover(posList);
+            }
+        }
+        return -1;
+    }
 }

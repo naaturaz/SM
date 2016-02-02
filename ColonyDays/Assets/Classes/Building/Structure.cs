@@ -137,6 +137,13 @@ public class Structure : StructureParent
         if (action != H.Cancel)
         {
             float howBigTheCollidingSphere = 5f;
+
+            //was leaving Spawner inside the farm
+            if (MyId.Contains("Farm"))
+            {
+                howBigTheCollidingSphere = 15;
+            }
+
             MarkTerraSpawnRoutine(howBigTheCollidingSphere, from: transform.position);
         }
 

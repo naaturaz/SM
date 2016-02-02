@@ -29,15 +29,14 @@ public class MoveToNewHome
     private TheRoute _routeToNewHome = new TheRoute();
 
     private Person _person;
-    private Structure currStructure;
+    //private Structure currStructure;
 
     public MoveToNewHome() { }
 
-    public MoveToNewHome(Brain brain, Person person, Structure currStructure)
+    public MoveToNewHome(Brain brain, Person person)
     {
         _brain = brain;
         _person = person;
-        this.currStructure = currStructure;
     }
 
     public string OldHomeKey
@@ -88,16 +87,16 @@ public class MoveToNewHome
     {
         for (int i = 0; i < _brain.AllPlaces.Length; i++)
         {
-            _brain.SetCurrents(_brain.AllPlaces[i]);
-
+            //_brain.SetCurrents(_brain.AllPlaces[i]);
             for (int j = 0; j < list.Count; j++)
             {
-                if (currStructure == null)
+                var currSt = _brain.ReturnCurrStructure(_brain.AllPlaces[i]);
+                if (currSt == null)
                 {
                     return false;
                 }
 
-                if (currStructure.MyId == list[j] && currStructure.Instruction == H.WillBeDestroy)
+                if (currSt.MyId == list[j] && currSt.Instruction == H.WillBeDestroy)
                 {
                     return true;
                 }

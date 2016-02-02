@@ -300,22 +300,26 @@ public class PersonController : PersonPot
         //make sure when execute this a least oneempty house exst 
         if (Input.GetKeyUp(KeyCode.M))
         {
-            DebugSpawnMorePeople(5 + AmtOfPeople());
+            DebugSpawnMorePeople(5 * AmtOfPeople());
         }
         //make sure when execute this a least oneempty house exst 
         if (Input.GetKeyUp(KeyCode.N))
         {
-            DebugSpawnMorePeople(1 + AmtOfPeople());
+            DebugSpawnMorePeople(1 * AmtOfPeople());
         }
     }
 
     int AmtOfPeople()
     {
-        if (Input.GetKeyUp(KeyCode.LeftControl))
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
+        {
+            return 20;
+        }
+        if (Input.GetKey(KeyCode.LeftControl))
         {
             return 5;
         }
-        return 0;
+        return 1;
     }
 
     void DebugSpawnMorePeople(int amt, Vector3 iniPos = new Vector3())

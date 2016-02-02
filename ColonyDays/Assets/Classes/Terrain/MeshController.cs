@@ -141,7 +141,12 @@ public class MeshController : ControllerParent
             LoadingVertexMesh(globalInPolyDiv, globalXStep, globalZStep);
         }
 
-        CurrentHoverVertices = Vertex.UpdateCurrentVertices(Malla, currentVertColAmount, currentVertRowAmount, lotStepX, lotStepZ, HitMouseOnTerrain);
+
+        //other wise is not needed 
+        if (BuildingPot.Control!=null && BuildingPot.Control.CurrentSpawnBuild!=null)
+        {
+            CurrentHoverVertices = Vertex.UpdateCurrentVertices(Malla, currentVertColAmount, currentVertRowAmount, lotStepX, lotStepZ, HitMouseOnTerrain);
+        }
 
         if (isToSetRealVerticesOnLots)
         {
