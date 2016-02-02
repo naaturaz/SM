@@ -317,6 +317,7 @@ public enum H
     Btn,
     LockDown,
     Demolish_Btn,
+    Cancel_Demolish_Btn,
 
 
 }

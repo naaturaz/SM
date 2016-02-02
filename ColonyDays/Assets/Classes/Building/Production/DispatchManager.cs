@@ -55,10 +55,26 @@ public class DispatchManager {
         }
     }
 
+    /// <summary>
+    /// Will remove all evac orders find in every single dispatch with this 'myId'
+    /// </summary>
+    /// <param name="myId"></param>
+    internal void RemoveEvacOrders(string myId)
+    {
+        var all = FindAllWheelBarrAndDockBuilds();
+
+        for (int i = 0; i < all.Count; i++)
+        {
+            all[i].Dispatch1.RemoveEvacuationOrder(myId);
+        }
+    }
+
     List<Structure> FindAllWheelBarrAndDockBuilds()
     {
         List<Structure> all = BuildingController.FindAllStructOfThisType(H.BuildersOffice);
         all.AddRange(BuildingController.FindAllStructOfThisType(H.Dock));
         return all;
     }
+
+  
 }

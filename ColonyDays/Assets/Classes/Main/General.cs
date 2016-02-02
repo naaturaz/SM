@@ -474,7 +474,15 @@ public class General : MonoBehaviour
     /// </summary>
     public void AddZeroToMyID(){MyId += "0";}
 
-    public virtual void Destroy() { Destroy(gameObject); }
+    public virtual void Destroy()
+    {
+        if (gameObject!=null && gameObject.transform.name.Contains("House"))
+        {
+            var t = this;
+        }
+
+        Destroy(gameObject);
+    }
 
     public void DestroySafe()
     {

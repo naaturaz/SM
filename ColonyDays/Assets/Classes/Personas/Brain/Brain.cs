@@ -1890,7 +1890,7 @@ public class Brain
         }
 
         //set to check for a new home 
-        if (_person.Home != null && _person.Home.Instruction == H.WillBeDestroy)
+        if (_person.Home != null && (_person.Home.Instruction == H.WillBeDestroy || !string.IsNullOrEmpty(_person.IsBooked)))
         {
             //does only need to check on AllBuilding List... simple on the case if is a new home it was removed
             //already from tht list 

@@ -223,6 +223,14 @@ public class MouseListener : InputMain
         else if (action == "Demolish_Btn")
         {
             DemolishAction();
+
+            _buildingWindow.Reload();
+        }
+        else if (action == "Cancel_Demolish_Btn")
+        {
+            CancelDemolishAction();
+            _buildingWindow.Reload();
+
         }
         else if (action == H.Next_Stage_Btn.ToString())
         {
@@ -243,6 +251,7 @@ public class MouseListener : InputMain
             HandleGUIClicks(action);
         }
     }
+
 
 
 
@@ -552,6 +561,14 @@ public class MouseListener : InputMain
 
 
 
+    private void CancelDemolishAction()
+    {
+        if (BuildingPot.Control.Registro.SelectBuilding.Category == Ca.Structure)
+        {
+            Structure b = BuildingPot.Control.Registro.SelectBuilding as Structure;
+            b.CancelDemolish();
+        }
+    }
 
     void DemolishAction()
     {
@@ -585,8 +602,9 @@ public class MouseListener : InputMain
             DragSquare b = BuildingPot.Control.Registro.SelectBuilding as DragSquare;
             b.Demolish();
         }
-        Program.InputMain.InputMouse.UnSelectCurrent();
-        DestroyForm();
+
+        //Program.InputMain.InputMouse.UnSelectCurrent();
+        //DestroyForm();
     }
 
 

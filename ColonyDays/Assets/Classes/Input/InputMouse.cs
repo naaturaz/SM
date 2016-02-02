@@ -77,6 +77,8 @@ public class InputMouse : InputParent
                 if (BuildingPot.Control.Registro.Structures.ContainsKey(keyName))
                 {
                     BuildingPot.Control.Registro.SelectBuilding = BuildingPot.Control.Registro.Structures[keyName];
+
+                   
                 }
             }
         }
@@ -117,6 +119,13 @@ public class InputMouse : InputParent
                     BuildingPot.Control.Registro.SelectBuilding = BuildingPot.Control.Registro.Farms[keyName];
                 }
             }
+        }
+
+
+        if (BuildingPot.Control.Registro.SelectBuilding == null)
+        {
+            BuildingPot.Control.Registro.SelectBuilding =
+                BuildingPot.Control.Registro.FindFromToDestroyBuildings(keyName);
         }
 
         SelectDecisions();

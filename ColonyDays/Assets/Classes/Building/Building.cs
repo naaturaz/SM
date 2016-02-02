@@ -513,7 +513,7 @@ public class Building : General, Iinfo
 
         if (IsLoadingFromFile && Instruction == H.WillBeDestroy)
         {
-            AssignLayer(0);//Default
+            //AssignLayer(0);//Default
             RemovePeople();
 
             if (Category != Ca.Way)
@@ -832,7 +832,7 @@ public class Building : General, Iinfo
     /// </summary>
     protected virtual void DestroyOrdered(bool forced = false)
     {
-        if ((_isOrderToDestroy            
+        if ((_isOrderToDestroy           
             //this is for addres the problem where routing is happening and a Building is destroyed
             && PersonController.UnivCounter == -1) || forced)
         {
@@ -840,6 +840,12 @@ public class Building : General, Iinfo
             {
                 _arrow.Destroy();
                 _arrow = null;
+            }
+
+            //if was CancelDemolish
+            if (Instruction!=H.WillBeDestroy)
+            {
+                return;
             }
 
             BuildingPot.Control.Registro.RemoveItem(Category, MyId);
@@ -1646,7 +1652,7 @@ public class Building : General, Iinfo
         if (action == H.Remove)
         {
             //is needed here otherwise router.cs might detyected and then give a null ref 
-            AssignLayer(0);//Default
+            //AssignLayer(0);//Default
             RemovePeople();
         }
         BuildingPot.Control.EditBuildRoutine(MyId, action, HType);
@@ -1654,7 +1660,7 @@ public class Building : General, Iinfo
 
     void RemovePeople()
     {
-        Instruction = H.WillBeDestroy;
+        //Instruction = H.WillBeDestroy;
         if (PeopleDict.Count == 0)//no one is registered on the build
         {
             DestroydHiddenBuild();
@@ -1678,11 +1684,11 @@ public class Building : General, Iinfo
         if (command == "init")
         {
             GrabPrefabLayer();
-            AssignLayer(0);//default
+            //AssignLayer(0);//default
         }
         else if (command == "done")
         {
-            AssignLayer(prefabLayer);//restore layer to initial one
+            //AssignLayer(prefabLayer);//restore layer to initial one
         }
     }
 
@@ -1691,15 +1697,15 @@ public class Building : General, Iinfo
         prefabLayer = gameObject.layer;
     }
 
-    protected void AssignLayer(int layer)
-    {
-        //just bz shack starts with layer 0 .. i dont know why 
-        if (HType == H.Shack)
-        {
-            gameObject.layer = 10;
-        }
-        else gameObject.layer = layer;
-    }
+    //protected void AssignLayer(int layer)
+    //{
+    //    //just bz shack starts with layer 0 .. i dont know why 
+    //    if (HType == H.Shack)
+    //    {
+    //        gameObject.layer = 10;
+    //    }
+    //    else gameObject.layer = layer;
+    //}
     #endregion
 
     public void DestroydHiddenBuild()
@@ -1710,7 +1716,8 @@ public class Building : General, Iinfo
             return;
         }
 
-        if (BuildingPot.Control.DispatchManager1.DoIHaveAnyOrderOnAnyDispatch(this))
+        //was CancelDestroy
+        if (BuildingPot.Control.DispatchManager1.DoIHaveAnyOrderOnAnyDispatch(this) || Instruction!=H.WillBeDestroy)
         {
             return;
         }
@@ -1725,6 +1732,8 @@ public class Building : General, Iinfo
 
         //so people can Reroutes if new build fell in the midle of one
         PersonPot.Control.Queues.AddToDestroyBuildsQueue(Anchors, MyId);
+        
+        BuildingPot.Control.Registro.RemoveFromDestroyBuildings(this);
     }
 
     /// <summary>

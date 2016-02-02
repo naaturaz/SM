@@ -24,6 +24,9 @@ public class Registro : MonoBehaviour
     private Dictionary<string, Building> _allBuilding = new Dictionary<string, Building>();
     private Building _selectBuilding = new Building();
 
+    
+    private List<Building> _toDestroyBuilding = new List<Building>();
+
     /// <summary>
     /// All Buildings are here collected 
     /// </summary>
@@ -64,6 +67,8 @@ public class Registro : MonoBehaviour
     }
 
 
+
+
     public Registro() { }
 
     /// <summary>
@@ -98,16 +103,36 @@ public class Registro : MonoBehaviour
     }
 
 
-/// <summary>
+#region ToDestroyBuilding
+    public void AddToDestroyBuilding(Building build)
+    {
+        _toDestroyBuilding.Add(build);
+    }
+
+    public void RemoveFromDestroyBuildings(Building build)
+    {
+        _toDestroyBuilding.Remove(build);
+    }
+
+    public Building FindFromToDestroyBuildings(string myIdP)
+    {
+        return _toDestroyBuilding.Find(a => a.MyId == myIdP);
+    }
+#endregion
+
+    /// <summary>
     /// Remove item from All, and its spefic list
     /// </summary>
     /// <param name="cat">item category</param>
     /// <param name="myId">item myId</param>
     public void RemoveItem(Ca cat, string myId)
     {
+        AddToDestroyBuilding(Brain.GetBuildingFromKey(myId));
+        
+        Debug.Log("Registro RemoveItem");
         PersonPot.Control.BuildersManager1.RemoveConstruction(myId);//so its removed from the BuilderManager
    
-        //so its save to AllRegFiles
+        ////so its save to AllRegFiles
         AllBuilding[myId].Instruction = H.WillBeDestroy;
         ResaveOnRegistro(myId);
 
@@ -377,13 +402,19 @@ public class Registro : MonoBehaviour
         }
 
         regFile.MyId = key;
-        BuildingPot.Control.CurrentSpawnBuild.MyId = key;
+
+        var build = BuildingPot.Control.CurrentSpawnBuild;
+        //means is a CancelDemolish
+        if (build==null)
+        {
+            build = SelectBuilding;
+            BuildingPot.Control.CurrentSpawnBuild = SelectBuilding;
+        }
+        build.MyId = key;
+        build.transform.name = key;
 
         AllRegFile.Add(regFile);
-
-
-        _allBuilding.Add(key, BuildingPot.Control.CurrentSpawnBuild);
-
+        _allBuilding.Add(key, build);
     }
 
     //will add an new building to it list dependeing on catefory
@@ -453,6 +484,12 @@ public class Registro : MonoBehaviour
     /// </summary>
     General CheckIfOnDict<T>(Dictionary<string, T> onDictionary, General checkP)
     {
+        //is a CancelDemolish
+        //if (checkP==null)
+        //{
+        //    checkP = SelectBuilding;
+        //}
+
         if (onDictionary.ContainsKey(checkP.MyId))
         {
             checkP.AddZeroToMyID();

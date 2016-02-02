@@ -82,7 +82,22 @@ public class Structure : StructureParent
             dollarsPay: DollarsPay,
             anchors: Anchors
             );
-            
+    }
+
+    /// <summary>
+    /// Canceling dempolishi
+    /// </summary>
+    public void CancelDemolish()
+    {
+        Debug.Log("Cancel Demiolish");
+        AddOnRegistro();
+        BuildingPot.Control.DispatchManager1.RemoveEvacOrders(MyId);
+
+        PositionFixed = true;
+        _isOrderToDestroy = false;
+        Instruction=H.None;
+
+        BuildingPot.Control.Registro.RemoveFromDestroyBuildings(this);
     }
 
     /// <summary>
@@ -328,6 +343,7 @@ public class Structure : StructureParent
 
     void StartDemolishProcess()
     {
+        //BuildingPot.Control.Registro.MarkBuildingAs(MyId, H.WillBeDestroy);
         BuildingPot.Control.Registro.RemoveItem(Category, MyId);
         HideAll();   
     }

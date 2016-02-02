@@ -47,6 +47,7 @@ public class BuildingWindow : GUIElement {
     private GameObject _upg_Cap_Btn; //Upg_Mat_Btn
 
     private GameObject _demolish_Btn; //Upg_Mat_Btn
+    private GameObject _cancelDemolish_Btn; //Upg_Mat_Btn
 
     // Use this for initialization
     void Start()
@@ -131,7 +132,8 @@ public class BuildingWindow : GUIElement {
         _upg_Cap_Btn = GetGrandChildCalled(H.Upg_Cap_Btn);
 
 
-        _demolish_Btn = GetGrandChildCalled(H.Demolish_Btn);
+        _demolish_Btn = GetGrandChildCalled(H.Demolish_Btn);//Cancel_Demolish_Btn
+        _cancelDemolish_Btn = GetGrandChildCalled(H.Cancel_Demolish_Btn);//Cancel_Demolish_Btn
 
     }
 
@@ -169,12 +171,17 @@ public class BuildingWindow : GUIElement {
 
     private void DemolishBtn()
     {
-        if (_building.Instruction==H.WillBeDestroy)
+        _cancelDemolish_Btn.SetActive(false);
+
+        if (_building.Instruction == H.WillBeDestroy)
         {
             _demolish_Btn.SetActive(false);
+            //_cancelDemolish_Btn.SetActive(true);
         }
         else
+        {
             _demolish_Btn.SetActive(true);
+        }
     }
 
     private void HideSalaryIfHouseOrStorage()
@@ -655,5 +662,10 @@ public class BuildingWindow : GUIElement {
         _building.SetProductToProduce(product);
 
         ShowProductDetail();
+    }
+
+    internal void Reload()
+    {
+        Show(_building);
     }
 }
