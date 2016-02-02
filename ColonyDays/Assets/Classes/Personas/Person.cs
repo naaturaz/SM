@@ -473,11 +473,6 @@ public class Person : General
         IsLoading = false;
     }
 
-    public void ReloadBodyLight()
-    {
-        _body.ReloadLight();
-    }
-
     private void RecreateProfession(PersonFile pF)
     {
         if (string.IsNullOrEmpty(pF._work))

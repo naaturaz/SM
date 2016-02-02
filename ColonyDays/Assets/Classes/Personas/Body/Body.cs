@@ -29,10 +29,6 @@ public class Body //: MonoBehaviour //: General
     Vector3 _loadedPosition = new Vector3();//the position was saved the GameObj was at
     Quaternion _loadedRotation = new Quaternion();
 
-    //if is false will not hide when getting close to building ... use for instances when is not
-    //really a building in the end or start of a route. ex routing to a tree
-    private bool _hideThisTime = true;
-
     //for save Load current animation of body
     private string _currentAni;
     private string _loadedAni;
@@ -94,12 +90,6 @@ public class Body //: MonoBehaviour //: General
         set { _speed = value; }
     }
 
-    public bool HideThisTime
-    {
-        get { return _hideThisTime; }
-        set { _hideThisTime = value; }
-    }
-
     public string CurrentAni
     {
         get { return _currentAni; }
@@ -127,7 +117,7 @@ public class Body //: MonoBehaviour //: General
     /// </summary>
     public Body(Person person, PersonFile pF)
     {
-        _personalObject = new PersonalObject(person, pF._body.CurrentAni);
+        _personalObject = new PersonalObject(person, pF._body.CurrentAni, ShouldHide());
 
         _pFile = pF;
         Init(person);
@@ -142,7 +132,6 @@ public class Body //: MonoBehaviour //: General
 
         _loadedPosition = pF.Position;
         _loadedRotation = pF.Rotation;
-        _hideThisTime = pF._body.HideThisTime;
 
         _loadedAni = pF._body.CurrentAni;
 
@@ -247,7 +236,7 @@ public class Body //: MonoBehaviour //: General
         myAnimator.SetBool(animationPass, true);
         myAnimator.SetBool(oldAnimation, false);
 
-        _personalObject.AddressNewAni(animationPass);
+        _personalObject.AddressNewAni(animationPass, ShouldHide());
     }
 
     public void TurnCurrentAniAndStartNew(string animationPass)
@@ -510,16 +499,9 @@ public class Body //: MonoBehaviour //: General
         }
     }
 
-    public void WalkRoutine(TheRoute route, HPers goingTo ,bool inverse = false, HPers whichRouteP = HPers.None,
-        bool hideThisTime = true)
+    public void WalkRoutine(TheRoute route, HPers goingTo ,bool inverse = false, HPers whichRouteP = HPers.None)
     {
-
-        _hideThisTime = hideThisTime;
-
-        if (!hideThisTime)
-        {
-            Show();//to show person whenh going from old home to shack to be built
-        }
+        //Show();//to show person whenh going from old home to shack to be built
 
         InitWalk(route, inverse);
         WalkRoutineTail(goingTo, whichRouteP);
@@ -730,25 +712,67 @@ public class Body //: MonoBehaviour //: General
         }
     }
 
+
+    #region Hide Show
     public void Show()
     {
-        _person.Geometry.GetComponent<Renderer>().enabled = true;
+        renderer.enabled = true;
+
+        if (_personalObject!=null)
+        {
+            _personalObject.Show();
+        }
     }
 
 
     private Renderer renderer;
     public void Hide()
     {
-        if (_hideThisTime)
+        if (ShouldHide())
         {
-            //renderer.enabled = false; 
+            renderer.enabled = false;
+
+            if (_personalObject != null)
+            {
+                _personalObject.Hide();
+            }
         }
     }
 
-    Child GiveBirth()
+    bool ShouldHide()
     {
-        return new Child();
+        if (CurrTheRoute==null )
+        {
+            return false;
+        }
+
+        if (!Inverse && !ContainsOpenAirJob(CurrTheRoute.DestinyKey))
+        {
+            return true;
+        }
+        if (Inverse && !ContainsOpenAirJob(CurrTheRoute.OriginKey))
+        {
+            return true;
+        }
+        return false;
     }
+
+    bool ContainsOpenAirJob(string key)
+    {
+        if (key==null)
+        {
+            return true;
+        }
+
+        if (key.Contains("Dummy") || key.Contains("Farm") || key.Contains("Fish"))
+        {
+            return true;
+        }
+        return false;
+    }
+
+
+#endregion
 	
 	// Update is called once per frame
 	public void Update ()
@@ -768,7 +792,7 @@ public class Body //: MonoBehaviour //: General
     {
         if (  _person == null || _routePoins == null || _routePoins.Count == 0){ return; }
 
-        var dist = 0.2f;
+        var dist = 0.25f;//.2
         var currDist = Vector3.Distance(_person.transform.position, _routePoins[lastRoutePoint].Point);
         //getting close to last point
         if (currDist < dist ) 
@@ -816,10 +840,5 @@ public class Body //: MonoBehaviour //: General
     {
         myAnimator.speed += amt;
         _speed += amt;
-    }
-
-    internal void ReloadLight()
-    {
-
     }
 }

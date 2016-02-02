@@ -28,13 +28,14 @@ public class Hover : MonoBehaviour
         screenRect = DefineScreenRect();
     }
 
+    
+
     Rect DefineScreenRect()
     {
         Rect res = new Rect();
         res.min = new Vector2();
         res.max = new Vector2(Screen.width, Screen.height);
-
-
+        
         return res;
     }
 
@@ -74,29 +75,24 @@ public class Hover : MonoBehaviour
     void SpawnHelp()
     {
         hoverWindow.Show(ReturnHoverPos(), MyMsg());
-        CorrectHoverWindowPos();
     }
 
-    Vector3 ReturnHoverPos()
+    private Vector3 ReturnHoverPos()
     {
-        Vector3 res = myRect.center;
-        Vector2 twoD = new Vector2(res.x, res.y + 20f);
-
-        ////if is too far on top
-        //if (!screenRect.Contains(twoD))
-        //{
-        //    twoD.y -= 40f;
-        //}
-
-        return twoD;
+        return MoveItTowardsScreenCenter(myRect);
     }
 
-    /// <summary>
-    /// Will correct the position if is a off screen
-    /// </summary>
-    void CorrectHoverWindowPos()
+    private Vector2 MoveItTowardsScreenCenter(Rect myRectP)
     {
-        
+        var w = Screen.width / 2;
+        var h = Screen.height / 2;
+
+        //so its depending on the screen size. roughly 45 px
+        var howFar = h / 9;
+
+        Vector2 center = new Vector2(w, h);
+        var moved = Vector2.MoveTowards(myRectP.center, center, howFar);
+        return moved;
     }
 
     void DestroyHelp()

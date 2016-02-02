@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class HoverWindow : MonoBehaviour
 {
-
     private string _msg;
 
     //windows props
@@ -32,7 +31,6 @@ public class HoverWindow : MonoBehaviour
         transform.GetComponent<RectTransform>().position = pos;
         
         transform.GetComponent<Text>().text = msg;
-
     }
 
     public string CurrentMsg()

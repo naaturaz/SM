@@ -123,6 +123,12 @@ public class Inventory  {
     /// <param name="amt"></param>
     public void Add(P key, float amt)
     {
+        if (key == P.None || amt == 0)
+        {
+            Debug.Log("ret Tried to add to inv:"+ key +" amt:"+ amt);
+            return;
+        }
+
         if (key.ToString().Contains("Random"))
         {
             Debug.Log("trace random");

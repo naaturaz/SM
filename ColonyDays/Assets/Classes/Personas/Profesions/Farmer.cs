@@ -75,6 +75,10 @@ public class Farmer : Profession
         { _person.Work.BehindMainDoorPoint, FinRoutePoint};
 
         var TheRoute = ReachBean.RouteVector3s(inBuildPoints);
+       
+        //the .O is to pass the profession or brain reurn 
+        TheRoute.OriginKey = _person.Work.MyId + ".O";
+        TheRoute.DestinyKey = _person.Work.MyId + ".D";
 
         Router1.TheRoute = TheRoute;
         Router1.IsRouteReady = true;
@@ -87,6 +91,10 @@ public class Farmer : Profession
     {
         var inBuildPoints = DefineInBuildPoint();
         var TheRoute = ReachBean.RouteVector3s(inBuildPoints);
+
+        //the .O is to pass the profession or brain reurn 
+        TheRoute.OriginKey = _person.Work.MyId + ".O";
+        TheRoute.DestinyKey = _person.Work.MyId + ".D";
 
         Router1.TheRoute=TheRoute;
         Router1.IsRouteReady = true;

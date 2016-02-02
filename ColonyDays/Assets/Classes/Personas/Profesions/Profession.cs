@@ -459,7 +459,7 @@ public class Profession  {
 
             if (_router.TheRoute.OriginKey != _router.TheRoute.DestinyKey)//so doesnt go in and out in the same building
             {
-                _person.Body.WalkRoutine(_router.TheRoute, HPers.InWork, hideThisTime: false);
+                _person.Body.WalkRoutine(_router.TheRoute, HPers.InWork);
                 _workerTask = HPers.WalkingToJobSite;
             }
             //when is importing something

@@ -15,6 +15,9 @@ public class PersonalObject
     //different roots for personc carrying stuff
     Dictionary<P, string> _prodCarry = new Dictionary<P, string>() { };
 
+    private Renderer renderer;
+
+
     public PersonalObject() { }
 
     /// <summary>
@@ -23,20 +26,24 @@ public class PersonalObject
     /// <param name="person"></param>
     public PersonalObject(Person person)
     {
+
+
         _person = person;
         Init();
     }
+
+
 
     /// <summary>
     /// Used to loading
     /// </summary>
     /// <param name="person"></param>
     /// <param name="currAni"></param>
-    public PersonalObject(Person person, string currAni)
+    public PersonalObject(Person person, string currAni, bool hide)
     {
         _person = person;
         Init(); 
-        AddressNewAni(currAni);
+        AddressNewAni(currAni, hide);
     }
 
     private void Init()
@@ -56,14 +63,14 @@ public class PersonalObject
     }
 
 
-    public void AddressNewAni(string newAni)
+    public void AddressNewAni(string newAni, bool hide)
     {
         _currentAni = newAni;
         SetNewPersonalObject();
-        AddressNewCurrentRoot();
+        AddressNewCurrentRoot(hide);
     }
 
-    private void AddressNewCurrentRoot()
+    private void AddressNewCurrentRoot(bool hide)
     {
         if (_current != null)
         {
@@ -75,6 +82,11 @@ public class PersonalObject
         }
         _current = General.Create(_currentRoot, _currentPoint.transform.position, "", _currentPoint.transform);
         _current.transform.rotation = _currentPoint.transform.rotation;
+
+        if (hide)
+        {
+            Hide();
+        }
     }
 
     /// <summary>
@@ -127,5 +139,36 @@ public class PersonalObject
         {
             _currentRoot = Root.crate;
         }
+    }
+
+    internal void Show()
+    {
+        if (_current != null && renderer == null)
+        {
+            var gO = General.FindGameObjectInHierarchy("Geometry", _current.gameObject);
+            renderer = gO.GetComponent<Renderer>();
+        }
+
+        if (renderer != null)
+        {
+            renderer.enabled = true;
+
+        }
+    }
+
+    internal void Hide()
+    {
+        if (_current != null && renderer == null)
+        {
+            var gO = General.FindGameObjectInHierarchy("Geometry", _current.gameObject);
+            renderer = gO.GetComponent<Renderer>();
+        }
+
+        if (renderer!=null)
+        {
+            renderer.enabled = false;
+            
+        }
+
     }
 }
