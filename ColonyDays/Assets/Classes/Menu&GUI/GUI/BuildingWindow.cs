@@ -46,6 +46,8 @@ public class BuildingWindow : GUIElement {
     private GameObject _upg_Mat_Btn;
     private GameObject _upg_Cap_Btn; //Upg_Mat_Btn
 
+    private GameObject _demolish_Btn; //Upg_Mat_Btn
+
     // Use this for initialization
     void Start()
     {
@@ -91,7 +93,7 @@ public class BuildingWindow : GUIElement {
         _salary = General.FindGameObjectInHierarchy("Salary", _general);
 
 
-
+        
         _title = GetChildCalled(H.Title).GetComponent<Text>();
         _info = GetGrandChildCalled(H.Info).GetComponent<Text>();
         _inv = GetGrandChildCalled(H.Bolsa).GetComponent<Text>();//bolsa bz tht algorith has a bugg tht names cannot be the same or start with the same
@@ -128,11 +130,17 @@ public class BuildingWindow : GUIElement {
         _upg_Mat_Btn = GetGrandChildCalled(H.Upg_Mat_Btn);
         _upg_Cap_Btn = GetGrandChildCalled(H.Upg_Cap_Btn);
 
+
+        _demolish_Btn = GetGrandChildCalled(H.Demolish_Btn);
+
     }
 
 
 
-
+    /// <summary>
+    /// The show of the menu in a building 
+    /// </summary>
+    /// <param name="val"></param>
     public void Show(Building val)
     {
         _building = val;
@@ -155,6 +163,18 @@ public class BuildingWindow : GUIElement {
         InitToggles();//in case they have not been set yet
         HideSalaryIfHouseOrStorage();
         Mark1stCheckBox();
+
+        DemolishBtn();
+    }
+
+    private void DemolishBtn()
+    {
+        if (_building.Instruction==H.WillBeDestroy)
+        {
+            _demolish_Btn.SetActive(false);
+        }
+        else
+            _demolish_Btn.SetActive(true);
     }
 
     private void HideSalaryIfHouseOrStorage()

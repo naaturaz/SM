@@ -316,6 +316,7 @@ public enum H
     Prd_Btns_Pos,
     Btn,
     LockDown,
+    Demolish_Btn,
 
 
 }

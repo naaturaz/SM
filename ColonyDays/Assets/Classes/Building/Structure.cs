@@ -303,7 +303,9 @@ public class Structure : StructureParent
 
 #endregion
 
-
+    /// <summary>
+    /// Demolishing a building 
+    /// </summary>
     public void Demolish()
     {
         //if is a house need to know 

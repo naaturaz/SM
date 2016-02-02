@@ -46,7 +46,7 @@ public class Body //: MonoBehaviour //: General
         {
             if (_location == HPers.MovingToNewHome && value != HPers.Restarting)
             {
-                Debug.Log("Ret Body Location: "+_person.MyId);
+//                Debug.Log("Ret Body Location: "+_person.MyId);
             }
 
             _location = value;

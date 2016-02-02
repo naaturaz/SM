@@ -32,7 +32,7 @@ public class CamRTSController : CamControl
     public static bool IsMouseMiddle;
 
      float MIN_FIELD_CAM = 5f;//21 
-     float MAX_FIELD_CAM = 80f;//45  
+     float MAX_FIELD_CAM = 60f;//80  45  
 
     //Target
     public Transform target;
@@ -146,7 +146,7 @@ public class CamRTSController : CamControl
         InitializeObjects();
         CreateTargetAndUpdate();
 
-        if (!MiniMapRTS.isOnTheLimits)
+        if (!MiniMapRTS.isOnTheLimits && BuildingPot.Control != null && BuildingPot.Control.Registro.AllBuilding.Count>0)
         {
             ControlInput();
             MouseInBorderDealer();

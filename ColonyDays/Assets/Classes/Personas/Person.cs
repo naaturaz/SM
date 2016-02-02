@@ -833,7 +833,7 @@ public class Person : General
 
             Realtor.BookNewPersonInNewHome(this, place, newFamilyID);
 
-            print("Age Major: " + MyId);
+//            print("Age Major: " + MyId);
             _isMajor = true;
             Brain.MajorAge.MarkMajorityAgeReached();
             PersonPot.Control.IsAPersonHomeLessNow = MyId;
@@ -1694,7 +1694,7 @@ public class Person : General
 
         MoveNewBornToHome(kid);
 
-        Debug.Log(MyId + " give birth to:" + kid.MyId+". inscribed on:"+FamilyId);
+//        Debug.Log(MyId + " give birth to:" + kid.MyId+". inscribed on:"+FamilyId);
         kid.DebugBornInfo = FamilyId+".home:"+Home.MyId+".mom:"+MyId;
 
         _lastNewBornYear = _dueYear;
@@ -1879,11 +1879,11 @@ public class Person : General
 
         var dist = Vector3.Distance(transform.position, Camera.main.transform.position);
 
-        if (dist > 50)
+        if (dist > 35 && dist <= 66)
         {
             LOD1();
         }
-        else if (dist > 75)
+        else if (dist > 65)
         {
             LOD2();
         }

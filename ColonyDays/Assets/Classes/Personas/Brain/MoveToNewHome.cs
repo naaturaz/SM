@@ -274,7 +274,7 @@ public class MoveToNewHome
         newHomeRouteStart = false;
         //_newHomeRouter.IsRouteReady = true;
 
-        Debug.Log("CleanUpRouteToNewHome "+_person.MyId +" famID:"+_person.FamilyId);
+//        Debug.Log("CleanUpRouteToNewHome "+_person.MyId +" famID:"+_person.FamilyId);
         searchedNewHome = 0;
         buildRouteToNewHome = false;
         _routeToNewHome.CheckPoints.Clear();
