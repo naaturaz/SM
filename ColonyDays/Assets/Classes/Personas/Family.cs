@@ -90,6 +90,18 @@ public class Family
         }
     }
 
+    public void AddKids(string newKid)
+    {
+        if (!Kids.Contains(newKid))
+        {
+            Kids.Add(newKid);
+        }
+        else
+        {
+            Debug.Log("is here already kid:" + newKid);
+        }
+    }
+
     public string Home
     {
         get { return _home; }
@@ -177,7 +189,7 @@ public class Family
 
     void AssignNewKidToThisFamily(Person newP)
     {
-        Kids.Add(newP.MyId);
+        AddKids(newP.MyId);
         newP.transform.parent = BuildingPot.Control.Registro.AllBuilding[_home].transform;
 
         if (string.IsNullOrEmpty(newP.FamilyId) && !string.IsNullOrEmpty(FamilyId))

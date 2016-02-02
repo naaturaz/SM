@@ -1721,7 +1721,7 @@ public class Person : General
     void MoveNewBornToHome(Person newBorn)
     {
         var family = Home.FindMyFamilyChecksFamID(this);
-        family.Kids.Add(newBorn.MyId);
+        family.AddKids(newBorn.MyId);
 
         newBorn.IsBooked = "";
         newBorn.transform.parent = Home.transform;

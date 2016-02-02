@@ -329,9 +329,10 @@ public class Realtor
             kid.transform.parent = newHome.transform;
 
             var temp = kid.MyId;
-            newFam.Kids.Add(temp);
+            newFam.AddKids(temp);
 
             curFamily.RemovePersonFromFamily(kid);
+            i--;
         }
     }
 

@@ -2462,7 +2462,7 @@ public class Building : General, Iinfo
         {
             if (newP.MyId == BookedHome1.Family.Kids[i])
             {
-                toBeFill.Kids.Add(newP.MyId);
+                toBeFill.AddKids(newP.MyId);
             }
         }
         if (newP.MyId == BookedHome1.Family.Father)
