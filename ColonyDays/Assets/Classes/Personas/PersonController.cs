@@ -337,22 +337,22 @@ public class PersonController : PersonPot
     #region People Check
 
     //the people had check for current new stuff. like new house or work
-    Dictionary<string, string> _peopleChecked = new Dictionary<string, string>();
+    List<string> _peopleChecked = new List<string>();
 
 
 
     public void CheckPeopleIn(string newPeople)
     {
-        if (!_peopleChecked.ContainsKey(newPeople))
+        if (!_peopleChecked.Contains(newPeople))
         {
            // print(newPeople+".Checked in");
-            _peopleChecked.Add(newPeople, newPeople);
+            _peopleChecked.Add(newPeople);
         }
     }
 
     public bool PeopleHasCheck(string people)
     {
-        if (_peopleChecked.ContainsKey(people))
+        if (_peopleChecked.Contains(people))
         {
             return true;
         }
@@ -361,8 +361,6 @@ public class PersonController : PersonPot
 
     public bool IsPeopleCheckFull()
     {
-        var t = ThatHasNotChecked();
-
         if (_peopleChecked.Count >= All.Count)
         {
             return true;
@@ -379,7 +377,7 @@ public class PersonController : PersonPot
             int personCount = 0;
             for (int j = 0; j < _peopleChecked.Count; j++)
             {
-                if (All[i].MyId != _peopleChecked.ElementAt(j).Value)
+                if (All[i].MyId != _peopleChecked[i])
                 {
                     personCount++;
                 }

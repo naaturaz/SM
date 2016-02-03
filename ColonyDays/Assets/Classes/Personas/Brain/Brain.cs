@@ -391,7 +391,7 @@ public class Brain
 
     private void SkipFood()
     {
-        if (ReadyToGetFood() && (_person.FoodSource == null || _person.Age < JobManager.startSchool))
+        if (ReadyToGetFood() && (_person.FoodSource == null || _person.Age < _jobManager.startSchool))
         {
             ReadyToGoToReligion(true);
         }
@@ -1922,7 +1922,7 @@ public class Brain
         //isallset is here so will check if closest building exist
         if (!ItHasOneAlready(HPers.Work) || _person.Work.Instruction == H.WillBeDestroy)
         {
-            var newWork =JobManager.GiveWork(_person);
+            var newWork = _jobManager.GiveWork(_person);
             _person.Work = newWork;
             WorkPositionsUpdate();
         }
@@ -1952,7 +1952,7 @@ public class Brain
         //if is not null and is not shack then dont need to  call CheckHomeLoop()
         if (_person.Home != null)
         {
-            bool thereIsABetterHome = Realtor.PublicIsABetterHome(_person);
+            bool thereIsABetterHome = _realtor.PublicIsABetterHome(_person);
 
             if (!thereIsABetterHome)
             {
@@ -1964,6 +1964,13 @@ public class Brain
     }
 
   
+    Realtor _realtor = new Realtor();
+    public Realtor Realtor1
+    {
+        get { return _realtor; }
+        set { _realtor = value; }
+    }
+
 
     /// <summary>
     /// Looks thru all the 'BuilderPot.Control.HousesWithSpace' items to see if this person can find
@@ -1971,13 +1978,13 @@ public class Brain
     /// </summary>
     void CheckHomeLoop()
     {
-        bool thereIsABetterHome = Realtor.PublicIsABetterHome(_person);
+        bool thereIsABetterHome = _realtor.PublicIsABetterHome(_person);
 
         //shack builders can not look into this. Othr wise they will stay on Limbo once better home found 
         if (thereIsABetterHome || !string.IsNullOrEmpty(_person.IsBooked))
         {
             var oldHomeP = PullOldHome();
-            var s = Realtor.GiveMeTheBetterHome(_person);
+            var s = _realtor.GiveMeTheBetterHome(_person);
 
             if (s != null)
             {
@@ -2268,9 +2275,11 @@ public class Brain
         }
     }
 
+    JobManager _jobManager = new JobManager();
+
     void HandleNewJobSearch()
     {
-        var newWork = JobManager.ThereIsABetterJob(_person);
+        var newWork = _jobManager.ThereIsABetterJob(_person);
         if (newWork == null)
         {
             //Debug.Log("New work should not be null");
@@ -2624,6 +2633,8 @@ public class Brain
         get { return _partido; }
         set { _partido = value; }
     }
+
+
 
     /// <summary>
     /// A person die 

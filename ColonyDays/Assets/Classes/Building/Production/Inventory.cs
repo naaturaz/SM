@@ -11,6 +11,9 @@ public class Inventory  {
     private string _info;
     private string _locMyId;
 
+
+    List<P> _foodItems=new List<P>(); 
+
     //Cubic meters of a Inventory
     private float _capacityVol;
 
@@ -30,6 +33,12 @@ public class Inventory  {
     {
         get { return _capacityVol; }
         set { _capacityVol = value; }
+    }
+
+    public List<P> FoodCatItems
+    {
+        get { return _foodItems; }
+        set { _foodItems = value; }
     }
 
     public Inventory(){}
@@ -81,6 +90,7 @@ public class Inventory  {
             if (Key == _inventItems[i].Key)
             {
                 _inventItems.RemoveAt(i);
+                RemoveFromCategory(Key);
                 return;
             }
         }
@@ -143,12 +153,29 @@ public class Inventory  {
         }
         else
         {
+            AddToCategory(key);
             _inventItems.Add(new InvItem( key , amt));
             SetAmtWithKey(key,amt);
         }
         //UpdateInfo();
         ResaveOnRegistro();
         UpdateOnGameController(H.Add, key, amt);
+    }
+
+    private void AddToCategory(P key)
+    {
+        if (CategorizeProd(key)==PCat.Food)
+        {
+            _foodItems.Add(key);
+        }
+    }
+
+    private void RemoveFromCategory(P key)
+    {
+        if (CategorizeProd(key) == PCat.Food)
+        {
+            _foodItems.Remove(key);
+        }
     }
 
     /// <summary>
@@ -374,14 +401,11 @@ public class Inventory  {
     {
         List<P> res = new List<P>();
 
-        for (int i = 0; i < _inventItems.Count; i++)
+        if (pCat==PCat.Food)
         {
-            var cateOfCurr = CategorizeProd(_inventItems[i].Key);
-            if (cateOfCurr == pCat)
-            {
-                res.Add(_inventItems[i].Key);
-            }
+            return FoodCatItems;
         }
+        
         return res;
     }
 

@@ -9,11 +9,11 @@ using System.Linq;
 public class Realtor
 {
     //its not well implemented so Im dropping confomrt to people get better home 
-    private static int confortWeight = 0;//100
+    private   int confortWeight = 0;//100
 
-    private static string familyID="";
+    private   string familyID="";
 
-    public static Structure GiveMeTheBetterHome(Person person)
+    public   Structure GiveMeTheBetterHome(Person person)
     {
         var key = "";
         if (!string.IsNullOrEmpty(person.IsBooked))
@@ -40,7 +40,7 @@ public class Realtor
     /// <summary>
     /// Will go thru all better homes to see if can find one. 
     /// </summary>
-    static string LoopThruAllBetterHomes(Person person)
+      string LoopThruAllBetterHomes(Person person)
     {
         //list of better hoomes
         var list = DefineBetterHomesList(person);
@@ -68,7 +68,7 @@ public class Realtor
     /// It has the logic to deal with the booking of a home
     /// </summary>
     /// <returns></returns>
-    static Structure HandleBooking(Person person, Structure newhome)
+      Structure HandleBooking(Person person, Structure newhome)
     {
         if (newhome == null)
         {
@@ -85,7 +85,7 @@ public class Realtor
     /// </summary>
     /// <param name="person"></param>
     /// <param name="newHome"></param>
-    static void BookToNewBuild(Person person, Structure newHome)
+      void BookToNewBuild(Person person, Structure newHome)
     {
         Debug.Log(person.MyId + " BookToNewBuild fID:"+familyID);
 
@@ -105,7 +105,7 @@ public class Realtor
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    private static string DefineIfIsABetterHouse(Person person, string homeToEval, List<BuildRank> list)
+    private   string DefineIfIsABetterHouse(Person person, string homeToEval, List<BuildRank> list)
     {
         if (ThereIsABetterHome(person, list))
         {
@@ -123,7 +123,7 @@ public class Realtor
         return "";
     }
 
-    static string DefineBetterHome4Adult(Person person, string homeToEval)
+      string DefineBetterHome4Adult(Person person, string homeToEval)
     {
         var newHome = Brain.GetBuildingFromKey(homeToEval);
 
@@ -139,7 +139,7 @@ public class Realtor
     }
 
 
-    static string DefineBetterHome4Child(Person person, string homeToEval)
+      string DefineBetterHome4Child(Person person, string homeToEval)
     {
         var newHome = Brain.GetBuildingFromKey(homeToEval);
 
@@ -166,7 +166,7 @@ public class Realtor
     /// <summary>
     /// Will tell u if the person family fits in the new home 
     /// </summary>
-    static bool DoesFamilyFit(Person person, Building newHome)
+      bool DoesFamilyFit(Person person, Building newHome)
     {
         var personHasFamily = person.HasFamily();
         //Debug.Log(person.MyId);
@@ -196,7 +196,7 @@ public class Realtor
     /// <summary>
     /// Will tell u if the 'person' is booked in the 'newHome'
     /// </summary>
-    static bool AmIBookedInThatBuild(Person person, Building newHome)
+      bool AmIBookedInThatBuild(Person person, Building newHome)
     {
         if (newHome.BookedHome1 == null)
         {
@@ -208,7 +208,7 @@ public class Realtor
     /// <summary>
     /// Will tell if a person fits in the 'newHome' will look first if the building is booked 
     /// </summary>
-    static bool DoesPersonFit(Person person, Building newHome)
+      bool DoesPersonFit(Person person, Building newHome)
     {
         //was removed from there then doesnt fit 
         if (!BuildingPot.Control.HousesWithSpace.Contains(newHome.MyId))
@@ -242,7 +242,7 @@ public class Realtor
         return false;
     }
 
-    static Family FindCurrentFamily(Person person)
+      Family FindCurrentFamily(Person person)
     {
         if (person.Home==null)
         {
@@ -257,7 +257,7 @@ public class Realtor
     /// <summary>
     /// Will book family to new building 
     /// </summary>
-    public static void BookMyFamilyToNewBuild(Person person, Building newHome)
+    public   void BookMyFamilyToNewBuild(Person person, Building newHome)
     {
         //if doesnt have at least 1 family empty.//means no booking is needed.
         if (newHome.ReturnEmptyFamily() == null)
@@ -281,7 +281,7 @@ public class Realtor
         }
     }
 
-    static void BookMyFamilyToNewBuildTail(Person person, Building newHome, Family myFamily)
+      void BookMyFamilyToNewBuildTail(Person person, Building newHome, Family myFamily)
     {
         newHome.BookedHome1 = new BookedHome(newHome.MyId, myFamily);
         BuildingPot.Control.Registro.ResaveOnRegistro(newHome.MyId);
@@ -289,7 +289,7 @@ public class Realtor
         RestartControllerForMyFamily(myFamily, person);
     }
 
-    private static Family TransferInToNewFamily(Family curFamily, Building newHome, Person newPerson)
+    private   Family TransferInToNewFamily(Family curFamily, Building newHome, Person newPerson)
     {
         var fam = newHome.ReturnEmptyFamily();
 
@@ -311,7 +311,7 @@ public class Realtor
     /// </summary>
     /// <param name="curFamily"></param>
     /// <param name="fam"></param>
-    private static void TransferFromCurrToNewFam(Family curFamily, Family newFam, Person newPerson, Building newHome)
+    private   void TransferFromCurrToNewFam(Family curFamily, Family newFam, Person newPerson, Building newHome)
     {
         if (!string.IsNullOrEmpty( newPerson.Spouse))
         {
@@ -343,7 +343,7 @@ public class Realtor
     /// </summary>
     /// <param name="person"></param>
     /// <param name="newHome"></param>
-    public static void BookNewPersonInNewHome(Person person, Building newHome, string familyIDP)
+    public   void BookNewPersonInNewHome(Person person, Building newHome, string familyIDP)
     {
         RemoveFromOldHomeFamily(person);
         var myFamily = newHome.FindFamilyById(familyIDP);
@@ -368,7 +368,7 @@ public class Realtor
     /// In case is being called from In Here Realtor. 
     /// </summary>
     /// <param name="person"></param>
-    static void RemoveFromOldHomeFamily(Person person)
+      void RemoveFromOldHomeFamily(Person person)
     {
         if (person.Home == null || person.Home.Families == null)
         {
@@ -386,7 +386,7 @@ public class Realtor
     /// 
     /// PersonB is the one asking for this. Is theone tht booked and this person doesnt need to check again  
     /// </summary>
-    static void RestartControllerForMyFamily(Family myFamily, Person personB)
+      void RestartControllerForMyFamily(Family myFamily, Person personB)
     {
         for (int i = 0; i < myFamily.Kids.Count; i++)
         {
@@ -405,7 +405,7 @@ public class Realtor
     /// </summary>
     /// <param name="newHome"></param>
     /// <returns></returns>
-    static bool CanIMoveFamilyToNewHome(Building newHome)
+      bool CanIMoveFamilyToNewHome(Building newHome)
     {
         bool isBooked = IsBuildBooked(newHome);
 
@@ -416,7 +416,7 @@ public class Realtor
     /// Will return true if building is booked 
     /// </summary>
     /// <returns></returns>
-    static bool IsBuildBooked(Building newHome)
+      bool IsBuildBooked(Building newHome)
     {
         bool isBooked = false;
 
@@ -435,7 +435,7 @@ public class Realtor
     /// <param name="building"></param>
     /// <param name="person"></param>
     /// <returns></returns>
-    static float ScoreABuild(Building building, Vector3 comparePoint,Person person)
+      float ScoreABuild(Building building, Vector3 comparePoint,Person person)
     {
         var distToNewHome = Vector3.Distance(building.transform.position, comparePoint);
         var confort = building.Confort * confortWeight;
@@ -453,7 +453,7 @@ public class Realtor
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    static List<BuildRank> ScoreAllAvailBuilds(Person person, Vector3 comparePoint, float above)
+    List<BuildRank> ScoreAllAvailBuilds(Person person, Vector3 comparePoint, float above)
     {
         List<BuildRank> res = new List<BuildRank>();
 
@@ -484,7 +484,7 @@ public class Realtor
     /// <summary>
     /// Will return true if is a better home than the current one 
     /// </summary>
-    static bool ThereIsABetterHome(Person person, List<BuildRank> list)
+      bool ThereIsABetterHome(Person person, List<BuildRank> list)
     {
         var myCurrentHomeScore = ScoreCurrentHome(person);
 
@@ -507,22 +507,38 @@ public class Realtor
         return false;
     }
 
-    public static bool PublicIsABetterHome(Person person)
+    public   bool PublicIsABetterHome(Person person)
     {
         var tempList = DefineBetterHomesList(person);
 
         return ThereIsABetterHome(person, tempList);
     }
 
-    static List<BuildRank> DefineBetterHomesList(Person person)
+    List<BuildRank> DefineBetterHomesList(Person person)
     {
         var myCurrentHomeScore = ScoreCurrentHome(person);
 
-        //will return list with all avail building tht have better score than 'myCurrentHomeScore'
-        return ScoreAllAvailBuilds(person, person.transform.position, myCurrentHomeScore);
+        UpdateAllAvalBuilds(person, myCurrentHomeScore);
+
+        return _allAvailBuild;
     }
 
-    static float ScoreCurrentHome(Person person)
+    private void UpdateAllAvalBuilds(Person person, float myCurrentHomeScore)
+    {
+        if (_oldHomes != BuildingPot.Control.HousesWithSpace)
+        {
+            _oldHomes = BuildingPot.Control.HousesWithSpace;
+
+            //will return list with all avail building tht have better score than 'myCurrentHomeScore'
+            _allAvailBuild = ScoreAllAvailBuilds(person, person.transform.position, myCurrentHomeScore);
+        }
+    }
+
+    List<string> _oldHomes = new List<string>();
+    List<BuildRank> _allAvailBuild = new List<BuildRank>(); 
+
+
+    float ScoreCurrentHome(Person person)
     {
         //to address the case if there is not home currently for the person
         //if will be destroy score will be -10000
@@ -539,7 +555,7 @@ public class Realtor
     /// </summary>
     /// <param name="makeIt"></param>
     /// <param name="family"></param>
-    static void MarkTheFamilyBooking(string booking, Family family)
+      void MarkTheFamilyBooking(string booking, Family family)
     {
         for (int i = 0; i < family.Kids.Count; i++)
         {
@@ -549,7 +565,7 @@ public class Realtor
         PersonPot.Control.SetIsBookedToPerson(family.Mother, booking);
     }
 
-    static void IdEveryOneOnTheFamily(string newFamId, Family family)
+      void IdEveryOneOnTheFamily(string newFamId, Family family)
     {
         for (int i = 0; i < family.Kids.Count; i++)
         {

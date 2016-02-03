@@ -132,7 +132,7 @@ public class Dispatch
             Debug.Log("Order Added:" + prod.Product + ".placed by:" + prod.DestinyBuild);
 
             Orders.Add(prod);
-            OrderByPlacedTime(Orders);
+            //OrderByPlacedTime(Orders);
 
 
             _recycledOrders.Remove(prod);
@@ -152,7 +152,7 @@ public class Dispatch
             Orders.Add(prod);
             _recycledOrders.Remove(prod);
 
-            OrderByPlacedTime(Orders);
+            //OrderByPlacedTime(Orders);
         }
     }
 

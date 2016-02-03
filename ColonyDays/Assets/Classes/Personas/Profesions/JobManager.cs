@@ -9,13 +9,13 @@ using System.Linq;
 
 public class JobManager
 {
-    public static int startSchool = 5;
-    public static int startTrade = 11;
-    public static int majorityAge = 16;
+    public   int startSchool = 5;
+    public   int startTrade = 11;
+    public static  int majorityAge = 16;
 
     #region Give Initial Work
 
-    public static Structure GiveWork(Person person)
+    public   Structure GiveWork(Person person)
     {
         var key = DecideBasedOnAge(person);
 
@@ -31,7 +31,7 @@ public class JobManager
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    static string DecideBasedOnAge(Person person)
+      string DecideBasedOnAge(Person person)
     {
         if (person.Age >= majorityAge)
         {
@@ -57,12 +57,12 @@ public class JobManager
         return "";
     }
 
-    static bool OneMoreKidFitOnTheSchool(Building building)
+      bool OneMoreKidFitOnTheSchool(Building building)
     {
         return true;
     }
 
-    static string FindBestSchool(H hTypeP, Person person)
+      string FindBestSchool(H hTypeP, Person person)
     {
         var trades = ReturnListType(hTypeP, person);
 
@@ -76,7 +76,7 @@ public class JobManager
         return "";
     }
 
-    static private string DefineClosestBuild(Person person)
+      private string DefineClosestBuild(Person person)
     {
         var currListOfBuild =  BuildingPot.Control.WorkOpenPos;
         int size = currListOfBuild.Count;
@@ -118,7 +118,7 @@ public class JobManager
     /// <summary>
     /// Created for modularity
     /// </summary>
-    static string DefineClosestBuildTail(List<VectorM> loc, int index)
+      string DefineClosestBuildTail(List<VectorM> loc, int index)
     {
         string closestKey = "";
 
@@ -136,7 +136,7 @@ public class JobManager
     /// </summary>
     /// <param name="hTypeP"></param>
     /// <returns></returns>
-    static List<Building> ReturnListType(H hTypeP, Person person)
+      List<Building> ReturnListType(H hTypeP, Person person)
     {
         List<Building> Re = new List<Building>();
         for (int i = 0; i < BuildingPot.Control.Registro.AllBuilding.Count; i++)
@@ -155,7 +155,7 @@ public class JobManager
 
 #endregion
 
-    static public Structure ThereIsABetterJob(Person person)
+      public Structure ThereIsABetterJob(Person person)
     {
         if (person.Home == null)
         {return null;}
@@ -179,7 +179,7 @@ public class JobManager
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    static Structure BetterWork(Person person)
+      Structure BetterWork(Person person)
     {
         if (BuildingPot.Control.WorkOpenPos.Count == 0 ||
             (person.Work != null && person.Work.Instruction == H.WillBeDestroy))
@@ -201,7 +201,7 @@ public class JobManager
     /// Created to address the case when a teen need to go to a Trades school if exist 
     /// </summary>
     /// <returns></returns>
-    static Structure BetterSchool(Person person)
+      Structure BetterSchool(Person person)
     {
         return GiveWork(person);
     }
@@ -211,29 +211,43 @@ public class JobManager
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    private static string DefineIfIsABetterJob(Person person)
+    private   string DefineIfIsABetterJob(Person person)
     {
-        var list = ScoreAllAvailBuilds(person, person.Home.transform.position);
+        UpdateAllJobAvail(person);
+        
         var myCurrentJobScore = ScoreABuild(person.Work, person.Home.transform.position);
 
-        bool isABetterJob = list[0].Score > myCurrentJobScore;
+        bool isABetterJob = _allJobAvailGC[0].Score > myCurrentJobScore;
 
         if (isABetterJob)
         {
-            return list[0].Key;
+            return _allJobAvailGC[0].Key;
         }
         return "";
     }
 
-    static private int rationsWeight = 50;
-    static private int dollarsWeight = 100;
+
+    List<string> _oldJobs = new List<string>();
+    List<BuildRank> _allJobAvailGC = new List<BuildRank>();
+    public   void UpdateAllJobAvail(Person person)
+    {
+        if (_oldJobs != BuildingPot.Control.WorkOpenPos)
+        {
+            _oldJobs = BuildingPot.Control.WorkOpenPos;
+
+            _allJobAvailGC = ScoreAllAvailBuilds(person, person.Home.transform.position);
+        }
+    }
+
+      private int rationsWeight = 50;
+      private int dollarsWeight = 100;
     /// <summary>
     /// Score one building 
     /// </summary>
     /// <param name="building"></param>
     /// <param name="person"></param>
     /// <returns></returns>
-    static float ScoreABuild(Building building, Vector3 comparePoint)
+      float ScoreABuild(Building building, Vector3 comparePoint)
     {
         if (building==null)
         {
@@ -252,7 +266,7 @@ public class JobManager
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    static List<BuildRank> ScoreAllAvailBuilds(Person person, Vector3 comparePoint)
+      List<BuildRank> ScoreAllAvailBuilds(Person person, Vector3 comparePoint)
     {
         List<BuildRank> res = new List<BuildRank>();
 

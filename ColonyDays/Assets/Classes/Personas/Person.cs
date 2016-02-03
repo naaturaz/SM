@@ -690,7 +690,7 @@ public class Person : General
     /// <param name="item"></param>
     void Nutrive(float amt, P item)
     {
-        var nutriValue = BuildingPot.Control.ProductionProp.Food1.NValues.Find(a => a.Nutrient == item).NutritionVal;
+        var nutriValue = BuildingPot.Control.ProductionProp.Food1.FindNutritionValue(item).NutritionVal;
         _nutritionLevel += (amt * nutriValue);
 
         //UnityEngine.Debug.Log(MyId + " nutrived nutriVal:" + amt * nutriValue + ". curr:" + _nutritionLevel);
@@ -826,7 +826,7 @@ public class Person : General
             RemoveMeFromOldHome();
             PeopleDictMatters(place);
 
-            Realtor.BookNewPersonInNewHome(this, place, newFamilyID);
+            Brain.Realtor1.BookNewPersonInNewHome(this, place, newFamilyID);
 
 //            print("Age Major: " + MyId);
             _isMajor = true;
@@ -1596,7 +1596,7 @@ public class Person : General
     /// <returns></returns>
     private float HowMuchINeedToBe100PointsFeed(P item)
     {
-        var nutriValue = BuildingPot.Control.ProductionProp.Food1.NValues.Find(a => a.Nutrient == item).NutritionVal;
+        var nutriValue = BuildingPot.Control.ProductionProp.Food1.FindNutritionValue(item).NutritionVal;
         var nutriNeed = 100 - _nutritionLevel;
 
         return  nutriNeed / nutriValue + 1;//+1 is to round up

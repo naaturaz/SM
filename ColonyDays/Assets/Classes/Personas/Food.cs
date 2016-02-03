@@ -5,15 +5,32 @@ public class Food
 {
     List<NutritionValue> _nValues = new List<NutritionValue>();//nutrition values
 
+    Dictionary<P, NutritionValue> _nValuesGC = new Dictionary<P, NutritionValue>();
+
     public Food()
     {
         LoadNutriVals();
+        MapDict();
     }
 
-    public List<NutritionValue> NValues
+    private void MapDict()
     {
-        get { return _nValues; }
+        for (int i = 0; i < _nValues.Count; i++)
+        {
+            _nValuesGC.Add(_nValues[i].Nutrient, _nValues[i]);
+        }
     }
+
+    public NutritionValue FindNutritionValue(P prod)
+    {
+        if (_nValuesGC.ContainsKey(prod))
+        {
+            return _nValuesGC[prod];
+            
+        }
+        return null;
+    }
+
 
     private void LoadNutriVals()
     {

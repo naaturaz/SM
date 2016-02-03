@@ -12,9 +12,21 @@ public class ExportImport
 {
     List<ProdSpec> _prodSpecs = new List<ProdSpec>(); 
 
+    //craeted for GC reasons
+    Dictionary<P, ProdSpec> _prodSpecsGC = new Dictionary<P, ProdSpec>();
+
     public ExportImport()
     {
         LoadBasePrices();
+        MapDict();
+    }
+
+    private void MapDict()
+    {
+        for (int i = 0; i < _prodSpecs.Count    ; i++)
+        {
+            _prodSpecsGC.Add(_prodSpecs[i].Product, _prodSpecs[i]);
+        }
     }
 
     //Densities
@@ -34,7 +46,6 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Bean, 90, 368, 100));
         _prodSpecs.Add(new ProdSpec(P.CoffeeBean, 100, 308, 100));
         _prodSpecs.Add(new ProdSpec(P.Cacao, 110, 250, 100));
-        _prodSpecs.Add(new ProdSpec(P.Bean, 90, 368, 100));
         _prodSpecs.Add(new ProdSpec(P.Potato, 70, 380, 100));
         _prodSpecs.Add(new ProdSpec(P.Banana, 100, 350, 100));
         _prodSpecs.Add(new ProdSpec(P.Coconut, 100, 550, 100));
@@ -129,6 +140,10 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.RandomFoundryOutput, 150, 4100, 100));
     }
 
+
+
+
+
     /// <summary>
     /// Will calculate the volume of a Product given the mass in KG 
     /// </summary>
@@ -137,7 +152,7 @@ public class ExportImport
     /// <returns></returns>
     public float CalculateVolume(P prod, float mass)
     {
-        var prodLo = _prodSpecs.Find(a => a.Product == prod);
+        var prodLo = FindProdSpec(prod);
 
         if (prodLo == null)
         {
@@ -158,7 +173,8 @@ public class ExportImport
     /// <returns></returns>
     public float CalculateMass(P prod, float cubicMetersVol)
     {
-        var prodLo = _prodSpecs.Find(a => a.Product == prod);
+
+        var prodLo = FindProdSpec(prod);
 
         if (prodLo == null)
         {
@@ -204,7 +220,8 @@ public class ExportImport
 
     public float ReturnDensityKGM3(P prod)
     {
-        var prodFound = _prodSpecs.Find(a => a.Product == prod);
+        var prodFound = FindProdSpec(prod);
+
 
         if (prodFound == null)
         {
@@ -213,11 +230,23 @@ public class ExportImport
         }
 
         return _prodSpecs.Find(a => a.Product == prod).Density;
-    }    
+    }
+
+    ProdSpec FindProdSpec(P prod)
+    {
+        if (_prodSpecsGC.ContainsKey(prod))
+        {
+            return _prodSpecsGC[prod];
+            
+        }
+
+        return null;
+    }
     
     public float ReturnProduceFactor(P prod)
     {
-        var prodFound = _prodSpecs.Find(a => a.Product == prod);
+
+        var prodFound = FindProdSpec(prod);
 
         if (prodFound == null)
         {
@@ -229,7 +258,8 @@ public class ExportImport
  
     public float ReturnPrice(P prod)
     {
-        var prodFound = _prodSpecs.Find(a => a.Product == prod);
+        var prodFound = FindProdSpec(prod);
+
 
         if (prodFound == null)
         {
