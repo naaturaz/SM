@@ -163,18 +163,17 @@ public class AddOrderWindow : GUIElement {
             return false;
         }
 
-
-        var _dock = BuildingPot.Control.Registro.SelectBuilding;
+        var dockBuild = BuildingPot.Control.Registro.SelectBuilding;
 
         if (_orderType == "Export")
         {
-            _dock.Export(new Order(_prodSelect, "Ship", _amt));
+            dockBuild.Dock1.Export(new Order(_prodSelect, "Ship", _amt));
         }
         else if (_orderType == "Import")
         {
             Order order = new Order(_prodSelect, "", "Ship");
             order.Amount = _amt;
-            _dock.Import(order);
+            dockBuild.Dock1.Import(order);
         }
 
         //so orders are updated 

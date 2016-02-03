@@ -195,5 +195,27 @@ public class UVisHelp : MonoBehaviour {
         return res;
     }
 
-  
+
+
+    internal static List<General> CreateHelpers(List<VectorM> _map8entries, string root)
+    {
+        List<General> res = new List<General>();
+
+        for (int i = 0; i < _map8entries.Count; i++)
+        {
+            res.Add(General.Create(root, _map8entries[i].Point));
+        }
+        return res;
+    }
+
+    internal static List<General> CreateHelpers(TheRoute route, string root)
+    {
+        List<General> res = new List<General>();
+
+        for (int i = 0; i < route.CheckPoints.Count; i++)
+        {
+            res.Add(General.Create(root, route.CheckPoints[i].Point));
+        }
+        return res;
+    }
 }

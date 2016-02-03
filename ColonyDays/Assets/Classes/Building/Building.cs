@@ -433,8 +433,7 @@ public class Building : General, Iinfo
             IfShackResaveInventoryOnRegistro();
         }
 
-        InitDockDryDockSupplier();
-        InitDryDockAndSupplier();
+        InitDockDryDockAndSupplier();
         InitWheelBarrow();
 
         //if gives a null ex here ussually is that u forgot a prefab on scene
@@ -657,9 +656,11 @@ public class Building : General, Iinfo
             {UpdateBuild();}
         }
 
-        if (_debugShip != null)
+
+
+        if (_dock != null)
         {
-            _debugShip.Update();    
+            _dock.Update();
         }
     }
 
@@ -791,6 +792,13 @@ public class Building : General, Iinfo
 
         LayerRoutine("done");
         PositionFixed = true;
+
+        if (IsDockType())
+        {
+            _dock.CreateRoute();
+            
+        }
+
 
         if (!HType.ToString().Contains("Unit") && !IsLoadingFromFile)
         {
@@ -992,8 +1000,15 @@ public class Building : General, Iinfo
         }
         else
         {
+            //for DockTypes
+            var reachRoute = true;
+            if (IsDockType())//if is not DockType wont be affected 
+            {
+                reachRoute = _dock.CanIReachRoute();
+            }
+
             DefineBoundsGameObj(H.MaritimeBound);
-            return RoutineToFindIfAnchorsAreGood(_terraBound, _maritimeBound, H.MaritimeBound);
+            return RoutineToFindIfAnchorsAreGood(_terraBound, _maritimeBound, H.MaritimeBound) && reachRoute;
         }
     }
 
@@ -2708,25 +2723,34 @@ public class Building : General, Iinfo
 #endregion
 
 
-#region DryDock and Supplier 
 
-    DryDock _dryDock;
 
-    private void InitDryDockAndSupplier()
+
+
+
+    #region Dock  DryDock and Supplier 
+
+    Dock _dock;
+    private Dispatch _dispatch;//dock will have a Dispatch
+
+
+    bool IsDockType()
     {
-        if (HType == H.DryDock || HType == H.Supplier)
+        if (HType == H.DryDock || HType == H.Supplier || HType == H.Dock)
         {
-            _dryDock = new DryDock(this);
+            return true;
+        }
+        return false;
+    }
+
+    private void InitDockDryDockAndSupplier()
+    {
+        if (HType == H.DryDock || HType == H.Supplier || HType == H.Dock)
+        {
+            _dock = new Dock(this);
             _dispatch = new Dispatch();
         }
     }
-
-    #endregion
-
-
-    #region Dock
-
-    private Dispatch _dispatch;//dock will have a Dispatch
 
     public Dispatch Dispatch1
     {
@@ -2734,49 +2758,18 @@ public class Building : General, Iinfo
         set { _dispatch = value; }
     }
 
-    private Ship _debugShip;
-
-    private void InitDockDryDockSupplier()
+    public Dock Dock1
     {
-        if (HType != H.Dock && HType != H.DryDock && HType != H.Supplier)
-        {
-            return;
-        }
-
-        _dispatch = new Dispatch();
-        _debugShip = new Ship(this);
+        get { return _dock; }
+        set { _dock = value; }
     }
-
-    /// <summary>
-    /// ACtion from the user tht need an 'item' to be import 
-    /// </summary>
-    /// <param name="item"></param>
-    public void Import(Order order)
-    {
-        _dispatch.AddToExpImpOrders(order);
-    }
-
-    /// <summary>
-    /// ACtion from the User when needs Export and order 
-    /// </summary>
-    /// <param name="order"></param>
-    public void Export(Order order)
-    {
-        Order exp = new Order();
-        exp = order;
-        _dispatch.AddToExpImpOrders(exp);
-
-
-        //so Dockers starts looking for this in the Storage Buildings 
-        Order local = new Order();
-        local = order;
-        _dispatch.AddToOrdersToDock(local);
-    }
-
-
-
 
     #endregion
+
+
+
+
+
 
 
 
@@ -2999,91 +2992,6 @@ public class Building : General, Iinfo
     }
 }
 
-/// <summary>
-/// The ship calss is the one that ask for Import and Exports on the Dock ExportImportDispath
-/// </summary>
-public class Ship
-{
-    private Building _dock;
-    Inventory _inventory = new Inventory();
-    private float _size = 20f;
-
-    public Building Dock
-    {
-        get { return _dock; }
-        set { _dock = value; }
-    }
-
-    public Inventory Inventory1
-    {
-        get { return _inventory; }
-        set { _inventory = value; }
-    }
-
-    public float Size
-    {
-        get { return _size; }
-        set { _size = value; }
-    }
-
-    public Ship(Building dock)
-    {
-        _dock = dock;
-        DebugInit();
-    }
-
-    /// <summary>
-    /// To emulate the user entering orders 
-    /// </summary>
-    void DebugInit()
-    {
-        //_dock.Export(new Order(P.Gold, "Ship", 1));
-
-
-
-
-        Order order = new Order(P.Axe, "", "Ship");
-        order.Amount = 1;
-        _dock.Import(order);
-    }
-
-    void CheckIfImportOrders()
-    {
-        if (_dock.Dispatch1.HasImportOrders())
-        {
-            _dock.Dispatch1.Import(_dock);
-        }    
-    }
-    
-    private void CheckIfExportOrders()
-    {
-        if (_dock.Dispatch1.HasExportOrders())
-        {
-            _dock.Dispatch1.Export(_dock);
-        }
-    }
-
-
-
-    private float lastCheck;
-    public void Update()
-    {
-        if (Time.time > lastCheck + 10f)
-        {
-            CheckIfImportOrders();
-            CheckIfExportOrders();
-
-            lastCheck = Time.time;
-        }
-    }
-
-
-
-
-
-
-
-}
 
 
 
