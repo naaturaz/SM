@@ -284,6 +284,12 @@ public class Root : MonoBehaviour
 
    
 
+    /// <summary>
+    /// Ships
+    /// </summary>
+    public static string shipSmall =  "Prefab/Ship/ShipSmall";
+
+
     static void LoadMatDict()
     {
         matDict.Add(H.Trail+"."+Ma.matBuildBase, matGravilla);
@@ -864,6 +870,8 @@ public class Root : MonoBehaviour
     public static string musicOnPaused = "Prefab/Menu/SettingsPause/Actionable_Music_Btn_Main_Paused";
     public static string backToPauseMenu = "Prefab/Menu/SettingsPause/Actionable_BackToPause_Btn2D_Click_Pause";
     public static string settingsPauseSpawner = "Settings_Pause_Menu_Spawner";
+
+
  
 
     //End of GUI*************************************************************************************

@@ -36,7 +36,9 @@ public class Dock
     private GameObject _entryGO;
     private List<GameObject> _allSpots = new List<GameObject>();
     private List<GameObject> _allLookPoints= new List<GameObject>();
- 
+
+    private bool[] _freeSpots;
+
 
     public Dock() { }
 
@@ -84,11 +86,11 @@ public class Dock
         _entry = _entryGO.transform.position;
     }
 
-    internal void CreateRoute()
+    internal TheRoute CreateRoute()
     {
         InitSpots();
 
-        var route = _seaRouter.PlotRoute(_entry, _allSpots, _allLookPoints);
+        return _seaRouter.PlotRoute(_entry, _allSpots, _allLookPoints);
 
         //UVisHelp.CreateHelpers(route, Root.yellowSphereHelp);
     }
@@ -180,4 +182,6 @@ public class Dock
     }
 
 
+
+ 
 }

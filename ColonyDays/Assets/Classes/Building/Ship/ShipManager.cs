@@ -15,7 +15,6 @@ public class ShipManager
 
     public ShipManager() { }
 
-
     public void Update ()
     {
         CheckIfTimeToVisit();
@@ -27,6 +26,7 @@ public class ShipManager
         if (_nextVisit != null && IsTheVisitPastOrNow() && 
             BuildingPot.Control.DockManager1.HasSpaceForOneMore(_shipGOs.Count))
         {
+            _nextVisit = null;
             NewShipComingToUs();
         }
     }
@@ -36,8 +36,9 @@ public class ShipManager
     /// </summary>
     private void NewShipComingToUs()
     {
-        //Building build = BuildingPot.Control.DockManager1.GiveMeRandomBuilding();
+        Building build = BuildingPot.Control.DockManager1.GiveMeRandomBuilding();
 
+        _shipGOs.Add(ShipGO.Create(Root.shipSmall, new Vector3(), build, H.ShipSmall));
     }
 
     private void CheckWhenNextVisit()
@@ -47,7 +48,7 @@ public class ShipManager
             return;
         }
 
-        if (_nextVisit == null || IsTheVisitPastOrNow())
+        if (_nextVisit == null)
         {
             SetNextVisit();
         }
@@ -61,7 +62,6 @@ public class ShipManager
         var daysFromNow = 3600 / (BuildingPot.Control.DockManager1.PortReputation + 1);
         _nextVisit = Program.gameScene.GameTime1.ReturnCurrentDatePlsAdded(daysFromNow);
     }
-
 
     private bool IsTheVisitPastOrNow()
     {

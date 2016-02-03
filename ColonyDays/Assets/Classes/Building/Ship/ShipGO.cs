@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-
 
 /// <summary>
 /// This calss instantiate visible Ships with Geomertry
@@ -11,6 +9,7 @@ public class ShipGO : General {
 
     Ship _ship;
     private Building _building;
+    private MoveThruPoints _moveThruPoints;
 
     public Building Building1
     {
@@ -37,10 +36,20 @@ public class ShipGO : General {
 	    MyId = "Ship |" + HType + " | " + Id;
 	    transform.name = MyId;
         _ship = new Ship(Building1);
+        
+        _moveThruPoints=new MoveThruPoints(Building1, this);
+        _moveThruPoints.WalkRoutine(_moveThruPoints.CurrTheRoute, HPers.Work);
 	}
 	
+    
 	// Update is called once per frame
-	void Update () {
-	
+	void Update ()
+    {
+	    _moveThruPoints.Update();
+
+        if (_moveThruPoints.Location == HPers.Work)
+	    {
+	        
+	    }
 	}
 }

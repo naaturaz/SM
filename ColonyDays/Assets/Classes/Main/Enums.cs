@@ -318,6 +318,7 @@ public enum H
     LockDown,
     Demolish_Btn,
     Cancel_Demolish_Btn,
+    ShipSmall,
 
 
 }

@@ -9,6 +9,8 @@ public class Ship
     Inventory _inventory = new Inventory();
     private float _size = 20f;
 
+    private MDate _leaveDate;
+
     public Building Dock
     {
         get { return _dock; }
@@ -27,7 +29,13 @@ public class Ship
         set { _size = value; }
     }
 
-    public Ship(Building dock)
+    public MDate LeaveDate
+    {
+        get { return _leaveDate; }
+        set { _leaveDate = value; }
+    }
+
+    public Ship(Building dock)
     {
         _dock = dock;
     }
@@ -59,4 +67,10 @@ public class Ship
             lastCheck = Time.time;
         }
     }
+
+
+    public void SetLeaveDate()
+    {
+        
+    }
 }

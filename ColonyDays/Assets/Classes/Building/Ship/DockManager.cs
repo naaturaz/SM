@@ -81,4 +81,10 @@ public class DockManager
         }
         return true;
     }
+
+    internal Building GiveMeRandomBuilding()
+    {
+        var key = _dockStructures[UMath.GiveRandom(0, _dockStructures.Count)];
+        return Brain.GetBuildingFromKey(key);
+    }
 }
