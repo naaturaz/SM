@@ -127,10 +127,14 @@ public class Registro : MonoBehaviour
     /// <param name="myId">item myId</param>
     public void RemoveItem(Ca cat, string myId)
     {
+        var build = Brain.GetBuildingFromKey(myId);
         AddToDestroyBuilding(Brain.GetBuildingFromKey(myId));
         
         Debug.Log("Registro RemoveItem");
         PersonPot.Control.BuildersManager1.RemoveConstruction(myId);//so its removed from the BuilderManager
+
+        BuildingPot.Control.DockManager1.RemoveFromDockStructure(myId, build.HType);
+
    
         ////so its save to AllRegFiles
         AllBuilding[myId].Instruction = H.WillBeDestroy;
@@ -354,7 +358,7 @@ public class Registro : MonoBehaviour
             anchors: anchors);
 
         AddToAll(regFile);
-
+        BuildingPot.Control.DockManager1.AddToDockStructure(myId, type);
 
 
         AddToBuilderManager(myId);

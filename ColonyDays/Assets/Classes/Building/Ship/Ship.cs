@@ -30,19 +30,6 @@ public class Ship
     public Ship(Building dock)
     {
         _dock = dock;
-        DebugInit();
-    }
-
-    /// <summary>
-    /// To emulate the user entering orders 
-    /// </summary>
-    void DebugInit()
-    {
-        //_dock.Export(new Order(P.Gold, "Ship", 1));
-
-        Order order = new Order(P.Axe, "", "Ship");
-        order.Amount = 1;
-        _dock.Dock1.Import(order);
     }
 
     void CheckIfImportOrders()

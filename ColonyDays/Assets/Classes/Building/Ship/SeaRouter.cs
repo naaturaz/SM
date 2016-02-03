@@ -47,7 +47,7 @@ public class SeaRouter  {
             _map8entries.Add(new VectorM(newV, _entry));
         }
         _map8entries = _map8entries.OrderBy(a => a.Distance).ToList();
-        UVisHelp.CreateHelpers(_map8entries, Root.largeBlueCube);
+        //UVisHelp.CreateHelpers(_map8entries, Root.largeBlueCube);
     }
 
     /// <summary>
@@ -90,8 +90,6 @@ public class SeaRouter  {
 
     public TheRoute PlotRoute(Vector3 entry, List<GameObject> spots, List<GameObject> finalLookPoint)
     {
-        TheRoute res = new TheRoute();
-
         var spot = spots[UMath.GiveRandom(0, spots.Count)];
         string spotFinLetter = FindMyLetter(spot.transform.name);
 

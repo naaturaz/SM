@@ -258,11 +258,17 @@ public class GameTime
         return new MDate(daysToConvert, mon, year);
     }
 
-
-
     internal string TodayYMD()
     {
         return Year + "-" + Month1 + "-" + Day;
+    }
+
+    public MDate ReturnCurrentDatePlsAdded(float daysP)
+    {
+        var currDaysSoFar = FromMDateToDays(CurrentDate());
+        var newDate = currDaysSoFar + daysP;
+
+        return FromDaysToMDate((int)newDate);
     }
 }
 

@@ -15,6 +15,10 @@ public class BuildingController : BuildingPot
 
     BridgeManager _bridgeManager = new BridgeManager();
 
+    ShipManager _shipManager = new ShipManager();
+    ShipRegistro _shipRegistro = new ShipRegistro();
+    DockManager _dockManager = new DockManager();
+
     public Building CurrentSpawnBuild
     {
         get { return _currentSpawnBuild; }
@@ -41,6 +45,7 @@ public class BuildingController : BuildingPot
 	{
 	    CheckHover();
         BridgeManager1.Update();
+        ShipManager1.Update();
 	}
 
     /// <summary>
@@ -176,6 +181,24 @@ public class BuildingController : BuildingPot
     {
         get { return _bridgeManager; }
         set { _bridgeManager = value; }
+    }
+
+    public ShipManager ShipManager1
+    {
+        get { return _shipManager; }
+        set { _shipManager = value; }
+    }
+
+    public ShipRegistro ShipRegistro1
+    {
+        get { return _shipRegistro; }
+        set { _shipRegistro = value; }
+    }
+
+    public DockManager DockManager1
+    {
+        get { return _dockManager; }
+        set { _dockManager = value; }
     }
 
 

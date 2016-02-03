@@ -90,7 +90,7 @@ public class Dock
 
         var route = _seaRouter.PlotRoute(_entry, _allSpots, _allLookPoints);
 
-        UVisHelp.CreateHelpers(route, Root.yellowSphereHelp);
+        //UVisHelp.CreateHelpers(route, Root.yellowSphereHelp);
     }
 
     /// <summary>
