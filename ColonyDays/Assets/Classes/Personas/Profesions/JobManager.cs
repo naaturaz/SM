@@ -233,7 +233,8 @@ public class JobManager
     {
         if (_oldJobs != BuildingPot.Control.WorkOpenPos)
         {
-            _oldJobs = BuildingPot.Control.WorkOpenPos;
+            _oldJobs.Clear();
+            _oldJobs.AddRange(BuildingPot.Control.WorkOpenPos);
 
             _allJobAvailGC = ScoreAllAvailBuilds(person, person.Home.transform.position);
         }

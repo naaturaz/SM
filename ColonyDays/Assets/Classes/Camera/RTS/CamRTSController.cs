@@ -31,7 +31,7 @@ public class CamRTSController : CamControl
 
     public static bool IsMouseMiddle;
 
-     float MIN_FIELD_CAM = 5f;//21 
+     float MIN_FIELD_CAM = 45f;//5   21 
      float MAX_FIELD_CAM = 60f;//80  45  
 
     //Target
@@ -102,13 +102,7 @@ public class CamRTSController : CamControl
 
     void Start()
     {
-#if DEBUG
 
-        MIN_FIELD_CAM = 5f;//21 /5
-        MAX_FIELD_CAM = 80f;//45  /80
-
-
-#endif
 
     }
 

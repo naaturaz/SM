@@ -527,12 +527,23 @@ public class Realtor
     {
         if (_oldHomes != BuildingPot.Control.HousesWithSpace)
         {
-            _oldHomes = BuildingPot.Control.HousesWithSpace;
+            _oldHomes.Clear();
+            _oldHomes.AddRange(BuildingPot.Control.HousesWithSpace);
 
             //will return list with all avail building tht have better score than 'myCurrentHomeScore'
             _allAvailBuild = ScoreAllAvailBuilds(person, person.transform.position, myCurrentHomeScore);
         }
     }
+
+    //void CopyToLocalList()
+    //{
+    //    _oldHomes.Clear();
+
+    //    for (int i = 0; i < BuildingPot.Control.HousesWithSpace; i++)
+    //    {
+    //        _oldHomes.Add();
+    //    }
+    //}
 
     List<string> _oldHomes = new List<string>();
     List<BuildRank> _allAvailBuild = new List<BuildRank>(); 

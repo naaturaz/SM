@@ -22,7 +22,7 @@ public class HUDFPS : MonoBehaviour
 
 	private GUIText guiText;
 	private int guiCount;
-	Vector3 guiTextPos = new Vector3(0.5f, .9f, 0);
+	Vector3 guiTextPos = new Vector3(0.7f, .9f, 0);
 
 	private GameObject guiClone;
     private static string _message;

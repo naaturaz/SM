@@ -1874,11 +1874,11 @@ public class Person : General
 
         var dist = Vector3.Distance(transform.position, Camera.main.transform.position);
 
-        if (dist > 35 && dist <= 66)
+        if (dist > 25 && dist <= 66)//35 66
         {
             LOD1();
         }
-        else if (dist > 65)
+        else if (dist > 65)//65
         {
             LOD2();
         }
@@ -1895,6 +1895,11 @@ public class Person : General
     }
 
     void LOD2()
+    {
+        Geometry.SetActive(false);
+    }
+
+    void LOD3()
     {
         Geometry.SetActive(false);
     }

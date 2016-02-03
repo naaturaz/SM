@@ -143,7 +143,7 @@ public class GameScene : General {
         //var onS = PersonPot.PersonController.All.ElementAt(0).Value.Geometry.GetComponent<OnScreen>();
         //var vis = onS.Visible();
 
-        HUDFPS.Message = " | " + MouseInBorderRTS.GlobalDir.ToString() + " | Dragged: " + Way._dir +
+        HUDFPS.Message = " | " + MouseInBorderRTS.GlobalDir.ToString() + "| Dragged: " + Way._dir +
                 " | InputMode: " + BuildingPot.InputMode + "\n" + more + "\n"
             //+ " Vis: " + PersonPot.PersonController.All.ElementAt(0).Value.IsVisible()
             //+ " | Can see: " + PersonPot.PersonController.All.ElementAt(0).Value.I_Can_See()
