@@ -18,6 +18,9 @@ public class SeaRouter  {
         _entry = entry;
         _building = building;
         DefineMap8Entries();
+
+        //needed to define _closerMapEntryReachable
+        CanRoute(entry);
     }
 
     private void DefineMap8Entries()
@@ -69,6 +72,8 @@ public class SeaRouter  {
 
     /// <summary>
     /// Will tell u if can route 
+    /// 
+    /// Defines too : _closerMapEntryReachable
     /// </summary>
     /// <param name="entry"></param>
     /// <returns></returns>

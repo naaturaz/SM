@@ -405,12 +405,9 @@ public class MoveThruPoints
     public void WalkRoutine(TheRoute route, HPers goingTo, bool inverse = false, HPers whichRouteP = HPers.None)
     {
         //Show();//to show person whenh going from old home to shack to be built
-
         InitWalk(route, inverse);
         WalkRoutineTail(goingTo, whichRouteP);
     }
-
-
 
     public void WalkRoutineLoad(TheRoute route, HPers goingTo, int loadInitCurrentPoint,
         bool inverse, HPers whichRouteP)

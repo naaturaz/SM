@@ -16,14 +16,6 @@ using System.Linq;
 
 public class Dock 
 {
-    //where the ship is shown on Screen. 
-    //Ship will be removed moved from sea to here
-    private Vector3 _shipDockPoint;
-
-    //the place where ship was on sea 
-    //so once we are done with it we can place it back there
-    private Vector3 _shipSeaPoint;
-
     //the building we are in
     private Building _building;
 
@@ -106,9 +98,13 @@ public class Dock
 
     internal TheRoute CreateRoute(string shipGoMyId)
     {
-
         InitSpots();
-        _seaRouter = new SeaRouter(_entry, _building);
+
+        if (_seaRouter==null)
+        {
+            _seaRouter = new SeaRouter(_entry, _building);
+        }
+
 
         return _seaRouter.PlotRoute(_entry, _allSpots, _allLookPoints, _building, shipGoMyId);
         //UVisHelp.CreateHelpers(route, Root.yellowSphereHelp);

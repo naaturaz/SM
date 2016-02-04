@@ -212,7 +212,7 @@ public class Ship
     {
         Building().Dock1.RemoveFromBusySpots(myID);
 
-        BuildingPot.Control.DockManager1.PortReputation += Survey();
+        BuildingPot.Control.DockManager1.AddSurvey(Survey());
     }
 
     /// <summary>

@@ -105,4 +105,14 @@ public class DockManager
         //will recurse until finds one tht has a free spot 
         return GiveMeRandomBuilding();
     }
+
+    public void AddSurvey(float survey)
+    {
+        PortReputation += survey;
+
+        if (PortReputation < 0)
+        {
+            PortReputation = 0;
+        }
+    }
 }

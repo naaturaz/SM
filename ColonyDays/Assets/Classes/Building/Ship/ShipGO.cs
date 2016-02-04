@@ -35,26 +35,26 @@ public class ShipGO : General {
         obj.transform.parent = building.transform;
         obj.MyId = myID;
 
-        //is loading
-        if (ship.Position !=new Vector3())
-        {
-            obj.transform.position = ship.Position;
-            obj.transform.rotation = ship.Rotation;
-        }
-
         return obj;
     }
 
 	// Use this for initialization
 	void Start ()
 	{
-        //not loading
-	    if (transform.position==new Vector3())
+        //new objetc
+        if (Ship1.Position == new Vector3())
 	    {
             MyId = "Ship |" + HType + " | " + Id;
             Ship1.MoveThruPoints1 = new MoveThruPoints(Building1, gameObject, MyId);
             Ship1.MoveThruPoints1.WalkRoutine(Ship1.MoveThruPoints1.CurrTheRoute, HPers.Work);
 	    }
+        //loading
+        else
+        {
+            transform.position = Ship1.Position;
+            transform.rotation = Ship1.Rotation;
+        }
+
         transform.name = MyId;
 	}
 	

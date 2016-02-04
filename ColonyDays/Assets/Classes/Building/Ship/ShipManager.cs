@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class ShipManager
 {
     private MDate _nextVisit;
     List<Ship> _ships = new List<Ship>();
-    private bool _isToLoadShips;
+    private int _isToLoadShips = -1;
 
     public MDate NextVisit
     {
@@ -25,9 +26,9 @@ public class ShipManager
         CheckIfTimeToVisit();
 	    CheckWhenNextVisit();
 
-        if (_isToLoadShips && BuildingPot.Control.Registro.IsFullyLoaded())
+        if (_isToLoadShips == 1 && BuildingPot.Control.Registro.IsFullyLoaded())
         {
-            _isToLoadShips = false;
+            _isToLoadShips = 0;
             LoadShips();
         }
 	}
@@ -94,7 +95,11 @@ public class ShipManager
 
     internal void MarkToLoadShips()
     {
-        _isToLoadShips = true;
+        if (_isToLoadShips==-1)
+        {
+            _isToLoadShips = 1;
+            Debug.Log("_isToLoadShips tru:");
+        }
     }
 
     void LoadShips()
@@ -102,6 +107,7 @@ public class ShipManager
         for (int i = 0; i < Ships.Count; i++)
         {
             Ships[i].ReCreateShip();
+            Debug.Log("recreate ship:" + Ships[i].MyId);
         }
     }
 }
