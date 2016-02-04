@@ -122,7 +122,27 @@ public class GameController  {
             && Program.gameScene.GameTime1.Month1 == 1)
         {
             LastYearWorkersSalaryWasPaid = Program.gameScene.GameTime1.Year;
-            Dollars -= BuildingPot.Control.Registro.ReturnYearSalary();
+            SalariesPay();
+            PirateThreat();
+        }
+    }
+
+
+
+    void SalariesPay()
+    {
+        Dollars -= BuildingPot.Control.Registro.ReturnYearSalary();
+    }
+
+    private void PirateThreat()
+    {
+        if (Dollars > 10000)
+        {
+            var pts = Dollars/10000;
+
+            //add gold,silver,etc
+
+            BuildingPot.Control.DockManager1.AddToPirateThreat(pts);
         }
     }
 }

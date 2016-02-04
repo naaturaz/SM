@@ -147,14 +147,18 @@ public class Dock
         BuildingPot.Control.Registro.ResaveOnRegistro(_building.MyId);
     }
 
-    public void RemoveFromBusySpots(string whoIs)
+    void ReInit()
     {
         if (_building == null)
         {
             _building = Brain.GetBuildingFromKey(BuildKey);
             InitSpots();
-            
-        }
+        } 
+    }
+
+    public void RemoveFromBusySpots(string whoIs)
+    {
+        ReInit();
 
         var index = _busySpots.FindIndex(a => a.Contains(whoIs));
 
@@ -164,6 +168,9 @@ public class Dock
 
     public bool ItHasAtLeastAFreeSpot()
     {
+        ReInit();
+
+
         if (_allSpots.Count <= _busySpots.Count)
         {
             return false;

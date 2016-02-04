@@ -274,12 +274,24 @@ public class GameTime
         return Year + "-" + Month1 + "-" + Day;
     }
 
+
+
     public MDate ReturnCurrentDatePlsAdded(float daysP)
     {
         var currDaysSoFar = FromMDateToDays(CurrentDate());
         var newDate = currDaysSoFar + daysP;
 
         return FromDaysToMDate((int)newDate);
+    }
+
+    public static bool IsPastOrNow(MDate leaveDate)
+    {
+        if (leaveDate.Month1 <= Program.gameScene.GameTime1.Month1 &&
+            leaveDate.Year <= Program.gameScene.GameTime1.Year)
+        {
+            return true;
+        }
+        return false;
     }
 }
 

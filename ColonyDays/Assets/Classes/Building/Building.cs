@@ -433,6 +433,7 @@ public class Building : General, Iinfo
             IfShackResaveInventoryOnRegistro();
         }
 
+        InitMilitar();
         InitDockDryDockAndSupplier();
         InitWheelBarrow();
 
@@ -635,6 +636,11 @@ public class Building : General, Iinfo
     protected new void Update()
     {
         //DebugShowAnchors();
+
+        if (_militar!=null)
+        {
+            _militar.Update();
+        }
 
         //if is way not need to know this.
         //bz we will be going btw buildings 
@@ -2724,11 +2730,32 @@ public class Building : General, Iinfo
 
 
 
+    #region Militar
+
+    private Militar _militar;
+    void InitMilitar()
+    {
+        if (IsMilitar())
+        {
+            _militar=new Militar(this);
+        }
+    }
+
+    bool IsMilitar()
+    {
+        if (HType == H.PostGuard || HType == H.Tower || HType == H.Fort || HType == H.Morro)
+        {
+            return true;
+        }
+        return false;
+    }
+
+
+#endregion
 
 
 
-
-    #region Dock  DryDock and Supplier 
+    #region Dock  DryDock and Supplier
 
     Dock _dock;
     private Dispatch _dispatch;//dock will have a Dispatch

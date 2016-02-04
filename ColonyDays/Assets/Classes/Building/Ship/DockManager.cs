@@ -115,4 +115,14 @@ public class DockManager
             PortReputation = 0;
         }
     }
+
+    internal void AddToPirateThreat(float amtChange)
+    {
+        PirateThreat = UMath.Clamper(amtChange, PirateThreat, 0, 100);
+    }
+
+    public void Update()
+    {
+        
+    }
 }

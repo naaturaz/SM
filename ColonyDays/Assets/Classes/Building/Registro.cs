@@ -89,7 +89,8 @@ public class Registro : MonoBehaviour
         var works = AllBuilding.Where(
             a => a.Value.MyId.Contains("House") == false &&
                 a.Value.MyId.Contains("Storage") == false &&
-                a.Value.MyId.Contains("Church") == false).ToList();
+                a.Value.MyId.Contains("Church") == false &&
+                a.Value.MyId.Contains("Tavern") == false).ToList();
 
         if (works.Count==0)
         {

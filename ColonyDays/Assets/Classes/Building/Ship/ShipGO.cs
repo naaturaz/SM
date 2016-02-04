@@ -96,7 +96,7 @@ public class ShipGO : General {
         {
             return;
         }
-        if (IsPastOrNow(_ship.LeaveDate) && Ship1.MoveThruPoints1.Location == HPers.Work && !Ship1.MoveThruPoints1.MovingNow)
+        if (GameTime. IsPastOrNow(_ship.LeaveDate) && Ship1.MoveThruPoints1.Location == HPers.Work && !Ship1.MoveThruPoints1.MovingNow)
         {
             _ship.CheckDockOrders();
 
@@ -105,13 +105,5 @@ public class ShipGO : General {
         }
     }
 
-    private bool IsPastOrNow(MDate leaveDate)
-    {
-        if (leaveDate.Month1 <= Program.gameScene.GameTime1.Month1 &&
-            leaveDate.Year <= Program.gameScene.GameTime1.Year)
-        {
-            return true;
-        }
-        return false;
-    }
+   
 }
