@@ -9,7 +9,8 @@ public class Ship
     Inventory _inventory = new Inventory();
     private float _size = 20f;
 
-    private MDate _leaveDate;
+
+    private MDate _leaveDate;
 
     public Building Dock
     {
@@ -29,13 +30,15 @@ public class Ship
         set { _size = value; }
     }
 
-    public MDate LeaveDate
+
+    public MDate LeaveDate
     {
         get { return _leaveDate; }
         set { _leaveDate = value; }
     }
 
-    public Ship(Building dock)
+
+    public Ship(Building dock)
     {
         _dock = dock;
     }
@@ -68,9 +71,9 @@ public class Ship
         }
     }
 
-
-    public void SetLeaveDate()
+    public void SetLeaveDate()
     {
-        
-    }
+        var daysOnDock = UMath.GiveRandom(30, 60);
+        LeaveDate = Program.gameScene.GameTime1.ReturnCurrentDatePlsAdded(daysOnDock);
+    }
 }

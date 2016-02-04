@@ -47,9 +47,54 @@ public class ShipGO : General {
     {
 	    _moveThruPoints.Update();
 
-        if (_moveThruPoints.Location == HPers.Work)
+        if (_moveThruPoints.Location == HPers.Work && _ship.LeaveDate == null)
 	    {
-	        
+	        _ship.SetLeaveDate();
 	    }
-	}
+
+	    CheckIfIsLeaveDate();
+	    CheckIfHome();
+    }
+
+    private void CheckIfHome()
+    {
+        //if (_ship == null || _ship.LeaveDate == null)
+        //{
+        //    return;
+        //}
+
+        //thats is its back to its original point 
+        if (_moveThruPoints.Location == HPers.Home)
+        {
+            Destroy();
+        }
+    }
+
+    private void CheckIfIsLeaveDate()
+    {
+        //if (_ship == null || _ship.LeaveDate==null)
+        //{
+        //  return;  
+        //}
+
+        //if (IsPastOrNow(_ship.LeaveDate))
+        //{
+        if (_moveThruPoints.Location==HPers.Work && !_moveThruPoints.MovingNow)
+        {
+            _moveThruPoints.WalkRoutine(_moveThruPoints.CurrTheRoute, HPers.Home, true);
+        }
+
+        //}
+    }
+
+
+    private bool IsPastOrNow(MDate leaveDate)
+    {
+        if (leaveDate.Month1 <= Program.gameScene.GameTime1.Month1 &&
+            leaveDate.Year <= Program.gameScene.GameTime1.Year)
+        {
+            return true;
+        }
+        return false;
+    }
 }

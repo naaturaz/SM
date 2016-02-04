@@ -742,7 +742,8 @@ public class Person : General
 
         AgeAction();
 
-        if (UPerson.IsMajor(_age) && !_isMajor && string.IsNullOrEmpty(IsBooked) && Brain.GoMindState)
+        if (UPerson.IsMajor(_age) && !_isMajor && string.IsNullOrEmpty(IsBooked) && Brain.GoMindState
+            )
         {
             ReachAgeMajority();
         }

@@ -103,6 +103,10 @@ public class SeaRouter  {
             }
         }
 
+        //correct Y  
+        _closerMapEntryReachable = 
+            new Vector3(_closerMapEntryReachable.x, spot.transform.position.y, _closerMapEntryReachable.z);
+
         var lis = new List<Vector3>() {_closerMapEntryReachable, entry, spot.transform.position};
         return ConformInBuildRouteAnimal(lis);
     }
