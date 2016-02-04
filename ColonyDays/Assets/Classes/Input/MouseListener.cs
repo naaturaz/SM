@@ -29,10 +29,6 @@ public class MouseListener : InputMain
        
     }
 
-
-
-
-
     /// <summary>
     /// Loading  and Reloading Main Form 
     /// </summary>
@@ -425,6 +421,10 @@ public class MouseListener : InputMain
         else if (action == "Other")
         {
             res = 8;
+        }
+        else if (action == "Militar")
+        {
+            res = 9;
         }
         return res;
     }

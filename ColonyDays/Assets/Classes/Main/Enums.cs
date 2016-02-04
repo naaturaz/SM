@@ -182,7 +182,7 @@ public enum H
     /// if is a Double bound structure such as Dock or MountainMine needs to be added on 
     /// List: doubleBounds on Building.cs
     //Structures Categores
-    Infrastructure, Housing, Farming, Raw, Production, Industry, Trade, GovServices, Other,
+    Infrastructure, Housing, Farming, Raw, Production, Industry, Trade, GovServices, Other, Militar,
 
     //infr F1
     Trail, Road, BridgeTrail, BridgeRoad, CoachMan, LightHouse, WheelBarrow, StockPile, BuildersOffice,
@@ -208,6 +208,8 @@ public enum H
     //Old
     Tavern, Shack,
 
+    //Militar
+    PostGuard, Tower, Fort, Morro,
 
 
 
@@ -326,7 +328,7 @@ public enum H
 //if new categorY IS ADDED PLS ADD ON BOOK.CS
 public enum StCat //strucutre categories
 {
-    Infrastructure, Housing, Farming, Raw, Production, Industry, Trade, GovServices, Other,
+    Infrastructure, Housing, Farming, Raw, Production, Industry, Trade, GovServices, Other, Militar
 }
 
 
@@ -391,6 +393,11 @@ public enum StOther //for structures game structure.cs
     Church,
     //Old
     Tavern, Shack
+}
+
+public enum StMil //for structures game structure.cs 
+{
+    PostGuard ,Tower, Fort, Morro,
 }
 
 

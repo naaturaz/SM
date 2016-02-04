@@ -156,6 +156,13 @@ public class Book : General
         //Other
         Build.Add(new BuildStat(H.Church, 1600, 80, 20, 0, 5, maxPeople: 3));
         Build.Add(new BuildStat(H.Tavern, 400, 30, 5, 50, 5, maxPeople: 2));
+
+        //Militar
+        Build.Add(new BuildStat(H.PostGuard, 600, 80, 20, 0, 5, maxPeople: 10));
+
+        Build.Add(new BuildStat(H.Tower, 600, 80, 20, 0, 5, maxPeople: 10));
+        Build.Add(new BuildStat(H.Fort, 600, 80, 20, 0, 5, maxPeople: 10));
+        Build.Add(new BuildStat(H.Morro, 600, 80, 20, 0, 5, maxPeople: 10));
     }
 
     // Use this for initialization
@@ -176,6 +183,7 @@ public class Book : General
         var trade = StTrade.GetValues(typeof(StTrade));
         var govServ = StGov.GetValues(typeof(StGov));
         var other = StOther.GetValues(typeof(StOther));
+        var mil = StMil.GetValues(typeof(StMil));
         var structCateg = StCat.GetValues(typeof(StCat));
 
         MenuGroupsList = UList.ConvertToList(structCateg);
@@ -191,6 +199,7 @@ public class Book : General
         listedArrays.Add(UList.ConvertToList(trade));
         listedArrays.Add(UList.ConvertToList(govServ));
         listedArrays.Add(UList.ConvertToList(other));
+        listedArrays.Add(UList.ConvertToList(mil));
 
         for (int i = 0; i < MenuGroupsList.Count; i++)
         {

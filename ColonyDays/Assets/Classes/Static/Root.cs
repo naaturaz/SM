@@ -564,6 +564,11 @@ public class Root : MonoBehaviour
         buildsRoot.Add(H.Church, "Prefab/Building/Other/Church");
         buildsRoot.Add(H.Tavern, "Prefab/Building/Other/Tavern");
 
+        //militar
+        buildsRoot.Add(H.PostGuard, "Prefab/Building/Militar/PostGuard");
+        buildsRoot.Add(H.Tower, "Prefab/Building/Militar/Tower");
+        buildsRoot.Add(H.Fort, "Prefab/Building/Militar/Fort");
+        buildsRoot.Add(H.Morro, "Prefab/Building/Militar/Morro");
     }
 
     private static Dictionary<P, string> _productsRoot = new Dictionary<P, string>();
