@@ -1,16 +1,21 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 public class ShipManager
 {
     private MDate _nextVisit;
-    List<ShipGO> _shipGOs = new List<ShipGO>(); 
+    List<Ship> _ships = new List<Ship>();
+    private bool _isToLoadShips;
 
     public MDate NextVisit
     {
         get { return _nextVisit; }
         set { _nextVisit = value; }
+    }
+
+    public List<Ship> Ships
+    {
+        get { return _ships; }
+        set { _ships = value; }
     }
 
     public ShipManager() { }
@@ -19,12 +24,18 @@ public class ShipManager
     {
         CheckIfTimeToVisit();
 	    CheckWhenNextVisit();
+
+        if (_isToLoadShips && BuildingPot.Control.Registro.IsFullyLoaded())
+        {
+            _isToLoadShips = false;
+            LoadShips();
+        }
 	}
 
     private void CheckIfTimeToVisit()
     {
         if (_nextVisit != null && IsTheVisitPastOrNow() && 
-            BuildingPot.Control.DockManager1.AtLeastOneDockHasSpace1More(_shipGOs.Count))
+            BuildingPot.Control.DockManager1.AtLeastOneDockHasSpace1More(_ships.Count))
         {
             _nextVisit = null;
             NewShipComingToUs();
@@ -37,7 +48,11 @@ public class ShipManager
     private void NewShipComingToUs()
     {
         Building build = BuildingPot.Control.DockManager1.GiveMeRandomBuilding();
-        _shipGOs.Add(ShipGO.Create(Root.shipSmall, new Vector3(), build, H.ShipSmall));
+
+
+
+        //_ships.Add(ShipGO.Create(Root.shipSmall, new Vector3(), build, H.ShipSmall));
+        _ships.Add(new Ship(Root.shipSmall, build, H.ShipSmall));
     }
 
     private void CheckWhenNextVisit()
@@ -71,9 +86,22 @@ public class ShipManager
         return false;
     }
 
-    internal void RemoveMeFromShipsOnIsland(ShipGO shipGO)
+    internal void RemoveMeFromShipsOnIsland(Ship shipGO)
     {
-        _shipGOs.Remove(shipGO);
+        _ships.Remove(shipGO);
 
+    }
+
+    internal void MarkToLoadShips()
+    {
+        _isToLoadShips = true;
+    }
+
+    void LoadShips()
+    {
+        for (int i = 0; i < Ships.Count; i++)
+        {
+            Ships[i].ReCreateShip();
+        }
     }
 }

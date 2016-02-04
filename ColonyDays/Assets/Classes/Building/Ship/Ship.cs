@@ -6,19 +6,33 @@
 public class Ship
 {
     private Building _building;
+    private string _buildKey;
+
     Inventory _inventory = new Inventory();
     private float _size = 20f;
 
     private bool _didDockImport;
     private bool _didDockExport;
-
-
+    
     private MDate _leaveDate;
 
-    public Building Building
+    private string _root;
+    private H _hType;
+    private ShipGO _shipGo;
+
+    private Quaternion _rotation;
+    private Vector3 _position;
+
+    private MoveThruPoints _moveThruPoints;
+
+    private string _myID;
+
+
+    private bool _isToRecreate;
+
+    public Building Building()
     {
-        get { return _building; }
-        set { _building = value; }
+        return _building;
     }
 
     public Inventory Inventory1
@@ -33,18 +47,96 @@ public class Ship
         set { _size = value; }
     }
 
-
     public MDate LeaveDate
     {
         get { return _leaveDate; }
         set { _leaveDate = value; }
     }
 
-    public Ship(Building build)
+    public string BuildKey
     {
-        _building = build;
-
+        get { return _buildKey; }
+        set { _buildKey = value; }
     }
+
+    public Quaternion Rotation
+    {
+        get { return _rotation; }
+        set { _rotation = value; }
+    }
+
+    public Vector3 Position
+    {
+        get { return _position; }
+        set { _position = value; }
+    }
+
+    public string Root1
+    {
+        get { return _root; }
+        set { _root = value; }
+    }
+
+    public H HType
+    {
+        get { return _hType; }
+        set { _hType = value; }
+    }
+
+    public bool DidDockImport
+    {
+        get { return _didDockImport; }
+        set { _didDockImport = value; }
+    }
+
+    public bool DidDockExport
+    {
+        get { return _didDockExport; }
+        set { _didDockExport = value; }
+    }
+
+    public MoveThruPoints MoveThruPoints1
+    {
+        get { return _moveThruPoints; }
+        set { _moveThruPoints = value; }
+    }
+
+    public string MyId
+    {
+        get { return _myID; }
+        set { _myID = value; }
+    }
+
+    public Ship(){}
+
+    /// <summary>
+    /// Instancing new Object 
+    /// </summary>
+    /// <param name="root"></param>
+    /// <param name="build"></param>
+    /// <param name="hType"></param>
+    public Ship(string root, Building build, H hType)
+    {
+        _root = root;
+        _building = build;
+        _buildKey = build.MyId;
+        _hType = hType;
+
+        _shipGo = ShipGO.Create(_root, new Vector3(), _building, this, _hType);
+    }
+
+    internal void ReCreateShip()
+    {
+        _building = Brain.GetBuildingFromKey(BuildKey);
+        _shipGo = ShipGO.Create(_root, new Vector3(), _building, this, _hType, MyId);
+        MoveThruPoints1.PassGameObject(_shipGo.gameObject);
+
+        MoveThruPoints1.WalkRoutineLoad(MoveThruPoints1.CurrTheRoute, MoveThruPoints1.GoingTo,
+            MoveThruPoints1.CurrentRoutePoint,
+            MoveThruPoints1.Inverse, MoveThruPoints1.WhichRoute);
+    }
+
+
 
     void CheckIfImportOrders()
     {
@@ -53,8 +145,6 @@ public class Ship
             _didDockImport =_building.Dispatch1.Import(_building);
         }
     }
-
-
 
     private void CheckIfExportOrders()
     {
@@ -82,11 +172,27 @@ public class Ship
     }
 
     private float lastCheck;
+
     public void Update()
     {
+        MoveThruPoints1.Update();
+
         if (Time.time > lastCheck + 10f)
         {
             lastCheck = Time.time;
+        }
+
+        if (_shipGo!=null)
+        {
+            Rotation = _shipGo.transform.rotation;
+            Position = _shipGo.transform.position;
+        }
+
+
+
+        if (string.IsNullOrEmpty(MyId))
+        {
+            MyId = _shipGo.MyId;
         }
     }
 
@@ -104,7 +210,7 @@ public class Ship
 
     public void Leaving(string myID)
     {
-        Building.Dock1.RemoveFromBusySpots(myID);
+        Building().Dock1.RemoveFromBusySpots(myID);
 
         BuildingPot.Control.DockManager1.PortReputation += Survey();
     }
@@ -127,14 +233,16 @@ public class Ship
             expo *= -1;
         }
 
-        if (Building.HType == H.DryDock || Building.HType == H.Supplier)
+        if (Building().HType == H.DryDock || Building().HType == H.Supplier)
         {
             return expo*2;
         }
-        if (Building.HType == H.Dock)
+        if (Building().HType == H.Dock)
         {
             return expo + impo;
         }
         return 0f;
     }
+
+
 }

@@ -36,18 +36,31 @@ public class Dock
     private List<GameObject> _allSpots = new List<GameObject>();
     private List<GameObject> _allLookPoints= new List<GameObject>();
 
-    private bool[] _freeSpots;
-
     private List<string> _busySpots = new List<string>();
+    private string _buildKey;
 
-
-    public Dock() { }
+    public Dock()
+    {
+    }
 
     public Dock(Building build)
     {
+        BuildKey = build.MyId;
         _building = build;
         InitSpots();
         _seaRouter = new SeaRouter(_entry, build);
+    }
+
+    public List<string> BusySpots
+    {
+        get { return _busySpots; }
+        set { _busySpots = value; }
+    }
+
+    public string BuildKey
+    {
+        get { return _buildKey; }
+        set { _buildKey = value; }
     }
 
 
@@ -93,7 +106,10 @@ public class Dock
 
     internal TheRoute CreateRoute(string shipGoMyId)
     {
+
         InitSpots();
+        _seaRouter = new SeaRouter(_entry, _building);
+
         return _seaRouter.PlotRoute(_entry, _allSpots, _allLookPoints, _building, shipGoMyId);
         //UVisHelp.CreateHelpers(route, Root.yellowSphereHelp);
     }
@@ -132,14 +148,22 @@ public class Dock
     public void AddToBusySpots( string whoIs,string nameSpot)
     {
         _busySpots.Add(whoIs+"."+nameSpot);
+        BuildingPot.Control.Registro.ResaveOnRegistro(_building.MyId);
     }
 
     public void RemoveFromBusySpots(string whoIs)
     {
+        if (_building == null)
+        {
+            _building = Brain.GetBuildingFromKey(BuildKey);
+            InitSpots();
+            
+        }
+
         var index = _busySpots.FindIndex(a => a.Contains(whoIs));
 
         _busySpots.RemoveAt(index);
-
+        BuildingPot.Control.Registro.ResaveOnRegistro(_building.MyId);
     }
 
     public bool ItHasAtLeastAFreeSpot()

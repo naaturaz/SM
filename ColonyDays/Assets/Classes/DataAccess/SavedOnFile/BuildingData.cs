@@ -51,6 +51,8 @@ public class BuildingControllerData
     }
 
     public DispatchManager DispatchManager1;
+    public DockManager DockManager1;
+    public ShipManager ShipManager1;
 
     public BuildingControllerData() { }
 

@@ -9,7 +9,6 @@ public class ShipGO : General {
 
     Ship _ship;
     private Building _building;
-    private MoveThruPoints _moveThruPoints;
 
     public Building Building1
     {
@@ -17,7 +16,13 @@ public class ShipGO : General {
         set { _building = value; }
     }
 
-    static public ShipGO Create(string root, Vector3 origen, Building building, H hType = H.None)
+    public Ship Ship1
+    {
+        get { return _ship; }
+        set { _ship = value; }
+    }
+
+    static public ShipGO Create(string root, Vector3 origen, Building building, Ship ship, H hType = H.None, string myID = "")
     {
         WAKEUP = true;
         ShipGO obj = null;
@@ -25,21 +30,32 @@ public class ShipGO : General {
         obj = (ShipGO)Instantiate(obj, origen, Quaternion.identity);
         obj.HType = hType;
         obj.Building1 = building;
+        obj.Ship1 = ship;
 
         obj.transform.parent = building.transform;
+        obj.MyId = myID;
+
+        //is loading
+        if (ship.Position !=new Vector3())
+        {
+            obj.transform.position = ship.Position;
+            obj.transform.rotation = ship.Rotation;
+        }
+
         return obj;
     }
 
 	// Use this for initialization
 	void Start ()
 	{
-	    MyId = "Ship |" + HType + " | " + Id;
-	    transform.name = MyId;
-        
-        _ship = new Ship(Building1);
-        
-        _moveThruPoints=new MoveThruPoints(Building1, this);
-        _moveThruPoints.WalkRoutine(_moveThruPoints.CurrTheRoute, HPers.Work);
+        //not loading
+	    if (transform.position==new Vector3())
+	    {
+            MyId = "Ship |" + HType + " | " + Id;
+            Ship1.MoveThruPoints1 = new MoveThruPoints(Building1, gameObject, MyId);
+            Ship1.MoveThruPoints1.WalkRoutine(Ship1.MoveThruPoints1.CurrTheRoute, HPers.Work);
+	    }
+        transform.name = MyId;
 	}
 	
     
@@ -47,16 +63,13 @@ public class ShipGO : General {
 	void Update ()
     {
         _ship.Update();
-	    _moveThruPoints.Update();
 
-        if (_moveThruPoints.Location == HPers.Work && _ship.LeaveDate == null)
+        if (Ship1.MoveThruPoints1.Location == HPers.Work && _ship.LeaveDate == null)
 	    {
             _ship.CheckDockOrders();
 
 	        _ship.SetLeaveDate();
 	    }
-
-	
 
 	    CheckIfIsLeaveDate();
 	    CheckIfHome();
@@ -70,9 +83,9 @@ public class ShipGO : General {
         }
 
         //thats is its back to its original point 
-        if (_moveThruPoints.Location == HPers.Home)
+        if (Ship1.MoveThruPoints1.Location == HPers.Home)
         {
-            BuildingPot.Control.ShipManager1.RemoveMeFromShipsOnIsland(this);
+            BuildingPot.Control.ShipManager1.RemoveMeFromShipsOnIsland(Ship1);
             Destroy();
         }
     }
@@ -83,11 +96,11 @@ public class ShipGO : General {
         {
             return;
         }
-        if (IsPastOrNow(_ship.LeaveDate) && _moveThruPoints.Location==HPers.Work && !_moveThruPoints.MovingNow)
+        if (IsPastOrNow(_ship.LeaveDate) && Ship1.MoveThruPoints1.Location == HPers.Work && !Ship1.MoveThruPoints1.MovingNow)
         {
             _ship.CheckDockOrders();
 
-            _moveThruPoints.WalkRoutine(_moveThruPoints.CurrTheRoute, HPers.Home, true);
+            Ship1.MoveThruPoints1.WalkRoutine(Ship1.MoveThruPoints1.CurrTheRoute, HPers.Home, true);
             _ship.Leaving(MyId);
         }
     }

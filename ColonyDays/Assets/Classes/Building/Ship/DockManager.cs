@@ -20,8 +20,13 @@ public class DockManager
         set { _pirateThreat = value; }
     }
 
-    public DockManager()
-    { }
+    public List<string> DockStructures
+    {
+        get { return _dockStructures; }
+        set { _dockStructures = value; }
+    }
+
+    public DockManager(){ }
 
     internal bool HasAtLeastOneDockStructure()
     {

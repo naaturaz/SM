@@ -80,7 +80,7 @@ public class Structure : StructureParent
             instructionP: Instruction, BookedHome1: BookedHome1, 
             dispatch: Dispatch1, Families: Families,
             dollarsPay: DollarsPay,
-            anchors: Anchors
+            anchors: Anchors, dock: Dock1
             );
     }
 

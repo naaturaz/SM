@@ -165,6 +165,8 @@ public class BuildingSaveLoad : BuildingPot
         s.LandZone1 = regFile.LandZone1;
         s.DollarsPay = regFile.DollarsPay;
 
+        s.Dock1 = regFile.Dock1;
+
         Control.Registro.Structures.Add(s.MyId, Control.CurrentSpawnBuild as Structure);
         Control.Registro.AllBuilding.Add(s.MyId, Control.CurrentSpawnBuild);
     }
@@ -343,6 +345,9 @@ public class BuildingSaveLoad : BuildingPot
         res.IsChillChanged = Control.IsNewChill;
         res.DispatchManager1 = Control.DispatchManager1;
 
+        res.DockManager1 = Control.DockManager1;
+        res.ShipManager1 = Control.ShipManager1;
+
         res._GameTime = Program.gameScene.GameTime1;
         res._GameController = Program.gameScene.GameController1;
 
@@ -376,6 +381,20 @@ public class BuildingSaveLoad : BuildingPot
         if (BuildingData.BuildingControllerData._GameController != null)
         {
             Program.gameScene.GameController1 = BuildingData.BuildingControllerData._GameController;
+        }
+
+
+        if (BuildingData.BuildingControllerData.DockManager1 != null)
+        {
+            Control.DockManager1 = BuildingData.BuildingControllerData.DockManager1;
+        }
+        if (BuildingData.BuildingControllerData.ShipManager1 != null)
+        {
+            Control.ShipManager1 = BuildingData.BuildingControllerData.ShipManager1;
+        }
+        if (Control.ShipManager1!=null)
+        {
+            Control.ShipManager1.MarkToLoadShips();
         }
     }
     #endregion

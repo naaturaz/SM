@@ -102,7 +102,7 @@ public class MoveThruPoints
         set { _currTheRoute = value; }
     }
 
-    private Building Building1;
+
 
     public MoveThruPoints() { }
 
@@ -110,57 +110,34 @@ public class MoveThruPoints
     {
         //_personalObject = new PersonalObject(person);
 
-        Init(gO);
+        Init();
     }
 
-    public MoveThruPoints(Building Building1, ShipGO shipGo)
+    public MoveThruPoints(Building Building1, GameObject gO, string myIDP)
     {
-        this.Building1 = Building1;
-        _currTheRoute = Building1.Dock1.CreateRoute(shipGo.MyId);
-        _gameObject = shipGo.gameObject;
+        //when is not lloading 
+        if (_currTheRoute.CheckPoints.Count==0)
+        {
+            _currTheRoute = Building1.Dock1.CreateRoute(myIDP);
+        }
 
-        Init(_gameObject);
+        _gameObject = gO;
+        Init();
     }
 
-
-
-    private PersonFile _pFile;
     /// <summary>
-    /// Intended to be used when loading from file
+    /// For loading reasons. bz gO was not spawn when this obj was loaded 
     /// </summary>
-    //public MoveThruPoints(Person person, PersonFile pF)
-    //{
-    //    _personalObject = new PersonalObject(person, pF._body.CurrentAni, ShouldHide());
+    /// <param name="gO"></param>
+    public void PassGameObject(GameObject gO)
+    {
+        _gameObject = gO;
+        Init();
+    }
 
-    //    _pFile = pF;
-    //    Init(person);
-
-    //    Location = pF._body.Location;
-    //    GoingTo = pF._body.GoingTo;
-    //    _movingNow = pF._body.MovingNow;
-        
-    //    _routePoins = pF._body.CurrRoute;
-    //    _inverse = pF._body.Inverse;
-    //    _whichRoute = pF._body.WhichRoute;
-
-    //    _loadedPosition = pF.Position;
-    //    _loadedRotation = pF.Rotation;
-
-    //    _loadedAni = pF._body.CurrentAni;
-
-    //    //if is zero is that is idling in a house 
-    //    if (pF._body.CurrTheRoute.CheckPoints.Count > 0)
-    //    {
-    //        WalkRoutineLoad(pF._body.CurrTheRoute, GoingTo, pF._body.CurrentRoutePoint, _inverse, _whichRoute); 
-    //    }
-
-    //}
-
-    public void Init(GameObject person)
+    public void Init()
     {
         oldGameSpeed = Program.gameScene.GameSpeed;
-
-
         renderer = _gameObject.GetComponent<Renderer>(); 
     }
 

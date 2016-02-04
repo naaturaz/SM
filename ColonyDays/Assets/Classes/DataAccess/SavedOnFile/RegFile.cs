@@ -171,6 +171,7 @@ public class RegFile  {
 
     //all ways load this but  is only save it by bridges. 
     public List<Vector3> Anchors;
+    public Dock Dock1;
 
     public RegFile(string myId, H type, Rect dimOnMap, Ca category, Vector3 iniPosition, 
         Inventory InventoryP, 
@@ -184,7 +185,7 @@ public class RegFile  {
         Vector3 max = new Vector3(), H instructionP = H.None , BookedHome bookedHome = null, 
         Dispatch dispatch = null, Family[] familes = null ,
         int dollarsPay = 0,
-        List<Vector3> anchors = null
+        List<Vector3> anchors = null, Dock dock = null
         )
     {
         MyId = myId;
@@ -219,6 +220,7 @@ public class RegFile  {
         Familes = familes;
         DollarsPay = dollarsPay;
         Anchors = anchors;
+        Dock1 = dock;
     }
 
     public RegFile() { }

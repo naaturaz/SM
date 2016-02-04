@@ -2745,6 +2745,11 @@ public class Building : General, Iinfo
 
     private void InitDockDryDockAndSupplier()
     {
+        if (IsLoadingFromFile)
+        {
+            return;
+        }
+
         if (HType == H.DryDock || HType == H.Supplier || HType == H.Dock)
         {
             _dock = new Dock(this);

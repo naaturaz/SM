@@ -120,6 +120,12 @@ public class Registro : MonoBehaviour
     }
 #endregion
 
+    public bool IsFullyLoaded()
+    {
+        return AllBuilding.Count == AllRegFile.Count;
+    }
+
+
     /// <summary>
     /// Remove item from All, and its spefic list
     /// </summary>
@@ -325,7 +331,7 @@ public class Registro : MonoBehaviour
         Vector3 max = new Vector3(), H instructionP = H.None, BookedHome BookedHome1 = null, 
         Dispatch dispatch = null, Family[] Families = null,
         int dollarsPay = 0,
-        List<Vector3> anchors = null 
+        List<Vector3> anchors = null, Dock dock = null 
         )
     {
         // 12 hours to find this OMG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -355,7 +361,7 @@ public class Registro : MonoBehaviour
             materialKey: materialKey, planesOnSoilPos: planesOnSoilPos, partsOnSoil: partsOnSoil, min: min, max: max,
             instructionP: instructionP,  bookedHome: BookedHome1, dispatch: dispatch, familes: Families,
             dollarsPay: dollarsPay, 
-            anchors: anchors);
+            anchors: anchors, dock: dock);
 
         AddToAll(regFile);
         BuildingPot.Control.DockManager1.AddToDockStructure(myId, type);
@@ -456,6 +462,7 @@ public class Registro : MonoBehaviour
     /// PositionFilled
     /// Anchors
     /// DollarsPay
+    /// Dock1
     /// </summary>
     public void ResaveOnRegistro(string myIdP)
     {
@@ -481,6 +488,7 @@ public class Registro : MonoBehaviour
         AllRegFile[index].PeopleDict = build.PeopleDict;
         AllRegFile[index].Anchors = build.Anchors;
         AllRegFile[index].DollarsPay = build.DollarsPay;
+        AllRegFile[index].Dock1 = build.Dock1;
     }
 
     /// <summary>
