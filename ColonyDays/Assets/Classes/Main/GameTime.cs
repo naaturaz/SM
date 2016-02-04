@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 public class GameTime
 {
     //0.0007f = 1Year at 10x 687.84sec; 
@@ -238,24 +240,33 @@ public class GameTime
     /// <param name="mon"></param>
     /// <param name="day"></param>
     /// <returns></returns>
-    MDate FromDaysToMDate(int daysToConvert, int year = 0, int mon = 0, int day = 0)
+    MDate FromDaysToMDate(float daysToConvert)
     {
+        float left = 0;
+        var yearFull = 0;
+        var monFull = 0;
         if (daysToConvert / 360 > 0)
         {
-            daysToConvert -= 360;
-            year++;
-            FromDaysToMDate(daysToConvert, year);
+            var year = daysToConvert/360;
+            yearFull = (int)year;
+
+            left = year - yearFull;
         }
-        else if (daysToConvert / 30 > 0)
+        daysToConvert = left * 360;
+        
+        if (daysToConvert / 30 > 0)
         {
-            daysToConvert -= 30;
-            mon++;
-            FromDaysToMDate(daysToConvert, year, mon);
+            var mon = daysToConvert / 30;
+            monFull = (int)mon;
+
+            left = mon - monFull;
         }
+        daysToConvert = left * 30;
+
 
         //willr return the days left tht are less than a year and a month, 
         //plus the calculate amount of Year and month
-        return new MDate(daysToConvert, mon, year);
+        return new MDate((int)daysToConvert, monFull, yearFull);
     }
 
     internal string TodayYMD()

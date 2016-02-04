@@ -670,7 +670,7 @@ public class Dispatch
     /// The action of importing an order to Inventory. This is called by ship 
     /// </summary>
     /// <param name="dock"></param>
-    internal void Import(Building dock)
+    internal bool Import(Building dock)
     {
         for (int i = 0; i < ExpImpOrders.Count; i++)
         {
@@ -682,9 +682,11 @@ public class Dispatch
                 if (dock.Inventory.HasEnoughtCapacityToStoreThis(ord.Product, ord.Amount))
                 {
                     HandleThatImport(dock, ord);
+                    return true;
                 }
             }
         }
+        return false;
     }
 
     /// <summary>
@@ -743,7 +745,7 @@ public class Dispatch
     /// The action of export from dock inventory to Ship. Ship object is the one calling this
     /// </summary>
     /// <param name="dock"></param>
-    internal void Export(Building dock)
+    internal bool Export(Building dock)
     {
         for (int i = 0; i < ExpImpOrders.Count; i++)
         {
@@ -752,9 +754,11 @@ public class Dispatch
                 if (dock.Inventory.IsItemOnInv(ExpImpOrders[i].Product))
                 {
                     HandleThatExport(dock, i);
+                    return true;
                 }
             }
         }
+        return false;
     }
 
     /// <summary>
@@ -764,14 +768,6 @@ public class Dispatch
     /// <param name="i"></param>
     void HandleThatExport(Building dock, int i)
     {
-        //var list = ReturnCurrentList();
-
-        //if (i >= list.Count)
-        //{
-        //    throw new Exception("If happen after dock is delete then u need to delete the dispatch related to the dock");
-        //    return;
-        //}
-
         var ord = ExpImpOrders[i];
 
         float initialAmtNeed = ord.Amount;
@@ -792,7 +788,6 @@ public class Dispatch
  
             return;
         }
-
         Debug.Log("Exported:" + ord.Product + " . " + amtExpThisTime + ".Still left:" + leftOnOrder);
     }
 

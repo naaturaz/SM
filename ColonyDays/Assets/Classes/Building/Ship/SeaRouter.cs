@@ -88,9 +88,11 @@ public class SeaRouter  {
     }
 
 
-    public TheRoute PlotRoute(Vector3 entry, List<GameObject> spots, List<GameObject> finalLookPoint)
+    public TheRoute PlotRoute(Vector3 entry, List<GameObject> spots, List<GameObject> finalLookPoint, 
+        Building build, string shipGOMyId)
     {
-        var spot = spots[UMath.GiveRandom(0, spots.Count)];
+        var spot = FindRandomSpot(spots, build, shipGOMyId);
+
         string spotFinLetter = FindMyLetter(spot.transform.name);
 
         var fin = new Vector3();
@@ -109,6 +111,20 @@ public class SeaRouter  {
 
         var lis = new List<Vector3>() {_closerMapEntryReachable, entry, spot.transform.position};
         return ConformInBuildRouteAnimal(lis);
+    }
+
+    GameObject FindRandomSpot(List<GameObject> spots, Building build, string shipGOMyId)
+    {
+        for (int i = 0; i < spots.Count; i++)
+        {
+            if (build.Dock1.IsSpotFree(spots[i].transform.name))
+            {
+                build.Dock1.AddToBusySpots(shipGOMyId, spots[i].transform.name);
+                return spots[i];
+            }
+        }
+
+        return null;
     }
 
     /// <summary>

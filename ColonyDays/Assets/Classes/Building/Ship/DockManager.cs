@@ -1,10 +1,9 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 
 public class DockManager
 {
-    private float _portReputation;
+    private float _portReputation = 50;
     private float _pirateThreat;
 
     List<string> _dockStructures = new List<string>(); 
@@ -61,8 +60,6 @@ public class DockManager
         }
     }
 
-
-
     bool IsDockType(H HType)
     {
         if (HType == H.DryDock || HType == H.Supplier || HType == H.Dock)
@@ -72,7 +69,7 @@ public class DockManager
         return false;
     }
 
-    internal bool HasSpaceForOneMore(int shipsOnIsland)
+    internal bool AtLeastOneDockHasSpace1More(int shipsOnIsland)
     {
         //15 how many ships each structure can hold 
         if (_dockStructures.Count * 15 <= shipsOnIsland)
@@ -82,9 +79,25 @@ public class DockManager
         return true;
     }
 
+    private int recuCount;
     internal Building GiveMeRandomBuilding()
     {
         var key = _dockStructures[UMath.GiveRandom(0, _dockStructures.Count)];
-        return Brain.GetBuildingFromKey(key);
+        var build = Brain.GetBuildingFromKey(key);
+
+        if (build.Dock1.ItHasAtLeastAFreeSpot())
+        {
+            recuCount = 0;
+            return build;
+        }
+        recuCount++;
+
+        if (recuCount>1000)
+        {
+            throw new Exception("inf loopp dock manag");
+        }
+
+        //will recurse until finds one tht has a free spot 
+        return GiveMeRandomBuilding();
     }
 }

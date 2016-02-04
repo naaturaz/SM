@@ -16,7 +16,6 @@ using System.Linq;
 
 public class Dock 
 {
-    private Ship _currShip;
     //where the ship is shown on Screen. 
     //Ship will be removed moved from sea to here
     private Vector3 _shipDockPoint;
@@ -39,6 +38,8 @@ public class Dock
 
     private bool[] _freeSpots;
 
+    private List<string> _busySpots = new List<string>();
+
 
     public Dock() { }
 
@@ -49,8 +50,12 @@ public class Dock
         _seaRouter = new SeaRouter(_entry, build);
     }
 
+
     private void InitSpots()
     {
+        _allSpots.Clear();
+        _allLookPoints.Clear();
+
         _spotsContainer = General.FindGameObjectInHierarchy("SpotsContainer", _building.gameObject);
 
         var allChild = General.FindAllChildsGameObjectInHierarchy(_spotsContainer);
@@ -86,73 +91,16 @@ public class Dock
         _entry = _entryGO.transform.position;
     }
 
-    internal TheRoute CreateRoute()
+    internal TheRoute CreateRoute(string shipGoMyId)
     {
         InitSpots();
-
-        return _seaRouter.PlotRoute(_entry, _allSpots, _allLookPoints);
-
+        return _seaRouter.PlotRoute(_entry, _allSpots, _allLookPoints, _building, shipGoMyId);
         //UVisHelp.CreateHelpers(route, Root.yellowSphereHelp);
-    }
-
-    /// <summary>
-    /// After ship asked if he can DryDock then can be placed here
-    /// </summary>
-    /// <param name="newShip"></param>
-    public void ServiceMe(Ship newShip)
-    {
-        _currShip = newShip;
-        //
-        //_shipSeaPoint = newShip.pos
-        //_currShip.pos = _shipDockPoint;
-
-        PrepareOrder();
-    }
-
-    private void PrepareOrder()
-    {
-        var items = _building.Inventory.ReturnInvItemsForSize(_currShip.Size);
-        Bill(items);
-    }
-
-    /// <summary>
-    /// The action of Billing  a ship
-    /// </summary>
-    void Bill(List<InvItem> list)
-    {
-        for (int i = 0; i < list.Count; i++)
-        {
-            Program.gameScene.ExportImport1.Sale(list[i].Key, list[i].Amount);
-        }
-
-        Program.gameScene.GameController1.Dollars += WorkersSalary();
-    }
-
-    float WorkersSalary()
-    {
-        return _building.PeopleDict.Count * _building.DollarsPay;//+time
-    }
-
-    /// <summary>
-    /// A Ship asking if can DryDock
-    /// </summary>
-    /// <param name="newShip"></param>
-    /// <returns></returns>
-    public bool CanIBeService(Ship newShip)
-    {
-        if (_currShip == null)
-        {
-            return true;
-        }
-        return false;
     }
 
     public void Update()
     {
-        if (_currShip != null)
-        {
-            _currShip.Update();
-        } 
+
     }
 
     /// <summary>
@@ -181,7 +129,37 @@ public class Dock
         _building.Dispatch1.AddToOrdersToDock(local);
     }
 
+    public void AddToBusySpots( string whoIs,string nameSpot)
+    {
+        _busySpots.Add(whoIs+"."+nameSpot);
+    }
 
+    public void RemoveFromBusySpots(string whoIs)
+    {
+        var index = _busySpots.FindIndex(a => a.Contains(whoIs));
 
- 
+        _busySpots.RemoveAt(index);
+
+    }
+
+    public bool ItHasAtLeastAFreeSpot()
+    {
+        if (_allSpots.Count <= _busySpots.Count)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// looking for 'A 3' for example
+    /// </summary>
+    /// <param name="p"></param>
+    /// <returns></returns>
+    internal bool IsSpotFree(string p)
+    {
+        var index = _busySpots.FindIndex(a => a.Contains(p));
+
+        return index == -1;
+    }
 }

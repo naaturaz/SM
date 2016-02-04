@@ -116,7 +116,7 @@ public class MoveThruPoints
     public MoveThruPoints(Building Building1, ShipGO shipGo)
     {
         this.Building1 = Building1;
-        _currTheRoute = Building1.Dock1.CreateRoute();
+        _currTheRoute = Building1.Dock1.CreateRoute(shipGo.MyId);
         _gameObject = shipGo.gameObject;
 
         Init(_gameObject);

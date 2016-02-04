@@ -35,6 +35,7 @@ public class ShipGO : General {
 	{
 	    MyId = "Ship |" + HType + " | " + Id;
 	    transform.name = MyId;
+        
         _ship = new Ship(Building1);
         
         _moveThruPoints=new MoveThruPoints(Building1, this);
@@ -45,12 +46,17 @@ public class ShipGO : General {
 	// Update is called once per frame
 	void Update ()
     {
+        _ship.Update();
 	    _moveThruPoints.Update();
 
         if (_moveThruPoints.Location == HPers.Work && _ship.LeaveDate == null)
 	    {
+            _ship.CheckDockOrders();
+
 	        _ship.SetLeaveDate();
 	    }
+
+	
 
 	    CheckIfIsLeaveDate();
 	    CheckIfHome();
@@ -58,35 +64,33 @@ public class ShipGO : General {
 
     private void CheckIfHome()
     {
-        //if (_ship == null || _ship.LeaveDate == null)
-        //{
-        //    return;
-        //}
+        if (_ship == null || _ship.LeaveDate == null)
+        {
+            return;
+        }
 
         //thats is its back to its original point 
         if (_moveThruPoints.Location == HPers.Home)
         {
+            BuildingPot.Control.ShipManager1.RemoveMeFromShipsOnIsland(this);
             Destroy();
         }
     }
 
     private void CheckIfIsLeaveDate()
     {
-        //if (_ship == null || _ship.LeaveDate==null)
-        //{
-        //  return;  
-        //}
-
-        //if (IsPastOrNow(_ship.LeaveDate))
-        //{
-        if (_moveThruPoints.Location==HPers.Work && !_moveThruPoints.MovingNow)
+        if (_ship == null || _ship.LeaveDate == null)
         {
-            _moveThruPoints.WalkRoutine(_moveThruPoints.CurrTheRoute, HPers.Home, true);
+            return;
         }
+        if (IsPastOrNow(_ship.LeaveDate) && _moveThruPoints.Location==HPers.Work && !_moveThruPoints.MovingNow)
+        {
+            _ship.CheckDockOrders();
 
-        //}
+            _moveThruPoints.WalkRoutine(_moveThruPoints.CurrTheRoute, HPers.Home, true);
+            _ship.Leaving(MyId);
+        }
     }
-
 
     private bool IsPastOrNow(MDate leaveDate)
     {
