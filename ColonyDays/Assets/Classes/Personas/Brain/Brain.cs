@@ -45,7 +45,7 @@ public class Brain
         {
             if (_currentTask == HPers.MovingToNewHome && value != HPers.Restarting)
             {
-               //Debug.Log("CurrTask called:" + _person.MyId + ".new:" + value);
+               Debug.Log("CurrTask called:" + _person.MyId + ".new:" + value);
                 //return;
             }
             _currentTask = value;
@@ -318,7 +318,7 @@ public class Brain
     void AddToGenOldKeyIfAOldRouteHasOneOldBridgeOnIt(TheRoute theRoute)
     {
         GoMindState = false;
-        //Debug.Log("AddToGenOldKey goMindState");
+        Debug.Log("AddToGenOldKey goMindState");
 
         if (String.IsNullOrEmpty(theRoute.BridgeKey))
         {
@@ -690,7 +690,7 @@ public class Brain
     /// </summary>
     void GoToNewHomeTail()
     {
-        //Debug.Log("1 got to new home:" + _person.MyId + ".famID" + _person.FamilyId);
+        Debug.Log("1 got to new home:" + _person.MyId + ".famID" + _person.FamilyId);
 
         //unbook
         _person.IsBooked = "";
@@ -711,7 +711,7 @@ public class Brain
             RemoveMeFromOldHomeFamily(oldHomeH);
         }
 
-        //Debug.Log("2 got to new home:" + _person.MyId+".famID"+_person.FamilyId);
+        Debug.Log("2 got to new home:" + _person.MyId+".famID"+_person.FamilyId);
         MoveToNewHome.GetMyNameOutOfOldHomePeopleList();
         MoveToNewHome.CleanUpRouteToNewHome();
 
@@ -845,9 +845,14 @@ public class Brain
             return;
         }
 
+        //so creates the route 
+        //if (!string.IsNullOrEmpty(_person.IsBooked) && MoveToNewHome.RouteToNewHome.CheckPoints.Count == 0)
+        //{
+        //    return;
+        //}
+
         if (goMindState)
         { MindState(); }
-
     }
 
 
@@ -1036,7 +1041,7 @@ public class Brain
             //if home was changed u need to star all routes 
             if (oldHome != _person.Home.MyId)
             {
-                //Debug.Log(_person.MyId + " redoing all routes");
+                Debug.Log(_person.MyId + " redoing all routes");
 
                 workRouteStart = false;
                 foodRouteStart = false;
@@ -1099,7 +1104,7 @@ public class Brain
     {
         if (_person.Work != null)
         {
-            //Debug.Log("Redoing Profesional:"+_person.MyId+" . "+_person.Work.MyId);
+            Debug.Log("Redoing Profesional:"+_person.MyId+" . "+_person.Work.MyId);
             _person.CreateProfession();
         }
     }
@@ -1181,7 +1186,7 @@ public class Brain
     void RestartVarsAndAddToGenList()
     {
         GoMindState = false;
-        //Debug.Log("RestartVarsAndAddToGenList goMindState");
+        Debug.Log("RestartVarsAndAddToGenList goMindState");
     }
 
     /// <summary>
@@ -1216,7 +1221,7 @@ public class Brain
             if (goMindState && !value)
             {
                 var t = 1;
-               //Debug.Log(_person.MyId+" goMind false");
+               Debug.Log(_person.MyId+" goMind false");
             }
             
             goMindState = value;
@@ -1561,7 +1566,7 @@ public class Brain
         {
             var which = collisionsOn[i];
 
-            //Debug.Log("Collided a builing with route:" + which + " on person:" + _person.MyId);
+            Debug.Log("Collided a builing with route:" + which + " on person:" + _person.MyId);
             if (which == HPers.Work)
             {
                 //GameScene.print("Redo Work");
@@ -1996,13 +2001,13 @@ public class Brain
 
                     if (MoveToNewHome.RouteToNewHome.CheckPoints.Count > 0)
                     {
-                        //Debug.Log(_person.MyId + " clear RouteToNewHome");
+                        Debug.Log(_person.MyId + " clear RouteToNewHome");
                     }
                     MoveToNewHome.RouteToNewHome.CheckPoints.Clear();
                 }
                 else
                 {  
-                    //Debug.Log(_person.MyId + " didNot clear RouteToNewHome");
+                    Debug.Log(_person.MyId + " didNot clear RouteToNewHome");
                 }
 
 
@@ -2010,6 +2015,8 @@ public class Brain
                 _person.Home = s;
                 //needs to be call here in case this person is the one ocpied the slot 
                 PersonPot.Control.CleanHomeLessSlot(_person.MyId);
+
+
 
                 _isIdleHomeNow = true;
                 MoveToNewHome.CheckOnOldKeysList();
@@ -2042,7 +2049,7 @@ public class Brain
             BuildingPot.Control.AddToHousesWithSpace(oldHomeP.MyId);
 
             PersonPot.Control.RestartController();
-           //Debug.Log("Home added :" + oldHomeP.MyId);
+           Debug.Log("Home added :" + oldHomeP.MyId);
         }
     }
 
@@ -2293,7 +2300,7 @@ public class Brain
         var newWork = _jobManager.ThereIsABetterJob(_person);
         if (newWork == null)
         {
-            //Debug.Log("New work should not be null");
+            Debug.Log("New work should not be null");
         }
         _person.Work = newWork;
         WorkPositionsUpdate();
@@ -2464,7 +2471,7 @@ public class Brain
         var buildFunc = BuildingController.ReturnBuildingFunction(build.HType);
 
 
-       //Debug.Log("MakeStructureNull");
+       Debug.Log("MakeStructureNull");
         var checkHome = false;
         var checkWork = false;
         var checkFood = false;
@@ -2566,7 +2573,7 @@ public class Brain
         }
 
         MoveToNewHome.RemovePeopleDict(p);
-        //Debug.Log("Blaclisted:"+p);
+        Debug.Log("Blaclisted:"+p);
         _blackList = AddToList(_blackList, p);
         BridgeMarkedAction(p);
     }
@@ -2609,7 +2616,7 @@ public class Brain
         {
             ClearEachBlackListedBuilding();
             brigdesKeyRoutes.Clear();
-           //Debug.Log(_person.MyId+" cleared blackList .famID"+_person.FamilyId);
+           Debug.Log(_person.MyId+" cleared blackList .famID"+_person.FamilyId);
         }
     }
 
@@ -2666,6 +2673,10 @@ public class Brain
             //so person goes to heaven, and ray is sent from Sky to take him //or angels take him 
             _person.DestroyCool();
             PersonPot.Control.All.Remove(_person);
+
+            //in case is looking still while dies 
+            //PersonPot.Control.CleanHomeLessSlot(_person.MyId);
+
         }
     }
 

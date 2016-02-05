@@ -105,7 +105,7 @@ public class PersonController : PersonPot
         int factor = 100;
         int ini = multiplier*factor;
 
-        StartingCondition newbie = new StartingCondition(0, ini, ini, 100000, ini, ini, ini, 1000000);
+        StartingCondition newbie = new StartingCondition(0, ini, ini *0, ini, ini, ini, ini, 1000000);
         StartingCondition easy = new StartingCondition(18, 900, 900, 900, 900, 900, 900, 900);
         StartingCondition med = new StartingCondition(16, 800, 800, 800, 800, 800, 800, 800);
         StartingCondition hard = new StartingCondition(14, 700, 700, 700, 700, 700, 700, 700);
@@ -221,6 +221,9 @@ public class PersonController : PersonPot
     {
         if (personId == _isAPersonHomeLessNow)
         {
+            Debug.Log(personId + " clean homless now:");
+
+
             _isAPersonHomeLessNow = "";
         }
     }
@@ -242,7 +245,7 @@ public class PersonController : PersonPot
 	// Update is called once per frame
 	void Update ()
 	{
-	    Debug();
+	    DebugHere();
         Count();
 	    UpdateOnScreen();
 
@@ -283,7 +286,7 @@ public class PersonController : PersonPot
         Program.gameScene.AddToMainScreen(msg);
     }
 
-    void Debug()
+    void DebugHere()
     {
         if (Input.GetKeyUp(KeyCode.K))
         {

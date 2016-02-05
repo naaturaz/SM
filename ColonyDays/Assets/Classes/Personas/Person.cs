@@ -106,7 +106,7 @@ public class Person : General
         {
             if (_work != null && value == null)
             {
-                 //Debug.Log("I calling to make work null.."+MyId);
+                 Debug.Log("I calling to make work null.."+MyId);
             }
 
             _work = value;
@@ -295,7 +295,7 @@ public class Person : General
         {
             if (Home!=null && _familyId.Contains(Home.MyId) && !value.Contains(Home.MyId))
             {
-                //Debug.Log(MyId + " Changing from:" + _familyId + " to:" + value + " while on:" + Home.MyId);
+                Debug.Log(MyId + " Changing from:" + _familyId + " to:" + value + " while on:" + Home.MyId);
             }
 
             _familyId = value;
@@ -658,7 +658,7 @@ public class Person : General
         var hit = m.SubDivide.FindYValueOnTerrain(origin.x, origin.z);
         var terrCenter = m.IniTerr.MathCenter;
 
-        //UnityEngine.//Debug.Log("dist:"+Mathf.Abs(terrCenter.y - hit));
+        //UnityEngine.Debug.Log("dist:"+Mathf.Abs(terrCenter.y - hit));
 
         if (Mathf.Abs(terrCenter.y - hit) < 0.1f )
         {
@@ -680,7 +680,11 @@ public class Person : General
     void CheckOnNutrition()
     {
         ChangeNutritionLvl(-4f);//-2
-        KillStarve();
+        
+        //if is booked cant kill it
+  
+            KillStarve();
+  //      }
     }
 
     /// <summary>
@@ -693,7 +697,7 @@ public class Person : General
         var nutriValue = BuildingPot.Control.ProductionProp.Food1.FindNutritionValue(item).NutritionVal;
         _nutritionLevel += (amt * nutriValue);
 
-        //UnityEngine.//Debug.Log(MyId + " nutrived nutriVal:" + amt * nutriValue + ". curr:" + _nutritionLevel);
+        //UnityEngine.Debug.Log(MyId + " nutrived nutriVal:" + amt * nutriValue + ". curr:" + _nutritionLevel);
     }
 
     /// <summary>
@@ -708,8 +712,15 @@ public class Person : General
         }
         if (_nutritionLevel < -5)//45
         {
-            print("Too hungry and died:" + MyId);
-            ActionOfDisappear();
+            if (string.IsNullOrEmpty(IsBooked))
+            {
+                print(MyId + " Too hungry and died:" + " major:" + IsMajor + " spouse:" + Spouse);
+                ActionOfDisappear();
+            }
+            else
+            {
+                print(MyId + " Cant die bz booked " + " major:" + IsMajor + " spouse:" + Spouse);
+            }
         }
     }
 
@@ -829,6 +840,10 @@ public class Person : General
             _isMajor = true;
             Brain.MajorAge.MarkMajorityAgeReached();
             PersonPot.Control.IsAPersonHomeLessNow = MyId;
+
+            Debug.Log(MyId+" Become major homless now:" );
+
+
             AddressIsBooked(place);
         }
         //so gets back its original famID
@@ -838,7 +853,7 @@ public class Person : General
     {
         if (Home!= null && newPlace == Home)
         {
-            //Debug.Log("Become major in same place:"+MyId);
+            Debug.Log("Become major in same place:"+MyId);
             //IsBooked = "";
         }
     }
@@ -1100,7 +1115,8 @@ public class Person : General
         Program.gameScene.GameTime1.FixedUpdate();
 	    LODCheck();
 
-        if (UPerson.IsMajor(_age) && !_isMajor && string.IsNullOrEmpty(IsBooked) && Brain.GoMindState
+        if (UPerson.IsMajor(_age) && !_isMajor && string.IsNullOrEmpty(IsBooked) //&& Brain.GoMindState 
+            && Brain.IAmHomeNow()
        )
         {
             ReachAgeMajority();
@@ -1445,7 +1461,7 @@ public class Person : General
         //wont get anymore food is his house is full
         if (Home != null && Home.Inventory != null && Home.Inventory.IsFull())
         {
-            //UnityEngine.//Debug.Log(MyId+" my house inv is full");
+            //UnityEngine.Debug.Log(MyId+" my house inv is full");
             return;
         }
 
@@ -1465,7 +1481,7 @@ public class Person : General
         var amt = HowMuchICanCarry();
         
         ExchangeInvetoryItem(FoodSource, this, item, amt);
-        //UnityEngine.//Debug.Log(MyId+" took food:"+item);
+        //UnityEngine.Debug.Log(MyId+" took food:"+item);
     }
 
     public void ExchangeInvetoryItem(General takenFrom, General givenTo, P product, float amt)
@@ -1564,7 +1580,13 @@ public class Person : General
         var age = AgeFactor();
         var genre = ReturnGenreVal();
 
-        return age + genre;
+        var mul = 1;
+        if (ProfessionProp != null && ProfessionProp.ProfDescription == Job.WheelBarrow)
+        {
+            mul = 3;
+        }
+
+        return (age + genre) * mul;
     }
 
 
@@ -1666,7 +1688,7 @@ public class Person : General
         if (CanIHaveANewKid())
         {
             GetPregnant();
-//            UnityEngine.//Debug.Log(MyId+" got pregnant due m:" + _dueMonth+" y:" + _dueYear);
+//            UnityEngine.Debug.Log(MyId+" got pregnant due m:" + _dueMonth+" y:" + _dueYear);
         }
     }
 
@@ -1698,7 +1720,7 @@ public class Person : General
 
         MoveNewBornToHome(kid);
 
-//        //Debug.Log(MyId + " give birth to:" + kid.MyId+". inscribed on:"+FamilyId);
+//        Debug.Log(MyId + " give birth to:" + kid.MyId+". inscribed on:"+FamilyId);
         kid.DebugBornInfo = FamilyId+".home:"+Home.MyId+".mom:"+MyId;
 
         _lastNewBornYear = _dueYear;
