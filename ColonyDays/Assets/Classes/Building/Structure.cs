@@ -352,7 +352,7 @@ public class Structure : StructureParent
     {
         //BuildingPot.Control.Registro.MarkBuildingAs(MyId, H.WillBeDestroy);
         BuildingPot.Control.Registro.RemoveItem(Category, MyId);
-        HideAll();   
+        //HideAll();   
     }
 
 

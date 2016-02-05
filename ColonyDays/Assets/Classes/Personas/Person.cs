@@ -489,7 +489,7 @@ public class Person : General
         Age = iniAge;
         _name = BuildRandomName();
 
-        _lifeLimit = GiveRandom(50, 50);//75, 85
+        _lifeLimit = GiveRandom(40, 40);//75, 85
         MyId = _name + "." + Id;
 
         Brain = new Brain(this);

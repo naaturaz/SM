@@ -150,7 +150,7 @@ public class MoveToNewHome
         if (_newHomeRouter.IsRouteReady && _routeToNewHome.CheckPoints.Count == 0
             && _brain.IAmHomeNow())
         {
-            //    Debug.Log(_person.MyId + " setting to new home");
+            Debug.Log(_person.MyId + " setting to new home");
             _routeToNewHome = _newHomeRouter.TheRoute;
             GoMindTrue();
             _brain.RoutesWereStarted = false;
@@ -190,14 +190,13 @@ public class MoveToNewHome
     {
         //_routeToNewHome.CheckPoints.Clear();
 
-
         if (_brain.PullOldHome() != null && _brain.PullOldHome() == _person.Home)
         {   //means is moving towards the same house 
             return;
         }
 
         _brain.GoMindState = false;
-        //        Debug.Log(_person.MyId + " InitValForNewHome()");
+        Debug.Log(_person.MyId + " InitValForNewHome()");
 
         //_oldHomeKey = _brain.PullOldHome().MyId;
 
@@ -209,7 +208,6 @@ public class MoveToNewHome
 
         //so that state happens 
         _brain.CurrentTask = HPers.MovingToNewHome;
-
         _brain.CheckMeOnSystemNow();
     }
 

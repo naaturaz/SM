@@ -56,33 +56,42 @@ public class MyText : MonoBehaviour
             thisText.text = PersonPot.Control.OverAllHappiness();
         }
 
+        if (name == "PortReputation")
+        {
+            thisText.text = BuildingPot.Control.DockManager1.PortReputation.ToString("F1");
+        }
+        if (name == "PirateThreat")
+        {
+            thisText.text = BuildingPot.Control.DockManager1.PirateThreat.ToString("F1");
+        }
+
         if (name == "Dollars")
         {
             thisText.text = Program.gameScene.GameController1.Dollars.ToString("C0");
         }
     }
-	
+
+
+    private static int reMapCount;//since is static need to remap all the times exist MyText.cs scripts
+
 	// Update is called once per frame
 	void Update ()
     {
-	    if (reMap)
-	    {
-            //9 the amount of MyText.cs scripts
-	        if (reMapCount > 9)
-	        {
-                reMap = false;
-	            reMapCount = 0;
-                return;
-	        }
-            
-            Map();
-	        reMapCount++;
-	    }
+        reMapCount++;
 
-	    if (!mappedOnce)
-	    {
-	        Map();
-	    }
+        if (reMapCount > 60)
+        {
+            reMapCount = 0;
+            Map();
+        }
+
+           
+        
+
+        if (!mappedOnce)
+        {
+            Map();
+        }
 
         if (name == "Date")
         {
@@ -92,13 +101,6 @@ public class MyText : MonoBehaviour
         }
 	}
 
-    private static bool reMap;
-    private static int reMapCount;//since is static need to remap all the times exist MyText.cs scripts
-    /// <summary>
-    /// Everytime something change on inventroy on GameController should call this
-    /// </summary>
-    public static void ManualUpdate()
-    {
-        reMap = true;
-    }
+
+
 }

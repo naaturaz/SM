@@ -159,7 +159,6 @@ public class Inventory  {
         }
         //UpdateInfo();
         ResaveOnRegistro();
-        UpdateOnGameController(H.Add, key, amt);
     }
 
     private void AddToCategory(P key)
@@ -234,7 +233,6 @@ public class Inventory  {
 
             //UpdateInfo();
             ResaveOnRegistro();
-            UpdateOnGameController(H.Remove, key, kg);
             return t;
         }
         return 0;
@@ -466,21 +464,7 @@ public class Inventory  {
         BuildingPot.Control.Registro.AllRegFile[index].Inventory = this;
     }
 
-    /// <summary>
-    /// The action of updating the Fake Inventory on GameController. tht is te one shown
-    /// on GUI
-    /// </summary>
-    /// <param name="action"></param>
-    void UpdateOnGameController(H action, P item, float amt)
-    {
-        //building containing thsi inventory must be a Food Scr
-        if (!BuildingPot.Control.FoodSources.Contains(LocMyId))
-        {
-            return;
-        }
 
-        MyText.ManualUpdate();
-    }
 
     /// <summary>
     /// Will tell u if the inventory has enought capacity to store this Load

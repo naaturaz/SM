@@ -37,7 +37,6 @@ public class PersonController : PersonPot
         get { return _all; }
         set
         {
-            MyText.ManualUpdate();
             _all = value;
         }
     }

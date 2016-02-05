@@ -86,7 +86,7 @@ public class CryRouteManager
         if (ini == fin)
         {
             var t = this;
-            Debug.Log("Same ini-fin:"+ini.MyId);
+            Debug.Log("Same ini-fin:"+ini.MyId+" . "+person.MyId);
         }
 
         ClearOldVars();

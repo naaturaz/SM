@@ -33,7 +33,6 @@ public class GameController  {
         get { return _dollars; }
         set
         {
-            MyText.ManualUpdate();
             _dollars = value;
         }
     }
