@@ -741,6 +741,8 @@ public class Body //: MonoBehaviour //: General
 
     bool ShouldHide()
     {
+        return false;
+
         if (CurrTheRoute==null )
         {
             return false;

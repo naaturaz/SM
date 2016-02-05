@@ -1988,12 +1988,21 @@ public class Brain
 
             if (s != null)
             {
-                if (oldHomeP != null)
+                //bz is has more than zero created the route already. is just getting the home here 
+                if (oldHomeP != null && MoveToNewHome.RouteToNewHome.CheckPoints.Count==0)
                 {
                     MoveToNewHome.AddToHomeOldKeysList(oldHomeP.MyId);
                     MoveToNewHome.OldHomeKey = "";
+
+                    if (MoveToNewHome.RouteToNewHome.CheckPoints.Count > 0)
+                    {
+                        Debug.Log(_person.MyId + " clear RouteToNewHome");
+                    }
                     MoveToNewHome.RouteToNewHome.CheckPoints.Clear();
                 }
+                else
+                {  Debug.Log(_person.MyId + " didNot clear RouteToNewHome");}
+
 
                 AddToPeopleDict(s.MyId);
                 _person.Home = s;

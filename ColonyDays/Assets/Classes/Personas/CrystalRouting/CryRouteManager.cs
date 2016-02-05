@@ -85,21 +85,11 @@ public class CryRouteManager
 
         if (ini == fin)
         {
-            var t = this;
             Debug.Log("Same ini-fin:"+ini.MyId+" . "+person.MyId);
         }
 
         ClearOldVars();
         Init();
-    }
-
-    /// <summary>
-    /// Soe when idle dummy is created doesnt send people to Vector3.zero
-    /// </summary>
-    /// <param name="fin"></param>
-    void CloneFin(Structure fin)
-    {
-        
     }
 
     void DefineOneAndTwo(Structure ini, Structure fin)
@@ -142,7 +132,8 @@ public class CryRouteManager
         //will stop a lot of instances where the landzone is not being initiated
         if (_one.LandZone == "" || _two.LandZone == "")
         {
-            throw new Exception("One Routing was stopped bz 1 or more Lanzones were empty");
+            throw new Exception("One Routing was stopped bz 1 or more Lanzones were empty"+" oneLandZ:"+_one.LandZone+
+            " twoLandZ:"+_two.LandZone);
             Debug.Log("One Routing was stopped bz 1 or more Lanzones were empty");
             return;
         }

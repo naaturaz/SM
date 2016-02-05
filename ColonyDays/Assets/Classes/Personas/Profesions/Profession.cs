@@ -456,8 +456,10 @@ public class Profession  {
         //walking toward the job site for forester walking towards a tree 
         if (_person.Body.Location == HPers.Work && _workerTask == HPers.None)
         {
-
-            if (_router.TheRoute.OriginKey != _router.TheRoute.DestinyKey)//so doesnt go in and out in the same building
+            if (_router.TheRoute.OriginKey != _router.TheRoute.DestinyKey 
+                //&& string.IsNullOrEmpty(_person.IsBooked)
+                )//so doesnt go in and out in the same building
+                //the is not booked to avoid people staying in the same House when grow older in same place 
             {
                 _person.Body.WalkRoutine(_router.TheRoute, HPers.InWork);
                 _workerTask = HPers.WalkingToJobSite;
@@ -467,9 +469,9 @@ public class Profession  {
             //to avoid go in and out again in the Dock
             else
             {
+                Debug.Log("Person had same Destiny and OriginKey was sent back to office :"+_person.MyId);
                 PreparePersonToGetBackToOffice();
             }
-
         }
         //called here so animation of iddle can be fully transitioned to
         else if (_person.Body.Location == HPers.InWork && _workerTask == HPers.WalkingToJobSite && !_person.Body.MovingNow)

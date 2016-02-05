@@ -51,7 +51,22 @@ public class CryRoute
     public bool IsRouteReady
     {
         get { return _isRouteReady; }
-        set { _isRouteReady = value; }
+        set
+        {
+            if (!IsRouteReady && value)
+            {
+                if (_person != null && _checkPoints != null)
+                {
+                    Debug.Log(_person.MyId + " isRouteREady chk.Cont:" + _checkPoints.Count);
+                    
+                }
+
+            }
+
+            _isRouteReady = value; 
+            
+
+        }
     }
 
     public TheRoute TheRoute
@@ -121,6 +136,8 @@ public class CryRoute
 
     private void ClearOldVars()
     {
+        Debug.Log("clean old vars cryRout:"+_person.MyId);
+
         grow = GROWC;
         _checkPoints.Clear();
         _historicRegions.Clear();
@@ -216,30 +233,6 @@ public class CryRoute
             CheckIfIsToBlackList();
         }
     }
-
-    /// <summary>
-    /// Will say if has a useful way 
-    /// </summary>
-    /// <returns></returns>
-    bool ItHasAWay()
-    {
-        var stepFinalPos = ReturnCorFinal();
-        if (Vector3.Distance(stepFinalPos, _two.Position) < 0.1f)
-        {
-            //means can reach the final position already
-            return false;
-        }
-
-        var wayCrystals = _crystals.Where(a => a.Type1.ToString().Contains("Way"));
-
-        //if is a way crytal
-        if (wayCrystals.Any())
-        {
-            return true;
-        }
-        return false;
-    }
-
 
     //u can explore only once for a _curr
     private bool canIExplore = true;
@@ -995,14 +988,6 @@ public class CryRoute
     /// </summary>
     private void CanIReach2PointAfter()
     {
-        var wayChecks = _checkPoints.Where(a => a.Speed > 1f);
-        if (wayChecks.Any())
-        {
-            //means it has way Crystals on it 
-            return;
-        }
-
-
         if (_checkPoints.Count - 1 < count + 2)
         {
             count = 0;
@@ -1020,6 +1005,7 @@ public class CryRoute
         //IF DOesnt intersect . will remove the point in the middle and will recurse here 
         if (!Intersect(draw))
         {
+            Debug.Log("point route removed:" + count + 1 +" "+_person.MyId);
             _checkPoints.RemoveAt(count + 1);
             CanIReach2PointAfter();
         }
@@ -1068,7 +1054,7 @@ public class CryRoute
 
         AddAnglesToRoute();
         CreateTheRouteObj();
-        _isRouteReady = true;
+        IsRouteReady = true;
     }
 
     /// <summary>

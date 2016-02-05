@@ -983,6 +983,12 @@ public class Person : General
     /// </summary>
     public bool WouldUMarryMe(Person other)
     {
+        //if is either is book no marriage
+        if (!string.IsNullOrEmpty(IsBooked) || !string.IsNullOrEmpty(other.IsBooked))
+        {
+            return false;
+        }
+
         if (spouse != "") { return false;}
         if (isWidow) { return false;}
         if (other.Gender == Gender) { return false;}
