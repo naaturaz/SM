@@ -57,7 +57,7 @@ public class CryRoute
             {
                 if (_person != null && _checkPoints != null)
                 {
-                    Debug.Log(_person.MyId + " isRouteREady chk.Cont:" + _checkPoints.Count);
+                    //Debug.Log(_person.MyId + " isRouteREady chk.Cont:" + _checkPoints.Count);
                     
                 }
 
@@ -136,7 +136,7 @@ public class CryRoute
 
     private void ClearOldVars()
     {
-        Debug.Log("clean old vars cryRout:"+_person.MyId);
+        //Debug.Log("clean old vars cryRout:"+_person.MyId);
 
         grow = GROWC;
         _checkPoints.Clear();
@@ -298,7 +298,7 @@ public class CryRoute
         //{
         //    return;
         //}
-        //Debug.Log("Set HistoCrys");
+        ////Debug.Log("Set HistoCrys");
 
         _prevHistoRegions = _historicRegions;
         //_historicCrystals = PersonController.CrystalManager1.GiveAllCrystalsInTheseRegionsExcludLinkRects(_historicRegions);
@@ -350,7 +350,7 @@ public class CryRoute
             return TryReachBuilding();
         }
 
-        //Debug.Log("Terrain Routing. loopCount: " + loopCount);
+        ////Debug.Log("Terrain Routing. loopCount: " + loopCount);
         if (loopCount < _eval.Count)
         {
             Line aLine = new Line(U2D.FromV2ToV3(_curr.Position), U2D.FromV2ToV3(_eval[i].Position), durationOfLines);
@@ -368,7 +368,7 @@ public class CryRoute
 
                 //make current _eval[i] and loop 
                 _curr = _eval[i];
-                //Debug.Log("_curr set on Terrain Routing");
+                ////Debug.Log("_curr set on Terrain Routing");
 
                 loop = true;
                 //Crystal.DebugCrystal.AddGameObjInPosition(U2D.FromV2ToV3(_curr.Position), Root.yellowSphereHelp);
@@ -480,7 +480,7 @@ public class CryRoute
     void CheckIfIsToBlackList()
     {
         blackCount++;
-        //        Debug.Log("blackCount:"+blackCount);
+        //        //Debug.Log("blackCount:"+blackCount);
 
         if (blackCount > maxCounts)
         {
@@ -500,7 +500,7 @@ public class CryRoute
             var t = this;
         }
 
-        Debug.Log("BlackListed: " + _fin.MyId + " by: " + _person.MyId);
+        //Debug.Log("BlackListed: " + _fin.MyId + " by: " + _person.MyId);
         _person.Brain.BlackListBuild(CryBridgeRoute.ExtractRealId((Structure)_fin));
         wasBlackListed = true;
     }
@@ -589,7 +589,7 @@ public class CryRoute
 
         if (isInside)
         {
-            Debug.Log("Inside build");
+            //Debug.Log("Inside build");
         }
 
         return isInside;
@@ -773,8 +773,8 @@ public class CryRoute
         if (_explorer.IsBuildingRouting)
         {
             _eval.Clear();
-            //            Debug.Log("was hit:" + _explorer.Result.Key + " ct:" + _explorer.Result.Crystals.Count);
-            //            Debug.Log("is building routing");
+            //            //Debug.Log("was hit:" + _explorer.Result.Key + " ct:" + _explorer.Result.Crystals.Count);
+            //            //Debug.Log("is building routing");
 
             _eval.AddRange(_explorer.Result.Crystals);
 
@@ -857,14 +857,14 @@ public class CryRoute
     {
         var stepFinalPos = ReturnCorFinal();
 
-        //        Debug.Log("Exploring");
+        //        //Debug.Log("Exploring");
         canIExplore = false;
         Line line = new Line(U2D.FromV2ToV3(_curr.Position), stepFinalPos, durationOfLines);
         var interCount = IntersectCount(line);
 
         if (interCount == 0)
         {
-            //            Debug.Log("Exploring went good ");
+            //            //Debug.Log("Exploring went good ");
             _curr = new Crystal(stepFinalPos, H.None, "", setIdAndName: false);
             loop = true;
             //canIExplore = true;//needs to be able to keep exploring
@@ -942,9 +942,9 @@ public class CryRoute
 
         if (closeEnogh || closeAndTerraObs)
         {
-            Debug.Log("closeEnogh:" + closeEnogh + " closeAndTerraObs:" + closeAndTerraObs);
+            //Debug.Log("closeEnogh:" + closeEnogh + " closeAndTerraObs:" + closeAndTerraObs);
 
-            //Debug.Log("Rect grow");
+            ////Debug.Log("Rect grow");
             grow *= 2;
             //_currRect.Grow();
             return true;
@@ -968,7 +968,7 @@ public class CryRoute
             {
                 _historicRegions.Add(newRegions[i]);
                 //AddRegionToHistoCrystals(i);
-                //                Debug.Log("added: _historicRegions.ct:" + _historicRegions.Count);
+                //                //Debug.Log("added: _historicRegions.ct:" + _historicRegions.Count);
             }
         }
     }
@@ -1005,7 +1005,7 @@ public class CryRoute
         //IF DOesnt intersect . will remove the point in the middle and will recurse here 
         if (!Intersect(draw))
         {
-            Debug.Log("point route removed:" + count + 1 +" "+_person.MyId);
+            //Debug.Log("point route removed:" + count + 1 +" "+_person.MyId);
             _checkPoints.RemoveAt(count + 1);
             CanIReach2PointAfter();
         }

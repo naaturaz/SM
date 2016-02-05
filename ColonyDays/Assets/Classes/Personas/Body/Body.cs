@@ -42,7 +42,7 @@ public class Body //: MonoBehaviour //: General
         {
             if (_location == HPers.MovingToNewHome && value != HPers.Restarting)
             {
-//                Debug.Log("Ret Body Location: "+_person.MyId);
+//                //Debug.Log("Ret Body Location: "+_person.MyId);
             }
 
             _location = value;
@@ -230,7 +230,7 @@ public class Body //: MonoBehaviour //: General
     /// <param name="oldAnimation"></param>
     public void SetCurrentAni(string animationPass, string oldAnimation)
     {
-        //Debug.Log("SetCurrAni nw:"+animationPass+".old:"+oldAnimation);
+        ////Debug.Log("SetCurrAni nw:"+animationPass+".old:"+oldAnimation);
 
         _currentAni = animationPass;
         myAnimator.SetBool(animationPass, true);
@@ -241,7 +241,7 @@ public class Body //: MonoBehaviour //: General
 
     public void TurnCurrentAniAndStartNew(string animationPass)
     {
-        //Debug.Log("TurnCurrent nw:" + animationPass + ".old:" + _currentAni);
+        ////Debug.Log("TurnCurrent nw:" + animationPass + ".old:" + _currentAni);
 
         SetCurrentAni(animationPass, _currentAni);
     }
@@ -456,7 +456,7 @@ public class Body //: MonoBehaviour //: General
         //if (_person.Work != null && _person.Work.HType == H.Dock)
         //{
         //    var t = this;
-        //    Debug.Log("Moved "+ _person.Name + " to:"  + _routePoins[_currentRoutePoint].Point);
+        //    //Debug.Log("Moved "+ _person.Name + " to:"  + _routePoins[_currentRoutePoint].Point);
         //}
 
         _person.transform.position = _routePoins[_currentRoutePoint].Point;
@@ -608,7 +608,7 @@ public class Body //: MonoBehaviour //: General
 
         if (_routePoins.Count == 0 || _currentRoutePoint > _routePoins.Count - 1)
         {
-            Debug.Log("Called in body exp");
+            //Debug.Log("Called in body exp");
             var t = this;
         }
 

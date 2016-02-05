@@ -176,7 +176,7 @@ public class Profession  {
         {
             if (_order != null && value == null)
             {
-                Debug.Log("Who reWrote Order1."+_person.MyId+".");
+                //Debug.Log("Who reWrote Order1."+_person.MyId+".");
             }
             _order = value;
         }
@@ -469,7 +469,7 @@ public class Profession  {
             //to avoid go in and out again in the Dock
             else
             {
-                Debug.Log("Person had same Destiny and OriginKey was sent back to office :"+_person.MyId);
+                //Debug.Log("Person had same Destiny and OriginKey was sent back to office :"+_person.MyId);
                 PreparePersonToGetBackToOffice();
             }
         }
@@ -568,7 +568,7 @@ public class Profession  {
 
         if (destinyBuild == null)
         {
-            Debug.Log("destinyBuild null whelbarr:" + _person.MyId + "._destinyBuildKey:" + _destinyBuildKey);
+            //Debug.Log("destinyBuild null whelbarr:" + _person.MyId + "._destinyBuildKey:" + _destinyBuildKey);
             _person.Inventory.Delete();
             return;
         }

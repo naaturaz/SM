@@ -150,7 +150,7 @@ public class MoveToNewHome
         if (_newHomeRouter.IsRouteReady && _routeToNewHome.CheckPoints.Count == 0
             && _brain.IAmHomeNow())
         {
-            Debug.Log(_person.MyId + " setting to new home");
+            //Debug.Log(_person.MyId + " setting to new home");
             _routeToNewHome = _newHomeRouter.TheRoute;
             GoMindTrue();
             _brain.RoutesWereStarted = false;
@@ -196,7 +196,7 @@ public class MoveToNewHome
         }
 
         _brain.GoMindState = false;
-        Debug.Log(_person.MyId + " InitValForNewHome()");
+        //Debug.Log(_person.MyId + " InitValForNewHome()");
 
         //_oldHomeKey = _brain.PullOldHome().MyId;
 
@@ -271,7 +271,7 @@ public class MoveToNewHome
         newHomeRouteStart = false;
         //_newHomeRouter.IsRouteReady = true;
 
-        Debug.Log("CleanUpRouteToNewHome "+_person.MyId +" famID:"+_person.FamilyId);
+        //Debug.Log("CleanUpRouteToNewHome "+_person.MyId +" famID:"+_person.FamilyId);
         searchedNewHome = 0;
         buildRouteToNewHome = false;
         _routeToNewHome.CheckPoints.Clear();

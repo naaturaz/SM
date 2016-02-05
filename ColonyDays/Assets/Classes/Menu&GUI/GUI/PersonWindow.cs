@@ -38,11 +38,11 @@ public class PersonWindow : GUIElement {
             yield return new WaitForSeconds(0.1f); // wait
 
             //means is showing 
-            if (transform.position == iniPos)
-            {
+            //if (transform.position == iniPos)
+            //{
                 LoadMenu(); 
                 //print("Reloaded");
-            }
+            //}
         }
     }
 
@@ -87,6 +87,11 @@ public class PersonWindow : GUIElement {
 
     private void LoadMenu()
     {
+        if (_person==null)
+        {
+            return;
+        }
+
         _title.text = _person.Name + "";
         _info.text = BuildPersonInfo();
         _inv.text = BuildStringInv(_person);

@@ -117,7 +117,7 @@ public class Production  {
         SteelFoundry();
         Foundry();
 
-        Meats();
+        //Meats();
 
         GunPodwer();
         
@@ -224,6 +224,13 @@ public class Production  {
         InputProdCheckAndAdd(new ProductInfo(P.Ceramic, null, H.Ceramic));
 
         InputProdCheckAndAdd(new ProductInfo(P.Fish, null, new List<H>() { H.FishSmall, H.FishRegular }));
+
+
+        //animal farms
+        List<H> listAnimalFarm = new List<H>() { H.AnimalFarmSmall, H.AnimalFarmMed, H.AnimalFarmLarge, H.AnimalFarmXLarge };
+        InputProdCheckAndAdd(new ProductInfo(P.Pork, null, listAnimalFarm));
+        InputProdCheckAndAdd(new ProductInfo(P.Chicken, null, listAnimalFarm));
+        InputProdCheckAndAdd(new ProductInfo(P.Beef, null, listAnimalFarm));
 
 
 
