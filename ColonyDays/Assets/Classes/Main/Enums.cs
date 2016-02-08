@@ -324,6 +324,8 @@ public enum H
     Text,
     Icon,
     Inv_Ini_Pos,
+    Resources,
+    Start,
 
 
 }

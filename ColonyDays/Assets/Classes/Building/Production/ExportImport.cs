@@ -21,6 +21,12 @@ public class ExportImport
         MapDict();
     }
 
+    public List<ProdSpec> ProdSpecs
+    {
+        get { return _prodSpecs; }
+        set { _prodSpecs = value; }
+    }
+
     private void MapDict()
     {
         for (int i = 0; i < _prodSpecs.Count    ; i++)
@@ -40,6 +46,9 @@ public class ExportImport
 
     /// <summary>
     /// Will load the base price of each prod
+    /// 
+    /// The Sprite Icion should be added on Prefab/GUI/Inventory_Items/Brick and just named same as Prod name
+    /// 
     /// </summary>
     private void LoadBasePrices()
     {
@@ -268,12 +277,26 @@ public class ExportImport
         }
         return prodFound.Price;
     }
+
+    public string ReturnIconRoot(P prod)
+    {
+        var prodFound = FindProdSpec(prod);
+
+        if (prodFound == null)
+        {
+            return "";
+        }
+        return prodFound.IconRoot;
+    }
 }
 
 /// <summary>
 /// Will hold the product and its base price
 /// Also the Density of the product 
 /// and the produce factor:  Producing item factor. Can produce more KG of rice than Ceramic
+/// 
+/// The Sprite Icion should be added on Prefab/GUI/Inventory_Items/Brick
+/// 
 /// </summary>
 public class ProdSpec
 {
@@ -282,6 +305,9 @@ public class ProdSpec
 
     private float _density;
     private float _produceFactor;
+
+
+    private string _iconRoot;
 
     /// <summary>
     /// The amount of Cubic Meters Needed to fit one KG of this Product
@@ -304,6 +330,15 @@ public class ProdSpec
         set { _produceFactor = value; }
     }
 
+    /// <summary>
+    /// The root of the icon
+    /// </summary>
+    public string IconRoot
+    {
+        get { return _iconRoot; }
+        set { _iconRoot = value; }
+    }
+
     public ProdSpec(){}
 
     public ProdSpec(P prod, float price, float density = 1, float produceFactor = 1)
@@ -312,5 +347,8 @@ public class ProdSpec
         Price = price;
         Density = density;
         ProduceFactor = produceFactor;
+
+        _iconRoot = "Prefab/GUI/Inventory_Icons/" + prod;
+
     }
 }

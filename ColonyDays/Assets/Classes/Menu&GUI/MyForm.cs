@@ -4,6 +4,9 @@ public class MyForm : General
 {
     GameObject _canvas;
     GameObject _panel;
+    GameObject _resources;
+
+    private GameObject _startPosIni;
 
     public GameObject Canvas
     {
@@ -25,6 +28,26 @@ public class MyForm : General
         }
     }
 
+    public GameObject Resources
+    {
+        get
+        {
+            if (_resources == null)
+            {
+                return GetChildCalled(H.Resources, Canvas);
+            }
+            return _resources;
+        }
+        set
+        {
+            if (_resources == null)
+            {
+                _resources = GetChildCalled(H.Resources, Canvas);
+            }
+            _resources = value;
+        }
+    }
+
     public GameObject Panel
     {
         get
@@ -39,7 +62,7 @@ public class MyForm : General
         {
             if (_panel == null)
             {
-                _panel = GetChildCalled(H.Canvas, Canvas);
+                _panel = GetChildCalled(H.Panel, Canvas);
             }
             _panel = value;
         }
@@ -47,12 +70,28 @@ public class MyForm : General
 
 	// Use this for initialization
 	void Start ()
-    {
+	{
+        _canvas = GetChildCalled(H.Canvas, gameObject);
+        _resources = FindGameObjectInHierarchy("Resources", Canvas);
+
+
+        //if resource is null is another Form. The MainMenu Form 
+        if (_resources != null)
+	    {
+            _startPosIni = GetChildCalled(H.Start, Resources);
+	        LoadMainInventory();   
+	    }
+
 	}
 	
 	// Update is called once per frame
-	void Update ()
-    {}
+    void Update()
+    {
+        if (_showAInventory!=null)
+        {
+            _showAInventory.Update();
+        } 
+    }
 
     protected GameObject GetChildCalled(H childName, GameObject parent)
     {
@@ -78,5 +117,11 @@ public class MyForm : General
             return true;
         }
         return false;
+    }
+
+    private ShowAInventory _showAInventory;
+    internal void LoadMainInventory()
+    {
+        _showAInventory = new ShowAInventory("Main", Resources, _startPosIni.transform.localPosition);
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 
@@ -35,15 +36,27 @@ public class ShowInvetoryItem : GUIElement
         _textObj = _text.GetComponent<Text>();
         _iconImg = _icon.GetComponent<Image>();
 
-        //so hover gets it
-	    _text.transform.name = InvItem1.Key+"";
+        if (_text != null && InvItem1!=null)
+	    {
+            //so hover gets it
+            _text.transform.name = InvItem1.Key + "";
+            LoadIcon();
 
-	    LoadIcon();
+	    }
 	}
 
     private void LoadIcon()
     {
-        Sprite sp = Resources.Load<Sprite>(Root.iconBrick);
+        var root = Program.gameScene.ExportImport1.ReturnIconRoot(_invItem.Key);
+        Sprite sp = Resources.Load<Sprite>(root);
+
+        //debug only bz all should have a root
+        if (sp == new Sprite())
+        {
+            root = "Prefab/GUI/Inventory_Icons/Brick";
+            sp = Resources.Load<Sprite>(root);
+        }
+
         _iconImg.sprite = sp;
     }
 
@@ -69,6 +82,7 @@ public class ShowInvetoryItem : GUIElement
         obj.transform.localPosition = iniPos;
 
         obj.InvItem1 = invItem;
+        obj.InvType = invType;
 
         return obj;
     }
@@ -78,23 +92,48 @@ public class ShowInvetoryItem : GUIElement
 	// Update is called once per frame
 	void Update ()
 	{
+        if (InvItem1 == null)
+	    {
+	        Destroy();
+            return;
+	    }
+
         if (oldAmt != InvItem1.Amount)
 	    {
             oldAmt = InvItem1.Amount;
-
             _textObj.text = Formatter();
 	    }
-
 	}
 
     string Formatter()
     {
-        //buildign invneotyr 
-        if (string.IsNullOrEmpty(InvType))
+        if (InvItem1.Amount < 1)
         {
-            return InvItem1.Amount.ToString("F1") + "kg. v(m3):" + InvItem1.Volume.ToString("F1");
+            return "-";
         }
 
-        return "";
+        //Main GUI
+        if (InvType=="Main")
+        {
+            return ShortFormat();
+        }
+
+        //buildign invneotyr 
+        //if (string.IsNullOrEmpty(InvType))
+        return InvItem1.Amount.ToString("F1") + "kg. v(m3):" + InvItem1.Volume.ToString("F1");
+    }
+
+    private string ShortFormat()
+    {
+        if (InvItem1.Amount > 1000000)
+        {
+            return (InvItem1.Amount / 1000000).ToString("F1") + "M";
+        }
+        if (InvItem1.Amount > 1000)
+        {
+            return (InvItem1.Amount/1000).ToString("F1") + "K";
+        }
+
+        return InvItem1.Amount.ToString("F1");
     }
 }

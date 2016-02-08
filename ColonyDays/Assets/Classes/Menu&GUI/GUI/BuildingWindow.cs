@@ -244,12 +244,16 @@ public class BuildingWindow : GUIElement {
         _title.text = _building.HType + "";
         _info.text = BuildInfo();
 
-        if (_showAInventory == null || _showAInventory.Inv != _building.Inventory)
+        if (_showAInventory == null)
         {
             _showAInventory = new ShowAInventory(_building.Inventory, _gaveta.gameObject, _invIniPos.transform.localPosition);
         }
+        else if (_showAInventory != null && _showAInventory.Inv != _building.Inventory)
+        {
+            _showAInventory.Destroy();
+            _showAInventory = new ShowAInventory(_building.Inventory, _gaveta.gameObject, _invIniPos.transform.localPosition);
+        }
         _showAInventory.ManualUpdate();
-
         _inv.text = BuildStringInv(_building);
     }
 

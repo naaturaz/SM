@@ -217,7 +217,7 @@ public class Root : MonoBehaviour
     public static string loadingScreen = "Prefab/Menu/LoadingScreen";
 
     //Images for GUI
-    public static string iconBrick = "Prefab/GUI/Inventory_Items/Brick";
+    public static string iconBrick = "";
 
 
 

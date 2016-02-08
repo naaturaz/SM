@@ -161,6 +161,20 @@ public class Inventory  {
         ResaveOnRegistro();
     }
 
+    #region Main Inventory
+    public void AddToSpecialInv(P key)
+    {
+        InventItems.Add(new InvItem(key, 0));
+        
+    }
+
+    public void SetToSpecialInv(P key, float amt)
+    {
+        SetAmtWithKey(key, amt);
+    }
+
+#endregion
+
     private void AddToCategory(P key)
     {
         if (CategorizeProd(key)==PCat.Food)

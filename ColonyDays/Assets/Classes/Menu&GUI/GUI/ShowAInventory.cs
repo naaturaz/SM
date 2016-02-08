@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 
 /*
@@ -39,10 +40,16 @@ public class ShowAInventory
     /// <param name="iniPos"></param>
     public ShowAInventory(string specialInfo, GameObject container, Vector3 iniPos)
     {
+        _containr = container;
+        _iniPos = iniPos;
+
         //will show all items in all Storages this is for GUI
         if (specialInfo == "Main")
         {
             _invType = "Main";
+            CreateMainInventory();
+            ShowAllItems();
+
         }
         //will show the items will be exported, imported in DOck. without amt only name 
         else if (specialInfo == "Dock")
@@ -52,20 +59,48 @@ public class ShowAInventory
         }
     }
 
+    /// <summary>
+    /// Create a inventory with all the Products annd pull the infor from all Storages in game 
+    /// </summary>
+    private void CreateMainInventory()
+    {
+        _inv = new Inventory();
+        var allProdSpec = Program.gameScene.ExportImport1.ProdSpecs;
+
+        for (int i = 0; i < allProdSpec.Count; i++)
+        {
+            if (allProdSpec[i].Product.ToString().Contains("Random") || allProdSpec[i].Product.ToString().Contains("Coin" ))
+            {
+                continue;
+            }
+
+            _inv.AddToSpecialInv(allProdSpec[i].Product);
+        }
+    }
+
+    void ManualUpdateOfAllInvItems()
+    {
+        for (int i = 0; i < _inv.InventItems.Count; i++)
+        {
+            var amt = GameController.Inventory1.ReturnAmtOfItemOnInv(_inv.InventItems[i].Key);
+            _inv.SetToSpecialInv(_inv.InventItems[i].Key, amt);
+        }
+    }
+
     public Inventory Inv
     {
         get { return _inv; }
         set { _inv = value; }
     }
 
-    
-
-
-    private void ShowAllItems()
+    private void ShowAllItems( )
     {
         for (int i = 0; i < _inv.InventItems.Count; i++)
         {
-            _allItems.Add(ShowInvetoryItem.Create(_containr.transform, _inv.InventItems[i], ReturnIniPos(i)));
+            if (_inv.InventItems[i]!=null)
+            {
+                _allItems.Add(ShowInvetoryItem.Create(_containr.transform, _inv.InventItems[i], ReturnIniPos(i), _invType));
+            }
         }
     }
 
@@ -83,7 +118,7 @@ public class ShowAInventory
             //filled out columns
             int columsInt = (int) columns;
 
-            return 20*columsInt;
+            return 40*columsInt;
         }
         //string.IsNullOrEmpty(_invType)
         return 1;
@@ -91,7 +126,16 @@ public class ShowAInventory
 
     float ReturnY(int i)
     {
-        return -4 * i;
+        if (_invType=="Main")
+        {
+            var lineNumber = (float)i / (float)_mainLines;
+            var roundDown = int.Parse(lineNumber.ToString("F0"));
+            var factor = lineNumber - roundDown;
+
+            return -12 * _mainLines * factor;
+        }
+
+        return -8*i;
     }
 
     public void ManualUpdate()
@@ -108,6 +152,18 @@ public class ShowAInventory
         for (int i = 0; i < _allItems.Count; i++)
         {
             _allItems[i].Destroy();
+        }
+    }
+
+    private int count = 0;
+    //so far only called from myForm.cs
+    public void Update()
+    {
+        count++;
+        if (count > 30)
+        {
+            ManualUpdateOfAllInvItems();
+            count = 0;
         }
     }
 }
