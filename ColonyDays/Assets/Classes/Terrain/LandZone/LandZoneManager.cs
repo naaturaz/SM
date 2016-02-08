@@ -101,6 +101,9 @@ public class LandZoneManager
 
             Save();
             DebugShowNames();
+
+            //save is handled in CrystalManager     
+            //m.MeshController.WaterBound1.Create();
         }
     }
 
@@ -151,7 +154,6 @@ public class LandZoneManager
         }
     }
 
-    List<List<LinkRect>> temp  = new List<List<LinkRect>>(); 
     /// <summary>
     /// Will create diff land zones based on the different names found on LinkRects
     /// </summary>

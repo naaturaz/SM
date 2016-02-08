@@ -56,11 +56,12 @@ public class Root : MonoBehaviour
         public static string bayAndMountain = "Prefab/Terrain/Bay_And_Mountain";
         public static string bayAndMountainSoft = "Prefab/Terrain/Bay_And_Mountain_Soft";
         public static string bayAndMountain1River = "Prefab/Terrain/Bay_And_Mountain_1_River";
+        public static string two_Islands_1_River = "Prefab/Terrain/2_Islands_1_River";
 
 
         public static List<string> BigTerrains = new List<string>()
         {
-            bayAndMountain, bayAndMountainSoft, bayAndMountain1River
+            bayAndMountain, bayAndMountainSoft, bayAndMountain1River, two_Islands_1_River
         }; 
 
 
@@ -208,10 +209,15 @@ public class Root : MonoBehaviour
     //so far used for products selection
     public static string orderShowGenBtn = "Prefab/GUI/Forms/Order_Show_Generic_Btn";
     public static string showGenBtnLarge = "Prefab/GUI/Forms/Show_Generic_Btn_Large";
+    public static string show_Invent_Item = "Prefab/GUI/Forms/Show_Invent_Item";
 
     //Menu
     public static string mainMenu = "Prefab/Menu/MainMenu";
     public static string loadingScreen = "Prefab/Menu/LoadingScreen";
+
+    //Images for GUI
+    public static string iconBrick = "Prefab/GUI/Inventory_items/Brick";
+
 
 
 

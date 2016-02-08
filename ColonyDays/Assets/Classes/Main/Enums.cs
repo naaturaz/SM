@@ -321,6 +321,8 @@ public enum H
     Demolish_Btn,
     Cancel_Demolish_Btn,
     ShipSmall,
+    Text,
+    Icon,
 
 
 }
