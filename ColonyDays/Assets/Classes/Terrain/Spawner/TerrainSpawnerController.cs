@@ -13,7 +13,7 @@ public class TerrainSpawnerController : ControllerParent
     float minHeightToSpawn;//min height to spawn obj on terrain
     private float maxHeightToSpawn;
 
-    private int multiplier = 20;//75 /80  10
+    private int multiplier = 10;//75 /80  10
 
     int howManyTreesToSpawn = 20;//50
     int howManyStonesToSpawn =3;//3
@@ -105,7 +105,7 @@ public class TerrainSpawnerController : ControllerParent
         AllSpawnedDataList[index].MaxHeight = ele.MaxHeight;
     }
 
-    public StillElement FindThis(string key)
+    public StillElement Find(string key)
     {
         var list = AllRandomObjList.ToList();
 

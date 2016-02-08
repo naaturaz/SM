@@ -71,13 +71,20 @@ public class Docker : Profession
 
     private void PickUpOrder()
     {
-        _destinyBuild = _sourceBuild;
+        //_destinyBuild = _sourceBuild;
 
-        if (_person.Work)
-        {
-            _destinyBuild = null;
-            return;
-        }
+        //if (_person.Work)
+        //{
+        //    _destinyBuild = null;
+        //    return;
+        //}
+
+
+        //if (_destinyBuild == _sourceBuild)
+        //{
+        //    _destinyBuild = null;
+        //    return;
+        //}
 
         Order1 = _person.Work.Dispatch1.GiveMeOrder(_person);
         _person.PrevOrder = Order1;
@@ -129,8 +136,7 @@ public class Docker : Profession
 
             if (_sourceBuild.HasEnoughToCoverOrder(Order1))
             {
-                Debug.Log(_person.MyId + " Docker got from:" + Order1.SourceBuild +
-                    " : " + Order1.Product + ".amt:" + Order1.Amount);
+               //Debug.Log(_person.MyId + " Docker got from:" + Order1.SourceBuild +" : " + Order1.Product + ".amt:" + Order1.Amount);
                 _person.ExchangeInvetoryItem(_sourceBuild, _person, Order1.Product, Order1.Amount);
                 _sourceBuild.CheckIfCanBeDestroyNow(Order1.Product);
 

@@ -221,7 +221,7 @@ public class PersonController : PersonPot
     {
         if (personId == _isAPersonHomeLessNow)
         {
-            Debug.Log(personId + " clean homless now:");
+           //Debug.Log(personId + " clean homless now:");
 
 
             _isAPersonHomeLessNow = "";

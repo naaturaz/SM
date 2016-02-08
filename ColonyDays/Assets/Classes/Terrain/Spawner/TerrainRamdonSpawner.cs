@@ -54,7 +54,7 @@ public class TerrainRamdonSpawner : General {
 
     internal bool Grown()
     {
-        var ele = Program.gameScene.controllerMain.TerraSpawnController.FindThis(MyId);
+        var ele = Program.gameScene.controllerMain.TerraSpawnController.Find(MyId);
         return ele.ReadyToMine();
     }
 }

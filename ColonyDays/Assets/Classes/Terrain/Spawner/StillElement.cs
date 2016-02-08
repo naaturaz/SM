@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 using Random = UnityEngine.Random;
 
 public class StillElement : TerrainRamdonSpawner {
@@ -302,4 +303,59 @@ public class StillElement : TerrainRamdonSpawner {
         return Height >= MaxHeight;
     }
     #endregion
+
+
+
+    //so if a strucutre ask for 2nd time I have the value stored 
+    Dictionary<string, Vector3> _cachedStructures = new Dictionary<string, Vector3>(); 
+    /// <summary>
+    /// Will find the closest anchor to that Structure 
+    /// </summary>
+    /// <param name="structure"></param>
+    /// <returns></returns>
+    internal Vector3 FindCloserAnchorTo(Structure structure)
+    {
+        if (_cachedStructures.ContainsKey(structure.MyId))
+        {
+            return _cachedStructures[structure.MyId];
+        }
+
+        var listOrdered = ReturnOrderedByDistance(structure.transform.position, GetAnchors());
+
+        //if (listOrdered.Count>0)
+        //{
+            _cachedStructures.Add(structure.MyId, listOrdered[0].Point);
+            return listOrdered[0].Point;
+        //}
+        //return new Vector3();
+    }
+
+    /// <summary>
+    /// Will return current anchors if exist already 
+    /// </summary>
+    /// <returns></returns>
+    List<Vector3> GetAnchors()
+    {
+        if (Anchors.Count>0)
+        {
+            return Anchors;
+        }
+        UpdateMinAndMaxVar();
+        var bou = FindBounds(_min, _max);
+        Anchors = FindAnchors(bou);
+        return Anchors;
+    }
+
+    static public List<VectorM> ReturnOrderedByDistance(Vector3 stone, List<Vector3> anchors)
+    {
+        var anchorOrdered = new List<VectorM>();
+        for (int i = 0; i < anchors.Count; i++)
+        {
+            if (anchors[i] != null)
+            {
+                anchorOrdered.Add(new VectorM(anchors[i], stone));
+            }
+        }
+        return anchorOrdered.OrderBy(a => a.Distance).ToList();
+    }
 }

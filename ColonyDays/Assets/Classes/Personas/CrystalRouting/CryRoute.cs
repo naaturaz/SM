@@ -393,12 +393,9 @@ public class CryRoute
         }
     }
 
-    private int counter1Debug;
     bool TryReachBuilding()
     {
-        counter1Debug++;
         loop = true;
-
         //UVisHelp.CreateTextEnumarate(_eval, Root.blueCube, counter1+"", 60);
 
         for (int i = 0; i < _eval.Count; i++)
@@ -424,7 +421,7 @@ public class CryRoute
         throw new Exception("At least the intersection should be reached. Go and investigate but at least once should " +
                             "pass this if all fail pls investigate" +
                             "\n ini:" + _ini.MyId + " mid:" + _eval[0].ParentId + " end:" + _fin.MyId + " person:" + _person.MyId + " " +
-                            "eval ct:" + _eval.Count);
+                            "eval ct:" + _eval.Count + " prof:"+_person.ProfessionProp.ProfDescription);
         return false;
     }
 

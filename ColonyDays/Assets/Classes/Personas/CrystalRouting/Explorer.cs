@@ -189,7 +189,7 @@ public class ExplorerUnit
         Building = Brain.GetBuildingFromKey(Key);
 
         StillElement =
-            Program.gameScene.controllerMain.TerraSpawnController.FindThis(crystal.ParentId);
+            Program.gameScene.controllerMain.TerraSpawnController.Find(crystal.ParentId);
 
         if (Building != null)
         {

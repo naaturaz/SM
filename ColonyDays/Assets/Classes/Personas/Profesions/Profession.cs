@@ -667,7 +667,7 @@ public class Profession  {
         }
 
         var ele =
-                Program.gameScene.controllerMain.TerraSpawnController.FindThis(StillElementId);
+                Program.gameScene.controllerMain.TerraSpawnController.Find(StillElementId);
 
         return ele == null;
     }

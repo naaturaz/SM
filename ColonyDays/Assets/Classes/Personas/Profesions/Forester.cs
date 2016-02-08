@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -7,6 +6,8 @@ public class Forester : Profession
 {
     private List<TerrainRamdonSpawner> _spawnersList = new List<TerrainRamdonSpawner>();//save implem
     private Vector3 _treeCenterPos;
+
+    private StillElement _stillElement;
 
 
     public Forester(Person person, PersonFile pF)
@@ -53,8 +54,11 @@ public class Forester : Profession
         FinRoutePoint = OrderedSites[0].Point;
         StillElementId = OrderedSites[0].LocMyId;
 
+        _stillElement = Program.gameScene.controllerMain.TerraSpawnController.Find(StillElementId);
+        var closerAnchorToUs = _stillElement.FindCloserAnchorTo(_person.Work);
+
         //moving the route point a bit towards the origin so when chopping tree its not inside the tree 
-        FinRoutePoint = Vector3.MoveTowards(FinRoutePoint, _person.Work.transform.position, MoveTowOrigin * 4f);//2,5
+        FinRoutePoint = Vector3.MoveTowards(closerAnchorToUs, _person.Work.transform.position, MoveTowOrigin * 0.05f);//2,5
 
         InitRoute();
     }
@@ -106,7 +110,7 @@ public class Forester : Profession
                 _spawnersList.Add(t);
             }
         }
-        GameScene.print("spawners found:"+_spawnersList.Count);
+        //GameScene.print("spawners found:"+_spawnersList.Count);
     }
 
     List<VectorM> OrderSpawners(List<TerrainRamdonSpawner> listP)
@@ -137,19 +141,12 @@ public class Forester : Profession
                 loc.Add(new VectorM(pos, _person.Work.transform.position, key, hType));
             }
         }
-        GameScene.print("spawners found on radius :" + loc.Count);
+        //GameScene.print("spawners found on radius :" + loc.Count);
         return loc.OrderBy(a => a.Distance).ToList();
     }
 
     public override void Update()
     {
-
-
-        if (_person.Name.Contains("Robert"))
-        {
-            var t = this;
-        }
-
         CheckIfShouldReDoProf();
 
         if (_takeABreakNow)
@@ -222,7 +219,7 @@ public class Forester : Profession
         }
 
         var ele =
-           Program.gameScene.controllerMain.TerraSpawnController.FindThis(StillElementId);
+           Program.gameScene.controllerMain.TerraSpawnController.Find(StillElementId);
 
         if (ele == null)
         {
@@ -240,11 +237,11 @@ public class Forester : Profession
             return true;
         }
 
-        var ele =
-            Program.gameScene.controllerMain.TerraSpawnController.FindThis(StillElementId);
+        //var ele =
+        //    Program.gameScene.controllerMain.TerraSpawnController.Find(StillElementId);
 
         //when is just on site to play animation of building 
-        if (ele == null)
+        if (_stillElement == null)//ele
         {
             //so skip all that and goes back to office 
             return true;
@@ -257,18 +254,17 @@ public class Forester : Profession
     /// </summary>
     private void RemoveWeightFromMiningEle(P prod)
     {
-        var ele =
-            Program.gameScene.controllerMain.TerraSpawnController.FindThis(StillElementId);
-
-        ele.MinedNowBy--;
+        //var ele =
+        //    Program.gameScene.controllerMain.TerraSpawnController.Find(StillElementId);
+        
+        _stillElement.MinedNowBy--;
 
         if (!_person.Inventory.Contains(prod))
         {
             //means didnt pick the Prod. Problably bz its Storage is full
             return;
         }
-
-        ele.RemoveWeight(ProdXShift, _person);
+        _stillElement.RemoveWeight(ProdXShift, _person);
     }
 
     /// <summary>
@@ -276,22 +272,19 @@ public class Forester : Profession
     /// </summary>
     private void SetProdImMiningWeight()
     {
-        var ele =
-            Program.gameScene.controllerMain.TerraSpawnController.FindThis(StillElementId);
-
         //was recently destroyed 
-        if (ele == null)
+        if (_stillElement == null)
         {
-            
+            return;
         }
 
-        ele.SetWeight();
+        _stillElement.SetWeight();
     }
 
     public static P FindProdImMining(string stillElementIdP, Person person)
     {
         var ele =
-            Program.gameScene.controllerMain.TerraSpawnController.FindThis(stillElementIdP);
+            Program.gameScene.controllerMain.TerraSpawnController.Find(stillElementIdP);
 
         if (ele == null)
         {
@@ -304,12 +297,6 @@ public class Forester : Profession
         }
         
         return ProcessHTypeSpawnerIntoProduct(ele.HType);
-    }
-
-    P FromHEnumToP(H val)
-    {
-        var content = (P)Enum.Parse(typeof(H), val.ToString());
-        return content;
     }
 
     static P ProcessHTypeSpawnerIntoProduct(H hTypeP)
@@ -328,7 +315,6 @@ public class Forester : Profession
             return P.Ore;
         }
     }
-
 
     private bool _takeABreakNow;
     private float _breakDuration = 5f;

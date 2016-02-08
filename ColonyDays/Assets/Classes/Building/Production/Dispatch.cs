@@ -129,7 +129,7 @@ public class Dispatch
     {
         if (!ListContainsCheckID(Orders, prod))
         {
-            Debug.Log("Order Added:" + prod.Product + ".placed by:" + prod.DestinyBuild);
+           //Debug.Log("Order Added:" + prod.Product + ".placed by:" + prod.DestinyBuild);
 
             Orders.Add(prod);
             //OrderByPlacedTime(Orders);
@@ -147,7 +147,7 @@ public class Dispatch
     {
         if (!ListContains(Orders, prod))
         {
-            Debug.Log("Order Added:" + prod.Product + ".placed by:" + prod.DestinyBuild);
+           //Debug.Log("Order Added:" + prod.Product + ".placed by:" + prod.DestinyBuild);
 
             Orders.Add(prod);
             _recycledOrders.Remove(prod);
@@ -305,8 +305,7 @@ public class Dispatch
             if (IsDestinyBuildInvFullForThisProd(currOrders[i]))
             {
                 //todo Notify
-                Debug.Log("Inv full to DestBuild:"+currOrders[i].DestinyBuild+"|for prod:"+currOrders[i].Product+"" +
-                          "|order removed");
+               //Debug.Log("Inv full to DestBuild:"+currOrders[i].DestinyBuild+"|for prod:"+currOrders[i].Product+"" +"|order removed");
                 
                 RemoveOrderByIDExIm(currOrders[i].ID);
                 i--;
@@ -566,7 +565,7 @@ public class Dispatch
         
         list.RemoveAt(index);
 
-        Debug.Log("Removed from list:"+order.Product+".type:"+order.TypeOrder);
+       //Debug.Log("Removed from list:"+order.Product+".type:"+order.TypeOrder);
     }
 
     /// <summary>
@@ -584,8 +583,7 @@ public class Dispatch
             !building.Inventory.IsHasEnoughToCoverThisIngredient(ing))
         {
             RemoveEvacuationOrder(order.ID);
-            Debug.Log("Removed evac order:" + order.Product+".date"+
-                Program.gameScene.GameTime1.TodayYMD());
+           //Debug.Log("Removed evac order:" + order.Product+".date"+Program.gameScene.GameTime1.TodayYMD());
 
             //so people pass check in with Queues and this building finnaly gets removed 
             if (building.Inventory.IsEmpty())
@@ -703,7 +701,7 @@ public class Dispatch
         //will added to invent and will remove it from ExpImpOrders
         if (maxAmtCanTake > ord.Amount)
         {
-            Debug.Log("Imported:" + ord.Product + " . " + ord.Amount+" Done" );
+           //Debug.Log("Imported:" + ord.Product + " . " + ord.Amount+" Done" );
             Program.gameScene.ExportImport1.Buy(ord.Product, ord.Amount);
 
             dock.Inventory.Add(ord.Product, ord.Amount);
@@ -713,7 +711,7 @@ public class Dispatch
         //so its handled later
         else
         {
-            Debug.Log("Imported:" + ord.Product + " . " + maxAmtCanTake);
+           //Debug.Log("Imported:" + ord.Product + " . " + maxAmtCanTake);
             Program.gameScene.ExportImport1.Buy(ord.Product, maxAmtCanTake);
 
             dock.Inventory.Add(ord.Product, maxAmtCanTake);
@@ -735,7 +733,7 @@ public class Dispatch
 
         if(!dock.Inventory.IsItemOnInv(ord.Product) && !ExpImpOrders.Contains(ord))
         {
-            Debug.Log("Docker removed the evac order:"+ord.Product);
+           //Debug.Log("Docker removed the evac order:"+ord.Product);
             RemoveEvacuationOrder(ord.ID);
             
         }
@@ -779,7 +777,7 @@ public class Dispatch
 
         if (ord.Amount == 0)
         {
-            Debug.Log("Exported of:" + ord.Product + " done");
+           //Debug.Log("Exported of:" + ord.Product + " done");
 
             //Removig from all. Could be in orders or in   RecycledOrders and always in   ExpImpOrders
             Orders.Remove(ord);
@@ -788,7 +786,7 @@ public class Dispatch
  
             return;
         }
-        Debug.Log("Exported:" + ord.Product + " . " + amtExpThisTime + ".Still left:" + leftOnOrder);
+       //Debug.Log("Exported:" + ord.Product + " . " + amtExpThisTime + ".Still left:" + leftOnOrder);
     }
 
     internal void AddToExpImpOrders(Order order)
@@ -801,7 +799,7 @@ public class Dispatch
         else
         {
             //todo notify
-            Debug.Log("Will not handle over 10 Export Import orders at the same time . 10 is the max");
+           //Debug.Log("Will not handle over 10 Export Import orders at the same time . 10 is the max");
         }
     }
 

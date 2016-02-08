@@ -477,7 +477,7 @@ public class Building : General, Iinfo
         int id = int.Parse(split[1]);
         var foundProd = BuildingPot.Control.ProductionProp.ReturnExactProduct(id);
         CurrentProd = foundProd;
-        Debug.Log("now Prod curr: "+CurrentProd.Product +" on:"+MyId);
+       //Debug.Log("now Prod curr: "+CurrentProd.Product +" on:"+MyId);
 
         AddressNewProductOnBuilding();
     }
@@ -923,7 +923,9 @@ public class Building : General, Iinfo
             //so they disappear, remove Crystals and Routing can work properly
             still.DestroyCool();
         }
-        else Debug.Log("key not cointained in AllRandomObjList." + key);
+        else
+            //Debug.Log("key not cointained in AllRandomObjList." + key)
+            ;
     }
 
     /// <summary>
@@ -2109,7 +2111,7 @@ public class Building : General, Iinfo
         else if (!hasThisBuildRoom)
         {
             AddEvacuationOrder();
-            //            Debug.Log("Both full" + person.FoodSource.MyId + ".and." + MyId);
+            //           //Debug.Log("Both full" + person.FoodSource.MyId + ".and." + MyId);
         }
         else if (!doIHaveInput)
         {
@@ -2397,7 +2399,7 @@ public class Building : General, Iinfo
         if (PeopleDict.Count >= _maxPeople)
         {
             BuildingPot.Control.WorkOpenPos.Remove(MyId);
-//            Debug.Log(MyId+" removed from curr Jobs");
+//           //Debug.Log(MyId+" removed from curr Jobs");
         }
     }
 
@@ -2431,7 +2433,7 @@ public class Building : General, Iinfo
 
         //add to list 
         BuildingPot.Control.WorkOpenPos.Add(MyId);
-//        Debug.Log(MyId + " Added to curr Jobs");
+//       //Debug.Log(MyId + " Added to curr Jobs");
     }
 
     /// <summary>
@@ -3116,9 +3118,9 @@ public class BookedHome
             }
             
             //just addressingn a bugg tht book can happen 
-            Debug.Log("Book to clear:"+personToRemove.MyId+ " famId b4:"+personToRemove.FamilyId);
+           //Debug.Log("Book to clear:"+personToRemove.MyId+ " famId b4:"+personToRemove.FamilyId);
             ClearBooking();
-            Debug.Log("Book Cleared:" + personToRemove.MyId + " famId b4:" + personToRemove.FamilyId);
+           //Debug.Log("Book Cleared:" + personToRemove.MyId + " famId b4:" + personToRemove.FamilyId);
 
 
             //so Individuals tht asked and where denied get a chancee to see this building unbooked
@@ -3148,7 +3150,7 @@ public class BookedHome
     //        if (fam != null)
     //        {
     //            fam.DeleteFamily();
-    //            Debug.Log("deleted family on:");
+    //           //Debug.Log("deleted family on:");
     //        }
     //    }
     //}
