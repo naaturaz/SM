@@ -69,26 +69,26 @@ public class Book : General
 
 
         //houses 
-        Build.Add(new BuildStat(H.HouseA, 400, 15, 5, 25, 5, maxPeople: 5, capacity: 5));
-        Build.Add(new BuildStat(H.HouseB, 400, 15, 5, 25, 5, maxPeople: 5, capacity: 5));
-        Build.Add(new BuildStat(H.HouseAWithTwoFloor, 800, 30, 5, 50, 5, maxPeople: 10, capacity: 10));
-        Build.Add(new BuildStat(H.HouseMedA, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 10));
-        Build.Add(new BuildStat(H.HouseMedB, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 10));
-        Build.Add(new BuildStat(H.HouseC, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 15));
-        Build.Add(new BuildStat(H.HouseD, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 20));
+        Build.Add(new BuildStat(H.HouseA, 400, 15, 5, 25, 5, maxPeople: 5, capacity: 1));
+        Build.Add(new BuildStat(H.HouseB, 400, 15, 5, 25, 5, maxPeople: 5, capacity: 1));
+        Build.Add(new BuildStat(H.HouseAWithTwoFloor, 800, 30, 5, 50, 5, maxPeople: 10, capacity: 2));
+        Build.Add(new BuildStat(H.HouseMedA, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 2));
+        Build.Add(new BuildStat(H.HouseMedB, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 2));
+        Build.Add(new BuildStat(H.HouseC, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 3));
+        Build.Add(new BuildStat(H.HouseD, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 3));
 
         Build.Add(new BuildStat(H.Shack, 50, maxPeople: 5, capacity: 500));
 
         //farming
-        Build.Add(new BuildStat(H.AnimalFarmSmall, 400, 15, 5, 25, 5, maxPeople: 5));
-        Build.Add(new BuildStat(H.AnimalFarmMed, 500, 15, 5, 25, 5, maxPeople: 7));
-        Build.Add(new BuildStat(H.AnimalFarmLarge, 600, 15, 5, 25, 5, maxPeople: 9));
-        Build.Add(new BuildStat(H.AnimalFarmXLarge, 800, 15, 5, 25, 5, maxPeople: 12));
+        Build.Add(new BuildStat(H.AnimalFarmSmall, 400, 15, 5, 25, 5, maxPeople: 5,  capacity: 1));
+        Build.Add(new BuildStat(H.AnimalFarmMed, 500, 15, 5, 25, 5, maxPeople: 7, capacity: 1));
+        Build.Add(new BuildStat(H.AnimalFarmLarge, 600, 15, 5, 25, 5, maxPeople: 9, capacity: 2));
+        Build.Add(new BuildStat(H.AnimalFarmXLarge, 800, 15, 5, 25, 5, maxPeople: 12, capacity: 3));
 
-        Build.Add(new BuildStat(H.FieldFarmSmall, 400, 15, 5, 25, 5, maxPeople: 2));
-        Build.Add(new BuildStat(H.FieldFarmMed, 500, 15, 5, 25, 5, maxPeople: 4));
-        Build.Add(new BuildStat(H.FieldFarmLarge, 600, 15, 5, 25, 5, maxPeople: 6));
-        Build.Add(new BuildStat(H.FieldFarmXLarge, 800, 15, 5, 25, 5, maxPeople: 9));
+        Build.Add(new BuildStat(H.FieldFarmSmall, 400, 15, 5, 25, 5, maxPeople: 2, capacity: 1));
+        Build.Add(new BuildStat(H.FieldFarmMed, 500, 15, 5, 25, 5, maxPeople: 4, capacity: 1));
+        Build.Add(new BuildStat(H.FieldFarmLarge, 600, 15, 5, 25, 5, maxPeople: 6, capacity: 2));
+        Build.Add(new BuildStat(H.FieldFarmXLarge, 800, 15, 5, 25, 5, maxPeople: 9, capacity: 3));
 
         //Raw
         Build.Add(new BuildStat(H.Ceramic, 400, 15, 5, 25, 5, maxPeople: 5));

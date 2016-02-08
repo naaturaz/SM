@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -616,7 +617,11 @@ public class MoveThruPoints
     #region Hide Show
     public void Show()
     {
-        renderer.enabled = true;
+        if (renderer!=null)
+        {
+            renderer.enabled = true;
+            
+        }
 
         if (_personalObject!=null)
         {
@@ -630,7 +635,10 @@ public class MoveThruPoints
     {
         if (ShouldHide())
         {
-            renderer.enabled = false;
+            if (renderer != null)
+            {
+                renderer.enabled = false;
+            }
 
             if (_personalObject != null)
             {

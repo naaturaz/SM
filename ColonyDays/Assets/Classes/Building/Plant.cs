@@ -156,7 +156,8 @@ public class Plant : MonoBehaviour
         _fieldFarm.PlantGrew();
 
         _currentGrowStep += 0.1f;
-        _amtToGrow = GROWFACTOR + ((float)_growGen / 10000) + addWorkedAmt;
+        _amtToGrow =    Program.gameScene.GameTime1.TimeFactorInclSpeed()
+            *(GROWFACTOR + ((float)_growGen / 10000) + addWorkedAmt) ;
 
         if (_amtToGrow > 1)
         {

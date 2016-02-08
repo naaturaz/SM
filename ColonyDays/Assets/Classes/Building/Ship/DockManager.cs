@@ -6,6 +6,8 @@ public class DockManager
     private float _portReputation = 50;
     private float _pirateThreat;
 
+    private int _maxAmountSpots = 3;
+
     List<string> _dockStructures = new List<string>(); 
 
     public float PortReputation
@@ -76,8 +78,8 @@ public class DockManager
 
     internal bool AtLeastOneDockHasSpace1More(int shipsOnIsland)
     {
-        //15 how many ships each structure can hold 
-        if (_dockStructures.Count * 15 <= shipsOnIsland)
+        // how many ships each structure can hold 
+        if (_dockStructures.Count * _maxAmountSpots <= shipsOnIsland)
         {
             return false;
         }

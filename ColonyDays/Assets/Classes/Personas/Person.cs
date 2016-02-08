@@ -679,12 +679,8 @@ public class Person : General
 
     void CheckOnNutrition()
     {
-        ChangeNutritionLvl(-4f);//-2
-        
-        //if is booked cant kill it
-  
-            KillStarve();
-  //      }
+        ChangeNutritionLvl(-100f * Program.gameScene.GameTime1.TimeFactorInclSpeed());//-2 //4
+        KillStarve();
     }
 
     /// <summary>
