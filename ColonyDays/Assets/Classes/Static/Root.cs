@@ -210,15 +210,20 @@ public class Root : MonoBehaviour
     public static string orderShowGenBtn = "Prefab/GUI/Forms/Order_Show_Generic_Btn";
     public static string showGenBtnLarge = "Prefab/GUI/Forms/Show_Generic_Btn_Large";
     public static string show_Invent_Item = "Prefab/GUI/Forms/Show_Invent_Item";
+    public static string show_Invent_Item_Med = "Prefab/GUI/Forms/Show_Invent_Item_Med";
 
     //Menu
     public static string mainMenu = "Prefab/Menu/MainMenu";
     public static string loadingScreen = "Prefab/Menu/LoadingScreen";
 
     //Images for GUI
-    public static string iconBrick = "Prefab/GUI/Inventory_items/Brick";
+    public static string iconBrick = "Prefab/GUI/Inventory_Items/Brick";
 
 
+
+
+
+    Dictionary<P, string> _icons = new Dictionary<P, string>(); 
 
 
 

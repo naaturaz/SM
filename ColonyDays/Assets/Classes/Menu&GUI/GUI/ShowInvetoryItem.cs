@@ -11,12 +11,19 @@ public class ShowInvetoryItem : GUIElement
 
     private Text _textObj;
     private Image _iconImg;
-    
+
+    private string _invType;
 
     public InvItem InvItem1
     {
         get { return _invItem; }
         set { _invItem = value; }
+    }
+
+    public string InvType
+    {
+        get { return _invType; }
+        set { _invType = value; }
     }
 
     // Use this for initialization
@@ -36,35 +43,58 @@ public class ShowInvetoryItem : GUIElement
 
     private void LoadIcon()
     {
-        Sprite sp = (Sprite)Resources.Load(Root.iconBrick);
-
+        Sprite sp = Resources.Load<Sprite>(Root.iconBrick);
         _iconImg.sprite = sp;
     }
 
-    static public ShowInvetoryItem Create(string root, Transform container, InvItem invItem, Vector3 iniPos)
+    static public ShowInvetoryItem Create(Transform container, InvItem invItem, Vector3 iniPos, string invType="")
     {
         ShowInvetoryItem obj = null;
+
+        var root = "";
+        if (string.IsNullOrEmpty(invType))
+        {
+            root=Root.show_Invent_Item_Med;
+        }
+        else
+        {
+            root = Root.show_Invent_Item;
+        }
+
         obj = (ShowInvetoryItem)Resources.Load(root, typeof(ShowInvetoryItem));
         obj = (ShowInvetoryItem)Instantiate(obj, new Vector3(), Quaternion.identity);
 
+
         obj.transform.parent = container;
+        obj.transform.localPosition = iniPos;
+
         obj.InvItem1 = invItem;
-        obj.transform.position = iniPos;
 
         return obj;
     }
 
 
-    private int count;
+    private float oldAmt;
 	// Update is called once per frame
 	void Update ()
 	{
-	    _textObj.text = InvItem1.Amount + "";
+        if (oldAmt != InvItem1.Amount)
+	    {
+            oldAmt = InvItem1.Amount;
+
+            _textObj.text = Formatter();
+	    }
+
 	}
 
-    string Formatter(float amt)
+    string Formatter()
     {
-        
+        //buildign invneotyr 
+        if (string.IsNullOrEmpty(InvType))
+        {
+            return InvItem1.Amount.ToString("F1") + "kg. v(m3):" + InvItem1.Volume.ToString("F1");
+        }
+
         return "";
     }
 }

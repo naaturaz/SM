@@ -82,16 +82,16 @@ public class GUIElement : General {
             "Fill: "+percentOcup.ToString("F1") + "% \n";
 
 
-        var invItems = obj.Inventory.InventItems;
+        //var invItems = obj.Inventory.InventItems;
 
-        for (int i = 0; i < invItems.Count; i++)
-        {
-            if (invItems[i].Amount > 0)
-            {
-                res += invItems[i].Key + ":" + invItems[i].Amount.ToString("F1")
-                    + " kg. v(m3):" + invItems[i].Volume.ToString("F1") + "\n";
-            }
-        }
+        //for (int i = 0; i < invItems.Count; i++)
+        //{
+        //    if (invItems[i].Amount > 0)
+        //    {
+        //        res += invItems[i].Key + ":" + invItems[i].Amount.ToString("F1")
+        //            + " kg. v(m3):" + invItems[i].Volume.ToString("F1") + "\n";
+        //    }
+        //}
 
         return res;
     }

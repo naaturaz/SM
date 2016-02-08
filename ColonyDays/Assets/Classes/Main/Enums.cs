@@ -323,6 +323,7 @@ public enum H
     ShipSmall,
     Text,
     Icon,
+    Inv_Ini_Pos,
 
 
 }

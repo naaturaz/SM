@@ -31,6 +31,7 @@ public class BuildingWindow : GUIElement {
     private GameObject _products;
     private GameObject _orders;
 
+    private GameObject _invIniPos;
 
     private Vector3 _importIniPos;
     private Vector3 _exportIniPos;    
@@ -48,6 +49,8 @@ public class BuildingWindow : GUIElement {
 
     private GameObject _demolish_Btn; //Upg_Mat_Btn
     private GameObject _cancelDemolish_Btn; //Upg_Mat_Btn
+
+
 
     // Use this for initialization
     void Start()
@@ -96,10 +99,15 @@ public class BuildingWindow : GUIElement {
 
         
         _title = GetChildCalled(H.Title).GetComponent<Text>();
+
+
         _info = GetGrandChildCalled(H.Info).GetComponent<Text>();
         _inv = GetGrandChildCalled(H.Bolsa).GetComponent<Text>();//bolsa bz tht algorith has a bugg tht names cannot be the same or start with the same
         
         _displayProdInfo = GetGrandChildCalled(H.Display_Lbl).GetComponent<Text>();//bolsa bz tht algorith has a bugg tht names cannot be the same or start with the same
+
+        _invIniPos = GetGrandChildCalled(H.Inv_Ini_Pos);
+
 
 
         var genBtn = GetChildThatContains(H.Gen_Btn).transform;
@@ -230,10 +238,18 @@ public class BuildingWindow : GUIElement {
         }
     }
 
+    private ShowAInventory _showAInventory;
     private void LoadMenu()
     {
         _title.text = _building.HType + "";
         _info.text = BuildInfo();
+
+        if (_showAInventory == null || _showAInventory.Inv != _building.Inventory)
+        {
+            _showAInventory = new ShowAInventory(_building.Inventory, _gaveta.gameObject, _invIniPos.transform.localPosition);
+        }
+        _showAInventory.ManualUpdate();
+
         _inv.text = BuildStringInv(_building);
     }
 
