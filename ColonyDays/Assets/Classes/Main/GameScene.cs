@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameScene : General {
@@ -311,14 +312,17 @@ public class GameScene : General {
         for (int i = 0; i < dummiesSpwnPoint.Count; i++)
         {
             if (dummiesSpwnPoint[i].transform.position == new Vector3() &&
-                dummiesSpwnPoint[i].transform.rotation == Quaternion.identity)
+                dummiesSpwnPoint[i].transform.rotation == Quaternion.identity &&
+                string.IsNullOrEmpty(dummiesSpwnPoint[i].DummyIdSpawner) &&
+                dummiesSpwnPoint[i].LandZone1.Count==0)
             {
                 Debug.Log("return dummy #:"+i);
                 dummiesSpwnPoint[i].name = myIDP + ".Dummy";
+                dummiesSpwnPoint[i].UsedAt = GameTime1.CurrentDate();
                 return dummiesSpwnPoint[i];
             }
-        }
-        return null;
+      }
+      return null;
     }
 
     internal void ReturnUsedDummy(Structure usedDummy)
@@ -329,6 +333,7 @@ public class GameScene : General {
 
         //bz is needed for next Routing 
         usedDummy.LandZone1.Clear();
+        //usedDummy.DummyIdSpawner = "";
     }
 
     #endregion

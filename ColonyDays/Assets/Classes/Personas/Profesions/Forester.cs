@@ -78,7 +78,9 @@ public class Forester : Profession
     {
         _routerActive = true;
 
+        //bz dummy.DummyIdSpawner
         dummy = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy);
+
         dummy.transform.position = FinRoutePoint;
         dummy.transform.LookAt(_treeCenterPos);
         dummy.HandleLandZoning();
@@ -89,7 +91,10 @@ public class Forester : Profession
         RouterBack = new CryRouteManager(dummy, _person.FoodSource, _person,  HPers.InWorkBack, false, true);
     }
 
-
+    Structure CreateDummy()
+    {
+        return Program.gameScene.GimeMeUnusedDummy(ProfDescription + ".Dummy." + StillElementId);
+    }
     
     void FindSpawnersToMine()
     {
@@ -187,9 +192,12 @@ public class Forester : Profession
         {
             ExecuteNow = false;
 
+            ////foresters reset when done work
+            Debug.Log("Foreset reset dummy");
+            ResetDummy();
+
             if (_person.Work.CanTakeItOut(_person))
             {
-
                 if (CheckIfStillElementWasDestroy())
                 {
                     //so it doesnt get a null ref in below methods 
@@ -200,13 +208,12 @@ public class Forester : Profession
                 SetProdImMiningWeight();
                 base.Execute(Job.Forester.ToString(), prod);
                 RemoveWeightFromMiningEle(prod);
-                
             }
             else
             {
                 //_person.Work.AddEvacuationOrderMost();
                 //todo add to notify //Forester didnt work bz its Home Storage is full
-                Debug.Log(_person.MyId +", Forester didnt work bz its Home Storage is full");
+                //Debug.Log(_person.MyId +", Forester didnt work bz its Home Storage is full");
             }
         }
     }

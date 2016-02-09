@@ -189,9 +189,8 @@ public class Builder : Profession
 
         _routerActive = true;
 
-        Debug.Log("got dummy:" + _person.MyId + " cons:" + _constructing.MyId + " finRt:" + FinRoutePoint);
+        //Debug.Log("got dummy:" + _person.MyId + " cons:" + _constructing.MyId + " finRt:" + FinRoutePoint);
         dummy = CreateDummy();
-        //dummy = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy);
         dummy.transform.position = FinRoutePoint;
 
         dummy.transform.LookAt(_constructing.transform.position);

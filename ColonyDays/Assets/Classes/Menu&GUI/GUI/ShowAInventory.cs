@@ -151,7 +151,12 @@ public class ShowAInventory
     {
         for (int i = 0; i < _allItems.Count; i++)
         {
-            _allItems[i].Destroy();
+            if (_allItems[i]!=null)
+            {
+
+                _allItems[i].Destroy();
+            }
+
         }
     }
 

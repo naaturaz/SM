@@ -492,11 +492,6 @@ public class CryRoute
 
     private void BlackList()
     {
-        if (_fin.MyId.Contains("Tree"))
-        {
-            var t = this;
-        }
-
         //Debug.Log("BlackListed: " + _fin.MyId + " by: " + _person.MyId);
         _person.Brain.BlackListBuild(CryBridgeRoute.ExtractRealId((Structure)_fin));
         wasBlackListed = true;

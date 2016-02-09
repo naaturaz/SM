@@ -365,6 +365,12 @@ public class Profession  {
     {
         _person.Brain.CurrentTask = HPers.None;
         //GameScene.print("Done work:" + _person.MyId);
+
+        ////foresters reset when done work
+        //if (ProfDescription == Job.Forester)
+        //{
+        //    ResetDummy();
+        //}
     }
 
     /// <summary>
@@ -410,7 +416,13 @@ public class Profession  {
             _readyToWork = true;
             _routerActive = false;
             Unlock();
-            DestroyDummy();
+
+            //foresters reset when done work
+            if (ProfDescription!=Job.Forester)
+            {
+                ResetDummy();
+                
+            }
         }
     }
 
@@ -428,34 +440,29 @@ public class Profession  {
             _readyToWork = true;
             _routerActive = false;
             Unlock();
-            DestroyDummy();
+
+            //foresters reset when done work
+            if (ProfDescription != Job.Forester)
+            {
+                ResetDummy();
+
+            }
         }
     }
 
     /// <summary>
     /// Created to address that sometimes derived classs dont even spawn the dummy helper 
     /// </summary>
-    protected void DestroyDummy()
-    {
-        ResetDummy();
-        //if (dummy!=null)
-        //{
-        // //   Program.gameScene.ReturnUsedDummy(dummy);
-        //    dummy.DestroySafe();
-        //}
-    }
-
-    void ResetDummy()
+    protected void ResetDummy()
     {
         if (dummy == null)
         {
             return;
         }
-        Debug.Log("Reset dummy:" + _person.MyId + " cons:" + _constructing.MyId + " finRt:" + FinRoutePoint);
+        //Debug.Log("Reset dummy:" + _person.MyId);
         Program.gameScene.ReturnUsedDummy(dummy);
         dummy = null;
     }
-
 
     /// <summary>
     /// If _workingNow = true this method will be called from derived class.
@@ -852,7 +859,7 @@ public class Profession  {
     internal void CleanOldProf()
     {
         CleanOldVars();
-        DestroyDummy();
+        ResetDummy();
     }
 
 

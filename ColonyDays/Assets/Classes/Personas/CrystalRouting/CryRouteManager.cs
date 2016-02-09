@@ -142,16 +142,15 @@ public class CryRouteManager
             return;
         }
 
-
-        //if (PersonPot.Control.RoutesCache1.ContainANewerOrSameRoute(_ini.MyId, _fin.MyId, _askDateTime) 
-        //    && string.IsNullOrEmpty(_person.IsBooked))
-        //{
-        //    WeHaveAnExisitingRoute();
-        //}
-        //else
-        //{
+        if (PersonPot.Control.RoutesCache1.ContainANewerOrSameRoute(_ini.MyId, _fin.MyId, _askDateTime)
+            && string.IsNullOrEmpty(_person.IsBooked))
+        {
+            WeHaveAnExisitingRoute();
+        }
+        else
+        {
             WeHaveToCreateTheRoute();
-        //}
+        }
     }
 
 
@@ -160,14 +159,14 @@ public class CryRouteManager
     private TheRoute tempTheRoute;//will hold the route for a bit until is realeased on Fake()
     private void WeHaveAnExisitingRoute()
     {
-        //GameScene.print("We have exisint route "+_person.MyId+" o:"+OriginKey + " d:"+DestinyKey + " askT:" +_askDateTime);
+       GameScene.print("We have exisint route "+_person.MyId+" o:"+OriginKey + " d:"+DestinyKey + " askT:" +_askDateTime);
         tempTheRoute = PersonPot.Control.RoutesCache1.GiveMeTheNewerRoute();
         time = Time.time;
     }
 
     private void WeHaveToCreateTheRoute()
     {
-        //GameScene.print("We have to create new route " + _person.MyId + " o:" + OriginKey + " d:" + DestinyKey + " askT:" + _askDateTime);
+        GameScene.print("We have to create new route " + _person.MyId + " o:" + OriginKey + " d:" + DestinyKey + " askT:" + _askDateTime);
 
         if (_one.LandZone != _two.LandZone)
         {

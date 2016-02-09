@@ -31,7 +31,7 @@ public class Insider : Profession {
     {
         //  to adress the problem when creating a new profession and builder spawned
         // Dummy somewhere, and the Dummy doesnt get destroyed 
-        DestroyDummy();
+        ResetDummy();
 
         FinRoutePoint = _person.Work.BehindMainDoorPoint;
         ReadyToWork = true;

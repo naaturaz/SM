@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 public class RoutesCache {
 
-    List<TheRoute> _items = new List<TheRoute>();
+    Dictionary<string, TheRoute> _items = new Dictionary<string, TheRoute>();
     TheRoute _current = new TheRoute();//current route we are comparing to
 
-    public List<TheRoute> Items
-    {
-        get { return _items; }
-        set { _items = value; }
-    }
+    //public Dictionary<string, TheRoute> Items
+    //{
+    //    get { return _items; }
+    //    set { _items = value; }
+    //}
 
     public TheRoute Current
     {
@@ -65,19 +65,21 @@ public class RoutesCache {
     /// <returns></returns>
     bool DoWeHaveThatRoute(string OriginKey, string DestinyKey)
     {
-        for (int i = 0; i < _items.Count; i++)
-        {
-            var sameOri = _items[i].OriginKey == OriginKey;
-            var sameDest = _items[i].DestinyKey == DestinyKey;
+        var key = OriginKey + "." + DestinyKey;
 
-            if (sameOri && sameDest)
+        if (_items.ContainsKey(key))
+        {
+            if (_items[key].CheckPoints.Count >0)
             {
-                _current = new TheRoute(_items[i]);
+                //only if has more than 0 bz they can reference clear the routes 
+                _current = new TheRoute(_items[key]);
                 return true;
             }
+            _items.Remove(key);
         }
         return false;
     }
+
 
     /// <summary>
     /// Will reutn _current the newer route found when asked 'bool ContainANewerRoute()'
@@ -92,15 +94,12 @@ public class RoutesCache {
 
     public void AddReplaceRoute(TheRoute theRoute)
     {
-        return;
+        if (theRoute.CheckPoints.Count==0)
+        {
+            return;
+        }
 
-        ////if inverse was not set yet not has to be considered
-        //if (!IsInverseSet(theRoute))
-        //{
-        //    return;
-        //}
-
-        //just to set _current
+        var key = theRoute.OriginKey + "." + theRoute.DestinyKey;
         var haveIt = DoWeHaveThatRoute(theRoute.OriginKey, theRoute.DestinyKey);
 
         if (haveIt)
@@ -111,48 +110,25 @@ public class RoutesCache {
             }
             else
             {
-                RemoveItem();
-                _items.Add(theRoute);
-                RemoveAllWithZeroCount();
+                _items[key]=theRoute;
             }
         }
         else
         {
-            _items.Add(theRoute);
+            _items.Add(key, theRoute);
         }
     }
 
-    bool IsInverseSet(TheRoute theRoute)
+    public void Update()
     {
-        return theRoute.CheckPoints[0].InverseWasSet;
+        
     }
 
     /// <summary>
-    /// Will remove _current a Route from list of items that has same  origin and destiny key
+    /// Bz routes will stay there forever. really old and not useful 
     /// </summary>
-    void RemoveItem()
+    void CheckIfARouteIsTooOld()
     {
-        for (int i = 0; i < _items.Count; i++)
-        {
-            var sameOri = _items[i].OriginKey == _current. OriginKey;
-            var sameDest = _items[i].DestinyKey == _current.DestinyKey;
-
-            if (sameOri && sameDest)
-            {
-                _items.RemoveAt(i);
-            }
-        }
-    }
-
-    void RemoveAllWithZeroCount()
-    {
-        for (int i = 0; i < _items.Count; i++)
-        {
-            if (_items[i].CheckPoints.Count==0)
-            {
-                _items.RemoveAt(i);
-                i--;
-            }
-        }
+        
     }
 }

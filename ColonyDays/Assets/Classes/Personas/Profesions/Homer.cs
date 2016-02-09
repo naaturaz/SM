@@ -58,7 +58,7 @@ public class Homer : Profession
     void InitRoute()
     {
         _routerActive = true;
-        dummy = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy);
+        dummy = CreateDummy();
         dummy.transform.position = FinRoutePoint;
         dummy.HandleLandZoning();
 
@@ -71,6 +71,12 @@ public class Homer : Profession
             throw new Exception("MyFoodSrc cant be null");
             InitRouteWithOutFoodSrc();
         }
+    }
+
+    Structure CreateDummy()
+    {
+
+        return Program.gameScene.GimeMeUnusedDummy(ProfDescription + ".Dummy." + _person.PrevJob+"." + _person.Home);
     }
 
     /// <summary>

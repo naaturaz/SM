@@ -446,8 +446,13 @@ public class Building : General, Iinfo
         Init();
         LayerRoutine("init");
 
-        //loads the defualt
+
+        //if (MyId.Contains("Dummy"))
+        //{
+        //    return;
+        //}
         CurrentProd = BuildingPot.Control.ProductionProp.ReturnDefaultProd(HType);
+
         InitFarm();
         
         InitJobRelated();

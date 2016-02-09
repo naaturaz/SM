@@ -236,7 +236,9 @@ public class CryBridgeRoute
     {
         if (fin.MyId.Contains("Dummy"))
         {
-            return fin.DummyIdSpawner;
+            var temp = fin.DummyIdSpawner;
+            //fin.DummyIdSpawner = "";
+            return temp;
         }
         return fin.MyId;
     }

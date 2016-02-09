@@ -1,11 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class Structure : StructureParent
 {
+    private MDate _usedAt = new MDate();
+
     private bool isStageObjHidden;
     private Farm _farm;//will be use if Structure is a farm 
+
+    /// <summary>
+    /// For Dummy OBj
+    /// </summary>
+    public MDate UsedAt
+    {
+        get { return _usedAt; }
+        set { _usedAt = value; }
+    }
 
     /// <summary>
     /// This is the method that moves the building around in the terrain 
