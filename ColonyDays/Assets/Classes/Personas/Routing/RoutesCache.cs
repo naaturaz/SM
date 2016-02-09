@@ -92,6 +92,8 @@ public class RoutesCache {
 
     public void AddReplaceRoute(TheRoute theRoute)
     {
+        return;
+
         ////if inverse was not set yet not has to be considered
         //if (!IsInverseSet(theRoute))
         //{

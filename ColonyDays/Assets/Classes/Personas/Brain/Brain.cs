@@ -245,15 +245,15 @@ public class Brain
         dummyIdle.transform.position = _idlePoint;
         dummyIdle.HandleLandZoning();
 
-        //_routerIdle = new RouterManager(_person.Home, dummyIdle, _person, HPers.IdleSpot, true, false);
-        _routerIdle = new CryRouteManager(_person.Home, dummyIdle, _person, finDoor:false);
+        //_routerIdle = new CryRouteManager(_person.Home, GameScene.dummySpawnPoint, _person, finDoor:false);
+        _routerIdle = new CryRouteManager(_person.Home, dummyIdle, _person, finDoor: false);
 
         idleRouteStart = true;
     }
 
     Structure CreateDummyIdle()
     {
-        //return Program.gameScene.GimeMeUnusedDummy();
+        return Program.gameScene.GimeMeUnusedDummy(_person.MyId+".Idle.Dummy");
 
         dummyIdle = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy,
             container: Program.ClassContainer.transform);
@@ -267,8 +267,8 @@ public class Brain
         {
             return;
         }
-        //Program.gameScene.ReturnUsedDummy(dummyIdle);
-        dummyIdle.Destroy();
+        Program.gameScene.ReturnUsedDummy(dummyIdle);
+        dummyIdle = null;
     }
 
     void DefineReligionRoute()

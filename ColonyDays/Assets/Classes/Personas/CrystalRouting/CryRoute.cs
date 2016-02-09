@@ -1076,7 +1076,7 @@ public class CryRoute
     /// </summary>
     void AddAnglesToRoute()
     {
-        var myDummy = Program.gameScene.GimeMeUnusedDummy();
+        var myDummy = Program.gameScene.GimeMeUnusedDummy("");
 
         myDummy.transform.position = _checkPoints[0].Point;
 

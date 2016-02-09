@@ -274,8 +274,8 @@ public class Family
 
             AddNewPersonToFamily(newPerson);
 
-            Debug.Log(inFamily.MyId + " .famId:" + inFamily.FamilyId + " :accepted: " + newPerson.MyId 
-                + " .famId:" + newPerson.FamilyId);
+//            Debug.Log(inFamily.MyId + " .famId:" + inFamily.FamilyId + " :accepted: " + newPerson.MyId 
+  //              + " .famId:" + newPerson.FamilyId);
 
             return true;
         }

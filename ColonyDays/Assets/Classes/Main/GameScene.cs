@@ -23,6 +23,8 @@ public class GameScene : General {
 
     public static General dummyBlue;//for help everywhere()
     public static General dummyRed;//for help everywhere()
+
+    public static Structure dummySpawnPoint;//for help everywhere()
     List<Structure> dummiesSpwnPoint = new List<Structure>();//for help everywhere()
 
 
@@ -112,6 +114,8 @@ public class GameScene : General {
 
 	    createDummySpawn = true;
 
+        dummySpawnPoint = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPointUnTimed, new Vector3(), H.Dummy,
+                container: Program.ClassContainer.transform);
 	}
 
 
@@ -220,6 +224,12 @@ public class GameScene : General {
         dummyBlue.transform.rotation = Quaternion.identity;
     }
 
+    public static void ResetDummySpawnPoint()
+    {
+        dummySpawnPoint.transform.position = new Vector3();
+        dummySpawnPoint.transform.rotation = Quaternion.identity;
+    }
+
     //public static void ResetDummyWithSpawnPoint(Structure dummPass)
     //{
     //    var ind = 
@@ -296,12 +306,15 @@ public class GameScene : General {
         }
     }
 
-    internal Structure GimeMeUnusedDummy()
+    internal Structure GimeMeUnusedDummy(string myIDP)
     {
         for (int i = 0; i < dummiesSpwnPoint.Count; i++)
         {
-            if (dummiesSpwnPoint[i].transform.position == new Vector3())
+            if (dummiesSpwnPoint[i].transform.position == new Vector3() &&
+                dummiesSpwnPoint[i].transform.rotation == Quaternion.identity)
             {
+                Debug.Log("return dummy #:"+i);
+                dummiesSpwnPoint[i].name = myIDP + ".Dummy";
                 return dummiesSpwnPoint[i];
             }
         }
@@ -311,10 +324,12 @@ public class GameScene : General {
     internal void ReturnUsedDummy(Structure usedDummy)
     {
         usedDummy.transform.position = new Vector3();
+        usedDummy.transform.rotation = Quaternion.identity;
+        usedDummy.name = usedDummy.Id+".Dummy";
+
+        //bz is needed for next Routing 
+        usedDummy.LandZone1.Clear();
     }
-
-
-
 
     #endregion
 

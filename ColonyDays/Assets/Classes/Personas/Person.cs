@@ -295,7 +295,7 @@ public class Person : General
         {
             if (Home!=null && _familyId.Contains(Home.MyId) && !value.Contains(Home.MyId))
             {
-                Debug.Log(MyId + " Changing from:" + _familyId + " to:" + value + " while on:" + Home.MyId);
+//                Debug.Log(MyId + " Changing from:" + _familyId + " to:" + value + " while on:" + Home.MyId);
             }
 
             _familyId = value;
@@ -837,7 +837,7 @@ public class Person : General
             Brain.MajorAge.MarkMajorityAgeReached();
             PersonPot.Control.IsAPersonHomeLessNow = MyId;
 
-            Debug.Log(MyId+" Become major homless now:" );
+//            Debug.Log(MyId+" Become major homless now:" );
 
 
             AddressIsBooked(place);
@@ -849,7 +849,7 @@ public class Person : General
     {
         if (Home!= null && newPlace == Home)
         {
-            Debug.Log("Become major in same place:"+MyId);
+   //         Debug.Log("Become major in same place:"+MyId);
             //IsBooked = "";
         }
     }

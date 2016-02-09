@@ -143,15 +143,15 @@ public class CryRouteManager
         }
 
 
-        if (PersonPot.Control.RoutesCache1.ContainANewerOrSameRoute(_ini.MyId, _fin.MyId, _askDateTime) 
-            && string.IsNullOrEmpty(_person.IsBooked))
-        {
-            WeHaveAnExisitingRoute();
-        }
-        else
-        {
+        //if (PersonPot.Control.RoutesCache1.ContainANewerOrSameRoute(_ini.MyId, _fin.MyId, _askDateTime) 
+        //    && string.IsNullOrEmpty(_person.IsBooked))
+        //{
+        //    WeHaveAnExisitingRoute();
+        //}
+        //else
+        //{
             WeHaveToCreateTheRoute();
-        }
+        //}
     }
 
 

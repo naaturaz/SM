@@ -437,12 +437,25 @@ public class Profession  {
     /// </summary>
     protected void DestroyDummy()
     {
-        if (dummy!=null)
-        {
-         //   Program.gameScene.ReturnUsedDummy(dummy);
-            dummy.DestroySafe();
-        }
+        ResetDummy();
+        //if (dummy!=null)
+        //{
+        // //   Program.gameScene.ReturnUsedDummy(dummy);
+        //    dummy.DestroySafe();
+        //}
     }
+
+    void ResetDummy()
+    {
+        if (dummy == null)
+        {
+            return;
+        }
+        Debug.Log("Reset dummy:" + _person.MyId + " cons:" + _constructing.MyId + " finRt:" + FinRoutePoint);
+        Program.gameScene.ReturnUsedDummy(dummy);
+        dummy = null;
+    }
+
 
     /// <summary>
     /// If _workingNow = true this method will be called from derived class.
@@ -855,4 +868,6 @@ public class Profession  {
         }
         return Brain.GetStructureFromKey(id);
     }
+
+ 
 }

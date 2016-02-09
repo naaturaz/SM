@@ -35,7 +35,10 @@ public class Builder : Profession
         
         MyAnimation = "isHammer";
         _person = person;
+        _person = person;
         _person.PrevJob = Job.Builder;
+
+
 
         DefineConstructingRoutine();
     }
@@ -181,19 +184,20 @@ public class Builder : Profession
 
     void InitRoute()
     {
+        Router1 = null;
+        RouterBack = null;
+
         _routerActive = true;
 
-        //dummy = Program.gameScene.GimeMeUnusedDummy();
-        dummy = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy);
+        Debug.Log("got dummy:" + _person.MyId + " cons:" + _constructing.MyId + " finRt:" + FinRoutePoint);
+        dummy = CreateDummy();
+        //dummy = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy);
         dummy.transform.position = FinRoutePoint;
 
-        //so SpwanPoint doesnt fall inside building
         dummy.transform.LookAt(_constructing.transform.position);
-
         dummy.HandleLandZoning();
 
         Router1 = new CryRouteManager(_person.Work, dummy, _person, finDoor:false);
-        //Router1 = new RouterManager(_person.Work, dummy, _person, HPers.InWork, true, false);
 
         //If the FoodSrc is not null will be used as way back
         if (_person.FoodSource != null)
@@ -201,6 +205,12 @@ public class Builder : Profession
             IsRouterBackUsed = true;
             RouterBack = new CryRouteManager(dummy, _person.FoodSource, _person, HPers.InWorkBack, false, true);
         }
+    }
+
+    Structure CreateDummy()
+    {
+        //added the finROute to name bz it could be different in a same building 
+        return Program.gameScene.GimeMeUnusedDummy(_constructing.MyId+".Dummy."+FinRoutePoint);
     }
 
     Building FindBestToBuild()
