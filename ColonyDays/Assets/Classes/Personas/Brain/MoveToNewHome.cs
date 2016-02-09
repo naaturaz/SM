@@ -120,6 +120,8 @@ public class MoveToNewHome
         if (BuildingPot.Control.Registro.AllBuilding[oldBuild].PeopleDict.Contains(_person.MyId))
         {
             BuildingPot.Control.Registro.AllBuilding[oldBuild].PeopleDict.Remove(_person.MyId);
+            BuildingPot.Control.Registro.ResaveOnRegistro(oldBuild);
+
         }
     }
 

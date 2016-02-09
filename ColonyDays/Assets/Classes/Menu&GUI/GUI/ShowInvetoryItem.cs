@@ -120,7 +120,7 @@ public class ShowInvetoryItem : GUIElement
 
         //buildign invneotyr 
         //if (string.IsNullOrEmpty(InvType))
-        return InvItem1.Amount.ToString("F1") + "kg. v(m3):" + InvItem1.Volume.ToString("F1");
+        return InvItem1.Key+ " "  + InvItem1.Amount.ToString("F1") + "kg. v(m3):" + InvItem1.Volume.ToString("F1");
     }
 
     private string ShortFormat()

@@ -1218,11 +1218,6 @@ public class Building : General, Iinfo
         set
         {
 
-            if (MyId.Contains("Farm"))
-            {
-                var t = this;
-            }
-
             _peopleDict = value;
 
             //no need if is loading from file now 
@@ -2365,7 +2360,7 @@ public class Building : General, Iinfo
 
     void InitWheelBarrow()
     {
-        if (HType != H.BuildersOffice)
+        if (HType != H.BuildersOffice || IsLoadingFromFile)
         {
             return;
         }

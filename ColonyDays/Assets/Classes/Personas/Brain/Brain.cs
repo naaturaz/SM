@@ -1163,6 +1163,7 @@ public class Brain
         if (!s.PeopleDict.Contains(_person.MyId))
         {
             s.PeopleDict.Add(_person.MyId);
+            BuildingPot.Control.Registro.ResaveOnRegistro(s.MyId);
         }
         //print("added:" + Person.MyId + ".bld:" + currStructure.MyId);
     }
@@ -1178,6 +1179,8 @@ public class Brain
         if (!s.PeopleDict.Contains(personKey))
         {
             s.PeopleDict.Add(personKey);
+            BuildingPot.Control.Registro.ResaveOnRegistro(s.MyId);
+
         }
     }
 
@@ -1461,6 +1464,8 @@ public class Brain
         if (build!=null)
         {
             build.PeopleDict.Remove(_person.MyId);
+            BuildingPot.Control.Registro.ResaveOnRegistro(build.MyId);
+
         }
     }
 
@@ -2680,6 +2685,8 @@ public class Brain
             if (all[i] != null)
             {
                 all[i].PeopleDict.Remove(_person.MyId);
+                BuildingPot.Control.Registro.ResaveOnRegistro(all[i].MyId);
+
                 DestroyOldBuildIfEmptyOrShack(all[i].MyId);
             }
         }

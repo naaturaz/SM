@@ -217,7 +217,11 @@ public class JobManager
         
         var myCurrentJobScore = ScoreABuild(person.Work, person.Home.transform.position);
 
-        bool isABetterJob = _allJobAvailGC[0].Score > myCurrentJobScore;
+        bool isABetterJob = false;
+        if (_allJobAvailGC.Count>0)
+        {
+            isABetterJob = _allJobAvailGC[0].Score > myCurrentJobScore;
+        }
 
         if (isABetterJob)
         {

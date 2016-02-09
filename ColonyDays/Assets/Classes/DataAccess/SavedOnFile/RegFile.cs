@@ -35,7 +35,6 @@ public class RegFile  {
     // / represents an 11,,,     // - represents an 12
     List<int> _partsOnSoil = new List<int>();
 
-    private List<string> _peopleDict = new List<string>(); 
 
     public List<VectorLand> LandZone1 = new List<VectorLand>();
 
@@ -154,11 +153,8 @@ public class RegFile  {
         set { _max = value; }
     }
 
-    public List<string> PeopleDict
-    {
-        get { return _peopleDict; }
-        set { _peopleDict = value; }
-    }
+    public List<string> PeopleDict;
+
 
     public Inventory Inventory;
     public H Instruction;
@@ -175,7 +171,7 @@ public class RegFile  {
 
     public RegFile(string myId, H type, Rect dimOnMap, Ca category, Vector3 iniPosition, 
         Inventory InventoryP, 
-        List<string> PeopleDict,
+        List<string> peopleDict,
         List<VectorLand> LandZone1,
         Rect dimOnMapHor = new Rect(),
         List<Vector3> tilePosVert = null, List<Vector3> tilePosHor = null, List<Vector3> planesOnAirPos = null,
@@ -212,7 +208,7 @@ public class RegFile  {
         Instruction = instructionP;
 
         Inventory = InventoryP;
-        _peopleDict = PeopleDict;
+        PeopleDict = peopleDict;
         this.LandZone1 = LandZone1;
         BookedHome1 = bookedHome;
 

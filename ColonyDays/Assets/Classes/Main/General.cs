@@ -476,11 +476,6 @@ public class General : MonoBehaviour
 
     public virtual void Destroy()
     {
-        if (gameObject!=null && gameObject.transform.name.Contains("House"))
-        {
-            var t = this;
-        }
-
         Destroy(gameObject);
     }
 

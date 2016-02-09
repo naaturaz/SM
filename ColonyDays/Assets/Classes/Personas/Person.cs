@@ -864,6 +864,8 @@ public class Person : General
 
         //removing person from Home PeopleDict here 
         Home.PeopleDict.Remove(MyId);
+        BuildingPot.Control.Registro.ResaveOnRegistro(Home.MyId);
+
     }
 
     /// <summary>

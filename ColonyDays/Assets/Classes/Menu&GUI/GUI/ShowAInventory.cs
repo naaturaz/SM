@@ -135,7 +135,7 @@ public class ShowAInventory
             return -12 * _mainLines * factor;
         }
 
-        return -8*i;
+        return -3*i;
     }
 
     public void ManualUpdate()
