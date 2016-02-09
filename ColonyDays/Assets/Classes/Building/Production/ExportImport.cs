@@ -259,7 +259,7 @@ public class ExportImport
 
         if (prodFound == null)
         {
-            Debug.Log("Prod Factor asked of not found prod:" + prod);
+           //Debug.Log("Prod Factor asked of not found prod:" + prod);
             return 0;
         }
         return prodFound.ProduceFactor;

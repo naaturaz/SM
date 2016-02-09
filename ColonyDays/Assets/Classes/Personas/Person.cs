@@ -1817,6 +1817,8 @@ public class Person : General
 
     public void Emmigrate()
     {
+        return;
+
         EmmigrateWithFamily();
         ActionOfDisappear();
         print(MyId+" emmigrated");

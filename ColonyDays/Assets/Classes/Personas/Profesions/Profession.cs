@@ -364,15 +364,7 @@ public class Profession  {
     public virtual void DoneWork()
     {
         _person.Brain.CurrentTask = HPers.None;
-        GameScene.print("Done work:" + _person.MyId);
-
-   
-
-        ////bz job foreseter drops things when gets at work
-        //if (ProfDescription == Job.Forester)
-        //{
-        //    DropGoods(_person.Work);
-        //}
+        //GameScene.print("Done work:" + _person.MyId);
     }
 
     /// <summary>
@@ -386,7 +378,7 @@ public class Profession  {
         {
             WorkNow();
         }
-        //  GameScene.print("Update on Profession");
+        //GameScene.print("Update on Profession");
 
         SetProdXShift();
 	}

@@ -135,13 +135,13 @@ public class Inventory  {
     {
         if (key == P.None || amt == 0)
         {
-            Debug.Log("ret Tried to add to inv:"+ key +" amt:"+ amt);
+           //Debug.Log("ret Tried to add to inv:"+ key +" amt:"+ amt);
             return;
         }
 
         if (key.ToString().Contains("Random"))
         {
-            Debug.Log("trace random");
+           //Debug.Log("trace random");
             DealWithRandomOutput(key, amt);
             return;
         }
@@ -313,7 +313,7 @@ public class Inventory  {
 
         if (build == null)
         {
-            Debug.Log("building not found:"+LocMyId);
+           //Debug.Log("building not found:"+LocMyId);
             return 1;
         }
 

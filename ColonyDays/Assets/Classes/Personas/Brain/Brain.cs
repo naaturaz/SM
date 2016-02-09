@@ -215,7 +215,7 @@ public class Brain
         AddToGenOldKeyIfAOldRouteHasOneOldBridgeOnIt(_workRoute);
 
        // _routerWork = new CryRouteManager(_person.Home, _person.Work, _person, HPers.Work, askDateTime: askWork);
-        _routerWork = new CryRouteManager(_person.Home, _person.Work, _person);
+        _routerWork = new CryRouteManager(_person.Home, _person.Work, _person, askDateTime: askWork);
      
         workRouteStart = true;
     }
@@ -225,7 +225,7 @@ public class Brain
         AddToGenOldKeyIfAOldRouteHasOneOldBridgeOnIt(_foodRoute);
 
        // _routerFood = new RouterManager(_person.Home, _person.FoodSource, _person, HPers.FoodSource, askDateTime: askFood);
-        _routerFood = new CryRouteManager(_person.Home, _person.FoodSource, _person);
+        _routerFood = new CryRouteManager(_person.Home, _person.FoodSource, _person, askDateTime: askFood);
 
         foodRouteStart = true;
     }
@@ -276,7 +276,7 @@ public class Brain
         AddToGenOldKeyIfAOldRouteHasOneOldBridgeOnIt(_religionRoute);
 
         //_routerReligion = new RouterManager(_person.Home, _person.Religion, _person, HPers.Religion, askDateTime: askReligion);
-        _routerReligion = new CryRouteManager(_person.Home, _person.Religion, _person);
+        _routerReligion = new CryRouteManager(_person.Home, _person.Religion, _person, askDateTime: askReligion);
         religionRouteStart = true;
     }
 
@@ -285,7 +285,7 @@ public class Brain
         AddToGenOldKeyIfAOldRouteHasOneOldBridgeOnIt(_chillRoute);
 
         //_routerChill = new RouterManager(_person.Home, _person.Chill, _person, HPers.Chill, askDateTime: askChill);
-        _routerChill = new CryRouteManager(_person.Home, _person.Chill, _person);
+        _routerChill = new CryRouteManager(_person.Home, _person.Chill, _person, askDateTime: askChill);
         chillRouteStart = true;
     }
 
@@ -953,7 +953,7 @@ public class Brain
     void ReRouteCallsCounter()
     {
         _timesCall++;
-        if (_waiting && _timesCall > 20)
+        if (_waiting && _timesCall > 60)//20
         {
             PersonPot.Control.DoneReRoute(_person.MyId);//so another people can use the Spot 
             _timesCall = 0;

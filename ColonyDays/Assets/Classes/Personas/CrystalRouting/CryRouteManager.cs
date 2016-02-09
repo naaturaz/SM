@@ -36,6 +36,7 @@ public class CryRouteManager
 
     void SetTheRoute(TheRoute val)
     {
+        _cryRoute = new CryRoute();
         _cryRoute.TheRoute = val;
         _theRoute = val;
     }
@@ -66,9 +67,12 @@ public class CryRouteManager
 
     public CryRouteManager(){}
 
+    private DateTime _askDateTime;
+
     public CryRouteManager(Structure ini, Structure fin, Person person,
-        HPers routeType = HPers.None, bool iniDoor = true, bool finDoor = true)
+        HPers routeType = HPers.None, bool iniDoor = true, bool finDoor = true, DateTime askDateTime = new DateTime())
     {
+        _askDateTime = askDateTime;
         _originKey = ini.MyId;
         _destinyKey = fin.MyId;
         
@@ -138,17 +142,68 @@ public class CryRouteManager
             return;
         }
 
+
+        if (PersonPot.Control.RoutesCache1.ContainANewerOrSameRoute(_ini.MyId, _fin.MyId, _askDateTime) 
+            && string.IsNullOrEmpty(_person.IsBooked))
+        {
+            WeHaveAnExisitingRoute();
+        }
+        else
+        {
+            WeHaveToCreateTheRoute();
+        }
+    }
+
+
+    #region Cache Route
+
+    private TheRoute tempTheRoute;//will hold the route for a bit until is realeased on Fake()
+    private void WeHaveAnExisitingRoute()
+    {
+        //GameScene.print("We have exisint route "+_person.MyId+" o:"+OriginKey + " d:"+DestinyKey + " askT:" +_askDateTime);
+        tempTheRoute = PersonPot.Control.RoutesCache1.GiveMeTheNewerRoute();
+        time = Time.time;
+    }
+
+    private void WeHaveToCreateTheRoute()
+    {
+        //GameScene.print("We have to create new route " + _person.MyId + " o:" + OriginKey + " d:" + DestinyKey + " askT:" + _askDateTime);
+
         if (_one.LandZone != _two.LandZone)
         {
- //           Debug.Log("Bridge Routing");
+            //           Debug.Log("Bridge Routing");
             _cryBridgeRoute = new CryBridgeRoute(_ini, _fin, _person, _destinyKey);
         }
         else
         {
-//            Debug.Log("Smple Routing");
+            //            Debug.Log("Smple Routing");
             _cryRoute = new CryRoute(_ini, _fin, _person, _destinyKey, _iniDoor, _finDoor);
         }
     }
+
+    private float time;
+    /// <summary>
+    /// Crated to fake the time of giving a route ready... bz the brain is set tht a router will take a bit
+    /// too finish a route. This is to use it with the existing routes 
+    /// </summary>
+    private void FakeRealRoute()
+    {
+        if (time == 0)
+        {
+            return;
+        }
+
+        if (Time.time > time + 1f)
+        {
+            time = 0;
+            SetTheRoute(tempTheRoute);//this route was defined on WeHaveAnExisitingRoute()
+
+            SetIsRouteReady(true);
+
+        }
+    }
+
+#endregion
 
     public void Update () 
     {
@@ -160,6 +215,9 @@ public class CryRouteManager
             {
                 _isRouteReady = true;
                 _theRoute = _cryRoute.TheRoute;
+
+                //calling here so at least is there already even if has not the inverse Route set 
+                PersonPot.Control.RoutesCache1.AddReplaceRoute(_theRoute);
             }
         }
 
@@ -171,7 +229,13 @@ public class CryRouteManager
             {
                 _isRouteReady = true;
                 _theRoute = _cryBridgeRoute.TheRoute;
+
+                //calling here so at least is there already even if has not the inverse Route set 
+                PersonPot.Control.RoutesCache1.AddReplaceRoute(_theRoute);
             }
         }
+
+        FakeRealRoute();
+
 	}
 }

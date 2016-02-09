@@ -291,6 +291,7 @@ public class Body //: MonoBehaviour //: General
     /// <param name="loadCurrentPoint">Use to load person last aprox position </param>
     void InitWalk(TheRoute route, bool inverse, int loadCurrentPoint = -1 )
     {
+
         DefineAnimation(_currTheRoute);
 
         FindIfAAniIsSaved();
@@ -443,7 +444,7 @@ public class Body //: MonoBehaviour //: General
         }
 
         GameScene.ResetDummyBlue();
-        //PersonPot.Control.RoutesCache1.AddReplaceRoute(_currTheRoute);
+        PersonPot.Control.RoutesCache1.AddReplaceRoute(_currTheRoute);
     }
 
 	///Set the next point on the route
@@ -794,7 +795,7 @@ public class Body //: MonoBehaviour //: General
     {
         if (  _person == null || _routePoins == null || _routePoins.Count == 0){ return; }
 
-        var dist = 0.25f;//.2
+        var dist = 0.9f;//.2 //.25
         var currDist = Vector3.Distance(_person.transform.position, _routePoins[lastRoutePoint].Point);
         //getting close to last point
         if (currDist < dist ) 
@@ -818,7 +819,7 @@ public class Body //: MonoBehaviour //: General
         }
 
         currDist = Vector3.Distance(_person.transform.position, _routePoins[index].Point);
-        if (currDist < dist  ){Show();}
+        if (currDist < 0.01f  ){Show();}
     }
 
     private int oldGameSpeed;//same speed the game is always started at

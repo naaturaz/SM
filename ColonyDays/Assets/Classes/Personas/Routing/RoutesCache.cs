@@ -26,16 +26,14 @@ public class RoutesCache {
     /// <param name="DestinyKey"></param>
     /// <param name="askDateTime"></param>
     /// <returns></returns>
-    public bool ContainANewerRoute(string OriginKey, string DestinyKey, DateTime askDateTime)
+    public bool ContainANewerOrSameRoute(string OriginKey, string DestinyKey, DateTime askDateTime)
     {
         var haveIt = DoWeHaveThatRoute(OriginKey, DestinyKey);
 
-        if (!haveIt 
-            //|| askDateTime == new DateTime()
-            )
+        if (!haveIt)
         {return false;}
 
-        return IsNewer(askDateTime);
+        return IsNewerOrSame(askDateTime);
     }
 
     /// <summary>
@@ -43,7 +41,7 @@ public class RoutesCache {
     /// </summary>
     /// <param name="askDateTime"></param>
     /// <returns></returns>
-    bool IsNewer(DateTime askDateTime)
+    bool IsNewerOrSame(DateTime askDateTime)
     {
         DateTime date1 = _current.DateTime1;
         DateTime date2 = askDateTime;
@@ -51,7 +49,7 @@ public class RoutesCache {
         int result = DateTime.Compare(date1, date2);
 
         // _current.DateTime1 is after 
-        if (result > 0 )
+        if (result > 0 || result == 0 )
         {
             return true;
         }
@@ -94,11 +92,11 @@ public class RoutesCache {
 
     public void AddReplaceRoute(TheRoute theRoute)
     {
-        //if inverse was not set yet not has to be considered
-        if (!IsInverseSet(theRoute))
-        {
-            return;
-        }
+        ////if inverse was not set yet not has to be considered
+        //if (!IsInverseSet(theRoute))
+        //{
+        //    return;
+        //}
 
         //just to set _current
         var haveIt = DoWeHaveThatRoute(theRoute.OriginKey, theRoute.DestinyKey);
