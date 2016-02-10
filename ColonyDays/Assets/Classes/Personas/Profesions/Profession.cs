@@ -389,9 +389,12 @@ public class Profession  {
         SetProdXShift();
 	}
 
+
     void RouterDealear()
     {
-        if (_routerActive)
+        CheckMeInSystem();
+
+        if (_routerActive && PersonPot.Control.OnSystemNow(_person.MyId))
         {
             if (_isRouterBackUsed)
             {
@@ -399,6 +402,24 @@ public class Profession  {
             }   
             else SingleRouterUpdate();
         }
+    }
+
+
+    private float lastTimeIn;
+    void CheckMeInSystem()
+    {
+        if (PersonPot.Control.CanIReRouteNow() && _routerActive && Time.time > lastTimeIn + 10f)
+        {
+            lastTimeIn = Time.time;
+            PersonPot.Control.CheckMeOnSystem(_person.MyId);
+        }
+    }
+
+    /// <summary>
+    /// </summary>
+    void ReRouteDone()
+    {
+        PersonPot.Control.DoneReRoute(_person.MyId);//so another people can use the Spot 
     }
 
     /// <summary>
@@ -416,12 +437,12 @@ public class Profession  {
             _readyToWork = true;
             _routerActive = false;
             Unlock();
+            ReRouteDone();
 
             //foresters reset when done work
             if (ProfDescription!=Job.Forester)
             {
                 ResetDummy();
-                
             }
         }
     }
@@ -440,12 +461,12 @@ public class Profession  {
             _readyToWork = true;
             _routerActive = false;
             Unlock();
+            ReRouteDone();
 
             //foresters reset when done work
             if (ProfDescription != Job.Forester)
             {
                 ResetDummy();
-
             }
         }
     }

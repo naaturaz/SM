@@ -570,6 +570,9 @@ public class PersonController : PersonPot
     
     //the number is not inclusinve so if u put a 3 will alow 2
     private int _systemCap = 2;//2//4//amt of person
+
+    //people waiting to be pass to _onSystemNow
+    List<CheckedIn>  _waitList = new List<CheckedIn>();
     
     /// <summary>
     /// This doesnt need to be SaveLoad. Will give probl
@@ -578,6 +581,12 @@ public class PersonController : PersonPot
     {
         get { return _onSystemNow; }
         set { _onSystemNow = value; }
+    }
+
+    public List<CheckedIn> WaitList
+    {
+        get { return _waitList; }
+        set { _waitList = value; }
     }
 
     public void CheckMeOnSystem(string id)
@@ -618,6 +627,7 @@ public class PersonController : PersonPot
             if (_onSystemNow[i].Id == p)
             {
                 _onSystemNow.RemoveAt(i);
+                TransferFirstInWaitingListToOnSystemNow();
                 return;
             }
         }
@@ -626,6 +636,26 @@ public class PersonController : PersonPot
     internal bool CanIReRouteNow()
     {
         return OnSystemNow1.Count < _systemCap;
+    }
+
+    internal void AddMeToOnSystemWaitList(string p)
+    {
+        WaitList.Add(new CheckedIn(p, Time.time));
+    }
+
+    /// <summary>
+    /// Called when DoneReRoute() is called 
+    /// </summary>
+    void TransferFirstInWaitingListToOnSystemNow()
+    {
+        if (WaitList.Count==0)
+        {
+            return;
+        }
+
+        var t = WaitList[0];
+        WaitList.RemoveAt(0);
+        OnSystemNow1.Add(t);
     }
 
 
@@ -666,6 +696,8 @@ public class PersonController : PersonPot
         }
         All[index].FamilyId = famId;
     }
+
+
 }
 
 public class CheckedIn

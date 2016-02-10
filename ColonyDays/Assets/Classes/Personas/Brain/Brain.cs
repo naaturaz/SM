@@ -845,12 +845,6 @@ public class Brain
             return;
         }
 
-        //so creates the route 
-        //if (!string.IsNullOrEmpty(_person.IsBooked) && MoveToNewHome.RouteToNewHome.CheckPoints.Count == 0)
-        //{
-        //    return;
-        //}
-
         if (goMindState)
         { MindState(); }
     }
@@ -899,6 +893,12 @@ public class Brain
     {
         PersonPot.Control.CheckMeOnSystem(_person.MyId);
         _lastTimeICheckedInOnSystem = Time.time;
+        _waiting = true;
+    }
+
+    void AddMeToSystemWaitingList()
+    {
+        PersonPot.Control.AddMeToOnSystemWaitList(_person.MyId);
         _waiting = true;
     }
 
@@ -1607,7 +1607,8 @@ public class Brain
     public void SetNewHouseFound()
     {
         //so can reroutre and stuff
-        CheckMeOnSystemNow();
+        //CheckMeOnSystemNow();
+        AddMeToSystemWaitingList();
         CheckAround(false,false,false,false,false,true);
     }
 
