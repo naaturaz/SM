@@ -139,7 +139,7 @@ public class Inventory  {
             return;
         }
 
-        if (key.ToString().Contains("Random"))
+        if (key == P.RandomMineOutput || key == P.RandomFoundryOutput)
         {
            //Debug.Log("trace random");
             DealWithRandomOutput(key, amt);
@@ -158,7 +158,7 @@ public class Inventory  {
             SetAmtWithKey(key,amt);
         }
         //UpdateInfo();
-        ResaveOnRegistro();
+        //ResaveOnRegistro();
     }
 
     #region Main Inventory
@@ -246,7 +246,7 @@ public class Inventory  {
             RemoveWithKey(key);
 
             //UpdateInfo();
-            ResaveOnRegistro();
+            //ResaveOnRegistro();
             return t;
         }
         return 0;
@@ -350,20 +350,18 @@ public class Inventory  {
         _inventItems.Clear();
     }
 
+
     /// <summary>
     /// Random is better so people get ramd stuff from Storages
     /// </summary>
     /// <returns></returns>
     public P GiveRandomFood()
     {
-        var listOfFoodPrd = ReturnListOfCatOfProd(PCat.Food);
-
-        if (listOfFoodPrd.Count == 0)
+        if (_foodItems.Count == 0)
         {
             return P.None;
         }
-
-        return listOfFoodPrd[Random.Range(0, listOfFoodPrd.Count)];
+        return _foodItems[Random.Range(0, _foodItems.Count)];
     }
 
 

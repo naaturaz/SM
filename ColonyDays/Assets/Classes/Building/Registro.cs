@@ -493,6 +493,32 @@ public class Registro : MonoBehaviour
     }
 
     /// <summary>
+    /// Will update Propersties on AllRegFile so when is saved is there to be loaded 
+    /// 
+    /// Prop that Update so far:
+    /// BookedHome1
+    /// Instruction
+    /// Families
+    /// Invetory
+    /// PeopleDic
+    /// PositionFilled
+    /// Anchors
+    /// DollarsPay
+    /// Dock1
+    /// </summary>
+    public void ResaveOnRegistro(RegFile regFile, Building build)
+    {
+        regFile.BookedHome1 = build.BookedHome1;
+        regFile.Instruction = build.Instruction;
+        regFile.Familes = build.Families;
+        regFile.Inventory = build.Inventory;
+        regFile.PeopleDict = build.PeopleDict;
+        regFile.Anchors = build.Anchors;
+        regFile.DollarsPay = build.DollarsPay;
+        regFile.Dock1 = build.Dock1;
+    }
+
+    /// <summary>
     /// If the key exist on Dict will add a Zero to the end of the MyId, will check again until it doesnt exist 
     /// </summary>
     General CheckIfOnDict<T>(Dictionary<string, T> onDictionary, General checkP)
@@ -589,5 +615,20 @@ public class Registro : MonoBehaviour
             res.AddRange(AllRegFile[i].Familes);
         }
         return res;
+    }
+
+    /// <summary>
+    /// Created for GC reasons Im not updating the invetory in buildings as changes anymore
+    /// Call when saving a game 
+    /// 
+    /// Will get the info from all buildings and will update it into AllRegFiles only Prop specified in ResaveOnRegistro()
+    /// are being resaved 
+    /// </summary>
+    internal void ResaveAllBuildings()
+    {
+        for (int i = 0; i < AllBuilding.Count; i++)
+        {
+            ResaveOnRegistro(AllRegFile[i], AllBuilding.ElementAt(i).Value);
+        }
     }
 }

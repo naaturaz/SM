@@ -1867,6 +1867,7 @@ public class Brain
         }
     }
 
+    //todo GC
     /// <summary>
     /// I made i diff method for modularity and for be called from Checking on food availabait
     /// in case is diff from wht the 'BuilderPot.Control.FoodSources' is then we need to update

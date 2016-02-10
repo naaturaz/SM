@@ -25,6 +25,7 @@ public class BuildingSaveLoad : BuildingPot
     {
         BuildingControllerData local = PullAllVarFromBuildingController();
 
+        Control.Registro.ResaveAllBuildings();
         BuildingData = new BuildingData(Control.Registro.AllRegFile, local);
         XMLSerie.WriteXMLBuilding(BuildingData);
     }

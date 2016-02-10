@@ -13,7 +13,7 @@ public class ExportImport
     List<ProdSpec> _prodSpecs = new List<ProdSpec>(); 
 
     //craeted for GC reasons
-    Dictionary<P, ProdSpec> _prodSpecsGC = new Dictionary<P, ProdSpec>();
+    Dictionary<P, int> _prodSpecsGC = new Dictionary<P, int>();
 
     public ExportImport()
     {
@@ -31,7 +31,7 @@ public class ExportImport
     {
         for (int i = 0; i < _prodSpecs.Count    ; i++)
         {
-            _prodSpecsGC.Add(_prodSpecs[i].Product, _prodSpecs[i]);
+            _prodSpecsGC.Add(_prodSpecs[i].Product, i);
         }
     }
 
@@ -241,14 +241,14 @@ public class ExportImport
         return _prodSpecs.Find(a => a.Product == prod).Density;
     }
 
+    //todo GC . pass Index of List. map index to Prod while creating the Dict 
     ProdSpec FindProdSpec(P prod)
     {
         if (_prodSpecsGC.ContainsKey(prod))
         {
-            return _prodSpecsGC[prod];
-            
+            var index = _prodSpecsGC[prod];
+            return _prodSpecs[index];
         }
-
         return null;
     }
     

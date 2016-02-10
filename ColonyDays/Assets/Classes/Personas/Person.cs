@@ -529,7 +529,7 @@ public class Person : General
 
     private void NameTransform()
     {
-        transform.name = MyId + "...|" + Age + "|" + Gender;
+        //transform.name = MyId + "...|" + Age + "|" + Gender;
     }
 
     private string BuildRandomName()
@@ -1407,16 +1407,23 @@ public class Person : General
         Eat();
     }
 
+    private float starveNutritionValue = 10f;
     private void Eat()
     {
+        //if is over 30 wont feed .GC
+        if (NutritionLevel > starveNutritionValue + 20)
+        {
+            return;
+        }
+
         P item = Home.Inventory.GiveRandomFood();
         if (item == P.None)
         {
             return;
         }
 
-        float amt = (int)HowMuchINeedToBe100PointsFeed(item);
-        float gotAmt = Home.Inventory.RemoveByWeight(item, amt);
+        //float amt = (int)HowMuchINeedToBe100PointsFeed(item);
+        float gotAmt = Home.Inventory.RemoveByWeight(item, 5);//wil eat 5kg of something for GC
 
         ChangeHappinesBy(0.1);
         Nutrive(gotAmt, item);

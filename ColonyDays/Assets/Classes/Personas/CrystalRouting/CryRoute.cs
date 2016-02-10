@@ -965,11 +965,6 @@ public class CryRoute
         }
     }
 
-    void AddRegionToHistoCrystals(int regionIndx)
-    {
-        _historicCrystals.AddRange(MeshController.CrystalManager1.GiveAllCrystalsInTheseRegionsExcludLinkRects(regionIndx));
-    }
-
     private int count = 0;
     private string _origenKey;
     /// <summary>
