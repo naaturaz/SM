@@ -193,7 +193,7 @@ public class Forester : Profession
             ExecuteNow = false;
 
             ////foresters reset when done work
-            Debug.Log("Foreset reset dummy");
+           //Debug.Log("Foreset reset dummy");
             ResetDummy();
 
             if (_person.Work.CanTakeItOut(_person))

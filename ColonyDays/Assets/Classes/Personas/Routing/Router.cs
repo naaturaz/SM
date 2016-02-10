@@ -318,7 +318,7 @@ public class Router : MonoBehaviour
                 res = true;
                 Program.gameScene.AddToMainScreen("Router point inside building:" + allBuild[i].Key);
 
-                Debug.Log("Router point inside building:" + allBuild[i].Key);
+               //Debug.Log("Router point inside building:" + allBuild[i].Key);
                 //throw new Exception("Router point inside building:" + allBuild[i].Key);
             }
         }
@@ -569,7 +569,7 @@ public class Router : MonoBehaviour
 
     private void RestartRouter()
     {
-        Debug.Log("Router Restarted:" + _person.MyId+"."+_originKey);
+       //Debug.Log("Router Restarted:" + _person.MyId+"."+_originKey);
         GameScene.ScreenMsg = "Router Restarted:" + _person.MyId+"."+_originKey;
         isToPlot = false;
         Init();

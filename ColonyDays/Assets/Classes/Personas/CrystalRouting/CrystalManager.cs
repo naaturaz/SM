@@ -272,7 +272,7 @@ public class CrystalManager  {
 
         AddCrystalToItsRegion(c);
 
-//        Debug.Log("Crys added:" + trail.MyId);
+//       //Debug.Log("Crys added:" + trail.MyId);
         //_siblings.Add(c);
     }
 
@@ -711,7 +711,7 @@ public class CrystalManager  {
                 var lineOnCrys = crystals[i].Lines[j];
                 if (line.IsIntersecting((lineOnCrys)))
                 {
-//                    Debug.Log("Intersected: " + crystals[i].ParentId + " tp: " +crystals[i].Type1);
+//                   //Debug.Log("Intersected: " + crystals[i].ParentId + " tp: " +crystals[i].Type1);
                     Vector3 intersection = U2D.FromV2ToV3(line.FindIntersection(lineOnCrys));
                     //add key to explorer on the CryRoute
                     cryRoute.AddKeyToExplorer(crystals[i], intersection);  
@@ -1024,10 +1024,10 @@ public class CrystalManager  {
         if (_bounds.Count == 0)
         {
             StopLinking(type);
-            Debug.Log("stopped on manager:" + _bounds.Count);
+           //Debug.Log("stopped on manager:" + _bounds.Count);
         }
 
-        Debug.Log("count:" + _bounds.Count);
+       //Debug.Log("count:" + _bounds.Count);
     }
 
 
@@ -1085,7 +1085,7 @@ public class CrystalManager  {
     void Voltas()
     {
         var topVoltas = DefineTopVoltas();
-        Debug.Log("Voltas:"+voltas);
+       //Debug.Log("Voltas:"+voltas);
 
         if (voltas == topVoltas)
         {

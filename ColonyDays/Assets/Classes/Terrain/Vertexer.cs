@@ -70,7 +70,7 @@ public class Vertexer : General//only to use print()
     //Given x and z Build a fake vertex where the terrain hits on Y... 
     public Vector3 BuildVertexWithXandZ(float x, float z)
     {
-//       Debug.Log("BlueRay");
+//      //Debug.Log("BlueRay");
         return new Vector3(x, m.SubDivide.FindYValueOnTerrain(x, z), z);
     }
 

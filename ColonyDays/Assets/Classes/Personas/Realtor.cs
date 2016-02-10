@@ -87,7 +87,7 @@ public class Realtor
     /// <param name="newHome"></param>
       void BookToNewBuild(Person person, Structure newHome)
     {
-        Debug.Log(person.MyId + " BookToNewBuild fID:"+familyID);
+       //Debug.Log(person.MyId + " BookToNewBuild fID:"+familyID);
 
         if (familyID=="Empty")
         {

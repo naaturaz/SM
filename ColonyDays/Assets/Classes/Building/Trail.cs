@@ -299,7 +299,7 @@ public class Trail : Way
 
     public void AddBridgeToRegistro()
     {
-        Debug.Log("!AddBridgeToRegistro()!");
+       //Debug.Log("!AddBridgeToRegistro()!");
 
         var activeBound = GetActiveBound();
 

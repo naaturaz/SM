@@ -224,7 +224,7 @@ public class CamRTSController : CamControl
                 target = centerTarget.transform;
             }
         }
-        //else Debug.Log("Did not Hit Layer 8: Terrain");
+        //else//Debug.Log("Did not Hit Layer 8: Terrain");
     }
 
     public void DestroyCenterTarget()

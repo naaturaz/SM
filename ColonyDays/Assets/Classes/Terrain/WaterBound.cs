@@ -64,7 +64,7 @@ public class WaterBound  {
         Line one = new Line(new Vector2(), new Vector2(0,1) );
         Line two = new Line(new Vector2(2,0), new Vector2(2, 1));
 
-        Debug.Log("Interse:"+one.IsIntersecting(two));
+       //Debug.Log("Interse:"+one.IsIntersecting(two));
     }
 
     /// <summary>
@@ -115,7 +115,7 @@ public class WaterBound  {
 
 
         //RenderMarineBounds();
-        Debug.Log(_marineBounds.Count + " _marineBounds");
+       //Debug.Log(_marineBounds.Count + " _marineBounds");
         //AddMarinePositions();
 
         DefineSeaPath(_marineBounds);

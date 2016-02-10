@@ -101,7 +101,7 @@ public class Structure : StructureParent
     /// </summary>
     public void CancelDemolish()
     {
-        Debug.Log("Cancel Demiolish");
+       //Debug.Log("Cancel Demiolish");
         AddOnRegistro();
         BuildingPot.Control.DispatchManager1.RemoveEvacOrders(MyId);
 
@@ -306,7 +306,7 @@ public class Structure : StructureParent
         if (MyId.Contains("FieldFarm"))
         {
             _farm=new FieldFarm(this);
-            Debug.Log("new farm");
+           //Debug.Log("new farm");
         }
     }
 
@@ -359,8 +359,8 @@ public class Structure : StructureParent
             else
             {
                 //todo notify
-                Debug.Log("People in this house have no where to go. Please build something at least a shack and try" +
-                           " again deleting this building");
+               //Debug.Log("People in this house have no where to go. Please build something at least a shack and try" +
+                         //  " again deleting this building");
                 _isOrderToDestroy = false;
             }
         }

@@ -98,7 +98,7 @@ public class ShipManager
         if (_isToLoadShips==-1)
         {
             _isToLoadShips = 1;
-            Debug.Log("_isToLoadShips tru:");
+           //Debug.Log("_isToLoadShips tru:");
         }
     }
 
@@ -107,7 +107,7 @@ public class ShipManager
         for (int i = 0; i < Ships.Count; i++)
         {
             Ships[i].ReCreateShip();
-            Debug.Log("recreate ship:" + Ships[i].MyId);
+           //Debug.Log("recreate ship:" + Ships[i].MyId);
         }
     }
 }

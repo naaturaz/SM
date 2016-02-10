@@ -1039,7 +1039,7 @@ public class DebugCrystal
         {
             ShowEach(debug[i]);
         }
-        Debug.Log(debug.Count+" debuc ct");
+       //Debug.Log(debug.Count+" debuc ct");
         //shownNow = true;
     }
 

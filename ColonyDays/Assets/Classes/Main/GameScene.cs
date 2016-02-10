@@ -316,7 +316,7 @@ public class GameScene : General {
                 string.IsNullOrEmpty(dummiesSpwnPoint[i].DummyIdSpawner) &&
                 dummiesSpwnPoint[i].LandZone1.Count==0)
             {
-                Debug.Log("return dummy #:"+i);
+               //Debug.Log("return dummy #:"+i);
                 dummiesSpwnPoint[i].name = myIDP + ".Dummy";
                 dummiesSpwnPoint[i].UsedAt = GameTime1.CurrentDate();
                 return dummiesSpwnPoint[i];

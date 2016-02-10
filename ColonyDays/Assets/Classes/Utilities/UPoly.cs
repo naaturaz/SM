@@ -382,7 +382,7 @@ public class UPoly
         }
         else
         {
-            Debug.Log("Mouse Did not Hit Layer 8: Terrain. UPoly.cs");
+           //Debug.Log("Mouse Did not Hit Layer 8: Terrain. UPoly.cs");
         }
         return HitMouseOnTerrain;
     }
@@ -426,7 +426,7 @@ public class UPoly
         }
         else
         {
-            Debug.Log("Mouse Did not Hit any obj UPoly.cs");
+           //Debug.Log("Mouse Did not Hit any obj UPoly.cs");
         }
         return HitMouse;
     }

@@ -126,7 +126,7 @@ public class RouterManager
     private TheRoute tempTheRoute;//will hold the route for a bit until is realeased on Fake()
     private void WeHaveAnExisitingRoute()
     {
-        GameScene.print("We have exisint route ");
+       //GameScene.print("We have exisint route ");
         tempTheRoute = PersonPot.Control.RoutesCache1.GiveMeTheNewerRoute();
 
         time = Time.time;
@@ -247,12 +247,12 @@ public class RouterManager
         //pulling the route out of delta capsule 
         if (_deltaCapsule.FinalRouter.IsRouteReady && _router.TheRoute == null)
         {
-            GameScene.print("Delta Capsule Assignment");
+           //GameScene.print("Delta Capsule Assignment");
             _router = _deltaCapsule.FinalRouter;
         }
         else if (_router == null && _deltaCapsule.DeltaRoutingDone && !_deltaCapsule.FinalRouter.IsRouteReady)
         {
-            GameScene.print("Calling BridgeRouting");
+           //GameScene.print("Calling BridgeRouting");
             BridgeRouting();
         }
     }
@@ -300,7 +300,7 @@ public class RouterManager
     {
         _iAmDeltaRouting = false;
         _iAmBridgeRouting = true;
-        GameScene.print("Bridge Routing init");
+       //GameScene.print("Bridge Routing init");
         _bridgeRouter = new BridgeRouter(_ini, _fin, _person, _routeType);
     }
 

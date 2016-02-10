@@ -74,7 +74,7 @@ public class DeltaCapsule
 
     private void Init()
     {
-        GameScene.print("Init()  DeltaRouting ");
+       //GameScene.print("Init()  DeltaRouting ");
         _finalRouter = new Router();
         _deltaRouter = new DeltaRouter(_iniPos, _finPos, _person);
     }
@@ -165,7 +165,7 @@ public class DeltaCapsule
 
     private void DoneDelta()
     {
-        GameScene.print("Done Delta Routing ");
+       //GameScene.print("Done Delta Routing ");
         DestroyDebuger();
 
         var t = CreateTheRouteObj();
@@ -205,7 +205,7 @@ public class DeltaCapsule
     void RestartDeltaRouter(Vector3 newIni = new Vector3())
     {
         bucketCheckPoints.Clear();
-        GameScene.print("One Recursion on Delta Routimng");
+       //GameScene.print("One Recursion on Delta Routimng");
 
         //will change _iniPos value if newIni was specified
         if (newIni != new Vector3())
@@ -253,7 +253,7 @@ public class DeltaCapsule
         else if (!deltaRouted && _deltaRouter.DeltaRoute.Points.Count == 0 && !_deltaRouter.IsDeltaRoutable())
         {
             DeltaRoutingDone = true;
-            GameScene.print("delta Routing Done for Not routable ");
+           //GameScene.print("delta Routing Done for Not routable ");
         }
 
         if (_router1.IsRouteReady && _router2.IsRouteReady && _router3.IsRouteReady

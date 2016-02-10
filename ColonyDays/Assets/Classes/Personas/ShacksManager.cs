@@ -179,7 +179,7 @@ public static class ShacksManager
 
     static private void Finish()
     {
-        GameScene.print("Shack Manger Finished State:" + State + ".locked:" + PersonPot.Control.Locked);
+       //GameScene.print("Shack Manger Finished State:" + State + ".locked:" + PersonPot.Control.Locked);
 
         if (DidCourseWasChange())
         {
@@ -211,7 +211,7 @@ public static class ShacksManager
     {
         if (Program.gameScene.GameTime1.Year != _lastYearChecked && Program.gameScene.GameTime1.Month1 == 1)
         {
-            Debug.Log("New Year:" + Program.gameScene.GameTime1.Year);
+           //Debug.Log("New Year:" + Program.gameScene.GameTime1.Year);
 
             _isNewYear = true;
             _lastYearChecked = Program.gameScene.GameTime1.Year;
@@ -319,7 +319,7 @@ public static class ShacksManager
     static void RestartManager()
     {
         //throw new Exception("Implement to address if people created while ShackManger was going ");
-        GameScene.print("Shack Manger Restarted,State:" + State);
+       //GameScene.print("Shack Manger Restarted,State:" + State);
         Start(false);
     }
 
@@ -362,7 +362,7 @@ public static class ShacksManager
             return;
         }
 
-        GameScene.print("FemaleAction()");
+       //GameScene.print("FemaleAction()");
         
         Init();
         _adult = FindAdult(H.Female, _homeless);
@@ -414,7 +414,7 @@ public static class ShacksManager
 
     static void PassControlToPersonController()
     {
-        Debug.Log("Control passed to PersonController.cs");
+       //Debug.Log("Control passed to PersonController.cs");
 
         PersonPot.Control.Locked = false;
         State = H.None;
@@ -470,7 +470,7 @@ public static class ShacksManager
             //so it checks at least thru all states , so each State of the Manager can use it at least once 
             if (newYearChecks.Count == 3)
             {
-                Debug.Log("2 States Checked");
+               //Debug.Log("2 States Checked");
                 _isNewYear = false;
                 newYearChecks.Clear();
 

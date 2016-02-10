@@ -137,7 +137,7 @@ public class WheelBarrow : Profession
         //if still null after this 
         if (_sourceBuild == null)
         {
-            Debug.Log("srcBuild null whelbarr:" + _person.MyId + ".orderSrcBld:" + Order1.SourceBuild);
+           //Debug.Log("srcBuild null whelbarr:" + _person.MyId + ".orderSrcBld:" + Order1.SourceBuild);
             _takeABreakNow = true;
             return;
         }
@@ -171,8 +171,8 @@ public class WheelBarrow : Profession
      
             if (_sourceBuild.HasEnoughToCoverOrder(Order1))
             {
-                Debug.Log(_person.MyId+ " Wheel Barr got from:"+Order1.SourceBuild + 
-                    " : " +Order1.Product+".amt:"+Order1.Amount);
+               //Debug.Log(_person.MyId+ " Wheel Barr got from:"+Order1.SourceBuild + 
+                    //" : " +Order1.Product+".amt:"+Order1.Amount);
 
                 _person.ExchangeInvetoryItem(_sourceBuild, _person, Order1.Product, Order1.Amount);
                 _sourceBuild.CheckIfCanBeDestroyNow(Order1.Product);

@@ -43,7 +43,7 @@ public class MoveThruPoints
         {
             if (_location == HPers.MovingToNewHome && value != HPers.Restarting)
             {
-//                Debug.Log("Ret Body Location: "+_person.MyId);
+//               //Debug.Log("Ret Body Location: "+_person.MyId);
             }
 
             _location = value;
@@ -360,7 +360,7 @@ public class MoveThruPoints
         //if (_person.Work != null && _person.Work.HType == H.Dock)
         //{
         //    var t = this;
-        //    Debug.Log("Moved "+ _person.Name + " to:"  + _routePoins[_currentRoutePoint].Point);
+        //   //Debug.Log("Moved "+ _person.Name + " to:"  + _routePoins[_currentRoutePoint].Point);
         //}
 
         _gameObject.transform.position = _routePoins[_currentRoutePoint].Point;
@@ -509,7 +509,7 @@ public class MoveThruPoints
 
         if (_routePoins.Count == 0 || _currentRoutePoint > _routePoins.Count - 1)
         {
-            Debug.Log("Called in body exp");
+           //Debug.Log("Called in body exp");
             var t = this;
         }
 

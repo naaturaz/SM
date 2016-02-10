@@ -139,10 +139,10 @@ public class JobManager
       List<Building> ReturnListType(H hTypeP, Person person)
     {
         List<Building> Re = new List<Building>();
-        for (int i = 0; i < BuildingPot.Control.Registro.AllBuilding.Count; i++)
+        for (int i = 0; i < BuildingPot.Control.Registro.AllRegFile.Count; i++)
         {
-            var key = BuildingPot.Control.Registro.AllBuilding.ElementAt(i).Key;
-            var struc = BuildingPot.Control.Registro.AllBuilding.ElementAt(i).Value;
+            var key = BuildingPot.Control.Registro.AllRegFile[i].MyId;
+            var struc = Brain.GetStructureFromKey(key);
 
             if (struc.HType == hTypeP &&
                 struc.Instruction != H.WillBeDestroy && !person.Brain.BlackList.Contains(key))
@@ -151,7 +151,24 @@ public class JobManager
             }
         }
         return Re;
-    }
+    }  
+    
+    //List<Building> ReturnListType(H hTypeP, Person person)
+    //{
+    //    List<Building> Re = new List<Building>();
+    //    for (int i = 0; i < BuildingPot.Control.Registro.AllBuilding.Count; i++)
+    //    {
+    //        var key = BuildingPot.Control.Registro.AllBuilding.ElementAt(i).Key;
+    //        var struc = BuildingPot.Control.Registro.AllBuilding.ElementAt(i).Value;
+
+    //        if (struc.HType == hTypeP &&
+    //            struc.Instruction != H.WillBeDestroy && !person.Brain.BlackList.Contains(key))
+    //        {
+    //            Re.Add(BuildingPot.Control.Registro.AllBuilding.ElementAt(i).Value);
+    //        }
+    //    }
+    //    return Re;
+    //}
 
 #endregion
 

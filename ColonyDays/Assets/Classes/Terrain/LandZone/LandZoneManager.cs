@@ -47,7 +47,7 @@ public class LandZoneManager
        // _commomLayer = UList.FindVectorsOnSameHeight(m.AllVertexs, yCommon, 0.05f);//0.05f
         _commomLayer = UList.FindVectorsOnSameHeight(m.Vertices.ToList(), yCommon, 0.0001f);//0.05f
 
-        Debug.Log(_commomLayer.Count);
+       //Debug.Log(_commomLayer.Count);
     }
 
 
@@ -66,7 +66,7 @@ public class LandZoneManager
 	    {
 	        addNew = false;
             _current.StartLinking(_commomLayer);
-            Debug.Log("nw: cnt:" + _commomLayer.Count);
+           //Debug.Log("nw: cnt:" + _commomLayer.Count);
 	    }
 	}
 
@@ -143,13 +143,13 @@ public class LandZoneManager
     {
         for (int i = 0; i < _current.LinkRects.Count; i++)
         {
-            //    Debug.Log(_current.LinkRects[i].Name);
+            //   //Debug.Log(_current.LinkRects[i].Name);
             UVisHelp.CreateText(U2D.FromV2ToV3(_current.LinkRects[i].Position), _current.LinkRects[i].Name, 150);
         }
 
         for (int i = 0; i < _landZones.Count; i++)
         {
-            //    Debug.Log(_current.LinkRects[i].Name);
+            //   //Debug.Log(_current.LinkRects[i].Name);
             UVisHelp.CreateText(U2D.FromV2ToV3(_landZones[i].CalcPosition()) + new Vector3(0,15,0), _landZones[i].LandZoneName, 1400);
         }
     }

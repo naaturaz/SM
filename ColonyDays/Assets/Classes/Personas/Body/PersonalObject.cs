@@ -4,6 +4,9 @@ using UnityEngine;
 public class PersonalObject
 {
     private General _current;
+    //as I spawn them Will add it here so can be reuse it for GC pupose
+    private Dictionary<string, General> _allPersonalObjects = new Dictionary<string, General>(); 
+
     private string _currentRoot;
     private string _currentAni;
 
@@ -26,13 +29,9 @@ public class PersonalObject
     /// <param name="person"></param>
     public PersonalObject(Person person)
     {
-
-
         _person = person;
         Init();
     }
-
-
 
     /// <summary>
     /// Used to loading
@@ -65,6 +64,9 @@ public class PersonalObject
 
     public void AddressNewAni(string newAni, bool hide)
     {
+        Hide();//will hide current 
+
+
         _currentAni = newAni;
         SetNewPersonalObject();
         AddressNewCurrentRoot(hide);
@@ -72,17 +74,33 @@ public class PersonalObject
 
     private void AddressNewCurrentRoot(bool hide)
     {
+        //means was used already once . could have this object we are looking for spawnerd 
         if (_current != null)
         {
-            _current.Destroy();
+            _current = null;
         }
+
+        if (_allPersonalObjects.ContainsKey(_currentRoot))
+        {
+            _current = _allPersonalObjects[_currentRoot];
+            CheckIfHide(hide);
+            return;
+        }
+
         if (string.IsNullOrEmpty(_currentRoot))
         {
             return;
         }
+        
         _current = General.Create(_currentRoot, _currentPoint.transform.position, "", _currentPoint.transform);
         _current.transform.rotation = _currentPoint.transform.rotation;
+        _allPersonalObjects.Add(_currentRoot, _current);
 
+        CheckIfHide(hide);
+    }
+
+    void CheckIfHide(bool hide)
+    {
         if (hide)
         {
             Hide();
@@ -143,35 +161,35 @@ public class PersonalObject
 
     internal void Show()
     {
-        if (_current != null && renderer == null)
+        if (_current != null && _current.Renderer1 == null)
         {
             var gO = General.FindGameObjectInHierarchy("Geometry", _current.gameObject);
             if (gO != null)
             {
-                renderer = gO.GetComponent<Renderer>();
+                _current.Renderer1 = gO.GetComponent<Renderer>();
             }
         }
 
-        if (renderer != null)
+        if (_current != null &&  _current.Renderer1 != null)
         {
-            renderer.enabled = true;
+            _current.Renderer1.enabled = true;
         }
     }
 
     internal void Hide()
     {
-        if (_current != null && renderer == null)
+        if (_current != null && _current.Renderer1 == null)
         {
             var gO = General.FindGameObjectInHierarchy("Geometry", _current.gameObject);
             if (gO != null)
             {
-                renderer = gO.GetComponent<Renderer>();
+                _current.Renderer1 = gO.GetComponent<Renderer>();
             }
         }
 
-        if (renderer!=null)
+        if (_current != null && _current.Renderer1 != null)
         {
-            renderer.enabled = false;
+            _current.Renderer1.enabled = false;
         }
     }
 }

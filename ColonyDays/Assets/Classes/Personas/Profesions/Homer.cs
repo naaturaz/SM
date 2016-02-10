@@ -35,7 +35,7 @@ public class Homer : Profession
     private void Init()
     {
         MyFoodSrc = _person.FoodSource;
-//        Debug.Log(_person.MyId + " new Homer");
+//       //Debug.Log(_person.MyId + " new Homer");
 
         FinRoutePoint = DefineFinRoute();
         ProfDescription = Job.Homer;
@@ -84,7 +84,7 @@ public class Homer : Profession
     /// </summary>
     void InitRouteWithFoodSrc()
     {
-//        Debug.Log(_person.MyId+ ".Prev job:" + _person.PrevJob);
+//       //Debug.Log(_person.MyId+ ".Prev job:" + _person.PrevJob);
         IsRouterBackUsed = true;
 
         Structure building = Brain.GetStructureFromKey(_person.PrevOrder.DestinyBuild);
@@ -144,7 +144,7 @@ public class Homer : Profession
             _person.HomeActivities();
             //UVisHelp.CreateText(_person.transform.position, "Home Now");
 
-//          Debug.Log(_person.MyId + " not homer anymore now will be a: " + _person.PrevJob);
+//         //Debug.Log(_person.MyId + " not homer anymore now will be a: " + _person.PrevJob);
 
             if (_person.PrevJob == Job.WheelBarrow || _person.PrevJob == Job.Builder)
             {

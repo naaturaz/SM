@@ -37,7 +37,7 @@ public class QueuesContainer
     {
         if (key.Contains("Bridge"))
         {
-            Debug.Log("Called:"+key);
+           //Debug.Log("Called:"+key);
         }
 
         _newBuildsQueue.AddToQueue(objP, key);

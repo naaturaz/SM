@@ -89,7 +89,7 @@ public class CryRouteManager
 
         if (ini == fin)
         {
-            Debug.Log("Same ini-fin:"+ini.MyId+" . "+person.MyId);
+           //Debug.Log("Same ini-fin:"+ini.MyId+" . "+person.MyId);
         }
 
         ClearOldVars();
@@ -138,7 +138,7 @@ public class CryRouteManager
         {
             throw new Exception("One Routing was stopped bz 1 or more Lanzones were empty"+" oneLandZ:"+_one.LandZone+
             " twoLandZ:"+_two.LandZone);
-            Debug.Log("One Routing was stopped bz 1 or more Lanzones were empty");
+           //Debug.Log("One Routing was stopped bz 1 or more Lanzones were empty");
             return;
         }
 
@@ -159,23 +159,23 @@ public class CryRouteManager
     private TheRoute tempTheRoute;//will hold the route for a bit until is realeased on Fake()
     private void WeHaveAnExisitingRoute()
     {
-       GameScene.print("We have exisint route "+_person.MyId+" o:"+OriginKey + " d:"+DestinyKey + " askT:" +_askDateTime);
+      //GameScene.print("We have exisint route "+_person.MyId+" o:"+OriginKey + " d:"+DestinyKey + " askT:" +_askDateTime);
         tempTheRoute = PersonPot.Control.RoutesCache1.GiveMeTheNewerRoute();
         time = Time.time;
     }
 
     private void WeHaveToCreateTheRoute()
     {
-        GameScene.print("We have to create new route " + _person.MyId + " o:" + OriginKey + " d:" + DestinyKey + " askT:" + _askDateTime);
+       //GameScene.print("We have to create new route " + _person.MyId + " o:" + OriginKey + " d:" + DestinyKey + " askT:" + _askDateTime);
 
         if (_one.LandZone != _two.LandZone)
         {
-            //           Debug.Log("Bridge Routing");
+            //          //Debug.Log("Bridge Routing");
             _cryBridgeRoute = new CryBridgeRoute(_ini, _fin, _person, _destinyKey);
         }
         else
         {
-            //            Debug.Log("Smple Routing");
+            //           //Debug.Log("Smple Routing");
             _cryRoute = new CryRoute(_ini, _fin, _person, _destinyKey, _iniDoor, _finDoor);
         }
     }

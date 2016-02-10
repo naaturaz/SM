@@ -65,7 +65,7 @@ public class Production  {
             return prod;
         }
         
-        Debug.Log("Prod not found: ReturnExactProduct(). pls check");
+       //Debug.Log("Prod not found: ReturnExactProduct(). pls check");
         return null;
     }
 
@@ -83,7 +83,7 @@ public class Production  {
             return prod;
         }
 
-        Debug.Log("Prod not found: ReturnProdInfoWithOutput(). pls check");
+       //Debug.Log("Prod not found: ReturnProdInfoWithOutput(). pls check");
         return null;
     }
 

@@ -8,6 +8,14 @@ using Random = UnityEngine.Random;
 public class General : MonoBehaviour
 {
     #region Field and Properties 
+
+    private Renderer _renderer;
+    public Renderer Renderer1
+    {
+        get { return _renderer; }
+        set { _renderer = value; }
+    }
+
     //Audio Section
     //Player
     protected AudioPlayer _audioPlayer = new AudioPlayer();
@@ -501,14 +509,7 @@ public class General : MonoBehaviour
         set { _inventory = value; }
     }
 
-
-
-
-
-
-
-
-
+    
 
     #region Search GameObj in GameObject until find it
 

@@ -82,7 +82,7 @@ public class Family
 
             if (_kids.Count>0 && value.Count==0)
             {
-                Debug.Log("who is doing this to Kids ");
+               //Debug.Log("who is doing this to Kids ");
             }
 
             _kids = value;
@@ -98,7 +98,7 @@ public class Family
         }
         else
         {
-            Debug.Log("is here already kid:" + newKid);
+           //Debug.Log("is here already kid:" + newKid);
         }
     }
 
@@ -242,7 +242,7 @@ public class Family
 
         adult.transform.parent = BuildingPot.Control.Registro.AllBuilding[_home].transform;
         adult.FamilyId = FamilyId;    
-//        Debug.Log(adult.MyId + " inscribed on " + FamilyId + " as " + debug);
+//       //Debug.Log(adult.MyId + " inscribed on " + FamilyId + " as " + debug);
     }
 
     //tis is if has already a adult we have to try to marry them
@@ -274,7 +274,7 @@ public class Family
 
             AddNewPersonToFamily(newPerson);
 
-//            Debug.Log(inFamily.MyId + " .famId:" + inFamily.FamilyId + " :accepted: " + newPerson.MyId 
+//           //Debug.Log(inFamily.MyId + " .famId:" + inFamily.FamilyId + " :accepted: " + newPerson.MyId 
   //              + " .famId:" + newPerson.FamilyId);
 
             return true;

@@ -460,7 +460,7 @@ public class TerrainSpawnerController : ControllerParent
 
     public void SaveData()
     {
-        Debug.Log("Called SaveData");
+       //Debug.Log("Called SaveData");
 
         spawnedData = new SpawnedData();
         spawnedData.AllSpawnedObj = AllSpawnedDataList;

@@ -199,7 +199,7 @@ public class CryRect
     /// </summary>
     internal void ApplyMinimumSize()
     {
-//      Debug.Log("smaller side: " + ReturnSizeOfSmallerSide());
+//     //Debug.Log("smaller side: " + ReturnSizeOfSmallerSide());
 
         //this is important too other wise some rects that are abt regular size get huge
         //so if the diff is bigger than 10f minimun size doenst need to be applied 

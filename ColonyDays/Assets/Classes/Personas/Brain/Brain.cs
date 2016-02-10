@@ -2096,7 +2096,7 @@ public class Brain
                 !BuildingPot.Control.IsNewChill)
             {
                 PersonController.UnivCounter = -1;
-                GameScene.print("Univ at -1 Done Checking!!!!");
+               //GameScene.print("Univ at -1 Done Checking!!!!");
             }
         }
     }

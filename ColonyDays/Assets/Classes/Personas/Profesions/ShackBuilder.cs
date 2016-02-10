@@ -178,7 +178,7 @@ public class ShackBuilder : Profession
         }
         else
         {
-            GameScene.print("ShackBilder cant find place to establish shack. will Emigrate");
+           //GameScene.print("ShackBilder cant find place to establish shack. will Emigrate");
             _person.Emmigrate();
         }
     }
@@ -281,7 +281,7 @@ public class ShackBuilder : Profession
             //to avoid ShackBuilder infinite Loop on this method once was finished 
             _workerTask = HPers.None;
            
-//            GameScene.print("Done work on ShackBulider:" + _person.MyId);
+//           //GameScene.print("Done work on ShackBulider:" + _person.MyId);
             //_person.Brain.ShackBuilderDone(_constructing);
         }
     }

@@ -40,7 +40,7 @@ public class MajorityAgeReached  {
         _person.transform.parent = null;
         _person.Home = null;
 
-        Debug.Log(_person.MyId + " reached majority");
+       //Debug.Log(_person.MyId + " reached majority");
         PersonPot.Control.RestartControllerForPerson(_person.MyId);
     }
 

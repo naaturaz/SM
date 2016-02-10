@@ -63,7 +63,7 @@ public class Insider : Profession {
             base.Execute();
 
 
-            // GameScene.print("excuting on Insider ");
+            ////GameScene.print("excuting on Insider ");
         }
     }
 }

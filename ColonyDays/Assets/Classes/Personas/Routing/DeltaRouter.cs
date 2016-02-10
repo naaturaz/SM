@@ -254,7 +254,7 @@ public class DeltaRouter
     {
         recurseRoutineNow = false;//so stops the recursion
         //throw new Exception("Not Posible routeing btw points on DeltaRouter");
-        GameScene.print("Not Posible routeing btw points on DeltaRouter");
+       //GameScene.print("Not Posible routeing btw points on DeltaRouter");
     }
 
     //step to move along towards middle and then towards last good position
@@ -273,7 +273,7 @@ public class DeltaRouter
             //out of terrain
             if (!IsOnTerrain(t))
             {
-                Debug.Log("not on terrain Delta DefinePositionsToCheck()");
+               //Debug.Log("not on terrain Delta DefinePositionsToCheck()");
                 break;
             }
             step *= 2f;

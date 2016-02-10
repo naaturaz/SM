@@ -122,7 +122,7 @@ public class CryBridgeRoute
         //todo
         if (bridge == null)
         {
-            Debug.Log("Called with null brdige:" + bridgeId);
+           //Debug.Log("Called with null brdige:" + bridgeId);
             throw new Exception("Fix");
         }
 

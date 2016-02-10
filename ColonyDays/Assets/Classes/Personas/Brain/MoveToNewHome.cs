@@ -254,8 +254,8 @@ public class MoveToNewHome
 
         if (searchedNewHome > 50)
         {
-            Debug.Log("whoGreenMeToBecomeMajor: " +_person.PersonReport.whoGreenMeToBecomeMajor+
-                "."+_person.MyId);
+           //Debug.Log("whoGreenMeToBecomeMajor: " +_person.PersonReport.whoGreenMeToBecomeMajor+
+            //    "."+_person.MyId);
         }
 
         //at 11x , 100 was fine. So I leave it like this 

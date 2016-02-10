@@ -106,7 +106,7 @@ public class Person : General
         {
             if (_work != null && value == null)
             {
-                 Debug.Log("I calling to make work null.."+MyId);
+                //Debug.Log("I calling to make work null.."+MyId);
             }
 
             _work = value;
@@ -295,7 +295,7 @@ public class Person : General
         {
             if (Home!=null && _familyId.Contains(Home.MyId) && !value.Contains(Home.MyId))
             {
-//                Debug.Log(MyId + " Changing from:" + _familyId + " to:" + value + " while on:" + Home.MyId);
+//               //Debug.Log(MyId + " Changing from:" + _familyId + " to:" + value + " while on:" + Home.MyId);
             }
 
             _familyId = value;
@@ -837,7 +837,7 @@ public class Person : General
             Brain.MajorAge.MarkMajorityAgeReached();
             PersonPot.Control.IsAPersonHomeLessNow = MyId;
 
-//            Debug.Log(MyId+" Become major homless now:" );
+//           //Debug.Log(MyId+" Become major homless now:" );
 
 
             AddressIsBooked(place);
@@ -849,7 +849,7 @@ public class Person : General
     {
         if (Home!= null && newPlace == Home)
         {
-   //         Debug.Log("Become major in same place:"+MyId);
+   //        //Debug.Log("Become major in same place:"+MyId);
             //IsBooked = "";
         }
     }
@@ -1393,7 +1393,7 @@ public class Person : General
     internal void Kill()
     {
         var t = PersonPot.Control.All.Find(a => a.MyId == MyId);
-        GameScene.print(MyId+".Killed");
+       //GameScene.print(MyId+".Killed");
         PersonPot.Control.All.Remove(t);
         t.Destroy();
     }
@@ -1718,7 +1718,7 @@ public class Person : General
 
         MoveNewBornToHome(kid);
 
-//        Debug.Log(MyId + " give birth to:" + kid.MyId+". inscribed on:"+FamilyId);
+//       //Debug.Log(MyId + " give birth to:" + kid.MyId+". inscribed on:"+FamilyId);
         kid.DebugBornInfo = FamilyId+".home:"+Home.MyId+".mom:"+MyId;
 
         _lastNewBornYear = _dueYear;
