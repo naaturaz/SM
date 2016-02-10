@@ -135,6 +135,7 @@ public class Structure : StructureParent
     /// </summary>
     public override void FinishPlacingMode(H action)
     {
+
         if (_arrow != null)
         {
             _arrow.Destroy();
@@ -169,6 +170,12 @@ public class Structure : StructureParent
     // Use this for initialization
 	protected void Start () 
     {
+	    if (MyId.Contains("Dummy"))
+	    {
+	        return;
+	    }
+
+
         base.Start();
 
         //print("b4 gen Uni#:" + General.UnivRotationFacer);

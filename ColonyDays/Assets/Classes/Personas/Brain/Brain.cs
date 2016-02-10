@@ -1408,7 +1408,7 @@ public class Brain
     public void CheckConditions()
     {
         MajorAge.CheckIfMajorityRecentlyReached();
-        CheckIfABridgeIUseIsMarked();
+        //CheckIfABridgeIUseIsMarked();
         //CheckOnGenOldKeys();//here just bz it kill the .exe with 250 people if i called in the update()
         MoveToNewHome.CheckOnOldKeysList();
 
@@ -2268,6 +2268,8 @@ public class Brain
 
             HandleNewJobSearch();
             UpdateBlackListing();
+
+            CheckIfABridgeIUseIsMarked();
         }
     }
 
@@ -2357,7 +2359,7 @@ public class Brain
 
     #region Bridges Piece of Mind
 
-    List<TheRoute> brigdesKeyRoutes = new List<TheRoute>();//routes that have a brdige key on it  
+    Dictionary<string,string> brigdesKeyRoutes = new Dictionary<string, string>();//routes that have a brdige key on it  
     /// <summary>
     /// Will be checking so if one Route has a brdige and was marked will Try to black list that building on the route
     /// </summary>
@@ -2367,7 +2369,7 @@ public class Brain
 
         for (int i = 0; i < brigdesKeyRoutes.Count; i++)
         {
-            var bridgeKey = brigdesKeyRoutes[i].BridgeKey;
+            var bridgeKey = brigdesKeyRoutes.ElementAt(i).Value;
 
             if (String.IsNullOrEmpty(bridgeKey))
             { continue; }
@@ -2376,7 +2378,7 @@ public class Brain
 
             if (bridge.Instruction == H.WillBeDestroy)
             {
-                var destinyKey = brigdesKeyRoutes[i].DestinyKey;
+                var destinyKey = brigdesKeyRoutes.ElementAt(i).Key;
                 BridgeMarkedAction(destinyKey, bridgeKey);
             }
         }
@@ -2387,25 +2389,25 @@ public class Brain
     /// </summary>
     private void UpdateBridgeKeyListMarked()
     {
-        if (_workRoute.BridgeKey != "")
+        if (!string.IsNullOrEmpty(_workRoute.BridgeKey) && !string.IsNullOrEmpty(_workRoute.DestinyKey ))
         {
-            brigdesKeyRoutes.Add(_workRoute);
+            brigdesKeyRoutes.Add(_workRoute.DestinyKey, _workRoute.BridgeKey);
         }
-        if (_foodRoute.BridgeKey != "")
+        if (!string.IsNullOrEmpty(_foodRoute.BridgeKey) && !string.IsNullOrEmpty(_foodRoute.DestinyKey))
         {
-            brigdesKeyRoutes.Add(_foodRoute);
+            brigdesKeyRoutes.Add(_foodRoute.DestinyKey,_foodRoute.BridgeKey);
         }
-        if (_idleRoute.BridgeKey != "")
+        if (!string.IsNullOrEmpty(_idleRoute.BridgeKey ) && !string.IsNullOrEmpty(_idleRoute.DestinyKey ))
         {
-            brigdesKeyRoutes.Add(_idleRoute);
+            brigdesKeyRoutes.Add(_idleRoute.DestinyKey, _idleRoute.BridgeKey);
         }
-        if (_religionRoute.BridgeKey != "")
+        if (!string.IsNullOrEmpty(_religionRoute.BridgeKey)  && !string.IsNullOrEmpty(_religionRoute.DestinyKey))
         {
-            brigdesKeyRoutes.Add(_religionRoute);
+            brigdesKeyRoutes.Add(_religionRoute.DestinyKey, _religionRoute.BridgeKey);
         }
-        if (_chillRoute.BridgeKey != "")
+        if (!string.IsNullOrEmpty(_chillRoute.BridgeKey ) && !string.IsNullOrEmpty(_chillRoute.DestinyKey ))
         {
-            brigdesKeyRoutes.Add(_chillRoute);
+            brigdesKeyRoutes.Add(_chillRoute.DestinyKey, _chillRoute.BridgeKey);
         }
     }
 
