@@ -99,7 +99,8 @@ public class ShowAInventory
         {
             if (_inv.InventItems[i]!=null)
             {
-                _allItems.Add(ShowInvetoryItem.Create(_containr.transform, _inv.InventItems[i], ReturnIniPos(i), _invType));
+                _allItems.Add(ShowInvetoryItem.Create(_containr.transform, _inv.InventItems[i], ReturnIniPos(i),this,
+            _invType));
             }
         }
     }
@@ -138,27 +139,32 @@ public class ShowAInventory
         return -3*i;
     }
 
+    private int countMU;
     public void ManualUpdate()
     {
-        if (_allItems.Count != _inv.InventItems.Count)
+        countMU++;
+        if (countMU>45)
         {
-            Destroy();
+            DestroyAll();
             ShowAllItems();
+            countMU = 0;
         }
     }
 
-    public void Destroy()
+    public void DestroyAll()
     {
         for (int i = 0; i < _allItems.Count; i++)
         {
             if (_allItems[i]!=null)
             {
-
                 _allItems[i].Destroy();
+                _allItems.RemoveAt(i);
+                i--;
             }
-
         }
     }
+
+
 
     private int count = 0;
     //so far only called from myForm.cs
@@ -170,5 +176,11 @@ public class ShowAInventory
             ManualUpdateOfAllInvItems();
             count = 0;
         }
+    }
+
+    internal void Destroy(ShowInvetoryItem showInvetoryItem)
+    {
+        _allItems.Remove(showInvetoryItem);
+        showInvetoryItem.Destroy();
     }
 }

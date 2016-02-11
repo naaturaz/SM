@@ -2763,7 +2763,7 @@ public class Building : General, Iinfo
     private Dispatch _dispatch;//dock will have a Dispatch
 
 
-    bool IsDockType()
+    public bool IsDockType()
     {
         if (HType == H.DryDock || HType == H.Supplier || HType == H.Dock)
         {

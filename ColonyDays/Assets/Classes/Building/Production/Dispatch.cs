@@ -701,7 +701,7 @@ public class Dispatch
         //will added to invent and will remove it from ExpImpOrders
         if (maxAmtCanTake > ord.Amount)
         {
-           //Debug.Log("Imported:" + ord.Product + " . " + ord.Amount+" Done" );
+           Debug.Log("Imported:" + ord.Product + " . " + ord.Amount+" Done" );
             Program.gameScene.ExportImport1.Buy(ord.Product, ord.Amount);
 
             dock.Inventory.Add(ord.Product, ord.Amount);
@@ -711,7 +711,7 @@ public class Dispatch
         //so its handled later
         else
         {
-           //Debug.Log("Imported:" + ord.Product + " . " + maxAmtCanTake);
+           Debug.Log("Imported:" + ord.Product + " . " + maxAmtCanTake);
             Program.gameScene.ExportImport1.Buy(ord.Product, maxAmtCanTake);
 
             dock.Inventory.Add(ord.Product, maxAmtCanTake);
@@ -733,7 +733,7 @@ public class Dispatch
 
         if(!dock.Inventory.IsItemOnInv(ord.Product) && !ExpImpOrders.Contains(ord))
         {
-           //Debug.Log("Docker removed the evac order:"+ord.Product);
+           Debug.Log("Docker removed the evac order:"+ord.Product);
             RemoveEvacuationOrder(ord.ID);
             
         }
@@ -777,16 +777,18 @@ public class Dispatch
 
         if (ord.Amount == 0)
         {
-           //Debug.Log("Exported of:" + ord.Product + " done");
+           Debug.Log("Exported of:" + ord.Product + " done");
 
             //Removig from all. Could be in orders or in   RecycledOrders and always in   ExpImpOrders
-            Orders.Remove(ord);
-            RecycledOrders.Remove(ord);
-            ExpImpOrders.Remove(ord);
+            //Orders.Remove(ord);
+            //RecycledOrders.Remove(ord);
+            //ExpImpOrders.Remove(ord);
  
+            RemoveOrderFromAllListByID(ord.ID);
+
             return;
         }
-       //Debug.Log("Exported:" + ord.Product + " . " + amtExpThisTime + ".Still left:" + leftOnOrder);
+       Debug.Log("Exported:" + ord.Product + " . " + amtExpThisTime + ".Still left:" + leftOnOrder);
     }
 
     internal void AddToExpImpOrders(Order order)
@@ -799,7 +801,7 @@ public class Dispatch
         else
         {
             //todo notify
-           //Debug.Log("Will not handle over 10 Export Import orders at the same time . 10 is the max");
+           Debug.Log("Will not handle over 10 Export Import orders at the same time . 10 is the max");
         }
     }
 
@@ -872,6 +874,36 @@ public class Dispatch
             if (_expImpOrders[i].ID == id)
             {
                 _expImpOrders.RemoveAt(i);
+                return;
+            }
+        }
+    }
+
+    void RemoveOrderFromAllListByID(string id)
+    {
+        for (int i = 0; i < Orders.Count; i++)
+        {
+            if (Orders[i].ID == id)
+            {
+                Orders.RemoveAt(i);
+                break;
+            }
+        }
+
+        for (int i = 0; i < RecycledOrders.Count; i++)
+        {
+            if (RecycledOrders[i].ID == id)
+            {
+                RecycledOrders.RemoveAt(i);
+                break;
+            }
+        }
+
+        for (int i = 0; i < ExpImpOrders.Count; i++)
+        {
+            if (ExpImpOrders[i].ID == id)
+            {
+                ExpImpOrders.RemoveAt(i);
                 return;
             }
         }

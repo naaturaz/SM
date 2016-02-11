@@ -83,20 +83,10 @@ public class Docker : Profession
 
     private void PickUpOrder()
     {
-        //_destinyBuild = _sourceBuild;
-
-        //if (_person.Work)
-        //{
-        //    _destinyBuild = null;
-        //    return;
-        //}
-
-
-        //if (_destinyBuild == _sourceBuild)
-        //{
-        //    _destinyBuild = null;
-        //    return;
-        //}
+        if (_person.Work == null || !_person.Work.IsDockType())//bz takes a cycle to person get its new job 
+        {
+            return;
+        }
 
         Order1 = _person.Work.Dispatch1.GiveMeOrder(_person);
         _person.PrevOrder = Order1;

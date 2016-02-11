@@ -38,11 +38,11 @@ public class PersonWindow : GUIElement {
             yield return new WaitForSeconds(0.1f); // wait
 
             //means is showing 
-            //if (transform.position == iniPos)
-            //{
+            if (transform.position == iniPos)
+            {
                 LoadMenu(); 
                 //print("Reloaded");
-            //}
+            }
         }
     }
 
@@ -103,7 +103,7 @@ public class PersonWindow : GUIElement {
         }
         else if (_showAInventory != null && _showAInventory.Inv != _person.Inventory)
         {
-            _showAInventory.Destroy();
+            _showAInventory.DestroyAll();
             _showAInventory = new ShowAInventory(_person.Inventory, gameObject, _inv.transform.localPosition);
         }
         _showAInventory.ManualUpdate();

@@ -62,12 +62,11 @@ public class BuildingWindow : GUIElement {
         StartCoroutine("ThreeSecUpdate");
     }
 
-    private float waitTime = 2;
     private IEnumerator ThreeSecUpdate()
     {
         while (true)
         {
-            yield return new WaitForSeconds(waitTime); // wait
+            yield return new WaitForSeconds(0.1f); // wait
 
             //means is showing 
             if (transform.position == iniPos)
@@ -250,7 +249,7 @@ public class BuildingWindow : GUIElement {
         }
         else if (_showAInventory != null && _showAInventory.Inv != _building.Inventory)
         {
-            _showAInventory.Destroy();
+            _showAInventory.DestroyAll();
             _showAInventory = new ShowAInventory(_building.Inventory, _gaveta.gameObject, _invIniPos.transform.localPosition);
         }
         _showAInventory.ManualUpdate();

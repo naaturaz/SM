@@ -15,6 +15,8 @@ public class ShowInvetoryItem : GUIElement
 
     private string _invType;
 
+    private ShowAInventory _parent;
+
     public InvItem InvItem1
     {
         get { return _invItem; }
@@ -25,6 +27,12 @@ public class ShowInvetoryItem : GUIElement
     {
         get { return _invType; }
         set { _invType = value; }
+    }
+
+    public ShowAInventory Parent
+    {
+        get { return _parent; }
+        set { _parent = value; }
     }
 
     // Use this for initialization
@@ -60,7 +68,8 @@ public class ShowInvetoryItem : GUIElement
         _iconImg.sprite = sp;
     }
 
-    static public ShowInvetoryItem Create(Transform container, InvItem invItem, Vector3 iniPos, string invType="")
+    static public ShowInvetoryItem Create(Transform container, InvItem invItem, Vector3 iniPos, ShowAInventory parent,
+        string invType="")
     {
         ShowInvetoryItem obj = null;
 
@@ -81,6 +90,8 @@ public class ShowInvetoryItem : GUIElement
         obj.transform.parent = container;
         obj.transform.localPosition = iniPos;
 
+
+        obj.Parent = parent;
         obj.InvItem1 = invItem;
         obj.InvType = invType;
 
@@ -93,9 +104,9 @@ public class ShowInvetoryItem : GUIElement
 	void Update ()
 	{
         if (InvItem1 == null)
-	    {
-	        Destroy();
-            return;
+        {
+            Parent.Destroy(this);
+	        return;
 	    }
 
         if (oldAmt != InvItem1.Amount)

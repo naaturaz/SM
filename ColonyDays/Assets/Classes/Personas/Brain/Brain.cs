@@ -101,6 +101,14 @@ public class Brain
     {
         _person.Home = GetStructureFromKey(pF._home);
         _person.Work = GetStructureFromKey(pF._work);
+        
+        oldJob = pF._work;
+        if (string.IsNullOrEmpty(oldJob))
+        {
+            oldJob = "";//so it keeps the logic on  WorkPositionsUpdate()
+        }
+
+
         _person.FoodSource = GetStructureFromKey(pF._foodSource);
         _person.Religion = GetStructureFromKey(pF._religion);
         _person.Chill = GetStructureFromKey(pF._chill);
