@@ -25,25 +25,7 @@ public class PersonWindow : GUIElement {
     void Start()
     {
         InitObj();
-
         Hide();
-
-        StartCoroutine("ThreeSecUpdate");
-    }
-
-    private IEnumerator ThreeSecUpdate()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(0.1f); // wait
-
-            //means is showing 
-            if (transform.position == iniPos)
-            {
-                LoadMenu(); 
-                //print("Reloaded");
-            }
-        }
     }
 
     void InitObj()
@@ -175,9 +157,24 @@ public class PersonWindow : GUIElement {
         return res;
     }
 
+    private int updCount;
     // Update is called once per frame
     void Update()
     {
+        updCount++;
+        //means is showing 
+        if (Vector3.Distance(transform.position, iniPos) < 0.1f)
+        {
+            if (updCount>6)
+            {
+                updCount = 0;
+                LoadMenu();
+                //print("Reloaded");
+            }
+        }
+
+
+
         //if click gen
         if (_genBtnRect.Contains(Input.mousePosition) && Input.GetMouseButtonUp(0))
         {

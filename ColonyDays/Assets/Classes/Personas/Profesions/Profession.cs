@@ -567,7 +567,7 @@ public class Profession
             //_person.Brain.CurrentTask = HPers.None;
             ResetMiniMindState();
         }
-        //for wheelbarrowers alone
+        //for wheelbarrowers alone and dockers
         else if (_person.Body.Location == HPers.WheelBarrow 
             && _workerTask == HPers.DoneAtWheelBarrow && _person.Body.GoingTo == HPers.WheelBarrow)
         {
@@ -588,11 +588,32 @@ public class Profession
         }
     }
 
-   
+
+
+
+    #region New Logic that all go back to closer Empty Storage to drop Load
+
+    bool IsAHomerCreator()
+    {
+        if (ProfDescription == Job.WheelBarrow || ProfDescription == Job.Docker
+            || IsNewHomerCreator())
+        {
+            return true;
+        }
+        return false;
+    }
+
+    bool IsNewHomerCreator()
+    {
+        return ProfDescription == Job.Insider;
+    }
+
+
+#endregion
 
     private void ConvertWheelBarrow()
     {
-        if (ProfDescription != Job.WheelBarrow && ProfDescription != Job.Docker)
+        if (!IsAHomerCreator())
         {
             return;
         }
@@ -610,7 +631,13 @@ public class Profession
     /// </summary>
     private void WheelBarrowDropLoad()
     {
-        if (ProfDescription != Job.WheelBarrow && ProfDescription != Job.Docker)
+        if (!IsAHomerCreator())
+        {
+            return;
+        }
+
+        //they just need to keep going to Final FoodSrc 
+        if (IsNewHomerCreator())
         {
             return;
         }
@@ -647,7 +674,7 @@ public class Profession
         if (_isRouterBackUsed)
         {
             //bz in wheelbarrower the back is use to do the route Source to Destination
-            if (ProfDescription == Job.WheelBarrow || ProfDescription == Job.Docker)
+            if (IsAHomerCreator())
             {
                 _person.Body.WalkRoutine(_routerBack.TheRoute, HPers.WheelBarrow);
                 _workerTask = HPers.DoneAtWheelBarrow;   
@@ -685,6 +712,10 @@ public class Profession
             _person.CreateProfession();
         }     
     }
+
+
+
+
 
     /// <summary>
     /// If Foresetrr has that Still Element blacklisted needs to Recreate Profession
@@ -817,6 +848,11 @@ public class Profession
         }
 
         Produce(instruct, prod);
+
+        if (ReadyToWork)
+        {
+            WorkingNow = true;
+        }
     }
 
     private float amtCarrying;
@@ -875,6 +911,16 @@ public class Profession
         }
  
         _person.ExchangeInvetoryItem(_person, _person.FoodSource, prodCarrying, amtCarrying);
+    }
+
+    public void DropAllMyGoods(Structure st)
+    {
+        if (_person == null || st == null)
+        {
+            return;
+        }
+
+        _person.DropAllInvetoryItems(_person, st);
     }
 
     /// <summary>

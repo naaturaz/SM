@@ -15,7 +15,6 @@ public class Insider : Profession {
     void CreatingNew(Person person)
     {
         ProfDescription = Job.Insider;
-        IsRouterBackUsed = false;
         MyAnimation = "isSummon";
         _person = person;
         Init();
@@ -34,7 +33,16 @@ public class Insider : Profession {
         ResetDummy();
 
         FinRoutePoint = _person.Work.BehindMainDoorPoint;
-        ReadyToWork = true;
+        //ReadyToWork = true;
+
+        _routerActive = true;
+
+        Router1 = new CryRouteManager();
+        Router1.TheRoute = new TheRoute();
+        Router1.IsRouteReady = true;
+
+        IsRouterBackUsed = true;
+        RouterBack = new CryRouteManager(_person.Work, _person.Work.PreferedStorage, _person, HPers.InWorkBack);
     }
 
     public override void Update()
@@ -60,7 +68,14 @@ public class Insider : Profession {
             ExecuteNow = false;
             //do stuff
 
+            _person.Body.Location = HPers.WheelBarrow;
+            _workerTask = HPers.DoneAtWheelBarrow;
+            _person.Body.GoingTo = HPers.WheelBarrow;
+
             base.Execute();
+
+
+
 
 
             ////GameScene.print("excuting on Insider ");

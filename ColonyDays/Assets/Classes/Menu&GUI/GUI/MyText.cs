@@ -29,7 +29,7 @@ public class MyText : MonoBehaviour
         }
         if (name == "Food")
         {
-            thisText.text = GameController.Inventory1.ReturnAmountOnCategory(PCat.Food) + "";
+            thisText.text = GameController.Inventory1.ReturnAmountOnCategory(PCat.Food).ToString("F1");
         }
         //if (name == "Wood")
         //{

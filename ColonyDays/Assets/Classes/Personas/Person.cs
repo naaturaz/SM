@@ -1508,6 +1508,34 @@ public class Person : General
         givenTo.Inventory.Add(product, amtTook);
     }
 
+
+    public void DropAllInvetoryItems(General takenFrom, General givenTo)
+    {
+        //to address when food Src is destroyed when person on its way 
+        if (takenFrom == null)
+        { return; }
+
+        for (int i = 0; i < takenFrom.Inventory.InventItems.Count; i++)
+        {
+            P product = takenFrom.Inventory.InventItems[i].Key;
+            float amt = takenFrom.Inventory.InventItems[i].Amount;
+
+            OneWayInvExchange(takenFrom, givenTo, product, amt);
+        }
+    }
+
+    void OneWayInvExchange(General takenFrom, General givenTo, P product, float amt)
+    {
+        if (product.ToString().Contains("Random"))
+        {
+            DealWithRandom(takenFrom, givenTo, product, amt);
+            return;
+        }
+
+        float amtTook = takenFrom.Inventory.RemoveByWeight(product, amt);
+        givenTo.Inventory.Add(product, amtTook);
+    }
+
     /// <summary>
     /// If the product is random has to actually decomposed and give that to him 
     /// </summary>

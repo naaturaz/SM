@@ -458,6 +458,8 @@ public class Building : General, Iinfo
         InitJobRelated();
 
         StartCoroutine("ThirtySecUpdate");
+
+        DefinePreferedStorage();
     }
 
     #region Current Product
@@ -2039,6 +2041,11 @@ public class Building : General, Iinfo
     #region Production
 
     /// <summary>
+    /// The Prefered storage where this Structue production should be taken to
+    /// </summary>
+    public Structure PreferedStorage { get; set; }
+
+    /// <summary>
     /// Will find out if pass has a val if does will return so. other wise CurrProd
     /// </summary>
     /// <param name="pass"></param>
@@ -2062,7 +2069,7 @@ public class Building : General, Iinfo
         P prodHere = DefineProdHere(prod);
 
         var doIHaveInput = DoBuildHaveRawResources();
-        var hasStorageRoom = DoesStorageHaveCapacity(person);
+        var hasStorageRoom = DoesStorageHaveCapacity();
         var hasThisBuildRoom = DoWeHaveCapacityInThisBuilding();
 
         if (doIHaveInput && (hasStorageRoom || hasThisBuildRoom))
@@ -2159,7 +2166,7 @@ public class Building : General, Iinfo
     /// <returns></returns>
     public bool CanTakeItOut(Person person)
     {
-        return (person.FoodSource != null && DoesStorageHaveCapacity(person));
+        return (person.FoodSource != null && DoesStorageHaveCapacity());
     }
 
     /// <summary>
@@ -2176,9 +2183,36 @@ public class Building : General, Iinfo
     /// Will tell u if a Storage has enoguh capacity to hold this new amt of goods
     /// </summary>
     /// <returns></returns>
-    bool DoesStorageHaveCapacity(Person person)
+    bool DoesStorageHaveCapacity()
     {
-        return person.FoodSource != null && !person.FoodSource.Inventory.IsFull();
+        DefinePreferedStorage();
+
+        return PreferedStorage != null && !PreferedStorage.Inventory.IsFull();
+    }
+
+
+    List<string>oldFoodSrcs= new List<string>(); 
+    /// <summary>
+    /// Define the closest storage that its inventory is not full
+    /// 
+    /// Must be redifined  if new Storage is added to the game 
+    /// </summary>
+    private void DefinePreferedStorage()
+    {
+        if (PreferedStorage == null)
+        {
+            if (BuildingPot.Control.FoodSources.Count>0)
+            {
+                oldFoodSrcs.Clear();
+                PreferedStorage = Brain.GetStructureFromKey(BuildingPot.Control.FoodSources[0]);
+                oldFoodSrcs.AddRange(BuildingPot.Control.FoodSources);
+            }
+        }
+        else if (oldFoodSrcs != BuildingPot.Control.FoodSources)
+        {
+            //search again for the closest 
+
+        }
     }
 
     /// <summary>

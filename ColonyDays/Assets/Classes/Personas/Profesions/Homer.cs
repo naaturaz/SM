@@ -77,7 +77,7 @@ public class Homer : Profession
         else
         {
             throw new Exception("MyFoodSrc cant be null");
-            InitRouteWithOutFoodSrc();
+            //InitRouteWithOutFoodSrc();
         }
     }
 
@@ -95,10 +95,13 @@ public class Homer : Profession
 //       //Debug.Log(_person.MyId+ ".Prev job:" + _person.PrevJob);
         IsRouterBackUsed = true;
 
-        Structure building = Brain.GetStructureFromKey(_person.PrevOrder.DestinyBuild);
+        Structure building = null;
+        if (_person.PrevOrder!=null)
+        {
+            building = Brain.GetStructureFromKey(_person.PrevOrder.DestinyBuild);
+        }
 
-        if (building == null //&& ProfDescription == Job.Docker
-            )
+        if (building == null)
         {
             //exporting will finish at destiny build is null(not sure)
             building = _person.Work;
@@ -109,23 +112,23 @@ public class Homer : Profession
         RouterBack = new CryRouteManager(MyFoodSrc, _person.Home, _person,  HPers.InWork);
     }
 
-    /// <summary>
-    /// Init a Route where from current point poerson goes directly to home
-    /// </summary>
-    void InitRouteWithOutFoodSrc()
-    {
-        if (_person.PrevJob == Job.WheelBarrow)
-        {
-            Structure building = Brain.GetStructureFromKey(_person.PrevOrder.DestinyBuild);
-            Router1 = new CryRouteManager(building, _person.Home, _person);
-          //  Router1 = new RouterManager(building, _person.Home, _person, HPers.InWork);
-        }
-        else
-        {
-            Router1 = new CryRouteManager(dummy, _person.Home, _person );
-         //   Router1 = new RouterManager(dummy, _person.Home, _person, HPers.InWork, false, true);
-        }
-    }
+    ///// <summary>
+    ///// Init a Route where from current point poerson goes directly to home
+    ///// </summary>
+    //void InitRouteWithOutFoodSrc()
+    //{
+    //    if (_person.PrevJob == Job.WheelBarrow)
+    //    {
+    //        Structure building = Brain.GetStructureFromKey(_person.PrevOrder.DestinyBuild);
+    //        Router1 = new CryRouteManager(building, _person.Home, _person);
+    //      //  Router1 = new RouterManager(building, _person.Home, _person, HPers.InWork);
+    //    }
+    //    else
+    //    {
+    //        Router1 = new CryRouteManager(dummy, _person.Home, _person );
+    //     //   Router1 = new RouterManager(dummy, _person.Home, _person, HPers.InWork, false, true);
+    //    }
+    //}
 
     public override void Update()
     {
@@ -146,6 +149,7 @@ public class Homer : Profession
         if (ExecuteNow)
         {
             ExecuteNow = false;
+            DropAllMyGoods(MyFoodSrc);
             _person.GetFood(MyFoodSrc);
         }
     }
