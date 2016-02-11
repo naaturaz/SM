@@ -378,12 +378,18 @@ public class Brain
         //doesnt need anything bz need to execute IdleInHome() Always 
     }
 
+
+    public void SkipWorkForced()
+    {
+        ReadyToGetFood(true);
+    }
+
     void SkipWork()
     {
 
-        if ((ReadyToWork() && _person.Work == null)) //||
-            //and can not take out any prod and the inventory at work is full can skip work 
-            //(!_person.Work.CanTakeItOut(_person) && _person.Work.Inventory.IsFull()))
+        if ((ReadyToWork() && _person.Work == null)// || 
+           // (ReadyToWork() && (_person.ProfessionProp == null|| !_person.ProfessionProp.ReadyToWork))
+            ) 
         {
             ReadyToGetFood(true);
         }
@@ -448,7 +454,7 @@ public class Brain
             _person.Body.Location = HPers.None;
         }
 
-        return CurrentTask == HPers.IdleInHome &&
+        return   CurrentTask == HPers.IdleInHome &&
                (_person.Body.Location == HPers.Home || _person.Body.Location == HPers.None);
     }
 
@@ -528,7 +534,9 @@ public class Brain
 
     void GoWork()
     {
-        if (ReadyToWork() && _routerWork.IsRouteReady && _workRoute.CheckPoints.Count > 0)
+        if (ReadyToWork() && _routerWork.IsRouteReady && _workRoute.CheckPoints.Count > 0 
+            //&& _person.ProfessionProp!=null && _person.ProfessionProp.ReadyToWork
+            )
         {
             _person.Body.WalkRoutine(_workRoute, HPers.Work);
             CurrentTask = HPers.Walking;
@@ -861,6 +869,12 @@ public class Brain
     //u are only waiting if u are checked in ready to reroute
     private bool _waiting;//waiting to reroute 
 
+    public bool Waiting
+    {
+        get { return _waiting; }
+        set { _waiting = value; }
+    }
+
     //last time I got into Checkin for new routes OnSystem
     //here so people when is the one of the first are not getting in all the time 
     private float _lastTimeICheckedInOnSystem;
@@ -919,6 +933,8 @@ public class Brain
             //there is room for me to check now on System
             if (PersonPot.Control.OnSystemNow(_person.MyId) && _waiting)
             {
+                //NewBornStuff();
+
                 //redo routes to see if some change 
                 ReRoutes();
                 ReRouteCallsCounter();
@@ -953,7 +969,7 @@ public class Brain
     void ReRouteCallsCounter()
     {
         _timesCall++;
-        if (_waiting && _timesCall > 60)//20
+        if (_waiting && _timesCall > 65)//20 60
         {
             PersonPot.Control.DoneReRoute(_person.MyId);//so another people can use the Spot 
             _timesCall = 0;
@@ -1609,8 +1625,19 @@ public class Brain
         //so can reroutre and stuff
         //CheckMeOnSystemNow();
         AddMeToSystemWaitingList();
-        CheckAround(false,false,false,false,false,true);
+        CheckAround(false, false, false, false, false, true);
     }
+
+    //void NewBornStuff()
+    //{
+    //    //new borns wont have this set yet 
+    //    if (_isAllSet || !string.IsNullOrEmpty(_person.IsBooked))
+    //    {
+    //        return;
+    //    }
+
+       
+    //}
 
     /// <summary>
     /// This method is the one that will look for new buildings if the respective flag is true 
@@ -2634,6 +2661,11 @@ public class Brain
         set { _partido = value; }
     }
 
+    public int TimesCall
+    {
+        get { return _timesCall; }
+        set { _timesCall = value; }
+    }
 
 
     /// <summary>
@@ -2643,6 +2675,7 @@ public class Brain
     {
         if (Partido && string.IsNullOrEmpty(_person.IsBooked))
         {
+            PersonPot.Control.RemoveMeFromSystem(_person.MyId);
             //people can die anywhere
             if (_person.Home != null)
             {

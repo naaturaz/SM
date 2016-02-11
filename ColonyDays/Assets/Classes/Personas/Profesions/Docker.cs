@@ -42,6 +42,13 @@ public class Docker : Profession
             return;
         }
 
+        //AddMeToWaitListOnSystem();
+        //if (!PersonPot.Control.OnSystemNow(_person.MyId) || _person.Brain._workRoute.CheckPoints.Count == 0)
+        //{
+        //    _takeABreakNow = true;
+        //    return;
+        //}
+
         //so its not using the same order over and over again in case the Dispatch is finding nothing 
         CleanOldVars();
 
@@ -55,6 +62,11 @@ public class Docker : Profession
         //means no Orders avail 
         if (_destinyBuild == null)
         {
+            //will let this guy get out of system  
+            //ReRouteDone();
+            //Skip work then
+            //_person.Brain.SkipWorkForced();
+
             _takeABreakNow = true;
             return;
         }

@@ -62,8 +62,8 @@ public class Farmer : Profession
         {
             ConformInBuildRouteField();
         }
+        ReadyToWork = true;
 
-       
     }
 
     /// <summary>

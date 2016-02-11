@@ -56,6 +56,13 @@ public class WheelBarrow : Profession
             return;
         }
 
+        //AddMeToWaitListOnSystem();
+        //if (!PersonPot.Control.OnSystemNow(_person.MyId))
+        //{
+        //    _takeABreakNow = true;
+        //    return;
+        //}
+
         //so its not using the same order over and over again in case the Dispatch is finding nothing 
         CleanOldVars();
 

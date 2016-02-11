@@ -529,7 +529,7 @@ public class Person : General
 
     private void NameTransform()
     {
-        //transform.name = MyId + "...|" + Age + "|" + Gender;
+        transform.name = MyId + "...|" + Age + "|" + Gender;
     }
 
     private string BuildRandomName()
@@ -775,8 +775,11 @@ public class Person : General
     {
         _age++;
         Body.GrowScaleByYears();
-        NameTransform();//so it reflects the new Age
         
+#if UNITY_EDITOR
+        Debug.Log("Name trans");
+        NameTransform();//so it reflects the new Age
+#endif
     }
 
     void CheckHappiness()
@@ -1741,8 +1744,8 @@ public class Person : General
         {
             spouseLo.Happinnes = 5;
         }
+        PersonPot.Control.RestartControllerForPerson(MyId);
 
-        PersonPot.Control.RestartControllerForPerson(kid.MyId);
     }
 
     /// <summary>

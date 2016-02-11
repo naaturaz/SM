@@ -34,6 +34,14 @@ public class Homer : Profession
 
     private void Init()
     {
+        //AddMeToWaitListOnSystem();
+        //if (!PersonPot.Control.OnSystemNow(_person.MyId))
+        //{
+        //    _takeABreakNow = true;
+        //    return;
+        //}
+
+
         MyFoodSrc = _person.FoodSource;
 //       //Debug.Log(_person.MyId + " new Homer");
 
@@ -121,6 +129,12 @@ public class Homer : Profession
 
     public override void Update()
     {
+        if (_takeABreakNow)
+        {
+            TakeABreak();
+            return;
+        }
+
         base.Update();
         WorkAction(HPers.None);
         Execute();
@@ -183,5 +197,29 @@ public class Homer : Profession
             return false;
         }
         return true;
+    }
+
+
+    private bool _takeABreakNow;
+    private float _breakDuration = 1f;
+    private float startIdleTime;
+    private bool _reInit;
+    /// <summary>
+    /// Used so a person is asking for bridges anchors takes a break and let brdige anchors complete then can 
+    /// work on it
+    /// </summary>
+    void TakeABreak()
+    {
+        if (startIdleTime == 0)
+        { startIdleTime = Time.time; }
+
+        if (Time.time > startIdleTime + _breakDuration)
+        {
+            _takeABreakNow = false;
+            startIdleTime = 0;
+
+            //so it restarted 
+            Init();
+        }
     }
 }

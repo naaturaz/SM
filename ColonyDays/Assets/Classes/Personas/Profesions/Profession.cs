@@ -7,8 +7,8 @@ using UnityEngine;
  * 
  */
 
-public class Profession  {
-
+public class Profession
+{
     protected Person _person;
     protected static float radius = 200f;//20f, how far will go to cut a tree 
 
@@ -392,34 +392,39 @@ public class Profession  {
 
     void RouterDealear()
     {
-        CheckMeInSystem();
-
-        if (_routerActive && PersonPot.Control.OnSystemNow(_person.MyId))
+        if (_routerActive)
         {
             if (_isRouterBackUsed)
             {
                 BackRouterUpdate();
-            }   
+            }
             else SingleRouterUpdate();
         }
     }
 
 
-    private float lastTimeIn;
-    void CheckMeInSystem()
+    void AddMeToWaitListOnSystem()
     {
-        if (PersonPot.Control.CanIReRouteNow() && _routerActive && Time.time > lastTimeIn + 10f)
+        //needs to finish thet route first. then will create this one 
+        if (_person.Brain._workRoute.CheckPoints.Count==0)
         {
-            lastTimeIn = Time.time;
-            PersonPot.Control.CheckMeOnSystem(_person.MyId);
+            return;
         }
+
+        PersonPot.Control.AddMeToOnSystemWaitList(_person.MyId);
     }
 
     /// <summary>
     /// </summary>
     void ReRouteDone()
     {
-        PersonPot.Control.DoneReRoute(_person.MyId);//so another people can use the Spot 
+        //means i didnt added. so i dont need to remove it 
+        if (ProfDescription == Job.Builder || ProfDescription == Job.WheelBarrow || ProfDescription == Job.Homer ||
+            ProfDescription == Job.Docker || ProfDescription == Job.Forester)
+        {
+            Debug.Log("remove from cntrl:" + _person.MyId + " :" + ProfDescription);
+            PersonPot.Control.DoneReRoute(_person.MyId);//so another people can use the Spot 
+        }
     }
 
     /// <summary>
@@ -437,7 +442,7 @@ public class Profession  {
             _readyToWork = true;
             _routerActive = false;
             Unlock();
-            ReRouteDone();
+            //ReRouteDone();
 
             //foresters reset when done work
             if (ProfDescription!=Job.Forester)
@@ -461,7 +466,7 @@ public class Profession  {
             _readyToWork = true;
             _routerActive = false;
             Unlock();
-            ReRouteDone();
+            //ReRouteDone();
 
             //foresters reset when done work
             if (ProfDescription != Job.Forester)
@@ -480,6 +485,14 @@ public class Profession  {
         {
             return;
         }
+
+        if (ProfDescription==Job.Forester)
+        {
+            Debug.Log("Destroy dummy");
+            dummy.Destroy();
+            return;
+        }
+
         //Debug.Log("Reset dummy:" + _person.MyId);
         Program.gameScene.ReturnUsedDummy(dummy);
         dummy = null;

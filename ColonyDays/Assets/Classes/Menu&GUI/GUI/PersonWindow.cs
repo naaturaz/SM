@@ -85,6 +85,8 @@ public class PersonWindow : GUIElement {
         _person.SelectPerson();
     }
 
+    private ShowAInventory _showAInventory;
+
     private void LoadMenu()
     {
         if (_person==null)
@@ -94,6 +96,17 @@ public class PersonWindow : GUIElement {
 
         _title.text = _person.Name + "";
         _info.text = BuildPersonInfo();
+
+        if (_showAInventory == null)
+        {
+            _showAInventory = new ShowAInventory(_person.Inventory, gameObject, _inv.transform.localPosition);
+        }
+        else if (_showAInventory != null && _showAInventory.Inv != _person.Inventory)
+        {
+            _showAInventory.Destroy();
+            _showAInventory = new ShowAInventory(_person.Inventory, gameObject, _inv.transform.localPosition);
+        }
+        _showAInventory.ManualUpdate();
         _inv.text = BuildStringInv(_person);
     }
 
@@ -123,13 +136,28 @@ public class PersonWindow : GUIElement {
         var res = "\n_________________________________\n GoMindState:" + _person.Brain.GoMindState +
                   "\n fdRouteChks:" + _person.Brain._foodRoute.CheckPoints.Count
                   + "\n movToNwHomRtChks:" + _person.Brain.MoveToNewHome.RouteToNewHome.CheckPoints.Count
-                     + "\n CurTask:" + _person.Brain.CurrentTask
-                     + "\n PrevTask:" + _person.Brain.PreviousTask
-                     + "\n IsBooked:" + _person.IsBooked
-                     + "\n Major:" + _person.IsMajor
-                     + "\n BodyLoc:" + _person.Body.Location
-                     + "\n BodyGngTo:" + _person.Body.GoingTo
-                     + "\n BornInfo:" + _person.DebugBornInfo;
+                  + "\n CurTask:" + _person.Brain.CurrentTask
+                  + "\n PrevTask:" + _person.Brain.PreviousTask
+                  + "\n IsBooked:" + _person.IsBooked
+                  + "\n Major:" + _person.IsMajor
+                  + "\n BodyLoc:" + _person.Body.Location
+                  + "\n BodyGngTo:" + _person.Body.GoingTo
+                  + "\n BornInfo:" + _person.DebugBornInfo
+                  + "\n wrkRouteChks:" + _person.Brain._workRoute.CheckPoints.Count
+                  + "\n Profession:" + _person.ProfessionProp
+                  + "\n Waiting:" + _person.Brain.Waiting
+                  + "\n TimesCall:" + _person.Brain.TimesCall
+                  + "\n OnSysNow:" + PersonPot.Control.OnSystemNow(_person.MyId)
+                  + "\n OnWaitNow:" + PersonPot.Control.OnWaitListNow(_person.MyId);
+
+        if (_person.ProfessionProp != null)
+        {
+            res += "\n ProfessionReady:" + _person.ProfessionProp.ReadyToWork;
+        }
+        else
+        {
+            res += "\n ProfessionReady: prof is null" ;
+        }
 
 
         if (_person.FoodSource != null)

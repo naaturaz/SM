@@ -15,8 +15,14 @@ public class JobManager
 
     #region Give Initial Work
 
-    public   Structure GiveWork(Person person)
+    public Structure GiveWork(Person person)
     {
+        ////bz need to finish wht is doing to find new work 
+        //if (PersonPot.Control.IAmOnSystemNow(person.MyId))
+        //{
+        //    return person.Work;
+        //}
+
         var key = DecideBasedOnAge(person);
 
         if (UPerson.IsWorkingAtSchool(person) && !UPerson.IsMajor(person.Age))
@@ -172,8 +178,14 @@ public class JobManager
 
 #endregion
 
-      public Structure ThereIsABetterJob(Person person)
+    public Structure ThereIsABetterJob(Person person)
     {
+        ////bz need to finish wht is doing to find new work 
+        //if (PersonPot.Control.IAmOnSystemNow(person.MyId))
+        //{
+        //    return person.Work;
+        //}
+
         if (person.Home == null)
         {return null;}
 

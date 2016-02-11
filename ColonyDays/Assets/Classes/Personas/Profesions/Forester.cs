@@ -40,6 +40,13 @@ public class Forester : Profession
 
     private void Init()
     {
+        //AddMeToWaitListOnSystem();
+        //if (!PersonPot.Control.OnSystemNow(_person.MyId))
+        //{
+        //    _takeABreakNow = true;
+        //    return;
+        //}
+
         FindSpawnersToMine();
         OrderedSites = OrderSpawners(_spawnersList);
 
@@ -324,7 +331,7 @@ public class Forester : Profession
     }
 
     private bool _takeABreakNow;
-    private float _breakDuration = 5f;
+    private float _breakDuration = 1f;
     private float startIdleTime;
     private bool _reInit;
     /// <summary>

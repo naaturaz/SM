@@ -569,7 +569,7 @@ public class PersonController : PersonPot
     private List<CheckedIn> _onSystemNow = new List<CheckedIn>();
     
     //the number is not inclusinve so if u put a 3 will alow 2
-    private int _systemCap = 2;//2//4//amt of person
+    private int _systemCap = 1;//2//4//amt of person
 
     //people waiting to be pass to _onSystemNow
     List<CheckedIn>  _waitList = new List<CheckedIn>();
@@ -638,9 +638,14 @@ public class PersonController : PersonPot
         return OnSystemNow1.Count < _systemCap;
     }
 
-    internal void AddMeToOnSystemWaitList(string p)
+    internal void AddMeToOnSystemWaitList(string id)
     {
-        WaitList.Add(new CheckedIn(p, Time.time));
+        if (IAmOnSystemNow(id))
+        {
+            return;
+        }
+
+        WaitList.Add(new CheckedIn(id, Time.time));
     }
 
     /// <summary>
@@ -658,6 +663,49 @@ public class PersonController : PersonPot
         OnSystemNow1.Add(t);
     }
 
+    internal bool OnWaitListNow(string id)
+    {
+        var find = WaitList.Find(a => a.Id == id);
+
+        if (find != null)
+        {
+            //was added in already
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// To bne call when person dies 
+    /// </summary>
+    /// <param name="id"></param>
+    public void RemoveMeFromSystem(string id)
+    {
+        var wIndex = WaitList.FindIndex(a => a.Id == id);
+
+        if (wIndex > 0)
+        {
+            WaitList.RemoveAt(wIndex);
+        }
+
+
+        var sIndex = OnSystemNow1.FindIndex(a => a.Id == id);
+
+        if (sIndex > 0)
+        {
+            OnSystemNow1.RemoveAt(sIndex);    
+            
+        }
+    }
+
+    /// <summary>
+    /// Either on WaitList or SystemNow1
+    /// </summary>
+    /// <returns></returns>
+    public bool IAmOnSystemNow(string id)
+    {
+        return OnSystemNow(id) || OnWaitListNow(id);
+    }
 
 #endregion
     
@@ -696,6 +744,8 @@ public class PersonController : PersonPot
         }
         All[index].FamilyId = famId;
     }
+
+
 
 
 }

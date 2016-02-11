@@ -112,6 +112,14 @@ public class Builder : Profession
 
     private void Init()
     {
+        //AddMeToWaitListOnSystem();
+        //if (!PersonPot.Control.OnSystemNow(_person.MyId))
+        //{
+        //    _takeABreakNow = true;
+        //    return;
+        //}
+
+
         //was destroy 
         if (_constructing == null)
         {
