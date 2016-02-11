@@ -1426,7 +1426,7 @@ public class Person : General
         }
 
         //float amt = (int)HowMuchINeedToBe100PointsFeed(item);
-        float gotAmt = Home.Inventory.RemoveByWeight(item, 5);//wil eat 5kg of something for GC
+        float gotAmt = Home.Inventory.RemoveByWeight(item, 8);//wil eat 8kg of something for GC
 
         ChangeHappinesBy(0.1);
         Nutrive(gotAmt, item);
