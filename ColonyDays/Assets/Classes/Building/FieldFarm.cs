@@ -25,12 +25,22 @@ public class FieldFarm : Farm
     //the total produuced 
     private int _kgProduced;
 
+    private PlantSave _plantSave;
+
     public FieldFarm() { }
 
     public FieldFarm(Structure building)
     {
         _building = building;
         _plantType = building.CurrentProd.Product;
+        Init();
+    }
+
+    public FieldFarm(Structure building, PlantSave plant)
+    {
+        _plantSave = plant;
+        _building = building;
+        _plantType = plant.Type;
         Init();
     }
 
@@ -62,14 +72,35 @@ public class FieldFarm : Farm
         }
     }
 
+    private bool createPlantNow;
+    private int creaCount;
     /// <summary>
     /// After we got the Location of the seeds will procede to plant seeds 
     /// </summary>
     private void CreatePlants()
     {
-        for (int i = 0; i < _seedLoc.Count; i++)
+        createPlantNow = true;
+    }
+
+    void CreatePlantsLoop()
+    {
+        if (creaCount < _seedLoc.Count)
         {
-            _plants.Add(Plant.Create(_plantType, _seedLoc[i], _building, this));
+            var plantNew = Plant.Create(_plantType, _seedLoc[creaCount], _building, this);
+
+            if (_plantSave!=null)
+            {
+                plantNew.LoadPlant(_plantSave);
+            }
+
+
+            _plants.Add(plantNew);
+            creaCount++;
+        }
+        else
+        {
+            createPlantNow = false;
+            creaCount = 0;
         }
     }
 
@@ -168,6 +199,11 @@ public class FieldFarm : Farm
         if (_harvestNow)
         {
             HarvestNowTheField();
+        }
+
+        if (createPlantNow)
+        {
+            CreatePlantsLoop();
         }
     }
 

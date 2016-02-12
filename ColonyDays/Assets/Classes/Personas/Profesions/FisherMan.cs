@@ -57,6 +57,8 @@ public class FisherMan : Profession {
     {
         _routerActive = true;
         ConformInBuildRoute();
+
+        RouteBackForNewProfThatUseHomer();
     }
 
     void ConformInBuildRoute()
@@ -73,8 +75,6 @@ public class FisherMan : Profession {
 
         Router1.TheRoute=TheRoute;
         Router1.IsRouteReady = true;
-
-        
     }
 
     List<Vector3> DefineInBuildPoint()
@@ -103,6 +103,7 @@ public class FisherMan : Profession {
         if (ExecuteNow)
         {
             ExecuteNow = false;
+
             base.Execute();
             //do stuff
         }

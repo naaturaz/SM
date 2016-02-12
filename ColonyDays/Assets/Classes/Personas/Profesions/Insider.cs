@@ -35,14 +35,10 @@ public class Insider : Profession {
         FinRoutePoint = _person.Work.BehindMainDoorPoint;
         //ReadyToWork = true;
 
-        _routerActive = true;
 
-        Router1 = new CryRouteManager();
-        Router1.TheRoute = new TheRoute();
-        Router1.IsRouteReady = true;
+        FakeRouter1ForNewProfThatUseHomer();   
 
-        IsRouterBackUsed = true;
-        RouterBack = new CryRouteManager(_person.Work, _person.Work.PreferedStorage, _person, HPers.InWorkBack);
+        RouteBackForNewProfThatUseHomer();
     }
 
     public override void Update()
@@ -68,9 +64,7 @@ public class Insider : Profession {
             ExecuteNow = false;
             //do stuff
 
-            _person.Body.Location = HPers.WheelBarrow;
-            _workerTask = HPers.DoneAtWheelBarrow;
-            _person.Body.GoingTo = HPers.WheelBarrow;
+            FakeWheelBarrowToRouteBack();
 
             base.Execute();
 

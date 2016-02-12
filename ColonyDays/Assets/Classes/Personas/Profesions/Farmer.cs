@@ -62,8 +62,8 @@ public class Farmer : Profession
         {
             ConformInBuildRouteField();
         }
-        ReadyToWork = true;
 
+        RouteBackForNewProfThatUseHomer();
     }
 
     /// <summary>
@@ -125,20 +125,10 @@ public class Farmer : Profession
         if (ExecuteNow)
         {
             ExecuteNow = false;
+            //FakeWheelBarrowToRouteBack();
 
             base.Execute();
-
-            //if (_person.Work == null || !_person.Work.MyId.Contains("Farm"))
-            //{
-            //    return;
-            //}
-
-            //Produce();
         }
     }
 
-    private void Produce()
-    {
-        
-    }
 }

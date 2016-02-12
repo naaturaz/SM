@@ -358,7 +358,7 @@ public class Brain
         //RemoveFromSystemIfNeed();
 
 
-        SkipIdleInHome();
+        //SkipIdleInHome();
         GoIdleInHome();//to clear and check stuff in case is not doing it like when is only working 
 
         SkipWork();
@@ -382,10 +382,10 @@ public class Brain
      * If the person is ready to move to a new state and that building we are going to is not null is all good...
      * But if is null the promt will make Brain vars equal so next condition can be executed . and so on 
      */
-    private void SkipIdleInHome()
-    {
-        //doesnt need anything bz need to execute IdleInHome() Always 
-    }
+    //private void SkipIdleInHome()
+    //{
+    //    //doesnt need anything bz need to execute IdleInHome() Always 
+    //}
 
 
     public void SkipWorkForced()
@@ -543,8 +543,8 @@ public class Brain
 
     void GoWork()
     {
-        if (ReadyToWork() && _routerWork.IsRouteReady && _workRoute.CheckPoints.Count > 0 
-            //&& _person.ProfessionProp!=null && _person.ProfessionProp.ReadyToWork
+        if (ReadyToWork() && _routerWork.IsRouteReady && _workRoute.CheckPoints.Count > 0
+            && _workRoute.DestinyKey == _person.Work.MyId
             )
         {
             _person.Body.WalkRoutine(_workRoute, HPers.Work);

@@ -2608,6 +2608,15 @@ public class Building : General, Iinfo
 
     #region AnimalFarm
 
+    PlantSave _plantSave;
+    /// <summary>
+    /// If is not null a plant was save it in here 
+    /// </summary>
+    public PlantSave PlantSave1
+    {
+        get { return _plantSave; }
+        set { _plantSave = value; }
+    }
 
     List<Animal> _animals = new List<Animal>();//the animals in a AnimalFarm 
 
@@ -2831,6 +2840,33 @@ public class Building : General, Iinfo
         get { return _dock; }
         set { _dock = value; }
     }
+
+    /// <summary>
+    /// Will return a family that is empty and has not ID set yet 
+    /// </summary>
+    /// <returns></returns>
+//internal Family FindVirginFamily()
+//{
+//    if (Families == null)
+//    {
+
+//        return null;
+//    }
+
+//    for (int i = 0; i < Families.Length; i++)
+//    {
+//        if (Families[i].IsFamilyEmpty() && string.IsNullOrEmpty(Families[i].FamilyId))
+//        {
+//            return Families[i];
+//        }
+//    }
+//    return null;
+//}
+
+    #endregion
+
+    #region AnimalFarm
+
 
     #endregion
 

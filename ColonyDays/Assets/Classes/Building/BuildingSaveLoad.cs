@@ -167,6 +167,7 @@ public class BuildingSaveLoad : BuildingPot
         s.DollarsPay = regFile.DollarsPay;
 
         s.Dock1 = regFile.Dock1;
+        s.PlantSave1 = regFile.PlantSave1;
 
         Control.Registro.Structures.Add(s.MyId, Control.CurrentSpawnBuild as Structure);
         Control.Registro.AllBuilding.Add(s.MyId, Control.CurrentSpawnBuild);

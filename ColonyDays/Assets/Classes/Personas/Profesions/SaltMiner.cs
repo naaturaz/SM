@@ -58,6 +58,8 @@ public class SaltMiner : Profession
     {
         _routerActive = true;
         ConformInBuildRoute();
+
+        RouteBackForNewProfThatUseHomer();
     }
 
     void ConformInBuildRoute()
@@ -104,6 +106,7 @@ public class SaltMiner : Profession
         if (ExecuteNow)
         {
             ExecuteNow = false;
+            //FakeWheelBarrowToRouteBack();
             base.Execute();
             //do stuff
         }

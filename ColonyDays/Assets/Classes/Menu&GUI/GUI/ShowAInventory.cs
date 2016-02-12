@@ -136,14 +136,14 @@ public class ShowAInventory
             return -12 * _mainLines * factor;
         }
 
-        return -3*i;
+        return -3.5f*i;
     }
 
     private int countMU;
     public void ManualUpdate()
     {
         countMU++;
-        if (countMU>45)
+        if (countMU>4)
         {
             DestroyAll();
             ShowAllItems();

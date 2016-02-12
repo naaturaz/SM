@@ -169,6 +169,8 @@ public class RegFile  {
     public List<Vector3> Anchors;
     public Dock Dock1;
 
+    public PlantSave PlantSave1;
+
     public RegFile(string myId, H type, Rect dimOnMap, Ca category, Vector3 iniPosition, 
         Inventory InventoryP, 
         List<string> peopleDict,

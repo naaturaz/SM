@@ -488,7 +488,7 @@ public class Profession
 
         if (ProfDescription==Job.Forester)
         {
-            Debug.Log("Destroy dummy");
+            //Debug.Log("Destroy dummy");
             dummy.Destroy();
             return;
         }
@@ -565,7 +565,7 @@ public class Profession
         {
             DoneWork();
             //_person.Brain.CurrentTask = HPers.None;
-            ResetMiniMindState();
+            //ResetMiniMindState();
         }
         //for wheelbarrowers alone and dockers
         else if (_person.Body.Location == HPers.WheelBarrow 
@@ -581,8 +581,16 @@ public class Profession
         _person.Body.GoingTo == HPers.Home)
         {
             //so in brain all gets retarted again . 
-            _person.Brain.CurrentTask = HPers.IdleInHome;
-            _person.Brain.PreviousTask = HPers.IdleSpot;
+            //_person.Brain.CurrentTask = HPers.IdleInHome;
+            //_person.Brain.PreviousTask = HPers.IdleSpot;     
+
+            //_person.Brain.CurrentTask = HPers.None;
+            //_person.Body.Location = HPers.None;
+
+
+            _person.Brain.CurrentTask = HPers.Walking;
+            _person.Body.Location = HPers.Home;
+            _person.Body.GoingTo = HPers.Home;
 
             ResetMiniMindState();
         }
@@ -596,7 +604,7 @@ public class Profession
     bool IsAHomerCreator()
     {
         if (ProfDescription == Job.WheelBarrow || ProfDescription == Job.Docker
-            || IsNewHomerCreator())
+            || IsNewHomerCreator() || IsNewHomerCreatorUsingAnInWorkRoute())
         {
             return true;
         }
@@ -608,6 +616,37 @@ public class Profession
         return ProfDescription == Job.Insider;
     }
 
+    bool IsNewHomerCreatorUsingAnInWorkRoute()
+    {
+        return ProfDescription == Job.Farmer || ProfDescription == Job.SaltMiner || ProfDescription == Job.FisherMan;
+    }
+
+    protected void FakeWheelBarrowToRouteBack()
+    {
+        _person.Body.Location = HPers.WheelBarrow;
+        _workerTask = HPers.DoneAtWheelBarrow;
+        _person.Body.GoingTo = HPers.WheelBarrow;
+    }
+
+    protected void FakeRouter1ForNewProfThatUseHomer()
+    {
+        Router1 = new CryRouteManager();
+        Router1.TheRoute = new TheRoute();
+        Router1.IsRouteReady = true;
+    }
+
+    /// <summary>
+    /// 
+    /// Conditions so it works:
+    /// and Router1 should be all set too. If never use Route1 can call FakeRouter1ForNewProfThatUseHomer()
+    /// must be:  _routerActive = true;
+    /// </summary>
+    protected void RouteBackForNewProfThatUseHomer()
+    {
+        _routerActive = true;
+        IsRouterBackUsed = true;
+        RouterBack = new CryRouteManager(_person.Work, _person.Work.PreferedStorage, _person, HPers.InWorkBack);
+    }
 
 #endregion
 
@@ -631,13 +670,8 @@ public class Profession
     /// </summary>
     private void WheelBarrowDropLoad()
     {
-        if (!IsAHomerCreator())
-        {
-            return;
-        }
-
         //they just need to keep going to Final FoodSrc 
-        if (IsNewHomerCreator())
+        if (ProfDescription != Job.WheelBarrow && ProfDescription != Job.Docker)
         {
             return;
         }
@@ -676,7 +710,15 @@ public class Profession
             //bz in wheelbarrower the back is use to do the route Source to Destination
             if (IsAHomerCreator())
             {
-                _person.Body.WalkRoutine(_routerBack.TheRoute, HPers.WheelBarrow);
+                //they will just use a Homer to go home
+                if (!IsNewHomerCreatorUsingAnInWorkRoute())
+                {
+                    _person.Body.WalkRoutine(_routerBack.TheRoute, HPers.WheelBarrow);
+                }
+                else
+                {
+                    _person.Body.WalkRoutine(_router.TheRoute, HPers.WheelBarrow, true);
+                }
                 _workerTask = HPers.DoneAtWheelBarrow;   
             }
             else  if (ProfDescription == Job.Homer)
@@ -692,8 +734,8 @@ public class Profession
         }
         else
         {
-            _person.Body.WalkRoutine(_router.TheRoute, HPers.Work, true);
-            _workerTask = HPers.DoneAtWork; //so reset the cycle                 
+            //_person.Body.WalkRoutine(_router.TheRoute, HPers.Work, true);
+            //_workerTask = HPers.DoneAtWork; //so reset the cycle                 
         }
     }
 

@@ -418,6 +418,12 @@ public class Root : MonoBehaviour
         productsRoot.Add(P.Bean, "Prefab/Building/Farming/Plants/Bean");
         productsRoot.Add(P.Banana, "Prefab/Building/Farming/Plants/Banana");
         productsRoot.Add(P.Coconut, "Prefab/Building/Farming/Plants/Coconut");
+
+        productsRoot.Add(P.Cotton, "Prefab/Building/Farming/Plants/Cotton");
+        productsRoot.Add(P.Henequen, "Prefab/Building/Farming/Plants/Henequen");
+        productsRoot.Add(P.Potato, "Prefab/Building/Farming/Plants/Potato");
+        productsRoot.Add(P.SugarCane, "Prefab/Building/Farming/Plants/SugarCane");
+        productsRoot.Add(P.TobaccoLeaf, "Prefab/Building/Farming/Plants/TobaccoLeaf");
     }
 
 

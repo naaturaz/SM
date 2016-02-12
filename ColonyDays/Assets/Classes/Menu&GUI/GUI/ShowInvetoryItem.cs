@@ -118,10 +118,10 @@ public class ShowInvetoryItem : GUIElement
 
     string Formatter()
     {
-        //if (InvItem1.Amount < 1)
-        //{
-        //    return "-";
-        //}
+        if (InvItem1.Amount < 0)
+        {
+            return "-";
+        }
 
         //Main GUI
         if (InvType=="Main")

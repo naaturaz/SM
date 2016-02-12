@@ -274,10 +274,16 @@ public class Structure : StructureParent
             }
         }
         
-        if (PositionFixed && _startingStage == H.Done && MyId.Contains("Farm"))
+        if (PositionFixed && _startingStage == H.Done && MyId.Contains("Farm") && CurrentProd!=null)
         {
             CreateFarm();
         }
+
+	    if (PlantSave1!=null && IsLoadingFromFile && _farm==null)
+	    {
+            _farm = new FieldFarm(this, PlantSave1);
+	        
+	    }
 
 	    UpdateFarm();
     }
