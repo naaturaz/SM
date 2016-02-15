@@ -252,8 +252,8 @@ public class StructureParent : Building {
         { materialKey = hType + "." + Ma.matBuildBase; }
 
         obj.StartingStage = startingStage;
-        obj.MaterialKey = materialKey;
-        obj.Geometry.GetComponent<Renderer>().sharedMaterial = Resources.Load(Root.RetMaterialRoot(materialKey)) as Material;
+        //obj.MaterialKey = materialKey;
+        //obj.Geometry.GetComponent<Renderer>().sharedMaterial = Resources.Load(Root.RetMaterialRoot(materialKey)) as Material;
 
         return obj;
     }

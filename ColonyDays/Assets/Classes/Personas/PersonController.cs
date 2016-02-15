@@ -633,9 +633,10 @@ public class PersonController : PersonPot
         }
     }
 
-    internal bool CanIReRouteNow()
+    internal bool CanIReRouteNow(string pMyID)
     {
-        return OnSystemNow1.Count < _systemCap;
+        //bz if he checked then dont need to try to get into system again
+        return OnSystemNow1.Count < _systemCap && !PeopleHasCheck(pMyID);
     }
 
     internal void AddMeToOnSystemWaitList(string id)

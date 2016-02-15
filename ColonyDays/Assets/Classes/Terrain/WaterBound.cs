@@ -56,7 +56,7 @@ public class WaterBound  {
             //create = false;
             FindVertexUnderNeathWater();
         }
-        //DebugLines();
+        DebugLines();
     }
 
     void DebugLines()
@@ -115,7 +115,7 @@ public class WaterBound  {
 
 
         //RenderMarineBounds();
-       //Debug.Log(_marineBounds.Count + " _marineBounds");
+       Debug.Log(_marineBounds.Count + " _marineBounds");
         //AddMarinePositions();
 
         DefineSeaPath(_marineBounds);

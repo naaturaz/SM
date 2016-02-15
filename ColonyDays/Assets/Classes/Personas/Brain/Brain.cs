@@ -262,7 +262,7 @@ public class Brain
 
     Structure CreateDummyIdle()
     {
-        return Program.gameScene.GimeMeUnusedDummy(_person.MyId+".Idle.Dummy");
+        //return Program.gameScene.GimeMeUnusedDummy(_person.MyId+".Idle.Dummy");
 
         dummyIdle = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy,
             container: Program.ClassContainer.transform);
@@ -276,7 +276,7 @@ public class Brain
         {
             return;
         }
-        Program.gameScene.ReturnUsedDummy(dummyIdle);
+        //Program.gameScene.ReturnUsedDummy(dummyIdle);
         dummyIdle = null;
     }
 
@@ -902,7 +902,7 @@ public class Brain
 
         if (IJustSpawn() || IAmHomeNow() || LocatedAtHomeNow())
         {
-            if (PersonPot.Control.CanIReRouteNow() && Time.time > _lastTimeICheckedInOnSystem + _delayToGetIntoOnSystem)
+            if (PersonPot.Control.CanIReRouteNow(_person.MyId) && Time.time > _lastTimeICheckedInOnSystem + _delayToGetIntoOnSystem)
             {
                 CheckMeOnSystemNow();
             }

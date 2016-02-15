@@ -140,12 +140,14 @@ public class ShowAInventory
     }
 
     private int countMU;
+    private bool loaded;
     public void ManualUpdate()
     {
-        countMU++;
-        if (countMU>4)
+        //countMU++;
+        if (!loaded || (_allItems.Count==0 && _inv.InventItems.Count>0))
         {
-            DestroyAll();
+            loaded = true;
+            //DestroyAll();
             ShowAllItems();
             countMU = 0;
         }

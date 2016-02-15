@@ -798,7 +798,7 @@ public class CryRoute
             {
                 _explorer.AddCrystalOfRectC(histoCry);
                 _crystals.Add(histoCry);
-                AddToCrystalsIfNotThere(histoCry.Siblings);
+                AddToCrystalsIfNotThere(histoCry.Siblings());
             }
             loopCount++;
         }

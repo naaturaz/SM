@@ -57,11 +57,12 @@ public class Root : MonoBehaviour
         public static string bayAndMountainSoft = "Prefab/Terrain/Bay_And_Mountain_Soft";
         public static string bayAndMountain1River = "Prefab/Terrain/Bay_And_Mountain_1_River";
         public static string two_Islands_1_River = "Prefab/Terrain/2_Islands_1_River";
+        public static string oneLand2Islands = "Prefab/Terrain/1_Land_2_Islands";
 
 
         public static List<string> BigTerrains = new List<string>()
         {
-            bayAndMountain, bayAndMountainSoft, bayAndMountain1River, two_Islands_1_River
+            bayAndMountain, bayAndMountainSoft, bayAndMountain1River, two_Islands_1_River, oneLand2Islands
         }; 
 
 
@@ -167,14 +168,14 @@ public class Root : MonoBehaviour
     public static string dock = "Prefab/Building/Trade/Dock";
 
     ///Bridges
-    public static string bridgeTrailPart1 = "Prefab/Building/Infrastructure/Bridge_Trail_Piece_1";
-    public static string bridgeTrailPart2 = "Prefab/Building/Infrastructure/Bridge_Trail_Piece_2";
-    public static string bridgeTrailPart3 = "Prefab/Building/Infrastructure/Bridge_Trail_Piece_3";
-    public static string bridgeTrailPart4 = "Prefab/Building/Infrastructure/Bridge_Trail_Piece_4";
+    //public static string bridgeTrailPart1 = "Prefab/Building/Infrastructure/Bridge_Trail_Piece_1";
+    //public static string bridgeTrailPart2 = "Prefab/Building/Infrastructure/Bridge_Trail_Piece_2";
+    //public static string bridgeTrailPart3 = "Prefab/Building/Infrastructure/Bridge_Trail_Piece_3";
+    //public static string bridgeTrailPart4 = "Prefab/Building/Infrastructure/Bridge_Trail_Piece_4";
 
-    public static string bridgeTrailPart10 = "Prefab/Building/Infrastructure/Bridge_Trail_Piece_10";
-    public static string bridgeTrailPart11 = "Prefab/Building/Infrastructure/Bridge_Trail_Piece_11";
-    public static string bridgeTrailPart12 = "Prefab/Building/Infrastructure/Bridge_Trail_Piece_12";
+    //public static string bridgeTrailPart10 = "Prefab/Building/Infrastructure/Bridge_Trail_Piece_10";
+    //public static string bridgeTrailPart11 = "Prefab/Building/Infrastructure/Bridge_Trail_Piece_11";
+    //public static string bridgeTrailPart12 = "Prefab/Building/Infrastructure/Bridge_Trail_Piece_12";
 
     ///Dummy buidling ......use to be thrown a Raycast by Router.cs
     public static string dummyBuild = "Prefab/Building/DummyBuild";

@@ -78,7 +78,7 @@ public class QueuesContainer
         {
             _peopleChecked.Add(personMyID);
 
-            if (_peopleChecked.Count == PersonPot.Control.All.Count)
+            if (_peopleChecked.Count >= PersonPot.Control.All.Count)
             { ClearAllQueues();}
         }
         return onNewB || onDesB;

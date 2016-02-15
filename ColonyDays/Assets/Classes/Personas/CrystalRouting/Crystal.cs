@@ -111,22 +111,10 @@ public class Crystal
         set { _calcWeight = value; }
     }
 
-    public float Sine
-    {
-        get { return _sine; }
-        set { _sine = value; }
-    }
-
     public bool IsDoor
     {
         get { return _isDoor; }
         set { _isDoor = value; }
-    }
-
-    public string Info
-    {
-        get { return _info; }
-        set { _info = value; }
     }
 
     /// <summary>
@@ -146,11 +134,10 @@ public class Crystal
     /// dor or entry points of brdiges are not consiedred siblings only the poly crystals 
     /// </summary>
     /// <returns></returns>
-    public List<Crystal> Siblings
+    public List<Crystal> Siblings()
     {
-        get { return _siblings; }
+        return _siblings; 
     }
-
 
 
 
@@ -179,7 +166,7 @@ public class Crystal
     {
         if (_type == H.LinkRect)
         {
-            _maxAmtLines = 15;
+            _maxAmtLines = 20;//15
         }
         if (_type == H.LandZone)
         {

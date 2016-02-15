@@ -81,12 +81,7 @@ public class Homer : Profession
         }
     }
 
-    Structure CreateDummy()
-    {
-
-        return Program.gameScene.GimeMeUnusedDummy(ProfDescription + ".Dummy." + _person.PrevJob+"." + _person.Home);
-    }
-
+ 
     /// <summary>
     /// Init a route that person will go to FoodSrc and then to Home 
     /// </summary>

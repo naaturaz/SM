@@ -245,19 +245,19 @@ public class Bridge : Trail
             string root = "";
             if (partsP[i] == 1)
             {
-                root = Root.bridgeTrailPart1;
+                root = ReturnBridgePartRoot(partsP[i]);
             }
             else if (partsP[i] == 2) 
             {
-               root = Root.bridgeTrailPart2;
+                root = ReturnBridgePartRoot(partsP[i]);
             }
             else if (partsP[i] == 3)
             {
-                root = Root.bridgeTrailPart3;
+                root = ReturnBridgePartRoot(partsP[i]);
             }
             else if (partsP[i] == 4)
             {
-                root = Root.bridgeTrailPart4;
+                root = ReturnBridgePartRoot(partsP[i]);
             }
 
             sP = StructureParent.CreateStructureParent(root, iniPos[i], BridgeUnit(), container: containerP,
@@ -284,19 +284,19 @@ public class Bridge : Trail
             string root = "";
             if (PartsOnAir[loopCounter] == 1)
             {
-                root = Root.bridgeTrailPart1;
+                root = ReturnBridgePartRoot(PartsOnAir[loopCounter]);
             }
             else if (PartsOnAir[loopCounter] == 2)
             {
-                root = Root.bridgeTrailPart2;
+                root = ReturnBridgePartRoot(PartsOnAir[loopCounter]);
             }
             else if (PartsOnAir[loopCounter] == 3)
             {
-                root = Root.bridgeTrailPart3;
+                root = ReturnBridgePartRoot(PartsOnAir[loopCounter]);
             }
             else if (PartsOnAir[loopCounter] == 4)
             {
-                root = Root.bridgeTrailPart4;
+                root = ReturnBridgePartRoot(PartsOnAir[loopCounter]);
             }
 
             sP = StructureParent.CreateStructureParent(root, PlanesOnAirPos[loopCounter], BridgeUnit(),
@@ -351,18 +351,18 @@ public class Bridge : Trail
         {
             if (partsP[i] == 10)
             {
-                g = StructureParent.CreateStructureParent(Root.bridgeTrailPart12, iniPos[i], BridgeUnit(), container: containerP,
+                g = StructureParent.CreateStructureParent(ReturnBridgePartRoot(partsP[i]), iniPos[i], BridgeUnit(), container: containerP,
                     startingStage: StartingStageForPieces);
                 g.transform.Rotate(new Vector3(0, 180, 0));
             }
             else if (partsP[i] == 11)
             {
-                g = StructureParent.CreateStructureParent(Root.bridgeTrailPart11, iniPos[i], BridgeUnit(), container: containerP,
+                g = StructureParent.CreateStructureParent(ReturnBridgePartRoot(partsP[i]), iniPos[i], BridgeUnit(), container: containerP,
                     startingStage: StartingStageForPieces);
             }
             else if (partsP[i] == 12)
             {
-                g = StructureParent.CreateStructureParent(Root.bridgeTrailPart12, iniPos[i], BridgeUnit(), container: containerP,
+                g = StructureParent.CreateStructureParent(ReturnBridgePartRoot(partsP[i]), iniPos[i], BridgeUnit(), container: containerP,
                     startingStage: StartingStageForPieces);
             }
 
@@ -385,20 +385,20 @@ public class Bridge : Trail
         {
             if (PartsOnSoil[loopCounter] == 10)
             {
-                g = StructureParent.CreateStructureParent(Root.bridgeTrailPart12, PlanesOnSoil[loopCounter],
+                g = StructureParent.CreateStructureParent(ReturnBridgePartRoot(PartsOnSoil[loopCounter]), PlanesOnSoil[loopCounter],
                     BridgeUnit(), container: transform,
                     startingStage: StartingStageForPieces);
                 g.transform.Rotate(new Vector3(0, 180, 0));
             }
             else if (PartsOnSoil[loopCounter] == 11)
             {
-                g = StructureParent.CreateStructureParent(Root.bridgeTrailPart11, PlanesOnSoil[loopCounter],
+                g = StructureParent.CreateStructureParent(ReturnBridgePartRoot(PartsOnSoil[loopCounter]), PlanesOnSoil[loopCounter],
                     BridgeUnit(), container: transform,
                     startingStage: StartingStageForPieces);
             }
             else if (PartsOnSoil[loopCounter] == 12)
             {
-                g = StructureParent.CreateStructureParent(Root.bridgeTrailPart12, PlanesOnSoil[loopCounter],
+                g = StructureParent.CreateStructureParent(ReturnBridgePartRoot(PartsOnSoil[loopCounter]), PlanesOnSoil[loopCounter],
                     BridgeUnit(),
                     container: transform,
                     startingStage: StartingStageForPieces);
@@ -417,6 +417,19 @@ public class Bridge : Trail
             createSoilPartsNow = false;
             loopCounter = 0;
         }
+    }
+
+    string ReturnBridgePartRoot(int which)
+    {
+        string base1 = "Prefab/Building/Infrastructure/";
+
+        //for the stone brdige 
+        if ((HType.ToString().Contains("Road")))
+        {
+            base1 += "Stone/";
+        }
+        base1 += "Bridge_Trail_Piece_" + which;
+        return base1;
     }
 
     /// <summary>

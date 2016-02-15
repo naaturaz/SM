@@ -27,7 +27,6 @@ public class BridgeManager
         }
     }
 
-
     /// <summary>
     /// Depending on the amount of landZones on this Terrain will create the types:
     /// 
@@ -60,6 +59,11 @@ public class BridgeManager
         }
         else if (landZones.Count > 3)
         {
+            for (int i = 0; i < landZones.Count     ; i++)
+            {
+                Debug.Log("landZones:"+i+"."+landZones[i].LandZoneName);
+            }
+
             throw new Exception("Game only support a Max of 3 LandZones ");
         }
     }

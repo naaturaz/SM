@@ -214,11 +214,7 @@ public class Builder : Profession
         }
     }
 
-    Structure CreateDummy()
-    {
-        //added the finROute to name bz it could be different in a same building 
-        return Program.gameScene.GimeMeUnusedDummy(_constructing.MyId+".Dummy."+FinRoutePoint);
-    }
+
 
     Building FindBestToBuild()
     {

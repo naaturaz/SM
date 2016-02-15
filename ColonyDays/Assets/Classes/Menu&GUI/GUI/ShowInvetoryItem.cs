@@ -103,7 +103,7 @@ public class ShowInvetoryItem : GUIElement
 	// Update is called once per frame
 	void Update ()
 	{
-        if (InvItem1 == null)
+        if (InvItem1 == null || (InvItem1.Amount <= 0 && string.IsNullOrEmpty(InvType)))
         {
             Parent.Destroy(this);
 	        return;

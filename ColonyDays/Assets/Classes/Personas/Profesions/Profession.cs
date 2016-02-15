@@ -373,6 +373,15 @@ public class Profession
         //}
     }
 
+    protected Structure CreateDummy()
+    {
+        //added the finROute to name bz it could be different in a same building 
+        //return Program.gameScene.GimeMeUnusedDummy(_constructing.MyId+".Dummy."+FinRoutePoint);
+
+        return (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy,
+           container: Program.ClassContainer.transform);
+    }
+
     /// <summary>
     /// This needs to be called from every child and to work must be called too from Person.Update()
     /// </summary>

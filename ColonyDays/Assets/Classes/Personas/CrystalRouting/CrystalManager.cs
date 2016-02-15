@@ -495,7 +495,7 @@ public class CrystalManager  {
 
 
     
-    Dictionary<string, List<int>> SurroundIndRegGC = new Dictionary<string, List<int>>();
+    //Dictionary<string, List<int>> SurroundIndRegGC = new Dictionary<string, List<int>>();
     /// <summary>
     /// Given the current index will look for the other 8 blocks tht surrounding him 
     /// 
@@ -505,10 +505,10 @@ public class CrystalManager  {
     /// <returns></returns>
     List<int> ReturnCurrentSurroundIndexRegions(int curr, int muchTiles)
     {
-        if (SurroundIndRegGC.ContainsKey(curr + "." + muchTiles))
-        {
-            return SurroundIndRegGC[curr + "." + muchTiles];
-        }
+        //if (SurroundIndRegGC.ContainsKey(curr + "." + muchTiles))
+        //{
+        //    return SurroundIndRegGC[curr + "." + muchTiles];
+        //}
 
         List<int> re = new List<int>(){curr};
         List<int> tem = new List<int>() { curr };
@@ -538,7 +538,7 @@ public class CrystalManager  {
                 i--;
             }
         }
-        SurroundIndRegGC.Add(curr+"."+muchTiles, re);
+        //SurroundIndRegGC.Add(curr+"."+muchTiles, re);
         return re;
     }
 
@@ -814,13 +814,13 @@ public class CrystalManager  {
 
 
 
-    Dictionary<List<int> ,List<Crystal> > terraCrystalRegGC = new Dictionary<List<int>, List<Crystal>>();
+    //Dictionary<List<int> ,List<Crystal> > terraCrystalRegGC = new Dictionary<List<int>, List<Crystal>>();
     List<Crystal> GiveAllTerraCrystalsInTheseRegions(List<int> regions)
     {
-        if (terraCrystalRegGC.ContainsKey(regions))
-        {
-            return terraCrystalRegGC[regions];
-        }
+        //if (terraCrystalRegGC.ContainsKey(regions))
+        //{
+        //    return terraCrystalRegGC[regions];
+        //}
 
         List<Crystal>res = new List<Crystal>();
         for (int i = 0; i < regions.Count; i++)
@@ -828,7 +828,7 @@ public class CrystalManager  {
             var index = regions[i];
             res.AddRange(CrystalRegions[index].TerraCrystals);
         }
-        terraCrystalRegGC.Add(regions,res);
+        //terraCrystalRegGC.Add(regions,res);
         return res;
     }
 
@@ -963,6 +963,7 @@ public class CrystalManager  {
 
     public void StopLinking(H type)
     {
+        Debug.Log("StopLinking t:"+type);
         linkNow = false;
         Crystal.ResetAccumNumbers();
         CleanBoundsList();
@@ -978,6 +979,9 @@ public class CrystalManager  {
             m.MeshController.LandZoneManager1.Create();
 
             Save();
+
+            //m.MeshController.WaterBound1.Create();
+
         }
         else if (type==H.LinkRect)
         {
@@ -1099,9 +1103,9 @@ public class CrystalManager  {
     {
         if (_bounds[0].Type1 == H.LandZone)
         {
-            return 7;
+            return 14;//7
         }
-        return 1;
+        return 1;//1
     }
 
     /// <summary>
@@ -1257,13 +1261,13 @@ public class CrystalManager  {
         return res;
     }
 
-    Dictionary<List<int>, string> regionsLandZoGC = new Dictionary<List<int>, string>(); 
+    //Dictionary<List<int>, string> regionsLandZoGC = new Dictionary<List<int>, string>(); 
     string ReturnRegionsLandZones(List<int> regions)
     {
-        if (regionsLandZoGC.ContainsKey(regions))
-        {
-            return regionsLandZoGC[regions];
-        }
+        //if (regionsLandZoGC.ContainsKey(regions))
+        //{
+        //    return regionsLandZoGC[regions];
+        //}
 
         var res="";
         List<string> lis = new List<string>();
@@ -1285,7 +1289,7 @@ public class CrystalManager  {
             res = lis[0];
         }
         
-        regionsLandZoGC.Add(regions,res);
+        //regionsLandZoGC.Add(regions,res);
         return res;
     }
 
