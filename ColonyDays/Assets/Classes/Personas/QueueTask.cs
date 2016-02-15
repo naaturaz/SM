@@ -15,7 +15,7 @@ public class QueueTask : IComparable {
 
   
 
-    internal void AddToQueue(List<Vector3> objP, string key)
+    internal void AddToQueue(List<Vector3> objP, string key, string typeP)
     {
         //Building can be only once on queus
         var ele = _elements.Find(a => a.Key == key);
@@ -25,7 +25,7 @@ public class QueueTask : IComparable {
             return;
         }
 
-        _elements.Add(new QueueElement(objP, key));
+        _elements.Add(new QueueElement(objP, key, typeP));
     }
     
     public bool Contains(Rect other, int index)
@@ -35,13 +35,6 @@ public class QueueTask : IComparable {
 
     bool IntersectMyRouteArea(Rect other, int index)
     {
-        //bool isLi3V = Elements is List<List<Vector3>>;
-        //if (!isLi3V)
-        //{
-        //    throw new NotImplementedException();
-        //    return false;
-        //}
-
         List<Vector3> e = Elements[index].Poly;
 
         //means doesnt have Anchors set.. for ex Ways like road
@@ -72,6 +65,8 @@ public class QueueElement
 
     private string _key;
 
+    private string _type;
+
     //people that has checked this Element
     //when all had u can proceed to be used to Greenlight or destryo
     List<string> _personChecked = new List<string>(); 
@@ -82,8 +77,9 @@ public class QueueElement
         set { _wasUsedToGreenLightOrDestroy = value; }
     }
 
-    public QueueElement(List<Vector3> eList, string key)
+    public QueueElement(List<Vector3> eList, string key, string type)
     {
+        _type = type;
         _key = key;
         Poly = eList;
         DateTime1=DateTime.Now;
@@ -103,11 +99,30 @@ public class QueueElement
         set { _personChecked = value; }
     }
 
-    internal void CheckPersonIn(string personID)
+    /// <summary>
+    /// It says if belongs to old or new List
+    /// </summary>
+    public string Type1
+    {
+        get { return _type; }
+        set { _type = value; }
+    }
+
+    /// <summary>
+    /// Will return true if person took Element out of Queue 
+    /// </summary>
+    /// <param name="personID"></param>
+    /// <returns></returns>
+    public void CheckPersonIn(string personID)
     {
         if (!_personChecked.Contains(personID))
         {
             _personChecked.Add(personID);
+        }
+
+        if (IsCheckedByAll() && !WasUsedToGreenLightOrDestroy)
+        {
+            PersonPot.Control.Queues.IWasCheckedByAllPeople(this);
         }
     }
 

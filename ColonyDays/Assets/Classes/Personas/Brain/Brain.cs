@@ -749,7 +749,7 @@ public class Brain
     #endregion
 
     private float startIdleTime;
-    private float _idleTime = 0.5f;
+    private float _idleTime = 4.5f;//.5
     private bool _isIdleHomeNow;//will tell if person is at home idleing now 
 
     //says if we ask for new routes. Created to stop the goMindState until the new routes are finished
@@ -789,7 +789,7 @@ public class Brain
     {
         CurrentTask = nextTask;
         startIdleTime = 0;
-        _idleTime = 0.5f;
+        _idleTime = 4.5f;//.5
         GoMindState = true;
         _isIdleHomeNow = false;
     }
@@ -914,6 +914,9 @@ public class Brain
     /// </summary>
     public void CheckMeOnSystemNow()
     {
+        PersonPot.Control.CheckPeopleIn(_person.MyId);
+
+
         PersonPot.Control.CheckMeOnSystem(_person.MyId);
         _lastTimeICheckedInOnSystem = Time.time;
         _waiting = true;
@@ -921,6 +924,9 @@ public class Brain
 
     void AddMeToSystemWaitingList()
     {
+        PersonPot.Control.CheckPeopleIn(_person.MyId);
+
+
         PersonPot.Control.AddMeToOnSystemWaitList(_person.MyId);
         _waiting = true;
     }
@@ -1450,7 +1456,7 @@ public class Brain
             && (IAmHomeNow() || IJustSpawn())
             )
         {
-            PersonPot.Control.CheckPeopleIn(_person.MyId);
+            //PersonPot.Control.CheckPeopleIn(_person.MyId);
 
             CheckAround(BuildingPot.Control.IsNewHouseSpace, BuildingPot.Control.AreNewWorkPos,
                 BuildingPot.Control.IsfoodSourceChange, BuildingPot.Control.IsNewReligion,

@@ -301,6 +301,17 @@ public class BuildersManager
             }
         }
     }
+
+    internal void AddGreenLightKeys(QueueElement qEle)
+    {
+        if (qEle.WasUsedToGreenLightOrDestroy)
+        {
+            return;
+        }
+
+        _passedQueue.Add(qEle.Key);
+        qEle.WasUsedToGreenLightOrDestroy = true;
+    }
 }
 
 public class Construction

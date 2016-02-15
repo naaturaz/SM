@@ -40,7 +40,7 @@ public class QueuesContainer
            //Debug.Log("Called:"+key);
         }
 
-        _newBuildsQueue.AddToQueue(objP, key);
+        _newBuildsQueue.AddToQueue(objP, key, "new");
         RestartPeopleChecked();
     }
 	
@@ -49,7 +49,7 @@ public class QueuesContainer
     /// </summary>	
     public void AddToDestroyBuildsQueue(List<Vector3> objP, string key)
     {
-        _destroyBuildsQueue.AddToQueue(objP, key);
+        _destroyBuildsQueue.AddToQueue(objP, key, "old");
         RestartPeopleChecked();
     }
 
@@ -114,6 +114,21 @@ public class QueuesContainer
         _peopleChecked.Clear();
     }
 
+    public void IWasCheckedByAllPeople(QueueElement qEle)
+    {
+        if (qEle.Type1=="new")
+        {
+            //NewBuildsQueue.Elements.Remove(qEle);
+            PersonPot.Control.BuildersManager1.AddGreenLightKeys(qEle);
+        }
+        else if (qEle.Type1 == "old")
+        {
+            //DestroyBuildsQueue.Elements.Remove(qEle);
+            FinalForceDestroyLastStp(qEle);
+        }
+
+    }
+
     /// <summary>
     /// Because some Structure dont get destroy bz UnivCounter is not in -1 
     /// when is called then here we finally destory them Bz all people checked on this 
@@ -132,12 +147,23 @@ public class QueuesContainer
             if (build != null && !_destroyBuildsQueue.Elements[i].WasUsedToGreenLightOrDestroy &&
                 _destroyBuildsQueue.Elements[i].IsCheckedByAll())
             {
-                _destroyBuildsQueue.Elements[i].WasUsedToGreenLightOrDestroy = true;
-                build.DestroyOrderedForced();   
+                FinalForceDestroyLastStp(_destroyBuildsQueue.Elements[i]);
             }
         }
     }
 
+    void FinalForceDestroyLastStp(QueueElement qEle)
+    {
+        if (qEle.WasUsedToGreenLightOrDestroy)
+        {
+            return;
+        }
+
+        qEle.WasUsedToGreenLightOrDestroy = true;
+        var build = Brain.GetBuildingFromKey(qEle.Key);
+
+        build.DestroyOrderedForced(); 
+    }
 
 
     DateTime _currenTime=new DateTime();
