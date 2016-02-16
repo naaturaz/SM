@@ -924,11 +924,14 @@ public class Brain
 
     void AddMeToSystemWaitingList()
     {
-        //PersonPot.Control.CheckPeopleIn(_person.MyId);
 
+        //if it was added to waiting list 
+        if (PersonPot.Control.AddMeToOnSystemWaitList(_person.MyId))
+        {
+            PersonPot.Control.CheckPeopleIn(_person.MyId);
 
-        PersonPot.Control.AddMeToOnSystemWaitList(_person.MyId);
-        _waiting = true;
+            _waiting = true;
+        }
     }
 
     private bool LocatedAtHomeNow()
@@ -2692,6 +2695,7 @@ public class Brain
         {
             PersonPot.Control.RemoveMeFromSystem(_person.MyId);
             PersonPot.Control.WorkersRoutingQueue.RemoveMeFromSystem(_person.MyId);
+            PersonPot.Control.RemovePersonFromPeopleChecked(_person.MyId);
             //people can die anywhere
             if (_person.Home != null)
             {

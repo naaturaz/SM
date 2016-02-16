@@ -373,10 +373,18 @@ public class PersonController : PersonPot
 
     public bool IsPeopleCheckFull()
     {
+        //needs to be the same otherwise Will left people 
+        //without checking out
         if (_peopleChecked.Count >= All.Count)
         {
             return true;
         }
+
+        //if (_peopleChecked.Count > All.Count)
+        //{
+        //    _peopleChecked.Clear();
+        //}
+
         return false;
     }
 
@@ -428,6 +436,15 @@ public class PersonController : PersonPot
     public void ClearPeopleCheck()
     {
         _peopleChecked.Clear();
+    }
+
+    /// <summary>
+    /// call when person die
+    /// </summary>
+    /// <param name="p"></param>
+    public void RemovePersonFromPeopleChecked(string p)
+    {
+        _peopleChecked.Remove(p);
     }
 
     #endregion
@@ -651,16 +668,32 @@ public class PersonController : PersonPot
         return OnSystemNow1.Count < _systemCap && !PeopleHasCheck(pMyID);
     }
 
-    internal void AddMeToOnSystemWaitList(string id)
+    internal bool AddMeToOnSystemWaitList(string id)
     {
         if (IAmOnSystemNow(id))
         {
-            return;
+            return false;
         }
 
-        Debug.Log("added to wait list:" + id);
+        if (//WaitList.Count <= WaitingListCap() && 
+            !PeopleHasCheck(id))
+        {
+            Debug.Log("added to wait list:" + id);
+            WaitList.Add(new CheckedIn(id, Time.time));
+            return true;
+        }
+        return false;
+    }
 
-        WaitList.Add(new CheckedIn(id, Time.time));
+    int WaitingListCap()
+    {
+        var res = All.Count/5;
+
+        if (res > 1)
+        {
+            return res;
+        }
+        return 1;
     }
 
     /// <summary>
@@ -739,6 +772,7 @@ public class PersonController : PersonPot
             {
                 Debug.Log("remove bz was gone OnSystemNow1:" + p.Id);
                 OnSystemNow1.Remove(p);
+                TransferFirstInWaitingListToOnSystemNow();
             }
             if (WaitList.Contains(p) && Family.FindPerson(p.Id) == null)
             {

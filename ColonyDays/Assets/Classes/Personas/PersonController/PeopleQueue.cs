@@ -100,10 +100,14 @@ public class PeopleQueue {
             return;
         }
 
-        if (_onSystemNow.Count == 0)
+        if (_onSystemNow.Count == 0 && WaitList.Count==0)
         {
             _onSystemNow.Add(new CheckedIn(id, Time.time));
             return;
+        }
+        if (_onSystemNow.Count == 0 && WaitList.Count > 0)
+        {
+            TransferFirstInWaitingListToOnSystemNow();
         }
 
         WaitList.Add(new CheckedIn(id, Time.time));
@@ -191,6 +195,7 @@ public class PeopleQueue {
             {
                 Debug.Log("remove bz was gone OnSystemNow1:" + p.Id);
                 OnSystemNow1.Remove(p);
+                TransferFirstInWaitingListToOnSystemNow();
             }
             if (WaitList.Contains(p) && Family.FindPerson(p.Id) == null)
             {
