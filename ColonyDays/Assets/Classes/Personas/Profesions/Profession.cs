@@ -403,11 +403,16 @@ public class Profession
     {
         if (_routerActive)
         {
-            if (_isRouterBackUsed)
+            AddMeToWaitListOnSystem();
+
+            if (PersonPot.Control.WorkersRoutingQueue.OnSystemNow(_person.MyId))
             {
-                BackRouterUpdate();
+                if (_isRouterBackUsed)
+                {
+                    BackRouterUpdate();
+                }
+                else SingleRouterUpdate();
             }
-            else SingleRouterUpdate();
         }
     }
 
@@ -420,20 +425,15 @@ public class Profession
             return;
         }
 
-        PersonPot.Control.AddMeToOnSystemWaitList(_person.MyId);
+        PersonPot.Control.WorkersRoutingQueue.AddMeToOnSystemWaitList(_person.MyId);
     }
 
     /// <summary>
     /// </summary>
     void ReRouteDone()
     {
-        //means i didnt added. so i dont need to remove it 
-        if (ProfDescription == Job.Builder || ProfDescription == Job.WheelBarrow || ProfDescription == Job.Homer ||
-            ProfDescription == Job.Docker || ProfDescription == Job.Forester)
-        {
-            Debug.Log("remove from cntrl:" + _person.MyId + " :" + ProfDescription);
-            PersonPot.Control.DoneReRoute(_person.MyId);//so another people can use the Spot 
-        }
+        //Debug.Log("remove from cntrl:" + _person.MyId + " :" + ProfDescription);
+        PersonPot.Control.WorkersRoutingQueue.DoneReRoute(_person.MyId);//so another people can use the Spot 
     }
 
     /// <summary>
@@ -451,7 +451,7 @@ public class Profession
             _readyToWork = true;
             _routerActive = false;
             Unlock();
-            //ReRouteDone();
+            ReRouteDone();
 
             //foresters reset when done work
             if (ProfDescription!=Job.Forester)
@@ -475,7 +475,7 @@ public class Profession
             _readyToWork = true;
             _routerActive = false;
             Unlock();
-            //ReRouteDone();
+            ReRouteDone();
 
             //foresters reset when done work
             if (ProfDescription != Job.Forester)

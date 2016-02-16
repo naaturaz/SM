@@ -914,8 +914,8 @@ public class Brain
     /// </summary>
     public void CheckMeOnSystemNow()
     {
+        Debug.Log("Check OnSysyemt NOw:"+_person.MyId);
         PersonPot.Control.CheckPeopleIn(_person.MyId);
-
 
         PersonPot.Control.CheckMeOnSystem(_person.MyId);
         _lastTimeICheckedInOnSystem = Time.time;
@@ -924,7 +924,7 @@ public class Brain
 
     void AddMeToSystemWaitingList()
     {
-        PersonPot.Control.CheckPeopleIn(_person.MyId);
+        //PersonPot.Control.CheckPeopleIn(_person.MyId);
 
 
         PersonPot.Control.AddMeToOnSystemWaitList(_person.MyId);
@@ -2691,6 +2691,7 @@ public class Brain
         if (Partido && string.IsNullOrEmpty(_person.IsBooked))
         {
             PersonPot.Control.RemoveMeFromSystem(_person.MyId);
+            PersonPot.Control.WorkersRoutingQueue.RemoveMeFromSystem(_person.MyId);
             //people can die anywhere
             if (_person.Home != null)
             {
@@ -2703,10 +2704,6 @@ public class Brain
             //so person goes to heaven, and ray is sent from Sky to take him //or angels take him 
             _person.DestroyCool();
             PersonPot.Control.All.Remove(_person);
-
-            //in case is looking still while dies 
-            //PersonPot.Control.CleanHomeLessSlot(_person.MyId);
-
         }
     }
 

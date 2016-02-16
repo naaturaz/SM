@@ -72,7 +72,8 @@ public class GameTime
     /// <returns></returns>
     public float TimeFactorInclSpeed()
     {
-        return Program.gameScene.GameSpeed*_timeFactor*Program.gameScene.GameSpeed;
+        return Program.gameScene.GameSpeed*_timeFactor*Program.gameScene.GameSpeed
+            ;
     }
 
     private void CheckIfNewDay()

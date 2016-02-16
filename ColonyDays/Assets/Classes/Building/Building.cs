@@ -1922,6 +1922,8 @@ public class Building : General, Iinfo
     /// </summary>
     protected void HandleLastStage()
     {
+        Debug.Log("construction built 100%:"+MyId+"." + Program.gameScene.GameTime1.TodayYMD());
+
 
         PersonPot.Control.BuildersManager1.RemoveConstruction(MyId);
 

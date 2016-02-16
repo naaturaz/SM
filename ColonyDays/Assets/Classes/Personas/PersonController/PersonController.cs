@@ -30,7 +30,13 @@ public class PersonController : PersonPot
 
     RoutesCache _routesCache = new RoutesCache();
 
-    
+    PeopleQueue _workersRoutingQueue=new PeopleQueue();
+
+    public PeopleQueue WorkersRoutingQueue
+    {
+        get { return _workersRoutingQueue; }
+        set { _workersRoutingQueue = value; }
+    }
 
     public List<Person> All
     {
@@ -258,6 +264,10 @@ public class PersonController : PersonPot
         {
             Initialize();
         }
+
+        WorkersRoutingQueue.Update();
+
+        SanitizeCurrent();
 	}
 
     private void UpdateOnScreen()
@@ -589,6 +599,8 @@ public class PersonController : PersonPot
         set { _waitList = value; }
     }
 
+
+
     public void CheckMeOnSystem(string id)
     {
         var find = _onSystemNow.Find(a => a.Id == id);
@@ -646,6 +658,8 @@ public class PersonController : PersonPot
             return;
         }
 
+        Debug.Log("added to wait list:" + id);
+
         WaitList.Add(new CheckedIn(id, Time.time));
     }
 
@@ -659,9 +673,12 @@ public class PersonController : PersonPot
             return;
         }
 
+
         var t = WaitList[0];
         WaitList.RemoveAt(0);
         OnSystemNow1.Add(t);
+
+        Debug.Log("transfer to System:"+t.Id);
     }
 
     internal bool OnWaitListNow(string id)
@@ -683,19 +700,17 @@ public class PersonController : PersonPot
     public void RemoveMeFromSystem(string id)
     {
         var wIndex = WaitList.FindIndex(a => a.Id == id);
-
         if (wIndex > 0)
         {
+            Debug.Log("remove from waitL:"+id);
             WaitList.RemoveAt(wIndex);
         }
 
-
         var sIndex = OnSystemNow1.FindIndex(a => a.Id == id);
-
         if (sIndex > 0)
         {
+            Debug.Log("remove from systemNow:" + id);
             OnSystemNow1.RemoveAt(sIndex);    
-            
         }
     }
 
@@ -706,6 +721,31 @@ public class PersonController : PersonPot
     public bool IAmOnSystemNow(string id)
     {
         return OnSystemNow(id) || OnWaitListNow(id);
+    }
+
+    void SanitizeCurrent()
+    {
+        if (OnSystemNow1.Count==0)
+        {
+            return;
+        }
+
+        var p = OnSystemNow1[0];
+
+        //if is being there for 10 sec we need to check 
+        if(Time.time > p.Time + 10f)
+        {
+            if (OnSystemNow1.Contains(p) && Family.FindPerson(p.Id) == null)
+            {
+                Debug.Log("remove bz was gone OnSystemNow1:" + p.Id);
+                OnSystemNow1.Remove(p);
+            }
+            if (WaitList.Contains(p) && Family.FindPerson(p.Id) == null)
+            {
+                Debug.Log("remove bz was gone WaitList:" + p.Id);
+                WaitList.Remove(p);
+            }
+        }
     }
 
 #endregion

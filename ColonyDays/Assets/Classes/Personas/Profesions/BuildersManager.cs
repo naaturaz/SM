@@ -60,6 +60,7 @@ public class BuildersManager
             return;
         }
 
+        Debug.Log("construction aded :"+key+"."+Program.gameScene.GameTime1.TodayYMD());
         Construction t = new Construction();
         t.Key = key;
         t.HType = hTypeP;
