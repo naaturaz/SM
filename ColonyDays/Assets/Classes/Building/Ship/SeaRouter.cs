@@ -77,18 +77,22 @@ public class SeaRouter  {
     /// </summary>
     /// <param name="entry"></param>
     /// <returns></returns>
-    public bool CanRoute(Vector3 entry)
+    public bool CanRoute(Vector3 entry, bool addDebugHelp=false)
     {
         for (int i = 0; i < _map8entries.Count; i++)
         {
+            Line line = new Line(_map8entries[i].Point, entry, 50f);
             //if a can reach 1 then I can use that one 
-            if (!MeshController.CrystalManager1.IntersectAnyLine(_map8entries[i].Point, entry))
+            if (!MeshController.CrystalManager1.DoIIntersectAnyLine(line, H.WaterObstacle))
             {
                 _closerMapEntryReachable = _map8entries[i].Point;
+                if (addDebugHelp)
+                {
+                    UVisHelp.CreateHelpers(_closerMapEntryReachable, Root.yellowSphereHelp);
+                }
                 return true;
             }
         }
-        
         return false;
     }
 
@@ -96,19 +100,20 @@ public class SeaRouter  {
     public TheRoute PlotRoute(Vector3 entry, List<GameObject> spots, List<GameObject> finalLookPoint, 
         Building build, string shipGOMyId)
     {
+        //needed to define _closerMapEntryReachable
+        CanRoute(entry);
+
         var spot = FindRandomSpot(spots, build, shipGOMyId);
+        //string spotFinLetter = FindMyLetter(spot.transform.name);
+        //var fin = new Vector3();
 
-        string spotFinLetter = FindMyLetter(spot.transform.name);
-
-        var fin = new Vector3();
-
-        for (int i = 0; i < finalLookPoint.Count; i++)
-        {
-            if (finalLookPoint[i].transform.name == spotFinLetter)
-            {
-                fin = finalLookPoint[i].transform.position;
-            }
-        }
+        //for (int i = 0; i < finalLookPoint.Count; i++)
+        //{
+        //    if (finalLookPoint[i].transform.name == spotFinLetter)
+        //    {
+        //        fin = finalLookPoint[i].transform.position;
+        //    }
+        //}
 
         //correct Y  
         _closerMapEntryReachable = 

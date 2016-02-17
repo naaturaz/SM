@@ -40,8 +40,14 @@ public class Dock
         BuildKey = build.MyId;
         _building = build;
         InitSpots();
+        
         _seaRouter = new SeaRouter(_entry, build);
     }
+
+    //public void DoneBuiltDock()
+    //{
+    //    _seaRouter = new SeaRouter(_entry, _building);
+    //}
 
     public List<string> BusySpots
     {
@@ -104,7 +110,6 @@ public class Dock
         {
             _seaRouter = new SeaRouter(_entry, _building);
         }
-
 
         return _seaRouter.PlotRoute(_entry, _allSpots, _allLookPoints, _building, shipGoMyId);
         //UVisHelp.CreateHelpers(route, Root.yellowSphereHelp);

@@ -365,7 +365,6 @@ public class Registro : MonoBehaviour
             anchors: anchors, dock: dock);
 
         AddToAll(regFile);
-        BuildingPot.Control.DockManager1.AddToDockStructure(myId, type);
 
 
         AddToBuilderManager(myId);

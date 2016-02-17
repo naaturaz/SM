@@ -434,8 +434,9 @@ public class Building : General, Iinfo
         }
 
         InitMilitar();
-        InitDockDryDockAndSupplier();
         InitWheelBarrow();
+        InitDockDryDockAndSupplier();
+
 
         //if gives a null ex here ussually is that u forgot a prefab on scene
         _minHeightToSpawn = Program.gameScene.WaterBody.transform.position.y + minHeightAboveSeaLevel;
@@ -644,6 +645,8 @@ public class Building : General, Iinfo
     {
         //DebugShowAnchors();
 
+
+
         if (_militar!=null)
         {
             _militar.Update();
@@ -806,11 +809,7 @@ public class Building : General, Iinfo
         LayerRoutine("done");
         PositionFixed = true;
 
-        if (IsDockType())
-        {
-            //_dock.CreateRoute();
-            
-        }
+     
 
 
         if (!HType.ToString().Contains("Unit") && !IsLoadingFromFile)
@@ -1924,6 +1923,11 @@ public class Building : General, Iinfo
     {
         Debug.Log("construction built 100%:"+MyId+"." + Program.gameScene.GameTime1.TodayYMD());
 
+        if (IsDockType())
+        {
+            BuildingPot.Control.DockManager1.AddToDockStructure(MyId, HType);
+        }
+
 
         PersonPot.Control.BuildersManager1.RemoveConstruction(MyId);
 
@@ -2819,7 +2823,7 @@ public class Building : General, Iinfo
 
     private void InitDockDryDockAndSupplier()
     {
-        if (IsLoadingFromFile)
+        if (IsLoadingFromFile || _dock!=null)
         {
             return;
         }

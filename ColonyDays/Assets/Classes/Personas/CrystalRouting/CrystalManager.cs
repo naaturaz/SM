@@ -650,17 +650,15 @@ public class CrystalManager  {
         return false;
     }
 
-
     /// <summary>
     /// Will tell if line intersect any line on the Terra Lines  
     /// 
     /// typeOfTerra: the type of terraObstacle we are considering 
     /// </summary>
     /// <returns></returns>
-    public bool DoIIntersectAnyLine(Line line, Vector2 pos, H typeOfTerra)
+    public bool DoIIntersectAnyLine(Line line, H typeOfTerra)
     {
         var crystals = GiveMeAllTerraCrystals();
-
         for (int i = 0; i < crystals.Count; i++)
         {
             for (int j = 0; j < crystals[i].Lines.Count; j++)
@@ -674,8 +672,6 @@ public class CrystalManager  {
         }
         return false;
     }
-
-
 
     /// <summary>
     /// Will tell u if intersect anyline at all 

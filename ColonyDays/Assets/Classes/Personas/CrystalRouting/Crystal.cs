@@ -762,7 +762,8 @@ public class Crystal
 
         Line tLine = new Line(this, nextCrystal, false);
 
-        return !MeshController.CrystalManager1.DoIIntersectAnyLine(tLine, Position, H.WaterObstacle);
+        return !MeshController.CrystalManager1.DoIIntersectAnyLine(tLine, H.WaterObstacle);
+        //return !MeshController.CrystalManager1.DoIIntersectAnyLine(tLine, Position, H.WaterObstacle);
     }
 
     /// <summary>
