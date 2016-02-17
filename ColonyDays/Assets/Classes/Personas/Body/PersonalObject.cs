@@ -83,6 +83,10 @@ public class PersonalObject
         if (_allPersonalObjects.ContainsKey(_currentRoot))
         {
             _current = _allPersonalObjects[_currentRoot];
+
+            //for hammer so is shown
+            Show();
+
             CheckIfHide(hide);
             return;
         }
@@ -92,7 +96,9 @@ public class PersonalObject
             return;
         }
         
-        _current = General.Create(_currentRoot, _currentPoint.transform.position, "", _currentPoint.transform);
+        _current = General.Create(_currentRoot, _currentPoint.transform.position);
+        _current.transform.parent = _currentPoint.transform;
+
         _current.transform.rotation = _currentPoint.transform.rotation;
         _allPersonalObjects.Add(_currentRoot, _current);
 
@@ -173,7 +179,37 @@ public class PersonalObject
         if (_current != null &&  _current.Renderer1 != null)
         {
             _current.Renderer1.enabled = true;
+            SetScaleOfCurrent();
         }
+    }
+
+    private int oldAge;
+    /// <summary>
+    /// bz youger guys carry boxes too
+    /// </summary>
+    private void SetScaleOfCurrent()
+    {
+        //bz all PersonalObjects were scaled initialiy for adults
+        if (_person.Age > 19)
+        {
+            return;
+        }
+        if (oldAge != _person.Age)
+        {
+            oldAge = _person.Age;
+            var dif = 20 - _person.Age;
+            ScaleGameObject(dif* -0.015f);
+        }
+    }
+
+    void ScaleGameObject(float toAdd)
+    {
+        var localScale = _current.gameObject.transform.localScale;
+
+        var addScale = localScale * toAdd;
+        var final = localScale + addScale;
+
+        _current.gameObject.transform.localScale = final;
     }
 
     internal void Hide()

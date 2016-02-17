@@ -412,7 +412,7 @@ public class Person : General
 
         obj = (Person)Instantiate(obj, iniPos, Quaternion.identity);
         obj.Gender = obj.OtherGender();
-        obj.InitObj(10);
+        obj.InitObj(5);//10
         obj.Geometry.GetComponent<Renderer>().sharedMaterial = Resources.Load(Root.personGuy1) as Material;
 
         //this to when Person dont have where to leave and then they find a place the teletranport effect
@@ -489,7 +489,7 @@ public class Person : General
         Age = iniAge;
         _name = BuildRandomName();
 
-        _lifeLimit = GiveRandom(40, 40);//75, 85
+        _lifeLimit = GiveRandom(50, 50);//75, 85
         MyId = _name + "." + Id;
 
         Brain = new Brain(this);
@@ -1943,11 +1943,11 @@ public class Person : General
 
         var dist = Vector3.Distance(transform.position, Camera.main.transform.position);
 
-        if (dist > 25 && dist <= 66)//35 66
+        if (dist > 45 && dist <= 76)//35 66
         {
             LOD1();
         }
-        else if (dist > 65)//65
+        else if (dist > 75)//65
         {
             LOD2();
         }

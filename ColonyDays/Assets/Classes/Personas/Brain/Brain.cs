@@ -582,7 +582,7 @@ public class Brain
 
     void GoGetFood()
     {   //get food
-        if (ReadyToGetFood())
+        if (ReadyToGetFood() && _foodRoute!=null && _foodRoute.DestinyKey == _person.FoodSource.MyId)
         {
             CurrentTask = HPers.GettingFood;
         }
@@ -1105,6 +1105,7 @@ public class Brain
             if (_person.FoodSource != null && oldFoodSrc != _person.FoodSource.MyId)
             {
                 foodRouteStart = false;
+                Debug.Log("New FoodSrc:" + _person.FoodSource+" ."+_person.MyId);
 
                 RestartVarsAndAddToGenList();
                 oldFoodSrc = _person.FoodSource.MyId;
@@ -1893,9 +1894,10 @@ public class Brain
         UnivCounter(HPers.FoodSource);
     }
 
+
     void CheckFoodAction()
     {
-        if (_person.FoodSource == null || _isAllSet || _person.FoodSource.Instruction == H.WillBeDestroy)
+        if (_person.FoodSource == null || _person.FoodSource.Instruction == H.WillBeDestroy)
         {
             UpdateOrderedFoodSources();
 
@@ -2377,12 +2379,12 @@ public class Brain
             Structure s = GetStructureFromKey(orderedFoodSources[i]);
             //will assign the first one is not empty... 
             //now if we assign a diff one from the current then the Brain will trace route to new FoodSrc
-            if (!s.Inventory.IsEmpty())
+            if (s.Inventory.FoodCatItems.Count > 0)
             {
                 //so the buildings PeopleDict gets updated
                 AddToNewBuildRemoveFromOld(_person.FoodSource, s.MyId);
                 _person.FoodSource = s;
-
+                PersonPot.Control.RestartControllerForPerson(_person.MyId);
                 return;
             }
             emptyCount++;
@@ -2396,7 +2398,7 @@ public class Brain
     /// <param name="index"></param>
     void AreTheyAllEmpty(int index)
     {
-        if (index == 5 || index == BuildingPot.Control.FoodSources.Count)
+        if (index == BuildingPot.Control.FoodSources.Count)
         {
             Structure s = GetStructureFromKey(orderedFoodSources[0]);
             _person.FoodSource = s;

@@ -107,7 +107,6 @@ public class Body //: MonoBehaviour //: General
     public Body(Person person)
     {
         _personalObject = new PersonalObject(person);
-
         Init(person);
     }
 
@@ -117,7 +116,7 @@ public class Body //: MonoBehaviour //: General
     /// </summary>
     public Body(Person person, PersonFile pF)
     {
-        _personalObject = new PersonalObject(person, pF._body.CurrentAni, ShouldHide());
+        _personalObject = new PersonalObject(person);
 
         _pFile = pF;
         Init(person);
@@ -140,7 +139,6 @@ public class Body //: MonoBehaviour //: General
         {
             WalkRoutineLoad(pF._body.CurrTheRoute, GoingTo, pF._body.CurrentRoutePoint, _inverse, _whichRoute); 
         }
-
     }
 
     public void Init(Person person)
