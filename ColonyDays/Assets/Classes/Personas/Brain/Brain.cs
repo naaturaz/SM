@@ -1551,12 +1551,32 @@ public class Brain
     //    set { _debugRect = value; }
     //}
 
+    private DateTime askInWork = new DateTime();
+    private DateTime askInWorkBack = new DateTime();
     /// <summary>
     /// Check thru the queues for each route AreaRecy to se if collide with any Anchors on the queues
     /// </summary>
     void CheckQueuesLoop()
     {
         List<HPers> collisionsOn = new List<HPers>();
+
+        if (_person.ProfessionProp!=null)
+        {
+            if (_person.ProfessionProp.Router1 != null && _person.ProfessionProp.Router1.TheRoute != null
+                && PersonPot.Control.Queues.ContainAnyBuild(_person.ProfessionProp.Router1.TheRoute, _person.MyId))
+            {
+                collisionsOn.Add(HPers.InWork);
+                askInWork = PersonPot.Control.Queues.GetLastCollisionTime();
+            }
+            if (_person.ProfessionProp.RouterBack != null && _person.ProfessionProp.RouterBack.TheRoute != null
+            && PersonPot.Control.Queues.ContainAnyBuild(_person.ProfessionProp.RouterBack.TheRoute, _person.MyId))
+            {
+                collisionsOn.Add(HPers.InWorkBack);
+                askInWorkBack = PersonPot.Control.Queues.GetLastCollisionTime();
+            }
+        }
+
+
 
         //bugg was doing if, else if below... where should be if, if , if
         if (PersonPot.Control.Queues.ContainAnyBuild(_workRoute, _person.MyId))
@@ -1632,6 +1652,17 @@ public class Brain
                 //GameScene.print("Redo Chill");
                 chillRouteStart = false;
             }
+        }
+
+        if (collisionsOn.Contains(HPers.InWork))
+        {
+            PersonPot.Control.RoutesCache1.RemoveRoute(_person.ProfessionProp.Router1.TheRoute, askInWork);
+            RedoProfession();
+        } 
+        if (collisionsOn.Contains(HPers.InWorkBack))
+        {
+            PersonPot.Control.RoutesCache1.RemoveRoute(_person.ProfessionProp.RouterBack.TheRoute, askInWorkBack);
+            RedoProfession();
         }
     }
     #endregion

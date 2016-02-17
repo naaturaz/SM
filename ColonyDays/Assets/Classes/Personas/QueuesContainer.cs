@@ -189,7 +189,6 @@ public class QueuesContainer
             DateTime date2 = theRoute.DateTime1;
 
             int result = DateTime.Compare(date1, date2);
-
             //can be called here bz a person when call the Queues to check in goes trhu all of them 
             queueTask.Elements[i].CheckPersonIn(personID);
 

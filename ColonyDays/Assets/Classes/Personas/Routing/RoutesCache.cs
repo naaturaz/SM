@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class RoutesCache {
 
     Dictionary<string, TheRoute> _items = new Dictionary<string, TheRoute>();
     TheRoute _current = new TheRoute();//current route we are comparing to
-
-    //public Dictionary<string, TheRoute> Items
-    //{
-    //    get { return _items; }
-    //    set { _items = value; }
-    //}
 
     public TheRoute Current
     {
@@ -117,6 +112,39 @@ public class RoutesCache {
         {
             _items.Add(key, theRoute);
         }
+    }
+
+    /// <summary>
+    /// Bz a route that was collided for Profession needs to be removed from here 
+    /// </summary>
+    /// <param name="theRoute"></param>
+    public void RemoveRoute(TheRoute theRoute, DateTime askTime)
+    {
+        var key = ReturnKey(theRoute);
+        var item = _items[key];
+
+        if (item==null)
+        {
+            return;
+        }
+
+        DateTime date1 = item.DateTime1;
+        DateTime date2 = askTime;
+        int result = DateTime.Compare(date1, date2);
+        //if the Current ITem date is bigger that askTime means we have the latest verstion of it
+        if (result > 0)
+        {
+            return;
+        }
+        
+        var was = _items.Remove(key);
+        Debug.Log("was remove:"+was+"."+key);
+    }
+
+    string ReturnKey(TheRoute theRoute)
+    {
+        
+        return theRoute.OriginKey + "." + theRoute.DestinyKey;
     }
 
     public void Update()

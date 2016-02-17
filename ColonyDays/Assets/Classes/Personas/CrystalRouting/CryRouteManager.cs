@@ -72,6 +72,12 @@ public class CryRouteManager
     public CryRouteManager(Structure ini, Structure fin, Person person,
         HPers routeType = HPers.None, bool iniDoor = true, bool finDoor = true, DateTime askDateTime = new DateTime())
     {
+        //so profession routes are not redone everytime 
+        if (askDateTime == new DateTime())
+        {
+            askDateTime=DateTime.Now;
+        }
+
         _askDateTime = askDateTime;
         _originKey = ini.MyId;
         _destinyKey = fin.MyId;
@@ -91,6 +97,8 @@ public class CryRouteManager
         {
            //Debug.Log("Same ini-fin:"+ini.MyId+" . "+person.MyId);
         }
+
+      
 
         ClearOldVars();
         Init();
@@ -159,7 +167,10 @@ public class CryRouteManager
     private TheRoute tempTheRoute;//will hold the route for a bit until is realeased on Fake()
     private void WeHaveAnExisitingRoute()
     {
-      //GameScene.print("We have exisint route "+_person.MyId+" o:"+OriginKey + " d:"+DestinyKey + " askT:" +_askDateTime);
+        //so it doesnt reference 
+        tempTheRoute = new TheRoute();
+        
+        //GameScene.print("We have exisint route "+_person.MyId+" o:"+OriginKey + " d:"+DestinyKey + " askT:" +_askDateTime);
         tempTheRoute = PersonPot.Control.RoutesCache1.GiveMeTheNewerRoute();
         time = Time.time;
     }
