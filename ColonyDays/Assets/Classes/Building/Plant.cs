@@ -242,7 +242,7 @@ public class Plant : MonoBehaviour
     {
         //divide by current step so its always not more and more
         //pls GROWFACTOR so we dont divide a zero 
-        var addWorkedAmt = (_fieldFarm.GiveMeMyWorkedAmt() + GROWFACTOR) / _currentGrowStep / 100000;
+        var addWorkedAmt = (_fieldFarm.GiveMeMyWorkedAmt() + GROWFACTOR) / _currentGrowStep / 1;//100000
         _fieldFarm.PlantGrew();
 
         _currentGrowStep += 0.1f;
@@ -301,13 +301,12 @@ public class Plant : MonoBehaviour
     /// </summary>
     private void CouldGrowPlantNow()
     {
-        if (_amtToGrow > 0.01)
+        if (_amtToGrow > 0)
         {
             _amtToGrow -= 0.01f;
             ScaleGameObject(0.01f);
 
             SavePlant();
-
         }
     }
 
@@ -323,15 +322,18 @@ public class Plant : MonoBehaviour
 
     void ScaleGameObject(float toAdd)
     {
-
-
         var localScale = gameObject.transform.localScale;
-        var singleX = localScale.x + toAdd;
-        var singleY = localScale.y + toAdd;
-        var singleZ = localScale.z + toAdd;
+        //var singleX = localScale.x + toAdd;
+        //var singleY = localScale.y + toAdd;
+        //var singleZ = localScale.z + toAdd;
 
-        var newScale = new Vector3(singleX, singleY, singleZ);
-        gameObject.transform.localScale = newScale;
+
+
+        var addScale = localScale * toAdd;
+        var final = localScale + addScale;
+
+        // var newScale = new Vector3(singleX, singleY, singleZ);
+        gameObject.transform.localScale = final;
     }
 
     internal void Harvest()
@@ -363,8 +365,16 @@ public class Plant : MonoBehaviour
     }
 
 
+    private bool wasLoaded;
     public void LoadPlant(PlantSave plant)
     {
+        if (wasLoaded)
+        {
+            return;
+        }
+        wasLoaded = true;
+
+
         _type = plant.Type;//type of plant. ex : Bean
 
         _growGen = plant.GrowGen; //btw 90-100 will indicate how farr will go a plant just by genes
