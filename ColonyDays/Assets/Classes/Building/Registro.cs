@@ -490,6 +490,7 @@ public class Registro : MonoBehaviour
         AllRegFile[index].Anchors = build.Anchors;
         AllRegFile[index].DollarsPay = build.DollarsPay;
         AllRegFile[index].Dock1 = build.Dock1;
+        AllRegFile[index].Dispatch1 = build.Dispatch1;
         AllRegFile[index].PlantSave1 = build.PlantSave1;
 
     }
@@ -519,6 +520,8 @@ public class Registro : MonoBehaviour
         regFile.Anchors = build.Anchors;
         regFile.DollarsPay = build.DollarsPay;
         regFile.Dock1 = build.Dock1;
+        regFile.Dispatch1 = regFile.Dispatch1;
+
         regFile.PlantSave1 = build.PlantSave1;
     }
 

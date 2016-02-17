@@ -88,7 +88,7 @@ public class Docker : Profession
             return;
         }
 
-        Order1 = _person.Work.Dispatch1.GiveMeOrder(_person);
+        Order1 = _person.Work.Dispatch1.GiveMeOrderDocker(_person);
         _person.PrevOrder = Order1;
 
         if (Order1 == null)

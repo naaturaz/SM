@@ -325,6 +325,35 @@ public class Dispatch
         return null;      
     }
 
+    public Order GiveMeOrderDocker(Person person)
+    {
+        var currOrders = ReturnCurrentListAndDefinePrimary();
+
+        for (int i = 0; i < currOrders.Count; i++)
+        {
+            //if the Inventory of destiny build is full will skip that order 
+            if (IsDestinyBuildInvFullForThisProd(currOrders[i]))
+            {
+                //todo Notify
+                //Debug.Log("Inv full to DestBuild:"+currOrders[i].DestinyBuild+"|for prod:"+currOrders[i].Product+"" +"|order removed");
+
+                RemoveOrderByIDExIm(currOrders[i].ID);
+                i--;
+                continue;
+            }
+
+            if (currOrders[i].TypeOrder == H.None)
+            {
+                return RegularOrderDocker(person, currOrders[i]);
+            }
+            else if (currOrders[i].TypeOrder == H.Evacuation)
+            {
+                return EvacuationOrder(person, currOrders[i]);
+            }
+        }
+        return null;
+    }
+
     bool IsDestinyBuildInvFullForThisProd(Order order)
     {
         var destBuild = Brain.GetBuildingFromKey(order.DestinyBuild);
@@ -397,6 +426,29 @@ public class Dispatch
         var foodSrc = FindFoodSrcWithProd(person, order.Product);
 
         if (foodSrc != "")
+        {
+            Order temp = new Order();
+            temp = Order.Copy( order);
+            OrderFound(order);
+
+            temp.Amount = DispatchAmount(person, order.Amount);
+            temp.SourceBuild = foodSrc;
+            return temp;
+        }
+        //if not found a FoodSrc with the Product need to seend it to the back of the queue
+        //or send it to Recycled Orders
+        OrderFound(order);
+        
+        return null;        
+    }   
+    
+    Order RegularOrderDocker(Person person, Order order)
+    {
+        var foodSrc = FindFoodSrcWithProd(person, order.Product);
+
+        //bz dock inventory amount of this item must be less other wise wont be given
+        //this is to avoid dockkers keep dumping an item into Dock Inventory until a ship arrives 
+        if (foodSrc != "" && person.Work.Inventory.ReturnAmtOfItemOnInv(order.Product) < order.Amount)
         {
             Order temp = new Order();
             temp = Order.Copy( order);
@@ -767,28 +819,20 @@ public class Dispatch
     void HandleThatExport(Building dock, int i)
     {
         var ord = ExpImpOrders[i];
-
         float initialAmtNeed = ord.Amount;
         ord = dock.Inventory.ManageExportOrder(ord);
         float leftOnOrder = ord.Amount;
         float amtExpThisTime = (initialAmtNeed - leftOnOrder);
 
         Program.gameScene.ExportImport1.Sale(ord.Product, amtExpThisTime);
-
         if (ord.Amount == 0)
         {
-           Debug.Log("Exported of:" + ord.Product + " done");
-
+            Debug.Log("Exported of:" + ord.Product + " done");
             //Removig from all. Could be in orders or in   RecycledOrders and always in   ExpImpOrders
-            //Orders.Remove(ord);
-            //RecycledOrders.Remove(ord);
-            //ExpImpOrders.Remove(ord);
- 
             RemoveOrderFromAllListByID(ord.ID);
-
             return;
         }
-       Debug.Log("Exported:" + ord.Product + " . " + amtExpThisTime + ".Still left:" + leftOnOrder);
+        Debug.Log("Exported:" + ord.Product + " . " + amtExpThisTime + ".Still left:" + leftOnOrder);
     }
 
     internal void AddToExpImpOrders(Order order)
