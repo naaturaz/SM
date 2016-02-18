@@ -397,35 +397,66 @@ public class Root : MonoBehaviour
     }
 
 
+
+
+
+
+
+
     /// <summary>
     /// Will return the root of the Product
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
-    public static string RetPrefabRoot(P key)
+    public static string RetPrefabRoot(P prod)
     {
-        if (productsRoot.Count == 0)
-        {
-            LoadProductsRoots();
-        }
+        //if (productsRoot.Count == 0)
+        //{
+        //    LoadProductsRoots();
+        //}
 
-        return productsRoot[key];
+        //if (productsRoot.ContainsKey(prod))
+        //{
+        //    return productsRoot[prod];
+        //}
+        return "Prefab/Building/Farming/Plants/" + prod;
     }
 
-    private static void LoadProductsRoots()
-    {
-        //plants
-        productsRoot.Add(P.Corn, "Prefab/Building/Farming/Plants/Corn");
-        productsRoot.Add(P.Bean, "Prefab/Building/Farming/Plants/Bean");
-        productsRoot.Add(P.Banana, "Prefab/Building/Farming/Plants/Banana");
-        productsRoot.Add(P.Coconut, "Prefab/Building/Farming/Plants/Coconut");
+    /// <summary>
+    /// some are here the ones are missing are created at RetPrefabRoot()
+    /// just prefab name has to match productname
+    ///// </summary>
+    //private static void LoadProductsRoots()
+    //{
+    //    //plants
+    //    productsRoot.Add(P.Corn, "Prefab/Building/Farming/Plants/Corn");
+    //    productsRoot.Add(P.Bean, "Prefab/Building/Farming/Plants/Bean");
+    //    productsRoot.Add(P.Banana, "Prefab/Building/Farming/Plants/Banana");
+    //    productsRoot.Add(P.Coconut, "Prefab/Building/Farming/Plants/Coconut");
 
-        productsRoot.Add(P.Cotton, "Prefab/Building/Farming/Plants/Cotton");
-        productsRoot.Add(P.Henequen, "Prefab/Building/Farming/Plants/Henequen");
-        productsRoot.Add(P.Potato, "Prefab/Building/Farming/Plants/Potato");
-        productsRoot.Add(P.SugarCane, "Prefab/Building/Farming/Plants/SugarCane");
-        productsRoot.Add(P.TobaccoLeaf, "Prefab/Building/Farming/Plants/TobaccoLeaf");
-    }
+    //    productsRoot.Add(P.Cotton, "Prefab/Building/Farming/Plants/Cotton");
+    //    productsRoot.Add(P.Henequen, "Prefab/Building/Farming/Plants/Henequen");
+    //    productsRoot.Add(P.Potato, "Prefab/Building/Farming/Plants/Potato");
+    //    productsRoot.Add(P.SugarCane, "Prefab/Building/Farming/Plants/SugarCane");
+    //    productsRoot.Add(P.TobaccoLeaf, "Prefab/Building/Farming/Plants/TobaccoLeaf");
+    //}
+
+    //private static Dictionary<P, string> _productsRoot = new Dictionary<P, string>();
+
+    ////for key and root
+
+    //static Dictionary<P, string> productsRoot
+    //{
+    //    get { return _productsRoot; }
+    //    set { _productsRoot = value; }
+    //}
+
+
+
+
+
+
+
 
 
 
@@ -589,15 +620,6 @@ public class Root : MonoBehaviour
         buildsRoot.Add(H.Morro, "Prefab/Building/Militar/Morro");
     }
 
-    private static Dictionary<P, string> _productsRoot = new Dictionary<P, string>();
-
-//for key and root
-
-    public static Dictionary<P, string> productsRoot
-    {
-        get { return _productsRoot; }
-        set { _productsRoot = value; }
-    }
 
 
 

@@ -95,8 +95,9 @@ public class PersonWindow : GUIElement {
     string BuildPersonInfo()
     {
         string res = "Age:" + _person.Age + "\n Gender:" + _person.Gender
-                     + "\n Nutrition:" + _person.NutritionLevel + "\n Profession:" +
-                     _person.ProfessionProp.ProfDescription
+                     + "\n Nutrition:" + _person.NutritionLevel 
+                     + "\n Profession:" + _person.ProfessionProp.ProfDescription
+                     + "\n PrevJob:" + _person.PrevJob
                      + "\n ID:" + _person.MyId
                      + "\n FamID:" + _person.FamilyId
                      + "\n Spouse:" + _person.Spouse
@@ -116,7 +117,7 @@ public class PersonWindow : GUIElement {
 
     string DebugInfo()
     {
-        var res = "\n_________________________________\n GoMindState:" + _person.Brain.GoMindState +
+        var res = "_________________________________\n GoMindState:" + _person.Brain.GoMindState +
                   "\n fdRouteChks:" + _person.Brain._foodRoute.CheckPoints.Count +
                   "\n idleRouteChks:" + _person.Brain._idleRoute.CheckPoints.Count
                   + "\n movToNwHomRtChks:" + _person.Brain.MoveToNewHome.RouteToNewHome.CheckPoints.Count
@@ -134,6 +135,12 @@ public class PersonWindow : GUIElement {
                   + "\n OnSysNow:" + PersonPot.Control.OnSystemNow(_person.MyId)
                   + "\n OnWaitNow:" + PersonPot.Control.OnWaitListNow(_person.MyId);
 
+        if (_person.Work != null)
+        {
+            res += "\n Work:" + _person.Work.MyId;
+        }
+        else res += "\n Work:null";
+
         if (_person.ProfessionProp != null)
         {
             res += "\n ProfessionReady:" + _person.ProfessionProp.ReadyToWork;
@@ -150,11 +157,7 @@ public class PersonWindow : GUIElement {
         }
         else res += "\n FoodSrc:null";
 
-        if (_person.Work != null)
-        {
-            res += "\n Work:" + _person.Work.MyId;
-        }
-        else res += "\n Work:null";
+     
 
         return res;
     }

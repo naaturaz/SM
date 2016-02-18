@@ -58,6 +58,27 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Potato, 70, 380, 100));
         _prodSpecs.Add(new ProdSpec(P.Banana, 100, 350, 100));
         _prodSpecs.Add(new ProdSpec(P.Coconut, 100, 550, 100));
+        
+        //new foods
+        _prodSpecs.Add(new ProdSpec(P.CornFlower, 100, 550, 100));
+        _prodSpecs.Add(new ProdSpec(P.Bread, 100, 550, 100));
+        _prodSpecs.Add(new ProdSpec(P.Carrot, 100, 550, 100));
+        _prodSpecs.Add(new ProdSpec(P.Tomato, 100, 550, 100));
+        _prodSpecs.Add(new ProdSpec(P.Cucumber, 100, 550, 100));
+        _prodSpecs.Add(new ProdSpec(P.Cabbage, 100, 550, 100));
+        _prodSpecs.Add(new ProdSpec(P.Lettuce, 100, 550, 100));
+        _prodSpecs.Add(new ProdSpec(P.SweetPotato, 100, 550, 100));
+        _prodSpecs.Add(new ProdSpec(P.Yucca, 100, 550, 100));
+        _prodSpecs.Add(new ProdSpec(P.Pineapple, 100, 550, 100));
+        _prodSpecs.Add(new ProdSpec(P.Papaya, 100, 550, 100));
+
+        //frutas
+        _prodSpecs.Add(new ProdSpec(P.Mango, 100, 550, 100));
+        _prodSpecs.Add(new ProdSpec(P.Avocado, 100, 550, 100));
+        _prodSpecs.Add(new ProdSpec(P.Guava, 100, 550, 100));
+        _prodSpecs.Add(new ProdSpec(P.Orange, 100, 550, 100));
+
+
 
         //liquids
         _prodSpecs.Add(new ProdSpec(P.Rum, 100, 1000, 100));

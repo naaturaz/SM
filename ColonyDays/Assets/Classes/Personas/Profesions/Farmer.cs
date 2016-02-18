@@ -19,6 +19,8 @@ public class Farmer : Profession
         IsRouterBackUsed = false;
         MyAnimation = "isSummon";
         _person = person;
+        _person.PrevJob = Job.Farmer;
+
         Init();
     }
 

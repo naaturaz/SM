@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Security.Policy;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -427,6 +425,7 @@ public class Person : General
     /// </summary>
     public void InitLoadedPerson(PersonFile pF)
     {
+        NutritionLevel = pF.NutritionLevel;
         Age = pF._age;
 
         _isMajor = pF.IsMajor;
@@ -749,12 +748,17 @@ public class Person : General
 
         AgeAction();
 
-   
-
         CheckHappiness();
         DidIDie();
         CheckIfEmmigrate();
         CheckIfInSchool();
+        AddHappyForVarietyOfFoods();
+    }
+
+    private void AddHappyForVarietyOfFoods()
+    {
+        var amtDiffFoods = Home.Inventory.FoodCatItems.Count;
+        ChangeHappinesBy(amtDiffFoods * 0.1f);
     }
 
     /// <summary>

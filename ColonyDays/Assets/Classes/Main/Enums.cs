@@ -145,7 +145,25 @@ public enum P
     CannonPart,
     Ink,
     Steel,
-    RandomMineOutput, RandomFoundryOutput
+    RandomMineOutput, RandomFoundryOutput,
+
+    CornFlower,
+    Bread,
+    Carrot,
+    Tomato,
+    Cucumber,
+    Cabbage,
+    Lettuce,
+    SweetPotato,
+    Yucca,
+    Pineapple,
+    Mango,
+    Avocado,
+    Guava,
+    Orange,
+    Papaya
+
+
 }
 
 /// <summary>

@@ -49,6 +49,23 @@ public class Food
 
         _nValues.Add(new NutritionValue(P.Fish, 6f));
 
+        //new
+        _nValues.Add(new NutritionValue(P.Bread, 1f));
+        _nValues.Add(new NutritionValue(P.Carrot, 1f));
+        _nValues.Add(new NutritionValue(P.Tomato, 1f));
+        _nValues.Add(new NutritionValue(P.Cucumber, 1f));
+        _nValues.Add(new NutritionValue(P.Cabbage, 1f));
+        _nValues.Add(new NutritionValue(P.Lettuce, 1f));
+        _nValues.Add(new NutritionValue(P.SweetPotato, 1f));
+        _nValues.Add(new NutritionValue(P.Yucca, 1f));
+        _nValues.Add(new NutritionValue(P.Pineapple, 1f));
+        _nValues.Add(new NutritionValue(P.Mango, 1f));
+        _nValues.Add(new NutritionValue(P.Avocado, 1f));
+        _nValues.Add(new NutritionValue(P.Guava, 1f));
+        _nValues.Add(new NutritionValue(P.Orange, 1f));
+        _nValues.Add(new NutritionValue(P.Papaya, 1f));
+
+
         _nValues.OrderBy(a => a.NutritionVal).ToList();
     }
 

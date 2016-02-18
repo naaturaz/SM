@@ -13,7 +13,6 @@ public class ShowAInventory
     private GameObject _containr;
     private Vector3 _iniPos;
     private Inventory _inv;
-
     private string _invType;
 
     /// <summary>
@@ -30,7 +29,6 @@ public class ShowAInventory
 
         ShowAllItems();
     }
-
 
     /// <summary>
     /// Reuglar inventory
@@ -49,13 +47,11 @@ public class ShowAInventory
             _invType = "Main";
             CreateMainInventory();
             ShowAllItems();
-
         }
         //will show the items will be exported, imported in DOck. without amt only name 
         else if (specialInfo == "Dock")
         {
             _invType = "Dock";
-
         }
     }
 
@@ -69,11 +65,12 @@ public class ShowAInventory
 
         for (int i = 0; i < allProdSpec.Count; i++)
         {
-            if (allProdSpec[i].Product.ToString().Contains("Random") || allProdSpec[i].Product.ToString().Contains("Coin" ))
+            if (allProdSpec[i].Product.ToString().Contains("Random") || allProdSpec[i].Product.ToString().Contains("Coin")
+                //foods wont be shown in main inventory
+                || Inventory.CategorizeProd(allProdSpec[i].Product)==PCat.Food)
             {
                 continue;
             }
-
             _inv.AddToSpecialInv(allProdSpec[i].Product);
         }
     }

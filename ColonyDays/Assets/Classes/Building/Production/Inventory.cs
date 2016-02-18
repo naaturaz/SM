@@ -387,18 +387,20 @@ public class Inventory  {
     }
 
 
-    PCat CategorizeProd(P prod)
+    public static PCat CategorizeProd(P prod)
     {
         if (prod == P.Bean || prod == P.Potato || prod == P.SugarCane || prod == P.Corn
             || prod == P.Chicken || prod == P.Egg || prod == P.Pork || prod == P.Beef
-            || prod == P.Fish  || prod == P.Sugar)
+            || prod == P.Fish  || prod == P.Sugar || prod == P.Coconut || prod == P.Banana ||
+
+            prod == P.CornFlower || prod == P.Bread || prod == P.Carrot || prod == P.Tomato
+            || prod == P.Cucumber || prod == P.Cabbage || prod == P.Lettuce || prod == P.SweetPotato
+            || prod == P.Yucca || prod == P.Pineapple || prod == P.Mango || prod == P.Avocado
+            || prod == P.Guava  || prod == P.Orange)
         {
             return PCat.Food;
         }
-        else
-        {
-            return PCat.None;
-        }
+        return PCat.None;
     }
 
     /// <summary>

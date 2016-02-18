@@ -264,6 +264,21 @@ public class Production  {
         InputProdCheckAndAdd(new ProductInfo(P.Cotton, null, listH));
         InputProdCheckAndAdd(new ProductInfo(P.TobaccoLeaf, null, listH));
         InputProdCheckAndAdd(new ProductInfo(P.Henequen, null, listH));
+
+        //new
+        InputProdCheckAndAdd(new ProductInfo(P.Carrot, null, listH));
+        InputProdCheckAndAdd(new ProductInfo(P.Tomato, null, listH));
+        InputProdCheckAndAdd(new ProductInfo(P.Cabbage, null, listH));
+        InputProdCheckAndAdd(new ProductInfo(P.Lettuce, null, listH));
+        InputProdCheckAndAdd(new ProductInfo(P.SweetPotato, null, listH));
+        InputProdCheckAndAdd(new ProductInfo(P.Yucca, null, listH));
+        InputProdCheckAndAdd(new ProductInfo(P.Pineapple, null, listH));
+        InputProdCheckAndAdd(new ProductInfo(P.Mango, null, listH));
+        InputProdCheckAndAdd(new ProductInfo(P.Avocado, null, listH));
+        InputProdCheckAndAdd(new ProductInfo(P.Guava, null, listH));
+        InputProdCheckAndAdd(new ProductInfo(P.Orange, null, listH));
+        InputProdCheckAndAdd(new ProductInfo(P.Papaya, null, listH));
+
     }
 
    
