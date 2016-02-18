@@ -24,6 +24,7 @@ public class MiniMapRTS : GenericCameraComponent {
 
     List<Transform> cardinalPointsTransf;
     Vector2 NW, NE, SW, SE;
+    Vector2 reducedNE, reducedSW , reducedNW;
 
     float terraStartX;
     float terraStartY;
@@ -47,9 +48,27 @@ public class MiniMapRTS : GenericCameraComponent {
         //mapDimRect = new Rect(xStart, yStart, oldScreenWidth / widthProportionSize, oldScreenHeight / heightProportionSize);
 
         GetCardinals();
+	    SetReducedCardinals();
         GetTerrainSpecs();
 	}
-	
+
+    private float reduction = 50;
+    Rect mapRect = new Rect();
+    private void SetReducedCardinals()
+    {
+        reducedNE = new Vector2(NE.x - reduction, NE.y - reduction);
+        reducedSW = new Vector2(SW.x + reduction, SW.y + reduction);
+        
+        reducedNW = new Vector2(NW.x + reduction, NW.y - reduction);
+
+        mapRect = Registro.FromALotOfVertexToRect(new List<Vector3>() {reducedNW, reducedNE, reducedSW});
+    }
+
+    public bool IsOnMapConstraints(Vector3 pos)
+    {
+        return mapRect.Contains(pos);
+    }
+
 	// Update is called once per frame
 	void Update () {
         if (CamControl.CAMRTS.centerTarget != null && centerTarget == null)
@@ -61,24 +80,24 @@ public class MiniMapRTS : GenericCameraComponent {
         UpdateRectDim();
 	}
 
-    public  Vector3 ConstrainLimits(Vector3 newPos)
+    public Vector3 ConstrainLimits(Vector3 newPos)
     {
         Vector3 limit = newPos;
-        if (newPos.x < SW.x)
+        if (newPos.x < reducedSW.x)
         {
-            limit.x = SW.x ;
+            limit.x = reducedSW.x ;
         }
-        if (newPos.z < SW.y)
+        if (newPos.z < reducedSW.y)
         {
-            limit.z = SW.y ;
+            limit.z = reducedSW.y ;
         }
-        if (newPos.x > NE.x)
+        if (newPos.x > reducedNE.x)
         {
-            limit.x = NE.x;
+            limit.x = reducedNE.x;
         }
-        if (newPos.z > NE.y)
+        if (newPos.z > reducedNE.y)
         {
-            limit.z = NE.y;
+            limit.z = reducedNE.y;
         }
         return limit;
     }

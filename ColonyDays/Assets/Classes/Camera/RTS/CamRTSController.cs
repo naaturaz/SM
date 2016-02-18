@@ -53,6 +53,12 @@ public class CamRTSController : CamControl
     //the minimap fully functioning. 
     MiniMapRTS miniMapRTS;
 
+    public MiniMapRTS MiniMapRts
+    {
+        get { return miniMapRTS; }
+        set { miniMapRTS = value; }
+    }
+
     /// <summary>
     /// Create the guides that will grab all the point to the camera move thru when doing the 360 
     /// Rotation

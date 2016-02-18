@@ -58,11 +58,13 @@ public class Root : MonoBehaviour
         public static string bayAndMountain1River = "Prefab/Terrain/Bay_And_Mountain_1_River";
         public static string two_Islands_1_River = "Prefab/Terrain/2_Islands_1_River";
         public static string oneLand2Islands = "Prefab/Terrain/1_Land_2_Islands";
+        public static string narrowIslandsLand = "Prefab/Terrain/Narrow_Islands_Land";
 
 
         public static List<string> BigTerrains = new List<string>()
         {
-            bayAndMountain, bayAndMountainSoft, bayAndMountain1River, two_Islands_1_River, oneLand2Islands
+            bayAndMountain, bayAndMountainSoft, bayAndMountain1River, two_Islands_1_River, oneLand2Islands, 
+            narrowIslandsLand
         }; 
 
 

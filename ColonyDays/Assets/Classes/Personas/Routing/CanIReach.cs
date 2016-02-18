@@ -126,7 +126,7 @@ public class CanIReach : MonoBehaviour
     /// </summary>
     void FindInitPointOnBridge()
     {
-        List<StructureParent> currentBridgeParts12 = _bridge.GiveTheTwoParts12();
+        List<StructureParent> currentBridgeParts12 = _bridge.GiveTheTwoEndsParts10and12();
         var part12ABotton = currentBridgeParts12[0].BottomTop(this)[0].transform.position;
         var part12BBottom = currentBridgeParts12[1].BottomTop(this)[0].transform.position;
 
@@ -140,7 +140,7 @@ public class CanIReach : MonoBehaviour
     /// </summary>
     void FindTopPointOnBridge()
     {
-        List<StructureParent> currentBridgeParts12 = _bridge.GiveTheTwoParts12();
+        List<StructureParent> currentBridgeParts12 = _bridge.GiveTheTwoEndsParts10and12();
         var part12ATop = currentBridgeParts12[0].BottomTop(this)[1].transform.position;
         var part12BTop = currentBridgeParts12[1].BottomTop(this)[1].transform.position;
 

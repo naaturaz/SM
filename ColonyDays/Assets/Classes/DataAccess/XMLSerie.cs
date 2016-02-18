@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System;
+using System.Security.Permissions;
+
 //to be able to serializea an obj cant inherit from monobeaviour
 
 //Tutorial:
@@ -15,6 +17,7 @@ public class XMLSerie
     //public static string dataPath = @"D:\Temp";
 
     public static string dataPath = Application.dataPath;
+
 
     public static void WriteXML(List<RTSData> listP)
     {
@@ -126,6 +129,25 @@ public class XMLSerie
         return res;
     }
 
+
+
+
+
+
+    static private int _buildCounts;
+    static bool _townLoaded;
+    public static bool TownLoaded
+    {
+        get { return _townLoaded; }
+        set { _townLoaded = value; }
+    }
+
+    public static int BuildCounts
+    {
+        get { return _buildCounts; }
+        set { _buildCounts = value; }
+    }
+
     private static BuildingData LoadDefaultTown()
     {
         string locPath = @"\Resources\Town";
@@ -137,12 +159,31 @@ public class XMLSerie
             var file = DataContainer.Load(Path.Combine(dataPath + locPath, "fourHouse.xml"));
             if (file!=null)
             {
+                Debug.Log("TownLoaded = true");
+                BuildCounts = file.BuildingData.All.Count;
+                TownLoaded = true;
                 res = file.BuildingData;
             }
-
         }
         return res;
     }
+
+    /// <summary>
+    /// Called from builing.cs when a building is loaded 
+    /// </summary>
+    public static void NewBuildingLoaded()
+    {
+        BuildCounts--;
+        if (BuildCounts==0)
+        {
+            Debug.Log("TownLoaded = false");
+            TownLoaded = false;
+        }
+    }
+
+
+
+
 
 
 

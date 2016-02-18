@@ -344,6 +344,7 @@ public enum H
     Inv_Ini_Pos,
     Resources,
     Start,
+    Bridge_Trail_Piece_10,
 
 
 }

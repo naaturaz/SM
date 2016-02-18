@@ -433,6 +433,8 @@ public class Building : General, Iinfo
             IfShackResaveInventoryOnRegistro();
         }
 
+        HandleSavedTownBuilding();
+
         InitMilitar();
         InitWheelBarrow();
         InitDockDryDockAndSupplier();
@@ -1959,16 +1961,39 @@ public class Building : General, Iinfo
     /// </summary>
     void LandZoneLoader()
     {
-        if (landZoneLoaded || !PositionFixed ||!IsLoadingFromFile)
+        if (landZoneLoaded || !PositionFixed || !IsLoadingFromFile
+            //|| XMLSerie.TownLoaded
+            )
         {
             return;
         }
+        landZoneLoaded = true;
 
         //so it can add the corners on CrystalManager
         Anchors = GetAnchors();
         //UVisHelp.CreateHelpers(Anchors, Root.largeBlueCube);
         MeshController.CrystalManager1.Add(this);
-        landZoneLoaded = true;
+    }
+
+    /// <summary>
+    /// bz could have being must likely saved in another Map woith other landZones 
+    /// </summary>
+    private void HandleSavedTownBuilding()
+    {
+        //this is only needed for the initial Loaded Town
+        if (Category != Ca.Structure)
+        {
+            return;
+        }
+
+        if (XMLSerie.TownLoaded)
+        {
+            Debug.Log("townLoaded:" + MyId);
+            //Anchors = GetAnchors();
+            LandZone1.Clear();
+            HandleLandZoning();
+            XMLSerie.NewBuildingLoaded();
+        }
     }
 
     protected void PrivHandleZoningAddCrystals()
@@ -2006,6 +2031,8 @@ public class Building : General, Iinfo
             LandZone1.Add(new VectorLand(landZonName, sp.SpawnPoint.transform.position));
         }
     }
+
+  
 
     /// <summary>
     /// Is made public so when is loding is called 

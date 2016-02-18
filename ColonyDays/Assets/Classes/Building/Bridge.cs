@@ -616,12 +616,13 @@ public class Bridge : Trail
     /// Returns the 2 Parts 12 of the Bridge .. the two ends 
     /// </summary>
     /// <returns></returns>
-    public List<StructureParent> GiveTheTwoParts12()
+    public List<StructureParent> GiveTheTwoEndsParts10and12()
     {
         List<StructureParent> res = new List<StructureParent>();
         for (int i = 0; i < Pieces.Count; i++)
         {
-            if (Pieces[i].MyId.Contains(H.Bridge_Trail_Piece_12.ToString()))
+            if (Pieces[i].MyId.Contains(H.Bridge_Trail_Piece_12.ToString()) ||
+                Pieces[i].MyId.Contains(H.Bridge_Trail_Piece_10.ToString()))
             {
                 res.Add(Pieces[i]);
             }
@@ -670,7 +671,7 @@ public class Bridge : Trail
     /// <returns></returns>
     public List<Vector3> GiveTwoEnds()
     {
-        List<StructureParent> currentBridgeParts12 = GiveTheTwoParts12();
+        List<StructureParent> currentBridgeParts12 = GiveTheTwoEndsParts10and12();
         var part12ABotton = currentBridgeParts12[0].BottonMiddle().transform.position;
         var part12BBottom = currentBridgeParts12[1].BottonMiddle().transform.position;
 
@@ -679,7 +680,7 @@ public class Bridge : Trail
 
     private List<Vector3> GiveTwoTops()
     {
-        List<StructureParent> currentBridgeParts12 = GiveTheTwoParts12();
+        List<StructureParent> currentBridgeParts12 = GiveTheTwoEndsParts10and12();
         var part12A = currentBridgeParts12[0].TopMiddle().transform.position;
         var part12 = currentBridgeParts12[1].TopMiddle().transform.position;
 

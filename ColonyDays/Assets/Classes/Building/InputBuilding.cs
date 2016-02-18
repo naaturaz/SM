@@ -119,6 +119,15 @@ public class InputBuilding : BuildingPot {
         //Placing mode
         else if (InputMode == Mode.Placing)
         {
+            //Vector3 iniPos = m.HitMouseOnTerrain.point;
+            //var onMap = CamControl.CAMRTS.MiniMapRts.IsOnMapConstraints(iniPos);
+
+            //if (!onMap)
+            //{
+            //    return;
+            //}
+
+
             //Screen.showCursor = false;
             //Structures
             if (Control.CurrentSpawnBuild.Category == Ca.Structure || Control.CurrentSpawnBuild.Category == Ca.Shore)
@@ -349,6 +358,10 @@ public class InputBuilding : BuildingPot {
     {
         CleanCurrentSpawnBuildIfNewBuildIsADiffType(buildWhat);
         Vector3 iniPos = m.HitMouseOnTerrain.point;
+
+        var onMap = CamControl.CAMRTS.MiniMapRts.IsOnMapConstraints(iniPos);
+        iniPos = CamControl.CAMRTS.MiniMapRts.ConstrainLimits(iniPos);
+
 
         if (DefineCategory(buildWhat) == Ca.Structure || DefineCategory(buildWhat) == Ca.Shore)
         {

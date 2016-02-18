@@ -217,7 +217,8 @@ public class NewGameWindow : GUIElement
             GetGrandChildCalledFromThis("Btn_2", Terra_Name_Btn),
             GetGrandChildCalledFromThis("Btn_3", Terra_Name_Btn),
             GetGrandChildCalledFromThis("Btn_4", Terra_Name_Btn),
-            GetGrandChildCalledFromThis("Btn_5", Terra_Name_Btn)
+            GetGrandChildCalledFromThis("Btn_5", Terra_Name_Btn),
+            GetGrandChildCalledFromThis("Btn_6", Terra_Name_Btn)
         };
     }
 
