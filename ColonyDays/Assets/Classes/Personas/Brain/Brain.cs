@@ -1657,12 +1657,12 @@ public class Brain
         if (collisionsOn.Contains(HPers.InWork))
         {
             PersonPot.Control.RoutesCache1.RemoveRoute(_person.ProfessionProp.Router1.TheRoute, askInWork);
-            RedoProfession();
+            //RedoProfession();
         } 
         if (collisionsOn.Contains(HPers.InWorkBack))
         {
             PersonPot.Control.RoutesCache1.RemoveRoute(_person.ProfessionProp.RouterBack.TheRoute, askInWorkBack);
-            RedoProfession();
+            //RedoProfession();
         }
     }
     #endregion

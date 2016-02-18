@@ -473,16 +473,13 @@ public class Dispatch
     /// <returns></returns>
     float DispatchAmount(Person pers, float amtOnOrder)
     {
-        ////not need for check for null bz this is called from WheelBarrow and Docker
-        //if (amtOnOrder < pers.HowMuchICanCarry())
-        //{
-       
-
-        //    //the 5Kg is to cover the last bit
-        //    //is the way that removes the order
-        //    return amtOnOrder + 5f;
-        //}
-        return pers.HowMuchICanCarry();
+        var mul = 1;
+        if (pers.ProfessionProp != null && pers.PrevJob == Job.WheelBarrow
+            && pers.ProfessionProp.ProfDescription == Job.None)
+        {
+            mul = 3;
+        }
+        return pers.HowMuchICanCarry() * mul;
     }
 
     /// <summary>

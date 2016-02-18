@@ -99,7 +99,10 @@ public class PersonWindow : GUIElement {
                      _person.ProfessionProp.ProfDescription
                      + "\n ID:" + _person.MyId
                      + "\n FamID:" + _person.FamilyId
-                     + "\n Spouse:" + _person.Spouse;
+                     + "\n Spouse:" + _person.Spouse
+                     + "\n Happy:" + _person.Happinnes
+                     + "\n UnHappyYears:" + _person.UnHappyYears
+                     + "\n YearsOfSchool:" + _person.YearsOfSchool;
 
         if (_person.Home!=null)
         {
@@ -107,9 +110,7 @@ public class PersonWindow : GUIElement {
         }
         else res += "\n Home:null";
 
-
         res += DebugInfo();
-
         return res;
     }
 

@@ -679,7 +679,7 @@ public class Person : General
 
     void CheckOnNutrition()
     {
-        ChangeNutritionLvl(-100f * Program.gameScene.GameTime1.TimeFactorInclSpeed());//-2 //4
+        ChangeNutritionLvl(-300f * Program.gameScene.GameTime1.TimeFactorInclSpeed());//-2 //4 //-100
         KillStarve();
     }
 
@@ -701,12 +701,12 @@ public class Person : General
     /// </summary>
     void KillStarve()
     {
-        if (_nutritionLevel < 0)
+        if (_nutritionLevel < 20)
         {
-            ChangeHappinesBy(-0.1);
+            ChangeHappinesBy(-3);//-.1
             //UpdateInfo("Starving");
         }
-        if (_nutritionLevel < -5)//45
+        if (_nutritionLevel < -345)//-45  -5  -545
         {
             if (string.IsNullOrEmpty(IsBooked))
             {
@@ -784,7 +784,7 @@ public class Person : General
 
     void CheckHappiness()
     {
-        if (Happinnes < 0.5f)
+        if (Happinnes < 2f)//.5
         {
             _unHappyYears++;
             return;
@@ -1617,10 +1617,7 @@ public class Person : General
         var genre = ReturnGenreVal();
 
         var mul = 1;
-        if (ProfessionProp != null && ProfessionProp.ProfDescription == Job.WheelBarrow)
-        {
-            mul = 3;
-        }
+
 
         return (age + genre) * mul;
     }
@@ -1847,7 +1844,9 @@ public class Person : General
     /// </summary>
     void CheckIfEmmigrate()
     {
-        if (_unHappyYears > 9 && UPerson.IsMajor(Age))
+        if (_unHappyYears > 2 
+            && UPerson.IsMajor(Age)
+            )
         {
             Emmigrate();
         }
@@ -1855,11 +1854,17 @@ public class Person : General
 
     public void Emmigrate()
     {
-        return;
-
-        EmmigrateWithFamily();
+        //EmmigrateWithFamily();
         ActionOfDisappear();
         print(MyId+" emmigrated");
+        AddToEmmigrationList();
+    }
+
+    /// <summary>
+    /// The peploe had emmigrated they will talk about your port wherever they are 
+    /// </summary>
+    private void AddToEmmigrationList()
+    {
     }
 
     /// <summary>
