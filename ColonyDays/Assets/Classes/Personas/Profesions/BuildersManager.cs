@@ -15,6 +15,8 @@ public class BuildersManager
     //the buildings that were on Queue and are not anymore so all person checked on them 
     List<string> _passedQueue = new List<string>();
 
+    private Building _building;
+
     public List<Construction> Constructions
     {
         get { return _constructions; }
@@ -34,6 +36,11 @@ public class BuildersManager
     }
 
     public BuildersManager() { }
+
+    public BuildersManager(Building building)
+    {
+        _building = building;
+    }
 
     public string GiveMeBestConstruction()
     {
@@ -255,14 +262,33 @@ public class BuildersManager
     void HandleList(Construction construction)
     {
         _constructions.Remove(construction);
-       
         Structure st = Brain.GetStructureFromKey(construction.Key);
 
+        //is the main BuildersManager
+        if (_building==null)
+        {
+            AddBuildingToClosestBuildingOffice(st, construction);
+        }
+    }
+
+    /// <summary>
+    /// The main BuildersManager contain in person controller will send this greenlight 
+    /// building to the closest BuilderManager to the building 
+    /// </summary>
+    void AddBuildingToClosestBuildingOffice(Structure st, Construction construction)
+    {
         //if is null is a brdige 
         if (st == null || st.StartingStage != H.Done)
         {
-            _greenLight.Add(construction);
+            //_greenLight.Add(construction);
+            var closest = FindClosestWheelBarrowerOfficeFullyBuilt(construction.Position);
+            closest.BuildersManager1.GreenLight.Add(construction);
         }
+    }
+
+    Structure FindClosestWheelBarrowerOfficeFullyBuilt(Vector3 construcPos)
+    {
+        return BuildingController.FindTheClosestOfThisTypeFullyBuilt(H.BuildersOffice, construcPos);
     }
 
     void RemoveFromGameController(H hTypeP)

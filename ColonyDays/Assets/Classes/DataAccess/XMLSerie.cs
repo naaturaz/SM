@@ -158,7 +158,7 @@ public class XMLSerie
         var difficulty = 0;
         if (difficulty == 0)
         {
-            var file = DataContainer.Load(Path.Combine(dataPath + locPath, "fourHouse.xml"));
+            var file = DataContainer.Load(Path.Combine(dataPath + locPath, "4H.xml"));
             if (file!=null)
             {
                 Debug.Log("TownLoaded = true");

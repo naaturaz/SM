@@ -464,6 +464,8 @@ public class Registro : MonoBehaviour
     /// DollarsPay
     /// Dock1
     /// PlantSave1
+    /// Dispatch
+    /// BuildersManager1
     /// </summary>
     public void ResaveOnRegistro(string myIdP)
     {
@@ -491,6 +493,7 @@ public class Registro : MonoBehaviour
         AllRegFile[index].DollarsPay = build.DollarsPay;
         AllRegFile[index].Dock1 = build.Dock1;
         AllRegFile[index].Dispatch1 = build.Dispatch1;
+        AllRegFile[index].BuildersManager1 = build.BuildersManager1;
         AllRegFile[index].PlantSave1 = build.PlantSave1;
 
     }
@@ -509,6 +512,8 @@ public class Registro : MonoBehaviour
     /// DollarsPay
     /// Dock1
     /// PlantSave1
+    ///     /// Dispatch
+    /// BuildersManager1
     /// </summary>
     public void ResaveOnRegistro(RegFile regFile, Building build)
     {
@@ -520,7 +525,8 @@ public class Registro : MonoBehaviour
         regFile.Anchors = build.Anchors;
         regFile.DollarsPay = build.DollarsPay;
         regFile.Dock1 = build.Dock1;
-        regFile.Dispatch1 = regFile.Dispatch1;
+        regFile.Dispatch1 = build.Dispatch1;
+        regFile.BuildersManager1 = build.BuildersManager1;
 
         regFile.PlantSave1 = build.PlantSave1;
     }

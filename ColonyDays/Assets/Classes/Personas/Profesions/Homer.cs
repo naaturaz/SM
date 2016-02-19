@@ -177,7 +177,7 @@ public class Homer : Profession
     void ConvertToWheelBarrOrBuilder()
     {
         
-        if (CheckIfCanBeWheelBar())
+        if (CheckIfCanBeWheelBar(_person))
         {
             _person.CreateProfession(Job.WheelBarrow);
         }
@@ -190,11 +190,21 @@ public class Homer : Profession
     /// <summary>
     /// Checks need to do when done 
     /// </summary>
-    public static bool CheckIfCanBeWheelBar()
+    public static bool CheckIfCanBeWheelBar(Person per)
     {
+        if (per == null || per.Work==null)
+        {
+            return false;
+        }
+        //his work is not a BUliding office 
+        if (per.Work.BuildersManager1==null)
+        {
+            return true;
+        }
+
         //will check only when is done 
         //if one building is up. This person will convert into a Builder 
-        if (PersonPot.Control.BuildersManager1.IsAtLeastOneBuildUp())
+        if (per.Work.BuildersManager1.IsAtLeastOneBuildUp())
         {
             //
             return false;

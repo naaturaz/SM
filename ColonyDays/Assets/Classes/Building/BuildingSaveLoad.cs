@@ -162,6 +162,7 @@ public class BuildingSaveLoad : BuildingPot
 
 
         s.Dispatch1 = regFile.Dispatch1;
+        s.BuildersManager1 = regFile.BuildersManager1;
         s.Families = regFile.Familes;
         s.LandZone1 = regFile.LandZone1;
         s.DollarsPay = regFile.DollarsPay;

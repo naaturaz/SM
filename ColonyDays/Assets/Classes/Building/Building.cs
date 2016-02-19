@@ -1828,11 +1828,11 @@ public class Building : General, Iinfo
     Book book = new Book();
     BuildStat buildStat = new BuildStat();
 
-    public void AddToConstruction(float amt)
+    public void AddToConstruction(float amt, Person person=null)
     {
         DefineAmtNeeded();
         constructionAmt += (int)amt;
-        CheckIfNewStageOrDone();
+        CheckIfNewStageOrDone(person);
     }
 
     /// <summary>
@@ -1847,7 +1847,7 @@ public class Building : General, Iinfo
     /// <summary>
     /// Will determnine if a new stage was reached or the building is fully built 
     /// </summary>
-    private void CheckIfNewStageOrDone()
+    private void CheckIfNewStageOrDone(Person person)
     {
         var sP = ReturnCurrentStructureParent();
         var amtPerStage = amtNeeded/4;
@@ -1874,7 +1874,7 @@ public class Building : General, Iinfo
         //if is Done
         if (sP.CurrentStage == 4)
         {
-            HandleLastStage();
+            HandleLastStage(person);
         }
     }
 
@@ -1920,7 +1920,7 @@ public class Building : General, Iinfo
     /// <summary>
     /// Created for modularity. Handles all things related onces the building is fully built 
     /// </summary>
-    protected void HandleLastStage()
+    protected void HandleLastStage(Person person=null)
     {
         Debug.Log("construction built 100%:"+MyId+"." + Program.gameScene.GameTime1.TodayYMD());
 
@@ -1929,8 +1929,12 @@ public class Building : General, Iinfo
             BuildingPot.Control.DockManager1.AddToDockStructure(MyId, HType);
         }
 
-
-        PersonPot.Control.BuildersManager1.RemoveConstruction(MyId);
+        if (person!=null)
+        {
+            person.Work.BuildersManager1.RemoveConstruction(MyId);
+            
+        }
+        //PersonPot.Control.BuildersManager1.RemoveConstruction(MyId);
 
         //if is a Unit from a bridge doesnt need to be added there 
         //Bridge bz needs to be called when all bridge elements are spanwed
@@ -2429,6 +2433,7 @@ public class Building : General, Iinfo
 
     #endregion
 
+    private BuildersManager _buildersManager;
     void InitWheelBarrow()
     {
         if (HType != H.BuildersOffice || IsLoadingFromFile)
@@ -2436,6 +2441,7 @@ public class Building : General, Iinfo
             return;
         }
 
+        _buildersManager=new BuildersManager(this);
         _dispatch = new Dispatch();
     }
 
@@ -2871,6 +2877,12 @@ public class Building : General, Iinfo
     {
         get { return _dock; }
         set { _dock = value; }
+    }
+
+    public BuildersManager BuildersManager1
+    {
+        get { return _buildersManager; }
+        set { _buildersManager = value; }
     }
 
     /// <summary>

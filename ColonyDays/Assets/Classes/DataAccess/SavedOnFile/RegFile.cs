@@ -242,4 +242,6 @@ public class RegFile  {
         }
         return false;
     }
+
+    public BuildersManager BuildersManager1 { get; set; }
 }

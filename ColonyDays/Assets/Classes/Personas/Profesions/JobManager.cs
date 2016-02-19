@@ -150,6 +150,12 @@ public class JobManager
             var key = BuildingPot.Control.Registro.AllRegFile[i].MyId;
             var struc = Brain.GetStructureFromKey(key);
 
+            //brdige 
+            if (struc==null)
+            {
+                continue;
+            }
+
             if (struc.HType == hTypeP &&
                 struc.Instruction != H.WillBeDestroy && !person.Brain.BlackList.Contains(key))
             {

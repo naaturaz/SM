@@ -550,6 +550,44 @@ public class BuildingController : BuildingPot
     /// <param name="hType"></param>
     /// <param name="fromPos"></param>
     /// <returns></returns>
+    static public Structure FindTheClosestOfThisTypeFullyBuilt(H hType, Vector3 fromPos)
+    {
+        List<VectorM> distances = new List<VectorM>();
+
+        for (int i = 0; i < BuildingPot.Control.Registro.AllBuilding.Count; i++)
+        {
+            var build = BuildingPot.Control.Registro.AllBuilding.ElementAt(i).Value;
+
+            //bz cant cast a brdige 
+            Structure st = null;
+            if (!build.MyId.Contains("Bridge"))
+            {
+                st = (Structure)build;
+            }
+
+            if (build.HType == hType && (build.StartingStage==H.Done || st.CurrentStage==4))
+            {
+                distances.Add(new VectorM(build.transform.position, fromPos, build.MyId));
+            }
+        }
+
+        distances = distances.OrderBy(a => a.Distance).ToList();
+        var clostKey = "";
+
+        if (distances.Count > 0)
+        {
+            clostKey = distances[0].LocMyId;
+        }
+
+        return Brain.GetStructureFromKey(clostKey);
+    }
+
+    /// <summary>
+    /// Will find the closest of the type form the point 'fromPos'
+    /// </summary>
+    /// <param name="hType"></param>
+    /// <param name="fromPos"></param>
+    /// <returns></returns>
     static public List<Structure> FindAllStructOfThisType(H hType)
     {
         List<Structure> distances = new List<Structure>();

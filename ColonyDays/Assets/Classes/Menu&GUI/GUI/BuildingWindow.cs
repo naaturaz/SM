@@ -272,6 +272,16 @@ public class BuildingWindow : GUIElement {
             {
                 res += "\n" + _building.PeopleDict[i];
             }
+
+            if (_building.HType == H.BuildersOffice)
+            {
+                res += "\n GreenLight:";
+
+                for (int i = 0; i < _building.BuildersManager1.GreenLight.Count; i++)
+                {
+                    res += "\n" + _building.BuildersManager1.GreenLight[i].Key;
+                }
+            }
         }
         else
         {
@@ -297,6 +307,8 @@ public class BuildingWindow : GUIElement {
             {
                 res += _building.Families[i].InfoShow();
             }
+
+           
         }
 
         return res;

@@ -84,6 +84,7 @@ public class Builder : Profession
     {
         if (_constructing.HType.ToString().Contains("Bridge"))
         {
+            _person.Work.BuildersManager1.RemoveConstruction(_constructing.MyId);       
             PersonPot.Control.BuildersManager1.RemoveConstruction(_constructing.MyId);       
         }
     }
@@ -218,7 +219,14 @@ public class Builder : Profession
 
     Building FindBestToBuild()
     {
-        ConstructingKey = PersonPot.Control.BuildersManager1.GiveMeBestConstruction();
+        //first time wheel barrow chekcs 
+        if (_person == null || _person.Work == null || _person.Work.BuildersManager1==null)
+        {
+            return null;
+        }
+
+        //ConstructingKey = PersonPot.Control.BuildersManager1.GiveMeBestConstruction();
+        ConstructingKey = _person.Work.BuildersManager1.GiveMeBestConstruction();
         return Brain.GetBuildingFromKey(ConstructingKey);
     }
 
@@ -270,7 +278,7 @@ public class Builder : Profession
             }
 
             //do stuff
-            _constructing.AddToConstruction(ProdXShift);
+            _constructing.AddToConstruction(200f, _person);
         }
     }
 

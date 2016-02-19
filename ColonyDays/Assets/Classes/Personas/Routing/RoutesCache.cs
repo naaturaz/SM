@@ -23,6 +23,9 @@ public class RoutesCache {
     /// <returns></returns>
     public bool ContainANewerOrSameRoute(string OriginKey, string DestinyKey, DateTime askDateTime)
     {
+
+        return false;
+
         var haveIt = DoWeHaveThatRoute(OriginKey, DestinyKey);
 
         if (!haveIt)

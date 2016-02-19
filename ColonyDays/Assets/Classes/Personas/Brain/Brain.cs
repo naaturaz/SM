@@ -749,7 +749,7 @@ public class Brain
     #endregion
 
     private float startIdleTime;
-    private float _idleTime = 4.5f;//.5
+    private float _idleTime = 4.5f;//.5  4.5
     private bool _isIdleHomeNow;//will tell if person is at home idleing now 
 
     //says if we ask for new routes. Created to stop the goMindState until the new routes are finished

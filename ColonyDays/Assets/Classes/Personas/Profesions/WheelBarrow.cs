@@ -210,7 +210,7 @@ public class WheelBarrow : Profession
 
     void DecideOnNextIteration()
     {
-        if (Homer.CheckIfCanBeWheelBar())
+        if (Homer.CheckIfCanBeWheelBar(_person))
         {
             //so it restarted
             Init();

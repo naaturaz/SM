@@ -237,16 +237,7 @@ public class Profession
         if (ProdXShift == 0)
         {
             ProdXShift = (_person.HowMuchICanCarry() + yearSchool);
-
-            
-
         }
-        if (ProfDescription==Job.Builder)
-        {
-            ProdXShift = 200;
-        }
-
-      
     }
 
 
