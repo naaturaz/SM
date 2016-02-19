@@ -46,6 +46,10 @@ public class Homer : Profession
 //       //Debug.Log(_person.MyId + " new Homer");
 
         FinRoutePoint = DefineFinRoute();
+        
+
+
+
         ProfDescription = Job.Homer;
 
         InitRoute();

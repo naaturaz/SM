@@ -186,6 +186,9 @@ public class Structure : StructureParent
 	    {
 	        b.CurrentSpawnBuild.transform.Rotate(0, RotationFacerIndex*90, 0);
 	    }
+        //here bz need to be called afer rotartion of building happens 
+        HandleSavedTownBuilding();
+
 
 	    //so bounds get updateds
         CheckIfIsEvenRoutine();

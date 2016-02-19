@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Animal : General
 {
@@ -28,6 +30,7 @@ public class Animal : General
 	    
 	}
 
+    private static int count;
     /// <summary>
     /// Returns Random position from origin. If fell inside a building will find another spot
     /// until is in a clear zone
@@ -44,6 +47,13 @@ public class Animal : General
   
         if (!area.Contains(new Vector2(origin.x, origin.z)))
         {
+            count++;
+            if (count>1000)
+            {
+                throw new Exception("AssignRandomIniPosition() animal.cs");
+            }
+
+
             origin = AssignRandomIniPosition(origin, area);
         }
         return origin;
@@ -66,7 +76,8 @@ public class Animal : General
     protected void SetRandomIdleStart()
     {
         var myAnimator = gameObject.GetComponent<Animator>();
-        myAnimator.Play("Idle", 0, Random.Range(0,2));
+        //myAnimator.Play("Idle", 0, Random.Range(0,2));
+        myAnimator.Play("Idle");
     }
 
     /// <summary>

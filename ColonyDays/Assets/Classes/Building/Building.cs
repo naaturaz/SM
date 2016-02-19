@@ -433,7 +433,6 @@ public class Building : General, Iinfo
             IfShackResaveInventoryOnRegistro();
         }
 
-        HandleSavedTownBuilding();
 
         InitMilitar();
         InitWheelBarrow();
@@ -1978,7 +1977,7 @@ public class Building : General, Iinfo
     /// <summary>
     /// bz could have being must likely saved in another Map woith other landZones 
     /// </summary>
-    private void HandleSavedTownBuilding()
+    protected void HandleSavedTownBuilding()
     {
         //this is only needed for the initial Loaded Town
         if (Category != Ca.Structure)

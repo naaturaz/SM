@@ -133,7 +133,7 @@ public class XMLSerie
 
 
 
-
+    private static int _loadedBuildCalls;
     static private int _buildCounts;
     static bool _townLoaded;
     public static bool TownLoaded
@@ -142,11 +142,13 @@ public class XMLSerie
         set { _townLoaded = value; }
     }
 
-    public static int BuildCounts
-    {
-        get { return _buildCounts; }
-        set { _buildCounts = value; }
-    }
+    //public static int BuildCounts
+    //{
+    //    get { return _buildCounts; }
+    //    set { _buildCounts = value; }
+    //}
+
+
 
     private static BuildingData LoadDefaultTown()
     {
@@ -160,7 +162,7 @@ public class XMLSerie
             if (file!=null)
             {
                 Debug.Log("TownLoaded = true");
-                BuildCounts = file.BuildingData.All.Count;
+                _buildCounts = file.BuildingData.All.Count;
                 TownLoaded = true;
                 res = file.BuildingData;
             }
@@ -173,8 +175,8 @@ public class XMLSerie
     /// </summary>
     public static void NewBuildingLoaded()
     {
-        BuildCounts--;
-        if (BuildCounts==0)
+        _loadedBuildCalls++;
+        if (_buildCounts == _loadedBuildCalls)
         {
             Debug.Log("TownLoaded = false");
             TownLoaded = false;

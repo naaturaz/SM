@@ -1361,6 +1361,9 @@ public class Person : General
         {
             _profession = new SaltMiner(this, pF);
         }
+
+
+        PersonPot.Control.RestartControllerForPerson(MyId);
     }
 
     /// <summary>

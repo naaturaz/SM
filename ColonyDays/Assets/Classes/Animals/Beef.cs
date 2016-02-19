@@ -10,7 +10,7 @@ public class Beef : Animal
 
 	    MoveToRandomSpot();
 	    RotateRandomly();
-	    //SetRandomIdleStart();
+	    SetRandomIdleStart();
     }
 
     /// <summary>

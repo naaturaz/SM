@@ -15,11 +15,19 @@ public class Farmer : Profession
 
     void CreatingNew(Person person)
     {
+        if (person.PrevOrder!=null)
+        {
+            //other wise will malfuntion when creating backRouting 
+            person.PrevOrder = null;
+        }
+
         ProfDescription = Job.Farmer;
         IsRouterBackUsed = false;
         MyAnimation = "isSummon";
         _person = person;
         _person.PrevJob = Job.Farmer;
+
+      
 
         Init();
     }
