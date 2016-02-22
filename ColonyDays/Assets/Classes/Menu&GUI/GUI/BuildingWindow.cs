@@ -173,14 +173,14 @@ public class BuildingWindow : GUIElement {
         HideSalaryIfHouseOrStorage();
         Mark1stCheckBox();
 
-        DemolishBtn();
     }
 
     private void DemolishBtn()
     {
         _cancelDemolish_Btn.SetActive(false);
-
-        if (_building.Instruction == H.WillBeDestroy)
+        bool fullyBuilt = IsFullyBuilt();
+       
+        if (_building.Instruction == H.WillBeDestroy || !fullyBuilt)
         {
             _demolish_Btn.SetActive(false);
             //_cancelDemolish_Btn.SetActive(true);
@@ -189,6 +189,28 @@ public class BuildingWindow : GUIElement {
         {
             _demolish_Btn.SetActive(true);
         }
+    }
+
+    bool IsFullyBuilt()
+    {
+        if (!_building.MyId.Contains("Bridge"))
+        {
+            var st = (Structure)_building;
+            if (st.CurrentStage == 4)
+            {
+                return true;
+            }
+        }
+        //addres bridge 
+        else
+        {
+            var bridge = (Bridge) _building;
+            if (bridge.StartingStageForPieces == H.Done)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void HideSalaryIfHouseOrStorage()
@@ -254,6 +276,9 @@ public class BuildingWindow : GUIElement {
         }
         _showAInventory.ManualUpdate();
         _inv.text = BuildStringInv(_building);
+
+        DemolishBtn();
+
     }
 
     string BuildInfo()
