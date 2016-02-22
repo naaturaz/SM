@@ -69,7 +69,9 @@ public class QueueElement
 
     //people that has checked this Element
     //when all had u can proceed to be used to Greenlight or destryo
-    List<string> _personChecked = new List<string>(); 
+    List<string> _personChecked = new List<string>();
+
+    private int _allCount;
 
     public bool WasUsedToGreenLightOrDestroy
     {
@@ -83,6 +85,7 @@ public class QueueElement
         _key = key;
         Poly = eList;
         DateTime1=DateTime.Now;
+        AllCount = PersonPot.Control.All.Count;
     }
 
     public QueueElement() { }
@@ -109,6 +112,16 @@ public class QueueElement
     }
 
     /// <summary>
+    /// The count of all people at the time this was created 
+    /// used to defined when all people checked this element
+    /// </summary>
+    public int AllCount
+    {
+        get { return _allCount; }
+        set { _allCount = value; }
+    }
+
+    /// <summary>
     /// Will return true if person took Element out of Queue 
     /// </summary>
     /// <param name="personID"></param>
@@ -127,12 +140,20 @@ public class QueueElement
     }
 
     /// <summary>
+    /// Decreases the AllCOunt in the element 
+    /// </summary>
+    public void PersonDie()
+    {
+        AllCount--;
+    }
+
+    /// <summary>
     /// Will tell if all person had being checked in
     /// </summary>
     /// <returns></returns>
     public bool IsCheckedByAll()
     {
         //> is bz some people had die in the process so will be bigger that current 
-        return _personChecked.Count >= PersonPot.Control.All.Count;
+        return _personChecked.Count >= AllCount;
     }
 }

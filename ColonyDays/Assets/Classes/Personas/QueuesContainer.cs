@@ -202,6 +202,37 @@ public class QueuesContainer
         return false;
     }
 
+    /// <summary>
+    /// Manullay checks person in into all _newBuildsQueue and _destroyBuildsQueue Elements 
+    /// </summary>
+    /// <param name="personID"></param>
+    public void CheckMeInToQueueElements(string personID)
+    {
+        for (int i = 0; i < _newBuildsQueue.Elements.Count; i++)
+        {
+            _newBuildsQueue.Elements[i].CheckPersonIn(personID);
+        } 
+        for (int i = 0; i < _destroyBuildsQueue.Elements.Count; i++)
+        {
+            _destroyBuildsQueue.Elements[i].CheckPersonIn(personID);
+        }
+    }
+
+    /// <summary>
+    /// So it decreses the AllCount in the Element 
+    /// </summary>
+    public void PersonDie()
+    {
+        for (int i = 0; i < _newBuildsQueue.Elements.Count; i++)
+        {
+            _newBuildsQueue.Elements[i].PersonDie();
+        }
+        for (int i = 0; i < _destroyBuildsQueue.Elements.Count; i++)
+        {
+            _destroyBuildsQueue.Elements[i].PersonDie();
+        }
+    }
+
 	/// <summary>
     /// Indicates if the Queue is empty or not
     /// </summary>

@@ -992,6 +992,10 @@ public class Brain
             PersonPot.Control.DoneReRoute(_person.MyId);//so another people can use the Spot 
             _timesCall = 0;
             _waiting = false;
+
+            //is called here bz regardless he updated or not his routes he checked into the elements
+            //bz he wont reroute again
+            PersonPot.Control.Queues.CheckMeInToQueueElements(_person.MyId);
         }
     }
 
@@ -2726,6 +2730,9 @@ public class Brain
     {
         if (Partido && string.IsNullOrEmpty(_person.IsBooked))
         {
+            PersonPot.Control.Queues.PersonDie();
+
+
             PersonPot.Control.RemoveMeFromSystem(_person.MyId);
             PersonPot.Control.WorkersRoutingQueue.RemoveMeFromSystem(_person.MyId);
             PersonPot.Control.RemovePersonFromPeopleChecked(_person.MyId);
