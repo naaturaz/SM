@@ -175,6 +175,8 @@ public class InputElement
         Element = element;
         Units = units;
     }
+
+    public InputElement() { }
 }
 
 public class ElementWeight
@@ -187,6 +189,9 @@ public class ElementWeight
         Element = element;
         Weight = weight;
     }
+
+    public ElementWeight() { }
+
 }
 
 

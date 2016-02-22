@@ -157,7 +157,8 @@ public class JobManager
             }
 
             if (struc.HType == hTypeP &&
-                struc.Instruction != H.WillBeDestroy && !person.Brain.BlackList.Contains(key))
+                struc.Instruction != H.WillBeDestroy && !person.Brain.BlackList.Contains(key)
+                && (struc.StartingStage==H.Done||struc.CurrentStage==4))//so they are fully built 
             {
                 Re.Add(BuildingPot.Control.Registro.AllBuilding.ElementAt(i).Value);
             }

@@ -148,8 +148,8 @@ public class Book : General
         Build.Add(new BuildStat(H.CommerceChamber, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.Customs, 400, 15, 5, 25, 5, maxPeople: 5));
 
-        Build.Add(new BuildStat(H.Library, 400, 15, 5, 25, 5, maxPeople: 5));
-        Build.Add(new BuildStat(H.School, 400, 15, 5, 25, 5, maxPeople: 5));
+        Build.Add(new BuildStat(H.Library, 400, 15, 5, 25, 5, maxPeople: 1));
+        Build.Add(new BuildStat(H.School, 400, 15, 5, 25, 5, maxPeople: 2));
         Build.Add(new BuildStat(H.TradesSchool, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.TownHouse, 400, 15, 5, 25, 5, maxPeople: 5));
 
