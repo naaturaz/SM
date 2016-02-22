@@ -14,6 +14,8 @@ public class Insider : Profession {
 
     void CreatingNew(Person person)
     {
+        person.PrevJob = ProfDescription;
+
         ProfDescription = Job.Insider;
         MyAnimation = "isSummon";
         _person = person;

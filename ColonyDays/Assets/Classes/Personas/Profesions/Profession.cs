@@ -878,10 +878,10 @@ public class Profession
     /// </summary>
     public void Execute(string instruct = "", P prod = P.None)
     {
-        if (UPerson.IsWorkingAtSchool(_person))
-        {
-            return;
-        }
+        //if (UPerson.IsWorkingAtSchool(_person))
+        //{
+        //    return;
+        //}
 
         //to address if work place is being destyo on the persons way
         if (_person.Work == null)
@@ -890,7 +890,6 @@ public class Profession
         }
 
         Produce(instruct, prod);
-
         if (ReadyToWork)
         {
             WorkingNow = true;
@@ -920,6 +919,12 @@ public class Profession
     /// <returns></returns>
     P DefineProdWillCarry()
     {
+        //as they have inputs and inputs are usualy in the first of the iNventory
+        if (ProfDescription==Job.Insider)
+        {
+            return _person.Work.CurrentProd.Product;
+        }
+
         if (_person.Work.Inventory.InventItems.Count>0)
         {
             //so removes the first item on Inventory 

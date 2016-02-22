@@ -1156,6 +1156,12 @@ public class Brain
     /// </summary>
     void RemoveAndAddPositionsToJob()
     {
+        //students to get added to PeopleDict
+        //if (_person.IsStudent)
+        //{
+        //    return;
+        //}
+
         if (!string.IsNullOrEmpty(oldWork))
         {
             var build = GetBuildingFromKey(oldWork);

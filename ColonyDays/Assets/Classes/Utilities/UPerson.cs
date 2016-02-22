@@ -12,13 +12,13 @@ public class UPerson
         return false;
     }
 
-    static public bool IsWorkingAtSchool(Person person)
+    static public bool IsWorkingAtSchool(Person person, Structure newWork)
     {
-        if (person.Work == null)
+        if (newWork == null)
         {
             return false;
         }
-        if (person.Work.HType == H.School || person.Work.HType == H.TradesSchool)
+        if (newWork.HType == H.School || newWork.HType == H.TradesSchool)
         {
             return true;
         }

@@ -17,19 +17,22 @@ public class JobManager
 
     public Structure GiveWork(Person person)
     {
-        ////bz need to finish wht is doing to find new work 
-        //if (PersonPot.Control.IAmOnSystemNow(person.MyId))
-        //{
-        //    return person.Work;
-        //}
-
         var key = DecideBasedOnAge(person);
+        var st = Brain.GetStructureFromKey(key);
 
-        if (UPerson.IsWorkingAtSchool(person) && !UPerson.IsMajor(person.Age))
+        if (UPerson.IsWorkingAtSchool(person, st) && !UPerson.IsMajor(person.Age))
         {
             person.IsStudent = true;
+            //add to new school here 
+
         }
-        return Brain.GetStructureFromKey(key);
+        else if (UPerson.IsMajor(person.Age) && person.IsStudent)
+        {
+            person.IsStudent = false;
+            //remove from old school here 
+
+        }
+        return st;
     }
 
     /// <summary>
@@ -37,7 +40,7 @@ public class JobManager
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-      string DecideBasedOnAge(Person person)
+    string DecideBasedOnAge(Person person)
     {
         if (person.Age >= majorityAge)
         {
@@ -63,12 +66,12 @@ public class JobManager
         return "";
     }
 
-      bool OneMoreKidFitOnTheSchool(Building building)
+    bool OneMoreKidFitOnTheSchool(Building building)
     {
-        return true;
+        return false;
     }
 
-      string FindBestSchool(H hTypeP, Person person)
+    string FindBestSchool(H hTypeP, Person person)
     {
         var trades = ReturnListType(hTypeP, person);
 
@@ -82,7 +85,7 @@ public class JobManager
         return "";
     }
 
-      private string DefineClosestBuild(Person person)
+    private string DefineClosestBuild(Person person)
     {
         var currListOfBuild =  BuildingPot.Control.WorkOpenPos;
         int size = currListOfBuild.Count;
@@ -124,7 +127,7 @@ public class JobManager
     /// <summary>
     /// Created for modularity
     /// </summary>
-      string DefineClosestBuildTail(List<VectorM> loc, int index)
+    string DefineClosestBuildTail(List<VectorM> loc, int index)
     {
         string closestKey = "";
 

@@ -34,22 +34,12 @@ public class Homer : Profession
 
     private void Init()
     {
-        //AddMeToWaitListOnSystem();
-        //if (!PersonPot.Control.OnSystemNow(_person.MyId))
-        //{
-        //    _takeABreakNow = true;
-        //    return;
-        //}
-
-
         MyFoodSrc = _person.FoodSource;
-//       //Debug.Log(_person.MyId + " new Homer");
+        //Debug.Log(_person.MyId + " new Homer");
 
         FinRoutePoint = DefineFinRoute();
-        
 
-
-
+        _person.PrevJob = ProfDescription;
         ProfDescription = Job.Homer;
 
         InitRoute();
