@@ -2128,7 +2128,7 @@ public class Building : General, Iinfo
         else if (!hasStorageRoom && !hasThisBuildRoom && person.FoodSource != null)
         {
             //todo show 3d icon
-            AddEvacuationOrder();
+            AddEvacuationOrderOfProdThatAreNotInput();
             //Debug.Log("Both full" + person.FoodSource.MyId + ".and." + MyId + " AddEvacuationOrder() called");
         }
         else if (!doIHaveInput)
@@ -2153,7 +2153,7 @@ public class Building : General, Iinfo
         }
         else if (!hasThisBuildRoom)
         {
-            AddEvacuationOrder();
+            AddEvacuationOrderOfProdThatAreNotInput();
             //           //Debug.Log("Both full" + person.FoodSource.MyId + ".and." + MyId);
         }
         else if (!doIHaveInput)
@@ -2170,11 +2170,16 @@ public class Building : General, Iinfo
     /// When this starts to happen over and over again is when u want to start to Export this Product
     /// In the Port should be a Dispatch to Export and Import 
     /// </summary>
-    void AddEvacuationOrder()
+    public void AddEvacuationOrderOfProdThatAreNotInput()
     {
-        Order t = new Order(CurrentProd.Product, "", MyId);
-        //BuildingPot.Control.Dispatch1.AddEvacuationOrder(t);
-        AddToClosestWheelBarrowAsOrder(t, H.Evacuation);
+        var prodToEvac = BuildingPot.Control.ProductionProp.ReturnProductsOnInvThatAreNotInput(Inventory, HType);
+
+        for (int i = 0; i < prodToEvac.Count; i++)
+        {
+            Order t = new Order(prodToEvac[i], "", MyId);
+            AddToClosestWheelBarrowAsOrder(t, H.Evacuation);
+
+        }
     }
 
     ///// <summary>

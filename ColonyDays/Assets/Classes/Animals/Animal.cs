@@ -133,14 +133,15 @@ public class Animal : General
             //if farm Inventory is not full
             //and Building is done
             //and I have input to produce this 
-            if (!Spawner.Inventory.IsFull() && st.StartingStage == H.Done)
+            if (!Spawner.Inventory.IsFull() && (st.CurrentStage == 4 || st.StartingStage == H.Done))
             {
                 YieldGoods();
             }
             else
             {
                 //todo Notify
-                //Debug.Log("Not Producing meat(beef) bz Inv is full:"+Spawner.MyId+". or not done");
+                Debug.Log("Not Producing meat(beef) bz Inv is full:"+Spawner.MyId+". evac Orders added ");
+                Spawner.AddEvacuationOrderOfProdThatAreNotInput();
             }
         }
     }

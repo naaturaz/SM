@@ -678,7 +678,7 @@ public class PersonController : PersonPot
         if (//WaitList.Count <= WaitingListCap() && 
             !PeopleHasCheck(id))
         {
-            Debug.Log("added to wait list:" + id);
+           //Debug.Log("added to wait list:" + id);
             WaitList.Add(new CheckedIn(id, Time.time));
             return true;
         }
@@ -711,7 +711,7 @@ public class PersonController : PersonPot
         WaitList.RemoveAt(0);
         OnSystemNow1.Add(t);
 
-        Debug.Log("transfer to System:"+t.Id);
+       //Debug.Log("transfer to System:"+t.Id);
     }
 
     internal bool OnWaitListNow(string id)
@@ -735,14 +735,14 @@ public class PersonController : PersonPot
         var wIndex = WaitList.FindIndex(a => a.Id == id);
         if (wIndex > 0)
         {
-            Debug.Log("remove from waitL:"+id);
+           //Debug.Log("remove from waitL:"+id);
             WaitList.RemoveAt(wIndex);
         }
 
         var sIndex = OnSystemNow1.FindIndex(a => a.Id == id);
         if (sIndex > 0)
         {
-            Debug.Log("remove from systemNow:" + id);
+           //Debug.Log("remove from systemNow:" + id);
             OnSystemNow1.RemoveAt(sIndex);    
         }
     }
@@ -770,13 +770,13 @@ public class PersonController : PersonPot
         {
             if (OnSystemNow1.Contains(p) && Family.FindPerson(p.Id) == null)
             {
-                Debug.Log("remove bz was gone OnSystemNow1:" + p.Id);
+               //Debug.Log("remove bz was gone OnSystemNow1:" + p.Id);
                 OnSystemNow1.Remove(p);
                 TransferFirstInWaitingListToOnSystemNow();
             }
             if (WaitList.Contains(p) && Family.FindPerson(p.Id) == null)
             {
-                Debug.Log("remove bz was gone WaitList:" + p.Id);
+               //Debug.Log("remove bz was gone WaitList:" + p.Id);
                 WaitList.Remove(p);
             }
         }

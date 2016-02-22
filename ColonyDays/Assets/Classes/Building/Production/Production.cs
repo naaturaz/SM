@@ -491,8 +491,42 @@ public class Production  {
     int ReturnAllInputsThisBuildingTake(H typeKey)
     {
         var prods = _inputProducts.Where(a => a.HType.Contains(typeKey)).ToList();
-
         return prods.Sum(t => t.Ingredients.Count);
+    }
+
+    List<P> ReturnAllInputsThisBuildingTakeListOfProd(H typeKey)
+    {
+        List<P> res = new List<P>();
+        var prods = _inputProducts.Where(a => a.HType.Contains(typeKey)).ToList();
+        for (int i = 0; i < prods.Count; i++)
+        {
+            res.Add(prods[i].Product);
+        }
+        return res;
+    }
+
+    /// <summary>
+    /// Given a Inventory and HType will tell u which products are not input
+    /// </summary>
+    /// <param name="inv"></param>
+    /// <param name="hType"></param>
+    /// <returns></returns>
+    public List<P> ReturnProductsOnInvThatAreNotInput(Inventory inv, H hType)
+    {
+        List<P> res = new List<P>();
+        var inputs = ReturnAllInputsThisBuildingTakeListOfProd(hType);
+
+        for (int i = 0; i < inv.InventItems.Count; i++)
+        {
+            for (int j = 0; j < inputs.Count; j++)
+            {
+                if (inv.InventItems[i].Key != inputs[j])
+                {
+                    res.Add(inv.InventItems[i].Key);
+                }
+            }
+        }
+        return res.Distinct().ToList();
     }
 
     /// <summary>
@@ -599,21 +633,4 @@ public class Production  {
     }
 
 #endregion
-
-
-
-    #region GUI this 
-    //is the Region tht will gather how much resources we have thur all the Storage and Will be called to be shown on GUI
-
-
-
-    public void UpdateNumbers()
-    {
-        
-    }
-
-
-
-#endregion
-
 }

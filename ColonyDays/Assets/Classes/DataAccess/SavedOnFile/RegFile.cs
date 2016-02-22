@@ -244,4 +244,6 @@ public class RegFile  {
     }
 
     public BuildersManager BuildersManager1 { get; set; }
+
+    public ProductInfo CurrentProd { get; set; }
 }

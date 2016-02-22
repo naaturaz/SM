@@ -908,11 +908,25 @@ public class Profession
 
         if (_person.Work.CanTakeItOut(_person))
         {
-            _person.ExchangeInvetoryItem(_person.Work, _person, _person.Work.CurrentProd.Product, ProdXShift);
+            _person.ExchangeInvetoryItem(_person.Work, _person, DefineProdWillCarry(), ProdXShift);
             prodCarrying = _person.Work.CurrentProd.Product;
-            amtCarrying = ProdXShift;
+            amtCarrying = ProdXShift;//ProdXShift
         }
-    }  
+    }
+
+    /// <summary>
+    /// So it handles what is the first item on inventory. otherwise will return CurrentProd 
+    /// </summary>
+    /// <returns></returns>
+    P DefineProdWillCarry()
+    {
+        if (_person.Work.Inventory.InventItems.Count>0)
+        {
+            //so removes the first item on Inventory 
+            return _person.Work.Inventory.InventItems[0].Key;
+        }
+        return _person.Work.CurrentProd.Product;
+    }
     
     /// <summary>
     /// The action of producing goods 

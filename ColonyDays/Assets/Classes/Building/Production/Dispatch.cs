@@ -190,8 +190,8 @@ public class Dispatch
         if (!ListContains(Orders, evacOrder) && !ListContains(_dormantOrders, evacOrder))
         {
             Orders.Insert(0, evacOrder);
-
             OrderByPlacedTime(Orders);
+            Debug.Log("evac order added:"+evacOrder.Product+" orig:"+evacOrder.SourceBuild);
         }
     }
 

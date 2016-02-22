@@ -466,6 +466,7 @@ public class Registro : MonoBehaviour
     /// PlantSave1
     /// Dispatch
     /// BuildersManager1
+    /// CurrentProd
     /// </summary>
     public void ResaveOnRegistro(string myIdP)
     {
@@ -495,6 +496,7 @@ public class Registro : MonoBehaviour
         AllRegFile[index].Dispatch1 = build.Dispatch1;
         AllRegFile[index].BuildersManager1 = build.BuildersManager1;
         AllRegFile[index].PlantSave1 = build.PlantSave1;
+        AllRegFile[index].CurrentProd = build.CurrentProd;
 
     }
 
@@ -514,6 +516,7 @@ public class Registro : MonoBehaviour
     /// PlantSave1
     ///     /// Dispatch
     /// BuildersManager1
+    /// CurrentProd
     /// </summary>
     public void ResaveOnRegistro(RegFile regFile, Building build)
     {
@@ -529,6 +532,7 @@ public class Registro : MonoBehaviour
         regFile.BuildersManager1 = build.BuildersManager1;
 
         regFile.PlantSave1 = build.PlantSave1;
+        regFile.CurrentProd = build.CurrentProd;
     }
 
     /// <summary>
