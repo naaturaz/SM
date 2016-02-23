@@ -31,14 +31,12 @@ public class Builder : Profession
 
     void B4Init(Person person)
     {
+        person.PrevJob = ProfDescription;
         ProfDescription = Job.Builder;
         
         MyAnimation = "isHammer";
         _person = person;
         _person = person;
-        _person.PrevJob = Job.Builder;
-
-
 
         DefineConstructingRoutine();
     }
@@ -171,8 +169,7 @@ public class Builder : Profession
                 return Brain.ReturnClosestVector3(_person.Work.transform.position, _constructing.Anchors);
             }
         }
-        else if (_constructing.HType.ToString().Contains("Dock") || _constructing.HType.ToString().Contains("DryDock")
-            || _constructing.HType.ToString().Contains("Fish"))
+        else if (IsAShoreBuilding(_constructing))
         {
             if (_constructing.Anchors.Count > 0)
             {
@@ -191,6 +188,17 @@ public class Builder : Profession
         return _constructing.GetAnchors(true)[UMath.GiveRandom(0, 4)];
     }
 
+    public static bool IsAShoreBuilding(Building constP)
+    {
+        if ((constP.HType.ToString().Contains("Dock") || constP.HType.ToString().Contains("DryDock")
+            || constP.HType.ToString().Contains("Fish") || constP.HType.ToString().Contains("SaltMine")
+            || constP.HType.ToString().Contains("Supplier")))
+        {
+            return true;
+        }
+        return false;
+    }
+
     void InitRoute()
     {
         Router1 = null;
@@ -203,7 +211,7 @@ public class Builder : Profession
         dummy.transform.position = FinRoutePoint;
 
         dummy.transform.LookAt(_constructing.transform.position);
-        dummy.HandleLandZoning();
+        dummy.HandleLandZoning(_constructing, FinRoutePoint);
 
         Router1 = new CryRouteManager(_person.Work, dummy, _person, finDoor:false);
 

@@ -15,6 +15,8 @@ public class SaltMiner : Profession
 
     void CreatingNew(Person person)
     {
+        person.PrevJob = ProfDescription;
+
         ProfDescription = Job.SaltMiner;
         IsRouterBackUsed = false;
         MyAnimation = "isSummon";

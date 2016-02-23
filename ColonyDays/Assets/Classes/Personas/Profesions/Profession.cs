@@ -202,6 +202,7 @@ public class Profession
 
     public Profession()
     {
+
         CleanOldProf();
         CleanOldVars();
      

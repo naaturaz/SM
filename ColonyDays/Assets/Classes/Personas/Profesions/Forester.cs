@@ -21,6 +21,7 @@ public class Forester : Profession
 
     void CreatingNew(Person person)
     {
+        person.PrevJob = ProfDescription;
         ProfDescription = Job.Forester;
         IsRouterBackUsed = true;
         MyAnimation = "isSummon";

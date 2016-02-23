@@ -137,6 +137,8 @@ public class PersonFile  {
 
         FamilyId = pers.FamilyId;
         YearsOfSchool = pers.YearsOfSchool;
+        PrevJob = pers.PrevJob;
+
         NutritionLevel = pers.NutritionLevel;
     }
 
@@ -178,4 +180,6 @@ public class PersonFile  {
 
 
 
+
+    public Job PrevJob { get; set; }
 }

@@ -129,11 +129,7 @@ public class PersonWindow : GUIElement {
                   + "\n BodyGngTo:" + _person.Body.GoingTo
                   + "\n BornInfo:" + _person.DebugBornInfo
                   + "\n wrkRouteChks:" + _person.Brain._workRoute.CheckPoints.Count
-                  + "\n Profession:" + _person.ProfessionProp
-                  + "\n Waiting:" + _person.Brain.Waiting
-                  + "\n TimesCall:" + _person.Brain.TimesCall
-                  + "\n OnSysNow:" + PersonPot.Control.OnSystemNow(_person.MyId)
-                  + "\n OnWaitNow:" + PersonPot.Control.OnWaitListNow(_person.MyId);
+                  + "\n Profession:" + _person.ProfessionProp;
 
         if (_person.Work != null)
         {
@@ -150,14 +146,16 @@ public class PersonWindow : GUIElement {
             res += "\n ProfessionReady: prof is null" ;
         }
 
-
         if (_person.FoodSource != null)
         {
             res += "\n FoodSrc:" + _person.FoodSource.MyId;
         }
         else res += "\n FoodSrc:null";
 
-     
+        res += "\n Waiting:" + _person.Brain.Waiting
+                  + "\n TimesCall:" + _person.Brain.TimesCall
+                  + "\n OnSysNow:" + PersonPot.Control.OnSystemNow(_person.MyId)
+                  + "\n OnWaitNow:" + PersonPot.Control.OnWaitListNow(_person.MyId);
 
         return res;
     }

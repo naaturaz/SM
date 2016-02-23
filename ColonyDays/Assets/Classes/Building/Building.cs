@@ -2029,10 +2029,44 @@ public class Building : General, Iinfo
         if (!MyId.Contains("Bridge"))
         {
             var sp = ReturnCurrentStructureParent();
-            var landZonName = MeshController.CrystalManager1.ReturnLandingZone(sp.SpawnPoint.transform.position);
+            var spawnPoint = MoveSpawnPointAwayFromBuildingIfShoreBuild(sp);
+
+            var landZonName = MeshController.CrystalManager1.ReturnLandingZone(spawnPoint);
 
             LandZone1.Add(new VectorLand(landZonName, sp.SpawnPoint.transform.position));
         }
+    }
+
+    /// <summary>
+    /// Bz structures that are close to shores in some conditions cant get a LinkRect to link 
+    /// then I will push the SpawnPoint pos a bit away from building
+    /// </summary>
+    /// <param name="spPoint"></param>
+    /// <returns></returns>
+    Vector3 MoveSpawnPointAwayFromBuildingIfShoreBuild(StructureParent sp)
+    {
+        //if is nota shore building will return spawn point 
+        if (!Builder.IsAShoreBuilding(sp))
+        {
+            return sp.SpawnPoint.transform.position;
+        }
+
+        //else will move it away from builidng 
+        var spawnPnt = sp.SpawnPoint.transform.position;
+        return Vector3.MoveTowards(spawnPnt, sp.transform.position, -5);
+    }
+
+    /// <summary>
+    /// To define the landzone of a dummy by geetting the LandZone name from the c'onstructing' and
+    /// the position
+    /// 
+    /// Useful to dummy spawns in Corners of a bulding that we know already the landzone
+    /// </summary>
+    /// <param name="constructing"></param>
+    /// <param name="position"></param>
+    internal void HandleLandZoning(Building constructing, Vector3 position)
+    {
+        LandZone1.Add(new VectorLand(constructing.LandZone1[0].LandZone, position));
     }
 
   

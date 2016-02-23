@@ -91,8 +91,12 @@ public class Naming
         string tempName = "";
         string[] maleNames =
         {
-            "Manuel", "Alejandro", "Anthony", "Jose", "Herminio", "Fernando", "Colon", "Oslandy", "Oslay",
-            "Oscar", "Enrrique",
+            "Manuel", "Alejandro", "Anthony", "Jose", "Herminio", "Aldo", "Isidro", "Lazaro",
+            "Fernando", "Colon", "Oslandy", "Oslay",
+            "Almendra", "Enrrique",
+            "Yoniel", "Santana", "Sandor", "Ferreiro", "Michel", "Otero", 
+            "Yohandry", "Yoandy",
+
             "Aaron", "Andrew", "Bill", "Carl", "Carlos", "John", "Jose", "Riley", "Rob",
             "Craig", "Elon", "Musk", "Page",
             "James", "Robert", "Michael", "William", "David", "Dave", "Richard", "Charles",
@@ -113,9 +117,13 @@ public class Naming
 
         string[] femaleNames =
         {
-            "Fatima", "Maria", "Madeleyne", "Luisa", "Berta", "Adelina", "Sonia", "Vera",
-            "Sophia", "Emma", "Isabella", "Olivia", "Ava", "Emily", "Abigail", "Mia", "Madison",
-            "Elizabeth", "Chloe", "Ella", "Avery", "Addison", "Aubrey", "Lily", "Natalie", "Sofia",
+            "Fatima", "Amalia", "Cristina", "Maria", "Madeleyne", "Luisa", "Berta", "Candelaria", "Canda", "Candita",
+            "Lazara", "Caridad",
+            "Adelina", "Sonia", "Vera",
+            "Amelie", "Amelia", "Marita",
+
+            "Nikita", "Emma", "Isabella", "Olivia", "Ava", "Emily", "Abigail", "Mia", "Madison",
+            "Elizabeth", "Chloe", "Ella", "Avery", "Addison", "Aubrey", "Lily", "Natalie", "Anita",
             "Charlotte", "Zoey", "Grace", "Hannah", "Amelia", "Lillian", "Samantha", "Evelyn", "Victoria",
             "Brooklyn", "Vicky", "Zoe", "Layla", "Hailey", "Leah", "Kaylee", "Anna", "Aaliyah", "Gabriella",
             "Allison", "Nevaeh", "Alexis", "Audrey", "Savannah", "Sarah", "Alyssa", "Claire", "Taylor",

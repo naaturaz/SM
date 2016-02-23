@@ -460,6 +460,7 @@ public class Person : General
 
         PrevOrder = pF.PrevOrder;
         YearsOfSchool = pF.YearsOfSchool;
+        PrevJob = pF.PrevJob;
 
         _body = new Body(this, pF);
         Brain = new Brain(this, pF);

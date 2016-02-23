@@ -56,18 +56,9 @@ public class WheelBarrow : Profession
             return;
         }
 
-        //AddMeToWaitListOnSystem();
-        //if (!PersonPot.Control.OnSystemNow(_person.MyId))
-        //{
-        //    _takeABreakNow = true;
-        //    return;
-        //}
-
         //so its not using the same order over and over again in case the Dispatch is finding nothing 
         CleanOldVars();
-
         //Debug.Log(_person.MyId+" Init WheelB");
-        _person.PrevJob = Job.WheelBarrow;
 
         //if did not fouind a order will return, and take a break now  
         if (!DidPickUpOrder())
@@ -76,6 +67,7 @@ public class WheelBarrow : Profession
             return;
         }
 
+        _person.PrevJob = ProfDescription;
         ProfDescription = Job.WheelBarrow;
         MyAnimation = "isHammer";
 

@@ -53,7 +53,8 @@ public class Docker : Profession
         CleanOldVars();
 
         //Debug.Log(_person.MyId+" Init WheelB");
-        _person.PrevJob = Job.Docker;
+        _person.PrevJob = ProfDescription;
+
         PickUpOrder();
 
         ProfDescription = Job.Docker;

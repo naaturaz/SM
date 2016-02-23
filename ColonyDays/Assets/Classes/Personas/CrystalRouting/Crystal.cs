@@ -565,8 +565,7 @@ public class Crystal
     {
         //not render if is poll
         bool render = Type1 != H.Poll;
-
-
+        //bool render = true;
 
         Line tLine = new Line(this, nextCrystal, render);
 
@@ -664,15 +663,15 @@ public class Crystal
         LinkALandZone(newName);
     }
 
-    private void SetNewNameAndLinks(string newName)
-    {
-        Name = newName;
+    //private void SetNewNameAndLinks(string newName)
+    //{
+    //    Name = newName;
 
-        for (int i = 0; i < _links.Count; i++)
-        {
-            _links[i].Name = newName;
-        }
-    }
+    //    for (int i = 0; i < _links.Count; i++)
+    //    {
+    //        _links[i].Name = newName;
+    //    }
+    //}
 
     /// <summary>
     /// Will assigin line to the available line spot 
