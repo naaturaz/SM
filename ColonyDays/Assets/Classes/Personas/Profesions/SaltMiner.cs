@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 public class SaltMiner : Profession
 {
-
     public SaltMiner(Person person, PersonFile pF)
     {
         if (pF == null)
@@ -15,6 +14,8 @@ public class SaltMiner : Profession
 
     void CreatingNew(Person person)
     {
+        //in case was a Wheelbarrow the prevProfession and when home route back gives problem 
+        person.PrevOrder = null;
         person.PrevJob = ProfDescription;
 
         ProfDescription = Job.SaltMiner;

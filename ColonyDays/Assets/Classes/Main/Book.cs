@@ -144,9 +144,9 @@ public class Book : General
         Build.Add(new BuildStat(H.StorageExtraBig, 600, 80, 20, 0, 5, maxPeople: 0, capacity: 4200));
 
         //Gov
-        Build.Add(new BuildStat(H.Clinic, 400, 15, 5, 25, 5, maxPeople: 5));
-        Build.Add(new BuildStat(H.CommerceChamber, 400, 15, 5, 25, 5, maxPeople: 5));
-        Build.Add(new BuildStat(H.Customs, 400, 15, 5, 25, 5, maxPeople: 5));
+        //Build.Add(new BuildStat(H.Clinic, 400, 15, 5, 25, 5, maxPeople: 5));
+        //Build.Add(new BuildStat(H.CommerceChamber, 400, 15, 5, 25, 5, maxPeople: 5));
+        //Build.Add(new BuildStat(H.Customs, 400, 15, 5, 25, 5, maxPeople: 5));
 
         Build.Add(new BuildStat(H.Library, 400, 15, 5, 25, 5, maxPeople: 1));
         Build.Add(new BuildStat(H.School, 400, 15, 5, 25, 5, maxPeople: 2));

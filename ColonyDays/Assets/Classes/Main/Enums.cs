@@ -219,7 +219,9 @@ public enum H
     //Trade F7
     Dock, DryDock, Supplier, StorageSmall, StorageMed, StorageBig, StorageBigTwoDoors, StorageExtraBig,
     //gov F8
-    Clinic, CommerceChamber, Customs, Library, School, TradesSchool, TownHouse,
+    //Clinic, CommerceChamber, Customs, 
+    Library, School, TradesSchool, 
+    TownHouse,
     //other F9
     //Religous
     Church,
@@ -361,7 +363,9 @@ public enum StInfr //for structures game structure.cs
     //Infrastructure
     //Trail, Road, 
     BridgeTrail, BridgeRoad,
-    CoachMan, LightHouse, WheelBarrow, 
+    //CoachMan, 
+    LightHouse,
+    //WheelBarrow, 
     //b4StockPile, 
     BuildersOffice
 }
@@ -408,7 +412,8 @@ public enum StTrade //for structures game structure.cs
 public enum StGov //for structures game structure.cs 
 {
     //Gov Services
-    Clinic,CommerceChamber,Customs,Library,School,TradesSchool,TownHouse,
+    //Clinic,CommerceChamber,Customs,
+    Library,School,TradesSchool,TownHouse,
 }
 
 public enum StOther //for structures game structure.cs 

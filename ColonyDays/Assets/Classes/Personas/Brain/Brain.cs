@@ -748,8 +748,10 @@ public class Brain
 
     #endregion
 
-    private float startIdleTime;
+    private const float IDLETIME = 1f;
     private float _idleTime = 1f;//.5  4.5
+
+    private float startIdleTime;
     private bool _isIdleHomeNow;//will tell if person is at home idleing now 
 
     //says if we ask for new routes. Created to stop the goMindState until the new routes are finished
@@ -789,7 +791,7 @@ public class Brain
     {
         CurrentTask = nextTask;
         startIdleTime = 0;
-        _idleTime = 4.5f;//.5
+        _idleTime = IDLETIME;//.5   4.5
         GoMindState = true;
         _isIdleHomeNow = false;
     }

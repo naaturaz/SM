@@ -126,7 +126,8 @@ public class BuildingsMenu : GUIElement
     }
 
     /// <summary>
-    /// Here have to implement the locking and unlocking of buildings 
+    /// Here have to implement the locking and unlocking of buildings
+    /// todo 
     /// </summary>
     /// <param name="build"></param>
     /// <returns></returns>

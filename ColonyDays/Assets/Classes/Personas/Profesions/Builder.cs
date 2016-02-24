@@ -19,6 +19,9 @@ public class Builder : Profession
 
     void CreatingNew(Person person)
     {
+        //in case was a Wheelbarrow the prevProfession and when home route back gives problem 
+        person.PrevOrder = null;
+
         B4Init(person);
     }
 

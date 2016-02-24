@@ -60,7 +60,7 @@ public class DescriptionWindow : General
     {
         _title.GetComponent<Text>().text = val + "";
         _cost.GetComponent<Text>().text = BuildCostString(val);
-        _description.GetComponent<Text>().text = val + "";
+        _description.GetComponent<Text>().text = Languages.ReturnString(val+".Desc");
 
 
         //load the root of the banner 

@@ -603,9 +603,9 @@ public class Root : MonoBehaviour
         buildsRoot.Add(H.StorageExtraBig, "Prefab/Building/Trade/StorageExtraBig");
 
         //gov
-        buildsRoot.Add(H.Clinic, "Prefab/Building/GovServices/Clinic");
-        buildsRoot.Add(H.CommerceChamber, "Prefab/Building/GovServices/CommerceChamber");
-        buildsRoot.Add(H.Customs, "Prefab/Building/GovServices/Customs");
+        //buildsRoot.Add(H.Clinic, "Prefab/Building/GovServices/Clinic");
+        //buildsRoot.Add(H.CommerceChamber, "Prefab/Building/GovServices/CommerceChamber");
+        //buildsRoot.Add(H.Customs, "Prefab/Building/GovServices/Customs");
         buildsRoot.Add(H.Library, "Prefab/Building/GovServices/Library");
         buildsRoot.Add(H.School, "Prefab/Building/GovServices/School");
         buildsRoot.Add(H.TradesSchool, "Prefab/Building/GovServices/TradesSchool");

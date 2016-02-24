@@ -30,16 +30,15 @@ public class Insider : Profession {
 
     private void Init()
     {
+        //in case was a Wheelbarrow the prevProfession and when home route back gives problem 
+        _person.PrevOrder = null;
+
         //  to adress the problem when creating a new profession and builder spawned
         // Dummy somewhere, and the Dummy doesnt get destroyed 
         ResetDummy();
 
         FinRoutePoint = _person.Work.BehindMainDoorPoint;
-        //ReadyToWork = true;
-
-
         FakeRouter1ForNewProfThatUseHomer();   
-
         RouteBackForNewProfThatUseHomer();
     }
 
