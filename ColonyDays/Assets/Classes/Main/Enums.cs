@@ -227,7 +227,7 @@ public enum H
     Tavern, Shack,
 
     //Militar
-    PostGuard, Tower, Fort, Morro,
+    PostGuard, Fort, Morro,
 
 
 
@@ -421,7 +421,7 @@ public enum StOther //for structures game structure.cs
 
 public enum StMil //for structures game structure.cs 
 {
-    PostGuard ,Tower, Fort, Morro,
+    PostGuard , Fort, Morro,
 }
 
 

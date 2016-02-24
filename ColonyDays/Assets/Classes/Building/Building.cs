@@ -2865,7 +2865,8 @@ public class Building : General, Iinfo
 
     bool IsMilitar()
     {
-        if (HType == H.PostGuard || HType == H.Tower || HType == H.Fort || HType == H.Morro)
+        if (HType == H.PostGuard //|| HType == H.Tower 
+            || HType == H.Fort || HType == H.Morro)
         {
             return true;
         }

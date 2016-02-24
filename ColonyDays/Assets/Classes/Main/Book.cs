@@ -160,7 +160,7 @@ public class Book : General
         //Militar
         Build.Add(new BuildStat(H.PostGuard, 600, 80, 20, 0, 5, maxPeople: 10));
 
-        Build.Add(new BuildStat(H.Tower, 600, 80, 20, 0, 5, maxPeople: 10));
+       // Build.Add(new BuildStat(H.Tower, 600, 80, 20, 0, 5, maxPeople: 10));
         Build.Add(new BuildStat(H.Fort, 600, 80, 20, 0, 5, maxPeople: 10));
         Build.Add(new BuildStat(H.Morro, 600, 80, 20, 0, 5, maxPeople: 10));
     }

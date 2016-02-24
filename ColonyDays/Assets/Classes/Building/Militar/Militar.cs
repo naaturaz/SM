@@ -30,11 +30,11 @@ public class Militar
             return 1;
             
         }
-        if (_building.HType == H.Tower)
-        {
-            return 3;
+        //if (_building.HType == H.Tower)
+        //{
+        //    return 3;
 
-        }
+        //}
         if (_building.HType == H.Fort)
         {
             return 10;
