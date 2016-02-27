@@ -141,7 +141,7 @@ public class WheelBarrow : Profession
             return;
         }
 
-        _routerActive = true;
+        RouterActive = true;
         Router1 = new CryRouteManager(_person.Work, _sourceBuild, _person);
        // Router1 = new RouterManager(_person.Work, _sourceBuild, _person, HPers.InWork);
 

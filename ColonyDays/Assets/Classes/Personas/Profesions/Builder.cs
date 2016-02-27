@@ -207,7 +207,7 @@ public class Builder : Profession
         Router1 = null;
         RouterBack = null;
 
-        _routerActive = true;
+        RouterActive = true;
 
         //Debug.Log("got dummy:" + _person.MyId + " cons:" + _constructing.MyId + " finRt:" + FinRoutePoint);
         dummy = CreateDummy();

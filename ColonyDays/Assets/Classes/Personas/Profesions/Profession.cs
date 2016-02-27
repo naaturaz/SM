@@ -200,6 +200,12 @@ public class Profession
         set { _stillElementID = value; }
     }
 
+    public bool RouterActive
+    {
+        get { return _routerActive; }
+        set { _routerActive = value; }
+    }
+
     public Profession()
     {
 
@@ -377,8 +383,9 @@ public class Profession
     /// <summary>
     /// This needs to be called from every child and to work must be called too from Person.Update()
     /// </summary>
-    public virtual void Update() 
+    public virtual void Update()
     {
+        RemoveMeFromQueueIfImThereAndNotUsingIt();
         RouterDealear();
 
         if (_workingNow)
@@ -390,6 +397,25 @@ public class Profession
         SetProdXShift();
 	}
 
+    /// <summary>
+    /// bz sometimes profession goes and create a different profession that at the moment
+    /// is not Routing and the guy gets stuck on System and doesnt let anyone else
+    /// ReRoute
+    /// </summary>
+    private void RemoveMeFromQueueIfImThereAndNotUsingIt()
+    {
+        //if is routing then let it here so routes 
+        if (_routerActive || _person==null)
+        {
+            return;
+        }
+
+        if (PersonPot.Control.WorkersRoutingQueue.OnSystemNow(_person.MyId))
+        {
+            PersonPot.Control.WorkersRoutingQueue.RemoveMeFromSystem(_person.MyId);
+            Debug.Log("remove form system prof:" + _person.MyId);
+        }
+    }
 
     void RouterDealear()
     {
@@ -408,7 +434,6 @@ public class Profession
         }
     }
 
-
     void AddMeToWaitListOnSystem()
     {
         //needs to finish thet route first. then will create this one 
@@ -424,8 +449,10 @@ public class Profession
     /// </summary>
     void ReRouteDone()
     {
-        //Debug.Log("remove from cntrl:" + _person.MyId + " :" + ProfDescription);
-        PersonPot.Control.WorkersRoutingQueue.DoneReRoute(_person.MyId);//so another people can use the Spot 
+        var timeOnSys = PersonPot.Control.WorkersRoutingQueue.DoneReRoute(_person.MyId);//so another people can use the Spot
+
+//        Debug.Log("remove from cntrl prof:" + _person.MyId + " :" + ProfDescription + " on Sys:" + timeOnSys);
+
     }
 
     /// <summary>

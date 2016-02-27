@@ -96,6 +96,11 @@ public class Root : MonoBehaviour
 
         public static string palm10 = "Prefab/Terrain/Spawner/Palm/Palm10";
 
+        public static string palm20 = "Prefab/Terrain/Spawner/Palm/Palm20";
+        public static string palm21 = "Prefab/Terrain/Spawner/Palm/Palm21";
+        public static string palm22 = "Prefab/Terrain/Spawner/Palm/Palm22";
+        public static string palm23 = "Prefab/Terrain/Spawner/Palm/Palm23";
+
 
 
 
@@ -131,6 +136,8 @@ public class Root : MonoBehaviour
         public static string orna4 = "Prefab/Terrain/Spawner/Orna4";
         public static string orna5 = "Prefab/Terrain/Spawner/Orna5";
         public static string orna6 = "Prefab/Terrain/Spawner/Orna6";
+        public static string orna7 = "Prefab/Terrain/Spawner/Orna7";
+        public static string orna8 = "Prefab/Terrain/Spawner/Orna8";
 
         public static string grass1 = "Prefab/Terrain/Spawner/Grass1";
         public static string grass2 = "Prefab/Terrain/Spawner/Grass2";

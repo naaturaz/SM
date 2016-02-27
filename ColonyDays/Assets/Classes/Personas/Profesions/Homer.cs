@@ -59,7 +59,7 @@ public class Homer : Profession
 
     void InitRoute()
     {
-        _routerActive = true;
+        RouterActive = true;
         dummy = CreateDummy();
         dummy.transform.position = FinRoutePoint;
         dummy.HandleLandZoning();

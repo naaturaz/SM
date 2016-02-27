@@ -2348,7 +2348,7 @@ public class Building : General, Iinfo
     void CheckIfOrdersAreNeeded()
     {
         //only order inpu twhen is has workers
-        if (PeopleDict.Count==0)
+        if (PeopleDict.Count==0 || Instruction==H.WillBeDestroy)
         {
             return;
         }

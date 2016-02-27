@@ -87,7 +87,7 @@ public class Forester : Profession
 
     void InitRoute()
     {
-        _routerActive = true;
+        RouterActive = true;
 
         //bz dummy.DummyIdSpawner
         dummy = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy);

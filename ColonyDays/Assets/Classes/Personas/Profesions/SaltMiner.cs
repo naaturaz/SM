@@ -59,7 +59,7 @@ public class SaltMiner : Profession
 
     void InitRoute()
     {
-        _routerActive = true;
+        RouterActive = true;
         ConformInBuildRoute();
 
         RouteBackForNewProfThatUseHomer();

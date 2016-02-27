@@ -74,17 +74,19 @@ public class PeopleQueue {
         return false;
     }
 
-    public void DoneReRoute(string p)
+    public float DoneReRoute(string p)
     {
         for (int i = 0; i < _onSystemNow.Count; i++)
         {
             if (_onSystemNow[i].Id == p)
             {
+                var timeOnSys = Time.time - _onSystemNow[i].Time;
                 _onSystemNow.RemoveAt(i);
                 TransferFirstInWaitingListToOnSystemNow();
-                return;
+                return timeOnSys;
             }
         }
+        return -1;
     }
 
     internal bool CanIReRouteNow(string pMyID)
@@ -159,7 +161,6 @@ public class PeopleQueue {
         if (sIndex > 0)
         {
             OnSystemNow1.RemoveAt(sIndex);
-
         }
     }
 
@@ -175,7 +176,6 @@ public class PeopleQueue {
     public void Update()
     {
         SanitizeCurrent();
-        
     }
 
 
@@ -187,19 +187,21 @@ public class PeopleQueue {
         }
 
         var p = OnSystemNow1[0];
+        var person = Family.FindPerson(p.Id);
 
         //if is being there for 10 sec we need to check 
         if (Time.time > p.Time + 10f)
         {
-            if (OnSystemNow1.Contains(p) && Family.FindPerson(p.Id) == null)
+            //if the person is not RouterActive means he is not working somehow so can be removed from here 
+            if (OnSystemNow1.Contains(p) && (person == null || !person.ProfessionProp.RouterActive))
             {
-                Debug.Log("remove bz was gone OnSystemNow1:" + p.Id);
+                Debug.Log("remove bz was gone OnSystemNow1 Prof:" + p.Id);
                 OnSystemNow1.Remove(p);
                 TransferFirstInWaitingListToOnSystemNow();
             }
-            if (WaitList.Contains(p) && Family.FindPerson(p.Id) == null)
+            if (WaitList.Contains(p) && (person == null || !person.ProfessionProp.RouterActive))
             {
-                Debug.Log("remove bz was gone WaitList:" + p.Id);
+                Debug.Log("remove bz was gone WaitList Prof:" + p.Id);
                 WaitList.Remove(p);
             }
         }

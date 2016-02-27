@@ -111,7 +111,7 @@ public class Docker : Profession
 
     void InitRoute()
     {
-        _routerActive = true;
+        RouterActive = true;
         Router1 = new CryRouteManager(_person.Work, _sourceBuild, _person);
 
         IsRouterBackUsed = true;

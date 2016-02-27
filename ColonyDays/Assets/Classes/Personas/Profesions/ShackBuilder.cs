@@ -48,7 +48,7 @@ public class ShackBuilder : Profession
 
     void InitRoute()
     {
-        _routerActive = true;
+        RouterActive = true;
 
         dummy = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy);
         dummy.transform.position = _person.transform.position;

@@ -59,7 +59,7 @@ public class Farmer : Profession
 
     void InitRoute()
     {
-        _routerActive = true;
+        RouterActive = true;
         Router1 = new CryRouteManager();
 
         if (_person.Work.HType.ToString().Contains(H.AnimalFarm+""))

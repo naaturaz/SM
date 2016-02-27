@@ -13,7 +13,7 @@ public class TerrainSpawnerController : ControllerParent
     float minHeightToSpawn;//min height to spawn obj on terrain
     private float maxHeightToSpawn;
 
-    private int multiplier = 10;//75 /80  10
+    private int multiplier = 80;//75 /80  10
 
     int howManyTreesToSpawn = 20;//50
     int howManyStonesToSpawn =3;//3
@@ -31,7 +31,8 @@ public class TerrainSpawnerController : ControllerParent
         Root.tree4, Root.tree5, Root.tree6, 
         Root.tree7,
 
-        Root.palm1, Root.palm2, Root.palm3, Root.palm4, Root.palm5, Root.palm6, //Root.palm10  
+        Root.palm1, Root.palm2, Root.palm3, Root.palm4, Root.palm5, Root.palm6, Root.palm10  ,
+        Root.palm20, Root.palm21, Root.palm22, Root.palm23,
     };
 
     List<string> allStones = new List<string>()
@@ -59,7 +60,8 @@ public class TerrainSpawnerController : ControllerParent
 
     List<string> allOrna = new List<string>()
     { 
-        Root.orna1, Root.orna2, Root.orna3, Root.orna4 , Root.orna5, Root.orna6
+        Root.orna1, Root.orna2, Root.orna3, Root.orna4 , Root.orna5, Root.orna6,
+         Root.orna7, Root.orna8
     };
 
     List<string> allGrass = new List<string>() 

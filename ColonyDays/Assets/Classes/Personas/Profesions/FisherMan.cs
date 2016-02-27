@@ -60,7 +60,7 @@ public class FisherMan : Profession {
 
     void InitRoute()
     {
-        _routerActive = true;
+        RouterActive = true;
         ConformInBuildRoute();
 
         RouteBackForNewProfThatUseHomer();
