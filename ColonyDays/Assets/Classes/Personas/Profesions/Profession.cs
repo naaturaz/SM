@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 /*
  * 
@@ -438,6 +439,13 @@ public class Profession
 
     void AddMeToWaitListOnSystem()
     {
+        //bz we pulled already the routes
+        if (WereTheTwoRoutesInCache())
+        {
+            _routerActive = false;
+            return;
+        }
+
         //needs to finish thet route first. then will create this one 
         if (_person.Brain._workRoute.CheckPoints.Count==0)
         {
@@ -445,6 +453,61 @@ public class Profession
         }
 
         PersonPot.Control.WorkersRoutingQueue.AddMeToOnSystemWaitList(_person.MyId);
+    }
+
+    /// <summary>
+    /// Will pull the routes if are in cache . will return true if they were both addressed or if was only one needed and
+    /// addressed
+    /// 
+    /// Here bz otherwise will put Professional on queue to become a Homer for example when is not need bz the routes
+    /// exist. And actually the Homer could be forever waiting on a Farm for example to get the new routes 
+    /// </summary>
+    /// <returns></returns>
+    bool WereTheTwoRoutesInCache()
+    {
+        if ( Router1 != null && !Router1.IsRouteReady)
+        {
+            if (PersonPot.Control.RoutesCache1.ContainANewerOrSameRoute(Router1.OriginKey, Router1.DestinyKey,
+                new DateTime()))
+            {
+                AddressRouter(Router1);
+            }
+        }
+        if (IsRouterBackUsed && RouterBack != null && !RouterBack.IsRouteReady)
+        {
+            if (PersonPot.Control.RoutesCache1.ContainANewerOrSameRoute(RouterBack.OriginKey, RouterBack.DestinyKey,
+                new DateTime()))
+            {
+                AddressRouter(RouterBack);
+            }
+        }
+
+        if (IsRouterBackUsed && RouterBack!=null)
+        {
+            return RouterBack.IsRouteReady && Router1.IsRouteReady;
+        }
+        return Router1.IsRouteReady;
+    }
+
+    /// <summary>
+    /// Things that need to be done to the Router if a new Route was found on RoutesCache
+    /// </summary>
+    /// <param name="routerP"></param>
+    void AddressRouter(CryRouteManager routerP)
+    {
+        var route = PersonPot.Control.RoutesCache1.GiveMeTheNewerRoute();
+
+        if (route!=null)
+        {
+            routerP.TheRoute = route;
+            routerP.IsRouteReady = true;
+
+            if (IsRouterBackUsed)
+            {
+                BackRouterUpdate();
+            }
+            else SingleRouterUpdate();
+        }
     }
 
     /// <summary>
@@ -537,9 +600,8 @@ public class Profession
         //walking toward the job site for forester walking towards a tree 
         if (_person.Body.Location == HPers.Work && _workerTask == HPers.None)
         {
-            if (_router.TheRoute.OriginKey != _router.TheRoute.DestinyKey 
-                //&& string.IsNullOrEmpty(_person.IsBooked)
-                )//so doesnt go in and out in the same building
+            if (_router!=null && _router.TheRoute.OriginKey != _router.TheRoute.DestinyKey)
+                //so doesnt go in and out in the same building
                 //the is not booked to avoid people staying in the same House when grow older in same place 
             {
                 _person.Body.WalkRoutine(_router.TheRoute, HPers.InWork);
