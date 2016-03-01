@@ -85,6 +85,12 @@ public class Root : MonoBehaviour
         public static string tree7 = "Prefab/Terrain/Spawner/Tree7";
         public static string tree8 = "Prefab/Terrain/Spawner/Tree8";
 
+        public static string tree21 = "Prefab/Terrain/Spawner/Tree21";
+        public static string tree22 = "Prefab/Terrain/Spawner/Tree22";
+        public static string tree23 = "Prefab/Terrain/Spawner/Tree23";
+        public static string tree24 = "Prefab/Terrain/Spawner/Tree24";
+        public static string tree25 = "Prefab/Terrain/Spawner/Tree25";
+
 
         public static string palm1 = "Prefab/Terrain/Spawner/Palm/Palm01";
         public static string palm2 = "Prefab/Terrain/Spawner/Palm/Palm02";
@@ -145,6 +151,13 @@ public class Root : MonoBehaviour
         public static string grass4 = "Prefab/Terrain/Spawner/Grass4";
         public static string grass5 = "Prefab/Terrain/Spawner/Grass5";
         public static string grass6 = "Prefab/Terrain/Spawner/Grass6";
+
+        public static string grass7 = "Prefab/Terrain/Spawner/Grass7";
+        public static string grass8 = "Prefab/Terrain/Spawner/Grass8";
+        public static string grass9 = "Prefab/Terrain/Spawner/Grass9";
+        public static string grass10= "Prefab/Terrain/Spawner/Grass10";
+        public static string grass11= "Prefab/Terrain/Spawner/Grass11";
+        public static string grass12= "Prefab/Terrain/Spawner/Grass12";
 
         //Visual Hep for spawner
         public static string selectMine1 = "Prefab/ScreenHelper/Selection_Mine1";
@@ -269,7 +282,12 @@ public class Root : MonoBehaviour
     public static string matWoodA = "Prefab/Mats/Building/WoodA";
     public static string matHouse2 = "Prefab/Mats/Building/house2";
 
-    public static string personGuy1 = "Prefab/Mats/Person/Guy1UV";
+    //they are now pull in Person.ReturnRandoPersonMaterialRoot()
+    //public static string personGuy1 = "Prefab/Mats/Person/Guy1UV 1";
+    //public static string personGuy2 = "Prefab/Mats/Person/Guy1UV 2";
+    //public static string personGuy3 = "Prefab/Mats/Person/Guy1UV 3";
+    //public static string personGuy4 = "Prefab/Mats/Person/Guy1UV 4";
+    //public static string personGuy5 = "Prefab/Mats/Person/Guy1UV 5";
 
     /// <summary>
     /// Personas
@@ -370,9 +388,35 @@ public class Root : MonoBehaviour
         if (buildsRoot.Count == 0)
         {
             LoadDictionaryRoots();
+            LoadHouseMed();
+        }
+
+        if (key == H.HouseMed)
+        {
+            return HouseMed();
         }
 
         return buildsRoot[key];
+    }
+
+
+    static List<string>houseMed = new List<string>(); 
+    private static string HouseMed()
+    {
+        return houseMed[UMath.GiveRandom(0, houseMed.Count)];
+    }
+
+    static void LoadHouseMed()
+    {
+        houseMed.Add("Prefab/Building/House/BuildsFactory/HouseMA");
+        houseMed.Add("Prefab/Building/House/BuildsFactory/HouseMB");
+        houseMed.Add("Prefab/Building/House/BuildsFactory/HouseMC");
+        houseMed.Add("Prefab/Building/House/BuildsFactory/HouseMD");
+        houseMed.Add("Prefab/Building/House/BuildsFactory/HouseME");
+        houseMed.Add("Prefab/Building/House/BuildsFactory/HouseMG");
+        houseMed.Add("Prefab/Building/House/BuildsFactory/HouseMI");
+        houseMed.Add("Prefab/Building/House/BuildsFactory/HouseMK");
+        houseMed.Add("Prefab/Building/House/BuildsFactory/HouseML");
     }
 
     /// <summary>
@@ -517,14 +561,23 @@ public class Root : MonoBehaviour
 
     enum MatHouse2
     {
-        HouseB, HouseMedA, HouseMedB, 
+        HouseB, 
+        //HouseMedA, HouseMedB, 
     }
     
     #endregion
     
     static void LoadDictionaryRoots()
     {
+
+
+
+
+
         //infr Trail, Road, BridgeTrail, BridgeRoad, CoachMan, LightHouse, WheelBarrow, StockPile,
+        buildsRoot.Add(H.Road, "Prefab/Building/Farm");
+       
+        
         buildsRoot.Add(H.BridgeTrail, "Prefab/Building/Bridge");
         buildsRoot.Add(H.BridgeRoad, "Prefab/Building/Bridge");
         
@@ -538,8 +591,8 @@ public class Root : MonoBehaviour
         buildsRoot.Add(H.HouseA, "Prefab/Building/House/HouseA");
         buildsRoot.Add(H.HouseB, "Prefab/Building/House/HouseB");
         buildsRoot.Add(H.HouseAWithTwoFloor, "Prefab/Building/House/HouseAWithTwoFloor");
-        buildsRoot.Add(H.HouseMedA, "Prefab/Building/House/HouseMedA");
-        buildsRoot.Add(H.HouseMedB, "Prefab/Building/House/HouseMedB");
+        buildsRoot.Add(H.HouseMed, "Prefab/Building/House/HouseMed");//only used for icon and banner 
+        //buildsRoot.Add(H.HouseMedB, "Prefab/Building/House/HouseMedB");
         buildsRoot.Add(H.HouseC, "Prefab/Building/House/HouseC");
         buildsRoot.Add(H.HouseD, "Prefab/Building/House/HouseD");
         

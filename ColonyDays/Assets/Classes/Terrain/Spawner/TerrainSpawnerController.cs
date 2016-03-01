@@ -20,19 +20,26 @@ public class TerrainSpawnerController : ControllerParent
     int howManyIronToSpawn = 3;//3
     int howManyGoldToSpawn = 3;//3
     int howManyOrnaToSpawn = 20;//50
-    int howManyGrassToSpawn = 10;
+    int howManyGrassToSpawn = 40;
 
     //will be use when spawing new obj to know if that position was used alread by another one
     bool[] usedVertexPos;
 
     private List<string> allTrees = new List<string>()
     {
-        Root.tree1,// Root.tree2, Root.tree3, 
-        Root.tree4, Root.tree5, Root.tree6, 
-        Root.tree7,
+        Root.tree1,
+        // Root.tree2, Root.tree3, 
+        //Root.tree4, Root.tree5, Root.tree6, 
+        //Root.tree7,
 
         Root.palm1, Root.palm2, Root.palm3, Root.palm4, Root.palm5, Root.palm6, Root.palm10  ,
         Root.palm20, Root.palm21, Root.palm22, Root.palm23,
+
+        Root.tree21,
+        Root.tree22,
+        Root.tree23,
+        Root.tree24,
+        Root.tree25,
     };
 
     List<string> allStones = new List<string>()
@@ -68,7 +75,12 @@ public class TerrainSpawnerController : ControllerParent
     { 
         //Root.grass1, 
         Root.grass2, Root.grass3  ,
-        Root.grass4, Root.grass5, Root.grass6 
+        Root.grass4, Root.grass5, Root.grass6,
+        Root.grass7, 
+        Root.grass8,
+        Root.grass9,
+        //Root.grass10,
+        Root.grass11, Root.grass12,
     };
     
     List<H> toSpawnList = new List<H>() { H.Tree, H.Stone, H.Iron, H.Gold, H.Ornament, H.Grass };

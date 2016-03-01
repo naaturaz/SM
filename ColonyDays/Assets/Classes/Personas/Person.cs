@@ -340,13 +340,21 @@ public class Person : General
         obj = (Person) Instantiate(obj, iniPos, Quaternion.identity);
         obj.Gender = obj.OtherGender();
         obj.InitObj(iniAge); //5,29
-        obj.Geometry.GetComponent<Renderer>().sharedMaterial = Resources.Load(Root.personGuy1) as Material;
+        obj.Geometry.GetComponent<Renderer>().sharedMaterial = ReturnRandoPersonMaterialRoot();
 
         //this to when Person dont have where to leave and then they find a place the teletranport effect
         //wont be seeable bz there are spawneed hidden. 
         //obj.Body.Hide();
 
         return obj;
+    }
+
+
+
+    static Material ReturnRandoPersonMaterialRoot()
+    {
+        var random = UMath.GiveRandom(1, 6);
+        return Resources.Load("Prefab/Mats/Person/Guy1UV " + random) as Material;
     }
 
     /// <summary>
@@ -370,7 +378,7 @@ public class Person : General
 
         obj.IsLoading = true;
         obj.InitLoadedPerson(pF);
-        obj.Geometry.GetComponent<Renderer>().sharedMaterial = Resources.Load(Root.personGuy1) as Material;
+        obj.Geometry.GetComponent<Renderer>().sharedMaterial = ReturnRandoPersonMaterialRoot();
 
         return obj;
     }
@@ -411,7 +419,7 @@ public class Person : General
         obj = (Person)Instantiate(obj, iniPos, Quaternion.identity);
         obj.Gender = obj.OtherGender();
         obj.InitObj(5);//10
-        obj.Geometry.GetComponent<Renderer>().sharedMaterial = Resources.Load(Root.personGuy1) as Material;
+        obj.Geometry.GetComponent<Renderer>().sharedMaterial = ReturnRandoPersonMaterialRoot();
 
         //this to when Person dont have where to leave and then they find a place the teletranport effect
         //wont be seeable bz there are spawneed hidden. 

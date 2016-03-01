@@ -60,6 +60,8 @@ public class Book : General
     void LoadBuildDict()
     {
         //infr
+        Build.Add(new BuildStat(H.Road, 100, 8, 2, 0, 5, maxPeople: 0));
+
         Build.Add(new BuildStat(H.BridgeTrail, 400, 80, 20, 0, 5, maxPeople: 0));
         Build.Add(new BuildStat(H.BridgeRoad, 1000, 80, 20, 0, 5, maxPeople: 0));
 
@@ -72,8 +74,8 @@ public class Book : General
         Build.Add(new BuildStat(H.HouseA, 400, 15, 5, 25, 5, maxPeople: 5, capacity: 1));
         Build.Add(new BuildStat(H.HouseB, 400, 15, 5, 25, 5, maxPeople: 5, capacity: 1));
         Build.Add(new BuildStat(H.HouseAWithTwoFloor, 800, 30, 5, 50, 5, maxPeople: 10, capacity: 2));
-        Build.Add(new BuildStat(H.HouseMedA, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 2));
-        Build.Add(new BuildStat(H.HouseMedB, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 2));
+        Build.Add(new BuildStat(H.HouseMed, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 2));
+        //Build.Add(new BuildStat(H.HouseMedB, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 2));
         Build.Add(new BuildStat(H.HouseC, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 3));
         Build.Add(new BuildStat(H.HouseD, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 3));
 

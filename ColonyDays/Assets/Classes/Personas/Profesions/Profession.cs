@@ -345,8 +345,10 @@ public class Profession
     /// </summary>
     public virtual void WorkAction(HPers p)
     {
+        Debug.Log("workActionCalled:" + _person.MyId + " _readyToWork:" + _readyToWork);
         if (_readyToWork)
         {
+            Debug.Log("workingNow:" + _person.MyId);
             _workingNow = true;
         }
         else
@@ -772,6 +774,7 @@ public class Profession
         _workingNow = false;
         _workerTask = HPers.None;
 
+        Debug.Log("resetMIniMindTstae:"+_person.MyId);
         //CheckIfProfHasToBeReCreated();
     }
 
@@ -920,6 +923,8 @@ public class Profession
         Produce(instruct, prod);
         if (ReadyToWork)
         {
+            Debug.Log("workingNow:" + _person.MyId);
+
             WorkingNow = true;
         }
     }

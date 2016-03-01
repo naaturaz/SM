@@ -1408,7 +1408,8 @@ public class Building : General, Iinfo
             Families[0] = new Family(5, MyId,0);
         }
         //can hhave 1 famili with 5 kids
-        else if (HType == H.HouseMedA || HType == H.HouseMedB || HType == H.HouseC || HType == H.HouseD)
+        else if (HType == H.HouseMed //|| HType == H.HouseMedB 
+            || HType == H.HouseC || HType == H.HouseD)
         {
             Families = new Family[1];
             Families[0] = new Family(5, MyId,0);
@@ -1608,7 +1609,8 @@ public class Building : General, Iinfo
         {
             _confort = 4;
         }
-        else if (HType == H.HouseMedA || HType == H.HouseMedB || HType == H.HouseC)
+        else if (HType == H.HouseMed //|| HType == H.HouseMedB 
+            || HType == H.HouseC)
         {
             _confort = 6;
         }

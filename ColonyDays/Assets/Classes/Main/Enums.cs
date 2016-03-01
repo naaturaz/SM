@@ -205,7 +205,7 @@ public enum H
     //infr F1
     Trail, Road, BridgeTrail, BridgeRoad, CoachMan, LightHouse, WheelBarrow, StockPile, BuildersOffice,
     //house F2 ... bugg bz they had numbers on it .. They cant have numbers
-    HouseA, HouseB, HouseAWithTwoFloor, HouseMedA, HouseMedB, HouseC, HouseD,
+    HouseA, HouseB, HouseAWithTwoFloor, HouseMed, HouseC, HouseD,
     //farming F3
     //Farm, this farm removed is the draggable farm 
     AnimalFarmSmall, AnimalFarmMed, AnimalFarmLarge, AnimalFarmXLarge,
@@ -361,7 +361,8 @@ public enum StCat //strucutre categories
 public enum StInfr //for structures game structure.cs 
 {
     //Infrastructure
-    //Trail, Road, 
+    //Trail,
+    Road, 
     BridgeTrail, BridgeRoad,
     //CoachMan, 
     LightHouse,
@@ -373,7 +374,7 @@ public enum StInfr //for structures game structure.cs
 public enum StHous //for structures game structure.cs 
 {
     //Housing
-    HouseA, HouseB, HouseAWithTwoFloor, HouseMedA, HouseMedB, HouseC,
+    HouseA, HouseB, HouseAWithTwoFloor, HouseMed,  HouseC,
     HouseD
 }
 

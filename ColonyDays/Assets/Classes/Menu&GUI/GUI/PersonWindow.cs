@@ -117,7 +117,7 @@ public class PersonWindow : GUIElement {
 
     string DebugInfo()
     {
-        var res = "_________________________________\n GoMindState:" + _person.Brain.GoMindState +
+        var res = "___________________\n GoMindState:" + _person.Brain.GoMindState +
                   "\n fdRouteChks:" + _person.Brain._foodRoute.CheckPoints.Count +
                   "\n idleRouteChks:" + _person.Brain._idleRoute.CheckPoints.Count
                   + "\n movToNwHomRtChks:" + _person.Brain.MoveToNewHome.RouteToNewHome.CheckPoints.Count
@@ -128,8 +128,7 @@ public class PersonWindow : GUIElement {
                   + "\n BodyLoc:" + _person.Body.Location
                   + "\n BodyGngTo:" + _person.Body.GoingTo
                   + "\n BornInfo:" + _person.DebugBornInfo
-                  + "\n wrkRouteChks:" + _person.Brain._workRoute.CheckPoints.Count
-                  + "\n Profession:" + _person.ProfessionProp;
+                  + "\n wrkRouteChks:" + _person.Brain._workRoute.CheckPoints.Count;
 
         if (_person.Work != null)
         {
@@ -139,7 +138,9 @@ public class PersonWindow : GUIElement {
 
         if (_person.ProfessionProp != null)
         {
-            res += "\n ProfessionReady:" + _person.ProfessionProp.ReadyToWork;
+            res += "\n Profession ReadyToWork:" + _person.ProfessionProp.ReadyToWork;
+            res += "\n Profession workerTask:" + _person.ProfessionProp.WorkerTask;
+            res += "\n Profession workingNow:" + _person.ProfessionProp.WorkingNow;
         }
         else
         {

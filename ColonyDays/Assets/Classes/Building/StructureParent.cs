@@ -388,8 +388,14 @@ public class StructureParent : Building {
             }
             HandleMeshChild(H.Stage1);
         }
-        else if (_currentStage == 2) { HandleMeshChild(H.Stage2); }
-        else if (_currentStage == 3) { HandleMeshChild(H.Stage3); }
+        else if (_currentStage == 2)
+        {
+            //HandleMeshChild(H.Stage2);
+        }
+        else if (_currentStage == 3)
+        {
+            //HandleMeshChild(H.Stage3);
+        }
         else if (_currentStage == 4)
         {
             HandleMeshChild(H.Done);

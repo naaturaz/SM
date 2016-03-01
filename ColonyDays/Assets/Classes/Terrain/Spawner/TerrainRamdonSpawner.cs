@@ -22,6 +22,13 @@ public class TerrainRamdonSpawner : General {
         WAKEUP = true;
         TerrainRamdonSpawner obj = null;
         obj = (TerrainRamdonSpawner)Resources.Load(root, typeof(TerrainRamdonSpawner));
+
+        if (obj==null)
+        {
+            Debug.Log("null:"+root);
+        }
+
+
         obj = (TerrainRamdonSpawner)Instantiate(obj, origen, Quaternion.identity);
         if (name != "") { obj.name = name; }
         if (container != null){obj.transform.parent = container;}

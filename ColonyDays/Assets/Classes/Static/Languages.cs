@@ -24,6 +24,7 @@ public class Languages
 
        //Descriptions
        //Infr
+	   { "Road.Desc","Only for decoration purpose. However people is happier if there is roads around them"},
 	   { "BridgeTrail.Desc","Allows people pass from one side of the map to the other"},
 	   { "BridgeRoad.Desc","Allows people pass from one side of the map to the other. People loves this bridges. Give them a prosperity and happinnes sense" +_houseTail},
 	   { "LightHouse.Desc","Helps to make the port more discoverable. Adds to Port Reputation as long the flame is glowing"},
@@ -34,8 +35,8 @@ public class Languages
 	   { "HouseA.Desc","Small house, a family can have 2 kids maximum" +_houseTail},
 	   { "HouseB.Desc","Small house, a family can have 2 kids maximum" +_houseTail },
 	   { "HouseAWithTwoFloor.Desc","Medium house, a family can have 3 kids maximum"+_houseTail},
-	   { "HouseMedA.Desc","Medium house, a family can have 3 kids maximum"+_houseTail},
-	   { "HouseMedB.Desc","Medium house, a family can have 3 kids maximum"+_houseTail},
+	   { "HouseMed.Desc","Medium house, a family can have 2 or 3 kids maximum"+_houseTail},
+	   //{ "HouseMedB.Desc","Medium house, a family can have 3 kids maximum"+_houseTail},
 	   { "HouseC.Desc","Medium house, a family can have 3 kids maximum"+_houseTail},
 	   { "HouseD.Desc","Medium house, a family can have 3 kids maximum"+_houseTail},
        
