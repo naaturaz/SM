@@ -130,13 +130,17 @@ public class Farmer : Profession
     /// </summary>
     void Execute()
     {
-        if (ExecuteNow)
+        if (ExecuteNow && ReadyToWork)
         {
             ExecuteNow = false;
-            //FakeWheelBarrowToRouteBack();
-
+            //do stuff
             base.Execute();
         }
+        else if (ExecuteNow && !ReadyToWork)
+        {
+            //so we leave it for next time to see if is ready ReadyToWork
+            //othwrwise gives buggg bz wherever is will do stuff as is will be inside the work place
+            ExecuteNow = false;
+        }
     }
-
 }

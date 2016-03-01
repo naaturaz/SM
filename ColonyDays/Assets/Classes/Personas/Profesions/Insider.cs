@@ -1,5 +1,6 @@
 ﻿
 using System.Xml;
+using UnityEngine;
 
 public class Insider : Profession {
 
@@ -50,6 +51,8 @@ public class Insider : Profession {
 
     public override void WorkAction(HPers p)
     {
+        Debug.Log("WorkAction called insider:" + _person.MyId);
+
         _person.Brain.CurrentTask = p;
         ExecuteNow = true;
     }
@@ -60,20 +63,21 @@ public class Insider : Profession {
     /// </summary>
     void Execute()
     {
-        if (ExecuteNow)
+        //need to check if is Ready To work bz might be routing still 
+        //and if execute once wont do it again 
+        if (ExecuteNow && ReadyToWork)
         {
             ExecuteNow = false;
             //do stuff
 
             FakeWheelBarrowToRouteBack();
-
             base.Execute();
-
-
-
-
-
-            ////GameScene.print("excuting on Insider ");
+        }
+        else if (ExecuteNow && !ReadyToWork)
+        {   
+            //so we leave it for next time to see if is ready
+            //othwrwise gives buggg bz wherever is will do stuff as is will be inside the work place
+            ExecuteNow = false;
         }
     }
 }

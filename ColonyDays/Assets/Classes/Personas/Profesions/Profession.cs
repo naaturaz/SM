@@ -345,10 +345,10 @@ public class Profession
     /// </summary>
     public virtual void WorkAction(HPers p)
     {
-        Debug.Log("workActionCalled:" + _person.MyId + " _readyToWork:" + _readyToWork);
+//        Debug.Log("workActionCalled:" + _person.MyId + " _readyToWork:" + _readyToWork);
         if (_readyToWork)
         {
-            Debug.Log("workingNow:" + _person.MyId);
+  //          Debug.Log("workingNow:" + _person.MyId);
             _workingNow = true;
         }
         else
@@ -924,7 +924,6 @@ public class Profession
         if (ReadyToWork)
         {
             Debug.Log("workingNow:" + _person.MyId);
-
             WorkingNow = true;
         }
     }

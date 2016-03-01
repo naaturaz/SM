@@ -199,12 +199,12 @@ public class Forester : Profession
     /// </summary>
     void Execute()
     {
-        if (ExecuteNow)
+        if (ExecuteNow && ReadyToWork)
         {
             ExecuteNow = false;
 
             ////foresters reset when done work
-           //Debug.Log("Foreset reset dummy");
+            //Debug.Log("Foreset reset dummy");
             ResetDummy();
 
             if (_person.Work.CanTakeItOut(_person))
@@ -226,6 +226,12 @@ public class Forester : Profession
                 //todo add to notify //Forester didnt work bz its Home Storage is full
                 //Debug.Log(_person.MyId +", Forester didnt work bz its Home Storage is full");
             }
+        }
+        else if (ExecuteNow && !ReadyToWork)
+        {
+            //so we leave it for next time to see if is ready
+            //othwrwise gives buggg bz wherever is will do stuff as is will be inside the work place
+            ExecuteNow = false;
         }
     }
 
