@@ -276,6 +276,21 @@ public class TerrainSpawnerController : ControllerParent
     /// </summary>
     /// <param name="pos"></param>
     /// <param name="pers"></param>
+    public void SpawnRandomTreeInThisPos(Person pers, Vector3 pos)
+    {
+        int rootToSpawnIndex = ReturnRandomRootIndex(H.Tree);
+
+        //so is saved and created
+        IsToSave = true;
+        CreateObjAndAddToMainList(H.Tree, pos, rootToSpawnIndex, 0, replantedTree: true);
+        IsToSave = false;
+    }
+
+    /// <summary>
+    /// Call to replant a tree
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <param name="pers"></param>
     public void SpawnRandomTreeAroundThisPos(Person pers)
     {
         //a position ard his Job. his job place is a forester place 
@@ -314,7 +329,10 @@ public class TerrainSpawnerController : ControllerParent
         //temp.AssignToAllGeometryAsSharedMat(temp.gameObject, "Enviroment");
 
         AllRandomObjList.Add(temp);
-        if(IsToSave){SaveOnListData(temp, typePass, rootToSpawnIndex, index);}
+        if (IsToSave)
+        {
+            SaveOnListData(temp, typePass, rootToSpawnIndex, index);
+        }
     }
 
 
@@ -338,7 +356,6 @@ public class TerrainSpawnerController : ControllerParent
         if (obj == null) { return;}
         if (obj is StillElement)
         {
-            StillElement temp = (StillElement) obj;
             SpawnedData sData = new SpawnedData(obj.transform.position, obj.transform.rotation, typeP, rootToSpawnIndex, indexPass);
             AllSpawnedDataList.Add(sData);
         }

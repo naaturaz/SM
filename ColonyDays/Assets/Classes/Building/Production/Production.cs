@@ -329,9 +329,10 @@ public class Production  {
 
     private void Brick()
     {
-        InputElement element = new InputElement(P.Ceramic, 5);
-        List<InputElement> prod = new List<InputElement>() { element };
-        InputProdCheckAndAdd(new ProductInfo(P.Brick, prod, H.Brick));
+        //InputElement element = new InputElement(P.Ceramic, 5);
+        //List<InputElement> prod = new List<InputElement>() { element };
+        //InputProdCheckAndAdd(new ProductInfo(P.Brick, prod, H.Brick));
+        InputProdCheckAndAdd(new ProductInfo(P.Brick, null, H.Brick));
     }
 
 
@@ -366,9 +367,10 @@ public class Production  {
 
     private void Tile()
     {
-        InputElement element = new InputElement(P.Ceramic, 10);
-        List<InputElement> prod = new List<InputElement>() { element };
-        InputProdCheckAndAdd(new ProductInfo(P.Tile, prod, H.Tile));
+        //InputElement element = new InputElement(P.Ceramic, 10);
+        //List<InputElement> prod = new List<InputElement>() { element };
+        //InputProdCheckAndAdd(new ProductInfo(P.Tile, prod, H.Tile));
+        InputProdCheckAndAdd(new ProductInfo(P.Tile, null, H.Tilery));
     }
 
 

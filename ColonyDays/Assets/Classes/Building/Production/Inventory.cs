@@ -64,7 +64,7 @@ public class Inventory  {
                 return _inventItems[i].Amount;
             }
         }
-        return -1;
+        return 0;
     }
 
     /// <summary>
@@ -100,7 +100,7 @@ public class Inventory  {
     {
         var intT = ReturnAmtOfItemOnInv(Key);
 
-        if (intT == -1)
+        if (intT <= 0)
         {
             return false;
         }

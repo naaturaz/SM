@@ -153,10 +153,29 @@ public class GameScene : General {
             //+ " Vis: " + PersonPot.PersonController.All.ElementAt(0).Value.IsVisible()
             //+ " | Can see: " + PersonPot.PersonController.All.ElementAt(0).Value.I_Can_See()
             //+ " | Became: " + vis
+            +AddPersonControllerInfo()
                 ;
 
         DebugInput();
         DebugChangeScreenResolution();
+    }
+
+    string AddPersonControllerInfo()
+    {
+        if (PersonPot.Control == null || PersonPot.Control.WorkersRoutingQueue == null)
+        {
+            return "";
+        }
+
+
+        string res = "";
+        if (PersonPot.Control.WorkersRoutingQueue.OnSystemNow1.Count>0)
+        {
+            res += "on sysNow:"+ PersonPot.Control.WorkersRoutingQueue.OnSystemNow1[0].Id;
+        }
+        res += " waitList ct:"+PersonPot.Control.WorkersRoutingQueue.WaitList.Count;
+
+        return res;
     }
 
     /// <summary>

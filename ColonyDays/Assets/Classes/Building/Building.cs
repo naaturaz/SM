@@ -931,7 +931,7 @@ public class Building : General, Iinfo
             still.DestroyCool();
         }
         else
-            //Debug.Log("key not cointained in AllRandomObjList." + key)
+            Debug.Log("key not cointained in AllRandomObjList." + key)
             ;
     }
 

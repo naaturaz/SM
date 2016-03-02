@@ -219,7 +219,7 @@ public class StillElement : TerrainRamdonSpawner {
             if (HType==H.Tree)
             {
                 Program.gameScene.controllerMain.TerraSpawnController.
-                    SpawnRandomTreeAroundThisPos(pers);
+                    SpawnRandomTreeInThisPos(pers, transform.position);
             }
         }
     }

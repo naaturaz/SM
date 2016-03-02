@@ -35,6 +35,8 @@ public class TerrainRamdonSpawner : General {
         obj.IndexAllVertex = indexAllVertex;
         obj.HType = hType;
         obj.MyId = obj.Rename(name, obj.Id, obj.HType);
+
+
         obj.transform.name = obj.MyId;
 
         obj.ReplantedTree = replantedTree;

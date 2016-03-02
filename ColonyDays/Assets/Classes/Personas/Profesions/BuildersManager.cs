@@ -205,12 +205,15 @@ public class BuildersManager
         bool dollar = Program.gameScene.GameController1.Dollars >= stat.Dollar;
         bool passedQue = _passedQueue.Contains(cons.Key);
 
-        if (passedQue)
+        //other wise would remove it from _passedQueue if was mising Brick for example and wont be 
+        //build it ever again
+        if (wood && stone && brick && iron && gold && dollar && passedQue)
         {
             _passedQueue.Remove(cons.Key);
+            return true;
         }
 
-        return wood && stone && brick && iron && gold && dollar && passedQue;
+        return false;
     }
 
     public void Update()

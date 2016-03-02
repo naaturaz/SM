@@ -482,8 +482,12 @@ public class Profession
             }
         }
 
-        if (IsRouterBackUsed && RouterBack!=null)
+        if (IsRouterBackUsed)
         {
+            if (RouterBack == null)
+            {
+                return false;
+            }
             return RouterBack.IsRouteReady && Router1.IsRouteReady;
         }
         return Router1.IsRouteReady;
@@ -836,7 +840,7 @@ public class Profession
         _workingNow = false;
         _workerTask = HPers.None;
 
-        Debug.Log("resetMIniMindTstae:"+_person.MyId);
+//        Debug.Log("resetMIniMindTstae:"+_person.MyId);
         //CheckIfProfHasToBeReCreated();
     }
 
@@ -985,7 +989,7 @@ public class Profession
         Produce(instruct, prod);
         if (ReadyToWork)
         {
-            Debug.Log("workingNow:" + _person.MyId);
+//            Debug.Log("workingNow:" + _person.MyId);
             WorkingNow = true;
         }
     }
