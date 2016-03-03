@@ -6,6 +6,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class CrystalManager  {
@@ -65,6 +66,23 @@ public class CrystalManager  {
             CrystalRegions[indexLoc].RemoveCrystal(myIdP);
         }
         //dont need to resave bz the adding of a build is done once is spwaned 
+        
+        RemoveFromAllObstas(myIdP);
+    }
+
+    /// <summary>
+    /// Other wise the crystal stay in _allobsta 
+    /// </summary>
+    /// <param name="myIdP"></param>
+    void RemoveFromAllObstas(string myIdP)
+    {
+        var crystals = _allObstas.Where(a => a.ParentId == myIdP).ToList();
+
+        for (int i = 0; i < crystals.Count; i++)
+        {
+            _allObstas.Remove(crystals[i]);
+            Debug.Log("Crystal removed: " + myIdP + ". from _allObsta");
+        }
     }
 
 
@@ -105,7 +123,7 @@ public class CrystalManager  {
         for (int i = 0; i < indexes.Count; i++)
         {
             var indexLoc = indexes[i];
-            res.AddRange(CrystalRegions[indexLoc].ObstaCrystals);
+            res.AddRange(CrystalRegions[indexLoc].ObstaCrystals());
         }
 
         var type = WhichType(includeDoor);
@@ -125,7 +143,7 @@ public class CrystalManager  {
         for (int i = 0; i < indexes.Count; i++)
         {
             var indexLoc = indexes[i];
-            res.AddRange(CrystalRegions[indexLoc].ObstaCrystals);
+            res.AddRange(CrystalRegions[indexLoc].ObstaCrystals());
         }
 
         var type = WhichType(includeDoor);
@@ -254,6 +272,12 @@ public class CrystalManager  {
     {
         //_info = "Still";
         _siblings.Clear();
+
+        if (still.Anchors.Count > 4)
+        {
+            Debug.Log("acnhors:"+still.Anchors.Count + " "+still.MyId);
+        }
+
         AddPoly(still.Anchors, still.MyId);
     }
 
@@ -694,8 +718,8 @@ public class CrystalManager  {
                 var lineOnCrys = crystals[i].Lines[j];
                 if (line.IsIntersecting((lineOnCrys)))
                 {
-
-
+                    //UVisHelp.CreateText(U2D.FromV2ToV3(lineOnCrys.A1), crystals[i].ParentId);
+                    
                     lineOnCrys.DebugRender(Color.red);
                     return true;
                 }
@@ -837,7 +861,7 @@ public class CrystalManager  {
         {
             var locIndex = regions[i];
             res.AddRange(CrystalRegions[locIndex].TerraCrystals);
-            res.AddRange(CrystalRegions[locIndex].ObstaCrystals);
+            res.AddRange(CrystalRegions[locIndex].ObstaCrystals());
         }
         return res;
     }
@@ -857,7 +881,7 @@ public class CrystalManager  {
         {
             var index = regions[i];
 
-            res.AddRange(CrystalRegions[index].ObstaCrystals);
+            res.AddRange(CrystalRegions[index].ObstaCrystals());
 
             //wont add LinkRects bz they have line all over the plcace 
             for (int j = 0; j < CrystalRegions[index].TerraCrystals.Count; j++)
@@ -1129,7 +1153,7 @@ public class CrystalManager  {
         }
 
         _crystalRegions[myRegionIndex].AddCrystal(c);
-
+        //Debug.Log("Added a crystal:"+c.ParentId);
 
         AddToAllObstas(c);
     }
@@ -1355,6 +1379,7 @@ public class CrystalManager  {
             //means one the lines is intesecting a line 
             if (DoIIntersectAnyLine(lines[i], indexes, new CryRoute()))
             {
+
                 return true;
             }
         }

@@ -84,8 +84,9 @@ public class GameTime
     {
         if (_accumDays > 1f)
         {
-            //so the one reached is removed and I keep adding 
-            _accumDays = -1f;
+            //so the one reached is removed and make it zero so we clear all again
+            //to avoid a bugg as years were passing the time was passing faster
+            _accumDays = 0;
 
             var oldDay = _day;
             _day = UMath.GoAround(1, _day, 1, 30);

@@ -52,10 +52,21 @@ public class CrystalRegion
         set { _landZoneID = value; }
     }
 
-    public List<Crystal> ObstaCrystals
+    //public List<Crystal> ObstaCrystals
+    //{
+    //    get { return _obstaCrystals; }
+    //    set { _obstaCrystals = value; }
+    //}
+
+    /// <summary>
+    /// OMG 1 day of work to find out that ObstaCrystals were being saved and loaded 
+    /// 
+    /// They were actually saved on the XML file 'Bay_And_Mountain_1_River'  >
+    /// </summary>
+    /// <returns></returns>
+    public List<Crystal> ObstaCrystals()
     {
-        get { return _obstaCrystals; }
-        set { _obstaCrystals = value; }
+        return _obstaCrystals;
     }
 
     public CrystalRegion()
@@ -209,13 +220,12 @@ public class CrystalRegion
         for (int i = 0; i < crystals.Count; i++)
         {
             _obstaCrystals.Remove(crystals[i]);
-           //Debug.Log("Crystal removed: " + parentId+".date:"+
-               // Program.gameScene.GameTime1.TodayYMD());
+            Debug.Log("Crystal removed: " + parentId+".date:"+Program.gameScene.GameTime1.TodayYMD());
         }
     }
 
-    public List<Crystal> QueryObstaCrystals(string parentIdP)
-    {
-        return ObstaCrystals.Where(a => a.ParentId == parentIdP).ToList();
-    }
+    //public List<Crystal> QueryObstaCrystals(string parentIdP)
+    //{
+    //    return ObstaCrystals.Where(a => a.ParentId == parentIdP).ToList();
+    //}
 }

@@ -40,6 +40,10 @@ public class StillElement : TerrainRamdonSpawner {
 	    {
 	        return;
 	    }
+        //if (!WasNamedCorrect())
+        //{
+        //    return;
+        //}
 
 	    addCrystals = true;
         AddCrystalsStart();
@@ -52,6 +56,19 @@ public class StillElement : TerrainRamdonSpawner {
 
 	    LoadGrowingTree();
 	}
+
+    ///// <summary>
+    ///// To corect when a Tree or other StillElement is not named correctly . dont know how happen
+    ///// and cant get the debugger to pass thru. but if is not named "Tree | Tree | 988 | Jose"
+    ///// then was spawned incorrectly
+    ///// </summary>
+    ///// <returns></returns>
+    //private bool WasNamedCorrect()
+    //{
+    //    var arr = MyId.Split('|');
+
+    //    return arr.Length == 4;
+    //}
 
     /// <summary>
     /// Will tel if anchors are colliding with anyohter obstacle on Scene . if so will remove it 
@@ -67,9 +84,13 @@ public class StillElement : TerrainRamdonSpawner {
 
         if (MeshController.CrystalManager1.IntersectAnyLine(Anchors, transform.position))
         {
-            Destroy();
-            Program.gameScene.controllerMain.TerraSpawnController.RemoveStillElement(this);
+            //Destroy();
+            //Program.gameScene.controllerMain.TerraSpawnController.RemoveStillElement(this);
 
+            Debug.Log("not valid:"+MyId);
+
+            //bz need to remove old Crystals 
+            DestroyCool();
             return false;
         }
         return true;
@@ -104,7 +125,7 @@ public class StillElement : TerrainRamdonSpawner {
             return;
         }
 
-
+        //Debug.Log("add cyrstals :" + MyId);
         MeshController.CrystalManager1.Add(this);
     }
 
@@ -160,6 +181,8 @@ public class StillElement : TerrainRamdonSpawner {
 
     public override void DestroyCool()
     {
+        //Debug.Log("DestroyCool():" + MyId);
+
         //cool stuff
 
         //remove from CrystalManager

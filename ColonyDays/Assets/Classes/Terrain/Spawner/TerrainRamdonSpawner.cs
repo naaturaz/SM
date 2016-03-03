@@ -15,9 +15,11 @@ public class TerrainRamdonSpawner : General {
 
     public bool ReplantedTree { get; set; }
 
-    static public TerrainRamdonSpawner CreateTerraSpawn(string root, Vector3 origen, int indexAllVertex, H hType,
+    static public TerrainRamdonSpawner CreateTerraSpawn(string root, Vector3 origen, Vector3 rotation,
+        int indexAllVertex, H hType,
         string name = "", Transform container = null, bool replantedTree = false,
-        float height = 0, MDate seedDate = null, float maxHeight = 0)
+        float height = 0, MDate seedDate = null, float maxHeight = 0,
+        Quaternion rot = new Quaternion())
     {
         WAKEUP = true;
         TerrainRamdonSpawner obj = null;
@@ -28,22 +30,26 @@ public class TerrainRamdonSpawner : General {
             Debug.Log("null:"+root);
         }
 
+        Naming naming=new Naming(H.Male);
 
         obj = (TerrainRamdonSpawner)Instantiate(obj, origen, Quaternion.identity);
         if (name != "") { obj.name = name; }
         if (container != null){obj.transform.parent = container;}
         obj.IndexAllVertex = indexAllVertex;
         obj.HType = hType;
-        obj.MyId = obj.Rename(name, obj.Id, obj.HType);
-
-
+        obj.MyId = obj.Rename(name, obj.Id, obj.HType) + " | " + naming.NewName();
         obj.transform.name = obj.MyId;
+
+        //here to avoid rotating object after spwaned
+        //for loading
+        obj.transform.rotation = rot;
+        //for new obj
+        obj.transform.Rotate(rotation);
 
         obj.ReplantedTree = replantedTree;
         obj.Height = height;
         obj.SeedDate = seedDate;
         obj.MaxHeight = maxHeight;
-
         return obj;
     }
 

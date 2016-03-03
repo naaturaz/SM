@@ -13,7 +13,7 @@ public class TerrainSpawnerController : ControllerParent
     float minHeightToSpawn;//min height to spawn obj on terrain
     private float maxHeightToSpawn;
 
-    private int multiplier = 80;//75 /80  10
+    private int multiplier = 20;//75 /80  10
 
     int howManyTreesToSpawn = 20;//50
     int howManyStonesToSpawn =3;//3
@@ -313,16 +313,18 @@ public class TerrainSpawnerController : ControllerParent
         TerrainRamdonSpawner temp = null;
         if (IsToSave)
         {
-            temp = TerrainRamdonSpawner.CreateTerraSpawn(root, pos, index, typePass, typePass.ToString() + ":" + index,
+            temp = TerrainRamdonSpawner.CreateTerraSpawn(root, pos, new Vector3(0, rand.Next(0, 360), 0),
+                index, typePass, typePass.ToString(),
                 transform, replantedTree, treeHeight, seedDate, maxHeight);
-            temp.transform.Rotate(new Vector3(0, rand.Next(0, 360), 0));
             usedVertexPos[index] = true;
+
+            //Debug.Log("Obj Spwned:"+temp.MyId);
         }
         else if (IsToLoadFromFile)
         {
-            temp = TerrainRamdonSpawner.CreateTerraSpawn(root, pos, index, typePass, typePass.ToString() + ":" + index,
-                transform, replantedTree, treeHeight, seedDate, maxHeight);
-            temp.transform.rotation = rot;
+            temp = TerrainRamdonSpawner.CreateTerraSpawn(root, pos, new Vector3(), 
+                index, typePass, typePass.ToString(),
+                transform, replantedTree, treeHeight, seedDate, maxHeight, rot);
         }
 
         //AssignSharedMaterial(temp);
