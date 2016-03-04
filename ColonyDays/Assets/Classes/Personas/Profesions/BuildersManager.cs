@@ -196,13 +196,14 @@ public class BuildersManager
     bool CanGreenLight(Construction cons)
     {
         var stat = Book.GiveMeStat(cons.HType);
-
-        bool wood = GameController.Inventory1.ReturnAmtOfItemOnInv(P.Wood) >= stat.Wood;
-        bool stone = GameController.Inventory1.ReturnAmtOfItemOnInv(P.Stone) >= stat.Stone;
-        bool brick = GameController.Inventory1.ReturnAmtOfItemOnInv(P.Brick) >= stat.Brick;
-        bool iron = GameController.Inventory1.ReturnAmtOfItemOnInv(P.Iron) >= stat.Iron;
-        bool gold = GameController.Inventory1.ReturnAmtOfItemOnInv(P.Gold) >= stat.Gold;
-        bool dollar = Program.gameScene.GameController1.Dollars >= stat.Dollar;
+        
+        bool wood = GameController.Inventory1.ReturnAmtOfItemOnInv(P.Wood) >= stat.Wood || stat.Wood == 0;//if is zero
+        //the needed amt will pass reagardless the amt we have on storage
+        bool stone = GameController.Inventory1.ReturnAmtOfItemOnInv(P.Stone) >= stat.Stone || stat.Stone == 0;
+        bool brick = GameController.Inventory1.ReturnAmtOfItemOnInv(P.Brick) >= stat.Brick || stat.Brick == 0;
+        bool iron = GameController.Inventory1.ReturnAmtOfItemOnInv(P.Iron) >= stat.Iron || stat.Iron == 0;
+        bool gold = GameController.Inventory1.ReturnAmtOfItemOnInv(P.Gold) >= stat.Gold || stat.Gold == 0;
+        bool dollar = Program.gameScene.GameController1.Dollars >= stat.Dollar || stat.Dollar == 0;
         bool passedQue = _passedQueue.Contains(cons.Key);
 
         //other wise would remove it from _passedQueue if was mising Brick for example and wont be 
@@ -212,7 +213,6 @@ public class BuildersManager
             _passedQueue.Remove(cons.Key);
             return true;
         }
-
         return false;
     }
 

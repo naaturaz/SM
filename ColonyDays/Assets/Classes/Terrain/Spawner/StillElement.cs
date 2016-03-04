@@ -32,6 +32,7 @@ public class StillElement : TerrainRamdonSpawner {
     // Use this for initialization
 	protected void Start ()
 	{
+
         UpdateMinAndMaxVar();
         var bou = FindBounds(_min, _max);
         Anchors = FindAnchors(bou);
@@ -40,10 +41,6 @@ public class StillElement : TerrainRamdonSpawner {
 	    {
 	        return;
 	    }
-        //if (!WasNamedCorrect())
-        //{
-        //    return;
-        //}
 
 	    addCrystals = true;
         AddCrystalsStart();
@@ -56,19 +53,6 @@ public class StillElement : TerrainRamdonSpawner {
 
 	    LoadGrowingTree();
 	}
-
-    ///// <summary>
-    ///// To corect when a Tree or other StillElement is not named correctly . dont know how happen
-    ///// and cant get the debugger to pass thru. but if is not named "Tree | Tree | 988 | Jose"
-    ///// then was spawned incorrectly
-    ///// </summary>
-    ///// <returns></returns>
-    //private bool WasNamedCorrect()
-    //{
-    //    var arr = MyId.Split('|');
-
-    //    return arr.Length == 4;
-    //}
 
     /// <summary>
     /// Will tel if anchors are colliding with anyohter obstacle on Scene . if so will remove it 
@@ -257,14 +241,19 @@ public class StillElement : TerrainRamdonSpawner {
         {
             return;
         }
+        MaxHeight = transform.localScale.y;
 
         SeedDate = Program.gameScene.GameTime1.CurrentDate();
         Height = 0;
-        MaxHeight = gameObject.transform.localScale.y;
         ScaleGameObjectToZero();
 
         Program.gameScene.controllerMain.TerraSpawnController.ReSaveStillElement(this);
     }
+
+    //private float FindMaxHeightForThisTree()
+    //{
+
+    //}
 
     void CheckIfCanGrow()
     {

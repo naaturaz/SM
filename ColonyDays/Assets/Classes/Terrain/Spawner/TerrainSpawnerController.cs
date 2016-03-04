@@ -114,6 +114,8 @@ public class TerrainSpawnerController : ControllerParent
     {
         var index = AllRandomObjList.ToList().FindIndex(a => a.MyId == ele.MyId);
 
+        AllRandomObjList[index].MaxHeight = ele.MaxHeight;
+
         AllSpawnedDataList[index].TreeHeight = ele.Height;
         AllSpawnedDataList[index].SeedDate = ele.SeedDate;
         AllSpawnedDataList[index].MaxHeight = ele.MaxHeight;

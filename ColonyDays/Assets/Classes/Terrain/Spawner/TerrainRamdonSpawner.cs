@@ -11,9 +11,19 @@ public class TerrainRamdonSpawner : General {
     public float Height = .25f;
 
     public MDate SeedDate;
-    public float MaxHeight;
+
+    private float _maxHeight;
+
+    //set in UnityEditor Mannually
+    public float MaxHeight
+    {
+        get { return _maxHeight; }
+        set { _maxHeight = value; }
+    }
+
 
     public bool ReplantedTree { get; set; }
+
 
     static public TerrainRamdonSpawner CreateTerraSpawn(string root, Vector3 origen, Vector3 rotation,
         int indexAllVertex, H hType,
@@ -30,14 +40,12 @@ public class TerrainRamdonSpawner : General {
             Debug.Log("null:"+root);
         }
 
-        Naming naming=new Naming(H.Male);
-
         obj = (TerrainRamdonSpawner)Instantiate(obj, origen, Quaternion.identity);
         if (name != "") { obj.name = name; }
         if (container != null){obj.transform.parent = container;}
         obj.IndexAllVertex = indexAllVertex;
         obj.HType = hType;
-        obj.MyId = obj.Rename(name, obj.Id, obj.HType) + " | " + naming.NewName();
+        obj.MyId = obj.Rename(name, obj.Id, obj.HType);
         obj.transform.name = obj.MyId;
 
         //here to avoid rotating object after spwaned
@@ -49,7 +57,6 @@ public class TerrainRamdonSpawner : General {
         obj.ReplantedTree = replantedTree;
         obj.Height = height;
         obj.SeedDate = seedDate;
-        obj.MaxHeight = maxHeight;
         return obj;
     }
 
