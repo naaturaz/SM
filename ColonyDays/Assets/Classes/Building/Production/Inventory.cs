@@ -395,8 +395,9 @@ public class Inventory  {
 
             prod == P.CornFlower || prod == P.Bread || prod == P.Carrot || prod == P.Tomato
             || prod == P.Cucumber || prod == P.Cabbage || prod == P.Lettuce || prod == P.SweetPotato
-            || prod == P.Yucca || prod == P.Pineapple || prod == P.Mango || prod == P.Avocado
-            || prod == P.Guava || prod == P.Orange || prod == P.Papaya)
+            || prod == P.Yucca || prod == P.Pineapple 
+            //|| prod == P.Mango || prod == P.Avocado || prod == P.Guava || prod == P.Orange 
+            || prod == P.Papaya)
         {
             return PCat.Food;
         }

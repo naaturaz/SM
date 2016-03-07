@@ -124,9 +124,13 @@ public class PersonalObject
         {
             _currentRoot = Root.hammer;
         }
-        else if (_currentAni == "isFarming")
+        else if (_currentAni == "isHoe")
         {
-            _currentRoot = Root.guataca;
+            _currentRoot = Root.hoe;
+        }
+        else if (_currentAni == "isAxe")
+        {
+            _currentRoot = Root.axe;
         }
         else if (_currentAni == "isFishing")
         {

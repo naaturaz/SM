@@ -273,10 +273,10 @@ public class Production  {
         InputProdCheckAndAdd(new ProductInfo(P.SweetPotato, null, listH));
         InputProdCheckAndAdd(new ProductInfo(P.Yucca, null, listH));
         InputProdCheckAndAdd(new ProductInfo(P.Pineapple, null, listH));
-        InputProdCheckAndAdd(new ProductInfo(P.Mango, null, listH));
-        InputProdCheckAndAdd(new ProductInfo(P.Avocado, null, listH));
-        InputProdCheckAndAdd(new ProductInfo(P.Guava, null, listH));
-        InputProdCheckAndAdd(new ProductInfo(P.Orange, null, listH));
+        //InputProdCheckAndAdd(new ProductInfo(P.Mango, null, listH));
+        //InputProdCheckAndAdd(new ProductInfo(P.Avocado, null, listH));
+        //InputProdCheckAndAdd(new ProductInfo(P.Guava, null, listH));
+        //InputProdCheckAndAdd(new ProductInfo(P.Orange, null, listH));
         InputProdCheckAndAdd(new ProductInfo(P.Papaya, null, listH));
 
     }

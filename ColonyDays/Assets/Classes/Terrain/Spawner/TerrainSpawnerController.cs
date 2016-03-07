@@ -13,7 +13,8 @@ public class TerrainSpawnerController : ControllerParent
     float minHeightToSpawn;//min height to spawn obj on terrain
     private float maxHeightToSpawn;
 
-    private int multiplier = 20;//75 /80  10
+    //UNITY EDITOR Multiplier()
+    private int multiplier = 80;//75 /80  10
 
     int howManyTreesToSpawn = 20;//50
     int howManyStonesToSpawn =3;//3
@@ -119,6 +120,8 @@ public class TerrainSpawnerController : ControllerParent
         AllSpawnedDataList[index].TreeHeight = ele.Height;
         AllSpawnedDataList[index].SeedDate = ele.SeedDate;
         AllSpawnedDataList[index].MaxHeight = ele.MaxHeight;
+        AllSpawnedDataList[index].TreeFall = ele.TreeFall;
+        AllSpawnedDataList[index].Weight = ele.Weight;
     }
 
     public StillElement Find(string key)
@@ -150,6 +153,8 @@ public class TerrainSpawnerController : ControllerParent
         float minHeightAboveSeaLevel = 1.2f;//1
         minHeightToSpawn = Program.gameScene.WaterBody.transform.position.y + minHeightAboveSeaLevel;
         maxHeightToSpawn = minHeightToSpawn + 6.9f;
+
+
     }
 
     /// <summary>
@@ -158,6 +163,10 @@ public class TerrainSpawnerController : ControllerParent
     /// <returns></returns>
     int Multiplier(int mul)
     {
+#if UNITY_EDITOR
+        multiplier = 20;
+#endif
+
         return mul*multiplier;
     }
 
@@ -309,7 +318,7 @@ public class TerrainSpawnerController : ControllerParent
     //SaveOnListData
     public void CreateObjAndAddToMainList(H typePass, Vector3 pos, 
         int rootToSpawnIndex, int index, Quaternion rot = new Quaternion(), bool replantedTree = false,
-        float treeHeight = 0, MDate seedDate = null, float maxHeight = 0)
+        float treeHeight = 0, MDate seedDate = null, float maxHeight = 0, bool treeFall=false, float weight=0)
     {
         string root = ReturnRoot(typePass, rootToSpawnIndex);
         TerrainRamdonSpawner temp = null;
@@ -327,6 +336,13 @@ public class TerrainSpawnerController : ControllerParent
             temp = TerrainRamdonSpawner.CreateTerraSpawn(root, pos, new Vector3(), 
                 index, typePass, typePass.ToString(),
                 transform, replantedTree, treeHeight, seedDate, maxHeight, rot);
+
+            if (typePass==H.Tree)
+            {
+                var st = (StillElement) temp;
+                st.Weight = weight;
+                st.TreeFall = treeFall;
+            }
         }
 
         //AssignSharedMaterial(temp);
@@ -452,7 +468,9 @@ public class TerrainSpawnerController : ControllerParent
                 AllRandomObjList[i].transform.position, AllRandomObjList[i].transform.rotation, 
                 AllSpawnedDataList[i].Type, AllSpawnedDataList[i].RootStringIndex, 
                 AllSpawnedDataList[i].AllVertexIndex,
-                AllSpawnedDataList[i].TreeHeight, AllSpawnedDataList[i].SeedDate, AllSpawnedDataList[i].MaxHeight));
+                AllSpawnedDataList[i].TreeHeight, AllSpawnedDataList[i].SeedDate, AllSpawnedDataList[i].MaxHeight,
+                AllSpawnedDataList[i].TreeFall, AllSpawnedDataList[i].Weight
+                ));
             }
         }
 
@@ -539,7 +557,8 @@ public class TerrainSpawnerController : ControllerParent
             
             false, 
             AllSpawnedDataList[loadingIndex].TreeHeight, AllSpawnedDataList[loadingIndex].SeedDate, 
-            AllSpawnedDataList[loadingIndex].MaxHeight);
+            AllSpawnedDataList[loadingIndex].MaxHeight,
+            AllSpawnedDataList[loadingIndex].TreeFall, AllSpawnedDataList[loadingIndex].Weight);
 
         //will restart the value of this array so I know which ones are being used
         usedVertexPos = new bool[spawnedData.TerraMshCntrlAllVertexIndexCount];

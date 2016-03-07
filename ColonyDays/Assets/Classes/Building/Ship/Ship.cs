@@ -196,10 +196,14 @@ public class Ship
         }
     }
 
+    /// <summary>
+    /// When arrive port wht to do
+    /// </summary>
     public void CheckDockOrders()
     {
         CheckIfImportOrders();
         CheckIfExportOrders();
+        _moveThruPoints.SailDown();
     }
 
     public void SetLeaveDate()
@@ -208,11 +212,14 @@ public class Ship
         LeaveDate = Program.gameScene.GameTime1.ReturnCurrentDatePlsAdded(daysOnDock);
     }
 
+
     public void Leaving(string myID)
     {
         Building().Dock1.RemoveFromBusySpots(myID);
 
         BuildingPot.Control.DockManager1.AddSurvey(Survey());
+        _moveThruPoints.SailUp();
+
     }
 
     /// <summary>

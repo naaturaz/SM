@@ -18,10 +18,13 @@ public class SpawnedData {
 
     public MDate SeedDate;
     public float MaxHeight;
+    public bool TreeFall;
+    public float Weight;
 
 
     public SpawnedData(Vector3 posP, Quaternion rotP, H typeP,  int rootStringIndexP,
-        int allVertexIndexP, float treeHeight=0, MDate seedDate=null, float maxHeight=0)
+        int allVertexIndexP, float treeHeight=0, MDate seedDate=null, float maxHeight=0,
+        bool treeFall=false, float weight=0)
     {
         Pos = posP;
         Rot = rotP;
@@ -32,7 +35,12 @@ public class SpawnedData {
         TreeHeight = treeHeight;
         SeedDate = seedDate;
         MaxHeight = maxHeight;
+
+        TreeFall = treeFall;
+        Weight = weight;
     }
 
     public SpawnedData(){}
+
+
 }

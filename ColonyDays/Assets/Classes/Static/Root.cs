@@ -305,7 +305,8 @@ public class Root : MonoBehaviour
     //Personal Objects// objects person carry around or use
     public static string coal = "Prefab/Personas/PersonalObject/Coal";
     public static string crate = "Prefab/Personas/PersonalObject/Crate";
-    public static string guataca = "Prefab/Personas/PersonalObject/Guataca";
+    public static string hoe = "Prefab/Personas/PersonalObject/Hoe";
+    public static string axe = "Prefab/Personas/PersonalObject/Axe";
     public static string hammer = "Prefab/Personas/PersonalObject/Hammer";
     public static string ore = "Prefab/Personas/PersonalObject/Ore";
     public static string tonel = "Prefab/Personas/PersonalObject/Tonel";
@@ -323,10 +324,11 @@ public class Root : MonoBehaviour
 
    
 
+    //now on ShipManager.cs
     /// <summary>
     /// Ships
     /// </summary>
-    public static string shipSmall =  "Prefab/Ship/ShipSmall";
+   // public static string shipSmall =  "Prefab/Ship/ShipSmall";
 
 
     static void LoadMatDict()

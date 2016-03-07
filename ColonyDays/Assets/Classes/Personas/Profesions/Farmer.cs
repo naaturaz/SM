@@ -24,7 +24,7 @@ public class Farmer : Profession
         person.PrevJob = ProfDescription;
         ProfDescription = Job.Farmer;
         IsRouterBackUsed = false;
-        MyAnimation = "isSummon";
+        MyAnimation = "isHoe";
         _person = person;
 
         Init();

@@ -7,6 +7,9 @@ public class ShipManager
     List<Ship> _ships = new List<Ship>();
     private int _isToLoadShips = -1;
 
+    List<string> _shipsRoot = new List<string>()
+    { "Prefab/Ship/ShipSmall1", "Prefab/Ship/ShipSmall2", "Prefab/Ship/ShipSmall3" }; 
+
     public MDate NextVisit
     {
         get { return _nextVisit; }
@@ -50,11 +53,12 @@ public class ShipManager
     {
         Building build = BuildingPot.Control.DockManager1.GiveMeRandomBuilding();
 
-
-
         //_ships.Add(ShipGO.Create(Root.shipSmall, new Vector3(), build, H.ShipSmall));
-        _ships.Add(new Ship(Root.shipSmall, build, H.ShipSmall));
+        _ships.Add(new Ship(_shipsRoot[UMath.GiveRandom(0,_shipsRoot.Count)], build, H.ShipSmall));
     }
+
+
+
 
     private void CheckWhenNextVisit()
     {

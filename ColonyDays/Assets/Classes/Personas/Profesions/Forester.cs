@@ -27,7 +27,7 @@ public class Forester : Profession
         person.PrevJob = ProfDescription;
         ProfDescription = Job.Forester;
         IsRouterBackUsed = true;
-        MyAnimation = "isSummon";
+        MyAnimation = "isAxe";
         _person = person;
         Lock();
         Init();

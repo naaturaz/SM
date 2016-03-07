@@ -19,6 +19,7 @@ public class MoveThruPoints
     private float _speed = .5f;
  //   private Person _person;
     GameObject _gameObject;
+    GameObject _sails;
     private HPers _location = HPers.None;//curr loc
     private HPers _goingTo=HPers.None;//going to location
     bool _inverse;//inverse route
@@ -138,8 +139,19 @@ public class MoveThruPoints
 
     public void Init()
     {
+        myAnimator = _gameObject.GetComponent<Animator>(); 
         oldGameSpeed = Program.gameScene.GameSpeed;
-        renderer = _gameObject.GetComponent<Renderer>(); 
+        renderer = _gameObject.GetComponent<Renderer>();
+
+        if (_gameObject.name.Contains("Ship"))
+        {
+            InitShip();
+        }
+    }
+
+    private void InitShip()
+    {
+        _sails = General.FindGameObjectInHierarchy("Sail", _gameObject);
     }
 
     private Animator myAnimator;
@@ -150,12 +162,12 @@ public class MoveThruPoints
     /// <param name="oldAnimation"></param>
     public void SetCurrentAni(string animationPass, string oldAnimation)
     {
-        //Debug.Log("SetCurrAni nw:"+animationPass+".old:"+oldAnimation);
+        Debug.Log("SetCurrAni nw:"+animationPass+".old:"+oldAnimation);
 
         _currentAni = animationPass;
-        //myAnimator.SetBool(animationPass, true);
-        //myAnimator.SetBool(oldAnimation, false);
-
+        myAnimator.SetBool(animationPass, true);
+        myAnimator.SetBool(oldAnimation, false);
+        
         //_personalObject.AddressNewAni(animationPass, ShouldHide());
     }
 
@@ -197,7 +209,7 @@ public class MoveThruPoints
     /// <param name="loadCurrentPoint">Use to load person last aprox position </param>
     void InitWalk(TheRoute route, bool inverse, int loadCurrentPoint = -1 )
     {
-        FindIfAAniIsSaved();
+        //FindIfAAniIsSaved();
 
         DefineSpeed();
 
@@ -405,6 +417,14 @@ public class MoveThruPoints
 
     public void WalkRoutine(TheRoute route, HPers goingTo, bool inverse = false, HPers whichRouteP = HPers.None)
     {
+        //for ships
+        if (inverse)
+        {
+            SetCurrentAni("isOlasRouteBack", "isOlas");
+            //so it makes the transitionm to isOlasRouteBack  
+            //_speed = 0;
+        }
+
         //Show();//to show person whenh going from old home to shack to be built
         InitWalk(route, inverse);
         WalkRoutineTail(goingTo, whichRouteP);
@@ -693,6 +713,17 @@ public class MoveThruPoints
         CheckIfGoingIntoBuild();
 
 	    //ReSetAnimation();
+	    CheckIfCanLetThisGo();
+    }
+
+    private void CheckIfCanLetThisGo()
+    {
+        if (_speed>0)
+        {
+            return;
+        }
+
+     
     }
 
     /// <summary>
@@ -741,5 +772,16 @@ public class MoveThruPoints
             //myAnimator.speed = Program.gameScene.GameSpeed;
             oldGameSpeed = Program.gameScene.GameSpeed;
         }
+    }
+
+    internal void SailDown()
+    {
+        _sails.SetActive(false);
+    }
+
+    internal void SailUp()
+    {
+        _sails.SetActive(true);
+
     }
 }

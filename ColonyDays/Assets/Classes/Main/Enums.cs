@@ -157,10 +157,10 @@ public enum P
     SweetPotato,
     Yucca,
     Pineapple,
-    Mango,
-    Avocado,
-    Guava,
-    Orange,
+    //Mango,
+    //Avocado,
+    //Guava,
+    //Orange,
     Papaya
 
 

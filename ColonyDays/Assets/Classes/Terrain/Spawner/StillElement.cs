@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using Random = UnityEngine.Random;
@@ -8,6 +7,13 @@ public class StillElement : TerrainRamdonSpawner {
     private Vector3 _min;
     private Vector3 _max;
     private bool addCrystals;
+
+    private Animator _myAnimator;
+
+    private float _fallTime;
+    private bool _destroyElement;
+
+    private bool _treeFall;
 
     //this is not saveLoad
     private float _weight;//the weight of the element //
@@ -29,10 +35,21 @@ public class StillElement : TerrainRamdonSpawner {
         set { _minedNowBy = value; }
     }
 
+    public bool TreeFall
+    {
+        get { return _treeFall; }
+        set { _treeFall = value; }
+    }
+
+    public float Weight
+    {
+        get { return _weight; }
+        set { _weight = value; }
+    }
+
     // Use this for initialization
 	protected void Start ()
 	{
-
         UpdateMinAndMaxVar();
         var bou = FindBounds(_min, _max);
         Anchors = FindAnchors(bou);
@@ -42,6 +59,7 @@ public class StillElement : TerrainRamdonSpawner {
 	        return;
 	    }
 
+	    InitTree();
 	    addCrystals = true;
         AddCrystalsStart();
         base.Start();//intended to call TerrainRandomSpawner.cs
@@ -53,6 +71,30 @@ public class StillElement : TerrainRamdonSpawner {
 
 	    LoadGrowingTree();
 	}
+
+    private void InitTree()
+    {
+        if (HType!=H.Tree)
+        {
+            return;
+        }
+
+        _myAnimator = GetComponent<Animator>();
+        //if is loading a falled tree
+        if (TreeFall)
+        {
+            CutDownTree();
+        }
+        if (Weight<0)
+        {
+            DestroyCool();
+        }
+    }
+
+    public void CutDownTree()
+    {
+        _myAnimator.SetBool("isTreeFall", true);
+    }
 
     /// <summary>
     /// Will tel if anchors are colliding with anyohter obstacle on Scene . if so will remove it 
@@ -117,7 +159,26 @@ public class StillElement : TerrainRamdonSpawner {
 	protected void Update () 
     {
         CheckIfCanGrow();
-	}
+	    CheckIfWasDestroyAndPlayedFullAnimation();
+    }
+
+    private void CheckIfWasDestroyAndPlayedFullAnimation()
+    {
+        if (!_destroyElement)
+        {
+            return;
+        }
+
+        //bz the fall tree animtion last 5sec and so
+        if (Time.time > _fallTime + 6 && HType==H.Tree)
+        {
+            DestroyCool();
+        }
+        if (HType != H.Tree)
+        {
+            DestroyCool();
+        }
+    }
 
     protected void UpdateMinAndMaxVar()
     {
@@ -191,7 +252,6 @@ public class StillElement : TerrainRamdonSpawner {
             return;
         }
 
-
         SetSpecWeight();
     }
 
@@ -215,19 +275,40 @@ public class StillElement : TerrainRamdonSpawner {
     /// <param name="ProdXShift"></param>
     internal void RemoveWeight(float ProdXShift, Person pers)
     {
+        CheckIfTreeMustBeCut();
         _weight -= ProdXShift;
         
         //depleted
         //mined now only by one person . The person calling this Method 
         if (_weight < 0)
         {
-            DestroyCool();
+            //DestroyCool();
+            _destroyElement = true;
 
             if (HType==H.Tree)
             {
                 Program.gameScene.controllerMain.TerraSpawnController.
                     SpawnRandomTreeInThisPos(pers, transform.position);
             }
+
+            //bz if is saved then need to save the weight so when thhis tree loads next time is just destroyed
+            //just in case doesnt finish playing the animation and is saved then. if that happen next time
+            //is loaded will be destroyed right away
+            Program.gameScene.controllerMain.TerraSpawnController.ReSaveStillElement(this);
+        }
+    }
+
+    /// <summary>
+    /// Will cut the tree , will set bool TreeFall, and will reSave element
+    /// </summary>
+    private void CheckIfTreeMustBeCut()
+    {
+        if (HType == H.Tree && !TreeFall)
+        {
+            _fallTime = Time.time;
+            TreeFall = true;
+            CutDownTree();
+            Program.gameScene.controllerMain.TerraSpawnController.ReSaveStillElement(this);
         }
     }
 
@@ -319,7 +400,7 @@ public class StillElement : TerrainRamdonSpawner {
 
 
     //so if a strucutre ask for 2nd time I have the value stored 
-    Dictionary<string, Vector3> _cachedStructures = new Dictionary<string, Vector3>(); 
+    Dictionary<string, Vector3> _cachedStructures = new Dictionary<string, Vector3>();
     /// <summary>
     /// Will find the closest anchor to that Structure 
     /// </summary>

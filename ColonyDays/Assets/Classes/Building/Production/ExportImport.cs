@@ -73,10 +73,10 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Papaya, 100, 550, 100));
 
         //frutas
-        _prodSpecs.Add(new ProdSpec(P.Mango, 100, 550, 100));
-        _prodSpecs.Add(new ProdSpec(P.Avocado, 100, 550, 100));
-        _prodSpecs.Add(new ProdSpec(P.Guava, 100, 550, 100));
-        _prodSpecs.Add(new ProdSpec(P.Orange, 100, 550, 100));
+        //_prodSpecs.Add(new ProdSpec(P.Mango, 100, 550, 100));
+        //_prodSpecs.Add(new ProdSpec(P.Avocado, 100, 550, 100));
+        //_prodSpecs.Add(new ProdSpec(P.Guava, 100, 550, 100));
+        //_prodSpecs.Add(new ProdSpec(P.Orange, 100, 550, 100));
 
 
 
