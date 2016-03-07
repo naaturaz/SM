@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Line
 {
@@ -165,4 +166,38 @@ public class Line
     {
         
     }
+
+    #region Return Random Points In Line
+    private float howFarPoints = .75f;
+    private float distanceLeft;
+    /// <summary>
+    /// Will return random point in line 
+    /// </summary>
+    /// <returns></returns>
+    internal List<Vector3> ReturnRandomPointsInLine()
+    {
+        var a1Loc = U2D.FromV2ToV3(A1);
+        var b1Loc = U2D.FromV2ToV3(B1);
+
+        List<Vector3> res = new List<Vector3>();
+        distanceLeft = Vector3.Distance(a1Loc, b1Loc);
+        var add = AddToLoop();
+
+
+        for (float i = 0; i < distanceLeft; i+= add)
+        {
+            var point = Vector3.MoveTowards(a1Loc, b1Loc, add);
+            res.Add(point);
+            a1Loc = point;
+            add = AddToLoop();
+        }
+
+        return res;
+    }
+
+    float AddToLoop()
+    {
+        return UMath.GiveRandom(howFarPoints - .4f, howFarPoints + .4f);
+    }
+    #endregion
 }

@@ -58,7 +58,7 @@ public class Docker : Profession
         PickUpOrder();
 
         ProfDescription = Job.Docker;
-        MyAnimation = "isHammer";
+        MyAnimation = "isWheelBarrow";
 
         //means no Orders avail 
         if (_destinyBuild == null)

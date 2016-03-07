@@ -141,6 +141,11 @@ public class PersonalObject
             _currentPoint = _stomach;
             SetRootForCarrying();
         }
+        else if (_currentAni == "isWheelBarrow")
+        {
+            _currentPoint = _person.gameObject;
+            _currentRoot = Root.wheelBarrow;
+        }
         else _currentRoot = "";
     }
 

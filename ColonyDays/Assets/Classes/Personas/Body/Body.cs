@@ -520,6 +520,24 @@ public class Body //: MonoBehaviour //: General
         GoingTo = goingTo;
         _movingNow = true;
         _whichRoute = whichRouteP;
+
+        AddressWheelBarrowingAni();
+    }
+
+    private void AddressWheelBarrowingAni()
+    {
+        if (_person.ProfessionProp==null)
+        {
+            return;
+        }
+
+        if (_person.ProfessionProp.ProfDescription == Job.Docker || _person.ProfessionProp.ProfDescription == Job.WheelBarrow)
+        {
+            //if (!_person.Inventory.IsEmpty())
+            //{
+                TurnCurrentAniAndStartNew("isWheelBarrow");
+            //}
+        }
     }
 
     void InitRotaVars()

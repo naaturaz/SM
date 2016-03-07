@@ -69,7 +69,7 @@ public class WheelBarrow : Profession
 
         _person.PrevJob = ProfDescription;
         ProfDescription = Job.WheelBarrow;
-        MyAnimation = "isHammer";
+        MyAnimation = "isWheelBarrow";
 
         //means no Orders avail 
         if (_destinyBuild == null)

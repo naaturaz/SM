@@ -438,7 +438,6 @@ public class Building : General, Iinfo
         InitWheelBarrow();
         InitDockDryDockAndSupplier();
 
-
         //if gives a null ex here ussually is that u forgot a prefab on scene
         _minHeightToSpawn = Program.gameScene.WaterBody.transform.position.y + minHeightAboveSeaLevel;
 
@@ -462,6 +461,20 @@ public class Building : General, Iinfo
         StartCoroutine("ThirtySecUpdate");
 
         DefinePreferedStorage();
+    }
+
+
+
+    private Decoration _decoration;
+    private bool isDecorated;
+    protected void InitDecoration()
+    {
+        if (!PositionFixed || Anchors.Count == 0 || isDecorated || MyId.Contains("Bridge") )
+        {
+            return;
+        }
+        isDecorated = true;
+        _decoration = new Decoration(this);
     }
 
     #region Current Product
@@ -646,7 +659,7 @@ public class Building : General, Iinfo
     {
         //DebugShowAnchors();
 
-
+        InitDecoration();
 
         if (_militar!=null)
         {

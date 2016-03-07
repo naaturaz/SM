@@ -311,6 +311,7 @@ public class Root : MonoBehaviour
     public static string ore = "Prefab/Personas/PersonalObject/Ore";
     public static string tonel = "Prefab/Personas/PersonalObject/Tonel";
     public static string vara = "Prefab/Personas/PersonalObject/Vara";
+    public static string wheelBarrow = "Prefab/Personas/PersonalObject/WheelBarrow";
     public static string wood = "Prefab/Personas/PersonalObject/Wood";
 
 

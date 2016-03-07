@@ -50,6 +50,12 @@ public class StillElement : TerrainRamdonSpawner {
     // Use this for initialization
 	protected void Start ()
 	{
+        //is a decora object 
+	    if (MyId.Contains("Decora"))
+	    {
+	        return;
+	    }
+
         UpdateMinAndMaxVar();
         var bou = FindBounds(_min, _max);
         Anchors = FindAnchors(bou);

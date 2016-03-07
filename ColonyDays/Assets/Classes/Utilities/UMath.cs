@@ -15,6 +15,11 @@ public class UMath : MonoBehaviour {
         return UnityEngine.Random.Range(min, max);
     }
 
+    public static float GiveRandom(float min, float max)
+    {
+        return UnityEngine.Random.Range(min, max);
+    }
+
     /// <summary>
     /// Return closest Vector3 to 'Stone' must have at least 2 items the list 
     /// </summary>
