@@ -423,14 +423,14 @@ public class General : MonoBehaviour
     /// <summary>
     /// Get the child obj called "" in this Transform
     /// </summary>
-    protected List<GameObject> GetChildsContaining(H childName)
+    public static List<GameObject> GetChildsNameEqual(GameObject gO, string childName)
     {
         List<GameObject> res = new List<GameObject>();
-        for (int i = 0; i < gameObject.transform.childCount; i++)
+        for (int i = 0; i < gO.transform.childCount; i++)
         {
-            if (gameObject.transform.GetChild(i).name.Contains(childName.ToString()))
+            if (gO.transform.GetChild(i).name == childName)
             {
-                res.Add( gameObject.transform.GetChild(i).gameObject);
+                res.Add(gO.transform.GetChild(i).gameObject);
             }
         }
         return res;
@@ -471,6 +471,19 @@ public class General : MonoBehaviour
             if (gameObject.transform.GetChild(i).name.Contains(childName.ToString()))
             {
                 return gameObject.transform.GetChild(i).gameObject;
+            }
+        }
+        //print("Obj doesnt have a child that contains: " + childName);
+        return null;
+    }
+
+    public static GameObject GetChildThatContains(string childName,GameObject go )
+    {
+        for (int i = 0; i < go.transform.childCount; i++)
+        {
+            if (go.transform.GetChild(i).name.Contains(childName))
+            {
+                return go.transform.GetChild(i).gameObject;
             }
         }
         //print("Obj doesnt have a child that contains: " + childName);

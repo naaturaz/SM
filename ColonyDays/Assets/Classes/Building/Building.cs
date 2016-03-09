@@ -469,7 +469,7 @@ public class Building : General, Iinfo
     private bool isDecorated;
     protected void InitDecoration()
     {
-        if (!PositionFixed || Anchors.Count == 0 || isDecorated || MyId.Contains("Bridge") )
+        if (!PositionFixed || Anchors.Count == 0 || isDecorated || MyId.Contains("Bridge") || _isMarine )
         {
             return;
         }
@@ -1409,7 +1409,13 @@ public class Building : General, Iinfo
         }
 
         //can hhave 1 famili with 3 kids
-        if (HType == H.HouseA || HType == H.HouseB)
+        if (HType == H.Bohio)
+        {
+            Families = new Family[1];
+            Families[0] = new Family(1, MyId, 0);
+        }
+        //can hhave 1 famili with 3 kids
+        else if (HType == H.HouseA || HType == H.HouseB)
         {
             Families = new Family[1];
             Families[0] = new Family(3, MyId, 0);

@@ -131,16 +131,16 @@ public class ExportImport
         //militar
         _prodSpecs.Add(new ProdSpec(P.CannonBall, 500, 6874, 20));
         _prodSpecs.Add(new ProdSpec(P.CannonPart, 500, 5944, 20));
-        _prodSpecs.Add(new ProdSpec(P.Weapon, 150, 5000, 8));
+        //_prodSpecs.Add(new ProdSpec(P.Weapon, 150, 5000, 8));
         _prodSpecs.Add(new ProdSpec(P.Sword, 150, 6000, 8));
         _prodSpecs.Add(new ProdSpec(P.Axe, 50, 2500, 10));
         _prodSpecs.Add(new ProdSpec(P.GunPowder, 100, 1281, 60));
 
 
 
-        _prodSpecs.Add(new ProdSpec(P.Resin, 10, 30));
+      //  _prodSpecs.Add(new ProdSpec(P.Resin, 10, 30));
         _prodSpecs.Add(new ProdSpec(P.Wood, 10, 500, 90));
-        _prodSpecs.Add(new ProdSpec(P.HolyWood, 100, 700, 30));
+        //_prodSpecs.Add(new ProdSpec(P.HolyWood, 100, 700, 30));
         _prodSpecs.Add(new ProdSpec(P.Tool, 150, 3000, 15));
 
 
@@ -159,9 +159,9 @@ public class ExportImport
 
 
         _prodSpecs.Add(new ProdSpec(P.Paper, 150, 192, 30));
-        _prodSpecs.Add(new ProdSpec(P.PaperNews, 50, 292, 50));
-        _prodSpecs.Add(new ProdSpec(P.Books, 300, 502, 5));
-        _prodSpecs.Add(new ProdSpec(P.Silk, 150, 1300, 5));
+        _prodSpecs.Add(new ProdSpec(P.Map, 50, 292, 50));
+        _prodSpecs.Add(new ProdSpec(P.Book, 300, 502, 5));
+       // _prodSpecs.Add(new ProdSpec(P.Silk, 150, 1300, 5));
 
         //so far 47 Products 
 

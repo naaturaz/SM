@@ -425,8 +425,8 @@ public class Production  {
         InputElement paper1 = new InputElement(P.Paper, 10);
         List<InputElement> paperForm1 = new List<InputElement>() { paper1, eleWoodComb};
         List<InputElement> paperForm2 = new List<InputElement>() { paper1, eleCoalComb};
-        InputProdCheckAndAdd(new ProductInfo(P.PaperNews, paperForm1, H.Printer));
-        InputProdCheckAndAdd(new ProductInfo(P.PaperNews, paperForm2, H.Printer));
+        InputProdCheckAndAdd(new ProductInfo(P.Map, paperForm1, H.Printer));
+        InputProdCheckAndAdd(new ProductInfo(P.Map, paperForm2, H.Printer));
 
 
         //books
@@ -434,8 +434,8 @@ public class Production  {
         InputElement leather = new InputElement(P.Leather, 1);
         List<InputElement> bookForm1 = new List<InputElement>() { paper2, leather, eleWoodComb };
         List<InputElement> bookForm2 = new List<InputElement>() { paper2, leather, eleCoalComb };
-        InputProdCheckAndAdd(new ProductInfo(P.Books, bookForm1, H.Printer));
-        InputProdCheckAndAdd(new ProductInfo(P.Books, bookForm2, H.Printer));
+        InputProdCheckAndAdd(new ProductInfo(P.Book, bookForm1, H.Printer));
+        InputProdCheckAndAdd(new ProductInfo(P.Book, bookForm2, H.Printer));
     }
 
 

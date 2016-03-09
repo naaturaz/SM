@@ -96,6 +96,12 @@ public class BuildingsMenu : GUIElement
                     var iconRoot = Root.RetBuildingIconRoot(vals[i]);
                     var s = (Sprite) Resources.Load(iconRoot, typeof (Sprite));
 
+                    //didnt found an Icon
+                    if (s==new Sprite())
+                    {
+                        s = (Sprite)Resources.Load("Prefab/Building/gameIcon", typeof(Sprite));
+                    }
+
                     slots[i].GetComponent<Image>().sprite = s;
                 }
                 //locked icon 

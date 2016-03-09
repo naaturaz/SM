@@ -193,7 +193,13 @@ public class BuildingWindow : GUIElement {
 
     bool IsFullyBuilt()
     {
-        if (!_building.MyId.Contains("Bridge"))
+        if (!_building.MyId.Contains("Road"))
+        {
+            //so user will never be able to be removed 
+            return false;
+        }
+
+        if (!_building.MyId.Contains("Bridge")  )
         {
             var st = (Structure)_building;
             if (st.CurrentStage == 4)

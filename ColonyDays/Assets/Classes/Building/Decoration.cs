@@ -19,22 +19,9 @@ public class Decoration  {
         "Prefab/Terrain/Spawner/Decora/RusticChair",
     };
 
-    List<string> allOrna = new List<string>()
-    { 
-        Root.orna1, Root.orna2, Root.orna3, Root.orna4 , Root.orna5, Root.orna6,
-         Root.orna7, Root.orna8
-    };
+    
 
-    List<string> allGrass = new List<string>() 
-    { 
-        //Root.grass1, 
-        Root.grass2, Root.grass3  ,
-        Root.grass4, Root.grass5, Root.grass6,
-        Root.grass7, 
-        //Root.grass8,
-        //Root.grass9,
-        Root.grass11, Root.grass12,
-    };
+    
 
     private Building _building;
     List<Line> _lines = new List<Line>(); 
@@ -45,8 +32,8 @@ public class Decoration  {
     public Decoration(Building build)
     {
         _building = build;
-        _roots.AddRange(allOrna);
-        _roots.AddRange(allGrass);
+        _roots.AddRange(TerrainSpawnerController.allOrna);
+        _roots.AddRange(TerrainSpawnerController.allGrass);
         Init();
     }
 
@@ -56,10 +43,60 @@ public class Decoration  {
         RemoveSpwnPointLine();
         FindPositionToSpwnDecor();
         SpawnDecorObj();
+        IfHouseMedAssignRandomMat();
     }
 
 
 
+
+    #region Romeo Bravo Pirate
+
+    private Material _romeo;
+    private Material _bravo;
+    private Material _pirate;
+    private GameObject _main;
+    private void IfHouseMedAssignRandomMat()
+    {
+        if (_building.HType != H.HouseMed)
+        {
+            return;
+        }
+        DefineRamdonMat();
+
+        _main = General.GetChildThatContains("Main", _building.gameObject);
+        FindAllSubObjsAndAssignMat();
+    }
+
+    private void FindAllSubObjsAndAssignMat()
+    {
+        var romeos = General.GetChildsNameEqual(_main, "Romeo");
+        var pirates = General.GetChildsNameEqual(_main, "Pirate");
+        var bravos = General.GetChildsNameEqual(_main, "Bravo");
+
+        AssignMat(romeos, _romeo);
+        AssignMat(pirates, _pirate);
+        AssignMat(bravos, _bravo);
+    }
+
+    void AssignMat(List<GameObject> list, Material mat)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            list[i].GetComponent<Renderer>().sharedMaterial = mat;
+        }
+    }
+
+    private void DefineRamdonMat()
+    {
+        _romeo = (Material)Resources.Load("Prefab/Mats/Building/BuildsFactory/Romeo"+UMath.GiveRandom(1,4));
+        _bravo = (Material)Resources.Load("Prefab/Mats/Building/BuildsFactory/Bravo"+UMath.GiveRandom(1,4));
+        _pirate = (Material)Resources.Load("Prefab/Mats/Building/BuildsFactory/Pirate"+UMath.GiveRandom(1,4));
+    }
+
+
+
+
+#endregion
 
     /// <summary>
     /// The line facing spawnPoint wil be removed
@@ -117,7 +154,7 @@ public class Decoration  {
 
         //ScaleDownTerrainSpawners
         var actScale = spwnObj.transform.localScale;
-        spwnObj.transform.localScale = actScale/2.5;
+        spwnObj.transform.localScale = actScale/2.5f;//2
     }
 
 

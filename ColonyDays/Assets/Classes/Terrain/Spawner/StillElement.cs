@@ -100,6 +100,7 @@ public class StillElement : TerrainRamdonSpawner {
     public void CutDownTree()
     {
         _myAnimator.SetBool("isTreeFall", true);
+        _audioPlayer.PlaySoundOneTime(RootSound.treeFall, gameObject.transform.position);
     }
 
     /// <summary>

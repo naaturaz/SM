@@ -86,7 +86,6 @@ public enum P
     //Mines
     Gold, Stone, Iron,
     //Resin,
-    Resin,
     //Wood,
     Wood,
     //BlackSmith,
@@ -109,9 +108,9 @@ public enum P
     //Paper,
     Paper,
     //PrinterSmall, PrinterBig,
-    PaperNews, Books,
+    Map, Book,
     //Silk, 
-    Silk, //decide if include or not in the game 
+    //Silk, //decide if include or not in the game 
     //SugarMill,
     Sugar,
     None,
@@ -124,7 +123,7 @@ public enum P
     Potassium,
     Silver,
     Henequen,
-    HolyWood,
+    //HolyWood,
     Sail,
     String,
     Nail,
@@ -133,7 +132,7 @@ public enum P
     CoffeeBean,
     Cacao,
     Chocolate,
-    Weapon,
+    //Weapon,
     Diamond,
     Jewel,
     Cloth,
@@ -193,7 +192,10 @@ public enum H
     //ADDING A NEW STRUCTURE INSTRUCTIONS:
     /////////////////anything u change BELOW HERE SHOULD BE ADDED IN THEIR SPECIFIC ENUM USED TO MAP KEYBOARD
     /// and added on Root.cs and 
-    /// stats should be added on Book.cs. thts all 
+    /// stats should be added on Book.cs.
+    /// and add Desc on Languages.cs
+    ///  thts all 
+    /// 
     /// add the type of Product produces on Production.cs
     /// if Category will be diff than structure set on General.DefineCategory()
     /// 
@@ -205,7 +207,7 @@ public enum H
     //infr F1
     Trail, Road, BridgeTrail, BridgeRoad, CoachMan, LightHouse, WheelBarrow, StockPile, BuildersOffice,
     //house F2 ... bugg bz they had numbers on it .. They cant have numbers
-    HouseA, HouseB, HouseAWithTwoFloor, HouseMed, HouseC, HouseD,
+    Bohio, HouseA, HouseB, HouseAWithTwoFloor, HouseMed, HouseC, HouseD,
     //farming F3
     //Farm, this farm removed is the draggable farm 
     AnimalFarmSmall, AnimalFarmMed, AnimalFarmLarge, AnimalFarmXLarge,
@@ -374,8 +376,8 @@ public enum StInfr //for structures game structure.cs
 public enum StHous //for structures game structure.cs 
 {
     //Housing
-    HouseA, HouseB, HouseAWithTwoFloor, HouseMed,  HouseC,
-    HouseD
+    Bohio, HouseA, HouseB, HouseAWithTwoFloor, HouseMed,  
+    //HouseC, HouseD
 }
 
 public enum StFarm

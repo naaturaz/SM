@@ -13,25 +13,25 @@ public class TerrainSpawnerController : ControllerParent
     float minHeightToSpawn;//min height to spawn obj on terrain
     private float maxHeightToSpawn;
 
-    //UNITY EDITOR Multiplier()
+    //UNITY EDITOR ManualStart()
     private int multiplier = 80;//75 /80  10
 
     int howManyTreesToSpawn = 20;//50
     int howManyStonesToSpawn =3;//3
     int howManyIronToSpawn = 3;//3
     int howManyGoldToSpawn = 3;//3
-    int howManyOrnaToSpawn = 20;//50
-    int howManyGrassToSpawn = 40;
+    int howManyOrnaToSpawn = 30;//50  20
+    int howManyGrassToSpawn = 40;//40
 
     //will be use when spawing new obj to know if that position was used alread by another one
     bool[] usedVertexPos;
 
     private List<string> allTrees = new List<string>()
     {
-        Root.tree1,
+        // Root.tree1,
         // Root.tree2, Root.tree3, 
-        //Root.tree4, Root.tree5, Root.tree6, 
-        //Root.tree7,
+        Root.tree4, Root.tree5, Root.tree6, 
+        Root.tree7,
 
         Root.palm1, Root.palm2, Root.palm3, Root.palm4, Root.palm5, Root.palm6, Root.palm10  ,
         Root.palm20, Root.palm21, Root.palm22, Root.palm23,
@@ -66,22 +66,22 @@ public class TerrainSpawnerController : ControllerParent
         //Root.gold4
     };
 
-    List<string> allOrna = new List<string>()
+    public static  List<string> allOrna = new List<string>()
     { 
-        Root.orna1, Root.orna2, Root.orna3, Root.orna4 , Root.orna5, Root.orna6,
-         Root.orna7, Root.orna8
+        //Root.orna1, Root.orna2, Root.orna3, Root.orna4 , Root.orna5, Root.orna6,
+        // Root.orna7, Root.orna8
     };
 
-    List<string> allGrass = new List<string>() 
+    public static List<string> allGrass = new List<string>() 
     { 
-        //Root.grass1, 
-        Root.grass2, Root.grass3  ,
-        Root.grass4, Root.grass5, Root.grass6,
-        Root.grass7, 
-        Root.grass8,
-        Root.grass9,
-        //Root.grass10,
-        Root.grass11, Root.grass12,
+        ////Root.grass1, 
+        //Root.grass2, Root.grass3  ,
+        //Root.grass4, Root.grass5, Root.grass6,
+        //Root.grass7, 
+        //Root.grass8,
+        //Root.grass9,
+        ////Root.grass10,
+        //Root.grass11, Root.grass12,
     };
     
     List<H> toSpawnList = new List<H>() { H.Tree, H.Stone, H.Iron, H.Gold, H.Ornament, H.Grass };
@@ -143,7 +143,16 @@ public class TerrainSpawnerController : ControllerParent
     // Use this for initialization
     void ManualStart()
     {
-        DefineStartVoidArea(20f, 20f);
+
+#if UNITY_EDITOR
+        multiplier = 20;
+        howManyGrassToSpawn = 40;//40
+#endif
+
+        DefineAllOrnaRoots();
+        DefineAllLawnRoots();
+
+        DefineStartVoidArea(20f, 20f);//20,20
         howManySpawn = new List<int>() {
             Multiplier(howManyTreesToSpawn), Multiplier(howManyStonesToSpawn), 
             Multiplier(howManyIronToSpawn), Multiplier(howManyGoldToSpawn),
@@ -157,15 +166,59 @@ public class TerrainSpawnerController : ControllerParent
 
     }
 
+    private void DefineAllLawnRoots()
+    {
+        var howManyLawnInEachFolder = 15+1;
+        var add = "";
+
+        //one ofr each folder
+        //for (int i = 1; i < howManyLawnInEachFolder; i++)
+        //{
+        //    if (i < 10)
+        //    {
+        //        add = "0";
+        //    }
+        //    else add = "";
+
+        //    allGrass.Add("Prefab/Terrain/Spawner/LawnBrown/Lawn" + add + i);
+        //}
+        for (int i = 1; i < howManyLawnInEachFolder; i++)
+        {
+            if (i < 10)
+            {
+                add = "0";
+            }
+            else add = "";
+
+            allGrass.Add("Prefab/Terrain/Spawner/LawnGreenDark/Lawn" + add + i);
+        }
+        //for (int i = 1; i < howManyLawnInEachFolder; i++)
+        //{
+        //    if (i < 10)
+        //    {
+        //        add = "0";
+        //    }
+        //    else add = "";
+
+        //    allGrass.Add("Prefab/Terrain/Spawner/LawnGreenLight/Lawn" + add + i);
+        //}
+    }
+
+    private void DefineAllOrnaRoots()
+    {
+        for (int i = 1; i < 27+1; i++)
+        {
+            allOrna.Add("Prefab/Terrain/Spawner/Orna/Orna"+i);
+        }
+    }
+
     /// <summary>
     /// So I dont have to change from 10 to 10,000 everytime a need to spawn more or less lawn for ex
     /// </summary>
     /// <returns></returns>
     int Multiplier(int mul)
     {
-#if UNITY_EDITOR
-        multiplier = 20;
-#endif
+
 
         return mul*multiplier;
     }

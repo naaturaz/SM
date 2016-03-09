@@ -32,6 +32,7 @@ public class Languages
 
 
        //House
+	   { "Bohio.Desc","Bohio house, really rudimentary conditions, people is unhappy living here, a family can have 1 kid maximum" +_houseTail},
 	   { "HouseA.Desc","Small house, a family can have 2 kids maximum" +_houseTail},
 	   { "HouseB.Desc","Small house, a family can have 2 kids maximum" +_houseTail },
 	   { "HouseAWithTwoFloor.Desc","Medium house, a family can have 3 kids maximum"+_houseTail},
@@ -105,25 +106,24 @@ public class Languages
        //other
 	   { "Church.Desc","The church gives happinnes and hope to your people"},
 	   { "Tavern.Desc","The tavern gives some relax and enjoy to your people"},
-
+	   { "Shack.Desc","Shack"},
 
        //Militar
 	   { "PostGuard.Desc",_militar},
 	   { "Fort.Desc",_militar},
 	   { "Morro.Desc",_militar+". Once you build this Pirates should know better"},
-
-
 	};
-
-
-
+    
     public static string ReturnString(string key)
     {
         if (_currentLang=="EN")
         {
-            return _english[key];
+            if (_english.ContainsKey(key))
+            {
+                return _english[key];
+            }
+            return key + " not found Languages(124)";
         }
-
         return "not languages selected ";
     }
 

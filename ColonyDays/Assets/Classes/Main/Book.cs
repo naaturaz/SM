@@ -71,6 +71,7 @@ public class Book : General
 
 
         //houses 
+        Build.Add(new BuildStat(H.Bohio, 400, 15, 5, 25, 5, maxPeople: 5, capacity: 1));
         Build.Add(new BuildStat(H.HouseA, 400, 15, 5, 25, 5, maxPeople: 5, capacity: 1));
         Build.Add(new BuildStat(H.HouseB, 400, 15, 5, 25, 5, maxPeople: 5, capacity: 1));
         Build.Add(new BuildStat(H.HouseAWithTwoFloor, 800, 30, 5, 50, 5, maxPeople: 10, capacity: 2));

@@ -366,6 +366,7 @@ public class Trail : Way
 	}
 
 
+    
 
     /// <summary>
     ///  Creates the trail.

@@ -258,9 +258,13 @@ public class Body //: MonoBehaviour //: General
     {
         if (_currentAni == "isCarry")
         {
-            _speed = .1f;
+            _speed = UMath.GiveRandom(0.09f, 0.12f);
         }
-        else _speed = .5f;
+        else if (_currentAni == "isWheelBarrow")
+        {
+            _speed = UMath.GiveRandom(0.49f, 0.59f);
+        }
+        else _speed = UMath.GiveRandom(0.45f, 0.55f);
     }
 
     private void DefineAnimation(TheRoute route)

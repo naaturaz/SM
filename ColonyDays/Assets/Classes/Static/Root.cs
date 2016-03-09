@@ -135,7 +135,7 @@ public class Root : MonoBehaviour
 
 
 
-
+        //all grass roots and orna are now in TerrainSpawnerController
         public static string orna1 = "Prefab/Terrain/Spawner/Orna1";
         public static string orna2 = "Prefab/Terrain/Spawner/Orna2";
         public static string orna3 = "Prefab/Terrain/Spawner/Orna3";
@@ -591,6 +591,7 @@ public class Root : MonoBehaviour
         buildsRoot.Add(H.WheelBarrow, "Prefab/Building/Infrastructure/WheelBarrow");
 
         //house
+        buildsRoot.Add(H.Bohio, "Prefab/Building/House/Bohio");
         buildsRoot.Add(H.HouseA, "Prefab/Building/House/HouseA");
         buildsRoot.Add(H.HouseB, "Prefab/Building/House/HouseB");
         buildsRoot.Add(H.HouseAWithTwoFloor, "Prefab/Building/House/HouseAWithTwoFloor");

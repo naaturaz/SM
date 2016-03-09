@@ -124,8 +124,12 @@ public class RoutesCache {
     public void RemoveRoute(TheRoute theRoute, DateTime askTime)
     {
         var key = ReturnKey(theRoute);
+        if (!_items.ContainsKey(key))
+        {
+            return;
+        }
+        
         var item = _items[key];
-
         if (item==null)
         {
             return;

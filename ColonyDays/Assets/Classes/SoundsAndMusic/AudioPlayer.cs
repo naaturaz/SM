@@ -20,6 +20,8 @@ public class AudioPlayer : MonoBehaviour {
         }
         else if (musicOrSound == H.Music && Settings.ISMusicOn)
         {
+            //wont play music now 
+            return null;
             temp = (Music)General.Create(soundToPlayRoot, iniPos);
         }
         return temp;

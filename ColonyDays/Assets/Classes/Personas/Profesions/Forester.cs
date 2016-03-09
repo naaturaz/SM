@@ -203,6 +203,12 @@ public class Forester : Profession
         {
             ExecuteNow = false;
 
+            if (_stillElement!=null)
+            {
+                _audioPlayer.PlaySoundOneTime(RootSound.axe, _stillElement.gameObject.transform.position);
+            }
+
+
             ////foresters reset when done work
             //Debug.Log("Foreset reset dummy");
             ResetDummy();
@@ -273,6 +279,7 @@ public class Forester : Profession
         return false;
     }
 
+    AudioPlayer _audioPlayer=new AudioPlayer();
     /// <summary>
     /// Remove the weight from the element Im mining 
     /// </summary>
