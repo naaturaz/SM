@@ -469,10 +469,16 @@ public class Building : General, Iinfo
     private bool isDecorated;
     protected void InitDecoration()
     {
-        if (!PositionFixed || Anchors.Count == 0 || isDecorated || MyId.Contains("Bridge") || _isMarine )
+        if (isDecorated || !PositionFixed || Anchors.Count == 0 )
         {
             return;
         }
+        if (MyId.Contains("Bridge") || MyId.Contains("Farm") || doubleBounds.Contains(HType))
+        {
+            isDecorated = true;
+            return;
+        }
+
         isDecorated = true;
         _decoration = new Decoration(this);
     }
@@ -1421,17 +1427,23 @@ public class Building : General, Iinfo
             Families[0] = new Family(3, MyId, 0);
         }
         //can hhave 2 famili with 3 kids each
-        else if (HType == H.HouseAWithTwoFloor)
+        else if (HType == H.HouseTwoFloor)
         {
             Families = new Family[1];
             Families[0] = new Family(5, MyId,0);
         }
         //can hhave 1 famili with 5 kids
         else if (HType == H.HouseMed //|| HType == H.HouseMedB 
-            || HType == H.HouseC || HType == H.HouseD)
+            )
         {
             Families = new Family[1];
             Families[0] = new Family(5, MyId,0);
+        }
+        //can hhave 1 famili with 5 kids
+        else if (HType == H.HouseLargeA || HType == H.HouseLargeB || HType == H.HouseLargeC)
+        {
+            Families = new Family[1];
+            Families[0] = new Family(6, MyId, 0);
         }
         else if (HType == H.Shack)
         {
@@ -1616,11 +1628,11 @@ public class Building : General, Iinfo
 
     void SetHouseConfort()
     {
-        if (HType == H.Shack)
+        if (HType == H.Shack || HType == H.Bohio)
         {
             _confort = 1;
         }
-        else if (HType == H.HouseAWithTwoFloor)
+        else if (HType == H.HouseTwoFloor)
         {
             _confort = 3;
         }
@@ -1629,11 +1641,11 @@ public class Building : General, Iinfo
             _confort = 4;
         }
         else if (HType == H.HouseMed //|| HType == H.HouseMedB 
-            || HType == H.HouseC)
+            )
         {
             _confort = 6;
         }
-        else if ( HType == H.HouseD)
+        else if ( HType == H.HouseLargeA || HType == H.HouseLargeB || HType == H.HouseLargeC)
         {
             _confort = 7;
         }
@@ -2077,6 +2089,8 @@ public class Building : General, Iinfo
         return Vector3.MoveTowards(spawnPnt, sp.transform.position, -5);
     }
 
+   
+
     /// <summary>
     /// To define the landzone of a dummy by geetting the LandZone name from the c'onstructing' and
     /// the position
@@ -2102,19 +2116,28 @@ public class Building : General, Iinfo
 
         //will move the ends a bit away from buidliing so if the bridge is too close
         //to rivers edges can link to the LinkRects are deeper in land 
-        var end0 = Vector3.MoveTowards(ends[0], transform.position, -8f);
-        var end1 = Vector3.MoveTowards(ends[1], transform.position, -8f);
+        var end0 = Vector3.MoveTowards(ends[0], transform.position, -8);
+        var end1 = Vector3.MoveTowards(ends[1], transform.position, -8);
 
         var zone0 = MeshController.CrystalManager1.ReturnLandingZone(end0);
         var zone1 = MeshController.CrystalManager1.ReturnLandingZone(end1);
 
         //bz they were being save loaded in Poly Anchors
         //this is really pointless bz somehow if u move the bottom gameObj in Part12 of brdigeTrails works 
-        var end0bit = Vector3.MoveTowards(ends[0], transform.position, -0f);
-        var end1bit = Vector3.MoveTowards(ends[1], transform.position, -0f);
+        var end0bit = Vector3.MoveTowards(ends[0], transform.position, HowFarPush());//0
+        var end1bit = Vector3.MoveTowards(ends[1], transform.position, HowFarPush());
 
         LandZone1.Add(new VectorLand(zone0, end0bit));
         LandZone1.Add(new VectorLand(zone1, end1bit));
+    }
+
+    float HowFarPush()
+    {
+        //if (HType == H.BridgeRoad)
+        //{
+        //    return -25;
+        //}
+        return 0;
     }
 
     /// <summary>
@@ -2769,11 +2792,11 @@ public class Building : General, Iinfo
         var animalFactor = AmountOfAnimalFactor();
         if (size == H.Small)
         {
-            SpawnAnimalNow(2 * animalFactor);
+            SpawnAnimalNow(1 * animalFactor);
         }
         else if (size == H.Med)
         {
-            SpawnAnimalNow(3 * animalFactor);
+            SpawnAnimalNow(2 * animalFactor);
         }    
         else if (size == H.Large)
         {
@@ -2864,7 +2887,7 @@ public class Building : General, Iinfo
         }
         if (animalType == P.Beef)
         {
-            return 2;
+            return 1;
         }
         return -1;
     }

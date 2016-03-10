@@ -406,8 +406,18 @@ public class StructureParent : Building {
     void CreateBasePlane()
     {
         var locPoly = UPoly.ScalePoly(Anchors, 0.04f);
-        basePlane = CreatePlane.CreatePlan(Root.createPlane, Root.matBuildingBase1, raiseFromFloor: 0.08f, container: transform);
+        basePlane = CreatePlane.CreatePlan(Root.createPlane, ReturnMatBase(), raiseFromFloor: 0.08f, container: transform);
         basePlane.UpdatePos(locPoly);
+    }
+
+    string ReturnMatBase()
+    {
+        //if (MyId.Contains("Farm"))
+        //{
+        //    return Root.matBuildingBase2;
+        //}
+
+        return Root.matBuildingBase1;
     }
 
     //Resave the .StartingStage on Control.Registro.All

@@ -107,7 +107,7 @@ public class ShowAInventory
         return new Vector3(ReturnX(i) + _iniPos.x, ReturnY(i) + _iniPos.y, _iniPos.z);
     }
 
-    private int _mainLines = 12;
+    private int _mainLines = 24;//12
     float ReturnX(int i)
     {
         if (_invType == "Main")
@@ -116,7 +116,7 @@ public class ShowAInventory
             //filled out columns
             int columsInt = (int) columns;
 
-            return 40*columsInt;
+            return 49*columsInt; //40
         }
         //string.IsNullOrEmpty(_invType)
         return 1;
@@ -130,7 +130,7 @@ public class ShowAInventory
             var roundDown = int.Parse(lineNumber.ToString("F0"));
             var factor = lineNumber - roundDown;
 
-            return -12 * _mainLines * factor;
+            return -16 * _mainLines * factor;
         }
 
         return -3.5f*i;

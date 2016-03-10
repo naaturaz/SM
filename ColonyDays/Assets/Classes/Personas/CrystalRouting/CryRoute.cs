@@ -491,7 +491,7 @@ public class CryRoute
             BlackList();
         }
         //is being a minute since started then can be blaclisted
-        else if (Time.time > _timeStamp + 90f)//maybe can add someFactor with PC Ram and CPU Speed
+        else if (Time.time > _timeStamp + 45f)//90  //maybe can add someFactor with PC Ram and CPU Speed
         {
             BlackList();
         }
@@ -499,7 +499,7 @@ public class CryRoute
 
     private void BlackList()
     {
-        //Debug.Log("BlackListed: " + _fin.MyId + " by: " + _person.MyId);
+        Debug.Log("BlackListed: " + _fin.MyId + " by: " + _person.MyId);
         _person.Brain.BlackListBuild(CryBridgeRoute.ExtractRealId((Structure)_fin));
         wasBlackListed = true;
     }
@@ -1092,16 +1092,36 @@ public class CryRoute
         TheRoute = new TheRoute(_checkPoints, _origenKey, _destinyKey);
     }
 
+
     /// <summary>
     /// Will return true if _curr and _two are really close 
     /// </summary>
     /// <returns></returns>
     bool CheckIfDone()
     {
-        if (UMath.nearEqualByDistance(U2D.FromV2ToV3(_curr.Position), _two.Position, 0.1f))
+        //bz Bridge road on Y is really far apart
+        if (_two != null && _two.MyBuildKey != null && _two.MyBuildKey.Contains("BridgeRoad"))
+        {
+            return ReturnBridgeRoadEquality();
+        }
+
+
+
+        if (UMath.nearEqualByDistance(U2D.FromV2ToV3(_curr.Position), _two.Position, .1f))
         {
             return true;
         }
         return false;
     }
+
+    private bool ReturnBridgeRoadEquality()
+    {
+        if (UMath.nearEqualByDistance(_curr.Position, U2D.FromV3ToV2(_two.Position), .1f))
+        {
+            return true;
+        }
+        return false;
+    }
+
+  
 }

@@ -69,8 +69,7 @@ public class Animal : General
     protected void MoveToRandomSpot()
     {
         Rect area = Spawner.ReturnInGameObjectZone(H.FarmZone);
-
-        transform.position = AssignRandomIniPosition(transform.position, area);
+        transform.position = AssignRandomIniPosition(transform.position, area, 1.8f, 0.3f);
     }
 
     protected void SetRandomIdleStart()

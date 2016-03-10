@@ -234,6 +234,7 @@ public class Root : MonoBehaviour
     public static string showGenBtnLarge = "Prefab/GUI/Forms/Show_Generic_Btn_Large";
     public static string show_Invent_Item = "Prefab/GUI/Forms/Show_Invent_Item";
     public static string show_Invent_Item_Med = "Prefab/GUI/Forms/Show_Invent_Item_Med";
+    public static string show_Invent_Item_Small_Med = "Prefab/GUI/Forms/Show_Invent_Item_Small_Med";
 
     //Menu
     public static string mainMenu = "Prefab/Menu/MainMenu";
@@ -594,11 +595,12 @@ public class Root : MonoBehaviour
         buildsRoot.Add(H.Bohio, "Prefab/Building/House/Bohio");
         buildsRoot.Add(H.HouseA, "Prefab/Building/House/HouseA");
         buildsRoot.Add(H.HouseB, "Prefab/Building/House/HouseB");
-        buildsRoot.Add(H.HouseAWithTwoFloor, "Prefab/Building/House/HouseAWithTwoFloor");
+        buildsRoot.Add(H.HouseTwoFloor, "Prefab/Building/House/HouseTwoFloor");
         buildsRoot.Add(H.HouseMed, "Prefab/Building/House/HouseMed");//only used for icon and banner 
         //buildsRoot.Add(H.HouseMedB, "Prefab/Building/House/HouseMedB");
-        buildsRoot.Add(H.HouseC, "Prefab/Building/House/HouseC");
-        buildsRoot.Add(H.HouseD, "Prefab/Building/House/HouseD");
+        buildsRoot.Add(H.HouseLargeA, "Prefab/Building/House/HouseLargeA");
+        buildsRoot.Add(H.HouseLargeB, "Prefab/Building/House/HouseLargeB");
+        buildsRoot.Add(H.HouseLargeC, "Prefab/Building/House/HouseLargeC");
         
         buildsRoot.Add(H.Shack, "Prefab/Building/Other/Shack");
 

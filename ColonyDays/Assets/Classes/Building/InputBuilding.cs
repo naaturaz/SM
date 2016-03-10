@@ -453,8 +453,8 @@ public class InputBuilding : BuildingPot {
     /// </summary>
     void AssignSharedMaterial()
     {
-        Material n = Resources.Load<Material>(Root.RetMaterialRoot(Control.CurrentSpawnBuild.MaterialKey));
-        n.name = "BaseOri";
+        //Material n = Resources.Load<Material>(Root.RetMaterialRoot(Control.CurrentSpawnBuild.MaterialKey));
+        //n.name = "BaseOri";
 
         //Control.CurrentSpawnBuild.Geometry.GetComponent<Renderer>().sharedMaterial = n;
     }

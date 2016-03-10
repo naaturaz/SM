@@ -79,7 +79,7 @@ public enum P
     Banana, Coconut,
     //Animal Farm
     Chicken, Egg, Pork, Beef, Leather,
-    //Clay
+    Clay, PalmLeaf,
     Ceramic,
     //Fishes
     Fish,
@@ -132,7 +132,9 @@ public enum P
     CoffeeBean,
     Cacao,
     Chocolate,
-    //Weapon,
+    Weapon,
+    WheelBarrow,
+
     Diamond,
     Jewel,
     Cloth,
@@ -207,7 +209,11 @@ public enum H
     //infr F1
     Trail, Road, BridgeTrail, BridgeRoad, CoachMan, LightHouse, WheelBarrow, StockPile, BuildersOffice,
     //house F2 ... bugg bz they had numbers on it .. They cant have numbers
-    Bohio, HouseA, HouseB, HouseAWithTwoFloor, HouseMed, HouseC, HouseD,
+    Bohio, HouseA, HouseB, HouseTwoFloor, HouseMed, 
+    HouseLargeA,
+    HouseLargeB,
+    HouseLargeC,
+
     //farming F3
     //Farm, this farm removed is the draggable farm 
     AnimalFarmSmall, AnimalFarmMed, AnimalFarmLarge, AnimalFarmXLarge,
@@ -376,8 +382,10 @@ public enum StInfr //for structures game structure.cs
 public enum StHous //for structures game structure.cs 
 {
     //Housing
-    Bohio, HouseA, HouseB, HouseAWithTwoFloor, HouseMed,  
-    //HouseC, HouseD
+    Bohio, HouseA, HouseB, HouseTwoFloor, HouseMed,
+    HouseLargeA,
+    HouseLargeB,
+    HouseLargeC,
 }
 
 public enum StFarm

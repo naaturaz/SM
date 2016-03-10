@@ -79,7 +79,7 @@ public class CryBridgeRoute
 
         for (int i = 0; i < in1Bridge.Count; i++)
         {
-            CreateAndAddToLegs(in1Bridge[i], _bridgePsuedoPath.Bridges[0].BuildMyId);
+            CreateAndAddToLegs(in1Bridge[i], _bridgePsuedoPath.Bridges[0].BuildMyId, isBridgeLeg:true);
         }
 
         if (_bridgePsuedoPath.Bridges.Count >1)
@@ -104,7 +104,7 @@ public class CryBridgeRoute
         for (int i = 0; i < list.Count; i++)
         {
             //will not be added if is same tht upper. will happen if there is only1 brdige
-            CreateAndAddToLegs(list[i], _bridgePsuedoPath.Bridges[1].BuildMyId);
+            CreateAndAddToLegs(list[i], _bridgePsuedoPath.Bridges[1].BuildMyId, isBridgeLeg:true);
         }
     }
 
@@ -115,32 +115,45 @@ public class CryBridgeRoute
     /// <param name="bridgeId"></param>
     /// <param name="add">If is false will not added to legs</param>
     /// <returns>The new Vector Land</returns>
-    VectorLand CreateAndAddToLegs(Vector3 pos, string bridgeId, bool add=true)
+    VectorLand CreateAndAddToLegs(Vector3 pos, string bridgeId, bool add=true, bool isBridgeLeg=false)
     {
         var bridge = Brain.GetBuildingFromKey(bridgeId);
 
         //todo
         if (bridge == null)
         {
-           //Debug.Log("Called with null brdige:" + bridgeId);
+            //Debug.Log("Called with null brdige:" + bridgeId);
+
+            //to address when is passing a dummy for bridgeId. useful wuth foresetr 
+            //bridge = Brain.GetBuildingFromKey(_ini.MyId);
+            //if (bridge == null)
+            //{
+            //    bridge = Brain.GetBuildingFromKey(_fin.MyId);
+            //}
+            
             throw new Exception("Fix");
         }
 
-        VectorLand newVectorLand = new VectorLand();
-        //if (bridge == null)
-        //{
-        //    newVectorLand = new VectorLand("", pos);
-        //}
-        //else 
-            
-        newVectorLand = new VectorLand("", pos, bridge);
+        //bz the Leg falls insiede the Bridge anchors 
+        pos = MoveItAwayABitIfBridgeRoad(bridge, pos, isBridgeLeg);
 
+        VectorLand newVectorLand = new VectorLand();
+        newVectorLand = new VectorLand("", pos, bridge);
         if (add)
         {
             _legs = AddIfsNotContain(_legs, newVectorLand);
         }
 
         return newVectorLand;
+    }
+
+    Vector3 MoveItAwayABitIfBridgeRoad(Building b, Vector3 pos, bool isBridgeLeg)
+    {
+        if (b.HType == H.BridgeRoad && isBridgeLeg)
+        {
+            return Vector3.MoveTowards(pos, b.transform.position, -2);
+        }
+        return pos;
     }
 
     void DebugLoc()

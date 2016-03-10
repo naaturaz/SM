@@ -80,7 +80,8 @@ public class ShowInvetoryItem : GUIElement
         }
         else
         {
-            root = Root.show_Invent_Item;
+            //for main
+            root = Root.show_Invent_Item_Small_Med;
         }
 
         obj = (ShowInvetoryItem)Resources.Load(root, typeof(ShowInvetoryItem));
@@ -138,13 +139,13 @@ public class ShowInvetoryItem : GUIElement
     {
         if (InvItem1.Amount > 1000000)
         {
-            return (InvItem1.Amount / 1000000).ToString("F1") + "M";
+            return (InvItem1.Amount / 1000000).ToString("N0") + "M";
         }
         if (InvItem1.Amount > 1000)
         {
-            return (InvItem1.Amount/1000).ToString("F1") + "K";
+            return (InvItem1.Amount / 1000).ToString("N0") + "K";
         }
 
-        return InvItem1.Amount.ToString("F1");
+        return InvItem1.Amount.ToString("N0");
     }
 }

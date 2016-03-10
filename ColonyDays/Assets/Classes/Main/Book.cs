@@ -74,11 +74,12 @@ public class Book : General
         Build.Add(new BuildStat(H.Bohio, 400, 15, 5, 25, 5, maxPeople: 5, capacity: 1));
         Build.Add(new BuildStat(H.HouseA, 400, 15, 5, 25, 5, maxPeople: 5, capacity: 1));
         Build.Add(new BuildStat(H.HouseB, 400, 15, 5, 25, 5, maxPeople: 5, capacity: 1));
-        Build.Add(new BuildStat(H.HouseAWithTwoFloor, 800, 30, 5, 50, 5, maxPeople: 10, capacity: 2));
+        Build.Add(new BuildStat(H.HouseTwoFloor, 800, 30, 5, 50, 5, maxPeople: 10, capacity: 2));
         Build.Add(new BuildStat(H.HouseMed, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 2));
         //Build.Add(new BuildStat(H.HouseMedB, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 2));
-        Build.Add(new BuildStat(H.HouseC, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 3));
-        Build.Add(new BuildStat(H.HouseD, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 3));
+        Build.Add(new BuildStat(H.HouseLargeA, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 3));
+        Build.Add(new BuildStat(H.HouseLargeB, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 3));
+        Build.Add(new BuildStat(H.HouseLargeC, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 3));
 
         Build.Add(new BuildStat(H.Shack, 50, maxPeople: 5, capacity: 500));
 
@@ -248,14 +249,17 @@ public class BuildStat
     public BuildStat(H hType, int amountOfLabour = 0, int wood = 0, int stone = 0, int brick = 0, int iron = 0,
         int gold = 0, int colonyDollar = 0, int maxPeople = 0, int capacity = 50)
     {
+        int multiplier = 100;
+
         AmountOfLabour = amountOfLabour;
         HType = hType;
         Root = global::Root.RetBuildingRoot(hType);
-        Wood = wood;
-        Stone = stone;
-        Brick = brick;
-        Iron = iron;
-        Gold = gold;
+        Wood = wood * multiplier;
+        Stone = stone * multiplier;
+        Brick = brick * multiplier;
+        Iron = iron * multiplier;
+        Gold = gold * multiplier;
+
         Dollar = colonyDollar;
         _maxPeople = maxPeople;
         _capacity = capacity;

@@ -92,39 +92,39 @@ public class DescriptionWindow : General
 
         if (stat.Dollar != 0)
         {
-            res += " Dollar: " + stat.Dollar;
+            res += " Dollars: " + stat.Dollar;
             appends++;
         }
         if (stat.Gold != 0)
         {
-            res += " Gold: " + stat.Gold;
+            res += " Gold: " + stat.Gold + " " + Settings.WeightUnit();
             appends++;
         }
         
         if (stat.Iron != 0)
         {
-            res += " Iron: " + stat.Iron;
+            res += " Iron: " + stat.Iron + " " + Settings.WeightUnit();
             appends++;
         }
         res = CheckIfAppend3(ref appends, res);
 
         if (stat.Stone != 0)
         {
-            res += " Stone: " + stat.Stone;
+            res += " Stone: " + stat.Stone + " " + Settings.WeightUnit();
             appends++;
         }
         res = CheckIfAppend3(ref appends, res);
  
         if (stat.Brick != 0)
         {
-            res += " Brick: " + stat.Brick;
+            res += " Brick: " + stat.Brick + " " + Settings.WeightUnit();
             appends++;
         }
         res = CheckIfAppend3(ref appends, res);
 
         if (stat.Wood != 0)
         {
-            res += " Wood: " + stat.Wood;
+            res += " Wood: " + stat.Wood + " " + Settings.WeightUnit();
             appends++;
         } 
         res = CheckIfAppend3(ref appends, res);

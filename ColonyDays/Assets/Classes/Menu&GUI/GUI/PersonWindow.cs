@@ -111,7 +111,7 @@ public class PersonWindow : GUIElement {
         }
         else res += "\n Home:null";
 
-        res += DebugInfo();
+        //res += DebugInfo();
         return res;
     }
 

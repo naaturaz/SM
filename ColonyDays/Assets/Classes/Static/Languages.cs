@@ -30,16 +30,15 @@ public class Languages
 	   { "LightHouse.Desc","Helps to make the port more discoverable. Adds to Port Reputation as long the flame is glowing"},
 	   { "BuildersOffice.Desc","Really important building. This workers construct new buildings and work as wheelbarrowers once have nothing to do"},
 
-
        //House
 	   { "Bohio.Desc","Bohio house, really rudimentary conditions, people is unhappy living here, a family can have 1 kid maximum" +_houseTail},
-	   { "HouseA.Desc","Small house, a family can have 2 kids maximum" +_houseTail},
+	   { "HouseA.Desc","Wooden Small house, a family can have 2 kids maximum" +_houseTail},
 	   { "HouseB.Desc","Small house, a family can have 2 kids maximum" +_houseTail },
-	   { "HouseAWithTwoFloor.Desc","Medium house, a family can have 3 kids maximum"+_houseTail},
+	   { "HouseTwoFloor.Desc","Wooden Medium house, a family can have 3 kids maximum"+_houseTail},
 	   { "HouseMed.Desc","Medium house, a family can have 2 or 3 kids maximum"+_houseTail},
-	   //{ "HouseMedB.Desc","Medium house, a family can have 3 kids maximum"+_houseTail},
-	   { "HouseC.Desc","Medium house, a family can have 3 kids maximum"+_houseTail},
-	   { "HouseD.Desc","Medium house, a family can have 3 kids maximum"+_houseTail},
+	   { "HouseLargeA.Desc","Large house, a family can have 6 kids maximum"+_houseTail},
+	   { "HouseLargeB.Desc","Large house, a family can have 6 kids maximum"+_houseTail},
+	   { "HouseLargeC.Desc","Large house, a family can have 6 kids maximum"+_houseTail},
        
        //Farms
        //Animal
