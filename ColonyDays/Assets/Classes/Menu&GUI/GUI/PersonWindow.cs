@@ -95,21 +95,21 @@ public class PersonWindow : GUIElement {
     string BuildPersonInfo()
     {
         string res = "Age:" + _person.Age + "\n Gender:" + _person.Gender
-                     + "\n Nutrition:" + _person.NutritionLevel 
+                     + "\n Nutrition:" + _person.NutritionLevel.ToString("N0") 
                      + "\n Profession:" + _person.ProfessionProp.ProfDescription
-                     + "\n PrevJob:" + _person.PrevJob
-                     + "\n ID:" + _person.MyId
-                     + "\n FamID:" + _person.FamilyId
+                     //+ "\n PrevJob:" + _person.PrevJob
+                   //  + "\n ID:" + _person.MyId
+                   //  + "\n FamID:" + _person.FamilyId
                      + "\n Spouse:" + _person.Spouse
                      + "\n Happy:" + _person.Happinnes
-                     + "\n UnHappyYears:" + _person.UnHappyYears
+                  //   + "\n UnHappyYears:" + _person.UnHappyYears
                      + "\n YearsOfSchool:" + _person.YearsOfSchool;
 
-        if (_person.Home!=null)
-        {
-            res+= "\n Home:" + _person.Home.MyId;
-        }
-        else res += "\n Home:null";
+        //if (_person.Home!=null)
+        //{
+        //    res+= "\n Home:" + _person.Home.MyId;
+        //}
+        //else res += "\n Home:null";
 
         //res += DebugInfo();
         return res;

@@ -76,7 +76,7 @@ public class ShowInvetoryItem : GUIElement
         var root = "";
         if (string.IsNullOrEmpty(invType))
         {
-            root=Root.show_Invent_Item_Med;
+            root = Root.show_Invent_Item_Small_Med_NoBack;
         }
         else
         {
@@ -127,25 +127,31 @@ public class ShowInvetoryItem : GUIElement
         //Main GUI
         if (InvType=="Main")
         {
+            return StandardFormat();
             return ShortFormat();
         }
 
         //buildign invneotyr 
         //if (string.IsNullOrEmpty(InvType))
-        return InvItem1.Key+ " "  + InvItem1.Amount.ToString("F1") + "kg. v(m3):" + InvItem1.Volume.ToString("F1");
+        return InvItem1.Key+ " "  + (int)InvItem1.Amount + "kg. v(m3):" + InvItem1.Volume.ToString("F1");
+    }
+
+    private string StandardFormat()
+    {
+        return  ((int)InvItem1.Amount)+"";
     }
 
     private string ShortFormat()
     {
         if (InvItem1.Amount > 1000000)
         {
-            return (InvItem1.Amount / 1000000).ToString("N0") + "M";
+            return (int)(InvItem1.Amount / 1000000) + "M";
         }
         if (InvItem1.Amount > 1000)
         {
-            return (InvItem1.Amount / 1000).ToString("N0") + "K";
+            return (int)(InvItem1.Amount / 1000) + "K";
         }
 
-        return InvItem1.Amount.ToString("N0");
+        return (int)InvItem1.Amount+"";
     }
 }

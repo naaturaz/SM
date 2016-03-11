@@ -235,6 +235,7 @@ public class Root : MonoBehaviour
     public static string show_Invent_Item = "Prefab/GUI/Forms/Show_Invent_Item";
     public static string show_Invent_Item_Med = "Prefab/GUI/Forms/Show_Invent_Item_Med";
     public static string show_Invent_Item_Small_Med = "Prefab/GUI/Forms/Show_Invent_Item_Small_Med";
+    public static string show_Invent_Item_Small_Med_NoBack = "Prefab/GUI/Forms/Show_Invent_Item_Small_Med_NoBack";
 
     //Menu
     public static string mainMenu = "Prefab/Menu/MainMenu";

@@ -730,13 +730,14 @@ public class Family
 
     public string InfoShow()
     {
-        var res = "\n\n Id : " + FamilyId +
+        var res = "\n\n Family:" +
+                //  "Id : " + FamilyId +
                "\n   Dad : " + Father +
                "\n   Mom : " + Mother;
 
         for (int i = 0; i < Kids.Count; i++)
         {
-            res = res + "\n     Kid#"+i+" : " +Kids[i] ;
+            res = res + "\n     Kid#" +(i+1) +" : " +Kids[i] ;
         }
         return res;
     }

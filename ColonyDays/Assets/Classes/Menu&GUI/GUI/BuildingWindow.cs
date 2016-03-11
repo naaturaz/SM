@@ -294,14 +294,15 @@ public class BuildingWindow : GUIElement {
         //is not a house or bohio 
         if (!_building.HType.ToString().Contains("House") && _building.HType != H.Bohio)
         {
-            res = "Type:" + _building.HType + "\n Workers:" + _building.PeopleDict.Count
-                  + "\n ID:" + _building.MyId
-                  + "\n MaxWorkers:" + Book.GiveMeStat(_building.HType).MaxPeople
-                  + "\n Workers:";
+            res = //"Type:" + _building.HType
+                "\nWorkers:" + _building.PeopleDict.Count + "\n";
+                 // + "\n ID:" + _building.MyId
+                  //+ "\n MaxWorkers:" + Book.GiveMeStat(_building.HType).MaxPeople
+                  //+ "\n Workers:";
 
             for (int i = 0; i < _building.PeopleDict.Count; i++)
             {
-                res += "\n" + _building.PeopleDict[i];
+                res += "\n " + _building.PeopleDict[i];
             }
 
             if (_building.HType == H.BuildersOffice)
@@ -322,24 +323,24 @@ public class BuildingWindow : GUIElement {
                 amt += _building.Families[i].MembersOfAFamily();
             }
 
-            res = "Type:" + _building.HType + " In House:" + amt
-                + " ID:" + _building.MyId;
+            res = //"Type:" + _building.HType + 
+                " In House:" + amt + "\n"
+                //+ " ID:" + _building.MyId
+                ;
 
-            if (_building.BookedHome1 != null)
-            {
-                res += " IsBooked:" + _building.BookedHome1.IsBooked();
-            }
-            else
-            {
-                res += " IsBooked: no";
-            }
+            //if (_building.BookedHome1 != null)
+            //{
+            //    res += " IsBooked:" + _building.BookedHome1.IsBooked();
+            //}
+            //else
+            //{
+            //    res += " IsBooked: no";
+            //}
 
             for (int i = 0; i < _building.Families.Count(); i++)
             {
                 res += _building.Families[i].InfoShow();
             }
-
-           
         }
 
         return res;

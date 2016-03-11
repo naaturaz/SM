@@ -133,7 +133,7 @@ public class Inventory  {
     /// <param name="amt"></param>
     public void Add(P key, float amt)
     {
-        if (key == P.None || amt == 0)
+        if (key == P.None || key == P.Food || amt == 0)
         {
            //Debug.Log("ret Tried to add to inv:"+ key +" amt:"+ amt);
             return;
@@ -397,7 +397,7 @@ public class Inventory  {
             || prod == P.Cucumber || prod == P.Cabbage || prod == P.Lettuce || prod == P.SweetPotato
             || prod == P.Yucca || prod == P.Pineapple 
             //|| prod == P.Mango || prod == P.Avocado || prod == P.Guava || prod == P.Orange 
-            || prod == P.Papaya)
+            || prod == P.Papaya || prod == P.Chocolate)
         {
             return PCat.Food;
         }

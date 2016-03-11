@@ -77,6 +77,8 @@ public class ShowAInventory
 
     void ManualUpdateOfAllInvItems()
     {
+
+
         for (int i = 0; i < _inv.InventItems.Count; i++)
         {
             var amt = GameController.Inventory1.ReturnAmtOfItemOnInv(_inv.InventItems[i].Key);
@@ -90,14 +92,23 @@ public class ShowAInventory
         set { _inv = value; }
     }
 
+    private float _oldVolOccupied;
+
+
     private void ShowAllItems( )
     {
+        _oldVolOccupied = Inv.CurrentVolumeOcuppied();
+        var iForSpwItem = 0;//so ReturnIniPos works nicely
+
         for (int i = 0; i < _inv.InventItems.Count; i++)
         {
-            if (_inv.InventItems[i]!=null)
+            //> 0 for main so only show items tht have some 
+            if (_inv.InventItems[i]!=null && _inv.InventItems[i].Amount>0)
             {
-                _allItems.Add(ShowInvetoryItem.Create(_containr.transform, _inv.InventItems[i], ReturnIniPos(i),this,
-            _invType));
+                _allItems.Add(ShowInvetoryItem.Create(_containr.transform, _inv.InventItems[i], ReturnIniPos(iForSpwItem),
+                    this,_invType));
+
+                iForSpwItem++;
             }
         }
     }
@@ -130,7 +141,7 @@ public class ShowAInventory
             var roundDown = int.Parse(lineNumber.ToString("F0"));
             var factor = lineNumber - roundDown;
 
-            return -16 * _mainLines * factor;
+            return -14 * _mainLines * factor;
         }
 
         return -3.5f*i;
@@ -172,8 +183,19 @@ public class ShowAInventory
         count++;
         if (count > 30)
         {
+            RedoItemsIfOldInvIsDiff();
             ManualUpdateOfAllInvItems();
             count = 0;
+        }
+    }
+
+    private void RedoItemsIfOldInvIsDiff()
+    {
+        if (!UMath.nearlyEqual(_oldVolOccupied, Inv.CurrentVolumeOcuppied(), 0.01f))//0.001
+        {
+            Debug.Log("Redone InvSh");
+            DestroyAll();
+            ShowAllItems();
         }
     }
 

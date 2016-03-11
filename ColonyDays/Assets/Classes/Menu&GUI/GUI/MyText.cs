@@ -29,28 +29,11 @@ public class MyText : MonoBehaviour
         }
         if (name == "Food")
         {
-            thisText.text = GameController.Inventory1.ReturnAmountOnCategory(PCat.Food).ToString("F1");
+            thisText.text = GameController.Inventory1.ReturnAmountOnCategory(PCat.Food).ToString("N0") + 
+                Settings.WeightUnit();
         }
-        //if (name == "Wood")
-        //{
-        //    thisText.text = GameController.Inventory1.ReturnAmtOfItemOnInv(P.Wood) + "";
-        //}
-        //if (name == "Stone")
-        //{
-        //    thisText.text = GameController.Inventory1.ReturnAmtOfItemOnInv(P.Stone) + "";
-        //}
-        //if (name == "Brick")
-        //{
-        //    thisText.text = GameController.Inventory1.ReturnAmtOfItemOnInv(P.Brick) + "";
-        //}
-        //if (name == "Iron")
-        //{
-        //    thisText.text = GameController.Inventory1.ReturnAmtOfItemOnInv(P.Iron) + "";
-        //}
-        //if (name == "Gold")
-        //{
-        //    thisText.text = GameController.Inventory1.ReturnAmtOfItemOnInv(P.Gold) + "";
-        //}
+     
+
         if (name == "Happy")
         {
             thisText.text = PersonPot.Control.OverAllHappiness();
