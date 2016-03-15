@@ -33,6 +33,11 @@ public class SaltMiner : Profession
 
     private void Init()
     {
+        if (ShouldITakeBreakInit())
+        {
+            return;
+        }
+
         //when get a number here is defined by wht worker is this on the building 
         //workers will be numbered on buildingsB
         FinRoutePoint = ReturnRandomFinalPoint();
@@ -96,7 +101,20 @@ public class SaltMiner : Profession
 
     public override void Update()
     {
+        if (_reInitNow)
+        {
+            _reInitNow = false;
+            Init();
+            return;
+        }
+
         base.Update();
+
+        if (_breakInitNow)
+        {
+            return;
+        }
+
         Execute();
     }
 

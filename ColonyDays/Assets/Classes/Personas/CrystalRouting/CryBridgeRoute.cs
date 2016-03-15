@@ -238,7 +238,9 @@ public class CryBridgeRoute
     /// </summary>
     private void BlackList()
     {
-        _person.Brain.BlackListBuild(ExtractRealId(_fin));
+        var key = RoutesCache.CreateRouteKey(_origenKey, _destinyKey);
+
+        _person.Brain.BlackListBuild(ExtractRealId(_fin), key);
     }
 
     /// <summary>

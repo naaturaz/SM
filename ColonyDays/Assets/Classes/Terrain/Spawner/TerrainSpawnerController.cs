@@ -340,7 +340,7 @@ public class TerrainSpawnerController : ControllerParent
     /// </summary>
     /// <param name="pos"></param>
     /// <param name="pers"></param>
-    public void SpawnRandomTreeInThisPos(Person pers, Vector3 pos)
+    public void SpawnRandomTreeInThisPos(Vector3 pos)
     {
         int rootToSpawnIndex = ReturnRandomRootIndex(H.Tree);
 

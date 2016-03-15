@@ -244,7 +244,7 @@ public class Brain
     void DefineIdleRoute()
     {
         AddToGenOldKeyIfAOldRouteHasOneOldBridgeOnIt(_idleRoute);
-        _idlePoint = _person.AssignRandomIniPosition(_person.Home.transform.position);
+        _idlePoint = Return1HouseCorner();
 
         if (dummyIdle == null || dummyIdle.transform.position == new Vector3())
         {
@@ -258,6 +258,12 @@ public class Brain
         _routerIdle = new CryRouteManager(_person.Home, dummyIdle, _person, finDoor: false);
 
         idleRouteStart = true;
+    }
+
+    Vector3 Return1HouseCorner()
+    {
+        var chosen = _person.Home.Anchors[UMath.GiveRandom(0, 4)];
+        return Vector3.MoveTowards(chosen, _person.Home.transform.position, -.2f);
     }
 
     Structure CreateDummyIdle()
@@ -2396,6 +2402,10 @@ public class Brain
 
             AddToPeopleDict(currWork);
             RemoveAndAddPositionsToJob();
+
+            //when is a game loaded and changed work need to mannually restart Controller to see it 
+            //forcing it here 
+            PersonPot.Control.RestartControllerForPerson(_person.MyId);
         }
         //in case we have a job
         oldJob = currWork;
@@ -2637,17 +2647,63 @@ public class Brain
     /// 
     /// If is callign from BridgesRouter then should look at the exception bz if i called from there
     /// i could not find any bridge</param>
-    internal void BlackListBuild(string p)
+    internal void BlackListBuild(string p, string routeKey)
     {
         if (_blackList.Contains(p))
         {
             return;
         }
 
+        //if (WasABuildFromThisRouteBlacked(routeKey))
+        //{
+        //    return;
+        //}
+
         MoveToNewHome.RemovePeopleDict(p);
-       ////Debug.Log("Blaclisted:"+p);
+        Debug.Log("Blaclisted:"+p +" ."+_person.MyId);
+
+        //the route key is added so we dont blaclist 2 buildings of a same route
+        //only the 1st one need to be blacklisted. this applys for BridgeRouting 
         _blackList = AddToList(_blackList, p);
+        
         BridgeMarkedAction(p);
+        PersonPot.Control.WorkersRoutingQueue.RemoveMeFromSystem(_person.MyId);
+    }
+
+    /// <summary>
+    /// Will tell if any of the two keys passed are contained in BlackList
+    /// </summary>
+    /// <param name="destKey"></param>
+    /// <param name="oriKey"></param>
+    /// <returns></returns>
+    public bool IsContainOnBlackList(string destKey, string oriKey)
+    {
+        if (BlackList.Contains(destKey) || BlackList.Contains(oriKey))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// If a building of this route was blacklisted we dont have dto blaclist the 
+    /// the second one too.
+    /// 
+    /// this applys for BridgeRouting
+    /// </summary>
+    /// <returns></returns>
+    bool WasABuildFromThisRouteBlacked(string routeKey)
+    {
+        for (int i = 0; i < _blackList.Count; i++)
+        {
+            var storedRouteKey = _blackList[i].Split('.')[1];
+
+            if (storedRouteKey == routeKey)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     /// <summary>

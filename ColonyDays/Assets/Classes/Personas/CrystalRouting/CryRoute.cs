@@ -491,7 +491,7 @@ public class CryRoute
             BlackList();
         }
         //is being a minute since started then can be blaclisted
-        else if (Time.time > _timeStamp + 45f)//90  //maybe can add someFactor with PC Ram and CPU Speed
+        else if (Time.time > _timeStamp + 45f)//45 //90  //maybe can add someFactor with PC Ram and CPU Speed
         {
             BlackList();
         }
@@ -499,8 +499,9 @@ public class CryRoute
 
     private void BlackList()
     {
-        Debug.Log("BlackListed: " + _fin.MyId + " by: " + _person.MyId);
-        _person.Brain.BlackListBuild(CryBridgeRoute.ExtractRealId((Structure)_fin));
+        var key = RoutesCache.CreateRouteKey(_origenKey, _destinyKey);
+
+        _person.Brain.BlackListBuild(CryBridgeRoute.ExtractRealId((Structure)_fin), key);
         wasBlackListed = true;
     }
 

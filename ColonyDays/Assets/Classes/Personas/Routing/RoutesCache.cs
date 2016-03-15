@@ -63,7 +63,7 @@ public class RoutesCache {
     /// <returns></returns>
     bool DoWeHaveThatRoute(string OriginKey, string DestinyKey)
     {
-        var key = OriginKey + "." + DestinyKey;
+        var key = CreateRouteKey(OriginKey, DestinyKey);
 
         if (_items.ContainsKey(key))
         {
@@ -78,6 +78,17 @@ public class RoutesCache {
         return false;
     }
 
+    /// <summary>
+    /// Creates a Stardard key for a route
+    /// OriginKey + "." + DestinyKey;
+    /// </summary>
+    /// <param name="OriginKey"></param>
+    /// <param name="DestinyKey"></param>
+    /// <returns></returns>
+    public static string CreateRouteKey(string OriginKey, string DestinyKey)
+    {
+        return OriginKey + "." + DestinyKey;
+    }
 
     /// <summary>
     /// Will reutn _current the newer route found when asked 'bool ContainANewerRoute()'

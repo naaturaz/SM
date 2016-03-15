@@ -138,6 +138,11 @@ public class ShowInvetoryItem : GUIElement
 
     private string StandardFormat()
     {
+        if (InvItem1.Amount < 10)
+        {
+            return (InvItem1.Amount.ToString("n1"));
+        }
+
         return  ((int)InvItem1.Amount)+"";
     }
 

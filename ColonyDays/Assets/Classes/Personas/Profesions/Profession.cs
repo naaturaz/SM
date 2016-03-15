@@ -238,7 +238,7 @@ public class Profession
         //Grown man will prod 4.5KG of wood with 10 year of school
         //              (10 + 10     + 30        + ) * 0.09         = 4.5KG of Wood per shift
         //              (10 + 10     + 30        + ) * 0.008         = 0.4KG of Weapons per shift
-        ProdXShift = (_person.HowMuchICanCarry() + yearSchool) * produceFac/1000;
+        ProdXShift = (_person.HowMuchICanCarry() + yearSchool) * produceFac/10;//1000
 
         //if is zero then will do this//is zero becasue one factor was zero. most likely the produceFac
         //for builders there is not produceFac
@@ -388,6 +388,12 @@ public class Profession
     /// </summary>
     public virtual void Update()
     {
+        if (_breakInitNow)
+        {
+            TakeInitBreak();
+            return;
+        }
+
         RemoveMeFromQueueIfImThereAndNotUsingIt();
         RouterDealear();
 
@@ -739,6 +745,13 @@ public class Profession
     /// </summary>
     protected void RouteBackForNewProfThatUseHomer()
     {
+        ////it will stay on limbo until redos profession again
+        //if (_person.Brain.IsContainOnBlackList(_person.Work.MyId, _person.Work.PreferedStorage.MyId))
+        //{
+        //    Debug.Log("contained on Blaclist: "+_person.MyId);
+        //    return;
+        //}
+
         _routerActive = true;
         IsRouterBackUsed = true;
         RouterBack = new CryRouteManager(_person.Work, _person.Work.PreferedStorage, _person, HPers.InWorkBack);
@@ -1005,9 +1018,10 @@ public class Profession
 
         if (_person.Work.CanTakeItOut(_person))
         {
-            _person.ExchangeInvetoryItem(_person.Work, _person, DefineProdWillCarry(), ProdXShift);
+            amtCarrying = _person.HowMuchICanCarry();//ProdXShift
+
+            _person.ExchangeInvetoryItem(_person.Work, _person, DefineProdWillCarry(), amtCarrying);
             prodCarrying = _person.Work.CurrentProd.Product;
-            amtCarrying = ProdXShift;//ProdXShift
         }
     }
 
@@ -1115,5 +1129,43 @@ public class Profession
         return Brain.GetStructureFromKey(id);
     }
 
- 
+
+
+    #region Break Init 
+
+    protected bool _breakInitNow;
+    private float _breakInitDuration = 1f;
+    private float _startInitBreakTime;
+    protected bool _reInitNow;//will say if need to call Init() again
+
+    protected bool ShouldITakeBreakInit()
+    {
+        if (_person.Brain._workRoute.CheckPoints.Count == 0 ||
+          _person.Brain._workRoute.DestinyKey != _person.Work.MyId)
+        {
+            Debug.Log(ProfDescription + ": take break now:" + _person.MyId);
+            _breakInitNow = true;
+            _startInitBreakTime = Time.time;
+
+            return true;
+        }
+        return false;
+    }
+    /// <summary>
+    /// Used so a person is asking for bridges anchors takes a break and let brdige anchors complete then can 
+    /// work on it
+    /// </summary>
+    void TakeInitBreak()
+    {
+        if (Time.time > _startInitBreakTime + _breakInitDuration)
+        {
+            _breakInitNow = false;
+            _startInitBreakTime = 0;
+
+            _reInitNow = true;
+        }
+    }
+
+    #endregion
+
 }

@@ -31,6 +31,11 @@ public class Insider : Profession {
 
     private void Init()
     {
+        if (ShouldITakeBreakInit())
+        {
+            return;
+        }
+
         //in case was a Wheelbarrow the prevProfession and when home route back gives problem 
         _person.PrevOrder = null;
 
@@ -43,15 +48,9 @@ public class Insider : Profession {
         RouteBackForNewProfThatUseHomer();
     }
 
-    public override void Update()
-    {
-        base.Update();
-        Execute();
-    }
-
     public override void WorkAction(HPers p)
     {
-        Debug.Log("WorkAction called insider:" + _person.MyId);
+//        Debug.Log("WorkAction called insider:" + _person.MyId);
 
         _person.Brain.CurrentTask = p;
         ExecuteNow = true;
@@ -80,4 +79,24 @@ public class Insider : Profession {
             ExecuteNow = false;
         }
     }
+
+    public override void Update()
+    {
+        if (_reInitNow)
+        {
+            _reInitNow = false;
+            Init();
+            return;
+        }
+
+        base.Update();
+
+        if (_breakInitNow)
+        {
+            return;
+        }
+
+        Execute();
+    }
+
 }

@@ -540,7 +540,7 @@ public class BridgeRouter : MonoBehaviour  {
     /// </summary>
     private void BlackListBuild()
     {
-        _person.Brain.BlackListBuild(_fin.MyId);
+        //_person.Brain.BlackListBuild(_fin.MyId);
     }
 
     public void Update()

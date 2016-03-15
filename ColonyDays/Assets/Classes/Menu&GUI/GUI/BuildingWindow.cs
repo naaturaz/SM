@@ -294,11 +294,7 @@ public class BuildingWindow : GUIElement {
         //is not a house or bohio 
         if (!_building.HType.ToString().Contains("House") && _building.HType != H.Bohio)
         {
-            res = //"Type:" + _building.HType
-                "\nWorkers:" + _building.PeopleDict.Count + "\n";
-                 // + "\n ID:" + _building.MyId
-                  //+ "\n MaxWorkers:" + Book.GiveMeStat(_building.HType).MaxPeople
-                  //+ "\n Workers:";
+            res = "\nWorkers:" + _building.PeopleDict.Count + "\n";
 
             for (int i = 0; i < _building.PeopleDict.Count; i++)
             {
@@ -323,24 +319,43 @@ public class BuildingWindow : GUIElement {
                 amt += _building.Families[i].MembersOfAFamily();
             }
 
-            res = //"Type:" + _building.HType + 
-                " In House:" + amt + "\n"
-                //+ " ID:" + _building.MyId
-                ;
-
-            //if (_building.BookedHome1 != null)
-            //{
-            //    res += " IsBooked:" + _building.BookedHome1.IsBooked();
-            //}
-            //else
-            //{
-            //    res += " IsBooked: no";
-            //}
+            res = " In House:" + amt + "\n";
 
             for (int i = 0; i < _building.Families.Count(); i++)
             {
                 res += _building.Families[i].InfoShow();
             }
+        }
+
+        return res + DebugInfo();
+    }
+
+    private string DebugInfo()
+    {
+        string res = "\n___________________\n";
+
+        //is not a house or bohio 
+        if (!_building.HType.ToString().Contains("House") && _building.HType != H.Bohio)
+        {
+            res += "Type:" + _building.HType
+             + "\n ID:" + _building.MyId
+            + "\n MaxWorkers:" + Book.GiveMeStat(_building.HType).MaxPeople
+            + "\n Workers:";
+        }
+        else
+        {
+           res += "Type:" + _building.HType + 
+                " ID:" + _building.MyId
+                ;
+
+           if (_building.BookedHome1 != null)
+           {
+               res += " IsBooked:" + _building.BookedHome1.IsBooked();
+           }
+           else
+           {
+               res += " IsBooked: no";
+           }
         }
 
         return res;

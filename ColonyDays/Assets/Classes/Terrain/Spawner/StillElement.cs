@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Random = UnityEngine.Random;
 
-public class StillElement : TerrainRamdonSpawner {
+public class StillElement : TerrainRamdonSpawner
+{
+
+    private bool _shouldReplant;    
+    
     private Vector3 _min;
     private Vector3 _max;
     private bool addCrystals;
@@ -117,9 +121,6 @@ public class StillElement : TerrainRamdonSpawner {
 
         if (MeshController.CrystalManager1.IntersectAnyLine(Anchors, transform.position))
         {
-            //Destroy();
-            //Program.gameScene.controllerMain.TerraSpawnController.RemoveStillElement(this);
-
             Debug.Log("not valid:"+MyId);
 
             //bz need to remove old Crystals 
@@ -167,6 +168,8 @@ public class StillElement : TerrainRamdonSpawner {
     {
         CheckIfCanGrow();
 	    CheckIfWasDestroyAndPlayedFullAnimation();
+
+        CouldGrowPlantNow();
     }
 
     private void CheckIfWasDestroyAndPlayedFullAnimation()
@@ -244,6 +247,14 @@ public class StillElement : TerrainRamdonSpawner {
 
         //removes from List in TerraSpawnerController
         Program.gameScene.controllerMain.TerraSpawnController.RemoveStillElement(this);
+
+
+        if (HType == H.Tree && _shouldReplant)
+        {
+            Program.gameScene.controllerMain.TerraSpawnController.SpawnRandomTreeInThisPos(transform.position);
+        }
+
+
     }
 
     /// <summary>
@@ -289,14 +300,9 @@ public class StillElement : TerrainRamdonSpawner {
         //mined now only by one person . The person calling this Method 
         if (_weight < 0)
         {
-            //DestroyCool();
             _destroyElement = true;
-
-            if (HType==H.Tree)
-            {
-                Program.gameScene.controllerMain.TerraSpawnController.
-                    SpawnRandomTreeInThisPos(pers, transform.position);
-            }
+            _shouldReplant = true;
+            
 
             //bz if is saved then need to save the weight so when thhis tree loads next time is just destroyed
             //just in case doesnt finish playing the animation and is saved then. if that happen next time
@@ -371,8 +377,18 @@ public class StillElement : TerrainRamdonSpawner {
 
         Height += 0.01f;
 
-        ScaleGameObject(0.01f);
+        _amtToGrow = 0.01f;
         Program.gameScene.controllerMain.TerraSpawnController.ReSaveStillElement(this);
+    }
+
+    private float _amtToGrow;
+    private void CouldGrowPlantNow()
+    {
+        if (_amtToGrow > 0)
+        {
+            _amtToGrow -= 0.0001f;
+            ScaleGameObject(0.0001f);
+        }
     }
 
     void ScaleGameObject(float toAdd)

@@ -97,27 +97,31 @@ public class PersonWindow : GUIElement {
         string res = "Age:" + _person.Age + "\n Gender:" + _person.Gender
                      + "\n Nutrition:" + _person.NutritionLevel.ToString("N0") 
                      + "\n Profession:" + _person.ProfessionProp.ProfDescription
-                     //+ "\n PrevJob:" + _person.PrevJob
-                   //  + "\n ID:" + _person.MyId
-                   //  + "\n FamID:" + _person.FamilyId
+                 
                      + "\n Spouse:" + _person.Spouse
                      + "\n Happy:" + _person.Happinnes
-                  //   + "\n UnHappyYears:" + _person.UnHappyYears
                      + "\n YearsOfSchool:" + _person.YearsOfSchool;
 
-        //if (_person.Home!=null)
-        //{
-        //    res+= "\n Home:" + _person.Home.MyId;
-        //}
-        //else res += "\n Home:null";
-
-        //res += DebugInfo();
+        res += DebugInfo();
         return res;
     }
 
     string DebugInfo()
     {
-        var res = "___________________\n GoMindState:" + _person.Brain.GoMindState +
+        var res = "\n___________________\n" +
+            "\n PrevJob:" + _person.PrevJob
+            + "\n ID:" + _person.MyId
+            + "\n FamID:" + _person.FamilyId
+            + "\n UnHappyYears:" + _person.UnHappyYears;
+
+
+        if (_person.Home != null)
+        {
+            res += "\n Home:" + _person.Home.MyId;
+        }
+        else res += "\n Home:null";
+
+        res += "___________________\n GoMindState:" + _person.Brain.GoMindState +
                   "\n fdRouteChks:" + _person.Brain._foodRoute.CheckPoints.Count +
                   "\n idleRouteChks:" + _person.Brain._idleRoute.CheckPoints.Count
                   + "\n movToNwHomRtChks:" + _person.Brain.MoveToNewHome.RouteToNewHome.CheckPoints.Count

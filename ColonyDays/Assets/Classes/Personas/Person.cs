@@ -755,6 +755,7 @@ public class Person : General
             return;
         }
 
+
         AgeAction();
 
         CheckHappiness();
@@ -762,6 +763,12 @@ public class Person : General
         CheckIfEmmigrate();
         CheckIfInSchool();
         AddHappyForVarietyOfFoods();
+
+        if (ProfessionProp!=null)
+        {
+            //so it relecfts new age 
+            ProfessionProp.ProdXShift = 0;
+        }
     }
 
     private void AddHappyForVarietyOfFoods()
@@ -1632,8 +1639,7 @@ public class Person : General
         var age = AgeFactor();
         var genre = ReturnGenreVal();
 
-        var mul = 1;
-
+        var mul = 0.5f;
 
         return (age + genre) * mul;
     }
