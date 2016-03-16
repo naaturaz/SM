@@ -598,11 +598,6 @@ public class TerrainSpawnerController : ControllerParent
 
     public void LoadFromFile()
     {
-        if (loadingIndex == 335)
-        {
-            var t = this;
-        }
-
         p.TerraSpawnController.CreateObjAndAddToMainList(AllSpawnedDataList[loadingIndex].Type,
             AllSpawnedDataList[loadingIndex].Pos,
             AllSpawnedDataList[loadingIndex].RootStringIndex, AllSpawnedDataList[loadingIndex].AllVertexIndex,
@@ -620,11 +615,11 @@ public class TerrainSpawnerController : ControllerParent
         loadingIndex++;
 
         //when index is the same as couunt that it
-        if (loadingIndex == AllSpawnedDataList.Count)
+        if (loadingIndex >= AllSpawnedDataList.Count)
         {
             IsToLoadFromFile = false;
             //CreateOrUpdateSpecificsList(AllSpawnedDataList[loaded)
-            //print(treeList.Count + " treeList.Count");
+            print(treeList.Count + " treeList.Count IsToLoadFromFile-false");
         }
     }
 

@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PersonalObject
 {
-    private General _current;
+    private FollowObject _current;
     //as I spawn them Will add it here so can be reuse it for GC pupose
-    private Dictionary<string, General> _allPersonalObjects = new Dictionary<string, General>(); 
+    private Dictionary<string, FollowObject> _allPersonalObjects = new Dictionary<string, FollowObject>(); 
 
     private string _currentRoot;
     private string _currentAni;
@@ -64,6 +65,8 @@ public class PersonalObject
 
     public void AddressNewAni(string newAni, bool hide)
     {
+        //return;
+
         Hide();//will hide current 
 
 
@@ -96,13 +99,47 @@ public class PersonalObject
             return;
         }
         
-        _current = General.Create(_currentRoot, _currentPoint.transform.position);
-        _current.transform.parent = _currentPoint.transform;
+        //ResetPersonPosition();
+
+        _current = FollowObject.Create(_currentRoot, _currentPoint, Program.PersonObjectContainer.transform, 
+            _person.MyId);
 
         _current.transform.rotation = _currentPoint.transform.rotation;
-        _allPersonalObjects.Add(_currentRoot, _current);
+        _current.transform.position = _currentPoint.transform.position;
 
+        _allPersonalObjects.Add(_currentRoot, _current);
         CheckIfHide(hide);
+
+        //ReloadPersonPosition();
+    }
+
+    /// <summary>
+    /// Bz this objects are not childs of _person . bz Transform child weird stuff 
+    /// </summary>
+    public void DestroyAllGameObjs()
+    {
+        for (int i = 0; i < _allPersonalObjects.Count; i++)
+        {
+            _allPersonalObjects.ElementAt(i).Value.Destroy();
+        }
+    }
+
+    private GameObject _toFollow;
+    private Quaternion _saveQuaternion;
+    private Vector3 _savePosition;
+    void ResetPersonPosition()
+    {
+        _saveQuaternion = _person.transform.rotation;
+        _savePosition = _person.transform.position;
+
+        _person.transform.rotation = new Quaternion();
+        _person.transform.position = new Vector3();
+    }
+
+    void ReloadPersonPosition()
+    {
+        _person.transform.rotation = _saveQuaternion;
+        _person.transform.position = _savePosition;
     }
 
     void CheckIfHide(bool hide)
@@ -193,6 +230,7 @@ public class PersonalObject
     }
 
     private int oldAge;
+
     /// <summary>
     /// bz youger guys carry boxes too
     /// </summary>
@@ -207,6 +245,8 @@ public class PersonalObject
         {
             oldAge = _person.Age;
             var dif = 20 - _person.Age;
+            _current.ReloadOriginalObjectDim();
+
             ScaleGameObject(dif* -0.015f);
         }
     }

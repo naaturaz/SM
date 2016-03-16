@@ -262,7 +262,7 @@ public class UPoly
     }
 
     /// <summary>
-    /// Creates a poly from param pos. with its dimensions
+    /// Creates a poly from param pos. with its dimensions. From make pos center and from there adds and removes 
     /// </summary>
     public static List<Vector3> CreatePolyFromVector3(Vector3 pos, float xDim, float zDim)
     {

@@ -106,8 +106,8 @@ public class Body //: MonoBehaviour //: General
 
     public Body(Person person)
     {
-        _personalObject = new PersonalObject(person);
         Init(person);
+
     }
 
     private PersonFile _pFile;
@@ -116,10 +116,10 @@ public class Body //: MonoBehaviour //: General
     /// </summary>
     public Body(Person person, PersonFile pF)
     {
-        _personalObject = new PersonalObject(person);
-
         _pFile = pF;
         Init(person);
+       LoadPosition();
+
 
         Location = pF._body.Location;
         GoingTo = pF._body.GoingTo;
@@ -132,6 +132,9 @@ public class Body //: MonoBehaviour //: General
         _loadedPosition = pF.Position;
         _loadedRotation = pF.Rotation;
 
+        _person.transform.position = _loadedPosition;
+        _person.transform.rotation = _loadedRotation;
+
         _loadedAni = pF._body.CurrentAni;
 
         //if is zero is that is idling in a house 
@@ -139,6 +142,7 @@ public class Body //: MonoBehaviour //: General
         {
             WalkRoutineLoad(pF._body.CurrTheRoute, GoingTo, pF._body.CurrentRoutePoint, _inverse, _whichRoute); 
         }
+
     }
 
     public void Init(Person person)
@@ -233,6 +237,11 @@ public class Body //: MonoBehaviour //: General
         _currentAni = animationPass;
         myAnimator.SetBool(animationPass, true);
         myAnimator.SetBool(oldAnimation, false);
+
+        if (_personalObject == null)
+        {
+            _personalObject = new PersonalObject(_person);
+        }
 
         _personalObject.AddressNewAni(animationPass, ShouldHide());
     }
@@ -519,6 +528,7 @@ public class Body //: MonoBehaviour //: General
         WalkRoutineTail(goingTo, whichRouteP);
     }
 
+    private bool _wasPersonParented;
     void WalkRoutineTail(HPers goingTo, HPers whichRouteP = HPers.None)
     {
         GoingTo = goingTo;
@@ -526,7 +536,10 @@ public class Body //: MonoBehaviour //: General
         _whichRoute = whichRouteP;
 
         AddressWheelBarrowingAni();
+
     }
+
+
 
     private void AddressWheelBarrowingAni()
     {
@@ -646,9 +659,11 @@ public class Body //: MonoBehaviour //: General
         if (_loadedPosition != new Vector3())
         {
             //GameScene.print(_loadedPosition + "._loadedPosition");
+            
             _person.transform.position = _loadedPosition;
             _person.transform.rotation = _loadedRotation;
             _loadedPosition = new Vector3();
+
         }
     }
 
@@ -733,6 +748,11 @@ public class Body //: MonoBehaviour //: General
         }
     }
 
+    public void DestroyAllPersonalObj()
+    {
+        _personalObject.DestroyAllGameObjs();
+    }
+
 
     #region Hide Show
     public void Show()
@@ -787,7 +807,12 @@ public class Body //: MonoBehaviour //: General
             return true;
         }
 
-        if (key.Contains("Dummy") || key.Contains("Farm") || key.Contains("Fish"))
+        if (key.Contains("Farm"))
+        {
+            var t = this;
+        }
+
+        if (key.Contains("Farm") || key.Contains("Dummy") || key.Contains("Fish"))
         {
             return true;
         }
@@ -805,8 +830,25 @@ public class Body //: MonoBehaviour //: General
 	    CheckOnGameSpeed();
         CheckIfGoingIntoBuild();
 
-	    //ReSetAnimation();
+	    ParentPerson();
     }
+
+
+
+    /// <summary>
+    /// bz if done before its all weird 
+    /// This is useful for when it loads person and when newBorn 
+    /// </summary>
+    void ParentPerson()
+    {
+        if (Time.time < 5f || _wasPersonParented || _person == null || _person.Home == null || _person.transform.parent != null)
+        {
+            return;
+        }
+        _wasPersonParented = true;
+        _person.transform.parent = _person.Home.transform;
+    }
+
 
     /// <summary>
     /// If is inside a building will hide or show Geometry

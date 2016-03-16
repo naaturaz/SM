@@ -248,13 +248,10 @@ public class StillElement : TerrainRamdonSpawner
         //removes from List in TerraSpawnerController
         Program.gameScene.controllerMain.TerraSpawnController.RemoveStillElement(this);
 
-
         if (HType == H.Tree && _shouldReplant)
         {
             Program.gameScene.controllerMain.TerraSpawnController.SpawnRandomTreeInThisPos(transform.position);
         }
-
-
     }
 
     /// <summary>

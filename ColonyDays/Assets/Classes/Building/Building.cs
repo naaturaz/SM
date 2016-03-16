@@ -454,7 +454,6 @@ public class Building : General, Iinfo
         //}
         CurrentProd = BuildingPot.Control.ProductionProp.ReturnDefaultProd(HType);
 
-        InitFarm();
         
         InitJobRelated();
 
@@ -665,6 +664,7 @@ public class Building : General, Iinfo
     {
         //DebugShowAnchors();
 
+        InitFarm();
         InitDecoration();
 
         if (_militar!=null)
@@ -2740,6 +2740,13 @@ public class Building : General, Iinfo
     }
 
     List<Animal> _animals = new List<Animal>();//the animals in a AnimalFarm 
+    private bool wasFarmInited;
+
+    public void RemoveAnimal(Animal animal)
+    {
+        var noti =_animals.Remove(animal);
+        Debug.Log("animal removed on:"+MyId);
+    }
 
     private void InitFarm()
     {
@@ -2747,6 +2754,11 @@ public class Building : General, Iinfo
         {
             if (HType.ToString().Contains(H.AnimalFarm + ""))
             {
+                if (wasFarmInited || !PositionFixed)
+                {
+                    return;
+                }
+                wasFarmInited = true;
                 InitAnimalFarm();
             }
         }
@@ -2867,6 +2879,98 @@ public class Building : General, Iinfo
 
         return m.Vertex.BuildVertexWithXandZ( mid.x, mid.z);
     }
+
+    /// <summary>
+    /// Will tell u if animal pass will overlap anyother existing aniumal
+    /// </summary>
+    /// <param name="pass"></param>
+    /// <param name="animalDim"></param>
+    /// <returns></returns>
+    public bool CollideWithExistingAnimal(Vector3 newPos, int newID, float animalDim  )
+    {
+        var passAnimalRect = ReturnBoundsRect(newPos, animalDim);
+
+        for (int i = 0; i < _animals.Count; i++)
+        {
+            var evalRect = ReturnBoundsRect(_animals[i].transform.position, animalDim);
+            if (passAnimalRect.Overlaps(evalRect) && _animals[i].Id != newID)//so its not asking to  himself 
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Will create a recty with the 'dim;
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="dim"></param>
+    /// <returns></returns>
+    Rect ReturnBoundsRect(Vector3 position, float dim)
+    {
+        var poly= UPoly.CreatePolyFromVector3(position, dim, dim);
+        return Registro.FromALotOfVertexToRect(poly);
+    }
+
+
+        /// <summary>
+    /// Will give a list of vector 3 that is a division of amt int rows and col in the rect 
+    /// </summary>
+    /// <param name="zone"></param>
+    /// <param name="amt"></param>
+    /// <returns></returns>
+    List<Vector3> ReturnPositionsFromInGameObjectZone(H zone, int amt)
+    {
+        List<Vector3>res = new List<Vector3>();
+        var child = GetChildThatContains(zone);
+        var min = child.transform.GetComponent<Collider>().bounds.min;
+        var max = child.transform.GetComponent<Collider>().bounds.max;
+
+        var mid = (min + max) / 2;
+        var zonePoly = Registro.FromALotOfVertexToPoly(new List<Vector3>() {min, max});
+
+        return DivideIntoPositions(zonePoly, amt);
+    }
+
+    List<Vector3> DivideIntoPositions(List<Vector3> zonePoly, int amt)
+    {
+        List<Vector3> res = new List<Vector3>();
+        amt = MakeIntAEvenNumber(amt);
+
+        var wide = Vector3.Distance(zonePoly[0], zonePoly[1]);
+        var height = Vector3.Distance(zonePoly[1], zonePoly[2]);
+
+        int rows = amt/2;
+        int col = amt/rows;
+
+        var addX = wide/rows;
+        var addZ = height/col;
+
+        var initVector = new Vector3(zonePoly[0].x + addX/2, m.IniTerr.MathCenter.y, zonePoly[0].z + addZ/2);
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < col; j++)
+            {
+                res.Add(new Vector3(initVector.x + addX*i, m.IniTerr.MathCenter.y, initVector.z +addZ*j));
+            }
+        }
+
+        UVisHelp.CreateHelpers(res, Root.yellowCube);
+        return res;
+    }
+
+    int MakeIntAEvenNumber(int amt)
+    {
+        var evenNumb = Bridge.isAEvenNumb(amt);
+        if (!evenNumb)
+        {
+            amt += 1;
+        }
+        return amt;
+    }
+
 
     /// <summary>
     /// Will return the factor of animals to put in an animal farm .

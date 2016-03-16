@@ -473,12 +473,15 @@ public class Person : General
         _body = new Body(this, pF);
         Brain = new Brain(this, pF);
 
+
         InitGeneralStuff();
 
         RecreateProfession(pF);
 
         //bz loading ends here 
         IsLoading = false;
+        
+        //transform.parent = Home.transform;
     }
 
     private void RecreateProfession(PersonFile pF)
@@ -773,6 +776,11 @@ public class Person : General
 
     private void AddHappyForVarietyOfFoods()
     {
+        if (Home==null)
+        {
+            return;
+        }
+
         var amtDiffFoods = Home.Inventory.FoodCatItems.Count;
         ChangeHappinesBy(amtDiffFoods * 0.1f);
     }
@@ -1805,7 +1813,10 @@ public class Person : General
         family.AddKids(newBorn.MyId);
 
         newBorn.IsBooked = "";
-        newBorn.transform.parent = Home.transform;
+        
+        //will be addressed on Body.Update 
+        //newBorn.transform.parent = Home.transform;
+        
         newBorn.Home = Home;
         newBorn.Brain.SetNewHouseFound();
     }

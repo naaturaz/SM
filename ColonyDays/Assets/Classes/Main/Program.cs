@@ -19,6 +19,9 @@ public class Program : MonoBehaviour {
     //cointains all the buildings as childs 
     public static General BuildsContainer;
 
+    //cointains all the buildings as childs 
+    public static General PersonObjectContainer;
+
     //statics vars
     public static Vector3 VIEWPOS;//use to grab mouse view position
     public static Transform MOUSEOVERTHIS = null;
@@ -62,6 +65,7 @@ public class Program : MonoBehaviour {
 	    ClassContainer = General.Create(Root.classesContainer);
 
 	    BuildsContainer = General.Create(Root.classesContainer, name: "BuildsContainer");
+	    PersonObjectContainer = General.Create(Root.classesContainer, name: "PersonObjectsContainer");
 
         if (Application.loadedLevelName == "Lobby")
         {
@@ -133,6 +137,7 @@ public class Program : MonoBehaviour {
     {
         ClassContainer.Destroy();
         BuildsContainer.Destroy();
+        PersonObjectContainer.Destroy();
         gameScene.Destroy();
         gameScene = null;
         InputMain.Destroy();

@@ -152,7 +152,6 @@ public class Brain
             return;
         }
 
-        _person.transform.parent = _person.Home.transform;
     }
 
     /// <summary>
@@ -2794,6 +2793,7 @@ public class Brain
     {
         if (Partido && string.IsNullOrEmpty(_person.IsBooked))
         {
+            _person.Body.DestroyAllPersonalObj();
             PersonPot.Control.Queues.PersonDie();
             
             PersonPot.Control.RemoveMeFromSystem(_person.MyId);

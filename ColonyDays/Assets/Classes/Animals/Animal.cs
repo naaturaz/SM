@@ -42,8 +42,6 @@ public class Animal : General
         float x = UMath.Random(-howFar, howFar);
         float z = UMath.Random(-howFar, howFar);
         origin = new Vector3(origin.x + x, origin.y, origin.z + z);
-
-        var _bounds = UPoly.CreatePolyFromVector3(origin, animalDim, animalDim);
   
         if (!area.Contains(new Vector2(origin.x, origin.z)))
         {
@@ -52,11 +50,37 @@ public class Animal : General
             {
                 throw new Exception("AssignRandomIniPosition() animal.cs");
             }
-
-
             origin = AssignRandomIniPosition(origin, area);
         }
         return origin;
+    }
+
+    private int aniCount;
+    /// <summary>
+    /// Returns Random position from origin. If fell inside a building will find another spot
+    /// until is in a clear zone
+    /// If origin is not specified will assume is CamControl.CAMRTS.hitFront.point the center of terrain
+    /// </summary>
+    /// <param name="howFar">How far will go</param>
+    Vector3 AssignAnimalRandomIniPosition(Vector3 origin, Rect area, float howFar, float animalDim)
+    {
+        float x = UMath.Random(-howFar, howFar);
+        float z = UMath.Random(-howFar, howFar);
+        var originMoved = new Vector3(origin.x + x, origin.y, origin.z + z);
+        var _bounds = UPoly.CreatePolyFromVector3(originMoved, animalDim, animalDim);
+
+        if (!area.Contains(new Vector2(originMoved.x, originMoved.z)) 
+            || Spawner.CollideWithExistingAnimal(originMoved, Id, animalDim)
+            )
+        {
+            aniCount++;
+            if (aniCount > 1000)
+            {
+                return new Vector3();
+            }
+            originMoved = AssignAnimalRandomIniPosition(origin, area, howFar, animalDim);
+        }
+        return originMoved;
     }
 
 
@@ -69,7 +93,21 @@ public class Animal : General
     protected void MoveToRandomSpot()
     {
         Rect area = Spawner.ReturnInGameObjectZone(H.FarmZone);
-        transform.position = AssignRandomIniPosition(transform.position, area, 1.8f, 0.3f);
+        var newPos  = AssignAnimalRandomIniPosition(transform.position, area, 2.8f, ReturnAnimalDim());
+
+        //means didnt find a place where to place it. then this animal should be destyo
+        if (newPos==new Vector3())
+        {
+            Spawner.RemoveAnimal(this);
+            Destroy();
+            return;
+        }
+        transform.position = newPos;
+    }
+
+    float ReturnAnimalDim()
+    {
+        return .4f;
     }
 
     protected void SetRandomIdleStart()

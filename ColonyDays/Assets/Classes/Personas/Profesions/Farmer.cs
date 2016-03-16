@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 
 public class Farmer : Profession
@@ -59,7 +60,25 @@ public class Farmer : Profession
         Rect area = _person.Work.ReturnInGameObjectZone(H.FarmZone);
         var middlePointOfArea  = _person.Work.ReturnGroundMiddleOfInGameObjectZone(H.FarmZone);
 
-        return Animal.AssignRandomIniPosition(middlePointOfArea, area);
+        return AssignRandomIniPosition(middlePointOfArea, area);
+    }
+
+    Vector3 AssignRandomIniPosition(Vector3 origin, Rect area, float howFar = 0.5f)
+    {
+        float x = UMath.Random(-howFar, howFar);
+        float z = UMath.Random(-howFar, howFar);
+        origin = new Vector3(origin.x + x, origin.y, origin.z + z);
+
+        //if (!area.Contains(new Vector2(origin.x, origin.z)))
+        //{
+        //    count++;
+        //    if (count > 1000)
+        //    {
+        //        throw new Exception("AssignRandomIniPosition() animal.cs");
+        //    }
+        //    origin = AssignRandomIniPosition(origin, area);
+        //}
+        return origin;
     }
 
     void InitRoute()
