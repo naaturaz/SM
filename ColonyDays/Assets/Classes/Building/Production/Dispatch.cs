@@ -397,7 +397,7 @@ public class Dispatch
             Order temp = new Order();
             temp = Order.Copy(order);
 
-            temp.Amount = DispatchAmount(person, order.Amount);
+            temp.Amount = person.HowMuchICanCarry();
             temp.DestinyBuild = destinFoodSrc;
             var sourceBuild = Brain.GetBuildingFromKey(temp.SourceBuild);
 
@@ -431,7 +431,7 @@ public class Dispatch
             temp = Order.Copy( order);
             OrderFound(order);
 
-            temp.Amount = DispatchAmount(person, order.Amount);
+            temp.Amount = person.HowMuchICanCarry();
             temp.SourceBuild = foodSrc;
             return temp;
         }
@@ -454,7 +454,7 @@ public class Dispatch
             temp = Order.Copy( order);
             OrderFound(order);
 
-            temp.Amount = DispatchAmount(person, order.Amount);
+            temp.Amount = person.HowMuchICanCarry();
             temp.SourceBuild = foodSrc;
             return temp;
         }
@@ -465,22 +465,24 @@ public class Dispatch
         return null;        
     }
 
-    /// <summary>
-    /// Will return the Dispatch amount based on the type of person carrying 
-    /// 
-    /// Will carry so many KG of that prod bz the person can do it 
-    /// </summary>
-    /// <returns></returns>
-    float DispatchAmount(Person pers, float amtOnOrder)
-    {
-        var mul = 1;
-        if (pers.ProfessionProp != null && pers.PrevJob == Job.WheelBarrow
-            && pers.ProfessionProp.ProfDescription == Job.None)
-        {
-            mul = 3;
-        }
-        return pers.HowMuchICanCarry() * mul;
-    }
+    ///// <summary>
+    ///// Will return the Dispatch amount based on the type of person carrying 
+    ///// 
+    ///// Will carry so many KG of that prod bz the person can do it 
+    ///// </summary>
+    ///// <returns></returns>
+    //public static float DispatchAmount(Person pers)
+    //{
+    //    var isWheel = pers.PrevJob == Job.WheelBarrow || pers.ProfessionProp.ProfDescription == Job.WheelBarrow;
+    //    var isDocker = pers.PrevJob == Job.Docker || pers.ProfessionProp.ProfDescription == Job.Docker;
+
+    //    var mul = 1;
+    //    if (pers.ProfessionProp != null && (isWheel || isDocker))
+    //    {
+    //        mul = 3;
+    //    }
+    //    return pers.HowMuchICanCarry() * mul;
+    //}
 
     /// <summary>
     /// Wil do the actions needed once an order is found 

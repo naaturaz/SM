@@ -641,12 +641,12 @@ public class Bridge : Trail
             return Anchors;
         }
 
-        if (BoundsHoriz.Count > 0)
+        if (BoundsHoriz!=null && BoundsHoriz.Count > 0)
         {
             return Registro.FromALotOfVertexToPoly(BoundsHoriz);
         }
 
-        else if (BoundsVertic.Count > 0)
+        if (BoundsVertic!=null && BoundsVertic.Count > 0)
         {
             return Registro.FromALotOfVertexToPoly(BoundsVertic);
         }

@@ -10,6 +10,9 @@ public class Hover : MonoBehaviour
     private HoverWindow hoverWindow;//the window tht will pop up msg
     private Rect screenRect;
 
+
+
+
 	// Use this for initialization
 	void Start ()
 	{

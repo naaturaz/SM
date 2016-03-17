@@ -463,25 +463,6 @@ public class Inventory  {
     }
 
     /// <summary>
-    /// Every time a inventory is changed need to be updated on Registro
-    /// </summary>
-    /// <param name="buildingId"></param>
-    void ResaveOnRegistro()
-    {
-        int index = BuildingPot.Control.Registro.AllRegFile.FindIndex(a => a.MyId == LocMyId);
-
-        //so it wont try it whhile loaiding 
-        if (BuildingPot.Control.Registro.AllRegFile.Count == 0 || index == -1)
-        {
-            return;
-        }
-
-        BuildingPot.Control.Registro.AllRegFile[index].Inventory = this;
-    }
-
-
-
-    /// <summary>
     /// Will tell u if the inventory has enought capacity to store this Load
     /// </summary>
     /// <param name="prod"></param>

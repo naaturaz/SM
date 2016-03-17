@@ -1370,6 +1370,8 @@ public class Person : General
         else if (jType == Job.WheelBarrow)
         {
             _profession = new WheelBarrow(this, pF);
+            //WheelBarrow wB = (WheelBarrow) _profession;
+            //wB.DelayedCreatingNew();
             //print("new WheelBarrow:"+MyId);
         }
         else if(jType == Job.Homer)
@@ -1403,7 +1405,7 @@ public class Person : General
         {
             return Job.Docker;
         }
-        else if (Work.HType == H.BuildersOffice)
+        else if (Work.HType == H.Masonry)
         {
             return Job.Builder;
         }
@@ -1649,7 +1651,20 @@ public class Person : General
 
         var mul = 0.5f;
 
-        return (age + genre) * mul;
+        return (age + genre) * mul * ProfessionMultiplierCarryWeight();
+    }
+
+    float ProfessionMultiplierCarryWeight()
+    {
+        var isWheel = PrevJob == Job.WheelBarrow || ProfessionProp.ProfDescription == Job.WheelBarrow;
+        var isDocker = PrevJob == Job.Docker || ProfessionProp.ProfDescription == Job.Docker;
+
+        var mul = 1;
+        if (ProfessionProp != null && (isWheel || isDocker))
+        {
+            mul = 3;
+        }
+        return mul;
     }
 
 

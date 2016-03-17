@@ -122,15 +122,6 @@ public class CryBridgeRoute
         //todo
         if (bridge == null)
         {
-            //Debug.Log("Called with null brdige:" + bridgeId);
-
-            //to address when is passing a dummy for bridgeId. useful wuth foresetr 
-            //bridge = Brain.GetBuildingFromKey(_ini.MyId);
-            //if (bridge == null)
-            //{
-            //    bridge = Brain.GetBuildingFromKey(_fin.MyId);
-            //}
-            
             throw new Exception("Fix");
         }
 
@@ -151,10 +142,16 @@ public class CryBridgeRoute
     {
         if (b.HType == H.BridgeRoad && isBridgeLeg)
         {
-            return Vector3.MoveTowards(pos, b.transform.position, -2);
+            var clstAnchor = Brain.ReturnClosestVector3(pos, b.Anchors);
+            var distFromBotomPosToClstAnchr = Vector3.Distance(clstAnchor, pos);
+
+            //so its moves just enough to get out of acnhors taht are use to put Crsitals 
+            return Vector3.MoveTowards(pos, b.transform.position, -distFromBotomPosToClstAnchr);
         }
         return pos;
     }
+
+
 
     void DebugLoc()
     {
@@ -317,11 +314,14 @@ public class CryBridgeRoute
     {
         TheRoute.CheckPoints.AddRange(_myRoutes[0].TheRoute.CheckPoints);
         //get the tops of the brdige in same land zone as _one
+
+        var botsBrid1 = FindPointInBridge(_one, H.Bottom);
+        CorrectLastPointRotationAndAddNextCheckPoint(TheRoute, botsBrid1[0]);
+        
         var topsBrid1 = FindPointInBridge(_one, H.Top);
+        CorrectLastPointRotationAndAddNextCheckPoint(TheRoute, topsBrid1[0]);
 
-        CorrectLastPointRotation(TheRoute, topsBrid1[0]);
-
-        FirstBridge(topsBrid1, _myRoutes[1].TheRoute.CheckPoints[0].Point);
+        HandleInPointsBridge(topsBrid1, botsBrid1, _myRoutes[1].TheRoute.CheckPoints[0].Point);
         TheRoute.CheckPoints.AddRange(_myRoutes[1].TheRoute.CheckPoints);
 
         //if has two bridges 
@@ -330,9 +330,12 @@ public class CryBridgeRoute
             var topsBrid2 = FindPointInBridge(_two, H.Top);
             topsBrid2.Reverse();
 
+            var botsBrid2 = FindPointInBridge(_two, H.Bottom);
+            botsBrid2.Reverse();
+
             //CorrectLastPointRotation(TheRoute, topsBrid2[0]);
 
-            FirstBridge(topsBrid2, _myRoutes[2].TheRoute.CheckPoints[0].Point);
+            HandleInPointsBridge(topsBrid2, botsBrid2, _myRoutes[2].TheRoute.CheckPoints[0].Point);
             TheRoute.CheckPoints.AddRange(_myRoutes[2].TheRoute.CheckPoints);
         }
 
@@ -349,10 +352,10 @@ public class CryBridgeRoute
     /// </summary>
     /// <param name="cryRoute"></param>
     /// <param name="vector3"></param>
-    private void CorrectLastPointRotation(TheRoute theRoute, Vector3 next)
+    private void CorrectLastPointRotationAndAddNextCheckPoint(TheRoute theRoute, Vector3 next)
     {
         var temp = theRoute.CheckPoints[theRoute.CheckPoints.Count - 1];
-        var newCheck = ReturnFacingTo(temp.Point, next, temp.Point);
+        var newCheck = ReturnFacingTo(temp.Point, next);
 
         //removes the last
         theRoute.CheckPoints.RemoveAt(theRoute.CheckPoints.Count - 1);
@@ -360,23 +363,25 @@ public class CryBridgeRoute
         theRoute.CheckPoints.Add(newCheck);
     }
 
-
-
-
-
-
     /// <summary>
     /// Will Conform a new leg in the routing of bridges 
     /// </summary>
-    /// <param name="brid">The points of top of the bridge </param>
+    /// <param name="tops">The points of top of the bridge </param>
     /// <param name="pointAfterBridge">The  exit point in the botton on the  bridge </param>
-    void FirstBridge(List<Vector3> brid, Vector3 pointAfterBridge)
+    void HandleInPointsBridge(List<Vector3> tops, List<Vector3> bottoms, Vector3 pointAfterBridge)
     {
-        var brid1FirstPoint = ReturnFacingTo(brid[0], brid[1], brid[0]);
-        var brid1SecPoint = ReturnFacingTo(brid[1], pointAfterBridge, brid[1]);
+        var brid1stPoint = ReturnFacingTo(bottoms[0], tops[1]);
 
-        TheRoute.CheckPoints.Add(brid1FirstPoint);
-        TheRoute.CheckPoints.Add(brid1SecPoint);
+        var brid2ndPoint = ReturnFacingTo(tops[0], tops[1]);
+        var brid3rdPoint = ReturnFacingTo(tops[1], pointAfterBridge);
+
+        var brid4thPoint = ReturnFacingTo(bottoms[1], pointAfterBridge);
+
+
+        TheRoute.CheckPoints.Add(brid1stPoint);
+        TheRoute.CheckPoints.Add(brid2ndPoint);
+        TheRoute.CheckPoints.Add(brid3rdPoint);
+        TheRoute.CheckPoints.Add(brid4thPoint);
     }
 
     /// <summary>
@@ -386,10 +391,10 @@ public class CryBridgeRoute
     /// <param name="facingTo">Point that will look at</param>
     /// <param name="iniPos">The Point of the CHeckPoint, which most of the time is the same as 'from'</param>
     /// <returns></returns>
-    CheckPoint ReturnFacingTo(Vector3 from, Vector3 facingTo, Vector3 iniPos)
+    CheckPoint ReturnFacingTo(Vector3 position, Vector3 facingTo)
     {
-        CheckPoint re = new CheckPoint(iniPos);
-        GameScene.dummyBlue.transform.position = from;
+        CheckPoint re = new CheckPoint(position);
+        GameScene.dummyBlue.transform.position = position;
 
         //so it doesnt tilt when going up or down the brdige hill 
         //im putting in the same height on Y as the next point 

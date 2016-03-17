@@ -291,7 +291,7 @@ public class BuildersManager
 
     Structure FindClosestWheelBarrowerOfficeFullyBuilt(Vector3 construcPos)
     {
-        return BuildingController.FindTheClosestOfThisTypeFullyBuilt(H.BuildersOffice, construcPos);
+        return BuildingController.FindTheClosestOfThisTypeFullyBuilt(H.Masonry, construcPos);
     }
 
     void RemoveFromGameController(H hTypeP)

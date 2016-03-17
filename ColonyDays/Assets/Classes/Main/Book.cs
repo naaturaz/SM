@@ -66,7 +66,7 @@ public class Book : General
         Build.Add(new BuildStat(H.BridgeRoad, 1000, 80, 20, 0, 5, maxPeople: 0));
 
         Build.Add(new BuildStat(H.CoachMan, 800, 80, 20, 0, 5, maxPeople: 8));
-        Build.Add(new BuildStat(H.BuildersOffice, 800, 80, 20, 0, 5, maxPeople: 8));
+        Build.Add(new BuildStat(H.Masonry, 800, 80, 20, 0, 5, maxPeople: 8));
         Build.Add(new BuildStat(H.LightHouse, 800, 80, 20, 0, 5, maxPeople: 3));
 
 

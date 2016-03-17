@@ -1036,7 +1036,7 @@ public class Building : General, Iinfo
         {
             //for DockTypes
             var reachRoute = true;
-            if (IsDockType())//if is not DockType wont be affected 
+            if (IsNaval())//if is not DockType wont be affected 
             {
                 reachRoute = _dock.CanIReachRoute();
             }
@@ -1957,7 +1957,7 @@ public class Building : General, Iinfo
     {
         Debug.Log("construction built 100%:"+MyId+"." + Program.gameScene.GameTime1.TodayYMD());
 
-        if (IsDockType())
+        if (IsNaval())
         {
             BuildingPot.Control.DockManager1.AddToDockStructure(MyId, HType);
         }
@@ -2089,8 +2089,6 @@ public class Building : General, Iinfo
         return Vector3.MoveTowards(spawnPnt, sp.transform.position, -5);
     }
 
-   
-
     /// <summary>
     /// To define the landzone of a dummy by geetting the LandZone name from the c'onstructing' and
     /// the position
@@ -2103,8 +2101,6 @@ public class Building : General, Iinfo
     {
         LandZone1.Add(new VectorLand(constructing.LandZone1[0].LandZone, position));
     }
-
-  
 
     /// <summary>
     /// Is made public so when is loding is called 
@@ -2138,14 +2134,6 @@ public class Building : General, Iinfo
         //    return -25;
         //}
         return 0;
-    }
-
-    /// <summary>
-    /// Some how is not working when loading 
-    /// </summary>
-    private void LoadLandZonesIntoBridgeManager()
-    {
-        BuildingPot.Control.BridgeManager1.AddBridge(LandZone1[0].LandZone, LandZone1[1].LandZone, transform.position, MyId);
     }
 
     #endregion
@@ -2482,7 +2470,7 @@ public class Building : General, Iinfo
 
     Structure FindClosestWheelBarrowerOffice()
     {
-        return BuildingController.FindTheClosestOfThisType(H.BuildersOffice, transform.position);
+        return BuildingController.FindTheClosestOfThisType(H.Masonry, transform.position);
     }
 
     private IEnumerator ThirtySecUpdate()
@@ -2519,7 +2507,7 @@ public class Building : General, Iinfo
     private BuildersManager _buildersManager;
     void InitWheelBarrow()
     {
-        if (HType != H.BuildersOffice || IsLoadingFromFile)
+        if (HType != H.Masonry || IsLoadingFromFile)
         {
             return;
         }
@@ -3032,7 +3020,7 @@ public class Building : General, Iinfo
     private Dispatch _dispatch;//dock will have a Dispatch
 
 
-    public bool IsDockType()
+    public bool IsNaval()
     {
         if (HType == H.DryDock || HType == H.Supplier || HType == H.Dock)
         {

@@ -34,6 +34,11 @@ public class Homer : Profession
 
     private void Init()
     {
+        if (IsWorkNaval())
+        {
+            _person.PrevOrder.Product=P.None;
+        }
+
         MyFoodSrc = _person.FoodSource;
         //Debug.Log(_person.MyId + " new Homer");
 
@@ -45,9 +50,14 @@ public class Homer : Profession
         InitRoute();
     }
 
+    bool IsWorkNaval()
+    {
+        return _person.Work != null && _person.Work.IsNaval();
+    }
+
     Vector3 DefineFinRoute()
     {
-        if (_person.Work.HType.ToString().Contains("Dock"))
+        if (IsWorkNaval())
         {
             return _person.Work.SpawnPoint.transform.position;
         }

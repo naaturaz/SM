@@ -109,6 +109,8 @@ public class PersonWindow : GUIElement {
     string DebugInfo()
     {
         var res = "\n___________________\n" +
+            "\n currentAni:" + _person.Body.CurrentAni +
+
             "\n PrevJob:" + _person.PrevJob
             + "\n ID:" + _person.MyId
             + "\n FamID:" + _person.FamilyId

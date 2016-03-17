@@ -71,7 +71,7 @@ public class DispatchManager {
 
     List<Structure> FindAllWheelBarrAndDockBuilds()
     {
-        List<Structure> all = BuildingController.FindAllStructOfThisType(H.BuildersOffice);
+        List<Structure> all = BuildingController.FindAllStructOfThisType(H.Masonry);
         all.AddRange(BuildingController.FindAllStructOfThisType(H.Dock));
         return all;
     }

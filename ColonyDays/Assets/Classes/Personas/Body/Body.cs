@@ -170,6 +170,8 @@ public class Body //: MonoBehaviour //: General
     /// </summary>
     void SetScaleByAge()
     {
+        UnparentPerson();
+
         var toAdd = 0f;
         var addAmnt = maleGrow;
         if (_person.Gender == H.Female)
@@ -184,6 +186,22 @@ public class Body //: MonoBehaviour //: General
         {toAdd += addAmnt;}
 
         AddToBodyScale(toAdd);
+
+        ParentBack();
+    }
+
+
+    private Transform savedParenTransform;
+    void UnparentPerson()
+    {
+        savedParenTransform = _person.transform.parent;
+        _person.transform.parent = null;
+    }
+
+    void ParentBack()
+    {
+        _person.transform.parent = savedParenTransform;
+        savedParenTransform = null;
     }
 
     /// <summary>
@@ -830,7 +848,7 @@ public class Body //: MonoBehaviour //: General
 	    CheckOnGameSpeed();
         CheckIfGoingIntoBuild();
 
-	    ParentPerson();
+	    ParentPersonToHome();
     }
 
 
@@ -839,7 +857,7 @@ public class Body //: MonoBehaviour //: General
     /// bz if done before its all weird 
     /// This is useful for when it loads person and when newBorn 
     /// </summary>
-    void ParentPerson()
+    void ParentPersonToHome()
     {
         if (Time.time < 5f || _wasPersonParented || _person == null || _person.Home == null || _person.transform.parent != null)
         {
@@ -905,5 +923,10 @@ public class Body //: MonoBehaviour //: General
     {
         myAnimator.speed += amt;
         _speed += amt;
+    }
+
+    internal void UpdatePersonalObject()
+    {
+        _personalObject.AddressNewAni(_currentAni, true);
     }
 }

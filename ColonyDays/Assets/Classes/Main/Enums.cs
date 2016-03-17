@@ -207,7 +207,7 @@ public enum H
     Infrastructure, Housing, Farming, Raw, Production, Industry, Trade, GovServices, Other, Militar,
 
     //infr F1
-    Trail, Road, BridgeTrail, BridgeRoad, CoachMan, LightHouse, WheelBarrow, StockPile, BuildersOffice,
+    Trail, Road, BridgeTrail, BridgeRoad, CoachMan, LightHouse, WheelBarrow, StockPile, Masonry,
     //house F2 ... bugg bz they had numbers on it .. They cant have numbers
     Bohio, HouseA, HouseB, HouseTwoFloor, HouseMed, 
     HouseLargeA,
@@ -376,7 +376,7 @@ public enum StInfr //for structures game structure.cs
     LightHouse,
     //WheelBarrow, 
     //b4StockPile, 
-    BuildersOffice
+    Masonry
 }
 
 public enum StHous //for structures game structure.cs 

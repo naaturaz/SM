@@ -484,7 +484,7 @@ public class BuildingController : BuildingPot
         }
 
 
-        if (count == 1 && s.HType == H.BuildersOffice)
+        if (count == 1 && s.HType == H.Masonry)
         {
             return true;
         }

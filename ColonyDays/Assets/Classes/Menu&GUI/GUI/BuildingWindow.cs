@@ -301,7 +301,7 @@ public class BuildingWindow : GUIElement {
                 res += "\n " + _building.PeopleDict[i];
             }
 
-            if (_building.HType == H.BuildersOffice)
+            if (_building.HType == H.Masonry)
             {
                 res += "\n GreenLight:";
 

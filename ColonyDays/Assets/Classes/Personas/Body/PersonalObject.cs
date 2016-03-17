@@ -181,9 +181,18 @@ public class PersonalObject
         else if (_currentAni == "isWheelBarrow")
         {
             _currentPoint = _person.gameObject;
-            _currentRoot = Root.wheelBarrow;
+            _currentRoot = DefineCurrentWheelBarrowRoot();
         }
         else _currentRoot = "";
+    }
+
+    string DefineCurrentWheelBarrowRoot()
+    {
+        if (_person.Inventory.IsEmpty())
+        {
+            return Root.wheelBarrow;
+        }
+        return Root.wheelBarrowWithBoxes;
     }
 
     /// <summary>
@@ -224,7 +233,9 @@ public class PersonalObject
 
         if (_current != null &&  _current.Renderer1 != null)
         {
-            _current.Renderer1.enabled = true;
+            _current.gameObject.SetActive(true);
+
+            //_current.Renderer1.enabled = true;
             SetScaleOfCurrent();
         }
     }
@@ -274,7 +285,8 @@ public class PersonalObject
 
         if (_current != null && _current.Renderer1 != null)
         {
-            _current.Renderer1.enabled = false;
+            _current.gameObject.SetActive(false);
+            //_current.Renderer1.enabled = false;
         }
     }
 }

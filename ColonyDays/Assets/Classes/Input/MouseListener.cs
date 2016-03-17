@@ -589,7 +589,7 @@ public class MouseListener : InputMain
                 return;
             }
 
-            if (BuildingPot.Control.IsThisTheLastOfThisType(H.BuildersOffice, b))
+            if (BuildingPot.Control.IsThisTheLastOfThisType(H.Masonry, b))
             {
                 GameScene.ScreenPrint("Cant destroy last Builders Office ");
                 return;

@@ -6,20 +6,16 @@ public class WheelBarrow : Profession
     private Structure _destinyBuild;
     private Structure _sourceBuild;
 
+    private bool _isDelayedCreatingNew;
+
     public WheelBarrow(Person person, PersonFile pF)
     {
         if (pF == null)
         {
-            CreatingNew(person);
+            _person = person;
+            Init();
         }
         else LoadingFromFile(person, pF);
-    }
-
-    void CreatingNew(Person person)
-    {
-        
-        _person = person;        
-        Init();
     }
 
     void LoadingFromFile(Person person, PersonFile pF)
@@ -60,6 +56,11 @@ public class WheelBarrow : Profession
         CleanOldVars();
         //Debug.Log(_person.MyId+" Init WheelB");
 
+        _person.PrevJob = ProfDescription;
+        ProfDescription = Job.WheelBarrow;
+        MyAnimation = "isWheelBarrow";
+
+
         //if did not fouind a order will return, and take a break now  
         if (!DidPickUpOrder())
         {
@@ -67,9 +68,6 @@ public class WheelBarrow : Profession
             return;
         }
 
-        _person.PrevJob = ProfDescription;
-        ProfDescription = Job.WheelBarrow;
-        MyAnimation = "isWheelBarrow";
 
         //means no Orders avail 
         if (_destinyBuild == null)
@@ -151,6 +149,7 @@ public class WheelBarrow : Profession
 
     public override void Update()
     {
+
         base.Update();
 
         if (_takeABreakNow)
@@ -173,8 +172,11 @@ public class WheelBarrow : Profession
                //Debug.Log(_person.MyId+ " Wheel Barr got from:"+Order1.SourceBuild + 
                     //" : " +Order1.Product+".amt:"+Order1.Amount);
 
+                Order1.Amount = _person.HowMuchICanCarry();
+
                 _person.ExchangeInvetoryItem(_sourceBuild, _person, Order1.Product, Order1.Amount);
                 _sourceBuild.CheckIfCanBeDestroyNow(Order1.Product);
+                _person.Body.UpdatePersonalObject();
             }
         }
     }
@@ -202,6 +204,12 @@ public class WheelBarrow : Profession
 
     void DecideOnNextIteration()
     {
+        if (_person==null)
+        {
+            _takeABreakNow = true;
+            
+        }
+
         if (Homer.CheckIfCanBeWheelBar(_person))
         {
             //so it restarted

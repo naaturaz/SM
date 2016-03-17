@@ -54,11 +54,12 @@ public class Docker : Profession
 
         //Debug.Log(_person.MyId+" Init WheelB");
         _person.PrevJob = ProfDescription;
+        ProfDescription = Job.Docker;
+        MyAnimation = "isWheelBarrow";
 
         PickUpOrder();
 
-        ProfDescription = Job.Docker;
-        MyAnimation = "isWheelBarrow";
+
 
         //means no Orders avail 
         if (_destinyBuild == null)
@@ -84,7 +85,7 @@ public class Docker : Profession
 
     private void PickUpOrder()
     {
-        if (_person.Work == null || !_person.Work.IsDockType())//bz takes a cycle to person get its new job 
+        if (_person.Work == null || !_person.Work.IsNaval())//bz takes a cycle to person get its new job 
         {
             return;
         }
@@ -140,8 +141,13 @@ public class Docker : Profession
             if (_sourceBuild.HasEnoughToCoverOrder(Order1))
             {
                //Debug.Log(_person.MyId + " Docker got from:" + Order1.SourceBuild +" : " + Order1.Product + ".amt:" + Order1.Amount);
-                _person.ExchangeInvetoryItem(_sourceBuild, _person, Order1.Product, Order1.Amount);
+
+                Order1.Amount = _person.HowMuchICanCarry();
+                _person.ExchangeInvetoryItem(_sourceBuild, _person, Order1.Product, Order1.Amount );
+                
+                
                 _sourceBuild.CheckIfCanBeDestroyNow(Order1.Product);
+                _person.Body.UpdatePersonalObject();
 
 
                 //will remove the import order(evacuation) from diispatch if is completed already

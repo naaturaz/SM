@@ -314,6 +314,7 @@ public class Root : MonoBehaviour
     public static string tonel = "Prefab/Personas/PersonalObject/Tonel";
     public static string vara = "Prefab/Personas/PersonalObject/Vara";
     public static string wheelBarrow = "Prefab/Personas/PersonalObject/WheelBarrow";
+    public static string wheelBarrowWithBoxes = "Prefab/Personas/PersonalObject/WheelBarrowWithBoxes";
     public static string wood = "Prefab/Personas/PersonalObject/Wood";
 
 
@@ -587,7 +588,7 @@ public class Root : MonoBehaviour
         buildsRoot.Add(H.BridgeRoad, "Prefab/Building/Bridge");
         
         buildsRoot.Add(H.CoachMan, "Prefab/Building/Infrastructure/CoachMan");
-        buildsRoot.Add(H.BuildersOffice, "Prefab/Building/Infrastructure/BuildersOffice");
+        buildsRoot.Add(H.Masonry, "Prefab/Building/Infrastructure/Masonry");
         buildsRoot.Add(H.LightHouse, "Prefab/Building/Infrastructure/LightHouse");
         //wheel barrrow not needed anymoe. bz will be join with BuildersOffice
         buildsRoot.Add(H.WheelBarrow, "Prefab/Building/Infrastructure/WheelBarrow");
@@ -709,7 +710,7 @@ public class Root : MonoBehaviour
     static void LoadPlaneMaterialRoots()
     {
         planesMaterialDict.Add(H.CoachMan, "material root");
-        planesMaterialDict.Add(H.BuildersOffice, "material root");
+        planesMaterialDict.Add(H.Masonry, "material root");
     }
 
 

@@ -13,16 +13,28 @@ public class HoverWindow : MonoBehaviour
     private Vector3 _min;
     private Vector3 _max;
 
+    private GameObject _geometry;
+    private Text _text;
+
 	// Use this for initialization
 	void Start ()
 	{
+	    _geometry = General.FindGameObjectInHierarchy("Geometry", gameObject);
+	    var textGO = General.FindGameObjectInHierarchy("Text", gameObject);
+
+	    if (textGO!= null)
+	    {
+	        _text = textGO.GetComponent<Text>();
+	    }
+
 	    Hide();
 	}
 
     public void Hide()
     {
         _msg = "";
-        transform.GetComponent<Text>().text = "";
+        _text.text = "";
+        _geometry.SetActive(false);
     }
 
     public void Show(Vector3 pos, string msg)
@@ -30,7 +42,8 @@ public class HoverWindow : MonoBehaviour
         _msg = msg;
         transform.GetComponent<RectTransform>().position = pos;
         
-        transform.GetComponent<Text>().text = msg;
+        _text.text = msg;
+        _geometry.SetActive(true);
     }
 
     public string CurrentMsg()
