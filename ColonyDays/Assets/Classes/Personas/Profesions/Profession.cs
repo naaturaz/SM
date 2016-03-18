@@ -795,6 +795,11 @@ public class Profession
         }
         
         _person.ExchangeInvetoryItem(_person, destinyBuild, _order.Product, _order.Amount);
+
+        //each time a wheelbarrow or docker uses a wheelBarrow dimish them a bit in the main storages
+        //as the wheelbarrows get use they get destroy
+        GameController.Inventory1.Remove(P.WheelBarrow, 1);
+
     }
 
     /// <summary>

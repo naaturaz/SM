@@ -112,30 +112,52 @@ public class CryBridgeRoute
     /// Will Create VectorLand with Building and will added to legs.
     /// </summary>
     /// <param name="pos"></param>
-    /// <param name="bridgeId"></param>
+    /// <param name="buildId"></param>
     /// <param name="add">If is false will not added to legs</param>
     /// <returns>The new Vector Land</returns>
-    VectorLand CreateAndAddToLegs(Vector3 pos, string bridgeId, bool add=true, bool isBridgeLeg=false)
+    VectorLand CreateAndAddToLegs(Vector3 pos, string buildId, bool add=true, bool isBridgeLeg=false)
     {
-        var bridge = Brain.GetBuildingFromKey(bridgeId);
-
-        //todo
-        if (bridge == null)
+        var build = Brain.GetBuildingFromKey(buildId);
+        
+        ////todo
+        //is the _fin or _ini being a dummy 
+        if (build == null && buildId.Contains("Dummy"))
         {
-            throw new Exception("Fix");
+            build = ReturnIniOrFinAsIDPass(buildId);
+            Debug.Log("build :" + build.MyId);
+            //throw new Exception("Fix");
         }
 
         //bz the Leg falls insiede the Bridge anchors 
-        pos = MoveItAwayABitIfBridgeRoad(bridge, pos, isBridgeLeg);
+        pos = MoveItAwayABitIfBridgeRoad(build, pos, isBridgeLeg);
 
         VectorLand newVectorLand = new VectorLand();
-        newVectorLand = new VectorLand("", pos, bridge);
+        newVectorLand = new VectorLand("", pos, build);
         if (add)
         {
             _legs = AddIfsNotContain(_legs, newVectorLand);
         }
 
         return newVectorLand;
+    }
+
+    /// <summary>
+    /// Will find if IdPass is _fin or _ini. Must have being confirmed prior that IdPass contained 'Dummy'
+    /// </summary>
+    /// <param name="IdPass"></param>
+    /// <returns></returns>
+    Structure ReturnIniOrFinAsIDPass(string IdPass)
+    {
+        if (IdPass == _fin.MyId)
+        {
+            return _fin;
+        } 
+        if (IdPass == _ini.MyId)
+        {
+            return _ini;
+        }
+        Debug.Log("ReturnIniOrFinAsIDPass returning null");
+        return null;
     }
 
     Vector3 MoveItAwayABitIfBridgeRoad(Building b, Vector3 pos, bool isBridgeLeg)

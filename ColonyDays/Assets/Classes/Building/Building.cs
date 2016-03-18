@@ -2202,6 +2202,12 @@ public class Building : General, Iinfo
             //todo show 3d icon
             //Debug.Log(MyId+" doesnt have input");
         }
+
+        //if has more thn 2000Kg of current prd can add Evac order as weell
+        if (Inventory.ReturnAmtOfItemOnInv(_currentProd.Product) > 2000)
+        {
+            AddEvacuationOrderOfProdThatAreNotInput();
+        }
     }
 
     /// <summary>

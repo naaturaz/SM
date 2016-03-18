@@ -279,9 +279,30 @@ public class InputMain : InputParent {
 
     #endregion
 
+    /// <summary>
+    /// Will say if game has fully loaded 
+    /// 
+    /// Still might be missing few stuff
+    /// Mar17 2015 most recent 
+    /// </summary>
+    /// <returns></returns>
+    public bool HasGameAllLoaded()
+    {
+        return PersonPot.Control != null && PersonPot.Control.IsFullyLoaded()
+                        && Program.gameScene.controllerMain != null 
+                        && Program.gameScene.controllerMain.TerraSpawnController != null
+                        && !Program.gameScene.controllerMain.TerraSpawnController.HasLoadedOrLoadedTreesAndRocks();
+    }
 
     void ChangeGameSpeed()
     {
+        //if there are foresters for example they wil cut trees while the TerrainController is still loading. so
+        //its not a good idea . all TerrainContrroller must be loaded before it can be played the game 
+        if (!HasGameAllLoaded())
+        {
+            return;
+        }
+
         //1x
         if (Input.GetKeyUp(KeyCode.PageUp))
         {

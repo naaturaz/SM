@@ -150,6 +150,7 @@ public class Docker : Profession
                 _person.Body.UpdatePersonalObject();
 
 
+
                 //will remove the import order(evacuation) from diispatch if is completed already
                 _person.Work.Dispatch1.RemoveImportOrder(_person.Work, Order1);
             }

@@ -126,7 +126,7 @@ public class Production  {
 
         Brick();
 
-        Tonel();
+        Carpintery();
 
         Cigar();
 
@@ -336,13 +336,17 @@ public class Production  {
     }
 
 
-    void Tonel()
+    void Carpintery()
     {
-        //tonels
         InputElement wood = new InputElement(P.Wood, 10);
+        InputElement iron = new InputElement(P.Iron, 1);
         List<InputElement> tonel = new List<InputElement>() { wood };
+        List<InputElement> wheelBar = new List<InputElement>() { wood,iron };
+
+
         InputProdCheckAndAdd(new ProductInfo(P.Tonel, tonel, H.Carpintery));
         InputProdCheckAndAdd(new ProductInfo(P.Crate, tonel, H.Carpintery));
+        InputProdCheckAndAdd(new ProductInfo(P.WheelBarrow, wheelBar, H.Carpintery));
     }
 
 

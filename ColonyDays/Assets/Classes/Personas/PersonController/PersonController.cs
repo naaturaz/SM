@@ -111,11 +111,11 @@ public class PersonController : PersonPot
         int factor = 100;
         int ini = multiplier*factor;
 
-        StartingCondition newbie = new StartingCondition(0, ini, ini * 2, ini, ini, ini, ini, 100000);
-        StartingCondition easy = new StartingCondition(18, 900, 900, 900, 900, 900, 900, 900);
-        StartingCondition med = new StartingCondition(16, 800, 800, 800, 800, 800, 800, 800);
-        StartingCondition hard = new StartingCondition(14, 700, 700, 700, 700, 700, 700, 700);
-        StartingCondition insane = new StartingCondition(12, 600, 600, 600, 600, 600, 600, 600);
+        StartingCondition newbie = new StartingCondition(0, ini, ini * 2, ini, ini, ini, ini, 100000, 5*factor);
+        StartingCondition easy = new StartingCondition(18, 900, 900, 900, 900, 900, 900, 900, 4);
+        StartingCondition med = new StartingCondition(16, 800, 800, 800, 800, 800, 800, 800, 3);
+        StartingCondition hard = new StartingCondition(14, 700, 700, 700, 700, 700, 700, 700, 2);
+        StartingCondition insane = new StartingCondition(12, 600, 600, 600, 600, 600, 600, 600, 1);
 
         Conditions = new StartingCondition[] {newbie, easy, med, hard, insane};
     }
@@ -588,6 +588,27 @@ public class PersonController : PersonPot
     }
 
     #endregion
+
+    private bool wasFullyLoaded;
+    /// <summary>
+    /// Will tell u if this Controller is fully loaded 
+    /// 
+    /// If you put speed on game and people still routing will give exception 
+    /// </summary>
+    /// <returns></returns>
+    public bool IsFullyLoaded()
+    {
+        //so it doesnt stop in Game when people is ReRouting 
+        if (wasFullyLoaded)
+        {
+            return true;
+        }
+
+        wasFullyLoaded =_onSystemNow.Count == 0 && _waitList.Count == 0
+               && _workersRoutingQueue.OnSystemNow1.Count == 0 && _workersRoutingQueue.WaitList.Count == 0;
+
+        return wasFullyLoaded;
+    }
     
     #region People ReRouting System
     //People will reroute if they had not reroute already in this cycle and 
@@ -850,10 +871,10 @@ public class StartingCondition
     public int iniStone;
     public int iniBrick;
     public int iniIron;
-    public int iniGold, iniDollar;
+    public int iniGold, iniDollar, iniWheelBarrow;
 
     public StartingCondition(int iniPersonP, int iniWoodP, int iniFoodP, int iniStoneP, int iniBrickP, int iniIronP,
-        int iniGoldP, int iniDollarP)
+        int iniGoldP, int iniDollarP, int iniWheelBarrowP)
     {
         iniPerson = iniPersonP;
         iniWood = iniWoodP;
@@ -863,6 +884,7 @@ public class StartingCondition
         iniIron = iniIronP;
         iniGold = iniGoldP;
         iniDollar = iniDollarP;
+        iniWheelBarrow = iniWheelBarrowP;
     }
 }
 

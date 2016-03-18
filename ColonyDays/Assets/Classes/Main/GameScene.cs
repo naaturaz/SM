@@ -149,11 +149,11 @@ public class GameScene : General {
         //var vis = onS.Visible();
 
         HUDFPS.Message = " | " + MouseInBorderRTS.GlobalDir.ToString() + "| Dragged: " + Way._dir +
-                " | InputMode: " + BuildingPot.InputMode + "\n" + more + "\n"
+                         " | InputMode: " + BuildingPot.InputMode + "\n" + more + "\n"
             //+ " Vis: " + PersonPot.PersonController.All.ElementAt(0).Value.IsVisible()
             //+ " | Can see: " + PersonPot.PersonController.All.ElementAt(0).Value.I_Can_See()
             //+ " | Became: " + vis
-            +AddPersonControllerInfo()
+                         + AddPersonControllerInfo() + " | " + AddLoadingInfo();
                 ;
 
         DebugInput();
@@ -176,6 +176,17 @@ public class GameScene : General {
         res += " waitList ct:"+PersonPot.Control.WorkersRoutingQueue.WaitList.Count;
 
         return res;
+    }
+
+    string AddLoadingInfo()
+    {
+        if (Program.gameScene.controllerMain != null 
+                        && Program.gameScene.controllerMain.TerraSpawnController != null
+                        && Program.gameScene.controllerMain.TerraSpawnController.IsToLoadFromFile)
+        {
+            return "Loading";
+        }
+        return "Fully Loaded 100%";
     }
 
     /// <summary>

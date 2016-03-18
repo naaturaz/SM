@@ -514,6 +514,8 @@ public class VectorLand
     public Vector3 Position;
     public string MyBuildKey;//use to legs in the CryBridgeRoute. Bz I need to know tht for CryRoute
 
+    private Building _building;//use to when is dummy so far
+
     public VectorLand() { }
 
     public VectorLand(string landzon, Vector3 pos)
@@ -527,12 +529,22 @@ public class VectorLand
         LandZone = landzon;
         Position = pos;
         MyBuildKey = st.MyId;
+
+        if (st.MyId.Contains("Dummy"))
+        {
+            _building = st;
+        }
     }
 
     //use to legs in the CryBridgeRoute. Bz I need to know tht for CryRoute
     //for serializations requirements
     public Building MyBuild()
     {
+        if (_building!=null)
+        {
+            return _building;
+        }
+
         return Brain.GetBuildingFromKey(MyBuildKey);
     }
 }

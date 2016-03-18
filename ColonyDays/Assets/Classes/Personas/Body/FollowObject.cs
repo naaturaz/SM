@@ -29,7 +29,8 @@ public class FollowObject : General
     }
 
     // Use this for initialization
-	void Start () {
+	void Start () 
+    {
         _objOriginalDimensions = gameObject.transform.localScale;
 	}
 	
@@ -45,6 +46,11 @@ public class FollowObject : General
     /// </summary>
     internal void ReloadOriginalObjectDim()
     {
+        if (_objOriginalDimensions == new Vector3())
+        {
+            _objOriginalDimensions = gameObject.transform.localScale;
+        }
+
         gameObject.transform.localScale = _objOriginalDimensions;
 
     }

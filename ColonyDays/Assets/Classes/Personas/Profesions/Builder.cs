@@ -158,6 +158,8 @@ public class Builder : Profession
         InitRoute();
     }
 
+    //so when using dummy on CryBrdigeRoute can find its spawner
+    //private string dummySpawnerId;
     /// <summary>
     /// Will return the init point which is the place will go to build and execute the animation on a building 
     /// </summary>
@@ -169,6 +171,7 @@ public class Builder : Profession
         {
             if (_constructing.Anchors.Count > 0)
             {
+            //    dummySpawnerId = _person.Work.MyId;
                 return Brain.ReturnClosestVector3(_person.Work.transform.position, _constructing.Anchors);
             }
         }
@@ -178,6 +181,8 @@ public class Builder : Profession
             {
                 //return the closest anchor to SpawnPoint 
                 var sp = (StructureParent) _constructing;
+               // dummySpawnerId = _constructing.MyId;
+
                 return Brain.ReturnClosestVector3(sp.SpawnPoint.transform.position, _constructing.Anchors);
             }
         }
@@ -188,6 +193,7 @@ public class Builder : Profession
 
         //for all other cases 
         //forcing geting the anchors was giving anchors really far appart sometimes 
+        //dummySpawnerId = _constructing.MyId;
         return _constructing.GetAnchors(true)[UMath.GiveRandom(0, 4)];
     }
 

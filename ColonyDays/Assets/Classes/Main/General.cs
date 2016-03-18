@@ -90,10 +90,15 @@ public class General : MonoBehaviour
     public static bool WAKEUP = false;
 
     //so it can be seen from the inspector. any sort of info needed to be displayed
-    public string info;    
-    
+    public string info;
+
+    private string _dummyIdSpawner;
     //if is a dummy here u can place the ID of the real object spawned the Dummy
-    public string DummyIdSpawner;
+    public string DummyIdSpawner
+    {
+        get { return _dummyIdSpawner; }
+        set { _dummyIdSpawner = value; }
+    }
 
 	////Constructor////
 	public General()
@@ -522,7 +527,7 @@ public class General : MonoBehaviour
         set { _inventory = value; }
     }
 
-    
+
 
     #region Search GameObj in GameObject until find it
 

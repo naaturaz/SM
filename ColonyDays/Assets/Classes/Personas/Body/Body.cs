@@ -566,13 +566,40 @@ public class Body //: MonoBehaviour //: General
             return;
         }
 
+        //bz is overwriting Wheel Barrowerers going to idle. This is to prevent they go with wheel barow personal object to
+        //idle
+        if (GoingTo == HPers.FoodSource || Location == HPers.FoodSource)
+        {
+            return;
+        }
+        if (GoingTo == HPers.IdleSpot || Location == HPers.IdleSpot)
+        {
+            return;
+        }
+
+        if (!ThereIsAtLeastOneWheelBarrowOnStorage())
+        {
+            return;
+        }
+
         if (_person.ProfessionProp.ProfDescription == Job.Docker || _person.ProfessionProp.ProfDescription == Job.WheelBarrow)
         {
-            //if (!_person.Inventory.IsEmpty())
-            //{
-                TurnCurrentAniAndStartNew("isWheelBarrow");
-            //}
+            TurnCurrentAniAndStartNew("isWheelBarrow");
         }
+    }
+
+    /// <summary>
+    /// If not wheelBarrow objects are on game storages then . WheelBarrowers and DOcker will carry everytihng on 
+    /// bare hands. (Crates)
+    /// </summary>
+    /// <returns></returns>
+    private bool ThereIsAtLeastOneWheelBarrowOnStorage()
+    {
+        if (GameController.Inventory1.ReturnAmtOfItemOnInv(P.WheelBarrow) > 0)
+        {
+            return true;
+        }
+        return false;
     }
 
     void InitRotaVars()
@@ -830,10 +857,15 @@ public class Body //: MonoBehaviour //: General
             var t = this;
         }
 
-        if (key.Contains("Farm") || key.Contains("Dummy") || key.Contains("Fish"))
+        if (key.Contains("Dummy") || key.Contains("Fish"))
         {
             return true;
         }
+        if (_person.ProfessionProp!=null && _person.ProfessionProp.ProfDescription==Job.Farmer)
+        {
+            return true;
+        }
+
         return false;
     }
 
@@ -928,5 +960,10 @@ public class Body //: MonoBehaviour //: General
     internal void UpdatePersonalObject()
     {
         _personalObject.AddressNewAni(_currentAni, true);
+    }
+
+    internal void UpdatePersonSpeed()
+    {
+        DefineSpeed();
     }
 }

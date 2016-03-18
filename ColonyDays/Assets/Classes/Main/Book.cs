@@ -62,8 +62,8 @@ public class Book : General
         //infr
         Build.Add(new BuildStat(H.Road, 100, 8, 2, 0, 5, maxPeople: 0));
 
-        Build.Add(new BuildStat(H.BridgeTrail, 400, 80, 20, 0, 5, maxPeople: 0));
-        Build.Add(new BuildStat(H.BridgeRoad, 1000, 80, 20, 0, 5, maxPeople: 0));
+        Build.Add(new BuildStat(H.BridgeTrail, 400, 8, 2, 0, 5, maxPeople: 0));
+        Build.Add(new BuildStat(H.BridgeRoad, 1000, 8, 10, 0, 8, maxPeople: 0));
 
         Build.Add(new BuildStat(H.CoachMan, 800, 80, 20, 0, 5, maxPeople: 8));
         Build.Add(new BuildStat(H.Masonry, 800, 80, 20, 0, 5, maxPeople: 8));
@@ -71,7 +71,7 @@ public class Book : General
 
 
         //houses 
-        Build.Add(new BuildStat(H.Bohio, 400, 15, 5, 25, 5, maxPeople: 5, capacity: 1));
+        Build.Add(new BuildStat(H.Bohio, 400, 3, 0, 0, 0, maxPeople: 5, capacity: 1));
         Build.Add(new BuildStat(H.HouseA, 400, 15, 5, 25, 5, maxPeople: 5, capacity: 1));
         Build.Add(new BuildStat(H.HouseB, 400, 15, 5, 25, 5, maxPeople: 5, capacity: 1));
         Build.Add(new BuildStat(H.HouseTwoFloor, 800, 30, 5, 50, 5, maxPeople: 10, capacity: 2));

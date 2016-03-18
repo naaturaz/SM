@@ -102,6 +102,13 @@ public class TerrainSpawnerController : ControllerParent
     List<IronRock> ironList = new List<IronRock>();
     List<StillElement> ornaList = new List<StillElement>();
     List<StillElement> grassList = new List<StillElement>();
+    private bool _isToLoadFromFile;
+
+    public bool IsToLoadFromFile
+    {
+        get { return _isToLoadFromFile; }
+        set { _isToLoadFromFile = value; }
+    }
 
     public void RemoveStillElement(StillElement ele)
     {
@@ -135,7 +142,8 @@ public class TerrainSpawnerController : ControllerParent
     }
 
     public bool IsToSave;
-    public bool IsToLoadFromFile;
+
+
 
     private int loadingAllowTimes = 1;//how many times system is allow to load 
     private int loadedTimes = 0;//loaded times
@@ -401,10 +409,20 @@ public class TerrainSpawnerController : ControllerParent
         //AssignSharedMaterial(temp);
         //temp.AssignToAllGeometryAsSharedMat(temp.gameObject, "Enviroment");
 
-        AllRandomObjList.Add(temp);
+
+        //if is replant tree we want to place it first so when loading is faster 
+        if (replantedTree)
+        {
+            AllRandomObjList.Insert(0,temp);
+        }
+        else
+        {
+            AllRandomObjList.Add(temp);
+        }
+        
         if (IsToSave)
         {
-            SaveOnListData(temp, typePass, rootToSpawnIndex, index);
+            SaveOnListData(temp, typePass, rootToSpawnIndex, index, replantedTree);
         }
     }
 
@@ -424,21 +442,35 @@ public class TerrainSpawnerController : ControllerParent
     
 
     //Save all the data into AllSpawnedDataList
-    void SaveOnListData(General obj, H typeP, int rootToSpawnIndex, int indexPass)
+    void SaveOnListData(General obj, H typeP, int rootToSpawnIndex, int indexPass, bool replantTree)
     {
         if (obj == null) { return;}
         if (obj is StillElement)
         {
             SpawnedData sData = new SpawnedData(obj.transform.position, obj.transform.rotation, typeP, rootToSpawnIndex, indexPass);
-            AllSpawnedDataList.Add(sData);
+            AddToAllSpawnedDataOnSpecificIndex(sData, replantTree);
         }
         else
         {
             SpawnedData sData = new SpawnedData(obj.transform.position, obj.transform.rotation, typeP, rootToSpawnIndex,
                 indexPass);
+            AddToAllSpawnedDataOnSpecificIndex(sData, replantTree);
+        }
+    }
+
+    void AddToAllSpawnedDataOnSpecificIndex(SpawnedData sData, bool replantTree)
+    {
+        if (replantTree)
+        {
+            AllSpawnedDataList.Insert(0,sData);
+        }
+        else
+        {
             AllSpawnedDataList.Add(sData);
         }
     }
+
+
 
     /// <summary>
     /// Will return a random root of a specific type of obj
@@ -623,6 +655,16 @@ public class TerrainSpawnerController : ControllerParent
         }
     }
 
+    public string PercentageLoaded()
+    {
+        if (AllSpawnedDataList.Count==0)
+        {
+            return "Wait Loading List on TerrainController";
+        }
+
+        return ((loadingIndex/AllSpawnedDataList.Count)*100).ToString("n1");
+    }
+
     void ClearCurrentFileAndList()
     {
         AllSpawnedDataList.Clear();
@@ -729,6 +771,12 @@ public class TerrainSpawnerController : ControllerParent
         }
 
         return false;
+    }
+
+    public bool HasLoadedOrLoadedTreesAndRocks()
+    {
+
+        return !IsToLoadFromFile || toSpawnListCounter > 3;//means is spwaning ornaments 
     }
 
 }

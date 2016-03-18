@@ -70,9 +70,9 @@ public class Homer : Profession
     void InitRoute()
     {
         RouterActive = true;
-        dummy = CreateDummy();
-        dummy.transform.position = FinRoutePoint;
-        dummy.HandleLandZoning();
+        //dummy = CreateDummy();
+        //dummy.transform.position = FinRoutePoint;
+        //dummy.HandleLandZoning();
 
         if (MyFoodSrc != null)
         {
@@ -110,24 +110,6 @@ public class Homer : Profession
         //Router1 = new RouterManager(building, MyFoodSrc, _person, HPers.InWork);
         RouterBack = new CryRouteManager(MyFoodSrc, _person.Home, _person,  HPers.InWork);
     }
-
-    ///// <summary>
-    ///// Init a Route where from current point poerson goes directly to home
-    ///// </summary>
-    //void InitRouteWithOutFoodSrc()
-    //{
-    //    if (_person.PrevJob == Job.WheelBarrow)
-    //    {
-    //        Structure building = Brain.GetStructureFromKey(_person.PrevOrder.DestinyBuild);
-    //        Router1 = new CryRouteManager(building, _person.Home, _person);
-    //      //  Router1 = new RouterManager(building, _person.Home, _person, HPers.InWork);
-    //    }
-    //    else
-    //    {
-    //        Router1 = new CryRouteManager(dummy, _person.Home, _person );
-    //     //   Router1 = new RouterManager(dummy, _person.Home, _person, HPers.InWork, false, true);
-    //    }
-    //}
 
     public override void Update()
     {

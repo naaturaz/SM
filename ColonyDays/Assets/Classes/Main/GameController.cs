@@ -6,6 +6,9 @@
  * Controls the game in the sense to which Scene with BUilding with Person Load.
  * Or create new game 
  */
+
+using UnityEngine;
+
 public class GameController  {
 
     //Main inventory of the game .. wht u see on the GUI 
@@ -75,6 +78,7 @@ public class GameController  {
         inv.Add(P.Iron, startingCondition.iniIron);
 
         inv.Add(P.Gold, startingCondition.iniGold);
+        inv.Add(P.WheelBarrow, startingCondition.iniWheelBarrow);
 
         //todo remove when release
         //inv.Add(P.Coal, 100000);
@@ -113,6 +117,34 @@ public class GameController  {
     public void Update()
     {
         CheckIfSalariesNeedToBePaid();
+        CheckIfGameOverCondition();
+    }
+
+    private void CheckIfGameOverCondition()
+    {
+        if (Dollars<-100000)
+        {
+            GameOver();
+        }
+        if (BuildingPot.Control!=null &&  BuildingPot.Control.DockManager1!=null &&
+            BuildingPot.Control.DockManager1.PirateThreat > 90)
+        {
+            GameOver();
+        }
+    }
+
+    private bool _isGameOver;
+    private void GameOver()
+    {
+        if (_isGameOver)
+        {
+            return;
+        }
+
+        //todo 
+        //end game, show form 
+        Debug.Log("Game over");
+        _isGameOver = true;
     }
 
     private void CheckIfSalariesNeedToBePaid()
@@ -135,13 +167,24 @@ public class GameController  {
 
     private void PirateThreat()
     {
+        var pts = 0f;
         if (Dollars > 10000)
         {
-            var pts = Dollars/10000;
-
-            //add gold,silver,etc
-
-            BuildingPot.Control.DockManager1.AddToPirateThreat(pts);
+            pts = Dollars/10000;
         }
+        if (Inventory1.ReturnAmtOfItemOnInv(P.Gold)> 1000)
+        {
+            pts += Inventory1.ReturnAmtOfItemOnInv(P.Gold)/1000;
+        } 
+        if (Inventory1.ReturnAmtOfItemOnInv(P.Silver) > 1000)
+        {
+            pts += Inventory1.ReturnAmtOfItemOnInv(P.Silver) / 2000;
+        }
+        if (Inventory1.ReturnAmtOfItemOnInv(P.Diamond) > 100)
+        {
+            pts += Inventory1.ReturnAmtOfItemOnInv(P.Diamond) / 100;
+        }
+        //add gold,silver,etc
+        BuildingPot.Control.DockManager1.AddToPirateThreat(pts);
     }
 }

@@ -229,7 +229,7 @@ public class BuildersManager
     /// </summary>
     private void RemoveFullyBuiltOrRemoved()
     {
-        if (_constructions.Count == 0)
+        if (_constructions.Count == 0 || _constructions[0].Key.Contains("Bridge"))//bz brdige will be null on below if 
         { return; }
 
         var st = Brain.GetStructureFromKey(Constructions[0].Key);
