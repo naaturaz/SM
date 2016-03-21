@@ -447,13 +447,11 @@ public class Building : General, Iinfo
         Init();
         LayerRoutine("init");
 
-
-        //if (MyId.Contains("Dummy"))
-        //{
-        //    return;
-        //}
-        CurrentProd = BuildingPot.Control.ProductionProp.ReturnDefaultProd(HType);
-
+        //brand new building .other wise was saved 
+        if (!IsLoadingFromFile)
+        {
+            CurrentProd = BuildingPot.Control.ProductionProp.ReturnDefaultProd(HType);
+        }
         
         InitJobRelated();
 
@@ -1391,7 +1389,7 @@ public class Building : General, Iinfo
         if (Inventory.IsEmpty() && amtOfStorages == 1)
         {
             int amtFood = PersonPot.Control.CurrentCondition().iniFood;
-            Inventory.Add(P.Pork, amtFood);
+            Inventory.Add(P.Corn, amtFood);
 
 
             Program.gameScene.GameController1.SetInitialLote();
@@ -1856,8 +1854,8 @@ public class Building : General, Iinfo
 
     #region Construction
 
-    private int constructionAmt;
-    private int amtNeeded;
+    private float constructionAmt;
+    private float amtNeeded;
     Book book = new Book();
     BuildStat buildStat = new BuildStat();
 

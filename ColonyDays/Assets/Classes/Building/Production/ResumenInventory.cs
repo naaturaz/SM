@@ -81,7 +81,7 @@ public class ResumenInventory {
     /// </summary>
     /// <param name="item"></param>
     /// <param name="amt"></param>
-    public void Remove(P item, int amt)
+    public void Remove(P item, float amt)
     {
         var storages = BuildingController.FindAllStructOfThisTypeContain(H.Storage);
 
@@ -100,7 +100,7 @@ public class ResumenInventory {
     /// <summary>
     /// Will remove from the 'building' and will tell u how much is left to be removed 
     /// </summary>
-    float LeftToRemove(P item, int amt, Structure building)
+    float LeftToRemove(P item, float amt, Structure building)
     {
         if (building.Inventory.IsItemOnInv(item))
         {

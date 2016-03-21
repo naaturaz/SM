@@ -289,4 +289,11 @@ public class PersonalObject
             //_current.Renderer1.enabled = false;
         }
     }
+
+    internal void Reset()
+    {
+        Hide();
+        _currentAni = "";
+        _current = null;
+    }
 }

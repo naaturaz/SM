@@ -2648,15 +2648,10 @@ public class Brain
     /// i could not find any bridge</param>
     internal void BlackListBuild(string p, string routeKey)
     {
-        if (_blackList.Contains(p))
+        if (_blackList.Contains(p)|| string.IsNullOrEmpty(p))//addresing the call of a Dummy
         {
             return;
         }
-
-        //if (WasABuildFromThisRouteBlacked(routeKey))
-        //{
-        //    return;
-        //}
 
         MoveToNewHome.RemovePeopleDict(p);
         Debug.Log("Blaclisted:"+p +" ."+_person.MyId);

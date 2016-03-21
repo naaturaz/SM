@@ -26,6 +26,10 @@ public class MyText : MonoBehaviour
         if (name == "Person")
         {
             thisText.text = PersonPot.Control.All.Count + "";
+        } 
+        if (name == "Emigrate")
+        {
+            thisText.text = PersonPot.Control.EmigrateController1.Emigrates.Count + "";
         }
         if (name == "Food")
         {

@@ -238,16 +238,26 @@ public class Profession
         //Grown man will prod 4.5KG of wood with 10 year of school
         //              (10 + 10     + 30        + ) * 0.09         = 4.5KG of Wood per shift
         //              (10 + 10     + 30        + ) * 0.008         = 0.4KG of Weapons per shift
-        ProdXShift = (_person.HowMuchICanCarry() + yearSchool) * produceFac/10;//1000
+        ProdXShift = (_person.HowMuchICanCarry() + yearSchool) * ToolsFactor() * produceFac/10;//1000
 
         //if is zero then will do this//is zero becasue one factor was zero. most likely the produceFac
         //for builders there is not produceFac
         if (ProdXShift == 0)
         {
-            ProdXShift = (_person.HowMuchICanCarry() + yearSchool);
+            ProdXShift = (_person.HowMuchICanCarry() + yearSchool) * ToolsFactor();
         }
     }
 
+    protected float ToolsFactor()
+    {
+        var thereAreTools = GameController.ThereIsAtLeastOneOfThisOnStorage(P.Tool);
+
+        if (thereAreTools)
+        {
+            return 1;
+        }
+        return .5f;
+    }
 
     float GetProduceFactor()
     {
@@ -1066,6 +1076,9 @@ public class Profession
         //they want to physically bring prod back and then drop it at they Storage 
         //dont want to added to building invetory he has to drop it there when he gets there 
         _person.Work.Produce(ProdXShift, _person, false, prod);
+
+        //so foreseter show Wood , carry wood 
+        _person.Body.UpdatePersonalObjAniSpeed();
 
         //means the prod was sent directly from Profession
         //Forestert is using this bz he Might mine ore or cut trees

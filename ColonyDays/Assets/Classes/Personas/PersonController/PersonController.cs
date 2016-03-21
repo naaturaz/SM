@@ -32,6 +32,13 @@ public class PersonController : PersonPot
 
     PeopleQueue _workersRoutingQueue=new PeopleQueue();
 
+    EmigrateController _emigrateController = new EmigrateController();
+    public EmigrateController EmigrateController1
+    {
+        get { return _emigrateController; }
+        set { _emigrateController = value; }
+    }
+
     public PeopleQueue WorkersRoutingQueue
     {
         get { return _workersRoutingQueue; }
@@ -111,7 +118,7 @@ public class PersonController : PersonPot
         int factor = 100;
         int ini = multiplier*factor;
 
-        StartingCondition newbie = new StartingCondition(0, ini, ini * 2, ini, ini, ini, ini, 100000, 5*factor);
+        StartingCondition newbie = new StartingCondition(0, ini, ini, ini, ini, ini, ini, 100000, 5*factor);
         StartingCondition easy = new StartingCondition(18, 900, 900, 900, 900, 900, 900, 900, 4);
         StartingCondition med = new StartingCondition(16, 800, 800, 800, 800, 800, 800, 800, 3);
         StartingCondition hard = new StartingCondition(14, 700, 700, 700, 700, 700, 700, 700, 2);
@@ -182,6 +189,8 @@ public class PersonController : PersonPot
         RoutesCache1 = pData.PersonControllerSaveLoad.RoutesCache;
 
         //OnSystemNow1 = pData.PersonControllerSaveLoad.OnSystemNow1;
+        EmigrateController1 = pData.PersonControllerSaveLoad.EmigrateController1;
+        EmigrateController1.RecreateEmigratesGC();
     }
 
     private Person tempPerson;
@@ -268,6 +277,7 @@ public class PersonController : PersonPot
         WorkersRoutingQueue.Update();
 
         SanitizeCurrent();
+	    EmigrateController1.Update();
 	}
 
     private void UpdateOnScreen()
@@ -637,7 +647,7 @@ public class PersonController : PersonPot
         set { _waitList = value; }
     }
 
-
+  
 
     public void CheckMeOnSystem(string id)
     {
@@ -871,7 +881,7 @@ public class StartingCondition
     public int iniStone;
     public int iniBrick;
     public int iniIron;
-    public int iniGold, iniDollar, iniWheelBarrow;
+    public int iniGold, iniDollar, iniWheelBarrow, iniTool;
 
     public StartingCondition(int iniPersonP, int iniWoodP, int iniFoodP, int iniStoneP, int iniBrickP, int iniIronP,
         int iniGoldP, int iniDollarP, int iniWheelBarrowP)
@@ -885,6 +895,7 @@ public class StartingCondition
         iniGold = iniGoldP;
         iniDollar = iniDollarP;
         iniWheelBarrow = iniWheelBarrowP;
+        iniTool = iniWheelBarrowP;
     }
 }
 
@@ -912,5 +923,8 @@ public class PersonControllerSaveLoad
 
     public List<string> Waiting = new List<string>();
     //public List<CheckedIn> OnSystemNow1 = new List<CheckedIn>();
+
+
+    public EmigrateController EmigrateController1 = new EmigrateController();
 
 }

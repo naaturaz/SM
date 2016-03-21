@@ -577,29 +577,15 @@ public class Body //: MonoBehaviour //: General
             return;
         }
 
-        if (!ThereIsAtLeastOneWheelBarrowOnStorage())
+        if (!GameController.ThereIsAtLeastOneOfThisOnStorage(P.WheelBarrow))
         {
             return;
         }
 
-        if (_person.ProfessionProp.ProfDescription == Job.Docker || _person.ProfessionProp.ProfDescription == Job.WheelBarrow)
+        if ((_person.Work!=null && _person.Work.IsNaval()) || _person.ProfessionProp.ProfDescription == Job.WheelBarrow)
         {
             TurnCurrentAniAndStartNew("isWheelBarrow");
         }
-    }
-
-    /// <summary>
-    /// If not wheelBarrow objects are on game storages then . WheelBarrowers and DOcker will carry everytihng on 
-    /// bare hands. (Crates)
-    /// </summary>
-    /// <returns></returns>
-    private bool ThereIsAtLeastOneWheelBarrowOnStorage()
-    {
-        if (GameController.Inventory1.ReturnAmtOfItemOnInv(P.WheelBarrow) > 0)
-        {
-            return true;
-        }
-        return false;
     }
 
     void InitRotaVars()
@@ -957,13 +943,50 @@ public class Body //: MonoBehaviour //: General
         _speed += amt;
     }
 
-    internal void UpdatePersonalObject()
+    internal void UpdatePersonalForWheelBa()
     {
         _personalObject.AddressNewAni(_currentAni, true);
     }
 
-    internal void UpdatePersonSpeed()
+    public void UpdatePersonalObjAniSpeed()
     {
-        DefineSpeed();
+        DefineIfCarryAni();
+    }
+
+    private void DefineIfCarryAni()
+    {
+        if (_currentAni == "isWheelBarrow")
+        {
+            return;
+        }
+
+        if (!_person.Inventory.IsEmpty() && _currentAni != "isCarry")
+        {
+            TurnCurrentAniAndStartNew("isCarry");
+            DefineSpeed();
+
+            //so its gets show 
+            _personalObject.Show();
+            
+            //_personalObject.AddressNewAni(_currentAni, false);
+        }
+    }
+
+    /// <summary>
+    /// bz when homer droping . and picking new load might always have the same animation 
+    /// but the prod he is loading noew is different 
+    /// 
+    /// Then calls UpdatePersonalObjAniSpeed();
+    /// </summary>
+    internal void ResetPersonalObject()
+    {
+        //_currentAni = "";
+        _personalObject.Reset();
+
+        //to address when person is changing from Wood to Crate
+        if (!_person.Inventory.IsEmpty())
+        {
+            _personalObject.AddressNewAni(_currentAni, false);
+        }
     }
 }

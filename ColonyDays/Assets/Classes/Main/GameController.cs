@@ -79,6 +79,7 @@ public class GameController  {
 
         inv.Add(P.Gold, startingCondition.iniGold);
         inv.Add(P.WheelBarrow, startingCondition.iniWheelBarrow);
+        inv.Add(P.Tool, startingCondition.iniTool);
 
         //todo remove when release
         //inv.Add(P.Coal, 100000);
@@ -186,5 +187,19 @@ public class GameController  {
         }
         //add gold,silver,etc
         BuildingPot.Control.DockManager1.AddToPirateThreat(pts);
+    }
+
+    /// <summary>
+    /// If not wheelBarrow objects are on game storages then . WheelBarrowers and DOcker will carry everytihng on 
+    /// bare hands. (Crates)
+    /// </summary>
+    /// <returns></returns>
+    static public bool ThereIsAtLeastOneOfThisOnStorage(P product)
+    {
+        if (GameController.Inventory1.ReturnAmtOfItemOnInv(product) > 0)
+        {
+            return true;
+        }
+        return false;
     }
 }

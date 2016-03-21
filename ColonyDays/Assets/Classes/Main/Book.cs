@@ -66,7 +66,7 @@ public class Book : General
         Build.Add(new BuildStat(H.BridgeRoad, 1000, 8, 10, 0, 8, maxPeople: 0));
 
         Build.Add(new BuildStat(H.CoachMan, 800, 80, 20, 0, 5, maxPeople: 8));
-        Build.Add(new BuildStat(H.Masonry, 800, 80, 20, 0, 5, maxPeople: 8));
+        Build.Add(new BuildStat(H.Masonry, 800, 80, 20, 0, 5, maxPeople: 12));
         Build.Add(new BuildStat(H.LightHouse, 800, 80, 20, 0, 5, maxPeople: 3));
 
 
@@ -89,10 +89,10 @@ public class Book : General
         Build.Add(new BuildStat(H.AnimalFarmLarge, 600, 15, 5, 25, 5, maxPeople: 9, capacity: 2));
         Build.Add(new BuildStat(H.AnimalFarmXLarge, 800, 15, 5, 25, 5, maxPeople: 12, capacity: 3));
 
-        Build.Add(new BuildStat(H.FieldFarmSmall, 400, 15, 5, 25, 5, maxPeople: 2, capacity: 1));
-        Build.Add(new BuildStat(H.FieldFarmMed, 500, 15, 5, 25, 5, maxPeople: 4, capacity: 1));
-        Build.Add(new BuildStat(H.FieldFarmLarge, 600, 15, 5, 25, 5, maxPeople: 6, capacity: 2));
-        Build.Add(new BuildStat(H.FieldFarmXLarge, 800, 15, 5, 25, 5, maxPeople: 9, capacity: 3));
+        Build.Add(new BuildStat(H.FieldFarmSmall, 100, .5f, 0, 0,  maxPeople: 2, capacity: 1));
+        Build.Add(new BuildStat(H.FieldFarmMed, 200, .75f, 0, 0,  maxPeople: 4, capacity: 1));
+        Build.Add(new BuildStat(H.FieldFarmLarge, 300, .9f, 0, 0,  maxPeople: 6, capacity: 2));
+        Build.Add(new BuildStat(H.FieldFarmXLarge, 400, 1, 0, 0,  maxPeople: 9, capacity: 3));
 
         //Raw
         Build.Add(new BuildStat(H.Ceramic, 400, 15, 5, 25, 5, maxPeople: 5));
@@ -227,14 +227,14 @@ public class Book : General
 /// </summary>
 public class BuildStat
 {
-    private int _amountOfLabour;//needed to finish the building
+    private float _amountOfLabour;//needed to finish the building
     //All Costs
-    private int _wood;
-    private int _stone;
-    private int _brick;
-    private int _iron;
-    private int _gold;
-    private int _dollar;//Money 
+    private float _wood;
+    private float _stone;
+    private float _brick;
+    private float _iron;
+    private float _gold;
+    private float _dollar;//Money 
 
     //Cubic Meters of storage for a build
     private int _capacity;
@@ -246,10 +246,10 @@ public class BuildStat
     private H _hType;
     private string _root;
 
-    public BuildStat(H hType, int amountOfLabour = 0, int wood = 0, int stone = 0, int brick = 0, int iron = 0,
-        int gold = 0, int colonyDollar = 0, int maxPeople = 0, int capacity = 50)
+    public BuildStat(H hType, float amountOfLabour = 0, float wood = 0, float stone = 0, float brick = 0, float iron = 0,
+        float gold = 0, float colonyDollar = 0, int maxPeople = 0, int capacity = 10)
     {
-        int multiplier = 100;
+        float multiplier = 100;
 
         AmountOfLabour = amountOfLabour;
         HType = hType;
@@ -285,43 +285,43 @@ public class BuildStat
         set { _root = value; }
     }
 
-    public int Wood
+    public float Wood
     {
         get { return _wood; }
         set { _wood = value; }
     }
 
-    public int Stone
+    public float Stone
     {
         get { return _stone; }
         set { _stone = value; }
     }
 
-    public int Brick
+    public float Brick
     {
         get { return _brick; }
         set { _brick = value; }
     }
 
-    public int Iron
+    public float Iron
     {
         get { return _iron; }
         set { _iron = value; }
     }
 
-    public int Gold
+    public float Gold
     {
         get { return _gold; }
         set { _gold = value; }
     }
 
-    public int Dollar
+    public float Dollar
     {
         get { return _dollar; }
         set { _dollar = value; }
     }
 
-    public int AmountOfLabour
+    public float AmountOfLabour
     {
         get { return _amountOfLabour; }
         set { _amountOfLabour = value; }

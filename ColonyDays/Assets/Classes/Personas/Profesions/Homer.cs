@@ -132,6 +132,9 @@ public class Homer : Profession
             ExecuteNow = false;
             DropAllMyGoods(MyFoodSrc);
             _person.GetFood(MyFoodSrc);
+
+            _person.Body.ResetPersonalObject();
+            
         }
     }
 

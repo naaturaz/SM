@@ -147,7 +147,7 @@ public class Docker : Profession
                 
                 
                 _sourceBuild.CheckIfCanBeDestroyNow(Order1.Product);
-                _person.Body.UpdatePersonalObject();
+                _person.Body.UpdatePersonalForWheelBa();
 
 
 

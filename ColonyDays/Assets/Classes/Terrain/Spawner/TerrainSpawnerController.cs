@@ -773,10 +773,28 @@ public class TerrainSpawnerController : ControllerParent
         return false;
     }
 
+
     public bool HasLoadedOrLoadedTreesAndRocks()
     {
-
-        return !IsToLoadFromFile || toSpawnListCounter > 3;//means is spwaning ornaments 
+        return !IsToLoadFromFile || IsOrnamenting();//means is spwaning ornaments 
     }
 
+
+    private bool isOrnamentingNow;
+    /// <summary>
+    /// Will tell u if while loading is ornamienting (spawning ornaments or grass )
+    /// </summary>
+    /// <returns></returns>
+    bool IsOrnamenting()
+    {
+        if (isOrnamentingNow)
+        {
+            return true;
+        }
+
+        isOrnamentingNow = AllSpawnedDataList[loadingIndex].Type == H.Ornament
+                           || AllSpawnedDataList[loadingIndex].Type == H.Grass;
+
+        return isOrnamentingNow;
+    }
 }

@@ -1658,9 +1658,10 @@ public class Person : General
     {
         var isWheel = PrevJob == Job.WheelBarrow || ProfessionProp.ProfDescription == Job.WheelBarrow;
         var isDocker = PrevJob == Job.Docker || ProfessionProp.ProfDescription == Job.Docker;
+        var thereAreWheels = GameController.ThereIsAtLeastOneOfThisOnStorage(P.WheelBarrow);
 
         var mul = 1;
-        if (ProfessionProp != null && (isWheel || isDocker))
+        if (ProfessionProp != null && (isWheel || isDocker) && thereAreWheels)
         {
             mul = 3;
         }
@@ -1905,14 +1906,8 @@ public class Person : General
         //EmmigrateWithFamily();
         ActionOfDisappear();
         print(MyId+" emmigrated");
-        AddToEmmigrationList();
-    }
-
-    /// <summary>
-    /// The peploe had emmigrated they will talk about your port wherever they are 
-    /// </summary>
-    private void AddToEmmigrationList()
-    {
+        // The peploe had emmigrated they will talk about your port wherever they are 
+        PersonPot.Control.EmigrateController1.AddEmigrate(this);
     }
 
     /// <summary>

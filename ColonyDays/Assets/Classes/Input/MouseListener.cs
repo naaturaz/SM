@@ -386,7 +386,7 @@ public class MouseListener : InputMain
     int ReturnDictSelection(string action)
     {
         var res = -1;
-        if (action == "Road")
+        if (action == "Infrastructure")
         {
             res = 0;
         }

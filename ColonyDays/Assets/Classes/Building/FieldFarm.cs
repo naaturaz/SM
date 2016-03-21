@@ -60,7 +60,7 @@ public class FieldFarm : Farm
     /// </summary>
     private void DefineSpaceBtnPlants()
     {
-        _spaceBtwPlants =  Mathf.Abs(m.SubDivide.XSubStep) / 3f;
+        _spaceBtwPlants =  Mathf.Abs(m.SubDivide.XSubStep) ;
 
         if (_plantType == P.Banana)
         {

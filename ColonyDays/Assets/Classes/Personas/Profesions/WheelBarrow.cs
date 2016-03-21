@@ -176,7 +176,7 @@ public class WheelBarrow : Profession
 
                 _person.ExchangeInvetoryItem(_sourceBuild, _person, Order1.Product, Order1.Amount);
                 _sourceBuild.CheckIfCanBeDestroyNow(Order1.Product);
-                _person.Body.UpdatePersonalObject();
+                _person.Body.UpdatePersonalForWheelBa();
             }
         }
     }

@@ -506,10 +506,29 @@ public class Production  {
         var prods = _inputProducts.Where(a => a.HType.Contains(typeKey)).ToList();
         for (int i = 0; i < prods.Count; i++)
         {
-            res.Add(prods[i].Product);
+            //res.Add(prods[i].Product);
+            res.AddRange(ReturnAllIngridients(prods[i]));
         }
         return res;
     }
+
+    private List<P> ReturnAllIngridients(ProductInfo productInfo)
+    {
+        List<P> res = new List<P>();
+
+        if (productInfo.Ingredients==null)
+        {
+            return res;
+        }
+
+        for (int i = 0; i < productInfo.Ingredients.Count; i++)
+        {
+            res.Add(productInfo.Ingredients[i].Element);
+        }
+        return res;
+    }
+
+
 
     /// <summary>
     /// Given a Inventory and HType will tell u which products are not input
@@ -524,6 +543,14 @@ public class Production  {
 
         for (int i = 0; i < inv.InventItems.Count; i++)
         {
+            //if nnot imput like Brick. just can add all items inventory to res 
+            if (inputs.Count == 0)
+            {
+                res.Add(inv.InventItems[i].Key);
+            }
+
+
+
             for (int j = 0; j < inputs.Count; j++)
             {
                 if (inv.InventItems[i].Key != inputs[j])
@@ -532,6 +559,9 @@ public class Production  {
                 }
             }
         }
+
+        
+
         return res.Distinct().ToList();
     }
 

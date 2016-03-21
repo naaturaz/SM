@@ -182,7 +182,7 @@ public class GameScene : General {
     {
         if (Program.gameScene.controllerMain != null 
                         && Program.gameScene.controllerMain.TerraSpawnController != null
-                        && Program.gameScene.controllerMain.TerraSpawnController.IsToLoadFromFile)
+                        && !Program.gameScene.controllerMain.TerraSpawnController.HasLoadedOrLoadedTreesAndRocks())
         {
             return "Loading";
         }

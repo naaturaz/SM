@@ -54,6 +54,8 @@ public class PersonSaveLoad : PersonPot {
         res.RoutesCache = Control.RoutesCache1;
 
         //res.OnSystemNow1 = Control.OnSystemNow1;
+        res.EmigrateController1 = Control.EmigrateController1;
+
 
         return res;
     }

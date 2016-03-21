@@ -291,7 +291,7 @@ public class InputMain : InputParent {
         return PersonPot.Control != null && PersonPot.Control.IsFullyLoaded()
                         && Program.gameScene.controllerMain != null 
                         && Program.gameScene.controllerMain.TerraSpawnController != null
-                        && !Program.gameScene.controllerMain.TerraSpawnController.HasLoadedOrLoadedTreesAndRocks();
+                        && Program.gameScene.controllerMain.TerraSpawnController.HasLoadedOrLoadedTreesAndRocks();
     }
 
     void ChangeGameSpeed()
