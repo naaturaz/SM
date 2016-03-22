@@ -16,12 +16,12 @@ public class SaltMiner : Profession
     {
         //in case was a Wheelbarrow the prevProfession and when home route back gives problem 
         person.PrevOrder = null;
-        person.PrevJob = ProfDescription;
 
-        ProfDescription = Job.SaltMiner;
         IsRouterBackUsed = false;
         MyAnimation = "isSummon";
         _person = person;
+        HandleNewProfDescrpSavedAndPrevJob(Job.SaltMiner);
+
         Init();
     }
 

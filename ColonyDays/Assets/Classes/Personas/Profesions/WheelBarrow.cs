@@ -40,6 +40,7 @@ public class WheelBarrow : Profession
         }
 
         InitRoute();
+        
     }
 
 
@@ -56,8 +57,8 @@ public class WheelBarrow : Profession
         CleanOldVars();
         //Debug.Log(_person.MyId+" Init WheelB");
 
-        _person.PrevJob = ProfDescription;
-        ProfDescription = Job.WheelBarrow;
+        HandleNewProfDescrpSavedAndPrevJob(Job.WheelBarrow);
+        
         MyAnimation = "isWheelBarrow";
 
 
@@ -207,7 +208,7 @@ public class WheelBarrow : Profession
         if (_person==null)
         {
             _takeABreakNow = true;
-            
+            return;
         }
 
         if (Homer.CheckIfCanBeWheelBar(_person))

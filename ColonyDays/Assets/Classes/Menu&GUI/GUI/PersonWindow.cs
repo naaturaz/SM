@@ -102,7 +102,7 @@ public class PersonWindow : GUIElement {
                      + "\n Happy:" + _person.Happinnes
                      + "\n YearsOfSchool:" + _person.YearsOfSchool;
 
-        //res += DebugInfo();
+        res += DebugInfo();
         return res;
     }
 

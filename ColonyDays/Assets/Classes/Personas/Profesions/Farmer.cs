@@ -22,11 +22,11 @@ public class Farmer : Profession
             person.PrevOrder = null;
         }
 
-        person.PrevJob = ProfDescription;
-        ProfDescription = Job.Farmer;
+
         IsRouterBackUsed = false;
         MyAnimation = "isHoe";
         _person = person;
+        HandleNewProfDescrpSavedAndPrevJob(Job.Farmer);
 
         Init();
     }

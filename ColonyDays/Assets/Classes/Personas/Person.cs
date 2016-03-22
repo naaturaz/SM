@@ -468,6 +468,7 @@ public class Person : General
 
         PrevOrder = pF.PrevOrder;
         YearsOfSchool = pF.YearsOfSchool;
+        SavedJob = pF.SavedJob;
         PrevJob = pF.PrevJob;
 
         _body = new Body(this, pF);
@@ -1274,7 +1275,10 @@ public class Person : General
 
     private Profession _profession = new Profession();
 
-    Job _prevJob = Job.None;//wht was the prev Job
+    Job _savedJob = Job.None;//everytime a job wht to be found. wht was the last job it will be here
+    //can be used to set Prev Job
+    private Job _prevJob = Job.None;
+
     Order _prevOrder;//previous order, this so far is only of use of Wheel Barrowers
 
     public Profession ProfessionProp
@@ -1299,6 +1303,12 @@ public class Person : General
     {
         get { return _mother; }
         set { _mother = value; }
+    }
+
+    public Job SavedJob
+    {
+        get { return _savedJob; }
+        set { _savedJob = value; }
     }
 
     public Job PrevJob
@@ -1663,7 +1673,7 @@ public class Person : General
         var mul = 1;
         if (ProfessionProp != null && (isWheel || isDocker) && thereAreWheels)
         {
-            mul = 3;
+            mul = 4;
         }
         return mul;
     }
@@ -2061,6 +2071,8 @@ public class Person : General
         get { return _projector; }
         set { _projector = value; }
     }
+
+
 
 
     public void CreateProjector()

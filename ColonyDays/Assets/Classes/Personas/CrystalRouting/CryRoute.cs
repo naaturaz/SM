@@ -488,11 +488,13 @@ public class CryRoute
 
         if (blackCount > maxCounts)
         {
+            Debug.Log("Backlisting :" + _person.MyId + " ." + _fin.MyId + "blackCount > maxCounts");
             BlackList();
         }
         //is being a minute since started then can be blaclisted
-        else if (Time.time > _timeStamp + 45f)//45 //90  //maybe can add someFactor with PC Ram and CPU Speed
+        else if (Time.time > _timeStamp + 90f)//45 //90  //maybe can add someFactor with PC Ram and CPU Speed
         {
+            Debug.Log("Backlisting :" + _person.MyId + " ." + _fin.MyId + "Time.time > _timeStamp");
             BlackList();
         }
     }

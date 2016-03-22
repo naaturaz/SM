@@ -137,6 +137,8 @@ public class Body //: MonoBehaviour //: General
 
         _loadedAni = pF._body.CurrentAni;
 
+
+
         //if is zero is that is idling in a house 
         if (pF._body.CurrTheRoute.CheckPoints.Count > 0)
         {
@@ -250,7 +252,15 @@ public class Body //: MonoBehaviour //: General
     /// <param name="oldAnimation"></param>
     public void SetCurrentAni(string animationPass, string oldAnimation)
     {
-        ////Debug.Log("SetCurrAni nw:"+animationPass+".old:"+oldAnimation);
+        if (string.IsNullOrEmpty(animationPass))
+        {
+            //Debug.Log("pass null ani");
+        }
+        if (!string.IsNullOrEmpty(animationPass) && animationPass.Contains("Wheel"))
+        {
+            //Debug.Log("SetCurrAni nw:"+animationPass+".old:"+oldAnimation+".pers: "+_person.MyId);
+        }
+
 
         _currentAni = animationPass;
         myAnimator.SetBool(animationPass, true);
@@ -269,11 +279,6 @@ public class Body //: MonoBehaviour //: General
         ////Debug.Log("TurnCurrent nw:" + animationPass + ".old:" + _currentAni);
 
         SetCurrentAni(animationPass, _currentAni);
-    }
-
-    private void ReLoadSameAnimation()
-    {
-        SetCurrentAni(_currentAni, "isIdle");
     }
     
     /// <summary>
@@ -294,7 +299,7 @@ public class Body //: MonoBehaviour //: General
         else _speed = UMath.GiveRandom(0.45f, 0.55f);
     }
 
-    private void DefineAnimation(TheRoute route)
+    private void DefineAnimation()
     {
         if (!string.IsNullOrEmpty(_loadedAni))
         {
@@ -320,9 +325,7 @@ public class Body //: MonoBehaviour //: General
     /// <param name="loadCurrentPoint">Use to load person last aprox position </param>
     void InitWalk(TheRoute route, bool inverse, int loadCurrentPoint = -1 )
     {
-
-        DefineAnimation(_currTheRoute);
-
+        DefineAnimation();
         FindIfAAniIsSaved();
 
         DefineSpeed();
@@ -561,31 +564,40 @@ public class Body //: MonoBehaviour //: General
 
     private void AddressWheelBarrowingAni()
     {
-        if (_person.ProfessionProp==null)
+        if (_person.ProfessionProp == null || _person.Brain == null )
         {
             return;
         }
 
-        //bz is overwriting Wheel Barrowerers going to idle. This is to prevent they go with wheel barow personal object to
-        //idle
-        if (GoingTo == HPers.FoodSource || Location == HPers.FoodSource)
-        {
-            return;
-        }
-        if (GoingTo == HPers.IdleSpot || Location == HPers.IdleSpot)
-        {
-            return;
-        }
+        var fromFoodSrcToDropPlace = Location == HPers.InWork && GoingTo == HPers.WheelBarrow;
+        var fromDropPlaceBackToFoodSrc = Location == HPers.Work && GoingTo == HPers.InWork 
+            && _person.Brain.CurrentTask == HPers.WheelBarrow;
 
         if (!GameController.ThereIsAtLeastOneOfThisOnStorage(P.WheelBarrow))
         {
             return;
         }
 
-        if ((_person.Work!=null && _person.Work.IsNaval()) || _person.ProfessionProp.ProfDescription == Job.WheelBarrow)
+        //so only spawns the WheelBarrow from FoodSrc to dropplace and in its way back 
+        if (!fromFoodSrcToDropPlace && !fromDropPlaceBackToFoodSrc)
+        {
+            return;   
+        }
+
+        if ((_person.Work!=null && _person.Work.IsNaval()) || 
+            (_person.ProfessionProp.ProfDescription == Job.WheelBarrow || _person.PrevJob == Job.WheelBarrow))
         {
             TurnCurrentAniAndStartNew("isWheelBarrow");
         }
+    }
+
+    string DefineWheelAni()
+    {
+        //if ( !GameController.ThereIsAtLeastOneOfThisOnStorage(P.WheelBarrow))
+        //{
+        //    return "isCarry";
+        //}
+        return "isWheelBarrow";
     }
 
     void InitRotaVars()
@@ -694,7 +706,6 @@ public class Body //: MonoBehaviour //: General
             _person.transform.position = _loadedPosition;
             _person.transform.rotation = _loadedRotation;
             _loadedPosition = new Vector3();
-
         }
     }
 
@@ -760,25 +771,7 @@ public class Body //: MonoBehaviour //: General
         SetCurrentAni("isIdle",_currentAni);//_current ani could be walk or carry
         _walkDoneAt = Time.time;
     }
-
-    /// <summary>
-    /// bz sometimes loads to fast an anmation and still the old one is being transited to
-    /// 
-    /// 
-    /// </summary>
-    private void ReSetAnimation()
-    {
-        if (_walkDoneAt == 0)
-        {
-            return;
-        }
-        if (Time.time + 1 > _walkDoneAt)
-        {
-            _walkDoneAt = 0;
-            ReLoadSameAnimation();
-        }
-    }
-
+    
     public void DestroyAllPersonalObj()
     {
         _personalObject.DestroyAllGameObjs();
@@ -945,6 +938,14 @@ public class Body //: MonoBehaviour //: General
 
     internal void UpdatePersonalForWheelBa()
     {
+        //need to put isCarry if dont have wheel barrow
+        if (!_person.Inventory.IsEmpty() && !GameController.ThereIsAtLeastOneOfThisOnStorage(P.WheelBarrow))
+        {
+            TurnCurrentAniAndStartNew("isCarry");
+            DefineSpeed();
+            return;
+        }
+
         _personalObject.AddressNewAni(_currentAni, true);
     }
 
@@ -967,8 +968,6 @@ public class Body //: MonoBehaviour //: General
 
             //so its gets show 
             _personalObject.Show();
-            
-            //_personalObject.AddressNewAni(_currentAni, false);
         }
     }
 
@@ -980,6 +979,8 @@ public class Body //: MonoBehaviour //: General
     /// </summary>
     internal void ResetPersonalObject()
     {
+        //return;
+
         //_currentAni = "";
         _personalObject.Reset();
 

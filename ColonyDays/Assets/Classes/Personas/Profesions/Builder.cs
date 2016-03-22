@@ -34,12 +34,11 @@ public class Builder : Profession
 
     void B4Init(Person person)
     {
-        person.PrevJob = ProfDescription;
-        ProfDescription = Job.Builder;
+
         
         MyAnimation = "isHammer";
         _person = person;
-        _person = person;
+        HandleNewProfDescrpSavedAndPrevJob(Job.Builder);
 
         DefineConstructingRoutine();
     }

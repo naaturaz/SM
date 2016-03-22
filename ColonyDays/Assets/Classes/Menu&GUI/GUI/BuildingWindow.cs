@@ -328,7 +328,7 @@ public class BuildingWindow : GUIElement {
         }
 
         return res 
-          //  + DebugInfo()
+           + DebugInfo()
             ;
     }
 

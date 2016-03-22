@@ -120,13 +120,12 @@ public class Production  {
         //Meats();
 
         GunPodwer();
-        
-        Axe();
-        Sword();
+
 
         Brick();
 
         Carpintery();
+        BlackSmith();
 
         Cigar();
 
@@ -309,22 +308,7 @@ public class Production  {
 
 
 
-    void Axe()
-    {
-        //axe
-        InputElement iron = new InputElement(P.Iron, 10);
-        InputElement wood = new InputElement(P.Wood, 10);
-        List<InputElement> axe = new List<InputElement>() { iron, wood };
-        InputProdCheckAndAdd(new ProductInfo(P.Axe, axe, H.BlackSmith));
-    }
 
-
-    private void Sword()
-    {
-        InputElement iron = new InputElement(P.Iron, 15);
-        List<InputElement> sword = new List<InputElement>() { iron };
-        InputProdCheckAndAdd(new ProductInfo(P.Sword, sword, H.BlackSmith));
-    }
 
 
     private void Brick()
@@ -347,6 +331,21 @@ public class Production  {
         InputProdCheckAndAdd(new ProductInfo(P.Tonel, tonel, H.Carpintery));
         InputProdCheckAndAdd(new ProductInfo(P.Crate, tonel, H.Carpintery));
         InputProdCheckAndAdd(new ProductInfo(P.WheelBarrow, wheelBar, H.Carpintery));
+    }
+
+    void BlackSmith()
+    {
+        InputElement wood = new InputElement(P.Wood, 10);
+        InputElement iron = new InputElement(P.Iron, 10);
+        
+        List<InputElement> tool = new List<InputElement>() { wood, iron };
+
+        InputProdCheckAndAdd(new ProductInfo(P.Tool, tool, H.BlackSmith));
+        InputProdCheckAndAdd(new ProductInfo(P.Axe, tool, H.BlackSmith));
+        InputProdCheckAndAdd(new ProductInfo(P.Weapon, tool, H.BlackSmith));
+
+        InputProdCheckAndAdd(new ProductInfo(P.Sword, tool, H.BlackSmith));
+
     }
 
 

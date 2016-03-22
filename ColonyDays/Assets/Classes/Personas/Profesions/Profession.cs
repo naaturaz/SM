@@ -338,7 +338,7 @@ public class Profession
     {
         _workerTask = HPers.None;
 
-        _profDescription = Job.None;
+        //_profDescription = Job.None;
         _person = null;
         _workTime = 1f;
         _readyToWork = false;
@@ -349,6 +349,19 @@ public class Profession
 
         _router = null;
         _routerBack = null;
+    }
+
+
+    protected void HandleNewProfDescrpSavedAndPrevJob(Job newJo)
+    {
+        //if (_person==null)
+        //{
+        //    return;
+        //}
+
+        _person.PrevJob = _person.SavedJob;
+        _person.SavedJob = newJo;
+        ProfDescription = newJo;
     }
 
     /// <summary>
@@ -650,7 +663,14 @@ public class Profession
                 return;
             }
 
-            _person.Body.TurnCurrentAniAndStartNew(_myAnimation);
+            //so its doesnt play 'isWheelBarrow' ani in the midle of nothing tht sometimes
+            //wheel lead to wheelBarrowers that have not a WheelBarrpw to play the ani while carrying a box 
+            if (ProfDescription!=Job.WheelBarrow && ProfDescription!=Job.Docker)
+            {
+                _person.Body.TurnCurrentAniAndStartNew(_myAnimation);
+            }
+            
+            
             Idle(HPers.WorkingInPlaceNow, _workTime);
         }
         //called here so animation of iddle can be fully transitioned to
@@ -662,6 +682,13 @@ public class Profession
         {
             _executeNow = true;
             _doneWorkNow = true;//set here once the ani is fully transioned to
+
+            //so it will get right animation . bz homer walks first and then drop/gets load
+            //there fore can have an animation of carrying with empty inv 
+            if (ProfDescription==Job.Homer)
+            {
+                return;
+            }
 
             ComingBackToOffice();
         }
@@ -808,8 +835,7 @@ public class Profession
 
         //each time a wheelbarrow or docker uses a wheelBarrow dimish them a bit in the main storages
         //as the wheelbarrows get use they get destroy
-        GameController.Inventory1.Remove(P.WheelBarrow, 1);
-
+        GameController.Inventory1.Remove(P.WheelBarrow, .1f);
     }
 
     /// <summary>
@@ -827,7 +853,7 @@ public class Profession
     /// 
     /// and if is not marked will use the _inverse of _router
     /// </summary>
-    void ComingBackToOffice()
+    protected void ComingBackToOffice()
     {
         if (_isRouterBackUsed)
         {
@@ -1037,6 +1063,9 @@ public class Profession
 
             _person.ExchangeInvetoryItem(_person.Work, _person, DefineProdWillCarry(), amtCarrying);
             prodCarrying = _person.Work.CurrentProd.Product;
+            
+            //people comsuming tools as they work 
+            GameController.Inventory1.Remove(P.Tool, 0.1f);
         }
     }
 

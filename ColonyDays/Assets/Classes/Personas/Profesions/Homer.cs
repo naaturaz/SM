@@ -34,18 +34,18 @@ public class Homer : Profession
 
     private void Init()
     {
-        if (IsWorkNaval())
-        {
-            _person.PrevOrder.Product=P.None;
-        }
+        //if (IsWorkNaval())
+        //{
+        //    _person.PrevOrder.Product=P.None;
+        //}
 
         MyFoodSrc = _person.FoodSource;
         //Debug.Log(_person.MyId + " new Homer");
 
         FinRoutePoint = DefineFinRoute();
 
-        _person.PrevJob = ProfDescription;
-        ProfDescription = Job.Homer;
+        HandleNewProfDescrpSavedAndPrevJob(Job.Homer);
+
 
         InitRoute();
     }
@@ -134,7 +134,8 @@ public class Homer : Profession
             _person.GetFood(MyFoodSrc);
 
             _person.Body.ResetPersonalObject();
-            
+
+            ComingBackToOffice();
         }
     }
 
@@ -148,7 +149,7 @@ public class Homer : Profession
 
 //         //Debug.Log(_person.MyId + " not homer anymore now will be a: " + _person.PrevJob);
 
-            if (_person.PrevJob == Job.WheelBarrow || _person.PrevJob == Job.Builder)
+            if (_person.PrevJob == Job.WheelBarrow || _person.PrevJob == Job.Builder || _person.PrevJob == Job.None)
             {
                 ConvertToWheelBarrOrBuilder();
             }
