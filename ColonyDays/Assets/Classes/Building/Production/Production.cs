@@ -548,19 +548,20 @@ public class Production  {
                 res.Add(inv.InventItems[i].Key);
             }
 
-
-
+            int notEqual = 0;
             for (int j = 0; j < inputs.Count; j++)
             {
                 if (inv.InventItems[i].Key != inputs[j])
                 {
-                    res.Add(inv.InventItems[i].Key);
+                    notEqual++;
                 }
             }
+            //if all inputs are not equal to inv.InventItems[i].Key then that is a product produced in that building 
+            if (notEqual == inputs.Count)
+            {
+                res.Add(inv.InventItems[i].Key);
+            }
         }
-
-        
-
         return res.Distinct().ToList();
     }
 

@@ -30,6 +30,8 @@
 	    _control = PersonController.CreatePersonController(Root.personController, 0,
 	        Program.ClassContainer.transform);
 	    _saveLoad = (PersonSaveLoad) Create(Root.personSaveLoad, container: Program.ClassContainer.transform);
+
+
 	}
 	
 	// Update is called once per frame

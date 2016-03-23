@@ -266,6 +266,7 @@ public class BuildingWindow : GUIElement {
     }
 
     private ShowAInventory _showAInventory;
+    private int oldItemsCount;
     private void LoadMenu()
     {
         _title.text = _building.HType + "";
@@ -275,16 +276,16 @@ public class BuildingWindow : GUIElement {
         {
             _showAInventory = new ShowAInventory(_building.Inventory, _gaveta.gameObject, _invIniPos.transform.localPosition);
         }
-        else if (_showAInventory != null && _showAInventory.Inv != _building.Inventory)
+        else if (_showAInventory != null && oldItemsCount != _building.Inventory.InventItems.Count)
         {
+            oldItemsCount = _building.Inventory.InventItems.Count;
             _showAInventory.DestroyAll();
             _showAInventory = new ShowAInventory(_building.Inventory, _gaveta.gameObject, _invIniPos.transform.localPosition);
         }
+        
         _showAInventory.ManualUpdate();
         _inv.text = BuildStringInv(_building);
-
         DemolishBtn();
-
     }
 
     string BuildInfo()

@@ -89,6 +89,11 @@ public class TerrainSpawnerController : ControllerParent
 
     int toSpawnListCounter;
 
+
+    //will know which string ID is in which Index on AllRandomObjList and AllSpawnedDataList
+    Dictionary<string, int> _mapGC = new Dictionary<string, int>();
+ 
+
     public TerrainRamdonSpawnerKey AllRandomObjList = new TerrainRamdonSpawnerKey();//containts all spawned obj
     public List<SpawnedData> AllSpawnedDataList = new List<SpawnedData>();//containts all spawned data serie saved
 
@@ -112,7 +117,7 @@ public class TerrainSpawnerController : ControllerParent
 
     public void RemoveStillElement(StillElement ele)
     {
-        var index = AllRandomObjList.ToList().FindIndex(a=>a.MyId==ele.MyId);
+        var index = AllRandomObjList.IndexOf(ele);
 
         AllSpawnedDataList.RemoveAt(index);
         AllRandomObjList.RemoveAt(index);
@@ -120,7 +125,8 @@ public class TerrainSpawnerController : ControllerParent
 
     public void ReSaveStillElement(StillElement ele)
     {
-        var index = AllRandomObjList.ToList().FindIndex(a => a.MyId == ele.MyId);
+        var index = AllRandomObjList.IndexOf(ele);
+        //var index = AllRandomObjList.ToList().FindIndex(a => a.MyId == ele.MyId);
 
         AllRandomObjList[index].MaxHeight = ele.MaxHeight;
 
@@ -133,12 +139,22 @@ public class TerrainSpawnerController : ControllerParent
 
     public StillElement Find(string key)
     {
-        var list = AllRandomObjList.ToList();
+        if (string.IsNullOrEmpty(key))
+        {
+            return null;
+        }
 
-        StillElement res = null;
-        res = (StillElement)list.Find(a => a.MyId == key);
+        if (!AllRandomObjList.Contains(key))
+        {
+            return null;
+        }
 
-        return res;
+        return AllRandomObjList[key] as StillElement;
+
+        //StillElement res = null;
+        //res = (StillElement)list.Find(a => a.MyId == key);
+
+        //return res;
     }
 
     public bool IsToSave;
@@ -414,6 +430,7 @@ public class TerrainSpawnerController : ControllerParent
         if (replantedTree)
         {
             AllRandomObjList.Insert(0,temp);
+            //_mapGC.Add(temp.MyId);
         }
         else
         {

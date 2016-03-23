@@ -7,7 +7,7 @@ public class GameTime
     //then decied do it 5 times faster since people reach 10Year in 2 Calendar years in Banished 
     //when put on FixedUpdate is 3 times slower... at time use to have 0.0035f
     //0.01, it was too fast. at 10 x 1 year will pass in 20 sec
-    private float _timeFactor = 0.001f;
+    private float _timeFactor = 0.005f; //0.001f
 
     private float _accumDays;
 

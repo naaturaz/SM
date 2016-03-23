@@ -142,6 +142,8 @@ public class GameScene : General {
             return;
         }
 
+        GameTime1.FixedUpdate();
+
         GameController1.Update();
         CreateDummySpawnPoint();
 

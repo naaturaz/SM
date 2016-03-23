@@ -1104,7 +1104,7 @@ public class Profession
         //if has instructions is so far from a : Forester
         //they want to physically bring prod back and then drop it at they Storage 
         //dont want to added to building invetory he has to drop it there when he gets there 
-        _person.Work.Produce(ProdXShift, _person, false, prod);
+        _person.Work.Produce(_person.HowMuchICanCarry(), _person, false, prod);
 
         //so foreseter show Wood , carry wood 
         _person.Body.UpdatePersonalObjAniSpeed();
@@ -1115,9 +1115,9 @@ public class Profession
         {
             prodCarrying = prod;
         }
-        else prodCarrying = _person.Work.CurrentProd.Product;    
-        
-        amtCarrying = ProdXShift;
+        else prodCarrying = _person.Work.CurrentProd.Product;
+
+        amtCarrying = _person.HowMuchICanCarry();
     }
 
     /// <summary>

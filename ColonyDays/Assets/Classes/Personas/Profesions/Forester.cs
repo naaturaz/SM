@@ -71,6 +71,7 @@ public class Forester : Profession
         //moving the route point a bit towards the origin so when chopping tree its not inside the tree 
         FinRoutePoint = Vector3.MoveTowards(closerAnchorToUs, _person.Work.transform.position, MoveTowOrigin * 0.05f);//2,5
 
+
         InitRoute();
     }
 
@@ -87,6 +88,7 @@ public class Forester : Profession
 
     void InitRoute()
     {
+        //Debug.Log("Forester InitingRoute:"+_person.MyId);
         RouterActive = true;
 
         //bz dummy.DummyIdSpawner
@@ -215,7 +217,7 @@ public class Forester : Profession
 
             if (_person.Work.CanTakeItOut(_person))
             {
-                if (CheckIfStillElementWasDestroy())
+                if (CheckIfStillElementWasDestroy() || ElementWasCut())
                 {
                     //so it doesnt get a null ref in below methods 
                     return;
@@ -241,22 +243,22 @@ public class Forester : Profession
         }
     }
 
-    private void ReInitIfEleNull()
+    /// <summary>
+    /// Needs to check before cut if the element is not Grown
+    /// </summary>
+    /// <returns></returns>
+    private bool ElementWasCut()
     {
-        if (_reInit)
+        if (_person == null)
         {
-            return;
+            return true;
         }
-
-        var ele =
-           Program.gameScene.controllerMain.TerraSpawnController.Find(StillElementId);
-
-        if (ele == null)
+        
+        if (_stillElement == null || !_stillElement.Grown())//ele
         {
-            //so find a new Object to mine 
-            //do the new Routing etc
-            _reInit = true;
+            return true;
         }
+        return false;
     }
 
     private bool CheckIfStillElementWasDestroy()

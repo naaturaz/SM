@@ -124,6 +124,10 @@ public class StillElement : TerrainRamdonSpawner
             Debug.Log("not valid:"+MyId);
 
             //bz need to remove old Crystals 
+            
+            //so it get removed the Crsytals forever 
+            _shouldReplant = false;
+
             DestroyCool();
             return false;
         }
@@ -154,7 +158,8 @@ public class StillElement : TerrainRamdonSpawner
     void AddCrystals()
     {
         //ornaments and grass wont be added 
-        if (name.Contains("Orna") || name.Contains("Grass"))
+        //replant should not add bz never was deleted 
+        if (_shouldReplant || name.Contains("Orna") || name.Contains("Grass"))
         {
             return;
         }
@@ -240,8 +245,7 @@ public class StillElement : TerrainRamdonSpawner
 
         //cool stuff
 
-        //remove from CrystalManager
-        MeshController.CrystalManager1.Delete(this);
+
 
         base.DestroyCool();
 
@@ -251,6 +255,11 @@ public class StillElement : TerrainRamdonSpawner
         if (HType == H.Tree && _shouldReplant)
         {
             Program.gameScene.controllerMain.TerraSpawnController.SpawnRandomTreeInThisPos(transform.position);
+        }
+        else//for GC will remove only if is not getting replanted 
+        {
+            //remove from CrystalManager
+            MeshController.CrystalManager1.Delete(this);
         }
     }
 
@@ -274,13 +283,13 @@ public class StillElement : TerrainRamdonSpawner
     {
         if (HType.ToString().Contains("Tree"))
         {
-            _weight = Random.Range(1, 5);
-            _weight = 5;
+            _weight = Random.Range(90, 200);
+            //_weight = 5;
         }
         else//ore. stone
         {
-            _weight = Random.Range(150, 200);
-            _weight = 5;
+            _weight = Random.Range(200, 400);
+            //_weight = 5;
         }
     }
 
@@ -333,6 +342,8 @@ public class StillElement : TerrainRamdonSpawner
             return;
         }
         MaxHeight = transform.localScale.y;
+
+        Debug.Log(MyId+" maxHeight:"+MaxHeight);
 
         SeedDate = Program.gameScene.GameTime1.CurrentDate();
         Height = 0;

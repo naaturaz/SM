@@ -34,6 +34,12 @@ public class XMLSerie
         var SaveInfoRTSCollection =
             DataContainer.Load(Path.Combine(dataPath, "cameraSave.xml"));
 
+        if (SaveInfoRTSCollection==null)
+        {
+            //no file saved
+            return null;
+        }
+
         List<RTSData> res = SaveInfoRTSCollection.SaveInfoRTSs;
         return res;
     }

@@ -123,6 +123,7 @@ public class InputMain : InputParent {
             Program.gameScene.controllerMain.TerraSpawnController.ReSaveData();
             BuildingPot.SaveLoad.Save();
             PersonPot.SaveLoad.Save();
+            CamControl.CAMRTS.InputRts.SaveLastCamPos();
 
             if (IsGameUnLock())
             {

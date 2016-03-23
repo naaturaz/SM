@@ -1142,7 +1142,6 @@ public class Person : General
 	    }
 	    
         TimeChecks();
-        Program.gameScene.GameTime1.FixedUpdate();
 	    LODCheck();
 
         if (UPerson.IsMajor(_age) && !_isMajor && string.IsNullOrEmpty(IsBooked) //&& Brain.GoMindState 

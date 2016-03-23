@@ -147,11 +147,9 @@ public class Dispatch
     {
         if (!ListContains(Orders, prod))
         {
-           //Debug.Log("Order Added:" + prod.Product + ".placed by:" + prod.DestinyBuild);
-
+            Debug.Log("Order Added:" + prod.Product + ".placed by:" + prod.DestinyBuild);
             Orders.Add(prod);
             _recycledOrders.Remove(prod);
-
             //OrderByPlacedTime(Orders);
         }
     }
@@ -302,14 +300,19 @@ public class Dispatch
         for (int i = 0; i < currOrders.Count; i++)
         {
             //if the Inventory of destiny build is full will skip that order 
-            if (IsDestinyBuildInvFullForThisProd(currOrders[i]))
+            if (IsDestinyBuildInvFullForThisProd(currOrders[i]) || IsDestinyWithOverSoManyKGOfThisProd(1000, currOrders[i]))
             {
                 //todo Notify
-               //Debug.Log("Inv full to DestBuild:"+currOrders[i].DestinyBuild+"|for prod:"+currOrders[i].Product+"" +"|order removed");
+                Debug.Log("Inv full to DestBuild:"+currOrders[i].DestinyBuild+"|for prod:"+currOrders[i].Product+"" 
+                    +"|order removed. Or  had >1000KG on Destiny of the prod");
                 
-                RemoveOrderByIDExIm(currOrders[i].ID);
-                i--;
+                bool wasRemoved = RemoveOrderByIDExIm(currOrders[i].ID);
 
+                //othwerwise is infinite loop
+                if (wasRemoved)
+                {
+                    i--;
+                }
                 continue;
             }
 
@@ -353,6 +356,31 @@ public class Dispatch
         }
         return null;
     }
+
+    /// <summary>
+    /// Will tell u if on order destiny has more that 'amtMax' of the order prod.
+    /// 
+    /// In the context that we have 1000KG of iron on carpintery we dont need more 
+    /// </summary>
+    /// <param name="amtMax"></param>
+    /// <param name="order"></param>
+    /// <returns></returns>
+    private bool IsDestinyWithOverSoManyKGOfThisProd(int amtMax, Order order)
+    {
+        var destBuild = Brain.GetBuildingFromKey(order.DestinyBuild);
+
+        if (destBuild == null)
+        {
+            return false;
+        }
+
+        if (destBuild.Inventory.ReturnAmtOfItemOnInv(order.Product) > amtMax)
+        {
+            return true;
+        }
+        return false;
+    }
+
 
     bool IsDestinyBuildInvFullForThisProd(Order order)
     {
@@ -897,9 +925,11 @@ public class Dispatch
     /// Bz as amount change in the order and .
     /// 
     /// use to remove the export and import orders
+    /// 
+    /// will return true if was removed 
     /// </summary>
     /// <param name="id"></param>
-    internal void RemoveOrderByIDExIm(string id)
+    internal bool RemoveOrderByIDExIm(string id)
     {
         for (int i = 0; i < _orders.Count; i++)
         {
@@ -908,7 +938,19 @@ public class Dispatch
                 _orders.RemoveAt(i);
                 CheckIfExportAndStillOnDockStorage();
 
-                break;
+                return true;
+
+            }
+        }
+        for (int i = 0; i < _recycledOrders.Count; i++)
+        {
+            if (_recycledOrders[i].ID == id)
+            {
+                _recycledOrders.RemoveAt(i);
+                CheckIfExportAndStillOnDockStorage();
+
+                return true;
+
             }
         }
 
@@ -917,9 +959,11 @@ public class Dispatch
             if (_expImpOrders[i].ID == id)
             {
                 _expImpOrders.RemoveAt(i);
-                return;
+                return true;
             }
         }
+        return false;
+
     }
 
     void RemoveOrderFromAllListByID(string id)

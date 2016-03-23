@@ -59,6 +59,12 @@ public class CamRTSController : CamControl
         set { miniMapRTS = value; }
     }
 
+    public InputRTS InputRts
+    {
+        get { return inputRTS; }
+        set { inputRTS = value; }
+    }
+
     /// <summary>
     /// Create the guides that will grab all the point to the camera move thru when doing the 360 
     /// Rotation

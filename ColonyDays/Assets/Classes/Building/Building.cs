@@ -2180,9 +2180,13 @@ public class Building : General, Iinfo
                 var farm = (Structure)this;
                 farm.AddWorkToFarm();
             }
-            else if (addToBuildInv && !MyId.Contains("Farm"))
+            else if (hasThisBuildRoom && addToBuildInv && !MyId.Contains("Farm"))
             {
                 Inventory.Add(prodHere, amt);
+            }
+            else if (!hasThisBuildRoom && hasStorageRoom && addToBuildInv && !MyId.Contains("Farm"))
+            {
+                person.Inventory.Add(prodHere, amt);
             }
             else if (!addToBuildInv && !MyId.Contains("Farm"))
             {
@@ -2193,7 +2197,7 @@ public class Building : General, Iinfo
         {
             //todo show 3d icon
             AddEvacuationOrderOfProdThatAreNotInput();
-            //Debug.Log("Both full" + person.FoodSource.MyId + ".and." + MyId + " AddEvacuationOrder() called");
+            Debug.Log("Both full" + person.FoodSource.MyId + ".and." + MyId + " AddEvacuationOrder() called");
         }
         else if (!doIHaveInput)
         {
@@ -2205,6 +2209,12 @@ public class Building : General, Iinfo
         if (Inventory.ReturnAmtOfItemOnInv(_currentProd.Product) > 2000)
         {
             AddEvacuationOrderOfProdThatAreNotInput();
+        }
+        if (hasStorageRoom && !hasThisBuildRoom && person.FoodSource != null)
+        {
+            //todo show 3d icon
+            AddEvacuationOrderOfProdThatAreNotInput();
+            Debug.Log("Building store full" + MyId + " AddEvacuationOrder() called. " + person.MyId);
         }
     }
 

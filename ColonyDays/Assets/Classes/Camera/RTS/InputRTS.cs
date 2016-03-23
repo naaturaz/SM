@@ -13,7 +13,15 @@ public class InputRTS : GenericCameraComponent
     private Transform personToFollow;
 
     // Use this for initialization
-    void Start() { InitializeList(); }
+    void Start()
+    {
+        InitializeList();
+       
+        
+        //the pos where cam was last saved by system 
+
+        LoadCamPos(KeyCode.None);
+    }
 
     // Update is called once per frame
     void LateUpdate()
@@ -59,11 +67,18 @@ public class InputRTS : GenericCameraComponent
         list.Add(new RTSData(KeyCode.Alpha3, KeyCode.Alpha8, TransformCam, CenterTarget));
         list.Add(new RTSData(KeyCode.Alpha4, KeyCode.Alpha9, TransformCam, CenterTarget));
         list.Add(new RTSData(KeyCode.Alpha5, KeyCode.Alpha0, TransformCam, CenterTarget));
-        SaveLastCamPos();
+
+        list.Add(new RTSData(KeyCode.None, KeyCode.None, TransformCam, CenterTarget));
     }
 
     void CheckIfKeyWasPressed()
     {
+        //didnt load so one need to be redone
+        if (list==null)
+        {
+            return;
+        }
+
         foreach (var item in list)
         {
             if (Input.GetKeyUp(item.saveKeyC))
@@ -89,6 +104,12 @@ public class InputRTS : GenericCameraComponent
     /// <param name="rot"></param>
     void SaveCamPos(KeyCode saveKeyC, Vector3 pos, Quaternion rot)
     {
+        if (list == null)
+        {
+            list= new List<RTSData>();
+            InitializeList();
+        }
+
         for (int i = 0; i < list.Count; i++)
         {
             if (list[i].saveKeyC == saveKeyC)
@@ -116,6 +137,12 @@ public class InputRTS : GenericCameraComponent
         //is loading the whole list to 
         list = XMLSerie.ReadXML();
 
+        //no file was found 
+        if (list==null)
+        {
+            return;
+        }
+
         for (int i = 0; i < list.Count; i++)
         {
             if ((list[i].loadKeyC == loadKeyC || listIdx == i)
@@ -140,7 +167,9 @@ public class InputRTS : GenericCameraComponent
     /// </summary>
     public void SaveLastCamPos()
     {
-        list.Add(new RTSData(TransformCam, CenterTarget));
+        SaveCamPos(KeyCode.None, TransformCam.position, TransformCam.rotation);
+        //list.Add(new RTSData(KeyCode.None, KeyCode.None, TransformCam, CenterTarget));
+        //list.Add(new RTSData(TransformCam, CenterTarget));
     }
 
     /// <summary>
@@ -148,7 +177,8 @@ public class InputRTS : GenericCameraComponent
     /// </summary>
     public void LoadLastCamPos()
     {
-        LoadCamPos(KeyCode.None, list.Count - 1);
+        LoadCamPos(KeyCode.None);
+        //LoadCamPos(KeyCode.None, list.Count - 1);
     }
 
     /// <summary>
