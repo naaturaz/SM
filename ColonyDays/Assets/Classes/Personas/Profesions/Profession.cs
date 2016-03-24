@@ -41,7 +41,7 @@ public class Profession
 
     //says the exact moment when the person finished the work in the site 
     protected bool _doneWorkNow;
-    protected float _workTime = 1f;//how long will execute the animation of work
+    protected float _workTime = 4f;//1    //how long will execute the animation of work
     protected Job _profDescription = Job.None;
 
     //ShackBuilder and Builders
@@ -332,7 +332,10 @@ public class Profession
         _sourceBuild = Brain.GetStructureFromKey(SourceBuildKey);
 
         StillElementId = prof.StillElementId;
+        FigureProdCarryingAndAmt();
     }
+
+
 
     private void CleanOldVars()
     {
@@ -340,7 +343,7 @@ public class Profession
 
         //_profDescription = Job.None;
         _person = null;
-        _workTime = 1f;
+        _workTime = 4f;
         _readyToWork = false;
         _workingNow = false;
         _isRouterBackUsed = false;
@@ -354,11 +357,6 @@ public class Profession
 
     protected void HandleNewProfDescrpSavedAndPrevJob(Job newJo)
     {
-        //if (_person==null)
-        //{
-        //    return;
-        //}
-
         _person.PrevJob = _person.SavedJob;
         _person.SavedJob = newJo;
         ProfDescription = newJo;
@@ -561,9 +559,14 @@ public class Profession
         if (!_router.IsRouteReady || !_routerBack.IsRouteReady)
         {
             _router.Update();
-            _routerBack.Update();
-        }
-        else if (_router.IsRouteReady && _routerBack.IsRouteReady)
+
+            //for foreseter that 1st does Router1 then RouterBack
+            if (_routerBack!=null)
+            {
+                _routerBack.Update();
+            }
+        }                                 //for forrester
+        else if (_router.IsRouteReady && _routerBack!=null && _routerBack.IsRouteReady)
         {
             _readyToWork = true;
             _routerActive = false;
@@ -665,9 +668,11 @@ public class Profession
 
             //so its doesnt play 'isWheelBarrow' ani in the midle of nothing tht sometimes
             //wheel lead to wheelBarrowers that have not a WheelBarrpw to play the ani while carrying a box 
-            if (ProfDescription!=Job.WheelBarrow && ProfDescription!=Job.Docker)
+            if (ProfDescription!=Job.WheelBarrow && ProfDescription!=Job.Docker &&
+                _person.Body.CurrentAni!= _myAnimation)//we need to pass it only once. dont keep doing it 
             {
                 _person.Body.TurnCurrentAniAndStartNew(_myAnimation);
+                //Debug.Log("_myAnimation sent on siteWork:"+_myAnimation+ " .profDesc:"+ProfDescription);
             }
             
             
@@ -1046,6 +1051,20 @@ public class Profession
 //            Debug.Log("workingNow:" + _person.MyId);
             WorkingNow = true;
         }
+    }
+
+
+    /// <summary>
+    /// so I dont have to save load those
+    /// </summary>
+    private void FigureProdCarryingAndAmt()
+    {
+        if (_person == null || _person.Inventory.InventItems.Count == 0)
+        {
+            return;
+        }
+        amtCarrying = _person.Inventory.InventItems[0].Amount;
+        prodCarrying = _person.Inventory.InventItems[0].Key;
     }
 
     private float amtCarrying;

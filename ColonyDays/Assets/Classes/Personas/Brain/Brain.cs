@@ -1695,17 +1695,6 @@ public class Brain
         CheckAround(false, false, false, false, false, true);
     }
 
-    //void NewBornStuff()
-    //{
-    //    //new borns wont have this set yet 
-    //    if (_isAllSet || !string.IsNullOrEmpty(_person.IsBooked))
-    //    {
-    //        return;
-    //    }
-
-       
-    //}
-
     /// <summary>
     /// This method is the one that will look for new buildings if the respective flag is true 
     /// </summary>
@@ -2652,6 +2641,13 @@ public class Brain
         {
             return;
         }
+
+        //so leaves the reRoutes free
+        PersonPot.Control.RemoveMeFromSystem(_person.MyId);
+        PersonPot.Control.WorkersRoutingQueue.RemoveMeFromSystem(_person.MyId);
+        //can reroute again later when is his turn again
+        PersonPot.Control.RemovePersonFromPeopleChecked(_person.MyId);
+
 
         MoveToNewHome.RemovePeopleDict(p);
         Debug.Log("Blaclisted:"+p +" ."+_person.MyId);

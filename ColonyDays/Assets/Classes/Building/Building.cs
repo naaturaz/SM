@@ -2399,8 +2399,14 @@ public class Building : General, Iinfo
             return;
         }
 
-        var rawsOnNeed = BuildingPot.Control.ProductionProp.ReturnIngredients(CurrentProd.Product);
+        ////if masory need wheelBarrows 
+        //if (HType == H.Masonry && Inventory.ReturnAmtOfItemOnInv(P.WheelBarrow) < 10)
+        //{
+        //    Order prodNeed = new Order(P.WheelBarrow, MyId, 100);
+        //    AddToClosestWheelBarrowAsOrder(prodNeed, H.None);
+        //}
 
+        var rawsOnNeed = BuildingPot.Control.ProductionProp.ReturnIngredients(CurrentProd.Product);
         if (rawsOnNeed == null)
         {
             return;
@@ -2419,6 +2425,8 @@ public class Building : General, Iinfo
                 AddToClosestWheelBarrowAsOrder(prodNeed, H.None);
             }
         }
+
+        
     }
 
 

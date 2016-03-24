@@ -703,7 +703,7 @@ public class Person : General
     void Nutrive(float amt, P item)
     {
         var nutriValue = BuildingPot.Control.ProductionProp.Food1.FindNutritionValue(item).NutritionVal;
-        _nutritionLevel += (amt * nutriValue);
+        _nutritionLevel += (amt * nutriValue * 5); //the five is bz people is dying with food in there places 
 
         //UnityEngine.Debug.Log(MyId + " nutrived nutriVal:" + amt * nutriValue + ". curr:" + _nutritionLevel);
     }
@@ -715,10 +715,10 @@ public class Person : General
     {
         if (_nutritionLevel < 20)
         {
-            ChangeHappinesBy(-3);//-.1
+            ChangeHappinesBy(-1);//   -5
             //UpdateInfo("Starving");
         }
-        if (_nutritionLevel < -345)//-45  -5  -545
+        if (_nutritionLevel < -200)//-545   -345
         {
             if (string.IsNullOrEmpty(IsBooked))
             {
@@ -783,7 +783,7 @@ public class Person : General
         }
 
         var amtDiffFoods = Home.Inventory.FoodCatItems.Count;
-        ChangeHappinesBy(amtDiffFoods * 0.1f);
+        ChangeHappinesBy(amtDiffFoods * 0.3f);
     }
 
     /// <summary>
@@ -1468,12 +1468,24 @@ public class Person : General
         }
 
         //float amt = (int)HowMuchINeedToBe100PointsFeed(item);
-        float gotAmt = Home.Inventory.RemoveByWeight(item, 20);//wil eat 8kg of something for GC
+        float gotAmt = Home.Inventory.RemoveByWeight(item, ReturnAmountToEat());//wil eat *kg of something for GC
 
-        ChangeHappinesBy(0.1);
+        ChangeHappinesBy(.1 * gotAmt);//.1
         Nutrive(gotAmt, item);
     }
 
+    /// <summary>
+    /// bz when negative needs to eat way more 
+    /// </summary>
+    /// <returns></returns>
+    int ReturnAmountToEat()
+    {
+        if (NutritionLevel < 0)
+        {
+            return 60;
+        }
+        return 20;
+    }
 
 
 
@@ -1665,12 +1677,8 @@ public class Person : General
 
     float ProfessionMultiplierCarryWeight()
     {
-        var isWheel = PrevJob == Job.WheelBarrow || ProfessionProp.ProfDescription == Job.WheelBarrow;
-        var isDocker = PrevJob == Job.Docker || ProfessionProp.ProfDescription == Job.Docker;
-        var thereAreWheels = GameController.ThereIsAtLeastOneOfThisOnStorage(P.WheelBarrow);
-
         var mul = 1;
-        if (ProfessionProp != null && (isWheel || isDocker) && thereAreWheels)
+        if (_body.CanSpawnWheelBarrow())
         {
             mul = 4;
         }

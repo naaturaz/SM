@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -24,7 +25,6 @@ public class Forester : Profession
         //in case was a Wheelbarrow the prevProfession and when home route back gives problem 
         person.PrevOrder = null;
 
-        IsRouterBackUsed = true;
         MyAnimation = "isAxe";
         _person = person;
         HandleNewProfDescrpSavedAndPrevJob(Job.Forester);
@@ -39,17 +39,11 @@ public class Forester : Profession
         LoadAttributes(pF.ProfessionProp);
 
         //so the detecting CheckIfShouldReDoProf() works 
-        FindSpawnersToMine();
+        //FindSpawnersToMine();
     }
 
     private void Init()
     {
-        //AddMeToWaitListOnSystem();
-        //if (!PersonPot.Control.OnSystemNow(_person.MyId))
-        //{
-        //    _takeABreakNow = true;
-        //    return;
-        //}
 
         FindSpawnersToMine();
         OrderedSites = OrderSpawners(_spawnersList);
@@ -71,6 +65,10 @@ public class Forester : Profession
         //moving the route point a bit towards the origin so when chopping tree its not inside the tree 
         FinRoutePoint = Vector3.MoveTowards(closerAnchorToUs, _person.Work.transform.position, MoveTowOrigin * 0.05f);//2,5
 
+        routerBackWasInit = false;
+        startIdleTime = 0;
+
+
 
         InitRoute();
     }
@@ -90,6 +88,8 @@ public class Forester : Profession
     {
         //Debug.Log("Forester InitingRoute:"+_person.MyId);
         RouterActive = true;
+        IsRouterBackUsed = true;
+
 
         //bz dummy.DummyIdSpawner
         dummy = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy);
@@ -101,7 +101,6 @@ public class Forester : Profession
 
         //so it doesnt add like a door at the end when gets to tree
         Router1 = new CryRouteManager(_person.Work, dummy, _person, HPers.None, true, false);
-        RouterBack = new CryRouteManager(dummy, _person.FoodSource, _person,  HPers.InWorkBack, false, true);
     }
 
     Structure CreateDummy()
@@ -165,6 +164,8 @@ public class Forester : Profession
 
     public override void Update()
     {
+        CheckIfRoute1IsReady();
+        CheckIfStillEleWasBlackListed();
         CheckIfShouldReDoProf();
 
         if (_takeABreakNow)
@@ -175,8 +176,48 @@ public class Forester : Profession
 
         base.Update();
         Execute();
-
         //GameScene.print("Update on Foreset ");
+    }
+
+    /// <summary>
+    /// Bz is he blacklisted his element he need to get a break and start all over again
+    /// </summary>
+    private void CheckIfStillEleWasBlackListed()
+    {
+        if (_person==null || _stillElement==null)
+        {
+            return;
+        }
+
+        if (_person.Brain.BlackList.Contains(_stillElement.MyId))
+        {
+            Debug.Log("Forester take break:"+_person.MyId);
+            _takeABreakNow = true;
+        }
+    }
+
+
+    private bool routerBackWasInit;
+    /// <summary>
+    /// So it doesnt blackList nothing in the second Route if he is blackListug a tree in the Router1
+    /// </summary>
+    private void CheckIfRoute1IsReady()
+    {
+        //if (dummy == null || _person == null)
+        //{
+        //    if (dummy == null)
+        //    {
+        //        Init();
+        //    }
+
+        //    return;
+        //}
+
+        if (RouterActive && Router1.IsRouteReady && !routerBackWasInit)
+        {
+            routerBackWasInit=true;
+            RouterBack = new CryRouteManager(dummy, _person.FoodSource, _person, HPers.InWorkBack, false, true);
+        }
     }
 
     /// <summary>

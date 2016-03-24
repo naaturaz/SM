@@ -342,6 +342,19 @@ public class BuildersManager
         _passedQueue.Add(qEle.Key);
         qEle.WasUsedToGreenLightOrDestroy = true;
     }
+
+
+#region User Changing Order of Buildings to be Greenlight and Greenlit
+
+
+
+
+
+
+
+
+
+#endregion 
 }
 
 public class Construction

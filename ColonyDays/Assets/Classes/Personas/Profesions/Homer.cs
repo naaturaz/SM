@@ -8,7 +8,7 @@ using UnityEngine;
  */
 public class Homer : Profession
 {
-    private Structure MyFoodSrc;//the food src of the homer
+    private Structure BuildToGoBackTo;//the food src of the homer
 
     public Homer(Person person, PersonFile pF)
     {
@@ -28,26 +28,35 @@ public class Homer : Profession
     void LoadingFromFile(Person person, PersonFile pF)
     {
         _person = person;
+
         LoadAttributes(pF.ProfessionProp);
-        Init();
+        
+        //so drops stuff in there 
+        BuildToGoBackTo = BuildToGoBackToDefine();
+
+        //Init();
     }
 
     private void Init()
     {
-        //if (IsWorkNaval())
-        //{
-        //    _person.PrevOrder.Product=P.None;
-        //}
-
-        MyFoodSrc = _person.FoodSource;
         //Debug.Log(_person.MyId + " new Homer");
-
+        HandleNewProfDescrpSavedAndPrevJob(Job.Homer);
+        BuildToGoBackTo = BuildToGoBackToDefine();
         FinRoutePoint = DefineFinRoute();
 
-        HandleNewProfDescrpSavedAndPrevJob(Job.Homer);
-
-
         InitRoute();
+    }
+
+    Structure BuildToGoBackToDefine()
+    {
+        //if is a wheelbarrow working from its DestinyBuild will go back to Work. and from there to home.
+        //this is to make it neat with the PersonalObject spawned
+        if (_person.PrevJob == Job.WheelBarrow && _person.Work!=null && _person.Work.HType==H.Masonry)
+        {
+            return _person.Work;
+        }
+
+        return _person.FoodSource;
     }
 
     bool IsWorkNaval()
@@ -63,7 +72,7 @@ public class Homer : Profession
         }
         else
         {
-            return MyFoodSrc.SpawnPoint.transform.position;
+            return BuildToGoBackTo.SpawnPoint.transform.position;
         }
     }
 
@@ -74,7 +83,7 @@ public class Homer : Profession
         //dummy.transform.position = FinRoutePoint;
         //dummy.HandleLandZoning();
 
-        if (MyFoodSrc != null)
+        if (BuildToGoBackTo != null)
         {
             InitRouteWithFoodSrc();
         }
@@ -106,9 +115,9 @@ public class Homer : Profession
             building = _person.Work;
         }
 
-        Router1 = new CryRouteManager(building, MyFoodSrc, _person);
+        Router1 = new CryRouteManager(building, BuildToGoBackTo, _person);
         //Router1 = new RouterManager(building, MyFoodSrc, _person, HPers.InWork);
-        RouterBack = new CryRouteManager(MyFoodSrc, _person.Home, _person,  HPers.InWork);
+        RouterBack = new CryRouteManager(BuildToGoBackTo, _person.Home, _person,  HPers.InWork);
     }
 
     public override void Update()
@@ -130,8 +139,8 @@ public class Homer : Profession
         if (ExecuteNow)
         {
             ExecuteNow = false;
-            DropAllMyGoods(MyFoodSrc);
-            _person.GetFood(MyFoodSrc);
+            DropAllMyGoods(BuildToGoBackTo);
+            _person.GetFood(BuildToGoBackTo);
 
             _person.Body.ResetPersonalObject();
 

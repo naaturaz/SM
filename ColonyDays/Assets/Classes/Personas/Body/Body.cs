@@ -564,31 +564,55 @@ public class Body //: MonoBehaviour //: General
 
     private void AddressWheelBarrowingAni()
     {
-        if (_person.ProfessionProp == null || _person.Brain == null )
-        {
-            return;
-        }
-
-        var fromFoodSrcToDropPlace = Location == HPers.InWork && GoingTo == HPers.WheelBarrow;
-        var fromDropPlaceBackToFoodSrc = Location == HPers.Work && GoingTo == HPers.InWork 
-            && _person.Brain.CurrentTask == HPers.WheelBarrow;
-
-        if (!GameController.ThereIsAtLeastOneOfThisOnStorage(P.WheelBarrow))
-        {
-            return;
-        }
-
-        //so only spawns the WheelBarrow from FoodSrc to dropplace and in its way back 
-        if (!fromFoodSrcToDropPlace && !fromDropPlaceBackToFoodSrc)
-        {
-            return;   
-        }
-
-        if ((_person.Work!=null && _person.Work.IsNaval()) || 
-            (_person.ProfessionProp.ProfDescription == Job.WheelBarrow || _person.PrevJob == Job.WheelBarrow))
+        if (CanSpawnWheelBarrow())
         {
             TurnCurrentAniAndStartNew("isWheelBarrow");
         }
+    }
+
+    public bool CanSpawnWheelBarrow()
+    {
+        if (_person.ProfessionProp == null || _person.Brain == null || _person.Work == null)
+        {
+            return false;
+        }
+
+        var isNavalWorker = _person.Work.IsNaval();
+
+        var fromWorkToBuildingToPickAmt = Location == HPers.Work && GoingTo == HPers.InWork
+            && _person.Brain.CurrentTask == HPers.Working ;
+
+        var fromPickingPlaceToDestiny = Location == HPers.InWork && GoingTo == HPers.WheelBarrow
+            && _person.Brain.CurrentTask == HPers.Working;
+
+        var fromDestinyBackToWork = Location == HPers.Work && GoingTo == HPers.InWork
+            &&
+            ((_person.Brain.CurrentTask == HPers.WheelBarrow && !isNavalWorker) || 
+                                                          //so docker doesnt come back with
+                                                          //WheelBarow and leave it on Storage
+             (_person.Brain.CurrentTask == HPers.None && !isNavalWorker));
+
+
+        if (!GameController.ThereIsAtLeastOneOfThisOnStorage(P.WheelBarrow))
+        {
+            return false;
+        }
+
+        //so only spawns the WheelBarrow from FoodSrc to dropplace and in its way back 
+        if (!fromWorkToBuildingToPickAmt && !fromPickingPlaceToDestiny && !fromDestinyBackToWork)
+        {
+            return false;
+        }
+
+        //so prevJob being wheelBarrow and working on a Farm Spawns wheelbarrow
+        bool isCurrentWheelBarrow = (_person.ProfessionProp.ProfDescription == Job.WheelBarrow ||
+                                     _person.PrevJob == Job.WheelBarrow) && _person.Work.MyId.Contains("Masonry");
+
+        if (isNavalWorker || isCurrentWheelBarrow)
+        {
+            return true;
+        }
+        return false;
     }
 
     string DefineWheelAni()

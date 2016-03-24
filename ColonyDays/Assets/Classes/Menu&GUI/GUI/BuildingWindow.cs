@@ -329,7 +329,9 @@ public class BuildingWindow : GUIElement {
         }
 
         return res 
+#if UNITY_EDITOR
            + DebugInfo()
+#endif
             ;
     }
 

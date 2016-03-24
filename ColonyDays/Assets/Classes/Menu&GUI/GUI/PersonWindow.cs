@@ -102,7 +102,9 @@ public class PersonWindow : GUIElement {
                      + "\n Happy:" + _person.Happinnes
                      + "\n YearsOfSchool:" + _person.YearsOfSchool;
 
+#if UNITY_EDITOR
         res += DebugInfo();
+#endif
         return res;
     }
 
