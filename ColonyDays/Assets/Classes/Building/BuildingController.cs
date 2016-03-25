@@ -308,7 +308,7 @@ public class BuildingController : BuildingPot
             hTypeP == H.HouseA || hTypeP == H.HouseB || hTypeP == H.HouseTwoFloor
             || hTypeP == H.HouseMed// || hTypeP == H.HouseMedB 
             || hTypeP == H.HouseLargeA || hTypeP == H.HouseLargeB || hTypeP == H.HouseLargeC
-            || hTypeP == H.Shack)
+            )
         {
             current = HousesWithSpace;
             return HPers.Home;
@@ -345,7 +345,7 @@ public class BuildingController : BuildingPot
            hTypeP == H.HouseA || hTypeP == H.HouseB || hTypeP == H.HouseTwoFloor
            || hTypeP == H.HouseMed// || hTypeP == H.HouseMedB 
            || hTypeP == H.HouseLargeA || hTypeP == H.HouseLargeB || hTypeP == H.HouseLargeC
-           || hTypeP == H.Shack)
+           )
         {
             return HPers.Home;
         }

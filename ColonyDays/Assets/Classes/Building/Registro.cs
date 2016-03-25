@@ -623,6 +623,35 @@ public class Registro : MonoBehaviour
         return res;
     }
 
+    /// <summary>
+    /// The poly pass shoud be really really small like a point. to this be effcective
+    /// Created to find what is coliiding with a Tile 
+    /// </summary>
+    /// <param name="poly"></param>
+    /// <returns></returns>
+    public H IsCollidingWithWhat(List<Vector3> poly)
+    {
+        ///////////////////////////////////////////////////////////**********************************************
+        // 12 hours to find this OMG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // I was creating the recatblgele and not inverting Y.. then I invert Y but didint inverted in 
+        //IsColliding() cheat !!!! And i knew it bz i inverted the big rectangle...
+        //with the rectangles inverted works like a charm... we have to do it bz im using North as bigger
+        //and south as leess... in the Rect cordinates is the other way arounds
+        Rect polyPass = U2D.FromPolyToRect(poly);
+        polyPass = U2D.ReturnRectYInverted(polyPass);
+        curr = polyPass;
+
+        for (int i = 0; i < _allRegFile.Count; i++)
+        {
+            if (_allRegFile[i].IsCollidingWithMe(polyPass))
+            {
+                return _allRegFile[i].HType;
+            }
+        }
+
+        return H.None;
+    }
+
     internal List<Family> AllFamilies()
     {
         List<Family>  res = new List<Family>();

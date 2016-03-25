@@ -219,13 +219,13 @@ public enum H
     AnimalFarmSmall, AnimalFarmMed, AnimalFarmLarge, AnimalFarmXLarge,
     FieldFarmSmall, FieldFarmMed, FieldFarmLarge, FieldFarmXLarge,
     //raw F4
-    Ceramic, FishSmall, FishRegular, Mine, MountainMine, Resin, Wood, BlackSmith, SaltMine,
+    Ceramic, Fishermen, FishRegular, Mine, MountainMine, Resin, LumberMill, BlackSmith, SaltMine,
     //prod F5
-    Brick, Carpintery, Cigars, Mill, Slat, Tilery, CannonParts, Rum, Chocolate, Ink,
+    Brick, Carpintery, Cigars, Mill, Slat, Tilery, CannonParts, Distillery, Chocolate, Ink,
     //industry F6
-    Cloth, GunPowder, Paper, Printer, CoinStamp, Silk, SugarMill, Foundry, SteelFoundry,
+    Cloth, GunPowder, Paper_Mill, Printer, CoinStamp, Silk, SugarMill, Foundry, SteelFoundry,
     //Trade F7
-    Dock, DryDock, Supplier, StorageSmall, StorageMed, StorageBig, StorageBigTwoDoors, StorageExtraBig,
+    Dock, Shipyard, Supplier, StorageSmall, StorageMed, StorageBig, StorageBigTwoDoors, StorageExtraBig,
     //gov F8
     //Clinic, CommerceChamber, Customs, 
     Library, School, TradesSchool, 
@@ -234,7 +234,7 @@ public enum H
     //Religous
     Church,
     //Old
-    Tavern, Shack,
+    Tavern,
 
     //Militar
     PostGuard, Fort, Morro,
@@ -399,23 +399,23 @@ public enum StFarm
 public enum StRaw //for structures game structure.cs 
 {
     //Raw
-    Ceramic, FishSmall, FishRegular, Mine, MountainMine, Resin, Wood, BlackSmith, SaltMine
+    Ceramic, Fishermen, FishRegular, Mine, MountainMine, Resin, LumberMill, BlackSmith, SaltMine
 }
 
 public enum StProd //for structures game structure.cs 
 {
     //Production
-    Brick, Carpintery, Cigars, Mill, Slat, Tilery, CannonParts, Rum, Chocolate, Ink,
+    Brick, Carpintery, Cigars, Mill, Slat, Tilery, CannonParts, Distillery, Chocolate, Ink,
 }
 
 //Ind
 public enum StInd
-{ Cloth, GunPowder, Paper, Printer, CoinStamp, Silk, SugarMill, Foundry, SteelFoundry }
+{ Cloth, GunPowder, Paper_Mill, Printer, CoinStamp, Silk, SugarMill, Foundry, SteelFoundry }
 
 public enum StTrade //for structures game structure.cs 
 {
     //Trade
-    Dock, DryDock, Supplier, StorageSmall, StorageMed, StorageBig, StorageBigTwoDoors, StorageExtraBig,
+    Dock, Shipyard, Supplier, StorageSmall, StorageMed, StorageBig, StorageBigTwoDoors, StorageExtraBig,
 }
 
 
@@ -432,7 +432,7 @@ public enum StOther //for structures game structure.cs
     //Religous
     Church,
     //Old
-    Tavern, Shack
+    Tavern,
 }
 
 public enum StMil //for structures game structure.cs 
@@ -510,5 +510,11 @@ public enum Month
     None
 }
 
+
+public enum Tile//for roads
+{
+    NW, N, NE, E, SE, S, SW, W, Inside,
+    None
+}
 
 public static class Enums { }

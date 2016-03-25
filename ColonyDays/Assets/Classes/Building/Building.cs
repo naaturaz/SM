@@ -430,7 +430,7 @@ public class Building : General, Iinfo
             _rotationFacerIndex = UnivRotationFacer;
             Inventory = new Inventory(MyId, HType); 
   
-            IfShackResaveInventoryOnRegistro();
+            //IfShackResaveInventoryOnRegistro();
         }
 
 
@@ -563,25 +563,7 @@ public class Building : General, Iinfo
     }
 
 
-    /// <summary>
-    /// Needs to be save bz shack is added by the builder to the registro before the inventory is instantiated
-    /// </summary>
-    void IfShackResaveInventoryOnRegistro()
-    {
-        if (HType != H.Shack)
-        {
-            return;
-        }
-
-        int index = BuildingPot.Control.Registro.AllRegFile.FindIndex(a => a.MyId == MyId);
-
-        if (index == -1)
-        {
-            return;
-        }
-
-        BuildingPot.Control.Registro.AllRegFile[index].Inventory = Inventory;
-    }
+  
 
 
     #region Bad Ass
@@ -600,7 +582,7 @@ public class Building : General, Iinfo
 
     public void CreateProjector()
     {
-        if (Category != Ca.None && Projector == null && !MyId.Contains("Dummy") &&
+        if (Category != Ca.None && Category != Ca.Way && Projector == null && !MyId.Contains("Dummy") &&
             !MyId.Contains("Shack"))
         {
             Projector = (MyProjector) Create(Root.projector, container: transform);
@@ -988,8 +970,8 @@ public class Building : General, Iinfo
 
     #region Create For Double Bound Strucutres Such as Maritimes and UnderTerra
 
-    List<H> doubleBounds = new List<H>(){H.FishRegular, H.FishSmall, 
-        H.Dock, H.DryDock, H.Supplier,
+    List<H> doubleBounds = new List<H>(){H.FishRegular, H.Fishermen, 
+        H.Dock, H.Shipyard, H.Supplier,
         H.MountainMine, H.SaltMine};
     private GameObject _maritimeBound;
     private GameObject _terraBound;
@@ -1443,11 +1425,7 @@ public class Building : General, Iinfo
             Families = new Family[1];
             Families[0] = new Family(6, MyId, 0);
         }
-        else if (HType == H.Shack)
-        {
-            Families = new Family[1];
-            Families[0] = new Family(3, MyId,0);
-        }
+        
         //resave familie
         BuildingPot.Control.Registro.ResaveOnRegistro(MyId);
     }
@@ -1626,7 +1604,7 @@ public class Building : General, Iinfo
 
     void SetHouseConfort()
     {
-        if (HType == H.Shack || HType == H.Bohio)
+        if ( HType == H.Bohio)
         {
             _confort = 1;
         }
@@ -3044,7 +3022,7 @@ public class Building : General, Iinfo
 
     public bool IsNaval()
     {
-        if (HType == H.DryDock || HType == H.Supplier || HType == H.Dock)
+        if (HType == H.Shipyard || HType == H.Supplier || HType == H.Dock)
         {
             return true;
         }
@@ -3058,7 +3036,7 @@ public class Building : General, Iinfo
             return;
         }
 
-        if (HType == H.DryDock || HType == H.Supplier || HType == H.Dock)
+        if (HType == H.Shipyard || HType == H.Supplier || HType == H.Dock)
         {
             _dock = new Dock(this);
             _dispatch = new Dispatch();

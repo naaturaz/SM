@@ -69,7 +69,7 @@ public class DockManager
 
     bool IsDockType(H HType)
     {
-        if (HType == H.DryDock || HType == H.Supplier || HType == H.Dock)
+        if (HType == H.Shipyard || HType == H.Supplier || HType == H.Dock)
         {
             return true;
         }

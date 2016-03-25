@@ -1406,11 +1406,11 @@ public class Person : General
     /// </summary>
     private Job ReturnJobType()
     {
-        if (Work.HType == H.Wood)
+        if (Work.HType == H.LumberMill)
         {
             return Job.Forester;
         }
-        else if (Work.HType == H.Dock || Work.HType == H.DryDock || Work.HType == H.Supplier)
+        else if (Work.HType == H.Dock || Work.HType == H.Shipyard || Work.HType == H.Supplier)
         {
             return Job.Docker;
         }
@@ -1418,7 +1418,7 @@ public class Person : General
         {
             return Job.Builder;
         }
-        else if (Work.HType == H.FishSmall || Work.HType == H.FishRegular)
+        else if (Work.HType == H.Fishermen || Work.HType == H.FishRegular)
         {
             return Job.FisherMan;
         }

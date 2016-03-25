@@ -203,7 +203,7 @@ public class Structure : StructureParent
 
     void CreateArrow()
     {
-        if (b.CurrentSpawnBuild == null || _arrow != null || MyId.Contains(H.Dummy.ToString()) || HType == H.Shack)
+        if (b.CurrentSpawnBuild == null || _arrow != null || MyId.Contains(H.Dummy.ToString()) )
         { return;}
 
         _arrow = Create(Root.arrow, new Vector3());

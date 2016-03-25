@@ -222,8 +222,19 @@ public class DragSquare : Trail
     {
         if (loopCounter < pos.Count)
         {
-            CreatePlane temp = CreatePlane.CreatePlan(Root.createPlane, Root.RetMaterialRoot(MaterialKey),
-                pos[loopCounter], scale: Program.gameScene.ScaleSmallRoadUnitFarm, container: containerP);
+            CreatePlane temp = null;
+
+            if (HType == H.Road)
+            {
+                temp = CreatePlane.CreatePlanTile(this, Root.createPlane, Root.RetMaterialRoot(MaterialKey),
+                    pos[loopCounter], scale: Program.gameScene.ScaleSmallRoadUnitFarm, container: containerP);
+            }
+            else
+            {
+                temp = CreatePlane.CreatePlan(Root.createPlane, Root.RetMaterialRoot(MaterialKey),
+                pos[loopCounter], scale: Program.gameScene.ScaleSmallRoadUnitFarm, container: containerP, hType: HType);
+            }
+
 
 
             _planesSoil.Add(temp);

@@ -140,12 +140,33 @@ public class Homer : Profession
         {
             ExecuteNow = false;
             DropAllMyGoods(BuildToGoBackTo);
-            _person.GetFood(BuildToGoBackTo);
+
+
+            if (ExDockerIsGettingFood())
+            {
+                _person.GetFood(BuildToGoBackTo);
+            }
+            else if (_person.PrevJob != Job.Docker)
+            {
+                _person.GetFood(BuildToGoBackTo);
+            }
 
             _person.Body.ResetPersonalObject();
-
             ComingBackToOffice();
         }
+    }
+
+    /// <summary>
+    /// As exDocker will have wheelbarrow willget food once every 4 times random
+    /// </summary>
+    /// <returns></returns>
+    bool ExDockerIsGettingFood()
+    {
+        if (_person.PrevJob!= Job.Docker)
+        {
+            return false;
+        }
+        return UMath.GiveRandom(0, 4) == 0;
     }
 
     private void CheckWhenDone()

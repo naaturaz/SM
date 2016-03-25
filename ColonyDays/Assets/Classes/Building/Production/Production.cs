@@ -161,8 +161,8 @@ public class Production  {
 
         List<InputElement> prodFormu1 = new List<InputElement>() { element, _eleWoodComb, tonelEle };
         List<InputElement> prodFormu2 = new List<InputElement>() { element, _eleCoalComb, tonelEle };
-        InputProdCheckAndAdd(new ProductInfo(P.Rum, prodFormu1, H.Rum));
-        InputProdCheckAndAdd(new ProductInfo(P.Rum, prodFormu2, H.Rum));
+        InputProdCheckAndAdd(new ProductInfo(P.Rum, prodFormu1, H.Distillery));
+        InputProdCheckAndAdd(new ProductInfo(P.Rum, prodFormu2, H.Distillery));
     }
     private void Chocolate()
     {
@@ -222,7 +222,7 @@ public class Production  {
     {
         InputProdCheckAndAdd(new ProductInfo(P.Ceramic, null, H.Ceramic));
 
-        InputProdCheckAndAdd(new ProductInfo(P.Fish, null, new List<H>() { H.FishSmall, H.FishRegular }));
+        InputProdCheckAndAdd(new ProductInfo(P.Fish, null, new List<H>() { H.Fishermen, H.FishRegular }));
 
 
         //animal farms
@@ -233,7 +233,7 @@ public class Production  {
 
 
 
-        InputProdCheckAndAdd(new ProductInfo(P.Wood, null, H.Wood));
+        InputProdCheckAndAdd(new ProductInfo(P.Wood, null, H.LumberMill));
         InputProdCheckAndAdd(new ProductInfo(P.Salt, null, H.SaltMine));
         InputProdCheckAndAdd(new ProductInfo(P.Tile, null, H.Tilery));
     }
@@ -420,8 +420,8 @@ public class Production  {
         List<InputElement> formula1 = new List<InputElement>() { eleInputWood, eleWoodComb };
         //2nd forumala that do paper 
         List<InputElement> formula2 = new List<InputElement>() { eleInputWood, eleCoalComb };
-        InputProdCheckAndAdd(new ProductInfo(P.Paper, formula1, H.Paper));
-        InputProdCheckAndAdd(new ProductInfo(P.Paper, formula2, H.Paper));
+        InputProdCheckAndAdd(new ProductInfo(P.Paper, formula1, H.Paper_Mill));
+        InputProdCheckAndAdd(new ProductInfo(P.Paper, formula2, H.Paper_Mill));
 
 
         //paper news

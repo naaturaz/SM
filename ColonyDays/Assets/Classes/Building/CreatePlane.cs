@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 
 /*In this class we create and update a obj that usually is a block*/
@@ -12,6 +13,10 @@ public class CreatePlane : Building
     private bool _isAnInVisiblePlane;
 
     private GameObject _geometry;
+
+    private Tile _tile = Tile.None;//the tile is like NE corner
+    private string _spawnerID;//the building spwaned this.  used for tiles
+
     /// <summary>
     /// This is the gameObj that is rendered 
     /// </summary>
@@ -19,6 +24,12 @@ public class CreatePlane : Building
     {
         get { return _geometry; }
         set { _geometry = value; }
+    }
+
+    public string SpawnerId
+    {
+        get { return _spawnerID; }
+        set { _spawnerID = value; }
     }
 
     public Material Material
@@ -70,18 +81,39 @@ public class CreatePlane : Building
         return obj;
     }
 
-
-
-    public void AssignSharedMaterial(Material mat, string materialRoot)
+    /// <summary>
+    /// Will find which tile is like NE corner 
+    /// </summary>
+    static public CreatePlane CreatePlanTile(Building spawner, string root, string materialRoot, Vector3 origen = new Vector3(), string name = "", Transform container = null,
+     float raiseFromFloor = 0.09f, Material mat = null, Vector3 scale = new Vector3(), bool isAnInvisiblePlane = false,
+        bool isLoadingFromFile = false)
     {
+        WAKEUP = true;
+        CreatePlane obj = null;
+        obj = (CreatePlane)Resources.Load(root, typeof(CreatePlane));
+        obj = (CreatePlane)Instantiate(obj, origen, Quaternion.identity);
+        obj.HType = spawner.HType;
+        obj.transform.name = obj.MyId = obj.Rename(obj.transform.name, obj.Id, obj.HType, name);
+        obj.Scale = scale;
+
         if (mat == null)
         {
-            Geometry.GetComponent<Renderer>().sharedMaterial = (Material)Resources.Load(materialRoot);
+            obj.Material = (Material)Resources.Load(materialRoot);
         }
-        else Geometry.GetComponent<Renderer>().sharedMaterial = mat;
+        else obj.Material = mat;
 
 
+        obj.RaisedFromFloor = raiseFromFloor;
+        obj.IsAnInVisiblePlane = isAnInvisiblePlane;
+
+        if (container != null) { obj.transform.parent = container; }
+
+        obj.SpawnerId = spawner.MyId;
+        obj.IsLoadingFromFile = isLoadingFromFile;
+        return obj;
     }
+
+
 
 
 
@@ -114,6 +146,12 @@ public class CreatePlane : Building
         
         //InitialColor = _material.color;
 
+        //if (IsLoadingFromFile)
+        //{
+        //    return;
+        //}
+
+
         //This is when the Plane is called from the loading fuction
         if (_scale != new Vector3() && _scale != null)
         {
@@ -139,7 +177,204 @@ public class CreatePlane : Building
 	// Update is called once per frame
     void Update()
     {
+
+        //then wait so all gets loaded into Regist
+        if (IsLoadingFromFile && BuildingPot.Control.CurrentSpawnBuild != null)
+        {
+            return;
+        }
+
+        SetCurrentTile();
+        CheckIfNewRoadIsBuilt();
     }
+
+
+
+
+    #region New Road Checking which Tile is 
+
+    private bool beAlert;
+    private void CheckIfNewRoadIsBuilt()
+    {
+        if (BuildingPot.Control.CurrentSpawnBuild != null && BuildingPot.Control.CurrentSpawnBuild.HType==H.Road)
+        {
+            beAlert = true;
+        }
+
+        if (beAlert && BuildingPot.Control.CurrentSpawnBuild == null)
+        {
+            beAlert=false;
+            //so updates material    
+            DetermineTileImAndAssignSharedMat();
+            SaveTile();
+        }
+    }
+
+    private void SaveTile()
+    {
+        //throw new NotImplementedException();
+    }
+
+
+    private void SetCurrentTile()
+    {
+        var build = Brain.GetBuildingFromKey(SpawnerId);
+
+        //lets wait all gets loaded into Registro
+        if (IsLoadingFromFile && build == null)
+        {
+            return;
+        }
+        
+        if (_tile != Tile.None ||  HType != H.Road || !build.PositionFixed)
+        {
+            return;
+        }
+        DetermineTileImAndAssignSharedMat();
+
+        Geometry.transform.Rotate(new Vector3(0, 90, 0));
+        //addressing the rotation
+        Scale = new Vector3(Scale.z, 0.001f, Scale.x);
+        _geometry.transform.localScale = Scale;
+    }
+
+    void DetermineTileImAndAssignSharedMat()
+    {
+        DetermineWhichTileIAm();
+        AssignSharedMaterial(ReturnTileMaterialRoot());
+        //UVisHelp.CreateText(transform.position, _tile + "", 20);
+    }
+
+    private void DetermineWhichTileIAm()
+    {
+        Tile N = FreeOn(Tile.N);
+        Tile S = FreeOn(Tile.S);
+        Tile W = FreeOn(Tile.W);
+        Tile E = FreeOn(Tile.E);
+
+        List<Tile> survey = new List<Tile>(){N, S, W, E};
+        DefineCurrentTile(survey);
+    }
+
+
+
+    /// <summary>
+    /// Will tell if has not tile on that direction 
+    /// </summary>
+    /// <param name="tile"></param>
+    /// <returns></returns>
+    private Tile FreeOn(Tile tile)
+    {
+        var polyToEval = ReturnPolyToEval(tile);
+        var collidinWith = BuildingPot.Control.Registro.IsCollidingWithWhat(polyToEval);
+
+        if (collidinWith == H.Road)
+        {
+            return Tile.None;
+        }
+        return tile;
+    }
+
+    /// <summary>
+    /// Will create the poly small. on the direction and will find if is coliiding with another 
+    /// </summary>
+    /// <param name="dir"></param>
+    /// <returns></returns>
+    List<Vector3> ReturnPolyToEval(Tile dir)
+    {
+        var x = m.SubDivide.XSubStep;
+        var z = m.SubDivide.ZSubStep;
+        var pos = new Vector3();
+        
+        if (dir == Tile.N)
+        {
+            pos = new Vector3(transform.position.x, transform.position.y, transform.position.z + z);
+        }
+        else if (dir == Tile.S)
+        {
+            pos = new Vector3(transform.position.x, transform.position.y, transform.position.z - z);
+        }
+        else if (dir == Tile.W)
+        {
+            pos = new Vector3(transform.position.x - x, transform.position.y, transform.position.z);
+        }
+        else if (dir == Tile.E)
+        {
+            pos = new Vector3(transform.position.x + x, transform.position.y, transform.position.z);
+        }
+
+        //UVisHelp.CreateHelpers(pos, Root.blueCube);
+
+        return UPoly.CreatePolyFromVector3(pos, 0.01f, 0.01f);
+
+    }
+
+    /// <summary>
+    /// Based on the survey will determine wht is currnet Tile
+    /// </summary>
+    /// <param name="survey"></param>
+    private void DefineCurrentTile(List<Tile> survey)
+    {
+        survey = CleanSurvey(survey);
+
+        if (survey.Count == 0)
+        {
+            _tile = Tile.Inside;
+        }
+        //like N or S
+        else if (survey.Count == 1)
+        {
+            _tile = survey[0];
+        }
+        else if (survey.Count == 2)
+        {   //(H)Enum.Parse(typeof(H), item.ToString());
+            //bz I ask them like NS then WS
+            _tile = (Tile)Enum.Parse(typeof(Tile), survey[0].ToString() + survey[1]);
+        }
+        else
+        {
+            throw new Exception("max is 2 CreatePlane DefineCurrentTile()");
+        }
+    }
+
+    /// <summary>
+    /// Will remove Tile.None
+    /// </summary>
+    /// <param name="survey"></param>
+    /// <returns></returns>
+    List<Tile> CleanSurvey(List<Tile> survey)
+    {
+        for (int i = 0; i < survey.Count; i++)
+        {
+            if (survey[i] == Tile.None)
+            {
+                survey.RemoveAt(i);
+                i--;
+            }
+        }
+        return survey;
+    }
+
+
+
+    string ReturnTileMaterialRoot()
+    {
+        if (_tile == Tile.None)
+        {
+            throw new Exception("Tile cant be  Tile.None ReturnTileMaterialRoot()");
+        }
+
+        return "Prefab/Mats/RoadTile/" + _tile;
+    }
+
+
+    public void AssignSharedMaterial(string materialRoot)
+    {
+
+        Geometry.GetComponent<Renderer>().sharedMaterial = (Material)Resources.Load(materialRoot);
+    }
+
+    #endregion
 
     //if is on the BigBox Class will correct minumulliy the scale for Big Box Prev Purposes
     protected bool corretMinimuScaleOnBigBox;
@@ -193,6 +428,8 @@ public class CreatePlane : Building
         get { return rectifyOnZ; }
         set { rectifyOnZ = value; }
     }
+
+
 
     /// <summary>
     /// this is created so all of them are perfect dont overlap 

@@ -102,7 +102,7 @@ public class BuildingSaveLoad : BuildingPot
             , container: Program.BuildsContainer.transform);
 
         DragSquare f = (DragSquare) Control.CurrentSpawnBuild;
-        f.PlanesSoil = CreatePlanes(regFile.PlaneOnAirPos, f.transform, regFile.TileScale, regFile.MaterialKey);
+        f.PlanesSoil = CreatePlanes(regFile.PlaneOnAirPos, f.transform, regFile.TileScale, regFile.MaterialKey, Control.CurrentSpawnBuild);
 
         Control.CurrentSpawnBuild.MyId = regFile.MyId;
         Control.CurrentSpawnBuild.transform.name = regFile.MyId;
@@ -118,13 +118,23 @@ public class BuildingSaveLoad : BuildingPot
     /// <summary>
     /// Creates the plane of pos lineanly
     /// </summary>
-    List<CreatePlane> CreatePlanes(List<Vector3> pos, Transform containerP, Vector3 scaleP, string materialKey)
+    List<CreatePlane> CreatePlanes(List<Vector3> pos, Transform containerP, Vector3 scaleP, string materialKey, Building spawner)
     {
         List<CreatePlane> res = new List<CreatePlane>();
         for (int i = 0; i < pos.Count; i++)
         {
-            res.Add(CreatePlane.CreatePlan(Root.createPlane, Root.RetMaterialRoot(materialKey),
-                pos[i], scale: scaleP, container: containerP));
+            if (spawner.HType == H.Road)
+            {
+                res.Add(CreatePlane.CreatePlanTile(spawner,Root.createPlane, Root.RetMaterialRoot(materialKey),
+                 pos[i], scale: scaleP, container: containerP, isLoadingFromFile:true));
+            }
+            else
+            {
+                res.Add(CreatePlane.CreatePlan(Root.createPlane, Root.RetMaterialRoot(materialKey),
+                 pos[i], scale: scaleP, container: containerP));
+            }
+
+
         }
         return res;
     }

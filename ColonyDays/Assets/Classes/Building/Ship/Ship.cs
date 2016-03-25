@@ -240,7 +240,7 @@ public class Ship
             expo *= -1;
         }
 
-        if (Building().HType == H.DryDock || Building().HType == H.Supplier)
+        if (Building().HType == H.Shipyard || Building().HType == H.Supplier)
         {
             return expo*2;
         }

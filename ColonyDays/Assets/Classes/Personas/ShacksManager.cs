@@ -439,10 +439,10 @@ public static class ShacksManager
             var key = BuildingPot.Control.HousesWithSpace[i];
             var build = Brain.GetBuildingFromKey(key);
 
-            if (build.HType == H.Shack)
-            {
-                res++;
-            }
+            //if (build.HType == H.Shack)
+            //{
+            //    res++;
+            //}
         }
         return res;
     }

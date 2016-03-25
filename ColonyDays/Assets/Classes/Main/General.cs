@@ -215,8 +215,8 @@ public class General : MonoBehaviour
         {
             res = Ca.DraggableSquare;
         }
-        else if (hTypeP == H.Dock || hTypeP == H.DryDock || hTypeP == H.Supplier
-            || hTypeP == H.FishSmall || hTypeP == H.FishRegular
+        else if (hTypeP == H.Dock || hTypeP == H.Shipyard || hTypeP == H.Supplier
+            || hTypeP == H.Fishermen || hTypeP == H.FishRegular
             || hTypeP == H.SaltMine)
         {
             res = Ca.Shore;

@@ -140,7 +140,7 @@ public class BuildingsMenu : GUIElement
     bool IsThisBuildLocked(H build)
     {
         //debug 
-        if (build == H.DryDock)
+        if (build == H.Shipyard)
         {
             return true;
         }

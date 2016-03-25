@@ -125,6 +125,11 @@ public class Docker : Profession
         {
             ExecuteNow = false;
 
+            if (_sourceBuild==null)
+            {
+                _sourceBuild = GetStructureSrcAndDestiny(SourceBuildKey, _person);
+            }
+
             if (_sourceBuild.HasEnoughToCoverOrder(Order1))
             {
                //Debug.Log(_person.MyId + " Docker got from:" + Order1.SourceBuild +" : " + Order1.Product + ".amt:" + Order1.Amount);
@@ -143,6 +148,8 @@ public class Docker : Profession
             }
         }
     }
+
+ 
 
     private bool _takeABreakNow;
     private float _breakDuration = 1f;

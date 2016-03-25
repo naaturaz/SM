@@ -1258,7 +1258,7 @@ public class Brain
 
         Building s = BuildingPot.Control.Registro.AllBuilding[oldBuild];
         if (s.PeopleDict.Count == 0 && 
-            (s.Instruction == H.WillBeDestroy || s.HType == H.Shack))
+            s.Instruction == H.WillBeDestroy)
         {
             s.DestroydHiddenBuild();
         }

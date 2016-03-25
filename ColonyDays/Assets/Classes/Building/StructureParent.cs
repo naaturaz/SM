@@ -338,7 +338,7 @@ public class StructureParent : Building {
     protected void SmokePlay(bool isToPlayNow)
     {
         if (HType == H.BlackSmith || HType == H.Tilery || HType == H.Brick
-            || HType == H.Paper || HType == H.SugarMill)
+            || HType == H.Paper_Mill || HType == H.SugarMill)
         {
             GameObject smoke = GetChildLastWordIs(H.Smoke);
             ParticleSystem pSystem = smoke.GetComponent<ParticleSystem>();
@@ -501,8 +501,8 @@ public class StructureParent : Building {
     //this is here to address the exepctions
     void AssignMaterialToStage(GameObject passP)
     {
-        if (!HType.ToString().Contains(H.Bridge.ToString()) && HType != H.Dock && HType != H.DryDock
-            && HType != H.FishSmall && HType != H.FishRegular)
+        if (!HType.ToString().Contains(H.Bridge.ToString()) && HType != H.Dock && HType != H.Shipyard
+            && HType != H.Fishermen && HType != H.FishRegular)
         {
             passP.GetComponent<Renderer>().sharedMaterial = Resources.Load(Root.RetMaterialRoot(H.Stages.ToString())) as Material;
         }

@@ -567,6 +567,7 @@ public class Body //: MonoBehaviour //: General
         if (CanSpawnWheelBarrow())
         {
             TurnCurrentAniAndStartNew("isWheelBarrow");
+            DefineSpeed();
         }
     }
 
@@ -598,6 +599,11 @@ public class Body //: MonoBehaviour //: General
             return false;
         }
 
+        if (isNavalWorker)
+        {
+            return CanNavalWorkerSpawnWheelBarrow();
+        }
+
         //so only spawns the WheelBarrow from FoodSrc to dropplace and in its way back 
         if (!fromWorkToBuildingToPickAmt && !fromPickingPlaceToDestiny && !fromDestinyBackToWork)
         {
@@ -615,14 +621,23 @@ public class Body //: MonoBehaviour //: General
         return false;
     }
 
-    string DefineWheelAni()
+    /// <summary>
+    /// They will take it from home to everywhere 
+    /// 
+    /// bz when importinh
+    /// </summary>
+    /// <returns></returns>
+    bool CanNavalWorkerSpawnWheelBarrow()
     {
-        //if ( !GameController.ThereIsAtLeastOneOfThisOnStorage(P.WheelBarrow))
-        //{
-        //    return "isCarry";
-        //}
-        return "isWheelBarrow";
+        if (_person.Brain.PreviousTask == HPers.IdleSpot || GoingTo == HPers.FoodSource || GoingTo == HPers.IdleSpot
+            || Location == HPers.FoodSource)
+        {
+            return false;
+        }
+        
+        return true;
     }
+
 
     void InitRotaVars()
     {
@@ -884,6 +899,7 @@ public class Body //: MonoBehaviour //: General
         CheckIfGoingIntoBuild();
 
 	    ParentPersonToHome();
+
     }
 
 

@@ -144,8 +144,6 @@ public class BuildingWindow : GUIElement {
 
     }
 
-
-
     /// <summary>
     /// The show of the menu in a building 
     /// </summary>
@@ -156,7 +154,8 @@ public class BuildingWindow : GUIElement {
 
         LoadMenu();
 
-        MakeThisTabActive(_general);
+        //so if last Window had the Inventory selected can be seen in this new builidng one too
+        MakeThisTabActive(oldTabActive);
 
         transform.position = iniPos;
         HandleOrdBtn();
@@ -193,7 +192,7 @@ public class BuildingWindow : GUIElement {
 
     bool IsFullyBuilt()
     {
-        if (!_building.MyId.Contains("Road"))
+        if (_building.MyId.Contains("Road"))
         {
             //so user will never be able to be removed 
             return false;
@@ -255,11 +254,11 @@ public class BuildingWindow : GUIElement {
     /// </summary>
     void HandleOrdBtn()
     {
-        if (_building.HType != H.Dock || _building.HType != H.DryDock || _building.HType != H.Supplier)
+        if (_building.HType != H.Dock || _building.HType != H.Shipyard || _building.HType != H.Supplier)
         {
             _ordBtn.SetActive(false);
         }
-        if (_building.HType == H.Dock || _building.HType == H.DryDock || _building.HType == H.Supplier)
+        if (_building.HType == H.Dock || _building.HType == H.Shipyard || _building.HType == H.Supplier)
         {
             _ordBtn.SetActive(true);
         }
@@ -267,6 +266,7 @@ public class BuildingWindow : GUIElement {
 
     private ShowAInventory _showAInventory;
     private int oldItemsCount;
+    private string oldBuildID;
     private void LoadMenu()
     {
         _title.text = _building.HType + "";
@@ -276,8 +276,10 @@ public class BuildingWindow : GUIElement {
         {
             _showAInventory = new ShowAInventory(_building.Inventory, _gaveta.gameObject, _invIniPos.transform.localPosition);
         }
-        else if (_showAInventory != null && oldItemsCount != _building.Inventory.InventItems.Count)
+        else if (_showAInventory != null && oldItemsCount != _building.Inventory.InventItems.Count ||
+            (oldBuildID != _building.MyId))
         {
+            oldBuildID = _building.MyId;
             oldItemsCount = _building.Inventory.InventItems.Count;
             _showAInventory.DestroyAll();
             _showAInventory = new ShowAInventory(_building.Inventory, _gaveta.gameObject, _invIniPos.transform.localPosition);
@@ -485,7 +487,7 @@ public class BuildingWindow : GUIElement {
         }
         //if click ord
         else if (_building!=null && _ordBtnRect.Contains(Input.mousePosition) && Input.GetMouseButtonUp(0) && 
-            (_building.HType == H.Dock || _building.HType == H.DryDock ||_building.HType == H.Supplier))
+            (_building.HType == H.Dock || _building.HType == H.Shipyard ||_building.HType == H.Supplier))
         {
             MakeThisTabActive(_orders);
         }
@@ -499,12 +501,20 @@ public class BuildingWindow : GUIElement {
         }
     }
 
+
+    private GameObject oldTabActive;
     /// <summary>
     /// Use to swith Tabs on Window. Will hide all and make the pass one as active
     /// </summary>
     /// <param name="g"></param>
     void MakeThisTabActive(GameObject g)
     {
+        //first time loaded ever in game 
+        if (g == null)
+        {
+            g = _general;
+        }
+
         _general.SetActive(false);
         _gaveta.SetActive(false);
         _orders.SetActive(false);
@@ -512,6 +522,7 @@ public class BuildingWindow : GUIElement {
         _products.SetActive(false);
 
         g.SetActive(true);
+        oldTabActive = g;
 
         //then orders need to be Pull from dispatch and shown on Tab
         if (g == _orders)
