@@ -208,7 +208,7 @@ public class Root : MonoBehaviour
 
 
 
-    ///GUI
+    ///GUI 3d Helpers
     public static string arrow = "Prefab/GUI/Arrow";
     public static string projector = "Prefab/GUI/Projector";
     public static string projectorPerson = "Prefab/GUI/ProjectorPerson";
@@ -217,6 +217,8 @@ public class Root : MonoBehaviour
     public static string lightCilPerson = "Prefab/GUI/Civ5/LightCilPerson";
 
     public static string lockedBuilding = "Prefab/GUI/Locked_Building";
+
+    public static string lineUpHelper = "Prefab/GUI/LineUpHelper";
 
 
     //FORMS
@@ -263,6 +265,7 @@ public class Root : MonoBehaviour
     public static string matGreenSel = "Prefab/Mats/Green_Selection";
     public static string matGreenSel2 = "Prefab/Mats/Green_Selection_2";
     public static string whiteSemi = "Prefab/Mats/White_Semi";
+    public static string graySemi = "Prefab/Mats/Gray_Semi";
     public static string matStone = "Prefab/Mats/Stone";
     public static string matAdoquin = "Prefab/Mats/Adoquin";
     public static string matGravilla = "Prefab/Mats/Gravilla";
@@ -984,6 +987,8 @@ public class Root : MonoBehaviour
     public static string musicOnPaused = "Prefab/Menu/SettingsPause/Actionable_Music_Btn_Main_Paused";
     public static string backToPauseMenu = "Prefab/Menu/SettingsPause/Actionable_BackToPause_Btn2D_Click_Pause";
     public static string settingsPauseSpawner = "Settings_Pause_Menu_Spawner";
+    
+    
 
 
  

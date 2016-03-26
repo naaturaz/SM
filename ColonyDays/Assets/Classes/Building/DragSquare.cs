@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 //this function as a Dragabble square the farming functions are not use at all. used to be the Farm.cs
 public class DragSquare : Trail
@@ -92,9 +93,132 @@ public class DragSquare : Trail
         if (!isColliding && !isToBig && !isToSmall)
         { isEvenFarm = CheckIfIsEven(localSoilList, 0.01f); }
 
+        if (isEvenFarm)
+        {
+            isEvenFarm = ItIsOnRange();
+        }
+
         //only using isEvenFarm bz if any bfeore is false. EvenFarm will be false too
         SetFarmOkAndHandleColor(isEvenFarm);
     }
+
+
+    #region IsOnRange
+
+    private Vector3 oldCheckedMousePoint;
+    /// <summary>
+    /// Will tell if Road is too far from the closest building 
+    /// 
+    /// So user see the Decoration Only aspect of Road
+    /// </summary>
+    /// <returns></returns>
+    private bool ItIsOnRange()
+    {
+        var distanceFromLastCheck = Vector3.Distance(oldCheckedMousePoint, m.HitMouseOnTerrain.point);
+        if (HType != H.Road //|| distanceFromLastCheck < 3//if is less than 5 dont recheck
+        )
+        {
+            return true;
+        }
+        //not include roads . other wise will allow u to keep building small roads forever 
+        var closestBuildList = ReturnClosestBuildings(m.HitMouseOnTerrain.point, 1, H.Road);
+        //debug game
+        if (closestBuildList == null ||closestBuildList.Count==0 )
+        {
+            return false;
+        }
+
+        var evalCorner = ReturnFurthersPolyCorner(closestBuildList[0].transform.position);
+        oldCheckedMousePoint = evalCorner;
+
+        var dist = Vector3.Distance(closestBuildList[0].transform.position, evalCorner);
+//        Debug.Log("Dsist:" + dist);
+        return dist < 12f;//how far a road can be built
+    }
+
+    /// <summary>
+    /// Need to evalute the corner is furtheron the DragSquare with respect to the 
+    /// closest building 
+    /// </summary>
+    /// <param name="closestBuildPos"></param>
+    /// <returns></returns>
+    Vector3 ReturnFurthersPolyCorner(Vector3 closestBuildPos)
+    {
+        var dist0 = Vector3.Distance(closestBuildPos, OnScreenPoly[0]);
+        var dist2 = Vector3.Distance(closestBuildPos, OnScreenPoly[2]);
+
+        if (dist0 > dist2)
+        {
+            return OnScreenPoly[0];
+        }
+        return OnScreenPoly[2];
+    }
+
+    /// <summary>
+    /// Define the closest build of a type. Will defined in the 'currStructure'
+    /// 
+    /// excluding: tht HType buiding will not be included on the list 
+    /// </summary>
+    public static List<Building> ReturnClosestBuildings(Vector3 comparitionPoint, int howMany, H excluding)
+    {
+        int size = BuildingPot.Control.Registro.AllBuilding.Count;
+        List<VectorM> loc = new List<VectorM>();
+
+        for (int i = 0; i < size; i++)
+        {
+            var key = BuildingPot.Control.Registro.AllRegFile[i].MyId;
+            //to address if building was deleted and not updated on the list 
+            Structure building = Brain.GetStructureFromKey(key);
+
+            if (building!=null && building.HType != excluding)
+            {
+                Vector3 pos = BuildingPot.Control.Registro.AllBuilding[key].transform.position;
+                loc.Add(new VectorM(pos, comparitionPoint, key));
+            }
+        }
+        loc = ReturnOrderedByDistance(comparitionPoint, loc);
+
+        //game has not start or is a debuging game 
+        if (loc.Count<howMany)
+        {
+            return null;
+        }
+
+        List<Building> res = new List<Building>();
+        for (int i = 0; i < howMany; i++)
+        {
+            res.Add(Brain.GetBuildingFromKey(loc[i].LocMyId));
+        }
+        return res;
+    }
+  
+    private static float MAXDISTANCE = 5000f;
+    /// <summary>
+    /// Return an ordered list of places ordered by distance by stone . If the place element is farther then 
+    /// MAXDISTANCE wont be added to the final result 
+    /// </summary>
+    /// <param name="stone">The initial point from where needs to be ordered</param>
+    /// <param name="places">Places to order</param>
+    static public List<VectorM> ReturnOrderedByDistance(Vector3 stone, List<VectorM> places)
+    {
+        var anchorOrdered = new List<VectorM>();
+        for (int i = 0; i < places.Count; i++)
+        {
+            if (places[i] != null)
+            {
+                float distance = Vector3.Distance(places[i].Point, stone);
+
+                if (distance < MAXDISTANCE)
+                {
+                    anchorOrdered.Add(new VectorM(places[i].Point, stone, places[i].LocMyId));
+                }
+            }
+        }
+        return anchorOrdered.OrderBy(a => a.Distance).ToList();
+    }
+#endregion
+
+
 
     /// <summary>
     /// Sets the _isFarmOk bool and Handles the color of the preview
@@ -226,7 +350,7 @@ public class DragSquare : Trail
 
             if (HType == H.Road)
             {
-                temp = CreatePlane.CreatePlanTile(this, Root.createPlane, Root.RetMaterialRoot(MaterialKey),
+                temp = CreatePlane.CreatePlanSmartTile(this, Root.createPlane, Root.RetMaterialRoot(MaterialKey),
                     pos[loopCounter], scale: Program.gameScene.ScaleSmallRoadUnitFarm, container: containerP);
             }
             else

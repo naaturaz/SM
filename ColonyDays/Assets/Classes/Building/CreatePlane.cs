@@ -17,6 +17,17 @@ public class CreatePlane : Building
     private Tile _tile = Tile.None;//the tile is like NE corner
     private string _spawnerID;//the building spwaned this.  used for tiles
 
+    
+    private bool _isSmartTile;
+
+    //THis is the kind the will be looking to see if a new Street or road
+    //is attach to it and will change current Object to make seamless
+    public bool IsSmartTile
+    {
+        get { return _isSmartTile; }
+        set { _isSmartTile = value; }
+    }
+
     /// <summary>
     /// This is the gameObj that is rendered 
     /// </summary>
@@ -84,7 +95,7 @@ public class CreatePlane : Building
     /// <summary>
     /// Will find which tile is like NE corner 
     /// </summary>
-    static public CreatePlane CreatePlanTile(Building spawner, string root, string materialRoot, Vector3 origen = new Vector3(), string name = "", Transform container = null,
+    static public CreatePlane CreatePlanSmartTile(Building spawner, string root, string materialRoot, Vector3 origen = new Vector3(), string name = "", Transform container = null,
      float raiseFromFloor = 0.09f, Material mat = null, Vector3 scale = new Vector3(), bool isAnInvisiblePlane = false,
         bool isLoadingFromFile = false)
     {
@@ -110,6 +121,7 @@ public class CreatePlane : Building
 
         obj.SpawnerId = spawner.MyId;
         obj.IsLoadingFromFile = isLoadingFromFile;
+        obj.IsSmartTile = true;
         return obj;
     }
 
@@ -146,11 +158,6 @@ public class CreatePlane : Building
         
         //InitialColor = _material.color;
 
-        //if (IsLoadingFromFile)
-        //{
-        //    return;
-        //}
-
 
         //This is when the Plane is called from the loading fuction
         if (_scale != new Vector3() && _scale != null)
@@ -177,9 +184,10 @@ public class CreatePlane : Building
 	// Update is called once per frame
     void Update()
     {
-
         //then wait so all gets loaded into Regist
-        if (IsLoadingFromFile && BuildingPot.Control.CurrentSpawnBuild != null)
+        if (!IsSmartTile ||
+            (IsLoadingFromFile && 
+                    BuildingPot.Control.Registro.AllRegFile.Count != BuildingPot.Control.Registro.AllBuilding.Count))
         {
             return;
         }
@@ -221,12 +229,12 @@ public class CreatePlane : Building
         var build = Brain.GetBuildingFromKey(SpawnerId);
 
         //lets wait all gets loaded into Registro
-        if (IsLoadingFromFile && build == null)
+        if ( build == null)
         {
             return;
         }
         
-        if (_tile != Tile.None ||  HType != H.Road || !build.PositionFixed)
+        if (_tile != Tile.None || !IsSmartTile || !build.PositionFixed)
         {
             return;
         }
@@ -238,11 +246,17 @@ public class CreatePlane : Building
         _geometry.transform.localScale = Scale;
     }
 
+    private General debugTileType;
     void DetermineTileImAndAssignSharedMat()
     {
         DetermineWhichTileIAm();
         AssignSharedMaterial(ReturnTileMaterialRoot());
-        //UVisHelp.CreateText(transform.position, _tile + "", 20);
+
+        if (debugTileType!=null)
+        {
+            debugTileType.Destroy();
+        }
+        //debugTileType = UVisHelp.CreateText(transform.position, _tile + "", 40);
     }
 
     private void DetermineWhichTileIAm()
@@ -302,11 +316,8 @@ public class CreatePlane : Building
         {
             pos = new Vector3(transform.position.x + x, transform.position.y, transform.position.z);
         }
-
         //UVisHelp.CreateHelpers(pos, Root.blueCube);
-
         return UPoly.CreatePolyFromVector3(pos, 0.01f, 0.01f);
-
     }
 
     /// <summary>
@@ -315,26 +326,22 @@ public class CreatePlane : Building
     /// <param name="survey"></param>
     private void DefineCurrentTile(List<Tile> survey)
     {
-        survey = CleanSurvey(survey);
+        var concat = "";
+        for (int i = 0; i < survey.Count; i++)
+        {
+            if (survey[i] != Tile.None)
+            {
+                concat += survey[i];
+            }
+        }
 
-        if (survey.Count == 0)
+        if (concat=="")
         {
             _tile = Tile.Inside;
+            return;
         }
-        //like N or S
-        else if (survey.Count == 1)
-        {
-            _tile = survey[0];
-        }
-        else if (survey.Count == 2)
-        {   //(H)Enum.Parse(typeof(H), item.ToString());
-            //bz I ask them like NS then WS
-            _tile = (Tile)Enum.Parse(typeof(Tile), survey[0].ToString() + survey[1]);
-        }
-        else
-        {
-            throw new Exception("max is 2 CreatePlane DefineCurrentTile()");
-        }
+        //bz I ask them like NS then WS
+        _tile = (Tile)Enum.Parse(typeof(Tile), concat);
     }
 
     /// <summary>
@@ -356,7 +363,14 @@ public class CreatePlane : Building
     }
 
 
-
+    /// <summary>
+    /// Thats the way to use it to new and diferent decoration SmartTiles 
+    /// 
+    /// Below will pull the material. The material for a new type needs to be creted 
+    /// in the right location for ex: for road is Prefab/Mats/SmartTile/Road/ + _tile
+    /// for dirt could be  Prefab/Mats/SmartTile/Dirt/ + _tile
+    /// </summary>
+    /// <returns></returns>
     string ReturnTileMaterialRoot()
     {
         if (_tile == Tile.None)
@@ -364,7 +378,7 @@ public class CreatePlane : Building
             throw new Exception("Tile cant be  Tile.None ReturnTileMaterialRoot()");
         }
 
-        return "Prefab/Mats/RoadTile/" + _tile;
+        return "Prefab/Mats/SmartTile/" + HType +"/"+ _tile;
     }
 
 

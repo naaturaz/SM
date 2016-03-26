@@ -24,6 +24,9 @@ public class InputBuilding : BuildingPot {
     //Infra, Prod, House, etc
     H selection = H.None;
 
+    /// <summary>
+    /// Must be set to false when Way or DragSquaare is cancelled
+    /// </summary>
     public bool IsDraggingWay
     {
         get { return _isDraggingWay; }
@@ -94,8 +97,81 @@ public class InputBuilding : BuildingPot {
             oldMousePos = Input.mousePosition;
             timeStart = Time.time;
         }
+
+	    AdressIfBuildingMode();
+	    ShowHideHelpLoopOnUpdate();
     }
 
+#region LineUpTool
+    private Mode oldInputMode = Mode.None;
+    private bool helpLoop;
+    private bool showHelp;
+    List<Building> _orgStructuresFromMouseHitPoint = new List<Building>(); 
+
+    private void AdressIfBuildingMode()
+    {
+        if (oldInputMode == InputMode)
+        {
+            return;
+        }
+
+        if (InputMode == Mode.Placing)
+        {
+            ShowHelp();
+        }
+        else if (oldInputMode == Mode.Placing)
+        {
+            HideHelp();
+        }
+        oldInputMode = InputMode;
+    }
+
+    void ShowHelp()
+    {
+        _orgStructuresFromMouseHitPoint = DragSquare.ReturnClosestBuildings(m.HitMouseOnTerrain.point,
+            Control.Registro.Structures.Count, H.Road);
+        showHelp = true;
+        helpLoop = true;
+    }
+
+    void HideHelp()
+    {
+        _orgStructuresFromMouseHitPoint = DragSquare.ReturnClosestBuildings(m.HitMouseOnTerrain.point,
+         Control.Registro.Structures.Count, H.Road);
+
+        showHelp = false;
+        helpLoop = true;
+    }
+
+    private int count;
+    void ShowHideHelpLoopOnUpdate()
+    {
+        if (!helpLoop)
+        {
+            return;
+        }
+
+        if (count < _orgStructuresFromMouseHitPoint.Count)
+        {
+            if (showHelp)
+            {
+                _orgStructuresFromMouseHitPoint[count].ShowLineUpHelpers();
+            }
+            else
+            {
+                _orgStructuresFromMouseHitPoint[count].HideLineUpHelpers();
+                
+            }
+            count++;
+        }
+        else
+        {
+            count = 0;
+            helpLoop = false;
+        }
+    }
+
+#endregion
     /// <summary>
     /// Depending on the current InputMode will direct the code to  BuildingMode(); or
     /// Structure.Place, DrawWay(), DragFarm(
@@ -182,7 +258,8 @@ public class InputBuilding : BuildingPot {
     {
         DragSquare farm = Control.CurrentSpawnBuild as DragSquare;
 
-        if (Input.GetMouseButtonUp(0) && !_isDraggingWay)
+
+        if (Control.CurrentSpawnBuild!=null &&  Input.GetMouseButtonUp(0) && !_isDraggingWay)
         {
             _isDraggingWay = true;
         }

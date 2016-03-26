@@ -190,6 +190,8 @@ public class InputMain : InputParent {
     {
         //in case is a dragable square
         BuildingPot.InputU.KillCursor();
+        BuildingPot.InputU.IsDraggingWay = false;
+
 
         DragSquare farm = BuildingPot.Control.CurrentSpawnBuild as DragSquare;
         if (farm != null)

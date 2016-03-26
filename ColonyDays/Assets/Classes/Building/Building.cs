@@ -352,6 +352,107 @@ public class Building : General, Iinfo
         return res;
     }
 
+
+#region LineUpTool
+    //the poly on the grid that ocupies this building 
+    //NW, NE , SE, SW
+    List<Vector3> _polyOnGrid = new List<Vector3>();
+    List<LineUpHelper> _lineUpHelpers = new List<LineUpHelper>(); 
+    private bool setLineUp;
+    void SetLineUpVertexs()
+    {
+        if (setLineUp || !PositionFixed || HType==H.Road)
+        {
+            return;
+        }
+        setLineUp = true;
+
+        //bz was used to show prev 
+        _polyOnGrid.Clear();
+        DefinePolyOnGrid();
+        SpawnLineUpHelpers();
+    }
+
+    private void SpawnLineUpHelpers()
+    {
+        for (int i = 0; i < _polyOnGrid.Count; i++)
+        {
+            _lineUpHelpers.Add(LineUpHelper.Create(Root.lineUpHelper, _polyOnGrid[i], container:transform));
+        }
+    }
+
+    private void DefinePolyOnGrid()
+    {
+        var scale = UPoly.ScalePoly(Anchors, 0.2f);
+
+        //west
+        var westOnAnchor = new Vector3(scale[0].x, scale[0].y, transform.position.z);
+        var distCenterWest = Vector3.Distance(transform.position, westOnAnchor);
+        var xS =  distCenterWest/m.SubDivide.XSubStep;
+
+        int xSInt = (int)Math.Ceiling(xS);
+        var westOnGrid = new Vector3(transform.position.x - (xSInt * m.SubDivide.XSubStep), scale[0].y, transform.position.z);
+
+        //east
+        var eastOnAnchor = new Vector3(scale[1].x, scale[0].y, transform.position.z);
+        var distCenterEast = Vector3.Distance(transform.position, eastOnAnchor);
+        var xSEast = distCenterEast / m.SubDivide.XSubStep;
+
+        int xSIntEast = (int)Math.Ceiling(xSEast);
+        var eastOnGrid = new Vector3(transform.position.x + (xSIntEast * m.SubDivide.XSubStep), scale[0].y, transform.position.z);
+
+
+        //north
+        var northOnAnchor = new Vector3(transform.position.x, scale[0].y, scale[0].z);
+        var distCenterNorth = Vector3.Distance(transform.position, northOnAnchor);
+        var zS = distCenterNorth / m.SubDivide.ZSubStep;
+
+        int zSInt = (int)Math.Ceiling(zS) ;//+1 correction
+        var northOnGrid = new Vector3(transform.position.x, scale[0].y, transform.position.z + (zSInt * m.SubDivide.ZSubStep));
+
+        //south
+        var southOnAnchor = new Vector3(transform.position.x, scale[0].y, scale[3].z);
+        var distCenterSouth = Vector3.Distance(transform.position, southOnAnchor);
+        var zSSouth = distCenterSouth / m.SubDivide.ZSubStep;
+
+        int zSIntSouth = (int)Math.Ceiling(zSSouth) ;
+        var southOnGrid = new Vector3(transform.position.x, scale[0].y, transform.position.z - (zSIntSouth * m.SubDivide.ZSubStep));
+
+        _polyOnGrid.Add(new Vector3(westOnGrid.x, scale[0].y + .03f, northOnGrid.z));//NW
+        _polyOnGrid.Add(new Vector3(eastOnGrid.x, scale[0].y + .03f, northOnGrid.z));//NE
+        _polyOnGrid.Add(new Vector3(eastOnGrid.x, scale[0].y + .03f, southOnGrid.z));//SE
+        _polyOnGrid.Add(new Vector3(westOnGrid.x, scale[0].y + .03f, southOnGrid.z));//SW
+
+        //UVisHelp.CreateHelpers(westOnGrid, Root.yellowCube);
+        //UVisHelp.CreateHelpers(eastOnGrid, Root.yellowCube);
+        //UVisHelp.CreateHelpers(northOnGrid, Root.yellowCube);
+        //UVisHelp.CreateHelpers(southOnGrid, Root.yellowCube);
+        //UVisHelp.CreateHelpers(_polyOnGrid, Root.yellowCube);
+
+    }
+
+    private bool areHelpersOnEarth;
+    public void ShowLineUpHelpers()
+    {
+        ShowBulidingPrev();
+        for (int i = 0; i < _lineUpHelpers.Count; i++)
+        {
+            _lineUpHelpers[i].BringToEarth();
+        }
+    }
+
+    public void HideLineUpHelpers()
+    {
+        HideBuildingPrev();
+        for (int i = 0; i < _lineUpHelpers.Count; i++)
+        {
+            _lineUpHelpers[i].BackToSky();
+        }
+    }
+
+#endregion
+
+
     /// <summary>
     /// Update _min, _max, _bounds, _anchors and then will call CheckIfIsEven(_anchors, maxDiffAllowOnTerrain)
     /// </summary>
@@ -459,6 +560,57 @@ public class Building : General, Iinfo
 
         DefinePreferedStorage();
     }
+
+
+
+#region Building preview
+
+    BigBoxPrev buildingPrev;
+    private Vector3 buildingPrevPos;
+    private void ShowPreviewBoxForBuilding()
+    {
+        if (Anchors.Count == 0 || buildingPrev!=null || HType == H.Road)
+        {
+            return;
+        }
+
+        DefinePolyOnGrid();
+        buildingPrev = (BigBoxPrev)CreatePlane.CreatePlan(Root.bigBoxPrev, Root.graySemi, container:transform);
+        buildingPrev.transform.name = "Building Preview: " + MyId;
+        buildingPrev.UpdatePos(_polyOnGrid, .25f);
+
+        //thisi is a Loading Building 
+        if (PositionFixed)
+        {
+            HideBuildingPrev();
+        }
+    }
+
+    void HideBuildingPrev()
+    {
+        if (buildingPrev!=null)
+        {
+            if (buildingPrevPos==new Vector3())
+            {
+                buildingPrevPos = buildingPrev.transform.position;
+            }
+           
+            buildingPrev.transform.position = new Vector3(buildingPrevPos.x, buildingPrevPos.y - 30, buildingPrevPos.z);
+        }
+    }
+
+    void ShowBulidingPrev()
+    {
+        if (buildingPrev != null)
+        {
+            buildingPrev.transform.position = buildingPrevPos;
+        }
+    }
+
+
+#endregion
+
+
 
 
 
@@ -643,6 +795,8 @@ public class Building : General, Iinfo
     protected new void Update()
     {
         //DebugShowAnchors();
+        SetLineUpVertexs();
+        ShowPreviewBoxForBuilding();
 
         InitFarm();
         InitDecoration();
@@ -802,6 +956,7 @@ public class Building : General, Iinfo
             
             }
 
+            HideBuildingPrev();
             DestroyCool();
             return;
         }
@@ -809,7 +964,9 @@ public class Building : General, Iinfo
         LayerRoutine("done");
         PositionFixed = true;
 
-     
+        HideBuildingPrev();
+
+
 
 
         if (!HType.ToString().Contains("Unit") && !IsLoadingFromFile)

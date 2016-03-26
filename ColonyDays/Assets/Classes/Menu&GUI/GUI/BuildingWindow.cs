@@ -69,7 +69,7 @@ public class BuildingWindow : GUIElement {
             yield return new WaitForSeconds(0.1f); // wait
 
             //means is showing 
-            if (transform.position == iniPos)
+            if (transform.position == iniPos && _building!=null && _building.HType != H.Road)
             {
                 LoadMenu();
 
@@ -151,6 +151,11 @@ public class BuildingWindow : GUIElement {
     public void Show(Building val)
     {
         _building = val;
+
+        if (_building.HType == H.Road)
+        {
+            return;
+        }
 
         LoadMenu();
 

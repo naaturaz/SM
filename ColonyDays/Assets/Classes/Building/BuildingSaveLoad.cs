@@ -101,15 +101,19 @@ public class BuildingSaveLoad : BuildingPot
             previewObjRoot: Root.previewTrail, hType: regFile.HType, isLoadingFromFile: true
             , container: Program.BuildsContainer.transform);
 
+        Control.CurrentSpawnBuild.MyId = regFile.MyId;
+        Control.CurrentSpawnBuild.transform.name = regFile.MyId;
+
         DragSquare f = (DragSquare) Control.CurrentSpawnBuild;
         f.PlanesSoil = CreatePlanes(regFile.PlaneOnAirPos, f.transform, regFile.TileScale, regFile.MaterialKey, Control.CurrentSpawnBuild);
 
-        Control.CurrentSpawnBuild.MyId = regFile.MyId;
-        Control.CurrentSpawnBuild.transform.name = regFile.MyId;
+
 
         f.AddBoxCollider(regFile);
         f.PositionFixed = true;
         f.PeopleDict = regFile.PeopleDict;
+
+        f.transform.position = regFile.IniPos;
 
         Control.Registro.Farms.Add(regFile.MyId, Control.CurrentSpawnBuild as DragSquare);
         Control.Registro.AllBuilding.Add(regFile.MyId, Control.CurrentSpawnBuild);
@@ -125,7 +129,7 @@ public class BuildingSaveLoad : BuildingPot
         {
             if (spawner.HType == H.Road)
             {
-                res.Add(CreatePlane.CreatePlanTile(spawner,Root.createPlane, Root.RetMaterialRoot(materialKey),
+                res.Add(CreatePlane.CreatePlanSmartTile(spawner,Root.createPlane, Root.RetMaterialRoot(materialKey),
                  pos[i], scale: scaleP, container: containerP, isLoadingFromFile:true));
             }
             else
