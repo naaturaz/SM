@@ -510,6 +510,12 @@ public class Person : General
         InitGeneralStuff();
     }
 
+    public void RedoBrain(List<string> blackList)
+    {
+        Brain = new Brain(this, blackList);
+        PersonPot.Control.RestartControllerForPerson(MyId);
+    }
+
     private void InitGeneralStuff()
     {
         NameTransform();

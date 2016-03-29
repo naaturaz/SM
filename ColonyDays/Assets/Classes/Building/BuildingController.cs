@@ -562,7 +562,7 @@ public class BuildingController : BuildingPot
 
             //bz cant cast a brdige 
             Structure st = null;
-            if (!build.MyId.Contains("Bridge"))
+            if (!build.MyId.Contains("Bridge") && build.Category != Ca.Way && !build.MyId.Contains("Road"))
             {
                 st = (Structure)build;
             }

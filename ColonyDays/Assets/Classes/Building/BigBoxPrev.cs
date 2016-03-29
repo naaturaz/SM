@@ -24,10 +24,10 @@ public class BigBoxPrev : CreatePlane {
     {
 	    base.Start();
 
-	    if (BuildingPot.Control.CurrentSpawnBuild.HType == H.BridgeRoad)
-	    {
-	        prevWideSquares = 5;
-	    }
+        //if (BuildingPot.Control.CurrentSpawnBuild.HType == H.BridgeRoad)
+        //{
+        //    prevWideSquares = 5;
+        //}
     }
 	
 	// Update is called once per frame

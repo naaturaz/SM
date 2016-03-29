@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using Random = UnityEngine.Random;
 
@@ -241,9 +242,10 @@ public class Building : General, Iinfo
     /// </summary>
     public List<Vector3> GetAnchors(bool forced=false)
     {
-        //if they were set already 
-        if (!forced && ValidVector3List(_anchors, 4))//4: bz anchors are 4 
-        {return _anchors;}
+        //removed bz when lolading is way bigger
+        ////if they were set already 
+        //if (!forced && ValidVector3List(_anchors, 4))//4: bz anchors are 4 
+        //{return _anchors;}
 
         //will find anchors
         UpdateMinAndMaxVar();
@@ -341,11 +343,11 @@ public class Building : General, Iinfo
         List<Vector3> res = new List<Vector3>();
         for (int i = 0; i < list.Count; i++)
         {
-            if (IsLoadingFromFile)
-            {
-                res.Add(new Vector3(list[i].x, m.IniTerr.MathCenter.y, list[i].z));
-            }
-            else
+            //if (IsLoadingFromFile)
+            //{
+            //    res.Add(new Vector3(list[i].x, m.IniTerr.MathCenter.y, list[i].z));
+            //}
+            //else
                 res.Add(m.Vertex.BuildVertexWithXandZ(list[i].x, list[i].z));
         }
         //UVisHelp.CreateHelpers(res, Root.blueCube);
@@ -361,7 +363,7 @@ public class Building : General, Iinfo
     private bool setLineUp;
     void SetLineUpVertexs()
     {
-        if (setLineUp || !PositionFixed || HType==H.Road)
+        if (setLineUp || !PositionFixed || HType==H.Road || MyId.Contains("Bridge"))
         {
             return;
         }
@@ -381,6 +383,9 @@ public class Building : General, Iinfo
         }
     }
 
+    /// <summary>
+    /// Defines : _polyOnGrid. use to spawn Preview Box , and helper to aling Lines 
+    /// </summary>
     private void DefinePolyOnGrid()
     {
         var scale = UPoly.ScalePoly(Anchors, 0.2f);
@@ -431,7 +436,6 @@ public class Building : General, Iinfo
 
     }
 
-    private bool areHelpersOnEarth;
     public void ShowLineUpHelpers()
     {
         ShowBulidingPrev();
@@ -1505,7 +1509,7 @@ public class Building : General, Iinfo
 #endregion
 
 
-
+    
 
     /// <summary>
     /// Adds items to the Storage Buildings
@@ -2113,11 +2117,11 @@ public class Building : General, Iinfo
         //needs to be called here other wise Dormant Orders will not become active
         InitStorage();
 
-        //bz trhu this way is the only way brdige can call it 
-        if (MyId.Contains("Bridge"))
-        {
-            PrivHandleZoningAddCrystals();
-        }
+        ////bz trhu this way is the only way brdige can call it 
+        //if (MyId.Contains("Bridge"))
+        //{
+        //    PrivHandleZoningAddCrystals();
+        //}
     }
 
     #endregion
@@ -3170,6 +3174,15 @@ public class Building : General, Iinfo
 #endregion
 
 
+    public bool IsHouse()
+    {
+        return MyId.Contains("House") || MyId.Contains("Bohio");
+    }
+
+    static public bool IsHouseType(string passID)
+    {
+        return passID.Contains("House") || passID.Contains("Bohio");
+    }
 
     #region Dock  DryDock and Supplier
 
@@ -3185,6 +3198,8 @@ public class Building : General, Iinfo
         }
         return false;
     }
+
+
 
     private void InitDockDryDockAndSupplier()
     {

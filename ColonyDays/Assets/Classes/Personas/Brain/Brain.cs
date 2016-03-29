@@ -96,6 +96,19 @@ public class Brain
         LoadFromFile(pF);
     }
 
+    /// <summary>
+    /// Intended to be used when person has blacklisted its home
+    /// </summary>
+    public Brain(Person person, List<string> blackList)
+    {
+        BlackList = blackList;
+
+        _moveToNewHome = new MoveToNewHome(this, person);
+        _majorAge = new MajorityAgeReached(this, person, MoveToNewHome);
+
+        Init(person);
+    }
+
     string[] myBuilds;
     void LoadFromFile(PersonFile pF)
     {
@@ -925,6 +938,10 @@ public class Brain
         PersonPot.Control.CheckPeopleIn(_person.MyId);
 
         PersonPot.Control.CheckMeOnSystem(_person.MyId);
+        
+        //so does the profesional routing too now
+        PersonPot.Control.WorkersRoutingQueue.CheckMeOnSystem(_person.MyId);
+
         _lastTimeICheckedInOnSystem = Time.time;
         _waiting = true;
     }
@@ -983,10 +1000,7 @@ public class Brain
         return false;
     }
     
-    public void YourTurnToReRoute()
-    {
-        Update();
-    }
+
 
     /// <summary>
     /// So a person can ask twice for rerouting then thats it 
@@ -2629,36 +2643,61 @@ public class Brain
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="p"></param>
+    /// <param name="buildID"></param>
     /// <param name="checkedOnBrdges">Can only be marked as false when is asking from CheckConditions bz
     /// I have it really check yet how many brdiges are 
     /// 
     /// If is callign from BridgesRouter then should look at the exception bz if i called from there
     /// i could not find any bridge</param>
-    internal void BlackListBuild(string p, string routeKey)
+    internal void BlackListBuild(string buildID, string routeKey)
     {
-        if (_blackList.Contains(p)|| string.IsNullOrEmpty(p))//addresing the call of a Dummy
+        if (_blackList.Contains(buildID)|| string.IsNullOrEmpty(buildID))//addresing the call of a Dummy
         {
             return;
         }
-
         //so leaves the reRoutes free
         PersonPot.Control.RemoveMeFromSystem(_person.MyId);
         PersonPot.Control.WorkersRoutingQueue.RemoveMeFromSystem(_person.MyId);
         //can reroute again later when is his turn again
         PersonPot.Control.RemovePersonFromPeopleChecked(_person.MyId);
 
-
-        MoveToNewHome.RemovePeopleDict(p);
-        Debug.Log("Blaclisted:"+p +" ."+_person.MyId);
+        MoveToNewHome.RemovePeopleDict(buildID);
+        Debug.Log("Blaclisted:"+buildID +" ."+_person.MyId);
 
         //the route key is added so we dont blaclist 2 buildings of a same route
         //only the 1st one need to be blacklisted. this applys for BridgeRouting 
-        _blackList = AddToList(_blackList, p);
+        _blackList = AddToList(_blackList, buildID);
+
+
+        //person blacklisting Home 
+        if (buildID == _person.Home.MyId)
+        {
+            var fam= _person.Home.FindMyFamilyChecksFamID(_person);
+            fam.RemovePersonFromFamily(_person);
+            _person.IsBooked = "";
+            _person.FamilyId = "";
+            _person.Body.GoingTo=HPers.None;
+
+            RemoveFromAllPeopleDict();
+
+
+            _person.Home.BookedHome1.ClearBooking();
+            _person.Home.BookedHome1 = null;
+            _person.Home = null;
         
-        BridgeMarkedAction(p);
-        PersonPot.Control.WorkersRoutingQueue.RemoveMeFromSystem(_person.MyId);
+            _person.Work = null;
+            _person.FoodSource = null;
+            _person.Religion = null;
+            _person.Chill = null;
+
+            _person.RedoBrain(BlackList);
+            return;
+        }
+        
+        
+        BridgeMarkedAction(buildID);
     }
+
 
     /// <summary>
     /// Will tell if any of the two keys passed are contained in BlackList
@@ -2752,6 +2791,11 @@ public class Brain
         {
             if (BuildingPot.Control.Registro.AllBuilding.ContainsKey(arr[i]))
             {
+                //we dont need to make null his current house 
+                if (Building.IsHouseType(arr[i]))
+                {
+                    continue;    
+                }
                 MakeStructureNull(arr[i]);
             }
         }

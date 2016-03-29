@@ -283,14 +283,15 @@ public class StillElement : TerrainRamdonSpawner
     {
         if (HType.ToString().Contains("Tree"))
         {
-            _weight = Random.Range(90, 200);
-            //_weight = 5;
+            _weight = Random.Range(600, 1000);
         }
         else//ore. stone
         {
-            _weight = Random.Range(200, 400);
-            //_weight = 5;
+            _weight = Random.Range(4000, 5000);
         }
+#if UNITY_EDITOR
+        _weight = 10;
+#endif
     }
 
     /// <summary>

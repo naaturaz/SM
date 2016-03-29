@@ -82,6 +82,7 @@ public class Structure : StructureParent
         //so the rect for collision is bigger
         //to address SpawnPoint not falling into another build
         var scale = UPoly.ScalePoly(Bounds, 0.2f);
+        //var scale = Anchors;
 
         //startin satge is save on ReSaveStartinStage()
         BuildingPot.Control.Registro.AddBuildToAll(MyId, HType, scale, Category, transform.position,

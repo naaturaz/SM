@@ -54,8 +54,8 @@ public class BuildersManager
 
     public void AddNewConstruction(string key, H hTypeP, int priority, Vector3 pos)
     {
-        //if (hTypeP == H.Shack)
-        //{return;}
+        if (hTypeP == H.Road)
+        {return;}
 
         //Brain.GetStructureFromKey(key) == null is a way and is not a brdige 
         if (Brain.GetStructureFromKey(key) == null && !key.Contains("Bridge"))

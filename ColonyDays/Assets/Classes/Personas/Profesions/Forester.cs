@@ -203,16 +203,6 @@ public class Forester : Profession
     /// </summary>
     private void CheckIfRoute1IsReady()
     {
-        //if (dummy == null || _person == null)
-        //{
-        //    if (dummy == null)
-        //    {
-        //        Init();
-        //    }
-
-        //    return;
-        //}
-
         if (RouterActive && Router1.IsRouteReady && !routerBackWasInit)
         {
             routerBackWasInit=true;

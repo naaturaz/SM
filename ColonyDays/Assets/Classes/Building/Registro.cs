@@ -364,11 +364,13 @@ public class Registro : MonoBehaviour
             dollarsPay: dollarsPay, 
             anchors: anchors, dock: dock);
 
+        //UVisHelp.CreateHelpers(anchors, Root.blueCube);
+
+
         AddToAll(regFile);
 
 
         AddToBuilderManager(myId);
-
 
 
 

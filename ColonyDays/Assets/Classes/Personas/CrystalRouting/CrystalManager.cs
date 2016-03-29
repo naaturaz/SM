@@ -354,12 +354,17 @@ public class CrystalManager  {
     /// </summary>
     /// <param name="anchors"></param>
     /// <param name="parentId"></param>
-    void AddPoly(List<Vector3> anchors, string parentId)
+    void AddPoly(List<Vector3> anchors, string parentId, bool debug=false)
     {
         var lines = U2D.FromPolyToLines(anchors);
         var scale = PassAnchorsGetPositionForCrystals(anchors);
+       
+        if (debug)
+        {
+            Debug.Log("crystal added by:"+parentId);
+            UVisHelp.CreateHelpers(scale, Root.yellowCube);
+        }
 
-        //UVisHelp.CreateHelpers(scale, Root.yellowCube);
         for (int i = 0; i < lines.Count; i++)
         {
             CreateAndAddPolyCrystal(scale[i], lines[i], parentId, i);

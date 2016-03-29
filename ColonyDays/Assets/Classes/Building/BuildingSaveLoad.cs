@@ -184,6 +184,7 @@ public class BuildingSaveLoad : BuildingPot
         s.Dock1 = regFile.Dock1;
         s.PlantSave1 = regFile.PlantSave1;
         s.CurrentProd = regFile.CurrentProd;
+        s.Anchors = regFile.Anchors;
 
         Control.Registro.Structures.Add(s.MyId, Control.CurrentSpawnBuild as Structure);
         Control.Registro.AllBuilding.Add(s.MyId, Control.CurrentSpawnBuild);

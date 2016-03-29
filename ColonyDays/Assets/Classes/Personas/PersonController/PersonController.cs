@@ -764,14 +764,14 @@ public class PersonController : PersonPot
     public void RemoveMeFromSystem(string id)
     {
         var wIndex = WaitList.FindIndex(a => a.Id == id);
-        if (wIndex > 0)
+        if (wIndex > -1)
         {
            //Debug.Log("remove from waitL:"+id);
             WaitList.RemoveAt(wIndex);
         }
 
         var sIndex = OnSystemNow1.FindIndex(a => a.Id == id);
-        if (sIndex > 0)
+        if (sIndex > -1)
         {
            //Debug.Log("remove from systemNow:" + id);
             OnSystemNow1.RemoveAt(sIndex);    

@@ -610,9 +610,11 @@ public class Body //: MonoBehaviour //: General
             return false;
         }
 
+        bool profesion = (_person.ProfessionProp.ProfDescription == Job.WheelBarrow ||
+                          _person.PrevJob == Job.WheelBarrow) &&
+                         _person.ProfessionProp.ProfDescription != Job.Builder;
         //so prevJob being wheelBarrow and working on a Farm Spawns wheelbarrow
-        bool isCurrentWheelBarrow = (_person.ProfessionProp.ProfDescription == Job.WheelBarrow ||
-                                     _person.PrevJob == Job.WheelBarrow) && _person.Work.MyId.Contains("Masonry");
+        bool isCurrentWheelBarrow = profesion && _person.Work.MyId.Contains("Masonry");
 
         if (isNavalWorker || isCurrentWheelBarrow)
         {

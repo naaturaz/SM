@@ -225,7 +225,7 @@ public class BuildingWindow : GUIElement {
 
     private void HideSalaryIfHouseOrStorage()
     {
-        if (_building.MyId.Contains("House") || _building.MyId.Contains("Storage") || _building.Category == Ca.Way)
+        if (_building.IsHouse() || _building.MyId.Contains("Storage") || _building.Category == Ca.Way)
         {
            _salary.SetActive(false);
         }

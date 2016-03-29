@@ -150,7 +150,7 @@ public class PeopleQueue {
     {
         var wIndex = WaitList.FindIndex(a => a.Id == id);
 
-        if (wIndex > 0)
+        if (wIndex > -1)
         {
             WaitList.RemoveAt(wIndex);
         }
@@ -158,7 +158,7 @@ public class PeopleQueue {
 
         var sIndex = OnSystemNow1.FindIndex(a => a.Id == id);
 
-        if (sIndex > 0)
+        if (sIndex > -1)
         {
             OnSystemNow1.RemoveAt(sIndex);
         }
