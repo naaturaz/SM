@@ -23,6 +23,8 @@ public class TerrainSpawnerController : ControllerParent
     int howManyOrnaToSpawn = 30;//50  20
     int howManyGrassToSpawn = 40;//40
 
+    List<TerrainRamdonSpawner> _treesPool = new List<TerrainRamdonSpawner>(); 
+
     //will be use when spawing new obj to know if that position was used alread by another one
     bool[] usedVertexPos;
 
@@ -125,8 +127,28 @@ public class TerrainSpawnerController : ControllerParent
 
     public void ReSaveStillElement(StillElement ele)
     {
+        //return;
+
         var index = AllRandomObjList.IndexOf(ele);
-        //var index = AllRandomObjList.ToList().FindIndex(a => a.MyId == ele.MyId);
+
+        if (index == -1)
+        {
+            index = AllRandomObjList.ToList().FindIndex(a => a.MyId == ele.MyId);
+        }
+
+
+        AllRandomObjList[index].MaxHeight = ele.MaxHeight;
+
+        AllSpawnedDataList[index].TreeHeight = ele.Height;
+        AllSpawnedDataList[index].SeedDate = ele.SeedDate;
+        AllSpawnedDataList[index].MaxHeight = ele.MaxHeight;
+        AllSpawnedDataList[index].TreeFall = ele.TreeFall;
+        AllSpawnedDataList[index].Weight = ele.Weight;
+    }
+
+    void ReSaveStillElement(StillElement ele, int indexOnLists)
+    {
+        var index = indexOnLists;
 
         AllRandomObjList[index].MaxHeight = ele.MaxHeight;
 
@@ -167,6 +189,7 @@ public class TerrainSpawnerController : ControllerParent
     // Use this for initialization
     void ManualStart()
     {
+        CreateTreePool();
 
 #if UNITY_EDITOR
         multiplier = 20;
@@ -273,12 +296,15 @@ public class TerrainSpawnerController : ControllerParent
         {
             SpawnAllObj();
             print(IsToSave+ " isToSave = true, we are generating all spanwened obj now ");
+
         }
 
         if (toSpawnListCounter == toSpawnList.Count && IsToSave && toSpawnList.Count > 0)
         {
             SaveData();
             IsToSave = false;
+
+            //CreateTreePool();
         }
 
         if (!p.MeshController.IsLoading && loadedTimes < loadingAllowTimes)
@@ -360,36 +386,64 @@ public class TerrainSpawnerController : ControllerParent
     }
 
     /// <summary>
-    /// Call to replant a tree
+    /// Call to swap a tree
+    /// 
+    /// The current tree will be sent to Pool and a pool random tree will be returned Reseted
+    /// 
     /// </summary>
     /// <param name="pos"></param>
-    /// <param name="pers"></param>
-    public void SpawnRandomTreeInThisPos(Vector3 pos)
+    public void SwapRandomTreeInThisPos(StillElement ele)
     {
-        int rootToSpawnIndex = ReturnRandomRootIndex(H.Tree);
+        var index = AllRandomObjList.IndexOf(ele);
 
-        //so is saved and created
-        IsToSave = true;
-        CreateObjAndAddToMainList(H.Tree, pos, rootToSpawnIndex, 0, replantedTree: true);
-        IsToSave = false;
+        var oldTree = AllRandomObjList[ele.MyId];
+        _treesPool.Add(oldTree);
+
+        var poolIndex = UMath.GiveRandom(0, _treesPool.Count - 1);
+        var newTree = _treesPool[poolIndex];
+        _treesPool.RemoveAt(poolIndex);
+
+
+
+        AllSpawnedDataList.RemoveAt(index);
+        Debug.Log(AllRandomObjList.Remove(ele) + " was rem:" + ele.MyId);
+
+
+        newTree.SwapIn(oldTree);
+
+
+        var oldEle = (StillElement) oldTree;
+        oldEle.ResetStillEle();
+
+
+        ele = (StillElement)newTree;
+        AllRandomObjList.Insert(0, ele);
+        SaveOnListData(ele, H.Tree, ele.RootToSpawnIndex, index, true);
     }
 
-    /// <summary>
-    /// Call to replant a tree
-    /// </summary>
-    /// <param name="pos"></param>
-    /// <param name="pers"></param>
-    public void SpawnRandomTreeAroundThisPos(Person pers)
-    {
-        //a position ard his Job. his job place is a forester place 
-        Vector3 finaPos = pers.AssignRandomIniPosition(pers.Work.transform.position, 15);
-        int rootToSpawnIndex = ReturnRandomRootIndex(H.Tree);
 
-        //so is saved and created
-        IsToSave = true;
-        CreateObjAndAddToMainList(H.Tree, finaPos, rootToSpawnIndex, 0, replantedTree: true);
-        IsToSave = false;
+
+    private int amtOfTreePool = 30;
+    void CreateTreePool()
+    {
+        for (int i = 0; i < amtOfTreePool; i++)
+        {
+            var randRootIndex = UMath.GiveRandom(0, allTrees.Count);
+            var randRoot = allTrees[randRootIndex];
+
+            var tTree = TerrainRamdonSpawner.CreateTerraSpawn(randRoot, new Vector3(),
+                new Vector3(0, rand.Next(0, 360), 0), -1, H.Tree, "", transform);
+
+            tTree.RootToSpawnIndex = randRootIndex;
+            tTree.MyId = "Reset Tree Init"+Id;
+            tTree.name = MyId;
+
+            _treesPool.Add(tTree);
+        }
+        Debug.Log("tree pool ct:"+_treesPool.Count);
     }
+
+
 
     //Creates the main type of objects and add them to AllRandomObjList, at the end if IsToSave is true will save it on
     //SaveOnListData
@@ -669,6 +723,8 @@ public class TerrainSpawnerController : ControllerParent
             IsToLoadFromFile = false;
             //CreateOrUpdateSpecificsList(AllSpawnedDataList[loaded)
             print(treeList.Count + " treeList.Count IsToLoadFromFile-false");
+            
+            //CreateTreePool();
         }
     }
 

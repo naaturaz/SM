@@ -118,7 +118,7 @@ public class PersonController : PersonPot
         int factor = 100;
         int ini = multiplier*factor;
 
-        StartingCondition newbie = new StartingCondition(0, ini, ini, ini, ini, ini, ini, 100000, 5*factor);
+        StartingCondition newbie = new StartingCondition(0, 10 * ini, ini, ini, ini, ini, ini, 100000, 5*factor);
         StartingCondition easy = new StartingCondition(18, 900, 900, 900, 900, 900, 900, 900, 4);
         StartingCondition med = new StartingCondition(16, 800, 800, 800, 800, 800, 800, 800, 3);
         StartingCondition hard = new StartingCondition(14, 700, 700, 700, 700, 700, 700, 700, 2);

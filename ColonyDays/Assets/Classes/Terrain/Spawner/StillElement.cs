@@ -5,9 +5,6 @@ using Random = UnityEngine.Random;
 
 public class StillElement : TerrainRamdonSpawner
 {
-
-    private bool _shouldReplant;    
-    
     private Vector3 _min;
     private Vector3 _max;
     private bool addCrystals;
@@ -55,7 +52,7 @@ public class StillElement : TerrainRamdonSpawner
 	protected void Start ()
 	{
         //is a decora object 
-	    if (MyId.Contains("Decora"))
+        if (MyId.Contains("Decora") || IndexAllVertex == -1)//if is -1 is a pool tree
 	    {
 	        return;
 	    }
@@ -64,7 +61,7 @@ public class StillElement : TerrainRamdonSpawner
         var bou = FindBounds(_min, _max);
         Anchors = FindAnchors(bou);
 
-	    if (!AmIValid())
+	    if (!AmIValid()  )
 	    {
 	        return;
 	    }
@@ -81,6 +78,30 @@ public class StillElement : TerrainRamdonSpawner
 
 	    LoadGrowingTree();
 	}
+
+    /// <summary>
+    /// The start for pool trees
+    /// </summary>
+    void ManualStart()
+    {
+        UpdateMinAndMaxVar();
+        var bou = FindBounds(_min, _max);
+        Anchors = FindAnchors(bou);
+
+        InitTree();
+
+        if (ReplantedTree)
+        {
+            ReplantThisTree();
+        }
+
+        LoadGrowingTree();
+
+
+        var oldP = transform.position;
+        //so it appears on terrain
+        transform.position = new Vector3(oldP.x, oldP.y + howDeepInY, oldP.z);
+    }
 
     private void InitTree()
     {
@@ -103,8 +124,16 @@ public class StillElement : TerrainRamdonSpawner
 
     public void CutDownTree()
     {
+        _myAnimator.SetBool("isTreeIdle", false);
         _myAnimator.SetBool("isTreeFall", true);
+        
         _audioPlayer.PlaySoundOneTime(RootSound.treeFall, gameObject.transform.position);
+    }
+
+    public void GetTreeBackToStandTree()
+    {
+        _myAnimator.SetBool("isTreeFall", false);
+        _myAnimator.SetBool("isTreeIdle", true);
     }
 
     /// <summary>
@@ -126,7 +155,7 @@ public class StillElement : TerrainRamdonSpawner
             //bz need to remove old Crystals 
             
             //so it get removed the Crsytals forever 
-            _shouldReplant = false;
+            ShouldReplant = false;
 
             DestroyCool();
             return false;
@@ -159,7 +188,7 @@ public class StillElement : TerrainRamdonSpawner
     {
         //ornaments and grass wont be added 
         //replant should not add bz never was deleted 
-        if (_shouldReplant || name.Contains("Orna") || name.Contains("Grass"))
+        if (ShouldReplant || name.Contains("Orna") || name.Contains("Grass"))
         {
             return;
         }
@@ -171,11 +200,42 @@ public class StillElement : TerrainRamdonSpawner
 	// Update is called once per frame
 	protected void Update () 
     {
+	    if (MyId.Contains("Reset"))
+	    {
+	        return;
+	    }
+
         CheckIfCanGrow();
 	    CheckIfWasDestroyAndPlayedFullAnimation();
 
         CouldGrowPlantNow();
+	    AddressSwapedTree();
     }
+
+
+    private void AddressSwapedTree()
+    {
+        if (!ReplantedTree || ReplatedTreeWasStarted)
+        {
+            return;
+        }
+        ReplatedTreeWasStarted = true;
+
+        ManualStart();
+    }
+
+    public void ResetStillEle()
+    {
+        base.Reset();
+        _destroyElement = false;
+        _fallTime = 0;
+        Weight = 0;
+        Height = 0;
+
+        //undo animation
+        GetTreeBackToStandTree();
+    }
+
 
     private void CheckIfWasDestroyAndPlayedFullAnimation()
     {
@@ -241,23 +301,19 @@ public class StillElement : TerrainRamdonSpawner
 
     public override void DestroyCool()
     {
-        //Debug.Log("DestroyCool():" + MyId);
-
+        Debug.Log("DestroyCool():" + MyId);
         //cool stuff
-
-
-
-        base.DestroyCool();
-
-        //removes from List in TerraSpawnerController
-        Program.gameScene.controllerMain.TerraSpawnController.RemoveStillElement(this);
-
-        if (HType == H.Tree && _shouldReplant)
+        if (HType == H.Tree && ShouldReplant)
         {
-            Program.gameScene.controllerMain.TerraSpawnController.SpawnRandomTreeInThisPos(transform.position);
+            Program.gameScene.controllerMain.TerraSpawnController.SwapRandomTreeInThisPos(this);
         }
-        else//for GC will remove only if is not getting replanted 
+        else if (!ShouldReplant || HType != H.Tree)//for GC will remove only if is not getting replanted 
         {
+            base.DestroyCool();
+
+            //removes from List in TerraSpawnerController
+            Program.gameScene.controllerMain.TerraSpawnController.RemoveStillElement(this);
+
             //remove from CrystalManager
             MeshController.CrystalManager1.Delete(this);
         }
@@ -300,6 +356,12 @@ public class StillElement : TerrainRamdonSpawner
     /// <param name="ProdXShift"></param>
     internal void RemoveWeight(float ProdXShift, Person pers)
     {
+        //trees tht were reseted will fall again if not prevented here
+        if (MyId.Contains("Reset"))
+        {
+            return;
+        }
+
         CheckIfTreeMustBeCut();
         _weight -= ProdXShift;
         
@@ -308,8 +370,7 @@ public class StillElement : TerrainRamdonSpawner
         if (_weight < 0)
         {
             _destroyElement = true;
-            _shouldReplant = true;
-            
+            ShouldReplant = true;
 
             //bz if is saved then need to save the weight so when thhis tree loads next time is just destroyed
             //just in case doesnt finish playing the animation and is saved then. if that happen next time
@@ -352,11 +413,6 @@ public class StillElement : TerrainRamdonSpawner
 
         Program.gameScene.controllerMain.TerraSpawnController.ReSaveStillElement(this);
     }
-
-    //private float FindMaxHeightForThisTree()
-    //{
-
-    //}
 
     void CheckIfCanGrow()
     {

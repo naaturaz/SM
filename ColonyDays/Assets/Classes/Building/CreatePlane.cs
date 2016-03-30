@@ -377,7 +377,18 @@ public class CreatePlane : Building
         {
             throw new Exception("Tile cant be  Tile.None ReturnTileMaterialRoot()");
         }
+        //making inside random
+        if (_tile == Tile.Inside)
+        {
+            var probOfRamdom = UMath.GiveRandom(0, 2);//50%
 
+            //0 is the full tile . so 50% of the tile should be the full tile
+            if (probOfRamdom == 0)
+            {
+                return "Prefab/Mats/SmartTile/" + HType + "/" + _tile + 0;
+            }
+            return "Prefab/Mats/SmartTile/" + HType + "/" + _tile + UMath.GiveRandom(1, 5);
+        }
         return "Prefab/Mats/SmartTile/" + HType +"/"+ _tile;
     }
 

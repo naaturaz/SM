@@ -13,11 +13,11 @@ public class Forester : Profession
 
     public Forester(Person person, PersonFile pF)
     {
-        if (pF == null)
-        {
+        //if (pF == null)
+        //{
             CreatingNew(person);
-        }
-        else LoadingFromFile(person, pF);
+        //}
+        //else LoadingFromFile(person, pF);
     }
 
     void CreatingNew(Person person)
@@ -63,7 +63,7 @@ public class Forester : Profession
         var closerAnchorToUs = _stillElement.FindCloserAnchorTo(_person.Work);
 
         //moving the route point a bit towards the origin so when chopping tree its not inside the tree 
-        FinRoutePoint = Vector3.MoveTowards(closerAnchorToUs, _person.Work.transform.position, MoveTowOrigin * 0.05f);//2,5
+        FinRoutePoint = Vector3.MoveTowards(closerAnchorToUs, _person.Work.transform.position, MoveTowOrigin * 0.15f);//.05
 
         routerBackWasInit = false;
         startIdleTime = 0;
@@ -117,7 +117,7 @@ public class Forester : Profession
             var t = all[i];
 
             //or if is blacklisted 
-            if (t == null || _person.Brain.BlackList.Contains(t.MyId) || !t.Grown())
+            if (t == null || _person.Brain.BlackList.Contains(t.MyId) || !t.Grown() || t.MyId.Contains("Reset"))
             {
                 continue;
             }
@@ -143,7 +143,7 @@ public class Forester : Profession
         for (int i = 0; i < listP.Count; i++)
         {
             //means that tree was deleted but the list has not being updated 
-            if (listP[i] == null || !listP[i].Grown())
+            if (listP[i] == null || !listP[i].Grown() || listP[i].MyId.Contains("Reset"))
             {
                 continue;
             }
@@ -167,6 +167,14 @@ public class Forester : Profession
         CheckIfRoute1IsReady();
         CheckIfStillEleWasBlackListed();
         CheckIfShouldReDoProf();
+
+        if (_stillElement != null && _stillElement.MyId.Contains("Reset"))
+        {
+            _takeABreakNow = true;
+            _stillElement = null;
+            StillElementId = "";
+            ResetDummy();
+        }
 
         if (_takeABreakNow)
         {
@@ -205,9 +213,27 @@ public class Forester : Profession
     {
         if (RouterActive && Router1.IsRouteReady && !routerBackWasInit)
         {
+            if (dummy == null)
+            {
+                _takeABreakNow = true;
+                return;
+            }
+
+            //bz sometimes falls inside the Still element
+            MoveDummyAwayFromEleSoDoesntFallInsideOfIt();
+
             routerBackWasInit=true;
             RouterBack = new CryRouteManager(dummy, _person.FoodSource, _person, HPers.InWorkBack, false, true);
         }
+    }
+
+    /// <summary>
+    /// Needed so the route starts a bits away from Still element 
+    /// </summary>
+    private void MoveDummyAwayFromEleSoDoesntFallInsideOfIt()
+    {
+        dummy.transform.position = Vector3.MoveTowards(dummy.transform.position, _person.FoodSource.transform.position,
+            3);
     }
 
     /// <summary>
@@ -285,11 +311,17 @@ public class Forester : Profession
             return true;
         }
         
-        if (_stillElement == null || !_stillElement.Grown())//ele
+        if (!IsStillElementReadyToBeCut())
         {
             return true;
         }
         return false;
+    }
+
+    bool IsStillElementReadyToBeCut()
+    {
+        var no = _stillElement == null || !_stillElement.Grown() || _stillElement.MyId.Contains("Reset");
+        return !no;
     }
 
     private bool CheckIfStillElementWasDestroy()

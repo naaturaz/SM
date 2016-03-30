@@ -14,6 +14,9 @@ public class TerrainRamdonSpawner : General {
 
     private float _maxHeight;
 
+
+    private int _rootToSpawnIndex;
+
     //set in UnityEditor Mannually
     public float MaxHeight
     {
@@ -23,6 +26,27 @@ public class TerrainRamdonSpawner : General {
 
 
     public bool ReplantedTree { get; set; }
+
+    public bool ShouldReplant
+    {
+        get { return _shouldReplant; }
+        set { _shouldReplant = value; }
+    }
+
+    public bool ReplatedTreeWasStarted
+    {
+        get { return _replatedTreeWasStarted; }
+        set { _replatedTreeWasStarted = value; }
+    }
+
+    /// <summary>
+    /// Only used by PoolTrees bz they thenw will pass this info into the DataList
+    /// </summary>
+    public int RootToSpawnIndex
+    {
+        get { return _rootToSpawnIndex; }
+        set { _rootToSpawnIndex = value; }
+    }
 
 
     static public TerrainRamdonSpawner CreateTerraSpawn(string root, Vector3 origen, Vector3 rotation,
@@ -77,6 +101,50 @@ public class TerrainRamdonSpawner : General {
     internal bool Grown()
     {
         var ele = Program.gameScene.controllerMain.TerraSpawnController.Find(MyId);
+
+        if (ele==null)
+        {
+            return false;
+        }
+
         return ele.ReadyToMine();
+    }
+
+    bool _replatedTreeWasStarted;
+    private bool _shouldReplant;
+    /// <summary>
+    /// So goes back to pool and then can be used again
+    /// </summary>
+    internal void Reset()
+    {
+        ReplatedTreeWasStarted = false;
+        _shouldReplant = false;
+
+        //
+        MyId = "Reset tree" + Id;
+        name = MyId;
+
+        transform.position=new Vector3();
+
+    }
+
+    
+    protected int howDeepInY = 50;
+    /// <summary>
+    /// The action of getting a new Swaped in tree ready 
+    /// </summary>
+    /// <param name="oldTree"></param>
+    internal void SwapIn(TerrainRamdonSpawner oldTree)
+    {
+        var oldP = oldTree.transform.position;
+        MyId = oldTree.MyId;
+        name = oldTree.name;
+
+        //hiding in deep into terrain
+        transform.position = new Vector3(oldP.x, oldP.y - howDeepInY, oldP.z);
+        transform.rotation = oldTree.transform.rotation;
+        IndexAllVertex = oldTree.IndexAllVertex;
+        SeedDate = Program.gameScene.GameTime1.CurrentDate();
+        ReplantedTree = true;
     }
 }

@@ -74,9 +74,7 @@ public class GameTime
     public float TimeFactorInclSpeed()
     {
         var multi = 1;
-#if UNITY_EDITOR
-        //multi = Program.gameScene.GameSpeed;
-#endif
+
         return Program.gameScene.GameSpeed*_timeFactor * multi;
         //like this now at 10x 1 years takes 4 min with  _timeFactor = 0.001f * Program.gameScene.GameSpeed;
     }
