@@ -3,13 +3,15 @@ using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Linq;
 using Random = UnityEngine.Random;
 
 public class Building : General, Iinfo
 {
     #region Fields and Prop
+
+
+
 
     //Rotate Building /// 0 is up, 1 is right, 2 is down, 3 is left
     private int _rotationFacerIndex;
@@ -43,10 +45,19 @@ public class Building : General, Iinfo
     private bool _isLoadingFromFile;//this indicates if the creating of a obj is being call from a Load File or not
     string _materialKey;//the key of the material of an building
 
+
+
+
+
+
+
+
+
+
+
+
     //the zone this building landed. The bridges have two landing zones and are not kept here
     private List<VectorLand> _landZone = new List<VectorLand>();
-
-
     /// <summary>
     /// Geograpihcally is in the spawnpoint of a building . If is a Bridge will have two
     /// each in each Bottom Middile
@@ -3418,13 +3429,13 @@ public class Building : General, Iinfo
         return Inventory.CapacityVol == baseCap + FirstUpgradeAmt() + SecondUpgradeAmt();
     }
 
-    int FirstUpgradeAmt()
+    float FirstUpgradeAmt()
     {
         var baseCap = Book.GiveMeStat(HType).Capacity;
         return baseCap /3;
     }
 
-    int SecondUpgradeAmt()
+    float SecondUpgradeAmt()
     {
         return FirstUpgradeAmt()/2;
     }
@@ -3457,7 +3468,7 @@ public class Building : General, Iinfo
     /// <summary>
     /// Everytime the next stage is used a fee must be paid 
     /// </summary>
-    private void PayUpgradeFee(int fee)
+    private void PayUpgradeFee(float fee)
     {
         Program.gameScene.GameController1.Dollars -= fee;
     }
@@ -3486,6 +3497,45 @@ public class Building : General, Iinfo
         }
         return 0;
     }
+
+
+
+
+
+    #region Customers
+
+    //Customers . For school the kids, church people going there, tavern is the customer
+    private int _customerCap = 20;
+    private int _currentCustomers;
+
+    void InitCustomersCap()
+    {
+        
+    }
+
+    public bool CanAddOneMoreCustomer()
+    {
+        return _currentCustomers < _customerCap;
+    }
+
+    public void AddOneCustomer()
+    {
+        _currentCustomers++;
+    }
+
+    public void RemoveOneCustomer()
+    {
+        _currentCustomers--;
+    }
+
+    public bool IsBuildingCustomerType(Person pers)
+    {
+        var tavChu = HType == H.Tavern || HType == H.Church;
+        var scholar = (HType == H.School || HType == H.TradesSchool) && !UPerson.IsMajor(pers.Age);
+        return tavChu || scholar;
+    }
+
+#endregion
 }
 
 

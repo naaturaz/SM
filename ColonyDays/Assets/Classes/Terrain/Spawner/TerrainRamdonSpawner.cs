@@ -27,17 +27,14 @@ public class TerrainRamdonSpawner : General {
 
     public bool ReplantedTree { get; set; }
 
+    private bool _shouldReplant;
     public bool ShouldReplant
     {
         get { return _shouldReplant; }
         set { _shouldReplant = value; }
     }
 
-    public bool ReplatedTreeWasStarted
-    {
-        get { return _replatedTreeWasStarted; }
-        set { _replatedTreeWasStarted = value; }
-    }
+
 
     /// <summary>
     /// Only used by PoolTrees bz they thenw will pass this info into the DataList
@@ -110,23 +107,23 @@ public class TerrainRamdonSpawner : General {
         return ele.ReadyToMine();
     }
 
-    bool _replatedTreeWasStarted;
-    private bool _shouldReplant;
-    /// <summary>
-    /// So goes back to pool and then can be used again
-    /// </summary>
-    internal void Reset()
-    {
-        ReplatedTreeWasStarted = false;
-        _shouldReplant = false;
+    //bool _replatedTreeWasStarted;
 
-        //
-        MyId = "Reset tree" + Id;
-        name = MyId;
+    ///// <summary>
+    ///// So goes back to pool and then can be used again
+    ///// </summary>
+    //internal void Reset()
+    //{
+    //    ReplatedTreeWasStarted = false;
+    //    _shouldReplant = false;
 
-        transform.position=new Vector3();
+    //    //
+    //    MyId = "Reset tree" + Id;
+    //    name = MyId;
 
-    }
+    //    transform.position=new Vector3();
+
+    //}
 
     
     protected int howDeepInY = 50;

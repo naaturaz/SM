@@ -1225,6 +1225,15 @@ public class Brain
         if (keyP == "")
         { return; }
 
+        //dont need to add to PeopleDict. In school will bring problems 
+        var buildCurrWork = GetBuildingFromKey(keyP);
+        if (buildCurrWork.IsBuildingCustomerType(_person))
+        {
+            return;
+        }
+
+      
+
         Structure s = BuildingPot.Control.Registro.AllBuilding[keyP] as Structure;
         if (!s.PeopleDict.Contains(_person.MyId))
         {
@@ -2402,8 +2411,13 @@ public class Brain
         {
             RemoveFromPeopleDict(oldJob);
 
-            AddToPeopleDict(currWork);
-            RemoveAndAddPositionsToJob();
+            var buildCurrWork = GetBuildingFromKey(currWork);
+            if (!buildCurrWork.IsBuildingCustomerType(_person))
+            {
+                AddToPeopleDict(currWork);
+                RemoveAndAddPositionsToJob();         
+            }
+       
 
             //when is a game loaded and changed work need to mannually restart Controller to see it 
             //forcing it here 
@@ -2556,25 +2570,13 @@ public class Brain
 
 
       ////Debug.Log("MakeStructureNull");
-        var checkHome = false;
         var checkWork = false;
         var checkFood = false;
         var checkReligion = false;
         var checkChill = false;
 
         //todo remove person from People Dict of the place will be made null
-        if ((buildFunc == HPers.Home ))
-        {
-            if (_person.Home.BookedHome1 != null)
-            {
-                _person.Home.BookedHome1.ClearBooking();
-            }
-
-            _person.Home = null;
-            checkHome = true;
-            oldHome = "";
-        }
-        else if ((buildFunc == HPers.Work ))
+        if ((buildFunc == HPers.Work ))
         {
             RemoveAndAddPositionsToJob();
 
@@ -2603,7 +2605,7 @@ public class Brain
             checkChill = true;
             oldChill = "";
         }
-        CheckAround(checkHome, checkWork, checkFood, checkReligion, checkChill);
+        CheckAround(false, checkWork, checkFood, checkReligion, checkChill);
     }
     #endregion
 
@@ -2655,9 +2657,12 @@ public class Brain
         {
             return;
         }
+
         //so leaves the reRoutes free
         PersonPot.Control.RemoveMeFromSystem(_person.MyId);
+        Waiting = false;
         PersonPot.Control.WorkersRoutingQueue.RemoveMeFromSystem(_person.MyId);
+
         //can reroute again later when is his turn again
         PersonPot.Control.RemovePersonFromPeopleChecked(_person.MyId);
 

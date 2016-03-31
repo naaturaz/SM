@@ -52,7 +52,7 @@ public class StillElement : TerrainRamdonSpawner
 	protected void Start ()
 	{
         //is a decora object 
-        if (MyId.Contains("Decora") || IndexAllVertex == -1)//if is -1 is a pool tree
+        if (MyId.Contains("Decora"))//if is -1 is a pool tree
 	    {
 	        return;
 	    }
@@ -143,7 +143,7 @@ public class StillElement : TerrainRamdonSpawner
     /// <returns></returns>
     private bool AmIValid()
     {
-        if (HType == H.Ornament || HType == H.Grass)
+        if (HType == H.Ornament || HType == H.Grass || ShouldReplant || ReplantedTree)
         {
             return true;
         }
@@ -188,7 +188,7 @@ public class StillElement : TerrainRamdonSpawner
     {
         //ornaments and grass wont be added 
         //replant should not add bz never was deleted 
-        if (ShouldReplant || name.Contains("Orna") || name.Contains("Grass"))
+        if (ReplantedTree || ShouldReplant || name.Contains("Orna") || name.Contains("Grass"))
         {
             return;
         }
@@ -200,41 +200,41 @@ public class StillElement : TerrainRamdonSpawner
 	// Update is called once per frame
 	protected void Update () 
     {
-	    if (MyId.Contains("Reset"))
-	    {
-	        return;
-	    }
+        //if (MyId.Contains("Reset"))
+        //{
+        //    return;
+        //}
 
         CheckIfCanGrow();
 	    CheckIfWasDestroyAndPlayedFullAnimation();
 
         CouldGrowPlantNow();
-	    AddressSwapedTree();
+	  //  AddressSwapedTree();
     }
 
 
-    private void AddressSwapedTree()
-    {
-        if (!ReplantedTree || ReplatedTreeWasStarted)
-        {
-            return;
-        }
-        ReplatedTreeWasStarted = true;
+    //private void AddressSwapedTree()
+    //{
+    //    if (!ReplantedTree || ReplatedTreeWasStarted)
+    //    {
+    //        return;
+    //    }
+    //    ReplatedTreeWasStarted = true;
 
-        ManualStart();
-    }
+    //    ManualStart();
+    //}
 
-    public void ResetStillEle()
-    {
-        base.Reset();
-        _destroyElement = false;
-        _fallTime = 0;
-        Weight = 0;
-        Height = 0;
+    //public void ResetStillEle()
+    //{
+    //    base.Reset();
+    //    _destroyElement = false;
+    //    _fallTime = 0;
+    //    Weight = 0;
+    //    Height = 0;
 
-        //undo animation
-        GetTreeBackToStandTree();
-    }
+    //    //undo animation
+    //    GetTreeBackToStandTree();
+    //}
 
 
     private void CheckIfWasDestroyAndPlayedFullAnimation()
@@ -303,17 +303,16 @@ public class StillElement : TerrainRamdonSpawner
     {
         Debug.Log("DestroyCool():" + MyId);
         //cool stuff
+        base.DestroyCool();
+        //removes from List in TerraSpawnerController
+        Program.gameScene.controllerMain.TerraSpawnController.RemoveStillElement(this);
+        
         if (HType == H.Tree && ShouldReplant)
         {
-            Program.gameScene.controllerMain.TerraSpawnController.SwapRandomTreeInThisPos(this);
+            Program.gameScene.controllerMain.TerraSpawnController.SpawnRandomTreeInThisPos(transform.position, MyId);
         }
         else if (!ShouldReplant || HType != H.Tree)//for GC will remove only if is not getting replanted 
         {
-            base.DestroyCool();
-
-            //removes from List in TerraSpawnerController
-            Program.gameScene.controllerMain.TerraSpawnController.RemoveStillElement(this);
-
             //remove from CrystalManager
             MeshController.CrystalManager1.Delete(this);
         }
@@ -357,10 +356,10 @@ public class StillElement : TerrainRamdonSpawner
     internal void RemoveWeight(float ProdXShift, Person pers)
     {
         //trees tht were reseted will fall again if not prevented here
-        if (MyId.Contains("Reset"))
-        {
-            return;
-        }
+        //if (MyId.Contains("Reset"))
+        //{
+        //    return;
+        //}
 
         CheckIfTreeMustBeCut();
         _weight -= ProdXShift;

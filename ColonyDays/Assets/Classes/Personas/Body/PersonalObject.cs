@@ -120,7 +120,10 @@ public class PersonalObject
     {
         for (int i = 0; i < _allPersonalObjects.Count; i++)
         {
-            _allPersonalObjects.ElementAt(i).Value.Destroy();
+            if (_allPersonalObjects.ElementAt(i).Value != null)
+            {
+                _allPersonalObjects.ElementAt(i).Value.Destroy();
+            }
         }
     }
 

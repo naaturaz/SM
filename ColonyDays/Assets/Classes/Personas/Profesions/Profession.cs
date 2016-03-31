@@ -557,6 +557,7 @@ public class Profession
     void BackRouterUpdate()
     {
         if (!_router.IsRouteReady || !_routerBack.IsRouteReady)
+            //if routerBack is null is bz routerBackWasInit was not set to false
         {
             _router.Update();
 
@@ -660,8 +661,10 @@ public class Profession
         //for forester //ChopWood
         else if (_workerTask == HPers.AniFullyTrans)
         {
-            if (ForesterHasNullEle())
+            if (ForesterHasNullEle() || LoadedDifferentElement())
             {
+                StillElementId = "";
+                
                 PreparePersonToGetBackToOffice();
                 return;
             }
@@ -899,16 +902,38 @@ public class Profession
         _workingNow = false;
         _workerTask = HPers.None;
 
-//        Debug.Log("resetMIniMindTstae:"+_person.MyId);
+        //Debug.Log("resetMIniMindTstae:"+_person.MyId);
         //CheckIfProfHasToBeReCreated();
     }
 
     protected void CheckIfProfHasToBeReCreated()
     {
-        if (ForesterHasNullEle() || ForesterCurrentStillEleIsBlackListed())
+        if (ForesterHasNullEle() || ForesterCurrentStillEleIsBlackListed() || //|| LoadedDifferentElement()
+            string.IsNullOrEmpty(StillElementId))
         {
+            //StillElementId = "";
+            Debug.Log("foresetr recrete prof:"+_person.MyId);
             _person.CreateProfession();
         }     
+    }
+
+
+    /// <summary>
+    /// The id of an Still Element is not the same when loads again
+    /// </summary>
+    /// <returns></returns>
+    private bool LoadedDifferentElement()
+    {
+        var ele =
+        Program.gameScene.controllerMain.TerraSpawnController.Find(StillElementId);
+
+        if (ele == null)
+        {
+            return true;
+        }
+
+        //if tht is over the amount on distance is not the same 
+        return Vector3.Distance(ele.transform.position, FinRoutePoint) > .5f;
     }
 
 

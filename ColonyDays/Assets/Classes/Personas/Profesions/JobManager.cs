@@ -68,7 +68,7 @@ public class JobManager
 
     bool OneMoreKidFitOnTheSchool(Building building)
     {
-        return false;
+        return true;
     }
 
     string FindBestSchool(H hTypeP, Person person)
@@ -169,42 +169,12 @@ public class JobManager
         return Re;
     }  
     
-    //List<Building> ReturnListType(H hTypeP, Person person)
-    //{
-    //    List<Building> Re = new List<Building>();
-    //    for (int i = 0; i < BuildingPot.Control.Registro.AllBuilding.Count; i++)
-    //    {
-    //        var key = BuildingPot.Control.Registro.AllBuilding.ElementAt(i).Key;
-    //        var struc = BuildingPot.Control.Registro.AllBuilding.ElementAt(i).Value;
-
-    //        if (struc.HType == hTypeP &&
-    //            struc.Instruction != H.WillBeDestroy && !person.Brain.BlackList.Contains(key))
-    //        {
-    //            Re.Add(BuildingPot.Control.Registro.AllBuilding.ElementAt(i).Value);
-    //        }
-    //    }
-    //    return Re;
-    //}
-
 #endregion
 
     public Structure ThereIsABetterJob(Person person)
     {
-        ////bz need to finish wht is doing to find new work 
-        //if (PersonPot.Control.IAmOnSystemNow(person.MyId))
-        //{
-        //    return person.Work;
-        //}
-
         if (person.Home == null)
         {return null;}
-
-        //if new positions are up will return the same so it doesnt affect the flow of finding job
-        //this method is only intended to work once no new positions are up 
-        //if (person.Work != null 
-        //    && BuildingPot.Control.AreNewWorkPos
-        //    )
-        //{return person.Work;}
 
         if (!UPerson.IsMajor(person.Age))
         {

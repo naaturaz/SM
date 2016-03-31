@@ -71,15 +71,15 @@ public class Book : General
 
 
         //houses 
-        Build.Add(new BuildStat(H.Bohio, 400, 3, 0, 0, 0, maxPeople: 5, capacity: 1));
-        Build.Add(new BuildStat(H.HouseA, 400, 15, 5, 25, 5, maxPeople: 5, capacity: 1));
-        Build.Add(new BuildStat(H.HouseB, 400, 15, 5, 25, 5, maxPeople: 5, capacity: 1));
-        Build.Add(new BuildStat(H.HouseTwoFloor, 800, 30, 5, 50, 5, maxPeople: 10, capacity: 2));
-        Build.Add(new BuildStat(H.HouseMed, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 2));
+        Build.Add(new BuildStat(H.Bohio, 400, 3, 0, 0, 0, maxPeople: 5, capacity: .3f));
+        Build.Add(new BuildStat(H.HouseA, 400, 15, 5, 25, 5, maxPeople: 5, capacity: .3f));
+        Build.Add(new BuildStat(H.HouseB, 400, 15, 5, 25, 5, maxPeople: 5, capacity: .3f));
+        Build.Add(new BuildStat(H.HouseTwoFloor, 800, 30, 5, 50, 5, maxPeople: 10, capacity: .6f));
+        Build.Add(new BuildStat(H.HouseMed, 800, 30, 5, 50, 5, maxPeople: 7, capacity: .6f));
         //Build.Add(new BuildStat(H.HouseMedB, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 2));
-        Build.Add(new BuildStat(H.HouseLargeA, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 3));
-        Build.Add(new BuildStat(H.HouseLargeB, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 3));
-        Build.Add(new BuildStat(H.HouseLargeC, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 3));
+        Build.Add(new BuildStat(H.HouseLargeA, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 1));
+        Build.Add(new BuildStat(H.HouseLargeB, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 1));
+        Build.Add(new BuildStat(H.HouseLargeC, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 1));
 
 
         //farming
@@ -236,7 +236,7 @@ public class BuildStat
     private float _dollar;//Money 
 
     //Cubic Meters of storage for a build
-    private int _capacity;
+    private float _capacity;
 
     //In game prop
     private int _maxPeople;//max amt of peope can leave in a house or can work in a place
@@ -246,7 +246,7 @@ public class BuildStat
     private string _root;
 
     public BuildStat(H hType, float amountOfLabour = 0, float wood = 0, float stone = 0, float brick = 0, float iron = 0,
-        float gold = 0, float colonyDollar = 0, int maxPeople = 0, int capacity = 10)
+        float gold = 0, float colonyDollar = 0, int maxPeople = 0, float capacity = 10)
     {
         float multiplier = 100;
 
@@ -326,7 +326,7 @@ public class BuildStat
         set { _amountOfLabour = value; }
     }
 
-    public int Capacity
+    public float Capacity
     {
         get { return _capacity; }
         set { _capacity = value; }

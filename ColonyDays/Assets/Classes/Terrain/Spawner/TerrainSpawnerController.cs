@@ -146,18 +146,18 @@ public class TerrainSpawnerController : ControllerParent
         AllSpawnedDataList[index].Weight = ele.Weight;
     }
 
-    void ReSaveStillElement(StillElement ele, int indexOnLists)
-    {
-        var index = indexOnLists;
+    //void ReSaveStillElement(StillElement ele, int indexOnLists)
+    //{
+    //    var index = indexOnLists;
 
-        AllRandomObjList[index].MaxHeight = ele.MaxHeight;
+    //    AllRandomObjList[index].MaxHeight = ele.MaxHeight;
 
-        AllSpawnedDataList[index].TreeHeight = ele.Height;
-        AllSpawnedDataList[index].SeedDate = ele.SeedDate;
-        AllSpawnedDataList[index].MaxHeight = ele.MaxHeight;
-        AllSpawnedDataList[index].TreeFall = ele.TreeFall;
-        AllSpawnedDataList[index].Weight = ele.Weight;
-    }
+    //    AllSpawnedDataList[index].TreeHeight = ele.Height;
+    //    AllSpawnedDataList[index].SeedDate = ele.SeedDate;
+    //    AllSpawnedDataList[index].MaxHeight = ele.MaxHeight;
+    //    AllSpawnedDataList[index].TreeFall = ele.TreeFall;
+    //    AllSpawnedDataList[index].Weight = ele.Weight;
+    //}
 
     public StillElement Find(string key)
     {
@@ -179,6 +179,35 @@ public class TerrainSpawnerController : ControllerParent
         //return res;
     }
 
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="position">The position this obj is around</param>
+    /// <returns></returns>
+    public StillElement Find(string key, Vector3 position)
+    {
+        if (string.IsNullOrEmpty(key))
+        {
+            return null;
+        }
+
+        if (!AllRandomObjList.Contains(key))
+        {
+            return null;
+        }
+
+        var ele = AllRandomObjList[key] as StillElement;
+
+        if (Vector3.Distance(ele.transform.position, position) <.5f)
+        {
+            return ele;
+        }
+        return null;
+    }
+
+
     public bool IsToSave;
 
 
@@ -189,7 +218,7 @@ public class TerrainSpawnerController : ControllerParent
     // Use this for initialization
     void ManualStart()
     {
-        CreateTreePool();
+        //CreateTreePool();
 
 #if UNITY_EDITOR
         multiplier = 20;
@@ -386,62 +415,42 @@ public class TerrainSpawnerController : ControllerParent
     }
 
     /// <summary>
-    /// Call to swap a tree
+    /// Call to replant a tree
     /// 
-    /// The current tree will be sent to Pool and a pool random tree will be returned Reseted
     /// 
     /// </summary>
     /// <param name="pos"></param>
-    public void SwapRandomTreeInThisPos(StillElement ele)
+    public void SpawnRandomTreeInThisPos(Vector3 pos, string oldTreeId)
     {
-        var index = AllRandomObjList.IndexOf(ele);
+        int rootToSpawnIndex = ReturnRandomRootIndex(H.Tree);
 
-        var oldTree = AllRandomObjList[ele.MyId];
-        _treesPool.Add(oldTree);
-
-        var poolIndex = UMath.GiveRandom(0, _treesPool.Count - 1);
-        var newTree = _treesPool[poolIndex];
-        _treesPool.RemoveAt(poolIndex);
-
-
-
-        AllSpawnedDataList.RemoveAt(index);
-        Debug.Log(AllRandomObjList.Remove(ele) + " was rem:" + ele.MyId);
-
-
-        newTree.SwapIn(oldTree);
-
-
-        var oldEle = (StillElement) oldTree;
-        oldEle.ResetStillEle();
-
-
-        ele = (StillElement)newTree;
-        AllRandomObjList.Insert(0, ele);
-        SaveOnListData(ele, H.Tree, ele.RootToSpawnIndex, index, true);
+        //so is saved and created
+        IsToSave = true;
+        CreateObjAndAddToMainList(H.Tree, pos, rootToSpawnIndex, 0, replantedTree: true);
+        IsToSave = false;
     }
 
 
 
-    private int amtOfTreePool = 30;
-    void CreateTreePool()
-    {
-        for (int i = 0; i < amtOfTreePool; i++)
-        {
-            var randRootIndex = UMath.GiveRandom(0, allTrees.Count);
-            var randRoot = allTrees[randRootIndex];
+    //private int amtOfTreePool = 30;
+    //void CreateTreePool()
+    //{
+    //    for (int i = 0; i < amtOfTreePool; i++)
+    //    {
+    //        var randRootIndex = UMath.GiveRandom(0, allTrees.Count);
+    //        var randRoot = allTrees[randRootIndex];
 
-            var tTree = TerrainRamdonSpawner.CreateTerraSpawn(randRoot, new Vector3(),
-                new Vector3(0, rand.Next(0, 360), 0), -1, H.Tree, "", transform);
+    //        var tTree = TerrainRamdonSpawner.CreateTerraSpawn(randRoot, new Vector3(),
+    //            new Vector3(0, rand.Next(0, 360), 0), -1, H.Tree, "", transform);
 
-            tTree.RootToSpawnIndex = randRootIndex;
-            tTree.MyId = "Reset Tree Init"+Id;
-            tTree.name = MyId;
+    //        tTree.RootToSpawnIndex = randRootIndex;
+    //        tTree.MyId = "Reset Tree Init"+Id;
+    //        tTree.name = MyId;
 
-            _treesPool.Add(tTree);
-        }
-        Debug.Log("tree pool ct:"+_treesPool.Count);
-    }
+    //        _treesPool.Add(tTree);
+    //    }
+    //    Debug.Log("tree pool ct:"+_treesPool.Count);
+    //}
 
 
 

@@ -213,6 +213,10 @@ public class Builder : Profession
         RouterBack = null;
 
         RouterActive = true;
+        IsRouterBackUsed = true;
+        routerBackWasInit = false;
+
+
 
         //Debug.Log("got dummy:" + _person.MyId + " cons:" + _constructing.MyId + " finRt:" + FinRoutePoint);
         dummy = CreateDummy();
@@ -221,14 +225,11 @@ public class Builder : Profession
         dummy.transform.LookAt(_constructing.transform.position);
         dummy.HandleLandZoning(_constructing, FinRoutePoint);
 
+        dummy.DummyIdSpawner = _constructing.MyId;
+
         Router1 = new CryRouteManager(_person.Work, dummy, _person, finDoor:false);
 
-        //If the FoodSrc is not null will be used as way back
-        if (_person.FoodSource != null)
-        {
-            IsRouterBackUsed = true;
-            RouterBack = new CryRouteManager(dummy, _person.FoodSource, _person, HPers.InWorkBack, false, true);
-        }
+     
     }
 
 
@@ -242,12 +243,25 @@ public class Builder : Profession
         }
 
         //ConstructingKey = PersonPot.Control.BuildersManager1.GiveMeBestConstruction();
-        ConstructingKey = _person.Work.BuildersManager1.GiveMeBestConstruction();
+        ConstructingKey = _person.Work.BuildersManager1.GiveMeBestConstruction(_person);
+
+        //todo should ask for 2nd better building 
+        if (_person.Brain.BlackList.Contains(ConstructingKey))
+        {
+            ConstructingKey = "";
+            return null;
+        }
+
         return Brain.GetBuildingFromKey(ConstructingKey);
     }
 
+
+
     public override void Update()
     {
+        CheckIfRoute1IsReady();
+        CheckIfWhatConstructingBlackListed();
+
         if (_takeABreakNow)
         {
             TakeABreak();
@@ -255,6 +269,8 @@ public class Builder : Profession
         }
 
         base.Update();
+
+
         AnyChange();
         Execute();
 
@@ -264,6 +280,37 @@ public class Builder : Profession
 
         CheckIfConstructingWasDestroy();
     }
+
+    private void CheckIfWhatConstructingBlackListed()
+    {
+        if (_takeABreakNow || _person == null || _constructing == null)
+        {
+            return;
+        }
+
+        if (_person.Brain.BlackList.Contains(_constructing.MyId))
+        {
+            ConstructingKey = "";
+            _constructing = null;
+            _takeABreakNow = true;
+        }
+    }
+
+
+    private bool routerBackWasInit;
+    /// <summary>
+    /// So it doesnt blackList nothing in the second Route if he is blackListug a tree in the Router1
+    /// </summary>
+    private void CheckIfRoute1IsReady()
+    {
+        if (RouterActive && Router1.IsRouteReady && !routerBackWasInit && _person.FoodSource != null)
+        {
+            routerBackWasInit = true;
+            //If the FoodSrc is not null will be used as way back
+            RouterBack = new CryRouteManager(dummy, _person.FoodSource, _person, HPers.InWorkBack, false, true);
+        }
+    }
+
 
     private void CheckIfConstructingWasDestroy()
     {

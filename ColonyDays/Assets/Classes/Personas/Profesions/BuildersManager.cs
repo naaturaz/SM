@@ -42,14 +42,21 @@ public class BuildersManager
         _building = building;
     }
 
-    public string GiveMeBestConstruction()
+    public string GiveMeBestConstruction(Person person)
     {
         if (_greenLight.Count == 0)
         {
             return "None";
         }
 
-        return _greenLight[0].Key;
+        for (int i = 0; i < _greenLight.Count; i++)
+        {
+            if (!person.Brain.BlackList.Contains(_greenLight[i].Key))
+            {
+                return _greenLight[i].Key;
+            }
+        }
+        return "None";
     }
 
     public void AddNewConstruction(string key, H hTypeP, int priority, Vector3 pos)

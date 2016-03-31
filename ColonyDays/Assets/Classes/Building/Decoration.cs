@@ -31,7 +31,7 @@ public class Decoration  {
 
     public Decoration(Building build)
     {
-
+        return;
 
         _building = build;
         _roots.AddRange(TerrainSpawnerController.allOrna);
