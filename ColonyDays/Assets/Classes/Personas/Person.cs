@@ -1117,6 +1117,13 @@ public class Person : General
         }
     }
 
+
+
+
+
+
+
+
     private float random1020Time;
     private IEnumerator RandomUpdate1020()
     {
@@ -1131,7 +1138,7 @@ public class Person : General
     }
 
 	// Update is called once per frame
-	void FixedUpdate()
+	void Update()
 	{
         if (!PersonPot.Control.Locked)
         {
@@ -2084,8 +2091,6 @@ public class Person : General
         get { return _projector; }
         set { _projector = value; }
     }
-
-
 
 
     public void CreateProjector()

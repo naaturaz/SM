@@ -525,10 +525,11 @@ public class Realtor
 
     private void UpdateAllAvalBuilds(Person person, float myCurrentHomeScore)
     {
-        if (_oldHomes != BuildingPot.Control.HousesWithSpace)
+        if (_oldHomes != BuildingPot.Control.HousesWithSpace.Count)
         {
-            _oldHomes.Clear();
-            _oldHomes.AddRange(BuildingPot.Control.HousesWithSpace);
+            _oldHomes = BuildingPot.Control.HousesWithSpace.Count;
+
+            //Debug.Log("Check if better home on Realtor");
 
             //will return list with all avail building tht have better score than 'myCurrentHomeScore'
             _allAvailBuild = ScoreAllAvailBuilds(person, person.transform.position, myCurrentHomeScore);
@@ -545,7 +546,8 @@ public class Realtor
     //    }
     //}
 
-    List<string> _oldHomes = new List<string>();
+    //List<string> _oldHomes = new List<string>();
+    private int _oldHomes;
     List<BuildRank> _allAvailBuild = new List<BuildRank>(); 
 
 

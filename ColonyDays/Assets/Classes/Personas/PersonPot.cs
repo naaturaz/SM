@@ -34,9 +34,9 @@
 
 	}
 	
-	// Update is called once per frame
-    void FixedUpdate()
-    {
-       // PersonController.Update();
-    }
+    //// Update is called once per frame
+    //void Update()
+    //{
+    //   // PersonController.Update();
+    //}
 }

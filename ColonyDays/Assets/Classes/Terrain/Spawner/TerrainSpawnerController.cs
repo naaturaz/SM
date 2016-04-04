@@ -21,7 +21,7 @@ public class TerrainSpawnerController : ControllerParent
     int howManyIronToSpawn = 3;//3
     int howManyGoldToSpawn = 3;//3
     int howManyOrnaToSpawn = 30;//50  20
-    int howManyGrassToSpawn = 40;//40
+    int howManyGrassToSpawn = 0;//40
 
     List<TerrainRamdonSpawner> _treesPool = new List<TerrainRamdonSpawner>(); 
 
@@ -32,17 +32,18 @@ public class TerrainSpawnerController : ControllerParent
     {
         // Root.tree1,
         // Root.tree2, Root.tree3, 
-        Root.tree4, Root.tree5, Root.tree6, 
-        Root.tree7,
+        //Root.tree4, Root.tree5, 
+        Root.tree6, 
+        //Root.tree7,
 
-        Root.palm1, Root.palm2, Root.palm3, Root.palm4, Root.palm5, Root.palm6, Root.palm10  ,
-        Root.palm20, Root.palm21, Root.palm22, Root.palm23,
+        //Root.palm1, Root.palm2, Root.palm3, Root.palm4, Root.palm5, Root.palm6, Root.palm10  ,
+        //Root.palm20, Root.palm21, Root.palm22, Root.palm23,
 
-        Root.tree21,
-        Root.tree22,
-        Root.tree23,
-        Root.tree24,
-        Root.tree25,
+        //Root.tree21,
+        //Root.tree22,
+        //Root.tree23,
+        //Root.tree24,
+        //Root.tree25,
     };
 
     List<string> allStones = new List<string>()
@@ -222,7 +223,7 @@ public class TerrainSpawnerController : ControllerParent
 
 #if UNITY_EDITOR
         multiplier = 20;
-        howManyGrassToSpawn = 40;//40
+        howManyGrassToSpawn = 0;//40
 #endif
 
         DefineAllOrnaRoots();
@@ -282,7 +283,7 @@ public class TerrainSpawnerController : ControllerParent
 
     private void DefineAllOrnaRoots()
     {
-        for (int i = 1; i < 27+1; i++)
+        for (int i = 1; i < 25+1; i++)
         {
             allOrna.Add("Prefab/Terrain/Spawner/Orna/Orna"+i);
         }

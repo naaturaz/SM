@@ -34,8 +34,8 @@ public class Decoration  {
         return;
 
         _building = build;
-        _roots.AddRange(TerrainSpawnerController.allOrna);
-        _roots.AddRange(TerrainSpawnerController.allGrass);
+        //_roots.AddRange(TerrainSpawnerController.allOrna);
+        //_roots.AddRange(TerrainSpawnerController.allGrass);
         Init();
     }
 
@@ -44,7 +44,7 @@ public class Decoration  {
         _lines = U2D.FromPolyToLines(_building.Anchors);
         RemoveSpwnPointLine();
         FindPositionToSpwnDecor();
-        SpawnDecorObj();
+        //SpawnDecorObj();
         IfHouseMedAssignRandomMat();
     }
 
@@ -146,6 +146,9 @@ public class Decoration  {
 
     void RandomizeRotAndScale(GameObject spwnObj, string root)
     {
+        //return;
+
+
         spwnObj.transform.Rotate(new Vector3(0, UMath.GiveRandom(0, 360), 0));
 
         //they are well scaled 
@@ -153,6 +156,7 @@ public class Decoration  {
         {
             return;
         }
+
 
         //ScaleDownTerrainSpawners
         var actScale = spwnObj.transform.localScale;

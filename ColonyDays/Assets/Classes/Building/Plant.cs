@@ -261,7 +261,7 @@ public class Plant : MonoBehaviour
     private int checkEverySoManyFrames = 240;
     private int count;
 
-    void FixedUpdate()
+    void Update()
     {
         count++;
 

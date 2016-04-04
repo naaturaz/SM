@@ -300,11 +300,11 @@ public class Dispatch
         for (int i = 0; i < currOrders.Count; i++)
         {
             //if the Inventory of destiny build is full will skip that order 
-            if (IsDestinyBuildInvFullForThisProd(currOrders[i]) || IsDestinyWithOverSoManyKGOfThisProd(1000, currOrders[i]))
+            if (IsDestinyBuildInvFullForThisProd(currOrders[i]) || IsDestinyWithOverSoManyKGOfThisProd(500, currOrders[i]))
             {
                 //todo Notify
                 Debug.Log("Inv full to DestBuild:"+currOrders[i].DestinyBuild+"|for prod:"+currOrders[i].Product+"" 
-                    +"|order removed. Or  had >1000KG on Destiny of the prod");
+                    +"|order removed. Or  had >500KG on Destiny of the prod");
                 
                 bool wasRemoved = RemoveOrderByIDExIm(currOrders[i].ID);
 

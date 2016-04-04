@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -99,7 +100,9 @@ public class GameScene : General {
         Book.Start();
 
         LoadTerrain();
-      
+
+        GameController1.Start();
+        StartCoroutine("SixtySecUpdate");
 
 
 
@@ -118,6 +121,17 @@ public class GameScene : General {
         dummySpawnPoint = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPointUnTimed, new Vector3(), H.Dummy,
                 container: Program.ClassContainer.transform);
 	}
+
+    private IEnumerator SixtySecUpdate()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(60); // wait
+            GameController1.ReCheckWheelBarrowsOnStorage();
+        }
+    }
+
+
 
 
 
@@ -308,6 +322,8 @@ public class GameScene : General {
 
         if (WaterBody == null)
         {
+            //at the Moment Water Small is not visible Apr1 2016. since the mirror was duplicating
+            //the Draw calls
             _waterBody = General.Create(Root.waterSmall, new Vector3(0, 8, 0));
         }
 

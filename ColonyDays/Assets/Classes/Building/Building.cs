@@ -382,8 +382,9 @@ public class Building : General, Iinfo
 
         //bz was used to show prev 
         _polyOnGrid.Clear();
-        DefinePolyOnGrid();
-        SpawnLineUpHelpers();
+        
+        //DefinePolyOnGrid();
+        //SpawnLineUpHelpers();
     }
 
     private void SpawnLineUpHelpers()

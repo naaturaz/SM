@@ -9,7 +9,7 @@ public class TreeVeget : StillElement {
 	}
 	
 	// Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         base.Update();
     }

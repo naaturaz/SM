@@ -594,7 +594,7 @@ public class Body //: MonoBehaviour //: General
              (_person.Brain.CurrentTask == HPers.None && !isNavalWorker));
 
 
-        if (!GameController.ThereIsAtLeastOneOfThisOnStorage(P.WheelBarrow))
+        if (!GameController.AreThereWheelBarrowsOnStorage)
         {
             return false;
         }
@@ -622,6 +622,10 @@ public class Body //: MonoBehaviour //: General
         }
         return false;
     }
+
+
+
+
 
     /// <summary>
     /// They will take it from home to everywhere 

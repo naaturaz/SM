@@ -7,6 +7,7 @@
  * Or create new game 
  */
 
+using System.Collections;
 using UnityEngine;
 
 public class GameController  {
@@ -113,6 +114,32 @@ public class GameController  {
     {
         var inv = CreateInitialInv(_startingCondition);
         LoadIntoInv(inv);
+    }
+
+
+
+
+    private static bool _areThereWheelBarrowsOnStorage;
+    /// <summary>
+    /// updated every 60sec from GameScene
+    /// </summary>
+    public static bool AreThereWheelBarrowsOnStorage
+    {
+        get { return _areThereWheelBarrowsOnStorage; }
+        set { _areThereWheelBarrowsOnStorage = value; }
+    }
+
+    public void ReCheckWheelBarrowsOnStorage()
+    {
+        AreThereWheelBarrowsOnStorage = ThereIsAtLeastOneOfThisOnStorage(P.WheelBarrow);
+    }
+
+
+
+
+    public void Start()
+    {
+        
     }
 
     public void Update()
