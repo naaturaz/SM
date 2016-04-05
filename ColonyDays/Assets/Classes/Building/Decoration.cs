@@ -9,14 +9,14 @@ public class Decoration  {
 
     List<string> _roots = new List<string>()
     {
-        "Prefab/Terrain/Spawner/Decora/Crate 1",
-        "Prefab/Terrain/Spawner/Decora/Crate 2",
-        "Prefab/Terrain/Spawner/Decora/Crate 3",
-        "Prefab/Terrain/Spawner/Decora/Crate 4",
-        "Prefab/Terrain/Spawner/Decora/Crate 5",
-        "Prefab/Terrain/Spawner/Decora/Barrel 1",
-        "Prefab/Terrain/Spawner/Decora/Barrel 2",
-        "Prefab/Terrain/Spawner/Decora/RusticChair",
+        //"Prefab/Terrain/Spawner/Decora/Crate 1",
+        //"Prefab/Terrain/Spawner/Decora/Crate 2",
+        //"Prefab/Terrain/Spawner/Decora/Crate 3",
+        //"Prefab/Terrain/Spawner/Decora/Crate 4",
+        //"Prefab/Terrain/Spawner/Decora/Crate 5",
+        //"Prefab/Terrain/Spawner/Decora/Barrel 1",
+        //"Prefab/Terrain/Spawner/Decora/Barrel 2",
+        //"Prefab/Terrain/Spawner/Decora/RusticChair",
     };
 
     
@@ -31,10 +31,10 @@ public class Decoration  {
 
     public Decoration(Building build)
     {
-        return;
+        //return;
 
         _building = build;
-        //_roots.AddRange(TerrainSpawnerController.allOrna);
+        _roots.AddRange(TerrainSpawnerController.allOrna);
         //_roots.AddRange(TerrainSpawnerController.allGrass);
         Init();
     }
@@ -44,7 +44,7 @@ public class Decoration  {
         _lines = U2D.FromPolyToLines(_building.Anchors);
         RemoveSpwnPointLine();
         FindPositionToSpwnDecor();
-        //SpawnDecorObj();
+        SpawnDecorObj();
         IfHouseMedAssignRandomMat();
     }
 

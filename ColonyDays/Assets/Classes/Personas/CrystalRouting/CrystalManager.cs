@@ -686,7 +686,10 @@ public class CrystalManager  {
     /// <returns></returns>
     public bool DoIIntersectAnyLine(Line line, H typeOfTerra)
     {
-        var crystals = GiveMeAllTerraCrystals();
+        var crystals = GiveMeAllTerraCrystalsInTheLine(line);
+
+        //Debug.Log("crystals counts:"+crystals.Count);
+
         for (int i = 0; i < crystals.Count; i++)
         {
             for (int j = 0; j < crystals[i].Lines.Count; j++)
@@ -700,6 +703,67 @@ public class CrystalManager  {
         }
         return false;
     }
+
+#region CPU too high
+
+    /// <summary>
+    /// Will return all crsytals in the regions around that surround the line 
+    /// </summary>
+    /// <returns></returns>
+    List<Crystal> GiveMeAllTerraCrystalsInTheLine(Line line)
+    {
+        var regions = ReturnRegionsOfALine(line);
+        return GiveAllCrystalsInTheseRegionsExcludLinkRects(regions);
+    }
+
+        /// <summary>
+    /// given a line will find out which are the regions this line is draw into 
+    /// 
+    /// Will go trhu steps and will find the 3x3 round it, if is doubled wont be added
+    /// to final result 
+    /// </summary>
+    /// <param name="line"></param>
+    /// <returns></returns>
+    List<int> ReturnRegionsOfALine(Line line)
+    {
+        List<int> re = new List<int>();
+
+        //the step is the size doiagonal of a Region 
+        var step = (CrystalRegions[0].Region.height + CrystalRegions[0].Region.width)/2;
+        var pointsInTheLine = ReturnPointsAcrossAline(line, step);
+
+        for (int i = 0; i < pointsInTheLine.Count; i++)
+        {
+            var region = ReturnMyRegion(pointsInTheLine[i]);
+
+            re.AddRange(ReturnCurrentSurroundIndexRegions(region, 3));
+        }
+        return re.Distinct().ToList();
+    }
+
+    /// <summary>
+    /// Will find the point across a line until we reach final point will return all points at the end
+    /// </summary>
+    /// <param name="line"></param>
+    /// <returns></returns>
+    List<Vector2> ReturnPointsAcrossAline(Line line, float step = 10f)
+    {
+        List<Vector2> res = new List<Vector2>() { };
+        var dist = Vector2.Distance(line.A1, line.B1);
+        var howManySteps = int.Parse((dist/step).ToString("n0"));
+
+        for (int i = 0; i < howManySteps+1; i++)
+        {
+            var v2 = Vector2.MoveTowards(line.A1, line.B1, step*i);
+            res.Add(v2);    
+        }
+
+        res.Add(line.B1);
+        return res;
+    }
+
+#endregion
+
 
     /// <summary>
     /// Will tell u if intersect anyline at all 

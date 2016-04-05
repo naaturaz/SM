@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class GameScene : General {
 
 
@@ -169,8 +170,9 @@ public class GameScene : General {
             //+ " Vis: " + PersonPot.PersonController.All.ElementAt(0).Value.IsVisible()
             //+ " | Can see: " + PersonPot.PersonController.All.ElementAt(0).Value.I_Can_See()
             //+ " | Became: " + vis
-                         + AddPersonControllerInfo() + " | " + AddLoadingInfo();
-                ;
+                         + AddPersonControllerInfo() + " | " + AddLoadingInfo() 
+                          //  +               Pull AddUnityStats()
+                             ;
 
         DebugInput();
         DebugChangeScreenResolution();
@@ -193,6 +195,8 @@ public class GameScene : General {
 
         return res;
     }
+
+
 
     string AddLoadingInfo()
     {

@@ -32,24 +32,30 @@ public class TerrainSpawnerController : ControllerParent
     {
         // Root.tree1,
         // Root.tree2, Root.tree3, 
-        //Root.tree4, Root.tree5, 
-        Root.tree6, 
+        //Root.tree4,
+ 
+        //Root.tree5, 
+        //Root.tree6, 
         //Root.tree7,
 
-        //Root.palm1, Root.palm2, Root.palm3, Root.palm4, Root.palm5, Root.palm6, Root.palm10  ,
-        //Root.palm20, Root.palm21, Root.palm22, Root.palm23,
+        
+        Root.palm1, Root.palm2,
+        Root.palm3, Root.palm4, Root.palm5, Root.palm6, 
+        //Root.palm10  ,
+        Root.palm20, Root.palm21, Root.palm22, Root.palm23,
 
-        //Root.tree21,
-        //Root.tree22,
-        //Root.tree23,
-        //Root.tree24,
-        //Root.tree25,
+        Root.tree21,
+        Root.tree22,
+        Root.tree23,
+        Root.tree24,
+        Root.tree25,
     };
 
     List<string> allStones = new List<string>()
     {
         //Root.stone0, 
-        Root.stone1, Root.stone2
+        Root.stone1,
+        //Root.stone2
         //, Root.stone3,
         //Root.stone4, Root.stone5, Root.stone6, Root.stone7,
     };
@@ -69,11 +75,7 @@ public class TerrainSpawnerController : ControllerParent
         //Root.gold4
     };
 
-    public static  List<string> allOrna = new List<string>()
-    { 
-        //Root.orna1, Root.orna2, Root.orna3, Root.orna4 , Root.orna5, Root.orna6,
-        // Root.orna7, Root.orna8
-    };
+    public static  List<string> allOrna = new List<string>(){ };
 
     public static List<string> allGrass = new List<string>() 
     { 
@@ -283,7 +285,7 @@ public class TerrainSpawnerController : ControllerParent
 
     private void DefineAllOrnaRoots()
     {
-        for (int i = 1; i < 25+1; i++)
+        for (int i = 1; i < 26+1; i++)
         {
             allOrna.Add("Prefab/Terrain/Spawner/Orna/Orna"+i);
         }
