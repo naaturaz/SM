@@ -185,7 +185,7 @@ public class Building : General, Iinfo
     public virtual bool CheckEvenTerraCollWater()
     {
         //if is fake obj will be terminated 
-        if (_isFakeObj) { return false; }
+        if (_isFakeObj || HType == H.Dummy) { return false; }
 
         _isEven = CheckIfIsEvenRoutine();
         _isColliding = CheckIfColliding();//must be check after CheckIfIsEvenRoutine()
@@ -475,6 +475,11 @@ public class Building : General, Iinfo
     /// <returns></returns>
     public virtual bool CheckIfIsEvenRoutine()
     {
+        if (HType == H.Dummy)
+        {
+            return true;
+        }
+
         UpdateMinAndMaxVar();
         _bounds = FindBounds(_min, _max);
         _anchors = FindAnchors(_bounds);
@@ -538,6 +543,11 @@ public class Building : General, Iinfo
     // Use this for initialization
     protected void Start()
     {
+        if (wasFarmInited)
+        {
+            
+        }
+
         base.Start();
         float minHeightAboveSeaLevel = 1f;
 
@@ -585,7 +595,7 @@ public class Building : General, Iinfo
     private Vector3 buildingPrevPos;
     private void ShowPreviewBoxForBuilding()
     {
-        if (Anchors.Count == 0 || buildingPrev!=null || HType == H.Road)
+        if (Anchors.Count == 0 || buildingPrev!=null || HType == H.Road || HType == H.Dummy)
         {
             return;
         }
@@ -813,6 +823,7 @@ public class Building : General, Iinfo
         //DebugShowAnchors();
         SetLineUpVertexs();
         ShowPreviewBoxForBuilding();
+        //NeutralizeDummy();
 
         InitFarm();
         InitDecoration();
@@ -847,6 +858,17 @@ public class Building : General, Iinfo
         if (_dock != null)
         {
             _dock.Update();
+        }
+    }
+
+    /// <summary>
+    /// Otherwise will keep rayCasting blue 
+    /// </summary>
+    private void NeutralizeDummy()
+    {
+        if (Anchors.Count > 0 && HType == H.Dummy && !PositionFixed)
+        {
+            PositionFixed = true;
         }
     }
 
@@ -2105,6 +2127,8 @@ public class Building : General, Iinfo
     protected void HandleLastStage(Person person=null)
     {
         Debug.Log("construction built 100%:"+MyId+"." + Program.gameScene.GameTime1.TodayYMD());
+        PersonPot.Control.RoutesCache1.RemoveAllMine(MyId);
+
 
         if (IsNaval())
         {

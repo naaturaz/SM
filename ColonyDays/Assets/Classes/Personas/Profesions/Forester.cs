@@ -44,7 +44,6 @@ public class Forester : Profession
 
     private void Init()
     {
-
         FindSpawnersToMine();
         OrderedSites = OrderSpawners(_spawnersList);
 
@@ -65,10 +64,9 @@ public class Forester : Profession
         //moving the route point a bit towards the origin so when chopping tree its not inside the tree 
         FinRoutePoint = Vector3.MoveTowards(closerAnchorToUs, _person.Work.transform.position, MoveTowOrigin * 0.3f);//.05
 
+        Debug.Log("routerBackWasInit set false");
         routerBackWasInit = false;
         startIdleTime = 0;
-
-
 
         InitRoute();
     }
@@ -90,22 +88,15 @@ public class Forester : Profession
         RouterActive = true;
         IsRouterBackUsed = true;
 
-
         //bz dummy.DummyIdSpawner
-        dummy = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy);
-
-        dummy.transform.position = FinRoutePoint;
-        dummy.transform.LookAt(_treeCenterPos);
-        dummy.HandleLandZoning();
-        dummy.DummyIdSpawner = StillElementId; 
+        _person.MyDummyProf.MyId = StillElementId;
+        _person.MyDummyProf.transform.position = FinRoutePoint;
+        _person.MyDummyProf.transform.LookAt(_treeCenterPos);
+        _person.MyDummyProf.HandleLandZoning();
+        _person.MyDummyProf.DummyIdSpawner = StillElementId; 
 
         //so it doesnt add like a door at the end when gets to tree
-        Router1 = new CryRouteManager(_person.Work, dummy, _person, HPers.None, true, false);
-    }
-
-    Structure CreateDummy()
-    {
-        return Program.gameScene.GimeMeUnusedDummy(ProfDescription + ".Dummy." + StillElementId);
+        Router1 = new CryRouteManager(_person.Work, _person.MyDummyProf, _person, HPers.None, true, false);
     }
     
     void FindSpawnersToMine()
@@ -211,7 +202,7 @@ public class Forester : Profession
             MoveDummyAwayFromEleSoDoesntFallInsideOfIt();
 
             routerBackWasInit=true;
-            RouterBack = new CryRouteManager(dummy, _person.FoodSource, _person, HPers.InWorkBack, false, true);
+            RouterBack = new CryRouteManager(_person.MyDummyProf, _person.FoodSource, _person, HPers.InWorkBack, false, true);
         }
     }
 
@@ -220,7 +211,7 @@ public class Forester : Profession
     /// </summary>
     private void MoveDummyAwayFromEleSoDoesntFallInsideOfIt()
     {
-        dummy.transform.position = Vector3.MoveTowards(dummy.transform.position, _person.FoodSource.transform.position,
+        _person.MyDummyProf.transform.position = Vector3.MoveTowards(_person.MyDummyProf.transform.position, _person.FoodSource.transform.position,
             3);
     }
 
@@ -403,7 +394,6 @@ public class Forester : Profession
     private bool _takeABreakNow;
     private float _breakDuration = 1f;
     private float startIdleTime;
-    private bool _reInit;
     /// <summary>
     /// Used so a person is asking for bridges anchors takes a break and let brdige anchors complete then can 
     /// work on it

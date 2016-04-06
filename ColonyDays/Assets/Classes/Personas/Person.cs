@@ -73,6 +73,25 @@ public class Person : General
 
     private bool _isLoading; //use to know if person is being loaded from file 
 
+    private Structure _myDummy;
+    private Structure _myDummyProf;
+    /// <summary>
+    /// eahc person has a dummy use to routing. here for GC 
+    /// </summary>
+    public Structure MyDummy
+    {
+        get { return _myDummy; }
+        set { _myDummy = value; }
+    }
+    /// <summary>
+    /// For profesions routing 
+    /// </summary>
+    public Structure MyDummyProf
+    {
+        get { return _myDummyProf; }
+        set { _myDummyProf = value; }
+    }
+
     public string IsBooked
     {
         get { return _isBooked; }
@@ -1049,15 +1068,29 @@ public class Person : General
         return true;
     }
 
+    Structure CreateDummy()
+    {
+        var dummyIdle = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPointUnTimed, new Vector3(), H.Dummy,
+            container: transform);
+
+        return dummyIdle;
+    }
+
     // Use this for initialization
 	void Start () 
     {
         base.Start();
         
+        StartOutOfScreen();
         StartCoroutine("FiveSecUpdate");
+        StartCoroutine("OneSecUpdate");
         StartCoroutine("RandomUpdate1020");
         StartCoroutine("QuickUpdate");
         //StartCoroutine("QuickUpdate2");
+
+	    MyDummy = CreateDummy();
+	    MyDummyProf = CreateDummy();
+        
 
         //means is loading from file
         if (Inventory != null && Inventory.InventItems.Count > 0)
@@ -1117,7 +1150,14 @@ public class Person : General
         }
     }
 
-
+    private IEnumerator OneSecUpdate()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1); // wait
+            UpdateCallsToOneSec();
+        }
+    }
 
 
 
@@ -1140,6 +1180,8 @@ public class Person : General
 	// Update is called once per frame
 	void Update()
 	{
+        _outOfScreen.Update();
+
         if (!PersonPot.Control.Locked)
         {
             _brain.CheckConditions();
@@ -1149,21 +1191,28 @@ public class Person : General
         _body.Update();
         //UpdateInfo();
 
-	    if (_profession != null)
-	    {
-            _profession.Update();     
-	    }
-	    
+        if (_profession != null)
+        {
+            _profession.Update();
+        }
+        //LODCheck();
+	}
+
+    void UpdateCallsToOneSec()
+    {
+      
+
+
+
+
         TimeChecks();
-	    LODCheck();
 
         if (UPerson.IsMajor(_age) && !_isMajor && string.IsNullOrEmpty(IsBooked) //&& Brain.GoMindState 
-            && Brain.IAmHomeNow()
-       )
+            && Brain.IAmHomeNow())
         {
             ReachAgeMajority();
         }
-	}
+    }
 
     public void UpdateInfo(string add = "")
     {
@@ -1195,12 +1244,8 @@ public class Person : General
                ;
     }
 
-    public bool IsVisible()
-    {
-        Renderer r = Geometry.GetComponent<Renderer>();
-        //print("is render visible."+r.isVisible);
-        return r.isVisible;
-    }
+
+
     
     public bool I_Can_See()
     {
@@ -1999,10 +2044,19 @@ public class Person : General
 
 
 
+    #region OutOfScreen
+
+    private OutOfScreen _outOfScreen;
+
+    void StartOutOfScreen()
+    {
+        _outOfScreen = new OutOfScreen(this);
+    }
 
 
 
 
+    #endregion
     #region LOD
 
 
@@ -2092,6 +2146,7 @@ public class Person : General
         set { _projector = value; }
     }
 
+ 
 
     public void CreateProjector()
     {

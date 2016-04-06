@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class RoutesCache {
@@ -103,7 +104,8 @@ public class RoutesCache {
 
     public void AddReplaceRoute(TheRoute theRoute)
     {
-        if (theRoute.CheckPoints.Count==0)
+        if (theRoute.CheckPoints.Count == 0
+            || theRoute.OriginKey.Contains("Dummy") || theRoute.DestinyKey.Contains("Dummy"))
         {
             return;
         }
@@ -125,6 +127,8 @@ public class RoutesCache {
         else
         {
             _items.Add(key, theRoute);
+            //Debug.Log("added to cache:" + key + " ct:" + _items.Count);
+
         }
     }
 
@@ -167,7 +171,7 @@ public class RoutesCache {
 
     public void Update()
     {
-        
+        CheckIfARouteIsTooOld();
     }
 
     /// <summary>
@@ -176,5 +180,32 @@ public class RoutesCache {
     void CheckIfARouteIsTooOld()
     {
         
+    }
+    
+    /// <summary>
+    /// Will remove all RoutesCahched related to this building 
+    /// </summary>
+    /// <param name="MyId"></param>
+    internal void RemoveAllMine(string MyId)
+    {
+        for (int i = 0; i < _items.Count; i++)
+        {
+            if (_items.ElementAt(i).Key.Contains(MyId))
+            {
+                var key = _items.ElementAt(i).Key;
+                var removed = _items.Remove(key);
+
+                if (removed)
+                {
+                    //Debug.Log("cachedRoute removed:"+key);
+                    i--;
+                }
+            }
+        }
+    }
+
+    internal string ItemsCount()
+    {
+        return _items.Count + "";
     }
 }

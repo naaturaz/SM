@@ -171,7 +171,7 @@ public class Structure : StructureParent
     // Use this for initialization
 	protected void Start () 
     {
-	    if (MyId.Contains("Dummy"))
+	    if (MyId.Contains("Dummy") || HType == H.Dummy)
 	    {
 	        return;
 	    }
@@ -246,7 +246,7 @@ public class Structure : StructureParent
 	protected void Update () 
     {
         //if is dummy doesnt need to be raycasting th blue rays all the time etc
-	    if (MyId.Contains("Dummy"))
+	    if (MyId.Contains("Dummy") || HType == H.Dummy)
 	    {
 	        return;
 	    }

@@ -89,7 +89,7 @@ public class MyForm : General
     {
         if (_showAInventory!=null)
         {
-            _showAInventory.Update();
+            //_showAInventory.Update();
         } 
     }
 

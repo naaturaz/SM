@@ -876,9 +876,12 @@ public class Body //: MonoBehaviour //: General
             return true;
         }
 
-        if (key.Contains("Farm"))
+        var foresterAtStillElement = _person.ProfessionProp.ProfDescription == Job.Forester;
+        var builderAtConstruction = _person.ProfessionProp.ProfDescription == Job.Builder;
+
+        if (foresterAtStillElement || builderAtConstruction)
         {
-            var t = this;
+            return true;
         }
 
         if (key.Contains("Dummy") || key.Contains("Fish"))

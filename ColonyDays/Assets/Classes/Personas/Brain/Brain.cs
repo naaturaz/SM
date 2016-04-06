@@ -251,23 +251,23 @@ public class Brain
         foodRouteStart = true;
     }
 
-    private Structure dummyIdle;
+   // private Structure dummyIdle;
     private Vector3 _idlePoint;
     void DefineIdleRoute()
     {
         AddToGenOldKeyIfAOldRouteHasOneOldBridgeOnIt(_idleRoute);
         _idlePoint = Return1HouseCorner();
 
-        if (dummyIdle == null || dummyIdle.transform.position == new Vector3())
-        {
-            dummyIdle = CreateDummyIdle();
-        }
+        //if (dummyIdle == null || dummyIdle.transform.position == new Vector3())
+        //{
+        //    dummyIdle = CreateDummyIdle();
+        //}
 
-        dummyIdle.transform.position = _idlePoint;
-        dummyIdle.HandleLandZoning();
+        _person.MyDummy.transform.position = _idlePoint;
+        _person.MyDummy.HandleLandZoning();
 
         //_routerIdle = new CryRouteManager(_person.Home, GameScene.dummySpawnPoint, _person, finDoor:false);
-        _routerIdle = new CryRouteManager(_person.Home, dummyIdle, _person, finDoor: false);
+        _routerIdle = new CryRouteManager(_person.Home, _person.MyDummy, _person, finDoor: false);
 
         idleRouteStart = true;
     }
@@ -278,24 +278,11 @@ public class Brain
         return Vector3.MoveTowards(chosen, _person.Home.transform.position, -.2f);
     }
 
-    Structure CreateDummyIdle()
-    {
-        //return Program.gameScene.GimeMeUnusedDummy(_person.MyId+".Idle.Dummy");
 
-        dummyIdle = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy,
-            container: Program.ClassContainer.transform);
-
-        return dummyIdle;
-    }
 
     void ResetDummyIdle()
     {
-        if (dummyIdle == null)
-        {
-            return;
-        }
-        //Program.gameScene.ReturnUsedDummy(dummyIdle);
-        dummyIdle = null;
+        _person.MyDummy.LandZone1.Clear();
     }
 
     void DefineReligionRoute()

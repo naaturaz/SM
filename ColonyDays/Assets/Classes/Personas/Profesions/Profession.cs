@@ -33,7 +33,7 @@ public class Profession
     
     //if is routing will not allow the save to happen. So its not need to same the dummy
     //since everytime a Profession is saved all its Routes are saved already
-    protected Structure dummy;
+    //protected Structure dummy;
 
     //Will execute the action it came to do in code... 
     //for ex will load inventory with Lumber from cutted tree 
@@ -556,7 +556,7 @@ public class Profession
     /// </summary>
     void BackRouterUpdate()
     {
-        if (!_router.IsRouteReady || !_routerBack.IsRouteReady)
+        if (!_router.IsRouteReady || (_routerBack!=null && !_routerBack.IsRouteReady))
             //if routerBack is null is bz routerBackWasInit was not set to false
         {
             _router.Update();
@@ -611,21 +611,30 @@ public class Profession
     /// </summary>
     protected void ResetDummy()
     {
-        if (dummy == null)
+        if (_person==null)
         {
             return;
         }
+        _person.MyDummyProf.MyId = "DummyProfReset";
 
-        if (ProfDescription==Job.Forester)
-        {
-            //Debug.Log("Destroy dummy");
-            dummy.Destroy();
-            return;
-        }
+        _person.MyDummyProf.LandZone1.Clear();
+        _person.MyDummyProf.DummyIdSpawner = "";
 
-        //Debug.Log("Reset dummy:" + _person.MyId);
-        Program.gameScene.ReturnUsedDummy(dummy);
-        dummy = null;
+        //if (dummy == null)
+        //{
+        //    return;
+        //}
+
+        //if (ProfDescription==Job.Forester)
+        //{
+        //    //Debug.Log("Destroy dummy");
+        //    dummy.Destroy();
+        //    return;
+        //}
+
+        ////Debug.Log("Reset dummy:" + _person.MyId);
+        //Program.gameScene.ReturnUsedDummy(dummy);
+        //dummy = null;
     }
 
     /// <summary>

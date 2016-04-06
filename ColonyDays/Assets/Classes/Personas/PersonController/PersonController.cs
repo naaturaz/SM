@@ -262,9 +262,10 @@ public class PersonController : PersonPot
 	{
 	    DebugHere();
         Count();
-	    UpdateOnScreen();
+	    //UpdateOnScreen();
 
         _buildersManager.Update();
+        RoutesCache1.Update();
 
         //CheckIfSystemHasRoom();
         //CheckIfPersonIsBeingOnSystemTooLong();

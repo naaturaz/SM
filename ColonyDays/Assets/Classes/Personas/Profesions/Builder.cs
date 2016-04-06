@@ -215,21 +215,20 @@ public class Builder : Profession
         RouterActive = true;
         IsRouterBackUsed = true;
         routerBackWasInit = false;
+        //Debug.Log("routerBackWasInit = false");
 
+        //that ID will remove dummy so can be cache and will add the FinRoutePoint so if another builder
+        //will go to that corner can use the cached one 
+        _person.MyDummyProf.MyId = _constructing.MyId + "." + FinRoutePoint;
+        _person.MyDummyProf.transform.position = FinRoutePoint;
 
+        //UVisHelp.CreateHelpers(FinRoutePoint, Root.yellowCube);
 
-        //Debug.Log("got dummy:" + _person.MyId + " cons:" + _constructing.MyId + " finRt:" + FinRoutePoint);
-        dummy = CreateDummy();
-        dummy.transform.position = FinRoutePoint;
+        _person.MyDummyProf.transform.LookAt(_constructing.transform.position);
+        _person.MyDummyProf.HandleLandZoning(_constructing, FinRoutePoint);
 
-        dummy.transform.LookAt(_constructing.transform.position);
-        dummy.HandleLandZoning(_constructing, FinRoutePoint);
-
-        dummy.DummyIdSpawner = _constructing.MyId;
-
-        Router1 = new CryRouteManager(_person.Work, dummy, _person, finDoor:false);
-
-     
+        _person.MyDummyProf.DummyIdSpawner = _constructing.MyId;
+        Router1 = new CryRouteManager(_person.Work, _person.MyDummyProf, _person, finDoor: false);
     }
 
 
@@ -307,7 +306,7 @@ public class Builder : Profession
         {
             routerBackWasInit = true;
             //If the FoodSrc is not null will be used as way back
-            RouterBack = new CryRouteManager(dummy, _person.FoodSource, _person, HPers.InWorkBack, false, true);
+            RouterBack = new CryRouteManager(_person.MyDummyProf, _person.FoodSource, _person, HPers.InWorkBack, false, true);
         }
     }
 

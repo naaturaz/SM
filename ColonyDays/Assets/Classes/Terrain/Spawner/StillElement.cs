@@ -302,6 +302,9 @@ public class StillElement : TerrainRamdonSpawner
     public override void DestroyCool()
     {
         Debug.Log("DestroyCool():" + MyId);
+        
+        //PersonPot.Control.RoutesCache1.RemoveAllMine(MyId);
+
         //cool stuff
         base.DestroyCool();
         //removes from List in TerraSpawnerController

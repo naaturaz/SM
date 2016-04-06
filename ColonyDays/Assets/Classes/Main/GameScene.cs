@@ -156,26 +156,43 @@ public class GameScene : General {
         {
             return;
         }
-
-        GameTime1.FixedUpdate();
-
+        
         GameController1.Update();
         CreateDummySpawnPoint();
 
-        //var onS = PersonPot.PersonController.All.ElementAt(0).Value.Geometry.GetComponent<OnScreen>();
-        //var vis = onS.Visible();
+        //HUDFPS.Message = " | " + MouseInBorderRTS.GlobalDir.ToString() + "| Dragged: " + Way._dir +
+        //                 " | InputMode: " + BuildingPot.InputMode + "\n" + more + "\n"
+        //    //+ " Vis: " + PersonPot.PersonController.All.ElementAt(0).Value.IsVisible()
+        //    //+ " | Can see: " + PersonPot.PersonController.All.ElementAt(0).Value.I_Can_See()
+        //    //+ " | Became: " + vis
+        //                 + AddPersonControllerInfo() + " | " + AddLoadingInfo()
+        //    //  +               Pull AddUnityStats()
 
-        HUDFPS.Message = " | " + MouseInBorderRTS.GlobalDir.ToString() + "| Dragged: " + Way._dir +
-                         " | InputMode: " + BuildingPot.InputMode + "\n" + more + "\n"
-            //+ " Vis: " + PersonPot.PersonController.All.ElementAt(0).Value.IsVisible()
-            //+ " | Can see: " + PersonPot.PersonController.All.ElementAt(0).Value.I_Can_See()
-            //+ " | Became: " + vis
-                         + AddPersonControllerInfo() + " | " + AddLoadingInfo() 
-                          //  +               Pull AddUnityStats()
-                             ;
+        //                 + AddCachedReoutesCount();
 
         DebugInput();
         DebugChangeScreenResolution();
+    }
+
+    void FixedUpdate()
+    {
+        //means tht it has it loaded
+        if (_gameTime == null)
+        {
+            return;
+        }
+        GameTime1.FixedUpdate();
+        
+    }
+
+    string AddCachedReoutesCount()
+    {
+        if (PersonPot.Control == null || PersonPot.Control.RoutesCache1 == null)
+        {
+            return "";
+        }
+
+        return "\n Cached: " + PersonPot.Control.RoutesCache1.ItemsCount();
     }
 
     string AddPersonControllerInfo()

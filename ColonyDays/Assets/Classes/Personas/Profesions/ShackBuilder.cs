@@ -50,13 +50,13 @@ public class ShackBuilder : Profession
     {
         RouterActive = true;
 
-        dummy = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy);
-        dummy.transform.position = _person.transform.position;
-        dummy.HandleLandZoning();
+        //dummy = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy);
+        //dummy.transform.position = _person.transform.position;
+        //dummy.HandleLandZoning();
 
-        Router1 = new CryRouteManager(dummy, (Structure)_constructing, _person, HPers.InWork, false, true);
+        //Router1 = new CryRouteManager(dummy, (Structure)_constructing, _person, HPers.InWork, false, true);
 
-        //Debug.Log("shck created dummy ");
+        ////Debug.Log("shck created dummy ");
     }
 
     //private void CreateShack()
