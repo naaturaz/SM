@@ -35,6 +35,10 @@ public class GameScene : General {
     GameController _gameController = new GameController();
     ExportImport _exportImport = new ExportImport();
 
+    private Culling _culling ;
+    private Fustrum _fustrum;
+
+
     public float SubDivideBlockYVal
     {
         get { return _subDivideBlockYVal; }
@@ -95,6 +99,18 @@ public class GameScene : General {
         set { _exportImport = value; }
     }
 
+    public Culling Culling1
+    {
+        get { return _culling; }
+        set { _culling = value; }
+    }
+
+    public Fustrum Fustrum1
+    {
+        get { return _fustrum; }
+        set { _fustrum = value; }
+    }
+
     // Use this for initialization
 	void Start ()
 	{
@@ -121,6 +137,8 @@ public class GameScene : General {
 
         dummySpawnPoint = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPointUnTimed, new Vector3(), H.Dummy,
                 container: Program.ClassContainer.transform);
+
+        //hudColor = textMessage.GetComponent<GUIText>().color;
 	}
 
     private IEnumerator SixtySecUpdate()
@@ -172,6 +190,24 @@ public class GameScene : General {
 
         DebugInput();
         DebugChangeScreenResolution();
+
+
+        if (Camera.main != null && _culling == null && PersonPot.Control!= null && PersonPot.Control.All.Count > 0
+            && BuildingPot.Control!=null && BuildingPot.Control.Registro.AllBuilding.Count>1)
+        {
+            _culling = new Culling();
+            _fustrum = new Fustrum();
+        }
+
+        if (_fustrum!=null)
+        {
+            _fustrum.Update();
+        }
+
+        if (hud==null)
+        {
+            hud = FindObjectOfType<HUDFPS>().GuiText;
+        }
     }
 
     void FixedUpdate()
@@ -245,11 +281,15 @@ public class GameScene : General {
         if (Input.GetKeyUp(KeyCode.Keypad0))
         {
             _hideText = !_hideText;
+            HideShowTextMsg();
+
         }
 
-        HideShowTextMsg();
     }
 
+    private GUIText hud;
+    private Color hudColor;
+    //Wont change color bz is not in updte directly 
     void HideShowTextMsg()
     {
         Color col = Color.green;
@@ -260,7 +300,7 @@ public class GameScene : General {
         }
         else col.a = 255;
 
-        var hud = FindObjectOfType<HUDFPS>().GuiText;
+
 
         if (hud == null)
         {
@@ -268,7 +308,7 @@ public class GameScene : General {
         }
 
         hud.color = col;
-        textMessage.GetComponent<GUIText>().color = col;
+        //hudColor = col;
     }
 
     private string more;

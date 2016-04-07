@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+/// <summary>
+/// Each Person , Still element will have one instance of this class
+/// </summary>
 public class OutOfScreen
 {
 
@@ -18,6 +20,7 @@ public class OutOfScreen
     private bool _onScreenNow;
     private bool _oldState;
 
+    private H _currentLOD = H.LOD0;
 
     public OutOfScreen(Person person)
     {
@@ -36,22 +39,29 @@ public class OutOfScreen
     // Update is called once per frame
 	public void Update ()
 	{
-        if (_renderer.isVisible && !_onScreenNow)
+        if (Program.gameScene.Fustrum1.OnFustrum(_boxCollider) && _renderer.isVisible && !_onScreenNow)
         {
             _onScreenNow = true;
             SwitchNow();
         }
-        else if (!_renderer.isVisible && _onScreenNow)
+        else if ((!Program.gameScene.Fustrum1.OnFustrum(_boxCollider) || !_renderer.isVisible) && _onScreenNow)
         {
             _onScreenNow = false;
             SwitchNow();
         }
 	}
 
+    public void SetNewLOD(H newLOD)
+    {
+        _currentLOD = newLOD;
+        SwitchNow();
+    }
+
+
 
     private void SwitchNow()
     {
-        if (_onScreenNow)
+        if (_onScreenNow && _currentLOD == H.LOD0)
         {
             OnBecameVisible();
         }
@@ -72,7 +82,7 @@ public class OutOfScreen
 
     internal void Activate()
     {
-        _boxCollider.enabled = true;
+        //_boxCollider.enabled = true;
 
         if (_type==H.Person)
         {
@@ -87,7 +97,7 @@ public class OutOfScreen
 
     internal void DeActivate()
     {
-        _boxCollider.enabled = false;
+        //_boxCollider.enabled = false;
 
         if (_type == H.Person)
         {

@@ -146,7 +146,8 @@ public class CamRTSController : CamControl
     }
 
     // Update is called once per frame
-    void LateUpdate()
+    //void LateUpdate()
+    void Update()
     {
         //initiales current obj pos and rot to...
         InitializeObjects();

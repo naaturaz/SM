@@ -209,7 +209,7 @@ public enum H
     //infr F1
     Trail, Road, BridgeTrail, BridgeRoad, CoachMan, LightHouse, WheelBarrow, StockPile, Masonry,
     //house F2 ... bugg bz they had numbers on it .. They cant have numbers
-    Bohio, HouseA, HouseB, HouseTwoFloor, HouseMed, 
+    Bohio, HouseA, HouseB, HouseTwoFloor, HouseMed,
     HouseLargeA,
     HouseLargeB,
     HouseLargeC,
@@ -228,7 +228,7 @@ public enum H
     Dock, Shipyard, Supplier, StorageSmall, StorageMed, StorageBig, StorageBigTwoDoors, StorageExtraBig,
     //gov F8
     //Clinic, CommerceChamber, Customs, 
-    Library, School, TradesSchool, 
+    Library, School, TradesSchool,
     TownHouse,
     //other F9
     //Religous
@@ -355,6 +355,9 @@ public enum H
     Resources,
     Start,
     Bridge_Trail_Piece_10,
+    LOD0,
+    LOD1,
+    LOD2,
 
 
 }

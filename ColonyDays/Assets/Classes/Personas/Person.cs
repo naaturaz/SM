@@ -6,6 +6,25 @@ using Random = UnityEngine.Random;
 
 public class Person : General
 {
+    public EventHandler<EventArgs> Carlos;
+
+    void OnCarlos(EventArgs e)
+    {
+        if (Carlos != null)
+        {
+            Carlos(this, e);
+        }
+    }
+
+
+
+    
+
+
+
+
+
+
     //Debug
     private List<General> _debugList = new List<General>();
 
@@ -1084,6 +1103,9 @@ public class Person : General
         StartOutOfScreen();
         StartCoroutine("FiveSecUpdate");
         StartCoroutine("OneSecUpdate");
+
+        StartCoroutine("A45msUpdate");
+
         StartCoroutine("RandomUpdate1020");
         StartCoroutine("QuickUpdate");
         //StartCoroutine("QuickUpdate2");
@@ -1101,8 +1123,11 @@ public class Person : General
         Inventory = new Inventory(MyId, HType);
 
 
-        _animator = GetComponent<Animator>();
+        //_animator = GetComponent<Animator>();
         _bip = GetChildCalled("Bip001");
+
+
+        OnCarlos(EventArgs.Empty);
 	}
 
     float RestartTimes(float a, float b){return Random.Range(a, b);}
@@ -1160,7 +1185,14 @@ public class Person : General
     }
 
 
-
+    private IEnumerator A45msUpdate()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(.045f); // wait
+            LODCheck();
+        }
+    }
 
 
 
@@ -1195,8 +1227,11 @@ public class Person : General
         {
             _profession.Update();
         }
-        //LODCheck();
 	}
+
+
+    
+
 
     void UpdateCallsToOneSec()
     {
@@ -2062,24 +2097,27 @@ public class Person : General
 
 
 
-    private Animator _animator;
+    //private Animator _animator;
     private GameObject _bip;
-
+    private H _oldLOD;
 
     void LODCheck()
     {
-        if (_bip == null)
+        var newLOD = ReturnCurrentLOD();
+
+        if ( _oldLOD == newLOD || _bip == null)
         {
             return;
         }
 
-        var dist = Vector3.Distance(transform.position, Camera.main.transform.position);
+        _oldLOD = newLOD;
+        _outOfScreen.SetNewLOD(newLOD);
 
-        if (dist > 45 && dist <= 76)//35 66
+        if (newLOD == H.LOD1)
         {
             LOD1();
         }
-        else if (dist > 75)//65
+        else if (newLOD == H.LOD2)
         {
             LOD2();
         }
@@ -2089,10 +2127,25 @@ public class Person : General
         }
     }
 
+    H ReturnCurrentLOD()
+    {
+        var dist = Vector3.Distance(transform.position, Camera.main.transform.position);
+
+        if (dist > 35 && dist <= 66)//35 66    45 76
+        {
+            return H.LOD1;
+        }
+        if (dist > 65)//65      75
+        {
+            return H.LOD2;
+        }
+        return H.LOD0;
+    }
+
     void LOD1()
     {
         _bip.SetActive(false);
-        _animator.enabled = false;
+        //_animator.enabled = false;
     }
 
     void LOD2()
@@ -2108,7 +2161,7 @@ public class Person : General
     void LODBest()
     {
         _bip.SetActive(true);
-        _animator.enabled = true;
+        //_animator.enabled = true;
         Geometry.SetActive(true);
     }
 

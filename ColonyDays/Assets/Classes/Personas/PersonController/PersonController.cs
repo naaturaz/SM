@@ -1,14 +1,21 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 /* To Svae Load anytihng in this class see PersonSaveLoad.cs*/
 
 //This class holds and controlls all persons
 public class PersonController : PersonPot
 {
+
+
+
+
+
 	//initiating a game difficulty
     //0 newbie, 1 easy, 2 med, 3 hard, 4 insane
     private int _difficulty = 0;
@@ -204,9 +211,19 @@ public class PersonController : PersonPot
         for (int i = 0; i < amtP; i++)
         {
             Person t = Person.CreatePerson(iniPos);
+            t.Carlos += CarlosHandler;
             All.Add( t);
         }
     }
+
+    void CarlosHandler(object sender, EventArgs e)
+    {
+        Person v = (Person) sender;
+        Debug.Log("Carlos event "+v.MyId);
+    }
+
+
+
 
     public void HaveNewKid(Vector3 iniPos)
     {

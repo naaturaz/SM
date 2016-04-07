@@ -180,7 +180,7 @@ public class InputMain : InputParent {
         }
         //BuilderPot.InputU.BuildNowNew(BuilderPot.DoingNow);
         BuildingPot.InputMode = Mode.None;
-        _audioPlayer.PlaySoundOneTime(RootSound.hoverMenuSound);
+        //_audioPlayer.PlaySoundOneTime(RootSound.hoverMenuSound);
     }
 
     /// <summary>
@@ -215,13 +215,13 @@ public class InputMain : InputParent {
         if (Input.GetKeyUp(KeyCode.B))
         {
             BuildingPot.InputMode = Mode.Building;
-            _audioPlayer.PlaySoundOneTime(RootSound.hoverMenuSound);
+            //_audioPlayer.PlaySoundOneTime(RootSound.hoverMenuSound);
             DestroyCurrentSpawnBuild();
         }
         else if (Input.GetKeyUp(KeyCode.C))
         {
             BuildingPot.InputMode = Mode.Cutting;
-            _audioPlayer.PlaySoundOneTime(RootSound.hoverMenuSound);
+            //_audioPlayer.PlaySoundOneTime(RootSound.hoverMenuSound);
         }
         //if (BuilderPot.InputMode != Mode.Placing) { Cursor.visible = true; }
     }
