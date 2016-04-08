@@ -458,7 +458,7 @@ public class Family
 
     public static Person FindPerson(string find)
     {
-        return PersonPot.Control.All.Find(a => a.MyId == find);
+        return PersonPot.Control.FindPerson(find);
     }
 
     /// <summary>

@@ -1179,7 +1179,7 @@ public class Person : General
     {
         while (true)
         {
-            yield return new WaitForSeconds(1); // wait
+            yield return new WaitForSeconds(3); // wait
             UpdateCallsToOneSec();
         }
     }
@@ -1235,11 +1235,6 @@ public class Person : General
 
     void UpdateCallsToOneSec()
     {
-      
-
-
-
-
         TimeChecks();
 
         if (UPerson.IsMajor(_age) && !_isMajor && string.IsNullOrEmpty(IsBooked) //&& Brain.GoMindState 

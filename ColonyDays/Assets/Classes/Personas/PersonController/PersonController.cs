@@ -21,6 +21,9 @@ public class PersonController : PersonPot
     private int _difficulty = 0;
 
     private List<Person> _all = new List<Person>();
+    //same as above for GC reasons 
+    Dictionary<string, Person> _allGC = new Dictionary<string, Person>(); 
+
     private StartingCondition[] conditions;
 
     //the counter to do the brainChecks.. BrainCheck is when looking to see if somethinglike a new Job is open
@@ -181,6 +184,7 @@ public class PersonController : PersonPot
         {
             Person t = Person.CreatePersonFromFile(pData.All[i]);
             All.Add( t);
+            _allGC.Add(t.MyId, t);
         }  
 
         //person controller vars
@@ -213,13 +217,14 @@ public class PersonController : PersonPot
             Person t = Person.CreatePerson(iniPos);
             t.Carlos += CarlosHandler;
             All.Add( t);
+            _allGC.Add(t.MyId, t);
         }
     }
 
     void CarlosHandler(object sender, EventArgs e)
     {
         Person v = (Person) sender;
-        Debug.Log("Carlos event "+v.MyId);
+        //Debug.Log("Carlos event "+v.MyId);
     }
 
 
@@ -228,7 +233,23 @@ public class PersonController : PersonPot
     public void HaveNewKid(Vector3 iniPos)
     {
         Person t = Person.CreatePersonKid(iniPos);
-        All.Add(t); 
+        All.Add(t);
+        _allGC.Add(t.MyId, t);
+    }
+
+    public void RemovePerson(Person p)
+    {
+        _allGC.Remove(p.MyId);
+        All.Remove(p);
+    }
+
+    internal Person FindPerson(string myIdP)
+    {
+        if (_allGC.ContainsKey(myIdP))
+        {
+            return _allGC[myIdP];
+        }
+        return null;
     }
 
     #region MovingToNewHome Related
@@ -271,7 +292,8 @@ public class PersonController : PersonPot
 
         UVisHelp.CreateHelpers(Program.gameScene.controllerMain.MeshController.wholeMalla, Root.redSphereHelp);
 
-        StartCoroutine("RandomUpdate1020");
+        StartCoroutine("A2sUpdate");
+
     }
 
 	// Update is called once per frame
@@ -281,8 +303,6 @@ public class PersonController : PersonPot
         Count();
 	    //UpdateOnScreen();
 
-        _buildersManager.Update();
-        RoutesCache1.Update();
 
         //CheckIfSystemHasRoom();
         //CheckIfPersonIsBeingOnSystemTooLong();
@@ -292,11 +312,25 @@ public class PersonController : PersonPot
             Initialize();
         }
 
-        WorkersRoutingQueue.Update();
 
-        SanitizeCurrent();
-	    EmigrateController1.Update();
 	}
+
+
+    private IEnumerator A2sUpdate()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(3.33f); // wait
+            
+            _buildersManager.Update();
+            RoutesCache1.Update();
+            WorkersRoutingQueue.Update();
+            SanitizeCurrent();
+            EmigrateController1.Update();
+        }
+    }
+
+
 
     private void UpdateOnScreen()
     {
@@ -326,16 +360,16 @@ public class PersonController : PersonPot
 
     void DebugHere()
     {
-        if (Input.GetKeyUp(KeyCode.K))
-        {
-            foreach (var ite in All)
-            {
-                //ite.Value.Brain.Router.DebugDestroy();
-                ite.Destroy();
-                All.Remove(ite);
-            }
-            SpawnIniPersonas();
-        }
+        //if (Input.GetKeyUp(KeyCode.K))
+        //{
+        //    foreach (var ite in All)
+        //    {
+        //        //ite.Value.Brain.Router.DebugDestroy();
+        //        ite.Destroy();
+        //        All.Remove(ite);
+        //    }
+        //    SpawnIniPersonas();
+        //}
 
         //make sure when execute this a least oneempty house exst 
         if (Input.GetKeyUp(KeyCode.M))
@@ -553,17 +587,7 @@ public class PersonController : PersonPot
 
     #region Immigrants
 
-    private float random1020Time;
-    private IEnumerator RandomUpdate1020()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(random1020Time); // wait
-            random1020Time = Random.Range(5, 10);
 
-            //CheckIfImmigrants();
-        }
-    }
 
 
     private int debugCount ;
@@ -868,6 +892,8 @@ public class PersonController : PersonPot
         }
         All[index].FamilyId = famId;
     }
+
+
 
 
 

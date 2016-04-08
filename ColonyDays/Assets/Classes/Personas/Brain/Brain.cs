@@ -24,8 +24,12 @@ public class Brain
     private CryRouteManager _routerIdle;
     private CryRouteManager _routerReligion;
     private CryRouteManager _routerChill;
+
+    CryRouteManager _eventSetter = new CryRouteManager();
     Person _person;
 
+    //Routes Started. they are kept started thru all the life of the route
+    //if is set back to false. Then the system will redo that route 
     private bool workRouteStart = true;
     private bool foodRouteStart = true;
     private bool idleRouteStart = true;
@@ -76,6 +80,9 @@ public class Brain
 
     public Brain(Person person)
     {
+        _eventSetter.DoneRoute += DoneRouteHandler;
+
+
         _moveToNewHome = new MoveToNewHome(this, person);
         _majorAge = new MajorityAgeReached(this, person, MoveToNewHome);
 
@@ -159,12 +166,12 @@ public class Brain
         MoveToNewHome.OldHomeKey = pF._brain.MoveToNewHome.OldHomeKey;
         MoveToNewHome.RouteToNewHome = pF._brain.MoveToNewHome.RouteToNewHome;
 
-        //is a shackBuilder , or its house was destroyed and father or mom is buiding shack
-        if (_person.Home == null)
-        {
-            return;
-        }
-
+        //bz loading routes. theyu need to be set to false otherwise will be true forver 
+        //workRouteStart = false;
+        //foodRouteStart = false;
+        //idleRouteStart = false;
+        //religionRouteStart = false;
+        //chillRouteStart = false;
     }
 
     /// <summary>
@@ -237,6 +244,7 @@ public class Brain
 
        // _routerWork = new CryRouteManager(_person.Home, _person.Work, _person, HPers.Work, askDateTime: askWork);
         _routerWork = new CryRouteManager(_person.Home, _person.Work, _person, askDateTime: askWork);
+        _routerWork.DoneRoute += DoneRouteHandler;
      
         workRouteStart = true;
     }
@@ -247,6 +255,9 @@ public class Brain
 
        // _routerFood = new RouterManager(_person.Home, _person.FoodSource, _person, HPers.FoodSource, askDateTime: askFood);
         _routerFood = new CryRouteManager(_person.Home, _person.FoodSource, _person, askDateTime: askFood);
+        _routerFood.DoneRoute += DoneRouteHandler;
+
+
 
         foodRouteStart = true;
     }
@@ -268,6 +279,7 @@ public class Brain
 
         //_routerIdle = new CryRouteManager(_person.Home, GameScene.dummySpawnPoint, _person, finDoor:false);
         _routerIdle = new CryRouteManager(_person.Home, _person.MyDummy, _person, finDoor: false);
+        _routerIdle.DoneRoute += DoneRouteHandler;
 
         idleRouteStart = true;
     }
@@ -291,6 +303,9 @@ public class Brain
 
         //_routerReligion = new RouterManager(_person.Home, _person.Religion, _person, HPers.Religion, askDateTime: askReligion);
         _routerReligion = new CryRouteManager(_person.Home, _person.Religion, _person, askDateTime: askReligion);
+        _routerReligion.DoneRoute += DoneRouteHandler;
+        
+        
         religionRouteStart = true;
     }
 
@@ -300,6 +315,8 @@ public class Brain
 
         //_routerChill = new RouterManager(_person.Home, _person.Chill, _person, HPers.Chill, askDateTime: askChill);
         _routerChill = new CryRouteManager(_person.Home, _person.Chill, _person, askDateTime: askChill);
+        _routerChill.DoneRoute += DoneRouteHandler;
+       
         chillRouteStart = true;
     }
 
@@ -850,7 +867,7 @@ public class Brain
 
         //used to be below mindState
         StartRoutes();
-        SetFinalRoutes();
+        //SetFinalRoutes();
         MoveToNewHome.BuildRouteToNewHomeRoutine();
         SearchAgain();
         if (!PersonPot.Control.Locked && _person.Home != null)
@@ -1069,6 +1086,25 @@ public class Brain
         set { _generalOldKeysList = value; }
     }
 
+
+
+    bool DoIHaveAWork()
+    {
+        return _person.Work != null;
+    }
+    bool DoIHaveAFood()
+    {
+        return _person.FoodSource != null;
+    }
+    bool DoIHaveAReligion()
+    {
+        return _person.Religion != null;
+    } 
+    bool DoIHaveAChill()
+    {
+        return _person.Chill != null;
+    }
+
     /// <summary>
     /// This method starts all the routes too since the var above have empty vvalues
     /// 
@@ -1081,20 +1117,19 @@ public class Brain
     /// </summary>
     private void CheckIfABuildWasChange()
     {
-       // if (_isAllSet && (IAmHomeNow() || IJustSpawn()))
         if (_isAllSet)
         {
-            //if home was changed u need to star all routes 
+            //if home was changed u need to star all routes .
+            //the ones that dont have the building not need to redo them 
             if (oldHome != _person.Home.MyId)
             {
-               ////Debug.Log(_person.MyId + " redoing all routes");
-
-                workRouteStart = false;
-                foodRouteStart = false;
+                //Debug.Log(_person.MyId + " redoing all routes");
+                workRouteStart = !DoIHaveAWork();//if has work will set it to false. so it gets redone
+                foodRouteStart = !DoIHaveAFood();
                 idleRouteStart = false;
-                religionRouteStart = false;
-                chillRouteStart = false;
-
+                religionRouteStart = !DoIHaveAReligion();
+                chillRouteStart = !DoIHaveAChill();//if have not a child then will stay as true.
+                                                //so we dont need to redo a chill route
                 if (!IJustSpawn())
                 {
                     //false pass as param so it doesnt remove the people from Houses
@@ -1303,6 +1338,17 @@ public class Brain
         return BlackList.Contains(router.OriginKey) || BlackList.Contains(router.DestinyKey);
     }
 
+
+
+
+
+    void DoneRouteHandler(object sender, EventArgs e)
+    {
+        //var v = (CryBridgeRoute) sender;
+        //Debug.Log("DoneRouteHandler event: ");
+        SetFinalRoutes();
+    }
+
     //if is true the Brain will executed the MindStates()
     private bool goMindState;
     /// <summary>
@@ -1311,6 +1357,8 @@ public class Brain
     /// </summary>
     void SetFinalRoutes()
     {
+        //Debug.Log("SetFinaRou "+_person.MyId);
+
         //this is so Person dont stay stuff there bz has some bacl listed buildings
         //what happens is that in ChangesBuildings this is start but never ended bz
         //then Building becomes null 
@@ -1371,7 +1419,6 @@ public class Brain
         if (idleRouteStart && _routerIdle.IsRouteReady && _idleRoute.CheckPoints.Count == 0)
         {
             ResetDummyIdle();
-
             _idleRoute = _routerIdle.TheRoute;
             CheckIfGoMindReady();
         }
@@ -2031,18 +2078,50 @@ public class Brain
         //if is not null and is not shack then dont need to  call CheckHomeLoop()
         if (_person.Home != null)
         {
-            bool thereIsABetterHome = _realtor.PublicIsABetterHome(_person);
+            //for CPU reasons only ask if really needed 
+            var shouldAsk = ShouldAskForBetterHome();
 
-            if (!thereIsABetterHome)
+            if (shouldAsk)
+            {
+                bool thereIsABetterHome = _realtor.PublicIsABetterHome(_person);
+                if (!thereIsABetterHome)
+                {
+                    UnivCounter(HPers.Home);
+                    return;
+                }
+            }
+            else
             {
                 UnivCounter(HPers.Home);
-                return;
+                return; 
             }
         }
         CheckHomeLoop();
     }
 
-  
+
+    #region Added Apr7 2016
+
+    bool ShouldAskForBetterHome()
+    {
+        var ageToBeMajorNoOwnHome = UPerson.IsMajor(_person.Age) && !_person.IsMajor;
+        var singleAndNotWidow = string.IsNullOrEmpty(_person.Spouse) && !_person.IsWidow;
+
+        if (_person.Home.Instruction == H.WillBeDestroy || ageToBeMajorNoOwnHome || singleAndNotWidow
+            || _person.IsBooked != "")
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+
+#endregion
+
+
+
+
     Realtor _realtor = new Realtor();
     public Realtor Realtor1
     {
@@ -2838,7 +2917,7 @@ public class Brain
             Partido = false;
             //so person goes to heaven, and ray is sent from Sky to take him //or angels take him 
             _person.DestroyCool();
-            PersonPot.Control.All.Remove(_person);
+            PersonPot.Control.RemovePerson(_person);
         }
     }
 

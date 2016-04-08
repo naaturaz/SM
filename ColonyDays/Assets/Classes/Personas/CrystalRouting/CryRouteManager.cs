@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.Xml.Serialization;
 using UnityEngine;
 
 public class CryRouteManager
@@ -228,6 +229,7 @@ public class CryRouteManager
 
                 //calling here so at least is there already even if has not the inverse Route set 
                 PersonPot.Control.RoutesCache1.AddReplaceRoute(_theRoute);
+                SetFinalRouteOnBrain();
             }
         }
 
@@ -242,10 +244,29 @@ public class CryRouteManager
 
                 //calling here so at least is there already even if has not the inverse Route set 
                 PersonPot.Control.RoutesCache1.AddReplaceRoute(_theRoute);
+                SetFinalRouteOnBrain();
             }
         }
 
         FakeRealRoute();
 
 	}
+
+
+
+    [XmlIgnoreAttribute]
+    public EventHandler<EventArgs> DoneRoute;
+
+    void OnDoneRoute(EventArgs e)
+    {
+        if (DoneRoute != null)
+        {
+            DoneRoute(this, e);
+        }
+    }
+
+    void SetFinalRouteOnBrain()
+    {
+        OnDoneRoute(EventArgs.Empty);
+    }
 }
