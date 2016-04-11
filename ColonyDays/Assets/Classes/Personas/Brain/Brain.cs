@@ -254,6 +254,8 @@ public class Brain
         AddToGenOldKeyIfAOldRouteHasOneOldBridgeOnIt(_foodRoute);
 
        // _routerFood = new RouterManager(_person.Home, _person.FoodSource, _person, HPers.FoodSource, askDateTime: askFood);
+
+
         _routerFood = new CryRouteManager(_person.Home, _person.FoodSource, _person, askDateTime: askFood);
         _routerFood.DoneRoute += DoneRouteHandler;
 
@@ -758,6 +760,9 @@ public class Brain
         AddToList(_generalOldKeysList, MoveToNewHome.RouteToNewHome.BridgeKey);
 
         //CheckIfClearBlackList();
+        
+        //in case was wiaint to Unbokk to die
+        Die();
     }
 
     private void RemoveMeFromOldHomeFamily(Structure oldHomeH)
@@ -799,6 +804,7 @@ public class Brain
         {
             _isIdleHomeNow = true;
             ListOfActionsInHome();
+            ExecuteSlowCheckUp();
         }
 
         AddIdleTimeIfHasOldKeys();
@@ -866,15 +872,15 @@ public class Brain
 
 
         //used to be below mindState
-        StartRoutes();
+        //StartRoutes();
         //SetFinalRoutes();
         MoveToNewHome.BuildRouteToNewHomeRoutine();
         SearchAgain();
-        if (!PersonPot.Control.Locked && _person.Home != null)
-        {
-            ExecuteSlowCheckUp();
-        }
-        Die();
+        //if (!PersonPot.Control.Locked && _person.Home != null)
+        //{
+        //    ExecuteSlowCheckUp();
+        //}
+        //Die();
 
 
 
@@ -1173,6 +1179,8 @@ public class Brain
                 RestartVarsAndAddToGenList();
                 oldChill = _person.Chill.MyId;
             }
+
+            StartRoutes();
         }
     }
 
@@ -1357,7 +1365,7 @@ public class Brain
     /// </summary>
     void SetFinalRoutes()
     {
-        //Debug.Log("SetFinaRou "+_person.MyId);
+        Debug.Log("SetFinaRou "+_person.MyId);
 
         //this is so Person dont stay stuff there bz has some bacl listed buildings
         //what happens is that in ChangesBuildings this is start but never ended bz
@@ -1422,6 +1430,9 @@ public class Brain
             _idleRoute = _routerIdle.TheRoute;
             CheckIfGoMindReady();
         }
+
+        //in case needs to be redone a new route
+        StartRoutes();
     }
 
     /// <summary>
@@ -1700,7 +1711,7 @@ public class Brain
         {
             var which = collisionsOn[i];
 
-           ////Debug.Log("Collided a builing with route:" + which + " on person:" + _person.MyId);
+            Debug.Log("Collided a builing with route:" + which + " on person:" + _person.MyId);
             if (which == HPers.Work)
             {
                 //GameScene.print("Redo Work");
@@ -1708,7 +1719,7 @@ public class Brain
             }
             if (which == HPers.FoodSource)
             {
-                //GameScene.print("Redo Food");
+                GameScene.print("Redo Food");
                 foodRouteStart = false;
             }
             if (which == HPers.IdleSpot)
@@ -1728,6 +1739,8 @@ public class Brain
             }
         }
 
+
+
         if (collisionsOn.Contains(HPers.InWork))
         {
             PersonPot.Control.RoutesCache1.RemoveRoute(_person.ProfessionProp.Router1.TheRoute, askInWork);
@@ -1738,6 +1751,10 @@ public class Brain
             PersonPot.Control.RoutesCache1.RemoveRoute(_person.ProfessionProp.RouterBack.TheRoute, askInWorkBack);
             //RedoProfession();
         }
+
+        //in case a new route needs to be start
+        StartRoutes();
+
     }
     #endregion
 
@@ -2429,15 +2446,21 @@ public class Brain
     /// <summary>
     /// Flag bool so we can check if the FoodSource was depleted
     /// </summary>
-    internal void SlowCheckUp() { slowCheckUp = true; }
+    internal void SlowCheckUp()
+    {
+        slowCheckUp = true;
+    }
 
     /// <summary>
     /// Checks if the FoodSource was depleted
+    /// Must be at home to check this 
     /// </summary>
     void ExecuteSlowCheckUp()
     {
-        if (slowCheckUp && IAmHomeNow())
+        if (slowCheckUp)
         {
+            //Debug.Log("SlowCheck");
+
             CheckOnFoodSourceAvail();
             slowCheckUp = false;
 
@@ -2478,7 +2501,7 @@ public class Brain
             RemoveFromPeopleDict(oldJob);
 
             var buildCurrWork = GetBuildingFromKey(currWork);
-            if (!buildCurrWork.IsBuildingCustomerType(_person))
+            if (buildCurrWork!=null && !buildCurrWork.IsBuildingCustomerType(_person))
             {
                 AddToPeopleDict(currWork);
                 RemoveAndAddPositionsToJob();         
@@ -2762,6 +2785,9 @@ public class Brain
             _person.Chill = null;
 
             _person.RedoBrain(BlackList);
+
+            //in case was wiaint to Unbokk to die
+            Die();
             return;
         }
         

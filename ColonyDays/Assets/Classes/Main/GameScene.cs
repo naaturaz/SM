@@ -121,7 +121,11 @@ public class GameScene : General {
         GameController1.Start();
         StartCoroutine("SixtySecUpdate");
 
+#if UNITY_EDITOR
 
+        StartCoroutine("OneSecUpdate");
+
+#endif
 
         Settings.PlayMusic();
 
@@ -151,6 +155,19 @@ public class GameScene : General {
     }
 
 
+    private IEnumerator OneSecUpdate()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1); // wait
+
+            HUDFPS.Message = " | " + MouseInBorderRTS.GlobalDir.ToString() + "| Dragged: " + Way._dir +
+                             " | InputMode: " + BuildingPot.InputMode + "\n" + more + "\n"
+                             + AddPersonControllerInfo() + " | " + AddLoadingInfo()
+                //  +               Pull AddUnityStats()
+                             + AddCachedReoutesCount();
+        }
+    }
 
 
 
@@ -178,15 +195,6 @@ public class GameScene : General {
         GameController1.Update();
         CreateDummySpawnPoint();
 
-        //HUDFPS.Message = " | " + MouseInBorderRTS.GlobalDir.ToString() + "| Dragged: " + Way._dir +
-        //                 " | InputMode: " + BuildingPot.InputMode + "\n" + more + "\n"
-        //    //+ " Vis: " + PersonPot.PersonController.All.ElementAt(0).Value.IsVisible()
-        //    //+ " | Can see: " + PersonPot.PersonController.All.ElementAt(0).Value.I_Can_See()
-        //    //+ " | Became: " + vis
-        //                 + AddPersonControllerInfo() + " | " + AddLoadingInfo()
-        //    //  +               Pull AddUnityStats()
-
-        //                 + AddCachedReoutesCount();
 
         DebugInput();
         DebugChangeScreenResolution();

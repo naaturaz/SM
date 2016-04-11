@@ -174,6 +174,8 @@ public class CryRouteManager
         //GameScene.print("We have exisint route "+_person.MyId+" o:"+OriginKey + " d:"+DestinyKey + " askT:" +_askDateTime);
         tempTheRoute = PersonPot.Control.RoutesCache1.GiveMeTheNewerRoute();
         time = Time.time;
+
+
     }
 
     private void WeHaveToCreateTheRoute()
@@ -204,13 +206,14 @@ public class CryRouteManager
             return;
         }
 
-        if (Time.time > time + 1f)
+        if (Time.time > time + .5f)
         {
             time = 0;
             SetTheRoute(tempTheRoute);//this route was defined on WeHaveAnExisitingRoute()
 
             SetIsRouteReady(true);
-
+            //need to call it so its set on Brain
+            OnDoneRoute(EventArgs.Empty);
         }
     }
 

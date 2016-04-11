@@ -712,7 +712,7 @@ public class Building : General, Iinfo
     void LoadingWillBeDestroyBuild()
     {
         //if we deactivated , or hasnt loaded yet, or simply is not a loading Building 
-        if (!IsLoadingFromFile || PersonPot.Control == null || PersonPot.Control.BuildersManager1 == null)
+        if (!IsLoadingFromFile || Instruction != H.WillBeDestroy || PersonPot.Control == null || PersonPot.Control.BuildersManager1 == null)
         {
             return;
         }
@@ -2935,15 +2935,16 @@ public class Building : General, Iinfo
 
     private void InitFarm()
     {
+        if (wasFarmInited || !PositionFixed)
+        {
+            return;
+        }
+        wasFarmInited = true;
+
         if (HType.ToString().Contains(H.Farm + ""))
         {
             if (HType.ToString().Contains(H.AnimalFarm + ""))
             {
-                if (wasFarmInited || !PositionFixed)
-                {
-                    return;
-                }
-                wasFarmInited = true;
                 InitAnimalFarm();
             }
         }

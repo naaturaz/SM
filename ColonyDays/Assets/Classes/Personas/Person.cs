@@ -471,6 +471,8 @@ public class Person : General
     /// </summary>
     public void InitLoadedPerson(PersonFile pF)
     {
+        CreateTheTwoDummies();
+
         NutritionLevel = pF.NutritionLevel;
         Age = pF._age;
 
@@ -1053,7 +1055,7 @@ public class Person : General
 
             sp.IsWidow = true;
         }
-        //Brain.Die();
+        Brain.Die();
     }
 
     #endregion
@@ -1095,6 +1097,18 @@ public class Person : General
         return dummyIdle;
     }
 
+    void CreateTheTwoDummies()
+    {
+        //mean was created already 
+        if (MyDummy!=null)
+        {
+            return;
+        }
+
+        MyDummy = CreateDummy();
+        MyDummyProf = CreateDummy();   
+    }
+
     // Use this for initialization
 	void Start () 
     {
@@ -1108,10 +1122,10 @@ public class Person : General
 
         StartCoroutine("RandomUpdate1020");
         StartCoroutine("QuickUpdate");
-        //StartCoroutine("QuickUpdate2");
 
-	    MyDummy = CreateDummy();
-	    MyDummyProf = CreateDummy();
+
+        CreateTheTwoDummies();
+	    
         
 
         //means is loading from file
@@ -1122,11 +1136,7 @@ public class Person : General
 
         Inventory = new Inventory(MyId, HType);
 
-
-        //_animator = GetComponent<Animator>();
         _bip = GetChildCalled("Bip001");
-
-
         OnCarlos(EventArgs.Empty);
 	}
 
@@ -1214,7 +1224,8 @@ public class Person : General
 	{
         _outOfScreen.Update();
 
-        if (!PersonPot.Control.Locked)
+        if (!PersonPot.Control.Locked && Home == null
+            )
         {
             _brain.CheckConditions();
         }
@@ -1277,18 +1288,6 @@ public class Person : General
 
 
     
-    public bool I_Can_See()
-    {
-        Camera rts = CamControl.CAMRTS.GetComponent<Camera>();
-        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(rts);
-
-        Collider c = gameObject.GetComponent<Collider>();
-
-        if (GeometryUtility.TestPlanesAABB(planes, c.bounds))
-            return true;
-        else
-            return false;
-    }
 
     #region Section that detect and handles if is colliding with another person while moving 
 

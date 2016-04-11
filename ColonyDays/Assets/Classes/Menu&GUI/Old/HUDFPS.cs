@@ -26,6 +26,7 @@ public class HUDFPS : MonoBehaviour
 
 	private GameObject guiClone;
     private static string _message;
+    private static string _messageLong;
 
     public static string Message
     {
@@ -37,6 +38,12 @@ public class HUDFPS : MonoBehaviour
     {
         get { return guiText; }
         set { guiText = value; }
+    }
+
+    public static string MessageLong
+    {
+        get { return _messageLong; }
+        set { _messageLong = value; }
     }
 
     void Start()

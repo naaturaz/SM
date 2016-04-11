@@ -77,7 +77,7 @@ public class Book : General
         Build.Add(new BuildStat(H.HouseTwoFloor, 800, 30, 5, 50, 5, maxPeople: 10, capacity: .6f));
         Build.Add(new BuildStat(H.HouseMed, 800, 30, 5, 50, 5, maxPeople: 7, capacity: .6f));
         //Build.Add(new BuildStat(H.HouseMedB, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 2));
-        Build.Add(new BuildStat(H.HouseLargeA, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 1));
+        Build.Add(new BuildStat(H.HouseLargeA, 1, 0.01f, 0, 0, 0, maxPeople: 7, capacity: 1));
         Build.Add(new BuildStat(H.HouseLargeB, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 1));
         Build.Add(new BuildStat(H.HouseLargeC, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 1));
 

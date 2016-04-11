@@ -209,6 +209,31 @@ public class Builder : Profession
 
     void InitRoute()
     {
+        //if (_person == null)
+        //{
+        //    Debug.Log("_person null");
+
+        //    _takeABreakNow = true;
+        //    return;
+        //}
+        //if (_person.MyDummyProf == null)
+        //{
+        //    Debug.Log("dummyProf null" + _person.MyId);
+
+        //    _takeABreakNow = true;
+        //    return;
+
+        //}
+        //if (_constructing == null)
+        //{
+        //    Debug.Log("_const was null" + _person.MyId);
+        //    _takeABreakNow = true;
+        //    return;
+
+        //}
+
+
+
         Router1 = null;
         RouterBack = null;
 
@@ -216,6 +241,8 @@ public class Builder : Profession
         IsRouterBackUsed = true;
         routerBackWasInit = false;
         //Debug.Log("routerBackWasInit = false");
+
+
 
         //that ID will remove dummy so can be cache and will add the FinRoutePoint so if another builder
         //will go to that corner can use the cached one 
