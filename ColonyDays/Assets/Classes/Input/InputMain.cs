@@ -1,7 +1,19 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 
 public class InputMain : InputParent {
+
+
+    public EventHandler<EventArgs> ChangeSpeed;
+    void OnChangeSpeed(EventArgs e)
+    {
+        if (ChangeSpeed != null)
+        {
+            ChangeSpeed(this, e);
+        }
+    }
+
 
     public static InputMeshSpawn InputMeshSpawnObj;
     public BuildingPot BuilderPot;
@@ -297,6 +309,7 @@ public class InputMain : InputParent {
                         && Program.gameScene.controllerMain.TerraSpawnController.HasLoadedOrLoadedTreesAndRocks();
     }
 
+
     void ChangeGameSpeed()
     {
         //if there are foresters for example they wil cut trees while the TerrainController is still loading. so
@@ -310,24 +323,30 @@ public class InputMain : InputParent {
         if (Input.GetKeyUp(KeyCode.PageUp))
         {
             Program.gameScene.GameSpeed++;
+            OnChangeSpeed(EventArgs.Empty);
         }
         if (Input.GetKeyUp(KeyCode.PageDown))
         {
             Program.gameScene.GameSpeed--;
+            OnChangeSpeed(EventArgs.Empty);
         }
         //10x
         if (Input.GetKeyUp(KeyCode.PageUp) && Input.GetKey(KeyCode.LeftControl))
         {
             Program.gameScene.GameSpeed += 10;
+            OnChangeSpeed(EventArgs.Empty);
         }
         if (Input.GetKeyUp(KeyCode.PageDown) && Input.GetKey(KeyCode.LeftControl))
         {
             Program.gameScene.GameSpeed -= 10;
+            OnChangeSpeed(EventArgs.Empty);
         }
         //prevent negative
         if (Program.gameScene.GameSpeed < 0)
         {
             Program.gameScene.GameSpeed = 0;
+            OnChangeSpeed(EventArgs.Empty);
         }
+
     }
 }

@@ -10,6 +10,7 @@ public class OutOfScreen
     private H _type;
 
     private Person _person;
+    private Animal _animal;
     private Animator _animator;
 
     private BoxCollider _boxCollider;
@@ -36,8 +37,22 @@ public class OutOfScreen
         _renderer = _person.Geometry.gameObject.GetComponent<Renderer>();
     }
 
+    public OutOfScreen(Animal animal)
+    {
+        _type = H.Animal;
+        _animal = animal;
+        InitAnimal();
+    }
+
+    private void InitAnimal()
+    {
+        _animator = _animal.gameObject.GetComponent<Animator>();
+        _boxCollider = _animal.gameObject.GetComponent<BoxCollider>();
+        _renderer = _animal.Geometry.gameObject.GetComponent<Renderer>();
+    }
+
     // Update is called once per frame
-	public void Update ()
+    public void A45msUpdate()
 	{
         if (Program.gameScene.Fustrum1.OnFustrum(_boxCollider) && _renderer.isVisible && !_onScreenNow)
         {
@@ -82,12 +97,9 @@ public class OutOfScreen
 
     internal void Activate()
     {
-        //_boxCollider.enabled = true;
 
-        if (_type==H.Person)
-        {
             ActivatePerson();
-        }
+        
     }
 
     private void ActivatePerson()
@@ -97,12 +109,9 @@ public class OutOfScreen
 
     internal void DeActivate()
     {
-        //_boxCollider.enabled = false;
 
-        if (_type == H.Person)
-        {
             DeActivatePerson();
-        }
+      
     }
 
     private void DeActivatePerson()

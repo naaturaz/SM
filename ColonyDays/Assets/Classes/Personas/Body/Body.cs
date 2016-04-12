@@ -46,13 +46,18 @@ public class Body //: MonoBehaviour //: General
             }
 
             _location = value;
+            //_person.Brain.MindState();
         }
     }
 
     public HPers GoingTo
     {
         get { return _goingTo; }
-        set { _goingTo = value; }
+        set
+        {
+            _goingTo = value;
+            //_person.Brain.MindState();
+        }
     }
 
     public bool MovingNow
@@ -296,7 +301,12 @@ public class Body //: MonoBehaviour //: General
         {
             _speed = UMath.GiveRandom(0.49f, 0.59f);
         }
-        else _speed = UMath.GiveRandom(0.45f, 0.55f);
+        else
+        {
+            _speed = UMath.GiveRandom(0.45f, 0.55f);
+        }
+        //bz the speed changes and then looks bad 
+        ReCalculateWalkStep();
     }
 
     private void DefineAnimation()
@@ -728,15 +738,31 @@ public class Body //: MonoBehaviour //: General
     {
         LoadPosition();
 
-        if (_routePoins.Count == 0 || _currentRoutePoint > _routePoins.Count - 1)
-        {
-            //Debug.Log("Called in body exp");
-            var t = this;
-        }
+        //var finStep = _speed*Program.gameScene.GameSpeed*Time.deltaTime*_routePoins[_currentRoutePoint].Speed;
+        //var finStep = 0.05f;
 
         _person.transform.position = Vector3.MoveTowards(_person.transform.position, _routePoins[_currentRoutePoint].Point,
-            _speed * Program.gameScene.GameSpeed * Time.deltaTime * _routePoins[_currentRoutePoint].Speed);
+            _walkStep);
     }
+
+    private float _walkStep;
+    /// <summary>
+    /// for CPU ussage . so this calculation is only done if a param in there changed
+    /// </summary>
+    void ReCalculateWalkStep()
+    {
+        //DefineSpeed();
+
+        _walkStep = _speed*Program.gameScene.GameSpeed*Time.deltaTime;
+    }
+
+
+    public void ChangedSpeedHandler(object sender, EventArgs e)
+    {
+        ReCalculateWalkStep();
+    }
+
+
 
 	/// <summary>
     /// If the _loadedPosition != new Vector3() will load the saved position and rotation
@@ -811,7 +837,7 @@ public class Body //: MonoBehaviour //: General
 	//Called when the last point of a route was reached
     void WalkDone()
     {
-        _location = GoingTo;
+        Location = GoingTo;
         _movingNow = false;
         SetCurrentAni("isIdle",_currentAni);//_current ani could be walk or carry
         _walkDoneAt = Time.time;

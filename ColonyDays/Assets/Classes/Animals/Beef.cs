@@ -31,9 +31,9 @@ public class Beef : Animal
     }
 	
 	// Update is called once per frame
-	void FixedUpdate ()
+	void Update ()
     {
-	    base.FixedUpdate();
+	    base.Update();
 
 	    CheckIfYield();
     }

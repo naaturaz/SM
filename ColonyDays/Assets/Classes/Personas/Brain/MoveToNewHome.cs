@@ -156,6 +156,7 @@ public class MoveToNewHome
             _routeToNewHome = _newHomeRouter.TheRoute;
             GoMindTrue();
             _brain.RoutesWereStarted = false;
+            //_person.Brain.MindState();
 
             //bz was overwritting that and people would be stuck on home after tey moved in
             if (_person.Body.Location != HPers.MovingToNewHome)

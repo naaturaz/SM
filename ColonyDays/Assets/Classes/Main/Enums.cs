@@ -358,6 +358,7 @@ public enum H
     LOD0,
     LOD1,
     LOD2,
+    Animal,
 
 
 }

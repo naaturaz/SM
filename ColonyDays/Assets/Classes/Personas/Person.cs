@@ -512,6 +512,12 @@ public class Person : General
         PrevJob = pF.PrevJob;
 
         _body = new Body(this, pF);
+        Program.InputMain.ChangeSpeed += _body.ChangedSpeedHandler;
+
+        //_body.ChangeSpeed; +=
+        //_eventSetter.DoneRoute += DoneRouteHandler;
+
+
         Brain = new Brain(this, pF);
 
 
@@ -546,6 +552,7 @@ public class Person : General
 
         Brain = new Brain(this);
         _body = new Body(this);
+        Program.InputMain.ChangeSpeed += _body.ChangedSpeedHandler;
 
         InitGeneralStuff();
     }
@@ -1113,8 +1120,9 @@ public class Person : General
 	void Start () 
     {
         base.Start();
+        StartLOD();
         
-        StartOutOfScreen();
+        //StartOutOfScreen();
         StartCoroutine("FiveSecUpdate");
         StartCoroutine("OneSecUpdate");
 
@@ -1135,8 +1143,8 @@ public class Person : General
 	    }
 
         Inventory = new Inventory(MyId, HType);
-
-        _bip = GetChildCalled("Bip001");
+        
+        //SetLOD();
         OnCarlos(EventArgs.Empty);
 	}
 
@@ -1181,7 +1189,9 @@ public class Person : General
         while (true)
         {
             yield return new WaitForSeconds(checkFoodElapsed); // wait
-            CheckOnNutrition();
+            //CheckOnNutrition();
+            _brain.SlowCheckUp();
+            TryHaveKids();
         }
     }
 
@@ -1200,7 +1210,7 @@ public class Person : General
         while (true)
         {
             yield return new WaitForSeconds(.045f); // wait
-            LODCheck();
+            _levelOfDetail.A45msUpdate();
         }
     }
 
@@ -1212,18 +1222,15 @@ public class Person : General
         while (true)
         {
             yield return new WaitForSeconds(random1020Time); // wait
-            _brain.SlowCheckUp();
-            random1020Time = RestartTimes(5f, 10f);
-
-            TryHaveKids();
+            random1020Time = RestartTimes(0.5f, 3f);
+            Brain.MindState();
         }
     }
 
 	// Update is called once per frame
 	void Update()
 	{
-        _outOfScreen.Update();
-
+        
         if (!PersonPot.Control.Locked && Home == null
             )
         {
@@ -2075,12 +2082,7 @@ public class Person : General
 
     #region OutOfScreen
 
-    private OutOfScreen _outOfScreen;
 
-    void StartOutOfScreen()
-    {
-        _outOfScreen = new OutOfScreen(this);
-    }
 
 
 
@@ -2088,76 +2090,13 @@ public class Person : General
     #endregion
     #region LOD
 
+    private LevelOfDetail _levelOfDetail;
 
-
-
-    //private Animator _animator;
-    private GameObject _bip;
-    private H _oldLOD;
-
-    void LODCheck()
+    void StartLOD()
     {
-        var newLOD = ReturnCurrentLOD();
-
-        if ( _oldLOD == newLOD || _bip == null)
-        {
-            return;
-        }
-
-        _oldLOD = newLOD;
-        _outOfScreen.SetNewLOD(newLOD);
-
-        if (newLOD == H.LOD1)
-        {
-            LOD1();
-        }
-        else if (newLOD == H.LOD2)
-        {
-            LOD2();
-        }
-        else
-        {
-            LODBest();
-        }
+        _levelOfDetail=new LevelOfDetail(this);
     }
 
-    H ReturnCurrentLOD()
-    {
-        var dist = Vector3.Distance(transform.position, Camera.main.transform.position);
-
-        if (dist > 35 && dist <= 66)//35 66    45 76
-        {
-            return H.LOD1;
-        }
-        if (dist > 65)//65      75
-        {
-            return H.LOD2;
-        }
-        return H.LOD0;
-    }
-
-    void LOD1()
-    {
-        _bip.SetActive(false);
-        //_animator.enabled = false;
-    }
-
-    void LOD2()
-    {
-        Geometry.SetActive(false);
-    }
-
-    void LOD3()
-    {
-        Geometry.SetActive(false);
-    }
-
-    void LODBest()
-    {
-        _bip.SetActive(true);
-        //_animator.enabled = true;
-        Geometry.SetActive(true);
-    }
 
 #endregion
 

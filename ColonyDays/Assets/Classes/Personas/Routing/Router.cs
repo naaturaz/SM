@@ -835,6 +835,7 @@ public class CheckPoint
 
     /// <summary>
     /// The speed of a checkPoint. Ways are faster than grass
+    /// So far not used in this version as Apr11 2016
     /// </summary>
     public float Speed
     {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -22,13 +23,42 @@ public class Animal : General
 	protected void Start ()
     {
 	    base.Start();
+        StartLOD();
+        StartCoroutine("A45msUpdate");
 	}
 	
 	// Update is called once per frame
-	protected void FixedUpdate ()
+	protected void Update()
     {
 	    
 	}
+
+
+
+#region LOD
+
+
+    private LevelOfDetail _levelOfDetail;
+
+    void StartLOD()
+    {
+        _levelOfDetail = new LevelOfDetail(this);
+    }
+
+    private IEnumerator A45msUpdate()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(.045f); // wait
+            _levelOfDetail.A45msUpdate();
+        }
+    }
+
+
+#endregion
+
+
+
 
     private static int count;
     /// <summary>

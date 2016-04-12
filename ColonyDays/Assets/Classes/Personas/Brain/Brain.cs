@@ -53,13 +53,19 @@ public class Brain
                 //return;
             }
             _currentTask = value;
+            //MindState();
         }
     }
 
     public HPers PreviousTask
     {
         get { return _previousTask; }
-        set { _previousTask = value; }
+        set
+        {
+            _previousTask = value;
+            //MindState();
+
+        }
     }
 
     public MoveToNewHome MoveToNewHome
@@ -134,7 +140,7 @@ public class Brain
         _person.Chill = GetStructureFromKey(pF._chill);
 
         CurrentTask = pF._brain.CurrentTask;
-        _previousTask = pF._brain.PreviousTask;
+        PreviousTask = pF._brain.PreviousTask;
 
         _workRoute = pF._brain._workRoute;
         _foodRoute = pF._brain._foodRoute;
@@ -373,12 +379,20 @@ public class Brain
     }
 
     #region MindStates
+
+    private float lastCall;
     /// <summary>
     /// Really important the mind states . 
     /// Depending where the person is and goping and doing will do neext state
     /// </summary>
-    void MindState()
+    public void MindState()
     {
+        //here its allow to callit only after half a sec. to avoid overFlow exceptions
+        if (!goMindState)
+        {
+            return;
+        }
+        lastCall = Time.time;
         //RemoveFromSystemIfNeed();
 
 
@@ -510,25 +524,25 @@ public class Brain
             CurrentTask = HPers.IdleInHome;
             _person.Body.Location = HPers.Home;
             _person.Body.GoingTo = HPers.Home;
-            _previousTask = HPers.IdleSpot;
+            PreviousTask = HPers.IdleSpot;
         }
 
         return CurrentTask == HPers.IdleInHome && _person.Body.Location == HPers.Home &&
                _person.Body.GoingTo == HPers.Home
-                && _previousTask == HPers.IdleSpot;
+                && PreviousTask == HPers.IdleSpot;
     }
 
     bool ReadyToGoToReligion(bool makeItTrue = false)
     {
         if (makeItTrue)
         {
-            _previousTask = HPers.Praying;
+            PreviousTask = HPers.Praying;
             CurrentTask = HPers.IdleInHome;
             _person.Body.Location = HPers.Home;
             _person.Body.GoingTo = HPers.Home;
         }
 
-        return _previousTask == HPers.Praying && CurrentTask == HPers.IdleInHome &&
+        return PreviousTask == HPers.Praying && CurrentTask == HPers.IdleInHome &&
                _person.Body.Location == HPers.Home && _person.Body.GoingTo == HPers.Home;
     }
 
@@ -536,13 +550,13 @@ public class Brain
     {
         if (makeItTrue)
         {
-            _previousTask = HPers.Chilling;
+            PreviousTask = HPers.Chilling;
             CurrentTask = HPers.IdleInHome;
             _person.Body.Location = HPers.Home;
             _person.Body.GoingTo = HPers.Home;
         }
 
-        return _previousTask == HPers.Chilling && CurrentTask == HPers.IdleInHome
+        return PreviousTask == HPers.Chilling && CurrentTask == HPers.IdleInHome
                && (_person.Body.Location == HPers.Home || _person.Body.Location == HPers.None)
                && _person.Body.GoingTo == HPers.Home
                ;
@@ -626,7 +640,7 @@ public class Brain
         }
         else if (CurrentTask == HPers.IdleSpot && _person.Body.Location == HPers.Home && _person.Body.GoingTo == HPers.Home)
         {
-            _previousTask = HPers.IdleSpot;
+            PreviousTask = HPers.IdleSpot;
             Idle(HPers.IdleInHome);
         }
     }
@@ -652,7 +666,7 @@ public class Brain
         }
         else if (CurrentTask == HPers.Praying && _person.Body.Location == HPers.Home && _person.Body.GoingTo == HPers.Home)
         {
-            _previousTask = HPers.Praying;
+            PreviousTask = HPers.Praying;
             Idle(HPers.IdleInHome);
         }
     }
@@ -677,7 +691,7 @@ public class Brain
         }
         else if (CurrentTask == HPers.Chilling && _person.Body.Location == HPers.Home && _person.Body.GoingTo == HPers.Home)
         {
-            _previousTask = HPers.Chilling;
+            PreviousTask = HPers.Chilling;
             Idle(HPers.IdleInHome);
         }
     }
@@ -775,8 +789,8 @@ public class Brain
 
     #endregion
 
-    private const float IDLETIME = 1f;
-    private float _idleTime = 1f;//.5  4.5
+    private const float IDLETIME = 0.1f;
+    private float _idleTime = 0.1f;//1   .5   4.5
 
     private float startIdleTime;
     private bool _isIdleHomeNow;//will tell if person is at home idleing now 
@@ -808,7 +822,6 @@ public class Brain
         }
 
         AddIdleTimeIfHasOldKeys();
-
         if (Time.time > startIdleTime + _idleTime && !_routesWereStarted)
         {
             RealeaseIdle(nextTask);
@@ -892,8 +905,14 @@ public class Brain
             return;
         }
 
-        if (goMindState)
-        { MindState(); }
+        //if (startIdleTime > 0)
+        //{
+        //    //false is so it doestn set the NextTask, NextTask used will be used the one is saved
+        //    Idle(HPers.None, false);
+        //}
+
+        //if (goMindState)
+        //{ MindState(); }
     }
 
 
@@ -1365,7 +1384,7 @@ public class Brain
     /// </summary>
     void SetFinalRoutes()
     {
-        Debug.Log("SetFinaRou "+_person.MyId);
+        //Debug.Log("SetFinaRou "+_person.MyId);
 
         //this is so Person dont stay stuff there bz has some bacl listed buildings
         //what happens is that in ChangesBuildings this is start but never ended bz
@@ -1433,6 +1452,7 @@ public class Brain
 
         //in case needs to be redone a new route
         StartRoutes();
+        //MindState();
     }
 
     /// <summary>

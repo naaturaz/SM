@@ -200,8 +200,10 @@ public class GameScene : General {
         DebugChangeScreenResolution();
 
 
-        if (Camera.main != null && _culling == null && PersonPot.Control!= null && PersonPot.Control.All.Count > 0
-            && BuildingPot.Control!=null && BuildingPot.Control.Registro.AllBuilding.Count>1)
+        if (Camera.main != null && _culling == null //&& PersonPot.Control!= null 
+            //&& PersonPot.Control.All.Count > 0
+            //&& BuildingPot.Control!=null && BuildingPot.Control.Registro.AllBuilding.Count>1
+            )
         {
             _culling = new Culling();
             _fustrum = new Fustrum();
