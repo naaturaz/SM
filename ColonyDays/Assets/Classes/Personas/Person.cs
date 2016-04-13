@@ -511,6 +511,8 @@ public class Person : General
         SavedJob = pF.SavedJob;
         PrevJob = pF.PrevJob;
 
+        StartLOD();
+
         _body = new Body(this, pF);
         Program.InputMain.ChangeSpeed += _body.ChangedSpeedHandler;
 
@@ -551,6 +553,9 @@ public class Person : General
         MyId = _name + "." + Id;
 
         Brain = new Brain(this);
+
+        StartLOD();
+
         _body = new Body(this);
         Program.InputMain.ChangeSpeed += _body.ChangedSpeedHandler;
 
@@ -1120,13 +1125,15 @@ public class Person : General
 	void Start () 
     {
         base.Start();
-        StartLOD();
         
         //StartOutOfScreen();
         StartCoroutine("FiveSecUpdate");
         StartCoroutine("OneSecUpdate");
 
         StartCoroutine("A45msUpdate");
+        
+        //for body
+        StartCoroutine("A32msUpdate");
 
         StartCoroutine("RandomUpdate1020");
         StartCoroutine("QuickUpdate");
@@ -1189,11 +1196,29 @@ public class Person : General
         while (true)
         {
             yield return new WaitForSeconds(checkFoodElapsed); // wait
+            ParentPersonToHome();
             //CheckOnNutrition();
             _brain.SlowCheckUp();
             TryHaveKids();
         }
     }
+
+
+    private bool _wasPersonParented;
+    /// <summary>
+    /// bz if done before its all weird 
+    /// This is useful for when it loads person and when newBorn 
+    /// </summary>
+    void ParentPersonToHome()
+    {
+        if (_wasPersonParented || Time.time < 5f || Home == null || transform.parent != null)
+        {
+            return;
+        }
+        _wasPersonParented = true;
+        transform.parent = Home.transform;
+    }
+
 
     private IEnumerator OneSecUpdate()
     {
@@ -1215,6 +1240,20 @@ public class Person : General
     }
 
 
+    //for body
+    private IEnumerator A32msUpdate()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(.032f); // wait
+            _body.A32msUpdate();
+        }
+    }
+
+
+
+
+
 
     private float random1020Time;
     private IEnumerator RandomUpdate1020()
@@ -1230,9 +1269,7 @@ public class Person : General
 	// Update is called once per frame
 	void Update()
 	{
-        
-        if (!PersonPot.Control.Locked && Home == null
-            )
+        if (!PersonPot.Control.Locked && Home == null)
         {
             _brain.CheckConditions();
         }
@@ -2091,6 +2128,10 @@ public class Person : General
     #region LOD
 
     private LevelOfDetail _levelOfDetail;
+    public LevelOfDetail LevelOfDetail1
+    {
+        get { return _levelOfDetail; }
+    }
 
     void StartLOD()
     {
@@ -2132,7 +2173,8 @@ public class Person : General
         set { _projector = value; }
     }
 
- 
+
+
 
     public void CreateProjector()
     {

@@ -35,11 +35,17 @@ public class FollowObject : General
 	}
 	
 	// Update is called once per frame
-	void Update ()
-	{
-	    transform.position = _toFollow.transform.position;
-	    transform.rotation = _toFollow.transform.rotation;
-	}
+    //void Update ()
+    //{
+    //    //transform.position = _toFollow.transform.position;
+    //    //transform.rotation = _toFollow.transform.rotation;
+    //}
+
+    public void UpdatePosition()
+    {
+        transform.position = _toFollow.transform.position;
+        transform.rotation = _toFollow.transform.rotation;
+    }
 
     /// <summary>
     /// So it gets then scaled down from here . to avoid bugg where was always small bz never came back to normal size

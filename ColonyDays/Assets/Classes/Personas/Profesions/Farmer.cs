@@ -103,6 +103,15 @@ public class Farmer : Profession
     /// </summary>
     private void ConformInBuildRouteField()
     {
+        if (PersonPot.Control.RoutesCache1.ContainANewerOrSameRoute(_person.Work.MyId + ".O", _person.Work.MyId + ".D",
+                new DateTime()))
+        {
+            Router1.TheRoute = PersonPot.Control.RoutesCache1.GiveMeTheNewerRoute();
+            Router1.IsRouteReady = true;
+            return;
+        }
+
+
         List<Vector3> inBuildPoints = new List<Vector3>() 
         { _person.Work.BehindMainDoorPoint, FinRoutePoint};
 
@@ -114,6 +123,9 @@ public class Farmer : Profession
 
         Router1.TheRoute = TheRoute;
         Router1.IsRouteReady = true;
+
+
+        PersonPot.Control.RoutesCache1.AddReplaceRoute(TheRoute);
     }
 
     /// <summary>
@@ -121,6 +133,14 @@ public class Farmer : Profession
     /// </summary>
     void ConformInBuildRouteAnimal()
     {
+        if (PersonPot.Control.RoutesCache1.ContainANewerOrSameRoute(_person.Work.MyId + ".O", _person.Work.MyId + ".D",
+                   new DateTime()))
+        {
+            Router1.TheRoute = PersonPot.Control.RoutesCache1.GiveMeTheNewerRoute();
+            Router1.IsRouteReady = true;
+            return;
+        }
+
         var inBuildPoints = DefineInBuildPoint();
         var TheRoute = ReachBean.RouteVector3s(inBuildPoints);
 
@@ -130,6 +150,9 @@ public class Farmer : Profession
 
         Router1.TheRoute=TheRoute;
         Router1.IsRouteReady = true;
+
+        PersonPot.Control.RoutesCache1.AddReplaceRoute(TheRoute);
+
     }
 
     List<Vector3> DefineInBuildPoint()

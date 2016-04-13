@@ -37,7 +37,7 @@ public class GameScene : General {
 
     private Culling _culling ;
     private Fustrum _fustrum;
-
+    private StaticBatch _staticBatch;
 
     public float SubDivideBlockYVal
     {
@@ -217,6 +217,12 @@ public class GameScene : General {
         if (hud==null)
         {
             hud = FindObjectOfType<HUDFPS>().GuiText;
+        }
+
+
+        if (Input.GetKeyUp(KeyCode.B))
+        {
+            //_staticBatch = new StaticBatch();
         }
     }
 

@@ -207,7 +207,7 @@ public class Animal : General
             else
             {
                 //todo Notify
-                Debug.Log("Not Producing meat(beef) bz Inv is full:"+Spawner.MyId+". evac Orders added ");
+                //Debug.Log("Not Producing meat(beef) bz Inv is full:"+Spawner.MyId+". evac Orders added ");
                 Spawner.AddEvacuationOrderOfProdThatAreNotInput();
             }
         }

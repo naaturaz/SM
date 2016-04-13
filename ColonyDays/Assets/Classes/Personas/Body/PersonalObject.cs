@@ -101,7 +101,8 @@ public class PersonalObject
         
         //ResetPersonPosition();
 
-        _current = FollowObject.Create(_currentRoot, _currentPoint, Program.PersonObjectContainer.transform, 
+        _current = FollowObject.Create(_currentRoot, _currentPoint, //Program.PersonObjectContainer.transform, 
+            _currentPoint.transform,
             _person.MyId);
 
         _current.transform.rotation = _currentPoint.transform.rotation;
@@ -236,10 +237,12 @@ public class PersonalObject
 
         if (_current != null &&  _current.Renderer1 != null)
         {
+            SetScaleOfCurrent();
+            //so its shown at first close to the person 
+            _current.UpdatePosition();
             _current.gameObject.SetActive(true);
 
             //_current.Renderer1.enabled = true;
-            SetScaleOfCurrent();
         }
     }
 

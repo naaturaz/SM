@@ -735,6 +735,11 @@ public class PersonController : PersonPot
         }
     }
 
+    /// <summary>
+    /// Will tell u if can reRoute.
+    /// </summary>
+    /// <param name="pMyID"></param>
+    /// <returns></returns>
     internal bool CanIReRouteNow(string pMyID)
     {
         //bz if he checked then dont need to try to get into system again

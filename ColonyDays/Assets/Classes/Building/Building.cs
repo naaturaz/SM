@@ -2372,7 +2372,7 @@ public class Building : General, Iinfo
         {
             //todo show 3d icon
             AddEvacuationOrderOfProdThatAreNotInput();
-            Debug.Log("Both full" + person.FoodSource.MyId + ".and." + MyId + " AddEvacuationOrder() called");
+            //Debug.Log("Both full" + person.FoodSource.MyId + ".and." + MyId + " AddEvacuationOrder() called");
         }
         else if (!doIHaveInput)
         {
@@ -2389,7 +2389,7 @@ public class Building : General, Iinfo
         {
             //todo show 3d icon
             AddEvacuationOrderOfProdThatAreNotInput();
-            Debug.Log("Building store full" + MyId + " AddEvacuationOrder() called. " + person.MyId);
+            //Debug.Log("Building store full" + MyId + " AddEvacuationOrder() called. " + person.MyId);
         }
     }
 

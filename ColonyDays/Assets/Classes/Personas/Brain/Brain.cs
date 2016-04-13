@@ -789,8 +789,8 @@ public class Brain
 
     #endregion
 
-    private const float IDLETIME = 0.1f;
-    private float _idleTime = 0.1f;//1   .5   4.5
+    private const float IDLETIME = 1f;
+    private float _idleTime = 1f;//1   .5   4.5
 
     private float startIdleTime;
     private bool _isIdleHomeNow;//will tell if person is at home idleing now 
@@ -805,12 +805,22 @@ public class Brain
         set { _routesWereStarted = value; }
     }
 
+    private HPers _savedNextTask = HPers.None;
     /// <summary>
     /// Idle Action 
     /// </summary>
     /// <param name="nextTask">The task will have after Idle is done</param>
-    void Idle(HPers nextTask)
+    void Idle(HPers nextTask, bool saveNextTask=true)
     {
+        if (saveNextTask)
+        {
+            _savedNextTask = nextTask;
+        }
+        else
+        {
+            nextTask = _savedNextTask;
+        }
+
         if (startIdleTime == 0)
         { startIdleTime = Time.time; }
 
@@ -877,7 +887,7 @@ public class Brain
 
     public void Update()
     {
-        DefineIfIsAllSet();
+        //DefineIfIsAllSet();
         DefineIfWaiting();
 
         UpdateRouters();
@@ -943,18 +953,22 @@ public class Brain
     /// </summary>
     private void DefineIfWaiting()
     {
-        //if is in process of moving dont need to deal with this
-        if (MoveToNewHome.RouteToNewHome.CheckPoints.Count > 0 || _waiting)
+        var ardHome = IJustSpawn() || IAmHomeNow() || LocatedAtHomeNow();
+        if (!ardHome)
         {
             return;
         }
 
-        if (IJustSpawn() || IAmHomeNow() || LocatedAtHomeNow())
+        var checkedOnPersonControl = PersonPot.Control.PeopleHasCheck(_person.MyId);
+        //if is in process of moving dont need to deal with this
+        if (checkedOnPersonControl || _waiting || MoveToNewHome.RouteToNewHome.CheckPoints.Count > 0)
         {
-            if (PersonPot.Control.CanIReRouteNow(_person.MyId) && Time.time > _lastTimeICheckedInOnSystem + _delayToGetIntoOnSystem)
-            {
-                CheckMeOnSystemNow();
-            }
+            return;
+        }
+
+        if (PersonPot.Control.CanIReRouteNow(_person.MyId) && Time.time > _lastTimeICheckedInOnSystem + _delayToGetIntoOnSystem)
+        {
+            CheckMeOnSystemNow();
         }
     }
 
@@ -1057,8 +1071,6 @@ public class Brain
     /// </summary>
     private void DefineIfIsAllSet()
     {
-        //if (!_isAllSet)
-        //{
         if (_person.Home != null &&
             (_person.Work != null || _person.FoodSource != null || _person.Religion != null || _person.Chill != null))
         {
@@ -1067,10 +1079,7 @@ public class Brain
         else
         {
             _isAllSet = false;
-
-          
         }
-        //}
     }
 
     /// <summary>
@@ -1142,6 +1151,7 @@ public class Brain
     /// </summary>
     private void CheckIfABuildWasChange()
     {
+        DefineIfIsAllSet();
         if (_isAllSet)
         {
             //if home was changed u need to star all routes .
@@ -1636,6 +1646,7 @@ public class Brain
     /// </summary>
     private void CheckOnTheQueues()
     {
+        DefineIfIsAllSet();
         if (!_isAllSet || PersonPot.Control.Queues.IsEmpty())
         {
             return;
@@ -1731,7 +1742,7 @@ public class Brain
         {
             var which = collisionsOn[i];
 
-            Debug.Log("Collided a builing with route:" + which + " on person:" + _person.MyId);
+            //Debug.Log("Collided a builing with route:" + which + " on person:" + _person.MyId);
             if (which == HPers.Work)
             {
                 //GameScene.print("Redo Work");
@@ -1739,7 +1750,7 @@ public class Brain
             }
             if (which == HPers.FoodSource)
             {
-                GameScene.print("Redo Food");
+                //GameScene.print("Redo Food");
                 foodRouteStart = false;
             }
             if (which == HPers.IdleSpot)
@@ -1841,6 +1852,7 @@ public class Brain
     {
         //SetCurrents(which);
 
+        DefineIfIsAllSet();
         //isallset is here so will check if closest building exist
         if (!ItHasOneAlready(which) || _isAllSet || ReturnCurrStructure(which).Instruction == H.WillBeDestroy)
         {

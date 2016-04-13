@@ -443,7 +443,7 @@ public class Profession
         if (PersonPot.Control.WorkersRoutingQueue.OnSystemNow(_person.MyId))
         {
             PersonPot.Control.WorkersRoutingQueue.RemoveMeFromSystem(_person.MyId);
-            Debug.Log("remove form system prof:" + _person.MyId);
+            //Debug.Log("remove form system prof:" + _person.MyId);
         }
     }
 
@@ -921,7 +921,7 @@ public class Profession
             string.IsNullOrEmpty(StillElementId))
         {
             //StillElementId = "";
-            Debug.Log("foresetr recrete prof:"+_person.MyId);
+            //Debug.Log("foresetr recrete prof:"+_person.MyId);
             _person.CreateProfession();
         }     
     }
@@ -1243,7 +1243,7 @@ public class Profession
         if (_person.Brain._workRoute.CheckPoints.Count == 0 ||
           _person.Brain._workRoute.DestinyKey != _person.Work.MyId)
         {
-            Debug.Log(ProfDescription + ": take break now:" + _person.MyId);
+            //Debug.Log(ProfDescription + ": take break now:" + _person.MyId);
             _breakInitNow = true;
             _startInitBreakTime = Time.time;
 

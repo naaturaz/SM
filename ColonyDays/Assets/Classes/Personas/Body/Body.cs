@@ -35,6 +35,8 @@ public class Body //: MonoBehaviour //: General
 
     private PersonalObject _personalObject;
 
+    private Vector3 _currentPosition;
+
     public HPers Location
     {
         get { return _location; }
@@ -107,6 +109,23 @@ public class Body //: MonoBehaviour //: General
         set { _currTheRoute = value; }
     }
 
+    /// <summary>
+    /// The current position of the _personGameObject.
+    /// 
+    /// </summary>
+    public Vector3 CurrentPosition
+    {
+        get
+        {
+            //if (_currentPosition == new Vector3())
+            //{
+            //    _currentPosition = _person.gameObject.transform.position;
+            //}
+            return _currentPosition;
+        }
+        set { _currentPosition = value; }
+    }
+
     public Body() { }
 
     public Body(Person person)
@@ -137,7 +156,8 @@ public class Body //: MonoBehaviour //: General
         _loadedPosition = pF.Position;
         _loadedRotation = pF.Rotation;
 
-        _person.transform.position = _loadedPosition;
+        //_person.transform.position = _loadedPosition;
+        AssignNewPositionNoQuesition(_loadedPosition);
         _person.transform.rotation = _loadedRotation;
 
         _loadedAni = pF._body.CurrentAni;
@@ -316,9 +336,7 @@ public class Body //: MonoBehaviour //: General
             return;
         }
 
-        if (
-            //route == _person.Brain._foodRoute && 
-            !_person.Inventory.IsEmpty() && _loadedAni != "isCarry")
+        if (!_person.Inventory.IsEmpty() && _loadedAni != "isCarry")
         {
             //defines _loadedAni so will be taken care of in InitWalk
             _loadedAni = "isCarry";
@@ -502,7 +520,9 @@ public class Body //: MonoBehaviour //: General
         //    //Debug.Log("Moved "+ _person.Name + " to:"  + _routePoins[_currentRoutePoint].Point);
         //}
 
-        _person.transform.position = _routePoins[_currentRoutePoint].Point;
+        //_person.transform.position = _routePoins[_currentRoutePoint].Point;
+        AssignNewPosition(_routePoins[_currentRoutePoint].Point);
+
 
         //if (!_inverse)
         //{
@@ -559,7 +579,6 @@ public class Body //: MonoBehaviour //: General
         WalkRoutineTail(goingTo, whichRouteP);
     }
 
-    private bool _wasPersonParented;
     void WalkRoutineTail(HPers goingTo, HPers whichRouteP = HPers.None)
     {
         GoingTo = goingTo;
@@ -567,7 +586,6 @@ public class Body //: MonoBehaviour //: General
         _whichRoute = whichRouteP;
 
         AddressWheelBarrowingAni();
-
     }
 
 
@@ -720,7 +738,7 @@ public class Body //: MonoBehaviour //: General
 
         MoveAction();
 
-        Vector3 curr = _person.transform.position;
+        Vector3 curr = CurrentPosition;
         Vector3 next = _routePoins[_currentRoutePoint].Point;
 
         if (UMath.nearEqualByDistance(curr, next, 0.01f))// 0.001f
@@ -738,12 +756,56 @@ public class Body //: MonoBehaviour //: General
     {
         LoadPosition();
 
-        //var finStep = _speed*Program.gameScene.GameSpeed*Time.deltaTime*_routePoins[_currentRoutePoint].Speed;
-        //var finStep = 0.05f;
-
-        _person.transform.position = Vector3.MoveTowards(_person.transform.position, _routePoins[_currentRoutePoint].Point,
+        var newPos = Vector3.MoveTowards(CurrentPosition, _routePoins[_currentRoutePoint].Point,
             _walkStep);
+
+        AssignNewPosition(newPos);
     }
+
+#region CPU
+
+    private bool isPersonOnScreenRenderNow;
+    /// <summary>
+    /// For CPU reasons 
+    /// </summary>
+    /// <param name="newPos"></param>
+    void AssignNewPosition(Vector3 newPos)
+    {
+        CurrentPosition = newPos;
+
+        if (isPersonOnScreenRenderNow)
+        {
+            //will onl;y assign if on screen now 
+            _person.transform.position = newPos;
+        }
+    }
+
+    public void A32msUpdate()
+    {
+        isPersonOnScreenRenderNow = _person.LevelOfDetail1.OutOfScreen1.OnScreenRenderNow;
+    }
+
+    public void UpdateTheOnScreenRenderNowLocalVar(bool newVal)
+    {
+        isPersonOnScreenRenderNow = newVal;
+    }
+
+
+#endregion
+
+
+
+
+    /// <summary>
+    /// Created for Loading instances 
+    /// </summary>
+    /// <param name="newPos"></param>
+    private void AssignNewPositionNoQuesition(Vector3 newPos)
+    {
+        CurrentPosition = newPos;
+       _person.transform.position = newPos;
+    }
+
 
     private float _walkStep;
     /// <summary>
@@ -751,9 +813,9 @@ public class Body //: MonoBehaviour //: General
     /// </summary>
     void ReCalculateWalkStep()
     {
-        //DefineSpeed();
+        CheckOnGameSpeed();
 
-        _walkStep = _speed*Program.gameScene.GameSpeed*Time.deltaTime;
+        _walkStep = _speed*Program.gameScene.GameSpeed * 0.02f;//0.02      the times 2 is bz the 32ms update 
     }
 
 
@@ -773,12 +835,15 @@ public class Body //: MonoBehaviour //: General
         if (_loadedPosition != new Vector3())
         {
             //GameScene.print(_loadedPosition + "._loadedPosition");
-            
-            _person.transform.position = _loadedPosition;
+
+            AssignNewPositionNoQuesition(_loadedPosition);
+            //_person.transform.position = _loadedPosition;
             _person.transform.rotation = _loadedRotation;
             _loadedPosition = new Vector3();
         }
     }
+
+
 
     //if dist btw Person and neext point is less than 'param':distToChangeRot we fire ChangeRot()
     private float distToChangeRot = 0.275f;//.299 is the max can be 
@@ -792,7 +857,7 @@ public class Body //: MonoBehaviour //: General
             _currentRoutePoint = CorrectBounds(_currentRoutePoint, 0, _routePoins.Count - 1);
 
             //print(currentRoutePoint + ".currentRoutePoint." + currRoute.Count + ".currRoute.Count");
-            var currDist = Vector3.Distance(_person.transform.position, _routePoins[_currentRoutePoint].Point);
+            var currDist = Vector3.Distance(CurrentPosition, _routePoins[_currentRoutePoint].Point);
             if (currDist < distToChangeRot)
             { ChangeRotation(currDist); }
         }
@@ -929,29 +994,22 @@ public class Body //: MonoBehaviour //: General
 	public void Update ()
     {
 	    if (_movingNow)
-	    {WalkHandler();}
-	    CheckOnGameSpeed();
+	    {
+            //ThreadPool.RunThis(_person);
+	        WalkHandler();
+	        
+	    }
+	    //CheckOnGameSpeed();
         CheckIfGoingIntoBuild();
-
-	    ParentPersonToHome();
-
     }
 
-
-
-    /// <summary>
-    /// bz if done before its all weird 
-    /// This is useful for when it loads person and when newBorn 
-    /// </summary>
-    void ParentPersonToHome()
+    public void WalkHanderCheck()
     {
-        if (Time.time < 5f || _wasPersonParented || _person == null || _person.Home == null || _person.transform.parent != null)
-        {
-            return;
-        }
-        _wasPersonParented = true;
-        _person.transform.parent = _person.Home.transform;
+        if (_movingNow)
+        { WalkHandler(); }
     }
+
+
 
 
     /// <summary>
@@ -962,7 +1020,7 @@ public class Body //: MonoBehaviour //: General
         if (  _person == null || _routePoins == null || _routePoins.Count == 0){ return; }
 
         var dist = 0.9f;//.2 //.25
-        var currDist = Vector3.Distance(_person.transform.position, _routePoins[lastRoutePoint].Point);
+        var currDist = Vector3.Distance(CurrentPosition, _routePoins[lastRoutePoint].Point);
         //getting close to last point
         if (currDist < dist ) 
         {
@@ -984,7 +1042,7 @@ public class Body //: MonoBehaviour //: General
             index -= 1;
         }
 
-        currDist = Vector3.Distance(_person.transform.position, _routePoins[index].Point);
+        currDist = Vector3.Distance(CurrentPosition, _routePoins[index].Point);
         if (currDist < 0.01f  ){Show();}
     }
 
@@ -1065,4 +1123,16 @@ public class Body //: MonoBehaviour //: General
             _personalObject.AddressNewAni(_currentAni, false);
         }
     }
+
+    /// <summary>
+    /// so when is shown is exactly where the currPos is 
+    /// </summary>
+    internal void RestoreTransformToCurrentPos()
+    {
+        _person.transform.position = CurrentPosition;
+    }
+
+
+
+
 }

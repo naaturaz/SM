@@ -18,7 +18,8 @@ public class OutOfScreen
 
     private StillElement _stillElement;
 
-    private bool _onScreenNow;
+    private bool _onScreenRenderNow;
+    private bool _onScreenRectNow;
     private bool _oldState;
 
     private H _currentLOD = H.LOD0;
@@ -28,6 +29,22 @@ public class OutOfScreen
         _type = H.Person;
         _person = person;
         InitPerson();
+    }
+
+    /// <summary>
+    /// Says if is on Screen and renderer is active Now
+    /// </summary>
+    public bool OnScreenRenderNow
+    {
+        get { return _onScreenRenderNow; }
+    }
+
+    /// <summary>
+    /// Says if is on the Screen Rect now 
+    /// </summary>
+    public bool OnScreenRectNow
+    {
+        get { return _onScreenRectNow; }
     }
 
     private void InitPerson()
@@ -53,35 +70,97 @@ public class OutOfScreen
 
     // Update is called once per frame
     public void A45msUpdate()
-	{
-        if (Program.gameScene.Fustrum1.OnFustrum(_boxCollider) && _renderer.isVisible && !_onScreenNow)
+    {
+        _onScreenRectNow = Program.gameScene.Fustrum1.OnScreen(ExtractObjPos());
+        if (_onScreenRectNow && _renderer.isVisible && !_onScreenRenderNow)
         {
-            _onScreenNow = true;
+            _onScreenRenderNow = true;
+            UpdateOnObjt();
             SwitchNow();
         }
-        else if ((!Program.gameScene.Fustrum1.OnFustrum(_boxCollider) || !_renderer.isVisible) && _onScreenNow)
+        else if ((!_onScreenRectNow || !_renderer.isVisible) && _onScreenRenderNow)
         {
-            _onScreenNow = false;
+            _onScreenRenderNow = false;
+            UpdateOnObjt();
             SwitchNow();
         }
+        HideShow();
 	}
+
+    void UpdateOnObjt()
+    {
+        if (_type == H.Person)
+        {
+            _person.Body.UpdateTheOnScreenRenderNowLocalVar(_onScreenRenderNow);
+        }
+    }
+
+    Vector3 ExtractObjPos()
+    {
+        if (_type == H.Person)
+        {
+            return _person.Body.CurrentPosition;
+        }
+        return _animator.transform.position;
+    }
 
     public void SetNewLOD(H newLOD)
     {
         _currentLOD = newLOD;
         SwitchNow();
+    
     }
-
-
 
     private void SwitchNow()
     {
-        if (_onScreenNow && _currentLOD == H.LOD0)
+        if (_onScreenRenderNow && _currentLOD == H.LOD0)
         {
             OnBecameVisible();
         }
-        else OnBecameInvisible();
+        else { OnBecameInvisible(); }
+        HideShow();
     }
+
+
+    private bool oldScreenRectState;
+    /// <summary>
+    /// so it gets hidden when camera lets him outOfScreen 
+    /// </summary>
+    private void HideShow()
+    {
+        if (OnScreenRectNow == oldScreenRectState)
+        {
+            return;
+        }
+        oldScreenRectState = OnScreenRectNow;
+
+        if (OnScreenRectNow)
+        {
+            _boxCollider.enabled = true;
+            if (_type == H.Person)
+            {
+               _person.Body.Show();
+            }
+            else
+            {
+               _renderer.enabled = true;
+            }
+        }
+        else
+        {
+            _boxCollider.enabled = false;
+            if (_type == H.Person)
+            {
+                _person.Body.Hide();
+            }
+            else
+            {
+                _renderer.enabled = false;
+            }
+        }
+    }
+
+
 
     void OnBecameVisible()
     {
@@ -97,26 +176,22 @@ public class OutOfScreen
 
     internal void Activate()
     {
-
-            ActivatePerson();
-        
+        ActivatePerson();
     }
 
     private void ActivatePerson()
     {
+
         _animator.enabled = true;
     }
 
     internal void DeActivate()
     {
-
-            DeActivatePerson();
-      
+        DeActivatePerson();
     }
 
     private void DeActivatePerson()
     {
         _animator.enabled = false;
-
     }
 }

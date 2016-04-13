@@ -5,7 +5,7 @@ using System.Text;
 using UnityEngine;
 
 
-class LevelOfDetail
+public class LevelOfDetail
 {
     private H _type;
     private GameObject _gO;
@@ -34,6 +34,11 @@ class LevelOfDetail
         _outOfScreen = new OutOfScreen(animal);
 
         SetLOD();
+    }
+
+    public OutOfScreen OutOfScreen1
+    {
+        get { return _outOfScreen; }
     }
 
     void SetLOD()
@@ -96,12 +101,12 @@ class LevelOfDetail
     void LOD1()
     {
         _bip.SetActive(false);
-        _geometry.SetActive(true);
+        //_geometry.SetActive(true);
     }
 
     void LOD2()
     {
-        _geometry.SetActive(false);
+        //_geometry.SetActive(false);
     }
 
     void LOD3()
@@ -112,7 +117,7 @@ class LevelOfDetail
     void LODBest()
     {
         _bip.SetActive(true);
-        _geometry.SetActive(true);
+        //_geometry.SetActive(true);
     }
 
     public void A45msUpdate()

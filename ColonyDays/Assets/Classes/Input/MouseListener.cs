@@ -69,6 +69,7 @@ public class MouseListener : InputMain
         main = null;
 
         LoadMainGUI();
+        Program.gameScene.Fustrum1.RedoRect();
     }
 
     /// <summary>

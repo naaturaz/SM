@@ -246,7 +246,7 @@ public class Structure : StructureParent
 	protected void Update () 
     {
         //if is dummy doesnt need to be raycasting th blue rays all the time etc
-	    if (MyId.Contains("Dummy") || HType == H.Dummy)
+	    if (HType == H.Dummy)
 	    {
 	        return;
 	    }

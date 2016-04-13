@@ -195,13 +195,13 @@ public class PeopleQueue {
             //if the person is not RouterActive means he is not working somehow so can be removed from here 
             if (OnSystemNow1.Contains(p) && (person == null || !person.ProfessionProp.RouterActive))
             {
-                Debug.Log("remove from WorkQueue OnSystemNow1 Prof:" + p.Id);
+                //Debug.Log("remove from WorkQueue OnSystemNow1 Prof:" + p.Id);
                 OnSystemNow1.Remove(p);
                 TransferFirstInWaitingListToOnSystemNow();
             }
             if (WaitList.Contains(p) && (person == null || !person.ProfessionProp.RouterActive))
             {
-                Debug.Log("remove from WorkQueue WaitList Prof:" + p.Id);
+                //Debug.Log("remove from WorkQueue WaitList Prof:" + p.Id);
                 WaitList.Remove(p);
             }
         }
