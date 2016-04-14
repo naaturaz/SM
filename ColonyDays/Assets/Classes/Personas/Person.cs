@@ -392,7 +392,7 @@ public class Person : General
     static Material ReturnRandoPersonMaterialRoot()
     {
         var random = UMath.GiveRandom(1, 6);
-        return Resources.Load("Prefab/Mats/Person/Guy1UV " + random) as Material;
+        return Resources.Load("Prefab/Mats/Person/Guy1UV " + 1) as Material;//random
     }
 
     /// <summary>
@@ -1104,7 +1104,7 @@ public class Person : General
     Structure CreateDummy()
     {
         var dummyIdle = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPointUnTimed, new Vector3(), H.Dummy,
-            container: transform);
+            container: Program.PersonObjectContainer.transform, name: "DummyUntimed . "+ MyId);
 
         return dummyIdle;
     }
@@ -1126,7 +1126,6 @@ public class Person : General
     {
         base.Start();
         
-        //StartOutOfScreen();
         StartCoroutine("FiveSecUpdate");
         StartCoroutine("OneSecUpdate");
 
@@ -1134,62 +1133,57 @@ public class Person : General
         
         //for body
         StartCoroutine("A32msUpdate");
+        //StartCoroutine("A64msUpdate");
 
         StartCoroutine("RandomUpdate1020");
-        StartCoroutine("QuickUpdate");
-
+        //StartCoroutine("QuickUpdate");
 
         CreateTheTwoDummies();
-	    
-        
 
         //means is loading from file
         if (Inventory != null && Inventory.InventItems.Count > 0)
 	    {
 	        return;
 	    }
-
         Inventory = new Inventory(MyId, HType);
-        
-        //SetLOD();
         OnCarlos(EventArgs.Empty);
 	}
 
     float RestartTimes(float a, float b){return Random.Range(a, b);}
 
 
-    private float _quickTime;
-    public float QuickTime
-    {
-        get { return _quickTime; }
-        set { _quickTime = value; }
-    }
+    //private float _quickTime;
+    //public float QuickTime
+    //{
+    //    get { return _quickTime; }
+    //    set { _quickTime = value; }
+    //}
 
-    private IEnumerator QuickUpdate()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(_quickTime); // wait 
-            _quickTime = RestartTimes(0f, 1f);
-        }
-    }
+    //private IEnumerator QuickUpdate()
+    //{
+    //    while (true)
+    //    {
+    //        yield return new WaitForSeconds(_quickTime); // wait 
+    //        _quickTime = RestartTimes(0f, 1f);
+    //    }
+    //}
 
 
-    private float quickTime2;
-    /// <summary>
-    /// For Person dont walk on top of each other 
-    /// </summary>
-    /// <returns></returns>
-    private IEnumerator QuickUpdate2()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(quickTime2); // wait 
-            UpdateCollBools();
-            CheckPersonColl();
-            quickTime2 = RestartTimes(4f, 5f);
-        }
-    }
+    //private float quickTime2;
+    ///// <summary>
+    ///// For Person dont walk on top of each other 
+    ///// </summary>
+    ///// <returns></returns>
+    //private IEnumerator QuickUpdate2()
+    //{
+    //    while (true)
+    //    {
+    //        yield return new WaitForSeconds(quickTime2); // wait 
+    //        UpdateCollBools();
+    //        CheckPersonColl();
+    //        quickTime2 = RestartTimes(4f, 5f);
+    //    }
+    //}
 
     private IEnumerator FiveSecUpdate()
     {
@@ -1226,6 +1220,8 @@ public class Person : General
         {
             yield return new WaitForSeconds(3); // wait
             UpdateCallsToOneSec();
+
+            
         }
     }
 
@@ -1249,7 +1245,14 @@ public class Person : General
             _body.A32msUpdate();
         }
     }
-
+    //private IEnumerator A64msUpdate()
+    //{
+    //    while (true)
+    //    {
+    //        yield return new WaitForSeconds(.064f); // wait
+    //        //_body.A64msUpdate();
+    //    }
+    //}
 
 
 
@@ -1262,22 +1265,22 @@ public class Person : General
         {
             yield return new WaitForSeconds(random1020Time); // wait
             random1020Time = RestartTimes(0.5f, 3f);
-            Brain.MindState();
+            _brain.MindState();
         }
     }
 
 	// Update is called once per frame
 	void Update()
-	{
-        if (!PersonPot.Control.Locked && Home == null)
+    {
+        //was on update so new PeopleFind their new home 
+        if (_home == null && !PersonPot.Control.Locked)
         {
             _brain.CheckConditions();
         }
 
-        Brain.Update();
+        _brain.Update();
         _body.Update();
         //UpdateInfo();
-
         if (_profession != null)
         {
             _profession.Update();

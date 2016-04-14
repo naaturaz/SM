@@ -38,6 +38,7 @@ public class GameScene : General {
     private Culling _culling ;
     private Fustrum _fustrum;
     private StaticBatch _staticBatch;
+    private MeshBatch _meshBatch;
 
     public float SubDivideBlockYVal
     {
@@ -223,6 +224,7 @@ public class GameScene : General {
         if (Input.GetKeyUp(KeyCode.B))
         {
             //_staticBatch = new StaticBatch();
+            _meshBatch = new MeshBatch();
         }
     }
 

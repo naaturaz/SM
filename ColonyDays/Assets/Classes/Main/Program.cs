@@ -22,6 +22,9 @@ public class Program : MonoBehaviour {
     //cointains all the buildings as childs 
     public static General PersonObjectContainer;
 
+
+    public static General MeshBatchContainer;
+
     //statics vars
     public static Vector3 VIEWPOS;//use to grab mouse view position
     public static Transform MOUSEOVERTHIS = null;
@@ -67,6 +70,7 @@ public class Program : MonoBehaviour {
 
 	    BuildsContainer = General.Create(Root.classesContainer, name: "BuildsContainer");
 	    PersonObjectContainer = General.Create(Root.classesContainer, name: "PersonObjectsContainer");
+        MeshBatchContainer = General.Create(Root.classesContainer, name: "MeshBatchContainer");
 
         if (Application.loadedLevelName == "Lobby")
         {
@@ -139,6 +143,9 @@ public class Program : MonoBehaviour {
         ClassContainer.Destroy();
         BuildsContainer.Destroy();
         PersonObjectContainer.Destroy();
+        MeshBatchContainer.Destroy();
+
+
         gameScene.Destroy();
         gameScene = null;
         InputMain.Destroy();

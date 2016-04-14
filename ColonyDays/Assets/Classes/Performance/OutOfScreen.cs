@@ -136,7 +136,6 @@ public class OutOfScreen
 
         if (OnScreenRectNow)
         {
-            _boxCollider.enabled = true;
             if (_type == H.Person)
             {
                _person.Body.Show();
@@ -144,11 +143,11 @@ public class OutOfScreen
             else
             {
                _renderer.enabled = true;
+               _boxCollider.enabled = true;
             }
         }
         else
         {
-            _boxCollider.enabled = false;
             if (_type == H.Person)
             {
                 _person.Body.Hide();
@@ -156,6 +155,7 @@ public class OutOfScreen
             else
             {
                 _renderer.enabled = false;
+                _boxCollider.enabled = false;
             }
         }
     }

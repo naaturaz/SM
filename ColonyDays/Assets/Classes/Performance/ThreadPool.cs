@@ -15,8 +15,8 @@ class ThreadPool
 
     public static void RunThis(Person p)
     {
-        var th = new Thread(p.Body.WalkHanderCheck);
-        th.Start();
+        //var th = new Thread(p.Body.WalkHanderCheck);
+        //th.Start();
     }
 
     private static Thread GiveMeUnusedThread()

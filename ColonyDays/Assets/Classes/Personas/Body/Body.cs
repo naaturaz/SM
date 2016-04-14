@@ -734,15 +734,22 @@ public class Body //: MonoBehaviour //: General
             oldCurrent = _currentRoutePoint;
             InitRotaVarsOnSpeed();
         }
-        CheckRotation();
 
+        //CheckRotation();
+        if (_routePoins.Count == 0)
+        {
+            return;
+        }
+
+        //correction needed when loading the _idle route inverse.. to avoid out of range excp
+        _currentRoutePoint = CorrectBounds(_currentRoutePoint, 0, _routePoins.Count - 1);
         MoveAction();
 
-        Vector3 curr = CurrentPosition;
         Vector3 next = _routePoins[_currentRoutePoint].Point;
-
-        if (UMath.nearEqualByDistance(curr, next, 0.01f))// 0.001f
+        if (UMath.nearEqualByDistance(_currentPosition, next, 0.01f))// 0.001f
         {
+            CheckRotation();
+
             if (next == _routePoins[lastRoutePoint].Point)
             {WalkDone();}
             SetNextPoint();
@@ -756,7 +763,7 @@ public class Body //: MonoBehaviour //: General
     {
         LoadPosition();
 
-        var newPos = Vector3.MoveTowards(CurrentPosition, _routePoins[_currentRoutePoint].Point,
+        var newPos = Vector3.MoveTowards(_currentPosition, _routePoins[_currentRoutePoint].Point,
             _walkStep);
 
         AssignNewPosition(newPos);
@@ -771,7 +778,7 @@ public class Body //: MonoBehaviour //: General
     /// <param name="newPos"></param>
     void AssignNewPosition(Vector3 newPos)
     {
-        CurrentPosition = newPos;
+        _currentPosition = newPos;
 
         if (isPersonOnScreenRenderNow)
         {
@@ -783,6 +790,23 @@ public class Body //: MonoBehaviour //: General
     public void A32msUpdate()
     {
         isPersonOnScreenRenderNow = _person.LevelOfDetail1.OutOfScreen1.OnScreenRenderNow;
+    }
+
+    public void A64msUpdate()
+    {
+        if (_person == null || _routePoins == null || _routePoins.Count == 0) { return; }
+
+        var distanceToFinPoint = Vector3.Distance(_currentPosition, _routePoins[lastRoutePoint].Point);
+        if (distanceToFinPoint < 2f)
+        {
+            GettingCloseToLastPoint();
+        }
+
+        var distanceToIniPoint = Vector3.Distance(_currentPosition, _routePoins[iniRoutePoint].Point);
+        if (distanceToIniPoint < 1f)
+        {
+            GettingCloseToSecondPoint();
+        }
     }
 
     public void UpdateTheOnScreenRenderNowLocalVar(bool newVal)
@@ -802,7 +826,7 @@ public class Body //: MonoBehaviour //: General
     /// <param name="newPos"></param>
     private void AssignNewPositionNoQuesition(Vector3 newPos)
     {
-        CurrentPosition = newPos;
+        _currentPosition = newPos;
        _person.transform.position = newPos;
     }
 
@@ -851,16 +875,17 @@ public class Body //: MonoBehaviour //: General
     void CheckRotation()
     {
         //correction needed when loading the _idle route inverse.. to avoid out of range excp
-        if (_routePoins.Count > 0)
-        {
-            //correction needed when loading the _idle route inverse.. to avoid out of range excp
-            _currentRoutePoint = CorrectBounds(_currentRoutePoint, 0, _routePoins.Count - 1);
 
-            //print(currentRoutePoint + ".currentRoutePoint." + currRoute.Count + ".currRoute.Count");
-            var currDist = Vector3.Distance(CurrentPosition, _routePoins[_currentRoutePoint].Point);
-            if (currDist < distToChangeRot)
-            { ChangeRotation(currDist); }
+        //correction needed when loading the _idle route inverse.. to avoid out of range excp
+        _currentRoutePoint = CorrectBounds(_currentRoutePoint, 0, _routePoins.Count - 1);
+
+        //print(currentRoutePoint + ".currentRoutePoint." + currRoute.Count + ".currRoute.Count");
+        var currDist = Vector3.Distance(_currentPosition, _routePoins[_currentRoutePoint].Point);
+        if (currDist < distToChangeRot)
+        {
+            ChangeRotation(currDist);
         }
+
     }
 
 	/// <summary>
@@ -997,17 +1022,16 @@ public class Body //: MonoBehaviour //: General
 	    {
             //ThreadPool.RunThis(_person);
 	        WalkHandler();
-	        
 	    }
 	    //CheckOnGameSpeed();
         CheckIfGoingIntoBuild();
     }
 
-    public void WalkHanderCheck()
-    {
-        if (_movingNow)
-        { WalkHandler(); }
-    }
+    //public void WalkHanderCheck()
+    //{
+    //    if (_movingNow)
+    //    { WalkHandler(); }
+    //}
 
 
 
@@ -1020,7 +1044,7 @@ public class Body //: MonoBehaviour //: General
         if (  _person == null || _routePoins == null || _routePoins.Count == 0){ return; }
 
         var dist = 0.9f;//.2 //.25
-        var currDist = Vector3.Distance(CurrentPosition, _routePoins[lastRoutePoint].Point);
+        var currDist = Vector3.Distance(_currentPosition, _routePoins[lastRoutePoint].Point);
         //getting close to last point
         if (currDist < dist ) 
         {
@@ -1042,9 +1066,51 @@ public class Body //: MonoBehaviour //: General
             index -= 1;
         }
 
-        currDist = Vector3.Distance(CurrentPosition, _routePoins[index].Point);
+        currDist = Vector3.Distance(_currentPosition, _routePoins[index].Point);
         if (currDist < 0.01f  ){Show();}
     }
+
+    /// <summary>
+    /// When person get close to Last Point of route is getting into a building and should most
+    /// of the time hides 
+    /// </summary>
+    void GettingCloseToLastPoint()
+    {
+        var dist = 0.9f;//.2 //.25
+        var currDist = Vector3.Distance(_currentPosition, _routePoins[lastRoutePoint].Point);
+        //getting close to last point
+        if (currDist < dist)
+        {
+            Hide();
+            //not when gonna idle .. other wise will just hide body on miuddle of iddle
+            //when is coming back ca be hidden not problem bz will be in the house again 
+            if (_whichRoute == HPers.IdleSpot && !_inverse)
+            { Show(); }
+        }
+    }
+
+    /// <summary>
+    /// When person is getting out of buiding aprochin the 2nd point on route should show up
+    /// </summary>
+    void GettingCloseToSecondPoint()
+    {
+        //geting close to 2nd point on route
+        var index = iniRoutePoint;
+        if (!_inverse)
+        {
+            index += 1;
+        }
+        else
+        {
+            index -= 1;
+        }
+
+        var currDist = Vector3.Distance(_currentPosition, _routePoins[index].Point);
+        if (currDist < 0.01f) { Show(); }
+    }
+
+
+
 
     private int oldGameSpeed;//same speed the game is always started at
     /// <summary>
@@ -1129,7 +1195,7 @@ public class Body //: MonoBehaviour //: General
     /// </summary>
     internal void RestoreTransformToCurrentPos()
     {
-        _person.transform.position = CurrentPosition;
+        _person.transform.position = _currentPosition;
     }
 
 

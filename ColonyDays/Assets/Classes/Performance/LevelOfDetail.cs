@@ -76,7 +76,8 @@ public class LevelOfDetail
 
     H ReturnCurrentLOD()
     {
-        var dist = Vector3.Distance(_gO.transform.position, Camera.main.transform.position);
+        //var dist = Vector3.Distance(_gO.transform.position, Camera.main.transform.position);
+        var dist = Vector3.Distance(_gO.transform.position, CamControl.CAMRTS.transform.position);
 
         if (dist > CloserDistLOD1() && dist <= 66)//25 66     35 66     45 76
         {

@@ -49,8 +49,8 @@ public class PersonalObject
     private void Init()
     {
         LoadCarrying();
-        _rightHand = General.FindGameObjectInHierarchy("RightHand", _person.gameObject);
-        _stomach = General.FindGameObjectInHierarchy("Stomach", _person.gameObject);
+        _rightHand = General.FindGameObjectInHierarchy("RightHand", _person.gameObject);//Bip001 R Hand    RightHand 
+        _stomach = General.FindGameObjectInHierarchy("Stomach", _person.gameObject);//Bip001 Spine    Stomach
     }
 
     void LoadCarrying()
