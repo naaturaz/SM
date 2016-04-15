@@ -53,8 +53,11 @@ public class General : MonoBehaviour
         set { _initialColor = value; }
     }
 
-    //Geomtry GameObject on the Prefab
-    //if is null we defined first.. other wise is just straight forward property
+    /// <summary>
+    /// Geomtry GameObject on the Prefab
+    /// if is null we defined first.. other wise is just straight forward property
+    /// If 'Geomtrey' doesnt exist in the Prefab will use 'Main'
+    /// </summary>
     public GameObject Geometry
     {
         get
@@ -115,6 +118,7 @@ public class General : MonoBehaviour
     private bool _positionFixed;
 
     private string _myId;//this is the id use for the game Registry 
+    private string _batchRegionId;//the id where this was batched in, in BatchManager
     H _hType;
     private Ca _category;
 
@@ -527,7 +531,11 @@ public class General : MonoBehaviour
         set { _inventory = value; }
     }
 
-
+    public string BatchRegionId
+    {
+        get { return _batchRegionId; }
+        set { _batchRegionId = value; }
+    }
 
     #region Search GameObj in GameObject until find it
 

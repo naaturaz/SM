@@ -66,7 +66,13 @@ public class Registro : MonoBehaviour
         set { _selectBuilding = value; }
     }
 
+    private bool _isFullyLoaded;
 
+    public bool IsFullyLoaded
+    {
+        get { return _isFullyLoaded; }
+        set { _isFullyLoaded = value; }
+    }
 
 
     public Registro() { }
@@ -121,10 +127,8 @@ public class Registro : MonoBehaviour
     }
 #endregion
 
-    public bool IsFullyLoaded()
-    {
-        return AllBuilding.Count == AllRegFile.Count;
-    }
+
+
 
 
     /// <summary>

@@ -1960,6 +1960,9 @@ public class Building : General, Iinfo
         PositionFixed = false;
 
         _isOrderToDestroy = true;
+
+        //getting the Main GameObject render back
+        Program.gameScene.BatchRemove(this);
         DestroyOrdered();
 
         //so people can Reroutes if new build fell in the midle of one
@@ -2152,6 +2155,7 @@ public class Building : General, Iinfo
         
         //needs to be called here other wise Dormant Orders will not become active
         InitStorage();
+        Program.gameScene.BatchAdd(this);
 
         ////bz trhu this way is the only way brdige can call it 
         //if (MyId.Contains("Bridge"))

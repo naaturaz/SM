@@ -1266,6 +1266,8 @@ public class CrystalManager  {
 
         load = false;
         CrystalRegions = m.SubMesh.CrystalManager1.CrystalRegions;
+        Program.gameScene.BatchManagerCreate();
+
 
         if (CrystalRegions.Count == 0)
         {
@@ -1275,10 +1277,10 @@ public class CrystalManager  {
         {
             isFullyLoaded = true;
 
-            for (int i = 0; i < CrystalRegions.Count; i++)
-            {
-                //CrystalRegions[i].DebugHere();
-            }
+            //for (int i = 0; i < CrystalRegions.Count; i++)
+            //{
+            //    CrystalRegions[i].DebugHere();
+            //}
         }
     }
 

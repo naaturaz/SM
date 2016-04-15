@@ -500,6 +500,7 @@ public class TerrainSpawnerController : ControllerParent
         }
         else
         {
+            Program.gameScene.BatchAdd(temp);
             AllRandomObjList.Add(temp);
         }
         
@@ -713,7 +714,7 @@ public class TerrainSpawnerController : ControllerParent
 
     public void LoadFromFile()
     {
-        p.TerraSpawnController.CreateObjAndAddToMainList(AllSpawnedDataList[loadingIndex].Type,
+        CreateObjAndAddToMainList(AllSpawnedDataList[loadingIndex].Type,
             AllSpawnedDataList[loadingIndex].Pos,
             AllSpawnedDataList[loadingIndex].RootStringIndex, AllSpawnedDataList[loadingIndex].AllVertexIndex,
             AllSpawnedDataList[loadingIndex].Rot, 
@@ -729,6 +730,7 @@ public class TerrainSpawnerController : ControllerParent
 
         loadingIndex++;
 
+
         //when index is the same as couunt that it
         if (loadingIndex >= AllSpawnedDataList.Count)
         {
@@ -736,6 +738,8 @@ public class TerrainSpawnerController : ControllerParent
             //CreateOrUpdateSpecificsList(AllSpawnedDataList[loaded)
             print(treeList.Count + " treeList.Count IsToLoadFromFile-false");
             
+            Program.gameScene.BatchInitial();
+
             //CreateTreePool();
         }
     }

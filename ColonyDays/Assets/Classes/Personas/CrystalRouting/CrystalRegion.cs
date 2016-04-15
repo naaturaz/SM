@@ -77,6 +77,8 @@ public class CrystalRegion
     {
         _index = index;
         _region = region;
+
+        //DebugHere();
     }
 
     public void DebugHere()

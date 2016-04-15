@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class GameScene : General {
+public class GameScene : General
+{
 
 
     public Terreno Terreno;
@@ -15,27 +16,29 @@ public class GameScene : General {
     public ControllerMain controllerMain;
     private General _waterBody;
 
-    private Book _book = new Book();//keeps all the caps for each object of the game 
+    private Book _book = new Book(); //keeps all the caps for each object of the game 
 
     //the scale of the small units in a farm
-    Vector3 _subDivideBlockScale = new Vector3();
-    
+    private Vector3 _subDivideBlockScale = new Vector3();
+
     //how thick a block of way is
-    float _subDivideBlockYVal = 0.05f;//0.001f;
-    private int _gameSpeed = 0;//the speed of the whole Game
+    private float _subDivideBlockYVal = 0.05f; //0.001f;
+    private int _gameSpeed = 0; //the speed of the whole Game
 
-    public static General dummyBlue;//for help everywhere()
-    public static General dummyRed;//for help everywhere()
+    public static General dummyBlue; //for help everywhere()
+    public static General dummyRed; //for help everywhere()
 
-    public static Structure dummySpawnPoint;//for help everywhere()
-    List<Structure> dummiesSpwnPoint = new List<Structure>();//for help everywhere()
+    public static Structure dummySpawnPoint; //for help everywhere()
+    private List<Structure> dummiesSpwnPoint = new List<Structure>(); //for help everywhere()
 
 
     private GameTime _gameTime = new GameTime();
-    GameController _gameController = new GameController();
-    ExportImport _exportImport = new ExportImport();
+    private GameController _gameController = new GameController();
+    private ExportImport _exportImport = new ExportImport();
 
-    private Culling _culling ;
+
+    private BatchManager _batchManager;
+    private Culling _culling;
     private Fustrum _fustrum;
     private StaticBatch _staticBatch;
     private MeshBatch _meshBatch;
@@ -113,8 +116,8 @@ public class GameScene : General {
     }
 
     // Use this for initialization
-	void Start ()
-	{
+    private void Start()
+    {
         Book.Start();
 
         LoadTerrain();
@@ -130,7 +133,7 @@ public class GameScene : General {
 
         Settings.PlayMusic();
 
-        textMessage = (Btn3D)General.Create(Root.menusTextMiddle, new Vector3(0.85f, 0.3f, 0));
+        textMessage = (Btn3D) General.Create(Root.menusTextMiddle, new Vector3(0.85f, 0.3f, 0));
         textMessage.MoveSpeed = 40f; //so fade happens
         textMessage.FadeDirection = "FadeIn";
 
@@ -138,13 +141,58 @@ public class GameScene : General {
         dummyRed = General.Create(Root.redCube, new Vector3());
 
 
-	    createDummySpawn = true;
+        createDummySpawn = true;
 
-        dummySpawnPoint = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPointUnTimed, new Vector3(), H.Dummy,
-                container: Program.ClassContainer.transform);
+        dummySpawnPoint = (Structure) Building.CreateBuild(Root.dummyBuildWithSpawnPointUnTimed, new Vector3(), H.Dummy,
+            container: Program.ClassContainer.transform);
 
         //hudColor = textMessage.GetComponent<GUIText>().color;
-	}
+    }
+
+
+    #region BatchManager
+
+    /// <summary>
+    /// Is only gonna be called when CrystalManager is loaded 
+    /// other wise Im creating a new Terrain 
+    /// </summary>
+    public void BatchManagerCreate()
+    {
+        _batchManager = new BatchManager();
+    }
+
+    /// <summary>
+    /// call when all buildigns are loaded and 
+    /// when all Spwaners are loaded.
+    /// 
+    /// Will pass only if both are done 
+    /// </summary>
+    public void BatchInitial()
+    {
+        //in case is not fully loaded the Spwaners or the buildings are not fully loaded
+        if (p.TerraSpawnController.IsToLoadFromFile || !BuildingPot.Control.Registro.IsFullyLoaded)
+        {
+            return;
+        }
+        Debug.Log("BatchInitial() gameScene");
+        _batchManager.BatchInitial();
+    }
+
+    /// <summary>
+    /// Add the Object to the BatchMesh
+    /// </summary>
+    /// <param name="gen"></param>
+    public void BatchAdd(General gen)
+    {
+        _batchManager.AddGen(gen);
+    }
+    internal void BatchRemove(General gen)
+    {
+        _batchManager.RemoveGen(gen);
+
+    }
+
+#endregion
 
     private IEnumerator SixtySecUpdate()
     {
@@ -464,6 +512,8 @@ public class GameScene : General {
     }
 
     #endregion
+
+
 
 
 }

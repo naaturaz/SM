@@ -66,6 +66,7 @@ public class TerrainRamdonSpawner : General {
         if (container != null){obj.transform.parent = container;}
         obj.IndexAllVertex = indexAllVertex;
         obj.HType = hType;
+        obj.Category = obj.DefineCategory(hType);
         obj.MyId = obj.Rename(name, obj.Id, obj.HType);
         obj.transform.name = obj.MyId;
 

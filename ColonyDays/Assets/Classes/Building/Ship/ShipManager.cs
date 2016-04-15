@@ -29,7 +29,7 @@ public class ShipManager
         CheckIfTimeToVisit();
 	    CheckWhenNextVisit();
 
-        if (_isToLoadShips == 1 && BuildingPot.Control.Registro.IsFullyLoaded())
+        if (_isToLoadShips == 1 && BuildingPot.Control.Registro.IsFullyLoaded)
         {
             _isToLoadShips = 0;
             LoadShips();

@@ -142,7 +142,7 @@ public class Decoration  {
             //moving a bit twrds buildings
             var iniPos = Vector3.MoveTowards(_positionsToSpawnDecor[i], _building.transform.position, .2f);
 
-            var spwnObj = General.Create(root, iniPos, name:"Decora", container: _building.transform);
+            var spwnObj = General.Create(root, iniPos, name:"Decora", container: _building.transform, hType: H.Ornament);
             RandomizeRotAndScale(spwnObj.gameObject, root);
 
             _spwnedObj.Add(spwnObj);

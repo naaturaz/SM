@@ -5,7 +5,11 @@ using UnityEngine;
 
 public class Forester : Profession
 {
+
+
+
     private List<TerrainRamdonSpawner> _spawnersList = new List<TerrainRamdonSpawner>();//save implem
+    
     private Vector3 _treeCenterPos;
 
     private StillElement _stillElement;
@@ -59,6 +63,18 @@ public class Forester : Profession
         StillElementId = OrderedSites[0].LocMyId;
 
         _stillElement = Program.gameScene.controllerMain.TerraSpawnController.Find(StillElementId);
+
+
+        //asking for grown in case is there but from an old list  
+        if (!_stillElement.Grown())
+        {
+            _spawnersList.Remove(_stillElement);
+            _takeABreakNow = true;
+            return;
+        }
+        HandleStillElement();
+
+
         var closerAnchorToUs = _stillElement.FindCloserAnchorTo(_person.Work);
 
         //moving the route point a bit towards the origin so when chopping tree its not inside the tree 
@@ -69,6 +85,24 @@ public class Forester : Profession
         startIdleTime = 0;
 
         InitRoute();
+    }
+
+    void HandleStillElement()
+    {
+        if (_stillElement != null)
+        {
+            //remove element from Batch
+            Program.gameScene.BatchRemove(_stillElement);
+            var animator = _stillElement.GetComponent<Animator>();
+
+            //in case was deleted right now
+            if (animator != null)
+            {
+                animator.enabled = true;
+            }
+            //todo remove to all Foresters
+            _spawnersList.Remove(_stillElement);
+        }
     }
 
     Vector3 DefineMiddlePos(List<VectorM> list)

@@ -67,6 +67,9 @@ public class BuildingSaveLoad : BuildingPot
 
     void CreatePersonPot()
     {
+        BuildingPot.Control.Registro.IsFullyLoaded = true;
+        Program.gameScene.BatchInitial();
+
         //The person pot creating is called when we loaded all buildings 
         Program.InputMain.CreatePersonPot();
     }
@@ -114,6 +117,9 @@ public class BuildingSaveLoad : BuildingPot
         f.PeopleDict = regFile.PeopleDict;
 
         f.transform.position = regFile.IniPos;
+
+
+        Program.gameScene.BatchAdd(f);
 
         Control.Registro.Farms.Add(regFile.MyId, Control.CurrentSpawnBuild as DragSquare);
         Control.Registro.AllBuilding.Add(regFile.MyId, Control.CurrentSpawnBuild);
@@ -186,6 +192,7 @@ public class BuildingSaveLoad : BuildingPot
         s.CurrentProd = regFile.CurrentProd;
         s.Anchors = regFile.Anchors;
 
+        Program.gameScene.BatchAdd(s);
         Control.Registro.Structures.Add(s.MyId, Control.CurrentSpawnBuild as Structure);
         Control.Registro.AllBuilding.Add(s.MyId, Control.CurrentSpawnBuild);
     }
@@ -247,6 +254,8 @@ public class BuildingSaveLoad : BuildingPot
             trail.AddBoxCollider(regFile.Min, regFile.Max);
             //trail.LandZoningBridge();
         }
+
+        Program.gameScene.BatchAdd(trail);
         
         Control.CurrentSpawnBuild = trail;
         Control.Registro.Ways.Add(trail.MyId, Control.CurrentSpawnBuild as Way);
