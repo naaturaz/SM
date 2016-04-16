@@ -443,8 +443,20 @@ public class Realtor
         //so the marriage rate increase
         var love = building.WouldFindLoveInThisBuilding(person);
 
-        return love + confort - distToNewHome;
+        return love + confort - ValidateDistanceToHome(distToNewHome);
     }
+
+    private float MAXDISTANCETOHOME = 200;
+    float ValidateDistanceToHome(float toEval)
+    {
+        if (toEval > MAXDISTANCETOHOME)
+        {
+            return 10000;
+        }
+        return toEval;
+    }
+
+
 
     /// <summary>
     /// Return a list with the Home rank ordered descending 
@@ -469,6 +481,11 @@ public class Realtor
             }
 
             var score = ScoreABuild(struc, comparePoint,person);
+            //a house that is over the Max Distance
+            if (score < 0)
+            {
+                continue;
+            }
 
             if (struc.Instruction != H.WillBeDestroy && !person.Brain.BlackList.Contains(key) && score > above
                 //&& !IsBuildBooked(struc)

@@ -59,6 +59,8 @@ public class InputMain : InputParent {
         ModeSwitcher();
         ChangeGameSpeed();
         AddressPointerOutOfScreen();
+
+       
     }
 
     void AddressPointerOutOfScreen()

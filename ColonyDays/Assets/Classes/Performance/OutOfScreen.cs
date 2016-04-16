@@ -84,7 +84,7 @@ public class OutOfScreen
             UpdateOnObjt();
             SwitchNow();
         }
-        HideShow();
+        //HideShow();
 	}
 
     void UpdateOnObjt()
@@ -118,7 +118,7 @@ public class OutOfScreen
             OnBecameVisible();
         }
         else { OnBecameInvisible(); }
-        HideShow();
+        //HideShow();
     }
 
 

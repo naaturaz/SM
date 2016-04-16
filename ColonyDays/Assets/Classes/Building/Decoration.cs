@@ -26,12 +26,12 @@ public class Decoration  {
     private Building _building;
     List<Line> _lines = new List<Line>(); 
 
-    List<Vector3> _positionsToSpawnDecor=new List<Vector3>(); 
-    List<General> _spwnedObj = new List<General>(); 
+    List<Vector3> _positionsToSpawnDecor=new List<Vector3>();
+    private General _spwnedObj;
 
     public Decoration(Building build)
     {
-        return;
+        //return;
 
         _building = build;
         _roots.AddRange(TerrainSpawnerController.allOrna);
@@ -49,7 +49,10 @@ public class Decoration  {
         _lines = U2D.FromPolyToLines(_building.Anchors);
         RemoveSpwnPointLine();
         FindPositionToSpwnDecor();
+        
         SpawnDecorObj();
+        AddToBatchMesh();
+
         IfHouseMedAssignRandomMat();
     }
 
@@ -58,9 +61,9 @@ public class Decoration  {
 
     #region Romeo Bravo Pirate
 
-    private Material _romeo;
-    private Material _bravo;
-    private Material _pirate;
+    private int _romeo;
+    private int _bravo;
+    private int _pirate;
     private GameObject _main;
     private void IfHouseMedAssignRandomMat()
     {
@@ -68,7 +71,7 @@ public class Decoration  {
         {
             return;
         }
-        DefineRamdonMat();
+        DefineRamdonSelection();
 
         _main = General.GetChildThatContains("Main", _building.gameObject);
         FindAllSubObjsAndAssignMat();
@@ -76,28 +79,65 @@ public class Decoration  {
 
     private void FindAllSubObjsAndAssignMat()
     {
-        var romeos = General.GetChildsNameEqual(_main, "Romeo");
-        var pirates = General.GetChildsNameEqual(_main, "Pirate");
-        var bravos = General.GetChildsNameEqual(_main, "Bravo");
+        var one = General.GetChildsNameEqual(_main, "1");
+        var two = General.GetChildsNameEqual(_main, "2");
+        var three = General.GetChildsNameEqual(_main, "3");
 
-        AssignMat(romeos, _romeo);
-        AssignMat(pirates, _pirate);
-        AssignMat(bravos, _bravo);
+        var ones = General.FindAllChildsGameObjectInHierarchy(one[0]);
+        var twos = General.FindAllChildsGameObjectInHierarchy(two[0]);
+        var threes = General.FindAllChildsGameObjectInHierarchy(three[0]);
+
+        GetRidOfUnselected(ones, twos, threes, _romeo, "Romeo");//romeo selection
+        GetRidOfUnselected(ones, twos, threes, _bravo, "Bravo");//romeo selection
+        GetRidOfUnselected(ones, twos, threes, _pirate, "Pirate");//romeo selection
     }
 
-    void AssignMat(List<GameObject> list, Material mat)
+    private void GetRidOfUnselected(GameObject[] ones,GameObject[] twos, GameObject[] threes, int selection,
+        string name)
     {
-        for (int i = 0; i < list.Count; i++)
+        if (selection == 1)
         {
-            list[i].GetComponent<Renderer>().sharedMaterial = mat;
+            DestroyAllThatMatch(twos, threes, name);
+        }
+        else if (selection == 2)
+        {
+            DestroyAllThatMatch(ones, threes, name);
+        }
+        else if (selection == 3)
+        {
+            DestroyAllThatMatch(ones, twos, name);
         }
     }
 
-    private void DefineRamdonMat()
+    /// <summary>
+    /// Will destroy all components in those 2 list that match 'name'
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <param name="name"></param>
+    private void DestroyAllThatMatch(GameObject[] a, GameObject[] b, string name)
     {
-        _romeo = (Material)Resources.Load("Prefab/Mats/Building/BuildsFactory/Romeo"+UMath.GiveRandom(1,4));
-        _bravo = (Material)Resources.Load("Prefab/Mats/Building/BuildsFactory/Bravo"+UMath.GiveRandom(1,4));
-        _pirate = (Material)Resources.Load("Prefab/Mats/Building/BuildsFactory/Pirate"+UMath.GiveRandom(1,4));
+        for (int i = 0; i < a.Length; i++)
+        {
+            if (a[i].name == name)
+            {
+                MonoBehaviour.Destroy(a[i]);
+            }
+        }
+        for (int i = 0; i < b.Length; i++)
+        {
+            if (a[i].name == name)
+            {
+                MonoBehaviour.Destroy(b[i]);
+            }
+        }
+    }
+
+    private void DefineRamdonSelection()
+    {
+        _romeo = UMath.GiveRandom(1,4);
+        _bravo = UMath.GiveRandom(1,4);
+        _pirate = UMath.GiveRandom(1,4);
     }
 
 
@@ -135,6 +175,11 @@ public class Decoration  {
 
     private void SpawnDecorObj()
     {
+        _spwnedObj = General.Create(Root.classesContainer,_building.transform.position,"",_building.transform,
+            H.Decoration);
+        
+        _spwnedObj.Category = _spwnedObj.DefineCategory(H.Decoration);
+
         for (int i = 0; i < _positionsToSpawnDecor.Count; i++)
         {
             var root = _roots[UMath.GiveRandom(0, _roots.Count)];
@@ -142,11 +187,29 @@ public class Decoration  {
             //moving a bit twrds buildings
             var iniPos = Vector3.MoveTowards(_positionsToSpawnDecor[i], _building.transform.position, .2f);
 
-            var spwnObj = General.Create(root, iniPos, name:"Decora", container: _building.transform, hType: H.Ornament);
+            var spwnObj = General.Create(root, iniPos, container: _building.transform, name:"Decora");
             RandomizeRotAndScale(spwnObj.gameObject, root);
 
-            _spwnedObj.Add(spwnObj);
+            var subs = General.FindAllChildsGameObjectInHierarchy(spwnObj.gameObject);
+
+            //will make all subs child of '_spwnedObj'
+            for (int j = 0; j < subs.Length; j++)
+            {
+                subs[j].transform.parent = _spwnedObj.transform;
+            }
+            //bz they are useless. I got the subObjects already
+            spwnObj.Destroy();
         }
+    }
+
+    void AddToBatchMesh()
+    {
+        Program.gameScene.BatchAdd(_spwnedObj);
+    }
+
+    public void RemoveFromBatchMesh()
+    {
+        Program.gameScene.BatchRemove(_spwnedObj);
     }
 
     void RandomizeRotAndScale(GameObject spwnObj, string root)

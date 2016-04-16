@@ -748,6 +748,7 @@ public class Building : General, Iinfo
 
     private static MyProjector _projector;
     private static General _light;
+    private static General _reachArea;
 
     /// <summary>
     /// this is the projector that hover when creating a nw building, or the current selected building
@@ -757,6 +758,11 @@ public class Building : General, Iinfo
         get { return _projector; }
         set { _projector = value; }
     }
+    public static General ReachArea
+    {
+        get { return _reachArea; }
+        set { _reachArea = value; }
+    }
 
     public void CreateProjector()
     {
@@ -765,6 +771,9 @@ public class Building : General, Iinfo
         {
             Projector = (MyProjector) Create(Root.projector, container: transform);
             _light = Create(Root.lightCil, transform.position, container: transform);
+            
+            _reachArea = Create(Root.reachArea, transform.position);
+            _reachArea.transform.localScale = new Vector3(Brain.Maxdistance, 0.1f, Brain.Maxdistance);
         }
     }
 
@@ -778,6 +787,9 @@ public class Building : General, Iinfo
 
             _light.Destroy();
             _light = null;
+
+            _reachArea.Destroy();
+            _reachArea = null;
         }
     }
 
@@ -1962,6 +1974,7 @@ public class Building : General, Iinfo
         _isOrderToDestroy = true;
 
         //getting the Main GameObject render back
+        _decoration.RemoveFromBatchMesh();
         Program.gameScene.BatchRemove(this);
         DestroyOrdered();
 
@@ -3273,6 +3286,8 @@ public class Building : General, Iinfo
         get { return _buildersManager; }
         set { _buildersManager = value; }
     }
+
+
 
     /// <summary>
     /// Will return a family that is empty and has not ID set yet 

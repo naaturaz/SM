@@ -214,6 +214,7 @@ public class Root : MonoBehaviour
     public static string projectorPerson = "Prefab/GUI/ProjectorPerson";
 
     public static string lightCil = "Prefab/GUI/Civ5/LightCil";
+    public static string reachArea = "Prefab/GUI/ReachArea";
     public static string lightCilPerson = "Prefab/GUI/Civ5/LightCilPerson";
 
     public static string lockedBuilding = "Prefab/GUI/Locked_Building";
@@ -286,6 +287,9 @@ public class Root : MonoBehaviour
     public static string matGovServices = "Prefab/Mats/Building/Gov_Serv";
     public static string matWoodA = "Prefab/Mats/Building/WoodA";
     public static string matHouse2 = "Prefab/Mats/Building/house2";
+
+    //Atlas
+    public static string alphaAtlas = "Prefab/Mats/Atlas/AlphaAtlas";
 
     //they are now pull in Person.ReturnRandoPersonMaterialRoot()
     //public static string personGuy1 = "Prefab/Mats/Person/Guy1UV 1";
@@ -413,7 +417,7 @@ public class Root : MonoBehaviour
     private static string HouseMed()
     {
         //return houseMed[UMath.GiveRandom(0, houseMed.Count)];
-        return houseMed[UMath.GiveRandom(6,9)];
+        return houseMed[UMath.GiveRandom(0,1)];
     }
 
     static void LoadHouseMed()

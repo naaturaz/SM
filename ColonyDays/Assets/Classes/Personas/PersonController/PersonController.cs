@@ -183,6 +183,8 @@ public class PersonController : PersonPot
         for (int i = 0; i < pData.All.Count; i++)
         {
             Person t = Person.CreatePersonFromFile(pData.All[i]);
+            MouseClick += t.MouseClickHandler;
+
             All.Add( t);
             _allGC.Add(t.MyId, t);
         }  
@@ -215,17 +217,13 @@ public class PersonController : PersonPot
         for (int i = 0; i < amtP; i++)
         {
             Person t = Person.CreatePerson(iniPos);
-            t.Carlos += CarlosHandler;
+            MouseClick += t.MouseClickHandler;
             All.Add( t);
             _allGC.Add(t.MyId, t);
         }
     }
 
-    void CarlosHandler(object sender, EventArgs e)
-    {
-        Person v = (Person) sender;
-        //Debug.Log("Carlos event "+v.MyId);
-    }
+
 
 
 
@@ -233,9 +231,31 @@ public class PersonController : PersonPot
     public void HaveNewKid(Vector3 iniPos)
     {
         Person t = Person.CreatePersonKid(iniPos);
+        MouseClick += t.MouseClickHandler;
+
         All.Add(t);
         _allGC.Add(t.MyId, t);
     }
+
+
+
+#region events
+
+    public EventHandler<EventArgs> MouseClick;
+
+    void OnMouseClick(EventArgs e)
+    {
+        if (MouseClick != null)
+        {
+            MouseClick(this, e);
+        }
+    }
+
+#endregion
+
+
+
+
 
     public void RemovePerson(Person p)
     {
@@ -311,8 +331,11 @@ public class PersonController : PersonPot
         {
             Initialize();
         }
-
-
+        
+        if (Input.GetMouseButtonUp(0))
+        {
+            OnMouseClick(EventArgs.Empty);
+        }
 	}
 
 

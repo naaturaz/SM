@@ -30,16 +30,29 @@ public class BatchRegion
         this._id = id;
     }
 
+    int ReturnVertices(GameObject go)
+    {
+        var meshF = go.GetComponent<MeshFilter>();
+
+        if (meshF != null)
+        {
+            return meshF.mesh.vertexCount;
+        }
+        //for Mains that have subobjects and not mesh attached
+        return 1000;
+    }
+
+
+
     void AddToAll(GameObject go, string id)
     {
         //todo Label Correctly object u want to put in here when Opaque
         //now Mansory has C Main as main and has a lot of subOjects . wont pass bz : meshF == null
-        var meshF = go.GetComponent<MeshFilter>();
-        if (go == null || go.transform == null || meshF == null)//if meshF == null is a 'Main' with subOjects in it 
+        if (go == null || go.transform == null)//if meshF == null is a 'Main' with subOjects in it 
         {
             return;
         }
-        _totalVertices += meshF.mesh.vertexCount;
+        _totalVertices += ReturnVertices(go);
 
 
         if (_totalVertices > 62000)
@@ -81,9 +94,10 @@ public class BatchRegion
 
             //so it seen 
             _all[index].SetActive(true);
+            ActivateAllChildsObj(_all[index]);
             //asign it back to original gamebject
             _all[index].transform.parent = go.transform;
-            _totalVertices -= _all[index].GetComponent<MeshFilter>().mesh.vertexCount;
+            _totalVertices -= ReturnVertices(_all[index]);
             _all[index] = null;
             _keymap.Remove(key);
         }
@@ -116,6 +130,7 @@ public class BatchRegion
                 return;
             }
 
+            InspectGameObject(go.Geometry, go);
             AddToAll(go.Geometry.gameObject, go.MyId);
             DecideIfRedoBatch();
         }
@@ -136,6 +151,24 @@ public class BatchRegion
         }
     }
 
+    /// <summary>
+    /// bz techos de guano needs has alphaAtlas material 
+    /// </summary>
+    /// <param name="geometry"></param>
+    /// <param name="mainGen"></param>
+    void InspectGameObject(GameObject geometry, General mainGen)
+    {
+        var subs = General.FindAllChildsGameObjectInHierarchy(geometry);
+
+        for (int i = 0; i < subs.Length; i++)
+        {
+            //if is a roof will take it back 
+            if (subs[i].name.Contains("Guano"))
+            {
+                subs[i].transform.parent = mainGen.transform;
+            }
+        }
+    }
 
 
 
@@ -170,11 +203,14 @@ public class BatchRegion
         if (_batchMaster!=null)
         {
             var child = General.FindAllChildsGameObjectInHierarchy(_batchMaster.gameObject);
-
             for (int i = 0; i < child.Length; i++)
             {
-                //so doesnt get wiped when destoryed 
-                child[i].transform.parent = null;
+                //if is child of batchMaster needs to get off him. need to ask tht in case a object has subobjects
+                if (child[i].transform.parent == _batchMaster.transform)
+                {
+                    //so doesnt get wiped when destoryed 
+                    child[i].transform.parent = null; 
+                }
             }
 
             _batchMaster.Destroy();
@@ -218,13 +254,12 @@ public class BatchRegion
         }
 
         int nullCt=0;
-        int eleNtNull = 0;
         for (int i = 0; i < _all.Length; i++)
         {
-            if (_all[i] == null && nullCt > 9)
+            if (_all[i] == null && nullCt > 99)
             {
                 //at 10 cts in a round of null means the last of the Array was reached 
-                StatKeeper(i-10);
+                StatKeeper(i-100);
                 break;
             }
             if (_all[i] == null)
@@ -233,12 +268,35 @@ public class BatchRegion
                 continue;
             }
 
-            eleNtNull = i;
             nullCt = 0;
             _all[i].SetActive(true);//in case this is now redoing a Region
+            ActivateAllChildsObj(_all[i]);
             _all[i].transform.parent = _batchMaster.transform;
         }
-        CombineMeshes(_batchMaster.gameObject, _all[eleNtNull].GetComponent<Renderer>().material);
+        CombineMeshes(_batchMaster.gameObject, ReturnProperMaterial());
+    }
+
+    Material ReturnProperMaterial()
+    {
+        if (_id.Contains("Opaque"))
+        {
+            return (Material)Resources.Load(Root.matTavernBase);
+        }
+        return (Material)Resources.Load(Root.alphaAtlas);
+    }
+
+    /// <summary>
+    /// In case an GameObj has child they need to be activate 
+    /// </summary>
+    /// <param name="go"></param>
+    void ActivateAllChildsObj(GameObject go)
+    {
+        var child = General.FindAllChildsGameObjectInHierarchy(go);
+
+        for (int i = 0; i < child.Length; i++)
+        {
+            child[i].SetActive(true);
+        }
     }
 
     void CombineMeshes(GameObject onGO, Material mat)

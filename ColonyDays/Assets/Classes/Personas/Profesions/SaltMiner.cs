@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
+using Random = UnityEngine.Random;
 
 public class SaltMiner : Profession
 {
@@ -74,13 +76,23 @@ public class SaltMiner : Profession
     {
         Router1 = new CryRouteManager();
 
+        if (PersonPot.Control.RoutesCache1.ContainANewerOrSameRoute(_person.Work.MyId + ".OFish", _person.Work.MyId + ".DFish",
+                   new DateTime()))
+        {
+            Router1.TheRoute = PersonPot.Control.RoutesCache1.GiveMeTheNewerRoute();
+            Router1.IsRouteReady = true;
+            return;
+        }
+
+
+
         var inBuildPoints = DefineInBuildPoint();
         //UVisHelp.CreateHelpers(inBuildPoints, Root.yellowCube);
         var TheRoute = ReachBean.RouteVector3s(inBuildPoints);
 
         //so they go trhu on Profession 
-        TheRoute.OriginKey = "PointIniFish";
-        TheRoute.DestinyKey = "PointFinFish";
+        TheRoute.OriginKey = _person.Work.MyId + ".OFish";
+        TheRoute.DestinyKey = _person.Work.MyId + ".DFish";
 
         Router1.TheRoute = TheRoute;
         Router1.IsRouteReady = true;

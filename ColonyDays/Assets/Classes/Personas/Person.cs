@@ -6,20 +6,16 @@ using Random = UnityEngine.Random;
 
 public class Person : General
 {
-    public EventHandler<EventArgs> Carlos;
 
-    void OnCarlos(EventArgs e)
+
+
+
+
+    public void MouseClickHandler(object sender, EventArgs e)
     {
-        if (Carlos != null)
-        {
-            Carlos(this, e);
-        }
+        //Person v = (Person)sender;
+        CheckMouseClicked();
     }
-
-
-
-    
-
 
 
 
@@ -1124,12 +1120,13 @@ public class Person : General
     // Use this for initialization
 	void Start () 
     {
+        cam = Camera.main;
         base.Start();
         
         StartCoroutine("FiveSecUpdate");
         StartCoroutine("OneSecUpdate");
 
-        StartCoroutine("A45msUpdate");
+        //StartCoroutine("A45msUpdate");
         
         //for body
         StartCoroutine("A32msUpdate");
@@ -1146,7 +1143,6 @@ public class Person : General
 	        return;
 	    }
         Inventory = new Inventory(MyId, HType);
-        OnCarlos(EventArgs.Empty);
 	}
 
     float RestartTimes(float a, float b){return Random.Range(a, b);}
@@ -1226,14 +1222,13 @@ public class Person : General
     }
 
 
-    private IEnumerator A45msUpdate()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(.045f); // wait
-            _levelOfDetail.A45msUpdate();
-        }
-    }
+    //private IEnumerator A45msUpdate()
+    //{
+    //    while (true)
+    //    {
+    //        yield return new WaitForSeconds(.045f); // wait
+    //    }
+    //}
 
 
     //for body
@@ -1272,6 +1267,8 @@ public class Person : General
 	// Update is called once per frame
 	void Update()
     {
+        _levelOfDetail.A45msUpdate();
+
         //was on update so new PeopleFind their new home 
         if (_home == null && !PersonPot.Control.Locked)
         {
@@ -2205,6 +2202,34 @@ public class Person : General
     #endregion
 
 
+#region Events
+
+    private Camera cam;
+    internal void CheckMouseClicked()
+    {
+        if (!LevelOfDetail1.OutOfScreen1.OnScreenRenderNow || cam == null)
+        {
+            return;
+        }
+
+        //bz _body.CurrentPosition is on the bottom of person 
+        var posCorrectedY = new Vector3(_body.CurrentPosition.x, _body.CurrentPosition.y + 0.1f, _body.CurrentPosition.z);
+        var scrnPos = cam.WorldToViewportPoint(posCorrectedY);
+        var ms = cam.ScreenToViewportPoint(Input.mousePosition);
+
+        var posCorrectedY2 = new Vector3(_body.CurrentPosition.x, _body.CurrentPosition.y + 0.35f, _body.CurrentPosition.z);
+        var scrnPos2 = cam.WorldToViewportPoint(posCorrectedY2);
+
+
+        var dist = Vector2.Distance(scrnPos, ms);
+        var dist2 = Vector2.Distance(scrnPos2, ms);
+
+        if (dist + dist2 < 0.1f)
+        {
+            Debug.Log(MyId+" was this close to click:" + dist);
+        }
+    }
+#endregion
 }
 
 public class PersonReport

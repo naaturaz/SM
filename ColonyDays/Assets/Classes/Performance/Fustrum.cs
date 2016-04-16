@@ -30,6 +30,7 @@ public class Fustrum
 
     public bool OnScreen(Vector3 objPosition)
     {
+        //todo change this cam.WorldToScreenPoint so its not asked by everyone all the time 
         var convertedPos = cam.WorldToScreenPoint(objPosition);
         if (screenRect.Contains(convertedPos))
         {

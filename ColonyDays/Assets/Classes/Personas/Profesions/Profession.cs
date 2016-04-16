@@ -11,7 +11,7 @@ using UnityEngine;
 public class Profession
 {
     protected Person _person;
-    protected static float radius = 200f;//20f, how far will go to cut a tree 
+    protected static float radius = 100f;//200 f, how far will go to cut a tree 
 
     protected bool _readyToWork;//says if workers is ready to work 
     protected bool _workingNow;

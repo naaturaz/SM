@@ -359,6 +359,7 @@ public enum H
     LOD1,
     LOD2,
     Animal,
+    Decoration,
 
 
 }
