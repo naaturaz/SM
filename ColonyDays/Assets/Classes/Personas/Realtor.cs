@@ -482,7 +482,7 @@ public class Realtor
 
             var score = ScoreABuild(struc, comparePoint,person);
             //a house that is over the Max Distance
-            if (score < 0)
+            if (score < -5000)
             {
                 continue;
             }

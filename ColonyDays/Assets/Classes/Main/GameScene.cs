@@ -170,7 +170,7 @@ public class GameScene : General
     public void BatchInitial()
     {
         //in case is not fully loaded the Spwaners or the buildings are not fully loaded
-        if (p.TerraSpawnController.IsToLoadFromFile || !BuildingPot.Control.Registro.IsFullyLoaded)
+        if (!GameFullyLoaded())
         {
             return;
         }
@@ -269,11 +269,11 @@ public class GameScene : General
         }
 
 
-        if (Input.GetKeyUp(KeyCode.B))
-        {
-            //_staticBatch = new StaticBatch();
-            _meshBatch = new MeshBatch();
-        }
+        //if (Input.GetKeyUp(KeyCode.B))
+        //{
+        //    //_staticBatch = new StaticBatch();
+        //    //_meshBatch = new MeshBatch();
+        //}
     }
 
     void FixedUpdate()
@@ -516,4 +516,9 @@ public class GameScene : General
 
 
 
+
+    internal bool GameFullyLoaded()
+    {
+        return !p.TerraSpawnController.IsToLoadFromFile && BuildingPot.Control.Registro.IsFullyLoaded;
+    }
 }

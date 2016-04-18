@@ -244,7 +244,7 @@ public class BuildingWindow : GUIElement {
     private void HandlePrdBtn()
     {
         //todo add all houses, trade, gov as Cointned in their Enum Cat
-        if (_building.HType.ToString().Contains("House") || _building.Category == Ca.Way)
+        if (isToHidePrdTab())
         {
             _prdBtn.SetActive(false);
         }
@@ -252,6 +252,11 @@ public class BuildingWindow : GUIElement {
         {
             _prdBtn.SetActive(true);
         }
+    }
+
+    bool isToHidePrdTab()
+    {
+        return _building.HType.ToString().Contains("House") || _building.Category == Ca.Way || _building.IsNaval();
     }
 
     /// <summary>
@@ -491,8 +496,8 @@ public class BuildingWindow : GUIElement {
             MakeThisTabActive(_gaveta);
         }
         //if click ord
-        else if (_building!=null && _ordBtnRect.Contains(Input.mousePosition) && Input.GetMouseButtonUp(0) && 
-            (_building.HType == H.Dock || _building.HType == H.Shipyard ||_building.HType == H.Supplier))
+        else if (_building!=null && _ordBtnRect.Contains(Input.mousePosition) && Input.GetMouseButtonUp(0) 
+            && _building.IsNaval())
         {
             MakeThisTabActive(_orders);
         }
@@ -514,8 +519,13 @@ public class BuildingWindow : GUIElement {
     /// <param name="g"></param>
     void MakeThisTabActive(GameObject g)
     {
+        if (_building == null || _orders == null || _products == null)
+        {
+            return;
+        }
+
         //first time loaded ever in game 
-        if (g == null)
+        if (g == null || (!_building.IsNaval() && g == _orders) || (g == _products && !isToHidePrdTab()))
         {
             g = _general;
         }

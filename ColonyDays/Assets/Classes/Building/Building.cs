@@ -202,9 +202,7 @@ public class Building : General, Iinfo
             isScaledOnFloor = IsScaledAnchorsOnFloor();
         }
 
-        bool res = _isEven && !_isColliding && _isGoodWaterHeight
-            && isScaledOnFloor
-            ;
+        bool res = _isEven && !_isColliding && _isGoodWaterHeight && isScaledOnFloor;
         if (res)
         {
             //Geometry.renderer.material.color = _initialColor;
@@ -215,12 +213,13 @@ public class Building : General, Iinfo
     /// <summary>
     /// Tells u if the Anchors out of the anchors are on the Floor
     /// 
-    /// 
+    /// Creted to avoid Streuctures be too close to Water.
+    /// Farms needs to be further still more 
     /// </summary>
     /// <returns></returns>
     bool IsScaledAnchorsOnFloor()
     {
-        var scale = 1.25f;//0.2f was choose arbitrary. How far I gonna check
+        var scale = ScaleVal();//0.2f was choose arbitrary. How far I gonna check
         //I scaled to address the problem when building is too close to water or cliff or moutain.
         //I make Anchors a bit bigger so checks for a bit bigger that Anchor area 
         var scaledAnchors = UPoly.ScalePolyNewList(Anchors, scale);
@@ -229,6 +228,17 @@ public class Building : General, Iinfo
         //checks if is on the floor
         return IsOnTheFloor(scaledAnchors, 0.25f);
     }
+
+    float ScaleVal()
+    {
+        if (MyId.Contains("Farm"))
+        {
+            //Farms need to check Further so they are not close to a shore 
+            return 16f;
+        }
+        return 1.25f;
+    }
+
 
     /// <summary>
     /// Will return the exact Y of each element on list along wth its X and Z.
@@ -1133,12 +1143,15 @@ public class Building : General, Iinfo
         if (p.TerraSpawnController.AllRandomObjList.Contains(key))
         {
             StillElement still = (StillElement)p.TerraSpawnController.AllRandomObjList[key];
+            
+            //so they get remved from their region 
+            Program.gameScene.BatchRemove(still);
+
             //so they disappear, remove Crystals and Routing can work properly
             still.DestroyCool();
         }
         else
-            Debug.Log("key not cointained in AllRandomObjList." + key)
-            ;
+            Debug.Log("key not cointained in AllRandomObjList." + key);
     }
 
     /// <summary>
@@ -2332,10 +2345,12 @@ public class Building : General, Iinfo
 
     #region Production
 
+    
+
     /// <summary>
     /// The Prefered storage where this Structue production should be taken to
     /// </summary>
-    public Structure PreferedStorage { get; set; }
+
 
     /// <summary>
     /// Will find out if pass has a val if does will return so. other wise CurrProd
@@ -2504,6 +2519,21 @@ public class Building : General, Iinfo
     }
 
 
+    #region Preferred Storage
+    private Structure _preferedStorage;
+    public Structure PreferedStorage
+    {
+        get
+        {
+            if (_preferedStorage == null)
+            {
+                DefinePreferedStorage();
+            }
+            return _preferedStorage;
+        }
+        set { _preferedStorage = value; }
+    }
+
     List<string>oldFoodSrcs= new List<string>(); 
     /// <summary>
     /// Define the closest storage that its inventory is not full
@@ -2512,21 +2542,57 @@ public class Building : General, Iinfo
     /// </summary>
     private void DefinePreferedStorage()
     {
-        if (PreferedStorage == null)
+        if (BuildingPot.Control.FoodSources.Count == 0 || !Program.gameScene.GameFullyLoaded())
         {
-            if (BuildingPot.Control.FoodSources.Count>0)
-            {
-                oldFoodSrcs.Clear();
-                PreferedStorage = Brain.GetStructureFromKey(BuildingPot.Control.FoodSources[0]);
-                oldFoodSrcs.AddRange(BuildingPot.Control.FoodSources);
-            }
+            return;
+        }
+
+        if (_preferedStorage == null || _preferedStorage.Inventory.IsFull())
+        {
+            PreferedStorageSerach();
         }
         else if (oldFoodSrcs != BuildingPot.Control.FoodSources)
         {
             //search again for the closest 
-
+            PreferedStorageSerach();
         }
     }
+
+    void PreferedStorageSerach()
+    {
+        oldFoodSrcs.Clear();
+        //masonry will check the closest
+        if (HType == H.Masonry)
+        {
+            _preferedStorage =
+                BuildingController.FindTheClosestOfContainTypeFullyBuilt("Storage", transform.position, true);
+
+            //is null bz was only one then 
+            if (_preferedStorage == null)
+            {
+                _preferedStorage =
+                    BuildingController.FindTheClosestOfContainTypeFullyBuilt("Storage", transform.position, false);
+            }
+        }
+        //other else strucutres will select the Prefered Storage of their closest Masory 
+        //as wheelBarrowers always go back to mansory makes sense to use their closer Storage
+        else
+        {
+            var clstMasonry = BuildingController.FindTheClosestOfThisTypeFullyBuilt(H.Masonry, transform.position);
+            if (clstMasonry == null)
+            {
+                _preferedStorage =
+                BuildingController.FindTheClosestOfContainTypeFullyBuilt("Storage", transform.position, false);
+                oldFoodSrcs.AddRange(BuildingPot.Control.FoodSources);
+                return;
+            }
+            _preferedStorage = clstMasonry.PreferedStorage;
+        }
+        oldFoodSrcs.AddRange(BuildingPot.Control.FoodSources);
+    }
+
+#endregion
+
 
     /// <summary>
     /// Will tell u if a this building has enoguh capacity to hold this new amt of goods
@@ -3286,6 +3352,7 @@ public class Building : General, Iinfo
         get { return _buildersManager; }
         set { _buildersManager = value; }
     }
+
 
 
 

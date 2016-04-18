@@ -584,6 +584,49 @@ public class BuildingController : BuildingPot
         return Brain.GetStructureFromKey(clostKey);
     }
 
+    /// <returns></returns>
+    static public Structure FindTheClosestOfContainTypeFullyBuilt(string hType, Vector3 fromPos,
+        bool includeOnlyIfInvHasRoom = true)
+    {
+        List<VectorM> distances = new List<VectorM>();
+
+        for (int i = 0; i < BuildingPot.Control.Registro.AllBuilding.Count; i++)
+        {
+            var build = BuildingPot.Control.Registro.AllBuilding.ElementAt(i).Value;
+
+            //bz cant cast a brdige 
+            Structure st = null;
+            if (!build.MyId.Contains("Bridge") && build.Category != Ca.Way && !build.MyId.Contains("Road"))
+            {
+                st = (Structure)build;
+            }
+
+            if (build.HType.ToString().Contains(hType) && (build.StartingStage == H.Done || st.CurrentStage == 4))
+            {
+                //will add if Inv not full
+                if (includeOnlyIfInvHasRoom && !build.Inventory.IsFull())
+                {
+                    distances.Add(new VectorM(build.transform.position, fromPos, build.MyId));
+                }
+                //will added anyways 
+                else
+                {
+                    distances.Add(new VectorM(build.transform.position, fromPos, build.MyId));
+                }
+            }
+        }
+
+        distances = distances.OrderBy(a => a.Distance).ToList();
+        var clostKey = "";
+
+        if (distances.Count > 0)
+        {
+            clostKey = distances[0].LocMyId;
+        }
+
+        return Brain.GetStructureFromKey(clostKey);
+    }
+
     /// <summary>
     /// Will find the closest of the type form the point 'fromPos'
     /// </summary>

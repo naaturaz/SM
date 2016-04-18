@@ -77,6 +77,8 @@ public class BatchManager
         }
         else if (go.Category == Ca.Structure)
         {
+            return;
+
             Structure st = (Structure)go;
             if (st.StartingStage != H.Done && st.CurrentStage != 4 )
             {

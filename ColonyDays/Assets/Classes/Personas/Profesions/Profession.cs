@@ -808,7 +808,16 @@ public class Profession
 
         _routerActive = true;
         IsRouterBackUsed = true;
-        RouterBack = new CryRouteManager(_person.Work, _person.Work.PreferedStorage, _person, HPers.InWorkBack);
+        RouterBack = new CryRouteManager(_person.Work, ReturnStorage(), _person, HPers.InWorkBack);
+    }
+
+    Structure ReturnStorage()
+    {
+        if (_person.Work.PreferedStorage == null)
+        {
+            return _person.FoodSource;
+        }
+        return _person.Work.PreferedStorage;
     }
 
 #endregion
@@ -1102,7 +1111,7 @@ public class Profession
     }
 
     private float amtCarrying;
-    P prodCarrying = P.None;
+    protected P prodCarrying = P.None;
     /// <summary>
     /// The action of producing goods 
     /// </summary>

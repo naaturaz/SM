@@ -72,28 +72,29 @@ public class OutOfScreen
     public void A45msUpdate()
     {
         _onScreenRectNow = Program.gameScene.Fustrum1.OnScreen(ExtractObjPos());
+        //if is moving now can be reshown bz might be on his way somewhere 
         if (_onScreenRectNow && _renderer.isVisible && !_onScreenRenderNow)
         {
             _onScreenRenderNow = true;
-            UpdateOnObjt();
+            //UpdateOnObjt();
             SwitchNow();
         }
         else if ((!_onScreenRectNow || !_renderer.isVisible) && _onScreenRenderNow)
         {
             _onScreenRenderNow = false;
-            UpdateOnObjt();
+            //UpdateOnObjt();
             SwitchNow();
         }
-        //HideShow();
+        HideShow();
 	}
 
-    void UpdateOnObjt()
-    {
-        if (_type == H.Person)
-        {
-            _person.Body.UpdateTheOnScreenRenderNowLocalVar(_onScreenRenderNow);
-        }
-    }
+    //void UpdateOnObjt()
+    //{
+    //    if (_type == H.Person)
+    //    {
+    //        _person.Body.UpdateTheOnScreenRenderNowLocalVar(_onScreenRenderNow);
+    //    }
+    //}
 
     Vector3 ExtractObjPos()
     {
@@ -117,8 +118,12 @@ public class OutOfScreen
         {
             OnBecameVisible();
         }
-        else { OnBecameInvisible(); }
-        //HideShow();
+        else
+        {
+            OnBecameInvisible();
+        }
+        
+        HideShow();
     }
 
 
@@ -134,33 +139,21 @@ public class OutOfScreen
         }
         oldScreenRectState = OnScreenRectNow;
 
-        if (OnScreenRectNow)
+        if (OnScreenRenderNow)
         {
             if (_type == H.Person)
             {
                _person.Body.Show();
             }
-            else
-            {
-               _renderer.enabled = true;
-               _boxCollider.enabled = true;
-            }
         }
-        else
+        else if (!OnScreenRenderNow)
         {
             if (_type == H.Person)
             {
-                _person.Body.Hide();
-            }
-            else
-            {
-                _renderer.enabled = false;
-                _boxCollider.enabled = false;
+                _person.Body.HideNoQuestion();
             }
         }
     }
-
-
 
     void OnBecameVisible()
     {
@@ -176,22 +169,20 @@ public class OutOfScreen
 
     internal void Activate()
     {
-        ActivatePerson();
-    }
-
-    private void ActivatePerson()
-    {
-
         _animator.enabled = true;
+        //if (_type == H.Person)
+        //{
+        //    _person.Body.Show();
+        //}
     }
+
 
     internal void DeActivate()
     {
-        DeActivatePerson();
-    }
-
-    private void DeActivatePerson()
-    {
         _animator.enabled = false;
+        //if (_type == H.Person)
+        //{
+        //    _person.Body.HideNoQuestion();
+        //}
     }
 }

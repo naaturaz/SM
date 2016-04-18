@@ -111,6 +111,12 @@ public class StillElement : TerrainRamdonSpawner
         }
 
         _myAnimator = GetComponent<Animator>();
+        
+        //so rotates
+        _myAnimator.enabled = true;
+        //so is not called in Update
+        _myAnimator.enabled = false;
+
         //if is loading a falled tree
         if (TreeFall)
         {

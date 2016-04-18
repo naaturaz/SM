@@ -259,7 +259,7 @@ public class Forester : Profession
     {
         //seein the spawner list bz if last time was bigger than one I can still find prob another 
         //stillElement to mine 
-        if (!_workingNow && _spawnersList.Count > 1)
+        if (!_workingNow && _spawnersList.Count > 1 && prodCarrying == P.None)//if is carrying someting need to drop it 1st
         {
             CheckIfProfHasToBeReCreated();
         }

@@ -291,14 +291,15 @@ public class BuildersManager
         if (st == null || st.StartingStage != H.Done)
         {
             //_greenLight.Add(construction);
-            var closest = FindClosestWheelBarrowerOfficeFullyBuilt(construction.Position);
+            var closest = BuildingController.FindTheClosestOfThisTypeFullyBuilt( H.Masonry, construction.Position);
+
+            //addresing when is a  Debug game .
+            if (closest == null)
+            {
+                return;
+            }
             closest.BuildersManager1.GreenLight.Add(construction);
         }
-    }
-
-    Structure FindClosestWheelBarrowerOfficeFullyBuilt(Vector3 construcPos)
-    {
-        return BuildingController.FindTheClosestOfThisTypeFullyBuilt(H.Masonry, construcPos);
     }
 
     void RemoveFromGameController(H hTypeP)

@@ -388,7 +388,7 @@ public class Person : General
     static Material ReturnRandoPersonMaterialRoot()
     {
         var random = UMath.GiveRandom(1, 6);
-        return Resources.Load("Prefab/Mats/Person/Guy1UV " + 1) as Material;//random
+        return Resources.Load("Prefab/Mats/Person/Guy1UV " + random) as Material;//random
     }
 
     /// <summary>
@@ -507,9 +507,10 @@ public class Person : General
         SavedJob = pF.SavedJob;
         PrevJob = pF.PrevJob;
 
-        StartLOD();
-
         _body = new Body(this, pF);
+
+        //StartLOD();
+
         Program.InputMain.ChangeSpeed += _body.ChangedSpeedHandler;
 
         //_body.ChangeSpeed; +=
@@ -549,10 +550,10 @@ public class Person : General
         MyId = _name + "." + Id;
 
         Brain = new Brain(this);
-
-        StartLOD();
-
         _body = new Body(this);
+
+        //StartLOD();
+
         Program.InputMain.ChangeSpeed += _body.ChangedSpeedHandler;
 
         InitGeneralStuff();
@@ -1129,7 +1130,7 @@ public class Person : General
         //StartCoroutine("A45msUpdate");
         
         //for body
-        StartCoroutine("A32msUpdate");
+        //StartCoroutine("A32msUpdate");
         //StartCoroutine("A64msUpdate");
 
         StartCoroutine("RandomUpdate1020");
@@ -1232,14 +1233,14 @@ public class Person : General
 
 
     //for body
-    private IEnumerator A32msUpdate()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(.032f); // wait
-            _body.A32msUpdate();
-        }
-    }
+    //private IEnumerator A32msUpdate()
+    //{
+    //    while (true)
+    //    {
+    //        yield return new WaitForSeconds(.032f); // wait
+    //        _body.A32msUpdate();
+    //    }
+    //}
     //private IEnumerator A64msUpdate()
     //{
     //    while (true)
@@ -2133,7 +2134,7 @@ public class Person : General
         get { return _levelOfDetail; }
     }
 
-    void StartLOD()
+    public void StartLOD()
     {
         _levelOfDetail=new LevelOfDetail(this);
     }

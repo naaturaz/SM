@@ -142,7 +142,7 @@ public class Body //: MonoBehaviour //: General
     {
         _pFile = pF;
         Init(person);
-       LoadPosition();
+        LoadPosition();
 
 
         Location = pF._body.Location;
@@ -163,7 +163,6 @@ public class Body //: MonoBehaviour //: General
         _loadedAni = pF._body.CurrentAni;
 
 
-
         //if is zero is that is idling in a house 
         if (pF._body.CurrTheRoute.CheckPoints.Count > 0)
         {
@@ -175,6 +174,7 @@ public class Body //: MonoBehaviour //: General
     public void Init(Person person)
     {
         _person = person;
+        _person.StartLOD();
         
         myAnimator = _person.gameObject.GetComponent<Animator>();
         myAnimator.speed = Program.gameScene.GameSpeed;
@@ -771,17 +771,17 @@ public class Body //: MonoBehaviour //: General
     {
         _currentPosition = newPos;
 
-        if (isPersonOnScreenRenderNow)
+        if (_person.LevelOfDetail1.OutOfScreen1.OnScreenRenderNow)
         {
             //will onl;y assign if on screen now 
             _person.transform.position = newPos;
         }
     }
 
-    public void A32msUpdate()
-    {
-        isPersonOnScreenRenderNow = _person.LevelOfDetail1.OutOfScreen1.OnScreenRenderNow;
-    }
+    //public void A32msUpdate()
+    //{
+    //    isPersonOnScreenRenderNow = _person.LevelOfDetail1.OutOfScreen1.OnScreenRenderNow;
+    //}
 
     public void A64msUpdate()
     {
@@ -800,10 +800,7 @@ public class Body //: MonoBehaviour //: General
         }
     }
 
-    public void UpdateTheOnScreenRenderNowLocalVar(bool newVal)
-    {
-        isPersonOnScreenRenderNow = newVal;
-    }
+
 
 
 #endregion
@@ -941,6 +938,16 @@ public class Body //: MonoBehaviour //: General
         }
     }
 
+
+    public void HideNoQuestion()
+    {
+        renderer.enabled = false;
+
+        if (_personalObject != null)
+        {
+            _personalObject.Hide();
+        }
+    }
 
     private Renderer renderer;
     public void Hide()
