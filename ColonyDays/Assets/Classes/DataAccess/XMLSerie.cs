@@ -55,7 +55,7 @@ public class XMLSerie
     public static SubMeshData ReadXMLMesh()
     {
         var loaded =
-            DataContainer.Load(Path.Combine(dataPath, Program.gameScene.Terreno.name + ".xml"));
+            DataContainer.Load(Path.Combine(Application.dataPath, Program.gameScene.Terreno.name + ".xml"));
 
         SubMeshData res = null;
         if (loaded != null) {res = loaded.SubMeshData; }
@@ -93,6 +93,8 @@ public class XMLSerie
         return false;
     }
 
+
+
     public static void WriteXMLSpawned(SpawnedData spawnedData)
     {
         DataContainer DataCollection = new DataContainer();
@@ -103,13 +105,24 @@ public class XMLSerie
     public static SpawnedData ReadXMLSpawned()
     {
         var loaded =
-            DataContainer.Load(Path.Combine(dataPath, Program.gameScene.Terreno.name + ".Spawned" + ".xml"));
+            DataContainer.Load(Path.Combine(ReturnRightSpawnerRoot(), Program.gameScene.Terreno.name + ".Spawned" + ".xml"));
 
         SpawnedData res = null;
         if (loaded != null) { res = loaded.SpawnedData; }
 
         return res;
     }
+
+    static string ReturnRightSpawnerRoot()
+    {
+        //is a new game 
+        if (dataPath == "")
+        {
+            return Application.dataPath;
+        }
+        return dataPath;
+    }
+
 
 
     public static void WriteXMLBuilding(BuildingData buildingData)
@@ -189,12 +202,6 @@ public class XMLSerie
         }
     }
 
-
-
-
-
-
-
     public static void WriteXMLPerson(PersonData personData)
     {
         DataContainer DataCollection = new DataContainer();
@@ -213,4 +220,39 @@ public class XMLSerie
 
         return res;
     }
+
+
+#region Main Menu
+
+    public static void NewGame()
+    {
+        dataPath = "";
+    }
+
+    public static void ContinueGame()
+    {
+        //restore to last saved dataPath
+
+    }  
+    
+    public static void SaveGame(string path)
+    {
+        //set  last saved dataPath, 
+
+        //and dataPath to newName
+        dataPath = path;
+
+    }
+
+    public static void LoadGame(string path)
+    {
+        //set  last saved dataPath
+
+        //and dataPath to newName
+        dataPath = path;
+    }
+
+
+
+#endregion
 }

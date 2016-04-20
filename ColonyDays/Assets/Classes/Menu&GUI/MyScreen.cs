@@ -9,6 +9,7 @@ public class MyScreen : General
 {
     private MainMenuWindow _mainMenuWindow;//the window of the main menu. so can be hidden and shw back
     private NewGameWindow _newGameWindow;
+    private SaveLoadGameWindow _saveLoadGameWindow;
     private MyForm current;
 
 
@@ -60,6 +61,7 @@ public class MyScreen : General
         //can only be one on scene to work 
         _mainMenuWindow = FindObjectOfType<MainMenuWindow>();
         _newGameWindow = FindObjectOfType<NewGameWindow>();
+        _saveLoadGameWindow = FindObjectOfType<SaveLoadGameWindow>();
 
         //DecideWhichBtnShow();
     }
@@ -103,6 +105,10 @@ public class MyScreen : General
         {
             _newGameWindow.MouseListen(sub);
         }
+        else if (sub.Contains("Save."))
+        {
+            _saveLoadGameWindow.MouseListen(sub);
+        }
         else if (sub == "Continue")
         {
             ContinueGameBtn();
@@ -113,12 +119,25 @@ public class MyScreen : General
         }
         else if (sub == "NewGame")
         {
+            RedifineWindows();
+
             HideMainMakeWindActive(_newGameWindow);
         }
         else if(sub == "Exit")
         {
              Application.Quit();
-        }
+        }    
+        else if(sub == "SaveGame")
+        {
+            RedifineWindows();
+            _saveLoadGameWindow.Show("Save");
+        }    
+        else if(sub == "LoadGame")
+        {
+            RedifineWindows();
+            _saveLoadGameWindow.Show("Load");
+        }   
+    
     }
 
 
@@ -138,6 +157,8 @@ public class MyScreen : General
     /// </summary>
     public void NewGameCreated(string terraRoot, string diff, string townName)
     {
+        XMLSerie.NewGame();
+
         isNewGameCreated = true;
         timeClicked = Time.time;
         DestroyCurrLoadLoading();
@@ -212,6 +233,8 @@ public class MyScreen : General
     /// <param name="wind"></param>
     public void HideWindowShowMain(GUIElement ele)
     {
+        RedifineWindows();
+
         ele.Hide();
         _mainMenuWindow.Show();
     }
@@ -219,7 +242,25 @@ public class MyScreen : General
 
     public void HideMainMakeWindActive(GUIElement window)
     {
+        RedifineWindows();
+
         _mainMenuWindow.Hide();
         window.Show();
+    }
+
+    void RedifineWindows()
+    {
+        if (_mainMenuWindow == null)
+        {
+            _mainMenuWindow = FindObjectOfType<MainMenuWindow>();
+        }
+        if (_newGameWindow == null)
+        {
+            _newGameWindow = FindObjectOfType<NewGameWindow>();
+        } 
+        if (_saveLoadGameWindow == null)
+        {
+            _saveLoadGameWindow = FindObjectOfType<SaveLoadGameWindow>();
+        }
     }
 }

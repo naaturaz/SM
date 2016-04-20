@@ -100,6 +100,8 @@ public class ShowInvetoryItem : GUIElement
     }
 
 
+
+
     private float oldAmt=-100;//the value so it gets started
 	// Update is called once per frame
 	void Update ()

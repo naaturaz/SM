@@ -59,6 +59,7 @@ public class Program : MonoBehaviour {
     // Use this for initialization
 	void Start ()
 	{
+        DataController.Start();
         Application.targetFrameRate = 60;
 	    //ProfilerHere();
 
@@ -140,6 +141,8 @@ public class Program : MonoBehaviour {
 
     public static void KillGame()
     {
+        PersonPot.Control.ClearAll();
+
         ClassContainer.Destroy();
         BuildsContainer.Destroy();
         PersonObjectContainer.Destroy();

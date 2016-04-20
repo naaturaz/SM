@@ -926,6 +926,20 @@ public class PersonController : PersonPot
 
 
 
+    /// <summary>
+    /// Called when new game is gonna be created 
+    /// </summary>
+    internal void ClearAll()
+    {
+        for (int i = 0; i < _all.Count; i++)
+        {
+            _all[i].Destroy();
+        }
+
+        _all.Clear();
+        _allGC.Clear();
+        _onSystemNow.Clear();
+    }
 }
 
 public class CheckedIn

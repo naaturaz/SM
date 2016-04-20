@@ -166,10 +166,10 @@ public class Person : General
         get { return _startingBuild; }
         set
         {
-            if (string.IsNullOrEmpty(_startingBuild))
-            {
+            //if (string.IsNullOrEmpty(_startingBuild))
+            //{
                 _startingBuild = value;
-            }
+            //}
         }
     }
     
@@ -512,6 +512,7 @@ public class Person : General
         //StartLOD();
 
         Program.InputMain.ChangeSpeed += _body.ChangedSpeedHandler;
+        Program.gameScene.ChangeSpeed += _body.ChangedSpeedHandler;
 
         //_body.ChangeSpeed; +=
         //_eventSetter.DoneRoute += DoneRouteHandler;
@@ -555,6 +556,7 @@ public class Person : General
         //StartLOD();
 
         Program.InputMain.ChangeSpeed += _body.ChangedSpeedHandler;
+        Program.gameScene.ChangeSpeed += _body.ChangedSpeedHandler;
 
         InitGeneralStuff();
     }
@@ -1119,8 +1121,9 @@ public class Person : General
     }
 
     // Use this for initialization
-	void Start () 
-    {
+	void Start ()
+	{
+
         cam = Camera.main;
         base.Start();
         

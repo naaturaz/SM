@@ -111,6 +111,14 @@ public class Languages
 	   { "PostGuard.Desc",_militar},
 	   { "Fort.Desc",_militar},
 	   { "Morro.Desc",_militar+". Once you build this Pirates should know better"},
+
+
+
+
+       //Main GUI
+	   { "SaveGame.Dialog", "Save your game progress"},
+	   { "LoadGame.Dialog", "Load a game"},
+
 	};
     
     public static string ReturnString(string key)

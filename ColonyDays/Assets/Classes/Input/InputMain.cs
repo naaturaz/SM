@@ -117,6 +117,8 @@ public class InputMain : InputParent {
         }
     }
 
+
+    private int ii;
     void GeneralSwitch()
     {
         if (Input.GetKeyUp(KeyCode.Escape))
@@ -133,37 +135,36 @@ public class InputMain : InputParent {
         }
         else if (Input.GetKeyUp(KeyCode.Q))
         {
-            //print("Resave Spawner and Buildings");
-            Program.gameScene.controllerMain.TerraSpawnController.ReSaveData();
-            BuildingPot.SaveLoad.Save();
-            PersonPot.SaveLoad.Save();
-            CamControl.CAMRTS.InputRts.SaveLastCamPos();
 
-            if (IsGameUnLock())
-            {
-
-            }
-            else
-            {
-                print("Need to resave ");
-                //implement late save 
-            }
+            DataController.SaveGame(ii+"");
+            ii++;
         }
     }
+
+
+
+
 
     public  void EscapeKey()
     {
         var mainMenu = FindObjectOfType<MainMenuWindow>();
 
-        //mens is playing
+        //means is playing
         if (mainMenu == null)
         {
+            Program.gameScene.PauseGameSpeed();
+            
             Program.MouseListener.HideMainGUI();
             Program.MyScreen1.LoadMainMenuWithResumeBtn();
         }
-        else 
+        //is on main Menu
+        else if (mainMenu != null && Program.gameScene.GameFullyLoaded())
+        {
+            Program.gameScene.ResumeGameSpeed();
+
             Program.MyScreen1.DestroyCurrentMenu();
             Program.MouseListener.ShowMainGUI();
+        }
     }
 
     /// <summary>

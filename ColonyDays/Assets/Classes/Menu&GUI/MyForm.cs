@@ -124,4 +124,26 @@ public class MyForm : General
     {
         _showAInventory = new ShowAInventory("Main", Resources, _startPosIni.transform.localPosition);
     }
+
+
+
+    /// <summary>
+    /// Hides the element 
+    /// </summary>
+    public virtual void Hide()
+    {
+        Vector3 newPos = transform.position;
+        newPos.y = -1400f;
+
+        transform.position = newPos;
+
+    }
+
+    internal void Show()
+    {
+        Vector3 newPos = transform.position;
+        newPos.y = +1400f;
+
+        transform.position = newPos;
+    }
 }

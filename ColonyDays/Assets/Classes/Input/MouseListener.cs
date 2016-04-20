@@ -35,7 +35,10 @@ public class MouseListener : InputMain
     private MyForm main;//the main GUI 
     public void LoadMainGUI()
     {
-        main = (MyForm)Create(Root.mainGUI, new Vector2());
+        if (main == null)
+        {
+            main = (MyForm)Create(Root.mainGUI, new Vector2());
+        }
 
         //can only be one on scene to work 
         _buildingsMenu = FindObjectOfType<BuildingsMenu>();

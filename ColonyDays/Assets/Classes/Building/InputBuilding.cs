@@ -146,7 +146,7 @@ public class InputBuilding : BuildingPot {
     private int count;
     void ShowHideHelpLoopOnUpdate()
     {
-        if (!helpLoop)
+        if (!helpLoop || _orgStructuresFromMouseHitPoint == null)
         {
             return;
         }

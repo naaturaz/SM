@@ -243,6 +243,7 @@ public class Root : MonoBehaviour
     //Menu
     public static string mainMenu = "Prefab/Menu/MainMenu";
     public static string loadingScreen = "Prefab/Menu/LoadingScreen";
+    public static string saveLoadTile = "Prefab/Menu/Save_Load_Tile";
 
     //Images for GUI
     public static string iconBrick = "";

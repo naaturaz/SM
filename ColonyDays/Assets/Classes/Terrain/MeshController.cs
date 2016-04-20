@@ -54,7 +54,7 @@ public class MeshController : ControllerParent
     Vector3 lotEnd = new Vector3();
 
     //whole
-    public bool IsLoading;
+    public bool IsLoading = true;
     public List<Vector3> AllVertexs = new List<Vector3>();
 
     Grid grid = new Grid();

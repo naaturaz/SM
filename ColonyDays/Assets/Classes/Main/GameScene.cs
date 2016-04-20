@@ -43,6 +43,8 @@ public class GameScene : General
     private StaticBatch _staticBatch;
     private MeshBatch _meshBatch;
 
+
+
     public float SubDivideBlockYVal
     {
         get { return _subDivideBlockYVal; }
@@ -520,5 +522,42 @@ public class GameScene : General
     internal bool GameFullyLoaded()
     {
         return !p.TerraSpawnController.IsToLoadFromFile && BuildingPot.Control.Registro.IsFullyLoaded;
+    }
+
+
+
+
+    public EventHandler<EventArgs> ChangeSpeed;
+    void OnChangeSpeed(EventArgs e)
+    {
+        if (ChangeSpeed != null)
+        {
+            ChangeSpeed(this, e);
+        }
+    }
+
+    private int oldSpeed;
+    /// <summary>
+    /// Will pause game. GameSpeed at 0
+    /// </summary>
+    internal void PauseGameSpeed()
+    {
+        oldSpeed = _gameSpeed;
+        _gameSpeed = 0;
+        OnChangeSpeed(EventArgs.Empty);
+    }
+
+    /// <summary>
+    /// Will resume the game at the Paused Speed 
+    /// </summary>
+    internal void ResumeGameSpeed()
+    {
+        _gameSpeed = oldSpeed;
+        OnChangeSpeed(EventArgs.Empty);
+    }
+
+    public void ClearOldSpeed()
+    {
+        oldSpeed = 0;
     }
 }

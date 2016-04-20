@@ -10,32 +10,6 @@ public class SaveLoad: MonoBehaviour {
     static ObjectToSerialize objectToSerialize;
     static SerializerClass serializer;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     //static void InitiateObj()
     //{
     //    objectToSerialize = new ObjectToSerialize();
@@ -71,31 +45,6 @@ public class SaveLoad: MonoBehaviour {
     //    nfoRTS = objectToSerialize.SaveInfo;
     //    print( "loaded: " + nfoRTS[0].pos);
     //}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     int ReturnProfileIndex(string currentUser)
     {
@@ -163,6 +112,5 @@ public class SaveLoad: MonoBehaviour {
         PlayerPrefs.SetString("Is_New_Profi" + indexProfile, "Is_Old_Now");
         PlayerPrefs.SetFloat("Time_Played" + indexProfile, 0);
         PlayerPrefs.SetInt("Player_Lives" + indexProfile, 3);
-
     }
 }
