@@ -58,7 +58,8 @@ public class ShowSaveLoadTile : GUIElement
         var text = GetChildCalledOnThis("Title", gameObject).GetComponent<Text>();
         text.text = saveName;
 
-        _btn = GetChildCalledOnThis("Btn", gameObject).GetComponent<UnityEngine.UI.Button>();
+       // _btn = GetChildCalledOnThis("Btn", gameObject).GetComponent<UnityEngine.UI.Button>();
+        _btn = gameObject.GetComponent<UnityEngine.UI.Button>();
         _btn.onClick.AddListener(() => Program.MouseClickListenerSt("MainMenu.Save." + saveName));
     }
 

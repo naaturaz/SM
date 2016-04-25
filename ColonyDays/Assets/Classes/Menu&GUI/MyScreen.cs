@@ -179,15 +179,14 @@ public class MyScreen : General
         {
             isNewGameCreated = false;
 
-            Program.KillGame();
-            Program.CreateGame();
+            Program.RedoGame();
 
             BuildingPot.LoadBuildingsNow();
         }
     }
 
 
-    void ContinueGameBtn()
+    public void ContinueGameBtn()
     {
         //person pot is created on BuildingSaveLoad. CreatePersonPot()
         BuildingPot.LoadBuildingsNow();
@@ -240,7 +239,7 @@ public class MyScreen : General
     }
 
 
-    public void HideMainMakeWindActive(GUIElement window)
+    void HideMainMakeWindActive(GUIElement window)
     {
         RedifineWindows();
 
@@ -262,5 +261,11 @@ public class MyScreen : General
         {
             _saveLoadGameWindow = FindObjectOfType<SaveLoadGameWindow>();
         }
+    }
+
+    public void DeleteSavedGameCallBack()
+    {
+        RedifineWindows();
+        _saveLoadGameWindow.DeleteCallBack();
     }
 }

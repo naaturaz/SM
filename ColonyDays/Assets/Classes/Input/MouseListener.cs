@@ -231,6 +231,10 @@ public class MouseListener : InputMain
             CancelDemolishAction();
             _buildingWindow.Reload();
 
+        }    
+        else if (action.Contains("Dialog."))
+        {
+            Dialog.Listen(action);
         }
         else if (action == H.Next_Stage_Btn.ToString())
         {

@@ -360,6 +360,8 @@ public enum H
     LOD2,
     Animal,
     Decoration,
+    OverWrite,
+    Delete,
 
 
 }

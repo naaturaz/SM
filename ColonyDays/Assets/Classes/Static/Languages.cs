@@ -118,7 +118,10 @@ public class Languages
        //Main GUI
 	   { "SaveGame.Dialog", "Save your game progress"},
 	   { "LoadGame.Dialog", "Load a game"},
-
+	   { "NameToSave", "Save your game as:"},
+	   { "NameToLoad", "Game to load selected:"},
+	   { "OverWrite", "There is a saved game with same name. Do you want to overwrite the file?"},
+	   { "Delete", "Are you sure want to delete the saved game?"},
 	};
     
     public static string ReturnString(string key)

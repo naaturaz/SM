@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class BuildingSaveLoad : BuildingPot
 {
-    private int counter;
+    private int counter;//the counter of buildigns being recreated
     private BuildingData _buildingData;
     private bool _isToRecreateNow;//if true is Loading Buildings 
 
@@ -35,6 +35,7 @@ public class BuildingSaveLoad : BuildingPot
         BuildingData = XMLSerie.ReadXMLBuilding();
         if (BuildingData != null)
         {
+            counter = 0;//in case something was loaded first 
             _isToRecreateNow = true;
             Control.Registro.AllRegFile = BuildingData.All;
         }

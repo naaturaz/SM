@@ -13,53 +13,109 @@ class SaveLoadGameWindow : GUIElement
     private InputField _inputName;
     
     private Text _title;
-    private GameObject _saveNameLbl;
+    private Text _saveNameLbl;
+    private Text _selectedToLoadNName;
 
     private GameObject _content;
     private RectTransform _contentRectTransform;
 
-    private GameObject _scroll_Ini_Pos;
+    private GameObject _scroll_Ini_PosGO;
+    private string _which;//is load or save dialog
+
+    private string _tileNameSelected;
+    private List<ShowSaveLoadTile> _tilesSpawn = new List<ShowSaveLoadTile>();
+    private Vector3 _scrollIniPos;
+
+    private Scrollbar _verticScrollbar;
 
     void Start()
     {
         iniPos = transform.position;
         Hide();
 
-        _scroll_Ini_Pos = GetChildCalled("Scroll_Ini_Pos"); 
 
 
         _inputNameGO = GetChildCalled("Input_Name"); 
         _inputName = _inputNameGO.GetComponent<InputField>();
 
-        var titleLbl = GetChildCalled("Title");
+        var titleLbl = GetChildCalled("Title"); 
         _title = titleLbl.GetComponentInChildren<Text>();
 
-        _saveNameLbl = GetChildCalled("Save_Name_Lbl");
+        var selLoad = GetChildCalled("Selected_To_Load");
+        _selectedToLoadNName = selLoad.GetComponentInChildren<Text>();
+
+        var saveNameLbl = GetChildCalled("Save_Name_Lbl");
+        _saveNameLbl = saveNameLbl.GetComponentInChildren<Text>();
         
         var scroll = GetChildCalled("Scroll_View");
 
-
         _content = GetGrandChildCalledFromThis("Content", scroll);
         _contentRectTransform = _content.GetComponent<RectTransform>();
+
+        _scroll_Ini_PosGO = GetChildCalledOnThis("Scroll_Ini_Pos", _content);
+
+
     }
 
     public void Show(string which)
     {
+        _which = which;
+        ClearForm();
+
         if (which == "Save")
         {
-            _saveNameLbl.SetActive(true);
+            _saveNameLbl.text = Languages.ReturnString("NameToSave");
             _inputNameGO.SetActive(true);
             _title.text = Languages.ReturnString("SaveGame.Dialog");
+            _selectedToLoadNName.enabled = false;
         }
         else if (which == "Load")
         {
-            _saveNameLbl.SetActive(false);
-
+            _saveNameLbl.text = Languages.ReturnString("NameToLoad");
             _inputNameGO.SetActive(false);
             _title.text = Languages.ReturnString("LoadGame.Dialog");
+            _selectedToLoadNName.enabled = true;
+
         }
         PopulateScrollView();
         Show();
+    }
+
+
+    public void DeleteCallBack()
+    {
+        PopulateScrollView();
+        ClearForm();
+    }
+
+
+    void ClearForm()
+    {
+        _tileNameSelected = "";
+        _selectedToLoadNName.text = "";
+        _inputName.text = "";
+
+        if (_verticScrollbar != null)
+        {
+            _verticScrollbar.value = 1;
+        }
+    }
+
+    /// <summary>
+    /// So as changes size will be available or not. 
+    /// We need this ref ' _verticScrollbar ' to set it to defauitl value 
+    /// </summary>
+    void TakeScrollVerticBar()
+    {
+        var vert = GetGrandChildCalled("Scrollbar Vertical");
+        if (vert != null)
+        {
+            _verticScrollbar = vert.GetComponent<Scrollbar>();
+        }
+        else
+        {
+            _verticScrollbar = null;
+        }
     }
 
     void Update()
@@ -71,9 +127,14 @@ class SaveLoadGameWindow : GUIElement
     {
         sub = sub.Substring(5);
 
-        if (sub == "OKBtn")
+        if (sub == "OKBtn" && _which == "Save")
         {
             DataController.SaveGame(_inputName.text);
+            PopulateScrollView();
+        }
+        else if (sub == "OKBtn" && _which == "Load")
+        {
+            DataController.LoadGame(_tileNameSelected);
         }
         //Reloadd main menu
         else if (sub == "CancelBtn")
@@ -82,15 +143,33 @@ class SaveLoadGameWindow : GUIElement
             DestroyPrevTiles();
             Program.MyScreen1.HideWindowShowMain(this);
         }
-
-        Display();
-    
+        else if (sub == "Delete")
+        {
+            if (string.IsNullOrEmpty(_tileNameSelected))
+            {
+                //pls select a game to delete 
+                
+                return;
+            }
+            DataController.DeleteGame(_tileNameSelected);
+        }
+        //clicked on a button of a SaveLoadTile
+        else
+        {
+            _tileNameSelected = sub;
+            if (_which == "Load")
+            {
+                _selectedToLoadNName.text = _tileNameSelected;
+            }
+            else
+            {
+                _inputName.text = _tileNameSelected;
+            }
+        }
     }
 
 
 
-    private List<ShowSaveLoadTile> _tilesSpawn = new List<ShowSaveLoadTile>();
-    private Vector3 _iniPos;
 
     void DestroyPrevTiles()
     {
@@ -109,46 +188,44 @@ class SaveLoadGameWindow : GUIElement
         var saves = Directory.GetDirectories(DataController.SugarMillPath()).ToList();
 
         SetHeightOfContentRect(saves.Count);
-
-
         ShowAllItems(saves);
+
+        TakeScrollVerticBar();
     }
 
     private void ShowAllItems(List<string> saves)
     {
-        var iForSpwItem = 0;//so ReturnIniPos works nicely
-
         for (int i = 0; i < saves.Count; i++)
         {
-            var tile = ShowSaveLoadTile.Create(Root.saveLoadTile, _content.transform, ReturnIniPos(iForSpwItem), saves[i]);
+            var iniPos = ReturnIniPos(i);
+            var tile = ShowSaveLoadTile.Create(Root.saveLoadTile, _content.transform, iniPos, saves[i]);
 
             _tilesSpawn.Add(tile);
-            iForSpwItem++;
         }
-
     }
 
+    /// <summary>
+    /// need to be called to set the Ini POs everytime 
+    /// </summary>
     void SetTileIniPos()
     {
-        if (_iniPos == new Vector3())
-        {
-            _iniPos = _scroll_Ini_Pos.transform.position;
-            _iniPos = new Vector3(_iniPos.x, _iniPos.y - 15, _iniPos.z);
-
-        }
+        _scrollIniPos = _scroll_Ini_PosGO.transform.position;
+        _scrollIniPos = new Vector3(_scrollIniPos.x, _scrollIniPos.y - 15, _scrollIniPos.z);
     }
 
 
     private void SetHeightOfContentRect(int tiles)
     {
-        //throw new NotImplementedException();
+        //5.57f the space btw two of them 
+        var size =  (5.57f* tiles) + 5f;
+        _contentRectTransform.sizeDelta = new Vector2(0, size);
     }
 
 
 
     Vector3 ReturnIniPos(int i)
     {
-        return new Vector3(270 + _iniPos.x, ReturnY(i) + _iniPos.y, _iniPos.z);
+        return new Vector3(270 + _scrollIniPos.x, ReturnY(i) + _scrollIniPos.y, _scrollIniPos.z);
     }
 
     float ReturnY(int i)
@@ -157,9 +234,6 @@ class SaveLoadGameWindow : GUIElement
     }
 
 
-    private void Display()
-    {
 
-    }
 }
 

@@ -57,7 +57,7 @@ public class Program : MonoBehaviour {
 
     #region Unity Voids
     // Use this for initialization
-	void Start ()
+	public void Start ()
 	{
         DataController.Start();
         Application.targetFrameRate = 60;
@@ -104,12 +104,6 @@ public class Program : MonoBehaviour {
     {
         MouseListener.Update();
         MyScreen1.Update();
-
-        if (start)
-        {
-            start = false;
-            Start();
-        }
     }
     #endregion
 
@@ -124,6 +118,42 @@ public class Program : MonoBehaviour {
         _mouseListener.DetectMouseClick(type);
     }
 
+    public static void KillGame()
+    {
+        if (PersonPot.Control != null)
+        {
+            PersonPot.Control.ClearAll();
+        }
+
+        ClassContainer.Destroy();
+        BuildsContainer.Destroy();
+        PersonObjectContainer.Destroy();
+        MeshBatchContainer.Destroy();
+
+        gameScene.Destroy();
+        gameScene = null;
+        InputMain.Destroy();
+    }
+
+    internal static void RedoGame()
+    {
+        KillGame();
+        var prog = FindObjectOfType<Program>();
+        prog.Start();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+class CarlosTest
+{
     //carlos
     public static List<NewBuild> newBildList;
     public static List<Btn3D> menus;
@@ -137,28 +167,4 @@ public class Program : MonoBehaviour {
         List<T> array = new List<T>();
         array.Add(obj);
     }
-
-
-    public static void KillGame()
-    {
-        PersonPot.Control.ClearAll();
-
-        ClassContainer.Destroy();
-        BuildsContainer.Destroy();
-        PersonObjectContainer.Destroy();
-        MeshBatchContainer.Destroy();
-
-
-        gameScene.Destroy();
-        gameScene = null;
-        InputMain.Destroy();
-    }
-
-
-    private static bool start;
-    public static void CreateGame()
-    {
-        start = true;
-    }
-
 }

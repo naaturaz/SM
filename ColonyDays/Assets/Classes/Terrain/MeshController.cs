@@ -54,7 +54,7 @@ public class MeshController : ControllerParent
     Vector3 lotEnd = new Vector3();
 
     //whole
-    public bool IsLoading = true;
+    public bool IsLoading;
     public List<Vector3> AllVertexs = new List<Vector3>();
 
     Grid grid = new Grid();
@@ -187,6 +187,18 @@ public class MeshController : ControllerParent
 
         //CryRouteManager c = new CryRouteManager(builA, builB);
     }
+
+    public bool IsFullyLoaded()
+    {
+        if (subMesh == null || Malla == null)
+        {
+            return false;
+        }
+
+        return AllVertexs.Count == subMesh.amountOfSubVertices && AllVertexs.Count > 0
+               && Malla.Lots.Count > 0 && !IsLoading;
+    }
+
 
     /// <summary>
     /// Will try to load from LoadMeshFromFile() if cant will throw ScanProcedure()

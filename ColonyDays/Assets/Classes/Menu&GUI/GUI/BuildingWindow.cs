@@ -525,7 +525,7 @@ public class BuildingWindow : GUIElement {
         }
 
         //first time loaded ever in game 
-        if (g == null || (!_building.IsNaval() && g == _orders) || (g == _products && !isToHidePrdTab()))
+        if (g == null || (!_building.IsNaval() && g == _orders) || (g == _products && isToHidePrdTab()))
         {
             g = _general;
         }

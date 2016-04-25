@@ -339,7 +339,7 @@ public class TerrainSpawnerController : ControllerParent
             //CreateTreePool();
         }
 
-        if (!p.MeshController.IsLoading && loadedTimes < loadingAllowTimes)
+        if (p.MeshController.IsFullyLoaded() && loadedTimes < loadingAllowTimes)
         {
             LoadData();
             if (spawnedData == null || spawnedData.AllSpawnedObj.Count == 0)
