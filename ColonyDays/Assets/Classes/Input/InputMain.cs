@@ -118,7 +118,6 @@ public class InputMain : InputParent {
     }
 
 
-    private int ii;
     void GeneralSwitch()
     {
         if (Input.GetKeyUp(KeyCode.Escape))
@@ -135,22 +134,30 @@ public class InputMain : InputParent {
         }
         else if (Input.GetKeyUp(KeyCode.Q))
         {
-
-            DataController.SaveGame(ii+"");
-            ii++;
+            QuickSaveNow();
         }
+    }
+
+    public void QuickSaveNow()
+    {
+        DataController.SaveGame(NowGameName(), true);
+    }
+
+    string NowGameName()
+    {
+        return DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + " " +
+               DateTime.Now.Hour + "h" + DateTime.Now.Minute + "m" + DateTime.Now.Second + "s";
     }
 
 
 
-
-
-    public  void EscapeKey()
+    public void EscapeKey()
     {
         var mainMenu = FindObjectOfType<MainMenuWindow>();
 
         //means is playing
-        if (mainMenu == null)
+        //&& Program.gameScene.GameFullyLoaded() is to not allow touch ESC while is loadig
+        if (mainMenu == null && Program.gameScene.GameFullyLoaded())
         {
             Program.gameScene.PauseGameSpeed();
             
@@ -178,7 +185,7 @@ public class InputMain : InputParent {
         return !personLock;
     }
 
-    public void CancelCurrentAction()
+    void CancelCurrentAction()
     {
         CancelBuilding();
         //print("game is paused now, mouse out of game windows");
@@ -271,7 +278,7 @@ public class InputMain : InputParent {
         }
     }
 
-    public void DeleteAllDrawDebug()
+    void DeleteAllDrawDebug()
     {
         if (debuger != null)
         {
@@ -304,7 +311,7 @@ public class InputMain : InputParent {
     /// Mar17 2015 most recent 
     /// </summary>
     /// <returns></returns>
-    public bool HasGameAllLoaded()
+    bool HasGameAllLoaded()
     {
         return PersonPot.Control != null && PersonPot.Control.IsFullyLoaded()
                         && Program.gameScene.controllerMain != null 
@@ -351,5 +358,21 @@ public class InputMain : InputParent {
             OnChangeSpeed(EventArgs.Empty);
         }
 
+    }
+
+    public void ChangeGameSpeedBy(int val)
+    {
+        Program.gameScene.GameSpeed += val;
+
+        if (Program.gameScene.GameSpeed < 0)
+        {
+            Program.gameScene.GameSpeed = 0;
+        }
+        else if (Program.gameScene.GameSpeed > 10)
+        {
+            Program.gameScene.GameSpeed = 10;
+        }
+        //needs to be call for Body.cs
+        OnChangeSpeed(EventArgs.Empty);
     }
 }

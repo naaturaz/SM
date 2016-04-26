@@ -30,6 +30,8 @@ class SaveLoadGameWindow : GUIElement
 
     void Start()
     {
+
+
         iniPos = transform.position;
         Hide();
 
@@ -55,6 +57,8 @@ class SaveLoadGameWindow : GUIElement
         _scroll_Ini_PosGO = GetChildCalledOnThis("Scroll_Ini_Pos", _content);
 
 
+        //pull the last Saved game if one
+        _tileNameSelected = PlayerPrefs.GetString("Last_Saved");
     }
 
     public void Show(string which)
@@ -157,6 +161,7 @@ class SaveLoadGameWindow : GUIElement
         else
         {
             _tileNameSelected = sub;
+
             if (_which == "Load")
             {
                 _selectedToLoadNName.text = _tileNameSelected;

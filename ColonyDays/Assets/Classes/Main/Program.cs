@@ -63,10 +63,6 @@ public class Program : MonoBehaviour {
         Application.targetFrameRate = 60;
 	    //ProfilerHere();
 
-        //loads main menu
-        MyScreen1.Start();
-
-        MouseListener.Start();
 	    ClassContainer = General.Create(Root.classesContainer);
 
 	    BuildsContainer = General.Create(Root.classesContainer, name: "BuildsContainer");
@@ -85,6 +81,10 @@ public class Program : MonoBehaviour {
                 InputMain = (InputMain)General.Create(Root.inputMain, container: ClassContainer.transform);
             }
         }
+
+        //loads main menu
+        MyScreen1.Start();
+        MouseListener.Start();
 	}
 
 

@@ -45,7 +45,7 @@ public class DataController
     /// Each save is a directory
     /// </summary>
     /// <param name="name"></param>
-    public static void SaveGame(string name)
+    public static void SaveGame(string name, bool quickSave = false)
     {
         savePath = _path + @"\" + name;
         var exist = Directory.Exists(savePath);
@@ -55,25 +55,39 @@ public class DataController
         {
             //todo notify cant bz space
             Debug.Log("Not enough space on " + _path.ToCharArray()[0] + " Drive to save");
+            Dialog.OKDialog(H.NotHDDSpace, _path.ToCharArray()[0].ToString());
             return;
         }
 
         //ask wants overWrite
         if (exist)
         {
-            Dialog.OKCancel(H.OverWrite);
+            Dialog.OKCancelDialog(H.OverWrite);
         }
         else
         {
-            SaveNow();
+            //if is not quickSave then needs to call EscapeKey
+            SaveNow(!quickSave);
+            PlayerPrefs.SetString("Last_Saved", name);
         }
     }
+
+    public static bool ThereIsALastSavedFile()
+    {
+        var tileNameSelected = PlayerPrefs.GetString("Last_Saved");
+        return !string.IsNullOrEmpty(tileNameSelected);
+    }
+
+
 
 
     /// <summary>
     /// Saving all XMLS
+    /// 
+    /// if 'callEscapeKey' will call : Program.InputMain.EscapeKey();
+    /// should be called always unless is a quicksave
     /// </summary>
-    public static void SaveNow()
+    public static void SaveNow(bool callEscapeKey)
     {
         Directory.CreateDirectory(savePath);
         XMLSerie.SaveGame(savePath); 
@@ -85,6 +99,12 @@ public class DataController
         CamControl.CAMRTS.InputRts.SaveLastCamPos();
 
         savePath = "";
+
+        if (callEscapeKey)
+        {
+            //so goes back to show the game 
+            Program.InputMain.EscapeKey();
+        }
     }
 
     private static bool HasHDDSpace()
@@ -94,20 +114,12 @@ public class DataController
         return DriveSpace.DriveFreeBytes(_path, out space);
     }
 
-    private static long GetTotalFreeSpace(string driveName)
+
+    public static bool ThereIsAtLeastAGameToLoad()
     {
-        foreach (DriveInfo drive in DriveInfo.GetDrives())
-        {
-            if (drive.IsReady && drive.Name == driveName)
-            {
-                return drive.TotalFreeSpace;
-            }
-        }
-        return -1;
+        var saves = Directory.GetDirectories(SugarMillPath()).ToList();
+        return saves.Count > 0;
     }
-
-
-
 
 
     internal static string SugarMillPath()
@@ -117,14 +129,22 @@ public class DataController
 
     internal static void LoadGame(string p)
     {
+        PlayerPrefs.SetString("Last_Saved", p);
+
         XMLSerie.LoadGame(_path + @"\" + p);
         Program.RedoGame();
         
         //now action the continue button event
-        Program.MyScreen1.ContinueGameBtn();
+        BuildingPot.LoadBuildingsNow();
+
+        Program.MyScreen1.DestroyCurrLoadLoading();
     }
 
-
+    internal static void ContinueGame()
+    {
+        var name = PlayerPrefs.GetString("Last_Saved");
+        LoadGame(name);
+    }
 
     public static void DeleteGame(string p)
     {
@@ -132,7 +152,7 @@ public class DataController
 
         if (Directory.Exists(savePath))
         {
-            Dialog.OKCancel(H.Delete);
+            Dialog.OKCancelDialog(H.Delete);
         }
     }
 
@@ -151,6 +171,8 @@ public class DataController
 
         savePath = "";
     }
+
+
 }
 
 

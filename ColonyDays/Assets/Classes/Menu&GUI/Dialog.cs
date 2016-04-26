@@ -18,13 +18,20 @@ public class Dialog
         
     }
 
-    public static void OKCancel(H type)
+    public static void OKCancelDialog(H type)
     {
         RoutineSetUp();
 
         _type = type;
         _dialogGo = DialogGO.Create(Root.dialogOKCancel, _canvas, _middleOfScreen, _type);
+    }  
+    
+    public static void OKDialog(H type, string str1 = "")
+    {
+        RoutineSetUp();
 
+        _type = type;
+        _dialogGo = DialogGO.Create(Root.dialogOK, _canvas, _middleOfScreen, _type, str1);
     }
 
     /// <summary>
@@ -39,7 +46,7 @@ public class Dialog
         {
             if (_type == H.OverWrite)
             {
-                DataController.SaveNow();
+                DataController.SaveNow(true);
             }
             else if (_type == H.Delete)
             {

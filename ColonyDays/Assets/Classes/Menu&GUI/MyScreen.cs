@@ -86,14 +86,6 @@ public class MyScreen : General
     }
 
     /// <summary>
-    /// Will show Continue or none depending if has a last game was loaded or is opening the game by first time 
-    /// </summary>
-    private void DecideWhichBtnShow()
-    {
-        _mainMenuWindow.MakeContinueActive();
-    }
-
-    /// <summary>
     /// Depending on the btn was clicked will do action 
     /// </summary>
     /// <param name="action"></param>
@@ -188,16 +180,13 @@ public class MyScreen : General
 
     public void ContinueGameBtn()
     {
-        //person pot is created on BuildingSaveLoad. CreatePersonPot()
-        BuildingPot.LoadBuildingsNow();
-
-        DestroyCurrLoadLoading();
+        DataController.ContinueGame();
     }
 
     /// <summary>
     /// Will destroy current form and will load loading screebn
     /// </summary>
-    void DestroyCurrLoadLoading()
+    public void DestroyCurrLoadLoading()
     {
         current.Destroy();
         LoadLoadingScreen();

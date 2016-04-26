@@ -122,6 +122,7 @@ public class Languages
 	   { "NameToLoad", "Game to load selected:"},
 	   { "OverWrite", "There is a saved game with same name. Do you want to overwrite the file?"},
 	   { "Delete", "Are you sure want to delete the saved game?"},
+	   { "NotHDDSpace", "Not enough space on {0} drive to save the game"},
 	};
     
     public static string ReturnString(string key)

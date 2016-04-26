@@ -521,6 +521,11 @@ public class GameScene : General
 
     internal bool GameFullyLoaded()
     {
+        if (p.TerraSpawnController == null)
+        {
+            return false;
+        }
+
         return !p.TerraSpawnController.IsToLoadFromFile && BuildingPot.Control.Registro.IsFullyLoaded;
     }
 

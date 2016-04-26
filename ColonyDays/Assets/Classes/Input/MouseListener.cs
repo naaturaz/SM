@@ -235,6 +235,10 @@ public class MouseListener : InputMain
         else if (action.Contains("Dialog."))
         {
             Dialog.Listen(action);
+        }     
+        else if (action.Contains("GUIBtn."))
+        {
+            GUIBtnHandlers(action);
         }
         else if (action == H.Next_Stage_Btn.ToString())
         {
@@ -253,6 +257,36 @@ public class MouseListener : InputMain
         else
         {
             HandleGUIClicks(action);
+        }
+    }
+
+    /// <summary>
+    /// Handle actions from buttons in GUI 
+    /// </summary>
+    /// <param name="action"></param>
+    private void GUIBtnHandlers(string action)
+    {
+        action = action.Substring(7);
+
+        if (action == "Menu")
+        {
+            Program.InputMain.EscapeKey();
+        }
+        else if (action == "QuickSave")
+        {
+            Program.InputMain.QuickSaveNow();
+        }
+        else if (action == "Share")
+        {
+            
+        } 
+        else if (action == "MoreSpeed")
+        {
+            Program.InputMain.ChangeGameSpeedBy(1);
+        }
+        else if (action == "LessSpeed")
+        {
+            Program.InputMain.ChangeGameSpeedBy(-1);
         }
     }
 

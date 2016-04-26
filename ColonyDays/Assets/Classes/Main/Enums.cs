@@ -362,6 +362,7 @@ public enum H
     Decoration,
     OverWrite,
     Delete,
+    NotHDDSpace,
 
 
 }

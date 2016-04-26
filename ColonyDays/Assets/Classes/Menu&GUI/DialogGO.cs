@@ -14,6 +14,7 @@ class DialogGO : GUIElement
 
     private H _type;
     private Text _textHere;
+    private string _str1;
 
     public H Type1
     {
@@ -21,7 +22,13 @@ class DialogGO : GUIElement
         set { _type = value; }
     }
 
-    static public DialogGO Create(string root, Transform container, Vector3 iniPos, H type)
+    public string Str1
+    {
+        get { return _str1; }
+        set { _str1 = value; }
+    }
+
+    static public DialogGO Create(string root, Transform container, Vector3 iniPos, H type, string str1 = "")
     {
         DialogGO obj = null;
 
@@ -35,6 +42,7 @@ class DialogGO : GUIElement
 
         obj.transform.localScale = localScale;
         obj.Type1 = type;
+        obj.Str1 = str1;
 
         return obj;
     }
@@ -44,14 +52,6 @@ class DialogGO : GUIElement
         var t = GetChildCalled("TextHere");
         _textHere = t.GetComponentInChildren<Text>();
 
-        _textHere.text = Languages.ReturnString(Type1+"");
-    }
-
-    private void Set()
-    {
-        if (Type1 == H.OverWrite)
-        {
-            
-        }
+        _textHere.text = String.Format(Languages.ReturnString(Type1+""), Str1);
     }
 }
