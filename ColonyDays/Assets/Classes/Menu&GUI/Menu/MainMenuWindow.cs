@@ -27,7 +27,7 @@ public class MainMenuWindow : GUIElement
 
     void MakeButtonsInactiveIfNeeded()
     {
-        if (!Program.gameScene.GameFullyLoaded())
+        if (!Program.gameScene.GameFullyLoaded() || Program.gameScene.GameController1.IsGameOver)
         {
             _resumeBtn.interactable = false;
             _saveBtn.interactable = false;

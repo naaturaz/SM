@@ -51,6 +51,10 @@ public class Dialog
             else if (_type == H.Delete)
             {
                 DataController.DeleteNow();
+            } 
+            else if (_type == H.GameOverPirate)
+            {
+                Program.InputMain.EscapeKey();
             }
         }
         _dialogGo.Destroy();

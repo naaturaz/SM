@@ -129,9 +129,10 @@ public class GameScene : General
 
 #if UNITY_EDITOR
 
-        StartCoroutine("OneSecUpdate");
 
 #endif
+        StartCoroutine("OneSecUpdate");
+
 
         Settings.PlayMusic();
 
@@ -176,8 +177,15 @@ public class GameScene : General
         {
             return;
         }
+
         Debug.Log("BatchInitial() gameScene");
         _batchManager.BatchInitial();
+
+        //so the loading screen is kill and gui loaded 
+        Program.MyScreen1.LoadingScreenIsDone();
+        //so its loaded to the right Screen resolution 
+        Program.MouseListener.ApplyChangeScreenResolution();
+
     }
 
     /// <summary>
@@ -211,6 +219,8 @@ public class GameScene : General
         while (true)
         {
             yield return new WaitForSeconds(1); // wait
+            GameController1.UpdateOneSecond();
+            DataController.Update();
 
             HUDFPS.Message = " | " + MouseInBorderRTS.GlobalDir.ToString() + "| Dragged: " + Way._dir +
                              " | InputMode: " + BuildingPot.InputMode + "\n" + more + "\n"
@@ -243,7 +253,6 @@ public class GameScene : General
             return;
         }
         
-        GameController1.Update();
         CreateDummySpawnPoint();
 
 

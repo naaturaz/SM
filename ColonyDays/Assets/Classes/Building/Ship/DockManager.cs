@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class DockManager
 {
     private float _portReputation = 50;
-    private float _pirateThreat;
+    private float _pirateThreat = 0;//0
 
     private int _maxAmountSpots = 3;
 

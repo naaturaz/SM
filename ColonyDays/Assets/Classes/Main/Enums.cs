@@ -363,6 +363,8 @@ public enum H
     OverWrite,
     Delete,
     NotHDDSpace,
+    GameOverPirate,
+    GameOverMoney,
 
 
 }

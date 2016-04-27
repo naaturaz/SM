@@ -214,15 +214,21 @@ class SaveLoadGameWindow : GUIElement
     /// </summary>
     void SetTileIniPos()
     {
+        var ySpace = Screen.height / 59.46667f;    //15 on editor
+
         _scrollIniPos = _scroll_Ini_PosGO.transform.position;
-        _scrollIniPos = new Vector3(_scrollIniPos.x, _scrollIniPos.y - 15, _scrollIniPos.z);
+        _scrollIniPos = new Vector3(_scrollIniPos.x, _scrollIniPos.y - ySpace, _scrollIniPos.z);
     }
 
 
     private void SetHeightOfContentRect(int tiles)
     {
+        //892
+        var tileYSpace = 5.57f;
+        //var tileYSpace = Screen.height / 160.1436f;//5.57f on editor
+
         //5.57f the space btw two of them 
-        var size =  (5.57f* tiles) + 5f;
+        var size = (tileYSpace * tiles) + tileYSpace;
         _contentRectTransform.sizeDelta = new Vector2(0, size);
     }
 
@@ -230,12 +236,14 @@ class SaveLoadGameWindow : GUIElement
 
     Vector3 ReturnIniPos(int i)
     {
-        return new Vector3(270 + _scrollIniPos.x, ReturnY(i) + _scrollIniPos.y, _scrollIniPos.z);
+        var xAddVal = Screen.width/5.87407f;
+        return new Vector3(xAddVal + _scrollIniPos.x, ReturnY(i) + _scrollIniPos.y, _scrollIniPos.z);
     }
 
     float ReturnY(int i)
     {
-        return -30f * i;
+        var yAddVal = Screen.height/29.733333f;
+        return -yAddVal * i;
     }
 
 

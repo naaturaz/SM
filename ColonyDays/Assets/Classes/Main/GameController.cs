@@ -129,6 +129,8 @@ public class GameController  {
         set { _areThereWheelBarrowsOnStorage = value; }
     }
 
+
+
     public void ReCheckWheelBarrowsOnStorage()
     {
         AreThereWheelBarrowsOnStorage = ThereIsAtLeastOneOfThisOnStorage(P.WheelBarrow);
@@ -142,7 +144,7 @@ public class GameController  {
         
     }
 
-    public void Update()
+    public void UpdateOneSecond()
     {
         CheckIfSalariesNeedToBePaid();
         CheckIfGameOverCondition();
@@ -152,28 +154,47 @@ public class GameController  {
     {
         if (Dollars<-100000)
         {
-            GameOver();
+            GameOver('m');
         }
         if (BuildingPot.Control!=null &&  BuildingPot.Control.DockManager1!=null &&
             BuildingPot.Control.DockManager1.PirateThreat > 90)
         {
-            GameOver();
+            GameOver('p');
         }
     }
 
+
+
+
     private bool _isGameOver;
-    private void GameOver()
+
+    public bool IsGameOver
+    {
+        get { return _isGameOver; }
+        set { _isGameOver = value; }
+    }
+    private void GameOver(char type)//p pirate ... m money
     {
         if (_isGameOver)
         {
             return;
         }
 
-        //todo 
-        //end game, show form 
+        Program.gameScene.GameSpeed = 0;
         Debug.Log("Game over");
         _isGameOver = true;
+
+        if (type == 'p')
+        {
+            Dialog.OKDialog(H.GameOverPirate);
+        } 
+        else if (type == 'm')
+        {
+            Dialog.OKDialog(H.GameOverMoney);
+        }
     }
+
+
 
     private void CheckIfSalariesNeedToBePaid()
     {
@@ -212,6 +233,10 @@ public class GameController  {
         {
             pts += Inventory1.ReturnAmtOfItemOnInv(P.Diamond) / 100;
         }
+
+        //to make game easier 
+        pts /= 100;
+
         //add gold,silver,etc
         BuildingPot.Control.DockManager1.AddToPirateThreat(pts);
     }

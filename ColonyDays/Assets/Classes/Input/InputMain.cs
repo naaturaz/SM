@@ -324,7 +324,7 @@ public class InputMain : InputParent {
     {
         //if there are foresters for example they wil cut trees while the TerrainController is still loading. so
         //its not a good idea . all TerrainContrroller must be loaded before it can be played the game 
-        if (!HasGameAllLoaded())
+        if (!HasGameAllLoaded() || Program.gameScene.GameController1.IsGameOver)
         {
             return;
         }
@@ -362,6 +362,11 @@ public class InputMain : InputParent {
 
     public void ChangeGameSpeedBy(int val)
     {
+        if (Program.gameScene.GameController1.IsGameOver)
+        {
+            return;
+        }
+
         Program.gameScene.GameSpeed += val;
 
         if (Program.gameScene.GameSpeed < 0)

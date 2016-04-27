@@ -123,6 +123,8 @@ public class Languages
 	   { "OverWrite", "There is a saved game with same name. Do you want to overwrite the file?"},
 	   { "Delete", "Are you sure want to delete the saved game?"},
 	   { "NotHDDSpace", "Not enough space on {0} drive to save the game"},
+	   { "GameOverPirate", "Sorry, you lost the game! Pirates attack your town and killed everyone."},
+	   { "GameOverMoney", "Sorry, you lost the game! The crown wont support your Caribbean island anymore."},
 	};
     
     public static string ReturnString(string key)

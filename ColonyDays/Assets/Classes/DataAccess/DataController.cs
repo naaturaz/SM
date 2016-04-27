@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Security.Permissions;
 using System.Text;
 using UnityEngine;
@@ -59,8 +60,8 @@ public class DataController
             return;
         }
 
-        //ask wants overWrite
-        if (exist)
+        //ask wants overWrite ... if is quicksave not need to ask
+        if (exist && !quickSave)
         {
             Dialog.OKCancelDialog(H.OverWrite);
         }
@@ -69,16 +70,37 @@ public class DataController
             //if is not quickSave then needs to call EscapeKey
             SaveNow(!quickSave);
             PlayerPrefs.SetString("Last_Saved", name);
+            PlayerPrefs.SetString(name, DateTime.Now.ToString());
+           
+            Debug.Log("DateTie now:" + DateTime.Now.ToString());
+            Debug.Log("Ticks now:" + DateTime.Now.Ticks.ToString());
         }
     }
 
     public static bool ThereIsALastSavedFile()
     {
         var tileNameSelected = PlayerPrefs.GetString("Last_Saved");
-        return !string.IsNullOrEmpty(tileNameSelected);
+        if (string.IsNullOrEmpty(tileNameSelected))
+        {
+            return false;
+        }
+        
+        //making sure was not deleted that save 
+        var saves = Directory.GetDirectories(SugarMillPath()).ToList();
+        for (int i = 0; i < saves.Count; i++)
+        {
+            if (saves[i] == ReturnPathPlsThsName(tileNameSelected))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
-
+    static string ReturnPathPlsThsName(string name)
+    {
+        return _path + @"\" + name;
+    }
 
 
     /// <summary>
@@ -173,6 +195,52 @@ public class DataController
     }
 
 
+#region AutoSave
+
+    private static float lastAutoSavedFile;
+    public static void Update()
+    {
+        if (Time.time > lastAutoSavedFile + Options.AutoSaveFrec )
+        {
+            AutoSave();
+            lastAutoSavedFile = Time.time;
+        }
+    }
+
+    static void AutoSave()
+    {
+        if (!Program.gameScene.GameFullyLoaded())
+        {
+            return;
+        }
+        SaveGame("AutoSave", true);
+    }
+#endregion
+
+    
+    public static void LastModifiedTime()
+    {
+        if (Directory.Exists(savePath))
+        {
+            System.IO.DirectoryInfo di = new DirectoryInfo(savePath);
+            foreach (FileInfo file in di.GetFiles())
+            {
+
+            }
+            Directory.Delete(savePath);
+            Program.MyScreen1.DeleteSavedGameCallBack();
+        }
+
+        savePath = "";
+    }
+
+    bool IsLoadFileValid(string name)
+    {
+        var thisPath = _path + @"\" + name;
+        var getSavedStamp = PlayerPrefs.GetString(name);
+
+        return false;
+    }
 }
 
 
@@ -210,5 +278,90 @@ class DriveSpace
         {
             return false;
         }
+    }
+}
+
+
+
+
+public class SimpleEncryption
+{
+    #region Constructor
+    public SimpleEncryption(string password)
+    {
+        byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+        byte[] saltValueBytes = Encoding.UTF8.GetBytes(SaltValue);
+
+        _DeriveBytes = new Rfc2898DeriveBytes(passwordBytes, saltValueBytes, PasswordIterations);
+        _InitVectorBytes = Encoding.UTF8.GetBytes(InitVector);
+        _KeyBytes = _DeriveBytes.GetBytes(32);
+    }
+    #endregion
+
+    #region Private Fields
+    private readonly Rfc2898DeriveBytes _DeriveBytes;
+    private readonly byte[] _InitVectorBytes;
+    private readonly byte[] _KeyBytes;
+    #endregion
+
+    private const string InitVector = "T=A4rAzu94ez-dra";
+    private const int PasswordIterations = 1000; //2;
+    private const string SaltValue = "d=?ustAF=UstenAr3B@pRu8=ner5sW&h59_Xe9P2za-eFr2fa&ePHE@ras!a+uc@";
+
+    public string Decrypt(string encryptedText)
+    {
+        byte[] encryptedTextBytes = Convert.FromBase64String(encryptedText);
+        string plainText;
+
+        RijndaelManaged rijndaelManaged = new RijndaelManaged { Mode = CipherMode.CBC };
+
+        try
+        {
+            using (ICryptoTransform decryptor = rijndaelManaged.CreateDecryptor(_KeyBytes, _InitVectorBytes))
+            {
+                using (MemoryStream memoryStream = new MemoryStream(encryptedTextBytes))
+                {
+                    using (CryptoStream cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
+                    {
+                        //TODO: Need to look into this more. Assuming encrypted text is longer than plain but there is probably a better way
+                        byte[] plainTextBytes = new byte[encryptedTextBytes.Length];
+
+                        int decryptedByteCount = cryptoStream.Read(plainTextBytes, 0, plainTextBytes.Length);
+                        plainText = Encoding.UTF8.GetString(plainTextBytes, 0, decryptedByteCount);
+                    }
+                }
+            }
+        }
+        catch (CryptographicException exception)
+        {
+            plainText = string.Empty; // Assume the error is caused by an invalid password
+        }
+
+        return plainText;
+    }
+
+    public string Encrypt(string plainText)
+    {
+        string encryptedText;
+        byte[] plainTextBytes = Encoding.UTF8.GetBytes(plainText);
+
+        RijndaelManaged rijndaelManaged = new RijndaelManaged { Mode = CipherMode.CBC };
+
+        using (ICryptoTransform encryptor = rijndaelManaged.CreateEncryptor(_KeyBytes, _InitVectorBytes))
+        {
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                using (CryptoStream cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write))
+                {
+                    cryptoStream.Write(plainTextBytes, 0, plainTextBytes.Length);
+                    cryptoStream.FlushFinalBlock();
+
+                    byte[] cipherTextBytes = memoryStream.ToArray();
+                    encryptedText = Convert.ToBase64String(cipherTextBytes);
+                }
+            }
+        }
+
+        return encryptedText;
     }
 }
