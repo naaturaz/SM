@@ -86,7 +86,7 @@ public class ProductInfo
             for (int i = 0; i < Ingredients.Count; i++)
             {
                 _details = _details + "Input: " + Ingredients[i].Element + " Units: " +
-                    Ingredients[i].Units + " " + Settings.WeightUnit() + " \n";
+                    Ingredients[i].Units + " " + Unit.WeightUnit() + " \n";
             }
         }
        

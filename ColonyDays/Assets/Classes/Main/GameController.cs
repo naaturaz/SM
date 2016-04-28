@@ -15,20 +15,20 @@ public class GameController  {
     //Main inventory of the game .. wht u see on the GUI 
     //will have all tht is in all Storages combined 
     //is a total inventory. Representing all tht is in those inventories 
-    static ResumenInventory _inventory = new ResumenInventory();
+    static ResumenInventory _resumenInventory = new ResumenInventory();
 
     private float _dollars;//the dollars the player has 
     private static StartingCondition _startingCondition;
 
     private int _lastYearWorkersSalaryWasPaid;
 
-    static public ResumenInventory Inventory1
+    static public ResumenInventory ResumenInventory1
     {
-        get { return _inventory; }
+        get { return _resumenInventory; }
         set
         {
             
-            _inventory = value;
+            _resumenInventory = value;
         }
     }
 
@@ -221,17 +221,17 @@ public class GameController  {
         {
             pts = Dollars/10000;
         }
-        if (Inventory1.ReturnAmtOfItemOnInv(P.Gold)> 1000)
+        if (ResumenInventory1.ReturnAmtOfItemOnInv(P.Gold)> 1000)
         {
-            pts += Inventory1.ReturnAmtOfItemOnInv(P.Gold)/1000;
+            pts += ResumenInventory1.ReturnAmtOfItemOnInv(P.Gold)/1000;
         } 
-        if (Inventory1.ReturnAmtOfItemOnInv(P.Silver) > 1000)
+        if (ResumenInventory1.ReturnAmtOfItemOnInv(P.Silver) > 1000)
         {
-            pts += Inventory1.ReturnAmtOfItemOnInv(P.Silver) / 2000;
+            pts += ResumenInventory1.ReturnAmtOfItemOnInv(P.Silver) / 2000;
         }
-        if (Inventory1.ReturnAmtOfItemOnInv(P.Diamond) > 100)
+        if (ResumenInventory1.ReturnAmtOfItemOnInv(P.Diamond) > 100)
         {
-            pts += Inventory1.ReturnAmtOfItemOnInv(P.Diamond) / 100;
+            pts += ResumenInventory1.ReturnAmtOfItemOnInv(P.Diamond) / 100;
         }
 
         //to make game easier 
@@ -248,7 +248,7 @@ public class GameController  {
     /// <returns></returns>
     static public bool ThereIsAtLeastOneOfThisOnStorage(P product)
     {
-        if (GameController.Inventory1.ReturnAmtOfItemOnInv(product) > 0)
+        if (GameController.ResumenInventory1.ReturnAmtOfItemOnInv(product) > 0)
         {
             return true;
         }

@@ -861,7 +861,7 @@ public class Profession
 
         //each time a wheelbarrow or docker uses a wheelBarrow dimish them a bit in the main storages
         //as the wheelbarrows get use they get destroy
-        GameController.Inventory1.Remove(P.WheelBarrow, .1f);
+        GameController.ResumenInventory1.Remove(P.WheelBarrow, .1f);
     }
 
     /// <summary>
@@ -1127,7 +1127,7 @@ public class Profession
             prodCarrying = _person.Work.CurrentProd.Product;
             
             //people comsuming tools as they work 
-            GameController.Inventory1.Remove(P.Tool, 0.1f);
+            GameController.ResumenInventory1.Remove(P.Tool, 0.1f);
         }
     }
 

@@ -609,6 +609,7 @@ public class Building : General, Iinfo
         {
             return;
         }
+        //UVisHelp.CreateHelpers(Anchors, Root.blueCube);
 
         DefinePolyOnGrid();
         buildingPrev = (BigBoxPrev)CreatePlane.CreatePlan(Root.bigBoxPrev, Root.graySemi, container:transform);
@@ -643,6 +644,15 @@ public class Building : General, Iinfo
         }
     }
 
+    /// <summary>
+    /// When rotates needs to redo the whole thing 
+    /// </summary>
+    void DestroyPreviewBaseBuilding()
+    {
+        buildingPrev.Destroy();
+        buildingPrev = null;
+        _polyOnGrid.Clear();
+    }
 
 #endregion
 
@@ -962,6 +972,8 @@ public class Building : General, Iinfo
         UnivRotationFacer = _rotationFacerIndex;
         gameObject.transform.Rotate(0, 90, 0);
         UpdateBuild();
+
+        DestroyPreviewBaseBuilding();
     }
 
     /// <summary>
@@ -2869,6 +2881,11 @@ public class Building : General, Iinfo
     }
 
 
+    public int MaxPeople
+    {
+        get { return _maxPeople; }
+    }
+
 #endregion
 
 
@@ -3354,8 +3371,6 @@ public class Building : General, Iinfo
     }
 
 
-
-
     /// <summary>
     /// Will return a family that is empty and has not ID set yet 
     /// </summary>
@@ -3648,6 +3663,7 @@ public class Building : General, Iinfo
     }
 
 #endregion
+
 }
 
 

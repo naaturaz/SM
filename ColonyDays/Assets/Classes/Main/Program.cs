@@ -133,6 +133,8 @@ public class Program : MonoBehaviour {
         gameScene.Destroy();
         gameScene = null;
         InputMain.Destroy();
+
+        GameController.ResumenInventory1.GameInventory.Delete();
     }
 
     internal static void RedoGame()

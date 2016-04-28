@@ -403,8 +403,13 @@ public class StructureParent : Building {
         }
     }
 
+    /// <summary>
+    /// Creates a Plane for the base of the Strcuture 
+    /// </summary>
     void CreateBasePlane()
     {
+        return;
+
         var locPoly = UPoly.ScalePoly(Anchors, 0.04f);
         basePlane = CreatePlane.CreatePlan(Root.createPlane, ReturnMatBase(), raiseFromFloor: 0.08f, container: transform);
         basePlane.UpdatePos(locPoly);

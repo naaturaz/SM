@@ -33,8 +33,10 @@ public class MyText : MonoBehaviour
         }
         if (name == "Food")
         {
-            thisText.text = GameController.Inventory1.ReturnAmountOnCategory(PCat.Food).ToString("N0") + 
-                Settings.WeightUnit();
+            var amt = GameController.ResumenInventory1.ReturnAmountOnCategory(PCat.Food);
+
+            thisText.text =  Unit.WeightConverted(amt).ToString("N0") + " " +
+                Unit.WeightUnit();
         }
      
 

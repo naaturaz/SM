@@ -280,7 +280,7 @@ public class BuildingWindow : GUIElement {
     private void LoadMenu()
     {
         _title.text = _building.HType + "";
-        _info.text = BuildInfo();
+        _info.text = BuildInfo() + BuildCover();
 
         if (_showAInventory == null)
         {
@@ -299,6 +299,20 @@ public class BuildingWindow : GUIElement {
         _inv.text = BuildStringInv(_building);
         DemolishBtn();
     }
+
+    /// <summary>
+    /// Schools, Church, and Tavern have coverage 
+    /// </summary>
+    /// <returns></returns>
+    private string BuildCover()
+    {
+        var st = (Structure) _building;
+        return st.CoverageInfo();
+    }
+
+
+
+
 
     string BuildInfo()
     {

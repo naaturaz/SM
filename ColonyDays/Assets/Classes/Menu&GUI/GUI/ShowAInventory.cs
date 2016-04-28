@@ -77,11 +77,9 @@ public class ShowAInventory
 
     void ManualUpdateOfAllInvItems()
     {
-
-
         for (int i = 0; i < _inv.InventItems.Count; i++)
         {
-            var amt = GameController.Inventory1.ReturnAmtOfItemOnInv(_inv.InventItems[i].Key);
+            var amt = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(_inv.InventItems[i].Key);
             _inv.SetToSpecialInv(_inv.InventItems[i].Key, amt);
         }
     }
@@ -92,12 +90,10 @@ public class ShowAInventory
         set { _inv = value; }
     }
 
-    private float _oldVolOccupied;
-
-
+    private float _oldVolumeOccupied;
     private void ShowAllItems( )
     {
-        _oldVolOccupied = Inv.CurrentVolumeOcuppied();
+        _oldVolumeOccupied = Inv.CurrentVolumeOcuppied();
         var iForSpwItem = 0;//so ReturnIniPos works nicely
 
         for (int i = 0; i < _inv.InventItems.Count; i++)
@@ -174,30 +170,35 @@ public class ShowAInventory
         }
     }
 
-
-
-    private int count = 0;
-    //so far only called from myForm.cs
     public void Update()
     {
-        count++;
-        if (count > 30)
+        if (Inv.InventItems.Count > 0 && _allItems.Count == 0)
         {
             RedoItemsIfOldInvIsDiff();
-            ManualUpdateOfAllInvItems();
-            count = 0;
         }
+    }
+
+    //so far only called from myForm.cs
+    public void UpdateEvery2Sec()
+    {
+        ManualUpdateOfAllInvItems();
+    }
+
+    public void UpdateEveryMinute()
+    {
+        RedoItemsIfOldInvIsDiff();
     }
 
     private void RedoItemsIfOldInvIsDiff()
     {
-        if (!UMath.nearlyEqual(_oldVolOccupied, Inv.CurrentVolumeOcuppied(), 0.01f))//0.001
+        if (!UMath.nearlyEqual(_oldVolumeOccupied, Inv.CurrentVolumeOcuppied(), 0.01f))//0.001
         {
-            Debug.Log("Redone InvSh");
+            Debug.Log("Redone InvShow");
             DestroyAll();
             ShowAllItems();
         }
     }
+
 
     internal void Destroy(ShowInvetoryItem showInvetoryItem)
     {

@@ -262,7 +262,9 @@ public class BuildStat
         Dollar = colonyDollar;
         _maxPeople = maxPeople;
         _capacity = capacity;
-    }
+    }   
+    
+
 
     public BuildStat()
     {
@@ -337,4 +339,39 @@ public class BuildStat
         get { return _maxPeople; }
         set { _maxPeople = value; }
     }
+
+  
+
+
+
+    private int _factor;
+    private int _minAge;
+    private int _maxAge;
+    public BuildStat(H hType, int factor, int minAge, int maxAge)
+    {
+        HType = hType;
+        _factor = factor;
+        _minAge = minAge;
+        _maxAge = maxAge;
+    }
+
+
+    public int Factor
+    {
+        get { return _factor; }
+        set { _factor = value; }
+    }
+
+    public int MinAge
+    {
+        get { return _minAge; }
+        set { _minAge = value; }
+    }
+
+    public int MaxAge
+    {
+        get { return _maxAge; }
+        set { _maxAge = value; }
+    }
+
 }

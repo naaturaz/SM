@@ -204,12 +204,12 @@ public class BuildersManager
     {
         var stat = Book.GiveMeStat(cons.HType);
         
-        bool wood = GameController.Inventory1.ReturnAmtOfItemOnInv(P.Wood) >= stat.Wood || stat.Wood == 0;//if is zero
+        bool wood = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Wood) >= stat.Wood || stat.Wood == 0;//if is zero
         //the needed amt will pass reagardless the amt we have on storage
-        bool stone = GameController.Inventory1.ReturnAmtOfItemOnInv(P.Stone) >= stat.Stone || stat.Stone == 0;
-        bool brick = GameController.Inventory1.ReturnAmtOfItemOnInv(P.Brick) >= stat.Brick || stat.Brick == 0;
-        bool iron = GameController.Inventory1.ReturnAmtOfItemOnInv(P.Iron) >= stat.Iron || stat.Iron == 0;
-        bool gold = GameController.Inventory1.ReturnAmtOfItemOnInv(P.Gold) >= stat.Gold || stat.Gold == 0;
+        bool stone = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Stone) >= stat.Stone || stat.Stone == 0;
+        bool brick = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Brick) >= stat.Brick || stat.Brick == 0;
+        bool iron = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Iron) >= stat.Iron || stat.Iron == 0;
+        bool gold = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Gold) >= stat.Gold || stat.Gold == 0;
         bool dollar = Program.gameScene.GameController1.Dollars >= stat.Dollar || stat.Dollar == 0;
         bool passedQue = _passedQueue.Contains(cons.Key);
 
@@ -306,12 +306,12 @@ public class BuildersManager
     {
         var stat = Book.GiveMeStat(hTypeP);
 
-        GameController.Inventory1.Remove(P.Wood, stat.Wood);
-        GameController.Inventory1.Remove(P.Stone, stat.Stone);
-        GameController.Inventory1.Remove(P.Brick, stat.Brick);
-        GameController.Inventory1.Remove(P.Iron, stat.Iron);
-        GameController.Inventory1.Remove(P.Gold, stat.Gold);
-        GameController.Inventory1.Remove(P.Dollar, stat.Dollar);
+        GameController.ResumenInventory1.Remove(P.Wood, stat.Wood);
+        GameController.ResumenInventory1.Remove(P.Stone, stat.Stone);
+        GameController.ResumenInventory1.Remove(P.Brick, stat.Brick);
+        GameController.ResumenInventory1.Remove(P.Iron, stat.Iron);
+        GameController.ResumenInventory1.Remove(P.Gold, stat.Gold);
+        GameController.ResumenInventory1.Remove(P.Dollar, stat.Dollar);
     }
 
     public bool IsAtLeastOneBuildUp()

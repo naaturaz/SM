@@ -635,7 +635,7 @@ public class BuildingController : BuildingPot
     /// <returns></returns>
     static public List<Structure> FindAllStructOfThisType(H hType)
     {
-        List<Structure> distances = new List<Structure>();
+        List<Structure> res = new List<Structure>();
 
         for (int i = 0; i < BuildingPot.Control.Registro.AllBuilding.Count; i++)
         {
@@ -643,11 +643,11 @@ public class BuildingController : BuildingPot
 
             if (build.HType == hType)
             {
-                distances.Add((Structure)build);
+                res.Add((Structure)build);
             }
         }
 
-        return distances;
+        return res;
     }
 
     /// <summary>

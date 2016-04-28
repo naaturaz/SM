@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class MyForm : General 
 {
@@ -71,6 +72,9 @@ public class MyForm : General
 	// Use this for initialization
 	void Start ()
 	{
+        StartCoroutine("UpdateEveryMinute");
+        StartCoroutine("UpdateEvery2Sec");
+
         _canvas = GetChildCalled(H.Canvas, gameObject);
         _resources = FindGameObjectInHierarchy("Resources", Canvas);
 
@@ -81,16 +85,39 @@ public class MyForm : General
             _startPosIni = GetChildCalled(H.Start, Resources);
 	        LoadMainInventory();   
 	    }
+    }
 
-	}
+    private IEnumerator UpdateEvery2Sec()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(2); // wait
+            if (_showAInventory != null)
+            {
+                _showAInventory.UpdateEvery2Sec();
+            }
+        }
+    }
+
+    private IEnumerator UpdateEveryMinute()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(67); // wait
+            if (_showAInventory != null)
+            {
+                _showAInventory.UpdateEveryMinute();
+            }
+        }
+    }
 	
 	// Update is called once per frame
     void Update()
     {
-        if (_showAInventory!=null)
+        if (_showAInventory != null)
         {
-            //_showAInventory.Update();
-        } 
+            _showAInventory.Update();
+        }
     }
 
     protected GameObject GetChildCalled(H childName, GameObject parent)

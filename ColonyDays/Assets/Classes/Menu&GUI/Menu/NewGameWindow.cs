@@ -6,12 +6,12 @@ using Button = UnityEngine.UI.Button;
 public class NewGameWindow : GUIElement
 {
     private string _townName;
-    private string _size;
+    //private string _size;
     private string _terraName;
     private string _terraRoot;
     private string _difficulty;
 
-    private Text _sizeTxt;//the btn tht contains the size 
+    //private Text _sizeTxt;//the btn tht contains the size 
     private Text _terraNameTxt;//the btn tht contains the size 
     private Text _diffTxt;//the btn tht contains the size 
     private InputField _inputTownName;
@@ -31,8 +31,8 @@ public class NewGameWindow : GUIElement
 	    iniPos = transform.position;
         Hide();
 
-	    var Terra_Size_Btn = GetGrandChildCalled("Terra_Size_Btn");
-	    _sizeTxt = Terra_Size_Btn.GetComponentInChildren<Text>();
+        //var Terra_Size_Btn = GetGrandChildCalled("Terra_Size_Btn");
+        //_sizeTxt = Terra_Size_Btn.GetComponentInChildren<Text>();
 
         Terra_Name_Btn = GetGrandChildCalled("Terra_Name_Btn");
         _terraNameTxt = Terra_Name_Btn.GetComponentInChildren<Text>();
@@ -41,10 +41,6 @@ public class NewGameWindow : GUIElement
         _diffTxt = Diff_Btn.GetComponentInChildren<Text>();
 
         _inputTownName = GetChildCalled("Input_Name").GetComponent<InputField>();
-
-
-
-
 
 
         LoadDefaultForNewGame();
@@ -56,11 +52,11 @@ public class NewGameWindow : GUIElement
     void LoadDefaultForNewGame()
     {
         _townName = "Toronto";
-        _size = "Small";
+        //_size = "Small";
         _difficulty = "Easy";
 
 
-
+        DefineTerrainNames();
         Display();
     }
 	
@@ -73,12 +69,7 @@ public class NewGameWindow : GUIElement
     {
         var sub = action.Substring(4);
 
-        if (sub == "Small" || sub == "Med" || sub == "Big")
-        {
-            _size = sub;
-            DefineTerrainNames();
-        }
-        else if (sub == "Easy" || sub == "Moderate" || sub == "Hard")
+        if (sub == "Easy" || sub == "Moderate" || sub == "Hard")
         {
             _difficulty = sub;
         }
@@ -102,10 +93,10 @@ public class NewGameWindow : GUIElement
     /// </summary>
     private void DefineTerrainNames()
     {
-        if (_size == "Big")
-        {
+        //if (_size == "Big")
+        //{
             DefineEachTerraName(Root.BigTerrains);
-        }
+        //}
     }
 
     /// <summary>
@@ -130,7 +121,7 @@ public class NewGameWindow : GUIElement
     {
         _inputTownName.text = _townName;
 
-        _sizeTxt.text = _size;
+        //_sizeTxt.text = _size;
         _terraNameTxt.text = _terraName;
         _diffTxt.text = _difficulty;
     }
@@ -228,12 +219,10 @@ public class NewGameWindow : GUIElement
     public void ClickTerraNameSelection(string terraName)
     {
         _terraName = terraName;
-        if (_size == "Big")
-        {
-
+        //if (_size == "Big")
+        //{
             _terraRoot = ReturnTerrainOnList(terraName, Root.BigTerrains);
-        }
-
+        //}
         Display();
     }
 }

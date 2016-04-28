@@ -10,7 +10,7 @@ public class Inventory  {
     private List<InvItem> _inventItems =  new List<InvItem>();
     private string _info;
     private string _locMyId;
-
+    private bool _isAStorage;
 
     List<P> _foodItems=new List<P>(); 
 
@@ -41,6 +41,15 @@ public class Inventory  {
         set { _foodItems = value; }
     }
 
+    /// <summary>
+    /// Needed to know bz if is one will report to gameInventory
+    /// </summary>
+    public bool IsAStorage
+    {
+        get { return _isAStorage; }
+        set { _isAStorage = value; }
+    }
+
     public Inventory(){}
 
     public Inventory(string myId, H hTypeP)
@@ -48,6 +57,11 @@ public class Inventory  {
         //LoadFromFile();
         _locMyId = myId;
         CapacityVol = Book.GiveMeStat(hTypeP).Capacity;
+
+        if (_locMyId.Contains("Storage"))
+        {
+            IsAStorage = true;
+        }
     }
 
     /// <summary>
@@ -157,8 +171,26 @@ public class Inventory  {
             _inventItems.Add(new InvItem( key , amt));
             SetAmtWithKey(key,amt);
         }
-        //UpdateInfo();
-        //ResaveOnRegistro();
+
+        AddressGameInventory(key, amt, true);
+    }
+
+
+    void AddressGameInventory(P key, float amt, bool add)
+    {
+        if (!IsAStorage)
+        {
+            return;
+        }
+
+        if (add)
+        {
+            GameController.ResumenInventory1.GameInventory.Add(key, amt);
+        }
+        else
+        {
+            GameController.ResumenInventory1.GameInventory.RemoveByWeight(key, amt);
+        } 
     }
 
     #region Main Inventory
@@ -235,18 +267,15 @@ public class Inventory  {
                 float intT = ReturnAmtOfItemOnInv(key) - kg;
                 SetAmtWithKey(key, intT);
 
-                //UpdateInfo();
+                AddressGameInventory(key, kg, false);
                 return kg;
             }
             //other wise will depleted
             float t = ReturnAmtOfItemOnInv(key);
-
             SetAmtWithKey(key, 0);
-
             RemoveWithKey(key);
 
-            //UpdateInfo();
-            //ResaveOnRegistro();
+            AddressGameInventory(key, kg, false);
             return t;
         }
         return 0;
@@ -348,6 +377,7 @@ public class Inventory  {
     internal void Delete()
     {
         _inventItems.Clear();
+        _foodItems.Clear();
     }
 
 

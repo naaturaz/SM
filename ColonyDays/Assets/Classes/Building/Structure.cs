@@ -423,4 +423,38 @@ public class Structure : StructureParent
 
 
 
+    /// <summary>
+    /// If a school has the maximun of workers: 2 , then is covering the max: 1.. that is 100%
+    /// </summary>
+    /// <returns></returns>
+    internal float CurrentCoverage()
+    {
+        var mul = 1f;
+
+        if (HType == H.Tavern && Inventory.IsEmpty())
+        {
+            mul = 0.5f;
+        }
+
+        return ((float)PeopleDict.Count / (float)MaxPeople) * mul;
+    }
+
+    public string CoverageInfo()
+    {
+        if (!IsACoverageBuilding())
+        {
+            return "";
+        }
+
+        return "\n\n I can service " + Coverage.PeopleICanServe(CurrentCoverage(), HType) + " people in this buiding \n" +
+               HType + " overall service:" + Coverage.OverallMyType(HType, true) + "\n" +
+               "Overall people needing this service:" + Coverage.HowManyPeopleNeedThisService(HType);
+    }
+
+
+    bool IsACoverageBuilding()
+    {
+        return HType == H.School || HType == H.TradesSchool || HType == H.Church
+               || HType == H.Tavern;
+    }
 }

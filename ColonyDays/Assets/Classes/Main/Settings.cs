@@ -1,19 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Settings : MonoBehaviour
+public class Settings
 {
+    public static bool ISPAUSED;//not used in this proj
 
-    //imperial or metric
-    private static char _unitSystem = 'm';//'i'
 
-    public static bool ISPAUSED;
 
     static bool _isSoundOn = true;
     static bool _isMusicOn = true;
 
     //this is the music variable use for the whole game 
     public static Music music = null;
+
+
+    private static float _autoSaveFrec = 300;//5min
+    public static float AutoSaveFrec
+    {
+        get { return _autoSaveFrec; }
+        set { _autoSaveFrec = value; }
+    }
 
     public static bool ISSoundOn
     {
@@ -27,46 +33,13 @@ public class Settings : MonoBehaviour
         set { _isMusicOn = value; }
     }
 
-    public static char UnitSystem
-    {
-        get { return _unitSystem; }
-        set { _unitSystem = value; }
-    }
-
-    public static string ReturnStringInSystem(string param)
-    {
-        if (param == "kg")
-        {
-            if (UnitSystem == 'm')
-            {
-                return param;
-            }
-            return "lbs";
-        }
-        return "nothing from Settings.cs";
-    }
-
-    public static string WeightUnit()
-    {
-        if (UnitSystem == 'm')
-        {
-            return "kg";
-        }
-        return "lb";
-    }  
-    
-    public static string DensityUnit()
-    {
-        if (UnitSystem == 'm')
-        {
-            return "kg/m3";
-        }
-        return "lb/ft3";
-    }
 
 
 
-    public static bool ISToAskB4Exit = true;
+
+
+
+
 
     public static Music Switch(H what, Music current = null)
     {
@@ -98,7 +71,7 @@ public class Settings : MonoBehaviour
         }
         else
         {   
-            Destroy(current.gameObject);
+            current.Destroy();
         }
         return current;
     }
@@ -123,5 +96,94 @@ public class Settings : MonoBehaviour
             music = (Music)ap.PlayAudio(RootSound.musicLvl1Start, H.Music);
         else if(Application.loadedLevelName == "Lobby")
             music = (Music)ap.PlayAudio(RootSound.musicLobby, H.Music);
+    }
+}
+
+public class Unit
+{
+    //imperial or metric
+    private static char _units = 'i';//'i'
+
+
+    public static char Units
+    {
+        get { return _units; }
+        set { _units = value; }
+    }
+
+    public static string WeightUnit()
+    {
+        if (Units == 'm')
+        {
+            return "kg";
+        }
+        return "lb";
+    }
+
+    public static string VolumeUnit()
+    {
+        if (Units == 'm')
+        {
+            return "m3";
+        }
+        return "ft3";
+    }
+
+    public static string DensityUnit()
+    {
+        if (Units == 'm')
+        {
+            return "kg/m3";
+        }
+        return "lb/ft3";
+    }
+
+    /// <summary>
+    /// from Kg to lbs
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns></returns>
+    public static float WeightFromMetricToImp(float input)
+    {
+        return input*2.2046f;
+    }
+    /// <summary>
+    /// From m3 to ft3
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns></returns>
+    public static float VolFromMetricToImp(float input)
+    {
+        return input*35.315f;
+    }   
+    
+    /// <summary>
+    /// from "kg/m3" to "lb/ft3"
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns></returns>
+    public static float DensityFromMetricToImp(float input)
+    {
+        return input*0.062427974f;
+    }
+
+
+
+    internal static float  WeightConverted(float p)
+    {
+        if (_units == 'm')
+        {
+            return p;
+        }
+        return WeightFromMetricToImp(p);
+    }
+
+    internal static float VolConverted(float p)
+    {
+        if (_units == 'm')
+        {
+            return p;
+        }
+        return VolFromMetricToImp(p);
     }
 }

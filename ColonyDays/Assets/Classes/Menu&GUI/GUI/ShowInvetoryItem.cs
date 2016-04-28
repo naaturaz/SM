@@ -126,16 +126,22 @@ public class ShowInvetoryItem : GUIElement
             return "-";
         }
 
+        var amt = Unit.WeightConverted(InvItem1.Amount);
+        var vol = Unit.VolConverted(InvItem1.Volume);
+
         //Main GUI
         if (InvType=="Main")
         {
-            return StandardFormat();
-            return ShortFormat();
+            //return StandardFormat();
+            return ShortFormat(amt);
         }
 
-        //buildign invneotyr 
-        //if (string.IsNullOrEmpty(InvType))
-        return InvItem1.Key+ " "  + (int)InvItem1.Amount + "kg. v(m3):" + InvItem1.Volume.ToString("F1");
+        return InvItem1.Key + " " + (int)amt + BuildStringUnits() + vol.ToString("F1");
+    }
+
+    string BuildStringUnits()
+    {
+        return " " + Unit.WeightUnit() + ". v(" + Unit.VolumeUnit() + "):";
     }
 
     private string StandardFormat()
@@ -144,21 +150,25 @@ public class ShowInvetoryItem : GUIElement
         {
             return (InvItem1.Amount.ToString("n1"));
         }
-
         return  ((int)InvItem1.Amount)+"";
     }
 
-    private string ShortFormat()
+    private string ShortFormat(float amt)
     {
-        if (InvItem1.Amount > 1000000)
+        if (amt < 10)
         {
-            return (int)(InvItem1.Amount / 1000000) + "M";
+            return (amt.ToString("n1"));
+        }
+
+        if (amt > 1000000)
+        {
+            return (int)(amt / 1000000) + "M";
         }
         if (InvItem1.Amount > 1000)
         {
-            return (int)(InvItem1.Amount / 1000) + "K";
+            return (int)(amt / 1000) + "K";
         }
 
-        return (int)InvItem1.Amount+"";
+        return (int)amt + "";
     }
 }

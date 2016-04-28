@@ -200,7 +200,7 @@ public class DataController
     private static float lastAutoSavedFile;
     public static void Update()
     {
-        if (Time.time > lastAutoSavedFile + Options.AutoSaveFrec )
+        if (Time.time > lastAutoSavedFile + Settings.AutoSaveFrec )
         {
             AutoSave();
             lastAutoSavedFile = Time.time;

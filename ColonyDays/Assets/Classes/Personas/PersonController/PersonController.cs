@@ -353,7 +353,7 @@ public class PersonController : PersonPot
 
     private void UpdateOnScreen()
     {
-        if (!GameController.Inventory1.IsItemOnInv(P.Wood))
+        if (!GameController.ResumenInventory1.IsItemOnInv(P.Wood))
         {
             return;
         }
@@ -361,12 +361,12 @@ public class PersonController : PersonPot
 
         var msg =
             "Person:" + _all.Count + " | " +
-            "Food:" + GameController.Inventory1.ReturnAmountOnCategory(PCat.Food) + " | " +
-            "Wood:" + GameController.Inventory1.ReturnAmtOfItemOnInv(P.Wood) + " | " +
-            "Stone:" + GameController.Inventory1.ReturnAmtOfItemOnInv(P.Stone) + " | " +
-            "Brick:" + GameController.Inventory1.ReturnAmtOfItemOnInv(P.Brick) + " | " +
-            "Iron:" + GameController.Inventory1.ReturnAmtOfItemOnInv(P.Iron) + " | " +
-            "Gold:" + GameController.Inventory1.ReturnAmtOfItemOnInv(P.Gold) + " | " +
+            "Food:" + GameController.ResumenInventory1.ReturnAmountOnCategory(PCat.Food) + " | " +
+            "Wood:" + GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Wood) + " | " +
+            "Stone:" + GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Stone) + " | " +
+            "Brick:" + GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Brick) + " | " +
+            "Iron:" + GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Iron) + " | " +
+            "Gold:" + GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Gold) + " | " +
             "Dollar:" + Program.gameScene.GameController1.Dollars.ToString("C0", new CultureInfo(0x0816)) + 
             "\nSpeed:" + Program.gameScene.GameSpeed + "x"
                 ;
