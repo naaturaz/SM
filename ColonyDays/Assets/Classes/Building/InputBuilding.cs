@@ -128,6 +128,7 @@ public class InputBuilding : BuildingPot {
 
     void ShowHelp()
     {
+        count = 0;
         _orgStructuresFromMouseHitPoint = DragSquare.ReturnClosestBuildings(m.HitMouseOnTerrain.point,
             Control.Registro.Structures.Count, H.Road);
         showHelp = true;
@@ -136,6 +137,7 @@ public class InputBuilding : BuildingPot {
 
     void HideHelp()
     {
+        count = 0;
         _orgStructuresFromMouseHitPoint = DragSquare.ReturnClosestBuildings(m.HitMouseOnTerrain.point,
          Control.Registro.Structures.Count, H.Road);
 

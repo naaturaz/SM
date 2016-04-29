@@ -367,10 +367,10 @@ public class Profession
     /// </summary>
     public virtual void WorkAction(HPers p)
     {
-//        Debug.Log("workActionCalled:" + _person.MyId + " _readyToWork:" + _readyToWork);
+//      Debug.Log("workActionCalled:" + _person.MyId + " _readyToWork:" + _readyToWork);
         if (_readyToWork)
         {
-  //          Debug.Log("workingNow:" + _person.MyId);
+            //Debug.Log("workingNow:" + _person.MyId);
             _workingNow = true;
         }
         else
@@ -424,7 +424,7 @@ public class Profession
         }
         //GameScene.print("Update on Profession");
 
-        SetProdXShift();
+        //SetProdXShift();
 	}
 
     /// <summary>
@@ -1077,17 +1077,13 @@ public class Profession
     /// </summary>
     public void Execute(string instruct = "", P prod = P.None)
     {
-        //if (UPerson.IsWorkingAtSchool(_person))
-        //{
-        //    return;
-        //}
-
         //to address if work place is being destyo on the persons way
         if (_person.Work == null)
         {
             return;
         }
 
+        SetProdXShift();
         Produce(instruct, prod);
         if (ReadyToWork)
         {

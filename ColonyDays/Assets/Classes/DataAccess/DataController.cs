@@ -73,7 +73,7 @@ public class DataController
             PlayerPrefs.SetString(name, DateTime.Now.ToString());
            
             Debug.Log("DateTie now:" + DateTime.Now.ToString());
-            Debug.Log("Ticks now:" + DateTime.Now.Ticks.ToString());
+            //Debug.Log("Ticks now:" + DateTime.Now.Ticks.ToString());
         }
     }
 

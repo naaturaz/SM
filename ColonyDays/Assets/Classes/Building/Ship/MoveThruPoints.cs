@@ -162,7 +162,7 @@ public class MoveThruPoints
     /// <param name="oldAnimation"></param>
     public void SetCurrentAni(string animationPass, string oldAnimation)
     {
-        Debug.Log("SetCurrAni nw:"+animationPass+".old:"+oldAnimation);
+        //Debug.Log("SetCurrAni nw:"+animationPass+".old:"+oldAnimation);
 
         _currentAni = animationPass;
         myAnimator.SetBool(animationPass, true);

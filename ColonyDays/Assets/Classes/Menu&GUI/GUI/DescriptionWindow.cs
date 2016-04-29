@@ -97,34 +97,34 @@ public class DescriptionWindow : General
         }
         if (stat.Gold != 0)
         {
-            res += " Gold: " + stat.Gold + " " + Unit.WeightUnit();
+            res += " Gold: " + Unit.WeightConverted(stat.Gold) + " " + Unit.WeightUnit();
             appends++;
         }
         
         if (stat.Iron != 0)
         {
-            res += " Iron: " + stat.Iron + " " + Unit.WeightUnit();
+            res += " Iron: " + Unit.WeightConverted(stat.Iron) + " " + Unit.WeightUnit();
             appends++;
         }
         res = CheckIfAppend3(ref appends, res);
 
         if (stat.Stone != 0)
         {
-            res += " Stone: " + stat.Stone + " " + Unit.WeightUnit();
+            res += " Stone: " + Unit.WeightConverted(stat.Stone) + " " + Unit.WeightUnit();
             appends++;
         }
         res = CheckIfAppend3(ref appends, res);
  
         if (stat.Brick != 0)
         {
-            res += " Brick: " + stat.Brick + " " + Unit.WeightUnit();
+            res += " Brick: " + Unit.WeightConverted(stat.Brick) + " " + Unit.WeightUnit();
             appends++;
         }
         res = CheckIfAppend3(ref appends, res);
 
         if (stat.Wood != 0)
         {
-            res += " Wood: " + stat.Wood + " " + Unit.WeightUnit();
+            res += " Wood: " + Unit.WeightConverted(stat.Wood) + " " + Unit.WeightUnit();
             appends++;
         } 
         res = CheckIfAppend3(ref appends, res);

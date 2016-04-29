@@ -73,7 +73,7 @@ public class OutOfScreen
     {
         _onScreenRectNow = Program.gameScene.Fustrum1.OnScreen(ExtractObjPos());
         //if is moving now can be reshown bz might be on his way somewhere 
-        if (_onScreenRectNow && _renderer.isVisible && !_onScreenRenderNow)
+        if (_onScreenRectNow && (_renderer.isVisible || _person.Body.MovingNow) && !_onScreenRenderNow)
         {
             _onScreenRenderNow = true;
             //UpdateOnObjt();

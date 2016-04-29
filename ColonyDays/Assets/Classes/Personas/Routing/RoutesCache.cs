@@ -115,20 +115,17 @@ public class RoutesCache {
 
         if (haveIt)
         {
-            if (theRoute.DateTime1 == _current.DateTime1)
+            var isNewer = IsNewerOrSame(theRoute.DateTime1);
+            if (isNewer)
             {
-                //we have the latest one already
+                _items[key] = theRoute;
             }
-            else
-            {
-                _items[key]=theRoute;
-            }
+            //other wise we have the lastest one 
         }
         else
         {
             _items.Add(key, theRoute);
             //Debug.Log("added to cache:" + key + " ct:" + _items.Count);
-
         }
     }
 
