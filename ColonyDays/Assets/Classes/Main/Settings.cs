@@ -5,8 +5,6 @@ public class Settings
 {
     public static bool ISPAUSED;//not used in this proj
 
-
-
     static bool _isSoundOn = true;
     static bool _isMusicOn = true;
 
@@ -14,8 +12,8 @@ public class Settings
     public static Music music = null;
 
 
-    private static float _autoSaveFrec = 300;//5min
-    public static float AutoSaveFrec
+    private static int _autoSaveFrec = 300;//5min
+    public static int AutoSaveFrec
     {
         get { return _autoSaveFrec; }
         set { _autoSaveFrec = value; }
@@ -33,13 +31,86 @@ public class Settings
         set { _isMusicOn = value; }
     }
 
+#region Save Load Settings
+
+    /// <summary>
+    /// Loads all Saved settings in PlayerPref
+    /// </summary>
+    public static void Load()
+    {
+        //general
+        var unitsSaved = PlayerPrefs.GetString("Unit").ToCharArray();
+        if (unitsSaved.Length>0)
+        {
+            Unit.Units = unitsSaved[0];
+        }
+        //means never is being saved before     
+        else if (unitsSaved.Length == 0)
+        {
+            return;
+        }
+        _autoSaveFrec = PlayerPrefs.GetInt("AutoSave");
+
+        //screen
+        QualitySettings.SetQualityLevel(PlayerPrefs.GetInt("Quality"));
+        //LoadAndApplyResolution();
+        Screen.fullScreen = bool.Parse(PlayerPrefs.GetString("FullScreen"));
+
+        //audio
+        ISMusicOn = bool.Parse(PlayerPrefs.GetString("Music"));
+        ISSoundOn = bool.Parse(PlayerPrefs.GetString("Sound"));
+
+        Debug.Log("Loading Settings");
+    }
+
+    static void LoadAndApplyResolution()
+    {
+        var width = PlayerPrefs.GetInt("Res.Width");
+        var height = PlayerPrefs.GetInt("Res.Height");
+
+        Screen.SetResolution(width, height, Screen.fullScreen);
+        Program.MouseListener.ApplyChangeScreenResolution();
+    }
+
+    /// <summary>
+    /// Saves all setting in PlayerPref 
+    /// </summary>
+    public static void Save()
+    {
+        //general
+        PlayerPrefs.SetString("Unit", Unit.CurrentSystem());
+        PlayerPrefs.SetInt("AutoSave", AutoSaveFrec);
+        
+        //screen
+        PlayerPrefs.SetInt("Quality", QualitySettings.GetQualityLevel());
+        PlayerPrefs.SetString("FullScreen", Screen.fullScreen.ToString());
+
+        //del call 
+        //SaveResolution("1920 x 1080");
+
+        //audio
+        PlayerPrefs.SetString("Music", ISMusicOn.ToString());
+        PlayerPrefs.SetString("Sound", ISSoundOn.ToString());
+    }
+
+    /// <summary>
+    /// Will be called from OptionsWindow
+    /// </summary>
+    /// <param name="newResolution"></param>
+    public static void SaveResolution(string newResolution)
+    {
+        Debug.Log(Screen.currentResolution.ToString());
+
+        var splt = newResolution.Split(' ');
+        PlayerPrefs.SetInt("Res.Width", int.Parse(splt[0]));
+        PlayerPrefs.SetInt("Res.Height", int.Parse(splt[2]));
+    }
 
 
 
+#endregion
 
-
-
-
+    #region Audio
 
     public static Music Switch(H what, Music current = null)
     {
@@ -97,6 +168,62 @@ public class Settings
         else if(Application.loadedLevelName == "Lobby")
             music = (Music)ap.PlayAudio(RootSound.musicLobby, H.Music);
     }
+#endregion
+
+#region Change Params 
+    internal static void SetQuality(string qual)
+    {
+        string[] names = QualitySettings.names;
+
+        for (int i = 0; i < names.Length; i++)
+        {
+            if (qual == names[i])
+            {
+                QualitySettings.SetQualityLevel(i);
+            }
+        }
+        Program.MyScreen1.OptionsWindow1.RefreshAllDropDowns();
+
+    }
+
+    internal static void SetResolution(string name)
+    {
+        SaveResolution(name);
+        LoadAndApplyResolution();
+        Program.MyScreen1.OptionsWindow1.RefreshAllDropDowns();
+
+    }
+
+    internal static void SetUnit(string sub)
+    {
+        if (sub == "Metric")
+        {
+            Unit.Units = 'm';
+        }
+        else if (sub == "Imperial")
+        {
+            Unit.Units = 'i';
+        }
+        Program.MouseListener.ApplyChangeScreenResolution();
+        Program.MyScreen1.OptionsWindow1.RefreshAllDropDowns();
+        
+        //so the GUI is not on top of main menu
+
+    }
+
+    internal static void SetAutoSave(string name)
+    {
+        var spl = name.Split(' ');
+        AutoSaveFrec = int.Parse(spl[0]) * 60;
+        Program.MyScreen1.OptionsWindow1.RefreshAllDropDowns();
+    }
+#endregion
+
+
+
+
+
+
 }
 
 public class Unit
@@ -185,5 +312,10 @@ public class Unit
             return p;
         }
         return VolFromMetricToImp(p);
+    }
+
+    internal static string CurrentSystem()
+    {
+        return _units.ToString();
     }
 }

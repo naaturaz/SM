@@ -145,7 +145,7 @@ public class InputMain : InputParent {
 
     string NowGameName()
     {
-        return DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + " " +
+        return Program.MyScreen1.TownName + " " + DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + " " +
                DateTime.Now.Hour + "h" + DateTime.Now.Minute + "m" + DateTime.Now.Second + "s";
     }
 

@@ -82,16 +82,16 @@ public class MenuHandler : General {
 
     public void ChangeAudioSettings(string typeP)
     {
-        if (typeP == "Sound")
-        {
-            Settings.Switch(H.Sound);
-            return;
-        }
-        else if (typeP == "Music")
-        {
-            Settings.music = Settings.Switch(H.Music, Settings.music);
-            return;
-        }
+        //if (typeP == "Sound")
+        //{
+        //    Settings.Switch(H.Sound);
+        //    return;
+        //}
+        //else if (typeP == "Music")
+        //{
+        //    Settings.music = Settings.Switch(H.Music, Settings.music);
+        //    return;
+        //}
     }
 
 	// Update is called once per frame

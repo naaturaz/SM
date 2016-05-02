@@ -66,13 +66,20 @@ public class MouseListener : InputMain
 
     public void ApplyChangeScreenResolution()
     {
+        Program.gameScene.Fustrum1.RedoRect();
+        
+        //being called before a game is loaded 
+        if (_personWindow == null)
+        {
+            return;
+        }
+
         HideAllWindows();
 
         main.Destroy();
         main = null;
 
         LoadMainGUI();
-        Program.gameScene.Fustrum1.RedoRect();
     }
 
     /// <summary>
@@ -374,6 +381,8 @@ public class MouseListener : InputMain
     /// </summary>
     public void HideAllWindows()
     {
+
+
         _personWindow.Hide();
         UnselectingBuild();
         _addOrderWindow.Hide();

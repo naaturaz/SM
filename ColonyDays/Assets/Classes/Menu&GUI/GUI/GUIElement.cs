@@ -56,7 +56,7 @@ public class GUIElement : General {
     public virtual void Hide()
     {
         Vector3 newPos = transform.position;
-        newPos.y = -400f;
+        newPos.y = -800f;
 
         transform.position = newPos;
         

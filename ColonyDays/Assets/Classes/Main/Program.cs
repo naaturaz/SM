@@ -59,6 +59,8 @@ public class Program : MonoBehaviour {
     // Use this for initialization
 	public void Start ()
 	{
+        //Settings.Load();
+
         DataController.Start();
         Application.targetFrameRate = 60;
 	    //ProfilerHere();

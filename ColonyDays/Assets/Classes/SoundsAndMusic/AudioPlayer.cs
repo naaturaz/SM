@@ -9,7 +9,7 @@ public class AudioPlayer : MonoBehaviour {
     public Audio PlayAudio(string soundToPlayRoot, H musicOrSound, Vector3 iniPos = new Vector3(), bool playOneTime = false)
     {
         Audio temp = null;
-        if (iniPos == Vector3.zero)
+        if (iniPos == Vector3.zero && Camera.main != null)
         {
             iniPos = Camera.main.transform.position;
         }

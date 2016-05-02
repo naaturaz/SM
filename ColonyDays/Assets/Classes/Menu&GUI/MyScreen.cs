@@ -10,6 +10,7 @@ public class MyScreen : General
     private MainMenuWindow _mainMenuWindow;//the window of the main menu. so can be hidden and shw back
     private NewGameWindow _newGameWindow;
     private SaveLoadGameWindow _saveLoadGameWindow;
+    private OptionsWindow _optionsWindow;
     private MyForm current;
 
 
@@ -46,6 +47,12 @@ public class MyScreen : General
         set { _townName = value; }
     }
 
+    public OptionsWindow OptionsWindow1
+    {
+        get { return _optionsWindow; }
+        set { _optionsWindow = value; }
+    }
+
     #region Main Menu. Load Game. New Game
 
     public void Start()
@@ -59,11 +66,27 @@ public class MyScreen : General
         LoadMainMenu();
 
         //can only be one on scene to work 
-        _mainMenuWindow = FindObjectOfType<MainMenuWindow>();
-        _newGameWindow = FindObjectOfType<NewGameWindow>();
-        _saveLoadGameWindow = FindObjectOfType<SaveLoadGameWindow>();
+        RedifineWindows();
+    }
 
-        //DecideWhichBtnShow();
+    void RedifineWindows()
+    {
+        if (_mainMenuWindow == null)
+        {
+            _mainMenuWindow = FindObjectOfType<MainMenuWindow>();
+        }
+        if (_newGameWindow == null)
+        {
+            _newGameWindow = FindObjectOfType<NewGameWindow>();
+        }
+        if (_saveLoadGameWindow == null)
+        {
+            _saveLoadGameWindow = FindObjectOfType<SaveLoadGameWindow>();
+        }
+        if (_optionsWindow == null)
+        {
+            _optionsWindow = FindObjectOfType<OptionsWindow>();
+        }
     }
 
     /// <summary>
@@ -76,6 +99,8 @@ public class MyScreen : General
 
         //_mainMenuWindow.MakeResumeActive();
     }
+
+
 
     /// <summary>
     /// Load the main menu
@@ -129,7 +154,11 @@ public class MyScreen : General
             RedifineWindows();
             _saveLoadGameWindow.Show("Load");
         }   
-    
+        else if (sub.Contains("Options"))
+        {
+            RedifineWindows();
+            _optionsWindow.Listen(sub);
+        }
     }
 
 
@@ -236,21 +265,7 @@ public class MyScreen : General
         window.Show();
     }
 
-    void RedifineWindows()
-    {
-        if (_mainMenuWindow == null)
-        {
-            _mainMenuWindow = FindObjectOfType<MainMenuWindow>();
-        }
-        if (_newGameWindow == null)
-        {
-            _newGameWindow = FindObjectOfType<NewGameWindow>();
-        } 
-        if (_saveLoadGameWindow == null)
-        {
-            _saveLoadGameWindow = FindObjectOfType<SaveLoadGameWindow>();
-        }
-    }
+
 
     public void DeleteSavedGameCallBack()
     {
