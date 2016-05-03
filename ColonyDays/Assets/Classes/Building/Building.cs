@@ -787,7 +787,7 @@ public class Building : General, Iinfo
     public void CreateProjector()
     {
         if (Category != Ca.None && Category != Ca.Way && Projector == null && !MyId.Contains("Dummy") &&
-            !MyId.Contains("Shack"))
+            !MyId.Contains("Shack") && HType != H.None)//none are the CreatePlanes 
         {
             Projector = (MyProjector) Create(Root.projector, container: transform);
             _light = Create(Root.lightCil, transform.position, container: transform);

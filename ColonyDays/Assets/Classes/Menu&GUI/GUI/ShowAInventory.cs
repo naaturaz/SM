@@ -114,7 +114,7 @@ public class ShowAInventory
         return new Vector3(ReturnX(i) + _iniPos.x, ReturnY(i) + _iniPos.y, _iniPos.z);
     }
 
-    private int _mainLines = 24;//12
+    private int _mainLines = 18;//24
     float ReturnX(int i)
     {
         if (_invType == "Main")
@@ -133,15 +133,27 @@ public class ShowAInventory
     {
         if (_invType=="Main")
         {
+            //so Y is resested when a new Colum is reached 
             var lineNumber = (float)i / (float)_mainLines;
             var roundDown = int.Parse(lineNumber.ToString("F0"));
             var factor = lineNumber - roundDown;
 
-            return -14 * _mainLines * factor;
+            if (i==0)
+            {
+                return 0;
+            }
+            return -(ReturnRelativeYSpace(32, _allItems[0].transform.localScale.y)) * _mainLines * factor;
+            //return -(ReturnRelativeYSpace(32, _allItems[0].transform.localScale.y)) * i;
         }
-
         return -3.5f*i;
     }
+
+    public static float ReturnRelativeYSpace(float relative, float ySpaceOfTile)
+    {
+        return relative * ySpaceOfTile;
+    }
+
+
 
     private int countMU;
     private bool loaded;

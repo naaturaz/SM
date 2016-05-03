@@ -242,8 +242,14 @@ class SaveLoadGameWindow : GUIElement
 
     float ReturnY(int i)
     {
-        var yAddVal = Screen.height/29.733333f;
-        return -yAddVal * i;
+        if (i == 0)
+        {
+            return 0;
+        }
+
+        var y = (Screen.height*30)/892;
+        //return -(ShowAInventory.ReturnRelativeYSpace(28, _tilesSpawn[0].transform.localScale.y)) * i;
+        return -y*i;
     }
 
 

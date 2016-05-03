@@ -69,7 +69,7 @@ public class Settings
         var height = PlayerPrefs.GetInt("Res.Height");
 
         Screen.SetResolution(width, height, Screen.fullScreen);
-        Program.MouseListener.ApplyChangeScreenResolution();
+
     }
 
     /// <summary>
@@ -189,9 +189,9 @@ public class Settings
     internal static void SetResolution(string name)
     {
         SaveResolution(name);
-        LoadAndApplyResolution();
-        Program.MyScreen1.OptionsWindow1.RefreshAllDropDowns();
-
+        LoadAndApplyResolution();            
+     
+        Program.MyScreen1.OptionsWindow1.ChangeResNow();
     }
 
     internal static void SetUnit(string sub)
@@ -204,11 +204,8 @@ public class Settings
         {
             Unit.Units = 'i';
         }
-        Program.MouseListener.ApplyChangeScreenResolution();
-        Program.MyScreen1.OptionsWindow1.RefreshAllDropDowns();
-        
-        //so the GUI is not on top of main menu
-
+        //so options menu is not gone
+        Program.MyScreen1.OptionsWindow1.ChangeResNow();
     }
 
     internal static void SetAutoSave(string name)

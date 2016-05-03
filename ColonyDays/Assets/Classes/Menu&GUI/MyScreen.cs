@@ -12,7 +12,7 @@ public class MyScreen : General
     private SaveLoadGameWindow _saveLoadGameWindow;
     private OptionsWindow _optionsWindow;
     private MyForm current;
-
+    private MyForm mainMenuForm = new MyForm();
 
 
 
@@ -108,6 +108,7 @@ public class MyScreen : General
     public void LoadMainMenu()
     {
         current = (MyForm)General.Create(Root.mainMenu, new Vector2());
+        mainMenuForm = current;
     }
 
     /// <summary>
@@ -271,5 +272,38 @@ public class MyScreen : General
     {
         RedifineWindows();
         _saveLoadGameWindow.DeleteCallBack();
+    }
+
+    /// <summary>
+    /// Needed so MainGUI doesnt go on top of MainMenu
+    /// </summary>
+    internal void ReLoadMainMenuIfActive()
+    {
+        var forms = FindObjectsOfType<MyForm>();
+
+        for (int i = 0; i < forms.Length; i++)
+        {
+            if (forms[i] != null && forms[i].MyId.Contains("MainMenu"))
+            {
+                RedifineWindows();
+                _mainMenuWindow.Destroy();
+                _mainMenuWindow = null;
+
+                _newGameWindow.Destroy();
+                _newGameWindow = null;
+
+                _saveLoadGameWindow.Destroy();
+                _saveLoadGameWindow = null;
+
+                _optionsWindow.Destroy();
+                _optionsWindow = null;
+
+                DestroyCurrentMenu();
+                LoadMainMenu();
+                Debug.Log("Reload Main Menu");   
+         
+                RedifineWindows();
+            }
+        }
     }
 }

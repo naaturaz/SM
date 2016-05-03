@@ -51,6 +51,8 @@ public class ShowInvetoryItem : GUIElement
             LoadIcon();
 
 	    }
+
+        //Debug.Log("loc:" + transform.localScale + " lossy"+transform.localScale);
 	}
 
     private void LoadIcon()
@@ -72,7 +74,6 @@ public class ShowInvetoryItem : GUIElement
         string invType="")
     {
         ShowInvetoryItem obj = null;
-
         var root = "";
         if (string.IsNullOrEmpty(invType))
         {
@@ -83,14 +84,11 @@ public class ShowInvetoryItem : GUIElement
             //for main
             root = Root.show_Invent_Item_Small_Med;
         }
-
         obj = (ShowInvetoryItem)Resources.Load(root, typeof(ShowInvetoryItem));
         obj = (ShowInvetoryItem)Instantiate(obj, new Vector3(), Quaternion.identity);
 
-
         obj.transform.parent = container;
         obj.transform.localPosition = iniPos;
-
 
         obj.Parent = parent;
         obj.InvItem1 = invItem;

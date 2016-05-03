@@ -55,6 +55,13 @@ public class OptionsWindow : GUIElement
         RefreshAllDropDowns();
 
         Hide();
+
+        //means was hidden by a Res Change 
+        if (resTimeChanged!=0)
+        {
+            resTimeChanged = 0;
+            Show();
+        }
     }
 
     private void SetAllControls()
@@ -63,7 +70,10 @@ public class OptionsWindow : GUIElement
         _musicToggle.isOn = Settings.ISMusicOn;
         _soundToggle.isOn = Settings.ISSoundOn;
 
-       
+        //so they dont trigger event 
+        _fullToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Full"));
+        _musicToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Music"));
+        _soundToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Sound"));
     }
 
     public void RefreshAllDropDowns()
@@ -74,7 +84,7 @@ public class OptionsWindow : GUIElement
         {
             _unitBtnTxt.text = "Metric";
         }
-        _resBtnTxt.text = Screen.currentResolution.ToString();
+        _resBtnTxt.text = CurrentResolution();
 
         var names = QualitySettings.names;
         var curr = QualitySettings.GetQualityLevel();
@@ -87,11 +97,46 @@ public class OptionsWindow : GUIElement
         }   
     }
 
+    /// <summary>
+    /// bz if is not full screen then is not accurate since will return the size
+    /// of the screen and not the window
+    /// </summary>
+    /// <returns></returns>
+    string CurrentResolution()
+    {
+        if (Screen.fullScreen)
+        {
+            return Screen.currentResolution.ToString();
+        }
+        var splt = Screen.currentResolution.ToString().Split(' ');
+        return Screen.width + " x " + Screen.height + " @ " + splt[4];//the Hz
+    }
+
+
+    private bool resChanged;
+    private static float resTimeChanged;
     void Update()
     {
-
-
+        if (resChanged && Time.time > resTimeChanged + .5f)
+        {
+            resChanged = false;
+            Program.MouseListener.ApplyChangeScreenResolution();
+        }
     }
+
+    /// <summary>
+    /// So it leaves a  while(.5s) before can redo MainGUI and MainMenu
+    /// 
+    /// is called too when switched to Full Screen or back
+    /// 
+    /// is called too when switch from Imperial to Metric and vice versa 
+    /// </summary>
+    public void ChangeResNow()
+    {
+        resChanged = true;
+        resTimeChanged = Time.time;
+    }
+
 
 
     string HandleAction(string sub)
@@ -105,7 +150,7 @@ public class OptionsWindow : GUIElement
 
     internal void Listen(string sub)
     {
-        Show();
+        ReFreshDropsThenShow();
         sub = HandleAction(sub);
 
         if(sub == "OKBtn")
@@ -122,13 +167,18 @@ public class OptionsWindow : GUIElement
         {
             ChangeAudioSettings(sub);
         }
-       
         //screen
         else if (sub == "Full")
         {
             Screen.fullScreen = Settings.MecanicSwitcher(Screen.fullScreen);
+            ChangeResNow();
         }
+    }
 
+    public void ReFreshDropsThenShow()
+    {
+        RefreshAllDropDowns();
+        Show();
     }
 
     public void ChangeAudioSettings(string typeP)

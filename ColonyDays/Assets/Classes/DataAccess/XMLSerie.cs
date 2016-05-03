@@ -221,19 +221,12 @@ public class XMLSerie
         return res;
     }
 
-
 #region Main Menu
 
     public static void NewGame()
     {
         dataPath = "";
     }
-
-    public static void ContinueGame()
-    {
-        //restore to last saved dataPath
-
-    }  
     
     public static void SaveGame(string path)
     {
@@ -242,6 +235,9 @@ public class XMLSerie
         //and dataPath to newName
         dataPath = path;
 
+#if UNITY_EDITOR
+        dataPath += " Editor";
+#endif
     }
 
     public static void LoadGame(string path)
@@ -251,8 +247,6 @@ public class XMLSerie
         //and dataPath to newName
         dataPath = path;
     }
-
-
 
 #endregion
 }

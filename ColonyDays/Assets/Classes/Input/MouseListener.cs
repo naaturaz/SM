@@ -67,6 +67,7 @@ public class MouseListener : InputMain
     public void ApplyChangeScreenResolution()
     {
         Program.gameScene.Fustrum1.RedoRect();
+        Program.MyScreen1.ReLoadMainMenuIfActive();
         
         //being called before a game is loaded 
         if (_personWindow == null)
@@ -80,6 +81,8 @@ public class MouseListener : InputMain
         main = null;
 
         LoadMainGUI();
+        //in case PersonWindow was not null. So main menu is last 
+        Program.MyScreen1.ReLoadMainMenuIfActive();
     }
 
     /// <summary>
