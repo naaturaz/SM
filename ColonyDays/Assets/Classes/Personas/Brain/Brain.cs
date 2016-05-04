@@ -834,6 +834,12 @@ public class Brain
         AddIdleTimeIfHasOldKeys();
         if (Time.time > startIdleTime + _idleTime && !_routesWereStarted)
         {
+            //if is booked and still doesnt have the route to new home pls dont release iddle 
+            if (!string.IsNullOrEmpty(_person.IsBooked) && MoveToNewHome.RouteToNewHome.CheckPoints.Count == 0)
+            {
+                return;
+            }
+
             RealeaseIdle(nextTask);
         }
     }
@@ -1533,6 +1539,12 @@ public class Brain
 
     void UpdateRouters()
     {
+        //so if is moving and released idle then do do this routes and teleport to new home 
+        if (!string.IsNullOrEmpty(_person.IsBooked))
+        {
+            return;
+        }
+
         _routerFood.Update();
         _routerIdle.Update();
         _routerWork.Update();

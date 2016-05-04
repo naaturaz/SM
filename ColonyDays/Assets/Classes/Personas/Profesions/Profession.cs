@@ -328,6 +328,8 @@ public class Profession
         DestinyBuildKey = prof.DestinyBuildKey;
         SourceBuildKey = prof.SourceBuildKey;
 
+        ReadyToWork = prof.ReadyToWork;
+
         _destinyBuild = Brain.GetStructureFromKey(DestinyBuildKey);
         _sourceBuild = Brain.GetStructureFromKey(SourceBuildKey);
 
@@ -686,8 +688,6 @@ public class Profession
                 _person.Body.TurnCurrentAniAndStartNew(_myAnimation);
                 //Debug.Log("_myAnimation sent on siteWork:"+_myAnimation+ " .profDesc:"+ProfDescription);
             }
-            
-            
             Idle(HPers.WorkingInPlaceNow, _workTime);
         }
         //called here so animation of iddle can be fully transitioned to
@@ -706,7 +706,6 @@ public class Profession
             {
                 return;
             }
-
             ComingBackToOffice();
         }
         else if (_person.Body.Location == HPers.FoodSource && _workerTask == HPers.DoneAtFoodScr &&
@@ -720,10 +719,8 @@ public class Profession
              _person.Body.GoingTo == HPers.Work)
         {
             DoneWork();
-            //_person.Brain.CurrentTask = HPers.None;
-            //ResetMiniMindState();
         }
-        //for wheelbarrowers alone and dockers
+        //for wheelbarrowers alone and dockers.. 
         else if (_person.Body.Location == HPers.WheelBarrow 
             && _workerTask == HPers.DoneAtWheelBarrow && _person.Body.GoingTo == HPers.WheelBarrow)
         {
@@ -731,19 +728,20 @@ public class Profession
             _person.Brain.CurrentTask = HPers.WheelBarrow;
             WheelBarrowDropLoad();
             ConvertWheelBarrow();
+        }    
+        //for loading stuck Homer that was Farmer only
+        else if (_person.Body.Location == HPers.WheelBarrow 
+            && ProfDescription == Job.Homer && _person.PrevJob == Job.Farmer && _workerTask == HPers.None
+            && _person.Body.GoingTo == HPers.WheelBarrow)
+        {
+            //so in brain all gets retarted again 
+            _person.Brain.CurrentTask = HPers.WheelBarrow;
+            ConvertToHomer();//called here bz need to restart 
         }
         //for homers so they can start all over again at home just as had finished Work
         else if (_person.Body.Location == HPers.Home && _workerTask == HPers.DoneAtHome &&
         _person.Body.GoingTo == HPers.Home)
         {
-            //so in brain all gets retarted again . 
-            //_person.Brain.CurrentTask = HPers.IdleInHome;
-            //_person.Brain.PreviousTask = HPers.IdleSpot;     
-
-            //_person.Brain.CurrentTask = HPers.None;
-            //_person.Body.Location = HPers.None;
-
-
             _person.Brain.CurrentTask = HPers.Walking;
             _person.Body.Location = HPers.Home;
             _person.Body.GoingTo = HPers.Home;
@@ -828,13 +826,19 @@ public class Profession
         {
             return;
         }
-
         //so work Profession Mini States
         _person.Body.Location = HPers.Work;
         _workerTask = HPers.None;
 
         _person.HomerFoodSrc = _sourceBuildKey;
         _person.CreateProfession(Job.Homer);
+    }
+
+    void ConvertToHomer()
+    {
+        //so work Profession Mini States
+        _person.Body.Location = HPers.Work;
+        _workerTask = HPers.None;
     }
 
     /// <summary>
@@ -929,10 +933,17 @@ public class Profession
         if (ForesterHasNullEle() || ForesterCurrentStillEleIsBlackListed() || //|| LoadedDifferentElement()
             string.IsNullOrEmpty(StillElementId))
         {
-            //StillElementId = "";
             //Debug.Log("foresetr recrete prof:"+_person.MyId);
             _person.CreateProfession();
-        }     
+            return;
+        }
+
+        var ele = Program.gameScene.controllerMain.TerraSpawnController.Find(StillElementId);
+
+        if (!ele.Grown())
+        {
+            _person.CreateProfession();
+        }
     }
 
 

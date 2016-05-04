@@ -52,6 +52,9 @@ public class NewGameWindow : GUIElement
     void LoadDefaultForNewGame()
     {
         _townName = "Toronto";
+#if UNITY_EDITOR
+        _townName = "Editor";
+#endif
         //_size = "Small";
         _difficulty = "Easy";
 

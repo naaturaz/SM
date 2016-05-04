@@ -198,7 +198,6 @@ public class StillElement : TerrainRamdonSpawner
         {
             return;
         }
-
         //Debug.Log("add cyrstals :" + MyId);
         MeshController.CrystalManager1.Add(this);
     }
@@ -206,42 +205,11 @@ public class StillElement : TerrainRamdonSpawner
 	// Update is called once per frame
 	protected void Update () 
     {
-        //if (MyId.Contains("Reset"))
-        //{
-        //    return;
-        //}
-
         CheckIfCanGrow();
 	    CheckIfWasDestroyAndPlayedFullAnimation();
 
         CouldGrowPlantNow();
-	  //  AddressSwapedTree();
     }
-
-
-    //private void AddressSwapedTree()
-    //{
-    //    if (!ReplantedTree || ReplatedTreeWasStarted)
-    //    {
-    //        return;
-    //    }
-    //    ReplatedTreeWasStarted = true;
-
-    //    ManualStart();
-    //}
-
-    //public void ResetStillEle()
-    //{
-    //    base.Reset();
-    //    _destroyElement = false;
-    //    _fallTime = 0;
-    //    Weight = 0;
-    //    Height = 0;
-
-    //    //undo animation
-    //    GetTreeBackToStandTree();
-    //}
-
 
     private void CheckIfWasDestroyAndPlayedFullAnimation()
     {
@@ -364,12 +332,6 @@ public class StillElement : TerrainRamdonSpawner
     /// <param name="ProdXShift"></param>
     internal void RemoveWeight(float ProdXShift, Person pers)
     {
-        //trees tht were reseted will fall again if not prevented here
-        //if (MyId.Contains("Reset"))
-        //{
-        //    return;
-        //}
-
         CheckIfTreeMustBeCut();
         _weight -= ProdXShift;
         

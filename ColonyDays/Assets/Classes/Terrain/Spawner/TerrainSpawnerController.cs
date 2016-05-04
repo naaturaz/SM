@@ -94,11 +94,6 @@ public class TerrainSpawnerController : ControllerParent
 
     int toSpawnListCounter;
 
-
-    //will know which string ID is in which Index on AllRandomObjList and AllSpawnedDataList
-    Dictionary<string, int> _mapGC = new Dictionary<string, int>();
- 
-
     public TerrainRamdonSpawnerKey AllRandomObjList = new TerrainRamdonSpawnerKey();//containts all spawned obj
     public List<SpawnedData> AllSpawnedDataList = new List<SpawnedData>();//containts all spawned data serie saved
 
@@ -429,39 +424,16 @@ public class TerrainSpawnerController : ControllerParent
 
         //so is saved and created
         IsToSave = true;
-        CreateObjAndAddToMainList(H.Tree, pos, rootToSpawnIndex, 0, replantedTree: true);
+        CreateObjAndAddToMainList(H.Tree, pos, rootToSpawnIndex, 0, replantedTree: true, oldTreeID: oldTreeId);
         IsToSave = false;
     }
-
-
-
-    //private int amtOfTreePool = 30;
-    //void CreateTreePool()
-    //{
-    //    for (int i = 0; i < amtOfTreePool; i++)
-    //    {
-    //        var randRootIndex = UMath.GiveRandom(0, allTrees.Count);
-    //        var randRoot = allTrees[randRootIndex];
-
-    //        var tTree = TerrainRamdonSpawner.CreateTerraSpawn(randRoot, new Vector3(),
-    //            new Vector3(0, rand.Next(0, 360), 0), -1, H.Tree, "", transform);
-
-    //        tTree.RootToSpawnIndex = randRootIndex;
-    //        tTree.MyId = "Reset Tree Init"+Id;
-    //        tTree.name = MyId;
-
-    //        _treesPool.Add(tTree);
-    //    }
-    //    Debug.Log("tree pool ct:"+_treesPool.Count);
-    //}
-
-
 
     //Creates the main type of objects and add them to AllRandomObjList, at the end if IsToSave is true will save it on
     //SaveOnListData
     public void CreateObjAndAddToMainList(H typePass, Vector3 pos, 
         int rootToSpawnIndex, int index, Quaternion rot = new Quaternion(), bool replantedTree = false,
-        float treeHeight = 0, MDate seedDate = null, float maxHeight = 0, bool treeFall=false, float weight=0)
+        float treeHeight = 0, MDate seedDate = null, float maxHeight = 0, bool treeFall=false, float weight=0,
+        string oldTreeID = "")
     {
         string root = ReturnRoot(typePass, rootToSpawnIndex);
         TerrainRamdonSpawner temp = null;
@@ -487,16 +459,15 @@ public class TerrainSpawnerController : ControllerParent
                 st.TreeFall = treeFall;
             }
         }
-
         //AssignSharedMaterial(temp);
         //temp.AssignToAllGeometryAsSharedMat(temp.gameObject, "Enviroment");
-
 
         //if is replant tree we want to place it first so when loading is faster 
         if (replantedTree)
         {
+            temp.MyId = oldTreeID;
+            temp.name = oldTreeID;
             AllRandomObjList.Insert(0,temp);
-            //_mapGC.Add(temp.MyId);
         }
         else
         {

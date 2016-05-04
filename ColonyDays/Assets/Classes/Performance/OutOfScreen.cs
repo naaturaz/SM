@@ -76,13 +76,16 @@ public class OutOfScreen
         if (_onScreenRectNow && (_renderer.isVisible || _person.Body.MovingNow) && !_onScreenRenderNow)
         {
             _onScreenRenderNow = true;
-            //UpdateOnObjt();
             SwitchNow();
         }
         else if ((!_onScreenRectNow || !_renderer.isVisible) && _onScreenRenderNow)
         {
             _onScreenRenderNow = false;
-            //UpdateOnObjt();
+            //wont deactivate the animator if is on RectNow and close enough to the camera 
+            if (_onScreenRectNow && _currentLOD == H.LOD0)
+            {
+                return;
+            }
             SwitchNow();
         }
         HideShow();
@@ -114,7 +117,7 @@ public class OutOfScreen
 
     private void SwitchNow()
     {
-        if (_onScreenRenderNow && _currentLOD == H.LOD0)
+        if ((_onScreenRenderNow || _onScreenRectNow) && _currentLOD == H.LOD0)
         {
             OnBecameVisible();
         }

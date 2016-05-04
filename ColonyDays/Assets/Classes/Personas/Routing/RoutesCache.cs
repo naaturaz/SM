@@ -102,10 +102,19 @@ public class RoutesCache {
         return _current;
     }
 
+    bool OriginDestinyContains(TheRoute theRoute, string word)
+    {
+        return theRoute.OriginKey.Contains(word) || theRoute.DestinyKey.Contains(word);
+    }
+
     public void AddReplaceRoute(TheRoute theRoute)
     {
         if (theRoute.CheckPoints.Count == 0
-            || theRoute.OriginKey.Contains("Dummy") || theRoute.DestinyKey.Contains("Dummy"))
+            || OriginDestinyContains(theRoute, "Dummy") 
+           // || OriginDestinyContains(theRoute, "Tree")
+            //|| OriginDestinyContains(theRoute, "Stone") || OriginDestinyContains(theRoute, "Iron")
+            //|| OriginDestinyContains(theRoute, "Gold")
+            )
         {
             return;
         }

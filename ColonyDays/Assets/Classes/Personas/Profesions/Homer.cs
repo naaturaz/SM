@@ -34,7 +34,11 @@ public class Homer : Profession
         //so drops stuff in there 
         BuildToGoBackTo = BuildToGoBackToDefine();
 
-        //Init();
+        if (_person.PrevJob == Job.Farmer)
+        {
+            FinRoutePoint = DefineFinRoute();
+            InitRoute();        
+        }
     }
 
     private void Init()
@@ -79,9 +83,6 @@ public class Homer : Profession
     void InitRoute()
     {
         RouterActive = true;
-        //dummy = CreateDummy();
-        //dummy.transform.position = FinRoutePoint;
-        //dummy.HandleLandZoning();
 
         if (BuildToGoBackTo != null)
         {
@@ -129,6 +130,12 @@ public class Homer : Profession
         }
 
         base.Update();
+
+        //if (_person == null)
+        //{
+        //    return;
+        //}
+
         WorkAction(HPers.None);
         Execute();
         CheckWhenDone();

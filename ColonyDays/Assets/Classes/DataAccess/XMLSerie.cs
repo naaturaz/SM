@@ -235,9 +235,6 @@ public class XMLSerie
         //and dataPath to newName
         dataPath = path;
 
-#if UNITY_EDITOR
-        dataPath += " Editor";
-#endif
     }
 
     public static void LoadGame(string path)

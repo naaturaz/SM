@@ -68,6 +68,7 @@ public class Forester : Profession
         //asking for grown in case is there but from an old list  
         if (!_stillElement.Grown())
         {
+            StillElementId = "";
             _spawnersList.Remove(_stillElement);
             _takeABreakNow = true;
             return;
@@ -118,16 +119,21 @@ public class Forester : Profession
 
     void InitRoute()
     {
-        //Debug.Log("Forester InitingRoute:"+_person.MyId);
         RouterActive = true;
         IsRouterBackUsed = true;
 
         //bz dummy.DummyIdSpawner
         _person.MyDummyProf.MyId = StillElementId;
         _person.MyDummyProf.transform.position = FinRoutePoint;
+        
         _person.MyDummyProf.transform.LookAt(_treeCenterPos);
         _person.MyDummyProf.HandleLandZoning();
-        _person.MyDummyProf.DummyIdSpawner = StillElementId; 
+        _person.MyDummyProf.DummyIdSpawner = StillElementId;
+
+        //UVisHelp.CreateText(FinRoutePoint, StillElementId, 60);
+
+        //bz sometimes falls inside the Still element
+        MoveDummyAwayFromEleSoDoesntFallInsideOfIt();
 
         //so it doesnt add like a door at the end when gets to tree
         Router1 = new CryRouteManager(_person.Work, _person.MyDummyProf, _person, HPers.None, true, false);
@@ -140,7 +146,6 @@ public class Forester : Profession
         for (int i = 0; i < all.Count; i++)
         {
             var t = all[i];
-
             //or if is blacklisted 
             if (t == null || _person.Brain.BlackList.Contains(t.MyId) || !t.Grown() )
             {
@@ -152,7 +157,6 @@ public class Forester : Profession
                 _spawnersList.Add(t);
             }
         }
-        //GameScene.print("spawners found:"+_spawnersList.Count);
     }
 
     List<VectorM> OrderSpawners(List<TerrainRamdonSpawner> listP)
@@ -201,7 +205,6 @@ public class Forester : Profession
 
         base.Update();
         Execute();
-        //GameScene.print("Update on Foreset ");
     }
 
     /// <summary>
@@ -232,8 +235,7 @@ public class Forester : Profession
     {
         if (RouterActive && Router1.IsRouteReady && !routerBackWasInit)
         {
-            //bz sometimes falls inside the Still element
-            MoveDummyAwayFromEleSoDoesntFallInsideOfIt();
+
 
             routerBackWasInit=true;
             RouterBack = new CryRouteManager(_person.MyDummyProf, _person.FoodSource, _person, HPers.InWorkBack, false, true);
@@ -245,8 +247,8 @@ public class Forester : Profession
     /// </summary>
     private void MoveDummyAwayFromEleSoDoesntFallInsideOfIt()
     {
-        _person.MyDummyProf.transform.position = Vector3.MoveTowards(_person.MyDummyProf.transform.position, _person.FoodSource.transform.position,
-            3);
+        _person.MyDummyProf.transform.position = 
+            Vector3.MoveTowards(_person.MyDummyProf.transform.position, _stillElement.transform.position, -2);
     }
 
     /// <summary>
@@ -259,7 +261,8 @@ public class Forester : Profession
     {
         //seein the spawner list bz if last time was bigger than one I can still find prob another 
         //stillElement to mine 
-        if (!_workingNow && _spawnersList.Count > 1 && prodCarrying == P.None)//if is carrying someting need to drop it 1st
+        if (!_workingNow && _spawnersList.Count > 1 &&
+            (prodCarrying == P.None || _person.Inventory.CurrentVolumeOcuppied() == 0))//if is carrying someting need to drop it 1st
         {
             CheckIfProfHasToBeReCreated();
         }
@@ -274,33 +277,27 @@ public class Forester : Profession
         if (ExecuteNow && ReadyToWork)
         {
             ExecuteNow = false;
-
             if (_stillElement!=null)
             {
                 _audioPlayer.PlaySoundOneTime(RootSound.axe, _stillElement.gameObject.transform.position);
             }
-
-
             ////foresters reset when done work
-            //Debug.Log("Foreset reset dummy");
             ResetDummy();
 
             if (_person.Work.CanTakeItOut(_person))
             {
-                if (CheckIfStillElementWasDestroy() || ElementWasCut())
+                if (ElementWasCut())
                 {
-                    //so it doesnt get a null ref in below methods 
                     return;
                 }
                 
-                P prod = FindProdImMining(StillElementId, _person);
+                P prod = FindProdImMining(_stillElement.MyId, _person);
                 SetProdImMiningWeight();
                 base.Execute(Job.Forester.ToString(), prod);
                 RemoveWeightFromMiningEle(prod);
             }
             else
             {
-                //_person.Work.AddEvacuationOrderMost();
                 //todo add to notify //Forester didnt work bz its Home Storage is full
                 //Debug.Log(_person.MyId +", Forester didnt work bz its Home Storage is full");
             }
@@ -323,39 +320,14 @@ public class Forester : Profession
         {
             return true;
         }
-        
-        if (!IsStillElementReadyToBeCut())
+
+        if (_stillElement == null || !_stillElement.Grown())
         {
             return true;
         }
         return false;
     }
 
-    bool IsStillElementReadyToBeCut()
-    {
-        var no = _stillElement == null || !_stillElement.Grown();
-        return !no;
-    }
-
-    private bool CheckIfStillElementWasDestroy()
-    {
-        if (_person == null)
-        {
-            //here is not really true but can skip all bz _person is null
-            return true;
-        }
-
-        //var ele =
-        //    Program.gameScene.controllerMain.TerraSpawnController.Find(StillElementId);
-
-        //when is just on site to play animation of building 
-        if (_stillElement == null)//ele
-        {
-            //so skip all that and goes back to office 
-            return true;
-        }
-        return false;
-    }
 
     AudioPlayer _audioPlayer=new AudioPlayer();
     /// <summary>
@@ -363,9 +335,6 @@ public class Forester : Profession
     /// </summary>
     private void RemoveWeightFromMiningEle(P prod)
     {
-        //var ele =
-        //    Program.gameScene.controllerMain.TerraSpawnController.Find(StillElementId);
-        
         _stillElement.MinedNowBy--;
 
         if (!_person.Inventory.Contains(prod))

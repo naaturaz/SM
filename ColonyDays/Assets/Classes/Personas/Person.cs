@@ -1264,6 +1264,10 @@ public class Person : General
         {
             yield return new WaitForSeconds(random1020Time); // wait
             random1020Time = RestartTimes(0.5f, 3f);
+
+#if UNITY_EDITOR
+            random1020Time = .1f;
+#endif
             _brain.MindState();
         }
     }
@@ -1641,7 +1645,7 @@ public class Person : General
 
     public void DropFoodAtHome()
     {
-        if (Home == null || Home.Instruction == H.WillBeDestroy)
+        if (Home == null)
         {
             return;
         }
