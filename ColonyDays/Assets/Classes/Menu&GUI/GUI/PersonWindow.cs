@@ -98,13 +98,13 @@ public class PersonWindow : GUIElement {
                      + "\n Nutrition:" + _person.NutritionLevel.ToString("N0") 
                      + "\n Profession:" + _person.ProfessionProp.ProfDescription
                  
-                     + "\n Spouse:" + _person.Spouse
+                     + "\n Spouse:" + Family.RemovePersonIDNumberOff(_person.Spouse)
                      + "\n Happy:" + _person.Happinnes
                      + "\n YearsOfSchool:" + _person.YearsOfSchool;
 
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
         res += DebugInfo();
-#endif
+//#endif
         return res;
     }
 

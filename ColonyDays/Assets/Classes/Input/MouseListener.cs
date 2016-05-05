@@ -228,7 +228,9 @@ public class MouseListener : InputMain
         else if (action == "Close_Btn")
         {
             _personWindow.Hide();
+
             _buildingWindow.Hide();
+            UnselectingBuild();
         }
         else if (action == "Demolish_Btn")
         {

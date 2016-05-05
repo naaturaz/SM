@@ -597,7 +597,7 @@ public class TerrainSpawnerController : ControllerParent
             bool isMarkToMineLocal = false;
             if (AllRandomObjList[i] is StillElement)
             {
-                print("ReSaveData() stillEle");
+                //print("ReSaveData() stillEle");
                 StillElement still = (StillElement)AllRandomObjList[i];
             }
 

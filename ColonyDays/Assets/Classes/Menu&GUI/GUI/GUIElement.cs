@@ -57,9 +57,7 @@ public class GUIElement : General {
     {
         Vector3 newPos = transform.position;
         newPos.y = -800f;
-
         transform.position = newPos;
-        
     }
 
     /// <summary>

@@ -362,7 +362,7 @@ public class Person : General
             obj = (Person) Resources.Load(Root.personaMale1, typeof (Person));
         }
 
-        int iniAge = General.GiveRandom(25, 26); //5, 29
+        int iniAge = General.GiveRandom(25, 25); //5, 29
 
         //will assign ramdom pos if has none 
         if (iniPos == new Vector3())
@@ -452,7 +452,7 @@ public class Person : General
 
         obj = (Person)Instantiate(obj, iniPos, Quaternion.identity);
         obj.Gender = obj.OtherGender();
-        obj.InitObj(5);//10
+        obj.InitObj(5);//5
         obj.Geometry.GetComponent<Renderer>().sharedMaterial = ReturnRandoPersonMaterialRoot();
 
         //this to when Person dont have where to leave and then they find a place the teletranport effect
@@ -506,20 +506,14 @@ public class Person : General
         YearsOfSchool = pF.YearsOfSchool;
         SavedJob = pF.SavedJob;
         PrevJob = pF.PrevJob;
+        IsWidow = pF._isWidow;
 
         _body = new Body(this, pF);
-
-        //StartLOD();
 
         Program.InputMain.ChangeSpeed += _body.ChangedSpeedHandler;
         Program.gameScene.ChangeSpeed += _body.ChangedSpeedHandler;
 
-        //_body.ChangeSpeed; +=
-        //_eventSetter.DoneRoute += DoneRouteHandler;
-
-
         Brain = new Brain(this, pF);
-
 
         InitGeneralStuff();
 
@@ -527,8 +521,6 @@ public class Person : General
 
         //bz loading ends here 
         IsLoading = false;
-        
-        //transform.parent = Home.transform;
     }
 
     private void RecreateProfession(PersonFile pF)
@@ -553,11 +545,11 @@ public class Person : General
         Brain = new Brain(this);
         _body = new Body(this);
 
-        //StartLOD();
-
         Program.InputMain.ChangeSpeed += _body.ChangedSpeedHandler;
         Program.gameScene.ChangeSpeed += _body.ChangedSpeedHandler;
 
+        DefineIfIsMajor();
+        DefineBirthMonth();
         InitGeneralStuff();
     }
 
@@ -571,8 +563,6 @@ public class Person : General
     {
         NameTransform();
         DefineColliders();
-        DefineIfIsMajor();
-        DefineBirthMonth();
     }
 
     /// <summary>
@@ -832,6 +822,13 @@ public class Person : General
         }
     }
 
+    public override void DestroyCool()
+    {
+        MyDummy.Destroy();
+        MyDummyProf.Destroy();
+        base.DestroyCool();
+    }
+
     private void AddHappyForVarietyOfFoods()
     {
         if (Home==null)
@@ -903,6 +900,9 @@ public class Person : General
     /// </summary>
     void ReachAgeMajority()
     {
+
+
+
         //the family ID of the place he is gonna be booked
         //will be empty if is Virgin Family
         var newFamilyID = "";//will be returned below 
@@ -1041,7 +1041,7 @@ public class Person : General
     {
         if (Age > _lifeLimit)
         {
-            print(MyId + " gone , se partio.To old");
+            print(MyId + " gone , se partio.To old" + " home:" + Home.MyId);
             ActionOfDisappear();
         }
     }
@@ -1061,6 +1061,7 @@ public class Person : General
             //to address when a person die in btw this one, assign true to Brain and still waiting to be process 
             if (sp == null)
             {
+                Debug.Log("Need to die now but cant find family " + MyId + " Spouse:"+Spouse);
                 return;
             }
 
@@ -1290,21 +1291,20 @@ public class Person : General
         {
             _profession.Update();
         }
+
+        //Majority used to be called in here 
+        if (UPerson.IsMajor(_age) && !_isMajor && string.IsNullOrEmpty(IsBooked) //&& Brain.GoMindState 
+          && Brain.IAmHomeNow())
+        {
+            ReachAgeMajority();
+        }
 	}
-
-
-    
 
 
     void UpdateCallsToOneSec()
     {
         TimeChecks();
-
-        if (UPerson.IsMajor(_age) && !_isMajor && string.IsNullOrEmpty(IsBooked) //&& Brain.GoMindState 
-            && Brain.IAmHomeNow())
-        {
-            ReachAgeMajority();
-        }
+     
     }
 
     public void UpdateInfo(string add = "")

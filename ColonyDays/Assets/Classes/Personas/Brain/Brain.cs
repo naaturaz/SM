@@ -277,18 +277,13 @@ public class Brain
         AddToGenOldKeyIfAOldRouteHasOneOldBridgeOnIt(_idleRoute);
         _idlePoint = Return1HouseCorner();
 
-        //if (dummyIdle == null || dummyIdle.transform.position == new Vector3())
-        //{
-        //    dummyIdle = CreateDummyIdle();
-        //}
-
+        //so it can use the new positions
+        _person.MyDummy.LandZone1.Clear();
         _person.MyDummy.transform.position = _idlePoint;
         _person.MyDummy.HandleLandZoning();
 
-        //_routerIdle = new CryRouteManager(_person.Home, GameScene.dummySpawnPoint, _person, finDoor:false);
         _routerIdle = new CryRouteManager(_person.Home, _person.MyDummy, _person, finDoor: false);
         _routerIdle.DoneRoute += DoneRouteHandler;
-
         idleRouteStart = true;
     }
 
@@ -2077,6 +2072,11 @@ public class Brain
     /// </summary>
     void UpdateOrderedFoodSources()
     {
+        //addressing nullRef
+        if (_person == null || _person.Home == null)
+        {
+            return;
+        }
         orderedFoodSources.Clear();
         int size = BuildingPot.Control.FoodSources.Count;
         List<VectorM> loc = new List<VectorM>();
@@ -2084,7 +2084,6 @@ public class Brain
         for (int i = 0; i < size; i++)
         {
             string key = BuildingPot.Control.FoodSources[i];
-
             if (BuildingPot.Control.Registro.AllBuilding[key].Instruction == H.None && !_blackList.Contains(key))
             {
                 Vector3 pos = BuildingPot.Control.Registro.AllBuilding[key].transform.position;
@@ -2099,7 +2098,6 @@ public class Brain
             if (GetStructureFromKey(loc[i].LocMyId).Instruction == H.None)
             {
                 orderedFoodSources.Add(loc[i].LocMyId);
-                //GameScene. print(foodSources[i] + ".foodsrc#:" + i + ".myId:" + _person.MyId);
             }
         }
     }
@@ -2976,6 +2974,8 @@ public class Brain
     {
         if (Partido && string.IsNullOrEmpty(_person.IsBooked))
         {
+            Person.UnselectPerson();
+
             _person.Body.DestroyAllPersonalObj();
             PersonPot.Control.Queues.PersonDie();
             

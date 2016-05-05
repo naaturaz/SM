@@ -215,8 +215,6 @@ public class Decoration  {
     void RandomizeRotAndScale(GameObject spwnObj, string root)
     {
         //return;
-
-
         spwnObj.transform.Rotate(new Vector3(0, UMath.GiveRandom(0, 360), 0));
 
         //they are well scaled 
@@ -224,11 +222,10 @@ public class Decoration  {
         {
             return;
         }
-
-
+        
         //ScaleDownTerrainSpawners
         var actScale = spwnObj.transform.localScale;
-        spwnObj.transform.localScale = actScale/2.5f;//2
+        spwnObj.transform.localScale = actScale/2f;//2.5
     }
 
 

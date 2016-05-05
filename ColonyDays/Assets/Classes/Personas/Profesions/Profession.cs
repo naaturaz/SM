@@ -672,10 +672,11 @@ public class Profession
         //for forester //ChopWood
         else if (_workerTask == HPers.AniFullyTrans)
         {
-            if (ForesterHasNullEle() || LoadedDifferentElement())
+            var forester = ProfDescription == Job.Forester && (ElementWasCut() || LoadedDifferentElement());
+            var builder = ProfDescription == Job.Builder && CurrentConstructionIsNullOrDone();
+            if (forester || builder)
             {
                 StillElementId = "";
-                
                 PreparePersonToGetBackToOffice();
                 return;
             }
@@ -751,6 +752,11 @@ public class Profession
     }
 
 
+    bool CurrentConstructionIsNullOrDone()
+    {
+        var constr = Brain.GetBuildingFromKey(ConstructingKey);
+        return constr == null || constr.StartingStage == H.Done;
+    }
 
 
     #region New Logic that all go back to closer Empty Storage to drop Load
@@ -870,6 +876,9 @@ public class Profession
 
     /// <summary>
     /// Created so builders can used it if a building is destroy while they are working on it 
+    /// 
+    /// now foresrets use it too if they went to a tree that was recently cut and is growing now 
+    /// and for stones,iron and gold recently removed too 
     /// </summary>
     protected void PreparePersonToGetBackToOffice()
     {
@@ -1000,6 +1009,27 @@ public class Profession
 
         return ele == null;
     }
+
+    /// <summary>
+    /// Needs to check before cut if the element is not Grown
+    /// </summary>
+    /// <returns></returns>
+    private bool ElementWasCut()
+    {
+        if (_person == null)
+        {
+            return true;
+        }
+        var ele =
+        Program.gameScene.controllerMain.TerraSpawnController.Find(StillElementId);
+
+        if (ele == null || !ele.Grown())
+        {
+            return true;
+        }
+        return false;
+    }
+
 
     private float startIdleTime;
     /// <summary>

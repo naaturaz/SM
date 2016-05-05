@@ -70,6 +70,10 @@ class SaveLoadGameWindow : GUIElement
         {
             _saveNameLbl.text = Languages.ReturnString("NameToSave");
             _inputNameGO.SetActive(true);
+            
+            _inputName.Select();
+            _inputName.ActivateInputField();
+
             _title.text = Languages.ReturnString("SaveGame.Dialog");
             _selectedToLoadNName.enabled = false;
         }
@@ -124,7 +128,10 @@ class SaveLoadGameWindow : GUIElement
 
     void Update()
     {
-        
+        if (transform.position == iniPos && Input.GetKeyUp(KeyCode.Return))
+        {
+            MouseListen("Save.OKBtn");
+        }
     }
 
     internal void MouseListen(string sub)

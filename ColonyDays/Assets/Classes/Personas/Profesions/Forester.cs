@@ -127,6 +127,8 @@ public class Forester : Profession
         _person.MyDummyProf.transform.position = FinRoutePoint;
         
         _person.MyDummyProf.transform.LookAt(_treeCenterPos);
+
+        _person.MyDummyProf.LandZone1.Clear();
         _person.MyDummyProf.HandleLandZoning();
         _person.MyDummyProf.DummyIdSpawner = StillElementId;
 

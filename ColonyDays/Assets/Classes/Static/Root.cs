@@ -419,8 +419,8 @@ public class Root : MonoBehaviour
     static List<string>houseMed = new List<string>(); 
     private static string HouseMed()
     {
-        //return houseMed[UMath.GiveRandom(0, houseMed.Count)];
-        return houseMed[UMath.GiveRandom(0,1)];
+        return houseMed[UMath.GiveRandom(0, houseMed.Count)];
+        //return houseMed[UMath.GiveRandom(0,1)];
     }
 
     static void LoadHouseMed()

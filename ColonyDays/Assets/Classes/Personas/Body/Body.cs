@@ -833,10 +833,13 @@ public class Body //: MonoBehaviour //: General
 
     public void ChangedSpeedHandler(object sender, EventArgs e)
     {
+        //bz somehow will call the dead people already
+        if (_person == null)
+        {
+            return;
+        }
         ReCalculateWalkStep();
     }
-
-
 
 	/// <summary>
     /// If the _loadedPosition != new Vector3() will load the saved position and rotation
@@ -1044,7 +1047,7 @@ public class Body //: MonoBehaviour //: General
         var dist = 0.9f;//.2 //.25
         var currDist = Vector3.Distance(_currentPosition, _routePoins[lastRoutePoint].Point);
         //getting close to last point
-        if (currDist < dist ) 
+        if (currDist < dist && CurrentRoutePointIsTheOneBeforeLast()) 
         {
             Hide();
             //not when gonna idle .. other wise will just hide body on miuddle of iddle
@@ -1066,6 +1069,20 @@ public class Body //: MonoBehaviour //: General
 
         currDist = Vector3.Distance(_currentPosition, _routePoins[index].Point);
         if (currDist < 0.01f  ){Show();}
+    }
+
+    /// <summary>
+    /// Needed so when passed close to house and is close to last point doesnt desappear.
+    /// so only dispappers in the point before the last 
+    /// </summary>
+    /// <returns></returns>
+    private bool CurrentRoutePointIsTheOneBeforeLast()
+    {
+        if (_currentRoutePoint  == lastRoutePoint)
+        {
+            return true;
+        }  
+        return false;
     }
 
     /// <summary>

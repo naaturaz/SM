@@ -242,7 +242,7 @@ public class InputMain : InputParent {
         }
         else if (Input.GetKeyUp(KeyCode.C))
         {
-            BuildingPot.InputMode = Mode.Cutting;
+            //BuildingPot.InputMode = Mode.Cutting;
             //_audioPlayer.PlaySoundOneTime(RootSound.hoverMenuSound);
         }
         //if (BuilderPot.InputMode != Mode.Placing) { Cursor.visible = true; }

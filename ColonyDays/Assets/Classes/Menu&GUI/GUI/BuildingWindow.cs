@@ -325,7 +325,7 @@ public class BuildingWindow : GUIElement {
 
             for (int i = 0; i < _building.PeopleDict.Count; i++)
             {
-                res += "\n " + _building.PeopleDict[i];
+                res += "\n " + Family.RemovePersonIDNumberOff(_building.PeopleDict[i]);
             }
 
             if (_building.HType == H.Masonry)
@@ -355,9 +355,9 @@ public class BuildingWindow : GUIElement {
         }
 
         return res 
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
            + DebugInfo()
-#endif
+//#endif
             ;
     }
 

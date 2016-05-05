@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using Random = UnityEngine.Random;
@@ -51,6 +52,8 @@ public class StillElement : TerrainRamdonSpawner
     // Use this for initialization
 	protected void Start ()
 	{
+	    StartCoroutine("TenSecUpdate");
+
         //is a decora object 
         if (MyId.Contains("Decora"))//if is -1 is a pool tree
 	    {
@@ -111,11 +114,10 @@ public class StillElement : TerrainRamdonSpawner
         }
 
         _myAnimator = GetComponent<Animator>();
-        
-        //so rotates
-        _myAnimator.enabled = true;
-        //so is not called in Update
-        _myAnimator.enabled = false;
+
+        //Debug.Log("Start: " + MyId);
+        _timeOfInit = Time.time;
+        _tenSecCourotine = 10;
 
         //if is loading a falled tree
         if (TreeFall)
@@ -127,6 +129,42 @@ public class StillElement : TerrainRamdonSpawner
             DestroyCool();
         }
     }
+
+
+#region Deactiavte Animator
+
+    private float _timeOfInit;
+    private float _tenSecCourotine = 10;
+    void CheckIfCanBeDeactivated()
+    {
+        if (_timeOfInit == 0)
+        {
+            return;
+        }
+        if (Time.time > _timeOfInit + 20)
+        {
+            _timeOfInit = 0;
+            //so is not called in Update
+            _myAnimator.enabled = false;
+            //so its not asked for really long periods of time 
+            _tenSecCourotine = 10000;
+        }
+    }
+
+    private IEnumerator TenSecUpdate()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(_tenSecCourotine); // wait
+            CheckIfCanBeDeactivated();
+        }
+    }
+
+#endregion
+
+
+
+
 
     public void CutDownTree()
     {
