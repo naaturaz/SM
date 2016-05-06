@@ -2789,10 +2789,8 @@ public class Brain
     /// i could not find any bridge</param>
     internal void BlackListBuild(string buildID, string routeKey)
     {
-        if (_blackList.Contains(buildID)|| string.IsNullOrEmpty(buildID))//addresing the call of a Dummy
-        {
-            return;
-        }
+        //This block needs to be called first in case is BlackListing a blacklisted building already
+        //was not tested 
 
         //so leaves the reRoutes free
         PersonPot.Control.RemoveMeFromSystem(_person.MyId);
@@ -2802,13 +2800,18 @@ public class Brain
         //can reroute again later when is his turn again
         PersonPot.Control.RemovePersonFromPeopleChecked(_person.MyId);
 
+
+        if (_blackList.Contains(buildID)|| string.IsNullOrEmpty(buildID))//addresing the call of a Dummy
+        {
+            return;
+        }
+
         MoveToNewHome.RemovePeopleDict(buildID);
         Debug.Log("Blaclisted:"+buildID +" ."+_person.MyId);
 
         //the route key is added so we dont blaclist 2 buildings of a same route
         //only the 1st one need to be blacklisted. this applys for BridgeRouting 
         _blackList = AddToList(_blackList, buildID);
-
 
         //person blacklisting Home 
         if (buildID == _person.Home.MyId)
@@ -2820,7 +2823,6 @@ public class Brain
             _person.Body.GoingTo=HPers.None;
 
             RemoveFromAllPeopleDict();
-
 
             _person.Home.BookedHome1.ClearBooking();
             _person.Home.BookedHome1 = null;
@@ -2837,7 +2839,6 @@ public class Brain
             Die();
             return;
         }
-        
         
         BridgeMarkedAction(buildID);
     }

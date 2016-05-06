@@ -554,9 +554,14 @@ public class CryRoute
             return false;
         }
 
+        //this is to address the case of a Terrain Spawner 
         var build = Brain.GetBuildingFromKey(c.ParentId);
-        var facer = build.RotationFacerIndex;
+        if (build == null)
+        {
+            return false;
+        }
 
+        var facer = build.RotationFacerIndex;
         return IsThisCrystalOnDoorSide(facer, c.AnchorIndex);
     }
 

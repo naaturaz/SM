@@ -581,14 +581,23 @@ public class Dispatch
         return rank.OrderByDescending(a => a.Score).ToList();
     }
 
+    /// <summary>
+    /// used to be from the closest from Home. Now is from Work
+    /// 
+    /// used by evacuation orders
+    /// and regular orders. they need to find the closest FoodSrc to the Works of the Persons
+    /// not their homes 
+    /// </summary>
+    /// <param name="person"></param>
+    /// <param name="toScore"></param>
+    /// <returns></returns>
     float ScoreABuild(Person person, Building toScore)
     {
-        if (person.Home == null)
+        if (person.Work == null)
         {
             return Vector3.Distance(person.transform.position, toScore.transform.position);    
         }
-
-        return Vector3.Distance(person.Home.transform.position, toScore.transform.position);
+        return Vector3.Distance(person.Work.transform.position, toScore.transform.position);
     }
 
 #region Evacuation Order
