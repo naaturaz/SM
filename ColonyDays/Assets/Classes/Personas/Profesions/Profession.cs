@@ -295,6 +295,19 @@ public class Profession
 
     protected void LoadAttributes(Profession prof)
     {
+        if (prof.RouterBack != null)
+        {
+            RouterBack = new CryRouteManager();
+            RouterBack.TheRoute = prof.RouterBack.TheRoute;
+            PersonPot.Control.RoutesCache1.AddReplaceRoute(RouterBack.TheRoute);
+        }
+        if (prof.Router1 != null)
+        {
+            Router1 = new CryRouteManager();
+            Router1.TheRoute = prof.Router1.TheRoute;
+            PersonPot.Control.RoutesCache1.AddReplaceRoute(Router1.TheRoute);
+        }
+
         ProfDescription=prof.ProfDescription;
         //Radius=prof.Radius;
 

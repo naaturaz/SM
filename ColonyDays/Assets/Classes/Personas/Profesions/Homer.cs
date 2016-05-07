@@ -34,10 +34,16 @@ public class Homer : Profession
         //so drops stuff in there 
         BuildToGoBackTo = BuildToGoBackToDefine();
 
-        if (_person.PrevJob == Job.Farmer)
+        var router1 = Router1 == null && Router1.TheRoute == null;
+        var routerBack = RouterBack == null && RouterBack.TheRoute == null;
+
+        if (_person.PrevJob == Job.Farmer && _person.Work!= null && _person.Work.MyId.Contains("Farm")
+            && WorkerTask == HPers.None//standing in field 
+            //&& (router1 || routerBack)
+            )
         {
             FinRoutePoint = DefineFinRoute();
-            InitRoute();        
+            InitRoute();
         }
     }
 

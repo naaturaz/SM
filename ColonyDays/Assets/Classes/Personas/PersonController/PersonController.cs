@@ -140,7 +140,7 @@ public class PersonController : PersonPot
     private bool init;
     public void Initialize()
     {
-        if (!MeshController.CrystalManager1.IsFullyLoaded())
+        if (!MeshController.CrystalManager1.IsFullyLoaded() || !Program.gameScene.GameFullyLoaded())//making sure all build are fullt loaded
         {
             return;
         }
@@ -164,8 +164,6 @@ public class PersonController : PersonPot
             //This is DEBUG
             GameController.LoadStartingConditions(conditions[Difficulty]);
         }
-
-
     }
 
 
@@ -175,16 +173,6 @@ public class PersonController : PersonPot
     /// <param name="pData"></param>
     void LoadFromFile(PersonData pData)
     {
-        //persons
-        for (int i = 0; i < pData.All.Count; i++)
-        {
-            Person t = Person.CreatePersonFromFile(pData.All[i]);
-            MouseClick += t.MouseClickHandler;
-
-            All.Add( t);
-            _allGC.Add(t.MyId, t);
-        }  
-
         //person controller vars
         Difficulty = pData.PersonControllerSaveLoad.Difficulty;
 
@@ -196,10 +184,23 @@ public class PersonController : PersonPot
         BuildersManager1 = pData.PersonControllerSaveLoad.BuildersManager;
 
         RoutesCache1 = pData.PersonControllerSaveLoad.RoutesCache;
+        RoutesCache1.LoadTheSave();
 
         //OnSystemNow1 = pData.PersonControllerSaveLoad.OnSystemNow1;
         EmigrateController1 = pData.PersonControllerSaveLoad.EmigrateController1;
         EmigrateController1.RecreateEmigratesGC();
+
+
+
+        //persons
+        for (int i = 0; i < pData.All.Count; i++)
+        {
+            Person t = Person.CreatePersonFromFile(pData.All[i]);
+            MouseClick += t.MouseClickHandler;
+
+            All.Add(t);
+            _allGC.Add(t.MyId, t);
+        }  
     }
 
     private Person tempPerson;

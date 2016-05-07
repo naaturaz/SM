@@ -3,15 +3,52 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class RoutesCache {
+public class RoutesCache
+{
 
     Dictionary<string, TheRoute> _items = new Dictionary<string, TheRoute>();
     TheRoute _current = new TheRoute();//current route we are comparing to
+    List<TheRoute> _itemsLoadSave = new List<TheRoute>();
+
+    //so they are saveLoad
+    public List<TheRoute> ItemsLoadSave
+    {
+        get { return _itemsLoadSave; }
+        set { _itemsLoadSave = value; }
+    }
 
     public TheRoute Current
     {
         get { return _current; }
         set { _current = value; }
+    }
+
+
+    /// <summary>
+    /// Needs to be called when saving this. so the List 'ItemsLoadSave' is created and is ready to save
+    /// </summary>
+    public void CreateSave()
+    {
+        for (int i = 0; i < _items.Count; i++)
+        {
+            _itemsLoadSave.Add(_items.ElementAt(i).Value);
+        }
+    }
+
+    /// <summary>
+    /// Needs to be called so the dict '_items' is populated
+    /// </summary>
+    public void LoadTheSave()
+    {
+        for (int i = 0; i < _itemsLoadSave.Count; i++)
+        {
+            var key = ReturnKey(_itemsLoadSave[i]);
+
+            if (!_items.ContainsKey(key))
+            {
+                _items.Add(key, _itemsLoadSave[i]);
+            }
+        }
     }
 
 
@@ -24,9 +61,6 @@ public class RoutesCache {
     /// <returns></returns>
     public bool ContainANewerOrSameRoute(string OriginKey, string DestinyKey, DateTime askDateTime)
     {
-
-        //return false;
-
         var haveIt = DoWeHaveThatRoute(OriginKey, DestinyKey);
 
         if (!haveIt)
@@ -68,7 +102,7 @@ public class RoutesCache {
 
         if (_items.ContainsKey(key))
         {
-            if (_items[key].CheckPoints.Count >0)
+            if (_items[key].CheckPoints.Count > 0)
             {
                 //only if has more than 0 bz they can reference clear the routes 
                 _current = new TheRoute(_items[key]);
@@ -109,7 +143,7 @@ public class RoutesCache {
 
     public void AddReplaceRoute(TheRoute theRoute)
     {
-        if (theRoute.CheckPoints.Count == 0
+        if (theRoute == null || theRoute.CheckPoints.Count == 0 || theRoute.CheckPoints.Count == 0
             || OriginDestinyContains(theRoute, "Dummy") 
            // || OriginDestinyContains(theRoute, "Tree")
             //|| OriginDestinyContains(theRoute, "Stone") || OriginDestinyContains(theRoute, "Iron")

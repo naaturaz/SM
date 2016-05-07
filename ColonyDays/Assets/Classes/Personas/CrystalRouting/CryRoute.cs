@@ -77,6 +77,8 @@ public class CryRoute
 
     public CryRoute(Structure ini, Structure fin, Person person, string destinyKey, bool iniDoor = true, bool finDoor = true)
     {
+        
+
         _origenKey = ini.MyId;
         _destinyKey = destinyKey;
 
@@ -117,6 +119,7 @@ public class CryRoute
 
     private void Init()
     {
+        //Debug.Log("init route:" + _person.MyId);
         _timeStamp = Time.time;
 
         _curr.Position = U2D.FromV3ToV2(_one.Position);

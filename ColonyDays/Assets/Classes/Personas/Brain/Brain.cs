@@ -149,6 +149,11 @@ public class Brain
         _chillRoute = pF._brain._chillRoute;
         goMindState = true;
 
+        PersonPot.Control.RoutesCache1.AddReplaceRoute(_workRoute);
+        PersonPot.Control.RoutesCache1.AddReplaceRoute(_foodRoute);
+        PersonPot.Control.RoutesCache1.AddReplaceRoute(_religionRoute);
+        PersonPot.Control.RoutesCache1.AddReplaceRoute(_chillRoute);
+
         //so routes dont get started 
         oldHome = pF._home;
         oldWork = pF._work;
@@ -157,7 +162,7 @@ public class Brain
         oldChill = pF._chill;
 
         //if we have an old route will start that one 
-        WillRedoOldLoadedRoutes();
+        //WillRedoOldLoadedRoutes();
 
         //so the MindState() works
         _routerFood.IsRouteReady = true;
@@ -172,7 +177,7 @@ public class Brain
         MoveToNewHome.OldHomeKey = pF._brain.MoveToNewHome.OldHomeKey;
         MoveToNewHome.RouteToNewHome = pF._brain.MoveToNewHome.RouteToNewHome;
 
-        //bz loading routes. theyu need to be set to false otherwise will be true forver 
+        ////bz loading routes. theyu need to be set to false otherwise will be true forver 
         //workRouteStart = false;
         //foodRouteStart = false;
         //idleRouteStart = false;
@@ -1172,8 +1177,8 @@ public class Brain
                     RestartVarsAndAddToGenList();
                 }
                 oldHome = _person.Home.MyId;
+                StartRoutes();
             }
-
             //work related
             if (_person.Work != null && oldWork != _person.Work.MyId)
             {
@@ -1182,9 +1187,8 @@ public class Brain
 
                 RestartVarsAndAddToGenList();
                 oldWork = _person.Work.MyId;
+                StartRoutes();
             }
-
-
             if (_person.FoodSource != null && oldFoodSrc != _person.FoodSource.MyId)
             {
                 foodRouteStart = false;
@@ -1194,6 +1198,7 @@ public class Brain
                 oldFoodSrc = _person.FoodSource.MyId;
 
                 RedoProfession();
+                StartRoutes();
             }
             if (_person.Religion != null && oldReligion != _person.Religion.MyId)
             {
@@ -1201,6 +1206,7 @@ public class Brain
 
                 RestartVarsAndAddToGenList();
                 oldReligion = _person.Religion.MyId;
+                StartRoutes();
             }
             if (_person.Chill != null && oldChill != _person.Chill.MyId)
             {
@@ -1208,9 +1214,8 @@ public class Brain
 
                 RestartVarsAndAddToGenList();
                 oldChill = _person.Chill.MyId;
+                StartRoutes();
             }
-
-            StartRoutes();
         }
     }
 

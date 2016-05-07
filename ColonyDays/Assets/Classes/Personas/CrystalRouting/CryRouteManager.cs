@@ -74,10 +74,10 @@ public class CryRouteManager
         HPers routeType = HPers.None, bool iniDoor = true, bool finDoor = true, DateTime askDateTime = new DateTime())
     {
         //so profession routes are not redone everytime 
-        if (askDateTime == new DateTime())
-        {
-            askDateTime=DateTime.Now;
-        }
+        //if (askDateTime == new DateTime())
+        //{
+        //    askDateTime=DateTime.Now;
+        //}
 
         _askDateTime = askDateTime;
         _originKey = ini.MyId;
@@ -98,8 +98,6 @@ public class CryRouteManager
         {
            //Debug.Log("Same ini-fin:"+ini.MyId+" . "+person.MyId);
         }
-
-      
 
         ClearOldVars();
         Init();

@@ -51,11 +51,12 @@ public class PersonSaveLoad : PersonPot {
         res.Locked = Control.Locked;
 
         res.BuildersManager = PersonPot.Control.BuildersManager1;
+
+        Control.RoutesCache1.CreateSave();
         res.RoutesCache = Control.RoutesCache1;
 
         //res.OnSystemNow1 = Control.OnSystemNow1;
         res.EmigrateController1 = Control.EmigrateController1;
-
 
         return res;
     }
