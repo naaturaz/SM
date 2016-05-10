@@ -1079,7 +1079,7 @@ public class Profession
     /// <returns></returns>
     Vector3 DefineLookAt()
     {
-        if (LookAtWork==new Vector3())
+        if (LookAtWork == new Vector3() && _person.Work != null)
         {
             LookAtWork = _person.Work.transform.position;
         }

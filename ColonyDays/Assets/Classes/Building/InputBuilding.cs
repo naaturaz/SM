@@ -126,6 +126,11 @@ public class InputBuilding : BuildingPot {
         oldInputMode = InputMode;
     }
 
+    public void AddToOrginizeStructures(Building b)
+    {
+        _orgStructuresFromMouseHitPoint.Add(b);
+    }
+
     void ShowHelp()
     {
         count = 0;

@@ -171,13 +171,13 @@ public class XMLSerie
 
     private static BuildingData LoadDefaultTown()
     {
-        string locPath = @"\Resources\Town";
+        string locPath = "/Resources/Town";
 
         BuildingData res = null;
         var difficulty = 0;
         if (difficulty == 0)
         {
-            var file = DataContainer.Load(Path.Combine(dataPath + locPath, "4H.xml"));
+            var file = DataContainer.Load(Path.Combine(Application.dataPath + locPath, "4H.xml"));
             if (file!=null)
             {
                 Debug.Log("TownLoaded = true");

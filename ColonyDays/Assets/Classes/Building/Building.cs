@@ -458,6 +458,7 @@ public class Building : General, Iinfo
 
     }
 
+
     public void ShowLineUpHelpers()
     {
         ShowBulidingPrev();
@@ -1037,9 +1038,14 @@ public class Building : General, Iinfo
         LayerRoutine("done");
         PositionFixed = true;
 
+        //Preview of the Base to help aling
         HideBuildingPrev();
-
-
+        if (!IsLoadingFromFile)
+        {
+            //DestroyPreviewBaseBuilding();
+            //ShowPreviewBoxForBuilding();
+            //BuildingPot.InputU.AddToOrginizeStructures(this);
+        }
 
 
         if (!HType.ToString().Contains("Unit") && !IsLoadingFromFile)

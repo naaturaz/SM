@@ -738,7 +738,7 @@ public class Person : General
 
     void CheckOnNutrition()
     {
-        ChangeNutritionLvl(-100f * Program.gameScene.GameTime1.TimeFactorInclSpeed());//-2 //4 //-100
+        ChangeNutritionLvl(-50f * Program.gameScene.GameTime1.TimeFactorInclSpeed());//-100
         KillStarve();
     }
 
@@ -1192,7 +1192,7 @@ public class Person : General
         {
             yield return new WaitForSeconds(checkFoodElapsed); // wait
             ParentPersonToHome();
-            //CheckOnNutrition();
+            CheckOnNutrition();
             _brain.SlowCheckUp();
             TryHaveKids();
         }
