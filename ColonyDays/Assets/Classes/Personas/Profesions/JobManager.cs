@@ -20,17 +20,16 @@ public class JobManager
         var key = DecideBasedOnAge(person);
         var st = Brain.GetStructureFromKey(key);
 
-        if (UPerson.IsWorkingAtSchool(person, st) && !UPerson.IsMajor(person.Age))
+        //if has open positions bigger people has to Occupoied those positions bz they are for Teachers 
+        if (UPerson.IsWorkingAtSchool(person, st) && !UPerson.IsMajor(person.Age) && !st.HasOpenPositions())
         {
             person.IsStudent = true;
             //add to new school here 
-
         }
         else if (UPerson.IsMajor(person.Age) && person.IsStudent)
         {
             person.IsStudent = false;
             //remove from old school here 
-
         }
         return st;
     }

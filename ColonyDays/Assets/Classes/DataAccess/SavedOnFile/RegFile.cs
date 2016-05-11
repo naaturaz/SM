@@ -171,6 +171,11 @@ public class RegFile  {
 
     public PlantSave PlantSave1;
 
+    //the root of the Building if used.
+    //for now will be used only by HouseMed
+    public string Root;
+
+
     public RegFile(string myId, H type, Rect dimOnMap, Ca category, Vector3 iniPosition, 
         Inventory InventoryP, 
         List<string> peopleDict,
@@ -183,7 +188,7 @@ public class RegFile  {
         Vector3 max = new Vector3(), H instructionP = H.None , BookedHome bookedHome = null, 
         Dispatch dispatch = null, Family[] familes = null ,
         int dollarsPay = 0,
-        List<Vector3> anchors = null, Dock dock = null
+        List<Vector3> anchors = null, Dock dock = null, string root = ""
         )
     {
         MyId = myId;
@@ -219,6 +224,8 @@ public class RegFile  {
         DollarsPay = dollarsPay;
         Anchors = anchors;
         Dock1 = dock;
+
+        Root = root;
     }
 
     public RegFile() { }

@@ -491,9 +491,16 @@ public class InputBuilding : BuildingPot {
 
     void BuildStructure(H buildWhat, Vector3 iniPos)
     {
-        Control.CurrentSpawnBuild = Building.CreateBuild(Root.RetBuildingRoot(buildWhat), iniPos, buildWhat,
+        var root = Root.RetBuildingRoot(buildWhat);
+
+        Control.CurrentSpawnBuild = Building.CreateBuild(root, iniPos, buildWhat,
             materialKey: buildWhat + "." + Ma.matBuildBase
             , container: Program.BuildsContainer.transform);
+
+        if (root.Contains("BuildsFactory"))
+        {
+            Control.CurrentSpawnBuild.RootBuilding = root;
+        }
 
         AssignSharedMaterial();
     }

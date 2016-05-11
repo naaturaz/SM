@@ -689,7 +689,7 @@ public class PersonController : PersonPot
     private List<CheckedIn> _onSystemNow = new List<CheckedIn>();
     
     //the number is not inclusinve so if u put a 3 will alow 2
-    private int _systemCap = 1;//2//4//amt of person
+    private int _systemCap = 5;//2//4//amt of person
 
     //people waiting to be pass to _onSystemNow
     List<CheckedIn>  _waitList = new List<CheckedIn>();

@@ -93,7 +93,7 @@ public class Structure : StructureParent
             instructionP: Instruction, BookedHome1: BookedHome1, 
             dispatch: Dispatch1, Families: Families,
             dollarsPay: DollarsPay,
-            anchors: Anchors, dock: Dock1
+            anchors: Anchors, dock: Dock1, root: RootBuilding
             );
     }
 

@@ -150,12 +150,21 @@ public class BuildingSaveLoad : BuildingPot
         return res;
     }
 
+    string FindRootForStructure(RegFile regFile)
+    {
+        if (!string.IsNullOrEmpty(regFile.Root))
+        {
+            return regFile.Root;
+        }
+        return Root.RetBuildingRoot(regFile.HType);
+    }
+
     /// <summary>
     /// Creates the the new building, category: structure
     /// </summary>
     void CreateStructure(RegFile regFile)
     {
-        Control.CurrentSpawnBuild = Building.CreateBuild(Root.RetBuildingRoot(regFile.HType), regFile.IniPos, 
+        Control.CurrentSpawnBuild = Building.CreateBuild(FindRootForStructure(regFile), regFile.IniPos, 
             regFile.HType, isLoadingFromFile: true, materialKey: regFile.MaterialKey
             , container: Program.BuildsContainer.transform);
             

@@ -313,8 +313,7 @@ public class StillElement : TerrainRamdonSpawner
 
     public override void DestroyCool()
     {
-        Debug.Log("DestroyCool():" + MyId);
-        
+        //Debug.Log("DestroyCool():" + MyId);
         //PersonPot.Control.RoutesCache1.RemoveAllMine(MyId);
 
         //cool stuff

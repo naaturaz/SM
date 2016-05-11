@@ -21,7 +21,7 @@ public class PeopleQueue {
     private List<CheckedIn> _onSystemNow = new List<CheckedIn>();
 
     //the number is not inclusinve so if u put a 3 will alow 2
-    private int _systemCap = 2;//amt of person   //1
+    private int _systemCap = 7;//amt of person   //1
 
     //people waiting to be pass to _onSystemNow
     List<CheckedIn> _waitList = new List<CheckedIn>();

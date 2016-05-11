@@ -53,7 +53,7 @@ public class Decoration  {
         SpawnDecorObj();
         AddToBatchMesh();
 
-        IfHouseMedAssignRandomMat();
+        //IfHouseMedAssignRandomMat();
     }
 
 

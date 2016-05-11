@@ -845,7 +845,7 @@ public class Person : General
     /// </summary>
     private void CheckIfInSchool()
     {
-        if (Work!=null && Work.HType.ToString().Contains("School"))
+        if (Work!=null && Work.HType.ToString().Contains("School") && !UPerson.IsMajor(Age))
         {
             YearsOfSchool++;
         }
@@ -860,7 +860,7 @@ public class Person : General
         Body.GrowScaleByYears();
         
 #if UNITY_EDITOR
-        Debug.Log("Name trans");
+        //Debug.Log("Name trans");
         NameTransform();//so it reflects the new Age
 #endif
     }
@@ -1227,6 +1227,8 @@ public class Person : General
     }
 
 
+
+
     //private IEnumerator A45msUpdate()
     //{
     //    while (true)
@@ -1299,6 +1301,11 @@ public class Person : General
             ReachAgeMajority();
         }
 	}
+
+    //void FixedUpdate()
+    //{
+    //    _body.Update();
+    //}
 
 
     void UpdateCallsToOneSec()

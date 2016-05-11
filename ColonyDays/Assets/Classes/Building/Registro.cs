@@ -336,7 +336,7 @@ public class Registro : MonoBehaviour
         Vector3 max = new Vector3(), H instructionP = H.None, BookedHome BookedHome1 = null, 
         Dispatch dispatch = null, Family[] Families = null,
         int dollarsPay = 0,
-        List<Vector3> anchors = null, Dock dock = null 
+        List<Vector3> anchors = null, Dock dock = null, string root = "" 
         )
     {
         // 12 hours to find this OMG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -366,7 +366,7 @@ public class Registro : MonoBehaviour
             materialKey: materialKey, planesOnSoilPos: planesOnSoilPos, partsOnSoil: partsOnSoil, min: min, max: max,
             instructionP: instructionP,  bookedHome: BookedHome1, dispatch: dispatch, familes: Families,
             dollarsPay: dollarsPay, 
-            anchors: anchors, dock: dock);
+            anchors: anchors, dock: dock, root: root);
 
         //UVisHelp.CreateHelpers(anchors, Root.blueCube);
 

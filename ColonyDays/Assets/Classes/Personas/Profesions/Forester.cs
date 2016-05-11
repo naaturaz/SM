@@ -81,7 +81,7 @@ public class Forester : Profession
         //moving the route point a bit towards the origin so when chopping tree its not inside the tree 
         FinRoutePoint = Vector3.MoveTowards(closerAnchorToUs, _person.Work.transform.position, MoveTowOrigin * 0.3f);//.05
 
-        Debug.Log("routerBackWasInit set false");
+        //Debug.Log("routerBackWasInit set false");
         routerBackWasInit = false;
         startIdleTime = 0;
 
@@ -281,7 +281,7 @@ public class Forester : Profession
             ExecuteNow = false;
             if (_stillElement!=null)
             {
-                _audioPlayer.PlaySoundOneTime(RootSound.axe, _stillElement.gameObject.transform.position);
+                //_audioPlayer.PlaySoundOneTime(RootSound.axe, _stillElement.gameObject.transform.position);
             }
             ////foresters reset when done work
             ResetDummy();
@@ -331,7 +331,6 @@ public class Forester : Profession
     }
 
 
-    AudioPlayer _audioPlayer=new AudioPlayer();
     /// <summary>
     /// Remove the weight from the element Im mining 
     /// </summary>

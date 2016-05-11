@@ -11,6 +11,11 @@ public class Building : General, Iinfo
     #region Fields and Prop
 
 
+    /// <summary>
+    /// The root of a building 
+    /// </summary>
+    public string RootBuilding { get; set; }
+
 
 
     //Rotate Building /// 0 is up, 1 is right, 2 is down, 3 is left
@@ -2879,7 +2884,7 @@ public class Building : General, Iinfo
     }
 
     /// <summary>
-    /// Willreturn if PositionsFilled < maxPeople
+    /// Will tell if this Buildign still has Open Positions 
     /// </summary>
     /// <returns></returns>
     internal bool HasOpenPositions()
@@ -3664,12 +3669,14 @@ public class Building : General, Iinfo
 
     public bool IsBuildingCustomerType(Person pers)
     {
-        var tavChu = HType == H.Tavern || HType == H.Church;
-        var scholar = (HType == H.School || HType == H.TradesSchool) && !UPerson.IsMajor(pers.Age);
-        return tavChu || scholar;
+        var tavChu = (HType == H.Tavern || HType == H.Church);
+        var scholar = (HType == H.School || HType == H.TradesSchool) && !UPerson.IsMajor(pers.Age)
+            ;
+        return (tavChu || scholar) && PeopleDict.Count >= MaxPeople;
     }
 
 #endregion
+
 
 }
 
