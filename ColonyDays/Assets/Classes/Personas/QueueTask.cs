@@ -128,6 +128,11 @@ public class QueueElement
     /// <returns></returns>
     public void CheckPersonIn(string personID)
     {
+        if (string.IsNullOrEmpty(personID))
+        {
+            return;
+        }
+
         if (!_personChecked.Contains(personID))
         {
             _personChecked.Add(personID);

@@ -827,8 +827,29 @@ public class Body //: MonoBehaviour //: General
     {
         CheckOnGameSpeed();
 
-        _walkStep = _speed*Program.gameScene.GameSpeed * 0.02f;//0.02      the times 2 is bz the 32ms update 
+        _walkStep = _speed*Program.gameScene.GameSpeed * 0.02f * FPSCorrection();
     }
+
+    /// <summary>
+    /// This corrects the current FPS
+    /// 
+    /// if is a 60FPS will return a 1, if FPS is at 30 will return 2, FPS:15 ret 4...and so on
+    /// </summary>
+    /// <returns></returns>
+    private float FPSCorrection()
+    {
+        //avoiding math issues
+        if (HUDFPS.FPS() == 0)
+        {
+            return 1;
+        }
+
+        //ex 30/60 = 0.5
+        var w60 = HUDFPS.FPS()/60;
+        //ex 1/0.5 = 2
+        return 1/w60;
+    }
+
 
 
     public void ChangedSpeedHandler(object sender, EventArgs e)

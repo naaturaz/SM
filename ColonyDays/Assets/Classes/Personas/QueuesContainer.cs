@@ -42,6 +42,7 @@ public class QueuesContainer
 
         _newBuildsQueue.AddToQueue(objP, key, "new");
         RestartPeopleChecked();
+        PersonPot.Control.RoutesCache1.CheckQueuesNow();
     }
 	
 	/// <summary>
@@ -51,6 +52,7 @@ public class QueuesContainer
     {
         _destroyBuildsQueue.AddToQueue(objP, key, "old");
         RestartPeopleChecked();
+        PersonPot.Control.RoutesCache1.CheckQueuesNow();
     }
 
     void RestartPeopleChecked()
@@ -181,7 +183,7 @@ public class QueuesContainer
     /// 
     /// and if the element on the queue was added after the route was created 
     /// </summary>
-    bool IsOnQueue(TheRoute theRoute, QueueTask queueTask, string personID)
+    bool IsOnQueue(TheRoute theRoute, QueueTask queueTask, string personID = "")
     {
         for (int i = 0; i < queueTask.Elements.Count; i++)
         {
@@ -200,6 +202,21 @@ public class QueuesContainer
             }
         }
         return false;
+    }
+
+    /// <summary>
+    /// Created so chache will Check if anything new in the queue interfieres with thm
+    /// 
+    /// Needed bz Homers will keep using old Cached ROutes and they will never get updated
+    /// </summary>
+    /// <param name="cachedRoute"></param>
+    /// <returns></returns>
+    public bool IsThisRouteOnAnyQueue(TheRoute cachedRoute)
+    {
+        var onNewB = IsOnQueue(cachedRoute, _newBuildsQueue);
+        var onDesB = IsOnQueue(cachedRoute, _destroyBuildsQueue);
+
+        return onNewB || onDesB;
     }
 
     /// <summary>

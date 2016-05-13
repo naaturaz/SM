@@ -71,6 +71,7 @@ public class HUDFPS : MonoBehaviour
 	    FPSCounter();
 	}
 
+    private static float savedFps=0;
     void FPSCounter()
     {
         timeleft -= Time.deltaTime;
@@ -82,6 +83,8 @@ public class HUDFPS : MonoBehaviour
         {
             // display two fractional digits (f2 format)
             float fps = accum / frames;
+            savedFps = fps;
+
             string format = System.String.Format("{0:F2} FPS", fps);
             guiText.text = format + "." + _message;
 
@@ -97,5 +100,10 @@ public class HUDFPS : MonoBehaviour
             accum = 0.0F;
             frames = 0;
         }
+    }
+
+    internal static float FPS()
+    {
+        return savedFps;
     }
 }

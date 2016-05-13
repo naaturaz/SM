@@ -61,6 +61,12 @@ public class RoutesCache
     /// <returns></returns>
     public bool ContainANewerOrSameRoute(string OriginKey, string DestinyKey, DateTime askDateTime)
     {
+        //needs to validate all the current routes first
+        if (_checkOnQueues)
+        {
+            return false;
+        }
+
         var haveIt = DoWeHaveThatRoute(OriginKey, DestinyKey);
 
         if (!haveIt)
@@ -143,12 +149,10 @@ public class RoutesCache
 
     public void AddReplaceRoute(TheRoute theRoute)
     {
-        if (theRoute == null || theRoute.CheckPoints.Count == 0 || theRoute.CheckPoints.Count == 0
-            || OriginDestinyContains(theRoute, "Dummy") 
-           // || OriginDestinyContains(theRoute, "Tree")
-            //|| OriginDestinyContains(theRoute, "Stone") || OriginDestinyContains(theRoute, "Iron")
-            //|| OriginDestinyContains(theRoute, "Gold")
-            )
+        //if _checkOnQueues is b is checking we need to keep pure that revision.
+        //after is done this will accept routes again
+        if (_checkOnQueues || theRoute == null || theRoute.CheckPoints.Count == 0 
+            || theRoute.CheckPoints.Count == 0 || OriginDestinyContains(theRoute, "Dummy"))
         {
             return;
         }
@@ -212,7 +216,9 @@ public class RoutesCache
     public void Update()
     {
         CheckIfARouteIsTooOld();
+        CheckIfNewQueues();
     }
+
 
     /// <summary>
     /// Bz routes will stay there forever. really old and not useful 
@@ -248,4 +254,53 @@ public class RoutesCache
     {
         return _items.Count + "";
     }
+
+
+    #region Queues
+
+    private bool _checkOnQueues;
+    private int _qCount;
+
+    /// <summary>
+    /// So all Routes in cache can be checked to see if one is colliding 
+    /// </summary>
+    public void CheckQueuesNow()
+    {
+        _checkOnQueues = true;
+        _qCount = 0;//in case was running already
+    }
+
+    private void CheckIfNewQueues()
+    {
+        if (!_checkOnQueues)
+        {
+            return;
+        }
+        CheckRouteOnQueue();
+    }
+
+    private void CheckRouteOnQueue()
+    {
+        if (_qCount < _items.Count)
+        {
+            var theRoute = _items.ElementAt(_qCount).Value;
+            _qCount++;
+            var isCollided = PersonPot.Control.Queues.IsThisRouteOnAnyQueue(theRoute);
+            var askTime = PersonPot.Control.Queues.GetLastCollisionTime();
+
+            //if collided then we need to see if can be removed bz we might have and old version of the route
+            if (isCollided)
+            {
+                RemoveRoute(theRoute, askTime);
+            }
+        }
+        else
+        {
+            _checkOnQueues = false;
+            _qCount = 0;
+        }
+    }
+
+
+#endregion
 }

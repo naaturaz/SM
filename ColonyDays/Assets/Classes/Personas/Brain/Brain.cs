@@ -1774,6 +1774,15 @@ public class Brain
                 //GameScene.print("Redo Chill");
                 chillRouteStart = false;
             }
+            //routes of professionals
+            //if (which == HPers.InWork)
+            //{
+                
+            //}   
+            //if (which == HPers.InWorkBack)
+            //{
+                
+            //}
         }
 
 
