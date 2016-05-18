@@ -2348,7 +2348,7 @@ public class Brain
         get { return MAXDISTANCE; }
         set { MAXDISTANCE = value; }
     }
-    private static float MAXDISTANCE = 100f;//the max distance a person will go to find a building //50
+    private static float MAXDISTANCE = 50f;//the max distance a person will go to find a building //50
     /// <summary>
     /// Return an ordered list of places ordered by distance by stone . If the place element is farther then 
     /// MAXDISTANCE wont be added to the final result 
@@ -2795,7 +2795,7 @@ public class Brain
     /// 
     /// If is callign from BridgesRouter then should look at the exception bz if i called from there
     /// i could not find any bridge</param>
-    internal void BlackListBuild(string buildID, string routeKey)
+    internal void BlackListBuild(string buildID, string routeKey, HPers routeType)
     {
         //This block needs to be called first in case is BlackListing a blacklisted building already
         //was not tested 
@@ -2807,7 +2807,6 @@ public class Brain
 
         //can reroute again later when is his turn again
         PersonPot.Control.RemovePersonFromPeopleChecked(_person.MyId);
-
 
         if (_blackList.Contains(buildID)|| string.IsNullOrEmpty(buildID))//addresing the call of a Dummy
         {
@@ -2821,6 +2820,12 @@ public class Brain
         //only the 1st one need to be blacklisted. this applys for BridgeRouting 
         _blackList = AddToList(_blackList, buildID);
 
+        if (routeType == HPers.InWork || routeType == HPers.InWorkBack)
+        {
+            BlackListProfesional();
+            return;
+        }
+
         //person blacklisting Home 
         if (buildID == _person.Home.MyId)
         {
@@ -2831,7 +2836,6 @@ public class Brain
             _person.Body.GoingTo=HPers.None;
 
             RemoveFromAllPeopleDict();
-
             _person.Home.BookedHome1.ClearBooking();
             _person.Home.BookedHome1 = null;
             _person.Home = null;
@@ -2847,9 +2851,34 @@ public class Brain
             Die();
             return;
         }
-        
         BridgeMarkedAction(buildID);
     }
+
+    private void BlackListProfesional()
+    {
+        Debug.Log("Profesional Blacklisting "+_person.MyId + " " + _person.ProfessionProp.ProfDescription);
+        if (_person.ProfessionProp.ProfDescription == Job.Homer)
+        {
+            Debug.Log("Redouing brain bz Homer blacklisted: "+_person.MyId);
+
+            //person is not selected 
+            if (!_person.ImITheSelectedPerson())
+            {
+                //should call redoBrain if person not selected and teletransported to Home 
+                _person.transform.position = _person.Home.transform.position;
+                _person.RedoBrain(BlackList);                
+            }
+            else
+            {
+                //so when is unselected will redoBrain
+                BlackList.Add("RedoBrain");
+            }
+            return;
+        }
+
+        _person.CreateProfession();
+    }
+    
 
 
     /// <summary>
@@ -2983,7 +3012,7 @@ public class Brain
     {
         if (Partido && string.IsNullOrEmpty(_person.IsBooked))
         {
-            Person.UnselectPerson();
+            _person.UnselectPerson();
 
             _person.Body.DestroyAllPersonalObj();
             PersonPot.Control.Queues.PersonDie();

@@ -138,7 +138,7 @@ public class Forester : Profession
         MoveDummyAwayFromEleSoDoesntFallInsideOfIt();
 
         //so it doesnt add like a door at the end when gets to tree
-        Router1 = new CryRouteManager(_person.Work, _person.MyDummyProf, _person, HPers.None, true, false);
+        Router1 = new CryRouteManager(_person.Work, _person.MyDummyProf, _person,HPers.InWork, true, false);
     }
     
     void FindSpawnersToMine()

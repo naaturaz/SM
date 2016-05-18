@@ -3,13 +3,13 @@ using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO.Compression;
 using System.Linq;
 using Random = UnityEngine.Random;
 
 public class Building : General, Iinfo
 {
     #region Fields and Prop
-
 
     /// <summary>
     /// The root of a building 
@@ -800,7 +800,7 @@ public class Building : General, Iinfo
             _light = Create(Root.lightCil, transform.position, container: transform);
             
             _reachArea = Create(Root.reachArea, transform.position);
-            _reachArea.transform.localScale = new Vector3(Brain.Maxdistance, 0.1f, Brain.Maxdistance);
+            _reachArea.transform.localScale = new Vector3(Brain.Maxdistance*2, 0.1f, Brain.Maxdistance*2);
         }
     }
 
@@ -1043,13 +1043,12 @@ public class Building : General, Iinfo
         LayerRoutine("done");
         PositionFixed = true;
 
+        
+
         //Preview of the Base to help aling
-        HideBuildingPrev();
         if (!IsLoadingFromFile)
         {
-            //DestroyPreviewBaseBuilding();
-            //ShowPreviewBoxForBuilding();
-            //BuildingPot.InputU.AddToOrginizeStructures(this);
+            BuildingPot.InputU.AddToOrginizeStructures(this);
         }
 
 
@@ -2724,6 +2723,8 @@ public class Building : General, Iinfo
         //only for debug bz a WheelBarrow always should be up
         if (closWheelBarr == null)
         {
+            //todo Notify not wheelBarrow close enought to me 3d icon
+            Debug.Log("Not Masonry close enought to " + MyId + " found");
             return;
         }
 
@@ -2757,6 +2758,8 @@ public class Building : General, Iinfo
         //only for debug bz a WheelBarrow always should be up
         if (closWheelBarr == null)
         {
+            //todo Notify not wheelBarrow close enought to me 3d icon
+            Debug.Log("Not Masonry close enought to " + MyId + " found");
             return;
         }
 
@@ -2774,7 +2777,7 @@ public class Building : General, Iinfo
 
     Structure FindClosestWheelBarrowerOffice()
     {
-        return BuildingController.FindTheClosestOfThisType(H.Masonry, transform.position);
+        return BuildingController.FindTheClosestOfThisType(H.Masonry, transform.position, Brain.Maxdistance);
     }
 
     private IEnumerator ThirtySecUpdate()

@@ -491,7 +491,8 @@ public class Realtor
                 //&& !IsBuildBooked(struc)
                 )
             {
-                res.Add(new BuildRank(key, score));
+                var dist = Vector3.Distance(struc.transform.position, comparePoint);
+                res.Add(new BuildRank(key, score, dist));
             }
         }
 

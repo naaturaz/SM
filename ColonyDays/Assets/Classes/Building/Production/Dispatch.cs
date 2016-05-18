@@ -575,7 +575,7 @@ public class Dispatch
             var score = ScoreABuild(person, foodSrc);//tht in this case is just Distance
             if (score < Profession.Radius && foodSrc.Instruction == H.None)
             {
-                rank.Add(new BuildRank(key, score));     
+                rank.Add(new BuildRank(key, score, score));     
             }
         }
         return rank.OrderByDescending(a => a.Score).ToList();

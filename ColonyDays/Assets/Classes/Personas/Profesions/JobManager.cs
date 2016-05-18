@@ -187,7 +187,7 @@ public class JobManager
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-      Structure BetterWork(Person person)
+    Structure BetterWork(Person person)
     {
         if (BuildingPot.Control.WorkOpenPos.Count == 0 ||
             (person.Work != null && person.Work.Instruction == H.WillBeDestroy))
@@ -219,21 +219,17 @@ public class JobManager
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    private   string DefineIfIsABetterJob(Person person)
+    private string DefineIfIsABetterJob(Person person)
     {
         UpdateAllJobAvail(person);
-        
         var myCurrentJobScore = ScoreABuild(person.Work, person.Home.transform.position);
 
-        bool isABetterJob = false;
-        if (_allJobAvailGC.Count>0)
-        {
-            isABetterJob = _allJobAvailGC[0].Score > myCurrentJobScore;
-        }
+        var betters = _allJobAvailGC.Where(a => a.Score > myCurrentJobScore && a.Distance < Brain.Maxdistance).ToList();
+        betters = betters.OrderBy(a => a.Score).ToList();
 
-        if (isABetterJob)
+        if (betters.Count > 0)
         {
-            return _allJobAvailGC[0].Key;
+            return betters[0].Key;
         }
         return "";
     }
@@ -298,7 +294,8 @@ public class JobManager
 
             if (struc.Instruction != H.WillBeDestroy && !person.Brain.BlackList.Contains(key))
             {
-                res.Add(new BuildRank(key, score));
+                var dist = Vector3.Distance(struc.transform.position, comparePoint);
+                res.Add(new BuildRank(key, score, dist));
             }
         }
 
@@ -310,10 +307,12 @@ public class BuildRank
 {
     public string Key;
     public float Score;
+    public float Distance;
 
-    public BuildRank(string key, float score)
+    public BuildRank(string key, float score, float distance)
     {
         Key = key;
         Score = score;
+        Distance = distance;
     }
 }

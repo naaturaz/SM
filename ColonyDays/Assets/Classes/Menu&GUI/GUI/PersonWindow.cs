@@ -49,7 +49,7 @@ public class PersonWindow : GUIElement {
     {
         if (_person != oldPerson)
         {
-            Person.UnselectPerson();
+            _person.UnselectPerson();
         }
         oldPerson = _person;
     }
@@ -211,6 +211,9 @@ public class PersonWindow : GUIElement {
     {
         base.Hide();
 
-        Person.UnselectPerson();
+        if (_person!=null)
+        {
+            _person.UnselectPerson();
+        }
     }
 }

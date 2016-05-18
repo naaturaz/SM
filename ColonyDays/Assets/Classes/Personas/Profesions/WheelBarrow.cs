@@ -123,8 +123,8 @@ public class WheelBarrow : Profession
         SourceBuildKey = Order1.SourceBuild;
 
         return true;
-
     }
+
 
     void InitRoute()
     {
@@ -141,7 +141,7 @@ public class WheelBarrow : Profession
         }
 
         RouterActive = true;
-        Router1 = new CryRouteManager(_person.Work, _sourceBuild, _person);
+        Router1 = new CryRouteManager(_person.Work, _sourceBuild, _person, HPers.InWork);
        // Router1 = new RouterManager(_person.Work, _sourceBuild, _person, HPers.InWork);
 
         IsRouterBackUsed = true;

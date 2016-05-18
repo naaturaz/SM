@@ -291,11 +291,12 @@ public class BuildersManager
         if (st == null || st.StartingStage != H.Done)
         {
             //_greenLight.Add(construction);
-            var closest = BuildingController.FindTheClosestOfThisTypeFullyBuilt( H.Masonry, construction.Position);
+            var closest = BuildingController.FindTheClosestOfThisType(H.Masonry, construction.Position, Brain.Maxdistance);
 
-            //addresing when is a  Debug game .
             if (closest == null)
             {
+                //todo Notify not wheelBarrow close enought to me 3d icon
+                Debug.Log("Not Masonry close enought to " + construction.Key + " found");
                 return;
             }
             closest.BuildersManager1.GreenLight.Add(construction);

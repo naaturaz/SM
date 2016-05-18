@@ -2163,6 +2163,11 @@ public class Person : General
 
     #region Bad Ass
 
+    public bool ImITheSelectedPerson()
+    {
+        return _light != null;
+    }
+
     internal void SelectPerson()
     {
         CreateProjector();
@@ -2171,9 +2176,23 @@ public class Person : General
     /// <summary>
     /// This is here bz when a building is unselected the proj has to be destroyed
     /// </summary>
-    public static void UnselectPerson()
+    public void UnselectPerson()
     {
         DestroyProjector();
+        
+        //if is Dead not point to continue
+        if (Brain.Partido)
+        {
+            return;
+        }
+
+        var index = Brain.BlackList.FindIndex(a=>a.Contains("RedoBrain"));
+        //then we have that instruction there . Placed by brain
+        if (index != -1)
+        {
+            Brain.BlackList.RemoveAt(index);
+            RedoBrain(Brain.BlackList);
+        }
     }
 
     private static General _projector;

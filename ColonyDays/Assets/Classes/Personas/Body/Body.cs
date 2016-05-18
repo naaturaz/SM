@@ -277,19 +277,11 @@ public class Body //: MonoBehaviour //: General
     /// <param name="oldAnimation"></param>
     public void SetCurrentAni(string animationPass, string oldAnimation)
     {
-        if (string.IsNullOrEmpty(animationPass))
-        {
-            //Debug.Log("pass null ani");
-        }
-        if (!string.IsNullOrEmpty(animationPass) && animationPass.Contains("Wheel"))
-        {
-            //Debug.Log("SetCurrAni nw:"+animationPass+".old:"+oldAnimation+".pers: "+_person.MyId);
-        }
-
-
         _currentAni = animationPass;
         myAnimator.SetBool(animationPass, true);
         myAnimator.SetBool(oldAnimation, false);
+
+        //Debug.Log(_person.Name + " " + animationPass);
 
         if (_personalObject == null)
         {
@@ -1237,4 +1229,28 @@ public class Body //: MonoBehaviour //: General
 
 
 
+    /// <summary>
+    /// Created so onces is enable activate the current Ani. Since the Animator might be running another animation
+    /// bz was disabled until now 
+    /// </summary>
+    internal void EnableAnimator()
+    {
+        if (myAnimator.enabled)
+        {
+            return;
+        }
+
+        myAnimator.enabled = true;
+        TurnCurrentAniAndStartNew(_currentAni);
+
+        if (_personalObject != null)
+        {
+            _personalObject.Show();
+        }
+    }
+
+    public void DisAbleAnimator()
+    {
+        myAnimator.enabled = false;
+    }
 }

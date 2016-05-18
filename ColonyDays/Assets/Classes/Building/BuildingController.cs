@@ -520,7 +520,7 @@ public class BuildingController : BuildingPot
     /// <param name="hType"></param>
     /// <param name="fromPos"></param>
     /// <returns></returns>
-    static public Structure FindTheClosestOfThisType(H hType, Vector3 fromPos)
+    static public Structure FindTheClosestOfThisType(H hType, Vector3 fromPos, float maxDistance)
     {
         List<VectorM> distances = new List<VectorM>();
 
@@ -534,6 +534,9 @@ public class BuildingController : BuildingPot
             }
         }
 
+        //eliminating the ones are way too Far
+        distances = distances.Where(a => a.Distance < maxDistance).ToList();
+        //Ordering by distance 
         distances = distances.OrderBy(a => a.Distance).ToList();
         var clostKey = "";
 

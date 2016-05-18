@@ -253,7 +253,7 @@ public class Builder : Profession
         _person.MyDummyProf.HandleLandZoning(_constructing, FinRoutePoint);
 
         _person.MyDummyProf.DummyIdSpawner = _constructing.MyId;
-        Router1 = new CryRouteManager(_person.Work, _person.MyDummyProf, _person, finDoor: false);
+        Router1 = new CryRouteManager(_person.Work, _person.MyDummyProf, _person, HPers.InWork, finDoor: false );
     }
 
 

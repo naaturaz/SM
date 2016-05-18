@@ -48,6 +48,15 @@ public class CryRoute
 
     private float _timeStamp;//when the Route was started 
 
+    private HPers _routeType = HPers.None;
+
+
+    public HPers RouteType
+    {
+        get { return _routeType; }
+        set { _routeType = value; }
+    }
+
     public bool IsRouteReady
     {
         get { return _isRouteReady; }
@@ -75,10 +84,11 @@ public class CryRoute
         set { _theRoute = value; }
     }
 
-    public CryRoute(Structure ini, Structure fin, Person person, string destinyKey, bool iniDoor = true, bool finDoor = true)
-    {
-        
 
+
+    public CryRoute(Structure ini, Structure fin, Person person, string destinyKey, bool iniDoor = true, bool finDoor = true,
+        HPers routetype= HPers.None)
+    {
         _origenKey = ini.MyId;
         _destinyKey = destinyKey;
 
@@ -92,13 +102,16 @@ public class CryRoute
         _ini = ini;
         _fin = fin;
 
+        RouteType = routetype;
+
         ClearOldVars();
         Init();
     }
 
     public CryRoute() { }
 
-    public CryRoute(VectorLand uno, VectorLand dos, Person person, bool iniDoor = true, bool finDoor = true)
+    public CryRoute(VectorLand uno, VectorLand dos, Person person, bool iniDoor = true, bool finDoor = true,
+        HPers routeType = HPers.None)
     {
         _origenKey = uno.MyBuild().MyId;
         _destinyKey = dos.MyBuild().MyId;
@@ -112,6 +125,9 @@ public class CryRoute
 
         _ini = uno.MyBuild();
         _fin = dos.MyBuild();
+
+        RouteType = routeType;
+
 
         ClearOldVars();
         Init();
@@ -483,15 +499,27 @@ public class CryRoute
         return false;
     }
 
+    private int oldGameSpeed = 1;
     private bool wasBlackListed;
     private int blackCount;
     //the rect will be allow to grow only 10 times. then will be black list tht building if was not reach
     private int maxCounts = 100;
     void CheckIfIsToBlackList()
     {
+        if (Program.gameScene.GameSpeed == 0)
+        {
+            oldGameSpeed = 0;
+            return;
+        }
+        if (oldGameSpeed == 0 && Program.gameScene.GameSpeed > 0)
+        {
+            oldGameSpeed = 1;
+            //so when is paused doesnt Blacklist building when resumes
+            _timeStamp = Time.time;
+            blackCount = 0;
+        }
+        ///////
         blackCount++;
-        //        //Debug.Log("blackCount:"+blackCount);
-
         if (blackCount > maxCounts)
         {
             Debug.Log("Backlisting :" + _person.MyId + " ." + _fin.MyId + "blackCount > maxCounts");
@@ -509,7 +537,7 @@ public class CryRoute
     {
         var key = RoutesCache.CreateRouteKey(_origenKey, _destinyKey);
 
-        _person.Brain.BlackListBuild(CryBridgeRoute.ExtractRealId((Structure)_fin), key);
+        _person.Brain.BlackListBuild(CryBridgeRoute.ExtractRealId((Structure)_fin), key, RouteType);
         wasBlackListed = true;
     }
 

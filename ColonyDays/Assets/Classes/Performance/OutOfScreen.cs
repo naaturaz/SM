@@ -73,12 +73,14 @@ public class OutOfScreen
     {
         _onScreenRectNow = Program.gameScene.Fustrum1.OnScreen(ExtractObjPos());
         //if is moving now can be reshown bz might be on his way somewhere 
-        if (_onScreenRectNow && (_renderer.isVisible || _person.Body.MovingNow) && !_onScreenRenderNow)
+        if (_onScreenRectNow &&
+            (_renderer.isVisible || _person.Body.MovingNow || _person.Body.Location == HPers.InWork)//inwork is for forester 
+            && !_onScreenRenderNow)
         {
             _onScreenRenderNow = true;
             SwitchNow();
         }
-        else if ((!_onScreenRectNow || !_renderer.isVisible) && _onScreenRenderNow)
+        else if ((!_onScreenRectNow || !_renderer.isVisible) && _onScreenRenderNow && _person.Body.Location != HPers.InWork)
         {
             _onScreenRenderNow = false;
             //wont deactivate the animator if is on RectNow and close enough to the camera 
@@ -161,31 +163,12 @@ public class OutOfScreen
     void OnBecameVisible()
     {
         //Debug.Log("became visible " + _person.MyId);
-        Activate();
+        _person.Body.EnableAnimator();
     }
 
     void OnBecameInvisible()
     {
         //Debug.Log("became Invisible " + _person.MyId);
-        DeActivate();
-    }
-
-    internal void Activate()
-    {
-        _animator.enabled = true;
-        //if (_type == H.Person)
-        //{
-        //    _person.Body.Show();
-        //}
-    }
-
-
-    internal void DeActivate()
-    {
-        _animator.enabled = false;
-        //if (_type == H.Person)
-        //{
-        //    _person.Body.HideNoQuestion();
-        //}
+        _person.Body.DisAbleAnimator();
     }
 }

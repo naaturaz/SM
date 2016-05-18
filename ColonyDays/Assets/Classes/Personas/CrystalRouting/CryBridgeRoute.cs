@@ -27,6 +27,16 @@ public class CryBridgeRoute
     private string _destinyKey;
     private string _origenKey;
 
+    private HPers _routeType = HPers.None;
+
+
+    public HPers RouteType
+    {
+        get { return _routeType; }
+        set { _routeType = value; }
+    }
+
+
     public bool IsRouteReady
     {
         get { return _isRouteReady; }
@@ -39,7 +49,8 @@ public class CryBridgeRoute
         set { _theRoute = value; }
     }
 
-    public CryBridgeRoute(Structure ini, Structure fin, Person person, string destinyKey)
+
+    public CryBridgeRoute(Structure ini, Structure fin, Person person, string destinyKey, HPers routeType)
     {
         _origenKey = ini.MyId;
         _destinyKey = destinyKey;
@@ -49,6 +60,8 @@ public class CryBridgeRoute
 
         _ini = ini;
         _fin = fin;
+
+        RouteType = routeType;
 
         Init();
     }
@@ -259,7 +272,7 @@ public class CryBridgeRoute
     {
         var key = RoutesCache.CreateRouteKey(_origenKey, _destinyKey);
 
-        _person.Brain.BlackListBuild(ExtractRealId(_fin), key);
+        _person.Brain.BlackListBuild(ExtractRealId(_fin), key, RouteType);
     }
 
     /// <summary>
