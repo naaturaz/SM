@@ -29,6 +29,10 @@ public class RoutesCache
     /// </summary>
     public void CreateSave()
     {
+        //so it doestn add the new ones on top of the old ones. in case are old ones
+        //all saved games will have old ones 
+        _itemsLoadSave.Clear();
+
         for (int i = 0; i < _items.Count; i++)
         {
             _itemsLoadSave.Add(_items.ElementAt(i).Value);

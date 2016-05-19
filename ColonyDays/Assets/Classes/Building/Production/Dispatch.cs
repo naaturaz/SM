@@ -578,7 +578,7 @@ public class Dispatch
                 rank.Add(new BuildRank(key, score, score));     
             }
         }
-        return rank.OrderByDescending(a => a.Score).ToList();
+        return rank.OrderBy(a => a.Score).ToList();
     }
 
     /// <summary>

@@ -343,7 +343,7 @@ public class Realtor
     /// </summary>
     /// <param name="person"></param>
     /// <param name="newHome"></param>
-    public   void BookNewPersonInNewHome(Person person, Building newHome, string familyIDP)
+    public void BookNewPersonInNewHome(Person person, Building newHome, string familyIDP)
     {
         RemoveFromOldHomeFamily(person);
         var myFamily = newHome.FindFamilyById(familyIDP);
@@ -357,6 +357,8 @@ public class Realtor
         famToBook.Home = newHome.MyId;
         famToBook.CanGetAnotherAdult(person);
         newHome.BookedHome1 = new BookedHome(newHome.MyId, famToBook);
+
+        Debug.Log(string.Format("Realtor Booking: {0} to: {1}", person.MyId, newHome.MyId));
 
         person.IsBooked = newHome.MyId;
 

@@ -945,9 +945,7 @@ public class Profession
     {
         _workingNow = false;
         _workerTask = HPers.None;
-
         //Debug.Log("resetMIniMindTstae:"+_person.MyId);
-        //CheckIfProfHasToBeReCreated();
     }
 
     protected void CheckIfProfHasToBeReCreated()
@@ -955,14 +953,17 @@ public class Profession
         if (ForesterHasNullEle() || ForesterCurrentStillEleIsBlackListed() || //|| LoadedDifferentElement()
             string.IsNullOrEmpty(StillElementId))
         {
+            if (_person == null)
+            {
+                return;
+            }
             //Debug.Log("foresetr recrete prof:"+_person.MyId);
             _person.CreateProfession();
             return;
         }
 
         var ele = Program.gameScene.controllerMain.TerraSpawnController.Find(StillElementId);
-
-        if (!ele.Grown())
+        if (ele !=null && !ele.Grown())
         {
             _person.CreateProfession();
         }
@@ -998,7 +999,7 @@ public class Profession
     /// <returns></returns>
     private bool ForesterCurrentStillEleIsBlackListed()
     {
-        if (ProfDescription != Job.Forester)
+        if (ProfDescription != Job.Forester || _person == null)
         {
             return false;
         }

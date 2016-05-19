@@ -745,7 +745,7 @@ public class Brain
     /// </summary>
     void GoToNewHomeTail()
     {
-       ////Debug.Log("1 got to new home:" + _person.MyId + ".famID" + _person.FamilyId);
+        Debug.Log("Unbooking. Got to new home:" + _person.MyId + ".famID" + _person.FamilyId);
 
         //unbook
         _person.IsBooked = "";

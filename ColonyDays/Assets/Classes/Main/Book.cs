@@ -72,14 +72,14 @@ public class Book : General
 
         //houses 
         Build.Add(new BuildStat(H.Bohio, 400, 3, 0, 0, 0, maxPeople: 5, capacity: .3f));
-        Build.Add(new BuildStat(H.HouseA, 400, 15, 5, 25, 5, maxPeople: 5, capacity: .3f));
-        Build.Add(new BuildStat(H.HouseB, 400, 15, 5, 25, 5, maxPeople: 5, capacity: .3f));
-        Build.Add(new BuildStat(H.HouseTwoFloor, 800, 30, 5, 50, 5, maxPeople: 10, capacity: .6f));
-        Build.Add(new BuildStat(H.HouseMed, 800, 30, 5, 50, 5, maxPeople: 7, capacity: .6f));
+        Build.Add(new BuildStat(H.HouseA, 400, 5, 5, 25, 5, maxPeople: 5, capacity: .3f));
+        Build.Add(new BuildStat(H.HouseB, 400, 5, 5, 25, 5, maxPeople: 5, capacity: .3f));
+        Build.Add(new BuildStat(H.HouseTwoFloor, 800, 30, 5, 5, 5, maxPeople: 10, capacity: .6f));
+        Build.Add(new BuildStat(H.HouseMed, 800, 10, 5, 50, 5, maxPeople: 7, capacity: .6f));
         //Build.Add(new BuildStat(H.HouseMedB, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 2));
         Build.Add(new BuildStat(H.HouseLargeA, 1, 0.01f, 0, 0, 0, maxPeople: 7, capacity: 1));
-        Build.Add(new BuildStat(H.HouseLargeB, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 1));
-        Build.Add(new BuildStat(H.HouseLargeC, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 1));
+        Build.Add(new BuildStat(H.HouseLargeB, 800, 10, 5, 50, 5, maxPeople: 7, capacity: 1));
+        Build.Add(new BuildStat(H.HouseLargeC, 800, 10, 5, 50, 5, maxPeople: 7, capacity: 1));
 
 
         //farming
@@ -140,11 +140,11 @@ public class Book : General
         Build.Add(new BuildStat(H.Shipyard, 900, 30, 20, 0, 5, maxPeople: 10));
         Build.Add(new BuildStat(H.Supplier, 900, 30, 20, 0, 5, maxPeople: 10));
 
-        Build.Add(new BuildStat(H.StorageSmall, 400, 80, 20, 0, 5, maxPeople: 0, capacity: 150));
-        Build.Add(new BuildStat(H.StorageMed, 600, 80, 20, 0, 5, maxPeople: 0, capacity: 200));
-        Build.Add(new BuildStat(H.StorageBig, 600, 80, 20, 0, 5, maxPeople: 0, capacity: 300));
-        Build.Add(new BuildStat(H.StorageBigTwoDoors, 600, 80, 20, 0, 5, maxPeople: 0, capacity: 300));
-        Build.Add(new BuildStat(H.StorageExtraBig, 600, 80, 20, 0, 5, maxPeople: 0, capacity: 4200));
+        Build.Add(new BuildStat(H.StorageSmall, 400, 10, 20, 10, 5, maxPeople: 0, capacity: 150));
+        Build.Add(new BuildStat(H.StorageMed, 600, 15, 20, 20, 5, maxPeople: 0, capacity: 200));
+        Build.Add(new BuildStat(H.StorageBig, 600, 20, 20, 35, 5, maxPeople: 0, capacity: 300));
+        Build.Add(new BuildStat(H.StorageBigTwoDoors, 600, 25, 20, 50, 5, maxPeople: 0, capacity: 300));
+        Build.Add(new BuildStat(H.StorageExtraBig, 600, 30, 20, 60, 5, maxPeople: 0, capacity: 4200));
 
         //Gov
         //Build.Add(new BuildStat(H.Clinic, 400, 15, 5, 25, 5, maxPeople: 5));

@@ -279,7 +279,12 @@ public class Body //: MonoBehaviour //: General
     {
         _currentAni = animationPass;
         myAnimator.SetBool(animationPass, true);
-        myAnimator.SetBool(oldAnimation, false);
+
+        //otherwise will stop the one intended to be playing now 
+        if (_currentAni != oldAnimation)
+        {
+            myAnimator.SetBool(oldAnimation, false);
+        }
 
         //Debug.Log(_person.Name + " " + animationPass);
 
@@ -818,7 +823,6 @@ public class Body //: MonoBehaviour //: General
     void ReCalculateWalkStep()
     {
         CheckOnGameSpeed();
-
         _walkStep = _speed*Program.gameScene.GameSpeed * 0.02f * FPSCorrection();
     }
 
@@ -831,8 +835,11 @@ public class Body //: MonoBehaviour //: General
     private float FPSCorrection()
     {
         //avoiding math issues
-        if (HUDFPS.FPS() == 0)
+        if (HUDFPS.FPS() > 60 || HUDFPS.FPS() == 0)//if over 60 then is good to lock it at one bz sometimes happens
+            //when game is paused or something then people will go really slow bz in a small portion the 
+            //fps was really high ex 120fps when saving 
         {
+            //returning 1 doesnt affect the normal step of them 
             return 1;
         }
 
@@ -1235,10 +1242,10 @@ public class Body //: MonoBehaviour //: General
     /// </summary>
     internal void EnableAnimator()
     {
-        if (myAnimator.enabled)
-        {
-            return;
-        }
+        //if (myAnimator.enabled)
+        //{
+        //    return;
+        //}
 
         myAnimator.enabled = true;
         TurnCurrentAniAndStartNew(_currentAni);
