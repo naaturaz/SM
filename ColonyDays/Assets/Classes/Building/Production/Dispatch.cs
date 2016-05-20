@@ -216,7 +216,7 @@ public class Dispatch
     }
 
     /// <summary>
-    /// domnt check id
+    /// does not check id.
     /// </summary>
     /// <param name="list"></param>
     /// <param name="prod"></param>
@@ -269,8 +269,7 @@ public class Dispatch
     void RemoveFromOrdersAddToRecycled(Order prod)
     {
         RemoveOrderFromTheList(Orders, prod);
-
-        if (!ListContainsCheckID(_recycledOrders, prod))
+        if (!ListContains(_recycledOrders, prod))
         {
             _recycledOrders.Add(prod);    
         }
@@ -285,7 +284,10 @@ public class Dispatch
         var indx = _recycledOrders.IndexOf(prod);
         Order temp = _recycledOrders[indx];
         _recycledOrders.RemoveAt(indx);
-        _recycledOrders.Add(temp);
+        if (!ListContains(_recycledOrders, prod))
+        {
+            _recycledOrders.Add(prod);
+        }
     }
 
     /// <summary>

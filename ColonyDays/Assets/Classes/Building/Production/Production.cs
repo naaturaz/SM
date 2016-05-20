@@ -189,9 +189,6 @@ public class Production  {
         List<InputElement> prodFormu2 = new List<InputElement>() {  elementI, elementC, _eleCoalComb };
         InputProdCheckAndAdd(new ProductInfo(P.Steel, prodFormu1, H.SteelFoundry));
         InputProdCheckAndAdd(new ProductInfo(P.Steel, prodFormu2, H.SteelFoundry));
-
-
-
     }
 
     private void Foundry()
@@ -201,8 +198,8 @@ public class Production  {
         List<InputElement> prodFormu1 = new List<InputElement>() { elementS, _eleWoodComb };
         List<InputElement> prodFormu2 = new List<InputElement>() { elementS, _eleCoalComb };
 
-        ProductInfo productInfo1 = new ProductInfo(P.RandomFoundryOutput, prodFormu1, H.MountainMine);
-        ProductInfo productInfo2 = new ProductInfo(P.RandomFoundryOutput, prodFormu2, H.MountainMine);
+        ProductInfo productInfo1 = new ProductInfo(P.RandomFoundryOutput, prodFormu1, H.Foundry);
+        ProductInfo productInfo2 = new ProductInfo(P.RandomFoundryOutput, prodFormu2, H.Foundry);
 
         productInfo1.AddRandomOutput(new ElementWeight(P.Iron, 2));
         productInfo1.AddRandomOutput(new ElementWeight(P.Coal, 1));

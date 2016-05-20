@@ -57,8 +57,14 @@ public class Body //: MonoBehaviour //: General
         get { return _goingTo; }
         set
         {
+            if (_person != null && _person.Brain !=null &&
+                (_person.Brain.CurrentTask == HPers.MovingToNewHome || !string.IsNullOrEmpty(_person.IsBooked))
+                && _goingTo == HPers.Home &&
+                value == HPers.None)
+            {
+                Debug.Log(string.Format("!Body.GoingTo being screw for {0} on person {1}", value, _person.MyId));
+            }
             _goingTo = value;
-            //_person.Brain.MindState();
         }
     }
 
@@ -270,6 +276,8 @@ public class Body //: MonoBehaviour //: General
     }
 
     private Animator myAnimator;
+    private string savedAnimation = "";//in case an animation was passed and the animators was disabled will be stored
+    //until is enabled
     /// <summary>
     /// Here is when u set the new Animation
     /// </summary>
@@ -277,6 +285,18 @@ public class Body //: MonoBehaviour //: General
     /// <param name="oldAnimation"></param>
     public void SetCurrentAni(string animationPass, string oldAnimation)
     {
+        if (!myAnimator.enabled)
+        {
+            savedAnimation = animationPass;
+            return;
+        }
+
+        if (string.IsNullOrEmpty(animationPass))
+        {
+            return;
+        }
+
+        savedAnimation = "";
         _currentAni = animationPass;
         myAnimator.SetBool(animationPass, true);
 
@@ -292,14 +312,12 @@ public class Body //: MonoBehaviour //: General
         {
             _personalObject = new PersonalObject(_person);
         }
-
         _personalObject.AddressNewAni(animationPass, ShouldHide());
     }
 
     public void TurnCurrentAniAndStartNew(string animationPass)
     {
         ////Debug.Log("TurnCurrent nw:" + animationPass + ".old:" + _currentAni);
-
         SetCurrentAni(animationPass, _currentAni);
     }
     
@@ -310,11 +328,12 @@ public class Body //: MonoBehaviour //: General
     /// </summary>
     private void DefineSpeed()
     {
-        if (_currentAni == "isCarry")
+        var aniToEval = FindAnimationToEvalSpeed();
+        if (aniToEval == "isCarry")
         {
             _speed = UMath.GiveRandom(0.09f, 0.12f);
         }
-        else if (_currentAni == "isWheelBarrow")
+        else if (aniToEval == "isWheelBarrow")
         {
             _speed = UMath.GiveRandom(0.49f, 0.59f);
         }
@@ -325,6 +344,20 @@ public class Body //: MonoBehaviour //: General
         //bz the speed changes and then looks bad 
         ReCalculateWalkStep();
     }
+
+    /// <summary>
+    /// Bz if saved need to put that Speed
+    /// </summary>
+    /// <returns></returns>
+    string FindAnimationToEvalSpeed()
+    {
+        if (!string.IsNullOrEmpty(savedAnimation))
+        {
+            return savedAnimation;
+        }
+        return _currentAni;
+    }
+
 
     private void DefineAnimation()
     {
@@ -1242,18 +1275,14 @@ public class Body //: MonoBehaviour //: General
     /// </summary>
     internal void EnableAnimator()
     {
-        //if (myAnimator.enabled)
-        //{
-        //    return;
-        //}
-
         myAnimator.enabled = true;
-        TurnCurrentAniAndStartNew(_currentAni);
+        TurnCurrentAniAndStartNew(savedAnimation);
 
         if (_personalObject != null)
         {
             _personalObject.Show();
         }
+        DefineSpeed();
     }
 
     public void DisAbleAnimator()

@@ -190,7 +190,7 @@ public class PersonController : PersonPot
         EmigrateController1 = pData.PersonControllerSaveLoad.EmigrateController1;
         EmigrateController1.RecreateEmigratesGC();
 
-
+        IsAPersonHomeLessNow = pData.PersonControllerSaveLoad.IsAPersonHomeLessNow;
 
         //persons
         for (int i = 0; i < pData.All.Count; i++)
@@ -273,7 +273,6 @@ public class PersonController : PersonPot
 
     //means that a person is moving from one hose to another 
     //if this is on. No One can move 
-    //TODO needs to be SaveLoad
     private string _isAPersonHomeLessNow;
 
     public string IsAPersonHomeLessNow
@@ -1011,4 +1010,5 @@ public class PersonControllerSaveLoad
 
     public EmigrateController EmigrateController1 = new EmigrateController();
 
+    public string IsAPersonHomeLessNow = "";
 }

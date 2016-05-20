@@ -57,6 +57,7 @@ public class PersonSaveLoad : PersonPot {
 
         //res.OnSystemNow1 = Control.OnSystemNow1;
         res.EmigrateController1 = Control.EmigrateController1;
+        res.IsAPersonHomeLessNow = Control.IsAPersonHomeLessNow;
 
         return res;
     }

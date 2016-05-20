@@ -179,7 +179,7 @@ public class ShackBuilder : Profession
         else
         {
            //GameScene.print("ShackBilder cant find place to establish shack. will Emigrate");
-            _person.Emmigrate();
+            //_person.Emmigrate();
         }
     }
 

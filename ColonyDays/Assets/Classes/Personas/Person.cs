@@ -452,7 +452,7 @@ public class Person : General
 
         obj = (Person)Instantiate(obj, iniPos, Quaternion.identity);
         obj.Gender = obj.OtherGender();
-        obj.InitObj(5);//5
+        obj.InitObj(15);//5
         obj.Geometry.GetComponent<Renderer>().sharedMaterial = ReturnRandoPersonMaterialRoot();
 
         //this to when Person dont have where to leave and then they find a place the teletranport effect
@@ -1715,12 +1715,19 @@ public class Person : General
         if (takenFrom == null)
         { return; }
 
-        for (int i = 0; i < takenFrom.Inventory.InventItems.Count; i++)
+        int expC = 0;
+        while (takenFrom.Inventory.InventItems.Count > 0)
         {
-            P product = takenFrom.Inventory.InventItems[i].Key;
-            float amt = takenFrom.Inventory.InventItems[i].Amount;
+            P product = takenFrom.Inventory.InventItems[0].Key;
+            float amt = takenFrom.Inventory.InventItems[0].Amount;
 
             OneWayInvExchange(takenFrom, givenTo, product, amt);
+            expC++;
+
+            if (expC > 1000)
+            {
+                throw new Exception("over 100 iterations Droping all goods");
+            }
         }
     }
 
@@ -2057,45 +2064,20 @@ public class Person : General
     void CheckIfEmmigrate()
     {
         if (_unHappyYears > 2 
-            && UPerson.IsMajor(Age)
-            )
+            //&& UPerson.IsMajor(Age) 
+            && IsMajor && string.IsNullOrEmpty(IsBooked))
         {
             Emmigrate();
         }
     }
 
-    public void Emmigrate()
+    void Emmigrate()
     {
         //EmmigrateWithFamily();
         ActionOfDisappear();
         print(MyId+" emmigrated");
         // The peploe had emmigrated they will talk about your port wherever they are 
         PersonPot.Control.EmigrateController1.AddEmigrate(this);
-    }
-
-    /// <summary>
-    /// Will make all ur family emmigrate.
-    /// 
-    /// Bz if u dont do so will bring other kind of bugs 
-    /// </summary>
-    void EmmigrateWithFamily()
-    {
-        if (Home == null)
-        {
-            return;
-        }
-
-        var fam = Home.FindMyFamilyChecksFamID(this);
-        if (fam == null)
-        {
-            return;
-        }
-
-        var members = fam.ReturnFamilyPersonObj();
-        for (int i = 0; i < members.Count; i++)
-        {
-            members[i].Emmigrate();
-        }
     }
 
     /// <summary>
