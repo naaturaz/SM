@@ -749,9 +749,14 @@ public class Person : General
     /// <param name="item"></param>
     void Nutrive(float amt, P item)
     {
-        var nutriValue = BuildingPot.Control.ProductionProp.Food1.FindNutritionValue(item).NutritionVal;
-        _nutritionLevel += (amt * nutriValue * 5); //the five is bz people is dying with food in there places 
+        var nutriValue = BuildingPot.Control.ProductionProp.Food1.FindNutritionValue(item);
 
+        if (nutriValue == null)
+        {
+            Debug.Log("Not found nutriVal for:" + item);
+            return;
+        }
+        _nutritionLevel += (amt * nutriValue.NutritionVal * 5); //the five is bz people is dying with food in there places 
         //UnityEngine.Debug.Log(MyId + " nutrived nutriVal:" + amt * nutriValue + ". curr:" + _nutritionLevel);
     }
 

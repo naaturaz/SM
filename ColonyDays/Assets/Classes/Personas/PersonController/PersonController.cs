@@ -317,11 +317,11 @@ public class PersonController : PersonPot
 	{
 	    DebugHere();
         Count();
-	    //UpdateOnScreen();
 
-
-        //CheckIfSystemHasRoom();
-        //CheckIfPersonIsBeingOnSystemTooLong();
+        //needs to be here for efficiency as people wont add routes to it if is bein checkked
+        //agaisnt new queues (new buildings added) here will get checked really fast.
+        //So people will use Cache routes more and buidings will get Greenlit faster too. 
+        RoutesCache1.Update();
 
         if (init)
         {
@@ -342,7 +342,6 @@ public class PersonController : PersonPot
             yield return new WaitForSeconds(3.33f); // wait
             
             _buildersManager.Update();
-            RoutesCache1.Update();
             WorkersRoutingQueue.Update();
             SanitizeCurrent();
             EmigrateController1.Update();

@@ -193,26 +193,30 @@ public class Production  {
 
     private void Foundry()
     {
+        //doesnt have Coal as Combustion element bz then leaves a lot of Coal in the inventory
+        //and gets full 
+
         InputElement elementS = new InputElement(P.Ore, 5);
 
         List<InputElement> prodFormu1 = new List<InputElement>() { elementS, _eleWoodComb };
-        List<InputElement> prodFormu2 = new List<InputElement>() { elementS, _eleCoalComb };
+        //List<InputElement> prodFormu2 = new List<InputElement>() { elementS, _eleCoalComb };
 
         ProductInfo productInfo1 = new ProductInfo(P.RandomFoundryOutput, prodFormu1, H.Foundry);
-        ProductInfo productInfo2 = new ProductInfo(P.RandomFoundryOutput, prodFormu2, H.Foundry);
+        //ProductInfo productInfo2 = new ProductInfo(P.RandomFoundryOutput, prodFormu2, H.Foundry);
 
-        productInfo1.AddRandomOutput(new ElementWeight(P.Iron, 2));
+        productInfo1.AddRandomOutput(new ElementWeight(P.Iron, 1.5f));
         productInfo1.AddRandomOutput(new ElementWeight(P.Coal, 1));
         productInfo1.AddRandomOutput(new ElementWeight(P.Stone, 1));
         productInfo1.AddRandomOutput(new ElementWeight(P.Sulfur, .5f));
+        productInfo1.AddRandomOutput(new ElementWeight(P.Potassium, .5f));
         productInfo1.AddRandomOutput(new ElementWeight(P.Gold, .05f));
         productInfo1.AddRandomOutput(new ElementWeight(P.Silver, 0.1f));
         productInfo1.AddRandomOutput(new ElementWeight(P.Diamond, 0.01f));
 
-        productInfo2.RandomWeightsOutput = productInfo1.RandomWeightsOutput;
+        //productInfo2.RandomWeightsOutput = productInfo1.RandomWeightsOutput;
 
         InputProdCheckAndAdd(productInfo1);
-        InputProdCheckAndAdd(productInfo2);
+        //InputProdCheckAndAdd(productInfo2);
     }
 
     private void LoadAllGenerics()

@@ -36,6 +36,7 @@ public class Food
     {
         //todo add all
         _nValues.Add(new NutritionValue(P.Bean, 1.8f));
+        _nValues.Add(new NutritionValue(P.Banana, 1.1f));
         _nValues.Add(new NutritionValue(P.Potato, 1.4f));
         _nValues.Add(new NutritionValue(P.SugarCane, .5f));
         _nValues.Add(new NutritionValue(P.Sugar, 1f));
