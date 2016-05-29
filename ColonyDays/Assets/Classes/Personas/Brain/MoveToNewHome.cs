@@ -195,14 +195,14 @@ public class MoveToNewHome
 
         if (_brain.PullOldHome() != null && _brain.PullOldHome() == _person.Home)
         {   //means is moving towards the same house 
+            Debug.Log(_person.MyId + " InitValForNewHome() Canceled");
             return;
         }
 
         _brain.GoMindState = false;
-        //Debug.Log(_person.MyId + " InitValForNewHome()");
+        Debug.Log(_person.MyId + " InitValForNewHome()");
 
         //_oldHomeKey = _brain.PullOldHome().MyId;
-
         var firstKeyOnList = _homeOldKeysList[0];
         _oldHomeKey = firstKeyOnList;
 
@@ -217,7 +217,7 @@ public class MoveToNewHome
     void InitValForNewHomeForNewSpawned()
     {
         //_routeToNewHome.CheckPoints.Clear();
-
+        Debug.Log(_person.MyId + " InitValForNewHomeForNewSpawned()");
 
         _brain.GoMindState = false;
         buildRouteToNewHome = true;

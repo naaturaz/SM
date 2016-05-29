@@ -355,11 +355,12 @@ public class Realtor
         Family famToBook = new Family();
         famToBook.FamilyId = person.FamilyId;
         famToBook.Home = newHome.MyId;
+
+        Debug.Log(string.Format("Before getting to CanGetAnotherAdult(): {0} to: {1}", person.MyId, newHome.MyId));
         famToBook.CanGetAnotherAdult(person);
         newHome.BookedHome1 = new BookedHome(newHome.MyId, famToBook);
 
         Debug.Log(string.Format("Realtor Booking: {0} to: {1}", person.MyId, newHome.MyId));
-
         person.IsBooked = newHome.MyId;
 
         BuildingPot.Control.Registro.ResaveOnRegistro(newHome.MyId);

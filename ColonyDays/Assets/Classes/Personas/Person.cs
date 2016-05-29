@@ -362,7 +362,7 @@ public class Person : General
             obj = (Person) Resources.Load(Root.personaMale1, typeof (Person));
         }
 
-        int iniAge = General.GiveRandom(25, 25); //5, 29
+        int iniAge = General.GiveRandom(17, 17); //5, 29
 
         //will assign ramdom pos if has none 
         if (iniPos == new Vector3())
@@ -539,7 +539,7 @@ public class Person : General
         Age = iniAge;
         _name = BuildRandomName();
 
-        _lifeLimit = GiveRandom(50, 50);//75, 85
+        _lifeLimit = GiveRandom(20, 20);//75, 85
         MyId = _name + "." + Id;
 
         Brain = new Brain(this);
@@ -905,9 +905,6 @@ public class Person : General
     /// </summary>
     void ReachAgeMajority()
     {
-
-
-
         //the family ID of the place he is gonna be booked
         //will be empty if is Virgin Family
         var newFamilyID = "";//will be returned below 
@@ -926,26 +923,12 @@ public class Person : General
 
             Brain.Realtor1.BookNewPersonInNewHome(this, place, newFamilyID);
 
-//            print("Age Major: " + MyId);
             _isMajor = true;
             Brain.MajorAge.MarkMajorityAgeReached();
             PersonPot.Control.IsAPersonHomeLessNow = MyId;
-
-//           //Debug.Log(MyId+" Become major homless now:" );
-
-
-            AddressIsBooked(place);
+            print("Age Major: " + MyId);
         }
         //so gets back its original famID
-    }
-
-    private void AddressIsBooked(Building newPlace)
-    {
-        if (Home!= null && newPlace == Home)
-        {
-   //        //Debug.Log("Become major in same place:"+MyId);
-            //IsBooked = "";
-        }
     }
 
     void PeopleDictMatters(Building newPlace)
