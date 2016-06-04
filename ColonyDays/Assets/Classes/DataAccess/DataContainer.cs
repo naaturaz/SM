@@ -21,6 +21,9 @@ public class DataContainer
     [XmlArrayItem("PersonData")]
     public PersonData PersonData;
 
+    [XmlArrayItem("ProgramData")]
+    public ProgramData ProgramData;
+
 
     public void Save(string path)
     {

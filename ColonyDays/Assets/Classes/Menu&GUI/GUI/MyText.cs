@@ -11,6 +11,21 @@ public class MyText : MonoBehaviour
 	{
 	    thisText = GetComponent<Text>();
 
+        if (name == "Version")
+        {
+            var read = XMLSerie.ReadXMLProgram();
+
+            if (read != null)
+            {
+                thisText.text = read.GameVersion;
+            }
+            else
+            {
+                thisText.text = ":)";
+            }
+        }
+
+
 	    Map();
 	}
 
@@ -38,7 +53,6 @@ public class MyText : MonoBehaviour
             thisText.text =  Unit.WeightConverted(amt).ToString("N0") + " " +
                 Unit.WeightUnit();
         }
-     
 
         if (name == "Happy")
         {
@@ -58,6 +72,8 @@ public class MyText : MonoBehaviour
         {
             thisText.text = Program.gameScene.GameController1.Dollars.ToString("C0");
         }
+
+
     }
 
 

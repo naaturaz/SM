@@ -29,8 +29,6 @@ public class XMLSerie
 
     public static List<RTSData> ReadXML()
     {
-
-
         var SaveInfoRTSCollection =
             DataContainer.Load(Path.Combine(dataPath, "cameraSave.xml"));
 
@@ -43,6 +41,39 @@ public class XMLSerie
         List<RTSData> res = SaveInfoRTSCollection.SaveInfoRTSs;
         return res;
     }
+
+
+
+
+    public static void WriteXMLProgram(ProgramData program)
+    {
+        DataContainer DataCollection = new DataContainer();
+        DataCollection.ProgramData = program;
+
+        DataCollection.Save(Path.Combine(dataPath, "program.xml"));
+    }
+
+    public static ProgramData ReadXMLProgram()
+    {
+        var load =
+            DataContainer.Load(Path.Combine(Application.dataPath, "program.xml"));
+
+        Debug.Log("program path: " + Path.Combine(Application.dataPath, "program.xml"));
+
+        if (load == null)
+        {
+            //no file saved
+            return null;
+        }
+
+        ProgramData res = load.ProgramData;
+        return res;
+    }
+
+
+
+
+
 
     public static void WriteXMLMesh(SubMeshData subMesh)
     {

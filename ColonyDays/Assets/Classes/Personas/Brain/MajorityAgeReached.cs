@@ -12,9 +12,16 @@ using UnityEngine;
 public class MajorityAgeReached  {
 
     private Brain _brain;
-    private bool majorityAgeRecentReached;
+    private bool _majorityAgeRecentReached;
     private Person _person;
     private MoveToNewHome _moveToNewHome;
+
+
+    public bool MajorityAgeRecentReached
+    {
+        get { return _majorityAgeRecentReached; }
+        set { _majorityAgeRecentReached = value; }
+    }
 
 
     public MajorityAgeReached() { }
@@ -26,9 +33,26 @@ public class MajorityAgeReached  {
         _moveToNewHome = moveToNewHome;
     }
 
+    /// <summary>
+    /// Loading
+    /// </summary>
+    /// <param name="brain"></param>
+    /// <param name="person"></param>
+    /// <param name="moveToNewHome"></param>
+    /// <param name="pF"></param>
+    public MajorityAgeReached(Brain brain, Person person, MoveToNewHome moveToNewHome, PersonFile pF)
+    {
+        _person = person;
+        _brain = brain;
+        _moveToNewHome = moveToNewHome;
+        
+        MajorityAgeRecentReached = pF._brain.MajorAge.MajorityAgeRecentReached;
+    }
+
+
     public void MarkMajorityAgeReached()
     {
-        majorityAgeRecentReached = true;
+        _majorityAgeRecentReached = true;
     }
 
     /// <summary>
@@ -46,9 +70,9 @@ public class MajorityAgeReached  {
 
     public void CheckIfMajorityRecentlyReached()
     {
-        if (majorityAgeRecentReached && _brain.IAmHomeNow())
+        if (_majorityAgeRecentReached && _brain.IAmHomeNow())
         {
-            majorityAgeRecentReached = false;
+            _majorityAgeRecentReached = false;
             PersonReachMajorityAgeAction();
         }
     }

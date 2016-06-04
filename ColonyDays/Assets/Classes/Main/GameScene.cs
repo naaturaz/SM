@@ -117,6 +117,51 @@ public class GameScene : General
         set { _fustrum = value; }
     }
 
+
+#region SaveLoad Game General
+
+    private string _gameVersion = "";
+    public string GameVersion
+    {
+        get { return _gameVersion; }
+        set { _gameVersion = value; }
+    }
+
+    private void ProgramDataInit()
+    {
+        //only gets created if in Editor
+#if UNITY_EDITOR
+        XMLSerie.WriteXMLProgram(CreateProgramDataObj());
+#endif
+    }
+
+
+    ProgramData CreateProgramDataObj()
+    {
+        ProgramData p = new ProgramData(Version());
+        return p;
+    }
+
+
+
+    /// <summary>
+    /// version on botton of the game like 0.0.0.16.05.22
+    /// </summary>
+    /// <returns></returns>
+    string Version()
+    {
+        return "Early Access \n v0.0.0." +
+               DateTime.Now.Year.ToString().Substring(2) + "." + DateTime.Now.Month + "." + DateTime.Now.Day + "d." +
+               DateTime.Now.Hour + "." + DateTime.Now.Minute + "." + DateTime.Now.Second;
+    }
+
+
+
+
+#endregion
+
+
+
     // Use this for initialization
     private void Start()
     {
@@ -127,10 +172,6 @@ public class GameScene : General
         GameController1.Start();
         StartCoroutine("SixtySecUpdate");
 
-#if UNITY_EDITOR
-
-
-#endif
         StartCoroutine("OneSecUpdate");
 
 
@@ -150,7 +191,12 @@ public class GameScene : General
             container: Program.ClassContainer.transform);
 
         //hudColor = textMessage.GetComponent<GUIText>().color;
+
+
+        ProgramDataInit();
     }
+
+   
 
 
     #region BatchManager

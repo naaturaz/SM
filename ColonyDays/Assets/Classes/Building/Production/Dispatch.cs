@@ -1073,7 +1073,7 @@ public class Order
 
     public Order() { }
 
-    public Order(P prod, string destiny, int amt )
+    public Order(P prod, string destiny, int amt)
     {
         Product = prod;
         DestinyBuild = destiny;

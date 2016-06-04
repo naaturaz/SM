@@ -365,6 +365,9 @@ public enum H
     NotHDDSpace,
     GameOverPirate,
     GameOverMoney,
+    Unlock,
+    Lock,
+    Coming_Soon,
 
 
 }

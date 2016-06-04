@@ -14,6 +14,8 @@ public class BuildingPot : Pot
     private static BuildingSaveLoad _saveLoad = new BuildingSaveLoad();
     private static bool isToLoadBuildings;
 
+    private static UnlockBuilds _unlockBuilds;
+
     public static InputBuilding InputU
     {
         get { return _input; }
@@ -42,10 +44,28 @@ public class BuildingPot : Pot
     /// </summary>
     public static H DoingNow { get; set; }
 
+    public static UnlockBuilds UnlockBuilds1
+    {
+        get { return _unlockBuilds; }
+        set { _unlockBuilds = value; }
+    }
+
     private void Start()
     {
         _input = (InputBuilding)Create(Root.inputBuilder, container: Program.ClassContainer.transform);
+        StartCoroutine("OneMinUpdate");
     }
+
+
+    private IEnumerator OneMinUpdate()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(60); // wait
+            UnlockBuilds1.UpdateBuildsStatuses();
+        }
+    }
+
 
     private void Update()
     {
@@ -66,6 +86,11 @@ public class BuildingPot : Pot
         }
 
         _saveLoad.Update();
+    }
+
+    public static void CreateUnlockBuilds()
+    {
+        _unlockBuilds = new UnlockBuilds();
     }
 
     /// <summary>

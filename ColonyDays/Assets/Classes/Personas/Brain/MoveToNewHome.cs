@@ -17,27 +17,18 @@ using System.Collections.Generic;
 /// </summary>
 public class MoveToNewHome
 {
-
     private Brain _brain;
+    private Person _person;
+
     private string _oldHomeKey = "";
     private List<string> _homeOldKeysList = new List<string>();
+    private TheRoute _routeToNewHome = new TheRoute();
+
     private bool buildRouteToNewHome;//main bool here to build route to new Home 
     private bool newHomeRouteStart;
     private CryRouteManager _newHomeRouter = new CryRouteManager();
     private int searchedNewHome;//counter of new search for a home 
     private Structure old;
-    private TheRoute _routeToNewHome = new TheRoute();
-
-    private Person _person;
-    //private Structure currStructure;
-
-    public MoveToNewHome() { }
-
-    public MoveToNewHome(Brain brain, Person person)
-    {
-        _brain = brain;
-        _person = person;
-    }
 
     public string OldHomeKey
     {
@@ -55,6 +46,16 @@ public class MoveToNewHome
     {
         get { return _routeToNewHome; }
         set { _routeToNewHome = value; }
+    }
+
+
+
+    public MoveToNewHome() { }
+
+    public MoveToNewHome(Brain brain, Person person)
+    {
+        _brain = brain;
+        _person = person;
     }
 
     /// <summary>

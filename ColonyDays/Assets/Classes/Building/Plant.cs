@@ -7,7 +7,7 @@ public class Plant : MonoBehaviour
     private Building _building;//the buildign tht contains this plant 
     private FieldFarm _fieldFarm;//the dfarm tht contains this plant
 
-    private int _growGen; //btw 90-100 will indicate how farr will go a plant just by genes
+    private float _growGen; //btw 90-100 will indicate how farr will go a plant just by genes
 
     //the duration of a plant in days
     private int _lifeDuration = 120;//120 is for corn 
@@ -38,7 +38,7 @@ public class Plant : MonoBehaviour
         set { _type = value; }
     }
 
-    public int GrowGen
+    public float GrowGen
     {
         get { return _growGen; }
         set { _growGen = value; }
@@ -195,7 +195,7 @@ public class Plant : MonoBehaviour
 
     void Start()
     {
-        _growGen = Random.Range(90, 100);
+        _growGen = Random.Range(.1f, .9f);
         DetermineSeedDate();
 
         //sets the Production factor of this plant 
@@ -242,16 +242,17 @@ public class Plant : MonoBehaviour
     {
         //divide by current step so its always not more and more
         //pls GROWFACTOR so we dont divide a zero 
-        var addWorkedAmt = (_fieldFarm.GiveMeMyWorkedAmt() + GROWFACTOR) / _currentGrowStep / 1;//100000
+        var addWorkedAmt = (_fieldFarm.GiveMeMyWorkedAmt() + GROWFACTOR) / _currentGrowStep / 1;
         _fieldFarm.PlantGrew();
 
         _currentGrowStep += 0.1f;
-        _amtToGrow =    Program.gameScene.GameTime1.TimeFactorInclSpeed()
-            *(GROWFACTOR + ((float)_growGen / 10000) + addWorkedAmt) ;
+        _amtToGrow = Program.gameScene.GameTime1.TimeFactorInclSpeed()
+            *(GROWFACTOR + (_growGen / 100) + addWorkedAmt/50) ;
 
-        if (_amtToGrow > 1)
+        //Debug.Log("amt to grow: "+_amtToGrow);
+        if (float.IsInfinity(_amtToGrow))
         {
-            _amtToGrow = 0.01f;
+            _amtToGrow = 0f;
         }
     }
 
@@ -405,7 +406,7 @@ public class PlantSave
 {
     private P _type;//type of plant. ex : Bean
 
-    private int _growGen; //btw 90-100 will indicate how farr will go a plant just by genes
+    private float _growGen; //btw 90-100 will indicate how farr will go a plant just by genes
 
     //the duration of a plant in days
     private int _lifeDuration = 120;//120 is for corn 
@@ -433,7 +434,7 @@ public class PlantSave
         set { _type = value; }
     }
 
-    public int GrowGen
+    public float GrowGen
     {
         get { return _growGen; }
         set { _growGen = value; }

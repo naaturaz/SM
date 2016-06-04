@@ -927,8 +927,10 @@ public class Person : General
             Brain.MajorAge.MarkMajorityAgeReached();
             PersonPot.Control.IsAPersonHomeLessNow = MyId;
             print("Age Major: " + MyId);
+
+            //needed here so can addres the new stuff
+            Brain.CheckConditions();
         }
-        //so gets back its original famID
     }
 
     void PeopleDictMatters(Building newPlace)
@@ -1027,7 +1029,7 @@ public class Person : General
     /// </summary>
     private void DidIDie()
     {
-        if (Age > _lifeLimit)
+        if (Age > _lifeLimit && !IsPregnant)
         {
             print(MyId + " gone , se partio.To old" + " home:" + Home.MyId);
             ActionOfDisappear();
@@ -1950,7 +1952,7 @@ public class Person : General
     {
         PersonPot.Control.HaveNewKid(Home.transform.position);
         Person kid = PersonPot.Control.All[PersonPot.Control.All.Count - 1];
-        kid.Mother = this.MyId;
+        kid.Mother = MyId;
         kid.Father = Spouse;
         kid.FamilyId = FamilyId;
         kid.IsBooked = Home.MyId;
@@ -2148,7 +2150,10 @@ public class Person : General
     /// </summary>
     public void UnselectPerson()
     {
-        DestroyProjector();
+        if (ImITheSelectedPerson())
+        {
+            DestroyProjector();
+        }
         
         //if is Dead not point to continue
         if (Brain.Partido)
@@ -2165,8 +2170,8 @@ public class Person : General
         }
     }
 
-    private static General _projector;
-    private static General _light;
+    private General _projector;
+    private General _light;
 
     /// <summary>
     /// this is the projector that hover when creating a nw building, or the current selected building
@@ -2192,7 +2197,7 @@ public class Person : General
         }
     }
 
-    static void DestroyProjector()
+    void DestroyProjector()
     {
         if (_light != null)
         {

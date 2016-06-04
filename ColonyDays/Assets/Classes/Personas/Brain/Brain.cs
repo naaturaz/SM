@@ -47,13 +47,7 @@ public class Brain
         get { return _currentTask; }
         set
         {
-            if (_currentTask == HPers.MovingToNewHome && value != HPers.Restarting)
-            {
-              ////Debug.Log("CurrTask called:" + _person.MyId + ".new:" + value);
-                //return;
-            }
             _currentTask = value;
-            //MindState();
         }
     }
 
@@ -103,7 +97,7 @@ public class Brain
     public Brain(Person person, PersonFile pF)
     {
         _moveToNewHome = new MoveToNewHome(this, person);
-        _majorAge = new MajorityAgeReached(this, person, MoveToNewHome) ;
+        _majorAge = new MajorityAgeReached(this, person, MoveToNewHome, pF) ;
 
         Init(person);
         LoadFromFile(pF);
@@ -155,11 +149,17 @@ public class Brain
         PersonPot.Control.RoutesCache1.AddReplaceRoute(_chillRoute);
 
         //so routes dont get started 
-        oldHome = pF._home;
-        oldWork = pF._work;
-        oldFoodSrc = pF._foodSource;
-        oldReligion = pF._religion;
-        oldChill = pF._chill;
+        if (pF._brain.CurrentTask != HPers.MovingToNewHome)
+        {
+            //bz is is moving dont worry abt this bz all routes need to get
+            //redone
+            oldHome = pF._home;
+            oldWork = pF._work;
+            oldFoodSrc = pF._foodSource;
+            oldReligion = pF._religion;
+            oldChill = pF._chill;            
+        }
+
 
         //if we have an old route will start that one 
         //WillRedoOldLoadedRoutes();
@@ -720,8 +720,9 @@ public class Brain
     {
         if (CurrentTask == HPers.MovingToNewHome
             //none is if person is just spwaneed and foudn new home 
-            && (_person.Body.Location == HPers.Home || _person.Body.Location == HPers.None) && 
-            _person.Body.GoingTo == HPers.Home
+            && (_person.Body.Location == HPers.Home || _person.Body.Location == HPers.None) &&
+            //as long is idling in home is ok. cant be going to home bz tht means it went trhu this if once 
+            _person.Body.GoingTo != HPers.MovingToNewHome && _isIdleHomeNow
             && MoveToNewHome.RouteToNewHome.CheckPoints.Count > 0)
         {
             _person.Body.WalkRoutine(MoveToNewHome.RouteToNewHome, HPers.MovingToNewHome);

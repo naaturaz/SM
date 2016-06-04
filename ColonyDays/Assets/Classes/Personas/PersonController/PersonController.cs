@@ -164,6 +164,7 @@ public class PersonController : PersonPot
             //This is DEBUG
             GameController.LoadStartingConditions(conditions[Difficulty]);
         }
+        BuildingPot.CreateUnlockBuilds();
     }
 
 
@@ -707,7 +708,8 @@ public class PersonController : PersonPot
         set { _waitList = value; }
     }
 
-  
+
+
 
     public void CheckMeOnSystem(string id)
     {
@@ -1010,4 +1012,6 @@ public class PersonControllerSaveLoad
     public EmigrateController EmigrateController1 = new EmigrateController();
 
     public string IsAPersonHomeLessNow = "";
+
+    public string GameVersion = "";
 }

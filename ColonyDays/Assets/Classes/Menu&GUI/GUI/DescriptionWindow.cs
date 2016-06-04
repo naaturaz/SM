@@ -63,10 +63,23 @@ public class DescriptionWindow : General
         _description.GetComponent<Text>().text = Languages.ReturnString(val+".Desc");
 
 
-        //load the root of the banner 
-        var iconRoot = Root.RetBuildingBannerRoot(val);
-        var s = (Sprite) Resources.Load(iconRoot, typeof (Sprite));
-
+        var state = BuildingPot.UnlockBuilds1.ReturnBuildingState(val);
+        Sprite s = null;
+        
+        if (state == H.Unlock)
+        {
+            //load the root of the banner 
+            var iconRoot = Root.RetBuildingBannerRoot(val);
+            s = (Sprite)Resources.Load(iconRoot, typeof(Sprite));
+        }
+        else if (state == H.Lock)
+        {
+            s = (Sprite)Resources.Load("Prefab/Building/Lock_Banner", typeof(Sprite));
+        }       
+        else if (state == H.Coming_Soon)
+        {
+            s = (Sprite)Resources.Load("Prefab/Building/Coming_Soon_Banner", typeof(Sprite));
+        }
 
         //debug
         if (s == null)
@@ -85,6 +98,18 @@ public class DescriptionWindow : General
     /// <returns></returns>
     string BuildCostString(H type)
     {
+        var state = BuildingPot.UnlockBuilds1.ReturnBuildingState(type);
+        if (state == H.Lock)
+        {
+            return BuildingPot.UnlockBuilds1.RequirementsNeeded(type);
+        }
+        if (state == H.Coming_Soon)
+        {
+            return "This building is coming soon to the game";
+        }
+
+
+        //unlock
         var stat = Book.GiveMeStat(type);
         int appends = 0;
 
@@ -130,13 +155,9 @@ public class DescriptionWindow : General
         res = CheckIfAppend3(ref appends, res);
 
         return res;
-
-        //private int _capacity;//how many units of good can hold a building
-
-
     }
 
-    string CheckIfAppend3(ref int append , string msg )
+    public static string CheckIfAppend3(ref int append , string msg )
     {
         if (append >= 3)
         {
