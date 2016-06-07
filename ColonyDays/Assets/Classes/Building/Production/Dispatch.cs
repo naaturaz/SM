@@ -1047,6 +1047,8 @@ public class Order
     public DateTime PlacedTime;
 
     public string ID;//the id of an order. Used to find and removed
+    private P p1;
+    private int p2;
 
     public static Order Copy(Order aOrder)
     {
@@ -1097,6 +1099,17 @@ public class Order
 
         ID = Product + ":" + Amount + "|" + TypeOrder + "|" + DateTime.Now;
         PlacedTime = DateTime.Now;
+    }
+
+    /// <summary>
+    /// Used for Orders on Unlock Buildings. tht really they hold 2 values alone for Unlocking purposes
+    /// </summary>
+    /// <param name="prod"></param>
+    /// <param name="amt"></param>
+    public Order(P prod, int amt)
+    {
+        Product = prod;
+        Amount = amt;
     }
 
  

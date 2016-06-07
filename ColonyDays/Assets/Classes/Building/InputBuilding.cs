@@ -441,6 +441,14 @@ public class InputBuilding : BuildingPot {
     /// </summary>
     public void BuildNowNew(H buildWhat)
     {
+        var state = BuildingPot.UnlockBuilds1.ReturnBuildingState(buildWhat);
+        if (state != H.Unlock)
+        {
+            Debug.Log("Sound here off negation of a building");
+            return;
+        }
+
+
         CleanCurrentSpawnBuildIfNewBuildIsADiffType(buildWhat);
         Vector3 iniPos = m.HitMouseOnTerrain.point;
 

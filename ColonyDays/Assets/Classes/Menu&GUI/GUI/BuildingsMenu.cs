@@ -64,14 +64,14 @@ public class BuildingsMenu : GUIElement
             hoverBuild.InitObjects();
         }
 
-        var iconRoot = Root.lockedBuilding;
-        _lockedSprite = (Sprite)Resources.Load(iconRoot, typeof(Sprite));
+
+        _lockedSprite = (Sprite)Resources.Load(Root.lockedBuilding, typeof(Sprite));
     }
 
     public void Show(List<H> vals)
     {
+        BuildingPot.UnlockBuilds1.UpdateBuildsStatuses();
         LoadMenu(vals);
-
         transform.position = iniPos;
     }
 
@@ -86,9 +86,9 @@ public class BuildingsMenu : GUIElement
             if (i < vals.Count)
             {
                 //find is if locked 
-                bool locked = IsThisBuildLocked(vals[i]);
+                bool unlocked = H.Unlock == BuildingPot.UnlockBuilds1.ReturnBuildingState(vals[i]);
 
-                if (!locked)
+                if (unlocked)
                 {
                     MakeAlphaColorMax(slots[i]);
 

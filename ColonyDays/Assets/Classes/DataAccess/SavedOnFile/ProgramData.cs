@@ -7,9 +7,7 @@ using System.Text;
 
 public class ProgramData
 {
-
     public string GameVersion;
-
 
     public ProgramData() { }
 
@@ -17,6 +15,4 @@ public class ProgramData
     {
         GameVersion = gameVersion;
     }
-
-
 }

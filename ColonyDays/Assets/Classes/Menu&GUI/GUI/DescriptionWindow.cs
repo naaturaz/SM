@@ -79,6 +79,10 @@ public class DescriptionWindow : General
         else if (state == H.Coming_Soon)
         {
             s = (Sprite)Resources.Load("Prefab/Building/Coming_Soon_Banner", typeof(Sprite));
+        }     
+        else if (state == H.Coming_Soon)
+        {
+            s = (Sprite)Resources.Load("Prefab/Building/Max_Cap_Reach_Banner", typeof(Sprite));
         }
 
         //debug
@@ -106,6 +110,10 @@ public class DescriptionWindow : General
         if (state == H.Coming_Soon)
         {
             return "This building is coming soon to the game";
+        }
+        if (state == H.Max_Cap_Reach)
+        {
+            return "Can't build more houses. Max population reached";
         }
 
 

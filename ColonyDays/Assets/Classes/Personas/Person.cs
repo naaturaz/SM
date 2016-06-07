@@ -1880,6 +1880,11 @@ public class Person : General
     /// <returns></returns>
     bool CanIHaveANewKid()
     {
+        if (PersonPot.Control.All.Count > GameController.CapMaxPerson)
+        {
+            return false;
+        }
+
         if (IsPregnant || IsWidow || Gender == H.Male || string.IsNullOrEmpty(Spouse) || Home == null 
             || !string.IsNullOrEmpty(IsBooked) || !IsMajor)
         {
@@ -2150,10 +2155,10 @@ public class Person : General
     /// </summary>
     public void UnselectPerson()
     {
-        if (ImITheSelectedPerson())
-        {
+        //if (ImITheSelectedPerson())
+        //{
             DestroyProjector();
-        }
+        //}
         
         //if is Dead not point to continue
         if (Brain.Partido)

@@ -368,6 +368,7 @@ public enum H
     Unlock,
     Lock,
     Coming_Soon,
+    Max_Cap_Reach,
 
 
 }

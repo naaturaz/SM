@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 
 
@@ -142,8 +143,6 @@ public class GameScene : General
         return p;
     }
 
-
-
     /// <summary>
     /// version on botton of the game like 0.0.0.16.05.22
     /// </summary>
@@ -151,8 +150,20 @@ public class GameScene : General
     string Version()
     {
         return "Early Access \n v0.0.0." +
-               DateTime.Now.Year.ToString().Substring(2) + "." + DateTime.Now.Month + "." + DateTime.Now.Day + "d." +
-               DateTime.Now.Hour + "." + DateTime.Now.Minute + "." + DateTime.Now.Second;
+               DateTime.Now.Year.ToString().Substring(2) + "." +
+               AddZeroInFrontIfOneChar(DateTime.Now.Month) + "." + 
+               AddZeroInFrontIfOneChar(DateTime.Now.Day) + "d." +
+               DateTime.Now.Hour + "." + DateTime.Now.Minute + "." + DateTime.Now.Second +
+               "r" + UMath.GiveRandom(0, 10);
+    }
+
+    string AddZeroInFrontIfOneChar(int v)
+    {
+        if (v.ToString().Length == 1)
+        {
+            return "0" + v;
+        }
+        return v+"";
     }
 
 

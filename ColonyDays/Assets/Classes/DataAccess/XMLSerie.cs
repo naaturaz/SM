@@ -45,15 +45,19 @@ public class XMLSerie
 
 
 
-    public static void WriteXMLProgram(ProgramData program)
+
+
+
+
+
+
+    private static ProgramData _programData;
+    public static ProgramData ProgramData1
     {
-        DataContainer DataCollection = new DataContainer();
-        DataCollection.ProgramData = program;
-
-        DataCollection.Save(Path.Combine(dataPath, "program.xml"));
+        get { return _programData; }
+        set { _programData = value; }
     }
-
-    public static ProgramData ReadXMLProgram()
+    static ProgramData ReadXMLProgram()
     {
         var load =
             DataContainer.Load(Path.Combine(Application.dataPath, "program.xml"));
@@ -62,13 +66,25 @@ public class XMLSerie
 
         if (load == null)
         {
+            Debug.Log("programXML NUll ");
             //no file saved
             return null;
         }
 
+        Debug.Log("programXML loaded:"+ load.ProgramData.GameVersion);
         ProgramData res = load.ProgramData;
         return res;
     }
+
+    public static void WriteXMLProgram(ProgramData program)
+    {
+        DataContainer DataCollection = new DataContainer();
+        DataCollection.ProgramData = program;
+
+        DataCollection.Save(Path.Combine(dataPath, "program.xml"));
+    }
+
+
 
 
 
@@ -87,6 +103,9 @@ public class XMLSerie
     {
         var loaded =
             DataContainer.Load(Path.Combine(Application.dataPath, Program.gameScene.Terreno.name + ".xml"));
+
+        Debug.Log("ReadXMLMesh: " + Path.Combine(Application.dataPath, Program.gameScene.Terreno.name + ".xml"));
+        ProgramData1 = ReadXMLProgram();
 
         SubMeshData res = null;
         if (loaded != null) {res = loaded.SubMeshData; }
@@ -192,23 +211,18 @@ public class XMLSerie
         set { _townLoaded = value; }
     }
 
-    //public static int BuildCounts
-    //{
-    //    get { return _buildCounts; }
-    //    set { _buildCounts = value; }
-    //}
 
 
 
     private static BuildingData LoadDefaultTown()
     {
-        string locPath = "/Resources/Town";
+        //string locPath = "/Resources/Town";
 
         BuildingData res = null;
         var difficulty = 0;
         if (difficulty == 0)
         {
-            var file = DataContainer.Load(Path.Combine(Application.dataPath + locPath, "4H.xml"));
+            var file = DataContainer.Load(Path.Combine(Application.dataPath, "4H.xml"));
             if (file!=null)
             {
                 Debug.Log("TownLoaded = true");

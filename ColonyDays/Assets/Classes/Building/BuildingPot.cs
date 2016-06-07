@@ -62,7 +62,7 @@ public class BuildingPot : Pot
         while (true)
         {
             yield return new WaitForSeconds(60); // wait
-            UnlockBuilds1.UpdateBuildsStatuses();
+            //UnlockBuilds1.UpdateBuildsStatuses();
         }
     }
 

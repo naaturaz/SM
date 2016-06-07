@@ -22,6 +22,17 @@ public class GameController  {
 
     private int _lastYearWorkersSalaryWasPaid;
 
+
+    private static int _capMaxPerson = 150;
+    /// <summary>
+    /// tHE Max amt of person in a game 
+    /// </summary>
+    public static int CapMaxPerson
+    {
+        get { return _capMaxPerson; }
+        set { _capMaxPerson = value; }
+    }
+
     static public ResumenInventory ResumenInventory1
     {
         get { return _resumenInventory; }
@@ -173,6 +184,8 @@ public class GameController  {
         get { return _isGameOver; }
         set { _isGameOver = value; }
     }
+
+
     private void GameOver(char type)//p pirate ... m money
     {
         if (_isGameOver)

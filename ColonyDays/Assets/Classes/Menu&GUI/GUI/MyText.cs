@@ -11,19 +11,7 @@ public class MyText : MonoBehaviour
 	{
 	    thisText = GetComponent<Text>();
 
-        if (name == "Version")
-        {
-            var read = XMLSerie.ReadXMLProgram();
 
-            if (read != null)
-            {
-                thisText.text = read.GameVersion;
-            }
-            else
-            {
-                thisText.text = ":)";
-            }
-        }
 
 
 	    Map();
@@ -74,6 +62,20 @@ public class MyText : MonoBehaviour
         }
 
 
+
+        if (name == "Version")
+        {
+            var read = XMLSerie.ProgramData1;
+
+            if (read != null)
+            {
+                thisText.text = read.GameVersion;
+            }
+            else
+            {
+                thisText.text = ":)";
+            }
+        }
     }
 
 
@@ -89,9 +91,6 @@ public class MyText : MonoBehaviour
             reMapCount = 0;
             Map();
         }
-
-           
-        
 
         if (!mappedOnce)
         {

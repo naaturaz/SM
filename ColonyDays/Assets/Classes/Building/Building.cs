@@ -799,7 +799,7 @@ public class Building : General, Iinfo
             Projector = (MyProjector) Create(Root.projector, container: transform);
             _light = Create(Root.lightCil, transform.position, container: transform);
             
-            _reachArea = Create(Root.reachArea, transform.position);
+            _reachArea = Create(Root.reachArea, transform.position, container: transform);
             _reachArea.transform.localScale = new Vector3(Brain.Maxdistance*2, 0.1f, Brain.Maxdistance*2);
         }
     }

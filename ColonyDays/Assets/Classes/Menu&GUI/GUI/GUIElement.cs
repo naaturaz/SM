@@ -22,6 +22,10 @@ public class GUIElement : General {
         transform.position = iniPos;
     }
 
+    public bool IsShownNow()
+    {
+        return transform.position == iniPos;
+    }
 
     protected void MakeAlphaColorZero(Text g)
     {

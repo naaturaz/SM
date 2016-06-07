@@ -1,6 +1,9 @@
 ﻿using System.Xml.Serialization;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
+using System.Xml;
+using UnityEngine;
 
 [XmlRoot("DataCollection")]
 public class DataContainer
@@ -34,6 +37,9 @@ public class DataContainer
         }
     }
 
+
+
+
     public static DataContainer Load(string path)
     {
         var serializer = new XmlSerializer(typeof(DataContainer));
@@ -47,6 +53,7 @@ public class DataContainer
         }
         catch (System.Exception ex)
         {
+            Debug.Log("exception: " +ex.Message);
             return null;
         }
     }

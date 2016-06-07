@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 /// <summary>
 /// This class will in one event will define wich building are unlock
@@ -7,7 +8,7 @@ using System.Linq;
 /// </summary>
 public class UnlockBuilds
 {
-    private List<BRequires> _list;
+    private List<BRequires> _list ;
     private Dictionary<H, BRequires> _dict = new Dictionary<H, BRequires>();
 
     public UnlockBuilds()
@@ -53,12 +54,23 @@ public class UnlockBuilds
             new BRequires(H.FieldFarmXLarge, 150),
 
 
+            //raw
+            new BRequires(H.Ceramic, true),
+            new BRequires(H.Fishermen, true),
+            new BRequires(H.FishRegular, true),
+            new BRequires(H.Mine, true),
+            new BRequires(H.MountainMine, true),
+            new BRequires(H.Resin, true),
+            new BRequires(H.LumberMill, true),
+            new BRequires(H.BlackSmith),
+            new BRequires(H.SaltMine, true),
+
             //prod
-            new BRequires(H.Brick, 50, 5000, 9000),
+            new BRequires(H.Brick, true),
             new BRequires(H.Carpintery, 50, 5000, 9000),
             new BRequires(H.Cigars, 50, 5000, 9000),
             new BRequires(H.Mill, 50, 5000, 9000),
-
+            new BRequires(H.Slat, H.Coming_Soon),
             new BRequires(H.Tilery, 50, 5000, 9000),
             new BRequires(H.CannonParts, 50, 5000, 9000),
             new BRequires(H.Distillery, 50, 5000, 9000),
@@ -74,25 +86,26 @@ public class UnlockBuilds
             new BRequires(H.Silk, 50, 5000, 9000),
             new BRequires(H.SugarMill, 50, 5000, 9000),
             new BRequires(H.Foundry, 50, 5000, 9000),
-            new BRequires(H.SteelFoundry, 50, 5000, 9000),
+            new BRequires(H.SteelFoundry, 50, 5000, 9000, priorBuilds: new List<H>(){H.Foundry}),
 
             //trade
-            new BRequires(H.Dock, 50, 5000, 9000),
-            new BRequires(H.Shipyard, 50, 5000, 9000),
-            new BRequires(H.Supplier, 50, 5000, 9000),
+            new BRequires(H.Dock, 50, 5000, 9000, priorBuilds: new List<H>(){H.Shipyard}),
+            new BRequires(H.Shipyard, 50, 5000, 50000, priorBuilds: new List<H>(){H.Supplier}),
+            new BRequires(H.Supplier, 50, 5000, 50000),
+            new BRequires(H.StorageSmall, true),
             new BRequires(H.StorageMed, 50, 5000, 9000),
-            new BRequires(H.StorageBig, 50, 5000, 9000),
-            new BRequires(H.StorageBigTwoDoors, 50, 5000, 9000),
-            new BRequires(H.StorageExtraBig, 50, 5000, 9000),
+            new BRequires(H.StorageBig, 150, 5000, 9000),
+            new BRequires(H.StorageBigTwoDoors, 250, 5000, 9000),
+            new BRequires(H.StorageExtraBig, 350, 5000, 9000),
 
             //gov
             new BRequires(H.Library, 50, 5000, 9000),
             new BRequires(H.School, 50, 5000, 9000),
             new BRequires(H.TradesSchool, 50, 5000, 9000),
-            new BRequires(H.TownHouse, 50, 5000, 9000),
+            new BRequires(H.TownHouse, H.Coming_Soon),
 
 
-            //gov
+            //other
             new BRequires(H.Church, 50, 5000, 9000),
             new BRequires(H.Tavern, 50, 5000, 9000),
 
@@ -168,23 +181,19 @@ class BRequires
         PriorBuilds = priorBuilds;
         ProductRequired = prodRequired;
 
-        if (ProductRequired == null)
-        {
-            CheckIfIsABuildThatHasInputProds();
-        }
-
-        if (HType.ToString().Contains("House"))
-        {
-            SetFoodNeededAsHouse();
-        }
-
+        CheckIfIsABuildThatHasInputProds();
+        SetFoodNeededAsHouse();
     }
 
 
 
     private void SetFoodNeededAsHouse()
     {
-        Food = 100 * PersonPot.Control.All.Count;
+        if (HType.ToString().Contains("House"))
+        {
+            Food = 100 * PersonPot.Control.All.Count;
+            InfoMsg = "";
+        }
     }
 
     /// <summary>
@@ -214,7 +223,19 @@ class BRequires
     /// </summary>
     private void CheckIfIsABuildThatHasInputProds()
     {
+        var inputs = BuildingPot.Control.ProductionProp.ReturnAllInputsThisBuildingTakeListOfProd(HType);
 
+        if (inputs != null && inputs.Count > 0 && ProductRequired == null)
+        {
+            ProductRequired = new List<Order>();
+            //so Woods is not twice in PaperFactory
+            inputs = inputs.Distinct().ToList();
+        }
+
+        for (int i = 0; i < inputs.Count; i++)
+        {
+            ProductRequired.Add(new Order(inputs[i], 5000));
+        }
     }
 
     /// <summary>
@@ -227,6 +248,9 @@ class BRequires
         {
             return;
         }
+
+        //needs to be called here again bz the amt of people changes all the time 
+        SetFoodNeededAsHouse();
 
         var person = PersonPot.Control.All.Count > Persons || Persons == 0;
         var food = currentAmtOfFood > Food || Food == 0;
@@ -244,6 +268,27 @@ class BRequires
             CurrentState = H.Lock;
             SetRequirementsNeededInfoMsg();
         }
+
+        if (!IsAHouseBelowCapMax())
+        {
+            CurrentState = H.Max_Cap_Reach;
+        }
+    }
+
+    /// <summary>
+    /// If is a house will check if the Population is below the Cap.
+    /// 
+    /// </summary>
+    /// <returns>if is not below and a house will return false</returns>
+    private bool IsAHouseBelowCapMax()
+    {
+        var aHouse = HType.ToString().Contains("House") || HType == H.Bohio;
+        if (!aHouse)
+        {
+            return true;
+        }
+
+        return PersonPot.Control.All.Count < GameController.CapMaxPerson;
     }
 
     private void SetRequirementsNeededInfoMsg()
@@ -288,7 +333,7 @@ class BRequires
             for (int i = 0; i < ProductRequired.Count; i++)
             {
                 res += ProductRequired[i].Product + " " + Unit.WeightConverted(ProductRequired[i].Amount)
-                    + " " + Unit.WeightUnit();
+                    + " " + Unit.WeightUnit() + " ";
                 appends++;
             } 
         }
@@ -320,7 +365,7 @@ class BRequires
             var onGeneral = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(ProductRequired[i].Product);
             return onGeneral > ProductRequired[i].Amount;
         }
-        return false;
+        return true;
     }
 
     bool DoesPriorBuildingsExist()
