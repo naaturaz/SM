@@ -76,4 +76,9 @@ public class MajorityAgeReached  {
             PersonReachMajorityAgeAction();
         }
     }
+
+    internal void RollBackMoajority()
+    {
+        _majorityAgeRecentReached = false;
+    }
 }

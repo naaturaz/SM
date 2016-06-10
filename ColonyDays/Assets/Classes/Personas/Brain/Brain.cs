@@ -113,7 +113,21 @@ public class Brain
         _moveToNewHome = new MoveToNewHome(this, person);
         _majorAge = new MajorityAgeReached(this, person, MoveToNewHome);
 
+       
         Init(person);
+
+        //goMindState = true;
+
+        //so redos Routes
+        oldHome = "";
+        oldWork = "";
+        oldFoodSrc = "";
+        oldReligion = "";
+        oldChill = "";
+
+        _person.Body.Location = HPers.Home;
+        _person.Body.GoingTo = HPers.Home;
+        CurrentTask = HPers.None;
     }
 
     string[] myBuilds;
@@ -160,29 +174,25 @@ public class Brain
             oldChill = pF._chill;            
         }
 
-
-        //if we have an old route will start that one 
-        //WillRedoOldLoadedRoutes();
-
-        //so the MindState() works
-        _routerFood.IsRouteReady = true;
-        _routerWork.IsRouteReady = true;
-        _routerIdle.IsRouteReady = true;
-        _routerReligion.IsRouteReady = true;
-        _routerChill.IsRouteReady = true;
+        SetBrainToMindState();
 
         _generalOldKeysList = pF._brain.GeneralOldKeysList;
 
         MoveToNewHome.HomeOldKeysList = pF._brain.MoveToNewHome.HomeOldKeysList;
         MoveToNewHome.OldHomeKey = pF._brain.MoveToNewHome.OldHomeKey;
         MoveToNewHome.RouteToNewHome = pF._brain.MoveToNewHome.RouteToNewHome;
+    }
 
-        ////bz loading routes. theyu need to be set to false otherwise will be true forver 
-        //workRouteStart = false;
-        //foodRouteStart = false;
-        //idleRouteStart = false;
-        //religionRouteStart = false;
-        //chillRouteStart = false;
+    /// <summary>
+    /// so the MindState() works
+    /// </summary>
+    void SetBrainToMindState()
+    {
+        _routerFood.IsRouteReady = true;
+        _routerWork.IsRouteReady = true;
+        _routerIdle.IsRouteReady = true;
+        _routerReligion.IsRouteReady = true;
+        _routerChill.IsRouteReady = true;
     }
 
     /// <summary>
@@ -2815,7 +2825,7 @@ public class Brain
         }
 
         MoveToNewHome.RemovePeopleDict(buildID);
-        Debug.Log("Blaclisted:"+buildID +" ."+_person.MyId);
+        Debug.Log("Blacklisted:"+buildID +" ."+_person.MyId);
 
         //the route key is added so we dont blaclist 2 buildings of a same route
         //only the 1st one need to be blacklisted. this applys for BridgeRouting 
@@ -2828,28 +2838,9 @@ public class Brain
         }
 
         //person blacklisting Home 
-        if (buildID == _person.Home.MyId)
+        if ( Building.IsHouseType(buildID))
         {
-            var fam= _person.Home.FindMyFamilyChecksFamID(_person);
-            fam.RemovePersonFromFamily(_person);
-            _person.IsBooked = "";
-            _person.FamilyId = "";
-            _person.Body.GoingTo=HPers.None;
-
-            RemoveFromAllPeopleDict();
-            _person.Home.BookedHome1.ClearBooking();
-            _person.Home.BookedHome1 = null;
-            _person.Home = null;
-        
-            _person.Work = null;
-            _person.FoodSource = null;
-            _person.Religion = null;
-            _person.Chill = null;
-
-            _person.RedoBrain(BlackList);
-
-            //in case was wiaint to Unbokk to die
-            Die();
+            _person.RollBackMajority();
             return;
         }
         BridgeMarkedAction(buildID);

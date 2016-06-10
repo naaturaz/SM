@@ -238,7 +238,7 @@ public class InputBuilding : BuildingPot {
             if (Input.GetKeyUp(KeyCode.R) && (DefineCategory(DoingNow) == Ca.Structure || (DefineCategory(DoingNow) == Ca.Shore)))
             {
                 Control.CurrentSpawnBuild.RotationAction();
-                _audioPlayer.PlaySoundOneTime(RootSound.hoverMenuSound);
+                AudioPlayer.PlaySoundOneTime(RootSound.hoverMenuSound);
             }
             else if (Input.GetMouseButtonUp(0) && !_isDraggingWay && (DefineCategory(DoingNow) == Ca.Structure || (DefineCategory(DoingNow) == Ca.Shore)))
             {
@@ -335,7 +335,7 @@ public class InputBuilding : BuildingPot {
         {
             DoneFarmRoutine();
         }
-        _audioPlayer.PlaySoundOneTime(RootSound.hoverMenuSound);
+        AudioPlayer.PlaySoundOneTime(RootSound.hoverMenuSound);
     }
 
     /// <summary>
@@ -472,7 +472,10 @@ public class InputBuilding : BuildingPot {
         }
 
         DoingNow = buildWhat;
-        _audioPlayer.PlaySoundOneTime(RootSound.clickMenuSound);
+        
+
+        AudioPlayer.PlaySoundOneTime(RootSound.clickMenuSound);
+        
         GameScene.ScreenPrint("Ready to build a " + buildWhat);
         InputMode = Mode.Placing;
     }

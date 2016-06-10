@@ -502,6 +502,24 @@ public enum S
     Up_Side_Elevator
 }
 
+/// <summary>
+/// For sounds
+/// </summary>
+public enum So
+{
+    ClickMenuSound,
+
+}
+
+/// <summary>
+/// For music
+/// </summary>
+public enum Mu
+{
+    Cubano,
+
+}
+
 public enum BtnsE
 {
     Select_Cube_Btn_Raw_3dMenu,

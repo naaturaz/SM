@@ -131,14 +131,13 @@ public class Settings
 
     static Music KillOrRestart(Music current, bool isMusicOnPass)
     {
-        AudioPlayer ap = new AudioPlayer();
         if (isMusicOnPass) 
         { 
             if(Application.loadedLevelName == "Lobby")
             {
-                current = (Music)ap.PlayAudio(RootSound.musicLobby, H.Music);
+                current = (Music)AudioPlayer.PlayAudio(RootSound.musicLobby, H.Music);
             }
-            else current = (Music)ap.PlayAudio(RootSound.musicLvl1Start, H.Music);
+            else current = (Music)AudioPlayer.PlayAudio(RootSound.musicLvl1Start, H.Music);
         }
         else
         {   
@@ -162,11 +161,10 @@ public class Settings
 
     public static void PlayMusic()
     {
-        AudioPlayer ap = new AudioPlayer();
         if(Application.loadedLevelName != "Lobby")
-            music = (Music)ap.PlayAudio(RootSound.musicLvl1Start, H.Music);
+            music = (Music)AudioPlayer.PlayAudio(RootSound.musicLvl1Start, H.Music);
         else if(Application.loadedLevelName == "Lobby")
-            music = (Music)ap.PlayAudio(RootSound.musicLobby, H.Music);
+            music = (Music)AudioPlayer.PlayAudio(RootSound.musicLobby, H.Music);
     }
 #endregion
 

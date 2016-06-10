@@ -44,26 +44,30 @@ public class PersonWindow : GUIElement {
     }
 
 
-    private Person oldPerson;
-    void CheckIfIsDiffNewPerson()
-    {
-        if (_person != oldPerson)
-        {
-            _person.UnselectPerson();
-        }
-        oldPerson = _person;
-    }
+    //private Person oldPerson;
+    //void CheckIfIsDiffNewPerson()
+    //{
+    //    if (_person != oldPerson)
+    //    {
+    //        _person.UnselectPerson();
+    //    }
+    //    oldPerson = _person;
+    //}
 
     public void Show(Person val)
     {
+        if (_person != null)
+        {
+            _person.UnselectPerson();
+        }
+
         _person = val;
-        CheckIfIsDiffNewPerson();
+        //CheckIfIsDiffNewPerson();
 
         LoadMenu();
         MakeAlphaColorZero(_inv);
 
         transform.position = iniPos;
-
         _person.SelectPerson();
     }
 

@@ -169,7 +169,7 @@ public class MenuHandler3DBtn : MenuHandler
             if (Program.MOUSEOVERTHIS != null)
             {
                 LobbyHandleMenu(Program.MOUSEOVERTHIS.name);
-                audioPlayer.PlayAudio(RootSound.clickMenuSound, H.Sound);
+                //audioPlayer.PlayAudio(RootSound.clickMenuSound, H.Sound);
 
                 //will pop up new menus
                 //will pop up new Raws and Elements
@@ -329,7 +329,7 @@ public class MenuHandler3DBtn : MenuHandler
                  SpawnText(Camera.main.WorldToViewportPoint(menuSetTip.position));
                  BringForward(Program.MOUSEOVERTHIS);
                  CamControl.CAMFollow.target = ReturnGuideCameraPoint(Program.MOUSEOVERTHIS);
-                 audioPlayer.PlaySoundOneTime(RootSound.hoverMenuSound, H.Sound);
+                 //audioPlayer.PlaySoundOneTime(RootSound.hoverMenuSound, H.Sound);
 
                  if (hoveredTemp != null)
                  {
@@ -340,7 +340,7 @@ public class MenuHandler3DBtn : MenuHandler
                          BringForward(action: "BackToOrigin");
                          CamControl.CAMFollow.target = menuSetCamGuideNoSelection;
                          SwitchMaterial(1);//Materials
-                         audioPlayer.PlaySoundOneTime(RootSound.hoverMenuSound, H.Sound, reset: true);
+                         //audioPlayer.PlaySoundOneTime(RootSound.hoverMenuSound, H.Sound, reset: true);
                      }
                  }
              }
@@ -355,7 +355,7 @@ public class MenuHandler3DBtn : MenuHandler
              BringForward(action: "BackToOrigin");
              CamControl.CAMFollow.target = menuSetCamGuideNoSelection;
              SwitchMaterial(1);//Materials
-             audioPlayer.PlaySoundOneTime(RootSound.hoverMenuSound, H.Sound, reset: true);
+             //audioPlayer.PlaySoundOneTime(RootSound.hoverMenuSound, H.Sound, reset: true);
          }
      }
 

@@ -16,10 +16,6 @@ public class General : MonoBehaviour
         set { _renderer = value; }
     }
 
-    //Audio Section
-    //Player
-    protected AudioPlayer _audioPlayer = new AudioPlayer();
-
     //Shortcuts to Mesch Controller
     private SMe sMe = new SMe();
     public SMe m 

@@ -63,10 +63,10 @@ public class BuildingsMenu : GUIElement
             //so rects are set bz is hidden
             hoverBuild.InitObjects();
         }
-
-
-        _lockedSprite = (Sprite)Resources.Load(Root.lockedBuilding, typeof(Sprite));
+        locked = (Sprite) Resources.Load(Root.lockedBuilding, typeof (Sprite));
     }
+    private Sprite locked;
+
 
     public void Show(List<H> vals)
     {
@@ -74,6 +74,7 @@ public class BuildingsMenu : GUIElement
         LoadMenu(vals);
         transform.position = iniPos;
     }
+
 
     /// <summary>
     /// Loads the menu of the Buildins Menu 
@@ -85,13 +86,13 @@ public class BuildingsMenu : GUIElement
         {
             if (i < vals.Count)
             {
+                MakeAlphaColorMax(slots[i]);
+
                 //find is if locked 
                 bool unlocked = H.Unlock == BuildingPot.UnlockBuilds1.ReturnBuildingState(vals[i]);
 
                 if (unlocked)
                 {
-                    MakeAlphaColorMax(slots[i]);
-
                     //load the root of the ico 
                     var iconRoot = Root.RetBuildingIconRoot(vals[i]);
                     var s = (Sprite) Resources.Load(iconRoot, typeof (Sprite));
@@ -114,7 +115,7 @@ public class BuildingsMenu : GUIElement
 
     private void ShowLockedIcon(GameObject g)
     {
-        g.GetComponent<Image>().sprite = _lockedSprite;
+        g.GetComponent<Image>().sprite = locked;
     }
 
     void MakeAlphaColorZero(GameObject g)

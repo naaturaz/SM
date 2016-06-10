@@ -287,7 +287,7 @@ public class MenuHandler2DBtn : MenuHandler
             if (Program.MOUSEOVERTHIS != null)
             {
                 //print(Program.MOUSEOVERTHIS.name);
-                audioPlayer.PlayAudio(RootSound.clickMenuSound, H.Sound);
+                //audioPlayer.PlayAudio(RootSound.clickMenuSound, H.Sound);
                 //will pop up new menus
                 //will pop up new Raws and Elements
                 if ((Program.MOUSEOVERTHIS.name.Contains("Select_") || Program.MOUSEOVERTHIS.name.Contains("Actionable_"))

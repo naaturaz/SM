@@ -21,7 +21,7 @@ public class MenuHandler : General {
 	// Use this for initialization
 	internal void Start ()
     {
-        audioPlayer = new AudioPlayer();
+        //audioPlayer = new AudioPlayer();
 	}
 
     /// <summary>

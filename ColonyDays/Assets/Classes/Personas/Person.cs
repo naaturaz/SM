@@ -362,7 +362,7 @@ public class Person : General
             obj = (Person) Resources.Load(Root.personaMale1, typeof (Person));
         }
 
-        int iniAge = General.GiveRandom(17, 17); //5, 29
+        int iniAge = General.GiveRandom(5, 29); //5, 29
 
         //will assign ramdom pos if has none 
         if (iniPos == new Vector3())
@@ -539,7 +539,7 @@ public class Person : General
         Age = iniAge;
         _name = BuildRandomName();
 
-        _lifeLimit = GiveRandom(20, 20);//75, 85
+        _lifeLimit = GiveRandom(40, 40);//75, 85
         MyId = _name + "." + Id;
 
         Brain = new Brain(this);
@@ -553,9 +553,14 @@ public class Person : General
         InitGeneralStuff();
     }
 
+    /// <summary>
+    /// redoes brain and restartCOntroller for person
+    /// </summary>
+    /// <param name="blackList"></param>
     public void RedoBrain(List<string> blackList)
     {
         Brain = new Brain(this, blackList);
+        
         PersonPot.Control.RestartControllerForPerson(MyId);
     }
 
@@ -966,7 +971,8 @@ public class Person : General
             if ((buildings[i].BookedHome1 == null || buildings[i].BookedHome1.MySpouseBooked(Spouse) ||
                 !buildings[i].BookedHome1.IsBooked()) 
                 &&
-                buildings[i].WouldAdultFitInThisHouseInAFamily(this, ref familyID))
+                buildings[i].WouldAdultFitInThisHouseInAFamily(this, ref familyID) 
+                && !Brain.BlackList.Contains(buildings[i].MyId))
             {
                 return buildings[i];
             }
@@ -1057,6 +1063,17 @@ public class Person : General
 
             sp.IsWidow = true;
         }
+        Brain.Die();
+    }
+
+    /// <summary>
+    /// Only for a person that has Blacklisted a house and dont have where to go back to
+    /// </summary>
+    void ForcedDeath()
+    {
+        Debug.Log("ForcedDeath: " + MyId + " Spouse:" + Spouse);
+
+        Brain.Partido = true;
         Brain.Die();
     }
 
@@ -2058,8 +2075,7 @@ public class Person : General
     /// </summary>
     void CheckIfEmmigrate()
     {
-        if (_unHappyYears > 2 
-            //&& UPerson.IsMajor(Age) 
+        if (_unHappyYears > 2 && !Brain.Partido 
             && IsMajor && string.IsNullOrEmpty(IsBooked))
         {
             Emmigrate();
@@ -2155,10 +2171,7 @@ public class Person : General
     /// </summary>
     public void UnselectPerson()
     {
-        //if (ImITheSelectedPerson())
-        //{
-            DestroyProjector();
-        //}
+        DestroyProjector();
         
         //if is Dead not point to continue
         if (Brain.Partido)
@@ -2244,6 +2257,46 @@ public class Person : General
         }
     }
 #endregion
+
+    /// <summary>
+    /// When a person was moving out to a new Building as they reach their majority
+    /// </summary>
+    internal void RollBackMajority()
+    {
+        Debug.Log("RollingBack: " + MyId);
+
+        //the one was blackListed
+        Home.PeopleDict.Remove(MyId);
+        Home.BookedHome1.ClearBooking();
+        Home.BookedHome1 = null;
+
+        var fam = Home.FindMyFamilyChecksFamID(this);
+        fam.RemovePersonFromFamily(this);
+        IsBooked = "";
+
+        var homeIsGoingBackTo = Brain.GetBuildingFromKey(Brain.MoveToNewHome.OldHomeKey);
+
+        //a person tht immigrate or spawned at initial game 
+        if (homeIsGoingBackTo == null)
+        {
+            ForcedDeath();
+            return;
+        }
+
+        FamilyId = homeIsGoingBackTo.Families[0].FamilyId;
+
+        //even if doesnt fit. he needs to get back to his house of origin
+        homeIsGoingBackTo.Families[0].AddKids(MyId);
+        Body.GoingTo = HPers.None;
+
+        Home = homeIsGoingBackTo as Structure;
+        transform.parent = Home.transform;
+        
+        IsMajor = false;
+        Brain.MajorAge.RollBackMoajority();
+
+        RedoBrain(Brain.BlackList);
+    }
 }
 
 public class PersonReport

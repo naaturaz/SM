@@ -1870,6 +1870,8 @@ public class Building : General, Iinfo
         }
     }
 
+   
+
     public bool ThisPersonFitInThisHouse(Person newPerson, ref string famID)
     {
         //means another person is asking for this buiding before hit the Start()
@@ -3331,9 +3333,40 @@ public class Building : General, Iinfo
         return MyId.Contains("House") || MyId.Contains("Bohio");
     }
 
+    /// <summary>
+    /// Check if contain Bohio or House
+    /// </summary>
+    /// <param name="passID"></param>
+    /// <returns></returns>
     static public bool IsHouseType(string passID)
     {
         return passID.Contains("House") || passID.Contains("Bohio");
+    }
+
+    public static bool IsHouseType(H HTypeP)
+    {
+        if (HTypeP == H.Bohio)
+        {
+            return true;
+        }
+        else if (HTypeP == H.HouseTwoFloor)
+        {
+            return true;
+        }
+        else if (HTypeP == H.HouseA || HTypeP == H.HouseB)
+        {
+            return true;
+        }
+        else if (HTypeP == H.HouseMed //|| HType == H.HouseMedB 
+            )
+        {
+            return true;
+        }
+        else if (HTypeP == H.HouseLargeA || HTypeP == H.HouseLargeB || HTypeP == H.HouseLargeC)
+        {
+            return true;
+        }
+        return false;
     }
 
     #region Dock  DryDock and Supplier

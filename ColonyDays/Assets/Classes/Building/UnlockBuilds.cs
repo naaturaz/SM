@@ -39,7 +39,7 @@ public class UnlockBuilds
             new BRequires(H.HouseB, 35),
             new BRequires(H.HouseTwoFloor, 75),
             new BRequires(H.HouseMed, 100),
-            new BRequires(H.HouseLargeA, 150),
+            new BRequires(H.HouseLargeA, true),
             new BRequires(H.HouseLargeB, 150),
             new BRequires(H.HouseLargeC, 150),
 
@@ -377,8 +377,9 @@ class BRequires
 
         for (int i = 0; i < PriorBuilds.Count; i++)
         {
-            var keyResult = BuildingPot.Control.Registro.AllBuilding.First(a => a.Value.HType == PriorBuilds[i]).Key;
-            if (string.IsNullOrEmpty(keyResult))
+            //var result = BuildingPot.Control.Registro.AllBuilding.First(a => a.Value.HType == PriorBuilds[i]);
+            var result = BuildingPot.Control.FindRandomBuildingOfThisType(PriorBuilds[i]);
+            if (result == null)
             {
                 //if doesnt contain one of the required buildings then is false
                 return false;

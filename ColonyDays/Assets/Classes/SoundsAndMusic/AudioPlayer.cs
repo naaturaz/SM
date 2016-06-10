@@ -1,12 +1,50 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class AudioPlayer : MonoBehaviour {
 
-    private bool isToPlayOneTimePlayed = true;
+    private static bool isToPlayOneTimePlayed = true;
+
+    Dictionary<So, Sound> _sounds = new Dictionary<So, Sound>();
+    Dictionary<Mu, Music> _musics = new Dictionary<Mu, Music>(); 
 
     public AudioPlayer(){}
 
-    public Audio PlayAudio(string soundToPlayRoot, H musicOrSound, Vector3 iniPos = new Vector3(), bool playOneTime = false)
+    // Use this for initialization
+    void Start()
+    {
+        LoadAllAudios();
+    }
+
+    private void LoadAllAudios()
+    {
+        _sounds.Add(So.ClickMenuSound, (Sound)Spawn(RootSound.clickMenuSound, H.Sound));
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+
+    static Audio Spawn(string soundToPlayRoot, H musicOrSound)
+    {
+        Audio temp = null;
+        if (musicOrSound == H.Sound)
+        {
+            temp = (Sound)General.Create(soundToPlayRoot, Camera.main.transform.position, container: Camera.main.transform);
+        }
+        else if (musicOrSound == H.Music)
+        {
+            temp = (Music)General.Create(soundToPlayRoot, Camera.main.transform.position, container: Camera.main.transform);
+        }
+        return temp;
+    }
+
+
+
+    public static Audio PlayAudio(string soundToPlayRoot, H musicOrSound, Vector3 iniPos = new Vector3(), bool playOneTime = false)
     {
         Audio temp = null;
         if (iniPos == Vector3.zero && Camera.main != null)
@@ -27,7 +65,7 @@ public class AudioPlayer : MonoBehaviour {
         return temp;
     }
 
-    public Sound PlaySoundOneTime(string soundToPlayRoot, H musicOrSound, Vector3 iniPos = new Vector3(), bool reset = false)
+    public static Sound PlaySoundOneTime(string soundToPlayRoot, H musicOrSound, Vector3 iniPos = new Vector3(), bool reset = false)
     {
         Sound temp = null;
         if (Settings.ISSoundOn && musicOrSound == H.Sound)
@@ -52,7 +90,7 @@ public class AudioPlayer : MonoBehaviour {
         return temp;
     }
 
-    public Sound PlaySoundOneTime(string soundToPlayRoot, Vector3 iniPos = new Vector3(), Transform container = null)
+    public static Sound PlaySoundOneTime(string soundToPlayRoot, Vector3 iniPos = new Vector3(), Transform container = null)
     {
         CamControl mainCam = USearch.FindCurrentCamera();
         Sound temp = null;
@@ -76,13 +114,5 @@ public class AudioPlayer : MonoBehaviour {
 
   
 
-	// Use this for initialization
-	void Start ()
-    {}
-	
-	// Update is called once per frame
-	void Update () 
-    {
-	
-	}
+
 }

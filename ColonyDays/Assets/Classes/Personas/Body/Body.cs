@@ -63,6 +63,7 @@ public class Body //: MonoBehaviour //: General
                 value == HPers.None)
             {
                 Debug.Log(string.Format("!Body.GoingTo being screw for {0} on person {1}", value, _person.MyId));
+                //return;
             }
             _goingTo = value;
         }

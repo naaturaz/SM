@@ -80,7 +80,7 @@ public class DescriptionWindow : General
         {
             s = (Sprite)Resources.Load("Prefab/Building/Coming_Soon_Banner", typeof(Sprite));
         }     
-        else if (state == H.Coming_Soon)
+        else if (state == H.Max_Cap_Reach)
         {
             s = (Sprite)Resources.Load("Prefab/Building/Max_Cap_Reach_Banner", typeof(Sprite));
         }

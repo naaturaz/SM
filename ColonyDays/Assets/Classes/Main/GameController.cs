@@ -23,7 +23,7 @@ public class GameController  {
     private int _lastYearWorkersSalaryWasPaid;
 
 
-    private static int _capMaxPerson = 150;
+    private static int _capMaxPerson = 200;
     /// <summary>
     /// tHE Max amt of person in a game 
     /// </summary>
