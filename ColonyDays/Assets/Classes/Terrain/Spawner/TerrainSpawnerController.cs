@@ -144,18 +144,7 @@ public class TerrainSpawnerController : ControllerParent
         AllSpawnedDataList[index].Weight = ele.Weight;
     }
 
-    //void ReSaveStillElement(StillElement ele, int indexOnLists)
-    //{
-    //    var index = indexOnLists;
 
-    //    AllRandomObjList[index].MaxHeight = ele.MaxHeight;
-
-    //    AllSpawnedDataList[index].TreeHeight = ele.Height;
-    //    AllSpawnedDataList[index].SeedDate = ele.SeedDate;
-    //    AllSpawnedDataList[index].MaxHeight = ele.MaxHeight;
-    //    AllSpawnedDataList[index].TreeFall = ele.TreeFall;
-    //    AllSpawnedDataList[index].Weight = ele.Weight;
-    //}
 
     public StillElement Find(string key)
     {

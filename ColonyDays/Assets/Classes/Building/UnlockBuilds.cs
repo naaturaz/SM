@@ -27,11 +27,11 @@ public class UnlockBuilds
         _list  = new List<BRequires>()
         {
             //infr
-            new BRequires(H.Road),
-            new BRequires(H.BridgeTrail, 50, 2000, 5000),
-            new BRequires(H.BridgeRoad, 100, 5000, 9000),
-            new BRequires(H.LightHouse, 100, 5000, 9000),
-            new BRequires(H.Masonry, 50, 5000, 9000),
+            new BRequires(H.Road, true),
+            new BRequires(H.BridgeTrail, true),
+            new BRequires(H.BridgeRoad, true),
+            new BRequires(H.LightHouse, 40),
+            new BRequires(H.Masonry, true),
 
             //houses
             new BRequires(H.Bohio, true),
@@ -82,26 +82,26 @@ public class UnlockBuilds
             new BRequires(H.GunPowder, 50, 5000, 9000),
             new BRequires(H.Paper_Mill, 50, 5000, 9000),
             new BRequires(H.Printer, 50, 5000, 9000),
-            new BRequires(H.CoinStamp, 50, 5000, 9000),
+            new BRequires(H.CoinStamp, 150, 5000, 9000),
             new BRequires(H.Silk, 50, 5000, 9000),
             new BRequires(H.SugarMill, 50, 5000, 9000),
             new BRequires(H.Foundry, 50, 5000, 9000),
-            new BRequires(H.SteelFoundry, 50, 5000, 9000, priorBuilds: new List<H>(){H.Foundry}),
+            new BRequires(H.SteelFoundry, 100, 5000, 9000, priorBuilds: new List<H>(){H.Foundry}),
 
             //trade
             new BRequires(H.Dock, 50, 5000, 9000, priorBuilds: new List<H>(){H.Shipyard}),
             new BRequires(H.Shipyard, 50, 5000, 50000, priorBuilds: new List<H>(){H.Supplier}),
-            new BRequires(H.Supplier, 50, 5000, 50000),
+            new BRequires(H.Supplier, 50, 5000, 50000, priorBuilds: new List<H>(){H.LightHouse}),
             new BRequires(H.StorageSmall, true),
-            new BRequires(H.StorageMed, 50, 5000, 9000),
-            new BRequires(H.StorageBig, 150, 5000, 9000),
-            new BRequires(H.StorageBigTwoDoors, 250, 5000, 9000),
-            new BRequires(H.StorageExtraBig, 350, 5000, 9000),
+            new BRequires(H.StorageMed, 50, 5000, 9000, priorBuilds: new List<H>(){H.StorageSmall}),
+            new BRequires(H.StorageBig, 150, 5000, 9000, priorBuilds: new List<H>(){H.StorageMed}),
+            new BRequires(H.StorageBigTwoDoors, 250, 5000, 9000, priorBuilds: new List<H>(){H.StorageBig}),
+            new BRequires(H.StorageExtraBig, 350, 5000, 9000, priorBuilds: new List<H>(){H.StorageBigTwoDoors}),
 
             //gov
             new BRequires(H.Library, 50, 5000, 9000),
             new BRequires(H.School, 50, 5000, 9000),
-            new BRequires(H.TradesSchool, 50, 5000, 9000),
+            new BRequires(H.TradesSchool, 50, 5000, 9000, priorBuilds: new List<H>(){H.School}),
             new BRequires(H.TownHouse, H.Coming_Soon),
 
 

@@ -199,53 +199,15 @@ public class XMLSerie
     }
 
 
-
-
-
-    private static int _loadedBuildCalls;
-    static private int _buildCounts;
-    static bool _townLoaded;
-    public static bool TownLoaded
-    {
-        get { return _townLoaded; }
-        set { _townLoaded = value; }
-    }
-
-
-
-
     private static BuildingData LoadDefaultTown()
     {
-        //string locPath = "/Resources/Town";
-
-        BuildingData res = null;
-        var difficulty = 0;
-        if (difficulty == 0)
-        {
-            var file = DataContainer.Load(Path.Combine(Application.dataPath, "4H.xml"));
-            if (file!=null)
-            {
-                Debug.Log("TownLoaded = true");
-                _buildCounts = file.BuildingData.All.Count;
-                TownLoaded = true;
-                res = file.BuildingData;
-            }
-        }
-        return res;
+        return TownLoader.LoadDefault();
     }
 
-    /// <summary>
-    /// Called from builing.cs when a building is loaded 
-    /// </summary>
-    public static void NewBuildingLoaded()
-    {
-        _loadedBuildCalls++;
-        if (_buildCounts == _loadedBuildCalls)
-        {
-            Debug.Log("TownLoaded = false");
-            TownLoaded = false;
-        }
-    }
+
+
+
+
 
     public static void WriteXMLPerson(PersonData personData)
     {

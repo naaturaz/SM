@@ -1321,11 +1321,21 @@ public class Building : General, Iinfo
     {
         for (int i = 0; i < anchorsListP.Count; i++)
         {
-            if (anchorsListP[i].y > m.SubMesh.mostCommonYValue + variance
-                || anchorsListP[i].y < m.SubMesh.mostCommonYValue - variance)
+            bool isV3onFloor = IsVector3OnTheFloor(anchorsListP[i], m.SubMesh.mostCommonYValue, variance);
+            if (!isV3onFloor)
             {
                 return false;
             }
+        }
+        return true;
+    }
+
+    public static bool IsVector3OnTheFloor(Vector3 v3, float mostCommonYValue, float variance = 0.1f)
+    {
+        if (v3.y > mostCommonYValue + variance
+                || v3.y <mostCommonYValue - variance)
+        {
+            return false;
         }
         return true;
     }
@@ -2239,6 +2249,7 @@ public class Building : General, Iinfo
         MeshController.CrystalManager1.Add(this);
     }
 
+
     /// <summary>
     /// bz could have being must likely saved in another Map woith other landZones 
     /// </summary>
@@ -2250,15 +2261,16 @@ public class Building : General, Iinfo
             return;
         }
 
-        if (XMLSerie.TownLoaded)
+        if (TownLoader.TownLoaded)
         {
             Debug.Log("townLoaded:" + MyId);
             //Anchors = GetAnchors();
             LandZone1.Clear();
             HandleLandZoning();
-            XMLSerie.NewBuildingLoaded();
+            TownLoader.NewBuildingLoaded();
         }
     }
+
 
     protected void PrivHandleZoningAddCrystals()
     {

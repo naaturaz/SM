@@ -44,7 +44,17 @@ public class NewGameWindow : GUIElement
 
 
         LoadDefaultForNewGame();
+	    AddressDevVer();
 	}
+
+    private void AddressDevVer()
+    {
+        if (!Developer.IsDev)
+        {
+            GetChildCalled("Panel_Terra_Name").SetActive(false);
+            GetChildCalled("Terra_Name_Lbl").SetActive(false);
+        }
+    }
 
     /// <summary>
     /// Load default conditions for a game

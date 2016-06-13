@@ -149,12 +149,19 @@ public class GameScene : General
     /// <returns></returns>
     string Version()
     {
+        if (Developer.IsDev)
+        {
+            return "Developer Version.";
+        }
+
         return "Early Access \n v0.0.0." +
                DateTime.Now.Year.ToString().Substring(2) + "." +
                AddZeroInFrontIfOneChar(DateTime.Now.Month) + "." + 
                AddZeroInFrontIfOneChar(DateTime.Now.Day) + "d." +
-               DateTime.Now.Hour + "." + DateTime.Now.Minute + "." + DateTime.Now.Second +
-               "r" + UMath.GiveRandom(0, 10);
+               AddZeroInFrontIfOneChar(DateTime.Now.Hour) + "." + 
+               AddZeroInFrontIfOneChar(DateTime.Now.Minute) + "." + 
+               AddZeroInFrontIfOneChar(DateTime.Now.Second) +"r" + 
+               UMath.GiveRandom(0, 10);
     }
 
     string AddZeroInFrontIfOneChar(int v)

@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
 /*
  * All Actions related to the the Screen. Including loading screen
  * 
@@ -185,10 +189,104 @@ public class MyScreen : General
         timeClicked = Time.time;
         DestroyCurrLoadLoading();
 
-        _terraRoot = terraRoot;
+        Debug.Log("terraRoot pass:" + terraRoot);
+
+        if (string.IsNullOrEmpty(terraRoot))
+        {
+            _terraRoot = ReturnRandomTerraRoot();
+        }
+        else
+        {
+            _terraRoot = terraRoot;
+        }
+
         _diff = diff;
         _townName = townName;
+
+        Debug.Log("tr:" + _terraRoot);
     }
+
+
+
+    #region Random Terra Root
+
+    /// <summary>
+    /// bz this Xmls are all Prefabs tht gets call in game
+    /// </summary>
+    /// <param name="file"></param>
+    /// <returns></returns>
+    string AddPrefabRoot(string file)
+    {
+        return "Prefab/Terrain/" + file;
+    }
+
+    private string _dataPath;
+    /// <summary>
+    /// now user wont select terrain will be always at random
+    /// </summary>
+    /// <returns></returns>
+    string ReturnRandomTerraRoot()
+    {
+        _dataPath = Application.dataPath;
+
+        //gets all xml files
+        var xmls = Directory.GetFiles(_dataPath, "*.xml").ToList();
+        List<string> validTerras = new List<string>();
+
+        for (int i = 0; i < xmls.Count; i++)
+        {
+            var splitArray = xmls[i].Split('.');
+            if (splitArray.Length > 0 && splitArray[1] == "Spawned")
+            {
+                //confirms that they have a terra file tht has the same name 
+                if (ConfirmThisIsATerraFile(splitArray[0], xmls))
+                {
+                    validTerras.Add(splitArray[0]);
+                }
+            }
+        }
+
+        var rand = validTerras[UMath.GiveRandom(0, validTerras.Count)];
+        var cleanRand = RemoveDataPath(rand, _dataPath);
+        return AddPrefabRoot(cleanRand);
+    }
+
+    /// <summary>
+    /// Will loop true XML list and will find match for 'terra'
+    /// </summary>
+    /// <param name="terra"></param>
+    /// <param name="xmls"></param>
+    /// <returns></returns>
+    bool ConfirmThisIsATerraFile(string terra, List<string> xmls)
+    {
+        for (int i = 0; i < xmls.Count; i++)
+        {
+            var cleaned = CleanRouteFile(xmls[i]);
+            var terraClean = RemoveDataPath(terra, _dataPath);
+            if (terraClean == cleaned)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    string CleanRouteFile(string fileName)
+    {
+        var splitArray = fileName.Split('.');
+        return RemoveDataPath(splitArray[0], _dataPath);
+    }
+
+    public static string RemoveDataPath(string pathToClean, string dataPath)
+    {
+        var len = dataPath.Length;
+        return pathToClean.Substring(len + 1);//bz the: \\
+    }
+
+
+#endregion
+
+
 
     /// <summary>
     /// bzloading screen appers after the terrain is loaded . so im goona wait until loading is loaded so will fire this 

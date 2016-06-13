@@ -362,7 +362,8 @@ public class Person : General
             obj = (Person) Resources.Load(Root.personaMale1, typeof (Person));
         }
 
-        int iniAge = General.GiveRandom(5, 29); //5, 29
+        //better like 17/29. since if they are less than 16 and have not parent is not addressed
+        int iniAge = General.GiveRandom(17, 29); //5, 29
 
         //will assign ramdom pos if has none 
         if (iniPos == new Vector3())
