@@ -98,7 +98,7 @@ public enum P
     //Cigars,
     Cigar,
     //Slat,
-    Slat,
+    //Slat,
     //Tilery,
     Tile,
     //Cloth,
@@ -162,7 +162,8 @@ public enum P
     //Avocado,
     //Guava,
     //Orange,
-    Papaya
+    Papaya,
+    Wool
 
 
 }
@@ -219,9 +220,9 @@ public enum H
     AnimalFarmSmall, AnimalFarmMed, AnimalFarmLarge, AnimalFarmXLarge,
     FieldFarmSmall, FieldFarmMed, FieldFarmLarge, FieldFarmXLarge,
     //raw F4
-    Ceramic, Fishermen, FishRegular, Mine, MountainMine, Resin, LumberMill, BlackSmith, SaltMine,
+    Ceramic, Fishing_Hut, FishRegular, Mine, MountainMine, Resin, LumberMill, BlackSmith, SaltMine,
     //prod F5
-    Brick, Carpintery, Cigars, Mill, Slat, Tilery, CannonParts, Distillery, Chocolate, Ink,
+    Brick, Carpintery, Cigars, Mill, Tailor, Tilery, CannonParts, Distillery, Chocolate, Ink,
     //industry F6
     Cloth, GunPowder, Paper_Mill, Printer, CoinStamp, Silk, SugarMill, Foundry, SteelFoundry,
     //Trade F7
@@ -413,13 +414,13 @@ public enum StFarm
 public enum StRaw //for structures game structure.cs 
 {
     //Raw
-    Ceramic, Fishermen, FishRegular, Mine, MountainMine, Resin, LumberMill, BlackSmith, SaltMine
+    Ceramic, Fishing_Hut, Mine, MountainMine, Resin, LumberMill, BlackSmith, SaltMine
 }
 
 public enum StProd //for structures game structure.cs 
 {
     //Production
-    Brick, Carpintery, Cigars, Mill, Slat, Tilery, CannonParts, Distillery, Chocolate, Ink,
+    Brick, Carpintery, Cigars, Mill, Tailor, Tilery, CannonParts, Distillery, Chocolate, Ink,
 }
 
 //Ind
@@ -502,23 +503,8 @@ public enum S
     Up_Side_Elevator
 }
 
-/// <summary>
-/// For sounds
-/// </summary>
-public enum So
-{
-    ClickMenuSound,
 
-}
 
-/// <summary>
-/// For music
-/// </summary>
-public enum Mu
-{
-    Cubano,
-
-}
 
 public enum BtnsE
 {

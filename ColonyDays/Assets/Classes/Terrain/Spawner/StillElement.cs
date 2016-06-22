@@ -402,7 +402,8 @@ public class StillElement : TerrainRamdonSpawner
 
     #region Grow
     //when was seeded
-    private int _lifeDuration = 1800;//5 years to be fully grown 
+    //10 years to be fully grown
+    private int _lifeDuration = 3600;//1800;// 
 
     void ReplantThisTree()
     {

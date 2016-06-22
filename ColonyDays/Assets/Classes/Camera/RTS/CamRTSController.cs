@@ -31,8 +31,8 @@ public class CamRTSController : CamControl
 
     public static bool IsMouseMiddle;
 
-     float MIN_FIELD_CAM = 5f;// 48  5   21   45
-     float MAX_FIELD_CAM = 48f;//50   80  45  60
+     float MIN_FIELD_CAM = 21f;// 5
+     float MAX_FIELD_CAM = 44f;//48
 
     //Target
     public Transform target;
@@ -114,6 +114,16 @@ public class CamRTSController : CamControl
 
     void Start()
     {
+        if (Developer.IsDev)
+        {
+            MIN_FIELD_CAM = 5f;// 48  5   21   45
+            MAX_FIELD_CAM = 48f;//50   80  45  60
+        }
+#if UNITY_EDITOR
+        MIN_FIELD_CAM = 5f;// 48  5   21   45
+        MAX_FIELD_CAM = 48f;//50   80  45  60
+#endif
+
 
 
     }

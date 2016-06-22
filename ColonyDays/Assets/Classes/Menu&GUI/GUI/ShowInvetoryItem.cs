@@ -1,16 +1,19 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using UnityEngine;
 using UnityEngine.UI;
 
 
 public class ShowInvetoryItem : GUIElement
 {
-    private GameObject _text;
     private GameObject _icon;
 
     private InvItem _invItem;
 
-    private Text _textObj;
+    private Text _textCol1;
+    private Text _textCol2;
+    private Text _textCol3;
+
     private Image _iconImg;
 
     private string _invType;
@@ -38,16 +41,32 @@ public class ShowInvetoryItem : GUIElement
     // Use this for initialization
 	void Start ()
 	{
-        _text = FindGameObjectInHierarchy("Text", gameObject);
 	    _icon = FindGameObjectInHierarchy("Icon", gameObject);
 
-        _textObj = _text.GetComponent<Text>();
+        _textCol1 = FindGameObjectInHierarchy("Text", gameObject).GetComponent<Text>();
+
+
+        var col2 = FindGameObjectInHierarchy("Weight of product", gameObject);
+	    if (col2!=null)
+	    {
+            _textCol2 = col2.GetComponent<Text>();
+	    }
+
+        var col3 = FindGameObjectInHierarchy("Volume occupied", gameObject);
+	    if (col3!=null)
+	    {
+            _textCol3 = col3.GetComponent<Text>();
+	    }
+
+
+
+
         _iconImg = _icon.GetComponent<Image>();
 
-        if (_text != null && InvItem1!=null)
+        if (_textCol1 != null && InvItem1!=null)
 	    {
             //so hover gets it
-            _text.transform.name = InvItem1.Key + "";
+            _textCol1.transform.name = InvItem1.Key + "";
             LoadIcon();
 
 	    }
@@ -77,7 +96,7 @@ public class ShowInvetoryItem : GUIElement
         var root = "";
         if (string.IsNullOrEmpty(invType))
         {
-            root = Root.show_Invent_Item_Small_Med_NoBack;
+            root = Root.show_Invent_Item_Small_3_Text;
         }
         else
         {
@@ -112,10 +131,49 @@ public class ShowInvetoryItem : GUIElement
 
         if (oldAmt != InvItem1.Amount)
 	    {
-            oldAmt = InvItem1.Amount;
-            _textObj.text = Formatter();
+            //for the one tht oly has 1 text
+	        if (_textCol2 == null)
+	        {
+                oldAmt = InvItem1.Amount;
+                _textCol1.text = Formatter();
+	        }
+            //3 text used to builidings inventoryes 
+	        else
+	        {
+	            Set3Text();
+	        }
+
+
 	    }
 	}
+
+    void Set3Text()
+    {
+        _textCol1.text = InvItem1.Key+"";
+        _textCol2.text = ReturnAmt();
+        _textCol3.text = ReturnVol();
+    }
+
+    string ReturnAmt()
+    {
+        if (InvItem1.Amount <= 0)
+        {
+            return "-";
+        }
+        var amt = Unit.WeightConverted(InvItem1.Amount);
+        return (int) amt + " " + Unit.WeightUnit();
+    }
+
+    string ReturnVol()
+    {
+        if (InvItem1.Amount <= 0)
+        {
+            return "-";
+        }
+        var vol = Unit.VolConverted(InvItem1.Volume);
+        return vol.ToString("F0") + " " + Unit.VolumeUnit();
+    }
+
 
     string Formatter()
     {
@@ -134,8 +192,39 @@ public class ShowInvetoryItem : GUIElement
             return ShortFormat(amt);
         }
 
-        return InvItem1.Key + " " + (int)amt + BuildStringUnits() + vol.ToString("F1");
+        return PadThis(InvItem1.Key+"", 14, 'r') + " " + PadThis((int)amt+"", 8, 'l' )+  
+            PadThis(vol.ToString("F1"), 8, 'l');
+        //return InvItem1.Key + " " + (int)amt + BuildStringUnits() + vol.ToString("F1");
     }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="pass">pass The string pass</param>
+    /// <param name="max">amount of spaces</param>
+    /// <param name="riOrLeft">padding on the right or left</param>
+    /// <returns> Spaces depending on the pass.lenght and max </returns>
+    private static string PadThis(string pass, int max, char riOrLeft, string pad = " ")
+    {
+        int spaces = max - pass.Length;
+
+        for (int i = 0; i < spaces; i++)
+        {
+            if (riOrLeft == 'r')
+            {
+                pass += pad;
+            }
+            else if (riOrLeft == 'l')
+            {
+                pass = pad + pass;
+            }
+        }
+        return pass;
+    }
+
+
+    
 
     string BuildStringUnits()
     {

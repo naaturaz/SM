@@ -347,8 +347,7 @@ public class Registro : MonoBehaviour
 
         //this is the usual poly will be filled for eg regular structures only use this one.
         //For ways is the vertic bound
-        Rect to  = U2D.FromPolyToRect(poly);
-        to = U2D.ReturnRectYInverted(to);
+        var to = ReturnDimOnMap(poly);
 
         Rect toHoriz = new Rect();
         if (polyHoriz != null)
@@ -369,20 +368,21 @@ public class Registro : MonoBehaviour
             anchors: anchors, dock: dock, root: root);
 
         //UVisHelp.CreateHelpers(anchors, Root.blueCube);
-
-
         AddToAll(regFile);
-
-
         AddToBuilderManager(myId);
-
-
 
         AddSpecToList(categ);
         if (_locHoverVert.Count > 0){UpdateCurrentVertexRect(_locHoverVert);}
         //use on the drawing debug functionalitie only:
         //toDraw.Add(to);
         //toDraw.Add(toHoriz);
+    }
+
+    Rect ReturnDimOnMap(List<Vector3> poly)
+    {
+        Rect to = U2D.FromPolyToRect(poly);
+        to = U2D.ReturnRectYInverted(to);
+        return to;
     }
 
     /// <summary>
@@ -681,6 +681,26 @@ public class Registro : MonoBehaviour
         for (int i = 0; i < AllBuilding.Count; i++)
         {
             ResaveOnRegistro(AllRegFile[i], AllBuilding.ElementAt(i).Value);
+        }
+    }
+
+    /// <summary>
+    /// This is used only when loading a town and needs to redo DimOnMap
+    /// </summary>
+    internal void RedoDimAndResaveAllBuildings()
+    {
+        for (int i = 0; i < AllBuilding.Count; i++)
+        {
+            AllRegFile[i].DimOnMap = ReturnDimOnMap(AllBuilding.ElementAt(i).Value.Anchors);
+            ResaveOnRegistro(AllRegFile[i], AllBuilding.ElementAt(i).Value);
+        }
+    }
+
+    public void DoLastStepOfTownLoaded()
+    {
+        for (int i = 0; i < AllBuilding.Count; i++)
+        {
+            AllBuilding.ElementAt(i).Value.TownBuildingLastStep();
         }
     }
 }

@@ -128,7 +128,7 @@ public class PersonController : PersonPot
         int factor = 100;
         int ini = multiplier*factor;
 
-        StartingCondition newbie = new StartingCondition(0, ini, ini, ini, ini, ini, ini, 100000, 5*factor);
+        StartingCondition newbie = new StartingCondition(8, ini, ini, ini, ini, ini, ini, 100000, 5*factor);
         StartingCondition easy = new StartingCondition(18, 900, 900, 900, 900, 900, 900, 900, 4);
         StartingCondition med = new StartingCondition(16, 800, 800, 800, 800, 800, 800, 800, 3);
         StartingCondition hard = new StartingCondition(14, 700, 700, 700, 700, 700, 700, 700, 2);
@@ -144,7 +144,6 @@ public class PersonController : PersonPot
         {
             return;
         }
-
         init = false;
 
         PersonData pData = XMLSerie.ReadXMLPerson();
@@ -153,6 +152,13 @@ public class PersonController : PersonPot
         {
             SpawnIniPersonas();
             GameController.LoadStartingConditions(conditions[Difficulty]);
+            RestartController();
+            CamControl.CAMRTS.InputRts.CenterCam(true);
+            
+            //here bz trees all spawneed after buildings. 
+            //so if tree is inside a building wont be deleted. bz the building
+            //might be to big and wont collide with the building 
+            BuildingPot.Control.Registro.DoLastStepOfTownLoaded();
         }
         //loading from file 
         else
@@ -163,6 +169,7 @@ public class PersonController : PersonPot
             //called here for the first time after a Storage was build.
             //This is DEBUG
             GameController.LoadStartingConditions(conditions[Difficulty]);
+            CamControl.CAMRTS.InputRts.LoadLastCamPos();
         }
         BuildingPot.CreateUnlockBuilds();
     }
@@ -379,16 +386,10 @@ public class PersonController : PersonPot
 
     void DebugHere()
     {
-        //if (Input.GetKeyUp(KeyCode.K))
-        //{
-        //    foreach (var ite in All)
-        //    {
-        //        //ite.Value.Brain.Router.DebugDestroy();
-        //        ite.Destroy();
-        //        All.Remove(ite);
-        //    }
-        //    SpawnIniPersonas();
-        //}
+        if (!Developer.IsDev)
+        {
+            return;
+        }
 
         //make sure when execute this a least oneempty house exst 
         if (Input.GetKeyUp(KeyCode.M))

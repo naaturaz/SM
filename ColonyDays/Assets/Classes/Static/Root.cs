@@ -239,6 +239,7 @@ public class Root : MonoBehaviour
     public static string show_Invent_Item_Med = "Prefab/GUI/Forms/Show_Invent_Item_Med";
     public static string show_Invent_Item_Small_Med = "Prefab/GUI/Forms/Show_Invent_Item_Small_Med";
     public static string show_Invent_Item_Small_Med_NoBack = "Prefab/GUI/Forms/Show_Invent_Item_Small_Med_NoBack";
+    public static string show_Invent_Item_Small_3_Text = "Prefab/GUI/Forms/Show_Invent_Item_Small_Med_3_Text";
 
     //Menu
     public static string mainMenu = "Prefab/Menu/MainMenu";
@@ -635,7 +636,7 @@ public class Root : MonoBehaviour
 
         //Raw
         buildsRoot.Add(H.Ceramic, "Prefab/Building/Raw/Ceramic");
-        buildsRoot.Add(H.Fishermen, "Prefab/Building/Raw/FishSmall");
+        buildsRoot.Add(H.Fishing_Hut, "Prefab/Building/Raw/FishSmall");
         buildsRoot.Add(H.FishRegular, "Prefab/Building/Raw/FishRegular");
         buildsRoot.Add(H.Mine, "Prefab/Building/Raw/Mine");
         buildsRoot.Add(H.MountainMine, "Prefab/Building/Raw/MountainMine");
@@ -650,7 +651,7 @@ public class Root : MonoBehaviour
         buildsRoot.Add(H.Carpintery, "Prefab/Building/Prod/Carpintery");
         buildsRoot.Add(H.Cigars, "Prefab/Building/Prod/Cigars");
         buildsRoot.Add(H.Mill, "Prefab/Building/Prod/Mill");
-        buildsRoot.Add(H.Slat, "Prefab/Building/Prod/Slat");
+        buildsRoot.Add(H.Tailor, "Prefab/Building/Prod/Slat");
         buildsRoot.Add(H.Tilery, "Prefab/Building/Prod/Tilery");
 
         buildsRoot.Add(H.CannonParts, "Prefab/Building/Prod/CannonParts");

@@ -24,7 +24,11 @@ public class MiniMapRTS : GenericCameraComponent {
 
     List<Transform> cardinalPointsTransf;
     Vector2 NW, NE, SW, SE;
+
+    //reducing the normal size of map
     Vector2 reducedNE, reducedSW , reducedNW;
+    private float reduction = 1;//50
+
 
     float terraStartX;
     float terraStartY;
@@ -52,7 +56,6 @@ public class MiniMapRTS : GenericCameraComponent {
         GetTerrainSpecs();
 	}
 
-    private float reduction = 50;
     Rect mapRect = new Rect();
     private void SetReducedCardinals()
     {

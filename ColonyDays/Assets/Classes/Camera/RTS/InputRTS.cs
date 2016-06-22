@@ -18,9 +18,7 @@ public class InputRTS : GenericCameraComponent
         InitializeList();
        
         
-        //the pos where cam was last saved by system 
 
-        LoadCamPos(KeyCode.None);
     }
 
     // Update is called once per frame
@@ -178,7 +176,6 @@ public class InputRTS : GenericCameraComponent
     public void LoadLastCamPos()
     {
         LoadCamPos(KeyCode.None);
-        //LoadCamPos(KeyCode.None, list.Count - 1);
     }
 
     /// <summary>
@@ -207,9 +204,11 @@ public class InputRTS : GenericCameraComponent
     }
 
     //Center cam command
-    void CenterCam()
+    public void CenterCam(bool fakedPressKeyP = false)
     {
-        if (Input.GetKeyUp(KeyCode.P) && !isFollowingPersonNow)
+        var yes = Input.GetKeyUp(KeyCode.P) || fakedPressKeyP;
+
+        if (yes && !isFollowingPersonNow)
         {
             //CenterCamTo(GameObject.Find("Barn1").gameObject.transform);
             CenterCamTo(BuildingPot.Control.Registro.AllBuilding.ElementAt(0).Value.transform);

@@ -189,8 +189,6 @@ public class MyScreen : General
         timeClicked = Time.time;
         DestroyCurrLoadLoading();
 
-        Debug.Log("terraRoot pass:" + terraRoot);
-
         if (string.IsNullOrEmpty(terraRoot))
         {
             _terraRoot = ReturnRandomTerraRoot();
@@ -200,10 +198,14 @@ public class MyScreen : General
             _terraRoot = terraRoot;
         }
 
-        _diff = diff;
-        _townName = townName;
 
-        Debug.Log("tr:" + _terraRoot);
+        if (string.IsNullOrEmpty(diff))
+        {
+            diff = "Easy";
+        }
+        _diff = diff;
+        
+        _townName = townName;
     }
 
 

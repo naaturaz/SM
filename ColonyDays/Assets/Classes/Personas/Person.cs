@@ -379,7 +379,7 @@ public class Person : General
 
         //this to when Person dont have where to leave and then they find a place the teletranport effect
         //wont be seeable bz there are spawneed hidden. 
-        //obj.Body.Hide();
+        obj.Body.HideNoQuestion();
 
         return obj;
     }
@@ -1572,7 +1572,7 @@ public class Person : General
         {
             return Job.Builder;
         }
-        else if (Work.HType == H.Fishermen || Work.HType == H.FishRegular)
+        else if (Work.HType == H.Fishing_Hut || Work.HType == H.FishRegular)
         {
             return Job.FisherMan;
         }

@@ -312,7 +312,7 @@ public class Way : Building
         DestroyBigPrevBoxes();
         ClearPrevWay();
         _firstWayPoint = new Vector3();
-
+        Destroy();
     }
 
     /// <summary>

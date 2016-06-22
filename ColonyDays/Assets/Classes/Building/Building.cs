@@ -801,6 +801,11 @@ public class Building : General, Iinfo
             
             _reachArea = Create(Root.reachArea, transform.position, container: transform);
             _reachArea.transform.localScale = new Vector3(Brain.Maxdistance*2, 0.1f, Brain.Maxdistance*2);
+
+            if (CurrentProd != null)
+            {
+                AudioPlayer.PlayThisSound1Time(HType + "", CurrentProd.Product.ToString());
+            }
         }
     }
 
@@ -1213,7 +1218,7 @@ public class Building : General, Iinfo
 
     #region Create For Double Bound Strucutres Such as Maritimes and UnderTerra
 
-    List<H> doubleBounds = new List<H>(){H.FishRegular, H.Fishermen, 
+    List<H> doubleBounds = new List<H>(){H.FishRegular, H.Fishing_Hut, 
         H.Dock, H.Shipyard, H.Supplier,
         H.MountainMine, H.SaltMine};
     private GameObject _maritimeBound;
@@ -2263,12 +2268,35 @@ public class Building : General, Iinfo
 
         if (TownLoader.TownLoaded)
         {
-            Debug.Log("townLoaded:" + MyId);
-            //Anchors = GetAnchors();
+            Anchors.Clear();
+            _polyOnGrid.Clear();
+
+            //Debug.Log("townLoaded:" + MyId);
+            Anchors = GetAnchors();
+            
             LandZone1.Clear();
             HandleLandZoning();
             TownLoader.NewBuildingLoaded();
+
+
+
+            //var st = this as Structure;
+            //if (st != null)
+            //{
+            //    st.FinishPlacingMode(H.Done);
+            //}
         }
+    }
+
+    /// <summary>
+    ///  The ast step of the buils th are loaded with the town
+    /// 
+    /// so MarkTerraSpawnRoutine is called and Spawner terrains around this building disappear
+    /// </summary>
+    public void TownBuildingLastStep()
+    {
+        // 
+        MarkTerraSpawnRoutine(20, from: transform.position);
     }
 
 

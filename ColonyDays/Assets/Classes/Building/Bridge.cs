@@ -26,6 +26,12 @@ public class Bridge : Trail
 	// Update is called once per frame
 	void Update ()
     {
+        //if (_isOrderToDestroy)
+        //{
+        //    DestroyOrdered(); 
+        //    return;
+        //}
+
         base.Update();
 
 	    if (createAirPartsNow)

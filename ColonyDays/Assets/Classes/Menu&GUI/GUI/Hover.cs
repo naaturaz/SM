@@ -104,4 +104,15 @@ public class Hover : MonoBehaviour
     {
         hoverWindow.Hide();
     }
+
+    void OnMouseEnter()
+    {
+      //  SpawnHelp();
+    }
+
+    void OnMouseExit()
+    {
+        //DestroyHelp();  
+        
+    }
 }

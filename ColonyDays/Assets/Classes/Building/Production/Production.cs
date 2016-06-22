@@ -129,7 +129,7 @@ public class Production  {
 
         Cigar();
 
-        Slat();
+        Tailor();
 
         Tile();
 
@@ -223,13 +223,13 @@ public class Production  {
     {
         InputProdCheckAndAdd(new ProductInfo(P.Ceramic, null, H.Ceramic));
 
-        InputProdCheckAndAdd(new ProductInfo(P.Fish, null, new List<H>() { H.Fishermen, H.FishRegular }));
+        InputProdCheckAndAdd(new ProductInfo(P.Fish, null, new List<H>() { H.Fishing_Hut, H.FishRegular }));
 
 
         //animal farms
         List<H> listAnimalFarm = new List<H>() { H.AnimalFarmSmall, H.AnimalFarmMed, H.AnimalFarmLarge, H.AnimalFarmXLarge };
-        InputProdCheckAndAdd(new ProductInfo(P.Pork, null, listAnimalFarm));
-        InputProdCheckAndAdd(new ProductInfo(P.Chicken, null, listAnimalFarm));
+        //InputProdCheckAndAdd(new ProductInfo(P.Pork, null, listAnimalFarm));
+        //InputProdCheckAndAdd(new ProductInfo(P.Chicken, null, listAnimalFarm));
         InputProdCheckAndAdd(new ProductInfo(P.Beef, null, listAnimalFarm));
 
 
@@ -241,7 +241,6 @@ public class Production  {
 
     private void Mine()
     {
-        //this should yeild 5 KG of meat(pork)
         ProductInfo productInfo = new ProductInfo(P.RandomMineOutput, null, H.MountainMine);
         productInfo.AddRandomOutput(new ElementWeight(P.Ore, 2));
         productInfo.AddRandomOutput(new ElementWeight(P.Coal, 1));
@@ -283,7 +282,7 @@ public class Production  {
 
    
 
-    private void Meats()
+    private void DryMeats()
     {
         //this should yeild 5 KG of meat(pork)
         InputElement salt = new InputElement(P.Salt, 0.25f);
@@ -361,11 +360,11 @@ public class Production  {
     }
 
 
-    private void Slat()
+    private void Tailor()
     {
-        InputElement element = new InputElement(P.Wood, 5);
+        InputElement element = new InputElement(P.Wool, 5);
         List<InputElement> prod = new List<InputElement>() { element };
-        InputProdCheckAndAdd(new ProductInfo(P.Slat, prod, H.Slat));
+        InputProdCheckAndAdd(new ProductInfo(P.Cloth, prod, H.Tailor));
     }
 
 

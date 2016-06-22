@@ -35,6 +35,11 @@ public class InputMouse : InputParent
     //Will get fully built
     void DebugFullConstructedBuilding()
     {
+        if (!Developer.IsDev)
+        {
+            return;
+        }
+
         if (BuildingPot.Control == null)
         {
             return;

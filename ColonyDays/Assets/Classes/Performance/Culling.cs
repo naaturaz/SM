@@ -44,7 +44,7 @@ public class Culling {
     void Layers()
     {
         float[] distances = new float[32];
-        Debug.Log("Oclussin layer");
+        //Debug.Log("Oclussin layer");
 
         for (int i = 0; i<32; i++)
         {

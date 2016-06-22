@@ -56,7 +56,7 @@ public class UnlockBuilds
 
             //raw
             new BRequires(H.Ceramic, true),
-            new BRequires(H.Fishermen, true),
+            new BRequires(H.Fishing_Hut, true),
             new BRequires(H.FishRegular, true),
             new BRequires(H.Mine, true),
             new BRequires(H.MountainMine, true),
@@ -70,7 +70,7 @@ public class UnlockBuilds
             new BRequires(H.Carpintery, 50, 5000, 9000),
             new BRequires(H.Cigars, 50, 5000, 9000),
             new BRequires(H.Mill, 50, 5000, 9000),
-            new BRequires(H.Slat, H.Coming_Soon),
+            new BRequires(H.Tailor, H.Coming_Soon),
             new BRequires(H.Tilery, 50, 5000, 9000),
             new BRequires(H.CannonParts, 50, 5000, 9000),
             new BRequires(H.Distillery, 50, 5000, 9000),
@@ -307,7 +307,7 @@ class BRequires
         }   
         if (Food != 0)
         {
-            res += " Food: " + Food;
+            res += " Food: " + Food + " " + Unit.WeightUnit();
             appends++;
         }    
         if (Dollars != 0)
@@ -342,7 +342,7 @@ class BRequires
         {
             for (int i = 0; i < PriorBuilds.Count; i++)
             {
-                res += "At least 1: " + PriorBuilds[i];
+                res += ".At least 1: " + PriorBuilds[i];
                 appends++;
             } 
         }
@@ -370,7 +370,7 @@ class BRequires
 
     bool DoesPriorBuildingsExist()
     {
-        if (PriorBuilds == null)
+        if (PriorBuilds == null || PriorBuilds.Count == 0)
         {
             return true;
         }
@@ -379,13 +379,13 @@ class BRequires
         {
             //var result = BuildingPot.Control.Registro.AllBuilding.First(a => a.Value.HType == PriorBuilds[i]);
             var result = BuildingPot.Control.FindRandomBuildingOfThisType(PriorBuilds[i]);
-            if (result == null)
+            if (result != null && result.StartingStage == H.Done)
             {
                 //if doesnt contain one of the required buildings then is false
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
 }

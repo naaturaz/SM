@@ -32,6 +32,10 @@ class TownLoader
         {
             Debug.Log("TownLoaded = false");
             TownLoaded = false;
+            _loadedBuildCalls = 0;
+            
+            //so the DimOnMap works
+            BuildingPot.Control.Registro.RedoDimAndResaveAllBuildings();
         }
     }
 
@@ -94,11 +98,91 @@ class TownLoader
     static BuildingData ShiftToRandBuildsPos(BuildingData bData)
     {
         var randIniPos = GetRandomMapPos();
-        Debug.Log("Rand Ini Pos:" + randIniPos);
-        UVisHelp.CreateHelpers(randIniPos, Root.blueCubeBig);
+        //UVisHelp.CreateHelpers(randIniPos, Root.blueCubeBig);
+        var townDim = GetTownDim(bData);
+        var fit = DoesSpotFitTown(randIniPos, townDim);
 
+        if (!fit)
+        {
+            return ShiftToRandBuildsPos(bData);
+        }
 
+        Debug.Log(prot + " TownLoaded Fit:" + fit);
+        MoveAllBuildingsToNewSpot(bData);
         return bData;
+    }
+
+    /// <summary>
+    /// Moves all the building to the new spot 
+    /// </summary>
+    /// <param name="randIniPos"></param>
+    /// <param name="bData"></param>
+    private static void MoveAllBuildingsToNewSpot(BuildingData bData)
+    {
+        for (int i = 0; i < bData.All.Count; i++)
+        {
+            var newPos = bData.All[i].IniPos + difference;
+            //its is important to get the newPOs in the closest vertex so is aling with new buildings to
+            //spawn by user 
+            newPos = m.Vertex.FindClosestVertex(newPos, m.AllVertexs.ToArray());
+            bData.All[i].IniPos = newPos;
+        }
+    }
+
+    /// <summary>
+    /// Will say if each corner of the town falls in ground. otherwise ret false
+    /// </summary>
+    /// <param name="spot"></param>
+    /// <param name="townDim"></param>
+    /// <returns></returns>
+    static bool DoesSpotFitTown(Vector3 spot, List<Vector3> townDim)
+    {
+        var movedTown = MoveTownToSpot(spot, townDim);
+        //UVisHelp.CreateHelpers(movedTown, Root.yellowCube);
+        for (int i = 0; i < movedTown.Count; i++)
+        {
+            //throws ray to check where is in real ground
+            var inRealGroundVal = m.Vertex.BuildVertexWithXandZ(movedTown[i].x, movedTown[i].z);
+            var inFloor = Building.IsVector3OnTheFloor(inRealGroundVal, m.IniTerr.MathCenter.y);
+            //if one is not in floor then is false 
+            if (!inFloor)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    private static Vector3 difference;
+    /// <summary>
+    /// It moves 'list' to the spot
+    /// </summary>
+    /// <param name="spot"></param>
+    /// <param name="list"></param>
+    /// <returns></returns>
+    private static List<Vector3> MoveTownToSpot(Vector3 spot, List<Vector3> list)
+    {
+        difference = spot - list[0];
+        List<Vector3> movedTown = new List<Vector3>();
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            movedTown.Add(list[i] + difference);
+        }
+        return movedTown;
+    }
+
+    static List<Vector3> GetTownDim(BuildingData bData)
+    {
+        List<Vector3> allAnchors = new List<Vector3>();
+
+        for (int i = 0; i < bData.All.Count; i++)
+        {
+            allAnchors.AddRange(bData.All[i].Anchors);
+        }
+
+        return Registro.FromALotOfVertexToPoly(allAnchors);
     }
 
 

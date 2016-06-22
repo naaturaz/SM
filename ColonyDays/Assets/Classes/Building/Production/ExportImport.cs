@@ -154,7 +154,7 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.WheelBarrow, 140, 10, 25));
 
         _prodSpecs.Add(new ProdSpec(P.Cigar, 200, 700, 50));
-        _prodSpecs.Add(new ProdSpec(P.Slat, 40, 600, 70));
+        //_prodSpecs.Add(new ProdSpec(P.Slat, 40, 600, 70));
         _prodSpecs.Add(new ProdSpec(P.Tile, 60, 2100, 90));
 
 

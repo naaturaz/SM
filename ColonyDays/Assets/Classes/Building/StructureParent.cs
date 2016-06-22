@@ -507,7 +507,7 @@ public class StructureParent : Building {
     void AssignMaterialToStage(GameObject passP)
     {
         if (!HType.ToString().Contains(H.Bridge.ToString()) && HType != H.Dock && HType != H.Shipyard
-            && HType != H.Fishermen && HType != H.FishRegular)
+            && HType != H.Fishing_Hut && HType != H.FishRegular)
         {
             passP.GetComponent<Renderer>().sharedMaterial = Resources.Load(Root.RetMaterialRoot(H.Stages.ToString())) as Material;
         }

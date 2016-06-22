@@ -162,13 +162,27 @@ public class OutOfScreen
 
     void OnBecameVisible()
     {
-        //Debug.Log("became visible " + _person.MyId);
-        _person.Body.EnableAnimator();
+        if (_person!=null)
+        {
+            //Debug.Log("became visible " + _person.MyId);
+            _person.Body.EnableAnimator();
+        }
+        else if (_animal != null)
+        {
+            _animator.enabled = true;
+        }
     }
 
     void OnBecameInvisible()
     {
-        //Debug.Log("became Invisible " + _person.MyId);
-        _person.Body.DisAbleAnimator();
+        if (_person != null)
+        {
+            //Debug.Log("became Invisible " + _person.MyId);
+            _person.Body.DisAbleAnimator();
+        }
+        else if(_animal != null)
+        {
+            _animator.enabled = false;
+        }
     }
 }

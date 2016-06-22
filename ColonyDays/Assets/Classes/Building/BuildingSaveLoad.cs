@@ -63,6 +63,9 @@ public class BuildingSaveLoad : BuildingPot
             //in the loaded scene
             Control.CurrentSpawnBuild = null;
             CreatePersonPot();
+
+            //the pos where cam was last saved by system 
+
         }
     }
 

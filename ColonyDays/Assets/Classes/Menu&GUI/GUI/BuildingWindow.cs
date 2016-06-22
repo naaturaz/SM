@@ -306,6 +306,11 @@ public class BuildingWindow : GUIElement {
     /// <returns></returns>
     private string BuildCover()
     {
+        if (_building.MyId.Contains("Bridge"))
+        {
+            return "";
+        }
+
         var st = (Structure) _building;
         return st.CoverageInfo();
     }
@@ -317,16 +322,26 @@ public class BuildingWindow : GUIElement {
     string BuildInfo()
     {
         string res = "";
-        
-        //is not a house or bohio 
-        if (!_building.HType.ToString().Contains("House") && _building.HType != H.Bohio)
-        {
-            res = "\nWorkers:" + _building.PeopleDict.Count + "\n";
+        var isAHouse = _building.HType.ToString().Contains("House") || _building.HType == H.Bohio;
 
-            for (int i = 0; i < _building.PeopleDict.Count; i++)
+        //is not a house or bohio 
+        if (!isAHouse || _building.HType == H.LightHouse)//must say lightHouse here bz actualkly contains House
+        {
+            //if is Storage
+            if (_building.HType.ToString().Contains("Storage"))
             {
-                res += "\n " + Family.RemovePersonIDNumberOff(_building.PeopleDict[i]);
+                res = "\nUsers:" + _building.PeopleDict.Count + "\n";
             }
+            //others
+            else
+            {
+                res = "\nWorkers:" + _building.PeopleDict.Count + "\n";
+                for (int i = 0; i < _building.PeopleDict.Count; i++)
+                {
+                    res += "\n " + Family.RemovePersonIDNumberOff(_building.PeopleDict[i]);
+                }
+            }
+           
 
             if (_building.HType == H.Masonry)
             {
@@ -338,6 +353,7 @@ public class BuildingWindow : GUIElement {
                 }
             }
         }
+        //is a house or bohio 
         else
         {
             var amt = 0;

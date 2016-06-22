@@ -24,7 +24,7 @@ public class GameScene : General
 
     //how thick a block of way is
     private float _subDivideBlockYVal = 0.05f; //0.001f;
-    private int _gameSpeed = 0; //the speed of the whole Game
+    private int _gameSpeed = 1; //the speed of the whole Game
 
     public static General dummyBlue; //for help everywhere()
     public static General dummyRed; //for help everywhere()
@@ -44,6 +44,7 @@ public class GameScene : General
     private StaticBatch _staticBatch;
     private MeshBatch _meshBatch;
 
+    private AudioPlayer _audioPlayer;
 
 
     public float SubDivideBlockYVal
@@ -154,7 +155,11 @@ public class GameScene : General
             return "Developer Version.";
         }
 
-        return "Early Access \n v0.0.0." +
+        var discl = "Aatlantis Copyright. This version is a closed beta. Not for distribution. \n\n";
+
+        return  discl +
+            //"Early Access \n v0.0.0." +
+            "Closed Beta \n v0.0.0." +
                DateTime.Now.Year.ToString().Substring(2) + "." +
                AddZeroInFrontIfOneChar(DateTime.Now.Month) + "." + 
                AddZeroInFrontIfOneChar(DateTime.Now.Day) + "d." +
@@ -183,6 +188,10 @@ public class GameScene : General
     // Use this for initialization
     private void Start()
     {
+//#if UNITY_EDITOR
+//        Developer.IsDev = true;
+//#endif
+
         Book.Start();
 
         LoadTerrain();
@@ -329,6 +338,9 @@ public class GameScene : General
             //&& BuildingPot.Control!=null && BuildingPot.Control.Registro.AllBuilding.Count>1
             )
         {
+            //bz camera needs to be initiated already
+            _audioPlayer = new AudioPlayer();
+
             _culling = new Culling();
             _fustrum = new Fustrum();
         }
