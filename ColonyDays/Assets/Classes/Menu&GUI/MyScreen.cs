@@ -214,10 +214,12 @@ public class MyScreen : General
 
     /// <summary>
     /// bz this Xmls are all Prefabs tht gets call in game
+    /// 
+    /// "Prefab/Terrain/" + file
     /// </summary>
     /// <param name="file"></param>
     /// <returns></returns>
-    string AddPrefabRoot(string file)
+    static public string AddPrefabTerrainRoot(string file)
     {
         return "Prefab/Terrain/" + file;
     }
@@ -250,7 +252,7 @@ public class MyScreen : General
 
         var rand = validTerras[UMath.GiveRandom(0, validTerras.Count)];
         var cleanRand = RemoveDataPath(rand, _dataPath);
-        return AddPrefabRoot(cleanRand);
+        return AddPrefabTerrainRoot(cleanRand);
     }
 
     /// <summary>

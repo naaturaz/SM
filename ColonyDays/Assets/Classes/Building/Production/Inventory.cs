@@ -658,6 +658,43 @@ public class Inventory  {
         }
         return res;
     }
+
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="pCat"></param>
+    /// <param name="amtNeeded"></param>
+    /// <returns>Returns wht is left from amt needed. if is 0 is was fully covered</returns>
+    internal float RemoveByCategory(PCat pCat, float amtNeeded)
+    {
+        var items = ReturnAllItemsCat(pCat);
+
+        for (int i = 0; i < items.Count; i++)
+        {
+            //if the items is not able to cover it all needed
+            if (items[i].Amount < amtNeeded)
+            {
+                //amt Needed being covered
+                amtNeeded -= items[i].Amount;
+                //will delete tht item from inventory
+                RemoveByWeight(items[i].Key, items[i].Amount);
+            }
+            //if can cover the rest needed 
+            else
+            {
+                RemoveByWeight(items[i].Key, amtNeeded);
+                amtNeeded = 0;
+            }
+        }
+        return amtNeeded;
+    }
+
+    public bool DoWeHaveOfThisCat(PCat cat)
+    {
+        return ReturnAmountOnCategory(cat) > 0;
+    }
 }
 
 public class InvItem

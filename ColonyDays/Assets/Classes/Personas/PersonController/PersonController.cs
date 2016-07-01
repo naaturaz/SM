@@ -172,6 +172,7 @@ public class PersonController : PersonPot
             CamControl.CAMRTS.InputRts.LoadLastCamPos();
         }
         BuildingPot.CreateUnlockBuilds();
+        MeshController.InitBuyRegions();
     }
 
 
@@ -199,6 +200,7 @@ public class PersonController : PersonPot
         EmigrateController1.RecreateEmigratesGC();
 
         IsAPersonHomeLessNow = pData.PersonControllerSaveLoad.IsAPersonHomeLessNow;
+
 
         //persons
         for (int i = 0; i < pData.All.Count; i++)
@@ -1015,4 +1017,10 @@ public class PersonControllerSaveLoad
     public string IsAPersonHomeLessNow = "";
 
     public string GameVersion = "";
+
+    public string TerrainName = "";
+
+
+    public List<int> UnlockRegions = new List<int>();
+
 }

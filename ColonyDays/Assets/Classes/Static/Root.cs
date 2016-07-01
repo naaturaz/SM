@@ -162,6 +162,11 @@ public class Root : MonoBehaviour
         //Visual Hep for spawner
         public static string selectMine1 = "Prefab/ScreenHelper/Selection_Mine1";
 
+        //regions
+        public static string forSaleRegion = "Prefab/Terrain/Regions/ForSaleRegion";
+        
+        
+
     /// Input
     public static string inputMain = "Prefab/Input/Input_Main";
     public static string inputMeshSpawn = "Prefab/Input/Input_Mesh_Spawn";
@@ -271,6 +276,8 @@ public class Root : MonoBehaviour
     public static string matGreenSel2 = "Prefab/Mats/Green_Selection_2";
     public static string whiteSemi = "Prefab/Mats/White_Semi";
     public static string graySemi = "Prefab/Mats/Gray_Semi";
+    public static string grayDarkSemi = "Prefab/Mats/Gray_Dark_Semi";
+    public static string grayDark = "Prefab/Mats/Gray_Dark";
     public static string matStone = "Prefab/Mats/Stone";
     public static string matAdoquin = "Prefab/Mats/Adoquin";
     public static string matGravilla = "Prefab/Mats/Gravilla";

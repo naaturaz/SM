@@ -55,9 +55,19 @@ public class Dialog
             else if (_type == H.GameOverPirate)
             {
                 Program.InputMain.EscapeKey();
+            } 
+            else if (_type == H.BuyRegion)
+            {
+                MeshController.BuyRegionManager1.CurrentRegionBuy();               
             }
         }
-        _dialogGo.Destroy();
+
+        //when calling a BuyRegion it will try to delete current dialog.
+        //thi is to prevent NullRef exp if is none
+        if (_dialogGo!=null)
+        {
+            _dialogGo.Destroy();
+        }
     }
 
 

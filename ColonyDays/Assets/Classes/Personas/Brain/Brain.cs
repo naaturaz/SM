@@ -305,7 +305,7 @@ public class Brain
     Vector3 Return1HouseCorner()
     {
         var chosen = _person.Home.Anchors[UMath.GiveRandom(0, 4)];
-        return Vector3.MoveTowards(chosen, _person.Home.transform.position, -.2f);
+        return Vector3.MoveTowards(chosen, _person.Home.transform.position, -.02f);//-.2
     }
 
 

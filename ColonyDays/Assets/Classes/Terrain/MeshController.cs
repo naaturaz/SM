@@ -65,6 +65,7 @@ public class MeshController : ControllerParent
 
 
     private static CrystalManager _crystalManager = new CrystalManager();
+    private static BuyRegionManager _buyRegionManager;
     
     public static CrystalManager CrystalManager1
     {
@@ -92,10 +93,21 @@ public class MeshController : ControllerParent
         set { _landZoneManager = value; }
     }
 
+    public static BuyRegionManager BuyRegionManager1
+    {
+        get { return _buyRegionManager; }
+        set { _buyRegionManager = value; }
+    }
+
     public void Destroy()
     {
         Malla.Destroy();
         base.Destroy();
+    }
+
+    public static void InitBuyRegions()
+    {
+        _buyRegionManager = new BuyRegionManager();
     }
 
     // Use this for initialization

@@ -59,6 +59,11 @@ public class PersonSaveLoad : PersonPot {
         res.EmigrateController1 = Control.EmigrateController1;
         res.IsAPersonHomeLessNow = Control.IsAPersonHomeLessNow;
 
+        //used in DataController.cs.SetLoadedTerrainInTerraRoot()
+        res.TerrainName = Program.gameScene.Terreno.name;
+        //used in BuyRegionManager.cs
+        res.UnlockRegions = MeshController.BuyRegionManager1.UnlockRegions;
+
         return res;
     }
 }

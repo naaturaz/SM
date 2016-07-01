@@ -152,15 +152,32 @@ public class DataController
     internal static void LoadGame(string p)
     {
         PlayerPrefs.SetString("Last_Saved", p);
-
         XMLSerie.LoadGame(_path + @"\" + p);
+
+        SetLoadedTerrainInTerraRoot(p);
+
         Program.RedoGame();
         
         //now action the continue button event
         BuildingPot.LoadBuildingsNow();
-
         Program.MyScreen1.DestroyCurrLoadLoading();
     }
+
+
+    /// <summary>
+    /// It sets Program.MyScreen1.TerraRoot so it loads the terrain saved 
+    /// </summary>
+    /// <param name="p"></param>
+    static void SetLoadedTerrainInTerraRoot(string p)
+    {
+        PersonData pData = XMLSerie.ReadXMLPerson();
+
+        //so it loads the saved terrain into the new game 
+        Program.MyScreen1.TerraRoot = MyScreen.AddPrefabTerrainRoot(pData.PersonControllerSaveLoad.TerrainName);
+    }
+
+
+
 
     internal static void ContinueGame()
     {

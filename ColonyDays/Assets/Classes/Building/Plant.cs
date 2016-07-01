@@ -236,7 +236,7 @@ public class Plant : MonoBehaviour
         _readyToHarvestDate = Program.gameScene.GameTime1.CurrentDate();
     }
 
-    const float GROWFACTOR = 0.01f;
+    const float GROWFACTOR = 0.001f;//0.01
     //Will grow in 10 percent increments
     private void Grow()
     {
@@ -247,7 +247,7 @@ public class Plant : MonoBehaviour
 
         _currentGrowStep += 0.1f;
         _amtToGrow = Program.gameScene.GameTime1.TimeFactorInclSpeed()
-            *(GROWFACTOR + (_growGen / 100) + addWorkedAmt/50) ;
+            *(GROWFACTOR + (_growGen / 1000) + addWorkedAmt/500) ; //100      50
 
         //Debug.Log("amt to grow: "+_amtToGrow);
         if (float.IsInfinity(_amtToGrow))

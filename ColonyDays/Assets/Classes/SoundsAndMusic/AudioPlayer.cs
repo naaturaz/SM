@@ -27,9 +27,6 @@ public class AudioPlayer : MonoBehaviour {
 
     static private void LoadAllAudios()
     {
-        return;
-
-
         if (_soundsLib.Count > 0)
         {
             return;
@@ -37,11 +34,18 @@ public class AudioPlayer : MonoBehaviour {
 
         soundsCointaner = General.Create(Root.classesContainer, Camera.main.transform.position,
             "SoundContainer", Camera.main.transform);
-        var root = Application.dataPath + "/Resources/Prefab/Audio/Sound/";
-        //Debug.Log("r:"+ root );
-        var waves = Directory.GetFiles(root, "*.wav").ToList();
 
+        //var root = Application.dataPath + "/Resources/Prefab/Audio/Sound/";
+        var root = "C:/GitHub/SM/ColonyDays/Assets/Resources/Prefab/Audio/Sound/";
+        var waves = new List<string>();
 
+#if UNITY_EDITOR
+        waves = GetFilesInEditor(root);
+        SaveOnProgramData(waves);
+#endif
+#if UNITY_STANDALONE
+        waves = GetFilesInStandAlone();
+#endif
 
         foreach (var item in waves)
         {
@@ -49,6 +53,29 @@ public class AudioPlayer : MonoBehaviour {
             _soundsLib.Add(newName, CreatePrefabAndAddAudioSource(item, root));
         }
     }
+
+    private static void SaveOnProgramData(List<string> waves)
+    {
+        var pData = XMLSerie.ReadXMLProgram();
+        pData.Waves = waves;
+        XMLSerie.WriteXMLProgram(pData);
+    }
+
+    static List<string> GetFilesInStandAlone()
+    {
+        var pData = XMLSerie.ReadXMLProgram();
+        return pData.Waves;
+    }
+
+
+    static List<string> GetFilesInEditor(string root)
+    {
+        Debug.Log("sound root:" + root);
+        var waves = Directory.GetFiles(root, "*.wav").ToList();
+        return waves;
+    }
+
+
 
     /// <summary>
     /// This is needed so later when a building is looking for its key will be easy to find a string.contain
@@ -72,7 +99,8 @@ public class AudioPlayer : MonoBehaviour {
 
     static Sound CreatePrefabAndAddAudioSource(string audioSourceRoot, string root)
     {
-        var sound = (Sound)General.Create("Prefab/Audio/Sound/Template", Camera.main.transform.position, container: soundsCointaner.transform);
+        var sound = (Sound)General.Create("Prefab/Audio/Sound/Template", 
+            Camera.main.transform.position, container: soundsCointaner.transform);
         audioSourceRoot = CleanTheFileNameThenAddPrefabRoot(audioSourceRoot, root);
         sound.name = audioSourceRoot;
 

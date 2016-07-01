@@ -370,6 +370,7 @@ public enum H
     Lock,
     Coming_Soon,
     Max_Cap_Reach,
+    BuyRegion,
 
 
 }

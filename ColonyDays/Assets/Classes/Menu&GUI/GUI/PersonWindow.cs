@@ -15,6 +15,9 @@ public class PersonWindow : GUIElement {
     private Rect _genBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
     private Rect _invBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
 
+    private GameObject _invIniPos;
+
+
     public Person Person1
     {
         get { return _person; }
@@ -30,6 +33,8 @@ public class PersonWindow : GUIElement {
 
     void InitObj()
     {
+        _invIniPos = GetGrandChildCalled(H.Inv_Ini_Pos);
+
         iniPos = transform.position;
 
         _title = GetChildThatContains(H.Title).GetComponent<Text>();
@@ -85,12 +90,12 @@ public class PersonWindow : GUIElement {
 
         if (_showAInventory == null)
         {
-            _showAInventory = new ShowAInventory(_person.Inventory, gameObject, _inv.transform.localPosition);
+            _showAInventory = new ShowAInventory(_person.Inventory, gameObject, _invIniPos.transform.localPosition);
         }
         else if (_showAInventory != null && _showAInventory.Inv != _person.Inventory)
         {
             _showAInventory.DestroyAll();
-            _showAInventory = new ShowAInventory(_person.Inventory, gameObject, _inv.transform.localPosition);
+            _showAInventory = new ShowAInventory(_person.Inventory, gameObject, _invIniPos.transform.localPosition);
         }
         _showAInventory.ManualUpdate();
         _inv.text = BuildStringInv(_person);
@@ -106,9 +111,9 @@ public class PersonWindow : GUIElement {
                      + "\n Happy:" + _person.Happinnes
                      + "\n YearsOfSchool:" + _person.YearsOfSchool;
 
-//#if UNITY_EDITOR
+#if UNITY_EDITOR
         res += DebugInfo();
-//#endif
+#endif
         return res;
     }
 

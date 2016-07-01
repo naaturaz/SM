@@ -105,7 +105,6 @@ public class ResumenInventory {
         }
     }
 
-
     /// <summary>
     /// Will remove from the 'building' and will tell u how much is left to be removed 
     /// </summary>
@@ -120,6 +119,52 @@ public class ResumenInventory {
         }
         return amt;
     }
+
+
+
+
+
+    /// <summary>
+    /// Will remove the item and the amount from the inventories.
+    /// 
+    /// This method is use for an building was built and 40 wood for ex needs to be removed 
+    /// 
+    /// Will loop thru the storages until remove the full amt
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="amt"></param>
+    public void RemoveOnCategory(PCat cat, float amt)
+    {
+        var storages = BuildingController.FindAllStructOfThisTypeContain(H.Storage);
+
+        for (int i = 0; i < storages.Count; i++)
+        {
+            var left = LeftToRemovePCat(cat, amt, storages[i]);
+
+            if (left == 0)
+            {
+                return;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Will remove from the 'building' and will tell u how much is left to be removed 
+    /// </summary>
+    float LeftToRemovePCat(PCat cat, float amt, Structure building)
+    {
+        if (building.Inventory.DoWeHaveOfThisCat(cat))
+        {
+            var removed = building.Inventory.RemoveByCategory(cat, amt);
+            var left = amt - removed;
+
+            return left;
+        }
+        return amt;
+    }
+
+
+
 
     /// <summary>
     /// Will tell u if all inventories are empty on the storages 

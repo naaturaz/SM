@@ -371,10 +371,10 @@ public class BuildingWindow : GUIElement {
         }
 
         return res 
-//#if UNITY_EDITOR
+#if UNITY_EDITOR
            + DebugInfo()
-//#endif
-            ;
+#endif
+;
     }
 
     private string DebugInfo()

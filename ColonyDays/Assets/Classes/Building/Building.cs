@@ -207,12 +207,17 @@ public class Building : General, Iinfo
             isScaledOnFloor = IsScaledAnchorsOnFloor();
         }
 
-        bool res = _isEven && !_isColliding && _isGoodWaterHeight && isScaledOnFloor;
-        if (res)
+        return _isEven && !_isColliding && _isGoodWaterHeight && isScaledOnFloor && AreAnchorsOnUnlockRegions();
+    }
+
+    bool AreAnchorsOnUnlockRegions()
+    {
+        if (MeshController.BuyRegionManager1 == null)
         {
-            //Geometry.renderer.material.color = _initialColor;
+            return true;
         }
-        return res;
+
+        return MeshController.BuyRegionManager1.AreAnchorsOnUnlockRegions(Anchors);
     }
 
     /// <summary>

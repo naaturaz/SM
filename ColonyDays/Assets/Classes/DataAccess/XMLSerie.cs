@@ -57,7 +57,7 @@ public class XMLSerie
         get { return _programData; }
         set { _programData = value; }
     }
-    static ProgramData ReadXMLProgram()
+    public static ProgramData ReadXMLProgram()
     {
         var load =
             DataContainer.Load(Path.Combine(Application.dataPath, "program.xml"));

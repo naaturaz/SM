@@ -155,7 +155,7 @@ public class GameScene : General
             return "Developer Version.";
         }
 
-        var discl = "Aatlantis Copyright. This version is a closed beta. Not for distribution. \n\n";
+        var discl = "Aatlantis Copyright. Not for distribution, nor publicity. \n\n";
 
         return  discl +
             //"Early Access \n v0.0.0." +

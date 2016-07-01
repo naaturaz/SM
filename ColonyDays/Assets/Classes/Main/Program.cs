@@ -139,6 +139,9 @@ public class Program : MonoBehaviour {
         GameController.ResumenInventory1.GameInventory.Delete();
     }
 
+    /// <summary>
+    /// Kills the whole game and then restarts all objects and GameObj
+    /// </summary>
     internal static void RedoGame()
     {
         KillGame();

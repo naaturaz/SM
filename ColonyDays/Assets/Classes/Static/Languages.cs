@@ -125,6 +125,8 @@ public class Languages
 	   { "NotHDDSpace", "Not enough space on {0} drive to save the game"},
 	   { "GameOverPirate", "Sorry, you lost the game! Pirates attack your town and killed everyone."},
 	   { "GameOverMoney", "Sorry, you lost the game! The crown wont support your Caribbean island anymore."},
+	   { "BuyRegion.WithMoney", "Are you sure want to buy this region."},
+	   { "BuyRegion.WithOutMoney", "Sorry, you can't afford this now."},
 	};
     
     public static string ReturnString(string key)

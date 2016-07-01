@@ -97,6 +97,26 @@ public class U2D : MonoBehaviour {
         res.Add(new Line(SW, NW, false));
 
         return res;
+    }   
+    
+
+    public static List<Vector3> FromRectToPoly(Rect rect)
+    {
+
+        Vector2 NW = new Vector2(rect.xMin, rect.yMin);
+        Vector2 NE = new Vector2(rect.xMax, rect.yMin);
+        Vector2 SE = new Vector2(rect.xMax, rect.yMax);
+        Vector2 SW = new Vector2(rect.xMin, rect.yMax);
+
+
+
+        return new List<Vector3>()
+        {
+            FromV2ToV3( NW), 
+            FromV2ToV3(NE), 
+            FromV2ToV3(SE), 
+            FromV2ToV3(SW)
+        };
     }
 
 
