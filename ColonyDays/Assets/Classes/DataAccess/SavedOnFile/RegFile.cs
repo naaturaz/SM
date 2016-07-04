@@ -166,7 +166,7 @@ public class RegFile  {
     public int DollarsPay;
 
     //all ways load this but  is only save it by bridges. 
-    public List<Vector3> Anchors;
+    public Vector3[] Anchors;
     public Dock Dock1;
 
     public PlantSave PlantSave1;
@@ -222,7 +222,7 @@ public class RegFile  {
         Dispatch1 = dispatch;
         Familes = familes;
         DollarsPay = dollarsPay;
-        Anchors = anchors;
+        Anchors = anchors.ToArray();
         Dock1 = dock;
 
         Root = root;

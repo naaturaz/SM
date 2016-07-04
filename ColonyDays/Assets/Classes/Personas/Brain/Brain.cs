@@ -2825,7 +2825,7 @@ public class Brain
         }
 
         MoveToNewHome.RemovePeopleDict(buildID);
-        Debug.Log("Blacklisted:"+buildID +" ."+_person.MyId);
+        Debug.Log("_person booked:" + _person.IsBooked);
 
         //the route key is added so we dont blaclist 2 buildings of a same route
         //only the 1st one need to be blacklisted. this applys for BridgeRouting 
@@ -2838,7 +2838,9 @@ public class Brain
         }
 
         //person blacklisting Home 
-        if ( Building.IsHouseType(buildID))
+        //if person is blacklisting while moving is becuase they became major. the 2nd is to address when is blacklisting
+        //a brdige 
+        if (Building.IsHouseType(buildID) || !string.IsNullOrEmpty(_person.IsBooked))
         {
             _person.RollBackMajority();
             return;
@@ -2930,7 +2932,7 @@ public class Brain
         for (int i = 0; i < BuildingPot.Control.Registro.Ways.Count; i++)
         {
             var b = (Trail)BuildingPot.Control.Registro.Ways.ElementAt(i).Value;
-            if (b.MyId.Contains(H.Bridge.ToString()) && b.Pieces[0].CurrentStage == 4)
+            if (b.MyId.Contains(H.Bridge.ToString()) && b.Pieces.Count > 0 && b.Pieces[0].CurrentStage == 4)
             {
                 res++;
             }

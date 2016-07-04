@@ -299,11 +299,13 @@ public class Trail : Way
 
     public void AddBridgeToRegistro()
     {
-       //Debug.Log("!AddBridgeToRegistro()!");
+        Debug.Log("!AddBridgeToRegistro()!");
 
         var activeBound = GetActiveBound();
 
         Registro.oldBridge = this;
+
+        //anchors are resave set on GetAnchors.Bridge
 
         BuildingPot.Control.Registro.AddBuildToAll(MyId, HType,  activeBound, Category,
             transform.position,
@@ -315,6 +317,7 @@ public class Trail : Way
             , min: activeBound[1], max: activeBound[3] ,
             instructionP: Instruction,
             anchors: Anchors);
+
 
         BuildingPot.Control.AddToQueuesRestartPersonControl(MyId);
     }

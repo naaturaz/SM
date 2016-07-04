@@ -908,7 +908,7 @@ public class PersonController : PersonPot
         {
             return;
         }
-        Debug.Log(string.Format("Booking: {0} to: {1}", id, isBooked));
+        //Debug.Log(string.Format("Booking: {0} to: {1}", id, isBooked));
         All[index].IsBooked = isBooked;
     }
 

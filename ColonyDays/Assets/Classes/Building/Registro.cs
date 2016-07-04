@@ -496,7 +496,12 @@ public class Registro : MonoBehaviour
         AllRegFile[index].Familes = build.Families;
         AllRegFile[index].Inventory = build.Inventory;
         AllRegFile[index].PeopleDict = build.PeopleDict;
-        AllRegFile[index].Anchors = build.Anchors;
+        AllRegFile[index].Anchors = build.Anchors.ToArray();
+
+        UVisHelp.CreateHelpers(build.Anchors, Root.yellowCube);
+
+
+
         AllRegFile[index].DollarsPay = build.DollarsPay;
         AllRegFile[index].Dock1 = build.Dock1;
         AllRegFile[index].Dispatch1 = build.Dispatch1;
@@ -524,14 +529,22 @@ public class Registro : MonoBehaviour
     /// BuildersManager1
     /// CurrentProd
     /// </summary>
-    public void ResaveOnRegistro(RegFile regFile, Building build)
+    public void ResaveOnRegistro(RegFile regFile, Building build, bool anchorsIsOn)
     {
         regFile.BookedHome1 = build.BookedHome1;
         regFile.Instruction = build.Instruction;
         regFile.Familes = build.Families;
         regFile.Inventory = build.Inventory;
         regFile.PeopleDict = build.PeopleDict;
-        regFile.Anchors = build.Anchors;
+
+        //only need to be resave when Loaded Town spanws 
+        if (anchorsIsOn && !build.MyId.Contains("Bridge"))
+        {
+            regFile.Anchors = build.Anchors.ToArray();
+        }
+
+
+
         regFile.DollarsPay = build.DollarsPay;
         regFile.Dock1 = build.Dock1;
         regFile.Dispatch1 = build.Dispatch1;
@@ -680,7 +693,7 @@ public class Registro : MonoBehaviour
     {
         for (int i = 0; i < AllBuilding.Count; i++)
         {
-            ResaveOnRegistro(AllRegFile[i], AllBuilding.ElementAt(i).Value);
+            ResaveOnRegistro(AllRegFile[i], AllBuilding.ElementAt(i).Value, false);
         }
     }
 
@@ -692,7 +705,7 @@ public class Registro : MonoBehaviour
         for (int i = 0; i < AllBuilding.Count; i++)
         {
             AllRegFile[i].DimOnMap = ReturnDimOnMap(AllBuilding.ElementAt(i).Value.Anchors);
-            ResaveOnRegistro(AllRegFile[i], AllBuilding.ElementAt(i).Value);
+            ResaveOnRegistro(AllRegFile[i], AllBuilding.ElementAt(i).Value, true);
         }
     }
 
@@ -702,5 +715,16 @@ public class Registro : MonoBehaviour
         {
             AllBuilding.ElementAt(i).Value.TownBuildingLastStep();
         }
+    }
+
+    public List<Vector3> ReturnMySavedAnchors(string MyIdP)
+    {
+        var miSave = AllRegFile.Find(a => a.MyId == MyIdP);
+
+        if (miSave != null)
+        {
+            return miSave.Anchors.ToList();
+        }
+        return new List<Vector3>();
     }
 }

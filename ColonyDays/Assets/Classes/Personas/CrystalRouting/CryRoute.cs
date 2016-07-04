@@ -537,7 +537,17 @@ public class CryRoute
     {
         var key = RoutesCache.CreateRouteKey(_origenKey, _destinyKey);
 
-        _person.Brain.BlackListBuild(CryBridgeRoute.ExtractRealId((Structure)_fin), key, RouteType);
+        Debug.Log("CryROute.BlackList() : "+ _fin.MyId);
+
+        if (_fin.MyId.Contains("Bridge"))
+        {
+            _person.Brain.BlackListBuild(_fin.MyId, key, RouteType);            
+        }
+        else
+        {
+            _person.Brain.BlackListBuild(CryBridgeRoute.ExtractRealId((Structure)_fin), key, RouteType);
+        }
+
         wasBlackListed = true;
     }
 

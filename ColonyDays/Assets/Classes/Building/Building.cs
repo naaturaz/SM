@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO.Compression;
 using System.Linq;
 using Random = UnityEngine.Random;
 
@@ -132,9 +131,22 @@ public class Building : General, Iinfo
 
     public List<Vector3> Anchors
     {
-        get { return _anchors; }
+        get
+        {
+            if (MyId.Contains("Bridge"))
+            {
+                var a = 1;
+            }
+            
+            return _anchors;
+        }
         set
         {
+            if (MyId.Contains("Bridge"))
+            {
+                var a = 1;
+            }
+
             _anchors = value;
 
            
@@ -273,40 +285,17 @@ public class Building : General, Iinfo
     /// </summary>
     public List<Vector3> GetAnchors(bool forced=false)
     {
-        //removed bz when lolading is way bigger
-        ////if they were set already 
-        //if (!forced && ValidVector3List(_anchors, 4))//4: bz anchors are 4 
-        //{return _anchors;}
-
         //will find anchors
         UpdateMinAndMaxVar();
         _bounds = FindBounds(_min, _max);
         _anchors = FindAnchors(_bounds);
 
+        //UVisHelp.CreateHelpers(_anchors, Root.blueCube);
+
         return _anchors;
     }
 
-    /// <summary>
-    /// Will tell u if the list has the amount of elements and if all are different that 
-    /// default value, then will be true
-    /// </summary>
-    bool ValidVector3List(List<Vector3> list, int amt)
-    {
-        int count = 0;
-        for (int i = 0; i < list.Count; i++)
-        {
-            if (list[i] != new Vector3())
-            {
-                count++;
-            }
-        }
 
-        if (count == list.Count && list.Count == amt)
-        {
-            return true;
-        }
-        return false;
-    }
 
     /// <summary>
     /// Returns true if the building is place over the _minHeightToSpawn 
@@ -1084,10 +1073,10 @@ public class Building : General, Iinfo
     /// <returns>True if collides</returns>
     public virtual bool CheckIfColliding()
     {
-        var tBounds = _bounds;
+        var tBounds = _bounds.ToArray();
         tBounds = UPoly.ScalePoly(tBounds, 0.05f);
 
-        return BuildingPot.Control.Registro.IsCollidingWithExisting(tBounds);
+        return BuildingPot.Control.Registro.IsCollidingWithExisting(tBounds.ToList());
     }
 
     /// <summary>
@@ -1342,8 +1331,10 @@ public class Building : General, Iinfo
 
     public static bool IsVector3OnTheFloor(Vector3 v3, float mostCommonYValue, float variance = 0.1f)
     {
-        if (v3.y > mostCommonYValue + variance
-                || v3.y <mostCommonYValue - variance)
+        Vector3 v3Copy = new Vector3(v3.x, v3.y, v3.z);
+
+        if (v3Copy.y > mostCommonYValue + variance
+                || v3Copy.y < mostCommonYValue - variance)
         {
             return false;
         }
@@ -2200,7 +2191,7 @@ public class Building : General, Iinfo
     /// </summary>
     protected void HandleLastStage(Person person=null)
     {
-        Debug.Log("construction built 100%:"+MyId+"." + Program.gameScene.GameTime1.TodayYMD());
+        //Debug.Log("construction built 100%:"+MyId+"." + Program.gameScene.GameTime1.TodayYMD());
         PersonPot.Control.RoutesCache1.RemoveAllMine(MyId);
 
 
@@ -2276,20 +2267,12 @@ public class Building : General, Iinfo
             Anchors.Clear();
             _polyOnGrid.Clear();
 
-            //Debug.Log("townLoaded:" + MyId);
+            Debug.Log("townLoaded:" + MyId);
             Anchors = GetAnchors();
             
             LandZone1.Clear();
             HandleLandZoning();
             TownLoader.NewBuildingLoaded();
-
-
-
-            //var st = this as Structure;
-            //if (st != null)
-            //{
-            //    st.FinishPlacingMode(H.Done);
-            //}
         }
     }
 

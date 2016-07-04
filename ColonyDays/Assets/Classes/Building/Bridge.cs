@@ -3,6 +3,9 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
+//todo fix
+//bug . be aware that Anchors of Bridge get bigger in game. dont know how or where
+
 public class Bridge : Trail
 {
     private bool createAirPartsNow;
@@ -84,24 +87,21 @@ public class Bridge : Trail
             if (HType.ToString().Contains(H.Bridge.ToString()))
             {
                 SetBridgeAnchors();
-                print("Get Acnhor called from Bridge");
-
-                //here so when Builders ask for anchros they have it already
-                //AddBridgeToRegistro();
-
                 addedToBuildControl = true;
-
-
-                //UpdateOnBuildControl(H.Add);
             }
         }
     }
 
+    /// <summary>
+    /// Birdge must be saved first then asked for Anchors.
+    /// </summary>
     protected void SetBridgeAnchors()
     {
+        print("Get Acnhor called from Bridge");
+
         Anchors = GetBridgeAnchors();
-        //    UVisHelp.CreateHelpers(Anchors, Root.redSphereHelp);
         BuildingPot.Control.Registro.ResaveOnRegistro(MyId);
+
     }
 
     /// <summary>
@@ -644,7 +644,8 @@ public class Bridge : Trail
     {
         if (Anchors.Count>0)
         {
-            return Anchors;
+            var aCopy = Anchors.ToArray();
+            return aCopy.ToList();
         }
 
         if (BoundsHoriz!=null && BoundsHoriz.Count > 0)

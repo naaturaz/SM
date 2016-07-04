@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
+
 /*The bulidings new RegFiles are created on Registro.AddBuildToAll()
  */
 
@@ -203,7 +205,7 @@ public class BuildingSaveLoad : BuildingPot
         s.Dock1 = regFile.Dock1;
         s.PlantSave1 = regFile.PlantSave1;
         s.CurrentProd = regFile.CurrentProd;
-        s.Anchors = regFile.Anchors;
+        s.Anchors = regFile.Anchors.ToList();
 
         Program.gameScene.BatchAdd(s);
         Control.Registro.Structures.Add(s.MyId, Control.CurrentSpawnBuild as Structure);
@@ -252,7 +254,14 @@ public class BuildingSaveLoad : BuildingPot
         trail.LandZone1 = regFile.LandZone1;
         trail.Instruction = regFile.Instruction;
         trail.MaterialKey = regFile.MaterialKey;
-        trail.Anchors = regFile.Anchors;
+        trail.Anchors = regFile.Anchors.ToList();
+
+        if (trail.name.Contains("Bridge"))
+        {
+            UVisHelp.CreateHelpers(trail.Anchors, Root.blueCube);
+            
+        }
+
         trail.StartingStage = regFile.StartingStage;
 
         //if is not a bridge

@@ -242,7 +242,7 @@ public class Family
 
         adult.transform.parent = BuildingPot.Control.Registro.AllBuilding[_home].transform;
         adult.FamilyId = FamilyId;    
-        Debug.Log(adult.MyId + " 1st adult inscribed on " + FamilyId + " as " + debug);
+        //Debug.Log(adult.MyId + " 1st adult inscribed on " + FamilyId + " as " + debug);
     }
 
     //tis is if has already a adult we have to try to marry them

@@ -80,7 +80,9 @@ public class OutOfScreen
             _onScreenRenderNow = true;
             SwitchNow();
         }
-        else if ((!_onScreenRectNow || !_renderer.isVisible) && _onScreenRenderNow && _person.Body.Location != HPers.InWork)
+        else if (_person != null && 
+            (!_onScreenRectNow || !_renderer.isVisible) &&
+            _onScreenRenderNow && _person.Body.Location != HPers.InWork)
         {
             _onScreenRenderNow = false;
             //wont deactivate the animator if is on RectNow and close enough to the camera 

@@ -20,6 +20,8 @@ public class BuyRegionManager
 
     public BuyRegionManager()
     {
+        //return;
+
         LoadUnlockRegions();
         AssignUnlockRegionsToNewGame();
 
