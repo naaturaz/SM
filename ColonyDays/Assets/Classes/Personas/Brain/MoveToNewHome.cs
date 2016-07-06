@@ -177,14 +177,7 @@ public class MoveToNewHome
         }
         //todo
         //The real solution is to find the closest building in MoveToNEwHome
-        return Brain.GetStructureFromKey(Person.StartingBuild);
-
-        //will create a dummy where the person is now
-        dummy = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy);
-        dummy.transform.position = _person.transform.position;
-        dummy.transform.LookAt(_person.Home.transform);
-        dummy.HandleLandZoning();
-        return dummy;
+        return Brain.GetStructureFromKey(_person.StartingBuild);
     }
 
     /// <summary>

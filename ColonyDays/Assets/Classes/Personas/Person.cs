@@ -62,7 +62,7 @@ public class Person : General
     private Structure _foodSource;
     private Structure _religion;
     private Structure _chill;
-    private static string _startingBuild = "";
+    private string _startingBuild;
     private Vector3 _idlePlace;
 
     //Techincal
@@ -161,15 +161,12 @@ public class Person : General
     /// 
     /// The real solution is to find the closest building in MoveToNEwHome
     /// </summary>
-    public static string StartingBuild
+    public string StartingBuild
     {
         get { return _startingBuild; }
         set
         {
-            //if (string.IsNullOrEmpty(_startingBuild))
-            //{
-                _startingBuild = value;
-            //}
+            _startingBuild = value;
         }
     }
     
@@ -365,16 +362,17 @@ public class Person : General
         //better like 17/29. since if they are less than 16 and have not parent is not addressed
         int iniAge = General.GiveRandom(17, 29); //5, 29
 
+        obj = (Person)Instantiate(obj, iniPos, Quaternion.identity);
+
         //will assign ramdom pos if has none 
         if (iniPos == new Vector3())
         {
             iniPos = obj.AssignRandomIniPosition();
+            obj.transform.position = iniPos;
         }
 
-
-        obj = (Person) Instantiate(obj, iniPos, Quaternion.identity);
         obj.Gender = obj.OtherGender();
-        obj.InitObj(iniAge); //5,29
+        obj.InitObj(iniAge); 
         obj.Geometry.GetComponent<Renderer>().sharedMaterial = ReturnRandoPersonMaterialRoot();
 
         //this to when Person dont have where to leave and then they find a place the teletranport effect
@@ -508,6 +506,7 @@ public class Person : General
         SavedJob = pF.SavedJob;
         PrevJob = pF.PrevJob;
         IsWidow = pF._isWidow;
+        StartingBuild = pF.StartingBuild;
 
         _body = new Body(this, pF);
 
@@ -1143,7 +1142,7 @@ public class Person : General
         
         //for body
         //StartCoroutine("A32msUpdate");
-        //StartCoroutine("A64msUpdate");
+        StartCoroutine("A64msUpdate");
 
         StartCoroutine("RandomUpdate1020");
         //StartCoroutine("QuickUpdate");
@@ -1255,14 +1254,15 @@ public class Person : General
     //        _body.A32msUpdate();
     //    }
     //}
-    //private IEnumerator A64msUpdate()
-    //{
-    //    while (true)
-    //    {
-    //        yield return new WaitForSeconds(.064f); // wait
-    //        //_body.A64msUpdate();
-    //    }
-    //}
+
+    private IEnumerator A64msUpdate()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(.064f); // wait
+            _body.A64msUpdate();
+        }
+    }
 
 
 

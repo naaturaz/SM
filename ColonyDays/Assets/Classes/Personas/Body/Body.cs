@@ -297,7 +297,15 @@ public class Body //: MonoBehaviour //: General
             return;
         }
 
+
+        //CheckIfNeedsToActivateAniCheck(animationPass, oldAnimation);
+        //CleanIfNewAni(animationPass);
+
+
         savedAnimation = "";
+
+        
+        
         _currentAni = animationPass;
         myAnimator.SetBool(animationPass, true);
 
@@ -816,19 +824,10 @@ public class Body //: MonoBehaviour //: General
 
     public void A64msUpdate()
     {
-        if (_person == null || _routePoins == null || _routePoins.Count == 0) { return; }
-
-        var distanceToFinPoint = Vector3.Distance(_currentPosition, _routePoins[lastRoutePoint].Point);
-        if (distanceToFinPoint < 2f)
-        {
-            GettingCloseToLastPoint();
-        }
-
-        var distanceToIniPoint = Vector3.Distance(_currentPosition, _routePoins[iniRoutePoint].Point);
-        if (distanceToIniPoint < 1f)
-        {
-            GettingCloseToSecondPoint();
-        }
+        //if (isSaveAniCheck)
+        //{
+        //    CheckIfCurrentAnimationIsTheSaved();
+        //}
     }
 
 
@@ -1259,13 +1258,7 @@ public class Body //: MonoBehaviour //: General
         }
     }
 
-    /// <summary>
-    /// so when is shown is exactly where the currPos is 
-    /// </summary>
-    internal void RestoreTransformToCurrentPos()
-    {
-        _person.transform.position = _currentPosition;
-    }
+
 
 
 
@@ -1286,8 +1279,80 @@ public class Body //: MonoBehaviour //: General
         DefineSpeed();
     }
 
+
+
+
+
+
+
+
+
+
+    void CheckIfNeedsToActivateAniCheck(string pass, string old)
+    {
+        var currentBaseState = myAnimator.GetCurrentAnimatorStateInfo(0);
+
+        //if saved animation has a value 
+        if (!string.IsNullOrEmpty(pass) && !currentBaseState.IsName(pass) && pass != old)
+        {
+            isSaveAniCheck = true;
+            saveAniToCheck = pass;
+        }
+    }
+
+    private string saveAniToCheck = "";
+    private bool isSaveAniCheck = false;
+    /// <summary>
+    /// This is gonig to be call every 64ms as long saveAniCheck is true
+    /// 
+    /// bz sometimes an animation that needs to be played does not get transioned to.
+    /// </summary>
+    void CheckIfCurrentAnimationIsTheSaved()
+    {
+        var currentBaseState = myAnimator.GetCurrentAnimatorStateInfo(0);
+
+        //if is the same is all good
+        if (string.IsNullOrEmpty(saveAniToCheck) || currentBaseState.IsName(saveAniToCheck))
+        {
+            var a = 1;
+            saveAniToCheck = "";
+            isSaveAniCheck = false;
+        }
+        //if is not needs to be reCall again
+        else
+        {
+            TurnCurrentAniAndStartNew(saveAniToCheck);
+        }
+    }
+
+    /// <summary>
+    /// bz needs to be clean in case a new ani was passed 
+    /// </summary>
+    /// <param name="newPass"></param>
+    void CleanIfNewAni(string newPass)
+    {
+        if (isSaveAniCheck && newPass != saveAniToCheck)
+        {
+            isSaveAniCheck = false;
+            saveAniToCheck = "";
+        }
+    }
+
+
+
+
+
+
+
+
+
+
     public void DisAbleAnimator()
     {
+        //if animator is disabled they need to be turn off
+        saveAniToCheck = "";
+        isSaveAniCheck = false;
+
         myAnimator.enabled = false;
     }
 }

@@ -77,6 +77,8 @@ public class PersonFile  {
     public int YearsOfSchool { get; set; }
     public float NutritionLevel { get; set; }
 
+    public string StartingBuild;
+
     public PersonFile(Person pers)
     {
         _age = pers.Age;
@@ -141,6 +143,7 @@ public class PersonFile  {
         PrevJob = pers.PrevJob;
 
         NutritionLevel = pers.NutritionLevel;
+        StartingBuild = pers.StartingBuild;
     }
 
     void SavePersonStructs(Person pers)

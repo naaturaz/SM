@@ -328,18 +328,7 @@ public class CrystalManager  {
 
     void AddBridge(Bridge b)
     {
-        Vector3[] copy = b.GetBridgeAnchors().ToArray();
-
-        List<Vector3> saved = BuildingPot.Control.Registro.ReturnMySavedAnchors(b.MyId);
-
-        //means has a saved value. then bz bridge gets scaled up anchors will reassign here
-        if (saved.Count > 0)
-        {
-            b.Anchors = saved;
-            copy = saved.ToArray();
-        }
-
-        UVisHelp.CreateHelpers(copy.ToList(), Root.yellowCube);
+        Vector3[] copy = b.GetBridgeAnchorsCheckIfSave();
 
         AddPoly(copy.ToList(), b.MyId);
         AddBridgeEnds(b);

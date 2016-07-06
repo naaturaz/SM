@@ -305,6 +305,14 @@ public class MouseListener : InputMain
         else if (action == "LessSpeed")
         {
             Program.InputMain.ChangeGameSpeedBy(-1);
+        }  
+        else if (action == "Feedback")
+        {
+            
+        }
+        else if (action == "BugReport")
+        {
+            
         }
     }
 

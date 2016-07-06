@@ -3288,7 +3288,7 @@ public class Building : General, Iinfo
             }
         }
 
-        UVisHelp.CreateHelpers(res, Root.yellowCube);
+        //UVisHelp.CreateHelpers(res, Root.yellowCube);
         return res;
     }
 

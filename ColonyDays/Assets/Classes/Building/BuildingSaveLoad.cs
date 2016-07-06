@@ -256,11 +256,11 @@ public class BuildingSaveLoad : BuildingPot
         trail.MaterialKey = regFile.MaterialKey;
         trail.Anchors = regFile.Anchors.ToList();
 
-        if (trail.name.Contains("Bridge"))
-        {
-            UVisHelp.CreateHelpers(trail.Anchors, Root.blueCube);
+        //if (trail.name.Contains("Bridge"))
+        //{
+        //    UVisHelp.CreateHelpers(trail.Anchors, Root.blueCube);
             
-        }
+        //}
 
         trail.StartingStage = regFile.StartingStage;
 

@@ -498,7 +498,7 @@ public class Registro : MonoBehaviour
         AllRegFile[index].PeopleDict = build.PeopleDict;
         AllRegFile[index].Anchors = build.Anchors.ToArray();
 
-        UVisHelp.CreateHelpers(build.Anchors, Root.yellowCube);
+        //UVisHelp.CreateHelpers(build.Anchors, Root.yellowCube);
 
 
 

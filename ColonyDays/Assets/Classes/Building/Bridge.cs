@@ -821,4 +821,26 @@ public class Bridge : Trail
 
 
     #endregion
+
+    /// <summary>
+    /// Will check if this bridge has anchors that were saved. basically
+    /// see if has a saved file. otherwise just call GetBridgeAnchors()
+    /// 
+    /// Also if has a saved file will reassign Anchors. Anchors = saved;
+    /// </summary>
+    /// <returns></returns>
+    internal Vector3[] GetBridgeAnchorsCheckIfSave()
+    {
+        List<Vector3> saved = BuildingPot.Control.Registro.ReturnMySavedAnchors(MyId);
+
+        //means has a saved value. then bz bridge gets scaled up anchors will reassign here
+        if (saved.Count > 0)
+        {
+            Anchors = saved;
+            return Anchors.ToArray();
+        }
+
+        //UVisHelp.CreateHelpers(copy.ToList(), Root.yellowCube);
+        return GetBridgeAnchors().ToArray();
+    }
 }
