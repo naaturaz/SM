@@ -163,7 +163,8 @@ public class CamRTSController : CamControl
         InitializeObjects();
         CreateTargetAndUpdate();
 
-        if (!MiniMapRTS.isOnTheLimits && BuildingPot.Control != null && BuildingPot.Control.Registro.AllBuilding.Count>0)
+        if (U2D.IsMouseOnScreen() &&
+            !MiniMapRTS.isOnTheLimits && BuildingPot.Control != null && BuildingPot.Control.Registro.AllBuilding.Count>0)
         {
             ControlInput();
             MouseInBorderDealer();

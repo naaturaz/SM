@@ -130,7 +130,10 @@ public class InputRTS : GenericCameraComponent
     /// <param name="loadKeyC"></param>
     void LoadCamPos(KeyCode loadKeyC, int listIdx = -1)
     {
-        //SaveLoad.Load();
+        if (Dialog.IsActive())
+        {
+            return;
+        }
 
         //is loading the whole list to 
         list = XMLSerie.ReadXML();
@@ -206,6 +209,11 @@ public class InputRTS : GenericCameraComponent
     //Center cam command
     public void CenterCam(bool fakedPressKeyP = false)
     {
+        if (Dialog.IsActive())
+        {
+            return;
+        }
+
         var yes = Input.GetKeyUp(KeyCode.P) || fakedPressKeyP;
 
         if (yes && !isFollowingPersonNow)
@@ -223,6 +231,11 @@ public class InputRTS : GenericCameraComponent
     /// </summary>
     void FollowPersonCam()
     {
+        if (Dialog.IsActive())
+        {
+            return;
+        }
+
         personToFollow = GetSelectedPerson();
         if (personToFollow == null)
         {

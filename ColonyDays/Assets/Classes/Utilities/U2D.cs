@@ -151,4 +151,24 @@ public class U2D : MonoBehaviour {
     {
         return new Vector2(a.x,  a.z);
     }
+
+
+    static Rect screenRect = new Rect(0, 0, Screen.width, Screen.height);
+    public static bool IsMouseOnScreen()
+    {
+        if (!screenRect.Contains(Input.mousePosition))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// called when resolution changed
+    /// </summary>
+    public static void RedoScreenRect()
+    {
+        screenRect = new Rect(0, 0, Screen.width, Screen.height);
+    }
+
 }

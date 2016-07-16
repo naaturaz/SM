@@ -308,11 +308,11 @@ public class MouseListener : InputMain
         }  
         else if (action == "Feedback")
         {
-            
+            Dialog.InputFormDialog(H.Feedback);
         }
         else if (action == "BugReport")
         {
-            
+            Dialog.InputFormDialog(H.BugReport);
         }
     }
 

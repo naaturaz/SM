@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -32,6 +33,14 @@ public class Dialog
 
         _type = type;
         _dialogGo = DialogGO.Create(Root.dialogOK, _canvas, _middleOfScreen, _type, str1);
+    }   
+    
+    public static void InputFormDialog(H type, string str1 = "")
+    {
+        RoutineSetUp();
+
+        _type = type;
+        _dialogGo = DialogGO.Create(Root.inputFormDialog, _canvas, _middleOfScreen, _type, str1);
     }
 
     /// <summary>
@@ -60,11 +69,22 @@ public class Dialog
             {
                 MeshController.BuyRegionManager1.CurrentRegionBuy();               
             }
+            else if (_type == H.Feedback || _type == H.BugReport)
+            {
+                CreateFile(_type+"");
+            }
+
         }
 
+        DestroyCurrDialog();
+    }
+
+
+    static void DestroyCurrDialog()
+    {
         //when calling a BuyRegion it will try to delete current dialog.
         //thi is to prevent NullRef exp if is none
-        if (_dialogGo!=null)
+        if (_dialogGo != null)
         {
             _dialogGo.Destroy();
         }
@@ -72,8 +92,12 @@ public class Dialog
 
 
 
+
+
     private static void RoutineSetUp()
     {
+        DestroyCurrDialog();
+
         RefindCanvas();
         RedoMiddleOfScreen();    
     }
@@ -118,6 +142,36 @@ public class Dialog
 
 
 
-    
+
+
+
+
+
+    static void CreateFile(string type)
+    {
+        var nameFile = type + "-" + GameScene.TimeStamp() + ".sm";
+
+        var path = Application.dataPath + "/" + nameFile;
+        Debug.Log(path);
+        File.WriteAllText(path, FileHeader()  + _dialogGo.InputText.text);
+    }
+
+    private static string FileHeader()
+    {
+        return "Current Version: " + GameScene.VersionLoaded() 
+            
+            
+            + "\n" +
+            "___________________________________________" +
+            "\n\n";
+    }
+
+
+
+
+    public static bool IsActive()
+    {
+        return _dialogGo != null;
+    }
 }
 

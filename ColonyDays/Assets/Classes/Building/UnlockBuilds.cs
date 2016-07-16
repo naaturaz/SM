@@ -27,9 +27,9 @@ public class UnlockBuilds
         _list  = new List<BRequires>()
         {
             //infr
-            new BRequires(H.Road, true),
-            new BRequires(H.BridgeTrail, true),
-            new BRequires(H.BridgeRoad, true),
+            new BRequires(H.Road, H.OnlyForDev),
+            new BRequires(H.BridgeTrail, H.OnlyForDev),
+            new BRequires(H.BridgeRoad, H.OnlyForDev),
             new BRequires(H.LightHouse, 40),
             new BRequires(H.Masonry, true),
 
@@ -39,7 +39,7 @@ public class UnlockBuilds
             new BRequires(H.HouseB, 35),
             new BRequires(H.HouseTwoFloor, 75),
             new BRequires(H.HouseMed, 100),
-            new BRequires(H.HouseLargeA, true),
+            new BRequires(H.HouseLargeA, H.OnlyForDev),
             new BRequires(H.HouseLargeB, 150),
             new BRequires(H.HouseLargeC, 150),
 
@@ -67,50 +67,50 @@ public class UnlockBuilds
 
             //prod
             new BRequires(H.Brick, true),
-            new BRequires(H.Carpintery, 50, 5000, 9000),
-            new BRequires(H.Cigars, 50, 5000, 9000),
-            new BRequires(H.Mill, 50, 5000, 9000),
+            new BRequires(H.Carpintery, 50, 500, 900),
+            new BRequires(H.Cigars, 50, 500, 900),
+            new BRequires(H.Mill, 50, 500, 900),
             new BRequires(H.Tailor, H.Coming_Soon),
-            new BRequires(H.Tilery, 50, 5000, 9000),
-            new BRequires(H.CannonParts, 50, 5000, 9000),
-            new BRequires(H.Distillery, 50, 5000, 9000),
-            new BRequires(H.Chocolate, 50, 5000, 9000),
-            new BRequires(H.Ink, 50, 5000, 9000),
+            new BRequires(H.Tilery, 50, 500, 900),
+            new BRequires(H.CannonParts, 50, 500, 900),
+            new BRequires(H.Distillery, 50, 500, 900),
+            new BRequires(H.Chocolate, 50, 500, 900),
+            new BRequires(H.Ink, 50, 500, 900),
 
             //ind
-            new BRequires(H.Cloth, 50, 5000, 9000),
-            new BRequires(H.GunPowder, 50, 5000, 9000),
-            new BRequires(H.Paper_Mill, 50, 5000, 9000),
-            new BRequires(H.Printer, 50, 5000, 9000),
-            new BRequires(H.CoinStamp, 150, 5000, 9000),
-            new BRequires(H.Silk, 50, 5000, 9000),
-            new BRequires(H.SugarMill, 50, 5000, 9000),
-            new BRequires(H.Foundry, 50, 5000, 9000),
-            new BRequires(H.SteelFoundry, 100, 5000, 9000, priorBuilds: new List<H>(){H.Foundry}),
+            new BRequires(H.Cloth, 50, 500, 900),
+            new BRequires(H.GunPowder, 50, 500, 900),
+            new BRequires(H.Paper_Mill, 50, 500, 900),
+            new BRequires(H.Printer, 50, 500, 900),
+            new BRequires(H.CoinStamp, 150, 500, 900),
+            new BRequires(H.Silk, 50, 500, 900),
+            new BRequires(H.SugarMill, 50, 500, 900),
+            new BRequires(H.Foundry, 50, 500, 900),
+            new BRequires(H.SteelFoundry, 100, 500, 900, priorBuilds: new List<H>(){H.Foundry}),
 
             //trade
-            new BRequires(H.Dock, 50, 5000, 9000, priorBuilds: new List<H>(){H.Shipyard}),
-            new BRequires(H.Shipyard, 50, 5000, 50000, priorBuilds: new List<H>(){H.Supplier}),
-            new BRequires(H.Supplier, 50, 5000, 50000, priorBuilds: new List<H>(){H.LightHouse}),
+            new BRequires(H.Dock, 50, 500, 900, priorBuilds: new List<H>(){H.Shipyard}),
+            new BRequires(H.Shipyard, 50, 500, 500, priorBuilds: new List<H>(){H.Supplier}),
+            new BRequires(H.Supplier, 50, 500, 1000, priorBuilds: new List<H>(){H.LightHouse}),
             new BRequires(H.StorageSmall, true),
-            new BRequires(H.StorageMed, 50, 5000, 9000, priorBuilds: new List<H>(){H.StorageSmall}),
-            new BRequires(H.StorageBig, 150, 5000, 9000, priorBuilds: new List<H>(){H.StorageMed}),
-            new BRequires(H.StorageBigTwoDoors, 250, 5000, 9000, priorBuilds: new List<H>(){H.StorageBig}),
-            new BRequires(H.StorageExtraBig, 350, 5000, 9000, priorBuilds: new List<H>(){H.StorageBigTwoDoors}),
+            new BRequires(H.StorageMed, 50, 500, 900, priorBuilds: new List<H>(){H.StorageSmall}),
+            new BRequires(H.StorageBig, 150, 10000, 900, priorBuilds: new List<H>(){H.StorageMed}),
+            new BRequires(H.StorageBigTwoDoors, 250, 1500, 900, priorBuilds: new List<H>(){H.StorageBig}),
+            new BRequires(H.StorageExtraBig, 350, 2500, 900, priorBuilds: new List<H>(){H.StorageBigTwoDoors}),
 
             //gov
-            new BRequires(H.Library, 50, 5000, 9000),
-            new BRequires(H.School, 50, 5000, 9000),
-            new BRequires(H.TradesSchool, 50, 5000, 9000, priorBuilds: new List<H>(){H.School}),
+            new BRequires(H.Library, 50, 500, 900),
+            new BRequires(H.School, 50, 500, 900),
+            new BRequires(H.TradesSchool, 50, 500, 900, priorBuilds: new List<H>(){H.School}),
             new BRequires(H.TownHouse, H.Coming_Soon),
 
 
             //other
-            new BRequires(H.Church, 50, 5000, 9000),
-            new BRequires(H.Tavern, 50, 5000, 9000),
+            new BRequires(H.Church, 50, 500, 900),
+            new BRequires(H.Tavern, 50, 500, 900),
 
             //military
-            new BRequires(H.PostGuard, 50, 5000, 9000),
+            new BRequires(H.PostGuard, 50, 500, 900),
             new BRequires(H.Fort, H.Coming_Soon),       
             new BRequires(H.Morro, H.Coming_Soon),
         };
@@ -165,6 +165,9 @@ class BRequires
     public H CurrentState = H.None;
 
     public string InfoMsg;//wht is needed in case needs to be shown in the BuildignDescription bz this is Lock
+    private H h;
+    private bool p1;
+    private string p2;
 
     public BRequires() { }
 
@@ -214,9 +217,18 @@ class BRequires
     /// <param name="currState"></param>
     public BRequires(H hType, H currState)
     {
+        if (currState == H.OnlyForDev && !Developer.IsDev)
+        {
+            currState = H.Coming_Soon;
+        }
+
         HType = hType;
+        PirateThreat = 90;
+
         CurrentState = currState;
     }
+
+
 
     /// <summary>
     /// If so add at least some prod requirements 
@@ -234,7 +246,7 @@ class BRequires
 
         for (int i = 0; i < inputs.Count; i++)
         {
-            ProductRequired.Add(new Order(inputs[i], 5000));
+            ProductRequired.Add(new Order(inputs[i], 500));
         }
     }
 
@@ -297,36 +309,34 @@ class BRequires
         {
             return;
         }
-        string res = HType + " build is lock.\nTo unlock:";
+        string res = HType + " build is lock.\nTo unlock: ";
         int appends = 0;
 
         if (Persons != 0)
         {
-            res += " Persons: " + Persons;
+            res += Persons + " persons ";
             appends++;
         }   
         if (Food != 0)
         {
-            res += " Food: " + Food + " " + Unit.WeightUnit();
+            res += Unit.WeightConverted(Food) + " " + Unit.WeightUnit() +" of food ";
             appends++;
         }    
         if (Dollars != 0)
         {
-            res += " Dollars: " + Dollars;
+            res += Dollars + " dollars ";
             appends++;
         }  
         if (PortReputation != 0)
         {
-            res += " PortReputation: " + PortReputation;
+            res += " Port reputation at least at " + PortReputation;
             appends++;
         }
         if (PirateThreat != 0)
         {
-            res += " PirateThreat: " + PirateThreat;
+            res += " Pirate threat less than " + PirateThreat;
             appends++;
         }
-
-
 
         if (ProductRequired!=null)
         {

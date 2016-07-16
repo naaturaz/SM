@@ -27,7 +27,14 @@ public class CameraRTS : MonoBehaviour
     }
 
     // LateUpdate is Better for these camera controls.
-    void LateUpdate() {
+    void LateUpdate()
+    {
+        if (Dialog.IsActive())
+        {
+            return;
+        }
+
+
         //Vector3 zoom variable.
         Vector3 zoom = transform.position;
        

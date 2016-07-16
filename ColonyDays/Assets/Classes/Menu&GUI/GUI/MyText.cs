@@ -65,16 +65,8 @@ public class MyText : MonoBehaviour
 
         if (name == "Version")
         {
-            var read = XMLSerie.ProgramData1;
 
-            if (read != null)
-            {
-                thisText.text = read.GameVersion;
-            }
-            else
-            {
-                thisText.text = ":)";
-            }
+            thisText.text = GameScene.VersionLoaded();
         }
     }
 

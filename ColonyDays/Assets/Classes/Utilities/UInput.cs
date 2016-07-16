@@ -15,9 +15,10 @@ public class UInput : MonoBehaviour {
 
     public static bool IfCursorKeyIsPressed()
     {
-        if (BuildingPot.InputMode != Mode.None)
+        if (Dialog.IsActive() || BuildingPot.InputMode != Mode.None)
         {
-            return false;}
+            return false;
+        }
 
         bool result = false;
         if (Input.GetKey(KeyCode.W) || Input.GetKey("up"))
@@ -43,6 +44,11 @@ public class UInput : MonoBehaviour {
 
     public static bool IfHorizontalKeysIsPressed()
     {
+        if (Dialog.IsActive())
+        {
+            return false;
+        }
+
         bool result = false;
         
         if (Input.GetKey(KeyCode.D) || Input.GetKey("right"))
@@ -60,6 +66,11 @@ public class UInput : MonoBehaviour {
 
     public static bool IfVerticalKeyIsPressed()
     {
+        if (Dialog.IsActive())
+        {
+            return false;
+        }
+
         bool result = false;
         if (Input.GetKey(KeyCode.W) || Input.GetKey("up"))
         {
@@ -76,13 +87,21 @@ public class UInput : MonoBehaviour {
 
     public static float HorizVal()
     {
+        //if mouse out of screen return
+
         return Input.GetAxis("Horizontal");
     }
 
     public static float VertiVal()
     {
+
+
         return Input.GetAxis("Vertical");
     }
+
+
+    
+
 
 	// Use this for initialization
 	void Start () {}

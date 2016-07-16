@@ -252,6 +252,10 @@ public class Root : MonoBehaviour
     public static string saveLoadTile = "Prefab/Menu/Save_Load_Tile";
     public static string dialogOKCancel = "Prefab/Menu/DialogOKCancel";
     public static string dialogOK = "Prefab/Menu/DialogOK";
+    public static string inputFormDialog = "Prefab/Menu/InputFormDialog";
+
+
+
 
     //Images for GUI
     public static string iconBrick = "";

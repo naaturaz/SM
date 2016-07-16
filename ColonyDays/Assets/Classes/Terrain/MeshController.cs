@@ -165,7 +165,7 @@ public class MeshController : ControllerParent
             DefineRealVerticesOnLots();
         }
 
-        if (Input.GetKeyUp(KeyCode.F12))
+        if (Developer.IsDev && Input.GetKeyUp(KeyCode.F12))
         {
             // grid.LoadGridRoutine();
             _waterBound.Create();

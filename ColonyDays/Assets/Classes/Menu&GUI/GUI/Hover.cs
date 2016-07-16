@@ -58,6 +58,15 @@ public class Hover : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        if (hoverWindow == null)
+	    {
+	        if (Time.time % 2 == 0)
+	        {
+                hoverWindow = FindObjectOfType<HoverWindow>();
+	        }
+            return;
+	    }
+
         //if got in my area
 	    if (myRect.Contains(Input.mousePosition))
 	    {

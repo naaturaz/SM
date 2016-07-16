@@ -371,6 +371,9 @@ public enum H
     Coming_Soon,
     Max_Cap_Reach,
     BuyRegion,
+    Feedback,
+    BugReport,
+    OnlyForDev,
 
 
 }

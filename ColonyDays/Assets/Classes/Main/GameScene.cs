@@ -155,21 +155,31 @@ public class GameScene : General
             return "Developer Version.";
         }
 
-        var discl = "Aatlantis Copyright. Not for distribution, nor publicity. \n\n";
+        var discl = "Legal: This is a Non Diclosure Agreement. By playing this game you \n" +
+                    "agree on not release, share or send any media about the game, nor talk about it. \n" +
+                    "You can not share any information about this game. \n" +
+                    "Thanks for your help. \n \n" +
+                    "Aatlantis Copyright 2016. Not for distribution, nor publicity. \n\n";
 
-        return  discl +
-            //"Early Access \n v0.0.0." +
-            "Closed Beta \n v0.0.0." +
-               DateTime.Now.Year.ToString().Substring(2) + "." +
-               AddZeroInFrontIfOneChar(DateTime.Now.Month) + "." + 
-               AddZeroInFrontIfOneChar(DateTime.Now.Day) + "d." +
-               AddZeroInFrontIfOneChar(DateTime.Now.Hour) + "." + 
-               AddZeroInFrontIfOneChar(DateTime.Now.Minute) + "." + 
-               AddZeroInFrontIfOneChar(DateTime.Now.Second) +"r" + 
-               UMath.GiveRandom(0, 10);
+        return discl +
+               //"Early Access \n v0.0.0." +
+               "Closed Beta \n v0.0.0." + 
+               TimeStamp();
     }
 
-    string AddZeroInFrontIfOneChar(int v)
+
+    public static string TimeStamp()
+    {
+        return
+            DateTime.Now.Year.ToString().Substring(2) + "." +
+            AddZeroInFrontIfOneChar(DateTime.Now.Month) + "." +
+            AddZeroInFrontIfOneChar(DateTime.Now.Day) + "d." +
+            AddZeroInFrontIfOneChar(DateTime.Now.Hour) + "." +
+            AddZeroInFrontIfOneChar(DateTime.Now.Minute) + "." +
+            AddZeroInFrontIfOneChar(DateTime.Now.Second);
+    }
+
+    static string AddZeroInFrontIfOneChar(int v)
     {
         if (v.ToString().Length == 1)
         {
@@ -646,8 +656,19 @@ public class GameScene : General
         OnChangeSpeed(EventArgs.Empty);
     }
 
-    public void ClearOldSpeed()
+
+
+    internal static string VersionLoaded()
     {
-        oldSpeed = 0;
+        var read = XMLSerie.ProgramData1;
+
+        if (read != null)
+        {
+            return read.GameVersion;
+        }
+        else
+        {
+            return ":)";
+        }
     }
 }

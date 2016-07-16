@@ -190,6 +190,7 @@ public class Settings
         LoadAndApplyResolution();            
      
         Program.MyScreen1.OptionsWindow1.ChangeResNow();
+        U2D.RedoScreenRect();
     }
 
     internal static void SetUnit(string sub)
@@ -290,7 +291,11 @@ public class Unit
     }
 
 
-
+    /// <summary>
+    /// Weight converted to proper current Unit
+    /// </summary>
+    /// <param name="p"></param>
+    /// <returns></returns>
     internal static float  WeightConverted(float p)
     {
         if (_units == 'm')

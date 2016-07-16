@@ -20,6 +20,8 @@ class DialogGO : GUIElement
     private GameObject _okBtnGO;
     private UnityEngine.UI.Button _ok;
 
+    private InputField _inputText;
+
     public H Type1
     {
         get { return _type; }
@@ -30,6 +32,12 @@ class DialogGO : GUIElement
     {
         get { return _str1; }
         set { _str1 = value; }
+    }
+
+    public InputField InputText
+    {
+        get { return _inputText; }
+        set { _inputText = value; }
     }
 
     static public DialogGO Create(string root, Transform container, Vector3 iniPos, H type, string str1 = "")
@@ -58,9 +66,19 @@ class DialogGO : GUIElement
 
         _textHere.text = String.Format(Languages.ReturnString(Type1+""), Str1);
 
-
         _okBtnGO = GetChildCalled("Ok_Btn");
         _ok = _okBtnGO.GetComponent<UnityEngine.UI.Button>();
+
+
+        var inText = GetChildCalled("Input_Field");
+
+        if (inText != null)
+        {
+            InputText = inText.GetComponent<InputField>();
+            
+        }
+
+
 
 
         AddressBuyRegionType();
@@ -90,4 +108,6 @@ class DialogGO : GUIElement
         }
         _textHere.text += " Cost:" + MeshController.BuyRegionManager1.Cost();
     }
+
+
 }

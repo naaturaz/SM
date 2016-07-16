@@ -128,11 +128,11 @@ public class InputMain : InputParent {
         {
             RightClickRoutine();
         }
-        else if (Input.GetKeyUp(KeyCode.J))
+        else if (!Dialog.IsActive() && Developer.IsDev && Input.GetKeyUp(KeyCode.J))
         {
             Program.gameScene.controllerMain.MeshController.ForcedTerraScanning();
         }
-        else if (Input.GetKeyUp(KeyCode.Q))
+        else if (!Dialog.IsActive() && Input.GetKeyUp(KeyCode.Q))
         {
             QuickSaveNow();
         }
