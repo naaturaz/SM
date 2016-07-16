@@ -65,9 +65,26 @@ public class BatchManager
         _batchRegions.Add(id, new BatchRegion(id));
     }
 
+    /// <summary>
+    /// means we are working on the creation of a new terrain 
+    /// </summary>
+    /// <returns></returns>
+    public bool IsABrandNewTerrain()
+    {
+        if (_semiIndeces.Count == 0)
+        {
+            return true;
+        }
+        return false;
+    }
 
     public void AddGen(General go)
     {
+        if (IsABrandNewTerrain())
+        {
+            return;
+        }
+
         //todo address if Road, Bridge
         if (go.Category == Ca.Spawn)
         {

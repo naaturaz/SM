@@ -52,7 +52,9 @@ public class LandZone : Crystal
     {
         AddCurrent();
 
-        if (grid.Count > 000)
+        //Debug.Log("GridCount:" + grid.Count);
+
+        if (grid.Count > 0)
         {
             _cuRect = (new LinkRect(grid));
         }

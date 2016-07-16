@@ -64,7 +64,7 @@ public class BridgeManager
                 Debug.Log("landZones:"+i+"."+landZones[i].LandZoneName);
             }
 
-            throw new Exception("Game only support a Max of 3 LandZones ");
+            throw new Exception("Game only support a Max of 3 LandZones. Expect this to trhow is creating brand new terrain");
         }
     }
 

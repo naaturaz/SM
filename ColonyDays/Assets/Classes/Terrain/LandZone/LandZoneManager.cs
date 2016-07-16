@@ -39,15 +39,30 @@ public class LandZoneManager
         set { _landZones = value; }
     }
 
+
+
+    private int secCount;
+    private float valYSearch = 0.0001f;//0.05f
     private void PullMostCommonYLayer()
     {
         var yS = UList.FindYAxisCommonValues(m.AllVertexs, H.Descending);
         float yCommon = UList.FindFirstYBelow(yS, m.IniTerr.MathCenter.y);
 
-       // _commomLayer = UList.FindVectorsOnSameHeight(m.AllVertexs, yCommon, 0.05f);//0.05f
-        _commomLayer = UList.FindVectorsOnSameHeight(m.Vertices.ToList(), yCommon, 0.0001f);//0.05f
+        _commomLayer = UList.FindVectorsOnSameHeight(m.Vertices.ToList(), yCommon, valYSearch);
 
-       //Debug.Log(_commomLayer.Count);
+        Debug.Log("_commomLayer.Count:"+_commomLayer.Count);
+
+        if (_commomLayer.Count == 0 && secCount < 1000)
+        {
+            valYSearch += 0.001f;
+            secCount++;
+            PullMostCommonYLayer();
+        }
+        else if (_commomLayer.Count == 0 && secCount >= 1000)
+        {
+            throw new Exception("Not pull anything from CommonY Layer");
+        }
+        
     }
 
 

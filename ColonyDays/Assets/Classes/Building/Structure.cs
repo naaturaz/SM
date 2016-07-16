@@ -155,7 +155,18 @@ public class Structure : StructureParent
             //was leaving Spawner inside the farm
             if (MyId.Contains("Farm"))
             {
-                howBigTheCollidingSphere = 15;
+                if (MyId.Contains("Med"))
+                {
+                    howBigTheCollidingSphere = 8;
+                }
+                else if (MyId.Contains("Large"))
+                {
+                    howBigTheCollidingSphere = 10;
+                }
+                else if (MyId.Contains("XLarge"))
+                {
+                    howBigTheCollidingSphere = 12;
+                }
             }
 
             MarkTerraSpawnRoutine(howBigTheCollidingSphere, from: transform.position);

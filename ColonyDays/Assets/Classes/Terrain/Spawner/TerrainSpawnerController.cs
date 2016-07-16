@@ -159,45 +159,11 @@ public class TerrainSpawnerController : ControllerParent
         }
 
         return AllRandomObjList[key] as StillElement;
-
-        //StillElement res = null;
-        //res = (StillElement)list.Find(a => a.MyId == key);
-
-        //return res;
     }
 
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="key"></param>
-    /// <param name="position">The position this obj is around</param>
-    /// <returns></returns>
-    public StillElement Find(string key, Vector3 position)
-    {
-        if (string.IsNullOrEmpty(key))
-        {
-            return null;
-        }
-
-        if (!AllRandomObjList.Contains(key))
-        {
-            return null;
-        }
-
-        var ele = AllRandomObjList[key] as StillElement;
-
-        if (Vector3.Distance(ele.transform.position, position) <.5f)
-        {
-            return ele;
-        }
-        return null;
-    }
 
 
     public bool IsToSave;
-
-
 
     private int loadingAllowTimes = 1;//how many times system is allow to load 
     private int loadedTimes = 0;//loaded times
@@ -215,7 +181,7 @@ public class TerrainSpawnerController : ControllerParent
         DefineAllOrnaRoots();
         DefineAllLawnRoots();
 
-        DefineStartVoidArea(20f, 20f);//20,20
+        DefineStartVoidArea(1f, 1f);//20,20
         howManySpawn = new List<int>() {
             Multiplier(howManyTreesToSpawn), Multiplier(howManyStonesToSpawn), 
             Multiplier(howManyIronToSpawn), Multiplier(howManyGoldToSpawn),
@@ -387,14 +353,25 @@ public class TerrainSpawnerController : ControllerParent
                     bool regionContainTerraCry =
                         MeshController.CrystalManager1.DoesMyRegionHasTerraCrystal(AllVertexs[index]);
 
-                    if (AllVertexs[index].y > minHeightToSpawn && AllVertexs[index].y < maxHeightToSpawn &&
+                    bool isHasMinHeight = AllVertexs[index].y > minHeightToSpawn;
+                    bool isLowerThanMaxHeight = AllVertexs[index].y < maxHeightToSpawn;
+
+                    if (isHasMinHeight && isLowerThanMaxHeight &&
                         !usedVertexPos[index] && !isOnTheStartZone && !regionContainTerraCry)
                     {
                         Vector3 finaPos = AssignRandomIniPosition(AllVertexs[index], 0);
-                        
+
                         CreateObjAndAddToMainList(typePass, finaPos, rootToSpawnIndex, index);
                     }
-                    else i--;
+                    else
+                    {
+                        //todo fix
+                        ////showing rejected positions 
+                        //UVisHelp.CreateText(AllVertexs[index], index+"");
+                        //Debug.Log("terra: " + index + "." + isOnTheStartZone + "." + regionContainTerraCry+ "." +
+                        //    isHasMinHeight + "." + isLowerThanMaxHeight + "." + !usedVertexPos[index]);
+                        i--;
+                    }
                 }
                 isSpawned = true;
             }
@@ -469,21 +446,6 @@ public class TerrainSpawnerController : ControllerParent
             SaveOnListData(temp, typePass, rootToSpawnIndex, index, replantedTree);
         }
     }
-
-
-    /// <summary>
-    /// Will asign a shared material to the Control.CurrentSpawnBuild
-    /// </summary>
-    void AssignSharedMaterial(TerrainRamdonSpawner t)
-    {
-        Material n = Resources.Load<Material>(Root.RetMaterialRoot("Enviroment"));
-        n.name = "Enviroment";
-
-        t.Geometry.GetComponent<Renderer>().sharedMaterial = n;
-    }
-    
-
-    
 
     //Save all the data into AllSpawnedDataList
     void SaveOnListData(General obj, H typeP, int rootToSpawnIndex, int indexPass, bool replantTree)

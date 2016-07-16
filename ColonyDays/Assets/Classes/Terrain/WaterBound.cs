@@ -130,16 +130,21 @@ public class WaterBound  {
     private int counter;
     void AddMarinePositions()
     {
-        if (counter <  _marineBounds.Count)
+        //so loops a 100 times each frame
+        for (int i = 0; i < 100; i++)
         {
-            AddEachCrystal(_marineBounds[counter], Time.time.ToString(), H.WaterObstacle);
-            counter++;
-        }
-        else
-        {
-            counter = 0;
-            addMarine = false;
-            MeshController.CrystalManager1.LinkCrystals();
+            if (counter < _marineBounds.Count)
+            {
+                AddEachCrystal(_marineBounds[counter], Time.time.ToString(), H.WaterObstacle);
+                counter++;
+            }
+            else
+            {
+                i = 200;//so exits loop
+                counter = 0;
+                addMarine = false;
+                MeshController.CrystalManager1.LinkCrystals();
+            }
         }
     }
 
@@ -235,6 +240,12 @@ public class WaterBound  {
         {
             Load();
         }
+
+        //for debug purpose find only mountain bound
+        if (Developer.IsDev && Input.GetKeyUp(KeyCode.F11))
+        {
+            FindVertexAboveTerrainLevel();
+        }
     }
 
 
@@ -274,6 +285,8 @@ public class WaterBound  {
         DefineMountPath(yS);
 
         _mountainBounds.AddRange(_mountainPath);
+        Debug.Log("_mountainBounds count: " + _mountainPath.Count);
+
         //bz was used by marine b4
 
         Save();
@@ -327,16 +340,20 @@ public class WaterBound  {
 
     private void AddMountPositions()
     {
-        if (counter < _mountainBounds.Count)
+        for (int i = 0; i < 100; i++)
         {
-            AddEachCrystal(_mountainBounds[counter], Time.time.ToString(), H.MountainObstacle);
-            counter++;
-        }
-        else
-        {
-            counter = 0;
-            addMount = false;
-            MeshController.CrystalManager1.LinkCrystals();
+            if (counter < _mountainBounds.Count)
+            {
+                AddEachCrystal(_mountainBounds[counter], Time.time.ToString(), H.MountainObstacle);
+                counter++;
+            }
+            else
+            {
+                i = 200;
+                counter = 0;
+                addMount = false;
+                MeshController.CrystalManager1.LinkCrystals();
+            }
         }
     }
 

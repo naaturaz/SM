@@ -1127,13 +1127,20 @@ public class CrystalManager  {
     /// </summary>
     void LinkCrystalsNow()
     {
-        if (_bounds.Count > 0)
+        for (int i = 0; i < 100; i++)
         {
-            if (_bounds[0].Type1 == H.LinkRect || _bounds[0].Type1 == H.LandZone)
+            if (_bounds.Count > 0)
             {
-                RamdonLinking();
+                if (_bounds[0].Type1 == H.LinkRect || _bounds[0].Type1 == H.LandZone)
+                {
+                    RamdonLinking();
+                }
+                else RegularLinking();
             }
-            else RegularLinking();
+            else
+            {
+                i = 200;
+            }
         }
     }
 
@@ -1236,8 +1243,20 @@ public class CrystalManager  {
         }
     }
 
+    bool IsBrandNewTerrain()
+    {
+        return _bounds.Count == 0;
+    }
+
     private void OrganizeByDist()
     {
+        ////to stop this when called from LandZone
+        //if (IsBrandNewTerrain())
+        //{
+        //    return;
+        //}
+
+
         var firstCry = _bounds[0];
 
         for (int i = 0; i < _bounds.Count; i++)

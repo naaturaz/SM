@@ -330,8 +330,7 @@ public class Building : General, Iinfo
         Vector3 SE = new Vector3(max.x, yMed, min.z);
         Vector3 SW = new Vector3(min.x, yMed, min.z);
         List<Vector3> res = new List<Vector3>() {NW, NE, SE, SW};
-        //UVisHelp.CreateHelpers(NW, Root.redSphereHelp);
-        //UVisHelp.CreateHelpers(SE, Root.redSphereHelp);
+
         //UVisHelp.CreateHelpers(res, Root.blueCubeBig);
         return res;
     }
@@ -351,7 +350,7 @@ public class Building : General, Iinfo
         Vector3 SE = new Vector3(max.x, yMed, min.z);
         Vector3 SW = new Vector3(min.x, yMed, min.z);
         List<Vector3> res = new List<Vector3>() { NW, NE, SE, SW };
-        //UVisHelp.CreateHelpers(res, Root.redSphereHelp);
+
         return res;
     }
 
@@ -2283,8 +2282,7 @@ public class Building : General, Iinfo
     /// </summary>
     public void TownBuildingLastStep()
     {
-        // 
-        MarkTerraSpawnRoutine(20, from: transform.position);
+        MarkTerraSpawnRoutine(10, from: transform.position);//20
     }
 
 

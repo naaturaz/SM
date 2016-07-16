@@ -36,7 +36,7 @@ public class Crystal
     //the lines tht this Crystal connect to
     //normally Cyrstals have only 3 lines. But LinkRect will need more than tht 
     List<Line> _lines = new List<Line>();
-    private int _maxAmtLines = 3;
+    private int _maxAmtLines = 1;
 
     //to help when organizing to link the marines, and others. Distance is a relaticve number
     //so should be used only if is recently set 
@@ -175,6 +175,10 @@ public class Crystal
         if (_type == H.Poll)
         {
             _maxAmtLines = 8;
+        }
+        if (_type == H.MountainObstacle)
+        {
+            _maxAmtLines = 10;
         }
     }
 
@@ -547,14 +551,14 @@ public class Crystal
     {
         if (_type == H.WaterObstacle)
         {
-            return 4;
+            return 1;//4
         }
         else if (_type == H.LinkRect || _type == H.LandZone)
         {
             return 1;
         }
-
-        return 4;
+        //mountain  
+        return 4;//4
     }
 
     /// <summary>
@@ -779,11 +783,21 @@ public class Crystal
         var aver = AverageDist();
 
         //if the distance is twice the average then not . no linking
-        if (dist > aver * tolerance && IsAverReady())//6
+        if (EvalFarnessOnTypeIsTooFar(dist, aver, tolerance))
         {
             return true;
         }
         return false;
+    }
+
+    bool EvalFarnessOnTypeIsTooFar(float dist, float aver, float tolerance)
+    {
+        //mountains wont link if are 40f units of distance  apart
+        if (_type == H.MountainObstacle)
+        {
+            return dist > 30f;
+        }
+        return dist > aver*tolerance && IsAverReady();
     }
 
     /// <summary>
@@ -839,12 +853,14 @@ public class Crystal
         if (_type == H.WaterObstacle)
         {
             _position = m.MeshController.WaterBound1.ReturnPushMeAwayFromSeaBottom(_position, 2.5f); 
-            UVisHelp.CreateHelpers(new Vector3(_position.x, m.IniTerr.MathCenter.y, _position.y), Root.yellowCube);
+
+            //they show exacatly where the points fall in terrain 
+            //UVisHelp.CreateHelpers(new Vector3(_position.x, m.IniTerr.MathCenter.y, _position.y), Root.yellowCube);
         }
         else if (_type == H.MountainObstacle)
         {
             _position = m.MeshController.WaterBound1.ReturnPushMeAwayFromMountTop(_position, 2.5f);
-            UVisHelp.CreateHelpers(new Vector3(_position.x, m.IniTerr.MathCenter.y, _position.y), Root.yellowCube);
+            //UVisHelp.CreateHelpers(new Vector3(_position.x, m.IniTerr.MathCenter.y, _position.y), Root.yellowCube);
         }
     }
 
