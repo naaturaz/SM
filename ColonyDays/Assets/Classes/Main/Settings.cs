@@ -91,6 +91,8 @@ public class Settings
         //audio
         PlayerPrefs.SetString("Music", ISMusicOn.ToString());
         PlayerPrefs.SetString("Sound", ISSoundOn.ToString());
+
+        PlayerPrefs.Save();
     }
 
     /// <summary>

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class MyText : MonoBehaviour
@@ -10,12 +11,23 @@ public class MyText : MonoBehaviour
 	void Start ()
 	{
 	    thisText = GetComponent<Text>();
-
-
-
-
 	    Map();
+
+        StartCoroutine("FiveSecUpdate");
 	}
+
+    private IEnumerator FiveSecUpdate()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(5); // wait
+
+            if (name == "Loaded")
+            {
+                thisText.text = Program.gameScene.controllerMain.TerraSpawnController.PercentageLoaded();
+            }
+        }
+    }
 
     private void Map()
     {
@@ -68,6 +80,7 @@ public class MyText : MonoBehaviour
 
             thisText.text = GameScene.VersionLoaded();
         }
+
     }
 
 

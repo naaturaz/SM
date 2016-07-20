@@ -74,7 +74,9 @@ public class DataController
            
             Debug.Log("DateTie now:" + DateTime.Now.ToString());
             //Debug.Log("Ticks now:" + DateTime.Now.Ticks.ToString());
+
         }
+        PlayerPrefs.Save();
     }
 
     public static bool ThereIsALastSavedFile()
@@ -111,6 +113,8 @@ public class DataController
     /// </summary>
     public static void SaveNow(bool callEscapeKey)
     {
+        PlayerPrefs.Save();
+
         Directory.CreateDirectory(savePath);
         XMLSerie.SaveGame(savePath); 
 
@@ -152,6 +156,8 @@ public class DataController
     internal static void LoadGame(string p)
     {
         PlayerPrefs.SetString("Last_Saved", p);
+        PlayerPrefs.Save();
+
         XMLSerie.LoadGame(_path + @"\" + p);
 
         SetLoadedTerrainInTerraRoot(p);

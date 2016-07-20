@@ -671,4 +671,12 @@ public class GameScene : General
             return ":)";
         }
     }
+
+    /// <summary>
+    /// So the PlayerPref is saved. 
+    /// </summary>
+    void OnApplicationQuit()
+    {
+        Debug.Log("Application ending after " + Time.time + " seconds");
+    }
 }

@@ -19,16 +19,13 @@ public class Languages
 
     static Dictionary<string, string> _english = new Dictionary<string, string>()
 	{
-	   { "new","va"},
-	   { "new1","va"},
-
        //Descriptions
        //Infr
 	   { "Road.Desc","Only for decoration purpose. However people is happier if there is roads around them"},
 	   { "BridgeTrail.Desc","Allows people pass from one side of the map to the other"},
 	   { "BridgeRoad.Desc","Allows people pass from one side of the map to the other. People loves this bridges. Give them a prosperity and happinnes sense" +_houseTail},
 	   { "LightHouse.Desc","Helps to make the port more discoverable. Adds to Port Reputation as long the flame is glowing"},
-	   { "BuildersOffice.Desc","Really important building. This workers construct new buildings and work as wheelbarrowers once have nothing to do"},
+	   { H.Masonry + ".Desc","Really important building. This workers construct new buildings and work as wheelbarrowers once have nothing to do"},
 
        //House
 	   { "Bohio.Desc","Bohio house, really rudimentary conditions, people is unhappy living here, a family can have 1 kid maximum" +_houseTail},
@@ -54,12 +51,12 @@ public class Languages
 
        //Raw
 	   { "Ceramic.Desc","In this building a worker will produce Ceramic products, such as dishes, jars, etc"},
-	   { "FishSmall.Desc","In this building a worker will catch fishes on a waterbody"},
+	   { H.Fishing_Hut + ".Desc","In this building a worker will catch fishes on a waterbody"},
 	   { "FishRegular.Desc","In this building a worker will catch fishes on a waterbody"},
 	   { "Mine.Desc","In this building a worker will catch fishes on a waterbody"},
 	   { "MountainMine.Desc","In this building a worker will mine the mine and will produce always a random output"},
 	   { "Resin.Desc","In this building a worker will mine the mine and will produce always a random output"},
-	   { "Wood.Desc","In this building workers will find and mine land resources such as wood, stone, and ore"},
+	   {  H.LumberMill +".Desc","In this building workers will find and mine land resources such as wood, stone, and ore"},
 	   { "BlackSmith.Desc","In this building workers will produce the selected product"+_asLongHasInput},
 	   { "SaltMine.Desc","In this building workers will produce salt"},
 
@@ -68,17 +65,17 @@ public class Languages
 	   { "Carpintery.Desc","In this building a worker will produce Ceramic products, such as dishes, jars, etc"},
 	   { "Cigars.Desc","In this building workers will produce cigars"+_asLongHasInput},
 	   { "Mill.Desc","In this building workers will produce cigars"+_asLongHasInput},
-	   { "Slat.Desc","In this building workers will produce cigars"+_asLongHasInput},
+	   { H.Tailor+".Desc","In this building workers will produce cigars"+_asLongHasInput},
 	   { "Tilery.Desc","In this building workers will produce roof tiles"+_asLongHasInput},
 	   { "CannonParts.Desc","In this building workers will produce cannon parts"+_asLongHasInput},
-	   { "Rum.Desc",_produce},
+	   { H.Distillery+".Desc",_produce},
 	   { "Chocolate.Desc",_produce},
 	   { "Ink.Desc",_produce},
 
        //Ind
 	   { "Cloth.Desc",_produce},
 	   { "GunPowder.Desc",_produce},
-	   { "Paper.Desc",_produce},
+	   { "Paper_Mill.Desc",_produce},
 	   { "Printer.Desc",_produce},
 	   { "CoinStamp.Desc",_produce},
 	   { "Silk.Desc",_produce},
@@ -88,7 +85,7 @@ public class Languages
 
        //trade
 	   { "Dock.Desc","In this building you can add import or export orders"},
-	   { "DryDock.Desc","In this building you can repair ships, must have ship repair materials on the inventory to be effective"},
+	   { H.Shipyard + ".Desc","In this building you can repair ships, must have ship repair materials on the inventory to be effective"},
 	   { "Supplier.Desc","In this building you can supply ships, must have items on inventory that a ship can use for their long trip"},
 	   { "StorageSmall.Desc",_storage},
 	   { "StorageMed.Desc",_storage},
@@ -127,6 +124,13 @@ public class Languages
 	   { "GameOverMoney", "Sorry, you lost the game! The crown wont support your Caribbean island anymore."},
 	   { "BuyRegion.WithMoney", "Are you sure want to buy this region."},
 	   { "BuyRegion.WithOutMoney", "Sorry, you can't afford this now."},
+	   { "Feedback", "Feedback!? Awesome...:) Thanks. 8) "},
+	   { "BugReport", "Catched a bug? uhmm yummy.... Send it this way!! Thanks"},
+
+
+       //words
+	   { "Wood", "Wood"},
+
 	};
     
     public static string ReturnString(string key)

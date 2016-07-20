@@ -326,6 +326,7 @@ public class TerrainSpawnerController : ControllerParent
         }
     }
 
+
     /// <summary>
     /// Spawns specific type of object 
     /// </summary>
@@ -666,6 +667,10 @@ public class TerrainSpawnerController : ControllerParent
         }
     }
 
+
+
+
+    private int ttlToSpawn = 0;
     public string PercentageLoaded()
     {
         if (AllSpawnedDataList.Count==0)
@@ -673,7 +678,17 @@ public class TerrainSpawnerController : ControllerParent
             return "Wait Loading List on TerrainController";
         }
 
-        return ((loadingIndex/AllSpawnedDataList.Count)*100).ToString("n1");
+        if (ttlToSpawn == 0)
+        {
+            for (int i = 0; i < howManySpawn.Count; i++)
+            {
+                ttlToSpawn += howManySpawn[i];
+            }
+        }
+
+        var perc = ((float)loadingIndex/(float)ttlToSpawn)*100;
+
+        return (perc - 1).ToString("n0") + " %";
     }
 
     void ClearCurrentFileAndList()
