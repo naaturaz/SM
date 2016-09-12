@@ -374,6 +374,9 @@ public class Inventory  {
         return false;
     }
 
+    /// <summary>
+    /// Deletes the whole invnetory
+    /// </summary>
     internal void Delete()
     {
         _inventItems.Clear();

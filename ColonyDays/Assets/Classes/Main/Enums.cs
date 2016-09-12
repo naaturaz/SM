@@ -89,7 +89,8 @@ public enum P
     //Wood,
     Wood,
     //BlackSmith,
-    Axe, Tool, Sword,
+    //Sword, Axe, 
+    Tool,
 
     //Brick, 
     Brick,
@@ -163,7 +164,9 @@ public enum P
     //Guava,
     //Orange,
     Papaya,
-    Wool
+    Wool,
+    Shoe,
+    CigarBox
 
 
 }

@@ -451,7 +451,7 @@ public class Person : General
 
         obj = (Person)Instantiate(obj, iniPos, Quaternion.identity);
         obj.Gender = obj.OtherGender();
-        obj.InitObj(15);//5
+        obj.InitObj(0);//15    5
         obj.Geometry.GetComponent<Renderer>().sharedMaterial = ReturnRandoPersonMaterialRoot();
 
         //this to when Person dont have where to leave and then they find a place the teletranport effect
@@ -539,7 +539,7 @@ public class Person : General
         Age = iniAge;
         _name = BuildRandomName();
 
-        _lifeLimit = GiveRandom(40, 40);//75, 85
+        _lifeLimit = GiveRandom(75, 85);//        40
         MyId = _name + "." + Id;
 
         Brain = new Brain(this);
@@ -1674,6 +1674,12 @@ public class Person : General
     /// <param name="theFoodSource"></param>
     public void GetFood(Structure theFoodSrc)
     {
+        //if there are not crates then cant carry food
+        if (!GameController.AreThereCratesOnStorage)
+        {
+            return;
+        }
+
         //wont get anymore food is his house is full
         if (Home != null && Home.Inventory != null && Home.Inventory.IsFull())
         {
@@ -1702,6 +1708,12 @@ public class Person : General
 
     public void ExchangeInvetoryItem(General takenFrom, General givenTo, P product, float amt)
     {
+        //if there are not crates and needs a crate then cant carry this item
+        if (!GameController.AreThereCratesOnStorage && DoesNeedACrate(product))
+        {
+            return;
+        }
+
         //to address when food Src is destroyed when person on its way 
         if (takenFrom == null)
         { return; }
@@ -1714,7 +1726,31 @@ public class Person : General
 
         float amtTook = takenFrom.Inventory.RemoveByWeight(product, amt);
         givenTo.Inventory.Add(product, amtTook);
+        RemoveCrateUsed(product);
     }
+
+
+    //Usage of crates
+    void RemoveCrateUsed(P prod)
+    {
+        if (DoesNeedACrate(prod))
+        {
+            //each time a person uses a crrate
+            //they get used and diminished
+            GameController.ResumenInventory1.Remove(P.Crate, .01f);
+        }
+    }
+    
+    bool DoesNeedACrate(P prod)
+    {
+        if (prod == P.Wood || prod == P.Stone || prod == P.Ore)
+        {
+            return false;
+        }
+        return true;
+    }
+
+
 
 
     public void DropAllInvetoryItems(General takenFrom, General givenTo)

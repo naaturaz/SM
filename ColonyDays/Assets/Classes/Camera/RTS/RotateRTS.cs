@@ -2,8 +2,8 @@
 
 public class RotateRTS : GenericCameraComponent {
 
-    float MIN_Y = 20f;//20
-    float MAX_Y = 50f;
+    float MIN_Y = 14f;//20
+    float MAX_Y = 60f;//50
     Vector3 oldPos;
 
     //move down and up thru Y

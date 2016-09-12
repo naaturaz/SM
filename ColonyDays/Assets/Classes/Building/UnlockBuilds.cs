@@ -89,9 +89,14 @@ public class UnlockBuilds
             new BRequires(H.SteelFoundry, 100, 500, 900, priorBuilds: new List<H>(){H.Foundry}),
 
             //trade
-            new BRequires(H.Dock, 50, 500, 900, priorBuilds: new List<H>(){H.Shipyard}),
-            new BRequires(H.Shipyard, 50, 500, 500, priorBuilds: new List<H>(){H.Supplier}),
-            new BRequires(H.Supplier, 50, 500, 1000, priorBuilds: new List<H>(){H.LightHouse}),
+            //new BRequires(H.Dock, 50, 500, 900, priorBuilds: new List<H>(){H.Shipyard}),
+            //new BRequires(H.Shipyard, 50, 500, 500, priorBuilds: new List<H>(){H.Supplier}),
+            //new BRequires(H.Supplier, 50, 500, 1000, priorBuilds: new List<H>(){H.LightHouse}),
+
+            new BRequires(H.Dock, true),
+            new BRequires(H.Shipyard, true),
+            new BRequires(H.Supplier, true),
+
             new BRequires(H.StorageSmall, true),
             new BRequires(H.StorageMed, 50, 500, 900, priorBuilds: new List<H>(){H.StorageSmall}),
             new BRequires(H.StorageBig, 150, 10000, 900, priorBuilds: new List<H>(){H.StorageMed}),

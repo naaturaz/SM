@@ -292,7 +292,7 @@ public class GameScene : General
         while (true)
         {
             yield return new WaitForSeconds(60); // wait
-            GameController1.ReCheckWheelBarrowsOnStorage();
+            GameController1.ReCheckWhatsOnStorage();
         }
     }
 

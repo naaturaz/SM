@@ -324,13 +324,21 @@ public class Production  {
     {
         InputElement wood = new InputElement(P.Wood, 10);
         InputElement iron = new InputElement(P.Iron, 1);
+
+
+
         List<InputElement> tonel = new List<InputElement>() { wood };
         List<InputElement> wheelBar = new List<InputElement>() { wood,iron };
 
 
-        InputProdCheckAndAdd(new ProductInfo(P.Tonel, tonel, H.Carpintery));
+        List<InputElement> cigarBox = new List<InputElement>() { new InputElement(P.Wood, 1), new InputElement(P.Iron, 0.2f) };
+
         InputProdCheckAndAdd(new ProductInfo(P.Crate, tonel, H.Carpintery));
         InputProdCheckAndAdd(new ProductInfo(P.WheelBarrow, wheelBar, H.Carpintery));
+        InputProdCheckAndAdd(new ProductInfo(P.Tonel, tonel, H.Carpintery));
+        InputProdCheckAndAdd(new ProductInfo(P.CigarBox, cigarBox, H.Carpintery));
+
+
     }
 
     void BlackSmith()
@@ -341,11 +349,14 @@ public class Production  {
         List<InputElement> tool = new List<InputElement>() { wood, iron };
 
         InputProdCheckAndAdd(new ProductInfo(P.Tool, tool, H.BlackSmith));
-        InputProdCheckAndAdd(new ProductInfo(P.Axe, tool, H.BlackSmith));
         InputProdCheckAndAdd(new ProductInfo(P.Weapon, tool, H.BlackSmith));
+        InputProdCheckAndAdd(new ProductInfo(P.Nail, tool, H.BlackSmith));
 
-        InputProdCheckAndAdd(new ProductInfo(P.Sword, tool, H.BlackSmith));
 
+
+
+        //InputProdCheckAndAdd(new ProductInfo(P.Axe, tool, H.BlackSmith));
+        //InputProdCheckAndAdd(new ProductInfo(P.Sword, tool, H.BlackSmith));
     }
 
 
@@ -353,8 +364,11 @@ public class Production  {
     {
         //H.Cigar
         InputElement element = new InputElement(P.TobaccoLeaf, 15);
-        List<InputElement> prodFormu1 = new List<InputElement>() { element, _eleWoodComb };
-        List<InputElement> prodFormu2 = new List<InputElement>() { element, _eleCoalComb};
+        InputElement cigarBox = new InputElement(P.CigarBox, 2);
+        
+        List<InputElement> prodFormu1 = new List<InputElement>() { element,cigarBox, _eleWoodComb };
+        List<InputElement> prodFormu2 = new List<InputElement>() { element,cigarBox, _eleCoalComb};
+        
         InputProdCheckAndAdd(new ProductInfo(P.Cigar, prodFormu1, H.Cigars));
         InputProdCheckAndAdd(new ProductInfo(P.Cigar, prodFormu2, H.Cigars));
     }
@@ -362,9 +376,17 @@ public class Production  {
 
     private void Tailor()
     {
-        InputElement element = new InputElement(P.Wool, 5);
-        List<InputElement> prod = new List<InputElement>() { element };
-        InputProdCheckAndAdd(new ProductInfo(P.Cloth, prod, H.Tailor));
+        InputElement wool = new InputElement(P.Wool, 5);
+        List<InputElement> cloth = new List<InputElement>() { wool };
+        InputProdCheckAndAdd(new ProductInfo(P.Cloth, cloth, H.Tailor));
+
+        InputElement fabric = new InputElement(P.Fabric, 5);
+        List<InputElement> sail = new List<InputElement>() { fabric };
+        InputProdCheckAndAdd(new ProductInfo(P.Sail, sail, H.Tailor));
+
+        InputElement leather = new InputElement(P.Leather, 5);
+        List<InputElement> shoe = new List<InputElement>() { leather };
+        InputProdCheckAndAdd(new ProductInfo(P.Shoe, shoe, H.Tailor));
     }
 
 
@@ -379,11 +401,21 @@ public class Production  {
 
     private void Fabric()
     {
-        InputElement element = new InputElement(P.Cotton, 10);
-        List<InputElement> prodForm1 = new List<InputElement>() { element, _eleWoodComb };
-        List<InputElement> prodForm2 = new List<InputElement>() { element, _eleCoalComb };
-        InputProdCheckAndAdd(new ProductInfo(P.Fabric, prodForm1, H.Cloth ));
-        InputProdCheckAndAdd(new ProductInfo(P.Fabric, prodForm2, H.Cloth));
+        InputElement cotton = new InputElement(P.Cotton, 10);
+        InputElement henequen = new InputElement(P.Henequen, 10);
+        
+        List<InputElement> cloth1 = new List<InputElement>() { cotton, _eleWoodComb };
+        List<InputElement> cloth2 = new List<InputElement>() { cotton, _eleCoalComb };
+
+        List<InputElement> string1 = new List<InputElement>() { henequen, _eleWoodComb };
+        List<InputElement> string2 = new List<InputElement>() { henequen, _eleCoalComb };
+
+
+        InputProdCheckAndAdd(new ProductInfo(P.Fabric, cloth1, H.Cloth ));
+        InputProdCheckAndAdd(new ProductInfo(P.Fabric, cloth2, H.Cloth));
+
+        InputProdCheckAndAdd(new ProductInfo(P.String, string1, H.Cloth));
+        InputProdCheckAndAdd(new ProductInfo(P.String, string2, H.Cloth));
     }
 
 

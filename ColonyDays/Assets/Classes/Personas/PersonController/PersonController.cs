@@ -128,11 +128,11 @@ public class PersonController : PersonPot
         int factor = 100;
         int ini = multiplier*factor;
 
-        StartingCondition newbie = new StartingCondition(8, ini, ini, ini, ini, ini, ini, 100000, 5*factor);
-        StartingCondition easy = new StartingCondition(18, 900, 900, 900, 900, 900, 900, 900, 4);
-        StartingCondition med = new StartingCondition(16, 800, 800, 800, 800, 800, 800, 800, 3);
-        StartingCondition hard = new StartingCondition(14, 700, 700, 700, 700, 700, 700, 700, 2);
-        StartingCondition insane = new StartingCondition(12, 600, 600, 600, 600, 600, 600, 600, 1);
+        StartingCondition newbie = new StartingCondition(8, ini, ini, ini, ini, ini, ini, 100000, 5 * factor);
+        StartingCondition easy = new StartingCondition(18, 900, 900, 900, 900, 900, 900, 900, 4 * factor);
+        StartingCondition med = new StartingCondition(16, 800, 800, 800, 800, 800, 800, 800, 3 * factor);
+        StartingCondition hard = new StartingCondition(14, 700, 700, 700, 700, 700, 700, 700, 2 * factor);
+        StartingCondition insane = new StartingCondition(12, 600, 600, 600, 600, 600, 600, 600, 1 * factor);
 
         Conditions = new StartingCondition[] {newbie, easy, med, hard, insane};
     }
@@ -160,7 +160,7 @@ public class PersonController : PersonPot
             //might be to big and wont collide with the building 
             BuildingPot.Control.Registro.DoLastStepOfTownLoaded();
         }
-        //loading from file 
+        //loading from file game
         else
         {
             LoadFromFile(pData);
@@ -173,6 +173,8 @@ public class PersonController : PersonPot
         }
         BuildingPot.CreateUnlockBuilds();
         MeshController.InitBuyRegions();
+
+        Program.gameScene.GameController1.ReCheckWhatsOnStorage();
     }
 
 
@@ -968,7 +970,7 @@ public class StartingCondition
     public int iniStone;
     public int iniBrick;
     public int iniIron;
-    public int iniGold, iniDollar, iniWheelBarrow, iniTool;
+    public int iniGold, iniDollar, iniWheelBarrow, iniTool, iniCrate;
 
     public StartingCondition(int iniPersonP, int iniWoodP, int iniFoodP, int iniStoneP, int iniBrickP, int iniIronP,
         int iniGoldP, int iniDollarP, int iniWheelBarrowP)
@@ -983,6 +985,7 @@ public class StartingCondition
         iniDollar = iniDollarP;
         iniWheelBarrow = iniWheelBarrowP;
         iniTool = iniWheelBarrowP;
+        iniCrate = iniWheelBarrowP;
     }
 }
 

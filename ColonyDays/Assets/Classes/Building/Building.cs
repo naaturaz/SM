@@ -2276,13 +2276,23 @@ public class Building : General, Iinfo
     }
 
     /// <summary>
-    ///  The ast step of the buils th are loaded with the town
+    ///  The last step of the buils th are loaded with the town
     /// 
     /// so MarkTerraSpawnRoutine is called and Spawner terrains around this building disappear
+    ///
     /// </summary>
     public void TownBuildingLastStep()
     {
         MarkTerraSpawnRoutine(10, from: transform.position);//20
+
+        if (!HType.ToString().Contains("Storage"))
+        {
+            return;
+        }
+
+        // if is a Storage then the inv should be clean and fill with current difficulty
+        Inventory.Delete();
+        InitStorage();
     }
 
 
@@ -2826,15 +2836,6 @@ public class Building : General, Iinfo
         {
             DestroydHiddenBuild();
         }
-    }
-
-    /// <summary>
-    /// Function tht user cam use to delete the Building inventory in case finds he doesnt need it 
-    /// //todo added as a btn in Building Window
-    /// </summary>
-    public void DeleteBuildingInventory()
-    {
-        Inventory.Delete();
     }
 
     #endregion

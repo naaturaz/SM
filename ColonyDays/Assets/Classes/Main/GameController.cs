@@ -23,7 +23,7 @@ public class GameController  {
     private int _lastYearWorkersSalaryWasPaid;
 
 
-    private static int _capMaxPerson = 200;
+    private static int _capMaxPerson = 10000;
     /// <summary>
     /// tHE Max amt of person in a game 
     /// </summary>
@@ -92,6 +92,7 @@ public class GameController  {
         inv.Add(P.Gold, startingCondition.iniGold);
         inv.Add(P.WheelBarrow, startingCondition.iniWheelBarrow);
         inv.Add(P.Tool, startingCondition.iniTool);
+        inv.Add(P.Crate, startingCondition.iniCrate);
 
         //todo remove when release
         //inv.Add(P.Coal, 100000);
@@ -142,9 +143,19 @@ public class GameController  {
 
 
 
-    public void ReCheckWheelBarrowsOnStorage()
+    private static bool _areThereCratesOnStorage;
+    public static bool AreThereCratesOnStorage
+    {
+        get { return _areThereCratesOnStorage; }
+        set { _areThereCratesOnStorage = value; }
+    }
+
+
+
+    public void ReCheckWhatsOnStorage()
     {
         AreThereWheelBarrowsOnStorage = ThereIsAtLeastOneOfThisOnStorage(P.WheelBarrow);
+        AreThereCratesOnStorage = ThereIsAtLeastOneOfThisOnStorage(P.Crate);
     }
 
 
@@ -184,6 +195,8 @@ public class GameController  {
         get { return _isGameOver; }
         set { _isGameOver = value; }
     }
+
+
 
 
     private void GameOver(char type)//p pirate ... m money

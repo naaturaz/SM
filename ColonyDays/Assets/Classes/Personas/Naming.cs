@@ -148,4 +148,30 @@ public class Naming
         }
         return tempName;
     }
+
+    string NameMeCelebrity()
+    {
+        string tempName = "";
+        string[] maleNames =
+        {
+           "Elon Musk", "Bill Gates", "Jose Marti"
+        }; 
+
+        string[] femaleNames =
+        {
+            "Hillary Clinton"
+        }; 
+
+        if (_gender == H.Male)
+        {
+            int rand = _random.Next(0, maleNames.Length);
+            tempName = maleNames[rand];
+        }
+        else if (_gender == H.Female)
+        {
+            int rand = _random.Next(0, femaleNames.Length);
+            tempName = femaleNames[rand];
+        }
+        return tempName;
+    }
 }
