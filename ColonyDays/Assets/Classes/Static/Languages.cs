@@ -125,7 +125,9 @@ public class Languages
 	   { "BuyRegion.WithMoney", "Are you sure want to buy this region."},
 	   { "BuyRegion.WithOutMoney", "Sorry, you can't afford this now."},
 	   { "Feedback", "Feedback!? Awesome...:) Thanks. 8) "},
-	   { "BugReport", "Catched a bug? uhmm yummy.... Send it this way!! Thanks"},
+	   { "BugReport", "Catched a bug? uhmm yummy.... Send it this way!! Thanks"},	  
+       { "Invitation", "Your friend's email for a chance to join the Private Beta"},  
+       { "Info", ""},//use for informational Dialogs
 
 
        //words

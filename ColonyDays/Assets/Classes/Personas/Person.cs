@@ -816,7 +816,6 @@ public class Person : General
             return;
         }
 
-
         AgeAction();
 
         CheckHappiness();
@@ -824,6 +823,8 @@ public class Person : General
         CheckIfEmmigrate();
         CheckIfInSchool();
         AddHappyForVarietyOfFoods();
+
+        Program.MouseListener.MStatsAndAchievements.CheckOnManualAchievements(years: Age);
 
         if (ProfessionProp!=null)
         {

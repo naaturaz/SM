@@ -40,7 +40,16 @@ public class Dialog
         RoutineSetUp();
 
         _type = type;
-        _dialogGo = DialogGO.Create(Root.inputFormDialog, _canvas, _middleOfScreen, _type, str1);
+
+        if (type == H.Invitation)
+        {
+            _dialogGo = DialogGO.Create(Root.inputFormDialogInvitation, _canvas, _middleOfScreen, _type, str1);
+        }
+        else
+        {
+            _dialogGo = DialogGO.Create(Root.inputFormDialog, _canvas, _middleOfScreen, _type, str1);
+        }
+
     }
 
     /// <summary>
@@ -71,9 +80,17 @@ public class Dialog
             }
             else if (_type == H.Feedback || _type == H.BugReport)
             {
-                CreateFile(_type+"");
+                CreateFile(_type + "", _dialogGo.InputText.text);
             }
-
+            else if (_type == H.Invitation)
+            {
+                _dialogGo.ValidateInvitation();
+                return;
+            }
+            else if (_type == H.Info)
+            {
+                //does nothing bz was a information dialog
+            }
         }
 
         DestroyCurrDialog();
@@ -146,21 +163,28 @@ public class Dialog
 
 
 
-
-    static void CreateFile(string type)
+    /// <summary>
+    /// Creates a file of the type. Is a .txt with extension .sm
+    /// 
+    /// </summary>
+    /// <param name="type"></param>
+    public static string CreateFile(string type, string text)
     {
-        var nameFile = type + "-" + GameScene.TimeStamp() + ".sm";
+        var nameFile = type + "-" + GameScene.TimeStamp() + ".zip";
 
         var path = Application.dataPath + "/" + nameFile;
         Debug.Log(path);
-        File.WriteAllText(path, FileHeader()  + _dialogGo.InputText.text);
+        File.WriteAllText(path, FileHeader()  + text);
+
+        LogUploader.UploadDirectToAWSCarlos(path);
+
+        return path;
     }
 
     private static string FileHeader()
     {
         return "Current Version: " + GameScene.VersionLoaded() 
-            
-            
+
             + "\n" +
             "___________________________________________" +
             "\n\n";

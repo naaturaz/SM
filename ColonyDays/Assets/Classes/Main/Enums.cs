@@ -377,6 +377,7 @@ public enum H
     Feedback,
     BugReport,
     OnlyForDev,
+    Invitation,
 
 
 }

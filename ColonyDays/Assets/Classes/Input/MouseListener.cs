@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
+using Facebook.Unity;
 
 public class MouseListener : InputMain
 {
@@ -28,11 +30,27 @@ public class MouseListener : InputMain
         set { _buildingsMenu = value; }
     }
 
+  
+
+    SteamStatsAndAchievements m_StatsAndAchievements;
+    /// <summary>
+    /// Accessing to Steam API Achivements and Stats
+    /// </summary>
+    public SteamStatsAndAchievements MStatsAndAchievements
+    {
+        get { return m_StatsAndAchievements; }
+        set { m_StatsAndAchievements = value; }
+    }
 
     // Use this for initialization
     public void Start()
     {
-       
+        if (m_StatsAndAchievements == null)
+        {
+            m_StatsAndAchievements = GameObject.FindObjectOfType<SteamStatsAndAchievements>();
+
+            m_StatsAndAchievements.OnGameStateChange(EClientGameState.k_EClientGameActive);
+        }
     }
 
     /// <summary>
@@ -314,9 +332,69 @@ public class MouseListener : InputMain
         {
             Dialog.InputFormDialog(H.BugReport);
         }
+        //invite a friend to the Closed beta
+        else if (action == "Invitation")
+        {
+            Dialog.InputFormDialog(H.Invitation);
+        }
+        //Social Media
+        else if (action == "Facebook")
+        {
+            Application.OpenURL("https://www.facebook.com/Aatlantis-455576847932828/");
+        }
+        else if (action == "Twitter")
+        {
+            Application.OpenURL("https://twitter.com/aatlantis_code/");
+        }
+        else if (action == "Youtube")
+        {
+            Application.OpenURL("https://www.youtube.com/channel/UCJ1VFhaQw6dYCYSlEjZ555Q/");
+        }
+        else if (action == "ShareFacebook")
+        {
+            //if (FB.IsInitialized)
+            //{
+            //    Application.OpenURL("https://www.facebook.com/Aatlantis-455576847932828/");
+            //    Uri uri = new Uri("http://steamcommunity.com/sharedfiles/filedetails/?id=642347935");
+            //    FB.ShareLink(uri, "Title", "Desc");
+            //}
+
+            //string facebookshare = "https://www.facebook.com/sharer/sharer.php?u=" + Uri.EscapeUriString("http://steamcommunity.com/sharedfiles/filedetails/?id=642347935");
+            //Application.OpenURL(facebookshare);
+
+            //string twittershare = "http://twitter.com/home?status=" + Uri.EscapeUriString(appStoreLink);
+            //Application.OpenURL(twittershare);
+
+            string fbFeed =
+                "https://www.facebook.com/dialog/feed?app_id=145634995501895&display=popup&caption=An%20example%20caption&link=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fdialogs%2F&redirect_uri=https://developers.facebook.com/tools/explorer";
+
+            Application.OpenURL(fbFeed);
+        }
+        else if (action.Contains("Test."))
+        {
+            action = action.Substring(5);
+            TestAchieve(action);
+        }
     }
 
+    void TestAchieve(string cmd)
+    {
+       
 
+        //m_StatsAndAchievements.Render();
+        //GUILayout.Space(10);
+
+        if (cmd == "100")
+        {
+            m_StatsAndAchievements.AddDistanceTraveled(100.0f);
+            print("Added 100");
+        }   
+        else if (cmd == "Reset")
+        {
+            m_StatsAndAchievements.ResetAll();
+        }
+ 
+    }
 
 
 

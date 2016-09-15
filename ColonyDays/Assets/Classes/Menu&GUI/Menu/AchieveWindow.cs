@@ -1,28 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-class SaveLoadGameWindow : GUIElement
+class AchieveWindow : GUIElement
 {
-    private GameObject _inputNameGO;
-    private InputField _inputName;
-
     private Text _title;
-    private Text _saveNameLbl;
-    private Text _selectedToLoadNName;
 
     private GameObject _content;
     private RectTransform _contentRectTransform;
 
     private GameObject _scroll_Ini_PosGO;
-    private string _which;//is load or save dialog
 
-    private string _tileNameSelected;
     private List<ShowSaveLoadTile> _tilesSpawn = new List<ShowSaveLoadTile>();
     private Vector3 _scrollIniPos;
 
@@ -30,24 +20,15 @@ class SaveLoadGameWindow : GUIElement
 
     void Start()
     {
-
-
         iniPos = transform.position;
         Hide();
-
-
-
-        _inputNameGO = GetChildCalled("Input_Name");
-        _inputName = _inputNameGO.GetComponent<InputField>();
 
         var titleLbl = GetChildCalled("Title");
         _title = titleLbl.GetComponentInChildren<Text>();
 
         var selLoad = GetChildCalled("Selected_To_Load");
-        _selectedToLoadNName = selLoad.GetComponentInChildren<Text>();
 
         var saveNameLbl = GetChildCalled("Save_Name_Lbl");
-        _saveNameLbl = saveNameLbl.GetComponentInChildren<Text>();
 
         var scroll = GetChildCalled("Scroll_View");
 
@@ -55,54 +36,17 @@ class SaveLoadGameWindow : GUIElement
         _contentRectTransform = _content.GetComponent<RectTransform>();
 
         _scroll_Ini_PosGO = GetChildCalledOnThis("Scroll_Ini_Pos", _content);
-
-
-        //pull the last Saved game if one
-        _tileNameSelected = PlayerPrefs.GetString("Last_Saved");
     }
 
     public void Show(string which)
     {
-        _which = which;
         ClearForm();
-
-        if (which == "Save")
-        {
-            _saveNameLbl.text = Languages.ReturnString("NameToSave");
-            _inputNameGO.SetActive(true);
-
-            _inputName.Select();
-            _inputName.ActivateInputField();
-
-            _title.text = Languages.ReturnString("SaveGame.Dialog");
-            _selectedToLoadNName.enabled = false;
-        }
-        else if (which == "Load")
-        {
-            _saveNameLbl.text = Languages.ReturnString("NameToLoad");
-            _inputNameGO.SetActive(false);
-            _title.text = Languages.ReturnString("LoadGame.Dialog");
-            _selectedToLoadNName.enabled = true;
-
-        }
         PopulateScrollView();
         Show();
     }
 
-
-    public void DeleteCallBack()
-    {
-        PopulateScrollView();
-        ClearForm();
-    }
-
-
     void ClearForm()
     {
-        _tileNameSelected = "";
-        _selectedToLoadNName.text = "";
-        _inputName.text = "";
-
         if (_verticScrollbar != null)
         {
             _verticScrollbar.value = 1;
@@ -130,54 +74,21 @@ class SaveLoadGameWindow : GUIElement
     {
         if (transform.position == iniPos && Input.GetKeyUp(KeyCode.Return))
         {
-            MouseListen("Save.OKBtn");
+            MouseListen("Achieve.OKBtn");
         }
     }
 
     internal void MouseListen(string sub)
     {
-        sub = sub.Substring(5);
+        sub = sub.Substring(8);
 
-        if (sub == "OKBtn" && _which == "Save")
-        {
-            DataController.SaveGame(_inputName.text);
-            PopulateScrollView();
-        }
-        else if (sub == "OKBtn" && _which == "Load")
-        {
-            DataController.LoadGame(_tileNameSelected);
-        }
-        //Reloadd main menu
-        else if (sub == "CancelBtn")
+        if (sub == "OKBtn")
         {
             Hide();
             DestroyPrevTiles();
             Program.MyScreen1.HideWindowShowMain(this);
         }
-        else if (sub == "Delete")
-        {
-            if (string.IsNullOrEmpty(_tileNameSelected))
-            {
-                //pls select a game to delete 
-
-                return;
-            }
-            DataController.DeleteGame(_tileNameSelected);
-        }
-        //clicked on a button of a SaveLoadTile
-        else
-        {
-            _tileNameSelected = sub;
-
-            if (_which == "Load")
-            {
-                _selectedToLoadNName.text = _tileNameSelected;
-            }
-            else
-            {
-                _inputName.text = _tileNameSelected;
-            }
-        }
+       
     }
 
 
@@ -227,7 +138,6 @@ class SaveLoadGameWindow : GUIElement
         _scrollIniPos = new Vector3(_scrollIniPos.x, _scrollIniPos.y - ySpace, _scrollIniPos.z);
     }
 
-
     private void SetHeightOfContentRect(int tiles)
     {
         //892
@@ -238,8 +148,6 @@ class SaveLoadGameWindow : GUIElement
         var size = (tileYSpace * tiles) + tileYSpace;
         _contentRectTransform.sizeDelta = new Vector2(0, size);
     }
-
-
 
     Vector3 ReturnIniPos(int i)
     {
@@ -258,8 +166,5 @@ class SaveLoadGameWindow : GUIElement
         //return -(ShowAInventory.ReturnRelativeYSpace(28, _tilesSpawn[0].transform.localScale.y)) * i;
         return -y * i;
     }
-
-
-
 }
 

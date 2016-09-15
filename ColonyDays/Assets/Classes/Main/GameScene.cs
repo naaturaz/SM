@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using Facebook.Unity;
 using UnityEngine;
 
 
@@ -198,6 +199,7 @@ public class GameScene : General
     // Use this for initialization
     private void Start()
     {
+        FB.Init();
 //#if UNITY_EDITOR
 //        Developer.IsDev = true;
 //#endif

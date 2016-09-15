@@ -2218,6 +2218,8 @@ public class Building : General, Iinfo
         InitStorage();
         Program.gameScene.BatchAdd(this);
 
+        Program.MouseListener.MStatsAndAchievements.CheckOnManualAchievements(HType+"");
+
         ////bz trhu this way is the only way brdige can call it 
         //if (MyId.Contains("Bridge"))
         //{

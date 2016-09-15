@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Net.Mail;
+using System.Text.RegularExpressions;
+//using Steamworks;
 using UnityEngine;
 using UnityEngine.UI;
-using Button = UnityEngine.UI.Button;
-
 
 /// <summary>
 /// The dialog GameObject 
@@ -13,7 +11,7 @@ using Button = UnityEngine.UI.Button;
 class DialogGO : GUIElement
 {
 
-    private H _type;
+    private H _type;//type of Dialog 
     private Text _textHere;
     private string _str1;
 
@@ -21,6 +19,9 @@ class DialogGO : GUIElement
     private UnityEngine.UI.Button _ok;
 
     private InputField _inputText;
+
+    private InputField _inputTextEmail1;
+    private InputField _inputTextEmail2;
 
     public H Type1
     {
@@ -64,21 +65,31 @@ class DialogGO : GUIElement
         var t = GetChildCalled("TextHere");
         _textHere = t.GetComponentInChildren<Text>();
 
-        _textHere.text = String.Format(Languages.ReturnString(Type1+""), Str1);
+        _textHere.text = Languages.ReturnString(Type1+"") + Str1;
 
         _okBtnGO = GetChildCalled("Ok_Btn");
         _ok = _okBtnGO.GetComponent<UnityEngine.UI.Button>();
 
 
         var inText = GetChildCalled("Input_Field");
-
         if (inText != null)
         {
             InputText = inText.GetComponent<InputField>();
-            
         }
 
+        //for email invitation for private beta
+        //Input_Field_Email_1
+        var email1 = GetChildCalled("Input_Field_Email_1");
+        if (email1 != null)
+        {
+            _inputTextEmail1 = email1.GetComponent<InputField>();
+        }
 
+        var email2 = GetChildCalled("Input_Field_Email_2");
+        if (email2 != null)
+        {
+            _inputTextEmail2 = email2.GetComponent<InputField>();
+        }
 
 
         AddressBuyRegionType();
@@ -108,6 +119,56 @@ class DialogGO : GUIElement
         }
         _textHere.text += " Cost:" + MeshController.BuyRegionManager1.Cost();
     }
+
+
+
+    internal void ValidateInvitation()
+    {
+        if (_inputTextEmail1.text == _inputTextEmail2.text && IsValidEmail(_inputTextEmail1.text)
+            && !string.IsNullOrEmpty(_inputTextEmail1.text))
+        {
+            CreateInviteOnThisPC();
+            Dialog.OKDialog(H.Info, "Invitation sent");
+        }
+        else
+        {
+            Dialog.OKDialog(H.Info, "Invitation was incorrect");
+        }
+    }
+
+    bool IsValidEmail(string emailaddress)
+    {
+        Regex regPass = new Regex(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+
+        if (regPass.IsMatch(emailaddress))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private void CreateInviteOnThisPC()
+    {        
+        var text = "Email: " + _inputTextEmail1.text;
+        //if (SteamFriends.GetPersonaName() != null)
+        //{
+        //    text = text + "\n\nReferred by: " + SteamFriends.GetPersonaName();
+        //}
+
+        try
+        {
+            Dialog.CreateFile(Type1+"", text);   
+            print("mail Send");
+        }
+        catch (Exception ex)
+        {
+            Dialog.OKDialog(H.Info, "Invitation was incorrect");
+            print(ex.ToString());
+        }
+    }
+
+
+
 
 
 }

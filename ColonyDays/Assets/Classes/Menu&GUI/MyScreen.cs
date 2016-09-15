@@ -15,6 +15,7 @@ public class MyScreen : General
     private NewGameWindow _newGameWindow;
     private SaveLoadGameWindow _saveLoadGameWindow;
     private OptionsWindow _optionsWindow;
+    private AchieveWindow _achieveWindow;
     private MyForm current;
     private MyForm mainMenuForm = new MyForm();
 
@@ -91,6 +92,10 @@ public class MyScreen : General
         {
             _optionsWindow = FindObjectOfType<OptionsWindow>();
         }
+        if (_achieveWindow == null)
+        {
+            _achieveWindow = FindObjectOfType<AchieveWindow>();
+        }
     }
 
     /// <summary>
@@ -163,6 +168,22 @@ public class MyScreen : General
         {
             RedifineWindows();
             _optionsWindow.Listen(sub);
+        }
+        else if (sub.Contains("Achieve"))
+        {
+            //this is a call from Main
+            if (sub == "Achieve")
+            {
+                RedifineWindows();
+                _achieveWindow.Show("");
+            }
+                //the hit of the ok
+            else
+            {
+                _achieveWindow.MouseListen(sub);
+            }
+           
+            //Debug.Log("Achive");
         }
     }
 
@@ -399,6 +420,9 @@ public class MyScreen : General
 
                 _optionsWindow.Destroy();
                 _optionsWindow = null;
+
+                _achieveWindow.Destroy();
+                _achieveWindow = null;
 
                 DestroyCurrentMenu();
                 LoadMainMenu();

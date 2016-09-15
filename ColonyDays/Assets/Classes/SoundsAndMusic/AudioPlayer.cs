@@ -107,6 +107,7 @@ public class AudioPlayer : MonoBehaviour {
         AudioSource audioSource = sound.gameObject.GetComponent<AudioSource>();
         var clip = Resources.Load(audioSourceRoot) as AudioClip;
         audioSource.clip = clip;
+        //Play sound on creation 
         audioSource.Play();
 
         return sound;
@@ -235,8 +236,6 @@ public class AudioPlayer : MonoBehaviour {
 
     public static Sound PlaySoundOneTime(string soundToPlayRoot, H musicOrSound, Vector3 iniPos = new Vector3(), bool reset = false)
     {
-        return null;
-
         Sound temp = null;
         if (Settings.ISSoundOn && musicOrSound == H.Sound)
         {
