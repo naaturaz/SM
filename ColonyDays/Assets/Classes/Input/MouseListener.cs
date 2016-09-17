@@ -392,6 +392,10 @@ public class MouseListener : InputMain
         else if (cmd == "Reset")
         {
             m_StatsAndAchievements.ResetAll();
+        } 
+        else if (cmd == "Render")
+        {
+            m_StatsAndAchievements.Render();
         }
  
     }

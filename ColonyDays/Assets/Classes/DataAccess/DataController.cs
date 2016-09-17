@@ -124,8 +124,6 @@ public class DataController
         PersonPot.SaveLoad.Save();
         CamControl.CAMRTS.InputRts.SaveLastCamPos();
 
-        UploadGameLog();
-
         savePath = "";
 
         if (callEscapeKey)
@@ -134,78 +132,6 @@ public class DataController
             Program.InputMain.EscapeKey();
         }
     }
-
-
-    static bool deleteLogWhenCan;
-    static string currNamePath;
-    /// <summary>
-    /// It sends the game log to the Server in AWS
-    /// </summary>
-    private static void UploadGameLog()
-    {
-        currNamePath = Application.dataPath + "/" + "output_log.txt";
-
-        if (HowBigIsAFile(currNamePath) > 100000000)//100MB
-        {
-            Debug.Log("TOO big of a file");
-            DeleteLogData();
-            return;
-        }
-
-        var newName = "output_log-" + GameScene.TimeStamp() + ".zip";
-        var newNamePath = Application.dataPath + "/" + newName;
-
-        File.Copy(currNamePath, newNamePath);
-        if (!IsFileLocked(new FileInfo(currNamePath)))
-        {
-            File.Delete(currNamePath);
-        }
-        else
-        {
-            deleteLogWhenCan = true;
-        }
-
-        LogUploader.UploadDirectToAWSCarlos(newNamePath);
-    }
-
-    static void DeleteLogData()
-    {
-        File.WriteAllText(currNamePath, "Clenead at:" + GameScene.TimeStamp() + "\n\n");
-    }
-
-    static long HowBigIsAFile(string path)
-    {
-        return new FileInfo(path).Length;
-    }
-
-
-    static bool IsFileLocked(FileInfo file)
-    {
-        FileStream stream = null;
-
-        try
-        {
-            stream = file.Open(FileMode.Open, FileAccess.Read, FileShare.None);
-        }
-        catch (IOException)
-        {
-            //the file is unavailable because it is:
-            //still being written to
-            //or being processed by another thread
-            //or does not exist (has already been processed)
-            return true;
-        }
-        finally
-        {
-            if (stream != null)
-                stream.Close();
-        }
-
-        //file is not locked
-        return false;
-    }
-
-
 
     private static bool HasHDDSpace()
     {
@@ -301,15 +227,6 @@ public class DataController
         {
             AutoSave();
             lastAutoSavedFile = Time.time;
-        }
-
-        if (deleteLogWhenCan)
-        {
-            if (!IsFileLocked(new FileInfo(currNamePath)))
-            {
-                File.Delete(currNamePath);
-                deleteLogWhenCan = false;
-            }
         }
     }
 

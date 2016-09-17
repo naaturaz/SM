@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using Steamworks;
 using UnityEngine;
 
 
@@ -170,7 +171,9 @@ public class Dialog
     /// <param name="type"></param>
     public static string CreateFile(string type, string text)
     {
-        var nameFile = type + "-" + GameScene.TimeStamp() + ".zip";
+        var nameFile =
+             SteamUser.GetSteamID() + "." + SteamFriends.GetPersonaName() + "." +
+             type + "-" + GameScene.TimeStamp() + ".zip";
 
         var path = Application.dataPath + "/" + nameFile;
         Debug.Log(path);
@@ -183,9 +186,17 @@ public class Dialog
 
     private static string FileHeader()
     {
-        return "Current Version: " + GameScene.VersionLoaded() 
+        return
+            
+            "User: " + SteamFriends.GetPersonaName() + "" +
+            "ID: " + SteamUser.GetSteamID() + "\n\n" +
+
+            "Current Version: " + GameScene.VersionLoaded() 
 
             + "\n" +
+            "Now Time: " + DateTime.Now.ToLongDateString() + " - " 
+            +DateTime.Now.ToLongTimeString() +
+            "\n" +
             "___________________________________________" +
             "\n\n";
     }

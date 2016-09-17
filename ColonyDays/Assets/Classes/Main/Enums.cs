@@ -166,7 +166,14 @@ public enum P
     Papaya,
     Wool,
     Shoe,
-    CigarBox
+    CigarBox,
+    Water,
+    Beer,
+    Honey,
+    Bucket,
+    Cart,
+    RoofTile,
+    Utensil
 
 
 }

@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using Facebook.Unity;
+using Steamworks;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 
 public class GameScene : General
@@ -434,7 +437,13 @@ public class GameScene : General
     /// </summary>
     void DebugChangeScreenResolution()
     {
-        if (Input.GetKeyUp(KeyCode.Keypad1))
+        bool shouldWork = Developer.IsDev;
+
+#if UNITY_EDITOR
+        shouldWork = true;
+#endif
+
+        if (shouldWork && Input.GetKeyUp(KeyCode.Keypad1))
         {
            Program.MouseListener.ApplyChangeScreenResolution();
         }
@@ -443,7 +452,13 @@ public class GameScene : General
     private bool _hideText = true;
     private void DebugInput()
     {
-        if (Input.GetKeyUp(KeyCode.Keypad0))
+        bool shouldWork = Developer.IsDev;
+
+#if UNITY_EDITOR
+        shouldWork = true;
+#endif
+
+        if (shouldWork && Input.GetKeyUp(KeyCode.Keypad0))
         {
             _hideText = !_hideText;
             HideShowTextMsg();
@@ -680,5 +695,60 @@ public class GameScene : General
     void OnApplicationQuit()
     {
         Debug.Log("Application ending after " + Time.time + " seconds");
+
+#if UNITY_EDITOR
+        return;
+#endif
+
+        if (IsCurrentUserOnLogUploadList())
+        {
+            OpenLogHandler();
+        }
+
+
     }
+
+
+    #region LogUploader
+    
+    //Logs will be uploaded only from people listed here 
+    Dictionary<string, string> whiteList = new Dictionary<string, string>()
+    {
+        {"76561198245800476", "aatlantisstudios"},
+    };
+
+    bool IsCurrentUserOnLogUploadList()
+    {
+        return whiteList.ContainsKey(SteamUser.GetSteamID() + "");
+    }
+
+    /// <summary>
+    /// Will open separate small .exe to upload and delete Log
+    /// </summary>
+    void OpenLogHandler()
+    {
+        // Prepare the process to run
+        ProcessStartInfo start = new ProcessStartInfo();
+        // Enter in the command line arguments, everything you would enter after the executable name itself
+        start.Arguments = SteamUser.GetSteamID() + "." +SteamFriends.GetPersonaName();
+        // Enter the executable to run, including the complete path
+        start.FileName = Application.dataPath + "/Logs/LogsHandler.exe";
+        // Do you want to show a console window?
+        start.WindowStyle = ProcessWindowStyle.Hidden;
+        start.CreateNoWindow = true;
+        int exitCode;
+
+        // Run the external process & wait for it to finish
+        using (Process proc = Process.Start(start))
+        {
+            proc.WaitForExit();
+
+            // Retrieve the app's exit code
+            exitCode = proc.ExitCode;
+        }
+    }
+
+
+
+#endregion
 }

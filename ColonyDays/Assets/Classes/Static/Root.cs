@@ -250,6 +250,7 @@ public class Root : MonoBehaviour
     public static string mainMenu = "Prefab/Menu/MainMenu";
     public static string loadingScreen = "Prefab/Menu/LoadingScreen";
     public static string saveLoadTile = "Prefab/Menu/Save_Load_Tile";
+    public static string achieveTile = "Prefab/Menu/Achievement_Tile";
     public static string dialogOKCancel = "Prefab/Menu/DialogOKCancel";
     public static string dialogOK = "Prefab/Menu/DialogOK";
     public static string inputFormDialog = "Prefab/Menu/InputFormDialog";

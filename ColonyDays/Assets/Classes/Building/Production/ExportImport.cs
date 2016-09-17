@@ -81,8 +81,11 @@ public class ExportImport
 
 
         //liquids
-        _prodSpecs.Add(new ProdSpec(P.Rum, 100, 1000, 100));
-        _prodSpecs.Add(new ProdSpec(P.Wine, 100, 990, 100));
+        _prodSpecs.Add(new ProdSpec(P.Water, 1, 1000, 100));
+        _prodSpecs.Add(new ProdSpec(P.Honey, 50, 1000, 100));
+        _prodSpecs.Add(new ProdSpec(P.Beer, 80, 1000, 100));
+        _prodSpecs.Add(new ProdSpec(P.Rum, 80, 1000, 100));
+        _prodSpecs.Add(new ProdSpec(P.Wine, 90, 990, 100));
         _prodSpecs.Add(new ProdSpec(P.Ink, 100, 990, 100));
 
         _prodSpecs.Add(new ProdSpec(P.Coal, 20, 180, 70));
@@ -145,18 +148,22 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Wood, 10, 500, 90));
         //_prodSpecs.Add(new ProdSpec(P.HolyWood, 100, 700, 30));
         _prodSpecs.Add(new ProdSpec(P.Tool, 150, 3000, 15));
+        _prodSpecs.Add(new ProdSpec(P.Utensil, 150, 3000, 15));
 
 
         _prodSpecs.Add(new ProdSpec(P.Brick, 50, 2000, 100));
-        _prodSpecs.Add(new ProdSpec(P.Tonel, 60, 20, 50));
         
-        _prodSpecs.Add(new ProdSpec(P.Crate, 40, 20, 50));
-        _prodSpecs.Add(new ProdSpec(P.WheelBarrow, 140, 10, 25));
+        _prodSpecs.Add(new ProdSpec(P.Tonel, 60, 100, 50));
+        _prodSpecs.Add(new ProdSpec(P.Bucket, 30, 90, 60));
+        _prodSpecs.Add(new ProdSpec(P.Crate, 40, 80, 50));
+        _prodSpecs.Add(new ProdSpec(P.WheelBarrow, 140, 40, 25));
+        _prodSpecs.Add(new ProdSpec(P.Cart, 140, 20, 25));
 
         _prodSpecs.Add(new ProdSpec(P.Cigar, 200, 700, 50));
         _prodSpecs.Add(new ProdSpec(P.CigarBox, 20, 200, 60));
         //_prodSpecs.Add(new ProdSpec(P.Slat, 40, 600, 70));
         _prodSpecs.Add(new ProdSpec(P.Tile, 60, 2100, 90));
+        _prodSpecs.Add(new ProdSpec(P.RoofTile, 60, 2100, 90));
 
 
         _prodSpecs.Add(new ProdSpec(P.Fabric, 100, 400, 20));

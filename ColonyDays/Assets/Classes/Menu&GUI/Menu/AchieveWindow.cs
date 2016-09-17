@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,15 +11,19 @@ class AchieveWindow : GUIElement
 
     private GameObject _scroll_Ini_PosGO;
 
-    private List<ShowSaveLoadTile> _tilesSpawn = new List<ShowSaveLoadTile>();
+    private List<AchieveTile> _tilesSpawn = new List<AchieveTile>();
     private Vector3 _scrollIniPos;
 
     private Scrollbar _verticScrollbar;
+
+    private SteamStatsAndAchievements _steamStatsAndAchievements;
 
     void Start()
     {
         iniPos = transform.position;
         Hide();
+
+        _steamStatsAndAchievements = FindObjectOfType<SteamStatsAndAchievements>();
 
         var titleLbl = GetChildCalled("Title");
         _title = titleLbl.GetComponentInChildren<Text>();
@@ -91,9 +93,6 @@ class AchieveWindow : GUIElement
        
     }
 
-
-
-
     void DestroyPrevTiles()
     {
         for (int i = 0; i < _tilesSpawn.Count; i++)
@@ -108,20 +107,20 @@ class AchieveWindow : GUIElement
         SetTileIniPos();
 
         DestroyPrevTiles();
-        var saves = Directory.GetDirectories(DataController.SugarMillPath()).ToList();
 
-        SetHeightOfContentRect(saves.Count);
-        ShowAllItems(saves);
+        SetHeightOfContentRect(_steamStatsAndAchievements.Achievements_t.Length);
+        ShowAllItems();
 
         TakeScrollVerticBar();
     }
 
-    private void ShowAllItems(List<string> saves)
+    private void ShowAllItems()
     {
-        for (int i = 0; i < saves.Count; i++)
+        for (int i = 0; i < _steamStatsAndAchievements.Achievements_t.Length; i++)
         {
             var iniPos = ReturnIniPos(i);
-            var tile = ShowSaveLoadTile.Create(Root.saveLoadTile, _content.transform, iniPos, saves[i]);
+            var tile = AchieveTile.Create(Root.achieveTile, _content.transform, iniPos, 
+                _steamStatsAndAchievements.Achievements_t[i]);
 
             _tilesSpawn.Add(tile);
         }
@@ -141,7 +140,7 @@ class AchieveWindow : GUIElement
     private void SetHeightOfContentRect(int tiles)
     {
         //892
-        var tileYSpace = 5.57f;
+        var tileYSpace = 5.57f * 3.3f;
         //var tileYSpace = Screen.height / 160.1436f;//5.57f on editor
 
         //5.57f the space btw two of them 
@@ -161,9 +160,8 @@ class AchieveWindow : GUIElement
         {
             return 0;
         }
-
-        var y = (Screen.height * 30) / 892;
-        //return -(ShowAInventory.ReturnRelativeYSpace(28, _tilesSpawn[0].transform.localScale.y)) * i;
+        //30
+        var y = (Screen.height * 100) / 892;
         return -y * i;
     }
 }

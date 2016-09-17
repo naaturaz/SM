@@ -350,8 +350,30 @@ public class Body //: MonoBehaviour //: General
         {
             _speed = UMath.GiveRandom(0.45f, 0.55f);
         }
+        _speed = _speed*CorrectSpeedPeopleAge();
         //bz the speed changes and then looks bad 
         ReCalculateWalkStep();
+    }
+
+    /// <summary>
+    /// Will correct speed based on age
+    /// </summary>
+    /// <returns></returns>
+    float CorrectSpeedPeopleAge()
+    {
+        if (_person.Age > 0 && _person.Age <= 45)
+        {
+            return 1;
+        }
+        else if (_person.Age > 45 && _person.Age <= 65)
+        {
+            return .8f;
+        }
+        else if (_person.Age > 65 && _person.Age <= 75)
+        {
+            return .7f;
+        } 
+        return .6f;
     }
 
     /// <summary>
