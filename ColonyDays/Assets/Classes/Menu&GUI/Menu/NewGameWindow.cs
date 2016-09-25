@@ -23,6 +23,7 @@ public class NewGameWindow : GUIElement
     private List<GameObject> _buttonsName = new List<GameObject>();// 
 
     private GameObject Terra_Name_Btn;
+    private GameObject Diff_Btn;
 
 
 	// Use this for initialization
@@ -37,7 +38,9 @@ public class NewGameWindow : GUIElement
         Terra_Name_Btn = GetGrandChildCalled("Terra_Name_Btn");
         _terraNameTxt = Terra_Name_Btn.GetComponentInChildren<Text>();
 
-        var Diff_Btn = GetGrandChildCalled("Diff_Btn");
+
+
+        Diff_Btn = GetGrandChildCalled("Diff_Btn");
         _diffTxt = Diff_Btn.GetComponentInChildren<Text>();
 
         _inputTownName = GetChildCalled("Input_Name").GetComponent<InputField>();
@@ -65,9 +68,7 @@ public class NewGameWindow : GUIElement
 #if UNITY_EDITOR
         _townName = "Editor";
 #endif
-        //_size = "Small";
-        _difficulty = "Easy";
-
+        _difficulty = "Newbie";
 
         DefineTerrainNames();
         Display();
@@ -82,12 +83,12 @@ public class NewGameWindow : GUIElement
     {
         var sub = action.Substring(4);
 
-        if (sub == "Easy" || sub == "Moderate" || sub == "Hard")
-        {
-            _difficulty = sub;
-        }
+        //if (sub == "Easy" || sub == "Moderate" || sub == "Hard")
+        //{
+        //    _difficulty = sub;
+        //}
         //create new game 
-        else if (sub == "OKBtn")
+        if (sub == "OKBtn")
         {
             DefineTownName();
             Program.MyScreen1.NewGameCreated(_terraRoot, _difficulty, _townName);
@@ -184,9 +185,6 @@ public class NewGameWindow : GUIElement
         {
             SetEachButton(_buttonsName[i], _terraNames[i]);
         }
-
-        
-       
     }
 
     /// <summary>
@@ -222,7 +220,16 @@ public class NewGameWindow : GUIElement
             GetGrandChildCalledFromThis("Btn_3", Terra_Name_Btn),
             GetGrandChildCalledFromThis("Btn_4", Terra_Name_Btn),
             GetGrandChildCalledFromThis("Btn_5", Terra_Name_Btn),
-            GetGrandChildCalledFromThis("Btn_6", Terra_Name_Btn)
+            GetGrandChildCalledFromThis("Btn_6", Terra_Name_Btn),
+            GetGrandChildCalledFromThis("Btn_7", Terra_Name_Btn),
+            GetGrandChildCalledFromThis("Btn_8", Terra_Name_Btn),
+            GetGrandChildCalledFromThis("Btn_9", Terra_Name_Btn),
+            GetGrandChildCalledFromThis("Btn_10", Terra_Name_Btn),
+            GetGrandChildCalledFromThis("Btn_11", Terra_Name_Btn),
+            GetGrandChildCalledFromThis("Btn_12", Terra_Name_Btn),
+            GetGrandChildCalledFromThis("Btn_13", Terra_Name_Btn),
+            GetGrandChildCalledFromThis("Btn_14", Terra_Name_Btn),
+            //GetGrandChildCalledFromThis("Btn_15", Terra_Name_Btn),
         };
     }
 
@@ -236,6 +243,50 @@ public class NewGameWindow : GUIElement
         //{
             _terraRoot = ReturnTerrainOnList(terraName, Root.BigTerrains);
         //}
+        Display();
+    }
+
+
+
+
+
+
+
+    //Dificulty
+
+    //
+    /// <summary>
+    /// Is called when the terraName drop down Btn is clicked 
+    /// </summary>
+    public void ClickDifficultyDropDown()
+    {
+        var newbie = GetGrandChildCalledFromThis("Btn_Newbie", Diff_Btn);
+        var easy = GetGrandChildCalledFromThis("Btn_Easy", Diff_Btn);
+        var moderate = GetGrandChildCalledFromThis("Btn_Moderate", Diff_Btn);
+        var hard = GetGrandChildCalledFromThis("Btn_Hard", Diff_Btn);
+        var insane = GetGrandChildCalledFromThis("Btn_Insane", Diff_Btn);
+
+        SetDiffButton(newbie, "Newbie");
+        SetDiffButton(easy, "Easy");
+        SetDiffButton(moderate, "Moderate");
+        SetDiffButton(hard, "Hard");
+        SetDiffButton(insane, "Insane");
+
+    }
+
+    private void SetDiffButton(GameObject b, string diff)
+    {
+        var button = b.GetComponent<UnityEngine.UI.Button>();
+        button.onClick.AddListener(() => Program.MyScreen1.NewGameWindow1.ClickDifficultySelection(diff));
+
+
+        var child = GetChildCalledOnThis("Text", b);
+        child.GetComponent<Text>().text = diff;
+    }
+
+    public void ClickDifficultySelection(string difficulty)
+    {
+        _difficulty = difficulty;
         Display();
     }
 }

@@ -214,6 +214,15 @@ public class Settings
         var spl = name.Split(' ');
         AutoSaveFrec = int.Parse(spl[0]) * 60;
         Program.MyScreen1.OptionsWindow1.RefreshAllDropDowns();
+    }  
+    
+    internal static void SetLanguage(string name)
+    {
+        Languages.SetCurrentLang(name);
+        Program.MyScreen1.OptionsWindow1.RefreshAllDropDowns();
+
+        //So all LangUpdateScripts gets Started again
+        Program.MouseListener.ApplyChangeScreenResolution();
     }
 #endregion
 

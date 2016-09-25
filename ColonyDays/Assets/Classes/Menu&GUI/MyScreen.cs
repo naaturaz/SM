@@ -24,6 +24,8 @@ public class MyScreen : General
 
     private string _terraRoot;//the terrain root
     private string _diff;//the game difficulty
+    private int _difficulty;//in 0-4
+
     private string _townName;//the town name 
 
 
@@ -40,12 +42,6 @@ public class MyScreen : General
         set { _terraRoot = value; }
     }
 
-    public string Diff
-    {
-        get { return _diff; }
-        set { _diff = value; }
-    }
-
     public string TownName
     {
         get { return _townName; }
@@ -56,6 +52,15 @@ public class MyScreen : General
     {
         get { return _optionsWindow; }
         set { _optionsWindow = value; }
+    }
+
+    /// <summary>
+    /// THe dificulty of the game selected by user 
+    /// </summary>
+    public int Difficulty
+    {
+        get { return _difficulty; }
+        set { _difficulty = value; }
     }
 
     #region Main Menu. Load Game. New Game
@@ -225,13 +230,47 @@ public class MyScreen : General
             diff = "Easy";
         }
         _diff = diff;
-        
+        AssignDificulty();
+
+
         _townName = townName;
+    }
+
+    void AssignDificulty()
+    {
+        if (_diff == "Newbie")
+        {
+            Difficulty = 4;
+        }
+        else if (_diff == "Easy")
+        {
+            Difficulty = 3;
+        }
+        else if (_diff == "Moderate")
+        {
+            Difficulty = 2;
+        } 
+        else if (_diff == "Hard")
+        {
+            Difficulty = 1;
+        }
+        else if (_diff == "Insane")
+        {
+            Difficulty = 0;
+        }
     }
 
 
 
     #region Random Terra Root
+    //IMPORTANT : To add a new Terrain
+    //To add a new Terrain the only thing needed is add the XML file to Application.dataPath;
+    //Also in NewGameWindow
+    //Need to be added in the button NewGameWindow.SetButtonsList()
+    //the button also needs to be added to mainMenu manually
+    //And need to be added on the Root.BigTerrains
+    //In Dev Mode let it run and when finish then press, F12,
+    //Then when XML is finish copy it to Assets
 
     /// <summary>
     /// bz this Xmls are all Prefabs tht gets call in game

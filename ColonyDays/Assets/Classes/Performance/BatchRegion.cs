@@ -54,10 +54,9 @@ public class BatchRegion
         }
         _totalVertices += ReturnVertices(go);
 
-
-        if (_totalVertices > 62000)
+        if (_totalVertices > 63500)
         {
-            Debug.Log("vert cnt over 62K "+_id);
+            Debug.Log("vert cnt over 63.5K "+_id);
             return;
         }
 

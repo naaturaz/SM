@@ -17,7 +17,7 @@ public class PersonController : PersonPot
 
 
 	//initiating a game difficulty
-    //0 newbie, 1 easy, 2 med, 3 hard, 4 insane
+    //0 insane, 4 newbie 
     private int _difficulty = 0;
 
     private List<Person> _all = new List<Person>();
@@ -82,6 +82,11 @@ public class PersonController : PersonPot
         set { _locked = value; }
     }
 
+    /// <summary>
+    /// 
+    ///game difficulty
+    ///0 newbie, 1 easy, 2 med, 3 hard, 4 insane
+    /// </summary>
     public int Difficulty
     {
         get { return _difficulty; }
@@ -106,7 +111,10 @@ public class PersonController : PersonPot
         set { _queues = value; }
     }
 
-
+    /// <summary>
+    /// The current game Difficulty we are playing
+    /// </summary>
+    /// <returns></returns>
     public StartingCondition CurrentCondition()
     {return Conditions[Difficulty];}
 
@@ -128,13 +136,13 @@ public class PersonController : PersonPot
         int factor = 100;
         int ini = multiplier*factor;
 
-        StartingCondition newbie = new StartingCondition(8, ini, ini, ini, ini, ini, ini, 100000, 5 * factor);
-        StartingCondition easy = new StartingCondition(18, 900, 900, 900, 900, 900, 900, 900, 4 * factor);
-        StartingCondition med = new StartingCondition(16, 800, 800, 800, 800, 800, 800, 800, 3 * factor);
-        StartingCondition hard = new StartingCondition(14, 700, 700, 700, 700, 700, 700, 700, 2 * factor);
-        StartingCondition insane = new StartingCondition(12, 600, 600, 600, 600, 600, 600, 600, 1 * factor);
+        StartingCondition insane = new StartingCondition(4, 600, 600, 600, 600, 600, 600, 600, 1 * factor, 1);
+        StartingCondition hard = new StartingCondition(5, 700, 700, 700, 700, 700, 700, 700, 2 * factor, 2);
+        StartingCondition med = new StartingCondition(6, 800, 800, 800, 800, 800, 800, 800, 3 * factor, 3);
+        StartingCondition easy = new StartingCondition(7, 900, 900, 900, 900, 900, 900, 900, 4 * factor, 4);
+        StartingCondition newbie = new StartingCondition(8, ini, ini, ini, ini, ini, ini, 100000, 5 * factor, 5);
 
-        Conditions = new StartingCondition[] {newbie, easy, med, hard, insane};
+        Conditions = new StartingCondition[] { insane, hard, med, easy, newbie, };
     }
 
     private bool init;
@@ -972,8 +980,11 @@ public class StartingCondition
     public int iniIron;
     public int iniGold, iniDollar, iniWheelBarrow, iniTool, iniCrate;
 
+    private int _thisDifficultyLevel;//    //0 insane, 4 newbie 
+
+
     public StartingCondition(int iniPersonP, int iniWoodP, int iniFoodP, int iniStoneP, int iniBrickP, int iniIronP,
-        int iniGoldP, int iniDollarP, int iniWheelBarrowP)
+        int iniGoldP, int iniDollarP, int iniWheelBarrowP, int thisDifficultyLevel)
     {
         iniPerson = iniPersonP;
         iniWood = iniWoodP;
@@ -986,6 +997,7 @@ public class StartingCondition
         iniWheelBarrow = iniWheelBarrowP;
         iniTool = iniWheelBarrowP;
         iniCrate = iniWheelBarrowP;
+        _thisDifficultyLevel = thisDifficultyLevel;
     }
 }
 
@@ -994,7 +1006,7 @@ public class StartingCondition
 /// </summary>
 public class PersonControllerSaveLoad
 {
-    //0 newbie, 1 easy, 2 med, 3 hard, 4 insane
+    //    //0 insane, 4 newbie 
     public int Difficulty;
 
     //the counter to do the brainChecks.. BrainCheck is when looking to see if somethinglike a new Job is open

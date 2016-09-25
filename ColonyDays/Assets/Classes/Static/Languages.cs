@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Languages
 {
-    private static string _currentLang = "EN";
+    private static string _currentLang = "English";
 
 
     private static  string _houseTail = ". SugarMiller's live here and enjoy having a nice meal at least once in a while";
@@ -134,20 +134,267 @@ public class Languages
 	   { "Wood", "Wood"},
 
 	};
+
+    //ESPANNOL
+    private static string _houseTailES = ". A los Azucareros les encanta comerse una buena comida de vez en cuando";
+    private static string _animalFarmTailES = ", aqui se pueden criar diferentes animales";
+    private static string _fieldFarmTailES = ", aqui se puede cultivar diferentes cultivos";
+    private static string _asLongHasInputES = ", siempre y cuando tenga la materia prima necesaria";
+    private static string _produceES = "Aqui los trabajadores produciran el producto selectionado, siempre y cuando exista la materia prima";
+    private static string _storageES =
+        "Aqui se almacenan todos los productos, si se llena los ciudadanos no tendran donde almacenar sus cosas";
+    private static string _militarES = "Con esta construccion la Amenaza Pirata decrece, " +
+                                       "para ser efectiva necesita trabajadores. Mientras mas, mejor";
+
+
+    static Dictionary<string, string> _spanish = new Dictionary<string, string>()
+	{
+       //Descriptions
+       //Infr
+	   { "Road.Desc","Solo para propositos de decoracion. De todas maneras las personas se sienten mas felices si la via esta pavimentada alrededor de ellos"},
+	   { "BridgeTrail.Desc","Por aqui las personas pasan de un lado del mapa a otro"},
+	   { "BridgeRoad.Desc","Por aqui las personas pasan de un lado del mapa a otro. Los ciudadanos adoran estos puentes. " +
+	                       "Les da un sentido de prosperidad y felicidad" +_houseTailES},
+	   { "LightHouse.Desc","Ayuda a que el puedo sea descubierto mas facil. Añade a la Reputacion del Puerto siempre y cuando la llama este encendida"},
+	   { H.Masonry + ".Desc","Una construccion muy imporatante. Estos trabajadores son los que construyen y cuando no tienen nada que hacer se dedican a transportar bienes"},
+
+       //House
+	   { "Bohio.Desc","El Bohio, una casa con condiciones muy rudimentarias, los ciudadanos se abochornan de vivir aqui, una familia puede tener el maximo de 1 niño aqui" +_houseTail},
+	   { "HouseA.Desc","Casa pequeña de madera, una familia puede tener el maximo de 2 niños aqui" +_houseTailES},
+	   { "HouseB.Desc","Small house, una familia puede tener el maximo de 2 niños aqui" +_houseTailES },
+	   { "HouseTwoFloor.Desc","Wooden Medium house, una familia puede tener el maximo de 3 niños aqui"+_houseTailES},
+	   { "HouseMed.Desc","Medium house, una familia puede tener el maximo de 2 a 3 niños aqui"+_houseTailES},
+	   { "HouseLargeA.Desc","Large house, una familia puede tener el maximo de 3 a 4 niños aqui"+_houseTailES},
+	   { "HouseLargeB.Desc","Large house, una familia puede tener el maximo de 3 a 4 niños aqui"+_houseTailES},
+	   { "HouseLargeC.Desc","Large house, una familia puede tener el maximo de 4 niños aqui"+_houseTailES},
+       
+       //Farms
+       //Animal
+	   { "AnimalFarmSmall.Desc","Finca de animales chica"+_animalFarmTailES},
+	   { "AnimalFarmMed.Desc","Finca de animales mediana"+_animalFarmTailES},
+	   { "AnimalFarmLarge.Desc","Finca de animales grande"+_animalFarmTailES},
+	   { "AnimalFarmXLarge.Desc","Finca de animales super grande"+_animalFarmTailES},
+       //Fields
+	   { "FieldFarmSmall.Desc","Finca de cultivos chica"+_fieldFarmTailES},
+	   { "FieldFarmMed.Desc","Finca de cultivos mediana"+_fieldFarmTailES},
+	   { "FieldFarmLarge.Desc","Finca de cultivos grande"+_fieldFarmTailES},
+	   { "FieldFarmXLarge.Desc","Finca de cultivos super grande"+_fieldFarmTailES},
+
+       //Raw
+	   { "Ceramic.Desc","Aqui se producen productos de ceramica como platos, jarras, etc"},
+	   { H.Fishing_Hut + ".Desc","Aqui se pescan peces"},
+	   { "FishRegular.Desc","Aqui se pescan peces"},
+	   { "Mine.Desc","Esta es una mina"},
+	   { "MountainMine.Desc","Esta es una mina"},
+	   { "Resin.Desc","La Resina de saca de los arboles aqui"},
+	   {  H.LumberMill +".Desc","Aqui los trabajadores buscan y extraen recursos naturales como madera, piedra y minerales"},
+	   { "BlackSmith.Desc","Aqui el trabajador produce elementos de la forja "+_asLongHasInputES},
+	   { "SaltMine.Desc","Aqui se produce la sal"},
+
+       //Prod
+	   { "Brick.Desc",_produceES},
+	   { "Carpintery.Desc",_produceES},
+	   { "Cigars.Desc",_produceES},
+	   { "Mill.Desc",_produceES},
+	   { H.Tailor+".Desc",_produceES},
+	   { "Tilery.Desc",_produceES},
+	   { "CannonParts.Desc",_produceES},
+	   { H.Distillery+".Desc",_produceES},
+	   { "Chocolate.Desc",_produceES},
+	   { "Ink.Desc",_produceES},
+
+       //Ind
+	   { "Cloth.Desc",_produceES},
+	   { "GunPowder.Desc",_produceES},
+	   { "Paper_Mill.Desc",_produceES},
+	   { "Printer.Desc",_produceES},
+	   { "CoinStamp.Desc",_produceES},
+	   { "Silk.Desc",_produceES},
+	   { "SugarMill.Desc",_produceES},
+	   { "Foundry.Desc",_produceES},
+	   { "SteelFoundry.Desc",_produceES},
+
+       //trade
+	   { "Dock.Desc","Aqui se pueden importar y exportar bienes"},
+	   { H.Shipyard + ".Desc","Aqui se reparan los barcos, para ser efectivo debe tener los materiales necesarios"},
+	   { "Supplier.Desc","Aqui se abastecen los barcos para sus largos viajes, siempre y cuando haiga bienes aqui"},
+	   { "StorageSmall.Desc",_storageES},
+	   { "StorageMed.Desc",_storageES},
+	   { "StorageBig.Desc",_storageES},
+	   { "StorageBigTwoDoors.Desc",_storageES},
+	   { "StorageExtraBig.Desc",_storageES},
+
+       //gov
+	   { "Library.Desc","Aqui la gente viene a nutrirse de conocimiento. Mientras mas libros haiga es mejor"},
+	   { "School.Desc","Aqui empieza la educacion de los Azucareros, mientras mas mejor"},
+	   { "TradesSchool.Desc","Aqui los Azucareros aprenden habilidades especiales, mientras mas mejor"},
+	   { "TownHouse.Desc","La casa de gobierno le da alegria y sentido de prosperidad a los ciudadanos"},
+
+       //other
+	   { "Church.Desc","La iglesia le da felicidad y esperanza a la gente"},
+	   { "Tavern.Desc","Aqui la gente viene a tomar y a divertirse"},
+	   { "Shack.Desc","Shack ESP"},
+
+       //Militar
+	   { "PostGuard.Desc",_militarES},
+	   { "Fort.Desc",_militarES},
+	   { "Morro.Desc",_militarES+". Una vez construida esta construccion los piratas se aconsejaran mejor"},
+
+
+
+
+       //Main GUI
+	   { "SaveGame.Dialog", "Salva tu partida"},
+	   { "LoadGame.Dialog", "Carga una partida"},
+	   { "NameToSave", "Salva tu partida como:"},
+	   { "NameToLoad", "La partida selecciona es:"},
+	   { "OverWrite", "Ya existe un archivo con este nombre. Quieres sobre escribirlo?"},
+	   { "Delete", "Estas seguro que quieres borrar esta partida?"},
+	   { "NotHDDSpace", "Not hay espacio suficiente en torre {0} para salvar la partida"},
+	   { "GameOverPirate", "Lo siento, perdiste el juego! Los piratas te atacaron y mataron a todos."},
+	   { "GameOverMoney", "Lo siento, perdiste el juego! La corona no te ayudara mas con tu sueño Caribeño."},
+	   { "BuyRegion.WithMoney", "Estas seguro que quieres comprar esta region."},
+	   { "BuyRegion.WithOutMoney", "No tienes dinero para comprar esto ahora."},
+	   { "Feedback", "Sugerencias si...:) Gracias. 8) "},
+	   { "BugReport", "Bug, mandalo, gracias"},	  
+       { "Invitation", "Pon el email de un amigo, quizas sea invitado a la Beta"},  
+       { "Info", ""},//use for informational Dialogs
+
+
+       //words
+       //Fiel Farms
+	   { "Bean", "Frijol"},
+	   { "Potato", "Papa"},
+	   { "SugarCane", "Caña"},
+	   { "Corn", "Maiz"},
+	   { "Cotton", "Algodon"},
+	   { "Banana", "Platano"},
+	   { "Coconut", "Coco"},
+       //Animal Farm
+	   { "Chicken", "Pollo"},
+	   { "Egg", "Huevo"},
+	   { "Pork", "Cerdo"},
+	   { "Beef", "Res"},
+	   { "Leather", "Cuero"},
+	   { "Fish", "Pescado"},
+       //mines
+	   { "Gold", "Oro"},
+	   { "Stone", "Piedra"},
+	   { "Iron", "Hierro"},
+
+	   { "Clay", "Arcilla"},
+	   { "Ceramic", "Ceramica"},
+	   { "Wood", "Madera"},
+
+       //Prod
+	   { "Tool", "Herramienta"},
+	   { "Brick", "Ladrillo"},
+	   { "Tonel", "Tonel"},
+	   { "Cigar", "Tabaco"},
+	   { "Tile", "Loza"},
+	   { "Fabric", "Tejido"},
+	   { "GunPowder", "Polvora"},
+	   { "Paper", "Papel"},
+	   { "Map", "Mapa"},
+	   { "Book", "Libro"},
+	   { "Sugar", "Azucar"},
+	   { "None", "Ninguno"},
+       //
+	   { "Person", "Persona"},
+	   { "Food", "Comida"},
+	   { "Dollar", "Dollar"},
+	   { "Salt", "Sal"},
+	   { "Coal", "Carbon"},
+	   { "Sulfur", "Sulfuro"},
+	   { "Potassium", "Potasio"},
+	   { "Silver", "Plata"},
+	   { "Henequen", "Henequen"},
+	   //
+       { "Sail", "Vela"},
+       { "String", "Cuerda"},
+       { "Nail", "Puntilla"},
+       { "CannonBall", "Bola de cañon"},
+       { "TobaccoLeaf", "Hoja de tabaco"},
+       { "CoffeeBean", "Grano de cafe"},
+       { "Cacao", "Cocoa"},
+       { "Chocolate", "Chocolate"},
+       { "Weapon", "Arma"},
+       { "WheelBarrow", "Carretilla"},
+       //
+       { "Diamond", "Diamante"},
+       { "Jewel", "Joya"},
+       { "Cloth", "Ropa"},
+       { "Rum", "Ron"},
+       { "Wine", "Vino"},
+       { "Ore", "Mineral"},
+       { "Crate", "Caja"},
+       { "Coin", "Moneda"},
+       { "CannonPart", "Pieza de cañon"},
+       { "Ink", "Tinta"},
+       { "Steel", "Acero"},
+       //
+       { "CornFlower", "Harina de castilla"},
+       { "Bread", "Pan"},
+       { "Carrot", "Zanahoria"},
+       { "Tomato", "Tomate"},
+       { "Cucumber", "Pepino"},
+       { "Cabbage", "Col"},
+       { "Lettuce", "Lechuga"},
+       { "SweetPotato", "Boniato"},
+       { "Yucca", "Yuca"},
+       { "Pineapple", "Piña"},
+       //
+       { "Papaya", "Fruta bomba"},
+       { "Wool", "Lana"},
+       { "Shoe", "Zapato"},
+       { "CigarBox", "Caja de tabaco"},
+       { "Water", "Agua"},
+       { "Beer", "Cerveza"},
+       { "Honey", "Miel"},
+       { "Bucket", "Cubo"},
+       { "Cart", "Carreta"},
+       { "RoofTile", "Teja"},
+       { "Utensil", "Utensillo"},
+       { "Stop", "Pare"},
+
+
+
+
+       
+       //Menus
+       { "New Game", "Juego Nuevo"},
+
+	};
     
     public static string ReturnString(string key)
     {
-        if (_currentLang=="EN")
+        if (_currentLang == "English")
         {
             if (_english.ContainsKey(key))
             {
                 return _english[key];
             }
-            return key + " not found Languages(124)";
+            Debug.Log(key + " not found Languages");
+            return key;
+        }
+        else if (_currentLang == "Español")
+        {
+            if (_spanish.ContainsKey(key))
+            {
+                return _spanish[key];
+            }
+            return key + " not found in ES Languages";
         }
         return "not languages selected ";
     }
 
+    public static void SetCurrentLang(string lang)
+    {
+        _currentLang = lang;
+    }
 
-
+    internal static string CurrentLang()
+    {
+        return _currentLang;
+    }
 }

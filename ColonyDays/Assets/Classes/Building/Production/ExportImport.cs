@@ -120,9 +120,9 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Jewel, 450, 8490, 8));
 
         
-        _prodSpecs.Add(new ProdSpec(P.CrystalCoin, 1000, 8120, 5));
-        _prodSpecs.Add(new ProdSpec(P.CaribbeanCoin, 1500, 11441, 5));
-        _prodSpecs.Add(new ProdSpec(P.SugarCoin, 2000, 14550, 5));
+        //_prodSpecs.Add(new ProdSpec(P.CrystalCoin, 1000, 8120, 5));
+        //_prodSpecs.Add(new ProdSpec(P.CaribbeanCoin, 1500, 11441, 5));
+        _prodSpecs.Add(new ProdSpec(P.Coin, 2000, 14550, 5));
 
 
         _prodSpecs.Add(new ProdSpec(P.Stone, 50, 2515, 20));

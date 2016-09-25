@@ -59,7 +59,6 @@ public class Building : General, Iinfo
 
 
 
-
     //the zone this building landed. The bridges have two landing zones and are not kept here
     private List<VectorLand> _landZone = new List<VectorLand>();
     /// <summary>
@@ -709,6 +708,12 @@ public class Building : General, Iinfo
     /// </summary>
     private void AddressNewProductOnBuilding()
     {
+        //nothing needs to get done 
+        if (CurrentProd.Product == P.Stop)
+        {
+            return;
+        }
+
         if (MyId.Contains("FieldFarm"))
         {
             var st = (Structure) this;
@@ -1561,29 +1566,26 @@ public class Building : General, Iinfo
     /// checkBox val : 1-5
     /// </summary>
     /// <param name="which"></param>
-    public void ChangeSalary(string which)
+    public string ChangeSalary(string which)
     {
-        if (which == "Sal_Toggle_1")
+        if (which == "Less")
         {
-            DollarsPay = BasePay() - 2;
-        }
-        else if (which == "Sal_Toggle_2")
+            DollarsPay -= 1;
+        } 
+        if (which == "More")
         {
-            DollarsPay = BasePay() - 1;
+            DollarsPay += 1;
         }
-        else if (which == "Sal_Toggle_3")
+
+        //wont be less than 1 
+        if (DollarsPay < 1)
         {
-            DollarsPay = BasePay();
+            DollarsPay = 1;
         }
-        else if (which == "Sal_Toggle_4")
-        {
-            DollarsPay = BasePay() + 1;
-        }
-        else if (which == "Sal_Toggle_5")
-        {
-            DollarsPay = BasePay() + 2;
-        }
+
         BuildingPot.Control.Registro.ResaveOnRegistro(MyId);
+
+        return DollarsPay+"";
     }
 
     /// <summary>
@@ -2437,6 +2439,11 @@ public class Building : General, Iinfo
     internal void Produce(float amt, Person person, bool addToBuildInv = true, P prod = P.None)
     {
         P prodHere = DefineProdHere(prod);
+
+        if (prodHere == P.Stop)
+        {
+            return;
+        }
 
         var doIHaveInput = DoBuildHaveRawResources();
         var hasStorageRoom = DoesStorageHaveCapacity();
@@ -3741,6 +3748,7 @@ public class Building : General, Iinfo
     }
 
 #endregion
+
 
 
 }

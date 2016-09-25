@@ -48,7 +48,7 @@ public class ForSaleRegionGO : General
     void Start()
     {
         var poly = U2D.FromRectToPoly(Region);
-        buildingPrev = (BigBoxPrev)CreatePlane.CreatePlan(Root.bigBoxPrev, Root.grayDarkSemi, container: transform);
+        buildingPrev = (BigBoxPrev)CreatePlane.CreatePlan(Root.bigBoxPrev, Root.dashedLinedSquare, container: transform);
         buildingPrev.UpdatePos(poly, .25f);
         buildingPrev.transform.position = U2D.FromV2ToV3(Region.center);
     }

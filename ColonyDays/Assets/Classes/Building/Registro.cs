@@ -727,4 +727,14 @@ public class Registro : MonoBehaviour
         }
         return new List<Vector3>();
     }
+
+    internal Vector3 AverageOfAllBuildingsNow()
+    {
+        Vector3 sum = new Vector3();
+        for (int i = 0; i < AllBuilding.Count; i++)
+        {
+            sum += AllBuilding.ElementAt(i).Value.transform.position;
+        }
+        return sum/AllBuilding.Count;
+    }
 }

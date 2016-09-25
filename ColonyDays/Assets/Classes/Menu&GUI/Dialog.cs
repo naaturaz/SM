@@ -172,8 +172,10 @@ public class Dialog
     public static string CreateFile(string type, string text)
     {
         var nameFile =
-             SteamUser.GetSteamID() + "." + SteamFriends.GetPersonaName() + "." +
-             type + "-" + GameScene.TimeStamp() + ".zip";
+              SteamFriends.GetPersonaName() + "." + SteamUser.GetSteamID() +
+              "_" + DateTime.Now.ToString("yy.MM.dd") +
+              "_" + DateTime.Now.ToString("hh.mm.ss") +
+              "_" + type + ".zip";
 
         var path = Application.dataPath + "/" + nameFile;
         Debug.Log(path);

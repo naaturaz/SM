@@ -27,7 +27,8 @@
     // Use this for initialization
 	void Start ()
 	{
-	    _control = PersonController.CreatePersonController(Root.personController, 0,
+	    _control = PersonController.CreatePersonController(Root.personController,
+            Program.MyScreen1.Difficulty,
 	        Program.ClassContainer.transform);
 	    _saveLoad = (PersonSaveLoad) Create(Root.personSaveLoad, container: Program.ClassContainer.transform);
 

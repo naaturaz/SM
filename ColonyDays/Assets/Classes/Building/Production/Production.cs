@@ -64,6 +64,12 @@ public class Production  {
         {
             return prod;
         }
+
+        //the Stop ID
+        if (IdP == 1000)
+        {
+            return new ProductInfo(P.Stop, null, H.None);
+        }
         
        //Debug.Log("Prod not found: ReturnExactProduct(). pls check");
         return null;
@@ -442,9 +448,7 @@ public class Production  {
         List<InputElement> prodForm2 = new List<InputElement>() { si, go2, _eleCoalComb };
         List<InputElement> prodForm3 = new List<InputElement>() { go, _eleCoalComb };
 
-        InputProdCheckAndAdd(new ProductInfo(P.CrystalCoin, prodForm1, H.CoinStamp));
-        InputProdCheckAndAdd(new ProductInfo(P.CaribbeanCoin, prodForm2, H.CoinStamp));
-        InputProdCheckAndAdd(new ProductInfo(P.SugarCoin, prodForm3, H.CoinStamp));
+        InputProdCheckAndAdd(new ProductInfo(P.Coin, prodForm3, H.CoinStamp));
     }
 
     private void PaperNewsAndBook()

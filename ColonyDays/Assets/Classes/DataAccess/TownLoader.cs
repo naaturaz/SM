@@ -39,6 +39,10 @@ class TownLoader
         }
     }
 
+    /// <summary>
+    /// Returns the Data of a Random town for initial game 
+    /// </summary>
+    /// <returns></returns>
     public static BuildingData LoadDefault()
     {
         _dataPath = Application.dataPath;
@@ -69,7 +73,14 @@ class TownLoader
     /// <returns></returns>
     static string GetRandomTownFile()
     {
-        var xmls = Directory.GetFiles(_dataPath, "Town*.xml").ToList();
+        //uncomment line below to create Template towns. Also make sure in PErsonController
+        //the amt of people spawned will be zero
+        //return "";
+       
+        //game Difficulty is added for load 'Town4A.xml' for example
+        var townName = "Town" + Program.MyScreen1.Difficulty + "*.xml";
+         
+        var xmls = Directory.GetFiles(_dataPath, townName).ToList();
         return xmls[UMath.GiveRandom(0, xmls.Count)];
     }
 

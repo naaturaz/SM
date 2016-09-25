@@ -27,7 +27,10 @@ public class MiniMapRTS : GenericCameraComponent {
 
     //reducing the normal size of map
     Vector2 reducedNE, reducedSW , reducedNW;
-    private float reduction = 1;//50
+
+    //this is the Variable that reduce the map limits in where the camera can go  
+    //todo a X and Z reduction is needed 
+    private float reduction = 1;//50 //30
 
 
     float terraStartX;

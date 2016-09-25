@@ -61,10 +61,29 @@ public class Root : MonoBehaviour
         public static string narrowIslandsLand = "Prefab/Terrain/Narrow_Islands_Land";
 
 
+        //this terrains are the ones will show on the New Game menu
         public static List<string> BigTerrains = new List<string>()
         {
-            bayAndMountain, bayAndMountainSoft, bayAndMountain1River, two_Islands_1_River, oneLand2Islands, 
-            narrowIslandsLand
+            //bayAndMountain, bayAndMountainSoft, 
+            bayAndMountain1River, 
+            //two_Islands_1_River,
+            oneLand2Islands, 
+            narrowIslandsLand,
+            "Prefab/Terrain/Matanzas",//
+            "Prefab/Terrain/3_Points",
+            //"Prefab/Terrain/3_Islands",
+            "Prefab/Terrain/Middle_Island",
+            "Prefab/Terrain/3_Circles_Land",
+            "Prefab/Terrain/Bed_Land",
+            "Prefab/Terrain/Mousee_Island",
+            "Prefab/Terrain/Encounter_River",
+
+            "Prefab/Terrain/Worms_Land",
+            "Prefab/Terrain/Corner_Sea",
+            "Prefab/Terrain/Curtain_Land",
+            //"Prefab/Terrain/Stack_Land",
+            "Prefab/Terrain/Fingers_Land",
+
         }; 
 
 
@@ -101,6 +120,7 @@ public class Root : MonoBehaviour
         public static string palm6 = "Prefab/Terrain/Spawner/Palm/Palm06";
 
         public static string palm10 = "Prefab/Terrain/Spawner/Palm/Palm10";
+        public static string palm11 = "Prefab/Terrain/Spawner/Palm/Palm11";
 
         public static string palm20 = "Prefab/Terrain/Spawner/Palm/Palm20";
         public static string palm21 = "Prefab/Terrain/Spawner/Palm/Palm21";
@@ -290,6 +310,8 @@ public class Root : MonoBehaviour
     public static string matGravillaRoad = "Prefab/Mats/GravillaRoad";
     public static string matBuildingBase1 = "Prefab/Mats/Building/Building_Base1";
     public static string matBuildingBase2 = "Prefab/Mats/Building/Building_Base2";
+    public static string dashedLinedSquare = "Prefab/Mats/Dashed_Line_Square";
+
 
     public static string matFarmSoil = "Prefab/Mats/FarmSoil";
 

@@ -74,10 +74,11 @@ public class BuyRegionManager
             return;
         }
 
-        var firstBuild = BuildingPot.Control.Registro.AllBuilding.ElementAt(0).Value.transform.position;
-        var first3x3Regions = MeshController.CrystalManager1.ReturnMySurroundRegions(U2D.FromV3ToV2(firstBuild));
+        //var firstBuild = BuildingPot.Control.Registro.AllBuilding.ElementAt(0).Value.transform.position;
+        var middleOfTown = BuildingPot.Control.Registro.AverageOfAllBuildingsNow();
+        var first1x1Regions = MeshController.CrystalManager1.ReturnMySurroundRegions(U2D.FromV3ToV2(middleOfTown), 1);
 
-        _unlockRegions.AddRange(first3x3Regions);
+        _unlockRegions.AddRange(first1x1Regions);
     }
 
    
@@ -95,8 +96,8 @@ public class BuyRegionManager
         _unlockRegions = pData.PersonControllerSaveLoad.UnlockRegions;
     }
 
-    private int foodMul = 100;
-    private int moneyMul = 10;
+    private int foodMul = 1000;
+    private int moneyMul = 1000;
     public bool HasEnoughResourcesToBuy()
     {
         var foodNeeded = FoodNeeded();

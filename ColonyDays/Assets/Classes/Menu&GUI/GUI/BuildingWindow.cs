@@ -39,9 +39,8 @@ public class BuildingWindow : GUIElement {
     private Vector3 _importIniPosOnProcess;
     private Vector3 _exportIniPosOnProcess;
 
-    //private Vector3 _iniPosForProdList;
     private GameObject _salary;
-    List<Toggle> toggles=new List<Toggle>() ; 
+
 
     //upg btns
     private GameObject _upg_Mat_Btn;
@@ -49,6 +48,11 @@ public class BuildingWindow : GUIElement {
 
     private GameObject _demolish_Btn; //Upg_Mat_Btn
     private GameObject _cancelDemolish_Btn; //Upg_Mat_Btn
+
+
+    //Salary
+    private Text _currSalaryTxt;
+
 
 
 
@@ -94,7 +98,9 @@ public class BuildingWindow : GUIElement {
 
 
         _salary = General.FindGameObjectInHierarchy("Salary", _general);
-
+        
+        var currSalary = FindGameObjectInHierarchy("Current_Salary", _salary);
+        _currSalaryTxt = currSalary.GetComponent<Text>();
 
         
         _title = GetChildCalled(H.Title).GetComponent<Text>();
@@ -130,9 +136,6 @@ public class BuildingWindow : GUIElement {
 
         _importIniPosOnProcess = GetGrandChildCalled(H.IniPos_Import_OnProcess).transform.position;
         _exportIniPosOnProcess = GetGrandChildCalled(H.IniPos_Export_OnProcess).transform.position;
-
-   //     _iniPosForProdList = GetGrandChildCalled(H.Prd_Btns_Pos).transform.position;
-
 
 
         _upg_Mat_Btn = GetGrandChildCalled(H.Upg_Mat_Btn);
@@ -173,9 +176,7 @@ public class BuildingWindow : GUIElement {
         CheckIfMatMaxOut();
         CheckIfCapMaxOut();
 
-        InitToggles();//in case they have not been set yet
         HideSalaryIfHouseOrStorage();
-        Mark1stCheckBox();
 
     }
 
@@ -297,6 +298,8 @@ public class BuildingWindow : GUIElement {
         
         _showAInventory.ManualUpdate();
         _inv.text = BuildStringInv(_building);
+        _currSalaryTxt.text = BuildingPot.Control.Registro.SelectBuilding.DollarsPay+"";
+
         DemolishBtn();
     }
 
@@ -409,29 +412,9 @@ public class BuildingWindow : GUIElement {
     }
 
 
-    #region CheckBoxes / Toggles
+    #region Salary
 
-    private bool ignore;//will ignore toggling so it doestn doo and infinity loop 
 
-    private void InitToggles()
-    {
-        if (toggles.Count > 0)
-        {
-            UnMarkAllCheckBoxes();
-            return;
-        }
-
-        toggles = new List<Toggle>()
-        {
-            GetGrandChildCalledFromThis("Toggle_1", _general).GetComponent<Toggle>(),
-            GetGrandChildCalledFromThis("Toggle_2", _general).GetComponent<Toggle>(),
-            GetGrandChildCalledFromThis("Toggle_3", _general).GetComponent<Toggle>(),
-            GetGrandChildCalledFromThis("Toggle_4", _general).GetComponent<Toggle>(),
-            GetGrandChildCalledFromThis("Toggle_5", _general).GetComponent<Toggle>(),
-        };
-
-        UnMarkAllCheckBoxes();
-    }
 
 
     /// <summary>
@@ -440,75 +423,14 @@ public class BuildingWindow : GUIElement {
     /// <param name="action"></param>
     public void ClickedOnChangeSalaryCheckBox(string action)
     {
-        if (ignore)
-        {//will ignore the toggle so the event listener wont do anyting
-            return;
-        }
 
         //change salary
-        UnMarkAllCheckBoxes();
-        MarkCheckBox(action);
-        BuildingPot.Control.Registro.SelectBuilding.ChangeSalary(action);
-    }
-
-    void UnMarkAllCheckBoxes()
-    {
-        for (int i = 0; i < toggles.Count; i++)
-        {
-            ToggleThisOne(i, false);
-        }
-    }
-
-    void MarkCheckBox(string action)
-    {
-        //Toggle_1
-        var subSt = action.Substring(action.Length - 1);
-        var index = int.Parse(subSt);
-        //-1 bz the toggles are from 1-5
-
-        ToggleThisOne(index - 1, true);
+        _currSalaryTxt.text = BuildingPot.Control.Registro.SelectBuilding.ChangeSalary(action);
     }
 
 
-    void ToggleThisOne(int index, bool val)
-    {
-        ignore = true;//will ignore the toggle so the event listener wont do anyting
-        toggles[index].isOn = val;
-        ignore = false;
-    }
 
 
-    /// <summary>
-    /// Happens when the first time the check box is loaded 
-    /// </summary>
-    void Mark1stCheckBox()
-    {
-        var diff = BuildingPot.Control.Registro.SelectBuilding.WhichIsTheBuildingSalaryStatus();
-        var index = -1;//the index toggle is gonna be mark
-
-        if (diff == -2)
-        {
-            index = 0;
-        }    
-        else if (diff == -1)
-        {
-            index = 1;
-        }   
-        else if (diff == 0)
-        {
-            index = 2;
-        }     
-        else if (diff == 1)
-        {
-            index = 3;
-        }     
-        else if (diff == 2)
-        {
-            index = 4;
-        }
-
-        ToggleThisOne(index, true);
-    }
 
 #endregion
 

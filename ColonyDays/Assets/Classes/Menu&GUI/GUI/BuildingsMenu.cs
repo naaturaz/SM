@@ -70,6 +70,12 @@ public class BuildingsMenu : GUIElement
 
     public void Show(List<H> vals)
     {
+        //means Im a creating new Towns to be saved as Initial(Templates) towns
+        if (Developer.IsDev && BuildingPot.Control.Registro.AllBuilding.Count == 0)
+        {
+            BuildingPot.CreateUnlockBuilds();
+        }
+
         BuildingPot.UnlockBuilds1.UpdateBuildsStatuses();
         LoadMenu(vals);
         transform.position = iniPos;

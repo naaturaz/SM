@@ -468,4 +468,13 @@ public class Structure : StructureParent
         return HType == H.School || HType == H.TradesSchool || HType == H.Church
                || HType == H.Tavern;
     }
+
+    /// <summary>
+    /// It is producing if current Product is not Stop 
+    /// </summary>
+    /// <returns></returns>
+    internal bool IsProducingNow()
+    {
+        return CurrentProd.Product != P.Stop;
+    }
 }

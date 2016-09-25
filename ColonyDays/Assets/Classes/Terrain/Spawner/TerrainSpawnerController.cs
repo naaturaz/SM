@@ -20,8 +20,11 @@ public class TerrainSpawnerController : ControllerParent
     int howManyStonesToSpawn =3;//3
     int howManyIronToSpawn = 3;//3
     int howManyGoldToSpawn = 3;//3
-    int howManyOrnaToSpawn = 30;//50  20
-    int howManyGrassToSpawn = 0;//40
+    int howManyOrnaToSpawn = 40;//30    50      20
+    int howManyGrassToSpawn = 10;//40
+    //the ones spawn in the marine bounds 
+    int howManyMarineBoundsToSpawn = 0;//
+    int howManyMountainBoundsToSpawn = 0;//
 
     List<TerrainRamdonSpawner> _treesPool = new List<TerrainRamdonSpawner>(); 
 
@@ -30,35 +33,14 @@ public class TerrainSpawnerController : ControllerParent
 
     private List<string> allTrees = new List<string>()
     {
-        // Root.tree1,
-        // Root.tree2, Root.tree3, 
-        //Root.tree4,
- 
-        //Root.tree5, 
-        //Root.tree6, 
-        //Root.tree7,
-
-        
         Root.palm1, Root.palm2,
         Root.palm3, Root.palm4, Root.palm5, Root.palm6, 
-        //Root.palm10  ,
+        Root.palm10  ,Root.palm11  ,
         Root.palm20, Root.palm21, Root.palm22, Root.palm23,
 
-        Root.tree21,
-        Root.tree22,
-        Root.tree23,
-        Root.tree24,
-        Root.tree25,
     };
 
-    List<string> allStones = new List<string>()
-    {
-        //Root.stone0, 
-        Root.stone1,
-        //Root.stone2
-        //, Root.stone3,
-        //Root.stone4, Root.stone5, Root.stone6, Root.stone7,
-    };
+    List<string> allStones = new List<string>(){};
 
     List<string> allIron = new List<string>()
     {
@@ -76,20 +58,15 @@ public class TerrainSpawnerController : ControllerParent
     };
 
     public static  List<string> allOrna = new List<string>(){ };
+    public static List<string> allGrass = new List<string>() { };
+    public static List<string> allMarine = new List<string>() { };
+    public static List<string> allMountain = new List<string>() { };
 
-    public static List<string> allGrass = new List<string>() 
-    { 
-        ////Root.grass1, 
-        //Root.grass2, Root.grass3  ,
-        //Root.grass4, Root.grass5, Root.grass6,
-        //Root.grass7, 
-        //Root.grass8,
-        //Root.grass9,
-        ////Root.grass10,
-        //Root.grass11, Root.grass12,
+    List<H> toSpawnList = new List<H>()
+    {
+        H.Tree, H.Stone, H.Iron, H.Gold, H.Ornament, H.Grass, H.Marine, H.Mountain
+        
     };
-    
-    List<H> toSpawnList = new List<H>() { H.Tree, H.Stone, H.Iron, H.Gold, H.Ornament, H.Grass };
     private List<int> howManySpawn;//will containt a list in serie of how many spawn for each type
 
     int toSpawnListCounter;
@@ -101,12 +78,13 @@ public class TerrainSpawnerController : ControllerParent
     private Vector3 voidNWCorner, voidSECorner;//starting zone, will not spawn anything btw them. 
 
     //List that holds the spawned objects 
-
     List<TreeVeget> treeList = new List<TreeVeget>();
     List<StoneRock> stoneList = new List<StoneRock>();
     List<IronRock> ironList = new List<IronRock>();
     List<StillElement> ornaList = new List<StillElement>();
     List<StillElement> grassList = new List<StillElement>();
+    List<StillElement> marineList = new List<StillElement>();
+    List<StillElement> mountainList = new List<StillElement>();
     private bool _isToLoadFromFile;
 
     public bool IsToLoadFromFile
@@ -125,15 +103,12 @@ public class TerrainSpawnerController : ControllerParent
 
     public void ReSaveStillElement(StillElement ele)
     {
-        //return;
-
         var index = AllRandomObjList.IndexOf(ele);
 
         if (index == -1)
         {
             index = AllRandomObjList.ToList().FindIndex(a => a.MyId == ele.MyId);
         }
-
 
         AllRandomObjList[index].MaxHeight = ele.MaxHeight;
 
@@ -143,8 +118,6 @@ public class TerrainSpawnerController : ControllerParent
         AllSpawnedDataList[index].TreeFall = ele.TreeFall;
         AllSpawnedDataList[index].Weight = ele.Weight;
     }
-
-
 
     public StillElement Find(string key)
     {
@@ -161,8 +134,6 @@ public class TerrainSpawnerController : ControllerParent
         return AllRandomObjList[key] as StillElement;
     }
 
-
-
     public bool IsToSave;
 
     private int loadingAllowTimes = 1;//how many times system is allow to load 
@@ -174,30 +145,35 @@ public class TerrainSpawnerController : ControllerParent
         //CreateTreePool();
 
 #if UNITY_EDITOR
-        multiplier = 2;//20
-        howManyGrassToSpawn = 0;//40
+        multiplier = 2;//2
+        howManyGrassToSpawn = 2;//40
 #endif
-
+        AddTreesToTreesRoots();
         DefineAllOrnaRoots();
+        DefineAllStoneRoots();
         DefineAllLawnRoots();
+        DefineMarinesToRoots();
+        DefineMountainsToRoots();
 
         DefineStartVoidArea(1f, 1f);//20,20
         howManySpawn = new List<int>() {
             Multiplier(howManyTreesToSpawn), Multiplier(howManyStonesToSpawn), 
             Multiplier(howManyIronToSpawn), Multiplier(howManyGoldToSpawn),
-            Multiplier(howManyOrnaToSpawn), Multiplier(howManyGrassToSpawn)
+            Multiplier(howManyOrnaToSpawn), Multiplier(howManyGrassToSpawn),
+            Multiplier(howManyMarineBoundsToSpawn),
+            Multiplier(howManyMountainBoundsToSpawn),
+
         };
 
         float minHeightAboveSeaLevel = 1.2f;//1
         minHeightToSpawn = Program.gameScene.WaterBody.transform.position.y + minHeightAboveSeaLevel;
         maxHeightToSpawn = minHeightToSpawn + 6.9f;
 
-
     }
 
     private void DefineAllLawnRoots()
     {
-        var howManyLawnInEachFolder = 15+1;
+        var howManyLawnInEachFolder = 5+1;
         var add = "";
 
         //one ofr each folder
@@ -235,11 +211,44 @@ public class TerrainSpawnerController : ControllerParent
 
     private void DefineAllOrnaRoots()
     {
-        for (int i = 1; i < 26+1; i++)
+        for (int i = 1; i < 36+1; i++)
         {
             allOrna.Add("Prefab/Terrain/Spawner/Orna/Orna"+i);
         }
+    }  
+    
+    private void DefineAllStoneRoots()
+    {
+        for (int i = 1; i < 3+1; i++)
+        {
+            allStones.Add("Prefab/Terrain/Spawner/Stone/Stone" + i);
+        }
+    }  
+    
+    private void AddTreesToTreesRoots()
+    {
+        for (int i = 1; i < 8+1; i++)
+        {
+            allTrees.Add("Prefab/Terrain/Spawner/Tree" + i);
+        }
     }
+
+    private void DefineMarinesToRoots()
+    {
+        for (int i = 1; i < 3 + 1; i++)
+        {
+            allMarine.Add("Prefab/Terrain/Spawner/Marine/Marine" + i);
+        }
+    }
+
+    private void DefineMountainsToRoots()
+    {
+        for (int i = 1; i < 3 + 1; i++)
+        {
+            allMountain.Add("Prefab/Terrain/Spawner/Mountain/Mountain" + i);
+        }
+    }
+
 
     /// <summary>
     /// So I dont have to change from 10 to 10,000 everytime a need to spawn more or less lawn for ex
@@ -247,8 +256,6 @@ public class TerrainSpawnerController : ControllerParent
     /// <returns></returns>
     int Multiplier(int mul)
     {
-
-
         return mul*multiplier;
     }
 
@@ -267,7 +274,6 @@ public class TerrainSpawnerController : ControllerParent
             ManualStart();
         }
 
-
         if (centerOfTerrain == new Vector3() && m.IniTerr.MathCenter != null
             && m != null && m.IniTerr != null)
         {   //define center of terrain
@@ -285,7 +291,6 @@ public class TerrainSpawnerController : ControllerParent
         {
             SaveData();
             IsToSave = false;
-
             //CreateTreePool();
         }
 
@@ -326,7 +331,6 @@ public class TerrainSpawnerController : ControllerParent
         }
     }
 
-
     /// <summary>
     /// Spawns specific type of object 
     /// </summary>
@@ -360,7 +364,7 @@ public class TerrainSpawnerController : ControllerParent
                     if (isHasMinHeight && isLowerThanMaxHeight &&
                         !usedVertexPos[index] && !isOnTheStartZone && !regionContainTerraCry)
                     {
-                        Vector3 finaPos = AssignRandomIniPosition(AllVertexs[index], 0);
+                        Vector3 finaPos = ReturnIniPosOfSpawn(typePass, AllVertexs[index], 0);
 
                         CreateObjAndAddToMainList(typePass, finaPos, rootToSpawnIndex, index);
                     }
@@ -377,6 +381,30 @@ public class TerrainSpawnerController : ControllerParent
                 isSpawned = true;
             }
         }
+    }
+
+    /// <summary>
+    /// Will valorate if is a Regular type or a marine or mountain type.
+    /// If is marine will only look into the positions of marine bounds 
+    /// </summary>
+    /// <param name="typeP"></param>
+    /// <param name="iniPos"></param>
+    /// <param name="howFar"></param>
+    /// <returns></returns>
+    Vector3 ReturnIniPosOfSpawn(H typeP, Vector3 iniPos, float howFar)
+    {
+        //if is a marine will 
+        if (typeP == H.Marine)
+        {
+            return m.SubMesh.MarineBounds[rand.Next(0, m.SubMesh.MarineBounds.Count)];
+        }
+        if (typeP == H.Mountain)
+        {
+            var v3 =  m.SubMesh.MountainBounds[rand.Next(0, m.SubMesh.MountainBounds.Count)];
+            
+            return new Vector3(v3.x, m.IniTerr.MathCenter.y, v3.z);
+        }
+        return AssignRandomIniPosition(iniPos, howFar);
     }
 
     /// <summary>
@@ -477,8 +505,6 @@ public class TerrainSpawnerController : ControllerParent
         }
     }
 
-
-
     /// <summary>
     /// Will return a random root of a specific type of obj
     /// </summary>
@@ -493,6 +519,8 @@ public class TerrainSpawnerController : ControllerParent
         else if (typePass == H.Gold) { index = rand.Next(0, allGold.Count); }
         else if (typePass == H.Ornament) { index = rand.Next(0, allOrna.Count); }
         else if (typePass == H.Grass) { index = rand.Next(0, allGrass.Count); }
+        else if (typePass == H.Marine) { index = rand.Next(0, allMarine.Count); }
+        else if (typePass == H.Mountain) { index = rand.Next(0, allMountain.Count); }
         return index;
     }
 
@@ -510,6 +538,8 @@ public class TerrainSpawnerController : ControllerParent
         else if (typePass == H.Gold) { rootToSpawn = allGold[index]; }
         else if (typePass == H.Ornament) { rootToSpawn = allOrna[index]; }
         else if (typePass == H.Grass) { rootToSpawn = allGrass[index]; }
+        else if (typePass == H.Marine) { rootToSpawn = allMarine[index]; }
+        else if (typePass == H.Mountain) { rootToSpawn = allMountain[index]; }
         return rootToSpawn;
     }
 
@@ -600,6 +630,16 @@ public class TerrainSpawnerController : ControllerParent
         {
             if (action == H.Create) { grassList.Add((StillElement)temp); }
             else if (action == H.Update) { grassList = UList.UpdateAList(grassList, temp); }
+        }  
+        else if (typePass == H.Marine)
+        {
+            if (action == H.Create) { marineList.Add((StillElement)temp); }
+            else if (action == H.Update) { marineList = UList.UpdateAList(marineList, temp); }
+        }
+        else if (typePass == H.Mountain)
+        {
+            if (action == H.Create) { mountainList.Add((StillElement)temp); }
+            else if (action == H.Update) { mountainList = UList.UpdateAList(mountainList, temp); }
         }
     }
 
@@ -666,8 +706,6 @@ public class TerrainSpawnerController : ControllerParent
             //CreateTreePool();
         }
     }
-
-
 
 
     private int ttlToSpawn = 0;
@@ -738,7 +776,8 @@ public class TerrainSpawnerController : ControllerParent
             origin = ReturnRandomPos(originalPoint, howFar);
         }
         //will add one unit to how far so can move further
-        howFar += 0.1f;
+        //doesnt matter that is positive bz in ReturnRandomPos goes in the range of the same number negative and positive
+        howFar += .1f;
 
         //to check if the poly ard it is free of obstacles 
         var polyToCheck = UPoly.CreatePolyFromVector3(origin, 1f, 1f);
@@ -757,8 +796,6 @@ public class TerrainSpawnerController : ControllerParent
         secCount = 0;
         return origin;
     }
-
-    
 
     private static Vector3 ReturnIniPos()
     {

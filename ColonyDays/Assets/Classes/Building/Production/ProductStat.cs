@@ -93,6 +93,12 @@ public class ProductInfo
         _details = _details + "Density: " +dens + "\n";
         _details = _details + "Produce Factor: " + prodF + "\n";
         _details = _details + "Base Price: " + price + "\n";
+
+        if (_product == P.Stop)
+        {
+            _details = "Attention: Production was stopped." +
+                       " To resume production in this Building select a product";
+        }
     }
 
     void BuildProductLine()

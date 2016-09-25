@@ -368,6 +368,7 @@ public class GameScene : General
         if (hud==null)
         {
             hud = FindObjectOfType<HUDFPS>().GuiText;
+            HideShowTextMsg();
         }
 
 
@@ -488,7 +489,6 @@ public class GameScene : General
         }
 
         hud.color = col;
-        //hudColor = col;
     }
 
     private string more;

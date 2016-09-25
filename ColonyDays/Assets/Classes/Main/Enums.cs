@@ -143,7 +143,9 @@ public enum P
     Wine,
     Ore,
     Crate,
-    CrystalCoin, CaribbeanCoin, SugarCoin,
+    Coin
+    ,
+    //CrystalCoin, CaribbeanCoin, SugarCoin,
     CannonPart,
     Ink,
     Steel,
@@ -173,7 +175,8 @@ public enum P
     Bucket,
     Cart,
     RoofTile,
-    Utensil
+    Utensil,
+    Stop,
 
 
 }
@@ -385,6 +388,8 @@ public enum H
     BugReport,
     OnlyForDev,
     Invitation,
+    Marine,
+    Mountain,
 
 
 }

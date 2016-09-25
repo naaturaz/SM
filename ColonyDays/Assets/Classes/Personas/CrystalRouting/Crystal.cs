@@ -36,7 +36,7 @@ public class Crystal
     //the lines tht this Crystal connect to
     //normally Cyrstals have only 3 lines. But LinkRect will need more than tht 
     List<Line> _lines = new List<Line>();
-    private int _maxAmtLines = 1;
+    private int _maxAmtLines = 3;
 
     //to help when organizing to link the marines, and others. Distance is a relaticve number
     //so should be used only if is recently set 
@@ -166,7 +166,7 @@ public class Crystal
     {
         if (_type == H.LinkRect)
         {
-            _maxAmtLines = 20;//15
+            _maxAmtLines = 40;//20      15
         }
         if (_type == H.LandZone)
         {

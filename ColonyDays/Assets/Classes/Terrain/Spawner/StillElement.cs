@@ -187,7 +187,8 @@ public class StillElement : TerrainRamdonSpawner
     /// <returns></returns>
     private bool AmIValid()
     {
-        if (HType == H.Ornament || HType == H.Grass || ShouldReplant || ReplantedTree)
+        if (HType == H.Ornament || HType == H.Grass || ShouldReplant || ReplantedTree ||
+            HType == H.Marine || HType == H.Mountain)
         {
             return true;
         }

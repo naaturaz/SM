@@ -15,11 +15,16 @@ public class OptionsWindow : GUIElement
 
     private GameObject _autoSaveBtn;
     private GameObject _unitBtn;
+    private GameObject _langBtn;
+
+
     private GameObject _resBtn;
     private GameObject _qualityBtn;  
     
     private Text _autoSaveBtnTxt;
     private Text _unitBtnTxt;
+    private Text _langBtnTxt;
+
     private Text _resBtnTxt;
     private Text _qualityBtnTxt;
 
@@ -34,6 +39,10 @@ public class OptionsWindow : GUIElement
         var autoSavePanel = GetGrandChildCalled("Panel_AutoSave");
         _autoSaveBtn = GetChildCalledOnThis("AutoSave_Btn", autoSavePanel);
         _autoSaveBtnTxt = GetChildCalledOnThis("Text", _autoSaveBtn).GetComponent<Text>();
+
+        var langPanel = GetGrandChildCalled("Panel_Lang");
+        _langBtn = GetChildCalledOnThis("Lang_Btn", langPanel);
+        _langBtnTxt = GetChildCalledOnThis("Text", _langBtn).GetComponent<Text>();
         
         var unitPanel = GetGrandChildCalled("Panel_Unit");
         _unitBtn = GetChildCalledOnThis("Unit_Btn", unitPanel);
@@ -85,6 +94,7 @@ public class OptionsWindow : GUIElement
             _unitBtnTxt.text = "Metric";
         }
         _resBtnTxt.text = CurrentResolution();
+        _langBtnTxt.text = Languages.CurrentLang();
 
         var names = QualitySettings.names;
         var curr = QualitySettings.GetQualityLevel();
@@ -242,8 +252,29 @@ public class OptionsWindow : GUIElement
                 Destroy(_buttonsName[i]);
             }
         }
-    }   
-    
+    }
+
+
+    public void ClickLanguagesDropDown()
+    {
+        SetButtonsList(_langBtn);
+        List<string> names = new List<string>() { "English", "Español" };
+
+        for (int i = 0; i < _buttonsName.Count; i++)
+        {
+            if (i < names.Count)
+            {
+                SetEachButton(_buttonsName[i], names[i].ToString(), "Lang");
+            }
+            else
+            {
+                //so dont show empty btns in the drop down 
+                Destroy(_buttonsName[i]);
+            }
+        }
+    }
+
+
     public void ClickAutoSaveDropDown()
     {
         SetButtonsList(_autoSaveBtn);
@@ -261,7 +292,9 @@ public class OptionsWindow : GUIElement
                 Destroy(_buttonsName[i]);
             }
         }
-    }
+    }    
+    
+
     
     public void ClickUnitDropDown()
     {
@@ -313,6 +346,10 @@ public class OptionsWindow : GUIElement
         else if (type == "AutoSave")
         {
             button.onClick.AddListener(() => Settings.SetAutoSave(name));
+        }  
+        else if (type == "Lang")
+        {
+            button.onClick.AddListener(() => Settings.SetLanguage(name));
         }
         
     }

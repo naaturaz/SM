@@ -62,6 +62,11 @@ public class DescriptionWindow : General
         _cost.GetComponent<Text>().text = BuildCostString(val);
         _description.GetComponent<Text>().text = Languages.ReturnString(val+".Desc");
 
+        ////means Im a creating new Towns to be saved as Initial(Templates) towns
+        //if (Developer.IsDev && BuildingPot.Control.Registro.AllBuilding.Count == 0)
+        //{
+        //    BuildingPot.CreateUnlockBuilds();
+        //}
 
         var state = BuildingPot.UnlockBuilds1.ReturnBuildingState(val);
         Sprite s = null;
@@ -102,6 +107,8 @@ public class DescriptionWindow : General
     /// <returns></returns>
     string BuildCostString(H type)
     {
+     
+
         var state = BuildingPot.UnlockBuilds1.ReturnBuildingState(type);
         if (state == H.Lock)
         {
@@ -114,6 +121,13 @@ public class DescriptionWindow : General
         if (state == H.Max_Cap_Reach)
         {
             return "Can't build more houses. Max population reached";
+        }
+
+        //means Im a creating new Towns to be saved as Initial(Templates) towns
+        if (Developer.IsDev && BuildingPot.Control.Registro.AllBuilding.Count == 0)
+        {
+            state = H.Unlock;
+            return "Hope u are Dev and creating template town";
         }
 
 

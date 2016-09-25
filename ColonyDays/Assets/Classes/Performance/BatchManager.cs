@@ -34,14 +34,14 @@ public class BatchManager
 
         for (int i = 0; i < MeshController.CrystalManager1.CrystalRegions.Count; i++)
         {
-            if (loc < 3)
+            if (loc < 1)//3
             {
                 id += "."+i;
                 regions.Add(i);
             }
             else
             {
-                Set3BatchRegions(id, regions);
+                Set2BatchRegions(id, regions);
                 loc = 0;
                 id = "Semi";
                 regions.Clear();
@@ -50,13 +50,18 @@ public class BatchManager
             }
             loc++;
         }
-        //the last 3 never get to the 'else'
-        Set3BatchRegions(id, regions);
+        //the last 2 never get to the 'else'
+        Set2BatchRegions(id, regions);
         Debug.Log("_semiIndeces ct:" + _semiIndeces.Count + ". Cryst.Regions ct:" +
             MeshController.CrystalManager1.CrystalRegions.Count);
     }
 
-    private void Set3BatchRegions(string id, List<int> regions)
+    /// <summary>
+    /// Now batcths only comprend 2 regions. Bz After I did the lawn in 3 regions batch passes the 62K vert
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="regions"></param>
+    private void Set2BatchRegions(string id, List<int> regions)
     {
         for (int i = 0; i < regions.Count; i++)
         {
@@ -88,6 +93,8 @@ public class BatchManager
         //todo address if Road, Bridge
         if (go.Category == Ca.Spawn)
         {
+            //Debug.Log("added:"+go.MyId);
+
             var i = MeshController.CrystalManager1.ReturnMyRegion(U2D.FromV3ToV2(go.transform.position));
             var id = _semiIndeces[i];
             _batchRegions[id].AddToRegion(go);

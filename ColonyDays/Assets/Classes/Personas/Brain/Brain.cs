@@ -443,10 +443,8 @@ public class Brain
 
     void SkipWork()
     {
-
-        if ((ReadyToWork() && _person.Work == null)// || 
-           // (ReadyToWork() && (_person.ProfessionProp == null|| !_person.ProfessionProp.ReadyToWork))
-            ) 
+        //if is ready to work and Work is null or is not producing now, then Skip work
+        if (ReadyToWork() && (_person.Work == null || !_person.Work.IsProducingNow())) 
         {
             ReadyToGetFood(true);
         }
@@ -454,7 +452,14 @@ public class Brain
 
     private void SkipFood()
     {
-        if (ReadyToGetFood() && (_person.FoodSource == null || _person.Age < _jobManager.startSchool))
+        bool invFull = false;
+        if (_person.Home != null && _person.Home.Inventory.IsFull())
+        {
+            invFull = true;
+        }
+
+        if (ReadyToGetFood() &&
+            (_person.FoodSource == null || _person.Age < _jobManager.startSchool || invFull))
         {
             ReadyToGoToReligion(true);
         }
@@ -593,6 +598,7 @@ public class Brain
     {
         if (ReadyToWork() && _routerWork.IsRouteReady && _workRoute.CheckPoints.Count > 0
             && _workRoute.DestinyKey == _person.Work.MyId
+            
             )
         {
             _person.Body.WalkRoutine(_workRoute, HPers.Work);
