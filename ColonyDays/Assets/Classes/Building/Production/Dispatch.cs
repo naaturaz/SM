@@ -154,6 +154,42 @@ public class Dispatch
         }
     }
 
+
+#region Heavy Load
+    /// <summary>
+    /// Bz they dont need to check ID if building place a order of a material should wait until is completed 
+    /// </summary>
+    /// <param name="prod"></param>
+    public void AddToOrdersToHeavyLoad(Order prod)
+    {
+        if (!ListContains(Orders, prod))
+        {
+            Debug.Log("Order Added on Heavy:" + prod.Product + ".placed by:" + prod.DestinyBuild);
+            Orders.Add(prod);
+            _recycledOrders.Remove(prod);
+            //OrderByPlacedTime(Orders);
+        }
+    }
+
+
+    /// <summary>
+    /// Evac order in a wheelbacrrow will overwrite if they are from the same place and same prod 
+    /// </summary>
+    /// <param name="evacOrder"></param>
+    public void AddEvacuationOrderToHeavyLoad(Order evacOrder)
+    {
+        if (!ListContains(Orders, evacOrder) && !ListContains(_dormantOrders, evacOrder))
+        {
+            Orders.Add(evacOrder);
+            //OrderByPlacedTime(Orders);
+            Debug.Log("evac order added:" + evacOrder.Product + " orig:" + evacOrder.SourceBuild);
+        }
+    }
+#endregion
+
+
+
+
     //ordering them by time placed so first placed is given always first 
     void OrderByPlacedTime(List<Order> list)
     {

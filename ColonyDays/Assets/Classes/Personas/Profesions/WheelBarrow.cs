@@ -49,7 +49,10 @@ public class WheelBarrow : Profession
         //so loads 
         if (_wasLoaded)
         {
-            InitForLoading();    
+            InitForLoading();
+
+            //watch NEW
+            _wasLoaded = false;
             return;
         }
 
@@ -60,6 +63,11 @@ public class WheelBarrow : Profession
         HandleNewProfDescrpSavedAndPrevJob(Job.WheelBarrow);
         
         MyAnimation = "isWheelBarrow";
+
+        if (_person.Work != null && _person.Work.HType == H.HeavyLoad)
+        {
+            MyAnimation = "isCartRide";
+        }
 
 
         //if did not fouind a order will return, and take a break now  

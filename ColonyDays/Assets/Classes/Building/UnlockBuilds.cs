@@ -32,6 +32,7 @@ public class UnlockBuilds
             new BRequires(H.BridgeRoad, H.OnlyForDev),
             new BRequires(H.LightHouse, 40),
             new BRequires(H.Masonry, true),
+            new BRequires(H.HeavyLoad, true),
 
             //houses
             new BRequires(H.Bohio, true),

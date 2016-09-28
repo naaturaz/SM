@@ -157,7 +157,7 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Bucket, 30, 90, 60));
         _prodSpecs.Add(new ProdSpec(P.Crate, 40, 80, 50));
         _prodSpecs.Add(new ProdSpec(P.WheelBarrow, 140, 40, 25));
-        _prodSpecs.Add(new ProdSpec(P.Cart, 140, 20, 25));
+        _prodSpecs.Add(new ProdSpec(P.Cart, 140, 10, 25));
 
         _prodSpecs.Add(new ProdSpec(P.Cigar, 200, 700, 50));
         _prodSpecs.Add(new ProdSpec(P.CigarBox, 20, 200, 60));

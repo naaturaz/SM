@@ -145,7 +145,7 @@ public class TerrainSpawnerController : ControllerParent
         //CreateTreePool();
 
 #if UNITY_EDITOR
-        multiplier = 2;//2
+        multiplier = 8;//2
         howManyGrassToSpawn = 2;//40
 #endif
         AddTreesToTreesRoots();
@@ -175,18 +175,6 @@ public class TerrainSpawnerController : ControllerParent
     {
         var howManyLawnInEachFolder = 5+1;
         var add = "";
-
-        //one ofr each folder
-        //for (int i = 1; i < howManyLawnInEachFolder; i++)
-        //{
-        //    if (i < 10)
-        //    {
-        //        add = "0";
-        //    }
-        //    else add = "";
-
-        //    allGrass.Add("Prefab/Terrain/Spawner/LawnBrown/Lawn" + add + i);
-        //}
         for (int i = 1; i < howManyLawnInEachFolder; i++)
         {
             if (i < 10)
@@ -197,16 +185,6 @@ public class TerrainSpawnerController : ControllerParent
 
             allGrass.Add("Prefab/Terrain/Spawner/LawnGreenDark/Lawn" + add + i);
         }
-        //for (int i = 1; i < howManyLawnInEachFolder; i++)
-        //{
-        //    if (i < 10)
-        //    {
-        //        add = "0";
-        //    }
-        //    else add = "";
-
-        //    allGrass.Add("Prefab/Terrain/Spawner/LawnGreenLight/Lawn" + add + i);
-        //}
     }
 
     private void DefineAllOrnaRoots()

@@ -16,6 +16,7 @@ public class PersonalObject
     private GameObject _currentPoint;
     private GameObject _rightHand;
     private GameObject _stomach;
+    private GameObject _bip001Pelvis;
     //different roots for personc carrying stuff
     Dictionary<P, string> _prodCarry = new Dictionary<P, string>() { };
 
@@ -51,6 +52,8 @@ public class PersonalObject
         LoadCarrying();
         _rightHand = General.FindGameObjectInHierarchy("RightHand", _person.gameObject);//Bip001 R Hand    RightHand 
         _stomach = General.FindGameObjectInHierarchy("Stomach", _person.gameObject);//Bip001 Spine    Stomach
+        _bip001Pelvis = General.FindGameObjectInHierarchy("Culo", _person.gameObject);//Bip001 Spine    Stomach
+        
     }
 
     void LoadCarrying()
@@ -140,11 +143,6 @@ public class PersonalObject
         _person.transform.position = new Vector3();
     }
 
-    void ReloadPersonPosition()
-    {
-        _person.transform.rotation = _saveQuaternion;
-        _person.transform.position = _savePosition;
-    }
 
     void CheckIfHide(bool hide)
     {
@@ -187,6 +185,11 @@ public class PersonalObject
             _currentPoint = _person.gameObject;
             _currentRoot = DefineCurrentWheelBarrowRoot();
         }
+        else if (_currentAni == "isCartRide")
+        {
+            _currentPoint = _bip001Pelvis;
+            _currentRoot = DefineCurrentCartRoot();
+        }
         else _currentRoot = "";
     }
 
@@ -197,6 +200,15 @@ public class PersonalObject
             return Root.wheelBarrow;
         }
         return Root.wheelBarrowWithBoxes;
+    }   
+    
+    string DefineCurrentCartRoot()
+    {
+        if (_person.Inventory.IsEmpty())
+        {
+            return Root.cart;
+        }
+        return Root.cartWithBoxes;
     }
 
     /// <summary>
@@ -235,7 +247,9 @@ public class PersonalObject
             }
         }
 
-        if (_current != null &&  _current.Renderer1 != null)
+        if (_current != null 
+            //&&  _current.Renderer1 != null
+            )
         {
             SetScaleOfCurrent();
             //so its shown at first close to the person 
@@ -289,7 +303,8 @@ public class PersonalObject
             }
         }
 
-        if (_current != null && _current.Renderer1 != null)
+        if (_current != null// && _current.Renderer1 != null
+            )
         {
             _current.gameObject.SetActive(false);
             //_current.Renderer1.enabled = false;

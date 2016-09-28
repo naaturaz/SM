@@ -231,6 +231,13 @@ public class Homer : Profession
             return true;
         }
 
+        //for heavyLoad. They only transport load so they are always ready to wheelbarrow
+        if (per.Work.HType == H.HeavyLoad)
+        {
+            return true;
+        }
+
+
         //will check only when is done 
         //if one building is up. This person will convert into a Builder 
         if (per.Work.BuildersManager1.IsAtLeastOneBuildUp())

@@ -363,6 +363,9 @@ public class Root : MonoBehaviour
     public static string wheelBarrowWithBoxes = "Prefab/Personas/PersonalObject/WheelBarrowWithBoxes";
     public static string wood = "Prefab/Personas/PersonalObject/Wood";
 
+    public static string cart = "Prefab/Personas/PersonalObject/Cart";
+    public static string cartWithBoxes = "Prefab/Personas/PersonalObject/CartWithBoxes";
+
 
     /// <summary>
     /// Animals
@@ -636,6 +639,8 @@ public class Root : MonoBehaviour
         
         buildsRoot.Add(H.CoachMan, "Prefab/Building/Infrastructure/CoachMan");
         buildsRoot.Add(H.Masonry, "Prefab/Building/Infrastructure/Masonry");
+        buildsRoot.Add(H.HeavyLoad, "Prefab/Building/Infrastructure/HeavyLoad");
+       
         buildsRoot.Add(H.LightHouse, "Prefab/Building/Infrastructure/LightHouse");
         //wheel barrrow not needed anymoe. bz will be join with BuildersOffice
         buildsRoot.Add(H.WheelBarrow, "Prefab/Building/Infrastructure/WheelBarrow");

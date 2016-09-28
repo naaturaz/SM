@@ -26,6 +26,7 @@ public class Languages
 	   { "BridgeRoad.Desc","Allows people pass from one side of the map to the other. People loves this bridges. Give them a prosperity and happinnes sense" +_houseTail},
 	   { "LightHouse.Desc","Helps to make the port more discoverable. Adds to Port Reputation as long the flame is glowing"},
 	   { H.Masonry + ".Desc","Really important building. This workers construct new buildings and work as wheelbarrowers once have nothing to do"},
+	   { H.HeavyLoad + ".Desc","Really important building. This workers construct new buildings and work as wheelbarrowers once have nothing to do"},
 
        //House
 	   { "Bohio.Desc","Bohio house, really rudimentary conditions, people is unhappy living here, a family can have 1 kid maximum" +_houseTail},
@@ -157,6 +158,7 @@ public class Languages
 	                       "Les da un sentido de prosperidad y felicidad" +_houseTailES},
 	   { "LightHouse.Desc","Ayuda a que el puedo sea descubierto mas facil. Añade a la Reputacion del Puerto siempre y cuando la llama este encendida"},
 	   { H.Masonry + ".Desc","Una construccion muy imporatante. Estos trabajadores son los que construyen y cuando no tienen nada que hacer se dedican a transportar bienes"},
+	   { H.HeavyLoad + ".Desc","Una construccion muy imporatante. Estos trabajadores son los que construyen y cuando no tienen nada que hacer se dedican a transportar bienes"},
 
        //House
 	   { "Bohio.Desc","El Bohio, una casa con condiciones muy rudimentarias, los ciudadanos se abochornan de vivir aqui, una familia puede tener el maximo de 1 niño aqui" +_houseTail},

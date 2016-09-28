@@ -2746,7 +2746,7 @@ public class Building : General, Iinfo
 
             if (!HaveThisProdOnInv(prod))
             {
-                //use 10000 to put a large number of units needed
+                //todo use 10000 to put a large number of units needed
                 Order prodNeed = new Order(prod, MyId, 100);
 
                 //BuildingPot.Control.Dispatch1.AddToOrders(prodNeed);
@@ -2765,10 +2765,10 @@ public class Building : General, Iinfo
     /// <param name="order"></param>
     public void AddToClosestWheelBarrowAsOrder(Order order, H typeOfOrder)
     {
-        var closWheelBarr = FindClosestWheelBarrowerOffice();
+        var closest = FindClosestWheelBarrowerOrHeavyLoad();
 
         //only for debug bz a WheelBarrow always should be up
-        if (closWheelBarr == null)
+        if (closest == null)
         {
             //todo Notify not wheelBarrow close enought to me 3d icon
             Debug.Log("Not Masonry close enought to " + MyId + " found");
@@ -2777,11 +2777,11 @@ public class Building : General, Iinfo
 
         if (typeOfOrder == H.None)
         {
-            closWheelBarr.Dispatch1.AddToOrdersToWheelBarrow(order);            
+            closest.Dispatch1.AddToOrdersToWheelBarrow(order);            
         }
         else if (typeOfOrder == H.Evacuation)
         {
-            closWheelBarr.Dispatch1.AddEvacuationOrderToWheelBarrow(order);
+            closest.Dispatch1.AddEvacuationOrderToWheelBarrow(order);
         }
     }
 
@@ -2800,10 +2800,10 @@ public class Building : General, Iinfo
             return;
         }
 
-        var closWheelBarr = FindClosestWheelBarrowerOffice();
+        var closest = FindClosestWheelBarrowerOrHeavyLoad();
 
         //only for debug bz a WheelBarrow always should be up
-        if (closWheelBarr == null)
+        if (closest == null)
         {
             //todo Notify not wheelBarrow close enought to me 3d icon
             Debug.Log("Not Masonry close enought to " + MyId + " found");
@@ -2815,16 +2815,27 @@ public class Building : General, Iinfo
 
         for (int i = 0; i < orders.Count; i++)
         {
-            closWheelBarr.Dispatch1.AddEvacuationOrderToWheelBarrow(orders[i]);
+            closest.Dispatch1.AddEvacuationOrderToWheelBarrow(orders[i]);
         }
     }
 
 
 
-
-    Structure FindClosestWheelBarrowerOffice()
+    /// <summary>
+    /// If amount is less than 500kg will only look for WheelBarrowOffice but if is bigger
+    /// will try to find a HeavyLoad around
+    /// </summary>
+    /// <returns></returns>
+    Structure FindClosestWheelBarrowerOrHeavyLoad()
     {
-        return BuildingController.FindTheClosestOfThisType(H.Masonry, transform.position, Brain.Maxdistance);
+        var wheel = BuildingController.FindTheClosestOfThisType(H.Masonry, transform.position, Brain.Maxdistance);
+        var heavy = BuildingController.FindTheClosestOfThisType(H.HeavyLoad, transform.position, Brain.Maxdistance);
+
+        if (Inventory.CurrentKGsOnInv() > 500 && heavy != null)
+        {
+            return heavy;
+        }
+        return wheel;
     }
 
     private IEnumerator ThirtySecUpdate()
@@ -2852,13 +2863,20 @@ public class Building : General, Iinfo
     private BuildersManager _buildersManager;
     void InitWheelBarrow()
     {
-        if (HType != H.Masonry || IsLoadingFromFile)
+        if (IsLoadingFromFile)
         {
             return;
         }
 
-        _buildersManager=new BuildersManager(this);
-        _dispatch = new Dispatch();
+        if (HType == H.HeavyLoad || HType == H.Masonry)
+        {
+            _dispatch = new Dispatch();
+
+            if (HType == H.Masonry)
+            {
+                _buildersManager = new BuildersManager(this);
+            }
+        }
     }
 
     #region Job Related

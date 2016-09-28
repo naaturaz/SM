@@ -93,6 +93,8 @@ public class GameController  {
         inv.Add(P.WheelBarrow, startingCondition.iniWheelBarrow);
         inv.Add(P.Tool, startingCondition.iniTool);
         inv.Add(P.Crate, startingCondition.iniCrate);
+        
+        inv.Add(P.Cart, startingCondition.iniCart);
 
         //todo remove when release
         //inv.Add(P.Coal, 100000);
@@ -151,11 +153,21 @@ public class GameController  {
     }
 
 
+    private static bool _areThereCartsOnStorage;
+    public static bool AreThereCartsOnStorage
+    {
+        get { return _areThereCartsOnStorage; }
+        set { _areThereCartsOnStorage = value; }
+    }
+
+
 
     public void ReCheckWhatsOnStorage()
     {
         AreThereWheelBarrowsOnStorage = ThereIsAtLeastOneOfThisOnStorage(P.WheelBarrow);
         AreThereCratesOnStorage = ThereIsAtLeastOneOfThisOnStorage(P.Crate);
+        AreThereCartsOnStorage = ThereIsAtLeastOneOfThisOnStorage(P.Cart);
+
     }
 
 

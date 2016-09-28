@@ -345,6 +345,10 @@ public class Body //: MonoBehaviour //: General
         else if (aniToEval == "isWheelBarrow")
         {
             _speed = UMath.GiveRandom(0.49f, 0.59f);
+        } 
+        else if (aniToEval == "isCartRide")
+        {
+            _speed = UMath.GiveRandom(0.1f, 0.11f);
         }
         else
         {
@@ -649,6 +653,52 @@ public class Body //: MonoBehaviour //: General
             TurnCurrentAniAndStartNew("isWheelBarrow");
             DefineSpeed();
         }
+        if (CanSpawnCart())
+        {
+            TurnCurrentAniAndStartNew("isCartRide");
+            DefineSpeed();
+        }
+    }
+
+    public bool CanSpawnCart()
+    {
+        if (_person.ProfessionProp == null || _person.Brain == null || _person.Work == null)
+        {
+            return false;
+        }
+
+        var fromWorkToBuildingToPickAmt = Location == HPers.Work && GoingTo == HPers.InWork
+            && _person.Brain.CurrentTask == HPers.Working;
+
+        var fromPickingPlaceToDestiny = Location == HPers.InWork && GoingTo == HPers.WheelBarrow
+            && _person.Brain.CurrentTask == HPers.Working;
+
+        var fromDestinyBackToWork = Location == HPers.Work && GoingTo == HPers.InWork;
+
+
+        if (!GameController.AreThereCartsOnStorage)
+        {
+            return false;
+        }
+
+        //so only spawns the WheelBarrow from FoodSrc to dropplace and in its way back 
+        if (!fromWorkToBuildingToPickAmt && !fromPickingPlaceToDestiny && !fromDestinyBackToWork)
+        {
+            return false;
+        }
+
+        bool profesion = (_person.ProfessionProp.ProfDescription == Job.WheelBarrow ||
+                          _person.PrevJob == Job.WheelBarrow) &&
+                         _person.ProfessionProp.ProfDescription != Job.Builder;
+        //so prevJob being wheelBarrow and working on a Farm Spawns wheelbarrow
+        bool isCurrentCart = profesion &&
+            (_person.Work.HType == H.HeavyLoad);
+
+        if (isCurrentCart)
+        {
+            return true;
+        }
+        return false;
     }
 
     public bool CanSpawnWheelBarrow()
@@ -694,7 +744,8 @@ public class Body //: MonoBehaviour //: General
                           _person.PrevJob == Job.WheelBarrow) &&
                          _person.ProfessionProp.ProfDescription != Job.Builder;
         //so prevJob being wheelBarrow and working on a Farm Spawns wheelbarrow
-        bool isCurrentWheelBarrow = profesion && _person.Work.MyId.Contains("Masonry");
+        bool isCurrentWheelBarrow = profesion &&
+            (_person.Work.HType == H.Masonry);
 
         if (isNavalWorker || isCurrentWheelBarrow)
         {

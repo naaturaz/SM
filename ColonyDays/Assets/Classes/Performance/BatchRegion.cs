@@ -30,15 +30,20 @@ public class BatchRegion
         this._id = id;
     }
 
-    int ReturnVertices(GameObject go)
+    int ReturnVertices(GameObject go, string id)
     {
         var meshF = go.GetComponent<MeshFilter>();
 
         if (meshF != null)
         {
+            //Debug.Log("Obj:" + go.transform.name + "|" + meshF.mesh.vertexCount);
+
             return meshF.mesh.vertexCount;
         }
-        //for Mains that have subobjects and not mesh attached
+
+        //for obj that have subobjects and not mesh attached
+        Debug.Log("Obj:" + go.transform.name + "|" + 1000);
+        throw new Exception("Obj:" + id + " has subObjects on it or doesnt have a meshFilter attched");
         return 1000;
     }
 
@@ -52,7 +57,7 @@ public class BatchRegion
         {
             return;
         }
-        _totalVertices += ReturnVertices(go);
+        _totalVertices += ReturnVertices(go, id);
 
         if (_totalVertices > 63500)
         {
@@ -96,7 +101,7 @@ public class BatchRegion
             ActivateAllChildsObj(_all[index]);
             //asign it back to original gamebject
             _all[index].transform.parent = go.transform;
-            _totalVertices -= ReturnVertices(_all[index]);
+            _totalVertices -= ReturnVertices(_all[index], myID + "(not sure if Id Correct)");
             _all[index] = null;
             _keymap.Remove(key);
         }

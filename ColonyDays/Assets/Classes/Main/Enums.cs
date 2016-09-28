@@ -210,6 +210,8 @@ public enum H
     /// and added on Root.cs and 
     /// stats should be added on Book.cs.
     /// and add Desc on Languages.cs
+    /// add on UnlockBuilds.cs
+    /// and underneath the proper region in this file
     ///  thts all 
     /// 
     /// add the type of Product produces on Production.cs
@@ -222,6 +224,8 @@ public enum H
 
     //infr F1
     Trail, Road, BridgeTrail, BridgeRoad, CoachMan, LightHouse, WheelBarrow, StockPile, Masonry,
+    HeavyLoad,
+
     //house F2 ... bugg bz they had numbers on it .. They cant have numbers
     Bohio, HouseA, HouseB, HouseTwoFloor, HouseMed,
     HouseLargeA,
@@ -411,7 +415,8 @@ public enum StInfr //for structures game structure.cs
     LightHouse,
     //WheelBarrow, 
     //b4StockPile, 
-    Masonry
+    Masonry,
+    HeavyLoad
 }
 
 public enum StHous //for structures game structure.cs 

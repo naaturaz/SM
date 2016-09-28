@@ -361,6 +361,17 @@ public class Inventory  {
         return total;
     }
 
+    public float CurrentKGsOnInv()
+    {
+        var total = 0f;
+        for (int i = 0; i < _inventItems.Count; i++)
+        {
+            total += _inventItems[i].Amount;
+        }
+
+        return total;
+    }
+
     public bool IsHasEnoughToCoverThisIngredient(InputElement ingredient)
     {
         var onInventory = IsItemOnInv(ingredient.Element);

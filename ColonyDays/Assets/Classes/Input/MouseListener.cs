@@ -49,7 +49,10 @@ public class MouseListener : InputMain
         {
             m_StatsAndAchievements = GameObject.FindObjectOfType<SteamStatsAndAchievements>();
 
-            m_StatsAndAchievements.OnGameStateChange(EClientGameState.k_EClientGameActive);
+            if (m_StatsAndAchievements != null)
+            {
+                m_StatsAndAchievements.OnGameStateChange(EClientGameState.k_EClientGameActive);
+            }
         }
     }
 

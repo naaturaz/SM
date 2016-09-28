@@ -1569,7 +1569,7 @@ public class Person : General
         {
             return Job.Docker;
         }
-        else if (Work.HType == H.Masonry)
+        else if (Work.HType == H.Masonry || Work.HType == H.HeavyLoad)
         {
             return Job.Builder;
         }
@@ -1879,6 +1879,10 @@ public class Person : General
         if (_body.CanSpawnWheelBarrow())
         {
             mul = 4;
+        }
+        else if (_body.CanSpawnCart())
+        {
+            mul = 16;
         }
         return mul;
     }
