@@ -394,6 +394,8 @@ public enum H
     Invitation,
     Marine,
     Mountain,
+    OnATrip,
+    AtFarm,
 
 
 }

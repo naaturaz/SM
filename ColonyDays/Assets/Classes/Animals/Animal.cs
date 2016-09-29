@@ -213,4 +213,31 @@ public class Animal : General
         }
     }
 
+
+#region Carts used animals
+
+    private H _currentTask = H.AtFarm;
+    internal bool OnATrip()
+    {
+        return _currentTask == H.OnATrip;
+    }
+
+    internal void Hide()
+    {
+        gameObject.SetActive(false);
+        _currentTask = H.OnATrip;
+    }
+
+    internal void BackFromTrip()
+    {
+        _currentTask = H.AtFarm;
+        Show();
+    }
+
+    void Show()
+    {
+        gameObject.SetActive(true);
+    }
+
+#endregion
 }

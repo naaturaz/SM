@@ -23,8 +23,8 @@ public class TerrainSpawnerController : ControllerParent
     int howManyOrnaToSpawn = 40;//30    50      20
     int howManyGrassToSpawn = 10;//40
     //the ones spawn in the marine bounds 
-    int howManyMarineBoundsToSpawn = 0;//
-    int howManyMountainBoundsToSpawn = 0;//
+    int howManyMarineBoundsToSpawn = 1;//
+    int howManyMountainBoundsToSpawn = 1;//
 
     List<TerrainRamdonSpawner> _treesPool = new List<TerrainRamdonSpawner>(); 
 
@@ -145,7 +145,7 @@ public class TerrainSpawnerController : ControllerParent
         //CreateTreePool();
 
 #if UNITY_EDITOR
-        multiplier = 8;//2
+        multiplier = 5;//2
         howManyGrassToSpawn = 2;//40
 #endif
         AddTreesToTreesRoots();
@@ -167,7 +167,7 @@ public class TerrainSpawnerController : ControllerParent
 
         float minHeightAboveSeaLevel = 1.2f;//1
         minHeightToSpawn = Program.gameScene.WaterBody.transform.position.y + minHeightAboveSeaLevel;
-        maxHeightToSpawn = minHeightToSpawn + 6.9f;
+        maxHeightToSpawn = minHeightToSpawn + 7.9f;//6.9
 
     }
 
@@ -189,7 +189,7 @@ public class TerrainSpawnerController : ControllerParent
 
     private void DefineAllOrnaRoots()
     {
-        for (int i = 1; i < 36+1; i++)
+        for (int i = 1; i < 39+1; i++)
         {
             allOrna.Add("Prefab/Terrain/Spawner/Orna/Orna"+i);
         }

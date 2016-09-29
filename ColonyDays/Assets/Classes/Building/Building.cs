@@ -3112,12 +3112,9 @@ public class Building : General, Iinfo
         }
         wasFarmInited = true;
 
-        if (HType.ToString().Contains(H.Farm + ""))
+        if (HType.ToString().Contains(H.AnimalFarm + "") || HType == H.HeavyLoad)
         {
-            if (HType.ToString().Contains(H.AnimalFarm + ""))
-            {
-                InitAnimalFarm();
-            }
+            InitAnimalFarm();
         }
     }
 
@@ -3131,9 +3128,9 @@ public class Building : General, Iinfo
         {
             SpawnFarmAnimals(H.Med);
         }
-        else if (HType == H.AnimalFarmLarge)
+        else if (HType == H.AnimalFarmLarge || HType == H.HeavyLoad)
         {
-            SpawnFarmAnimals(H.Large);
+            SpawnFarmAnimals(H.Large );
         }
         else if (HType == H.AnimalFarmXLarge)
         {
@@ -3195,7 +3192,12 @@ public class Building : General, Iinfo
     Animal SpawnSpecificAnimal(Vector3 iniPos)
     {
         Animal t = null;
-        if (CurrentProd.Product == P.Beef)
+
+        if (HType == H.HeavyLoad)
+        {
+            t = Beef.CreateBeef(iniPos, this);
+        }
+        else if (CurrentProd.Product == P.Beef)
         {
             t = Beef.CreateBeef(iniPos, this);
         }  
@@ -3338,6 +3340,12 @@ public class Building : General, Iinfo
     {
         var animalType = CurrentProd.Product;
 
+        //so HeavyLoad spawns cows at start 
+        if (animalType == P.None && HType == H.HeavyLoad)
+        {
+            animalType = P.Beef;
+        }
+
         if (animalType == P.Chicken)
         {
             return 5;
@@ -3352,6 +3360,44 @@ public class Building : General, Iinfo
         }
         return -1;
     }
+
+#endregion
+
+
+
+    #region HeavyLoad
+
+    /// <summary>
+    /// When a HeavyLoader worker needs an animal
+    /// </summary>
+    public void GiveMeAnimal()
+    {
+        for (int i = 0; i < _animals.Count; i++)
+        {
+            if (!_animals[i].OnATrip())
+            {
+                _animals[i].Hide();
+                return;
+            }
+        }
+    }
+
+    /// <summary>
+    /// When a heavyLoader workers is done with an animal and its returning it to 
+    /// this 
+    /// </summary>
+    public void ReturningBackAnimal()
+    {
+        for (int i = 0; i < _animals.Count; i++)
+        {
+            if (_animals[i].OnATrip())
+            {
+                _animals[i].BackFromTrip();
+                return;
+            }
+        }
+    }
+
 
 #endregion
 

@@ -31,16 +31,11 @@ public class Decoration  {
 
     public Decoration(Building build)
     {
-        //return;
-
         _building = build;
-        _roots.AddRange(TerrainSpawnerController.allOrna);
-
-        //removing the last 2 orna. The small palms 
-        _roots.RemoveAt(_roots.Count-1);
-        _roots.RemoveAt(_roots.Count-1);
-
-        //_roots.AddRange(TerrainSpawnerController.allGrass);
+        for (int i = 1; i < 36 + 1; i++)
+        {
+            _roots.Add("Prefab/Terrain/Spawner/Orna/Orna" + i);
+        }
         Init();
     }
 

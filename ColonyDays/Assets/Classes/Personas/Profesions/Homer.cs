@@ -61,7 +61,9 @@ public class Homer : Profession
     {
         //if is a wheelbarrow working from its DestinyBuild will go back to Work. and from there to home.
         //this is to make it neat with the PersonalObject spawned
-        if (_person.PrevJob == Job.WheelBarrow && _person.Work!=null && _person.Work.HType==H.Masonry)
+        //Heavy load too should drop Cow and Cart at work place 
+        if (_person.PrevJob == Job.WheelBarrow && _person.Work!=null 
+            && (_person.Work.HType==H.Masonry || _person.Work.HType == H.HeavyLoad))
         {
             return _person.Work;
         }

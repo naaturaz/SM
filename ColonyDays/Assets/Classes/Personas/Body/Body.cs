@@ -37,6 +37,8 @@ public class Body //: MonoBehaviour //: General
 
     private Vector3 _currentPosition;
 
+    private bool _imARidingAnAnimal;
+
     public HPers Location
     {
         get { return _location; }
@@ -423,6 +425,8 @@ public class Body //: MonoBehaviour //: General
 
         DefineSpeed();
 
+   
+
         _inverse = inverse;
         _currTheRoute = route;
         _routePoins = route.CheckPoints;
@@ -448,6 +452,40 @@ public class Body //: MonoBehaviour //: General
             _person.transform.rotation = _routePoins[iniRoutePoint].QuaterniRotation;
         }
         SetNextPoint();
+    }
+
+
+
+    /// <summary>
+    /// If is a person using a Cart will need to ask for an animal at work
+    /// </summary>
+    private void AskForAnimalIfNeeded()
+    {
+        if (_person.Work != null && _person.Work.HType == H.HeavyLoad 
+            && _person.ProfessionProp.ProfDescription == Job.WheelBarrow  
+            && Location == HPers.Work 
+            && GoingTo == HPers.InWork
+            && !_imARidingAnAnimal)
+        {
+            _person.Work.GiveMeAnimal();
+            _imARidingAnAnimal = true;
+        }
+    }
+
+    /// <summary>
+    /// If is a person using a Cart will need to ask for an animal at work
+    /// </summary>
+    private void ReturnAnimalIfNeeded()
+    {
+        if (_person.Work != null && _person.Work.HType == H.HeavyLoad
+            && _person.ProfessionProp.ProfDescription == Job.Homer
+            && Location == HPers.InWork
+            && GoingTo == HPers.Home
+            && _imARidingAnAnimal)
+        {
+            _person.Work.ReturningBackAnimal();
+            _imARidingAnAnimal = false;
+        }
     }
 
     /// <summary>
@@ -620,10 +658,11 @@ public class Body //: MonoBehaviour //: General
 
     public void WalkRoutine(TheRoute route, HPers goingTo ,bool inverse = false, HPers whichRouteP = HPers.None)
     {
-        //Show();//to show person whenh going from old home to shack to be built
-
         InitWalk(route, inverse);
         WalkRoutineTail(goingTo, whichRouteP);
+
+        AskForAnimalIfNeeded();
+        ReturnAnimalIfNeeded();
     }
 
 
@@ -633,6 +672,9 @@ public class Body //: MonoBehaviour //: General
     {
         InitWalk(route, inverse, loadInitCurrentPoint);
         WalkRoutineTail(goingTo, whichRouteP);
+
+        AskForAnimalIfNeeded();
+        ReturnAnimalIfNeeded();
     }
 
     void WalkRoutineTail(HPers goingTo, HPers whichRouteP = HPers.None)
@@ -897,10 +939,8 @@ public class Body //: MonoBehaviour //: General
 
     public void A64msUpdate()
     {
-        //if (isSaveAniCheck)
-        //{
-        //    CheckIfCurrentAnimationIsTheSaved();
-        //}
+
+
     }
 
 
@@ -1048,6 +1088,7 @@ public class Body //: MonoBehaviour //: General
         _movingNow = false;
         SetCurrentAni("isIdle",_currentAni);//_current ani could be walk or carry
         _walkDoneAt = Time.time;
+
     }
     
     public void DestroyAllPersonalObj()
@@ -1345,15 +1386,31 @@ public class Body //: MonoBehaviour //: General
         myAnimator.enabled = true;
         TurnCurrentAniAndStartNew(savedAnimation);
 
-        if (_personalObject != null)
+        //needs to know if is Shown, other wise will show Personal Object without person
+        //
+        if (_personalObject != null && IAmShown())
         {
             _personalObject.Show();
         }
         DefineSpeed();
     }
 
+    private bool IAmShown()
+    {
+        return renderer.enabled;
+    }
 
 
+
+
+    /// <summary>
+    /// Syays if is in first or last of a route 
+    /// </summary>
+    /// <returns></returns>
+    bool AmIOnTheStartOrEnd()
+    {
+        return _currentRoutePoint == iniRoutePoint || _currentRoutePoint == lastRoutePoint;
+    }
 
 
 

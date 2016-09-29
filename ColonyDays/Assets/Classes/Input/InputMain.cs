@@ -11,6 +11,7 @@ public class InputMain : InputParent {
         if (ChangeSpeed != null)
         {
             ChangeSpeed(this, e);
+            Rotate.SpeedChanged();
         }
     }
 

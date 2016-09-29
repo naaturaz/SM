@@ -31,6 +31,13 @@ public class OutOfScreen
         InitPerson();
     }
 
+    public OutOfScreen(Animal animal)
+    {
+        _type = H.Animal;
+        _animal = animal;
+        InitAnimal();
+    }
+
     /// <summary>
     /// Says if is on Screen and renderer is active Now
     /// </summary>
@@ -54,12 +61,7 @@ public class OutOfScreen
         _renderer = _person.Geometry.gameObject.GetComponent<Renderer>();
     }
 
-    public OutOfScreen(Animal animal)
-    {
-        _type = H.Animal;
-        _animal = animal;
-        InitAnimal();
-    }
+
 
     private void InitAnimal()
     {
@@ -71,6 +73,11 @@ public class OutOfScreen
     // Update is called once per frame
     public void A45msUpdate()
     {
+        if (_person == null)
+        {
+             return;
+        }
+
         _onScreenRectNow = Program.gameScene.Fustrum1.OnScreen(ExtractObjPos());
         //if is moving now can be reshown bz might be on his way somewhere 
         if (_onScreenRectNow &&

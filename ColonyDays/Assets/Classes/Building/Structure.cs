@@ -8,7 +8,7 @@ public class Structure : StructureParent
     private MDate _usedAt = new MDate();
 
     private bool isStageObjHidden;
-    private Farm _farm;//will be use if Structure is a farm 
+    private Farm _farm;//will be use if Structure is a farm , also in HeavyLoad
 
     /// <summary>
     /// For Dummy OBj

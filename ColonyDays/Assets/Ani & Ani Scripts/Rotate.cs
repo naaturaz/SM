@@ -6,28 +6,46 @@ public class Rotate : MonoBehaviour
     public bool onX;
     public bool onY;
     public bool onZ;
+    public bool CareAboutGameSpeed;
+
+    private float finalSpeed;
+
+    private static bool speedChangedNow;
 
 	// Use this for initialization
-	void Start () {
-	
+	void Start () 
+    {
+        if (CareAboutGameSpeed)
+        {
+            finalSpeed = speed*Program.gameScene.GameSpeed;
+        }
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-	    
+	    if (speedChangedNow)
+	    {
+	        speedChangedNow = false;
+            Start();
+	    }
 
 	    if (onX)
 	    {
-	        gameObject.transform.Rotate(speed,0  , 0);
+            gameObject.transform.Rotate(finalSpeed, 0, 0);
 	    }
         if (onY)
         {
-            gameObject.transform.Rotate(0 ,speed , 0);
+            gameObject.transform.Rotate(0, finalSpeed, 0);
         }
         if (onZ)
         {
-            gameObject.transform.Rotate(0, 0, speed);
+            gameObject.transform.Rotate(0, 0, finalSpeed);
         }
+    }
+
+    public static void SpeedChanged()
+    {
+        speedChangedNow = true;
     }
 }
