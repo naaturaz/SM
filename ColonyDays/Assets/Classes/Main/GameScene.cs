@@ -341,6 +341,7 @@ public class GameScene : General
             return;
         }
         
+        AudioCollector.Update();
         CreateDummySpawnPoint();
 
 

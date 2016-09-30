@@ -371,6 +371,7 @@ public class Person : General
             obj.transform.position = iniPos;
         }
 
+        obj.HType = H.Person;
         obj.Gender = obj.OtherGender();
         obj.InitObj(iniAge); 
         obj.Geometry.GetComponent<Renderer>().sharedMaterial = ReturnRandoPersonMaterialRoot();
@@ -412,6 +413,7 @@ public class Person : General
         obj.IsLoading = true;
         obj.InitLoadedPerson(pF);
         obj.Geometry.GetComponent<Renderer>().sharedMaterial = ReturnRandoPersonMaterialRoot();
+        obj.HType = H.Person;
 
         return obj;
     }
@@ -453,6 +455,8 @@ public class Person : General
         obj.Gender = obj.OtherGender();
         obj.InitObj(0);//15    5
         obj.Geometry.GetComponent<Renderer>().sharedMaterial = ReturnRandoPersonMaterialRoot();
+        obj.HType = H.Person;
+
 
         //this to when Person dont have where to leave and then they find a place the teletranport effect
         //wont be seeable bz there are spawneed hidden. 

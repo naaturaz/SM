@@ -6,12 +6,17 @@ public class InputMain : InputParent {
 
 
     public EventHandler<EventArgs> ChangeSpeed;
+    /// <summary>
+    /// This event is called everytime speed is changed on game
+    /// </summary>
+    /// <param name="e"></param>
     void OnChangeSpeed(EventArgs e)
     {
         if (ChangeSpeed != null)
         {
             ChangeSpeed(this, e);
             Rotate.SpeedChanged();
+            AudioContainer.SpeedChanged();
         }
     }
 

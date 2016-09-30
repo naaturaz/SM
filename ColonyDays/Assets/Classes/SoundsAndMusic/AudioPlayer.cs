@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
@@ -18,6 +17,12 @@ public class AudioPlayer : MonoBehaviour {
     {
         LoadAllAudios();
         
+    }
+
+    public static General SoundsCointaner
+    {
+        get { return soundsCointaner; }
+        set { soundsCointaner = value; }
     }
 
     // Use this for initialization
@@ -41,11 +46,11 @@ public class AudioPlayer : MonoBehaviour {
 
 #if UNITY_EDITOR
         waves = GetFilesInEditor(root);
-        SaveOnProgramData(waves);
+        //SaveOnProgramData(waves);
 #endif
-#if UNITY_STANDALONE
-        waves = GetFilesInStandAlone();
-#endif
+//#if UNITY_STANDALONE
+//        waves = GetFilesInStandAlone();
+//#endif
 
         foreach (var item in waves)
         {

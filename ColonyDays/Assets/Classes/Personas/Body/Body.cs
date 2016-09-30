@@ -324,7 +324,15 @@ public class Body //: MonoBehaviour //: General
             _personalObject = new PersonalObject(_person);
         }
         _personalObject.AddressNewAni(animationPass, ShouldHide());
+        AddressNewAniSound();
     }
+
+
+
+
+
+
+
 
     public void TurnCurrentAniAndStartNew(string animationPass)
     {
@@ -932,11 +940,6 @@ public class Body //: MonoBehaviour //: General
         }
     }
 
-    //public void A32msUpdate()
-    //{
-    //    isPersonOnScreenRenderNow = _person.LevelOfDetail1.OutOfScreen1.OnScreenRenderNow;
-    //}
-
     public void A64msUpdate()
     {
 
@@ -1193,14 +1196,9 @@ public class Body //: MonoBehaviour //: General
 	    }
 	    //CheckOnGameSpeed();
         CheckIfGoingIntoBuild();
+
+	CheckSound();
     }
-
-    //public void WalkHanderCheck()
-    //{
-    //    if (_movingNow)
-    //    { WalkHandler(); }
-    //}
-
 
 
 
@@ -1485,4 +1483,89 @@ public class Body //: MonoBehaviour //: General
 
         myAnimator.enabled = false;
     }
+
+
+
+#region Sounds
+
+    //Time to wait in normal speed to play the animation from the beggining of the animation  
+    Dictionary<string, int> _aniDelayToPlaySound = new Dictionary<string, int>()
+    {
+        //so isHoe has 50 frames. in the frame 19 the animation hits the ground
+        //so i will play 
+        {"isHoe", 19},
+        {"isWheelBarrow", 10},//2 or any point before full
+        {"isHammer", 7},
+        {"isAxe", 16},
+    };   
+    
+    //total timeof animation
+    //must run once again before i can play sound again
+    Dictionary<string, int> _aniWholeTime = new Dictionary<string, int>()
+    {
+        {"isHoe", 50},//the total time of this animation
+        {"isWheelBarrow", 37},//37 it is
+        {"isHammer", 18},//the total time of this animation
+        {"isAxe", 40},//the total time of this animation
+    };
+
+    private float timeToPlaySound = -1;
+    private void AddressNewAniSound()
+    {
+        if (!_aniDelayToPlaySound.ContainsKey(CurrentAni))
+        {
+            timeToPlaySound = -1;
+            return;
+        }
+
+        var frames = _aniDelayToPlaySound[CurrentAni];
+        timeToPlaySound = Time.time + ConvertFramesIntoSeconds(frames);
+    }
+
+    float TimeInSecToNextAnimation()
+    {
+        //if person not on screen now 
+        if (!_person.LevelOfDetail1.OutOfScreen1.OnScreenRenderNow || IsHidden())
+        {
+            return -1;
+        }
+
+        var framesToPlayWholeAni = _aniWholeTime[CurrentAni];
+        return Time.time + ConvertFramesIntoSeconds(framesToPlayWholeAni);
+    }
+
+    private bool IsHidden()
+    {
+        return renderer.enabled == false;
+    }
+
+    float ConvertFramesIntoSeconds(int frames)
+    {
+        //30FPS becasue animations are played at tht speed
+        var time = (float)frames/(float)30;
+        //bz if is 2x the speed is going to be half of the time to play
+        return time/Program.gameScene.GameSpeed;
+    }
+
+    /// <summary>
+    /// Called in Update 
+    /// </summary>
+    void CheckSound()
+    {
+        if (Time.time > timeToPlaySound && timeToPlaySound != -1)
+        {
+            var dist = Vector3.Distance(Camera.main.transform.position, _person.transform.position);
+
+            if (dist > 200)
+            {
+                timeToPlaySound = -1;
+                return;
+            }
+
+            timeToPlaySound = TimeInSecToNextAnimation();
+            AudioCollector.PlayOneShot(CurrentAni, dist);
+        }
+    }
+
+#endregion
 }

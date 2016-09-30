@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -119,6 +120,8 @@ public class General : MonoBehaviour
     private Ca _category;
 
     int _indexAllVertex;//correspondent index of subMesh AllVertex List
+
+    private AudioReporter _audioReporter;
 
     public int IndexAllVertex
     {
@@ -282,6 +285,22 @@ public class General : MonoBehaviour
     protected void Start()
     {
         _category = DefineCategory(_hType);
+
+        if (AudioCollector.Roots.ContainsKey(HType+""))
+        {
+            _audioReporter = new AudioReporter(this);
+        }
+
+        StartCoroutine("TwoSecUpdate");
+    }
+
+    private IEnumerator TwoSecUpdate()
+    {
+        while (true && _audioReporter != null)
+        {
+            yield return new WaitForSeconds(2); // wait
+            _audioReporter.A2SecUpdate();
+        }
     }
 
     protected void Update()
