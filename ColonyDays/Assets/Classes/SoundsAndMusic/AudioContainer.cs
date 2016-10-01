@@ -75,16 +75,18 @@ public class AudioContainer: MonoBehaviour
         _audioSource.clip = _audioClip;
         _audioSource.volume = 0;
 
-        //no loop for people 
-        if (IsThisAPersonSound())
-        {
-            _audioSource.loop = false;
-        }
+
+
     }
 
 
     internal void Play(float newLevel)
     {
+        if (!Settings.ISSoundOn)
+        {
+            return;
+        }
+
         FadesTo(newLevel);
         _lastReport = Time.time;
     }
@@ -92,7 +94,7 @@ public class AudioContainer: MonoBehaviour
     /// <summary>
     /// At this distance the Volume will be zero or passed this
     /// </summary>
-    private int distanceThatVolIsZeroAt = 200;
+    private int distanceThatVolIsZeroAt = 200;//1000
     public void Stop()
     {
         FadesTo(distanceThatVolIsZeroAt);//1000 is zero
@@ -124,7 +126,7 @@ public class AudioContainer: MonoBehaviour
     /// </summary>
     void StopAudioSource()
     {
-        if (IsThisAPersonSound())
+        if (IsThisAPersonSound() || IsASpawnSound() || IsAMusic())
         {
             return;
         }
@@ -137,7 +139,12 @@ public class AudioContainer: MonoBehaviour
     /// </summary>
     void PlayAudioSource()
     {
-        if (IsThisAPersonSound())
+        if (!Settings.ISSoundOn)
+        {
+            return;
+        }
+
+        if (IsThisAPersonSound() || IsASpawnSound() || IsAMusic())
         {
             return;
         }
@@ -145,10 +152,7 @@ public class AudioContainer: MonoBehaviour
         _audioSource.Play();
     }
 
-    bool IsThisAPersonSound()
-    {
-        return AudioCollector.PersonRoots.ContainsKey(_key);
-    }
+
 
     /// <summary>
     /// bz the newLevel is a Distance report it has to be removed from 1000
@@ -166,8 +170,22 @@ public class AudioContainer: MonoBehaviour
 
     void Update()
     {
+        if (coolDownUntil > 0 && Time.time > coolDownUntil)
+        {
+            PlayMusicAShot();
+        }
+
+        //3 seconds before finishes 
+        if (Time.time > timeToPlayNextSong - 3 && timeToPlayNextSong > 0)
+        {
+            //todo play another music 
+            timeToPlayNextSong = 0;//so it doesnt keep trying to play new songs 
+            MusicManager.PlayANewSong(_key);
+        }
+
         //if is not changign the vol and time has passed since las report and is playing
         if (!IsThisAPersonSound() && 
+            !IsASpawnSound() && !IsAMusic() &&
             _audioSource.isPlaying && !volUp && !volDown 
             && Time.time + 2.6f > _lastReport)
         {
@@ -180,6 +198,21 @@ public class AudioContainer: MonoBehaviour
             speedJustChanged = false;
             //_audioSource.pitch = Program.gameScene.GameSpeed;
         }
+    }
+
+    private bool IsASpawnSound()
+    {
+        return AudioCollector.RootsToSpawn.ContainsKey(_key);
+    }
+
+    bool IsThisAPersonSound()
+    {
+        return AudioCollector.PersonRoots.ContainsKey(_key);
+    }   
+    
+    bool IsAMusic()
+    {
+        return MusicManager.IsMusic(_key);
     }
 
     private static bool speedJustChanged;
@@ -229,9 +262,14 @@ public class AudioContainer: MonoBehaviour
     /// </summary>
     internal void PlayAShot(float dist)
     {
+        if (!Settings.ISSoundOn)
+        {
+            return;
+        }
+
         //so 12 wheelBarrowers dont sound aweful
         //we need at least 0.15f sec since last played 
-        if (lastShotPlayed + .01f > Time.time)
+        if (lastShotPlayed + .11f > Time.time)
         {
             return;
         }
@@ -241,4 +279,46 @@ public class AudioContainer: MonoBehaviour
 
         lastShotPlayed = Time.time;
     }
+
+#region Music
+
+    private float timeToPlayNextSong;
+    private float coolDownUntil;//used when play was hit before Start() happened
+    /// <summary>
+    /// Created to play music a shot 
+    /// </summary>
+    /// <param name="dist"></param>
+    internal void PlayMusicAShot()
+    {
+        if (!Settings.ISMusicOn)
+        {
+            return;
+        }
+
+        //means is being played before it had time to Start()
+        if (_audioSource == null || _audioClip == null)
+        {
+            coolDownUntil = Time.time + 3;
+            return;
+        }
+        coolDownUntil = 0;
+        
+        _audioSource.PlayOneShot(_audioClip, .15f);
+        timeToPlayNextSong = Time.time + _audioClip.length;
+    }
+
+    internal void Pause()
+    {
+        _audioSource.Pause();
+    }   
+    
+    internal void UnPause()
+    {
+        _audioSource.UnPause();
+    }
+
+
+#endregion
+
+
 }

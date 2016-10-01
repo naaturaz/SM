@@ -1510,6 +1510,7 @@ public class Body //: MonoBehaviour //: General
     };
 
     private float timeToPlaySound = -1;
+    private float timeToUnBan;//time was given a -1
     private void AddressNewAniSound()
     {
         if (!_aniDelayToPlaySound.ContainsKey(CurrentAni))
@@ -1524,13 +1525,16 @@ public class Body //: MonoBehaviour //: General
 
     float TimeInSecToNextAnimation()
     {
+        var framesToPlayWholeAni = _aniWholeTime[CurrentAni];
+
         //if person not on screen now 
         if (!_person.LevelOfDetail1.OutOfScreen1.OnScreenRenderNow || IsHidden())
         {
+            //puts 3 cycles of animation here pls time 
+            timeToUnBan = Time.time + ConvertFramesIntoSeconds(framesToPlayWholeAni) * 3;
             return -1;
         }
 
-        var framesToPlayWholeAni = _aniWholeTime[CurrentAni];
         return Time.time + ConvertFramesIntoSeconds(framesToPlayWholeAni);
     }
 
@@ -1564,6 +1568,13 @@ public class Body //: MonoBehaviour //: General
 
             timeToPlaySound = TimeInSecToNextAnimation();
             AudioCollector.PlayOneShot(CurrentAni, dist);
+        }
+        //the wheelBarrowers only play once bz then since they become hidden dont try anymore
+        //bz timeToPlaySound = -1. here after 2 second will give an option again of play the animation
+        if (Time.time > timeToUnBan && timeToPlaySound == -1 
+            && _aniWholeTime.ContainsKey(CurrentAni))
+        {
+            timeToPlaySound = TimeInSecToNextAnimation();
         }
     }
 

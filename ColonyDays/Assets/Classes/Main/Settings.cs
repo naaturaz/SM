@@ -123,10 +123,11 @@ public class Settings
         else if(what == H.Music)
         {
             _isMusicOn = MecanicSwitcher(_isMusicOn);
-            if (current != null || _isMusicOn)
-            {
-                current = KillOrRestart(current, _isMusicOn);
-            }
+            MusicManager.MusicIsSwitchNow();
+            //if (current != null || _isMusicOn)
+            //{
+            //    current = KillOrRestart(current, _isMusicOn);
+            //}
         }
         return current;
     }

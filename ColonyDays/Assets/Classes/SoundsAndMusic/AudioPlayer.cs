@@ -8,6 +8,10 @@ public class AudioPlayer : MonoBehaviour {
     private static bool isToPlayOneTimePlayed = true;
 
     static Dictionary<string, Sound> _soundsLib = new Dictionary<string, Sound>();
+
+
+
+
     static Dictionary<string, Sound> _sounds = new Dictionary<string, Sound>();
     static Dictionary<string, Music> _musics = new Dictionary<string, Music>();
 
@@ -39,6 +43,9 @@ public class AudioPlayer : MonoBehaviour {
 
         soundsCointaner = General.Create(Root.classesContainer, Camera.main.transform.position,
             "SoundContainer", Camera.main.transform);
+
+        //starts the music 
+        MusicManager.Start();
 
         //var root = Application.dataPath + "/Resources/Prefab/Audio/Sound/";
         var root = "C:/GitHub/SM/ColonyDays/Assets/Resources/Prefab/Audio/Sound/";
@@ -131,6 +138,11 @@ public class AudioPlayer : MonoBehaviour {
 
     public static void PlayThisSound1Time(string hTypeP, string currProd)
     {
+        if (!Settings.ISSoundOn)
+        {
+            return;
+        }
+
         var type = TreatType(hTypeP, currProd);
         if (_sounds.ContainsKey(type))
         {

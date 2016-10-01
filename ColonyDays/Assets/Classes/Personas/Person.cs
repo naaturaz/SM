@@ -462,6 +462,9 @@ public class Person : General
         //wont be seeable bz there are spawneed hidden. 
         //obj.Body.Hide();
 
+        
+        AudioCollector.PlayOneShot("BabyBorn", iniPos);
+
         return obj;
     }
 
@@ -2135,6 +2138,7 @@ public class Person : General
         print(MyId+" emmigrated");
         // The peploe had emmigrated they will talk about your port wherever they are 
         PersonPot.Control.EmigrateController1.AddEmigrate(this);
+        AudioCollector.PlayOneShot("Emigrated", transform.position);
     }
 
     /// <summary>

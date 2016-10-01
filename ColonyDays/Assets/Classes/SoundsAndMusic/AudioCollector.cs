@@ -21,7 +21,6 @@ public class AudioCollector
     static Dictionary<string, string> _roots = new Dictionary<string, string>()
     {
 
-
     };
 
 
@@ -30,12 +29,25 @@ public class AudioCollector
     static Dictionary<string, string> _personRoots = new Dictionary<string, string>()
     {
         {"Person", ""},//so persons are spawned
+        //Animations
         {"isHoe", ""},
         {"isWheelBarrow", ""},
         {"isAxe", ""},
         {"isHammer", ""},
 
+        
+
     };
+
+    //this roots sounds get spawned anywas. Like BabyBorn sound
+    private static Dictionary<string, string> _rootsToSpawn = new Dictionary<string, string>()
+    {
+        //one shots 
+        {"BabyBorn", ""},
+        {"Emigrated", ""},
+        {"FallingTree", ""},
+    };
+
 
 
 
@@ -62,6 +74,12 @@ public class AudioCollector
     {
         get { return _personRoots; }
         set { _personRoots = value; }
+    }
+
+    public static Dictionary<string, string> RootsToSpawn
+    {
+        get { return _rootsToSpawn; }
+        set { _rootsToSpawn = value; }
     }
 
     static void StartRoots()
@@ -165,7 +183,7 @@ public class AudioCollector
         return plsFolders + key;
     }
 
-
+    static bool isSpawnStarted;
     public static void Update()
     {
         StartRoots();
@@ -174,6 +192,23 @@ public class AudioCollector
         if (_timeLastReport != 0 && Time.time + 0.5f > _timeLastReport)
         {
             ExecuteReport();
+        }
+
+        if (!isSpawnStarted && _audioContainers.Count > 0)
+        {
+            isSpawnStarted = true;
+            Spawn();
+        }
+    }
+
+    static void Spawn()
+    {
+        foreach (var item in _rootsToSpawn)
+        {
+            var root = DefineRoot(item.Key);
+
+            _audioContainers.Add(item.Key, AudioContainer.Create(item.Key, root, 0,
+              container: AudioPlayer.SoundsCointaner.transform));  
         }
     }
 
@@ -187,6 +222,16 @@ public class AudioCollector
         if (_audioContainers.ContainsKey(key))
         {
             _audioContainers[key].PlayAShot(dist);
+        }
+    } 
+    
+    public static void PlayOneShot(string key, Vector3 urPos)
+    {
+        var dist = Vector3.Distance(Camera.main.transform.position, urPos);
+
+        if (dist < 200)
+        {
+            PlayOneShot(key, dist);
         }
     }
 }

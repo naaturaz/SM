@@ -41,7 +41,8 @@ public class Decoration  {
 
     private void Init()
     {
-        _lines = U2D.FromPolyToLines(_building.Anchors);
+        var scaledAnchors = UPoly.ScalePoly(_building.Anchors, .5f);
+        _lines = U2D.FromPolyToLines(scaledAnchors);
         RemoveSpwnPointLine();
         FindPositionToSpwnDecor();
         
@@ -179,8 +180,8 @@ public class Decoration  {
         {
             var root = _roots[UMath.GiveRandom(0, _roots.Count)];
             
-            //moving a bit twrds buildings
-            var iniPos = Vector3.MoveTowards(_positionsToSpawnDecor[i], _building.transform.position, .2f);
+            //moving a bit away from  buildings
+            var iniPos = Vector3.MoveTowards(_positionsToSpawnDecor[i], _building.transform.position, -.2f);
 
             var spwnObj = General.Create(root, iniPos, container: _building.transform, name:"Decora");
             RandomizeRotAndScale(spwnObj.gameObject, root);

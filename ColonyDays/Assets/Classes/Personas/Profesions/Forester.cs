@@ -281,7 +281,7 @@ public class Forester : Profession
             ExecuteNow = false;
             if (_stillElement!=null)
             {
-                AudioPlayer.PlaySoundOneTime(RootSound.axe, _stillElement.gameObject.transform.position);
+                //AudioPlayer.PlaySoundOneTime(RootSound.axe, _stillElement.gameObject.transform.position);
             }
             ////foresters reset when done work
             ResetDummy();

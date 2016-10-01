@@ -87,6 +87,7 @@ public class Program : MonoBehaviour {
         //loads main menu
         MyScreen1.Start();
         MouseListener.Start();
+
 	}
 
 

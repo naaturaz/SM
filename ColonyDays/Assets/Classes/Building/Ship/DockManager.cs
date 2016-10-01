@@ -110,7 +110,7 @@ public class DockManager
 
     public void AddSurvey(float survey)
     {
-        PortReputation += survey;
+        PortReputation = UMath.Clamper(survey, PortReputation, 0, 100);
 
         if (PortReputation < 0)
         {

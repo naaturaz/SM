@@ -332,6 +332,7 @@ public class GameScene : General
         _subDivideBlockScale.z = Mathf.Abs(m.SubDivide.ZSubStep) + cP.RectifyOnZ * 2;
     }
 
+    private bool wereSpawn;
 	// Update is called once per frame
     void Update()
     {
@@ -343,20 +344,15 @@ public class GameScene : General
         
         AudioCollector.Update();
         CreateDummySpawnPoint();
-
-
+        
         DebugInput();
         DebugChangeScreenResolution();
 
-
-        if (Camera.main != null && _culling == null //&& PersonPot.Control!= null 
-            //&& PersonPot.Control.All.Count > 0
-            //&& BuildingPot.Control!=null && BuildingPot.Control.Registro.AllBuilding.Count>1
-            )
+        if (Camera.main != null && !wereSpawn)
         {
+            wereSpawn = true;
             //bz camera needs to be initiated already
             _audioPlayer = new AudioPlayer();
-
             _culling = new Culling();
             _fustrum = new Fustrum();
         }
@@ -371,7 +367,6 @@ public class GameScene : General
             hud = FindObjectOfType<HUDFPS>().GuiText;
             HideShowTextMsg();
         }
-
 
         //if (Input.GetKeyUp(KeyCode.B))
         //{

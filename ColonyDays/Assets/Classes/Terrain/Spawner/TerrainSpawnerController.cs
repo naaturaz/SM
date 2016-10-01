@@ -23,8 +23,8 @@ public class TerrainSpawnerController : ControllerParent
     int howManyOrnaToSpawn = 40;//30    50      20
     int howManyGrassToSpawn = 10;//40
     //the ones spawn in the marine bounds 
-    int howManyMarineBoundsToSpawn = 1;//
-    int howManyMountainBoundsToSpawn = 1;//
+    int howManyMarineBoundsToSpawn = 0;//
+    int howManyMountainBoundsToSpawn = 0;//
 
     List<TerrainRamdonSpawner> _treesPool = new List<TerrainRamdonSpawner>(); 
 

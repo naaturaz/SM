@@ -171,7 +171,7 @@ public class StillElement : TerrainRamdonSpawner
         _myAnimator.SetBool("isTreeIdle", false);
         _myAnimator.SetBool("isTreeFall", true);
 
-        AudioPlayer.PlaySoundOneTime(RootSound.treeFall, gameObject.transform.position);
+        AudioCollector.PlayOneShot("FallingTree", transform.position);
     }
 
     public void GetTreeBackToStandTree()
