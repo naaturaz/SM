@@ -4,6 +4,8 @@
  * 
  * Here is the input for the Keys for the Camera
  */
+
+using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -124,9 +126,9 @@ public class CamRTSController : CamControl
         MAX_FIELD_CAM = 48f;//50   80  45  60
 #endif
 
-
-
     }
+
+
 
     void InitializeObjects()
     {
@@ -153,12 +155,41 @@ public class CamRTSController : CamControl
             classContainer: transform);
         inputRTS = (InputRTS)InputRTS.CreateCamComponent(Root.inputRTS, transform, centerTarget: centerTarget.transform,
             classContainer: transform);
+
+
+    }
+
+
+
+    public void AudioAmbientPlay()
+    {
+        var playThis = MeshController.CrystalManager1.WhatAudioIPlay(transform.position);
+        var pos = MeshController.CrystalManager1.CurrentRegionPos(transform.position);
+        //if game tht has not started
+        if (string.IsNullOrEmpty(playThis))
+        {
+            return;
+        }
+
+        AudioCollector.PlayAmbience(playThis, pos);
+        //Debug.Log(playThis);
+    }
+
+    void OnGUI()
+    {
+        if (Event.current.type == EventType.KeyUp || Event.current.type == EventType.MouseUp)
+        {
+        //    Debug.Log("Key/Mouse up event detected");
+            AudioAmbientPlay();
+        }
     }
 
     // Update is called once per frame
     //void LateUpdate()
     void Update()
     {
+
+
         //initiales current obj pos and rot to...
         InitializeObjects();
         CreateTargetAndUpdate();

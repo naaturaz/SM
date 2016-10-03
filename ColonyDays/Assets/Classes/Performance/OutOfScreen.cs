@@ -73,8 +73,10 @@ public class OutOfScreen
     // Update is called once per frame
     public void A45msUpdate()
     {
-        if (_person == null || Program.gameScene.Fustrum1 == null 
-            || _renderer == null || _person.Body == null)
+        if (_person == null 
+            //|| Program.gameScene.Fustrum1 == null 
+            //|| _renderer == null || _person.Body == null
+            )
         {
              return;
         }

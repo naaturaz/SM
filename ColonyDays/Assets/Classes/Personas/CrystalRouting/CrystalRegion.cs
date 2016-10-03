@@ -23,6 +23,10 @@ public class CrystalRegion
     private string _waterCrystalInfo;
     private string _mountCrystalInfo;
 
+    private string _whatAudioIReport;
+
+    private General _debugText;
+
     /// <summary>
     /// This are the Terrain Crystals they get setup once and thats it. They
     /// dont need to be changed ever again. Contains the bounds of water and mountain and the LinkRects
@@ -52,6 +56,12 @@ public class CrystalRegion
         set { _landZoneID = value; }
     }
 
+    public string WhatAudioIReport
+    {
+        get { return _whatAudioIReport; }
+        set { _whatAudioIReport = value; }
+    }
+
     //public List<Crystal> ObstaCrystals
     //{
     //    get { return _obstaCrystals; }
@@ -78,13 +88,28 @@ public class CrystalRegion
         _index = index;
         _region = region;
 
-        //DebugHere();
+        WhatAudioIReport = DefineWhichAudioIReport();
     }
 
-    public void DebugHere()
+    public void StartWithAudioReport()
+    {
+        if (string.IsNullOrEmpty(WhatAudioIReport))
+        {
+            WhatAudioIReport = DefineWhichAudioIReport();
+        }
+
+        if (WhatAudioIReport == "Later")
+        {
+            return;
+        }
+        DebugHere();
+    }
+
+    void DebugHere()
     {
         UVisHelp.CreateDebugLines(Region, Color.cyan);
-        UVisHelp.CreateText(U2D.FromV2ToV3(Region.center), Index + "", 300);
+        UVisHelp.CreateText(U2D.FromV2ToV3(Region.center),
+            Index + "|" + WhatAudioIReport, 300);
     }
 
     /// <summary>
@@ -180,6 +205,8 @@ public class CrystalRegion
     /// </summary>
     public void DefineWhichLandZoneIBelongTo()
     {
+        // Will return different names of the Crystall types H.LinkRect I have in this region
+        //ReturnDiffZonesNames
         var myZones = ReturnDiffZonesNames();
 
         if (myZones.Count == 1)
@@ -193,18 +220,94 @@ public class CrystalRegion
     }
 
     /// <summary>
-    /// Will return different names of the Crystall types H.LinkRect I have in this region
+    /// Will return the different ZOnes names. 
     /// </summary>
     /// <returns></returns>
     List<string> ReturnDiffZonesNames()
     {
+        return ReturnDiffCrystals(_terraCrystals, H.LinkRect);
+    }
+
+        /// <summary>
+    /// Will return diff crystals of the type pass, crystals wont be repeated
+    /// </summary>
+    /// <returns></returns>
+    List<string> ReturnDiffCrystals(List<Crystal> list, H typeP)
+    {
         List<string> res = new List<string>();
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            if (!res.Contains(list[i].Name) && list[i].Type1 == typeP)
+            {
+                res.Add(list[i].Name);
+            }
+        }
+
+        return res;
+    }
+
+    /// <summary>
+    /// Created to Report Ambience Sound. I need to see how many diff crsytals are
+    /// to detect River, Ocean shore and Full Ocean
+    /// </summary>
+    /// <returns></returns>
+    string DefineWhichAudioIReport()
+    {
+        //106 ocean shore, 84 river , 64 riv
+        if (Index == 106 || Index == 84 || Index == 64)
+        {
+            var a = 1;
+        }
+
+        var myCrsytals = ReturnDiffCrystalsNames();
+        //crystals that are seaType 
+        var seaTypes = myCrsytals.Where(a => a.Type1 == H.WaterObstacle).ToList();
+        var mountTypes = myCrsytals.Where(a => a.Type1 == H.MountainObstacle).ToList();
+
+        var linkTypes = myCrsytals.Where(a => a.Type1 == H.LinkRect).ToList();
+        var uniqueZones = ReturnDiffCrystals(linkTypes, H.LinkRect);
+
+        if (myCrsytals.Count == 1)
+        {
+            return "InLand";
+        }
+        else if (mountTypes.Count > 0)
+        {
+            return "Mountain";
+        }
+        else if (myCrsytals.Count > 1 && uniqueZones.Count == 0)
+        {
+            return "Later";//OceanSHore
+        }   
+        else if (myCrsytals.Count > 1 && uniqueZones.Count == 1)
+        {
+            //this ones will find later if have a Full Ocean around if they do that
+            //it is OceanShore. Otherwise is River
+            return "Later";
+        }
+        else if (myCrsytals.Count > 1 && uniqueZones.Count > 1)
+        {
+            return "River";
+        }
+        return "FullOcean";
+    }
+
+    /// <summary>
+    /// Will return Crystalls are in this region
+    /// </summary>
+    /// <returns></returns>
+    List<Crystal> ReturnDiffCrystalsNames()
+    {
+        List<Crystal> res = new List<Crystal>();
+        List<string> keyers = new List<string>();
 
         for (int i = 0; i < _terraCrystals.Count; i++)
         {
-            if (!res.Contains(_terraCrystals[i].Name) && _terraCrystals[i].Type1 == H.LinkRect)
+            if (!keyers.Contains(_terraCrystals[i].Name))
             {
-                res.Add(_terraCrystals[i].Name);
+                keyers.Add(_terraCrystals[i].Name);
+                res.Add(_terraCrystals[i]);
             }
         }
 
@@ -226,8 +329,25 @@ public class CrystalRegion
         }
     }
 
-    //public List<Crystal> QueryObstaCrystals(string parentIdP)
-    //{
-    //    return ObstaCrystals.Where(a => a.ParentId == parentIdP).ToList();
-    //}
+    /// <summary>
+    /// For the ones are not determined yet.
+    /// If has a FullOcean around it is a Ocean shore. Otherwise
+    /// a rive
+    /// </summary>
+    internal void DoAroundAudioSurvey()
+    {
+        var around = MeshController.CrystalManager1.ReturnMySurroundRegions(_region.center);
+
+        for (int i = 0; i < around.Count; i++)
+        {
+            var crystalIndex = around[i];
+            if (MeshController.CrystalManager1.CrystalRegions[crystalIndex].WhatAudioIReport == "FullOcean")
+            {
+                WhatAudioIReport = "OceanShore";
+                return;
+            }
+        }
+        WhatAudioIReport = "River";
+        
+    }
 }

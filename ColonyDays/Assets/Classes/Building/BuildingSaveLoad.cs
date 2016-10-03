@@ -71,6 +71,9 @@ public class BuildingSaveLoad : BuildingPot
         }
     }
 
+    /// <summary>
+    /// Game is fully loaded will:
+    /// </summary>
     void CreatePersonPot()
     {
         BuildingPot.Control.Registro.IsFullyLoaded = true;
@@ -78,6 +81,8 @@ public class BuildingSaveLoad : BuildingPot
 
         //The person pot creating is called when we loaded all buildings 
         Program.InputMain.CreatePersonPot();
+
+        Program.gameScene.GameController1.NotificationsManagerInit();
     }
 
     /// <summary>

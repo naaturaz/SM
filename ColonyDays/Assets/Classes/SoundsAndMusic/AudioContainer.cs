@@ -38,6 +38,20 @@ public class AudioContainer: MonoBehaviour
         set { _newLevel = value; }
     }
 
+
+    /// <summary>
+    /// At this distance the Volume will be zero or passed this
+    /// </summary>
+    static int _distanceThatVolIsZeroAt = 200;//1000
+    /// <summary>
+    /// At this distance the Volume will be zero or passed this
+    /// </summary>
+    public static int DistanceThatVolIsZeroAt
+    {
+        get { return _distanceThatVolIsZeroAt; }
+        set { _distanceThatVolIsZeroAt = value; }
+    }
+
     static public AudioContainer Create(string key, string root, float newLevel,
         Vector3 origen = new Vector3(), Transform container = null)
     {
@@ -91,13 +105,9 @@ public class AudioContainer: MonoBehaviour
         _lastReport = Time.time;
     }
 
-    /// <summary>
-    /// At this distance the Volume will be zero or passed this
-    /// </summary>
-    private int distanceThatVolIsZeroAt = 200;//1000
     public void Stop()
     {
-        FadesTo(distanceThatVolIsZeroAt);//1000 is zero
+        FadesTo(_distanceThatVolIsZeroAt);//1000 is zero
     }
 
     void FadesTo(float newVal)
@@ -126,11 +136,13 @@ public class AudioContainer: MonoBehaviour
     /// </summary>
     void StopAudioSource()
     {
-        if (IsThisAPersonSound() || IsASpawnSound() || IsAMusic())
+        if (IsThisAPersonSound() || IsASpawnSound() || IsAMusic() 
+            //|| IsAmbience()
+            )
         {
             return;
         }
-
+        _audioSource.volume = 0;
         _audioSource.Stop();
     }
 
@@ -144,7 +156,9 @@ public class AudioContainer: MonoBehaviour
             return;
         }
 
-        if (IsThisAPersonSound() || IsASpawnSound() || IsAMusic())
+        if (IsThisAPersonSound() || IsASpawnSound() || IsAMusic()
+            || IsAmbience()
+            )
         {
             return;
         }
@@ -164,8 +178,8 @@ public class AudioContainer: MonoBehaviour
     /// <returns></returns>
     float ConvertLevel(float newVal)
     {
-        var newReal = distanceThatVolIsZeroAt - newVal;
-        return newReal / distanceThatVolIsZeroAt;//so is ready for AudioSource Volume (0-1f)
+        var newReal = _distanceThatVolIsZeroAt - newVal;
+        return newReal / _distanceThatVolIsZeroAt;//so is ready for AudioSource Volume (0-1f)
     }
 
     void Update()
@@ -185,7 +199,7 @@ public class AudioContainer: MonoBehaviour
 
         //if is not changign the vol and time has passed since las report and is playing
         if (!IsThisAPersonSound() && 
-            !IsASpawnSound() && !IsAMusic() &&
+            !IsASpawnSound() && !IsAMusic() && !IsAmbience() &&
             _audioSource.isPlaying && !volUp && !volDown 
             && Time.time + 2.6f > _lastReport)
         {
@@ -196,7 +210,6 @@ public class AudioContainer: MonoBehaviour
         if (speedJustChanged)
         {
             speedJustChanged = false;
-            //_audioSource.pitch = Program.gameScene.GameSpeed;
         }
     }
 
@@ -213,6 +226,11 @@ public class AudioContainer: MonoBehaviour
     bool IsAMusic()
     {
         return MusicManager.IsMusic(_key);
+    }
+
+    bool IsAmbience()
+    {
+        return AudioCollector.Ambience.ContainsKey(_key);
     }
 
     private static bool speedJustChanged;
@@ -254,6 +272,15 @@ public class AudioContainer: MonoBehaviour
                 target = -1;
             }
         }
+    }
+
+    internal void PlayAmbience(float dist)
+    {
+        var volHere = ConvertLevel(dist);
+        _audioSource.volume = volHere;
+        _audioSource.loop = true;
+
+        PlayAShot(dist);
     }
 
     private float lastShotPlayed;
@@ -321,4 +348,15 @@ public class AudioContainer: MonoBehaviour
 #endregion
 
 
+
+    internal bool IsPlayingNow()
+    {
+        return _audioSource.isPlaying;
+    }
+
+    internal void StopAmbience()
+    {
+        speed = 0.01f;
+        Stop();
+    }
 }

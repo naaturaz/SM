@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
-public class AudioPlayer : MonoBehaviour {
+public class AudioPlayer  {
 
     private static bool isToPlayOneTimePlayed = true;
 
@@ -17,21 +17,20 @@ public class AudioPlayer : MonoBehaviour {
 
     static private General soundsCointaner;
 
+    private Camera cam;
+
     public AudioPlayer()
     {
+        //so AudioPlayer is not null
+        cam = Camera.main;
+
         LoadAllAudios();
-        
     }
 
     public static General SoundsCointaner
     {
         get { return soundsCointaner; }
         set { soundsCointaner = value; }
-    }
-
-    // Use this for initialization
-    void Start()
-    {
     }
 
     static private void LoadAllAudios()
@@ -43,6 +42,8 @@ public class AudioPlayer : MonoBehaviour {
 
         soundsCointaner = General.Create(Root.classesContainer, Camera.main.transform.position,
             "SoundContainer", Camera.main.transform);
+
+        AudioCollector.SpawnSounds();
 
         //starts the music 
         MusicManager.Start();
@@ -120,7 +121,7 @@ public class AudioPlayer : MonoBehaviour {
         var clip = Resources.Load(audioSourceRoot) as AudioClip;
         audioSource.clip = clip;
         //Play sound on creation 
-        audioSource.Play();
+        //audioSource.Play();
 
         return sound;
     }
@@ -203,15 +204,6 @@ public class AudioPlayer : MonoBehaviour {
 
        
 
-
-
-
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
 
     static Audio Spawn(string soundToPlayRoot, H musicOrSound)

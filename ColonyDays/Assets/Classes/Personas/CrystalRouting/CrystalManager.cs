@@ -1534,6 +1534,38 @@ public class CrystalManager  {
 
         return res.Distinct().ToList();
     }
+
+    public string WhatAudioIPlay(Vector3 camPos)
+    {
+        //todo make sure they start with out ForSaleRegionGO
+        var v2 = U2D.FromV3ToV2(camPos);
+        var index = ReturnMyRegion(v2);
+
+        if (index == -1)
+        {
+            return "OutOfTerrain";
+        }
+
+        return CrystalRegions[index].WhatAudioIReport;
+    }
+
+    /// <summary>
+    /// Center of the region the camera is on top of now
+    /// </summary>
+    /// <param name="camPos"></param>
+    /// <returns></returns>
+    internal Vector3 CurrentRegionPos(Vector3 camPos)
+    {
+        var v2 = U2D.FromV3ToV2(camPos);
+        var index = ReturnMyRegion(v2);
+        
+        if (index == -1)
+        {
+            return camPos;
+        }
+
+        return U2D.FromV2ToV3( CrystalRegions[index].Region.center);
+    }
 }
 
 

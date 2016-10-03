@@ -30,7 +30,11 @@ public class MouseListener : InputMain
         set { _buildingsMenu = value; }
     }
 
-  
+    public NotificationWindowGO NotificationWindow
+    {
+        get { return _notificationWindow; }
+        set { _notificationWindow = value; }
+    }
 
     SteamStatsAndAchievements m_StatsAndAchievements;
     /// <summary>
@@ -41,6 +45,8 @@ public class MouseListener : InputMain
         get { return m_StatsAndAchievements; }
         set { m_StatsAndAchievements = value; }
     }
+
+
 
     // Use this for initialization
     public void Start()
@@ -73,6 +79,7 @@ public class MouseListener : InputMain
         _personWindow = FindObjectOfType<PersonWindow>();
         _buildingWindow = FindObjectOfType<BuildingWindow>();
         _addOrderWindow = FindObjectOfType<AddOrderWindow>();
+        _notificationWindow = FindObjectOfType<NotificationWindowGO>();
     }
 
     private Vector3 mainTempIniPos;
@@ -426,6 +433,7 @@ public class MouseListener : InputMain
     private PersonWindow _personWindow;
     private BuildingWindow _buildingWindow;
     private AddOrderWindow _addOrderWindow;
+    private NotificationWindowGO _notificationWindow;
 
     /// <summary>
     /// Will handle all the inputs from the buttons on the GUI 
@@ -490,6 +498,7 @@ public class MouseListener : InputMain
         _personWindow.Hide();
         UnselectingBuild();
         _addOrderWindow.Hide();
+        _notificationWindow.Hide();
     }
 
     /// <summary>

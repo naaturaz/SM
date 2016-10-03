@@ -332,7 +332,7 @@ public class GameScene : General
         _subDivideBlockScale.z = Mathf.Abs(m.SubDivide.ZSubStep) + cP.RectifyOnZ * 2;
     }
 
-    private bool wereSpawn;
+    private bool audioWas;
 	// Update is called once per frame
     void Update()
     {
@@ -348,13 +348,18 @@ public class GameScene : General
         DebugInput();
         DebugChangeScreenResolution();
 
-        if (Camera.main != null && !wereSpawn)
+        if (Camera.main != null && _culling == null)
         {
-            wereSpawn = true;
             //bz camera needs to be initiated already
-            _audioPlayer = new AudioPlayer();
             _culling = new Culling();
             _fustrum = new Fustrum();
+        }
+
+        if (Camera.main != null && _audioPlayer == null && !audioWas)
+        {
+            audioWas = true;
+            //bz camera needs to be initiated already
+            _audioPlayer = new AudioPlayer();
         }
 
         if (_fustrum!=null)

@@ -28,7 +28,10 @@ public class DockManager
         set { _dockStructures = value; }
     }
 
-    public DockManager(){ }
+    public DockManager()
+    {
+
+    }
 
     internal bool HasAtLeastOneDockStructure()
     {

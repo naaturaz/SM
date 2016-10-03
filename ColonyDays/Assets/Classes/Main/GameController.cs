@@ -22,8 +22,11 @@ public class GameController  {
 
     private int _lastYearWorkersSalaryWasPaid;
 
+    private NotificationsManager _notificationsManager;
 
-    private static int _capMaxPerson = 10000;
+
+
+    private static int _capMaxPerson = 1000;
     /// <summary>
     /// tHE Max amt of person in a game 
     /// </summary>
@@ -31,6 +34,12 @@ public class GameController  {
     {
         get { return _capMaxPerson; }
         set { _capMaxPerson = value; }
+    }
+
+    public NotificationsManager NotificationsManager1
+    {
+        get { return _notificationsManager; }
+        set { _notificationsManager = value; }
     }
 
     static public ResumenInventory ResumenInventory1
@@ -172,16 +181,21 @@ public class GameController  {
 
 
 
-
     public void Start()
     {
-        
     }
 
     public void UpdateOneSecond()
     {
         CheckIfSalariesNeedToBePaid();
         CheckIfGameOverCondition();
+
+        if (_notificationsManager != null)
+        {
+            _notificationsManager.UpdateOneSecond();
+            
+        }
+
     }
 
     private void CheckIfGameOverCondition()
@@ -291,5 +305,11 @@ public class GameController  {
             return true;
         }
         return false;
+    }
+
+    internal void NotificationsManagerInit()
+    {
+        _notificationsManager = new NotificationsManager();
+
     }
 }

@@ -8,11 +8,6 @@ using Assets.Classes.SoundsAndMusic;
 
 public class AudioCollector
 {
-
-
-
-
-
     //TO ADD A SOUND ====>
     //Add first the type of HType is initiating the Sound Ex: "Person" then the sound
     //as named in Prefab/Audio/Sound/Other/
@@ -47,6 +42,22 @@ public class AudioCollector
         {"Emigrated", ""},
         {"FallingTree", ""},
     };
+    
+    
+    //this roots sounds get spawned anywas. Like BabyBorn sound
+    private static Dictionary<string, string> _ambience = new Dictionary<string, string>()
+    {
+        //one shots 
+        {"FullOcean", ""},
+        {"InLand", ""},
+        {"OceanShore", ""},
+        {"Jungle", ""},
+        {"River", ""},
+        {"OutOfTerrain", ""},
+        {"Mountain", ""},
+    };
+
+
 
 
 
@@ -82,6 +93,12 @@ public class AudioCollector
         set { _rootsToSpawn = value; }
     }
 
+    public static Dictionary<string, string> Ambience
+    {
+        get { return _ambience; }
+        set { _ambience = value; }
+    }
+
     static void StartRoots()
     {
         if (_roots.Count > 0)
@@ -92,8 +109,36 @@ public class AudioCollector
         foreach (var personRoot in _personRoots)
         {
             _roots.Add(personRoot.Key, personRoot.Value);
+        }  
+        
+        foreach (var amb in _ambience)
+        {
+            _roots.Add(amb.Key, amb.Value);
         }
     }
+
+    public static void SpawnSounds()
+    {
+        for (int i = 0; i < _ambience.Count; i++)
+        {
+            var root = DefineRoot(_ambience.ElementAt(i).Key);
+
+            _audioContainers.Add(_ambience.ElementAt(i).Key,
+                AudioContainer.Create(_ambience.ElementAt(i).Key, root, 0,
+            container: AudioPlayer.SoundsCointaner.transform));
+        }
+    }
+
+    /// <summary>
+    /// Reporting how far an GameObj is 
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="dist"></param>
+    internal static void Reporting(string key, Vector3 v3)
+    {
+        Reporting(key, Vector3.Distance(v3, Camera.main.transform.position));
+    }
+
 
     /// <summary>
     /// Reporting how far an GameObj is 
@@ -229,9 +274,39 @@ public class AudioCollector
     {
         var dist = Vector3.Distance(Camera.main.transform.position, urPos);
 
-        if (dist < 200)
+        if (dist < AudioContainer.DistanceThatVolIsZeroAt)
         {
             PlayOneShot(key, dist);
+        }
+    }
+
+    internal static void PlayAmbience(string playThis, Vector3 vector3)
+    {
+        var dist = Vector3.Distance(Camera.main.transform.position, vector3);
+        if (dist < AudioContainer.DistanceThatVolIsZeroAt)
+        {
+            StopCurrAmbienceThatIsNotNewSound(playThis);
+
+            if (_audioContainers[playThis].IsPlayingNow())
+            {
+                //do nothing
+            }
+            else
+            {
+                _audioContainers[playThis].PlayAmbience(dist);
+            }
+        }
+    }
+
+    private static void StopCurrAmbienceThatIsNotNewSound(string playThis)
+    {
+        for (int i = 0; i < _ambience.Count; i++)
+        {
+            var keyHere = _ambience.ElementAt(i).Key;
+            if (_audioContainers[keyHere].IsPlayingNow() && keyHere != playThis)
+            {
+                _audioContainers[keyHere].StopAmbience();
+            }
         }
     }
 }

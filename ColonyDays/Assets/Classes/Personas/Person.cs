@@ -462,8 +462,8 @@ public class Person : General
         //wont be seeable bz there are spawneed hidden. 
         //obj.Body.Hide();
 
-        
         AudioCollector.PlayOneShot("BabyBorn", iniPos);
+        Program.gameScene.GameController1.NotificationsManager1.Notify("BabyBorn");
 
         return obj;
     }

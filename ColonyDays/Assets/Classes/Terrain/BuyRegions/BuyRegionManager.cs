@@ -141,7 +141,7 @@ public class BuyRegionManager
     public void CurrentRegionBuy()
     {
         //play sound
-
+        //todo
 
         RemoveCost();
 
