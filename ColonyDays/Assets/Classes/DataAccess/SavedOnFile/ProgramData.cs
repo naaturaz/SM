@@ -17,4 +17,10 @@ public class ProgramData
     {
         GameVersion = gameVersion;
     }
+
+    public bool SoundIsOn;
+    public bool MusicIsOn;
+
+    public float SoundLevel;
+    public float MusicLevel;
 }

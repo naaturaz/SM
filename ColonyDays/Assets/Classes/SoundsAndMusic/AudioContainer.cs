@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class AudioContainer: MonoBehaviour
 {
@@ -76,8 +77,12 @@ public class AudioContainer: MonoBehaviour
         Debug.Log("newAudioContainer: "+Root1);
         AddSpecificAudioSource();
 
+        if (IsAmbience())
+        {
+            return;
+        }
+        
         Play(_newLevel);
-
     }
 
     private void AddSpecificAudioSource()
@@ -88,9 +93,6 @@ public class AudioContainer: MonoBehaviour
         _audioClip = Resources.Load(Root1) as AudioClip;
         _audioSource.clip = _audioClip;
         _audioSource.volume = 0;
-
-
-
     }
 
 
@@ -110,10 +112,10 @@ public class AudioContainer: MonoBehaviour
         FadesTo(_distanceThatVolIsZeroAt);//1000 is zero
     }
 
-    void FadesTo(float newVal)
+    void FadesTo(float newDist)
     {
-        var realVal = ConvertLevel(newVal);
-
+        var realVal = ConvertLevel(newDist);
+      
         if (_audioSource.volume > realVal)
         {
             volDown = true;
@@ -157,7 +159,7 @@ public class AudioContainer: MonoBehaviour
         }
 
         if (IsThisAPersonSound() || IsASpawnSound() || IsAMusic()
-            || IsAmbience()
+            //|| IsAmbience()
             )
         {
             return;
@@ -181,6 +183,13 @@ public class AudioContainer: MonoBehaviour
         var newReal = _distanceThatVolIsZeroAt - newVal;
         return newReal / _distanceThatVolIsZeroAt;//so is ready for AudioSource Volume (0-1f)
     }
+
+    private float ConvertVolToDist(float p)
+    {
+        var dist = (1 - p) * _distanceThatVolIsZeroAt;
+        return dist;
+    }
+
 
     void Update()
     {
@@ -277,10 +286,10 @@ public class AudioContainer: MonoBehaviour
     internal void PlayAmbience(float dist)
     {
         var volHere = ConvertLevel(dist);
-        _audioSource.volume = volHere;
+        _audioSource.volume = volHere * AudioCollector.SoundLevel; 
         _audioSource.loop = true;
-
         PlayAShot(dist);
+       // FadesTo(dist);
     }
 
     private float lastShotPlayed;
@@ -302,7 +311,7 @@ public class AudioContainer: MonoBehaviour
         }
 
         var volHere = ConvertLevel(dist);
-        _audioSource.PlayOneShot(_audioClip, volHere);
+        _audioSource.PlayOneShot(_audioClip, volHere * AudioCollector.SoundLevel);
 
         lastShotPlayed = Time.time;
     }
@@ -330,22 +339,50 @@ public class AudioContainer: MonoBehaviour
         }
         coolDownUntil = 0;
         
-        _audioSource.PlayOneShot(_audioClip, .15f);
+        _audioSource.PlayOneShot(_audioClip, .15f * AudioCollector.MusicLevel);
         timeToPlayNextSong = Time.time + _audioClip.length;
     }
 
+    private bool wasPaused;
     internal void Pause()
     {
-        _audioSource.Pause();
+        if (_audioSource.isPlaying)
+        {
+            _audioSource.Pause();
+            wasPaused = true;
+        }
     }   
     
     internal void UnPause()
     {
-        _audioSource.UnPause();
+        if (wasPaused)
+        {
+            _audioSource.UnPause();
+            wasPaused = false;
+        }
+        else
+        {
+            PlayMusicAShot();
+        }
     }
 
 
 #endregion
+
+
+    public void LevelChanged(object sender, EventArgs e)
+    {
+        _audioSource.volume = AudioCollector.SoundLevel;
+
+        if (IsAMusic())
+        {
+            _audioSource.volume = AudioCollector.MusicLevel;
+        }
+        Debug.Log("Sound Event :"+_key);
+
+        //var dist = ConvertVolToDist(_audioSource.volume);
+        //FadesTo(dist);
+    }
 
 
 

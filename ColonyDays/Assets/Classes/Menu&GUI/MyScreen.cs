@@ -63,10 +63,19 @@ public class MyScreen : General
         set { _difficulty = value; }
     }
 
+    public MainMenuWindow MainMenuWindow1
+    {
+        get { return _mainMenuWindow; }
+        set { _mainMenuWindow = value; }
+    }
+
     #region Main Menu. Load Game. New Game
 
     public void Start()
     {
+        Settings.LoadFromFileAudioSettings();
+
+
         //so is used only 1st time 
         if (current != null)
         {

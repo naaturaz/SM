@@ -30,6 +30,7 @@ public class Sound : Audio {
 
     internal void Play()
     {
+        _audioSource.volume = AudioCollector.SoundLevel;
         _audioSource.Play();
     }
 }

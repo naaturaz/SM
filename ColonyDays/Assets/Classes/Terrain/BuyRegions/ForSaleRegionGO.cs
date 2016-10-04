@@ -12,7 +12,6 @@ public class ForSaleRegionGO : General
 
     BigBoxPrev buildingPrev;
 
-    private float _iStartAt;
 
     /// <summary>
     /// The index of the region 
@@ -53,18 +52,12 @@ public class ForSaleRegionGO : General
         buildingPrev.UpdatePos(poly, .25f);
         buildingPrev.transform.position = U2D.FromV2ToV3(Region.center);
         
-        MeshController.CrystalManager1.CrystalRegions[Index].StartWithAudioReport();
-        _iStartAt = Time.time;
+        //MeshController.CrystalManager1.CrystalRegions[Index].StartWithAudioReport();
     }
 
     void Update()
     {
-        if (MeshController.CrystalManager1.CrystalRegions[Index].WhatAudioIReport == "Later"
-            && Time.time >_iStartAt + 5)
-        {
-            MeshController.CrystalManager1.CrystalRegions[Index].DoAroundAudioSurvey();
-            MeshController.CrystalManager1.CrystalRegions[Index].StartWithAudioReport();
-        }
+
     }
 
     void OnMouseUp()

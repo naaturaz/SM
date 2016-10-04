@@ -444,7 +444,12 @@ public class Brain
     void SkipWork()
     {
         //if is ready to work and Work is null or is not producing now, then Skip work
-        if (ReadyToWork() && (_person.Work == null || !_person.Work.IsProducingNow())) 
+        if (ReadyToWork() && 
+            
+            (_person.Work == null || !_person.Work.IsProducingNow())
+            //without FoodSource wont go to work
+            //|| _person.FoodSource == null)
+            ) 
         {
             ReadyToGetFood(true);
         }

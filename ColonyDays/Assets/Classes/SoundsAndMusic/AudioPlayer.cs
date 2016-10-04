@@ -49,16 +49,20 @@ public class AudioPlayer  {
         MusicManager.Start();
 
         //var root = Application.dataPath + "/Resources/Prefab/Audio/Sound/";
+        
+        Debug.Log("appData path: " + Application.dataPath);
+        
+        
         var root = "C:/GitHub/SM/ColonyDays/Assets/Resources/Prefab/Audio/Sound/";
         var waves = new List<string>();
 
 #if UNITY_EDITOR
         waves = GetFilesInEditor(root);
-        //SaveOnProgramData(waves);
+        SaveOnProgramData(waves);
 #endif
-//#if UNITY_STANDALONE
-//        waves = GetFilesInStandAlone();
-//#endif
+#if UNITY_STANDALONE
+        waves = GetFilesInStandAlone();
+#endif
 
         foreach (var item in waves)
         {

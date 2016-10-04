@@ -93,6 +93,12 @@ public class ShowAInventory
     private float _oldVolumeOccupied;
     private void ShowAllItems( )
     {
+        //bridge for ex
+        if (Inv == null)
+        {
+            return;
+        }
+
         _oldVolumeOccupied = Inv.CurrentVolumeOcuppied();
         var iForSpwItem = 0;//so ReturnIniPos works nicely
 

@@ -83,6 +83,8 @@ public class BuildingSaveLoad : BuildingPot
         Program.InputMain.CreatePersonPot();
 
         Program.gameScene.GameController1.NotificationsManagerInit();
+
+        CamControl.CAMRTS.ReportAudioNow();
     }
 
     /// <summary>

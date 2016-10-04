@@ -159,14 +159,27 @@ public class CamRTSController : CamControl
 
     }
 
+    #region Audio Reporting
+    private bool _isAudioReport;
+    public void ReportAudioNow()
+    {
+        _isAudioReport = true;
+    }
+
+    public void StopReportingAudioNow()
+    {
+        _isAudioReport = false;
+    }
 
 
-    public void AudioAmbientPlay()
+    void AudioAmbientPlay()
     {
         var playThis = MeshController.CrystalManager1.WhatAudioIPlay(transform.position);
         var pos = MeshController.CrystalManager1.CurrentRegionPos(transform.position);
         //if game tht has not started
-        if (string.IsNullOrEmpty(playThis))
+        if (string.IsNullOrEmpty(playThis) || AudioCollector.AudioContainers.Count == 0 
+            || !_isAudioReport
+            )
         {
             return;
         }
@@ -183,6 +196,7 @@ public class CamRTSController : CamControl
             AudioAmbientPlay();
         }
     }
+#endregion
 
     // Update is called once per frame
     //void LateUpdate()

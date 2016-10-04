@@ -102,10 +102,11 @@ public class CrystalRegion
         {
             return;
         }
-        DebugHere();
+        
+        //DebugHere();
     }
 
-    void DebugHere()
+    public void DebugHere()
     {
         UVisHelp.CreateDebugLines(Region, Color.cyan);
         UVisHelp.CreateText(U2D.FromV2ToV3(Region.center),

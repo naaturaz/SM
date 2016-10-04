@@ -67,7 +67,7 @@ public class Dialog
             {
                 DataController.SaveNow(true);
             }
-            else if (_type == H.Delete)
+            else if (_type == H.DeleteDialog)
             {
                 DataController.DeleteNow();
             } 

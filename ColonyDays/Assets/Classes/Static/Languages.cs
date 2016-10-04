@@ -119,7 +119,7 @@ public class Languages
 	   { "NameToSave", "Save your game as:"},
 	   { "NameToLoad", "Game to load selected:"},
 	   { "OverWrite", "There is a saved game with same name. Do you want to overwrite the file?"},
-	   { "Delete", "Are you sure want to delete the saved game?"},
+	   { "DeleteDialog", "Are you sure want to delete the saved game?"},
 	   { "NotHDDSpace", "Not enough space on {0} drive to save the game"},
 	   { "GameOverPirate", "Sorry, you lost the game! Pirates attack your town and killed everyone."},
 	   { "GameOverMoney", "Sorry, you lost the game! The crown wont support your Caribbean island anymore."},
@@ -251,7 +251,7 @@ public class Languages
 	   { "NameToSave", "Salva tu partida como:"},
 	   { "NameToLoad", "La partida selecciona es:"},
 	   { "OverWrite", "Ya existe un archivo con este nombre. Quieres sobre escribirlo?"},
-	   { "Delete", "Estas seguro que quieres borrar esta partida?"},
+	   { "DeleteDialog", "Estas seguro que quieres borrar esta partida?"},
 	   { "NotHDDSpace", "Not hay espacio suficiente en torre {0} para salvar la partida"},
 	   { "GameOverPirate", "Lo siento, perdiste el juego! Los piratas te atacaron y mataron a todos."},
 	   { "GameOverMoney", "Lo siento, perdiste el juego! La corona no te ayudara mas con tu sueño Caribeño."},
@@ -363,8 +363,49 @@ public class Languages
 
 
        
-       //Menus
+       //Main Menu
+       { "Resume Game", "Sigue el Juego"},
+       { "Continue Game", "Continua Juego"},
        { "New Game", "Juego Nuevo"},
+       { "Load Game", "Cargar Juego"},
+       { "Save Game", "Salvar Juego"},
+       { "Options", "Opciones"},
+       { "Credits", "Creditos"},
+       { "Exit", "Salir del Juego"},
+       { "Achievements", "Logros"},
+       { "Town Name:", "Nombre del Pueblo:"},
+       { "OK", "OK"},
+       { "Cancel", "Cancelar"},
+       { "Enter name...", "Escribe el nombre..."},
+       { "Terrain Name:", "Nombre del terreno:"},
+       { "Difficulty:", "Dificultad:"},
+       { "Click Here", "Haz click aquí"},
+       
+       { "Newbie", "Novato"},
+       { "Easy", "Fácil"},
+       { "Moderate", "Mas o menos"},
+       { "Hard", "Duro"},
+       { "Insane", "Locura"},
+      
+       { "Save Name:", "Nombre de la Salva:"},
+       { "Delete", "Borra"},
+       { "FullScreen:", "Pantalla completa:"},
+       { "Quality:", "Calidad:"},
+       { "Resolution:", "Resolucion:"},
+       { "Screen", "Pantalla"},
+       
+       { "Music:", "Musica:"},
+       { "Audio", "Audio"},
+       { "Sound:", "Sonido:"},
+       { "General", "General"},
+       { "Unit System:", "Sistema de unidades:"},
+     
+       { "AutoSave Frec:", "Frecuencia de auto salva:"},
+       { "Language:", "Lenguage:"},
+       { "Loading...", "Cargando..."},
+       { "Menu", "Menu"},
+
+
 
 	};
     
@@ -376,7 +417,8 @@ public class Languages
             {
                 return _english[key];
             }
-            Debug.Log(key + " not found Languages");
+            //in English if key is not found will return key alone 
+            //'Potato' is an ex, will passed as a key and is not even in the Dict
             return key;
         }
         else if (_currentLang == "Español")
@@ -385,7 +427,7 @@ public class Languages
             {
                 return _spanish[key];
             }
-            return key + " not found in ES Languages";
+            return key + " not in ES Languages";
         }
         return "not languages selected ";
     }

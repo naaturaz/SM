@@ -1296,15 +1296,34 @@ public class CrystalManager  {
         }
         else
         {
-            isFullyLoaded = true;
 
-            //for (int i = 0; i < CrystalRegions.Count; i++)
-            //{
-            //    CrystalRegions[i].DebugHere();
-            //}
+            AfterLoaded();
+            isFullyLoaded = true;
+            
         }
     }
 
+    void AfterLoaded()
+    {
+        for (int i = 0; i < CrystalRegions.Count; i++)
+        {
+            CrystalRegions[i].StartWithAudioReport();
+        }
+        HandleLaterAudioRegions();
+    }
+
+    void HandleLaterAudioRegions()
+    {
+        for (int i = 0; i < CrystalRegions.Count; i++)
+        {
+            var Index = i;
+            if (MeshController.CrystalManager1.CrystalRegions[Index].WhatAudioIReport == "Later")
+            {
+                MeshController.CrystalManager1.CrystalRegions[Index].DoAroundAudioSurvey();
+                //MeshController.CrystalManager1.CrystalRegions[Index].DebugHere();
+            }
+        }
+    }
 
 #endregion
 

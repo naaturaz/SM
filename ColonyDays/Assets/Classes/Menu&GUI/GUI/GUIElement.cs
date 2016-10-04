@@ -64,6 +64,7 @@ public class GUIElement : General {
         transform.position = newPos;
     }
 
+
     /// <summary>
     /// Will build the string to show cost 
     /// </summary>

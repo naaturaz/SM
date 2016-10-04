@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
 public class Settings
@@ -54,11 +55,7 @@ public class Settings
         //screen
         QualitySettings.SetQualityLevel(PlayerPrefs.GetInt("Quality"));
         //LoadAndApplyResolution();
-        Screen.fullScreen = bool.Parse(PlayerPrefs.GetString("FullScreen"));
-
-        //audio
-        ISMusicOn = bool.Parse(PlayerPrefs.GetString("Music"));
-        ISSoundOn = bool.Parse(PlayerPrefs.GetString("Sound"));
+        Screen.fullScreen = Boolean.Parse(PlayerPrefs.GetString("FullScreen"));
 
         Debug.Log("Loading Settings");
     }
@@ -88,9 +85,6 @@ public class Settings
         //del call 
         //SaveResolution("1920 x 1080");
 
-        //audio
-        PlayerPrefs.SetString("Music", ISMusicOn.ToString());
-        PlayerPrefs.SetString("Sound", ISSoundOn.ToString());
 
         PlayerPrefs.Save();
     }
@@ -104,8 +98,8 @@ public class Settings
         Debug.Log(Screen.currentResolution.ToString());
 
         var splt = newResolution.Split(' ');
-        PlayerPrefs.SetInt("Res.Width", int.Parse(splt[0]));
-        PlayerPrefs.SetInt("Res.Height", int.Parse(splt[2]));
+        PlayerPrefs.SetInt("Res.Width", Int32.Parse(splt[0]));
+        PlayerPrefs.SetInt("Res.Height", Int32.Parse(splt[2]));
     }
 
 
@@ -113,41 +107,23 @@ public class Settings
 #endregion
 
     #region Audio
+    
 
     public static Music Switch(H what, Music current = null)
     {
         if(what == H.Sound)
         {
             _isSoundOn = MecanicSwitcher(_isSoundOn);
+            AudioCollector.SoundIsSwitchNow();
         }
         else if(what == H.Music)
         {
             _isMusicOn = MecanicSwitcher(_isMusicOn);
             MusicManager.MusicIsSwitchNow();
-            //if (current != null || _isMusicOn)
-            //{
-            //    current = KillOrRestart(current, _isMusicOn);
-            //}
         }
         return current;
     }
 
-    static Music KillOrRestart(Music current, bool isMusicOnPass)
-    {
-        if (isMusicOnPass) 
-        { 
-            if(Application.loadedLevelName == "Lobby")
-            {
-                current = (Music)AudioPlayer.PlayAudio(RootSound.musicLobby, H.Music);
-            }
-            else current = (Music)AudioPlayer.PlayAudio(RootSound.musicLvl1Start, H.Music);
-        }
-        else
-        {   
-            current.Destroy();
-        }
-        return current;
-    }
 
     public static bool MecanicSwitcher(bool currentState)
     {
@@ -169,7 +145,47 @@ public class Settings
         else if(Application.loadedLevelName == "Lobby")
             music = (Music)AudioPlayer.PlayAudio(RootSound.musicLobby, H.Music);
     }
-#endregion
+
+
+
+    static bool loadedOnce;
+    /// <summary>
+    /// Loads Audio Settings from file
+    /// </summary>
+    public static void LoadFromFileAudioSettings()
+    {
+        if (loadedOnce)
+        {
+            return;
+        }
+        loadedOnce = true;
+
+        var pData = XMLSerie.ReadXMLProgram();
+
+        Settings.ISSoundOn = pData.SoundIsOn;
+        Settings.ISMusicOn = pData.MusicIsOn;
+
+        AudioCollector.SoundLevel = pData.SoundLevel;
+        AudioCollector.MusicLevel = pData.MusicLevel;
+    }
+
+    /// <summary>
+    /// Saves to file audio settings 
+    /// </summary>
+    public static void SaveToFileAudioSettings()
+    {
+        var pData = XMLSerie.ReadXMLProgram();
+
+        pData.SoundIsOn = Settings.ISSoundOn;
+        pData.MusicIsOn = Settings.ISMusicOn;
+
+        pData.SoundLevel = AudioCollector.SoundLevel;
+        pData.MusicLevel = AudioCollector.MusicLevel;
+
+        XMLSerie.WriteXMLProgram(pData);
+    }
+
+    #endregion
 
 #region Change Params 
     internal static void SetQuality(string qual)
@@ -213,7 +229,7 @@ public class Settings
     internal static void SetAutoSave(string name)
     {
         var spl = name.Split(' ');
-        AutoSaveFrec = int.Parse(spl[0]) * 60;
+        AutoSaveFrec = Int32.Parse(spl[0]) * 60;
         Program.MyScreen1.OptionsWindow1.RefreshAllDropDowns();
     }  
     
@@ -226,12 +242,6 @@ public class Settings
         Program.MouseListener.ApplyChangeScreenResolution();
     }
 #endregion
-
-
-
-
-
-
 }
 
 public class Unit

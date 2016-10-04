@@ -68,6 +68,7 @@ public class Homer : Profession
             return _person.Work;
         }
 
+
         return _person.FoodSource;
     }
 

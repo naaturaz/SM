@@ -56,6 +56,9 @@ public class Program : MonoBehaviour {
     }
 
     #region Unity Voids
+
+
+
     // Use this for initialization
 	public void Start ()
 	{
@@ -73,7 +76,7 @@ public class Program : MonoBehaviour {
 
         if (Application.loadedLevelName == "Lobby")
         {
-            Settings.PlayMusic();
+            //Settings.PlayMusic();
         }
         else
         {
@@ -90,6 +93,10 @@ public class Program : MonoBehaviour {
 
 	}
 
+    private void OnApplicationQuit()
+    {
+        Settings.SaveToFileAudioSettings();
+    }
 
 
     private void ProfilerHere()

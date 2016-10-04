@@ -207,30 +207,6 @@ public class Builder : Profession
 
     void InitRoute()
     {
-        //if (_person == null)
-        //{
-        //    Debug.Log("_person null");
-
-        //    _takeABreakNow = true;
-        //    return;
-        //}
-        //if (_person.MyDummyProf == null)
-        //{
-        //    Debug.Log("dummyProf null" + _person.MyId);
-
-        //    _takeABreakNow = true;
-        //    return;
-
-        //}
-        //if (_constructing == null)
-        //{
-        //    Debug.Log("_const was null" + _person.MyId);
-        //    _takeABreakNow = true;
-        //    return;
-
-        //}
-
-
 
         Router1 = null;
         RouterBack = null;

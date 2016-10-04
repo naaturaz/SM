@@ -379,7 +379,7 @@ public enum H
     Animal,
     Decoration,
     OverWrite,
-    Delete,
+    DeleteDialog,
     NotHDDSpace,
     GameOverPirate,
     GameOverMoney,

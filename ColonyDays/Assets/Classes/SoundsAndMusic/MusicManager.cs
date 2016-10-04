@@ -78,8 +78,15 @@ public class MusicManager
             var item = _musicRoots.ElementAt(i);
             var root = DefineRoot(item.Key);
 
-            _musics.Add(item.Key, AudioContainer.Create(item.Key, root, 0,
-                container: AudioPlayer.SoundsCointaner.transform));
+
+            var audCont = AudioContainer.Create(_musicRoots.ElementAt(i).Key, root, 0,
+                container: AudioPlayer.SoundsCointaner.transform);
+
+            LevelChanged += audCont.LevelChanged;
+
+
+
+            _musics.Add(item.Key, audCont);
         }
     }
 
@@ -134,6 +141,16 @@ public class MusicManager
         else
         {
             MusicIsTurnedOFF();
+        }
+    }
+
+    static public EventHandler<EventArgs> LevelChanged;
+
+    public static void OnLevelChanged(EventArgs e)
+    {
+        if (LevelChanged != null)
+        {
+            LevelChanged("", e);
         }
     }
 }

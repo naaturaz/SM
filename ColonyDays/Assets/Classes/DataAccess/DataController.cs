@@ -197,7 +197,7 @@ public class DataController
 
         if (Directory.Exists(savePath))
         {
-            Dialog.OKCancelDialog(H.Delete);
+            Dialog.OKCancelDialog(H.DeleteDialog);
         }
     }
 

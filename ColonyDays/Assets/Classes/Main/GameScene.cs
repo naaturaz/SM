@@ -137,15 +137,24 @@ public class GameScene : General
     {
         //only gets created if in Editor
 #if UNITY_EDITOR
-        XMLSerie.WriteXMLProgram(CreateProgramDataObj());
+        XMLSerie.WriteXMLProgram(CreateProgramDataObjOrUpdate());
 #endif
     }
 
 
-    ProgramData CreateProgramDataObj()
+    ProgramData CreateProgramDataObjOrUpdate()
     {
-        ProgramData p = new ProgramData(Version());
-        return p;
+        //reads the Program.xls
+        var pData = XMLSerie.ReadXMLProgram();
+
+        if (pData == null)
+        {
+            ProgramData p = new ProgramData(Version());
+            return p;
+        }
+
+        pData.GameVersion = Version();
+        return pData;
     }
 
     /// <summary>
@@ -198,7 +207,6 @@ public class GameScene : General
 #endregion
 
 
-
     // Use this for initialization
     private void Start()
     {
@@ -206,6 +214,7 @@ public class GameScene : General
 //#if UNITY_EDITOR
 //        Developer.IsDev = true;
 //#endif
+
 
         Book.Start();
 
@@ -217,7 +226,7 @@ public class GameScene : General
         StartCoroutine("OneSecUpdate");
 
 
-        Settings.PlayMusic();
+        //Settings.PlayMusic();
 
         textMessage = (Btn3D) General.Create(Root.menusTextMiddle, new Vector3(0.85f, 0.3f, 0));
         textMessage.MoveSpeed = 40f; //so fade happens
@@ -695,6 +704,8 @@ public class GameScene : General
     /// </summary>
     void OnApplicationQuit()
     {
+      
+
         Debug.Log("Application ending after " + Time.time + " seconds");
 
 #if UNITY_EDITOR

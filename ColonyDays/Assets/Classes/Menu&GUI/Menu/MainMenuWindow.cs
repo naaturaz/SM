@@ -9,7 +9,7 @@ public class MainMenuWindow : GUIElement
     private UnityEngine.UI.Button _continueBtn;
     private UnityEngine.UI.Button _resumeBtn;
     private UnityEngine.UI.Button _loadBtn;
-    private UnityEngine.UI.Button _saveBtn; 
+    private UnityEngine.UI.Button _saveBtn;
 
     // Use this for initialization
     void Start()
@@ -23,6 +23,7 @@ public class MainMenuWindow : GUIElement
         iniPos = transform.position;
 
         MakeButtonsInactiveIfNeeded();
+
     }
 
     void MakeButtonsInactiveIfNeeded()
@@ -49,5 +50,5 @@ public class MainMenuWindow : GUIElement
 
 	}
 
-    
+
 }

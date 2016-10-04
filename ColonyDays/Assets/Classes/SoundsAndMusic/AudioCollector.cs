@@ -8,6 +8,11 @@ using Assets.Classes.SoundsAndMusic;
 
 public class AudioCollector
 {
+    //determined by user on Interface. Saved and loaded too
+    private static float _soundLevel = 1;
+    private static float _musicLevel = 1;
+
+
     //TO ADD A SOUND ====>
     //Add first the type of HType is initiating the Sound Ex: "Person" then the sound
     //as named in Prefab/Audio/Sound/Other/
@@ -99,6 +104,24 @@ public class AudioCollector
         set { _ambience = value; }
     }
 
+    public static Dictionary<string, AudioContainer> AudioContainers
+    {
+        get { return _audioContainers; }
+        set { _audioContainers = value; }
+    }
+
+    public static float MusicLevel
+    {
+        get { return _musicLevel; }
+        set { _musicLevel = value; }
+    }
+
+    public static float SoundLevel
+    {
+        get { return _soundLevel; }
+        set { _soundLevel = value; }
+    }
+
     static void StartRoots()
     {
         if (_roots.Count > 0)
@@ -115,19 +138,32 @@ public class AudioCollector
         {
             _roots.Add(amb.Key, amb.Value);
         }
+
+        foreach (var amb in _rootsToSpawn)
+        {
+            _roots.Add(amb.Key, amb.Value);
+        }
     }
 
     public static void SpawnSounds()
     {
-        for (int i = 0; i < _ambience.Count; i++)
-        {
-            var root = DefineRoot(_ambience.ElementAt(i).Key);
 
-            _audioContainers.Add(_ambience.ElementAt(i).Key,
-                AudioContainer.Create(_ambience.ElementAt(i).Key, root, 0,
-            container: AudioPlayer.SoundsCointaner.transform));
+        for (int i = 0; i < _roots.Count; i++)
+        {
+            var root = DefineRoot(_roots.ElementAt(i).Key);
+
+
+            var audCont = AudioContainer.Create(_roots.ElementAt(i).Key, root, 0,
+                container: AudioPlayer.SoundsCointaner.transform);
+
+            LevelChanged += audCont.LevelChanged;
+
+
+            _audioContainers.Add(_roots.ElementAt(i).Key, audCont);
         }
     }
+
+   
 
     /// <summary>
     /// Reporting how far an GameObj is 
@@ -218,17 +254,10 @@ public class AudioCollector
 
     private static string DefineRoot(string key)
     {
-        //var root = "C:/GitHub/SM/ColonyDays/Assets/Resources/Prefab/Audio/Sound/Other/";
-
         var plsFolders = "Prefab/Audio/Sound/Other/";
-        var appData = Application.dataPath;
-
-        Debug.Log("appData path: "+ appData);
-        
         return plsFolders + key;
     }
 
-    static bool isSpawnStarted;
     public static void Update()
     {
         StartRoots();
@@ -238,24 +267,8 @@ public class AudioCollector
         {
             ExecuteReport();
         }
-
-        if (!isSpawnStarted && _audioContainers.Count > 0)
-        {
-            isSpawnStarted = true;
-            Spawn();
-        }
     }
 
-    static void Spawn()
-    {
-        foreach (var item in _rootsToSpawn)
-        {
-            var root = DefineRoot(item.Key);
-
-            _audioContainers.Add(item.Key, AudioContainer.Create(item.Key, root, 0,
-              container: AudioPlayer.SoundsCointaner.transform));  
-        }
-    }
 
     /// <summary>
     /// Mainly for Persons animations 
@@ -307,6 +320,50 @@ public class AudioCollector
             {
                 _audioContainers[keyHere].StopAmbience();
             }
+        }
+    }
+
+    internal static void SetNewSoundLevelTo(float p)
+    {
+        SoundLevel = p;
+        OnLevelChanged(EventArgs.Empty);
+    }
+
+    internal static void SetNewMusicLevelTo(float p)
+    {
+        MusicLevel = p;
+        MusicManager. OnLevelChanged(EventArgs.Empty);
+    }
+
+
+
+
+    static public EventHandler<EventArgs> LevelChanged;
+
+    static void OnLevelChanged(EventArgs e)
+    {
+        if (LevelChanged != null)
+        {
+            LevelChanged("", e);
+        }
+    }
+
+
+    public static void SoundTurnedOff()
+    {
+        //wills stop all ambiences noises 
+        StopCurrAmbienceThatIsNotNewSound("");
+    }
+
+    internal static void SoundIsSwitchNow()
+    {
+        if (Settings.ISSoundOn)
+        {
+
+        }
+        else
+        {
+            SoundTurnedOff();
         }
     }
 }

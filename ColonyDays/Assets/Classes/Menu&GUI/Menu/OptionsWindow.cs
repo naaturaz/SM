@@ -28,6 +28,9 @@ public class OptionsWindow : GUIElement
     private Text _resBtnTxt;
     private Text _qualityBtnTxt;
 
+    private Slider _musicSlider;
+    private Slider _soundSlider;
+
     void Start()
     {
         iniPos = transform.position;
@@ -35,6 +38,13 @@ public class OptionsWindow : GUIElement
         _fullToggle = GetGrandChildCalled("FullScreen_Toggle").GetComponent<Toggle>();
         _musicToggle = GetGrandChildCalled("Music_Toggle").GetComponent<Toggle>();
         _soundToggle = GetGrandChildCalled("Sound_Toggle").GetComponent<Toggle>();
+        
+        
+        _musicSlider = GetGrandChildCalled("Music_Slider").GetComponent<Slider>();
+        _soundSlider = GetGrandChildCalled("Sound_Slider").GetComponent<Slider>();
+
+
+
 
         var autoSavePanel = GetGrandChildCalled("Panel_AutoSave");
         _autoSaveBtn = GetChildCalledOnThis("AutoSave_Btn", autoSavePanel);
@@ -71,13 +81,19 @@ public class OptionsWindow : GUIElement
             resTimeChanged = 0;
             Show();
         }
+
+        LoadSlidersValues();
+
     }
 
     private void SetAllControls()
     {
         _fullToggle.isOn = Screen.fullScreen;
+
+
         _musicToggle.isOn = Settings.ISMusicOn;
         _soundToggle.isOn = Settings.ISSoundOn;
+
 
         //so they dont trigger event 
         _fullToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Full"));
@@ -189,6 +205,7 @@ public class OptionsWindow : GUIElement
     {
         RefreshAllDropDowns();
         Show();
+        LoadSlidersValues();
     }
 
     public void ChangeAudioSettings(string typeP)
@@ -388,5 +405,26 @@ public class OptionsWindow : GUIElement
 
 #endregion
 
+
+#region Sliders Sound and Music
+
+    void LoadSlidersValues()
+    {
+        _soundSlider.value = AudioCollector.SoundLevel;
+        _musicSlider.value = AudioCollector.MusicLevel;
+
+    }
+
+    public void NewSoundLevel()
+    {
+        AudioCollector.SetNewSoundLevelTo(_soundSlider.value);
+    }
+
+    public void NewMusicLevel()
+    {
+        AudioCollector.SetNewMusicLevelTo(_musicSlider.value);
+    }
+
+#endregion
 }
 

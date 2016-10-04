@@ -81,7 +81,7 @@ public class XMLSerie
         DataContainer DataCollection = new DataContainer();
         DataCollection.ProgramData = program;
 
-        DataCollection.Save(Path.Combine(dataPath, "program.xml"));
+        DataCollection.Save(Path.Combine(Application.dataPath, "program.xml"));
     }
 
 

@@ -100,4 +100,13 @@ public class BuildingPot : Pot
     {
         isToLoadBuildings = true;
     }
+
+    public static bool FullyLoaded()
+    {
+        if (Control == null || Control.Registro == null)
+        {
+            return false;
+        }
+        return Control.Registro.IsFullyLoaded;
+    }
 }

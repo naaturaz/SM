@@ -169,6 +169,8 @@ public class InputMain : InputParent {
             
             Program.MouseListener.HideMainGUI();
             Program.MyScreen1.LoadMainMenuWithResumeBtn();
+
+            CamControl.CAMRTS.StopReportingAudioNow();
         }
         //is on main Menu
         else if (mainMenu != null && Program.gameScene.GameFullyLoaded())
@@ -177,8 +179,12 @@ public class InputMain : InputParent {
 
             Program.MyScreen1.DestroyCurrentMenu();
             Program.MouseListener.ShowMainGUI();
+
+            CamControl.CAMRTS.ReportAudioNow();
         }
     }
+
+ 
 
     /// <summary>
     /// Says if game is unlock and can be saved now 
