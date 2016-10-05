@@ -8,7 +8,19 @@ public class ControllerMain : General {
 
     void Start()
     {
-        TerraSpawnController = (TerrainSpawnerController)General.Create(Root.terrainSpawnerController, container: Program.ClassContainer.transform);
+        TerraSpawnController = FindObjectOfType<TerrainSpawnerController>();
+
+        if (TerraSpawnController == null)
+        {
+            TerraSpawnController =
+                (TerrainSpawnerController)
+                    General.Create(Root.terrainSpawnerController);
+        }
+        else
+        {
+            TerraSpawnController.RehuseStart();
+        }
+
     }
 
     void Update()
@@ -25,8 +37,10 @@ public class ControllerMain : General {
     public void Destroy()
     {
         MeshController.Destroy();
-        TerraSpawnController.Destroy();
+        //TerraSpawnController.Destroy();
+        TerraSpawnController.PrepareToRehuse();
 
         base.Destroy();
     }
+
 }

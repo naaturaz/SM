@@ -93,6 +93,9 @@ public class TerrainSpawnerController : ControllerParent
         set { _isToLoadFromFile = value; }
     }
 
+
+
+
     public void RemoveStillElement(StillElement ele)
     {
         var index = AllRandomObjList.IndexOf(ele);
@@ -142,7 +145,8 @@ public class TerrainSpawnerController : ControllerParent
     // Use this for initialization
     void ManualStart()
     {
-        //CreateTreePool();
+        terraName = Program.gameScene.Terreno.Root1;
+        Debug.Log("terraName :" +terraName );
 
 #if UNITY_EDITOR
         multiplier = 2;//2
@@ -241,6 +245,11 @@ public class TerrainSpawnerController : ControllerParent
     // Update is called once per frame
     void Update()
     {
+        if (holdOn)
+        {
+            return;
+        }
+
         if (MeshController.CrystalManager1 == null || MeshController.CrystalManager1.CrystalRegions.Count==0)
         {
             return;
@@ -252,8 +261,10 @@ public class TerrainSpawnerController : ControllerParent
             ManualStart();
         }
 
-        if (centerOfTerrain == new Vector3() && m.IniTerr.MathCenter != null
-            && m != null && m.IniTerr != null)
+        if (centerOfTerrain == new Vector3()
+            && m != null && m.IniTerr != null
+            && m.IniTerr.MathCenter != null
+            )
         {   //define center of terrain
             centerOfTerrain = m.IniTerr.MathCenter;
         }
@@ -291,6 +302,7 @@ public class TerrainSpawnerController : ControllerParent
                 //print(stoneList.Count + " stoneList.Count");
             }
         }
+        RehuseSameCall();
     }
 
     /// <summary>
@@ -432,8 +444,6 @@ public class TerrainSpawnerController : ControllerParent
                 st.TreeFall = treeFall;
             }
         }
-        //AssignSharedMaterial(temp);
-        //temp.AssignToAllGeometryAsSharedMat(temp.gameObject, "Enviroment");
 
         //if is replant tree we want to place it first so when loading is faster 
         if (replantedTree)
@@ -444,8 +454,16 @@ public class TerrainSpawnerController : ControllerParent
         }
         else
         {
-            Program.gameScene.BatchAdd(temp);
-            AllRandomObjList.Add(temp);
+            //wil be inserted now added
+            if (rehuseNow)
+            {
+                AllRandomObjList.Insert(loadingIndex, temp);
+            }
+            else
+            {
+                AllRandomObjList.Add(temp);
+            }
+            
         }
         
         if (IsToSave)
@@ -453,6 +471,7 @@ public class TerrainSpawnerController : ControllerParent
             SaveOnListData(temp, typePass, rootToSpawnIndex, index, replantedTree);
         }
     }
+
 
     //Save all the data into AllSpawnedDataList
     void SaveOnListData(General obj, H typeP, int rootToSpawnIndex, int indexPass, bool replantTree)
@@ -646,6 +665,7 @@ public class TerrainSpawnerController : ControllerParent
             print("subMesh loaded not the same as the one was the spawned obj created with");
             IsToSave = true;
             ClearCurrentFileAndList();
+            //NotToRehuseNow();
             return;
         }
 
@@ -653,37 +673,7 @@ public class TerrainSpawnerController : ControllerParent
         p.TerraSpawnController.IsToLoadFromFile = true;
     }
 
-    public void LoadFromFile()
-    {
-        CreateObjAndAddToMainList(AllSpawnedDataList[loadingIndex].Type,
-            AllSpawnedDataList[loadingIndex].Pos,
-            AllSpawnedDataList[loadingIndex].RootStringIndex, AllSpawnedDataList[loadingIndex].AllVertexIndex,
-            AllSpawnedDataList[loadingIndex].Rot, 
-            
-            false, 
-            AllSpawnedDataList[loadingIndex].TreeHeight, AllSpawnedDataList[loadingIndex].SeedDate, 
-            AllSpawnedDataList[loadingIndex].MaxHeight,
-            AllSpawnedDataList[loadingIndex].TreeFall, AllSpawnedDataList[loadingIndex].Weight);
 
-        //will restart the value of this array so I know which ones are being used
-        usedVertexPos = new bool[spawnedData.TerraMshCntrlAllVertexIndexCount];
-        usedVertexPos[AllSpawnedDataList[loadingIndex].AllVertexIndex] = true;
-
-        loadingIndex++;
-
-
-        //when index is the same as couunt that it
-        if (loadingIndex >= AllSpawnedDataList.Count)
-        {
-            IsToLoadFromFile = false;
-            //CreateOrUpdateSpecificsList(AllSpawnedDataList[loaded)
-            print(treeList.Count + " treeList.Count IsToLoadFromFile-false");
-            
-            Program.gameScene.BatchInitial();
-
-            //CreateTreePool();
-        }
-    }
 
 
     private int ttlToSpawn = 0;
@@ -838,4 +828,285 @@ public class TerrainSpawnerController : ControllerParent
 
         return isOrnamentingNow;
     }
+
+    void LoadFromFile()
+    {
+        if (rehuseNow)
+        {
+            RehuseRoutine();
+            return;
+        }
+
+        //if (rehusingSameNow)
+        //{
+        //    //rehusing same terrain
+        //    //wil keep going so it finishes the complete XML file 
+        //    RehuseRoutine();
+        //    return;
+        //}
+
+        CreateObjAndAddToMainList(AllSpawnedDataList[loadingIndex].Type,
+            AllSpawnedDataList[loadingIndex].Pos,
+            AllSpawnedDataList[loadingIndex].RootStringIndex, AllSpawnedDataList[loadingIndex].AllVertexIndex,
+            AllSpawnedDataList[loadingIndex].Rot,
+
+            false,
+            AllSpawnedDataList[loadingIndex].TreeHeight, AllSpawnedDataList[loadingIndex].SeedDate,
+            AllSpawnedDataList[loadingIndex].MaxHeight,
+            AllSpawnedDataList[loadingIndex].TreeFall, AllSpawnedDataList[loadingIndex].Weight);
+
+        //will restart the value of this array so I know which ones are being used
+        usedVertexPos = new bool[spawnedData.TerraMshCntrlAllVertexIndexCount];
+        usedVertexPos[AllSpawnedDataList[loadingIndex].AllVertexIndex] = true;
+
+        loadingIndex++;
+
+        //when index is the same as couunt thats it
+        if (loadingIndex >= AllSpawnedDataList.Count)
+        {
+            IsToLoadFromFile = false;
+            //CreateOrUpdateSpecificsList(AllSpawnedDataList[loaded)
+            print(treeList.Count + " treeList.Count IsToLoadFromFile-false");
+         
+            BatchAndReleaseLoadingScreen();
+        }
+    }
+
+    void AddAllToBatch()
+    {
+        for (int i = 0; i < AllRandomObjList.Count; i++)
+        {
+            Program.gameScene.BatchAdd(AllRandomObjList[i]);
+        }
+    }
+
+    private void RehuseRoutine()
+    {
+        var spawnedItem = AllRandomObjList[loadingIndex];
+        var dataItem = AllSpawnedDataList[loadingIndex];
+
+        //if they are the same type is an assignation of prop
+        if (dataItem.Type == spawnedItem.HType)
+        {
+            LoadDataIntoSpawnedObj(spawnedItem, dataItem);
+        }
+        else
+        {
+            //is data ahead
+            if (IsDataAhead(spawnedItem.HType, dataItem.Type))
+            {
+                AllRandomObjList[loadingIndex].Destroy();
+                AllRandomObjList.RemoveAt(loadingIndex);
+            }
+            //if is behind . data is spawing a tree and this spawned obj are in rock already
+            else
+            {
+                SpawnTemp();
+            }
+        }
+
+        loadingIndex++;
+        LateRehuseRoutine();
+    }
+
+    void LateRehuseRoutine()
+    {
+        if (loadingIndex >= AllRandomObjList.Count)
+        {
+            FinishRehuse();
+        }
+        else if (loadingIndex >= AllSpawnedDataList.Count)
+        {
+            //while AllRandObj bigeer thnan Data will be all removed 
+            while (AllRandomObjList.Count > AllSpawnedDataList.Count)
+            {
+                AllRandomObjList[AllRandomObjList.Count - 1].Destroy();
+                AllRandomObjList.RemoveAt(AllRandomObjList.Count - 1);
+            }
+            FinishRehuse();
+        }
+    }
+
+    void FinishRehuse()
+    {
+        IsToLoadFromFile = false;
+        rehuseNow = false;
+        //rehusingSameNow = false;
+
+        BatchAndReleaseLoadingScreen();
+    }
+
+    /// <summary>
+    /// Means Data is already on 'Rock' and Spawn still on 'Tree'
+    /// </summary>
+    /// <param name="spawnType"></param>
+    /// <param name="dataType"></param>
+    /// <returns></returns>
+    private bool IsDataAhead(H spawnType, H dataType)
+    {
+        var spwOrder = toSpawnList.FindIndex(a => a == spawnType);
+        var dataOrder = toSpawnList.FindIndex(a => a == dataType);
+
+        if (dataOrder > spwOrder)
+        {
+            return true;
+        }
+        return false;
+    }
+
+
+
+    /// <summary>
+    /// Loading all the data of a loaded data item into a spawned element 
+    /// </summary>
+    /// <param name="spwn"></param>
+    /// <param name="data"></param>
+    void LoadDataIntoSpawnedObj(TerrainRamdonSpawner spwn, SpawnedData data)
+    {
+        spwn.transform.position = data.Pos;
+        spwn.RootToSpawnIndex = data.RootStringIndex;
+        spwn.IndexAllVertex = data.AllVertexIndex;
+        spwn.transform.rotation = data.Rot;
+        spwn.Height = data.TreeHeight;
+        spwn.SeedDate = data.SeedDate;
+        spwn.MaxHeight = data.MaxHeight;
+
+        if (spwn.HType == H.Tree)
+        {
+            var st = (StillElement)spwn;
+            st.Weight = data.Weight;
+            st.TreeFall = data.TreeFall;
+        }
+        //Program.gameScene.BatchAdd(spwn);
+
+        //add crystals
+        spwn.AddCrystals();
+
+    }
+
+    void SpawnTemp()
+    {
+        CreateObjAndAddToMainList(AllSpawnedDataList[loadingIndex].Type,
+            AllSpawnedDataList[loadingIndex].Pos,
+            AllSpawnedDataList[loadingIndex].RootStringIndex, AllSpawnedDataList[loadingIndex].AllVertexIndex,
+            AllSpawnedDataList[loadingIndex].Rot,
+
+            false,
+            AllSpawnedDataList[loadingIndex].TreeHeight, AllSpawnedDataList[loadingIndex].SeedDate,
+            AllSpawnedDataList[loadingIndex].MaxHeight,
+            AllSpawnedDataList[loadingIndex].TreeFall, AllSpawnedDataList[loadingIndex].Weight);
+    }
+
+
+
+
+#region Rehusing This Class
+
+    private bool rehuseNow;//rehusing now
+    private bool rehusingSameNow;//rehusing the same terrain
+    private string terraName;
+
+    private bool holdOn;//will hold on while Things are getting redone
+    //bz otherwise gives a lot of problems while MEshController doesnt exist
+
+
+
+    /// <summary>
+    /// Call when rehuse starts 
+    /// Instead of destroying this GObj I call this method
+    /// </summary>
+    internal void PrepareToRehuse()
+    {
+        var spawnedData = XMLSerie.ReadXMLSpawned();
+        if (spawnedData == null || 
+            spawnedData.TerraMshCntrlAllVertexIndexCount != p.MeshController.AllVertexs.Count)
+        {
+            print("Deleting this TerraContoller so we can spawn new Spawer file");
+            Destroy(this);
+            return;
+        }
+
+        //transform.parent = null;
+        RemoveAll();
+
+        //bz otherwise gives a lot of problems while MEshController doesnt exist
+        holdOn = true;
+    }
+
+    /// <summary>
+    /// Used when this is being Rehuse
+    /// 
+    /// No need to remove from Crystal Manager bz that is going to be wiped out
+    /// in the KillGame Process 
+    /// </summary>
+    public void RemoveAll()
+    {
+        for (int i = 0; i < AllRandomObjList.Count; i++)
+        {
+            Program.gameScene.BatchRemove(AllRandomObjList[i]);
+        }
+    }
+
+    /// <summary>
+    /// Called when starting an Rehuse GObj like this one. This is the start
+    /// of a GObj like this one when rehuse
+    /// </summary>
+    internal void RehuseStart()
+    {
+        if (terraName != Program.MyScreen1.TerraRoot)
+        {
+            rehuseNow = true;
+            //bz if is the same terrain just should keep loading 
+            loadingIndex = 0;
+            //so reloads next file XML data 
+            
+            loadedTimes = 0;
+        }
+        else
+        {
+            rehusingSameNow = true;
+            //so loads the 
+        }
+        
+        terraName = Program.MyScreen1.TerraRoot;
+        //Debug.Log("RehuseNow: " + rehuseNow + "| terra: "+terraName);
+    }
+
+
+    void RehuseSameCall()
+    {
+        if (!IsToLoadFromFile && rehusingSameNow && loadingIndex >= AllSpawnedDataList.Count)
+        {
+            rehusingSameNow = false;
+            BatchAndReleaseLoadingScreen();
+        }
+    }
+
+    void BatchAndReleaseLoadingScreen()
+    {
+        AddAllToBatch();
+        Program.gameScene.BatchInitial();
+    }
+
+
+    /// <summary>
+    /// Called when MeshController is done loading 
+    /// </summary>
+    internal void Release()
+    {
+        holdOn = false;
+    }
+
+   
+
+
+#endregion
+
+
+    internal bool IsLoadingOrRehusing()
+    {
+        return IsToLoadFromFile || rehuseNow;
+    }
+
+  
 }

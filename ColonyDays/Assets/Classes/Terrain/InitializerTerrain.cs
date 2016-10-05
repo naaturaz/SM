@@ -62,8 +62,9 @@ public class InitializerTerrain : General
         _lenght = wholeMalla[0].x - wholeMalla[1].x;
         _height = wholeMalla[3].z - wholeMalla[0].z;
 
-        MathCenter = m.Vertex.BuildVertexWithXandZ((wholeMalla[0].x + wholeMalla[1].x) / 2,
+        _mathCenter = m.Vertex.BuildVertexWithXandZ((wholeMalla[0].x + wholeMalla[1].x) / 2,
             (wholeMalla[3].z + wholeMalla[0].z) / 2);
+
 
         float epsi = 0.001f;
 

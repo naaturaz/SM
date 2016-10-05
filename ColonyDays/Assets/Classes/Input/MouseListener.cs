@@ -128,6 +128,12 @@ public class MouseListener : InputMain
         //print("DetectMouseClick() :" + type);
         if (action == "Outside")
         {
+            //for when is clicked on Main menu gives NullRef
+            if (_addOrderWindow == null)
+            {
+                return;
+            }
+
             _addOrderWindow.Hide();
             _buildingWindow.Hide();
 

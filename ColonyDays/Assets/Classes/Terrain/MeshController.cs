@@ -229,6 +229,8 @@ public class MeshController : ControllerParent
                 && Malla.Lots.Count > 0)
             {
                 IsLoading = false;
+                Program.gameScene.controllerMain.TerraSpawnController.Release();
+
                 return;
             }
             nextStart = wholeMalla[0];

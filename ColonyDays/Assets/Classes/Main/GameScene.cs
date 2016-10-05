@@ -278,11 +278,27 @@ public class GameScene : General
         Debug.Log("BatchInitial() gameScene");
         _batchManager.BatchInitial();
 
+        ReleaseLoadingScreen();
+    }
+
+    /// <summary>
+    /// call when all buildigns are loaded and 
+    /// when all Spwaners are loaded.
+    /// 
+    /// Will pass only if both are done 
+    /// 
+    /// Called directly too when Spawners are rehuse 
+    /// </summary>
+    public void ReleaseLoadingScreen()
+    {
+        if (!GameFullyLoaded())
+        {
+            return;
+        }
         //so the loading screen is kill and gui loaded 
         Program.MyScreen1.LoadingScreenIsDone();
         //so its loaded to the right Screen resolution 
         Program.MouseListener.ApplyChangeScreenResolution();
-
     }
 
     /// <summary>
@@ -648,7 +664,7 @@ public class GameScene : General
             return false;
         }
 
-        return !p.TerraSpawnController.IsToLoadFromFile && BuildingPot.Control.Registro.IsFullyLoaded;
+        return !p.TerraSpawnController.IsLoadingOrRehusing() && BuildingPot.Control.Registro.IsFullyLoaded;
     }
 
 

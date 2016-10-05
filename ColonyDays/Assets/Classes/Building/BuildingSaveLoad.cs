@@ -77,7 +77,6 @@ public class BuildingSaveLoad : BuildingPot
     void CreatePersonPot()
     {
         BuildingPot.Control.Registro.IsFullyLoaded = true;
-        Program.gameScene.BatchInitial();
 
         //The person pot creating is called when we loaded all buildings 
         Program.InputMain.CreatePersonPot();
@@ -85,6 +84,9 @@ public class BuildingSaveLoad : BuildingPot
         Program.gameScene.GameController1.NotificationsManagerInit();
 
         CamControl.CAMRTS.ReportAudioNow();
+
+        Program.gameScene.BatchInitial();
+
     }
 
     /// <summary>

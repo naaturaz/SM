@@ -31,7 +31,9 @@ public class MyText : MonoBehaviour
 
     private void Map()
     {
-        if (Program.InputMain == null || !Program.InputMain.IsGameFullyLoaded())
+        if (Program.InputMain == null || !Program.InputMain.IsGameFullyLoaded()
+            ||  !Program.gameScene.GameFullyLoaded()
+            )
         {
             return;
         }

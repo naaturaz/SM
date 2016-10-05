@@ -229,6 +229,16 @@ public class StillElement : TerrainRamdonSpawner
         }
     }
 
+    /// <summary>
+    /// Will redo crystals 
+    /// </summary>
+    public void RedoCrystals()
+    {
+        Anchors.Clear();
+        Anchors = GetAnchors();
+        AddCrystals();
+    }
+
     void AddCrystals()
     {
         //ornaments and grass wont be added 

@@ -145,4 +145,18 @@ public class TerrainRamdonSpawner : General {
         SeedDate = Program.gameScene.GameTime1.CurrentDate();
         ReplantedTree = true;
     }
+
+    /// <summary>
+    /// will add this to the Crsytals so it can be routed to
+    /// </summary>
+    internal void AddCrystals()
+    {
+        if (ReplantedTree || ShouldReplant || name.Contains("Orna") || name.Contains("Grass"))
+        {
+            return;
+        }
+        var still = (StillElement)this;
+        still.RedoCrystals();
+
+    }
 }
