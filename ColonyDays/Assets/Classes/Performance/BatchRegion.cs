@@ -313,6 +313,13 @@ public class BatchRegion
 
         MeshFilter[] meshFilters = onGO.GetComponentsInChildren<MeshFilter>();
         CombineInstance[] combine = new CombineInstance[meshFilters.Length];
+
+        //to avoid Combine mesh instance 0 is null. 
+        if (_totalVertices == 0 || meshFilters.Length == 0 || combine.Length == 0)
+        {
+            return;
+        }
+
         int i = 0;
         while (i < meshFilters.Length)
         {

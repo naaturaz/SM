@@ -337,7 +337,9 @@ public class StructureParent : Building {
 
     protected void SmokePlay(bool isToPlayNow)
     {
-        if (HType == H.BlackSmith || HType == H.Tilery || HType == H.Brick
+        if (HType == H.BlackSmith || 
+            //HType == H.Tilery || 
+            HType == H.Brick
             || HType == H.Paper_Mill || HType == H.SugarMill)
         {
             GameObject smoke = GetChildLastWordIs(H.Smoke);
@@ -415,12 +417,12 @@ public class StructureParent : Building {
 
     string ReturnMatBase()
     {
-        //if (MyId.Contains("Farm"))
-        //{
-        //    return Root.matBuildingBase2;
-        //}
+        if (MyId.Contains("Farm"))
+        {
+            return Root.matBuildingBase2;
+        }
 
-        return Root.matBuildingBase1;
+        return Root.matBuildingBase3;
     }
 
     //Resave the .StartingStage on Control.Registro.All

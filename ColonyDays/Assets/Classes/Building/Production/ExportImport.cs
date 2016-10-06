@@ -162,7 +162,7 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Cigar, 200, 700, 50));
         _prodSpecs.Add(new ProdSpec(P.CigarBox, 20, 200, 60));
         //_prodSpecs.Add(new ProdSpec(P.Slat, 40, 600, 70));
-        _prodSpecs.Add(new ProdSpec(P.Tile, 60, 2100, 90));
+        _prodSpecs.Add(new ProdSpec(P.FloorTile, 60, 2100, 90));
         _prodSpecs.Add(new ProdSpec(P.RoofTile, 60, 2100, 90));
 
 
@@ -377,10 +377,17 @@ public class ProdSpec
 
     public ProdSpec(){}
 
+    /// <summary>
+    /// The price is divided by 100 in Constructor
+    /// </summary>
+    /// <param name="prod"></param>
+    /// <param name="price"></param>
+    /// <param name="density"></param>
+    /// <param name="produceFactor"></param>
     public ProdSpec(P prod, float price, float density = 1, float produceFactor = 1)
     {
         Product = prod;
-        Price = price;
+        Price = price/100;
         Density = density;
         ProduceFactor = produceFactor;
 

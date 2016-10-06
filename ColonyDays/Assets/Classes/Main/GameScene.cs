@@ -168,15 +168,15 @@ public class GameScene : General
             return "Developer Version.";
         }
 
-        var discl = "Legal: This is a Non Diclosure Agreement. By playing this game you \n" +
-                    "agree on not release, share or send any media about the game, nor talk about it. \n" +
-                    "You can not share any information about this game. \n" +
-                    "Thanks for your help. \n \n" +
-                    "Aatlantis Copyright 2016. Not for distribution, nor publicity. \n\n";
+        var discl = "Legal: This is a Non Diclosure Agreement. By playing this game you " +
+                    "agree on not release, share or send any media about the game, nor talk about it. " +
+                    "You can not share any information about this game. " +
+                    "Thanks for your help. "  +
+                    "Aatlantis Code Copyright 2016. Not for distribution, nor publicity. \n";
 
         return discl +
                //"Early Access \n v0.0.0." +
-               "Closed Beta \n v0.0.0." + 
+               "Closed Beta \n v0.0.1." + 
                TimeStamp();
     }
 
@@ -664,7 +664,7 @@ public class GameScene : General
             return false;
         }
 
-        return !p.TerraSpawnController.IsLoadingOrRehusing() && BuildingPot.Control.Registro.IsFullyLoaded;
+        return !p.TerraSpawnController.IsToLoadFromFile && BuildingPot.Control.Registro.IsFullyLoaded;
     }
 
 

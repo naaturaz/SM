@@ -239,6 +239,7 @@ public class Root : MonoBehaviour
     public static string projectorPerson = "Prefab/GUI/ProjectorPerson";
 
     public static string lightCil = "Prefab/GUI/Civ5/LightCil";
+    public static string lightCilWithProjScript = "Prefab/GUI/Civ5/LightCilWithProjScript";
     public static string reachArea = "Prefab/GUI/ReachArea";
     public static string lightCilPerson = "Prefab/GUI/Civ5/LightCilPerson";
 
@@ -311,6 +312,7 @@ public class Root : MonoBehaviour
     public static string matGravillaRoad = "Prefab/Mats/GravillaRoad";
     public static string matBuildingBase1 = "Prefab/Mats/Building/Building_Base1";
     public static string matBuildingBase2 = "Prefab/Mats/Building/Building_Base2";
+    public static string matBuildingBase3 = "Prefab/Mats/Building/Building_Base3";
     public static string dashedLinedSquare = "Prefab/Mats/Dashed_Line_Square";
 
 
@@ -676,6 +678,7 @@ public class Root : MonoBehaviour
 
 
         //Raw
+        buildsRoot.Add(H.Clay, "Prefab/Building/Raw/Clay");
         buildsRoot.Add(H.Ceramic, "Prefab/Building/Raw/Ceramic");
         buildsRoot.Add(H.Fishing_Hut, "Prefab/Building/Raw/FishSmall");
         buildsRoot.Add(H.FishRegular, "Prefab/Building/Raw/FishRegular");
@@ -693,7 +696,7 @@ public class Root : MonoBehaviour
         buildsRoot.Add(H.Cigars, "Prefab/Building/Prod/Cigars");
         buildsRoot.Add(H.Mill, "Prefab/Building/Prod/Mill");
         buildsRoot.Add(H.Tailor, "Prefab/Building/Prod/Slat");
-        buildsRoot.Add(H.Tilery, "Prefab/Building/Prod/Tilery");
+        //buildsRoot.Add(H.Tilery, "Prefab/Building/Prod/Tilery");
 
         buildsRoot.Add(H.CannonParts, "Prefab/Building/Prod/CannonParts");
         buildsRoot.Add(H.Distillery, "Prefab/Building/Prod/Rum");

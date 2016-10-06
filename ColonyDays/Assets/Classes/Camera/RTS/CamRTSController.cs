@@ -33,8 +33,8 @@ public class CamRTSController : CamControl
 
     public static bool IsMouseMiddle;
 
-     float MIN_FIELD_CAM = 21f;// 5
-     float MAX_FIELD_CAM = 44f;//48
+     float MIN_FIELD_CAM = 25f;// 5
+     float MAX_FIELD_CAM = 42f;//48
 
     //Target
     public Transform target;

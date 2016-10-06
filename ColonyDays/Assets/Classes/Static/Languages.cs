@@ -51,6 +51,7 @@ public class Languages
 	   { "FieldFarmXLarge.Desc","Extra large field farm"+_fieldFarmTail},
 
        //Raw
+	   { "Clay.Desc","In this building a worker will produce Clay, raw material needed for bricks and more"},
 	   { "Ceramic.Desc","In this building a worker will produce Ceramic products, such as dishes, jars, etc"},
 	   { H.Fishing_Hut + ".Desc","In this building a worker will catch fishes on a waterbody"},
 	   { "FishRegular.Desc","In this building a worker will catch fishes on a waterbody"},
@@ -183,6 +184,8 @@ public class Languages
 	   { "FieldFarmXLarge.Desc","Finca de cultivos super grande"+_fieldFarmTailES},
 
        //Raw
+	   { "Clay.Desc","Aqui se produce barro, necesaria para construir ladrillos y otros productos mas"},
+
 	   { "Ceramic.Desc","Aqui se producen productos de ceramica como platos, jarras, etc"},
 	   { H.Fishing_Hut + ".Desc","Aqui se pescan peces"},
 	   { "FishRegular.Desc","Aqui se pescan peces"},
@@ -402,7 +405,7 @@ public class Languages
      
        { "AutoSave Frec:", "Frecuencia de auto salva:"},
        { "Language:", "Lenguage:"},
-       { "Loading...", "Cargando..."},
+       //{ "Loading...", "Cargando..."},
        { "Menu", "Menu"},
 
 

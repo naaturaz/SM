@@ -52,7 +52,9 @@ public class MusicManager
     static int secCount;
     private static void PlayRandom()
     {
-        _currMusic = _musics.ElementAt(Random.Range(0, _musics.Count)).Value;
+        _currMusic = PlayMaracasFirst();
+
+        
         secCount++;
 
         if (secCount > 1000)
@@ -70,6 +72,28 @@ public class MusicManager
         secCount = 0;
         _currMusic.PlayMusicAShot();
     }
+
+    /// <summary>
+    /// Will play maracas first if has not being played once already
+    /// </summary>
+    /// <returns></returns>
+    private static AudioContainer PlayMaracasFirst()
+    {
+        AudioContainer res = null;
+
+        //never a song was played 
+        if (_playedSongs.Count == 0)
+        {
+            res = _musics.ElementAt(5).Value;//las maracas
+        }
+        else
+        {
+            res = _musics.ElementAt(Random.Range(0, _musics.Count)).Value;
+        }
+        return res;
+    }
+
+
 
     private static void LoadMusics()
     {

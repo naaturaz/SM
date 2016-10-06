@@ -31,9 +31,18 @@ public class MyText : MonoBehaviour
 
     private void Map()
     {
-        if (Program.InputMain == null || !Program.InputMain.IsGameFullyLoaded()
-            ||  !Program.gameScene.GameFullyLoaded()
-            )
+        if (Program.InputMain == null)
+        {
+            return;
+        }
+
+        if (name == "Version")
+        {
+            thisText.text = GameScene.VersionLoaded();
+            mappedOnce = true;
+        }
+
+        if (!Program.InputMain.IsGameFullyLoaded() || !Program.gameScene.GameFullyLoaded())
         {
             return;
         }
@@ -75,14 +84,7 @@ public class MyText : MonoBehaviour
             thisText.text = Program.gameScene.GameController1.Dollars.ToString("C0");
         }
 
-
-
-        if (name == "Version")
-        {
-
-            thisText.text = GameScene.VersionLoaded();
-        }
-
+      
     }
 
 

@@ -127,8 +127,9 @@ public class Production  {
 
         GunPodwer();
 
-
+        Clay();
         Brick();
+        Ceramic();
 
         Carpintery();
         BlackSmith();
@@ -227,7 +228,7 @@ public class Production  {
 
     private void LoadAllGenerics()
     {
-        InputProdCheckAndAdd(new ProductInfo(P.Ceramic, null, H.Ceramic));
+
 
         InputProdCheckAndAdd(new ProductInfo(P.Fish, null, new List<H>() { H.Fishing_Hut, H.FishRegular }));
 
@@ -242,7 +243,7 @@ public class Production  {
 
         InputProdCheckAndAdd(new ProductInfo(P.Wood, null, H.LumberMill));
         InputProdCheckAndAdd(new ProductInfo(P.Salt, null, H.SaltMine));
-        InputProdCheckAndAdd(new ProductInfo(P.Tile, null, H.Tilery));
+       // InputProdCheckAndAdd(new ProductInfo(P.FloorTile, null, H.Tilery));
     }
 
     private void Mine()
@@ -317,13 +318,42 @@ public class Production  {
 
 
 
+    private void Clay()
+    {
+        InputProdCheckAndAdd(new ProductInfo(P.Clay, null, H.Clay));
+    }
+
+
     private void Brick()
     {
-        //InputElement element = new InputElement(P.Ceramic, 5);
+        InputElement element = new InputElement(P.Clay, 5);
+        List<InputElement> prod = new List<InputElement>() { element, _eleWoodComb };
+        List<InputElement> prod2 = new List<InputElement>() { element, _eleCoalComb };
+        
+        InputProdCheckAndAdd(new ProductInfo(P.Brick, prod, H.Brick));
+        InputProdCheckAndAdd(new ProductInfo(P.Brick, prod2, H.Brick));
+        InputProdCheckAndAdd(new ProductInfo(P.RoofTile, prod, H.Brick));
+        InputProdCheckAndAdd(new ProductInfo(P.RoofTile, prod2, H.Brick));
+        InputProdCheckAndAdd(new ProductInfo(P.FloorTile, prod, H.Brick));
+        InputProdCheckAndAdd(new ProductInfo(P.FloorTile, prod2, H.Brick));
+    }   
+    
+    private void Ceramic()
+    {
+        InputElement element = new InputElement(P.Clay, 5);
+        List<InputElement> prod = new List<InputElement>() { element, _eleWoodComb };
+        List<InputElement> prod2 = new List<InputElement>() { element, _eleCoalComb };
+
+        InputProdCheckAndAdd(new ProductInfo(P.Ceramic, prod, H.Ceramic));
+        InputProdCheckAndAdd(new ProductInfo(P.Ceramic, prod2, H.Ceramic));
+    }
+
+    private void Tile()
+    {
+        //InputElement element = new InputElement(P.Ceramic, 10);
         //List<InputElement> prod = new List<InputElement>() { element };
-        //InputProdCheckAndAdd(new ProductInfo(P.Brick, prod, H.Brick));
-        InputProdCheckAndAdd(new ProductInfo(P.Brick, null, H.Brick));
-        InputProdCheckAndAdd(new ProductInfo(P.RoofTile, null, H.Brick));
+        //InputProdCheckAndAdd(new ProductInfo(P.Tile, prod, H.Tile));
+        //InputProdCheckAndAdd(new ProductInfo(P.FloorTile, null, H.Tilery));
     }
 
 
@@ -403,13 +433,7 @@ public class Production  {
     }
 
 
-    private void Tile()
-    {
-        //InputElement element = new InputElement(P.Ceramic, 10);
-        //List<InputElement> prod = new List<InputElement>() { element };
-        //InputProdCheckAndAdd(new ProductInfo(P.Tile, prod, H.Tile));
-        InputProdCheckAndAdd(new ProductInfo(P.Tile, null, H.Tilery));
-    }
+
 
 
     private void Fabric()

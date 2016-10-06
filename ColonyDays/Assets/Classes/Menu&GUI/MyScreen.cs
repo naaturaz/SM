@@ -296,6 +296,10 @@ public class MyScreen : General
     private string _dataPath;
     /// <summary>
     /// now user wont select terrain will be always at random
+    /// 
+    /// to remember would nt work in Standalone bz in StandAlone the root was:
+    /// C:/GitHub/SM/10.05/SugarMill_Data\Bay_And_Mountain_1_River.Spawned.xml
+    /// and the additional dot in '10.05' will mess below code
     /// </summary>
     /// <returns></returns>
     string ReturnRandomTerraRoot()
@@ -309,12 +313,16 @@ public class MyScreen : General
         for (int i = 0; i < xmls.Count; i++)
         {
             var splitArray = xmls[i].Split('.');
-            if (splitArray.Length > 0 && splitArray[1] == "Spawned")
+            Debug.Log("xmls: "+xmls[i]);
+            
+            if (splitArray.Length > 1 && splitArray[1] == "Spawned")
             {
                 //confirms that they have a terra file tht has the same name 
                 if (ConfirmThisIsATerraFile(splitArray[0], xmls))
                 {
                     validTerras.Add(splitArray[0]);
+                    Debug.Log("validTerras: " + splitArray[0]);
+
                 }
             }
         }
@@ -336,6 +344,9 @@ public class MyScreen : General
         {
             var cleaned = CleanRouteFile(xmls[i]);
             var terraClean = RemoveDataPath(terra, _dataPath);
+
+            Debug.Log("terra:"+terra+"...dataPath:"+_dataPath);
+
             if (terraClean == cleaned)
             {
                 return true;

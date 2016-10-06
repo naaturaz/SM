@@ -101,7 +101,7 @@ public enum P
     //Slat,
     //Slat,
     //Tilery,
-    Tile,
+    FloorTile,
     //Cloth,
     Fabric,
     //GunPowder,
@@ -237,9 +237,11 @@ public enum H
     AnimalFarmSmall, AnimalFarmMed, AnimalFarmLarge, AnimalFarmXLarge,
     FieldFarmSmall, FieldFarmMed, FieldFarmLarge, FieldFarmXLarge,
     //raw F4
-    Ceramic, Fishing_Hut, FishRegular, Mine, MountainMine, Resin, LumberMill, BlackSmith, SaltMine,
+    Clay, Ceramic, Fishing_Hut, FishRegular, Mine, MountainMine, Resin, LumberMill, BlackSmith, SaltMine,
     //prod F5
-    Brick, Carpintery, Cigars, Mill, Tailor, Tilery, CannonParts, Distillery, Chocolate, Ink,
+    Brick, Carpintery, Cigars, Mill, Tailor,
+    //Tilery, 
+    CannonParts, Distillery, Chocolate, Ink,
     //industry F6
     Cloth, GunPowder, Paper_Mill, Printer, CoinStamp, Silk, SugarMill, Foundry, SteelFoundry,
     //Trade F7
@@ -441,13 +443,15 @@ public enum StFarm
 public enum StRaw //for structures game structure.cs 
 {
     //Raw
-    Ceramic, Fishing_Hut, Mine, MountainMine, Resin, LumberMill, BlackSmith, SaltMine
+    Clay, Ceramic, Fishing_Hut, Mine, MountainMine, Resin, LumberMill, BlackSmith, SaltMine
 }
 
 public enum StProd //for structures game structure.cs 
 {
     //Production
-    Brick, Carpintery, Cigars, Mill, Tailor, Tilery, CannonParts, Distillery, Chocolate, Ink,
+    Brick, Carpintery, Cigars, Mill, Tailor, 
+    //Tilery, 
+    CannonParts, Distillery, Chocolate, Ink,
 }
 
 //Ind

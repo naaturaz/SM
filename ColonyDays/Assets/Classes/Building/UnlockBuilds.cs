@@ -36,12 +36,12 @@ public class UnlockBuilds
 
             //houses
             new BRequires(H.Bohio, true),
-            new BRequires(H.HouseA, 25),
-            new BRequires(H.HouseB, 35),
-            new BRequires(H.HouseTwoFloor, 75),
-            new BRequires(H.HouseMed, 100),
+            new BRequires(H.HouseA, 17),
+            new BRequires(H.HouseB, 25),
+            new BRequires(H.HouseTwoFloor, 55),
+            new BRequires(H.HouseMed, H.OnlyForDev),
             new BRequires(H.HouseLargeA, H.OnlyForDev),
-            new BRequires(H.HouseLargeB, 150),
+            new BRequires(H.HouseLargeB, H.OnlyForDev),
             new BRequires(H.HouseLargeC, 150),
 
             //farm
@@ -56,6 +56,7 @@ public class UnlockBuilds
 
 
             //raw
+            new BRequires(H.Clay, true),
             new BRequires(H.Ceramic, true),
             new BRequires(H.Fishing_Hut, true),
             new BRequires(H.FishRegular, true),
@@ -72,7 +73,7 @@ public class UnlockBuilds
             new BRequires(H.Cigars, 50, 500, 900),
             new BRequires(H.Mill, 50, 500, 900),
             new BRequires(H.Tailor, H.Coming_Soon),
-            new BRequires(H.Tilery, 50, 500, 900),
+            //new BRequires(H.Tilery, 50, 500, 900),
             new BRequires(H.CannonParts, 50, 500, 900),
             new BRequires(H.Distillery, 50, 500, 900),
             new BRequires(H.Chocolate, 50, 500, 900),

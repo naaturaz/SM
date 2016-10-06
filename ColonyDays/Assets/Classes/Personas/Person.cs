@@ -768,7 +768,7 @@ public class Person : General
             Debug.Log("Not found nutriVal for:" + item);
             return;
         }
-        _nutritionLevel += (amt * nutriValue.NutritionVal * 5); //the five is bz people is dying with food in there places 
+        _nutritionLevel += (amt * nutriValue.NutritionVal * 4);//5 //the five is bz people is dying with food in there places 
         //UnityEngine.Debug.Log(MyId + " nutrived nutriVal:" + amt * nutriValue + ". curr:" + _nutritionLevel);
     }
 

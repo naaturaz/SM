@@ -13,8 +13,9 @@ public class Rotate : MonoBehaviour
     private static bool speedChangedNow;
 
 	// Use this for initialization
-	void Start () 
-    {
+	void Start ()
+	{
+	    finalSpeed = speed;
         if (CareAboutGameSpeed)
         {
             finalSpeed = speed*Program.gameScene.GameSpeed;

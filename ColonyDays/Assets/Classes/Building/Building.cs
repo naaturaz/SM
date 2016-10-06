@@ -795,10 +795,11 @@ public class Building : General, Iinfo
             !MyId.Contains("Shack") && HType != H.None)//none are the CreatePlanes 
         {
             Projector = (MyProjector) Create(Root.projector, container: transform);
-            _light = Create(Root.lightCil, transform.position, container: transform);
-            
+            _light = Create(Root.lightCilWithProjScript, container: transform);
+
+
             _reachArea = Create(Root.reachArea, transform.position, container: transform);
-            _reachArea.transform.localScale = new Vector3(Brain.Maxdistance*2, 0.1f, Brain.Maxdistance*2);
+            _reachArea.transform.localScale = new Vector3(Brain.Maxdistance, 0.1f, Brain.Maxdistance);
 
             if (CurrentProd != null)
             {

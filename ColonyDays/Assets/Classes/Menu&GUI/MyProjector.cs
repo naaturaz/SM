@@ -2,9 +2,10 @@
 
 public class MyProjector : General
 {
-    float height = 10f;
+    public float height = 10f;
+    public float waitTo2ndHeight = 0f;
 
-    private float _initialXRot = 90;
+    public float _initialXRot = 90;
     private Projector engineProjector;
 
     private float buildingHeight;
@@ -14,9 +15,13 @@ public class MyProjector : General
     //trying to address a Null ref exception on SwitchColor()
     private bool wasInit;
 
+    private float wasCreated;
+
 	// Use this for initialization
 	void Start ()
 	{
+        wasCreated = Time.time;
+
 	    engineProjector = GetComponent<Projector>();
 
 	    //initialColor = engineProjector.material.color;
@@ -64,14 +69,48 @@ public class MyProjector : General
 	        SwitchColorLight(true);
             Destroy();
 	    }
+
+        if (BuildingPot.Control.CurrentSpawnBuild != null 
+            || BuildingPot.Control.Registro.SelectBuilding != null)
+        {
+            var build = BuildingPot.Control.CurrentSpawnBuild;
+            if (build == null)
+            {
+                build = BuildingPot.Control.Registro.SelectBuilding;
+            }
+            if (build == null)
+            {
+                return;
+            }
+
+            if (waitTo2ndHeight != 0)
+            {
+                if (Time.time > wasCreated + waitTo2ndHeight)
+                {
+                    MoveToThereBuilding(build.transform.position);
+                }
+
+            }
+	    }
+
+	    
     }
 
     void MoveToThere(Vector3 to)
     {
+
         if (transform.position != to)
         {
             transform.position = Vector3.Lerp(transform.position, to + heightCompound,
                 0.1f);
+        }
+    }
+
+    void MoveToThereBuilding(Vector3 to)
+    {
+        if (transform.position != to)
+        {
+            transform.position = Vector3.Lerp(transform.position, to, 0.2f);
         }
     }
 
