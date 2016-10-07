@@ -247,6 +247,11 @@ public class MyScreen : General
 
     void AssignDificulty()
     {
+        //todo. Change so all work
+
+        Difficulty = 4;
+        return;
+
         if (_diff == "Newbie")
         {
             Difficulty = 4;

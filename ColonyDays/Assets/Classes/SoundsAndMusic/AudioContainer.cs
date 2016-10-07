@@ -1,6 +1,9 @@
 ﻿using System;
 using UnityEngine;
 
+/// <summary>
+/// This class along wiht AudioPlayer are the only ones that play audio sounds
+/// </summary>
 public class AudioContainer: MonoBehaviour
 {
     private string _key;
@@ -43,7 +46,7 @@ public class AudioContainer: MonoBehaviour
     /// <summary>
     /// At this distance the Volume will be zero or passed this
     /// </summary>
-    static int _distanceThatVolIsZeroAt = 200;//1000
+    static int _distanceThatVolIsZeroAt = 100;//200
     /// <summary>
     /// At this distance the Volume will be zero or passed this
     /// </summary>

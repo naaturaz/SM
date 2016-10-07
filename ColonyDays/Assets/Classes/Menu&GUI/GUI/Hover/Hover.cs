@@ -10,9 +10,6 @@ public class Hover : MonoBehaviour
     private HoverWindow hoverWindow;//the window tht will pop up msg
     private Rect screenRect;
 
-
-
-
 	// Use this for initialization
 	void Start ()
 	{
@@ -59,37 +56,41 @@ public class Hover : MonoBehaviour
 	void Update ()
     {
         if (hoverWindow == null)
-	    {
-	        if (Time.time % 2 == 0)
-	        {
+        {
+            if (Time.time % 2 == 0)
+            {
                 hoverWindow = FindObjectOfType<HoverWindow>();
-	        }
+            }
             return;
-	    }
+        }
 
         //if got in my area
-	    if (myRect.Contains(Input.mousePosition))
-	    {
+        if (myRect.Contains(Input.mousePosition))
+        {
             SpawnHelp();
-	    }
+        }
         //ig got out 
-        else if (!myRect.Contains(Input.mousePosition) && MyMsg() == hoverWindow.CurrentMsg())
-	    {
-	        DestroyHelp();  
-	    }
+        else if (!myRect.Contains(Input.mousePosition) && MyKey() == hoverWindow.Key)
+        {
+            DestroyHelp();
+        }
 	}
 
-    string MyMsg()
+    /// <summary>
+    /// The key is the name of the spawner
+    /// </summary>
+    /// <returns></returns>
+    string MyKey()
     {
-
-
         return transform.name;
     }
 
     void SpawnHelp()
     {
-        hoverWindow.Show(ReturnHoverPos(), MyMsg());
-    }
+        hoverWindow.Show(ReturnHoverPos(), MyKey());
+    } 
+    
+   
 
     private Vector3 ReturnHoverPos()
     {
@@ -114,14 +115,7 @@ public class Hover : MonoBehaviour
         hoverWindow.Hide();
     }
 
-    void OnMouseEnter()
-    {
-      //  SpawnHelp();
-    }
+  
 
-    void OnMouseExit()
-    {
-        //DestroyHelp();  
-        
-    }
+
 }

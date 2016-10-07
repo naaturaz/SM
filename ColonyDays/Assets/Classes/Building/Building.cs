@@ -799,7 +799,8 @@ public class Building : General, Iinfo
 
 
             _reachArea = Create(Root.reachArea, transform.position, container: transform);
-            _reachArea.transform.localScale = new Vector3(Brain.Maxdistance, 0.1f, Brain.Maxdistance);
+            // *2 bz is from where the person is at so 'Brain.Maxdistance' is a  Radius
+            _reachArea.transform.localScale = new Vector3(Brain.Maxdistance * 2, 0.1f, Brain.Maxdistance * 2);
 
             if (CurrentProd != null)
             {

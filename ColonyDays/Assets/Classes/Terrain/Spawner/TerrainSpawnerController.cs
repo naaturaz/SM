@@ -14,7 +14,7 @@ public class TerrainSpawnerController : ControllerParent
     private float maxHeightToSpawn;
 
     //UNITY EDITOR ManualStart()
-    private int multiplier = 20;//80  
+    private int multiplier = 40;//80  
 
     int howManyTreesToSpawn = 20;//50
     int howManyStonesToSpawn =3;//3
