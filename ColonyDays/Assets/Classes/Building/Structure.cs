@@ -19,6 +19,7 @@ public class Structure : StructureParent
         set { _usedAt = value; }
     }
 
+
     /// <summary>
     /// This is the method that moves the building around in the terrain 
     /// when is newly built
@@ -33,6 +34,7 @@ public class Structure : StructureParent
 
         base.UpdateClosestVertexAndOld();
         gameObject.transform.position = ClosestSubMeshVert;
+
 
         if (_arrow != null)
         {

@@ -19,16 +19,29 @@ public class NotificationWindowGO : GUIElement
     //todo saveload
     List<string> _allNotifications = new List<string>(){}; 
 
+    /// <summary>
+    /// IMPORTANT
+    /// To add notification :
+    /// Add below,
+    /// Add name and desc and Languages.cs
+    /// Add sound file on Prefab/audio/sound/other and icon on GUI/Notification_Icon/
+    /// Then add it in sound name added it on _rootsToSpawn on AudioCollector.cs
+    /// </summary>
     Dictionary<string, Notification> _bank = new Dictionary<string, Notification>()
     {
-        {"BabyBorn", 
-        new Notification("New Born", "A new baby was born", "BabyBorn")},
-            
-        {"PirateUp", 
-        new Notification("Pirates Closer", "Pirates are aware of you", "PirateUp")},            
+        {"BabyBorn", new Notification("BabyBorn")},
+        {"PirateUp", new Notification("PirateUp")},            
+        {"PirateDown", new Notification("PirateDown")},
         
-        {"PirateDown", 
-        new Notification("Pirates Respect You", "Pirates respect you a bit more today", "PirateDown")},
+        {"Emigrate", new Notification("Emigrate")},
+        {"PortUp", new Notification("PortUp")},
+        {"PortDown", new Notification("PortDown")},
+        {"BoughtLand", new Notification("BoughtLand")},
+        {"ShipPayed", new Notification("ShipPayed")},
+        {"ShipArrived", new Notification("ShipArrived")},
+
+
+
     }; 
 
     void Start()
@@ -205,6 +218,9 @@ public class NotificationWindowGO : GUIElement
     /// <param name="notiKey">The key of the notification like 'PirateUp'</param>
     public void Notify(string notiKey)
     {
+        //plays the sound of the notification
+        AudioCollector.PlayOneShot(notiKey, 0);
+
         _allNotifications.Insert(0, notiKey);
         Show("");
     }

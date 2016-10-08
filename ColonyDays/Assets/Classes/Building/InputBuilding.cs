@@ -39,13 +39,16 @@ public class InputBuilding : BuildingPot {
         set { _inputListDict = value; }
     }
 
+    private HoverWindowMed _hoverWindowMed;
+
     void Start ()
 	{
 	    oldMousePos = Input.mousePosition;
 	    timeStart = Time.time;
 
         InputKeyMapping();
-    }
+        _hoverWindowMed = FindObjectOfType<HoverWindowMed>();
+	}
 
     void InputKeyMapping()
     {
@@ -180,6 +183,7 @@ public class InputBuilding : BuildingPot {
     }
 
 #endregion
+
     /// <summary>
     /// Depending on the current InputMode will direct the code to  BuildingMode(); or
     /// Structure.Place, DrawWay(), DragFarm(
@@ -238,7 +242,7 @@ public class InputBuilding : BuildingPot {
             if (Input.GetKeyUp(KeyCode.R) && (DefineCategory(DoingNow) == Ca.Structure || (DefineCategory(DoingNow) == Ca.Shore)))
             {
                 Control.CurrentSpawnBuild.RotationAction();
-                AudioPlayer.PlaySoundOneTime(RootSound.hoverMenuSound);
+                AudioCollector.PlayOneShot("ClickMetal1",0);
             }
             else if (Input.GetMouseButtonUp(0) && !_isDraggingWay && (DefineCategory(DoingNow) == Ca.Structure || (DefineCategory(DoingNow) == Ca.Shore)))
             {
@@ -335,7 +339,8 @@ public class InputBuilding : BuildingPot {
         {
             DoneFarmRoutine();
         }
-        AudioPlayer.PlaySoundOneTime(RootSound.hoverMenuSound);
+
+        AudioCollector.PlayOneShot("ClickWood1", 0);
     }
 
     /// <summary>
@@ -444,6 +449,7 @@ public class InputBuilding : BuildingPot {
         var state = BuildingPot.UnlockBuilds1.ReturnBuildingState(buildWhat);
         if (state != H.Unlock)
         {
+            //todo
             Debug.Log("Sound here off negation of a building");
             return;
         }
@@ -474,7 +480,11 @@ public class InputBuilding : BuildingPot {
         DoingNow = buildWhat;
         
 
-        AudioPlayer.PlaySoundOneTime(RootSound.clickMenuSound);
+        AudioCollector.PlayOneShot("ClickWood7", 0);
+
+        _hoverWindowMed = FindObjectOfType<HoverWindowMed>();
+
+        _hoverWindowMed.ShowSemiTut("Build");
         
         GameScene.ScreenPrint("Ready to build a " + buildWhat);
         InputMode = Mode.Placing;

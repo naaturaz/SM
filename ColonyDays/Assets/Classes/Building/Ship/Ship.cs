@@ -151,6 +151,11 @@ public class Ship
         if (_building.Dispatch1.HasExportOrders())
         {
             _didDockExport = _building.Dispatch1.Export(_building);
+
+            if (_didDockExport)
+            {
+                Program.gameScene.GameController1.NotificationsManager1.Notify("ShipPayed");
+            }
         }
     }
 
@@ -208,6 +213,8 @@ public class Ship
 
     public void SetLeaveDate()
     {
+        Program.gameScene.GameController1.NotificationsManager1.Notify("ShipArrived");
+
         var daysOnDock = UMath.GiveRandom(30, 60);
         LeaveDate = Program.gameScene.GameTime1.ReturnCurrentDatePlsAdded(daysOnDock);
     }

@@ -44,8 +44,23 @@ public class AudioCollector
     {
         //one shots 
         {"BabyBorn", ""},
-        {"Emigrated", ""},
+        {"Emigrate", ""},
         {"FallingTree", ""},
+
+
+
+        {"PirateUp", ""},
+        {"PirateDown", ""},
+        {"PortUp", ""},
+        {"PortDown", ""},
+        {"BoughtLand", ""},
+        {"ShipPayed", ""},
+        {"ShipArrived", ""},
+
+        {"ClickMetal1", ""},
+        {"ClickWood1", ""},
+        {"ClickWood4", ""},
+        {"ClickWood7", ""},
     };
     
     

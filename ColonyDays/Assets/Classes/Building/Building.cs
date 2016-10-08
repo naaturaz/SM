@@ -964,13 +964,17 @@ public class Building : General, Iinfo
         ClosestSubMeshVert = m.Vertex.FindClosestVertex(m.HitMouseOnTerrain.point, m.CurrentHoverVertices.ToArray());
     }
 
+
     /// <summary>
     /// Updates the ClosestVertOld = ClosestSubMeshVert if the distance is further than 0.01f
+    /// 
+    /// This is what moves a building around the grid
     /// </summary>
     public virtual void UpdateClosestVertexAndOld()
     {
         if (!UMath.nearEqualByDistance(ClosestVertOld, ClosestSubMeshVert, 0.01f))
         {
+            AudioCollector.PlayOneShot("ClickWood4",0);
             ClosestVertOld = ClosestSubMeshVert;
         }
     }
@@ -1586,6 +1590,8 @@ public class Building : General, Iinfo
         }
 
         BuildingPot.Control.Registro.ResaveOnRegistro(MyId);
+
+        AudioCollector.PlayOneShot("BoughtLand", 0);
 
         return DollarsPay+"";
     }

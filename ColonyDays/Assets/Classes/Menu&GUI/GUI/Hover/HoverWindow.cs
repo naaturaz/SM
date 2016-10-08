@@ -66,13 +66,25 @@ public class HoverWindow : MonoBehaviour
 
         diffToMouse = pos - Input.mousePosition;
         showedAt = Time.time;
-    }
-
-    public string CurrentMsg()
+    }  
+    
+    /// <summary>
+    /// This one is a simple message
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <param name="msg"></param>
+    public void ShowMsg(Vector3 pos, string msg)
     {
-        return _msg;
-    }
+        _key = "";
+        _msg = Languages.ReturnString(msg);
+        _rectTransform.position = pos;
 
+        _text.text = _msg;
+        _geometry.SetActive(true);
+
+        diffToMouse = pos - Input.mousePosition;
+        showedAt = Time.time;
+    }
 
     //so mouse never touches this one. so it doesnt trigger a OnMouseExit on the spawer
     //of this window
@@ -94,7 +106,8 @@ public class HoverWindow : MonoBehaviour
 	    _rectTransform.position = Input.mousePosition + diffToMouse;
 
         //after 3 seconds of being show
-	    if (Time.time > showedAt + 3)
+        //if key = "" is a simple msg with out key
+	    if (Time.time > showedAt + 3 && !string.IsNullOrEmpty(_key))
 	    {
 	        //SpawnMedHover();
 	    }
@@ -116,4 +129,9 @@ public class HoverWindow : MonoBehaviour
 
 
 
+
+    internal string Message()
+    {
+        return _msg;
+    }
 }

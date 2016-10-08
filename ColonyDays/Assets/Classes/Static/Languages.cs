@@ -131,9 +131,82 @@ public class Languages
        { "Invitation", "Your friend's email for a chance to join the Private Beta"},  
        { "Info", ""},//use for informational Dialogs
 
+       //todo aadd to ESP
+       //Tooltips 
+       //Small Tooltips 
+	   { "Person.HoverSmall", "People"},
+	   { "Emigrate.HoverSmall", "Emigrated"},
+	   { "Food.HoverSmall", "Food"},
+	   { "Happy.HoverSmall", "Happiness"},
+	   { "PortReputation.HoverSmall", "Port Reputation"},
+	   { "Dollars.HoverSmall", "Dollars"},
+	   { "PirateThreat.HoverSmall", "Pirate Threat"},
+	   { "Date.HoverSmall", "Date"},
+	   { "MoreSpeed.HoverSmall", "More Speed"},
+	   { "LessSpeed.HoverSmall", "Less Speed"},
+	   { "ShowNoti.HoverSmall", "Notifications"},
 
-       //words
-	   { "Wood", "Wood"},
+       //down bar
+	   { "Infrastructure.HoverSmall", "Infrastructure"},
+	   { "House.HoverSmall", "Housing"},
+	   { "Farming.HoverSmall", "Farming"},
+	   { "Raw.HoverSmall", "Raw"},
+	   { "Prod.HoverSmall", "Production"},
+	   { "Ind.HoverSmall", "Industry"},
+	   { "Trade.HoverSmall", "Trade"},
+	   { "Gov.HoverSmall", "Goverment"},
+	   { "Other.HoverSmall", "Other"},
+	   { "Militar.HoverSmall", "Militar"},
+	   
+       //building window
+       { "Gen_Btn.HoverSmall", "General Tab"},
+       { "Inv_Btn.HoverSmall", "Inventory Tab"},
+       { "Upg_Btn.HoverSmall", "Upgrades Tab"},
+       { "Prd_Btn.HoverSmall", "Production Tab"},
+       { "Ord_Btn.HoverSmall", "Orders Tab"},
+	   { "Stop_Production.HoverSmall", "Stop Production"},
+	   { "Demolish_Btn.HoverSmall", "Demolish"},
+	   { "More Salary.HoverSmall", "Pay more"},
+	   { "Less Salary.HoverSmall", "Pay less"},
+	   { "Next_Stage_Btn.HoverSmall", "Buy Next Stage"},
+	   { "Current_Salary.HoverSmall", "Current salary"},
+	   { "Add_Import_Btn.HoverSmall", "Add an import"},
+	   { "Add_Export_Btn.HoverSmall", "Add an export"},
+	   { "Upg_Cap_Btn.HoverSmall", "Upgrades capacity"},
+	   { "Close_Btn.HoverSmall", "Close"},
+
+       //addOrder windiw
+	   { "Amt_Tip.HoverSmall", "Amount of prod"},
+
+       //Med Tooltips 
+	   { "Build.HoverMed", "Place building: 'Left click' \n" +
+	                       "Rotate building: 'R' key \n " +
+	                       "Cancel: 'Right click'"},
+
+
+       //Notifications
+	   { "BabyBorn.Noti.Name", "New Born"},
+	   { "BabyBorn.Noti.Desc", "A new baby was born"},
+	   { "PirateUp.Noti.Name", "Pirates Closer"},
+	   { "PirateUp.Noti.Desc", "Pirates close to the shore"},
+       { "PirateDown.Noti.Name", "Pirates Respect You"},
+	   { "PirateDown.Noti.Desc", "Pirates respect you a bit more today"},
+
+       { "Emigrate.Noti.Name", "A person emigrated"},
+	   { "Emigrate.Noti.Desc", "People emigrate when not happy in your goverment"},
+       { "PortUp.Noti.Name", "Port is known"},
+	   { "PortUp.Noti.Desc", "Your port is getting more reputation in the area routes"},
+       { "PortDown.Noti.Name", "Port is less known"},
+	   { "PortDown.Noti.Desc", "Your port reputation went down"},
+
+       { "BoughtLand.Noti.Name", "New Land Purchased"},
+	   { "BoughtLand.Noti.Desc", "A new land region was purchased"},
+
+       { "ShipPayed.Noti.Name", "Ship payed"},
+	   { "ShipPayed.Noti.Desc", "A ship has payed for goods or service"}, 
+       { "ShipArrived.Noti.Name", "Ship arrived"},
+	   { "ShipArrived.Noti.Desc", "A new ship has arrived to one of our maritimes buildings"},
+
 
 	};
 

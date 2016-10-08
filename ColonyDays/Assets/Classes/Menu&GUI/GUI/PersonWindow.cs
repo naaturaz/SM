@@ -103,13 +103,33 @@ public class PersonWindow : GUIElement {
 
     string BuildPersonInfo()
     {
-        string res = "Age:" + _person.Age + "\n Gender:" + _person.Gender
-                     + "\n Nutrition:" + _person.NutritionLevel.ToString("N0") 
-                     + "\n Profession:" + _person.ProfessionProp.ProfDescription
-                 
-                     + "\n Spouse:" + Family.RemovePersonIDNumberOff(_person.Spouse)
-                     + "\n Happy:" + _person.Happinnes
-                     + "\n YearsOfSchool:" + _person.YearsOfSchool;
+        string res = "Age: " + _person.Age + "\n Gender: " + _person.Gender
+                     + "\n Nutrition: " + _person.NutritionLevel.ToString("N0")
+                     + "\n Profession: " + _person.ProfessionProp.ProfDescription
+
+                     + "\n Spouse: " + Family.RemovePersonIDNumberOff(_person.Spouse)
+                     + "\n Happinness: " + _person.Happinnes
+                     + "\n Years Of School: " + _person.YearsOfSchool
+                     + "\n Age majority reach: " + _person.IsMajor;
+                     
+
+        if (_person.Home != null)
+        {
+            res += "\n Home: " + _person.Home.HType;
+        }
+        else res += "\n Home: None";
+        if (_person.Work != null)
+        {
+            res += "\n Work place: " + _person.Work.HType;
+        }
+        else res += "\n Work place: None";
+        if (_person.FoodSource != null)
+        {
+            res += "\n Food Source: " + _person.FoodSource.HType;
+        }
+        else res += "\n Food Source: None";
+
+
 
 #if UNITY_EDITOR
         res += DebugInfo();
@@ -128,11 +148,7 @@ public class PersonWindow : GUIElement {
             + "\n UnHappyYears:" + _person.UnHappyYears;
 
 
-        if (_person.Home != null)
-        {
-            res += "\n Home:" + _person.Home.MyId;
-        }
-        else res += "\n Home:null";
+
 
         res += "___________________\n GoMindState:" + _person.Brain.GoMindState +
                   "\n fdRouteChks:" + _person.Brain._foodRoute.CheckPoints.Count +
@@ -141,17 +157,12 @@ public class PersonWindow : GUIElement {
                   + "\n CurTask:" + _person.Brain.CurrentTask
                   + "\n PrevTask:" + _person.Brain.PreviousTask
                   + "\n IsBooked:" + _person.IsBooked
-                  + "\n Major:" + _person.IsMajor
                   + "\n BodyLoc:" + _person.Body.Location
                   + "\n BodyGngTo:" + _person.Body.GoingTo
                   + "\n BornInfo:" + _person.DebugBornInfo
                   + "\n wrkRouteChks:" + _person.Brain._workRoute.CheckPoints.Count;
 
-        if (_person.Work != null)
-        {
-            res += "\n Work:" + _person.Work.MyId;
-        }
-        else res += "\n Work:null";
+
 
         if (_person.ProfessionProp != null)
         {
@@ -164,11 +175,7 @@ public class PersonWindow : GUIElement {
             res += "\n ProfessionReady: prof is null" ;
         }
 
-        if (_person.FoodSource != null)
-        {
-            res += "\n FoodSrc:" + _person.FoodSource.MyId;
-        }
-        else res += "\n FoodSrc:null";
+
 
         res += "\n Waiting:" + _person.Brain.Waiting
                   + "\n TimesCall:" + _person.Brain.TimesCall

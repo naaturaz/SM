@@ -91,5 +91,23 @@ class HoverWindowMed : MonoBehaviour
             //SpawnMedHover();
         }
     }
+
+    /// <summary>
+    /// To show small tutorials like how to place a building 
+    /// </summary>
+    /// <param name="key"></param>
+    internal void ShowSemiTut(string key)
+    {
+        Show( Input.mousePosition + new Vector3(150,150,150), key);
+    }
+
+    void OnGUI()
+    {
+        if (Event.current.type == EventType.KeyUp || Event.current.type == EventType.MouseUp)
+        {
+            Hide();
+        }
+    }
+
 }
 

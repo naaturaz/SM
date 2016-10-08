@@ -12,10 +12,10 @@ public class Notification
 
     public string NotificationKey { get; set; }
 
-    public Notification(string name, string desc, string key)
+    public Notification(string key)
     {
-        Name = name;
-        Description = desc;
+        Name = Languages.ReturnString(key+".Noti.Name");
+        Description = Languages.ReturnString(key + ".Noti.Desc");
         NotificationKey = key;
     }
 }

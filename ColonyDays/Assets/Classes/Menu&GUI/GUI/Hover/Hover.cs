@@ -2,6 +2,8 @@
 
 /*
  * Game obj tht have this script wioll pop up small form with help as is being hover 
+ * 
+ * This GObj it spawns it doesnt move wit mouse 
  */
 
 public class Hover : MonoBehaviour
@@ -70,24 +72,23 @@ public class Hover : MonoBehaviour
             SpawnHelp();
         }
         //ig got out 
-        else if (!myRect.Contains(Input.mousePosition) && MyKey() == hoverWindow.Key)
+        else if (!myRect.Contains(Input.mousePosition) && MyMsg() == hoverWindow.Message())
         {
             DestroyHelp();
         }
 	}
 
     /// <summary>
-    /// The key is the name of the spawner
     /// </summary>
     /// <returns></returns>
-    string MyKey()
+    string MyMsg()
     {
         return transform.name;
     }
 
     void SpawnHelp()
     {
-        hoverWindow.Show(ReturnHoverPos(), MyKey());
+        hoverWindow.ShowMsg(ReturnHoverPos(), MyMsg());
     } 
     
    

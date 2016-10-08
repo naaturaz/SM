@@ -170,7 +170,9 @@ public class BuildingWindow : GUIElement {
         HandlePrdBtn();
 
         //in case were inactive 
-        _upg_Mat_Btn.SetActive(true);
+        
+        
+        //_upg_Mat_Btn.SetActive(true);
         _upg_Cap_Btn.SetActive(true);
 
         CheckIfMatMaxOut();
@@ -192,7 +194,8 @@ public class BuildingWindow : GUIElement {
         }
         else
         {
-            _demolish_Btn.SetActive(true);
+            //todo uncomment so it active
+            //_demolish_Btn.SetActive(true);
         }
     }
 

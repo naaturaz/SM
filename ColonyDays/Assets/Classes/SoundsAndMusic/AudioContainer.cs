@@ -381,10 +381,7 @@ public class AudioContainer: MonoBehaviour
         {
             _audioSource.volume = AudioCollector.MusicLevel;
         }
-        Debug.Log("Sound Event :"+_key);
-
-        //var dist = ConvertVolToDist(_audioSource.volume);
-        //FadesTo(dist);
+        //Debug.Log("Sound Event :"+_key);
     }
 
 

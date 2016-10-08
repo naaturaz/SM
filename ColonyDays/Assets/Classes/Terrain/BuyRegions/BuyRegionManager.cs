@@ -141,7 +141,7 @@ public class BuyRegionManager
     public void CurrentRegionBuy()
     {
         //play sound
-        //todo
+        Program.gameScene.GameController1.NotificationsManager1.Notify("BoughtLand");
 
         RemoveCost();
 

@@ -316,32 +316,32 @@ class BRequires
         {
             return;
         }
-        string res = HType + " build is lock.\nTo unlock: ";
+        string res = HType + " build is lock.\nTo Unlock: ";
         int appends = 0;
 
         if (Persons != 0)
         {
-            res += Persons + " persons ";
+            res += Persons + " persons. ";
             appends++;
         }   
         if (Food != 0)
         {
-            res += Unit.WeightConverted(Food) + " " + Unit.WeightUnit() +" of food ";
+            res += Unit.WeightConverted(Food) + " " + Unit.WeightUnit() +" of food. ";
             appends++;
         }    
         if (Dollars != 0)
         {
-            res += Dollars + " dollars ";
+            res += Dollars + " dollars. ";
             appends++;
         }  
         if (PortReputation != 0)
         {
-            res += " Port reputation at least at " + PortReputation;
+            res += "Port reputation at least at " + PortReputation +". ";
             appends++;
         }
         if (PirateThreat != 0)
         {
-            res += " Pirate threat less than " + PirateThreat;
+            res += "Pirate threat less than " + PirateThreat + ". ";
             appends++;
         }
 
@@ -350,7 +350,7 @@ class BRequires
             for (int i = 0; i < ProductRequired.Count; i++)
             {
                 res += ProductRequired[i].Product + " " + Unit.WeightConverted(ProductRequired[i].Amount)
-                    + " " + Unit.WeightUnit() + " ";
+                    + " " + Unit.WeightUnit() + ". ";
                 appends++;
             } 
         }
@@ -359,7 +359,7 @@ class BRequires
         {
             for (int i = 0; i < PriorBuilds.Count; i++)
             {
-                res += ".At least 1: " + PriorBuilds[i];
+                res += ".At least 1: " + PriorBuilds[i] + ". ";
                 appends++;
             } 
         }

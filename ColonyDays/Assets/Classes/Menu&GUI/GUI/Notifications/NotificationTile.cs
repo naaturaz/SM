@@ -57,6 +57,12 @@ public class NotificationTile : GUIElement
             + _notification.NotificationKey;
         Sprite sp = Resources.Load<Sprite>(root);
 
+        if (sp == null)
+        {
+            root = "Prefab/GUI/Notification_Icons/Default";
+            sp = Resources.Load<Sprite>(root);
+        }
+
         return sp;
     }
 

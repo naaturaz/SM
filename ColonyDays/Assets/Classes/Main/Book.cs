@@ -73,8 +73,8 @@ public class Book : General
 
         //houses 
         Build.Add(new BuildStat(H.Bohio, 400, 3, 0, 0, 0, maxPeople: 5, capacity: .3f));
-        Build.Add(new BuildStat(H.HouseA, 400, 5, 5, 25, 5, maxPeople: 5, capacity: .3f));
-        Build.Add(new BuildStat(H.HouseB, 400, 5, 5, 25, 5, maxPeople: 5, capacity: .3f));
+        Build.Add(new BuildStat(H.HouseA, 400, 15, 1, 0, 0, maxPeople: 5, capacity: .4f));
+        Build.Add(new BuildStat(H.HouseB, 400, 5, 5, 25, 1, maxPeople: 5, capacity: .5f));
         Build.Add(new BuildStat(H.HouseTwoFloor, 800, 30, 5, 5, 5, maxPeople: 10, capacity: .6f));
         Build.Add(new BuildStat(H.HouseMed, 800, 10, 5, 50, 5, maxPeople: 7, capacity: .6f));
         //Build.Add(new BuildStat(H.HouseMedB, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 2));
@@ -95,7 +95,7 @@ public class Book : General
         Build.Add(new BuildStat(H.FieldFarmXLarge, 400, 1, 0, 0,  maxPeople: 9, capacity: 3));
 
         //Raw
-        Build.Add(new BuildStat(H.Clay, 400, 15, 5, 25, 5, maxPeople: 5));
+        Build.Add(new BuildStat(H.Clay, 400, 15, 5, 15, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.Ceramic, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.Fishing_Hut, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.FishRegular, 400, 15, 5, 25, 5, maxPeople: 5));
@@ -103,7 +103,7 @@ public class Book : General
 
         Build.Add(new BuildStat(H.MountainMine, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.Resin, 400, 15, 5, 25, 5, maxPeople: 5));
-        Build.Add(new BuildStat(H.LumberMill, 400, 15, 5, 25, 5, maxPeople: 5));
+        Build.Add(new BuildStat(H.LumberMill, 400, 30, 5, 0, 1, maxPeople: 5));
         Build.Add(new BuildStat(H.BlackSmith, 400, 15, 5, 25, 5, maxPeople: 5));
 
         Build.Add(new BuildStat(H.SaltMine, 400, 15, 5, 25, 5, maxPeople: 5));
@@ -247,12 +247,26 @@ public class BuildStat
     private H _hType;
     private string _root;
 
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="hType"></param>
+    /// <param name="amountOfLabour">multiplied by 4 in constructor</param>
+    /// <param name="wood"></param>
+    /// <param name="stone"></param>
+    /// <param name="brick"></param>
+    /// <param name="iron"></param>
+    /// <param name="gold"></param>
+    /// <param name="colonyDollar"></param>
+    /// <param name="maxPeople"></param>
+    /// <param name="capacity"></param>
     public BuildStat(H hType, float amountOfLabour = 0, float wood = 0, float stone = 0, float brick = 0, float iron = 0,
         float gold = 0, float colonyDollar = 0, int maxPeople = 0, float capacity = 10)
     {
         float multiplier = 100;
 
-        AmountOfLabour = amountOfLabour;
+        AmountOfLabour = amountOfLabour * 4;
         HType = hType;
         Root = global::Root.RetBuildingRoot(hType);
         Wood = wood * multiplier;

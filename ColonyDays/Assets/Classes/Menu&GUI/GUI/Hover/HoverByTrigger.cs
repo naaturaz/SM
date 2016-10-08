@@ -20,13 +20,11 @@ class HoverByTrigger : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        print("enter:"+eventData);
         PublicSpawnHelp();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        print("exitt:" + eventData);
         PublicDestroyHelp();
     }
 
@@ -50,11 +48,28 @@ class HoverByTrigger : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
     void PublicSpawnHelp()
     {
 
-        var pos = MoveItTowardsScreenCenter(Input.mousePosition);
+        var pos = MoveItTowardsScreenCenter(CorrectMouseCenterPos());
         hoverWindow.Show(pos, MyMsg());
     }
 
+    /// <summary>
+    /// If mouse is too close to center on the screen want to add a bit
+    /// on Y so it doesnt keep entering and exiting bz the hover window is
+    /// being spawned on it 
+    /// </summary>
+    /// <returns></returns>
+    Vector3 CorrectMouseCenterPos()
+    {
+        var half = Screen.height / 2;
+        var difference = Input.mousePosition.y - half;
 
+        //means is in the middle of the screen
+        if ( Math.Abs(difference) < 220)
+        {
+            return Input.mousePosition + new Vector3(0, 100, 0);
+        }
+        return Input.mousePosition;
+    }
 
     private Vector2 MoveItTowardsScreenCenter(Vector3 v3)
     {
@@ -63,6 +78,8 @@ class HoverByTrigger : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
 
         //so its depending on the screen size. roughly +45 px
         var howFar = h / 7;//9
+
+      
 
         Vector2 center = new Vector2(w, h);
         var moved = Vector2.MoveTowards(v3, center, howFar);
