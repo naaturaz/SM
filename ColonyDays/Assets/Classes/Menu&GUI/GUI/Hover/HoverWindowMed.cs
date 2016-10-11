@@ -103,7 +103,7 @@ class HoverWindowMed : MonoBehaviour
 
     void OnGUI()
     {
-        if (Event.current.type == EventType.KeyUp || Event.current.type == EventType.MouseUp)
+        if (Event.current.type == EventType.MouseUp)
         {
             Hide();
         }

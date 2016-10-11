@@ -1001,8 +1001,16 @@ public class Building : General, Iinfo
         {
             FinishPlacingMode(H.Done);
         }
-        else if (!IsEven) { GameScene.ScreenPrint("Can't place, uneven terrain.Building.cs"); }
-        else if (_isColliding) { GameScene.ScreenPrint("Is colliiding.Building.cs"); }
+        else if (!IsEven)
+        {
+            //todo noti and sound
+            GameScene.ScreenPrint("Can't place, uneven terrain.Building.cs");
+        }
+        else if (_isColliding)
+        {
+            //todo noti and sound
+            GameScene.ScreenPrint("Is colliiding.Building.cs");
+        }
     }
        
     /// <summary>
@@ -2106,6 +2114,22 @@ public class Building : General, Iinfo
     Book book = new Book();
     BuildStat buildStat = new BuildStat();
 
+
+    internal float PercentageBuilt()
+    {
+        return (constructionAmt / amtNeeded) * 100;
+    } 
+    
+    internal string PercentageBuiltCured()
+    {
+        var percent = PercentageBuilt();
+        if (float.IsNaN(percent))
+        {
+            return "0";
+        }
+        return percent.ToString("N0");
+    }
+
     public void AddToConstruction(float amt, Person person=null)
     {
         DefineAmtNeeded();
@@ -2459,6 +2483,8 @@ public class Building : General, Iinfo
 
         if (doIHaveInput && (hasStorageRoom || hasThisBuildRoom))
         {
+            //todo Consume inputs
+
             //if is a farm
             if (MyId.Contains("Farm"))
             {
@@ -2493,6 +2519,7 @@ public class Building : General, Iinfo
         //if has more thn 2000Kg of current prd can add Evac order as weell
         if (Inventory.ReturnAmtOfItemOnInv(_currentProd.Product) > 2000)
         {
+            //todo show 3d icon
             AddEvacuationOrderOfProdThatAreNotInput();
         }
         if (hasStorageRoom && !hasThisBuildRoom && person.FoodSource != null)
@@ -3525,6 +3552,8 @@ public class Building : General, Iinfo
         get { return _buildersManager; }
         set { _buildersManager = value; }
     }
+
+
 
 
     /// <summary>

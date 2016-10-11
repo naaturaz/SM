@@ -199,5 +199,25 @@ public class Line
     {
         return UMath.GiveRandom(howFarPoints - .4f, howFarPoints + .4f);
     }
+
+
+    internal List<Vector3> ReturnPointsInLineEvery(float step)
+    {
+        var a1Loc = U2D.FromV2ToV3(A1);
+        var b1Loc = U2D.FromV2ToV3(B1);
+
+        List<Vector3> res = new List<Vector3>();
+        distanceLeft = Vector3.Distance(a1Loc, b1Loc);
+        var add = step;
+
+        for (float i = 0; i < distanceLeft; i += add)
+        {
+            var point = Vector3.MoveTowards(a1Loc, b1Loc, add);
+            res.Add(point);
+            a1Loc = point;
+        }
+        return res;
+    }
+
     #endregion
 }

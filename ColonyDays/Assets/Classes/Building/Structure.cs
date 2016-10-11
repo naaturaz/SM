@@ -72,9 +72,19 @@ public class Structure : StructureParent
             }
             InitHouseProp();
         }
-        else if (!IsEven) { GameScene.ScreenPrint("Can't place here: uneven terrain! Struc"); }
-        else if (IsColliding) { GameScene.ScreenPrint("Can't place here: colli"); }
-        else { GameScene.ScreenPrint("could be the sea Struct.cs"); }
+        else if (!IsEven)
+        {
+            //todo noti
+            GameScene.ScreenPrint("Can't place here: uneven terrain! Struc");
+        }
+        else if (IsColliding)
+        {
+            GameScene.ScreenPrint("Can't place here: colli");
+        }
+        else
+        {
+            GameScene.ScreenPrint("could be the sea Struct.cs");
+        }
     }
 
     public void AddOnRegistro()
@@ -138,7 +148,6 @@ public class Structure : StructureParent
     /// </summary>
     public override void FinishPlacingMode(H action)
     {
-
         if (_arrow != null)
         {
             _arrow.Destroy();
@@ -154,21 +163,19 @@ public class Structure : StructureParent
         {
             float howBigTheCollidingSphere = 5f;
 
-            //was leaving Spawner inside the farm
-            if (MyId.Contains("Farm"))
+            if (MyId.Contains("Med"))
             {
-                if (MyId.Contains("Med"))
-                {
-                    howBigTheCollidingSphere = 8;
-                }
-                else if (MyId.Contains("Large"))
-                {
-                    howBigTheCollidingSphere = 10;
-                }
-                else if (MyId.Contains("XLarge"))
-                {
-                    howBigTheCollidingSphere = 12;
-                }
+                howBigTheCollidingSphere = 8;
+            }
+            else if (MyId.Contains("Large") 
+                || HType == H.Clay || HType == H.Brick || HType == H.LumberMill
+                || HType == H.SaltMine)
+            {
+                howBigTheCollidingSphere = 10;
+            }
+            else if (MyId.Contains("XLarge"))
+            {
+                howBigTheCollidingSphere = 12;
             }
 
             MarkTerraSpawnRoutine(howBigTheCollidingSphere, from: transform.position);
@@ -414,7 +421,7 @@ public class Structure : StructureParent
         //r.enabled = false;
     }
 
-    //implement
+    //todo implement
     internal bool HasEnoughToCoverOrder(Order _order)
     {
         return true;

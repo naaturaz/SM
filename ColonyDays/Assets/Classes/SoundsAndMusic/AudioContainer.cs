@@ -46,7 +46,7 @@ public class AudioContainer: MonoBehaviour
     /// <summary>
     /// At this distance the Volume will be zero or passed this
     /// </summary>
-    static int _distanceThatVolIsZeroAt = 100;//200
+    static int _distanceThatVolIsZeroAt = 30;//200
     /// <summary>
     /// At this distance the Volume will be zero or passed this
     /// </summary>

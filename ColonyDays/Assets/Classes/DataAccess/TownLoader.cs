@@ -142,6 +142,8 @@ class TownLoader
 
     /// <summary>
     /// Will say if each corner of the town falls in ground. otherwise ret false
+    /// Will also make sure all points are in the terrain limit
+    /// and also they all are in the same region
     /// </summary>
     /// <param name="spot"></param>
     /// <param name="townDim"></param>
@@ -150,13 +152,24 @@ class TownLoader
     {
         var movedTown = MoveTownToSpot(spot, townDim);
         //UVisHelp.CreateHelpers(movedTown, Root.yellowCube);
+        var region = MeshController.CrystalManager1.ReturnMyRegion(movedTown[0]);
+        
         for (int i = 0; i < movedTown.Count; i++)
         {
             //throws ray to check where is in real ground
             var inRealGroundVal = m.Vertex.BuildVertexWithXandZ(movedTown[i].x, movedTown[i].z);
             var inFloor = Building.IsVector3OnTheFloor(inRealGroundVal, m.IniTerr.MathCenter.y);
+            
+            //will check if the point is on terrain. Also manipulates '-50' the size of terrain and 
+            //makes it a bit smaller so they town loaded is not right no the edge of terrain
+            var inTerrain = UTerra.IsOnTerrainManipulateTerrainSize(movedTown[i], -2);//-1
+
+            //so all fall into the same region 
+            var regionThisIndex = MeshController.CrystalManager1.ReturnMyRegion(movedTown[i]);
+            var isSameRegion = region == regionThisIndex;
+
             //if one is not in floor then is false 
-            if (!inFloor)
+            if (!inFloor || !inTerrain || !isSameRegion)
             {
                 return false;
             }
@@ -197,5 +210,7 @@ class TownLoader
     }
 
 
+
+ 
 }
 

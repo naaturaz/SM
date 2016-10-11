@@ -9,6 +9,8 @@ public class MyForm : General
 
     private GameObject _startPosIni;
 
+    private ShowPathToSea _showPathToSea;
+
     public GameObject Canvas
     {
         get
@@ -85,6 +87,12 @@ public class MyForm : General
             _startPosIni = GetChildCalled(H.Start, Resources);
 	        LoadMainInventory();   
 	    }
+
+        //is the main gui 
+	    if (transform.name.Contains("MainGUI"))
+	    {
+	        _showPathToSea = new ShowPathToSea();
+	    }
     }
 
     private IEnumerator UpdateEvery2Sec()
@@ -117,6 +125,10 @@ public class MyForm : General
         if (_showAInventory != null)
         {
             _showAInventory.Update();
+        }
+        if (_showPathToSea != null)
+        {
+            _showPathToSea.Update();
         }
     }
 
@@ -173,4 +185,29 @@ public class MyForm : General
 
         transform.position = newPos;
     }
+
+    #region Set thru events on Editor
+
+    /// <summary>
+    /// Called by the WhereIsSea on GUI
+    /// Set thru events on Editor
+    /// </summary>
+    public void ShowHideSeaPathToggle()
+    {
+        if (_showPathToSea!=null)
+        {
+            _showPathToSea.Toggle();
+        }
+    }
+
+    /// <summary>
+    /// Called by the WhereIsTown on Gui
+    /// </summary>
+    public void CenterCamToTown()
+    {
+        CamControl.CAMRTS.InputRts.CenterCam(true);
+    }
+
+
+#endregion
 }

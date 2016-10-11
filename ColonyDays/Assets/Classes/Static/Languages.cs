@@ -22,8 +22,8 @@ public class Languages
        //Descriptions
        //Infr
 	   { "Road.Desc","Only for decoration purpose. However people is happier if there is roads around them"},
-	   { "BridgeTrail.Desc","Allows people pass from one side of the map to the other"},
-	   { "BridgeRoad.Desc","Allows people pass from one side of the map to the other. People loves this bridges. Give them a prosperity and happinnes sense" +_houseTail},
+	   { "BridgeTrail.Desc","Allows people pass from one side of the terrain to the other"},
+	   { "BridgeRoad.Desc","Allows people pass from one side of the terrain to the other. People loves this bridges. Give them a prosperity and happinnes sense" +_houseTail},
 	   { "LightHouse.Desc","Helps to make the port more discoverable. Adds to Port Reputation as long the flame is glowing"},
 	   { H.Masonry + ".Desc","Really important building. This workers construct new buildings and work as wheelbarrowers once have nothing to do"},
 	   { H.HeavyLoad + ".Desc","Really important building. This workers construct new buildings and work as wheelbarrowers once have nothing to do"},
@@ -157,6 +157,9 @@ public class Languages
 	   { "Gov.HoverSmall", "Goverment"},
 	   { "Other.HoverSmall", "Other"},
 	   { "Militar.HoverSmall", "Militar"},
+	   { "WhereIsTown.HoverSmall", "Back to town 'P'"},
+	   { "WhereIsSea.HoverSmall", "Show/hide path to sea"},
+	   { "Helper.HoverSmall", "Mini help"},
 	   
        //building window
        { "Gen_Btn.HoverSmall", "General Tab"},
@@ -182,6 +185,9 @@ public class Languages
 	   { "Build.HoverMed", "Place building: 'Left click' \n" +
 	                       "Rotate building: 'R' key \n " +
 	                       "Cancel: 'Right click'"},
+	   { "Current_Salary.HoverMed", "Workers will work in the place that pays the highest salary." +
+	                                "If 2 places pay the same salary, then the closest to home will be the one" +
+	                                " they will choose."},
 
 
        //Notifications
@@ -516,5 +522,23 @@ public class Languages
     internal static string CurrentLang()
     {
         return _currentLang;
+    }
+
+    internal static bool DoIHaveHoverMed(string key)
+    {
+        var currentLang = ReturnCurrentDict();
+
+        return currentLang.ContainsKey(key + ".HoverMed");
+    }
+
+    static Dictionary<string, string> ReturnCurrentDict()
+    {
+        if (_currentLang == "Español")
+        {
+            return _spanish;
+        }
+
+        return _english;
+            
     }
 }

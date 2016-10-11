@@ -72,8 +72,11 @@ public class BuildingWindow : GUIElement {
         {
             yield return new WaitForSeconds(0.1f); // wait
 
+            var samePos = UMath.nearEqualByDistance(transform.position, iniPos, 1);
+            var buildNull = _building == null;
+            
             //means is showing 
-            if (transform.position == iniPos && _building!=null && _building.HType != H.Road)
+            if (samePos && !buildNull && BuildingPot.Control.Registro.SelectBuilding != null)
             {
                 LoadMenu();
 
@@ -301,6 +304,9 @@ public class BuildingWindow : GUIElement {
         
         _showAInventory.ManualUpdate();
         _inv.text = BuildStringInv(_building);
+
+       
+
         _currSalaryTxt.text = BuildingPot.Control.Registro.SelectBuilding.DollarsPay+"";
 
         DemolishBtn();
@@ -327,7 +333,10 @@ public class BuildingWindow : GUIElement {
 
     string BuildInfo()
     {
-        string res = "";
+        string res = Languages.ReturnString(_building.HType+".Desc") + "\n\n";
+
+        res += IfInConstructionAddPercentageOfCompletion();
+        
         var isAHouse = _building.HType.ToString().Contains("House") || _building.HType == H.Bohio;
 
         //is not a house or bohio 
@@ -336,22 +345,21 @@ public class BuildingWindow : GUIElement {
             //if is Storage
             if (_building.HType.ToString().Contains("Storage"))
             {
-                res = "\nUsers:" + _building.PeopleDict.Count + "\n";
+                res += "\nUsers:" + _building.PeopleDict.Count + "\n";
             }
             //others
             else
             {
-                res = "\nWorkers:" + _building.PeopleDict.Count + "\n";
+                res += "\nWorkers:" + _building.PeopleDict.Count + "\n";
                 for (int i = 0; i < _building.PeopleDict.Count; i++)
                 {
                     res += "\n " + Family.RemovePersonIDNumberOff(_building.PeopleDict[i]);
                 }
             }
-           
 
             if (_building.HType == H.Masonry)
             {
-                res += "\n GreenLight:";
+                res += "\n\n Buildings ready to be built:";
 
                 for (int i = 0; i < _building.BuildersManager1.GreenLight.Count; i++)
                 {
@@ -368,7 +376,7 @@ public class BuildingWindow : GUIElement {
                 amt += _building.Families[i].MembersOfAFamily();
             }
 
-            res = " In House:" + amt + "\n";
+            res += " People living in this house:" + amt + "";
 
             for (int i = 0; i < _building.Families.Count(); i++)
             {
@@ -376,11 +384,28 @@ public class BuildingWindow : GUIElement {
             }
         }
 
-        return res 
+        return res
 #if UNITY_EDITOR
-           + DebugInfo()
+               + DebugInfo()
 #endif
-;
+            ;
+
+    }
+
+    /// <summary>
+    /// If is in construction will add percentage of completion 
+    /// </summary>
+    /// <returns></returns>
+    private string IfInConstructionAddPercentageOfCompletion()
+    {
+        var sP = (StructureParent) _building;
+
+        if (sP.CurrentStage != 4)
+        {
+            var percentage = sP.PercentageBuiltCured();
+            return "Construction progress at: " + percentage + "%\n\n";
+        }
+        return "";
     }
 
     private string DebugInfo()

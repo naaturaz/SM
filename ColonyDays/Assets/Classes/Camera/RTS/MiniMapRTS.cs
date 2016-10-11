@@ -30,7 +30,8 @@ public class MiniMapRTS : GenericCameraComponent {
 
     //this is the Variable that reduce the map limits in where the camera can go  
     //todo a X and Z reduction is needed 
-    private float reduction = 1;//50 //30
+    private float reductionX = 30;//50 
+    private float reductionY = 60;//50
 
 
     float terraStartX;
@@ -62,10 +63,10 @@ public class MiniMapRTS : GenericCameraComponent {
     Rect mapRect = new Rect();
     private void SetReducedCardinals()
     {
-        reducedNE = new Vector2(NE.x - reduction, NE.y - reduction);
-        reducedSW = new Vector2(SW.x + reduction, SW.y + reduction);
+        reducedNE = new Vector2(NE.x - reductionX, NE.y - reductionY);
+        reducedSW = new Vector2(SW.x + reductionX, SW.y + reductionY);
         
-        reducedNW = new Vector2(NW.x + reduction, NW.y - reduction);
+        reducedNW = new Vector2(NW.x + reductionX, NW.y - reductionY);
 
         mapRect = Registro.FromALotOfVertexToRect(new List<Vector3>() {reducedNW, reducedNE, reducedSW});
     }

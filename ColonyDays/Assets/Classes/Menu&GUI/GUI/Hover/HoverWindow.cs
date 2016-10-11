@@ -107,9 +107,9 @@ public class HoverWindow : MonoBehaviour
 
         //after 3 seconds of being show
         //if key = "" is a simple msg with out key
-	    if (Time.time > showedAt + 3 && !string.IsNullOrEmpty(_key))
+	    if (Time.time > showedAt + .2 && !string.IsNullOrEmpty(_key))
 	    {
-	        //SpawnMedHover();
+	        SpawnMedHover();
 	    }
 	}
 
@@ -121,9 +121,14 @@ public class HoverWindow : MonoBehaviour
     /// </summary>
     private void SpawnMedHover()
     {
+        if (!Languages.DoIHaveHoverMed(_key))
+        {
+            return;
+        }
+
         Hide();
         //*3 to make it abit further from mouse pointer
-        _hoverWindowMed.Show(Input.mousePosition + (diffToMouse*3), _key);
+        _hoverWindowMed.ShowSemiTut(_key);
     }
 
 

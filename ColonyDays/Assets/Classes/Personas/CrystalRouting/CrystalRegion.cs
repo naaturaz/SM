@@ -291,6 +291,12 @@ public class CrystalRegion
         {
             return "River";
         }
+
+        if (!UTerra.IsOnTerrain(U2D.FromV2ToV3(Region.center)))
+        {
+            return "OutOfTerrain";
+        }
+
         return "FullOcean";
     }
 
@@ -350,5 +356,16 @@ public class CrystalRegion
         }
         WhatAudioIReport = "River";
         
+    }
+
+    public float TempDistance { get; set; }
+
+    /// <summary>
+    /// The center position of the rect of the region 
+    /// </summary>
+    /// <returns></returns>
+    internal Vector3 Position()
+    {
+        return U2D.FromV2ToV3(Region.center);
     }
 }

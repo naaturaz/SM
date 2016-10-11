@@ -496,6 +496,11 @@ public class CrystalManager  {
         return -1;
     }
 
+    public int ReturnMyRegion(Vector3 v3)
+    {
+        return ReturnMyRegion(U2D.FromV3ToV2(v3));
+    }
+
     public bool DoesMyRegionHasTerraCrystal(Vector3 pos)
     {
         pos = U2D.FromV3ToV2(pos);
@@ -1584,6 +1589,27 @@ public class CrystalManager  {
         }
 
         return U2D.FromV2ToV3( CrystalRegions[index].Region.center);
+    }
+
+    /// <summary>
+    /// Will return the closest FullOcoean position to param
+    /// 
+    /// 
+    /// </summary>
+    /// <param name="iniPosP"></param>
+    /// <returns></returns>
+    internal Vector3 GiveMeTheClosestSeaRegionToMe(Vector3 iniPosP)
+    {
+        var fullOcean = _crystalRegions.Where(a => a.WhatAudioIReport == "FullOcean").ToList();
+
+        for (int i = 0; i < fullOcean.Count; i++)
+        {
+            fullOcean[i].TempDistance = Vector3.Distance(fullOcean[i].Position(), iniPosP);
+        }
+        fullOcean = fullOcean.OrderBy(a => a.TempDistance).ToList();
+
+        return fullOcean[0].Position();
+
     }
 }
 

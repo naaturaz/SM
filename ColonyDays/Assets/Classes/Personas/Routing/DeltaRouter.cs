@@ -271,7 +271,7 @@ public class DeltaRouter
             //if is not on Terrain will break loop so wont add antyhing else towards that Prime
             //bz sim,ply after that is just out of terrain. In this way I will never RayCast a point
             //out of terrain
-            if (!IsOnTerrain(t))
+            if (!UTerra.IsOnTerrain(t))
             {
                //Debug.Log("not on terrain Delta DefinePositionsToCheck()");
                 break;
@@ -392,22 +392,6 @@ public class DeltaRouter
             origin = AssignIniPositionIfNotInBuild(origin, target);
         }
         return origin;
-    }
-
-    /// <summary>
-    /// Syas if param is on terrain
-    /// 
-    /// Needs to be Testet
-    /// </summary>
-    bool IsOnTerrain(Vector3 a)
-    {
-        Rect terra = U2D.FromPolyToRect(Program.gameScene.controllerMain.MeshController.wholeMalla);
-        terra = U2D.ReturnRectYInverted(terra);//must be inverted to be on same Y values 
-
-        if (terra.Contains(new Vector2(a.x, a.z)))
-        { return true; }
-
-        return false;
     }
 
 

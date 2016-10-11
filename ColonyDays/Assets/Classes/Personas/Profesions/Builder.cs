@@ -341,7 +341,7 @@ public class Builder : Profession
             }
 
             //do stuff
-            _constructing.AddToConstruction(200f * ToolsFactor(), _person);
+            _constructing.AddToConstruction(100f * ToolsFactor(), _person);
         }
     }
 
