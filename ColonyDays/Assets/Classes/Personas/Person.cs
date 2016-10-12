@@ -2216,6 +2216,7 @@ public class Person : General
     internal void SelectPerson()
     {
         CreateProjector();
+        AudioCollector.PlayPersonVoice(this);
     }
 
     /// <summary>

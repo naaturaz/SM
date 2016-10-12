@@ -181,8 +181,6 @@ public class OptionsWindow : GUIElement
 
         if(sub == "OKBtn")
         {
-            Settings.Save();
-            Settings.Load();
             Hide();
         }
         else if(sub == "CancelBtn")
@@ -200,6 +198,8 @@ public class OptionsWindow : GUIElement
             ChangeResNow();
         }
     }
+
+
 
     public void ReFreshDropsThenShow()
     {

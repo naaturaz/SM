@@ -189,7 +189,8 @@ public class MoveToNewHome
 
         if (_brain.PullOldHome() != null && _brain.PullOldHome() == _person.Home)
         {   //means is moving towards the same house 
-            Debug.Log(_person.MyId + " InitValForNewHome() Canceled");
+            //todo fix this keep being calling thru the game
+            //Debug.Log(_person.MyId + " InitValForNewHome() Canceled");
             return;
         }
 

@@ -499,7 +499,14 @@ public class MouseListener : InputMain
     /// </summary>
     public void HideAllWindows()
     {
-
+        if (_miniHelper == null)
+        {
+            _miniHelper = FindObjectOfType<MiniHelper>();
+        }
+        if (_miniHelper != null)
+        {
+            _miniHelper.Hide();
+        }
 
         _personWindow.Hide();
         UnselectingBuild();
@@ -724,6 +731,7 @@ public class MouseListener : InputMain
     #region Person Selection Form
 
     private Person _personSelect;
+    private MiniHelper _miniHelper;
 
 
 

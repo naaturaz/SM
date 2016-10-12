@@ -141,7 +141,7 @@ public class AudioContainer: MonoBehaviour
     /// </summary>
     void StopAudioSource()
     {
-        if (IsThisAPersonSound() || IsASpawnSound() || IsAMusic() 
+        if (IsThisAPersonSound() || IsASpawnSound() || IsAMusic() || IsLanguage()
             //|| IsAmbience()
             )
         {
@@ -212,6 +212,7 @@ public class AudioContainer: MonoBehaviour
         //if is not changign the vol and time has passed since las report and is playing
         if (!IsThisAPersonSound() && 
             !IsASpawnSound() && !IsAMusic() && !IsAmbience() &&
+            !IsLanguage() &&
             _audioSource.isPlaying && !volUp && !volDown 
             && Time.time + 2.6f > _lastReport)
         {
@@ -223,6 +224,11 @@ public class AudioContainer: MonoBehaviour
         {
             speedJustChanged = false;
         }
+    }
+
+    private bool IsLanguage()
+    {
+        return AudioCollector.Languages1.ContainsKey(_key);
     }
 
     private bool IsASpawnSound()

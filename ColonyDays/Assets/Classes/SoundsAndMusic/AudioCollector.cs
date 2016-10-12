@@ -1,17 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 using Assets.Classes.SoundsAndMusic;
+using Random = UnityEngine.Random;
 
 
 public class AudioCollector
 {
+
     //determined by user on Interface. Saved and loaded too
     private static float _soundLevel = 1;
     private static float _musicLevel = 1;
 
+
+    static Dictionary<string, string> _languages = new Dictionary<string, string>();
 
     //TO ADD A SOUND ====>
     //Add first the type of HType is initiating the Sound Ex: "Person" then the sound
@@ -62,8 +67,8 @@ public class AudioCollector
         {"ClickWood4", ""},
         {"ClickWood7", ""},
     };
-    
-    
+
+
     //this roots sounds get spawned anywas. Like BabyBorn sound
     private static Dictionary<string, string> _ambience = new Dictionary<string, string>()
     {
@@ -137,6 +142,12 @@ public class AudioCollector
         set { _soundLevel = value; }
     }
 
+    public static Dictionary<string, string> Languages1
+    {
+        get { return _languages; }
+        set { _languages = value; }
+    }
+
     static void StartRoots()
     {
         if (_roots.Count > 0)
@@ -147,8 +158,8 @@ public class AudioCollector
         foreach (var personRoot in _personRoots)
         {
             _roots.Add(personRoot.Key, personRoot.Value);
-        }  
-        
+        }
+
         foreach (var amb in _ambience)
         {
             _roots.Add(amb.Key, amb.Value);
@@ -178,7 +189,7 @@ public class AudioCollector
         }
     }
 
-   
+
 
     /// <summary>
     /// Reporting how far an GameObj is 
@@ -234,7 +245,7 @@ public class AudioCollector
 
         //we need to clean the report after
         _report.Clear();
-        
+
     }
 
     /// <summary>
@@ -296,8 +307,8 @@ public class AudioCollector
         {
             _audioContainers[key].PlayAShot(dist);
         }
-    } 
-    
+    }
+
     public static void PlayOneShot(string key, Vector3 urPos)
     {
         var dist = Vector3.Distance(Camera.main.transform.position, urPos);
@@ -347,7 +358,7 @@ public class AudioCollector
     internal static void SetNewMusicLevelTo(float p)
     {
         MusicLevel = p;
-        MusicManager. OnLevelChanged(EventArgs.Empty);
+        MusicManager.OnLevelChanged(EventArgs.Empty);
     }
 
 
@@ -379,6 +390,46 @@ public class AudioCollector
         else
         {
             SoundTurnedOff();
+        }
+    }
+
+
+    public static void PlayPersonVoice(Person p)
+    {
+        if (p.Gender == H.Male)
+        {
+            if (p.Age > 18 && p.Age < 70)
+            {
+                PlayPerson("Man");
+            }
+        }
+
+    }
+
+    static void PlayPerson(string typeOfPerson)
+    {
+        //the root is determined by the languages and the type of person
+        //English/Man/ is an ex
+        var buildRoot = "Prefab/Audio/Sound/" + Languages.CurrentLang() + "/" + typeOfPerson + "/";
+
+        DirectoryInfo dir = new DirectoryInfo("Assets/Resources/" + buildRoot);
+        var info = dir.GetFiles("*.wav").ToList();
+        info.AddRange(dir.GetFiles("*.mp3"));
+
+        var key = info[Random.Range(0, info.Count)].Name;
+        key = key.Substring(0, key.Length - 4);
+
+
+        if (!_audioContainers.ContainsKey(key))
+        {
+            var audioConta = AudioContainer.Create(key, buildRoot + key, 0,
+            container: AudioPlayer.SoundsCointaner.transform);
+            _audioContainers.Add(key, audioConta);
+            _languages.Add(key, buildRoot + key);
+        }
+        else
+        {
+            _audioContainers[key].PlayAShot(0);
         }
     }
 }

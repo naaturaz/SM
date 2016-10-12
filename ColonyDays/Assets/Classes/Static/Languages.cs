@@ -157,7 +157,7 @@ public class Languages
 	   { "Gov.HoverSmall", "Goverment"},
 	   { "Other.HoverSmall", "Other"},
 	   { "Militar.HoverSmall", "Militar"},
-	   { "WhereIsTown.HoverSmall", "Back to town 'P'"},
+	   { "WhereIsTown.HoverSmall", "Back to town [P]"},
 	   { "WhereIsSea.HoverSmall", "Show/hide path to sea"},
 	   { "Helper.HoverSmall", "Mini help"},
 	   
@@ -186,7 +186,7 @@ public class Languages
 	                       "Rotate building: 'R' key \n " +
 	                       "Cancel: 'Right click'"},
 	   { "Current_Salary.HoverMed", "Workers will work in the place that pays the highest salary." +
-	                                "If 2 places pay the same salary, then the closest to home will be the one" +
+	                                " If 2 places pay the same salary, then the closest to home will be the one" +
 	                                " they will choose."},
 
 
@@ -213,6 +213,22 @@ public class Languages
        { "ShipArrived.Noti.Name", "Ship arrived"},
 	   { "ShipArrived.Noti.Desc", "A new ship has arrived to one of our maritimes buildings"},
 
+       //todo keep aadding to ESP
+       //Main notificaion
+       { "NotScaledOnFloor", "The building is too close to shore or to a mountain"},
+       { "NotEven", "The ground underneath the building is not even"},
+       { "Colliding", "Building is colliding with another one"},
+       { "BadWaterHeight", "The building is too low or high on the water"},
+       { "LockedRegion", "You need to own this region to build in here"},
+
+       //Mini help
+       { "Camera", "Camera: Use [AWSD] or cursor to move. " +
+                   "Press mouse middle button and keep pressed to rotate"},
+       { "SeaPath", "Click on the left botton corner 'Show/hide sea path' " +
+                    "button to show the closest path to the sea"},
+       { "Region", "Region: You need to own a region to be able to build on it. Click on the For Sale sign in the" +
+                   " middle of each region to buy it"},
+       { "PeopleRange", "The circle around each building marks the range of it"},
 
 	};
 

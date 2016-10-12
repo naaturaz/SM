@@ -483,6 +483,21 @@ public class Inventory  {
         }
 
         return res;
+    }   
+    
+    /// <summary>
+    /// Use for see how much food is it in all Storages
+    /// </summary>
+    /// <param name="pCat"></param>
+    /// <returns></returns>
+    public float ReturnAllAmountOnInv()
+    {
+        float res = 0;
+        for (int i = 0; i < _inventItems.Count; i++)
+        {
+            res += ReturnAmtOfItemOnInv(_inventItems[i].Key);
+        }
+        return res;
     }
 
     /// <summary>

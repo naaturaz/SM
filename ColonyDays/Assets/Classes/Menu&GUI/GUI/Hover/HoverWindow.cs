@@ -49,6 +49,11 @@ public class HoverWindow : MonoBehaviour
 
     public void Hide()
     {
+        if (_rectTransform == null)
+        {
+            return;
+        }
+
         _rectTransform.position = new Vector3(500,500);
         _msg = "";
         _text.text = "";

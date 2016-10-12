@@ -95,7 +95,7 @@ public class Book : General
         Build.Add(new BuildStat(H.FieldFarmXLarge, 400, 1, 0, 0,  maxPeople: 9, capacity: 3));
 
         //Raw
-        Build.Add(new BuildStat(H.Clay, 400, 15, 5, 15, 5, maxPeople: 5));
+        Build.Add(new BuildStat(H.Clay, 400, 15, 5, 15, 5, maxPeople: 5, capacity: 160));
         Build.Add(new BuildStat(H.Ceramic, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.Fishing_Hut, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.FishRegular, 400, 15, 5, 25, 5, maxPeople: 5));
@@ -110,7 +110,7 @@ public class Book : General
 
 
         //Prod
-        Build.Add(new BuildStat(H.Brick, 400, 15, 5, 25, 5, maxPeople: 5));
+        Build.Add(new BuildStat(H.Brick, 400, 15, 5, 25, 5, maxPeople: 5, capacity: 50));
         Build.Add(new BuildStat(H.Carpintery, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.Cigars, 400, 15, 5, 25, 5, maxPeople: 5));
 

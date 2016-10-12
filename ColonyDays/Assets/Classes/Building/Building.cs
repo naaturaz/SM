@@ -218,7 +218,50 @@ public class Building : General, Iinfo
             isScaledOnFloor = IsScaledAnchorsOnFloor();
         }
 
+        NotifyBuildingProblem(isScaledOnFloor);
         return _isEven && !_isColliding && _isGoodWaterHeight && isScaledOnFloor && AreAnchorsOnUnlockRegions();
+    }
+
+    /// <summary>
+    /// Will notify why current buliding cant be placed here 
+    /// </summary>
+    /// <param name="isScaledOnFloor"></param>
+    private void NotifyBuildingProblem(bool isScaledOnFloor)
+    {
+        if (!Program.gameScene.GameFullyLoaded() || IsLoadingFromFile || PositionFixed)
+        {
+            return;
+        }
+
+        if (!isScaledOnFloor)
+        {
+            Program.gameScene.GameController1.NotificationsManager1.MainNotify("NotScaledOnFloor");
+        }
+        else if (!_isEven)
+        {
+            Program.gameScene.GameController1.NotificationsManager1.MainNotify("NotEven");
+
+        }
+        else if (_isColliding)
+        {
+            Program.gameScene.GameController1.NotificationsManager1.MainNotify("Colliding");
+            
+        }
+        else if (!_isGoodWaterHeight)
+        {
+            Program.gameScene.GameController1.NotificationsManager1.MainNotify("BadWaterHeight");
+            
+        }
+        else if (!AreAnchorsOnUnlockRegions())
+        {
+            Program.gameScene.GameController1.NotificationsManager1.MainNotify("LockedRegion");
+        }
+            //if none is true then needs to be hidden bz might have being showed already by a quick
+            //true of any above. so needs to be hidden
+        else
+        {
+            Program.gameScene.GameController1.NotificationsManager1.HideMainNotify();
+        }
     }
 
     bool AreAnchorsOnUnlockRegions()
@@ -234,7 +277,7 @@ public class Building : General, Iinfo
     /// <summary>
     /// Tells u if the Anchors out of the anchors are on the Floor
     /// 
-    /// Creted to avoid Streuctures be too close to Water.
+    /// Creted to avoid Streuctures be too close to Water or Mountain
     /// Farms needs to be further still more 
     /// </summary>
     /// <returns></returns>
@@ -1003,13 +1046,11 @@ public class Building : General, Iinfo
         }
         else if (!IsEven)
         {
-            //todo noti and sound
-            GameScene.ScreenPrint("Can't place, uneven terrain.Building.cs");
+            //GameScene.ScreenPrint("Can't place, uneven terrain.Building.cs");
         }
         else if (_isColliding)
         {
-            //todo noti and sound
-            GameScene.ScreenPrint("Is colliiding.Building.cs");
+            //GameScene.ScreenPrint("Is colliiding.Building.cs");
         }
     }
        
@@ -1054,6 +1095,7 @@ public class Building : General, Iinfo
 
             HideBuildingPrev();
             DestroyCool();
+            Program.MouseListener.HideAllWindows();
             return;
         }
 
@@ -2442,7 +2484,8 @@ public class Building : General, Iinfo
 
     #region Production
 
-    
+    //BuildingWindow.cs will reload inv
+    private bool _isToReloadInv;
 
     /// <summary>
     /// The Prefered storage where this Structue production should be taken to
@@ -2471,11 +2514,12 @@ public class Building : General, Iinfo
     internal void Produce(float amt, Person person, bool addToBuildInv = true, P prod = P.None)
     {
         P prodHere = DefineProdHere(prod);
-
         if (prodHere == P.Stop)
         {
             return;
         }
+
+        _isToReloadInv = true;
 
         var doIHaveInput = DoBuildHaveRawResources();
         var hasStorageRoom = DoesStorageHaveCapacity();
@@ -2484,6 +2528,7 @@ public class Building : General, Iinfo
         if (doIHaveInput && (hasStorageRoom || hasThisBuildRoom))
         {
             //todo Consume inputs
+            amt = ConsumeInputs(amt);
 
             //if is a farm
             if (MyId.Contains("Farm"))
@@ -2510,12 +2555,22 @@ public class Building : General, Iinfo
             AddEvacuationOrderOfProdThatAreNotInput();
             //Debug.Log("Both full" + person.FoodSource.MyId + ".and." + MyId + " AddEvacuationOrder() called");
         }
+        //if doesnt have input will see if can get anything out of that buliding that is not an inpput
+            //product 
         else if (!doIHaveInput)
         {
             //todo show 3d icon
             //Debug.Log(MyId+" doesnt have input");
-        }
+            var prodToEvac = BuildingPot.Control.ProductionProp.ReturnProductsOnInvThatAreNotInput(Inventory, HType);
 
+            for (int i = 0; i < prodToEvac.Count; i++)
+            {
+                var got = Inventory.RemoveByWeight(prodToEvac[i], person.HowMuchICanCarry());
+                person.Inventory.Add(prodToEvac[i], got);
+                return;
+            }
+        }
+        
         //if has more thn 2000Kg of current prd can add Evac order as weell
         if (Inventory.ReturnAmtOfItemOnInv(_currentProd.Product) > 2000)
         {
@@ -2528,6 +2583,93 @@ public class Building : General, Iinfo
             AddEvacuationOrderOfProdThatAreNotInput();
             //Debug.Log("Building store full" + MyId + " AddEvacuationOrder() called. " + person.MyId);
         }
+    }
+
+    #region Production INput
+
+    /// <summary>
+    /// Consumre the inputs needed to create the current product 
+    /// 
+    /// Return what actually was produced based on the input
+    /// </summary>
+    private float ConsumeInputs(float amtToProd)
+    {
+        //the ones dont need inputs
+        if (CurrentProd.Ingredients == null || CurrentProd.Ingredients.Count == 0)
+        {
+            return amtToProd;
+        }
+
+        List<float> howMuchCanProduce = new List<float>();
+        for (int i = 0; i < CurrentProd.Ingredients.Count; i++)
+        {
+            var ingredient = CurrentProd.Ingredients[i];
+            howMuchCanProduce.Add(HowMuchCanProduce(ingredient, amtToProd));
+        }
+
+        //order by lowest.
+        //bz if we have 100kg of clay and 50kk of wood we can only produce
+        //50kg of brick bz the limit is set by the clay
+        howMuchCanProduce = howMuchCanProduce.OrderBy(a=>a).ToList();
+        ProduceThisKGAndRemove(howMuchCanProduce[0]);
+
+        return howMuchCanProduce[0];
+    }
+
+    /// <summary>
+    /// Wil produce that exact amout of KG bz was found that that was
+    /// the max amt we could produce with current inputs
+    /// </summary>
+    /// <param name="p"></param>
+    private void ProduceThisKGAndRemove(float p)
+    {
+        for (int i = 0; i < CurrentProd.Ingredients.Count; i++)
+        {
+            var ingredient = CurrentProd.Ingredients[i];
+            var kg = ingredient.Units*p;
+            Inventory.RemoveByWeight(ingredient.Element, kg);
+        }
+    }
+
+    /// <summary>
+    /// Will find out how much can produce of a Brick for ex
+    /// Will see how much Clay is, ex if is 100kg clay then can produce only 50kg brick
+    /// And if there is 50kg of wood will be able to produce 500kg of brick.
+    /// 
+    /// Then the restiction will be imposed by the amot of clay on inventory and that
+    /// will be what at the end will be produced by the worker 
+    /// </summary>
+    /// <param name="ingredient"></param>
+    /// <param name="amtToProd"></param>
+    /// <returns></returns>
+    float HowMuchCanProduce(InputElement ingredient, float amtToProd)
+    {
+        // 100 * 2 for Brick for ex = 200. he needs 200KG of clay to produce 100kg of brick
+        // 
+        var kgNeeded = amtToProd * ingredient.Units;
+        var onInv = Inventory.ReturnAmtOfItemOnInv(ingredient.Element);
+
+        //will return wht we need if can be covered 
+        if (onInv > kgNeeded)
+        {
+            return kgNeeded / ingredient.Units;
+        }
+        //otherwise what is on inv
+        return onInv / ingredient.Units;
+    }
+
+
+
+#endregion
+
+    internal bool IsToReloadInv()
+    {
+        if (_isToReloadInv)
+        {
+            _isToReloadInv = false;
+            return true;
+        }
+        return false;
     }
 
     /// <summary>
@@ -3849,6 +3991,8 @@ public class Building : General, Iinfo
     }
 
 #endregion
+
+
 
 
 

@@ -84,7 +84,7 @@ public class BuildingWindow : GUIElement {
                 if (_orders.gameObject.activeSelf == _orders)
                 {
                     ShowOrders();
-                }
+                } 
             }
         }
     }
@@ -293,11 +293,15 @@ public class BuildingWindow : GUIElement {
         {
             _showAInventory = new ShowAInventory(_building.Inventory, _gaveta.gameObject, _invIniPos.transform.localPosition);
         }
-        else if (_showAInventory != null && oldItemsCount != _building.Inventory.InventItems.Count ||
-            (oldBuildID != _building.MyId))
+        else if (_showAInventory != null && ( 
+            oldItemsCount != _building.Inventory.InventItems.Count ||
+            oldBuildID != _building.MyId ||
+            _building.IsToReloadInv())
+            )
         {
-            oldBuildID = _building.MyId;
             oldItemsCount = _building.Inventory.InventItems.Count;
+
+            oldBuildID = _building.MyId;
             _showAInventory.DestroyAll();
             _showAInventory = new ShowAInventory(_building.Inventory, _gaveta.gameObject, _invIniPos.transform.localPosition);
         }
@@ -306,9 +310,7 @@ public class BuildingWindow : GUIElement {
         _inv.text = BuildStringInv(_building);
 
        
-
         _currSalaryTxt.text = BuildingPot.Control.Registro.SelectBuilding.DollarsPay+"";
-
         DemolishBtn();
     }
 

@@ -95,7 +95,7 @@ public class Program : MonoBehaviour {
 
     private void OnApplicationQuit()
     {
-        Settings.SaveToFileAudioSettings();
+        Settings.SaveToFile();
     }
 
 

@@ -34,31 +34,8 @@ public class Settings
 
 #region Save Load Settings
 
-    /// <summary>
-    /// Loads all Saved settings in PlayerPref
-    /// </summary>
-    public static void Load()
-    {
-        //general
-        var unitsSaved = PlayerPrefs.GetString("Unit").ToCharArray();
-        if (unitsSaved.Length>0)
-        {
-            Unit.Units = unitsSaved[0];
-        }
-        //means never is being saved before     
-        else if (unitsSaved.Length == 0)
-        {
-            return;
-        }
-        _autoSaveFrec = PlayerPrefs.GetInt("AutoSave");
 
-        //screen
-        QualitySettings.SetQualityLevel(PlayerPrefs.GetInt("Quality"));
-        //LoadAndApplyResolution();
-        Screen.fullScreen = Boolean.Parse(PlayerPrefs.GetString("FullScreen"));
-
-        Debug.Log("Loading Settings");
-    }
+    
 
     static void LoadAndApplyResolution()
     {
@@ -69,25 +46,7 @@ public class Settings
 
     }
 
-    /// <summary>
-    /// Saves all setting in PlayerPref 
-    /// </summary>
-    public static void Save()
-    {
-        //general
-        PlayerPrefs.SetString("Unit", Unit.CurrentSystem());
-        PlayerPrefs.SetInt("AutoSave", AutoSaveFrec);
-        
-        //screen
-        PlayerPrefs.SetInt("Quality", QualitySettings.GetQualityLevel());
-        PlayerPrefs.SetString("FullScreen", Screen.fullScreen.ToString());
 
-        //del call 
-        //SaveResolution("1920 x 1080");
-
-
-        PlayerPrefs.Save();
-    }
 
     /// <summary>
     /// Will be called from OptionsWindow
@@ -152,27 +111,44 @@ public class Settings
     /// <summary>
     /// Loads Audio Settings from file
     /// </summary>
-    public static void LoadFromFileAudioSettings()
+    public static void LoadFromFile()
     {
         if (loadedOnce)
         {
             return;
         }
         loadedOnce = true;
-
         var pData = XMLSerie.ReadXMLProgram();
 
         Settings.ISSoundOn = pData.SoundIsOn;
         Settings.ISMusicOn = pData.MusicIsOn;
-
         AudioCollector.SoundLevel = pData.SoundLevel;
         AudioCollector.MusicLevel = pData.MusicLevel;
+        Unit.Units = pData.Units;
+        _autoSaveFrec = pData.AutoSaveFrec;
+        //in case was deleted or somehting
+        if (_autoSaveFrec < 300)
+        {
+            _autoSaveFrec = 300;
+        }
+
+        QualitySettings.SetQualityLevel(pData.QualityLevel);
+        Screen.fullScreen = pData.isFullScreen;
+        Languages.SetCurrentLang(pData.Lang);
+        //in case was deleted or somehting
+        if (string.IsNullOrEmpty(Languages.CurrentLang()))
+        {
+            Languages.SetCurrentLang("English");
+        }
+
+        Debug.Log("Loading Settings");
+
     }
 
     /// <summary>
     /// Saves to file audio settings 
     /// </summary>
-    public static void SaveToFileAudioSettings()
+    public static void SaveToFile()
     {
         var pData = XMLSerie.ReadXMLProgram();
 
@@ -182,7 +158,18 @@ public class Settings
         pData.SoundLevel = AudioCollector.SoundLevel;
         pData.MusicLevel = AudioCollector.MusicLevel;
 
+        pData.Units = Unit.CurrentSystem();
+        pData.AutoSaveFrec = AutoSaveFrec;
+
+        //screen
+        pData.QualityLevel = QualitySettings.GetQualityLevel();
+        pData.isFullScreen = Screen.fullScreen;
+
+        pData.Lang = Languages.CurrentLang();
+
         XMLSerie.WriteXMLProgram(pData);
+        Debug.Log("Saving settings");
+
     }
 
     #endregion
@@ -336,8 +323,8 @@ public class Unit
         return VolFromMetricToImp(p);
     }
 
-    internal static string CurrentSystem()
+    internal static char CurrentSystem()
     {
-        return _units.ToString();
+        return _units;
     }
 }

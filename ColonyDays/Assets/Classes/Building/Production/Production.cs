@@ -98,8 +98,8 @@ public class Production  {
     //contains which products are needed in the input to generate 1 unit of the final product
     List<ProductInfo> _inputProducts = new List<ProductInfo>();
 
-    InputElement _eleWoodComb = new InputElement(P.Wood, 2);
-    InputElement _eleCoalComb = new InputElement(P.Coal, 1);
+    InputElement _eleWoodComb = new InputElement(P.Wood, 0.1f);
+    InputElement _eleCoalComb = new InputElement(P.Coal, 0.1f);
 
 
     void InputProdCheckAndAdd(ProductInfo pInfo)
@@ -326,7 +326,7 @@ public class Production  {
 
     private void Brick()
     {
-        InputElement element = new InputElement(P.Clay, 5);
+        InputElement element = new InputElement(P.Clay, 2);
         List<InputElement> prod = new List<InputElement>() { element, _eleWoodComb };
         List<InputElement> prod2 = new List<InputElement>() { element, _eleCoalComb };
         

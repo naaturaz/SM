@@ -10,6 +10,7 @@ public class MyForm : General
     private GameObject _startPosIni;
 
     private ShowPathToSea _showPathToSea;
+    private MiniHelper _miniHelper;
 
     public GameObject Canvas
     {
@@ -92,6 +93,7 @@ public class MyForm : General
 	    if (transform.name.Contains("MainGUI"))
 	    {
 	        _showPathToSea = new ShowPathToSea();
+	        _miniHelper = FindObjectOfType<MiniHelper>();
 	    }
     }
 
@@ -206,6 +208,14 @@ public class MyForm : General
     public void CenterCamToTown()
     {
         CamControl.CAMRTS.InputRts.CenterCam(true);
+    }  
+    
+    /// <summary>
+    /// Called by the Helper on Gui
+    /// </summary>
+    public void Helper()
+    {
+        _miniHelper.Show();
     }
 
 

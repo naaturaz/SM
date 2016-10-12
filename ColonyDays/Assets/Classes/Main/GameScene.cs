@@ -245,6 +245,7 @@ public class GameScene : General
 
 
         ProgramDataInit();
+
     }
 
    
@@ -720,7 +721,6 @@ public class GameScene : General
     /// </summary>
     void OnApplicationQuit()
     {
-      
 
         Debug.Log("Application ending after " + Time.time + " seconds");
 

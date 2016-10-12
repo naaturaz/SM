@@ -350,7 +350,7 @@ public class Body //: MonoBehaviour //: General
         var aniToEval = FindAnimationToEvalSpeed();
         if (aniToEval == "isCarry")
         {
-            _speed = UMath.GiveRandom(0.09f, 0.12f);
+            _speed = UMath.GiveRandom(0.09f, 0.12f);//.09   .12
         }
         else if (aniToEval == "isWheelBarrow")
         {
@@ -365,9 +365,37 @@ public class Body //: MonoBehaviour //: General
             _speed = UMath.GiveRandom(0.45f, 0.55f);
         }
         _speed = _speed*CorrectSpeedPeopleAge();
+        //_speed = CorrectSpeedByWeight(aniToEval);
         //bz the speed changes and then looks bad 
         ReCalculateWalkStep();
     }
+
+    private float CorrectSpeedByWeight(string aniToEval)
+    {
+        if (!Program.gameScene.GameFullyLoaded() || _person == null || _person.Body == null)
+        {
+            return _speed;
+        }
+
+        if (aniToEval == "isCarry" || aniToEval == "isWheelBarrow" 
+            || aniToEval == "isCartRide")
+        {
+            //ex 10kg
+            var much = _person.HowMuchICanCarry();
+            //ex 1kg
+            var carrying = _person.Inventory.ReturnAllAmountOnInv();
+            //ex 10
+            var factor = much/carrying;
+            //so if a perosn can carry 10kg and is carrying 1kg will add
+            //to speed 0.1f.
+            //if is carryig 5kg then will add 0.05f
+            //if is carrying 10kg then will add 0.01f
+            return _speed + (factor/much*100);
+        }
+        return _speed;
+    }
+
+
 
     /// <summary>
     /// Will correct speed based on age

@@ -162,7 +162,7 @@ class TownLoader
             
             //will check if the point is on terrain. Also manipulates '-50' the size of terrain and 
             //makes it a bit smaller so they town loaded is not right no the edge of terrain
-            var inTerrain = UTerra.IsOnTerrainManipulateTerrainSize(movedTown[i], -2);//-1
+            var inTerrain = UTerra.IsOnTerrainManipulateTerrainSize(movedTown[i], -1.2f);//-1
 
             //so all fall into the same region 
             var regionThisIndex = MeshController.CrystalManager1.ReturnMyRegion(movedTown[i]);

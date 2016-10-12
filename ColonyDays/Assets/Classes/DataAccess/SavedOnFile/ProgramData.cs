@@ -23,4 +23,9 @@ public class ProgramData
 
     public float SoundLevel;
     public float MusicLevel;
+    public char Units;
+    public int AutoSaveFrec;
+    public int QualityLevel;
+    public bool isFullScreen;
+    public string Lang;
 }

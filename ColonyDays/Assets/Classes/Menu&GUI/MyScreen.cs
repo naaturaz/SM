@@ -73,7 +73,7 @@ public class MyScreen : General
 
     public void Start()
     {
-        Settings.LoadFromFileAudioSettings();
+        Settings.LoadFromFile();
 
 
         //so is used only 1st time 

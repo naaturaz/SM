@@ -10,7 +10,6 @@ public class Rotate : MonoBehaviour
 
     private float finalSpeed;
 
-    private static bool speedChangedNow;
 
 	// Use this for initialization
 	void Start ()
@@ -25,11 +24,10 @@ public class Rotate : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-	    if (speedChangedNow)
-	    {
-	        speedChangedNow = false;
-            Start();
-	    }
+        if (CareAboutGameSpeed)
+        {
+            finalSpeed = speed * Program.gameScene.GameSpeed;
+        }
 
 	    if (onX)
 	    {
@@ -47,6 +45,6 @@ public class Rotate : MonoBehaviour
 
     public static void SpeedChanged()
     {
-        speedChangedNow = true;
+
     }
 }

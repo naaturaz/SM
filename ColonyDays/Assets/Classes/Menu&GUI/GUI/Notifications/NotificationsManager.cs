@@ -22,7 +22,7 @@ public class NotificationsManager
     private bool _reputation;
     private bool _stillNeedInit;
 
-
+    private MainNotificationGO _mainNotificationGo;
 
     public NotificationsManager()
     {
@@ -38,6 +38,7 @@ public class NotificationsManager
         }
         _stillNeedInit = false;
         FindEnds(BuildingPot.Control.DockManager1.PirateThreat, out _lowPirate10, out _highPirate10);
+
     }
 
     private void FindEnds(float val, out float low, out float high)
@@ -92,4 +93,20 @@ public class NotificationsManager
         Program.MouseListener.NotificationWindow.Notify(which);
     }
 
+    public void MainNotify(string which)
+    {
+        if (_mainNotificationGo == null)
+        {
+            _mainNotificationGo = GameObject.FindObjectOfType<MainNotificationGO>();
+        }
+
+        _mainNotificationGo.Show(which);
+    }
+
+
+    internal void HideMainNotify()
+    {
+        _mainNotificationGo.Hide();
+
+    }
 }
