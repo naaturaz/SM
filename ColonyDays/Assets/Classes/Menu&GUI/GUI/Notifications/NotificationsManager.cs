@@ -106,6 +106,10 @@ public class NotificationsManager
 
     internal void HideMainNotify()
     {
+        if (_mainNotificationGo == null)
+        {
+            _mainNotificationGo = GameObject.FindObjectOfType<MainNotificationGO>();
+        }
         _mainNotificationGo.Hide();
 
     }

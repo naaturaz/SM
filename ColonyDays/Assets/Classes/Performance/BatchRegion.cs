@@ -140,6 +140,12 @@ public class BatchRegion
         }
         else if (go.Category == Ca.Spawn)
         {
+            if (go.HType == H.Tree)
+            {
+                //Debug.Log("Return tree");
+                return;
+            }
+
             //find all subGameObjects and add
             FindAllChildObjectsAndAddThem(go);
         }

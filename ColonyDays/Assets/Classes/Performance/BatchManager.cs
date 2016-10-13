@@ -94,8 +94,23 @@ public class BatchManager
         if (go.Category == Ca.Spawn)
         {
             //Debug.Log("added:"+go.MyId);
+            //if (go.HType == H.Tree)
+            //{
+            //    //Debug.Log("Return tree");
+            //    return;
+            //}
 
             var i = MeshController.CrystalManager1.ReturnMyRegion(U2D.FromV3ToV2(go.transform.position));
+
+            if (!_semiIndeces.ContainsKey(i))
+            {
+                //destroy and remove GO
+                Debug.Log("go out:" + go.MyId);
+
+                return;
+            }
+
+
             var id = _semiIndeces[i];
             _batchRegions[id].AddToRegion(go);
         }

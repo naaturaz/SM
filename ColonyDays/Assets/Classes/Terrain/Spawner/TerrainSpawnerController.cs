@@ -20,8 +20,8 @@ public class TerrainSpawnerController : ControllerParent
     int howManyStonesToSpawn =3;//3
     int howManyIronToSpawn = 3;//3
     int howManyGoldToSpawn = 3;//3
-    int howManyOrnaToSpawn = 40;//30    50      20
-    int howManyGrassToSpawn = 10;//40
+    int howManyOrnaToSpawn = 30;//30    50      20
+    int howManyGrassToSpawn = 20;//40
     //the ones spawn in the marine bounds 
     int howManyMarineBoundsToSpawn = 0;//
     int howManyMountainBoundsToSpawn = 0;//
@@ -33,10 +33,11 @@ public class TerrainSpawnerController : ControllerParent
 
     private List<string> allTrees = new List<string>()
     {
-        Root.palm1, Root.palm2,
-        Root.palm3, Root.palm4, Root.palm5, Root.palm6, 
-        Root.palm10  ,Root.palm11  ,
-        Root.palm20, Root.palm21, Root.palm22, Root.palm23,
+        //Root.palm1, Root.palm2,
+        //Root.palm3, Root.palm4, Root.palm5, Root.palm6, 
+        //Root.palm10  ,Root.palm11  ,
+        Root.palm20, Root.palm21, 
+        Root.palm22, Root.palm23,
 
     };
 
@@ -145,7 +146,7 @@ public class TerrainSpawnerController : ControllerParent
         //CreateTreePool();
 
 #if UNITY_EDITOR
-        multiplier = 2;//2
+        multiplier = 8;//2
         howManyGrassToSpawn = 2;//40
 #endif
         AddTreesToTreesRoots();
@@ -165,9 +166,9 @@ public class TerrainSpawnerController : ControllerParent
 
         };
 
-        float minHeightAboveSeaLevel = 1.2f;//1
+        float minHeightAboveSeaLevel = 1.2f;//1.2
         minHeightToSpawn = Program.gameScene.WaterBody.transform.position.y + minHeightAboveSeaLevel;
-        maxHeightToSpawn = minHeightToSpawn + 7.9f;//6.9
+        maxHeightToSpawn = minHeightToSpawn + 6.9f;//6.9
 
     }
 
@@ -205,7 +206,7 @@ public class TerrainSpawnerController : ControllerParent
     
     private void AddTreesToTreesRoots()
     {
-        for (int i = 1; i < 8+1; i++)
+        for (int i = 1; i < 4+1; i++)
         {
             allTrees.Add("Prefab/Terrain/Spawner/Tree" + i);
         }
