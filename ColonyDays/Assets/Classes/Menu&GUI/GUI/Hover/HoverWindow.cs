@@ -62,6 +62,7 @@ public class HoverWindow : MonoBehaviour
 
     public void Show(Vector3 pos, string key)
     {
+        AudioCollector.PlayOneShot("ClickWoodSubtle", 0);
         _key = key;
         _msg = Languages.ReturnString(key + ".HoverSmall");
         _rectTransform.position = pos;
@@ -80,6 +81,8 @@ public class HoverWindow : MonoBehaviour
     /// <param name="msg"></param>
     public void ShowMsg(Vector3 pos, string msg)
     {
+        AudioCollector.PlayOneShot("ClickWoodSubtle", 0);
+
         _key = "";
         _msg = Languages.ReturnString(msg);
         _rectTransform.position = pos;

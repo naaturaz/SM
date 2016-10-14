@@ -166,9 +166,9 @@ public class TerrainSpawnerController : ControllerParent
 
         };
 
-        float minHeightAboveSeaLevel = 1.2f;//1.2
+        float minHeightAboveSeaLevel = 1.5f;//1.2
         minHeightToSpawn = Program.gameScene.WaterBody.transform.position.y + minHeightAboveSeaLevel;
-        maxHeightToSpawn = minHeightToSpawn + 6.9f;//6.9
+        maxHeightToSpawn = minHeightToSpawn + 5.9f;//6.9
 
     }
 

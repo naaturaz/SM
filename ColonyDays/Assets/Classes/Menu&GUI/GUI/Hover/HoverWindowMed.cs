@@ -49,6 +49,8 @@ class HoverWindowMed : MonoBehaviour
     }
     public void Show(Vector3 pos, string key)
     {
+        AudioCollector.PlayOneShot("ClickWoodSubtle", 0);
+
         _key = key;
         _msg = Languages.ReturnString(key + ".HoverMed");
         _rectTransform.position = pos;

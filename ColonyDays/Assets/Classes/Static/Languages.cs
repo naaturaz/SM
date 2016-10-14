@@ -145,6 +145,10 @@ public class Languages
 	   { "MoreSpeed.HoverSmall", "More Speed"},
 	   { "LessSpeed.HoverSmall", "Less Speed"},
 	   { "ShowNoti.HoverSmall", "Notifications"},
+	   { "Menu.HoverSmall", "Main Menu"},
+	   { "QuickSave.HoverSmall", "Quick Save"},
+	   { "Bug Report.HoverSmall", "Report a bug"},
+	   { "Feedback.HoverSmall", "Feedback"},
 
        //down bar
 	   { "Infrastructure.HoverSmall", "Infrastructure"},

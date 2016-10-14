@@ -66,6 +66,7 @@ public class AudioCollector
         {"ClickWood1", ""},
         {"ClickWood4", ""},
         {"ClickWood7", ""},
+        {"ClickWoodSubtle", ""},
     };
 
 
