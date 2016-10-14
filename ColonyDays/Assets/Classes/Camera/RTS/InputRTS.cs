@@ -81,6 +81,7 @@ public class InputRTS : GenericCameraComponent
         {
             if (Input.GetKeyUp(item.saveKeyC))
             {
+                InputReport.Add("SaveCamPos:" +item.saveKeyC);
                 SaveCamPos(item.saveKeyC, TransformCam.position, TransformCam.rotation);
             }
         }
@@ -88,6 +89,8 @@ public class InputRTS : GenericCameraComponent
         {
             if (Input.GetKeyUp(item.loadKeyC))
             {
+                InputReport.Add("LoadCamPos:" + item.saveKeyC);
+
                 LoadCamPos(item.loadKeyC);
             }
         }
@@ -218,7 +221,7 @@ public class InputRTS : GenericCameraComponent
 
         if (yes && !isFollowingPersonNow)
         {
-            //CenterCamTo(GameObject.Find("Barn1").gameObject.transform);
+            InputReport.Add("CenterCam to 1st Building");
             CenterCamTo(BuildingPot.Control.Registro.AllBuilding.ElementAt(0).Value.transform);
         }
     }

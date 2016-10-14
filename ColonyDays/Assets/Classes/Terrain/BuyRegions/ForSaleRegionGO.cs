@@ -41,7 +41,7 @@ public class ForSaleRegionGO : General
         obj.Index = index;
         obj.Region = region;
 
-        if (container != null) { obj.transform.parent = container; }
+        if (container != null) { obj.transform.SetParent( container); }
         return obj;
     }
 

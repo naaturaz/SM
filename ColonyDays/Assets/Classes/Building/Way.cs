@@ -180,7 +180,7 @@ public class Way : Building
         obj.MaxStepsWay = maxStepsWay;
 
         obj.ClosestSubMeshVert = origen;
-        if (container != null) { obj.transform.parent = container; }
+        if (container != null) { obj.transform.SetParent( container); }
         obj.MaterialKey = materialKey;
 
         obj.IsLoadingFromFile = isLoadingFromFile;

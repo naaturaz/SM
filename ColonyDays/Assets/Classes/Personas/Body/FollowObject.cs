@@ -24,7 +24,7 @@ public class FollowObject : General
         obj.transform.name = obj.MyId = obj.Rename(obj.transform.name, obj.Id, obj.HType) + " own:"+owner ;
         obj.ToFollow = toFollow;
 
-        if (container != null) { obj.transform.parent = container; }
+        if (container != null) { obj.transform.SetParent( container); }
         return obj;
     }
 

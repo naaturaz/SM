@@ -326,7 +326,7 @@ public class Realtor
         for (int i = 0; i < curFamily.Kids.Count; i++)
         {
             var kid = Family.FindPerson(curFamily.Kids[i]);
-            kid.transform.parent = newHome.transform;
+            kid.transform.SetParent( newHome.transform);
 
             var temp = kid.MyId;
             newFam.AddKids(temp);

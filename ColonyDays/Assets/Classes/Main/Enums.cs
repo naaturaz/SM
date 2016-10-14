@@ -237,7 +237,11 @@ public enum H
     AnimalFarmSmall, AnimalFarmMed, AnimalFarmLarge, AnimalFarmXLarge,
     FieldFarmSmall, FieldFarmMed, FieldFarmLarge, FieldFarmXLarge,
     //raw F4
-    Clay, Ceramic, Fishing_Hut, FishRegular, Mine, MountainMine, Resin, LumberMill, BlackSmith, SaltMine,
+    Clay, Ceramic, Fishing_Hut, FishRegular, 
+    //Mine, 
+    MountainMine, 
+    //Resin, 
+    LumberMill, BlackSmith, SaltMine,
     //prod F5
     Brick, Carpintery, Cigars, Mill, Tailor,
     //Tilery, 
@@ -443,7 +447,11 @@ public enum StFarm
 public enum StRaw //for structures game structure.cs 
 {
     //Raw
-    Clay, Ceramic, Fishing_Hut, Mine, MountainMine, Resin, LumberMill, BlackSmith, SaltMine
+    Clay, Ceramic, Fishing_Hut, 
+    //Mine, 
+    MountainMine, 
+    //Resin, 
+    LumberMill, BlackSmith, SaltMine
 }
 
 public enum StProd //for structures game structure.cs 

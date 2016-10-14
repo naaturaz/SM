@@ -246,7 +246,7 @@ public class StructureParent : Building {
 
         obj.ClosestSubMeshVert = origen;
         if (name != "") { obj.name = name; }
-        if (container != null) { obj.transform.parent = container; }
+        if (container != null) { obj.transform.SetParent( container); }
 
         if (materialKey == "")
         { materialKey = hType + "." + Ma.matBuildBase; }
@@ -290,7 +290,8 @@ public class StructureParent : Building {
         UpdateBuild();
 
         //the bridges parts are called Units... u dont want planes on those...
-        if (!HType.ToString().Contains("Unit") && Category != Ca.Shore && HType != H.MountainMine)
+        if (!HType.ToString().Contains("Unit") && Category != Ca.Shore && HType != H.MountainMine
+            )
         {
             CreateBasePlane();
         }
@@ -306,7 +307,8 @@ public class StructureParent : Building {
     protected void ShowWheel(bool show)
     {
         
-        if (HType == H.Mill || HType == H.Mine)
+        if (HType == H.Mill //|| HType == H.Mine
+            )
         {
             GameObject wheel = GetChildLastWordIs(H.Wheel);
             if (wheel == null) { throw new Exception("Obj doenst have obj attached called |...Wheel|");}
@@ -319,7 +321,8 @@ public class StructureParent : Building {
 
     protected void ToggleWheelRotate()
     {
-        if (HType == H.Mill || HType == H.Mine)
+        if (HType == H.Mill// || HType == H.Mine
+            )
         {
             rotateWheel = !rotateWheel;
         }

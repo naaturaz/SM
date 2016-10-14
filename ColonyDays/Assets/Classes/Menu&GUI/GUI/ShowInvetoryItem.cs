@@ -106,7 +106,7 @@ public class ShowInvetoryItem : GUIElement
         obj = (ShowInvetoryItem)Resources.Load(root, typeof(ShowInvetoryItem));
         obj = (ShowInvetoryItem)Instantiate(obj, new Vector3(), Quaternion.identity);
 
-        obj.transform.parent = container;
+        obj.transform.SetParent( container);
         obj.transform.localPosition = iniPos;
 
         obj.Parent = parent;

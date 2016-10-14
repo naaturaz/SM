@@ -27,6 +27,8 @@ class MiniHelper : GUIElement
 
     void Start()
     {
+        //the helper btn
+        var helper = FindGameObjectInHierarchy("Helper", ReturnMainGUI().gameObject);
         _iniPos = transform.position;
 
         var childText = GetChildCalled("Text");
@@ -35,6 +37,20 @@ class MiniHelper : GUIElement
         _rectTransform = transform.GetComponent<RectTransform>();
 
         Hide();
+    }
+
+    MyForm ReturnMainGUI()
+    {
+        var forms = FindObjectsOfType<MyForm>();
+
+        for (int i = 0; i < forms.Count(); i++)
+        {
+            if (forms[i].name.Contains("GUI"))
+            {
+                return forms[i];
+            }
+        }
+        return null;
     }
 
     public void Hide()

@@ -24,7 +24,7 @@ public class Beef : Animal
 
         obj = (Beef)Instantiate(obj, iniPos, Quaternion.identity);
         obj.Geometry.GetComponent<Renderer>().sharedMaterial = Resources.Load(Root.beefMat1) as Material;
-        obj.gameObject.transform.parent = spawner.transform;
+        obj.gameObject.transform.SetParent(spawner.transform);
         obj.Spawner = spawner;
 
         return obj;

@@ -31,7 +31,7 @@ public class Selection : General {
         obj = (Selection)Resources.Load(root, typeof(Selection));
         obj = (Selection)Instantiate(obj, origen, Quaternion.identity);
         if (name != "") { obj.name = name; }
-        if (container != null) { obj.transform.parent = container; }
+        if (container != null) { obj.transform.SetParent( container); }
         obj.IndexAllVertex = indexAllVertex;
         return obj;
     }

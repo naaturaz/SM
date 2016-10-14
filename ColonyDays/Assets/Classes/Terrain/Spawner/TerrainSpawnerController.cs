@@ -146,7 +146,7 @@ public class TerrainSpawnerController : ControllerParent
         //CreateTreePool();
 
 #if UNITY_EDITOR
-        multiplier = 8;//2
+        multiplier = 2;//2
         howManyGrassToSpawn = 2;//40
 #endif
         AddTreesToTreesRoots();

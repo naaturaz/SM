@@ -17,7 +17,7 @@ public class GenericCameraComponent : MonoBehaviour {
 
         if (classContainer != null)
         {
-            obj.transform.parent = classContainer;
+            obj.transform.SetParent( classContainer);
         }
 
         return obj;

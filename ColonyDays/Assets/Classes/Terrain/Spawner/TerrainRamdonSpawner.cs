@@ -63,7 +63,7 @@ public class TerrainRamdonSpawner : General {
 
         obj = (TerrainRamdonSpawner)Instantiate(obj, origen, Quaternion.identity);
         if (name != "") { obj.name = name; }
-        if (container != null){obj.transform.parent = container;}
+        if (container != null){obj.transform.SetParent( container);}
         obj.IndexAllVertex = indexAllVertex;
         obj.HType = hType;
         obj.Category = obj.DefineCategory(hType);

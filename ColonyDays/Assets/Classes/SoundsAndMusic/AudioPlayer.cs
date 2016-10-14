@@ -289,9 +289,9 @@ public class AudioPlayer  {
 
         if (container == null)
         {
-            temp.transform.parent = mainCam.transform.GetComponent<Camera>().transform;
+            temp.transform.SetParent( mainCam.transform.GetComponent<Camera>().transform);
         }
-        else temp.transform.parent = container;
+        else temp.transform.SetParent( container);
 
         return temp;
     }

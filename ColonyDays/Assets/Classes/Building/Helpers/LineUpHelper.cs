@@ -30,7 +30,7 @@ public class LineUpHelper : General
 
         obj.EarthPosition = origen;
 
-        if (container != null) { obj.transform.parent = container; }
+        if (container != null) { obj.transform.SetParent(container); }
         return obj;
     }
 

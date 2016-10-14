@@ -685,9 +685,9 @@ public class Root : MonoBehaviour
         buildsRoot.Add(H.Ceramic, "Prefab/Building/Raw/Ceramic");
         buildsRoot.Add(H.Fishing_Hut, "Prefab/Building/Raw/FishSmall");
         buildsRoot.Add(H.FishRegular, "Prefab/Building/Raw/FishRegular");
-        buildsRoot.Add(H.Mine, "Prefab/Building/Raw/Mine");
+        //buildsRoot.Add(H.Mine, "Prefab/Building/Raw/Mine");
         buildsRoot.Add(H.MountainMine, "Prefab/Building/Raw/MountainMine");
-        buildsRoot.Add(H.Resin, "Prefab/Building/Raw/Resin");
+        //buildsRoot.Add(H.Resin, "Prefab/Building/Raw/Resin");
         buildsRoot.Add(H.LumberMill, "Prefab/Building/Raw/Wood");
         buildsRoot.Add(H.BlackSmith, "Prefab/Building/Raw/BlackSmith");
         buildsRoot.Add(H.SaltMine, "Prefab/Building/Raw/SaltMine");

@@ -91,8 +91,8 @@ public class DeltaRouter
         var a1Help = UVisHelp.CreateHelpers(_a, Root.yellowCube);
         var b1Help = UVisHelp.CreateHelpers(_b, Root.yellowCube);
 
-        a1Help.transform.parent = midHelp.transform;
-        b1Help.transform.parent = midHelp.transform;
+        a1Help.transform.SetParent( midHelp.transform);
+        b1Help.transform.SetParent( midHelp.transform);
         midHelp.transform.Rotate(0, 90, 0);
 
         _a1 = a1Help.transform.position;

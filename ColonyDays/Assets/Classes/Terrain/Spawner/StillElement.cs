@@ -25,6 +25,9 @@ public class StillElement : TerrainRamdonSpawner
 
     List<Vector3> _anchors = new List<Vector3>();
 
+    private GameObject _billBoardGO;
+    private List<GameObject> _collObjects = new List<GameObject>();//for palms 
+
     public List<Vector3> Anchors
     {
         get { return _anchors; }
@@ -52,6 +55,19 @@ public class StillElement : TerrainRamdonSpawner
     // Use this for initialization
 	protected void Start ()
 	{
+	    _billBoardGO = GetChildThatContains("Billboard", gameObject);
+
+        //only will be used for palms 
+        for (int i = 0; i < 4; i++)
+        {
+            var gO = GetChildThatContains("Object" + i, gameObject);
+            if (gO!= null)
+            {
+                //wont be null if a palm
+                _collObjects.Add(gO);
+            }
+        }
+
 	    StartCoroutine("TenSecUpdate");
 
         //is a decora object 
@@ -168,10 +184,28 @@ public class StillElement : TerrainRamdonSpawner
 
     public void CutDownTree()
     {
+
         _myAnimator.SetBool("isTreeIdle", false);
         _myAnimator.SetBool("isTreeFall", true);
 
+
+        Destroy(_billBoardGO);
+
+        //for palms
+        for (int i = 0; i < _collObjects.Count; i++)
+        {
+            Destroy(_collObjects[i]);
+        }
+
+        var rig = gameObject.GetComponent<Rigidbody>();
+        if (rig != null)
+        {
+            Destroy(rig);
+            //gameObject.GetComponent<Rigidbody>().detectCollisions = false;
+        }
+
         AudioCollector.PlayOneShot("FallingTree", transform.position);
+
     }
 
     public void GetTreeBackToStandTree()

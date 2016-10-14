@@ -191,7 +191,7 @@ public class Decoration  {
             //will make all subs child of '_spwnedObj'
             for (int j = 0; j < subs.Length; j++)
             {
-                subs[j].transform.parent = _spwnedObj.transform;
+                subs[j].transform.SetParent(_spwnedObj.transform);
             }
             //bz they are useless. I got the subObjects already
             spwnObj.Destroy();

@@ -69,7 +69,7 @@ public class AudioContainer: MonoBehaviour
         obj.Root1 = root;
         obj.NewLevel = newLevel;
 
-        if (container != null) { obj.transform.parent = container; }
+        if (container != null) { obj.transform.SetParent( container); }
         return obj;
     }
 
@@ -82,6 +82,7 @@ public class AudioContainer: MonoBehaviour
 
         if (IsAmbience())
         {
+            _audioSource.loop = true;
             return;
         }
         

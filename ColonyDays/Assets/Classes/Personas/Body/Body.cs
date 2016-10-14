@@ -231,12 +231,12 @@ public class Body //: MonoBehaviour //: General
     void UnparentPerson()
     {
         savedParenTransform = _person.transform.parent;
-        _person.transform.parent = null;
+        _person.transform.SetParent( null);
     }
 
     void ParentBack()
     {
-        _person.transform.parent = savedParenTransform;
+        _person.transform.SetParent( savedParenTransform);
         savedParenTransform = null;
     }
 

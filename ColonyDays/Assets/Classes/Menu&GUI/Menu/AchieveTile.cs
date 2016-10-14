@@ -105,7 +105,7 @@ public class AchieveTile : GUIElement
         var localScale = obj.transform.localScale;
 
         obj.transform.position = iniPos;
-        obj.transform.parent = container;
+        obj.transform.SetParent( container);
 
         obj.transform.localScale = localScale;
         obj.Achievement = achievement;

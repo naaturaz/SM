@@ -229,7 +229,7 @@ public class Structure : StructureParent
 
         _arrow = Create(Root.arrow, new Vector3());
         _arrow.transform.Rotate(0, RotationFacerIndex*90, 0);
-        _arrow.transform.parent = b.CurrentSpawnBuild.transform;
+        _arrow.transform.SetParent( b.CurrentSpawnBuild.transform);
         
         if (Bounds.Count > 0)
         {

@@ -61,7 +61,7 @@ public class MajorityAgeReached  {
     private void PersonReachMajorityAgeAction()
     {
         _moveToNewHome.AddToHomeOldKeysList();
-        _person.transform.parent = null;
+        _person.transform.SetParent( null);
         _person.Home = null;
 
        //Debug.Log(_person.MyId + " reached majority");

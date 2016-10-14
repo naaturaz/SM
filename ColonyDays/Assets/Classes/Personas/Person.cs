@@ -1225,7 +1225,7 @@ public class Person : General
             return;
         }
         _wasPersonParented = true;
-        transform.parent = Home.transform;
+        transform.SetParent( Home.transform);
     }
 
 
@@ -2061,7 +2061,7 @@ public class Person : General
         newBorn.IsBooked = "";
         
         //will be addressed on Body.Update 
-        //newBorn.transform.parent = Home.transform;
+        //newBorn.transform.SetParent( Home.transform;
         
         newBorn.Home = Home;
         newBorn.Brain.SetNewHouseFound();
@@ -2343,7 +2343,7 @@ public class Person : General
         Body.GoingTo = HPers.None;
 
         Home = homeIsGoingBackTo as Structure;
-        transform.parent = Home.transform;
+        transform.SetParent( Home.transform);
         
         IsMajor = false;
         Brain.MajorAge.RollBackMoajority();

@@ -96,8 +96,8 @@ public class CamRTSController : CamControl
             helpCam360MainY = General.Create(Root.yellowSphereHelp_ZeroAlpha, main, "helpCam360MainY");
             helpCam360GrabPosY = General.Create(Root.yellowSphereHelp_ZeroAlpha, transform.position, "helpCam360GrabPosY");
             helpCam360BalanceY = General.Create(Root.yellowSphereHelp_ZeroAlpha, main + difference, "helpCam360BalanceY");
-            helpCam360GrabPosY.transform.parent = helpCam360MainY.transform;
-            helpCam360BalanceY.transform.parent = helpCam360MainY.transform;
+            helpCam360GrabPosY.transform.SetParent( helpCam360MainY.transform);
+            helpCam360BalanceY.transform.SetParent( helpCam360MainY.transform);
         }
     }
 
@@ -145,7 +145,7 @@ public class CamRTSController : CamControl
         CreateTargetAndUpdate();
         FindGuideChildObjs(centerTarget.transform);//if giving u a null exp here in new terrain is bz new terrain is not
         //l;ayer 8
-        transform.parent = centerTarget.transform;
+        transform.SetParent( centerTarget.transform);
 
 
         miniMapRTS = (MiniMapRTS)MiniMapRTS.CreateCamComponent(Root.miniMapRTS, transform, classContainer: transform);
@@ -227,12 +227,12 @@ public class CamRTSController : CamControl
     {
         if (!wasYAligned)
         {
-            transform.parent = null;
+            transform.SetParent( null);
             float newYPos = initialCamPos.y + hitFront.point.y;
             transform.position =new Vector3(0, newYPos, 0);
             CreateTargetAndUpdate();//so the hitFront updates
             centerTarget.transform.position = hitFront.point;
-            transform.parent = centerTarget.transform;
+            transform.SetParent( centerTarget.transform);
             wasYAligned = true;
         }
     }
@@ -363,7 +363,7 @@ public class CamRTSController : CamControl
         //if is realeased
         else if (Input.GetMouseButtonUp(2) && !InputRTS.isFollowingPersonNow)
         {
-            //transform.parent = null;
+            //transform.SetParent( null;
             CleanUpRotHelp();
             IsMouseMiddle = false;
             //Cursor.visible = true;

@@ -250,8 +250,8 @@ public class Production  {
     {
         ProductInfo productInfo = new ProductInfo(P.RandomMineOutput, null, H.MountainMine);
         productInfo.AddRandomOutput(new ElementWeight(P.Ore, 2));
-        productInfo.AddRandomOutput(new ElementWeight(P.Coal, 1));
-        productInfo.AddRandomOutput(new ElementWeight(P.Stone, 1));
+        //productInfo.AddRandomOutput(new ElementWeight(P.Coal, 1));
+        productInfo.AddRandomOutput(new ElementWeight(P.Stone, 2));
 
         InputProdCheckAndAdd(productInfo);
     }

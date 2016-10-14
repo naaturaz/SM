@@ -51,7 +51,7 @@ class DialogGO : GUIElement
         var localScale = obj.transform.localScale;
 
         obj.transform.position = iniPos;
-        obj.transform.parent = container;
+        obj.transform.SetParent( container);
 
         obj.transform.localScale = localScale;
         obj.Type1 = type;

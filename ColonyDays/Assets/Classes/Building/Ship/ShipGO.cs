@@ -32,7 +32,7 @@ public class ShipGO : General {
         obj.Building1 = building;
         obj.Ship1 = ship;
 
-        obj.transform.parent = building.transform;
+        obj.transform.SetParent( building.transform);
         obj.MyId = myID;
 
         return obj;

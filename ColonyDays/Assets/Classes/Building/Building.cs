@@ -180,7 +180,7 @@ public class Building : General, Iinfo
 
         obj.ClosestSubMeshVert = origen;
         if (name != "") { obj.name = name; }
-        if (container != null){obj.transform.parent = container;}
+        if (container != null){obj.transform.SetParent(container);}
 
         if (materialKey == "")
         {materialKey = hType + "." + Ma.matBuildBase;}
@@ -3163,7 +3163,7 @@ public class Building : General, Iinfo
 
         //newP.IsBooked = false;
         AssignBookedRole(newP, toBeFill, familyID);
-        newP.transform.parent = transform;
+        newP.transform.SetParent(transform);
 
         //so families are resaved 
         BuildingPot.Control.Registro.ResaveOnRegistro(MyId);

@@ -232,7 +232,7 @@ public class Languages
                     "button to show the closest path to the sea"},
        { "Region", "Region: You need to own a region to be able to build on it. Click on the For Sale sign in the" +
                    " middle of each region to buy it"},
-       { "PeopleRange", "The circle around each building marks the range of it"},
+       { "PeopleRange", "The huge blue circle around each building marks the range of it"},
 
 	};
 

@@ -23,7 +23,7 @@ public class MeshBatch
 
         for (int i = 0; i < array.Length; i++)
         {
-            array[i].transform.parent = batchmaster.transform;
+            array[i].transform.SetParent( batchmaster.transform);
         }
 
         CombineMeshes(batchmaster.gameObject, array[0].GetComponent<Renderer>().material);
@@ -39,7 +39,7 @@ public class MeshBatch
 
         for (int i = 0; i < array.Length; i++)
         {
-            array[i].transform.parent = batchmaster.transform;
+            array[i].transform.SetParent( batchmaster.transform);
         }
 
         CombineMeshes(batchmaster.gameObject, array[0].GetComponent<Renderer>().material);

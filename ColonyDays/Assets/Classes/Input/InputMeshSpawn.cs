@@ -25,8 +25,8 @@ public class InputMeshSpawn : InputParent {
     // Update is called once per frame
     void Update()
     {
-        CuttingSwitch();
-        Cutter();
+        //CuttingSwitch();
+        //Cutter();
     }
 
     #region Mesh Controller

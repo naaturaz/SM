@@ -99,10 +99,10 @@ public class Book : General
         Build.Add(new BuildStat(H.Ceramic, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.Fishing_Hut, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.FishRegular, 400, 15, 5, 25, 5, maxPeople: 5));
-        Build.Add(new BuildStat(H.Mine, 400, 15, 5, 25, 5, maxPeople: 5));
+        //Build.Add(new BuildStat(H.Mine, 400, 15, 5, 25, 5, maxPeople: 5));
 
         Build.Add(new BuildStat(H.MountainMine, 400, 15, 5, 25, 5, maxPeople: 5));
-        Build.Add(new BuildStat(H.Resin, 400, 15, 5, 25, 5, maxPeople: 5));
+        //Build.Add(new BuildStat(H.Resin, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.LumberMill, 400, 30, 5, 0, 1, maxPeople: 5));
         Build.Add(new BuildStat(H.BlackSmith, 400, 15, 5, 25, 5, maxPeople: 5));
 

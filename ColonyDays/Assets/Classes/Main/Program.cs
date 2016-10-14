@@ -91,10 +91,12 @@ public class Program : MonoBehaviour {
         MyScreen1.Start();
         MouseListener.Start();
 
+        ManagerReport.Start();
 	}
 
     private void OnApplicationQuit()
     {
+        ManagerReport.FinishAllReports();
         Settings.SaveToFile();
     }
 
@@ -114,6 +116,7 @@ public class Program : MonoBehaviour {
     {
         MouseListener.Update();
         MyScreen1.Update();
+        ManagerReport.Update();
     }
     #endregion
 
@@ -121,11 +124,13 @@ public class Program : MonoBehaviour {
     public void MouseClickListener(string type)
     {
         _mouseListener.DetectMouseClick(type);
+        InputReport.Add(type);
     }
 
     public static void MouseClickListenerSt(string type)
     {
         _mouseListener.DetectMouseClick(type);
+        InputReport.Add(type);
     }
 
     public static void KillGame()
@@ -134,6 +139,8 @@ public class Program : MonoBehaviour {
         {
             PersonPot.Control.ClearAll();
         }
+
+        ManagerReport.FinishAllReports("NewMap");
 
         ClassContainer.Destroy();
         BuildsContainer.Destroy();

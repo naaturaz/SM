@@ -100,7 +100,7 @@ public class BatchRegion
             _all[index].SetActive(true);
             ActivateAllChildsObj(_all[index]);
             //asign it back to original gamebject
-            _all[index].transform.parent = go.transform;
+            _all[index].transform.SetParent( go.transform);
             _totalVertices -= ReturnVertices(_all[index], myID + "(not sure if Id Correct)");
             _all[index] = null;
             _keymap.Remove(key);
@@ -175,7 +175,7 @@ public class BatchRegion
             //if is a roof will take it back 
             if (subs[i].name.Contains("Guano"))
             {
-                subs[i].transform.parent = mainGen.transform;
+                subs[i].transform.SetParent( mainGen.transform);
             }
         }
     }
@@ -219,7 +219,7 @@ public class BatchRegion
                 if (child[i].transform.parent == _batchMaster.transform)
                 {
                     //so doesnt get wiped when destoryed 
-                    child[i].transform.parent = null; 
+                    child[i].transform.SetParent( null); 
                 }
             }
 
@@ -281,7 +281,7 @@ public class BatchRegion
             nullCt = 0;
             _all[i].SetActive(true);//in case this is now redoing a Region
             ActivateAllChildsObj(_all[i]);
-            _all[i].transform.parent = _batchMaster.transform;
+            _all[i].transform.SetParent( _batchMaster.transform);
         }
         CombineMeshes(_batchMaster.gameObject, ReturnProperMaterial());
     }

@@ -86,7 +86,7 @@ public class NotificationTile : GUIElement
         var localScale = obj.transform.localScale;
 
         obj.transform.position = iniPos;
-        obj.transform.parent = container;
+        obj.transform.SetParent( container);
 
         obj.transform.localScale = localScale;
         obj.Notification1 = notification;

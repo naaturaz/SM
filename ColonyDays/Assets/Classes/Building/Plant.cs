@@ -100,7 +100,7 @@ public class Plant : MonoBehaviour
         obj = (Plant)Resources.Load(root, typeof(Plant));
         obj = (Plant)Instantiate(obj, origen, Quaternion.identity);
 
-        obj.transform.parent = container.transform;
+        obj.transform.SetParent( container.transform);
         obj.ObjInit(container, fieldFarm, type);
         return obj;
     }

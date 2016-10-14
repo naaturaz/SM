@@ -22,7 +22,7 @@ public class StaticBatch
         // parent the array under batchmaster
         for(int i = 0; i< array_gameobjects.Length;i++)
         {
-            array_gameobjects[i].transform.parent = batchmaster.transform;
+            array_gameobjects[i].transform.SetParent( batchmaster.transform);
         }
  
         StaticBatchingUtility.Combine (array_gameobjects, batchmaster);

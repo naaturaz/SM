@@ -126,7 +126,7 @@ public class PersonController : PersonPot
 
         obj.Difficulty = difficultyP;
 
-        if (container != null) { obj.transform.parent = container; }
+        if (container != null) { obj.transform.SetParent( container); }
         return obj;
     }
 

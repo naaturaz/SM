@@ -190,7 +190,7 @@ public class Family
     void AssignNewKidToThisFamily(Person newP)
     {
         AddKids(newP.MyId);
-        newP.transform.parent = BuildingPot.Control.Registro.AllBuilding[_home].transform;
+        newP.transform.SetParent( BuildingPot.Control.Registro.AllBuilding[_home].transform);
 
         if (string.IsNullOrEmpty(newP.FamilyId) && !string.IsNullOrEmpty(FamilyId))
         {
@@ -240,7 +240,7 @@ public class Family
             _mother = adult.MyId;
         }
 
-        adult.transform.parent = BuildingPot.Control.Registro.AllBuilding[_home].transform;
+        adult.transform.SetParent( BuildingPot.Control.Registro.AllBuilding[_home].transform);
         adult.FamilyId = FamilyId;    
         //Debug.Log(adult.MyId + " 1st adult inscribed on " + FamilyId + " as " + debug);
     }
@@ -293,7 +293,7 @@ public class Family
             Mother = newPerson.MyId;
         }
 
-        newPerson.transform.parent = BuildingPot.Control.Registro.AllBuilding[_home].transform;
+        newPerson.transform.SetParent( BuildingPot.Control.Registro.AllBuilding[_home].transform);
         newPerson.FamilyId = FamilyId;
         
     }
@@ -317,7 +317,7 @@ public class Family
         if (_mother == "") { _mother = newPerson.MyId; }
         else if (_father == "") { _father = newPerson.MyId; }
 
-        newPerson.transform.parent = BuildingPot.Control.Registro.AllBuilding[_home].transform;
+        newPerson.transform.SetParent( BuildingPot.Control.Registro.AllBuilding[_home].transform);
         newPerson.FamilyId = FamilyId;
     }
 
@@ -369,7 +369,7 @@ public class Family
 
         if (WasDatingGood(newPerson) || AreTheyMarriedAlready(newPerson))
         {
-            //newPerson.transform.parent = BuildingPot.Control.Registro.AllBuilding[_home].transform;
+            //newPerson.transform.SetParent( BuildingPot.Control.Registro.AllBuilding[_home].transform;
             //newPerson.FamilyId = FamilyId;
             //newPerson.Home = BuildingPot.Control.Registro.AllBuilding[_home] as Structure;
 
@@ -412,7 +412,7 @@ public class Family
 
         adult.FamilyId = FamilyId;
 
-        adult.transform.parent = BuildingPot.Control.Registro.AllBuilding[_home].transform;
+        adult.transform.SetParent( BuildingPot.Control.Registro.AllBuilding[_home].transform);
         //Debug.Log(adult.MyId + " inscribed on " + FamilyId +" as " + momOrDad);
     }
 

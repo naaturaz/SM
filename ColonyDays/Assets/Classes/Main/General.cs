@@ -201,7 +201,7 @@ public class General : MonoBehaviour
         obj.HType = hType;
         obj.transform.name = obj._myId = obj.Rename(obj.transform.name, obj.Id, obj.HType, name);
 	    
-	    if (container != null){obj.transform.parent = container;}
+	    if (container != null){obj.transform.SetParent( container);}
 		return obj;
 	}
  

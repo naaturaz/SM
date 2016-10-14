@@ -52,7 +52,7 @@ public class OrderShow : GUIElement
         obj = (OrderShow)Instantiate(obj, new Vector3(), Quaternion.identity);
         
 
-        obj.transform.parent = container; 
+        obj.transform.SetParent( container); 
 
         return obj;
     }
