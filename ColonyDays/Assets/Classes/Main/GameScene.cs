@@ -712,7 +712,7 @@ public class GameScene : General
         }
         else
         {
-            return ":)";
+            return "Wait Loading";
         }
     }
 

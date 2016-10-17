@@ -50,7 +50,7 @@ public class AudioPlayer  {
 
         //var root = Application.dataPath + "/Resources/Prefab/Audio/Sound/";
         
-        Debug.Log("appData path: " + Application.dataPath);
+        //Debug.Log("appData path: " + Application.dataPath);
         
         
         var root = "C:/GitHub/SM/ColonyDays/Assets/Resources/Prefab/Audio/Sound/";
@@ -87,7 +87,7 @@ public class AudioPlayer  {
 
     static List<string> GetFilesInEditor(string root)
     {
-        Debug.Log("sound root:" + root);
+        //Debug.Log("sound root:" + root);
         var waves = Directory.GetFiles(root, "*.wav").ToList();
         return waves;
     }

@@ -26,6 +26,12 @@ public class ManagerReport
 
     public static void FinishAllReports()
     {
+        //avoiding if was closed game even before loaded a map 
+        if (!Program.gameScene.GameFullyLoaded())
+        {
+            return;
+        }
+
         InputReport.FinishReport();
         FPSReport.FinishReport();
         FinalReport.FinishReport();

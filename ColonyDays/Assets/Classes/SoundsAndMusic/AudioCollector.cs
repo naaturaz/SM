@@ -395,6 +395,10 @@ public class AudioCollector
     }
 
 
+
+
+#region Person Voice
+
     public static void PlayPersonVoice(Person p)
     {
         if (p.Gender == H.Male)
@@ -407,23 +411,26 @@ public class AudioCollector
 
     }
 
+
+    static List<string> info = new List<string>();
+    private static int infoIndex;
     static void PlayPerson(string typeOfPerson)
     {
         //the root is determined by the languages and the type of person
         //English/Man/ is an ex
         var buildRoot = "Prefab/Audio/Sound/" + Languages.CurrentLang() + "/" + typeOfPerson + "/";
 
-        DirectoryInfo dir = new DirectoryInfo("Assets/Resources/" + buildRoot);
-        var info = dir.GetFiles("*.wav").ToList();
-        info.AddRange(dir.GetFiles("*.mp3"));
+        InitInfoList(typeOfPerson);
 
-        var key = info[Random.Range(0, info.Count)].Name;
-        key = key.Substring(0, key.Length - 4);
+        var key = info[Random.Range(0, info.Count)];
+        key = key.Substring(infoIndex, key.Length - (4 + infoIndex));
 
+        //Debug.Log("Key: " + key);
+        //Debug.Log("buildRoot: " + buildRoot);
 
         if (!_audioContainers.ContainsKey(key))
         {
-            var audioConta = AudioContainer.Create(key, buildRoot + key, 0,
+            var audioConta = AudioContainer.Create(key, key, 0,
             container: AudioPlayer.SoundsCointaner.transform);
             _audioContainers.Add(key, audioConta);
             _languages.Add(key, buildRoot + key);
@@ -433,4 +440,60 @@ public class AudioCollector
             _audioContainers[key].PlayAShot(0);
         }
     }
+
+    /// <summary>
+    /// Be aware if new sounds were added to a Language it needs
+    /// to be run at least once in EDITOR b4 works in Standalone.
+    /// So in editor play the game and click a person so it talks 
+    /// </summary>
+    /// <param name="typeOfPerson"></param>
+    static void InitInfoList(string typeOfPerson)
+    {
+        if (info.Count > 0)
+        {
+            return;
+        }
+
+        infoIndex = 0;
+
+#if UNITY_EDITOR
+        info = GetFilesInEditor(typeOfPerson);
+        SaveOnProgramData(info);
+#endif
+#if UNITY_STANDALONE
+        info = GetFilesInStandAlone(typeOfPerson);
+        infoIndex = 17;//bz needs to remove 'Assets/Resources/'
+#endif
+    }
+
+    private static void SaveOnProgramData(List<string> waves)
+    {
+        var pData = XMLSerie.ReadXMLProgram();
+        pData.Voices = waves;
+        XMLSerie.WriteXMLProgram(pData);
+    }
+
+    static List<string> GetFilesInStandAlone(string typeOfPerson)
+    {
+        var pData = XMLSerie.ReadXMLProgram();
+
+        //needs to contain the current lang and the type of person
+        var res = pData.Voices.Where(a => a.Contains(Languages.CurrentLang()) &&
+            a.Contains(typeOfPerson)).ToList();
+
+        return res;
+    }
+
+    static List<string> GetFilesInEditor(string typeOfPerson)
+    {
+        var root = "Assets/Resources/Prefab/Audio/Sound/" + Languages.CurrentLang() + "/"
+            + typeOfPerson + "/";
+
+        //Debug.Log("sound root:" + root);
+        var waves = Directory.GetFiles(root, "*.wav").ToList();
+        return waves;
+    }
+
+#endregion
+
 }

@@ -28,4 +28,6 @@ public class ProgramData
     public int QualityLevel;
     public bool isFullScreen;
     public string Lang;
+
+    public List<string> Voices { get; set; }
 }

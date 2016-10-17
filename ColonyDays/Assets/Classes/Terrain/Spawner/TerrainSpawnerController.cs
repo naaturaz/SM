@@ -146,7 +146,7 @@ public class TerrainSpawnerController : ControllerParent
         //CreateTreePool();
 
 #if UNITY_EDITOR
-        multiplier = 2;//2
+        multiplier = 16;//2
         howManyGrassToSpawn = 2;//40
 #endif
         AddTreesToTreesRoots();
@@ -166,9 +166,9 @@ public class TerrainSpawnerController : ControllerParent
 
         };
 
-        float minHeightAboveSeaLevel = 1.5f;//1.2
+        float minHeightAboveSeaLevel = 1.4f;//1.2
         minHeightToSpawn = Program.gameScene.WaterBody.transform.position.y + minHeightAboveSeaLevel;
-        maxHeightToSpawn = minHeightToSpawn + 5.9f;//6.9
+        maxHeightToSpawn = minHeightToSpawn + 2.4f;//6.9
 
     }
 
@@ -344,15 +344,14 @@ public class TerrainSpawnerController : ControllerParent
                         !usedVertexPos[index] && !isOnTheStartZone && !regionContainTerraCry)
                     {
                         Vector3 finaPos = ReturnIniPosOfSpawn(typePass, AllVertexs[index], 0);
-
                         CreateObjAndAddToMainList(typePass, finaPos, rootToSpawnIndex, index);
                     }
                     else
                     {
                         //todo fix
-                        ////showing rejected positions 
-                        //UVisHelp.CreateText(AllVertexs[index], index+"");
-                        //Debug.Log("terra: " + index + "." + isOnTheStartZone + "." + regionContainTerraCry+ "." +
+                        //showing rejected positions 
+                        //UVisHelp.CreateText(AllVertexs[index], index + "");
+                        //Debug.Log("terra: " + index + "." + isOnTheStartZone + "." + regionContainTerraCry + "." +
                         //    isHasMinHeight + "." + isLowerThanMaxHeight + "." + !usedVertexPos[index]);
                         i--;
                     }
@@ -737,7 +736,7 @@ public class TerrainSpawnerController : ControllerParent
     /// Will throw new Exception("Cant be use if MeshController.AllVertexs.Count == 0");
     /// </summary>
     /// <param name="howFar">How far will go</param>
-    public static Vector3 AssignRandomIniPosition(Vector3 origin = new Vector3(), float howFar = 1)
+    Vector3 AssignRandomIniPosition(Vector3 origin = new Vector3(), float howFar = 1)
     {
         if (origin == new Vector3())
         {
@@ -756,18 +755,20 @@ public class TerrainSpawnerController : ControllerParent
         }
         //will add one unit to how far so can move further
         //doesnt matter that is positive bz in ReturnRandomPos goes in the range of the same number negative and positive
-        howFar += .1f;
+        howFar += .1f;//.1f
 
         //to check if the poly ard it is free of obstacles 
-        var polyToCheck = UPoly.CreatePolyFromVector3(origin, 1f, 1f);
+        var polyToCheck = UPoly.CreatePolyFromVector3(origin, 1f, 1f);//1, 1
 
-        if (MeshController.CrystalManager1.IntersectAnyLine(polyToCheck, origin) || !IsOnTerrain(origin))
+        if (MeshController.CrystalManager1.IntersectAnyLine(polyToCheck, origin) || !IsOnTerrain(origin)
+            || !ComplyWithTerraRules(origin))
         {
             secCount++;
             if (secCount > 1000)
             {
                 throw new Exception("Infinite loop terraSpawContrl");
             }
+            //UVisHelp.CreateText(origin, "R" + "");
             origin = AssignRandomIniPosition(origin, howFar);
         }
 
@@ -775,6 +776,19 @@ public class TerrainSpawnerController : ControllerParent
         secCount = 0;
         return origin;
     }
+
+    bool ComplyWithTerraRules(Vector3 toEval)
+    {
+        bool isOnTheStartZone = UMesh.Contains(toEval, voidNWCorner, voidSECorner);
+        bool regionContainTerraCry =
+            MeshController.CrystalManager1.DoesMyRegionHasTerraCrystal(toEval);
+
+        bool isHasMinHeight = toEval.y > minHeightToSpawn;
+        bool isLowerThanMaxHeight = toEval.y < maxHeightToSpawn;
+
+        return !isOnTheStartZone && !regionContainTerraCry && isHasMinHeight && isLowerThanMaxHeight;
+    }
+
 
     private static Vector3 ReturnIniPos()
     {
