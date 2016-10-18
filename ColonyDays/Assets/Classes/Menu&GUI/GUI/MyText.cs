@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -64,7 +65,6 @@ public class MyText : MonoBehaviour
             thisText.text =  Unit.WeightConverted(amt).ToString("N0") + " " +
                 Unit.WeightUnit();
         }
-
         if (name == "Happy")
         {
             thisText.text = PersonPot.Control.OverAllHappiness();
@@ -82,9 +82,11 @@ public class MyText : MonoBehaviour
         if (name == "Dollars")
         {
             thisText.text = Program.gameScene.GameController1.Dollars.ToString("C0");
+        }   
+        if (name == "Lazy")
+        {
+            thisText.text = PersonPot.Control.All.Count(a => a.Work==null && a.IsMajor)+"";
         }
-
-      
     }
 
 
@@ -95,7 +97,7 @@ public class MyText : MonoBehaviour
     {
         reMapCount++;
 
-        if (reMapCount > 60)
+        if (reMapCount > 180)//60
         {
             reMapCount = 0;
             Map();

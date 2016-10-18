@@ -7,23 +7,29 @@ using UnityEngine;
 
 public class FinalReport
 {
+    public static string Separator = "  |  ";
+
     public static void FinishReport(string addName = "")
     {
-        Dialog.CreateFile(addName + "Input", CreateFinalReportNow());
+        Dialog.CreateFile(addName + "Final", CreateFinalReportNow());
     }
 
     private static string CreateFinalReportNow()
     {
-        return "People: " + PersonPot.Control.All.Count + "\n" +
-               "Emigrate: " + PersonPot.Control.EmigrateController1.Emigrates.Count + "\n" +
+        return "People: " + PersonPot.Control.All.Count + Separator +
+               "Emigrate: " + PersonPot.Control.EmigrateController1.Emigrates.Count + Separator +
                "Food: " + GameController.ResumenInventory1.ReturnAmountOnCategory(PCat.Food) + " kg \n" +
-               "Happy: " + PersonPot.Control.OverAllHappiness() + "\n" +
-               "PortRep: " + BuildingPot.Control.DockManager1.PortReputation.ToString("F1") + "\n" +
-               "PirateThr: " + BuildingPot.Control.DockManager1.PirateThreat.ToString("F1") + "\n" +
-               "Dollar: " + Program.gameScene.GameController1.Dollars.ToString("C0") + "\n" +
-               "Buildings: " + BuildingPot.Control.Registro.AllBuilding.Count + "\n" +
+               "Happy: " + PersonPot.Control.OverAllHappiness() + Separator +
+               "PortRep: " + BuildingPot.Control.DockManager1.PortReputation.ToString("F1") + Separator +
+               "PirateThr: " + BuildingPot.Control.DockManager1.PirateThreat.ToString("F1") + Separator +
+               "Dollar: " + Program.gameScene.GameController1.Dollars.ToString("C0") + Separator +
+               "Buildings: " + BuildingPot.Control.Registro.AllBuilding.Count + Separator +
+               "List of Buildings: " + BuildingPot.Control.Registro.StringOfAllBuildings() + Separator +
 
-               "Time: " + Time.time + "\n";
+               "Time Sec: " + Time.time + Separator +
+               "Time Min: " + Time.time/60 + Separator;
+
+
             
     }
 }

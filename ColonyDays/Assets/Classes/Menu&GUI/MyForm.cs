@@ -9,7 +9,7 @@ public class MyForm : General
 
     private GameObject _startPosIni;
 
-    private ShowPathToSea _showPathToSea;
+    private ShowPathTo _showPathToSea;
     private MiniHelper _miniHelper;
 
     public GameObject Canvas
@@ -92,7 +92,7 @@ public class MyForm : General
         //is the main gui 
 	    if (transform.name.Contains("MainGUI"))
 	    {
-	        _showPathToSea = new ShowPathToSea();
+	        _showPathToSea = new ShowPathTo();
 	        _miniHelper = FindObjectOfType<MiniHelper>();
 	    }
     }

@@ -11,13 +11,13 @@ public class InputReport
 
     public static void Add(string add)
     {
-        _report += add + "\n";
+        _report += add + FinalReport.Separator;
         _counter++;
     }
 
     public static void FinishReport(string addName = "")
     {
-        Add("TTL Inputs: "+_counter+"");
+        Add(FinalReport.Separator + "TTL Inputs: "+_counter+"");
         Dialog.CreateFile(addName+"Input", _report);
     }
 }

@@ -163,7 +163,7 @@ public class Structure : StructureParent
         {
             float howBigTheCollidingSphere = 5f;
 
-            if (MyId.Contains("Med"))
+            if (MyId.Contains("Med") || HType == H.BlackSmith)
             {
                 howBigTheCollidingSphere = 8;
             }

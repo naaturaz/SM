@@ -219,7 +219,7 @@ public class General : MonoBehaviour
             res = Ca.DraggableSquare;
         }
         else if (hTypeP == H.Dock || hTypeP == H.Shipyard || hTypeP == H.Supplier
-            || hTypeP == H.Fishing_Hut || hTypeP == H.FishRegular
+            || hTypeP == H.FishingHut 
             || hTypeP == H.SaltMine)
         {
             res = Ca.Shore;

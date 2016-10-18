@@ -230,7 +230,7 @@ public class Production  {
     {
 
 
-        InputProdCheckAndAdd(new ProductInfo(P.Fish, null, new List<H>() { H.Fishing_Hut, H.FishRegular }));
+        InputProdCheckAndAdd(new ProductInfo(P.Fish, null, new List<H>() { H.FishingHut,  }));
 
 
         //animal farms

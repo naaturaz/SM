@@ -58,8 +58,7 @@ public class UnlockBuilds
             //raw
             new BRequires(H.Clay, true),
             new BRequires(H.Ceramic, true),
-            new BRequires(H.Fishing_Hut, true),
-            new BRequires(H.FishRegular, true),
+            new BRequires(H.FishingHut, true),
             //new BRequires(H.Mine, true),
             new BRequires(H.MountainMine, true),
             //new BRequires(H.Resin, true),
@@ -91,13 +90,13 @@ public class UnlockBuilds
             new BRequires(H.SteelFoundry, 100, 500, 900, priorBuilds: new List<H>(){H.Foundry}),
 
             //trade
-            //new BRequires(H.Dock, 50, 500, 900, priorBuilds: new List<H>(){H.Shipyard}),
-            //new BRequires(H.Shipyard, 50, 500, 500, priorBuilds: new List<H>(){H.Supplier}),
-            //new BRequires(H.Supplier, 50, 500, 1000, priorBuilds: new List<H>(){H.LightHouse}),
+            new BRequires(H.Dock, 50, 500, 900, priorBuilds: new List<H>(){H.Shipyard}),
+            new BRequires(H.Shipyard, 50, 500, 500, priorBuilds: new List<H>(){H.Supplier}),
+            new BRequires(H.Supplier, 50, 500, 1000, priorBuilds: new List<H>(){H.LightHouse}),
 
-            new BRequires(H.Dock, true),
-            new BRequires(H.Shipyard, true),
-            new BRequires(H.Supplier, true),
+            //new BRequires(H.Dock, true),
+            //new BRequires(H.Shipyard, true),
+            //new BRequires(H.Supplier, true),
 
             new BRequires(H.StorageSmall, true),
             new BRequires(H.StorageMed, 50, 500, 900, priorBuilds: new List<H>(){H.StorageSmall}),
@@ -291,6 +290,11 @@ class BRequires
         if (!IsAHouseBelowCapMax())
         {
             CurrentState = H.Max_Cap_Reach;
+        }
+
+        if (Developer.IsDev)
+        {
+            CurrentState = H.Unlock;
         }
     }
 

@@ -1272,7 +1272,7 @@ public class Building : General, Iinfo
 
     #region Create For Double Bound Strucutres Such as Maritimes and UnderTerra
 
-    List<H> doubleBounds = new List<H>(){H.FishRegular, H.Fishing_Hut, 
+    List<H> doubleBounds = new List<H>(){H.FishingHut, 
         H.Dock, H.Shipyard, H.Supplier,
         H.MountainMine, H.SaltMine};
     private GameObject _maritimeBound;

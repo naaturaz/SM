@@ -2,7 +2,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PersonWindow : GUIElement {
+public class PersonWindow : GUIElement
+{
 
     private Text _title;
     private Text _info;
@@ -80,7 +81,7 @@ public class PersonWindow : GUIElement {
 
     private void LoadMenu()
     {
-        if (_person==null)
+        if (_person == null)
         {
             return;
         }
@@ -111,7 +112,7 @@ public class PersonWindow : GUIElement {
                      + "\n Happinness: " + _person.Happinnes
                      + "\n Years Of School: " + _person.YearsOfSchool
                      + "\n Age majority reach: " + _person.IsMajor;
-                     
+
 
         if (_person.Home != null)
         {
@@ -172,7 +173,7 @@ public class PersonWindow : GUIElement {
         }
         else
         {
-            res += "\n ProfessionReady: prof is null" ;
+            res += "\n ProfessionReady: prof is null";
         }
 
 
@@ -193,7 +194,7 @@ public class PersonWindow : GUIElement {
         //means is showing 
         if (Vector3.Distance(transform.position, iniPos) < 0.1f)
         {
-            if (updCount>6)
+            if (updCount > 6)
             {
                 updCount = 0;
                 LoadMenu();
@@ -221,15 +222,28 @@ public class PersonWindow : GUIElement {
         {
             _inv.text = BuildStringInv(_person);
         }
+
+      
     }
 
     public override void Hide()
     {
         base.Hide();
 
-        if (_person!=null)
+        if (_person != null)
         {
             _person.UnselectPerson();
         }
     }
+
+    /// <summary>
+    /// Called from GUI
+    /// </summary>
+    /// <param name="which"></param>
+    public void ShowPath(string which)
+    {
+        _person.ToggleShowPath(which);
+    }
+
+
 }

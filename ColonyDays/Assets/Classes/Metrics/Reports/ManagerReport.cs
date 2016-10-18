@@ -19,7 +19,7 @@ public class ManagerReport
         //every 60sec
         if (Time.time > _lastFPS + 60f)
         {
-            FPSReport.Add(HUDFPS.FPS()+"");
+            FPSReport.Add(HUDFPS.FPS().ToString("n0"));
             _lastFPS = Time.time;
         }
     }

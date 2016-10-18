@@ -10,6 +10,11 @@ internal class GOLookAt: General
     private bool _isShownNow;
     private Quaternion _targetRot;
     private Quaternion _oldRot;
+
+
+    public GameObject PrevGO { get; set; }
+    public GameObject NextGO { get; set; }
+
     void Start()
     {
         Hide();
@@ -20,6 +25,13 @@ internal class GOLookAt: General
         if (_isShownNow)
         {
             transform.rotation = Quaternion.Lerp(transform.rotation, _targetRot, 0.1f);
+
+            if (PrevGO != null)
+            {
+                //the middle average point btw ur next and previos link object in the chain
+                var movingTo = (PrevGO.transform.position+NextGO.transform.position)/2;
+                transform.position = Vector3.MoveTowards(transform.position, movingTo, .1f);
+            }
         }
     }
 
@@ -49,6 +61,7 @@ internal class GOLookAt: General
         Geometry.SetActive(true);
         _isShownNow = true;
     }
+
 
 
 }

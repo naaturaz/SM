@@ -352,7 +352,9 @@ public class BuildingWindow : GUIElement {
             //others
             else
             {
-                res += "\nWorkers:" + _building.PeopleDict.Count + "\n";
+                res += "\n  " + ReturnAvailablePositions() + "\n";
+                
+                res += "Workers:" + _building.PeopleDict.Count + "\n";
                 for (int i = 0; i < _building.PeopleDict.Count; i++)
                 {
                     res += "\n " + Family.RemovePersonIDNumberOff(_building.PeopleDict[i]);
@@ -391,7 +393,18 @@ public class BuildingWindow : GUIElement {
                + DebugInfo()
 #endif
             ;
+    }
 
+    string ReturnAvailablePositions()
+    {
+        var res = "Available positions:";
+        var availPos = Book.GiveMeStat(_building.HType).MaxPeople - _building.PeopleDict.Count;
+
+        if (availPos < 0)
+        {
+            availPos = 0;
+        }
+        return res + " " + availPos;
     }
 
     /// <summary>

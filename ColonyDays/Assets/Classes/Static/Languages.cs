@@ -53,7 +53,7 @@ public class Languages
        //Raw
 	   { "Clay.Desc","In this building a worker will produce Clay, raw material needed for bricks and more"},
 	   { "Ceramic.Desc","In this building a worker will produce Ceramic products, such as dishes, jars, etc"},
-	   { H.Fishing_Hut + ".Desc","In this building a worker will catch fishes on a waterbody"},
+	   { H.FishingHut + ".Desc","In this building a worker will catch fishes on a waterbody"},
 	   { "FishRegular.Desc","In this building a worker will catch fishes on a waterbody"},
 	   { "Mine.Desc","In this building a worker will catch fishes on a waterbody"},
 	   { "MountainMine.Desc","In this building a worker will mine the mine and will produce always a random output"},
@@ -136,6 +136,7 @@ public class Languages
        //Small Tooltips 
 	   { "Person.HoverSmall", "People"},
 	   { "Emigrate.HoverSmall", "Emigrated"},
+	   { "Lazy.HoverSmall", "Unemployed people"},
 	   { "Food.HoverSmall", "Food"},
 	   { "Happy.HoverSmall", "Happiness"},
 	   { "PortReputation.HoverSmall", "Port Reputation"},
@@ -192,6 +193,17 @@ public class Languages
 	   { "Current_Salary.HoverMed", "Workers will work in the place that pays the highest salary." +
 	                                " If 2 places pay the same salary, then the closest to home will be the one" +
 	                                " they will choose."},
+	   { "PirateThreat.HoverMed", "This is how aware are the pirates of your port. This increases as" +
+	                              "you have more money. If this reaches over 90 you will lose the game"},
+
+	   { "PortReputation.HoverMed", "The more people know about your port the more they will visit it." +
+	                                "If you want to increase this make sure you always have some orders" +
+	                                "on the port, supplier and shipyard"},
+	   { "Emigrate.HoverMed", "When people are unhappy for a few years they jusy leave. The bad" +
+	                          "is that they wont combeack, wont produce and wont have kids." +
+	                          "The only good thing is that they increase the 'Port Reputation'"},
+	   { "Food.HoverMed", "The more variety of foods a person has in their houses the happier they" +
+	                      "will be."},
 
 
        //Notifications
@@ -286,7 +298,7 @@ public class Languages
 	   { "Clay.Desc","Aqui se produce barro, necesaria para construir ladrillos y otros productos mas"},
 
 	   { "Ceramic.Desc","Aqui se producen productos de ceramica como platos, jarras, etc"},
-	   { H.Fishing_Hut + ".Desc","Aqui se pescan peces"},
+	   { H.FishingHut + ".Desc","Aqui se pescan peces"},
 	   { "FishRegular.Desc","Aqui se pescan peces"},
 	   { "Mine.Desc","Esta es una mina"},
 	   { "MountainMine.Desc","Esta es una mina"},

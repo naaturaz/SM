@@ -16,6 +16,10 @@ class MiniHelper : GUIElement
         "SeaPath",
         "PeopleRange",
         "Region",
+        "PirateThreat.HoverMed",
+        "PortReputation.HoverMed",
+        "Emigrate.HoverMed",
+        "Food.HoverMed",
     };
 
     //which is being shown now 

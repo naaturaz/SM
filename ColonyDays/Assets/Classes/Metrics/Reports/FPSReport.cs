@@ -10,13 +10,13 @@ public class FPSReport
 
     public static void Add(string add)
     {
-        _report += add + "\n";
+        _report += add + FinalReport.Separator;
         _counter++;
     }
 
     public static void FinishReport(string addName = "")
     {
-        Add("TTL FPS: " + _counter + "");
+        Add(FinalReport.Separator + "TTL FPS: " + _counter + "");
         Dialog.CreateFile(addName + "FPS", _report);
     }
 }

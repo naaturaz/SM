@@ -737,4 +737,14 @@ public class Registro : MonoBehaviour
         }
         return sum/AllBuilding.Count;
     }
+
+    internal string StringOfAllBuildings()
+    {
+        string res = "...";
+        for (int i = 0; i < AllBuilding.Count; i++)
+        {
+            res += AllBuilding.ElementAt(i).Value.MyId+".";
+        }
+        return res+"...";
+    }
 }

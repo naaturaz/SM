@@ -237,9 +237,10 @@ public enum H
     AnimalFarmSmall, AnimalFarmMed, AnimalFarmLarge, AnimalFarmXLarge,
     FieldFarmSmall, FieldFarmMed, FieldFarmLarge, FieldFarmXLarge,
     //raw F4
-    Clay, Ceramic, Fishing_Hut, FishRegular, 
+    Clay, Ceramic, FishingHut,
+    //FishRegular, 
     //Mine, 
-    MountainMine, 
+    MountainMine,
     //Resin, 
     LumberMill, BlackSmith, SaltMine,
     //prod F5
@@ -402,6 +403,7 @@ public enum H
     Mountain,
     OnATrip,
     AtFarm,
+    Home,
 
 
 }
@@ -447,7 +449,7 @@ public enum StFarm
 public enum StRaw //for structures game structure.cs 
 {
     //Raw
-    Clay, Ceramic, Fishing_Hut, 
+    Clay, Ceramic, FishingHut, 
     //Mine, 
     MountainMine, 
     //Resin, 
@@ -575,6 +577,11 @@ public enum Tile//for roads
     NSW, NSE, NS,
     NWE, SWE, WE,
     NSWE
+}
+
+public enum G//for General Random stuff
+{
+    Home, Sea,
 }
 
 public static class Enums { }

@@ -115,7 +115,7 @@ public class HoverWindow : MonoBehaviour
 
         //after 3 seconds of being show
         //if key = "" is a simple msg with out key
-	    if (Time.time > showedAt + .2 && !string.IsNullOrEmpty(_key))
+	    if (Time.time > showedAt + .7 && !string.IsNullOrEmpty(_key))
 	    {
 	        SpawnMedHover();
 	    }

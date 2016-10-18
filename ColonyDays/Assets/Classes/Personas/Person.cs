@@ -169,7 +169,7 @@ public class Person : General
             _startingBuild = value;
         }
     }
-    
+
     public List<General> DebugList
     {
         get { return _debugList; }
@@ -322,9 +322,9 @@ public class Person : General
         get { return _familyId; }
         set
         {
-            if (Home!=null && _familyId.Contains(Home.MyId) && !value.Contains(Home.MyId))
+            if (Home != null && _familyId.Contains(Home.MyId) && !value.Contains(Home.MyId))
             {
-//               //Debug.Log(MyId + " Changing from:" + _familyId + " to:" + value + " while on:" + Home.MyId);
+                //               //Debug.Log(MyId + " Changing from:" + _familyId + " to:" + value + " while on:" + Home.MyId);
             }
 
             _familyId = value;
@@ -352,11 +352,11 @@ public class Person : General
 
         if (PersonController.GenderLast == H.Male)
         {
-            obj = (Person) Resources.Load(Root.personaFeMale1, typeof (Person));
+            obj = (Person)Resources.Load(Root.personaFeMale1, typeof(Person));
         }
         else if (PersonController.GenderLast == H.Female)
         {
-            obj = (Person) Resources.Load(Root.personaMale1, typeof (Person));
+            obj = (Person)Resources.Load(Root.personaMale1, typeof(Person));
         }
 
         //better like 17/29. since if they are less than 16 and have not parent is not addressed
@@ -373,7 +373,7 @@ public class Person : General
 
         obj.HType = H.Person;
         obj.Gender = obj.OtherGender();
-        obj.InitObj(iniAge); 
+        obj.InitObj(iniAge);
         obj.Geometry.GetComponent<Renderer>().sharedMaterial = ReturnRandoPersonMaterialRoot();
 
         //this to when Person dont have where to leave and then they find a place the teletranport effect
@@ -400,15 +400,15 @@ public class Person : General
 
         if (pF._gender == H.Male)
         {
-            obj = (Person) Resources.Load(Root.personaMale1, typeof (Person));
+            obj = (Person)Resources.Load(Root.personaMale1, typeof(Person));
         }
         else if (pF._gender == H.Female)
         {
-            obj = (Person) Resources.Load(Root.personaFeMale1, typeof (Person));
+            obj = (Person)Resources.Load(Root.personaFeMale1, typeof(Person));
         }
 
         SMe me = new SMe();
-        obj = (Person) Instantiate(obj, me.IniTerr.MathCenter, Quaternion.identity);
+        obj = (Person)Instantiate(obj, me.IniTerr.MathCenter, Quaternion.identity);
 
         obj.IsLoading = true;
         obj.InitLoadedPerson(pF);
@@ -444,11 +444,11 @@ public class Person : General
 
         if (PersonController.GenderLast == H.Male)
         {
-            obj = (Person) Resources.Load(Root.personaFeMale1, typeof (Person));
+            obj = (Person)Resources.Load(Root.personaFeMale1, typeof(Person));
         }
         else if (PersonController.GenderLast == H.Female)
         {
-            obj = (Person) Resources.Load(Root.personaMale1, typeof (Person));
+            obj = (Person)Resources.Load(Root.personaMale1, typeof(Person));
         }
 
         obj = (Person)Instantiate(obj, iniPos, Quaternion.identity);
@@ -566,7 +566,7 @@ public class Person : General
     public void RedoBrain(List<string> blackList)
     {
         Brain = new Brain(this, blackList);
-        
+
         PersonPot.Control.RestartControllerForPerson(MyId);
     }
 
@@ -648,12 +648,12 @@ public class Person : General
             origin = ReturnRandomPos(originalPoint, howFar);
         }
         //will add one unit to how far so can move further
-        howFar+=0.1f;
+        howFar += 0.1f;
 
         if (MeshController.CrystalManager1.IntersectAnyLine(ReturnIniPos(), origin) || !IsOnTerrain(origin))
         {
             secCount++;
-            if (secCount>1000)
+            if (secCount > 1000)
             {
                 throw new Exception("Infinite loop");
             }
@@ -730,12 +730,12 @@ public class Person : General
 
         //UnityEngine.Debug.Log("dist:"+Mathf.Abs(terrCenter.y - hit));
 
-        if (Mathf.Abs(terrCenter.y - hit) < 0.1f )
+        if (Mathf.Abs(terrCenter.y - hit) < 0.1f)
         {
             return true;
         }
-        
-        return  false;
+
+        return false;
     }
 
     #endregion
@@ -832,7 +832,7 @@ public class Person : General
 
         Program.MouseListener.MStatsAndAchievements.CheckOnManualAchievements(years: Age);
 
-        if (ProfessionProp!=null)
+        if (ProfessionProp != null)
         {
             //so it relecfts new age 
             ProfessionProp.ProdXShift = 0;
@@ -848,7 +848,7 @@ public class Person : General
 
     private void AddHappyForVarietyOfFoods()
     {
-        if (Home==null)
+        if (Home == null)
         {
             return;
         }
@@ -862,7 +862,7 @@ public class Person : General
     /// </summary>
     private void CheckIfInSchool()
     {
-        if (Work!=null && Work.HType.ToString().Contains("School") && !UPerson.IsMajor(Age))
+        if (Work != null && Work.HType.ToString().Contains("School") && !UPerson.IsMajor(Age))
         {
             YearsOfSchool++;
         }
@@ -875,7 +875,7 @@ public class Person : General
     {
         _age++;
         Body.GrowScaleByYears();
-        
+
 #if UNITY_EDITOR
         //Debug.Log("Name trans");
         NameTransform();//so it reflects the new Age
@@ -948,7 +948,7 @@ public class Person : General
     void PeopleDictMatters(Building newPlace)
     {
         //dont need to remove if new place is same as current home 
-        if (Home!= null && newPlace == Home)
+        if (Home != null && newPlace == Home)
         {
             return;
         }
@@ -976,9 +976,9 @@ public class Person : General
         for (int i = 0; i < buildings.Count; i++)
         {
             if ((buildings[i].BookedHome1 == null || buildings[i].BookedHome1.MySpouseBooked(Spouse) ||
-                !buildings[i].BookedHome1.IsBooked()) 
+                !buildings[i].BookedHome1.IsBooked())
                 &&
-                buildings[i].WouldAdultFitInThisHouseInAFamily(this, ref familyID) 
+                buildings[i].WouldAdultFitInThisHouseInAFamily(this, ref familyID)
                 && !Brain.BlackList.Contains(buildings[i].MyId))
             {
                 return buildings[i];
@@ -1009,7 +1009,7 @@ public class Person : General
             else
             {
                 FindMeInAllFamiliesAndRemoveMeFromMine();
-                throw new Exception("family null:"+MyId);
+                throw new Exception("family null:" + MyId);
             }
 
             Brain.MoveToNewHome.OldHomeKey = "";//so he doesnt pull that family as its old family when creating Shack or moving to new home 
@@ -1029,7 +1029,7 @@ public class Person : General
         var fams = BuildingPot.Control.Registro.AllFamilies();
         var myFam = fams.Find(a => a.Kids.Contains(MyId) || a.Father == MyId || a.Mother == MyId);
 
-        if (myFam!=null)
+        if (myFam != null)
         {
             myFam.RemovePersonFromFamily(this);
             return myFam;
@@ -1064,7 +1064,7 @@ public class Person : General
             //to address when a person die in btw this one, assign true to Brain and still waiting to be process 
             if (sp == null)
             {
-                Debug.Log("Need to die now but cant find family " + MyId + " Spouse:"+Spouse);
+                Debug.Log("Need to die now but cant find family " + MyId + " Spouse:" + Spouse);
                 return;
             }
 
@@ -1091,7 +1091,7 @@ public class Person : General
         spouse = spouseMyId;
     }
 
-	/// <summary>
+    /// <summary>
     /// Returns true if the other person is suitable for marriage with currnet obj
     /// </summary>
     public bool WouldUMarryMe(Person other)
@@ -1102,10 +1102,10 @@ public class Person : General
             return false;
         }
 
-        if (spouse != "") { return false;}
-        if (isWidow) { return false;}
-        if (other.Gender == Gender) { return false;}
-        if (Mathf.Abs(other.Age - _age) > 15) { return false;}
+        if (spouse != "") { return false; }
+        if (isWidow) { return false; }
+        if (other.Gender == Gender) { return false; }
+        if (Mathf.Abs(other.Age - _age) > 15) { return false; }
 
         if (Age < 16 || other.Age < 16)
         {
@@ -1118,7 +1118,7 @@ public class Person : General
     Structure CreateDummy()
     {
         var dummyIdle = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPointUnTimed, new Vector3(), H.Dummy,
-            container: Program.PersonObjectContainer.transform, name: "DummyUntimed . "+ MyId);
+            container: Program.PersonObjectContainer.transform, name: "DummyUntimed . " + MyId);
 
         return dummyIdle;
     }
@@ -1126,27 +1126,27 @@ public class Person : General
     void CreateTheTwoDummies()
     {
         //mean was created already 
-        if (MyDummy!=null)
+        if (MyDummy != null)
         {
             return;
         }
 
         MyDummy = CreateDummy();
-        MyDummyProf = CreateDummy();   
+        MyDummyProf = CreateDummy();
     }
 
     // Use this for initialization
-	void Start ()
-	{
+    void Start()
+    {
 
         cam = Camera.main;
         base.Start();
-        
+
         StartCoroutine("FiveSecUpdate");
         StartCoroutine("OneSecUpdate");
 
         //StartCoroutine("A45msUpdate");
-        
+
         //for body
         //StartCoroutine("A32msUpdate");
         StartCoroutine("A64msUpdate");
@@ -1158,13 +1158,13 @@ public class Person : General
 
         //means is loading from file
         if (Inventory != null && Inventory.InventItems.Count > 0)
-	    {
-	        return;
-	    }
+        {
+            return;
+        }
         Inventory = new Inventory(MyId, HType);
-	}
+    }
 
-    float RestartTimes(float a, float b){return Random.Range(a, b);}
+    float RestartTimes(float a, float b) { return Random.Range(a, b); }
 
 
     //private float _quickTime;
@@ -1225,7 +1225,7 @@ public class Person : General
             return;
         }
         _wasPersonParented = true;
-        transform.SetParent( Home.transform);
+        transform.SetParent(Home.transform);
     }
 
 
@@ -1236,7 +1236,7 @@ public class Person : General
             yield return new WaitForSeconds(3); // wait
             UpdateCallsToOneSec();
 
-            
+
         }
     }
 
@@ -1268,6 +1268,15 @@ public class Person : General
         {
             yield return new WaitForSeconds(.064f); // wait
             _body.A64msUpdate();
+
+            if (_showPathToHome != null)
+            {
+                _showPathToHome.Update();
+            }
+            if (_showPathToWork != null)
+            {
+                _showPathToWork.Update();
+            }
         }
     }
 
@@ -1290,8 +1299,8 @@ public class Person : General
         }
     }
 
-	// Update is called once per frame
-	void Update()
+    // Update is called once per frame
+    void Update()
     {
         _levelOfDetail.A45msUpdate();
 
@@ -1315,7 +1324,9 @@ public class Person : General
         {
             ReachAgeMajority();
         }
-	}
+
+
+    }
 
     //void FixedUpdate()
     //{
@@ -1326,13 +1337,13 @@ public class Person : General
     void UpdateCallsToOneSec()
     {
         TimeChecks();
-     
+
     }
 
     public void UpdateInfo(string add = "")
     {
         string homeId = "none";
-        if (Home != null){homeId = Home.MyId;}
+        if (Home != null) { homeId = Home.MyId; }
 
         string foodId = "none";
         if (FoodSource != null) { foodId = FoodSource.MyId; }
@@ -1355,15 +1366,15 @@ public class Person : General
                "add:" + add + "\n" +
                "Current Task:" + Brain.CurrentTask + "\n" +
                "Location:" + Body.Location + "\n" +
-               "GoingTo:" + Body.GoingTo + "\n" 
+               "GoingTo:" + Body.GoingTo + "\n"
                ;
     }
 
 
 
-    
 
-    #region Section that detect and handles if is colliding with another person while moving 
+
+    #region Section that detect and handles if is colliding with another person while moving
 
     private GameObject _frontCollider;
     private GameObject _rearCollider;
@@ -1383,7 +1394,7 @@ public class Person : General
 
     void CheckPersonColl()
     {
-        if (!Body.MovingNow){return;}
+        if (!Body.MovingNow) { return; }
 
         if (rearCollision && frontCollision)
         { //do nothing
@@ -1393,11 +1404,11 @@ public class Person : General
         {
             ChangeBodySpeed(-0.1f);
         }
-        else if(rearCollision)
+        else if (rearCollision)
         {
-            ChangeBodySpeed(0.1f);  
+            ChangeBodySpeed(0.1f);
         }
-        else if(!rearCollision && !frontCollision)
+        else if (!rearCollision && !frontCollision)
         {
             SetBodySpeedToDefault();
         }
@@ -1406,9 +1417,9 @@ public class Person : General
     private bool speedChanged;//acuumulates the changes of speed 
     void ChangeBodySpeed(float amt)
     {
-        if (Body.Speed != 0.5f){return;}//will only change it if is at is initial value
+        if (Body.Speed != 0.5f) { return; }//will only change it if is at is initial value
 
-        speedChanged =true;
+        speedChanged = true;
         Body.ChangeSpeed(amt);
         print("speed chng");
     }
@@ -1483,7 +1494,7 @@ public class Person : General
         set { _prevOrder = value; }
     }
 
-   
+
 
 
     /// <summary>
@@ -1544,16 +1555,16 @@ public class Person : General
             //wB.DelayedCreatingNew();
             //print("new WheelBarrow:"+MyId);
         }
-        else if(jType == Job.Homer)
+        else if (jType == Job.Homer)
         {
             _profession = new Homer(this, pF);
             //print("new Homer:" + MyId);
         }
-        else if(jType == Job.Farmer)
+        else if (jType == Job.Farmer)
         {
             _profession = new Farmer(this, pF);
         }
-        else if(jType == Job.SaltMiner)
+        else if (jType == Job.SaltMiner)
         {
             _profession = new SaltMiner(this, pF);
         }
@@ -1579,15 +1590,15 @@ public class Person : General
         {
             return Job.Builder;
         }
-        else if (Work.HType == H.Fishing_Hut || Work.HType == H.FishRegular)
+        else if (Work.HType == H.FishingHut)
         {
             return Job.FisherMan;
         }
-        else if ( Work.HType.ToString().Contains(H.Farm.ToString()))
+        else if (Work.HType.ToString().Contains(H.Farm.ToString()))
         {
             return Job.Farmer;
         }
-        else if ( Work.HType.ToString().Contains(H.SaltMine.ToString()))
+        else if (Work.HType.ToString().Contains(H.SaltMine.ToString()))
         {
             return Job.SaltMiner;
         }
@@ -1599,15 +1610,15 @@ public class Person : General
     internal void Kill()
     {
         var t = PersonPot.Control.All.Find(a => a.MyId == MyId);
-       //GameScene.print(MyId+".Killed");
+        //GameScene.print(MyId+".Killed");
         PersonPot.Control.All.Remove(t);
         t.Destroy();
     }
 
     public void HomeActivities()
     {
-        if(Home == null || Home.Inventory == null)
-        { return;}
+        if (Home == null || Home.Inventory == null)
+        { return; }
 
         DropFoodAtHome();
         Eat();
@@ -1708,7 +1719,7 @@ public class Person : General
         }
 
         var amt = HowMuchICanCarry();
-        
+
         ExchangeInvetoryItem(FoodSource, this, item, amt);
         //UnityEngine.Debug.Log(MyId+" took food:"+item);
     }
@@ -1747,7 +1758,7 @@ public class Person : General
             GameController.ResumenInventory1.Remove(P.Crate, .01f);
         }
     }
-    
+
     bool DoesNeedACrate(P prod)
     {
         if (prod == P.Wood || prod == P.Stone || prod == P.Ore)
@@ -1856,7 +1867,7 @@ public class Person : General
     /// <returns></returns>
     internal bool IsOrphan()
     {
-        if (string.IsNullOrEmpty(_father ) && string.IsNullOrEmpty(_mother ))
+        if (string.IsNullOrEmpty(_father) && string.IsNullOrEmpty(_mother))
         {
             return true;
         }
@@ -1934,9 +1945,9 @@ public class Person : General
         var nutriValue = BuildingPot.Control.ProductionProp.Food1.FindNutritionValue(item).NutritionVal;
         var nutriNeed = 100 - _nutritionLevel;
 
-        return  nutriNeed / nutriValue + 1;//+1 is to round up
+        return nutriNeed / nutriValue + 1;//+1 is to round up
     }
-    
+
     #region Reproduction Having Kids & Stuff
 
     /// <summary>
@@ -1950,7 +1961,7 @@ public class Person : General
             return false;
         }
 
-        if (IsPregnant || IsWidow || Gender == H.Male || string.IsNullOrEmpty(Spouse) || Home == null 
+        if (IsPregnant || IsWidow || Gender == H.Male || string.IsNullOrEmpty(Spouse) || Home == null
             || !string.IsNullOrEmpty(IsBooked) || !IsMajor)
         {
             return false;
@@ -1971,7 +1982,7 @@ public class Person : General
 
         bool nutrida = AmINutrida();
         bool happy = AmIHappy();
-        bool bodyReady = Mathf.Abs( _lastNewBornYear - Program.gameScene.GameTime1.Year ) > 1;
+        bool bodyReady = Mathf.Abs(_lastNewBornYear - Program.gameScene.GameTime1.Year) > 1;
 
         //have to check Age>14 in case lost both parent really young and was made Family.HouseHeadPerson() on House 
         return nutrida && hasSpace && happy && bodyReady && Age > 14 && Age < 45 && IsSpouseAlive();
@@ -1997,7 +2008,7 @@ public class Person : General
         if (CanIHaveANewKid())
         {
             GetPregnant();
-//            UnityEngine.Debug.Log(MyId+" got pregnant due m:" + _dueMonth+" y:" + _dueYear);
+            //            UnityEngine.Debug.Log(MyId+" got pregnant due m:" + _dueMonth+" y:" + _dueYear);
         }
     }
 
@@ -2029,8 +2040,8 @@ public class Person : General
 
         MoveNewBornToHome(kid);
 
-//       //Debug.Log(MyId + " give birth to:" + kid.MyId+". inscribed on:"+FamilyId);
-        kid.DebugBornInfo = FamilyId+".home:"+Home.MyId+".mom:"+MyId;
+        //       //Debug.Log(MyId + " give birth to:" + kid.MyId+". inscribed on:"+FamilyId);
+        kid.DebugBornInfo = FamilyId + ".home:" + Home.MyId + ".mom:" + MyId;
 
         _lastNewBornYear = _dueYear;
         _dueMonth = 0;
@@ -2041,7 +2052,7 @@ public class Person : General
         var spouseLo = Family.FindPerson(Spouse);
 
         //in case spoise die during preganancy
-        if (spouseLo!=null)
+        if (spouseLo != null)
         {
             spouseLo.Happinnes = 5;
         }
@@ -2059,10 +2070,10 @@ public class Person : General
         family.AddKids(newBorn.MyId);
 
         newBorn.IsBooked = "";
-        
+
         //will be addressed on Body.Update 
         //newBorn.transform.SetParent( Home.transform;
-        
+
         newBorn.Home = Home;
         newBorn.Brain.SetNewHouseFound();
     }
@@ -2079,7 +2090,7 @@ public class Person : General
             return true;
         }
         if (_dueYear < Program.gameScene.GameTime1.Year)
-            //so in case it missed bz moving to newer home took forever will deliver as soon get to new Place 
+        //so in case it missed bz moving to newer home took forever will deliver as soon get to new Place 
         {
             return true;
         }
@@ -2103,7 +2114,7 @@ public class Person : General
         }
         else
         {
-            _dueYear = Program.gameScene.GameTime1.Year;     
+            _dueYear = Program.gameScene.GameTime1.Year;
         }
     }
 
@@ -2116,14 +2127,14 @@ public class Person : General
         return NutritionLevel > 10;
     }
 
-#endregion
+    #endregion
 
     /// <summary>
     /// Every BD will ask if wnt to emmigrate 
     /// </summary>
     void CheckIfEmmigrate()
     {
-        if (_unHappyYears > 2 && !Brain.Partido 
+        if (_unHappyYears > 2 && !Brain.Partido
             && IsMajor && string.IsNullOrEmpty(IsBooked))
         {
             Emmigrate();
@@ -2134,12 +2145,12 @@ public class Person : General
     {
         //EmmigrateWithFamily();
         ActionOfDisappear();
-        print(MyId+" emmigrated");
+        print(MyId + " emmigrated");
         // The peploe had emmigrated they will talk about your port wherever they are 
         PersonPot.Control.EmigrateController1.AddEmigrate(this);
 
         Program.gameScene.GameController1.NotificationsManager1.Notify("Emigrate");
-        
+
         //AudioCollector.PlayOneShot("Emigrated", transform.position);
     }
 
@@ -2195,11 +2206,11 @@ public class Person : General
 
     public void StartLOD()
     {
-        _levelOfDetail=new LevelOfDetail(this);
+        _levelOfDetail = new LevelOfDetail(this);
     }
 
 
-#endregion
+    #endregion
 
 
 
@@ -2225,14 +2236,14 @@ public class Person : General
     public void UnselectPerson()
     {
         DestroyProjector();
-        
+
         //if is Dead not point to continue
         if (Brain.Partido)
         {
             return;
         }
 
-        var index = Brain.BlackList.FindIndex(a=>a.Contains("RedoBrain"));
+        var index = Brain.BlackList.FindIndex(a => a.Contains("RedoBrain"));
         //then we have that instruction there . Placed by brain
         if (index != -1)
         {
@@ -2260,7 +2271,7 @@ public class Person : General
     {
         if (_light == null)
         {
-            Vector3 projNewP = new Vector3(0,6,0) + transform.position;
+            Vector3 projNewP = new Vector3(0, 6, 0) + transform.position;
             Projector = Create(Root.projectorPerson, projNewP, container: transform);
             Projector.transform.Rotate(new Vector3(90, 0, 0));
 
@@ -2282,7 +2293,7 @@ public class Person : General
     #endregion
 
 
-#region Events
+    #region Events
 
     private Camera cam;
     internal void CheckMouseClicked()
@@ -2306,10 +2317,10 @@ public class Person : General
 
         if (dist + dist2 < 0.1f)
         {
-            Debug.Log(MyId+" was this close to click:" + dist);
+            Debug.Log(MyId + " was this close to click:" + dist);
         }
     }
-#endregion
+    #endregion
 
     /// <summary>
     /// When a person was moving out to a new Building as they reach their majority
@@ -2343,13 +2354,53 @@ public class Person : General
         Body.GoingTo = HPers.None;
 
         Home = homeIsGoingBackTo as Structure;
-        transform.SetParent( Home.transform);
-        
+        transform.SetParent(Home.transform);
+
         IsMajor = false;
         Brain.MajorAge.RollBackMoajority();
 
         RedoBrain(Brain.BlackList);
     }
+
+
+    #region Showing Path
+
+    /// <summary>
+    /// They all need a function calling its Update()
+    /// </summary>
+    private ShowPathTo _showPathToHome;
+    private ShowPathTo _showPathToWork;
+    private ShowPathTo _showPathToFood;
+    private ShowPathTo _showPathToReligion;
+    private ShowPathTo _showPathTChill;
+
+    internal void ToggleShowPath(string which)
+    {
+        InitShowPath(which);
+
+        if (_showPathToHome != null && which == "Home")
+        {
+            _showPathToHome.Toggle(which);
+        }
+        if (_showPathToWork != null && which == "Work")
+        {
+            _showPathToWork.Toggle(which);
+        }
+    }
+
+    void InitShowPath(string which)
+    {
+        if (_showPathToHome == null && which == "Home" && Home != null)
+        {
+            _showPathToHome = new ShowPathTo(this, "Home");
+        }
+        if (_showPathToWork == null && which == "Work" && Work != null)
+        {
+            _showPathToWork = new ShowPathTo(this, "Work");
+        }
+    }
+
+    #endregion
 }
 
 public class PersonReport

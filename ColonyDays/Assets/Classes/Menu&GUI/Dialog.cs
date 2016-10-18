@@ -174,7 +174,7 @@ public class Dialog
         var nameFile =
               SteamFriends.GetPersonaName() + "." + SteamUser.GetSteamID() +
               "_" + DateTime.Now.ToString("yy.MM.dd") +
-              "_" + DateTime.Now.ToString("hh.mm.ss") +
+              "_" + DateTime.Now.ToString("HH.mm.ss") +
               "_" + type + ".zip";
 
         var path = Application.dataPath + "/" + nameFile;

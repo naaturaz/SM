@@ -97,8 +97,7 @@ public class Book : General
         //Raw
         Build.Add(new BuildStat(H.Clay, 400, 15, 5, 15, 5, maxPeople: 5, capacity: 160));
         Build.Add(new BuildStat(H.Ceramic, 400, 15, 5, 25, 5, maxPeople: 5));
-        Build.Add(new BuildStat(H.Fishing_Hut, 400, 15, 5, 25, 5, maxPeople: 5));
-        Build.Add(new BuildStat(H.FishRegular, 400, 15, 5, 25, 5, maxPeople: 5));
+        Build.Add(new BuildStat(H.FishingHut, 400, 15, 5, 25, 5, maxPeople: 5));
         //Build.Add(new BuildStat(H.Mine, 400, 15, 5, 25, 5, maxPeople: 5));
 
         Build.Add(new BuildStat(H.MountainMine, 400, 15, 5, 25, 5, maxPeople: 5));
@@ -266,7 +265,7 @@ public class BuildStat
     {
         float multiplier = 100;
 
-        AmountOfLabour = amountOfLabour * 4;
+        AmountOfLabour = amountOfLabour * 2;
         HType = hType;
         Root = global::Root.RetBuildingRoot(hType);
         Wood = wood * multiplier;
