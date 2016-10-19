@@ -177,6 +177,7 @@ public enum P
     RoofTile,
     Utensil,
     Stop,
+    Year,
 
 
 }
@@ -404,6 +405,7 @@ public enum H
     OnATrip,
     AtFarm,
     Home,
+    YearReport,
 
 
 }

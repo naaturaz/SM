@@ -7,7 +7,7 @@ public class Languages
     private static string _currentLang = "English";
 
 
-    private static  string _houseTail = ". SugarMiller's live here and enjoy having a nice meal at least once in a while";
+    private static string _houseTail = ". SugarMiller's live here and enjoy having a nice meal at least once in a while";
     private static string _animalFarmTail = ", can raise different animals in this building";
     private static string _fieldFarmTail = ", can seed different crops and fruits in this building";
     private static string _asLongHasInput = ", as long it has the necessary inputs";
@@ -231,11 +231,17 @@ public class Languages
 
        //todo keep aadding to ESP
        //Main notificaion
+       //Shows on the middle of the screen
        { "NotScaledOnFloor", "The building is too close to shore or to a mountain"},
        { "NotEven", "The ground underneath the building is not even"},
        { "Colliding", "Building is colliding with another one"},
        { "BadWaterHeight", "The building is too low or high on the water"},
        { "LockedRegion", "You need to own this region to build in here"},
+       { "HomeLess", "People in this house have no where to go. Please build a new house that" +
+                     " can hold this family and try again deleting this house"},   
+       { "LastFood", "Can not destroy the only Storage in your village"},
+       { "LastMasonry", "Can not destroy the only Masonry in your village"},
+
 
        //Mini help
        { "Camera", "Camera: Use [AWSD] or cursor to move. " +
@@ -522,7 +528,7 @@ public class Languages
 
 
 	};
-    
+
     public static string ReturnString(string key)
     {
         if (_currentLang == "English")
@@ -571,6 +577,6 @@ public class Languages
         }
 
         return _english;
-            
+
     }
 }

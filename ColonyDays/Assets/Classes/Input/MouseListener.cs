@@ -763,13 +763,15 @@ public class MouseListener : InputMain
 
             if (BuildingPot.Control.IsThisTheLastFoodSrc(b))
             {
-                GameScene.ScreenPrint("Cant destroy last Food Src ");
+                Program.gameScene.GameController1.NotificationsManager1.MainNotify("LastFood");
+                //GameScene.ScreenPrint("Cant destroy last Food Src ");
                 return;
             }
 
             if (BuildingPot.Control.IsThisTheLastOfThisType(H.Masonry, b))
             {
-                GameScene.ScreenPrint("Cant destroy last Builders Office ");
+                Program.gameScene.GameController1.NotificationsManager1.MainNotify("LastMasonry");
+                //GameScene.ScreenPrint("Cant destroy last Builders Office ");
                 return;
             }
 

@@ -68,6 +68,16 @@ public class RotateRTS : GenericCameraComponent {
             changeValue = Input.GetAxis("Horizontal") * camSensivity;
         }
 
+        //new todo comment and test
+        if (Input.GetKey(KeyCode.Q))
+        {
+            changeValue = -.5f * camSensivity;
+        }
+        if (Input.GetKey(KeyCode.E))
+        {
+            changeValue = .5f * camSensivity;
+        }
+
         if (changeValue != 0)
         {
             helpCam360MainY.transform.Rotate(new Vector3(0, changeValue, 0));

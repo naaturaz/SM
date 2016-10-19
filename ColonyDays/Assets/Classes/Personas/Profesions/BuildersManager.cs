@@ -53,11 +53,23 @@ public class BuildersManager
         {
             if (!person.Brain.BlackList.Contains(_greenLight[i].Key))
             {
-                return _greenLight[i].Key;
+                var build = Brain.GetBuildingFromKey(_greenLight[i].Key);
+
+                if (build!=null)
+                {
+                    return _greenLight[i].Key;
+                }
+                else//means the build was deleted 
+                {
+                    _greenLight.RemoveAt(i);
+                    i--;
+                }
             }
         }
         return "None";
     }
+
+
 
     public void AddNewConstruction(string key, H hTypeP, int priority, Vector3 pos)
     {
@@ -93,7 +105,6 @@ public class BuildersManager
                 _greenLight.RemoveAt(i);
                 return;
             }
-
         }
 
         for (int i = 0; i < _constructions.Count; i++)

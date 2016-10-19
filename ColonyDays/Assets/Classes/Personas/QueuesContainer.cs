@@ -52,6 +52,8 @@ public class QueuesContainer
     {
         _destroyBuildsQueue.AddToQueue(objP, key, "old");
         RestartPeopleChecked();
+        buidingsWhenStartChecking = 0;
+
         PersonPot.Control.RoutesCache1.CheckQueuesNow();
     }
 
@@ -72,7 +74,6 @@ public class QueuesContainer
 
         var onNewB = IsOnQueue(theRoute, _newBuildsQueue, personMyID);
         var onDesB = IsOnQueue(theRoute, _destroyBuildsQueue, personMyID);
-
         //print("onNewBlds:" + onNewB + ".elem.Count:" + _newBuildsAnchors.Elements.Count);
         //print("onDstBlds:" + onDesB + ".elem.Count:" + _destroyedBuildsAnchors.Elements.Count);
 
@@ -81,7 +82,9 @@ public class QueuesContainer
             _peopleChecked.Add(personMyID);
 
             if (_peopleChecked.Count >= PersonPot.Control.All.Count)
-            { ClearAllQueues();}
+            {
+                ClearAllQueues();
+            }
         }
         return onNewB || onDesB;
     }
@@ -164,7 +167,11 @@ public class QueuesContainer
         qEle.WasUsedToGreenLightOrDestroy = true;
         var build = Brain.GetBuildingFromKey(qEle.Key);
 
-        build.DestroyOrderedForced(); 
+        //when loading a WillBeDestroy strucutre sometimes gets destroyed right away
+        if (build!=null)
+        {
+            build.DestroyOrderedForced(); 
+        }
     }
 
 

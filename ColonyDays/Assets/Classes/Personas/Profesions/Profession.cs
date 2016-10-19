@@ -985,7 +985,7 @@ public class Profession
         }
 
         //if tht is over the amount on distance is not the same 
-        return Vector3.Distance(ele.transform.position, FinRoutePoint) > .5f;
+        return Vector3.Distance(ele.transform.position, FinRoutePoint) > 1f;
     }
 
 

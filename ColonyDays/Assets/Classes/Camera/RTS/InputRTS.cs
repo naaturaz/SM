@@ -190,7 +190,7 @@ public class InputRTS : GenericCameraComponent
     /// </summary>
     /// <param name="newTarget"></param>
     /// <param name="loop"></param>
-    void CenterCamTo(Transform newTarget, int loop = 4)
+    public void CenterCamTo(Transform newTarget, int loop = 4)
     {
         //it will lopp few times so ensure the cam is really centered to newTarget
         for (int i = 0; i < loop; i++)

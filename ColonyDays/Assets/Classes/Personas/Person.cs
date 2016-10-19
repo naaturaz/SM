@@ -2400,7 +2400,24 @@ public class Person : General
         }
     }
 
+
+    internal void ShowLocationOf(string _key)
+    {
+        if (_key == "Home" && Home != null)
+        {
+            CamControl.CAMRTS.InputRts.CenterCamTo(Home.transform);
+        }
+        if (_key == "Work" && Work != null)
+        {
+            CamControl.CAMRTS.InputRts.CenterCamTo(Work.transform);
+        }
+
+        
+    }
+
     #endregion
+
+
 }
 
 public class PersonReport

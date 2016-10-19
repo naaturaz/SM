@@ -305,12 +305,44 @@ public class CamRTSController : CamControl
 
     private void ControlInput()
     {
+        QandEKeys();
         MiddleMouse();
         if (!IsMouseMiddle && mouseInBorderDir == Dir.None && !InputRTS.isFollowingPersonNow)
         {
             AssignPosTo();
         }
         ScrollMouse();
+    }
+
+    private void QandEKeys()
+    {
+        if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.E))
+        {
+            //CreateRotCam360GuidesY();
+            IsMouseMiddle = true;
+            RotateDealer();
+
+            if (Input.GetKey(KeyCode.Q))
+            {
+                //rotateRTS.RotateCam(helpCam360GrabPosY, helpCam360MainY, target, camSensivity, smoothTime,
+                //ref velocity);
+                //AssignPosTo(Dir.Left);
+            } 
+            if (Input.GetKey(KeyCode.E))
+            {
+                //rotateRTS.RotateCam(helpCam360GrabPosY, helpCam360MainY, target, camSensivity, smoothTime,
+                //ref velocity);
+                //AssignPosTo(Dir.Right);
+
+            }
+        }
+        else if (Input.GetKeyUp(KeyCode.Q) || Input.GetKeyUp(KeyCode.E))
+        {
+            IsMouseMiddle = false;
+            CleanUpRotHelp();
+        }
+        
+
     }
 
     private void AssignPosTo(Dir dir = Dir.None)

@@ -161,7 +161,8 @@ public class DragSquare : Trail
     /// </summary>
     public static List<Building> ReturnClosestBuildings(Vector3 comparitionPoint, int howMany, H excluding)
     {
-        int size = BuildingPot.Control.Registro.AllBuilding.Count;
+        int size = BuildingPot.Control.Registro.AllRegFile.Count;
+        //int size = BuildingPot.Control.Registro.AllBuilding.Count;
         List<VectorM> loc = new List<VectorM>();
 
         for (int i = 0; i < size; i++)

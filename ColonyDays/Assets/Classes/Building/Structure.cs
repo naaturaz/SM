@@ -380,7 +380,7 @@ public class Structure : StructureParent
     public void Demolish()
     {
         //if is a house need to know 
-        if (MyId.Contains("House") || MyId.Contains("Shack"))
+        if (MyId.Contains("House") || MyId.Contains("Bohio"))
         {
             if (BuildingPot.Control.HowManyEmptyFamilies() >= Families.Length)
             {
@@ -388,9 +388,7 @@ public class Structure : StructureParent
             }
             else
             {
-                //todo notify
-               //Debug.Log("People in this house have no where to go. Please build something at least a shack and try" +
-                         //  " again deleting this building");
+                Program.gameScene.GameController1.NotificationsManager1.MainNotify("HomeLess");
                 _isOrderToDestroy = false;
             }
         }
@@ -399,10 +397,19 @@ public class Structure : StructureParent
 
     void StartDemolishProcess()
     {
-        //BuildingPot.Control.Registro.MarkBuildingAs(MyId, H.WillBeDestroy);
+        //if is not fully build will do this b4
+        if (!IsFullyBuilt())
+        {
+            AddToConstruction(100000);
+            //needed for in case this is saved and load
+            PersonPot.Control.Queues.AddToDestroyBuildsQueue(Anchors, MyId);
+        }
+
         BuildingPot.Control.Registro.RemoveItem(Category, MyId);
         //HideAll();   
     }
+
+    
 
 
     private void HideAll()

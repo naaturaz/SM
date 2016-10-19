@@ -786,24 +786,24 @@ public class Building : General, Iinfo
 
         if (IsLoadingFromFile && Instruction == H.WillBeDestroy)
         {
-            //AssignLayer(0);//Default
+            var b = this;
             RemovePeople();
-
-            if (Category != Ca.Way)
-            {
-                //so the action of demolish happens again 
-                var b = (Structure)this;
-                b.Demolish();
-            }
-            else
-            {
-                var b = (Trail)this;
-                b.Demolish();
-            }
-
 
             //so dont call this method anymore
             IsLoadingFromFile = false;
+
+
+            //if (Category != Ca.Way)
+            //{
+            //    //so the action of demolish happens again 
+            //    var b = (Structure)this;
+            //    b.Demolish();
+            //}
+            //else
+            //{
+            //    var b = (Trail)this;
+            //    b.Demolish();
+            //}
         }
     }
 
@@ -1175,6 +1175,15 @@ public class Building : General, Iinfo
             MeshController.CrystalManager1.Delete(this);
 
             DestroyProjector();
+
+            //so saveLoad of buildings is not affected 
+            BuildingPot.Control.Registro.RemoveFromAllRegFile(MyId);
+            BuildingPot.Control.EditBuildRoutine(MyId, H.Remove, HType);
+
+            //only usefull for loaded buildings that were Destroy before finish construcion
+            //and were loaded 
+            PersonPot.Control.BuildersManager1.RemoveConstruction(MyId);//so its removed from the BuilderManager
+
             Destroy();
         }
     }
@@ -2010,11 +2019,13 @@ public class Building : General, Iinfo
         BuildingPot.Control.EditBuildRoutine(MyId, action, HType);
     }
 
+    private int countRemoves;//bz it makes a loop 
     void RemovePeople()
     {
         //Instruction = H.WillBeDestroy;
-        if (PeopleDict.Count == 0)//no one is registered on the build
+        if (PeopleDict.Count == 0 && countRemoves == 0)//no one is registered on the build
         {
+            countRemoves++;
             DestroydHiddenBuild();
         }
     }
@@ -2074,21 +2085,23 @@ public class Building : General, Iinfo
             return;
         }
 
-        BuildingPot.Control.Registro.RemoveFromAllRegFile(MyId);
-
-        BuildingPot.Control.EditBuildRoutine(MyId, H.Remove, HType);
+        //BuildingPot.Control.Registro.RemoveFromAllRegFile(MyId);
+        //BuildingPot.Control.EditBuildRoutine(MyId, H.Remove, HType);
         PositionFixed = false;
-
         _isOrderToDestroy = true;
 
+        //farms have not decoration
+        if (_decoration != null)
+        {
+            _decoration.RemoveFromBatchMesh();
+        }
+
         //getting the Main GameObject render back
-        _decoration.RemoveFromBatchMesh();
         Program.gameScene.BatchRemove(this);
         DestroyOrdered();
 
         //so people can Reroutes if new build fell in the midle of one
         PersonPot.Control.Queues.AddToDestroyBuildsQueue(Anchors, MyId);
-        
         BuildingPot.Control.Registro.RemoveFromDestroyBuildings(this);
     }
 
@@ -2172,6 +2185,37 @@ public class Building : General, Iinfo
         return percent.ToString("N0");
     }
 
+
+    public bool IsFullyBuilt()
+    {
+        if (MyId.Contains("Road"))
+        {
+            //so user will never be able to be removed 
+            return false;
+        }
+
+        if (!MyId.Contains("Bridge"))
+        {
+            var st = (Structure)this;
+            if (st.CurrentStage == 4)
+            {
+                return true;
+            }
+        }
+        //addres bridge 
+        else
+        {
+            var bridge = (Bridge)this;
+            if (bridge.StartingStageForPieces == H.Done)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    //todo call 
     public void AddToConstruction(float amt, Person person=null)
     {
         DefineAmtNeeded();
@@ -2527,7 +2571,6 @@ public class Building : General, Iinfo
 
         if (doIHaveInput && (hasStorageRoom || hasThisBuildRoom))
         {
-            //todo Consume inputs
             amt = ConsumeInputs(amt);
 
             //if is a farm
@@ -2539,14 +2582,18 @@ public class Building : General, Iinfo
             else if (hasThisBuildRoom && addToBuildInv && !MyId.Contains("Farm"))
             {
                 Inventory.Add(prodHere, amt);
+                AddProductionThisYear(prodHere, amt);
             }
             else if (!hasThisBuildRoom && hasStorageRoom && addToBuildInv && !MyId.Contains("Farm"))
             {
                 person.Inventory.Add(prodHere, amt);
+                AddProductionThisYear(prodHere, amt);
+
             }
             else if (!addToBuildInv && !MyId.Contains("Farm"))
             {
                 person.Inventory.Add(prodHere, amt);
+                AddProductionThisYear(prodHere, amt);
             }
         }
         else if (!hasStorageRoom && !hasThisBuildRoom && person.FoodSource != null)
@@ -2672,6 +2719,41 @@ public class Building : General, Iinfo
         return false;
     }
 
+    #region Production Reporting
+
+
+    //for report purposes
+    List<Inventory> _productionReport = new List<Inventory>();
+
+
+    private void AddProductionThisYear(P p, float amt)
+    {
+        var thisYear = Program.gameScene.GameTime1.Year + "";
+       
+        //find this year report 
+        var thisYearReport = _productionReport.Find(a => a.LocMyId == thisYear);
+
+        //if none will create this year report right away
+        if (thisYearReport==null)
+        {
+            thisYearReport = new Inventory(thisYear, H.YearReport);
+            //so the newest in on top
+            _productionReport.Insert(0, thisYearReport);
+        }
+        thisYearReport.Add(p, amt);
+    }
+
+
+
+    public List<Inventory> ProductionReport
+    {
+        get { return _productionReport; }
+        set { _productionReport = value; }
+    }
+
+
+#endregion
+
     /// <summary>
     /// Use for plants lie Corn to add produced ammt
     /// </summary>
@@ -2684,6 +2766,7 @@ public class Building : General, Iinfo
         if (doIHaveInput && hasThisBuildRoom)
         {
             Inventory.Add(CurrentProd.Product, amt);
+            AddProductionThisYear(CurrentProd.Product, amt);
         }
         else if (!hasThisBuildRoom)
         {
@@ -2696,6 +2779,8 @@ public class Building : General, Iinfo
             //Debug.Log(MyId + " doesnt have input");
         }
     }
+
+ 
 
     /// <summary>
     /// If is all full an evacuation order is add to Dispatch so at least this 
@@ -2924,7 +3009,7 @@ public class Building : General, Iinfo
             if (!HaveThisProdOnInv(prod))
             {
                 //todo use 10000 to put a large number of units needed
-                Order prodNeed = new Order(prod, MyId, 100);
+                Order prodNeed = new Order(prod, MyId, 200);
 
                 //BuildingPot.Control.Dispatch1.AddToOrders(prodNeed);
                 AddToClosestWheelBarrowAsOrder(prodNeed, H.None);
@@ -3694,7 +3779,6 @@ public class Building : General, Iinfo
         get { return _buildersManager; }
         set { _buildersManager = value; }
     }
-
 
 
 

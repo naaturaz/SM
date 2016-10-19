@@ -188,9 +188,10 @@ public class BuildingWindow : GUIElement {
     private void DemolishBtn()
     {
         _cancelDemolish_Btn.SetActive(false);
-        bool fullyBuilt = IsFullyBuilt();
+       // bool fullyBuilt = _building.IsFullyBuilt();
        
-        if (_building.Instruction == H.WillBeDestroy || !fullyBuilt)
+        if (_building.Instruction == H.WillBeDestroy //|| !fullyBuilt
+            )
         {
             _demolish_Btn.SetActive(false);
             //_cancelDemolish_Btn.SetActive(true);
@@ -198,37 +199,11 @@ public class BuildingWindow : GUIElement {
         else
         {
             //todo uncomment so it active
-            //_demolish_Btn.SetActive(true);
+            _demolish_Btn.SetActive(true);
         }
     }
 
-    bool IsFullyBuilt()
-    {
-        if (_building.MyId.Contains("Road"))
-        {
-            //so user will never be able to be removed 
-            return false;
-        }
 
-        if (!_building.MyId.Contains("Bridge")  )
-        {
-            var st = (Structure)_building;
-            if (st.CurrentStage == 4)
-            {
-                return true;
-            }
-        }
-        //addres bridge 
-        else
-        {
-            var bridge = (Bridge) _building;
-            if (bridge.StartingStageForPieces == H.Done)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
 
     private void HideSalaryIfHouseOrStorage()
     {
@@ -292,6 +267,8 @@ public class BuildingWindow : GUIElement {
         if (_showAInventory == null)
         {
             _showAInventory = new ShowAInventory(_building.Inventory, _gaveta.gameObject, _invIniPos.transform.localPosition);
+            ShowProductionReport();
+        
         }
         else if (_showAInventory != null && ( 
             oldItemsCount != _building.Inventory.InventItems.Count ||
@@ -304,14 +281,38 @@ public class BuildingWindow : GUIElement {
             oldBuildID = _building.MyId;
             _showAInventory.DestroyAll();
             _showAInventory = new ShowAInventory(_building.Inventory, _gaveta.gameObject, _invIniPos.transform.localPosition);
+            ShowProductionReport();
+        
         }
         
         _showAInventory.ManualUpdate();
         _inv.text = BuildStringInv(_building);
 
-       
+
+
+
         _currSalaryTxt.text = BuildingPot.Control.Registro.SelectBuilding.DollarsPay+"";
         DemolishBtn();
+    }
+
+    List<ShowAInventory> _reports = new List<ShowAInventory>(); 
+    private void ShowProductionReport()
+    {
+        for (int i = 0; i < _reports.Count; i++)
+        {
+            _reports[i].DestroyAll();
+        }
+        _reports.Clear();
+
+        var pastItems = 0;
+        for (int i = 0; i < _building.ProductionReport.Count; i++)
+        {
+            var a = new ShowAInventory(_building.ProductionReport[i], _upgrades.gameObject, 
+                _invIniPos.transform.localPosition + new Vector3(0, pastItems*-3.5f*i,0));
+
+            _reports.Add(a);
+            pastItems = _building.ProductionReport[i].InventItems.Count;
+        }
     }
 
     /// <summary>

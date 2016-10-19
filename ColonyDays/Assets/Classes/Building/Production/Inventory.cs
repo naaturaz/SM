@@ -62,7 +62,14 @@ public class Inventory  {
         {
             IsAStorage = true;
         }
+
+        if (hTypeP == H.YearReport)
+        {
+            Add(P.Year, float.Parse(LocMyId));
+        }
     }
+
+
 
     /// <summary>
     /// Will tell u wht amt of a specific type is on inventory 
@@ -731,6 +738,7 @@ public class InvItem
     public P Key;
     private float _amount;
     private float _volume;
+    private string _info;//for year for reports
 
     /// <summary>
     /// How many KG of this Item 
@@ -755,6 +763,12 @@ public class InvItem
     {
         get { return _volume; }
         set { _volume = value; }
+    }
+
+    public string Info
+    {
+        get { return _info; }
+        set { _info = value; }
     }
 
     public InvItem(P KeyP, float amtP)

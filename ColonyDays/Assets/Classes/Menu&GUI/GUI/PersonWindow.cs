@@ -18,6 +18,10 @@ public class PersonWindow : GUIElement
 
     private GameObject _invIniPos;
 
+    private ShowAInventory _showAInventory;
+
+
+    private ShowAPersonBuildingDetails _aPersonBuildingDetails;
 
     public Person Person1
     {
@@ -77,7 +81,6 @@ public class PersonWindow : GUIElement
         _person.SelectPerson();
     }
 
-    private ShowAInventory _showAInventory;
 
     private void LoadMenu()
     {
@@ -93,17 +96,39 @@ public class PersonWindow : GUIElement
         {
             _showAInventory = new ShowAInventory(_person.Inventory, gameObject, _invIniPos.transform.localPosition);
         }
+            //diff  person
         else if (_showAInventory != null && _showAInventory.Inv != _person.Inventory)
         {
             _showAInventory.DestroyAll();
             _showAInventory = new ShowAInventory(_person.Inventory, gameObject, _invIniPos.transform.localPosition);
+
+            if (_aPersonBuildingDetails != null)
+            {
+                _aPersonBuildingDetails.ManualUpdate(_person, true);
+            }
+        
         }
         _showAInventory.ManualUpdate();
         _inv.text = BuildStringInv(_person);
+
+        if (_aPersonBuildingDetails == null)
+        {
+            _aPersonBuildingDetails = new ShowAPersonBuildingDetails(_person, gameObject, _invIniPos.transform.localPosition);
+        }
+        else
+        {
+            //manual update
+            _aPersonBuildingDetails.ManualUpdate(_person);
+        }
+
     }
+
 
     string BuildPersonInfo()
     {
+
+
+        return "";
         string res = "Age: " + _person.Age + "\n Gender: " + _person.Gender
                      + "\n Nutrition: " + _person.NutritionLevel.ToString("N0")
                      + "\n Profession: " + _person.ProfessionProp.ProfDescription
@@ -238,6 +263,8 @@ public class PersonWindow : GUIElement
 
     /// <summary>
     /// Called from GUI
+    /// 
+    /// Or added event to ShowPersonBuildingTile
     /// </summary>
     /// <param name="which"></param>
     public void ShowPath(string which)

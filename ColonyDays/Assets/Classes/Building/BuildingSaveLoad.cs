@@ -457,4 +457,15 @@ public class BuildingSaveLoad : BuildingPot
         }
     }
     #endregion
+
+    /// <summary>
+    /// Will say if that building was loaded from File 
+    /// </summary>
+    /// <param name="build"></param>
+    /// <returns></returns>
+    internal bool IsWasLoaded(Building build)
+    {
+        var found = _buildingData.All.Find(a => a.MyId == build.MyId);
+        return found != null;
+    }
 }

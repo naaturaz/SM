@@ -1644,6 +1644,25 @@ public class Brain
             build.PeopleDict.Remove(_person.MyId);
             BuildingPot.Control.Registro.ResaveOnRegistro(build.MyId);
 
+            AddressBuildingSavedWithPeople(build);
+        }
+    }
+
+    /// <summary>
+    /// For buildings that were saved with people inside and with WillBeDestroy
+    /// </summary>
+    private void AddressBuildingSavedWithPeople(Building build)
+    {
+        if (build.PeopleDict.Count >0)
+        {
+            return;
+        }
+
+        if (build.Instruction == H.WillBeDestroy && BuildingPot.SaveLoad.IsWasLoaded(build))
+        {
+            build.DestroydHiddenBuild();
+            //so everyones checks on that added building to QueuesContainer and gets deleted 
+            PersonPot.Control.RestartController();
         }
     }
 
