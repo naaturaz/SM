@@ -64,6 +64,8 @@ public class PersonSaveLoad : PersonPot {
         //used in BuyRegionManager.cs
         res.UnlockRegions = MeshController.BuyRegionManager1.UnlockRegions;
 
+        res.TownName = Program.MyScreen1.TownName;
+
         return res;
     }
 }

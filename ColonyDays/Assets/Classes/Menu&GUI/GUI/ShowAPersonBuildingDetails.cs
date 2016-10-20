@@ -40,6 +40,9 @@ public class ShowAPersonBuildingDetails
 
         _items.Add("Age", _person.Age + "");
         _items.Add("Gender", _person.Gender + "");
+        _items.Add("Height", _person.Height + "");
+        _items.Add("Weight", _person.Weight + "");
+        _items.Add("Calories", _person.Nutrition1.CalNeededNowUpdate().ToString("N0") + "");
         _items.Add("Nutrition", _person.NutritionLevel + "");
         _items.Add("Profession", _person.ProfessionProp.ProfDescription + "");
         _items.Add("Spouse", Family.RemovePersonIDNumberOff(_person.Spouse));
@@ -72,13 +75,13 @@ public class ShowAPersonBuildingDetails
 
     Vector3 ReturnIniPos(int i)
     {
-        return new Vector3(ReturnX(i) + _iniPos.x, ReturnY(i) + _iniPos.y, _iniPos.z);
+        return new Vector3(_iniPos.x, ReturnY(i) + _iniPos.y, _iniPos.z);
     }
 
     private int _mainLines = 18;//24
     float ReturnX(int i)
     {
-        return 1;
+        return 0;
     }
 
     float ReturnY(int i)

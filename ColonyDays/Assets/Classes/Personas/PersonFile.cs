@@ -29,9 +29,8 @@ public class PersonFile  {
     public int DueMonth;
     public int DueYear;
 
-    //how well feed is a person. 100 is max. 
-    //if person eat adds to this. This will be removed by one every : checkFoodElapsed
-    public float _nutritionLevel;
+
+    public string _nutritionLevel;
 
     //Places
     public string _home;
@@ -75,7 +74,7 @@ public class PersonFile  {
     public string FamilyId;
 
     public int YearsOfSchool { get; set; }
-    public float NutritionLevel { get; set; }
+    public string NutritionLevel { get; set; }
 
     public string StartingBuild;
 
@@ -144,6 +143,10 @@ public class PersonFile  {
 
         NutritionLevel = pers.NutritionLevel;
         StartingBuild = pers.StartingBuild;
+
+        Weight = pers.Weight;
+        Height = pers.Height;
+        Nutrition1 = pers.Nutrition1;
     }
 
     void SavePersonStructs(Person pers)
@@ -188,4 +191,10 @@ public class PersonFile  {
     public Job SavedJob { get; set; }
 
     public Job PrevJob { get; set; }
+
+    public float Weight { get; set; }
+
+    public float Height { get; set; }
+
+    public Nutrition Nutrition1 { get; set; }
 }

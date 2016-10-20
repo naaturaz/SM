@@ -25,6 +25,9 @@ public class Person : General
     private List<General> _debugList = new List<General>();
 
     private int _age;
+    private float _weight;//kg
+    private float _height;//cm
+    private Nutrition _nutrition;
 
     private bool _isMajor; //says if a person is major age 
 
@@ -46,9 +49,8 @@ public class Person : General
     private int _dueMonth;
     private int _dueYear;
 
-    //how well feed is a person. 100 is max. 
-    //if person eat adds to this. This will be removed by one every : checkFoodElapsed
-    private float _nutritionLevel = 50;
+
+    private string _nutritionLevel = "Normal";
 
     ///Variables to allow the class be independet 
     //how often will check if obj has eaten
@@ -117,6 +119,24 @@ public class Person : General
     {
         get { return _homerFoodSrc; }
         set { _homerFoodSrc = value; }
+    }
+
+    public float Weight
+    {
+        get { return _weight; }
+        set { _weight = value; }
+    }
+
+    public float Height
+    {
+        get { return _height; }
+        set { _height = value; }
+    }
+
+    public Nutrition Nutrition1
+    {
+        get { return _nutrition; }
+        set { _nutrition = value; }
     }
 
     #region Initializing Obj
@@ -254,7 +274,7 @@ public class Person : General
         set { _isPregnant = value; }
     }
 
-    public float NutritionLevel
+    public string NutritionLevel
     {
         get { return _nutritionLevel; }
         set { _nutritionLevel = value; }
@@ -514,6 +534,12 @@ public class Person : General
         IsWidow = pF._isWidow;
         StartingBuild = pF.StartingBuild;
 
+        Weight = pF.Weight;
+        Height = pF.Height;
+
+        Nutrition1 = pF.Nutrition1;
+        Nutrition1.SetPerson(this);
+
         _body = new Body(this, pF);
 
         Program.InputMain.ChangeSpeed += _body.ChangedSpeedHandler;
@@ -557,6 +583,7 @@ public class Person : General
         DefineIfIsMajor();
         DefineBirthMonth();
         InitGeneralStuff();
+
     }
 
     /// <summary>
@@ -742,46 +769,46 @@ public class Person : General
 
     #region Person Nutrition
 
-    void ChangeNutritionLvl(float change)
-    {
-        _nutritionLevel += change;
-    }
+    //void ChangeNutritionLvl(float change)
+    //{
+    //    _nutritionLevel += change;
+    //}
 
     void CheckOnNutrition()
     {
-        ChangeNutritionLvl(-50f * Program.gameScene.GameTime1.TimeFactorInclSpeed());//-100
+        //ChangeNutritionLvl(-50f * Program.gameScene.GameTime1.TimeFactorInclSpeed());//-100
         KillStarve();
     }
 
-    /// <summary>
-    /// The action of getting some nutrition, sets the _nutritionLevel
-    /// </summary>
-    /// <param name="amt"></param>
-    /// <param name="item"></param>
-    void Nutrive(float amt, P item)
-    {
-        var nutriValue = BuildingPot.Control.ProductionProp.Food1.FindNutritionValue(item);
+    ///// <summary>
+    ///// The action of getting some nutrition, sets the _nutritionLevel
+    ///// </summary>
+    ///// <param name="amt"></param>
+    ///// <param name="item"></param>
+    //void Nutrive(float amt, P item)
+    //{
+    //    var nutriValue = BuildingPot.Control.ProductionProp.Food1.FindNutritionValue(item);
 
-        if (nutriValue == null)
-        {
-            Debug.Log("Not found nutriVal for:" + item);
-            return;
-        }
-        _nutritionLevel += (amt * nutriValue.NutritionVal * 3);//5 //the five is bz people is dying with food in there places 
-        //UnityEngine.Debug.Log(MyId + " nutrived nutriVal:" + amt * nutriValue + ". curr:" + _nutritionLevel);
-    }
+    //    if (nutriValue == null)
+    //    {
+    //        Debug.Log("Not found nutriVal for:" + item);
+    //        return;
+    //    }
+    //    _nutritionLevel += (amt * nutriValue.NutritionVal * 3);//5 //the five is bz people is dying with food in there places 
+    //    //UnityEngine.Debug.Log(MyId + " nutrived nutriVal:" + amt * nutriValue + ". curr:" + _nutritionLevel);
+    //}
 
     /// <summary>
     /// Of _nutrition level is so low will kill person
     /// </summary>
     void KillStarve()
     {
-        if (_nutritionLevel < 20)
+        if (_nutritionLevel == "Starve")
         {
             ChangeHappinesBy(-1);//   -5
             //UpdateInfo("Starving");
         }
-        if (_nutritionLevel < -200)//-545   -345
+        if (_nutritionLevel == "Dead")//-545   -345
         {
             if (string.IsNullOrEmpty(IsBooked))
             {
@@ -1138,6 +1165,11 @@ public class Person : General
     // Use this for initialization
     void Start()
     {
+
+        if (_nutrition == null)
+        {
+            _nutrition = new Nutrition(this);
+        }
 
         cam = Camera.main;
         base.Start();
@@ -1615,48 +1647,58 @@ public class Person : General
         t.Destroy();
     }
 
+    private MDate _lastTimeHome;
     public void HomeActivities()
     {
-        if (Home == null || Home.Inventory == null)
+        if (Home == null || Home.Inventory == null
+            //wont go in the same day
+            )
         { return; }
 
         DropFoodAtHome();
-        Eat();
+
+
+        //if (_lastTimeHome == Program.gameScene.GameTime1.CurrentDate()
+        //    //had to pass at least 20 days in caledar to eat
+        //    //other wise eats all the food really fast this should be called only once is gets home
+        //    || Program.gameScene.GameTime1.ElapsedDateInDaysToDate(_lastTimeHome) < 20)
+        //{
+        //   return; 
+        //}
+
+        //_lastTimeHome = Program.gameScene.GameTime1.CurrentDate();
+        //Eat();
     }
 
-    private float starveNutritionValue = 10f;
-    private void Eat()
+    float AdditionalFoodNeeds()
     {
-        //if is over 30 wont feed .GC
-        if (NutritionLevel > starveNutritionValue + 20)
+        if (NutritionLevel == "Normal")
         {
-            return;
+            return 0;
         }
+        return 2;
+    }
 
+    public void Eat()
+    {
         P item = Home.Inventory.GiveRandomFood();
-        if (item == P.None)
-        {
-            return;
-        }
+        var kgNeeded = ReturnAmountToEat(item) + AdditionalFoodNeeds();//in case is below normal it needs to eat more 
 
-        //float amt = (int)HowMuchINeedToBe100PointsFeed(item);
-        float gotAmt = Home.Inventory.RemoveByWeight(item, ReturnAmountToEat());//wil eat *kg of something for GC
-
-        ChangeHappinesBy(.1 * gotAmt);//.1
-        Nutrive(gotAmt, item);
+        float gotAmt = Home.Inventory.RemoveByWeight(item, kgNeeded);
+        _nutrition.AteThisMuch(item, gotAmt);
     }
 
     /// <summary>
-    /// bz when negative needs to eat way more 
     /// </summary>
     /// <returns></returns>
-    int ReturnAmountToEat()
+    float ReturnAmountToEat(P prod)
     {
-        if (NutritionLevel < 0)
+        if (_nutrition == null)
         {
-            return 60;
+            _nutrition = new Nutrition(this);
         }
-        return 20;
+
+        return Math.Abs((_nutrition.HowManyKGINeedOfThisToSupplyMyNeed(prod)));
     }
 
 
@@ -1935,18 +1977,18 @@ public class Person : General
         return 2;
     }
 
-    /// <summary>
-    /// Will tell u how much u will need of a tpye of food to be fed to 100 %
-    /// </summary>
-    /// <param name="item">the type of food</param>
-    /// <returns></returns>
-    private float HowMuchINeedToBe100PointsFeed(P item)
-    {
-        var nutriValue = BuildingPot.Control.ProductionProp.Food1.FindNutritionValue(item).NutritionVal;
-        var nutriNeed = 100 - _nutritionLevel;
+    ///// <summary>
+    ///// Will tell u how much u will need of a tpye of food to be fed to 100 %
+    ///// </summary>
+    ///// <param name="item">the type of food</param>
+    ///// <returns></returns>
+    //private float HowMuchINeedToBe100PointsFeed(P item)
+    //{
+    //    var nutriValue = BuildingPot.Control.ProductionProp.Food1.FindNutritionValue(item).NutritionVal;
+    //    var nutriNeed = 100 - _nutritionLevel;
 
-        return nutriNeed / nutriValue + 1;//+1 is to round up
-    }
+    //    return nutriNeed / nutriValue + 1;//+1 is to round up
+    //}
 
     #region Reproduction Having Kids & Stuff
 
@@ -2124,7 +2166,7 @@ public class Person : General
     /// <returns></returns>
     private bool AmINutrida()
     {
-        return NutritionLevel > 10;
+        return NutritionLevel == "Normal" ;
     }
 
     #endregion
@@ -2263,8 +2305,6 @@ public class Person : General
         get { return _projector; }
         set { _projector = value; }
     }
-
-
 
 
     public void CreateProjector()
@@ -2412,12 +2452,101 @@ public class Person : General
             CamControl.CAMRTS.InputRts.CenterCamTo(Work.transform);
         }
 
-        
+
     }
 
     #endregion
 
 
+
+    internal void NewWeight(float kgChanged)
+    {
+        Weight += kgChanged;
+
+        DefineNutritionLevel();
+    }
+
+    private void DefineNutritionLevel()
+    {
+        if (Weight >= NormalWeight())
+        {
+            NutritionLevel = "Normal";
+        }
+        else if (Weight >= LowWeight())
+        {
+            NutritionLevel = "Low";
+        } 
+        else if (Weight >= StarvingWeight())
+        {
+            NutritionLevel = "Starve";
+        } 
+        else if (Weight < StarvingWeight())
+        {
+            NutritionLevel = "Dead";
+        }
+    }
+
+    float WeightBase()
+    {
+        if (Gender==H.Male)
+        {
+            return 56.2f;
+        }
+        return 53.1f;
+    }
+
+    float WeightFactor()
+    {
+        if (Gender == H.Male)
+        {
+            return 1.41f;
+        }
+        return 1.36f;
+    }
+
+    //D. R. Miller Formula (1983)
+    //56.2 kg + 1.41 kg per 2.54cm over 152.4cm       (man)
+    //53.1 kg + 1.36 kg per 2.54cm over 152.4cm       (woman)
+    float NormalWeight()
+    {
+        var heightDiff = _height - 152.4f;
+        var times = heightDiff/2.54f;
+
+        return WeightBase() + (WeightFactor()*times);
+    }
+
+    float LowWeight()
+    {
+        var normal = NormalWeight();
+        var a15 = NormalWeight()*0.15f;
+        return NormalWeight() - a15;
+    }
+
+    float StarvingWeight()
+    {
+        var normal = NormalWeight();
+        var a40 = NormalWeight() * 0.40f;
+        return NormalWeight() - a40;
+    }
+
+
+
+
+
+    /// <summary>
+    /// in game 0.5f is grown male, so that is 170cm in real life 
+    /// </summary>
+    internal void InitHeightAndWeight()
+    {
+        if (Height != 0)
+        {
+            return;
+        }
+        var fact = 170f/0.5f;
+        Height = transform.localScale.x * fact;
+        Weight = NormalWeight();
+
+    }
 }
 
 public class PersonReport

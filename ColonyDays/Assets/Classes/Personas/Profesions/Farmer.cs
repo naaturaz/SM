@@ -46,6 +46,8 @@ public class Farmer : Profession
 
         //when get a number here is defined by wht worker is this on the building 
         //workers will be numbered on buildingsB
+
+        //todo cache 20 validated points in Farm and then no need of run this anymore
         FinRoutePoint = DefineFinalPoint(); 
 
         InitRoute();
@@ -60,25 +62,64 @@ public class Farmer : Profession
         Rect area = _person.Work.ReturnInGameObjectZone(H.FarmZone);
         var middlePointOfArea  = _person.Work.ReturnGroundMiddleOfInGameObjectZone(H.FarmZone);
 
-        return AssignRandomIniPosition(middlePointOfArea, area);
+        var newPoint = AssignRandomIniPosition(middlePointOfArea, area);
+        if (newPoint == new Vector3())
+        {
+            return middlePointOfArea;
+        }
+        return newPoint;
     }
 
-    Vector3 AssignRandomIniPosition(Vector3 origin, Rect area, float howFar = 0.5f)
+    private int count;
+    Vector3 AssignRandomIniPosition(Vector3 origin, Rect area)
     {
+        var howFar = HowFar();
+
         float x = UMath.Random(-howFar, howFar);
         float z = UMath.Random(-howFar, howFar);
         origin = new Vector3(origin.x + x, origin.y, origin.z + z);
 
-        //if (!area.Contains(new Vector2(origin.x, origin.z)))
-        //{
-        //    count++;
-        //    if (count > 1000)
-        //    {
-        //        throw new Exception("AssignRandomIniPosition() animal.cs");
-        //    }
-        //    origin = AssignRandomIniPosition(origin, area);
-        //}
+        if (!area.Contains(new Vector2(origin.x, origin.z)))
+        {
+            count++;
+            if (count > 1000)
+            {
+                Debug.Log("AssignRandomIniPosition() Farmer.cs over 1000");
+                //throw new Exception("AssignRandomIniPosition() Farmer.cs");
+                count = 0;
+                return new Vector3();
+            }
+            origin = AssignRandomIniPosition(origin, area);
+        }
         return origin;
+    }
+
+    private float HowFar()
+    {
+        if (_person.Work == null)
+        {
+            return 0.1f;
+        }
+
+        if (_person.Work.MyId.Contains("Small"))
+        {
+            return .5f;
+        } 
+        if (_person.Work.MyId.Contains("Med"))
+        {
+            return 1f;
+        }
+        if (_person.Work.MyId.Contains("XLarge"))
+        {
+            return 2.5f;
+        } 
+        if (_person.Work.MyId.Contains("Large"))
+        {
+            return 2f;
+        } 
+        //unkown
+        return .1f;
+        
     }
 
     void InitRoute()
@@ -103,14 +144,13 @@ public class Farmer : Profession
     /// </summary>
     private void ConformInBuildRouteField()
     {
-        if (PersonPot.Control.RoutesCache1.ContainANewerOrSameRoute(_person.Work.MyId + ".O", _person.Work.MyId + ".D",
-                new DateTime()))
-        {
-            Router1.TheRoute = PersonPot.Control.RoutesCache1.GiveMeTheNewerRoute();
-            Router1.IsRouteReady = true;
-            return;
-        }
-
+        //if (PersonPot.Control.RoutesCache1.ContainANewerOrSameRoute(_person.Work.MyId + ".O", _person.Work.MyId + ".D",
+        //        new DateTime()))
+        //{
+        //    Router1.TheRoute = PersonPot.Control.RoutesCache1.GiveMeTheNewerRoute();
+        //    Router1.IsRouteReady = true;
+        //    return;
+        //}
 
         List<Vector3> inBuildPoints = new List<Vector3>() 
         { _person.Work.BehindMainDoorPoint, FinRoutePoint};
@@ -124,8 +164,7 @@ public class Farmer : Profession
         Router1.TheRoute = TheRoute;
         Router1.IsRouteReady = true;
 
-
-        PersonPot.Control.RoutesCache1.AddReplaceRoute(TheRoute);
+        //PersonPot.Control.RoutesCache1.AddReplaceRoute(TheRoute);
     }
 
     /// <summary>

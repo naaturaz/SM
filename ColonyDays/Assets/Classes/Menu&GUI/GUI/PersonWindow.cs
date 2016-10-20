@@ -17,11 +17,16 @@ public class PersonWindow : GUIElement
     private Rect _invBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
 
     private GameObject _invIniPos;
+    private GameObject _inv_Ini_Pos_Gen;
 
     private ShowAInventory _showAInventory;
 
 
     private ShowAPersonBuildingDetails _aPersonBuildingDetails;
+
+    private GameObject _general;
+    private GameObject _gaveta;
+
 
     public Person Person1
     {
@@ -38,13 +43,17 @@ public class PersonWindow : GUIElement
 
     void InitObj()
     {
+        _general = GetChildThatContains(H.General);
+        _gaveta = GetChildThatContains(H.Gaveta);
+
         _invIniPos = GetGrandChildCalled(H.Inv_Ini_Pos);
+        _inv_Ini_Pos_Gen = GetGrandChildCalled("Inv_Ini_Pos_Gen");
 
         iniPos = transform.position;
 
         _title = GetChildThatContains(H.Title).GetComponent<Text>();
         _info = GetChildThatContains(H.Info).GetComponent<Text>();
-        _inv = GetChildThatContains(H.Bolsa).GetComponent<Text>();
+        _inv = FindGameObjectInHierarchy("Bolsa", _gaveta).GetComponent<Text>();
 
         var genBtn = GetChildThatContains(H.Gen_Btn).transform;
         var invBtn = GetChildThatContains(H.Inv_Btn).transform;
@@ -53,23 +62,14 @@ public class PersonWindow : GUIElement
         _invBtnRect = GetRectFromBoxCollider2D(invBtn);
     }
 
-
-    //private Person oldPerson;
-    //void CheckIfIsDiffNewPerson()
-    //{
-    //    if (_person != oldPerson)
-    //    {
-    //        _person.UnselectPerson();
-    //    }
-    //    oldPerson = _person;
-    //}
-
     public void Show(Person val)
     {
         if (_person != null)
         {
             _person.UnselectPerson();
         }
+
+        MakeThisTabActive(oldTabActive);
 
         _person = val;
         //CheckIfIsDiffNewPerson();
@@ -88,19 +88,21 @@ public class PersonWindow : GUIElement
         {
             return;
         }
+        MakeThisTabActive(oldTabActive);
+
 
         _title.text = _person.Name + "";
         _info.text = BuildPersonInfo();
 
         if (_showAInventory == null)
         {
-            _showAInventory = new ShowAInventory(_person.Inventory, gameObject, _invIniPos.transform.localPosition);
+            _showAInventory = new ShowAInventory(_person.Inventory, _gaveta, _invIniPos.transform.localPosition);
         }
             //diff  person
         else if (_showAInventory != null && _showAInventory.Inv != _person.Inventory)
         {
             _showAInventory.DestroyAll();
-            _showAInventory = new ShowAInventory(_person.Inventory, gameObject, _invIniPos.transform.localPosition);
+            _showAInventory = new ShowAInventory(_person.Inventory, _gaveta, _invIniPos.transform.localPosition);
 
             if (_aPersonBuildingDetails != null)
             {
@@ -113,7 +115,7 @@ public class PersonWindow : GUIElement
 
         if (_aPersonBuildingDetails == null)
         {
-            _aPersonBuildingDetails = new ShowAPersonBuildingDetails(_person, gameObject, _invIniPos.transform.localPosition);
+            _aPersonBuildingDetails = new ShowAPersonBuildingDetails(_person, _general, _inv_Ini_Pos_Gen.transform.localPosition);
         }
         else
         {
@@ -130,7 +132,7 @@ public class PersonWindow : GUIElement
 
         return "";
         string res = "Age: " + _person.Age + "\n Gender: " + _person.Gender
-                     + "\n Nutrition: " + _person.NutritionLevel.ToString("N0")
+                     + "\n Nutrition: " + _person.NutritionLevel
                      + "\n Profession: " + _person.ProfessionProp.ProfDescription
 
                      + "\n Spouse: " + Family.RemovePersonIDNumberOff(_person.Spouse)
@@ -232,14 +234,12 @@ public class PersonWindow : GUIElement
         //if click gen
         if (_genBtnRect.Contains(Input.mousePosition) && Input.GetMouseButtonUp(0))
         {
-            MakeAlphaColorMax(_info);
-            MakeAlphaColorZero(_inv);
+            MakeThisTabActive(_general);
         }
         //ig click inv
         else if (_invBtnRect.Contains(Input.mousePosition) && Input.GetMouseButtonUp(0))
         {
-            MakeAlphaColorMax(_inv);
-            MakeAlphaColorZero(_info);
+            MakeThisTabActive(_gaveta);
         }
 
         //then update inv info all the time 
@@ -247,8 +247,31 @@ public class PersonWindow : GUIElement
         {
             _inv.text = BuildStringInv(_person);
         }
+    }
 
-      
+    private GameObject oldTabActive;
+    /// <summary>
+    /// Use to swith Tabs on Window. Will hide all and make the pass one as active
+    /// </summary>
+    /// <param name="g"></param>
+    void MakeThisTabActive(GameObject g)
+    {
+        if (_person == null)
+        {
+            return;
+        }
+
+        //first time loaded ever in game 
+        if (g == null)
+        {
+            g = _general;
+        }
+
+        _general.SetActive(false);
+        _gaveta.SetActive(false);
+
+        g.SetActive(true);
+        oldTabActive = g;
     }
 
     public override void Hide()

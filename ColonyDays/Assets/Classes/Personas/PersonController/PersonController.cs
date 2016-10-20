@@ -211,6 +211,7 @@ public class PersonController : PersonPot
 
         IsAPersonHomeLessNow = pData.PersonControllerSaveLoad.IsAPersonHomeLessNow;
 
+        Program.MyScreen1.TownName = pData.PersonControllerSaveLoad.TownName;
 
         //persons
         for (int i = 0; i < pData.All.Count; i++)
@@ -1040,4 +1041,6 @@ public class PersonControllerSaveLoad
 
     public List<int> UnlockRegions = new List<int>();
 
+
+    public string TownName { get; set; }
 }

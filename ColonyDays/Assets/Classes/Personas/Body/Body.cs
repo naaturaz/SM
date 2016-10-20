@@ -224,6 +224,8 @@ public class Body //: MonoBehaviour //: General
         AddToBodyScale(toAdd);
 
         ParentBack();
+
+        _person.InitHeightAndWeight();
     }
 
 

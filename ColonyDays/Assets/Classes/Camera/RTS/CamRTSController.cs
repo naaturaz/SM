@@ -202,8 +202,6 @@ public class CamRTSController : CamControl
     //void LateUpdate()
     void Update()
     {
-
-
         //initiales current obj pos and rot to...
         InitializeObjects();
         CreateTargetAndUpdate();
@@ -319,30 +317,15 @@ public class CamRTSController : CamControl
         if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.E))
         {
             //CreateRotCam360GuidesY();
-            IsMouseMiddle = true;
+            //IsMouseMiddle = true;
             RotateDealer();
 
-            if (Input.GetKey(KeyCode.Q))
-            {
-                //rotateRTS.RotateCam(helpCam360GrabPosY, helpCam360MainY, target, camSensivity, smoothTime,
-                //ref velocity);
-                //AssignPosTo(Dir.Left);
-            } 
-            if (Input.GetKey(KeyCode.E))
-            {
-                //rotateRTS.RotateCam(helpCam360GrabPosY, helpCam360MainY, target, camSensivity, smoothTime,
-                //ref velocity);
-                //AssignPosTo(Dir.Right);
-
-            }
         }
         else if (Input.GetKeyUp(KeyCode.Q) || Input.GetKeyUp(KeyCode.E))
         {
-            IsMouseMiddle = false;
+            //IsMouseMiddle = false;
             CleanUpRotHelp();
         }
-        
-
     }
 
     private void AssignPosTo(Dir dir = Dir.None)

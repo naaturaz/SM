@@ -1102,6 +1102,12 @@ public class Building : General, Iinfo
         LayerRoutine("done");
         PositionFixed = true;
 
+        //so it donest show the help 
+        if (doubleBounds.Contains(HType))
+        {
+            Destroy(_maritimeBound);
+            Destroy(_terraBound);
+        }
         
 
         //Preview of the Base to help aling
@@ -1720,32 +1726,32 @@ public class Building : General, Iinfo
         if (HType == H.Bohio)
         {
             Families = new Family[1];
-            Families[0] = new Family(1, MyId, 0);
+            Families[0] = new Family(UMath.GiveRandom(1,4), MyId, 0);
         }
         //can hhave 1 famili with 3 kids
         else if (HType == H.HouseA || HType == H.HouseB)
         {
             Families = new Family[1];
-            Families[0] = new Family(3, MyId, 0);
+            Families[0] = new Family(UMath.GiveRandom(1, 4), MyId, 0);
         }
         //can hhave 2 famili with 3 kids each
         else if (HType == H.HouseTwoFloor)
         {
             Families = new Family[1];
-            Families[0] = new Family(5, MyId,0);
+            Families[0] = new Family(4, MyId,0);
         }
         //can hhave 1 famili with 5 kids
         else if (HType == H.HouseMed //|| HType == H.HouseMedB 
             )
         {
             Families = new Family[1];
-            Families[0] = new Family(5, MyId,0);
+            Families[0] = new Family(4, MyId,0);
         }
         //can hhave 1 famili with 5 kids
         else if (HType == H.HouseLargeA || HType == H.HouseLargeB || HType == H.HouseLargeC)
         {
             Families = new Family[1];
-            Families[0] = new Family(6, MyId, 0);
+            Families[0] = new Family(4, MyId, 0);
         }
         
         //resave familie

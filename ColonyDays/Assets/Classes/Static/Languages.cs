@@ -53,7 +53,7 @@ public class Languages
        //Raw
 	   { "Clay.Desc","In this building a worker will produce Clay, raw material needed for bricks and more"},
 	   { "Ceramic.Desc","In this building a worker will produce Ceramic products, such as dishes, jars, etc"},
-	   { H.FishingHut + ".Desc","In this building a worker will catch fishes on a waterbody"},
+	   { H.FishingHut + ".Desc","In this building a worker will catch fishes on a river"},
 	   { "FishRegular.Desc","In this building a worker will catch fishes on a waterbody"},
 	   { "Mine.Desc","In this building a worker will catch fishes on a waterbody"},
 	   { "MountainMine.Desc","In this building a worker will mine the mine and will produce always a random output"},
@@ -147,7 +147,7 @@ public class Languages
 	   { "LessSpeed.HoverSmall", "Less Speed"},
 	   { "ShowNoti.HoverSmall", "Notifications"},
 	   { "Menu.HoverSmall", "Main Menu"},
-	   { "QuickSave.HoverSmall", "Quick Save"},
+	   { "QuickSave.HoverSmall", "Quick Save [F]"},
 	   { "Bug Report.HoverSmall", "Report a bug"},
 	   { "Feedback.HoverSmall", "Feedback"},
 
@@ -193,17 +193,7 @@ public class Languages
 	   { "Current_Salary.HoverMed", "Workers will work in the place that pays the highest salary." +
 	                                " If 2 places pay the same salary, then the closest to home will be the one" +
 	                                " they will choose."},
-	   { "PirateThreat.HoverMed", "This is how aware are the pirates of your port. This increases as" +
-	                              "you have more money. If this reaches over 90 you will lose the game"},
 
-	   { "PortReputation.HoverMed", "The more people know about your port the more they will visit it." +
-	                                "If you want to increase this make sure you always have some orders" +
-	                                "on the port, supplier and shipyard"},
-	   { "Emigrate.HoverMed", "When people are unhappy for a few years they jusy leave. The bad" +
-	                          "is that they wont combeack, wont produce and wont have kids." +
-	                          "The only good thing is that they increase the 'Port Reputation'"},
-	   { "Food.HoverMed", "The more variety of foods a person has in their houses the happier they" +
-	                      "will be."},
 
 
        //Notifications
@@ -245,12 +235,24 @@ public class Languages
 
        //Mini help
        { "Camera", "Camera: Use [AWSD] or cursor to move. " +
-                   "Press mouse middle button and keep pressed to rotate"},
+                   "Press mouse middle button and keep pressed to rotate, or [Q] and [E]"},
        { "SeaPath", "Click on the left botton corner 'Show/hide sea path' " +
                     "button to show the closest path to the sea"},
        { "Region", "Region: You need to own a region to be able to build on it. Click on the For Sale sign in the" +
                    " middle of each region to buy it"},
        { "PeopleRange", "The huge blue circle around each building marks the range of it"},
+
+       { "PirateThreat.Help", "Pirate Threat: This is how aware are the pirates of your port. This increases as" +
+	                              "you have more money. If this reaches over 90 you will lose the game"},
+
+	   { "PortReputation.Help", "Port Reputation: The more people know about your port the more they will visit it." +
+	                                "If you want to increase this make sure you always have some orders" +
+	                                "on the port, supplier and shipyard"},
+	   { "Emigrate.Help", "Emigrates: When people are unhappy for a few years they jusy leave. The bad" +
+	                          "is that they wont combeack, wont produce and wont have kids." +
+	                          "The only good thing is that they increase the 'Port Reputation'"},
+	   { "Food.Help", "Food: The more variety of foods a person has in their houses the happier they" +
+	                      "will be."},
 
 	};
 

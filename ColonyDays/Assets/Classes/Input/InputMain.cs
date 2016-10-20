@@ -64,9 +64,7 @@ public class InputMain : InputParent {
         GeneralSwitch();
         ModeSwitcher();
         ChangeGameSpeed();
-        AddressPointerOutOfScreen();
-
-       
+        //AddressPointerOutOfScreen();
     }
 
     void AddressPointerOutOfScreen()
@@ -139,7 +137,7 @@ public class InputMain : InputParent {
         {
             Program.gameScene.controllerMain.MeshController.ForcedTerraScanning();
         }
-        else if (!Dialog.IsActive() && Input.GetKeyUp(KeyCode.Q))
+        else if (!Dialog.IsActive() && Input.GetKeyUp(KeyCode.F))
         {
             InputReport.Add("QuickSaveNow()");
             QuickSaveNow();
