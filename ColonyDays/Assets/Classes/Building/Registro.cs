@@ -738,13 +738,13 @@ public class Registro : MonoBehaviour
         return sum/AllBuilding.Count;
     }
 
-    internal string StringOfAllBuildings()
+    internal List<string> StringOfAllBuildings()
     {
-        string res = "...";
+        List<string> res = new List<string>();
         for (int i = 0; i < AllBuilding.Count; i++)
         {
-            res += AllBuilding.ElementAt(i).Value.MyId+".";
+            res.Add(AllBuilding.ElementAt(i).Value.MyId);
         }
-        return res+"...";
+        return res;
     }
 }

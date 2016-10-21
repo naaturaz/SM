@@ -40,6 +40,7 @@ public class BuildingWindow : GUIElement {
     private Vector3 _exportIniPosOnProcess;
 
     private GameObject _salary;
+    private GameObject _positions;
 
 
     //upg btns
@@ -50,8 +51,9 @@ public class BuildingWindow : GUIElement {
     private GameObject _cancelDemolish_Btn; //Upg_Mat_Btn
 
 
-    //Salary
+    //Texts
     private Text _currSalaryTxt;
+    private Text _currPositionsTxt;
 
 
 
@@ -99,11 +101,14 @@ public class BuildingWindow : GUIElement {
         _products = GetChildThatContains(H.Products);
         _upgrades = GetChildCalled(H.Upgrades);
 
-
         _salary = General.FindGameObjectInHierarchy("Salary", _general);
+        _positions = General.FindGameObjectInHierarchy("Positions", _general);
         
         var currSalary = FindGameObjectInHierarchy("Current_Salary", _salary);
         _currSalaryTxt = currSalary.GetComponent<Text>();
+
+        var currPos = FindGameObjectInHierarchy("Current_Positions", _positions);
+        _currPositionsTxt = currPos.GetComponent<Text>();
 
         
         _title = GetChildCalled(H.Title).GetComponent<Text>();
@@ -188,7 +193,6 @@ public class BuildingWindow : GUIElement {
     private void DemolishBtn()
     {
         _cancelDemolish_Btn.SetActive(false);
-       // bool fullyBuilt = _building.IsFullyBuilt();
        
         if (_building.Instruction == H.WillBeDestroy //|| !fullyBuilt
             )
@@ -256,11 +260,33 @@ public class BuildingWindow : GUIElement {
         }
     }
 
+    /// <summary>
+    /// Will hide salary and positions if is not fully built
+    /// </summary>
+    void HideShowSalAndPositions()
+    {
+        bool fullyBuilt = _building.IsFullyBuilt();
+        bool isAWorkPlace = isAWorkBuild(_building);
+
+        if (fullyBuilt && isAWorkPlace)
+        {
+            _salary.SetActive(true);
+            _positions.SetActive(true);
+        }
+        else
+        {
+            _salary.SetActive(false);
+            _positions.SetActive(false);
+        }
+    }
+
     private ShowAInventory _showAInventory;
     private int oldItemsCount;
     private string oldBuildID;
     private void LoadMenu()
     {
+        HideShowSalAndPositions();
+
         _title.text = _building.HType + "";
         _info.text = BuildInfo() + BuildCover();
 
@@ -292,6 +318,7 @@ public class BuildingWindow : GUIElement {
 
 
         _currSalaryTxt.text = BuildingPot.Control.Registro.SelectBuilding.DollarsPay+"";
+        _currPositionsTxt.text = BuildingPot.Control.Registro.SelectBuilding.MaxPeople + "";
         DemolishBtn();
     }
 
@@ -331,12 +358,19 @@ public class BuildingWindow : GUIElement {
     }
 
 
+    public static bool isAWorkBuild(Building build)
+    {
+        var isAHouse = build.HType.ToString().Contains("House") || build.HType == H.Bohio;
+        var isStorage = build.HType.ToString().Contains("Storage");
+
+        return !isAHouse && !isStorage;
+    }
 
 
 
     string BuildInfo()
     {
-        string res = Languages.ReturnString(_building.HType+".Desc") + "\n\n";
+        string res = Languages.ReturnString(_building.HType+".Desc") + "\n";
 
         res += IfInConstructionAddPercentageOfCompletion();
         
@@ -364,7 +398,7 @@ public class BuildingWindow : GUIElement {
 
             if (_building.HType == H.Masonry)
             {
-                res += "\n\n Buildings ready to be built:";
+                res += "\n Buildings ready to be built:";
 
                 for (int i = 0; i < _building.BuildersManager1.GreenLight.Count; i++)
                 {
@@ -399,7 +433,7 @@ public class BuildingWindow : GUIElement {
     string ReturnAvailablePositions()
     {
         var res = "Available positions:";
-        var availPos = Book.GiveMeStat(_building.HType).MaxPeople - _building.PeopleDict.Count;
+        var availPos = _building.MaxPeople - _building.PeopleDict.Count;
 
         if (availPos < 0)
         {
@@ -433,8 +467,7 @@ public class BuildingWindow : GUIElement {
         {
             res += "Type:" + _building.HType
              + "\n ID:" + _building.MyId
-            + "\n MaxWorkers:" + Book.GiveMeStat(_building.HType).MaxPeople
-            + "\n Workers:";
+            + "\n Recommended max workers:" + Book.GiveMeStat(_building.HType).MaxPeople;
         }
         else
         {
@@ -470,6 +503,11 @@ public class BuildingWindow : GUIElement {
 
         //change salary
         _currSalaryTxt.text = BuildingPot.Control.Registro.SelectBuilding.ChangeSalary(action);
+    }  
+    
+    public void ClickedOnChangeMaxAmtOfWorkers(string action)
+    {
+        _currPositionsTxt.text = BuildingPot.Control.Registro.SelectBuilding.ChangeMaxAmoutOfWorkers(action);
     }
 
 

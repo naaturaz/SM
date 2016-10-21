@@ -26,6 +26,9 @@ public class DataContainer
 
     [XmlArrayItem("ProgramData")]
     public ProgramData ProgramData;
+    
+    [XmlArrayItem("FinalReport")]
+    public FinalReport FinalReport;
 
 
     public void Save(string path)

@@ -634,6 +634,7 @@ public class Building : General, Iinfo
         InitJobRelated();
 
         StartCoroutine("ThirtySecUpdate");
+        StartCoroutine("SixtySecUpdate");
 
         DefinePreferedStorage();
     }
@@ -697,8 +698,31 @@ public class Building : General, Iinfo
 
 #endregion
 
-
-
+    private MDate _checkDate;
+    private IEnumerator SixtySecUpdate()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(60);
+            if (Instruction == H.WillBeDestroy)
+            {
+                if (_checkDate != null)
+                {
+                    //bz they saty there forever now if they do they will add them self there after 30 days
+                    if (Program.gameScene.GameTime1.ElapsedDateInDaysToDate(_checkDate) > 30)
+                    {
+                        PersonPot.Control.Queues.AddToDestroyBuildsQueue(Anchors, MyId);
+                        _checkDate = Program.gameScene.GameTime1.CurrentDate();
+                    }
+                }
+                //start
+                else
+                {
+                    _checkDate = Program.gameScene.GameTime1.CurrentDate();
+                }
+            }
+        }
+    }
 
 
     private Decoration _decoration;
@@ -1599,6 +1623,9 @@ public class Building : General, Iinfo
         _oldProd = _currentProd;
     }
 
+
+
+
     #region Salary
 
     /// <summary>
@@ -1726,13 +1753,13 @@ public class Building : General, Iinfo
         if (HType == H.Bohio)
         {
             Families = new Family[1];
-            Families[0] = new Family(UMath.GiveRandom(1,4), MyId, 0);
+            Families[0] = new Family(UMath.GiveRandom(2,4), MyId, 0);
         }
         //can hhave 1 famili with 3 kids
         else if (HType == H.HouseA || HType == H.HouseB)
         {
             Families = new Family[1];
-            Families[0] = new Family(UMath.GiveRandom(1, 4), MyId, 0);
+            Families[0] = new Family(UMath.GiveRandom(2, 4), MyId, 0);
         }
         //can hhave 2 famili with 3 kids each
         else if (HType == H.HouseTwoFloor)
@@ -3110,7 +3137,7 @@ public class Building : General, Iinfo
     {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(1, 2)); // wait
+            yield return new WaitForSeconds(Random.Range(10, 20)); // wait
             CheckIfOrdersAreNeeded();
         }
     }
@@ -3150,6 +3177,47 @@ public class Building : General, Iinfo
     #region Job Related
 
     private int _maxPeople;//max people this builging can hold. workers 
+
+
+    internal string ChangeMaxAmoutOfWorkers(string action)
+    {
+        if (action == "Less")
+        {
+            _maxPeople--;
+        }
+        else if (action == "More")
+        {
+            _maxPeople++;
+        }
+
+        if (_maxPeople < 0)
+        {
+            _maxPeople = 0;
+        }
+
+        //fire people
+        FirePeopleIfNeeded();
+
+        CheckIfNoOpenPosLeftThenRemoveFromList();
+        CheckIfNeedsToBeAddedToList();
+
+        return _maxPeople + "";
+    }
+
+    private void FirePeopleIfNeeded()
+    {
+        var peopleToBeFired = PeopleDict.Count - _maxPeople;
+
+        for (int i = 0; i < peopleToBeFired; i++)
+        {
+            var index = PeopleDict.Count - (1 + i);//starting from the last towards the first
+            var person = Family.FindPerson(PeopleDict[index]);
+            person.WasFired = true; 
+            PersonPot.Control.RestartControllerForPerson(person.MyId);
+            person.Brain.SetNewWorkFound();
+        }
+    }
+
 
     private void InitJobRelated()
     {
@@ -4081,6 +4149,8 @@ public class Building : General, Iinfo
     }
 
 #endregion
+
+
 
 
 

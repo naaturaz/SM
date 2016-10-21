@@ -493,4 +493,21 @@ public class Structure : StructureParent
     {
         return CurrentProd.Product != P.Stop;
     }
+
+
+    //cached farm points
+    List<Vector3> _cachedWorkPoints = new List<Vector3>();
+    internal Vector3 ReturnFarmWorkPoint()
+    {
+        if (_cachedWorkPoints.Count < 20)
+        {
+            return new Vector3();
+        }
+        return _cachedWorkPoints[UMath.GiveRandom(0, _cachedWorkPoints.Count)];
+    }
+
+    internal void AddAsFarmWorkPoint(Vector3 newPoint)
+    {
+        _cachedWorkPoints.Add(newPoint);
+    }
 }

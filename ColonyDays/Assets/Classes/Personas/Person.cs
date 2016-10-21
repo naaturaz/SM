@@ -2292,7 +2292,11 @@ public class Person : General
             Brain.BlackList.RemoveAt(index);
             RedoBrain(Brain.BlackList);
         }
+
+        HidePaths();
     }
+
+
 
     private General _projector;
     private General _light;
@@ -2441,6 +2445,18 @@ public class Person : General
     }
 
 
+    private void HidePaths()
+    {
+        if (_showPathToHome != null)
+        {
+            _showPathToHome.Hide();
+        }
+        if (_showPathToWork != null)
+        {
+            _showPathToWork.Hide();
+        }
+    }
+
     internal void ShowLocationOf(string _key)
     {
         if (_key == "Home" && Home != null)
@@ -2547,6 +2563,9 @@ public class Person : General
         Weight = NormalWeight();
 
     }
+
+    //todo saveload
+    public bool WasFired { get; set; }
 }
 
 public class PersonReport

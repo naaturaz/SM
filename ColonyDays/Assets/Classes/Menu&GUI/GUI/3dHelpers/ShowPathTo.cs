@@ -216,5 +216,24 @@ public class ShowPathTo
         }
         Toggle();
     }
+
+    /// <summary>
+    /// Will hide the Path 
+    /// </summary>
+    internal void Hide()
+    {
+        //fisrt time
+        if (!_isToShowNow && !_isToHideNow)
+        {
+            return;
+        }
+        //means is hidden already
+        if (_isToHideNow)
+        {
+            return;
+        }
+        //if not togle so it hides
+        Toggle();
+    }
 }
 

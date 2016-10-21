@@ -1856,6 +1856,16 @@ public class Brain
         //CheckMeOnSystemNow();
         AddMeToSystemWaitingList();
         CheckAround(false, false, false, false, false, true);
+    }   
+    
+    /// <summary>
+    /// Used when fired peoeple
+    /// </summary>
+    public void SetNewWorkFound()
+    {
+        //so can reroutre and stuff
+        AddMeToSystemWaitingList();
+        CheckAround(false, true, false, false, false);
     }
 
     /// <summary>
@@ -2156,8 +2166,13 @@ public class Brain
     void CheckWork()
     {
         //isallset is here so will check if closest building exist
-        if (!ItHasOneAlready(HPers.Work) || _person.Work.Instruction == H.WillBeDestroy)
+        if (!ItHasOneAlready(HPers.Work) || _person.Work.Instruction == H.WillBeDestroy || _person.WasFired)
         {
+            if (_person.WasFired)
+            {
+                _person.WasFired = false;
+            }
+
             var newWork = _jobManager.GiveWork(_person);
             _person.Work = newWork;
             WorkPositionsUpdate();

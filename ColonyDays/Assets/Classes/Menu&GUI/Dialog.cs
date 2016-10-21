@@ -184,6 +184,27 @@ public class Dialog
         LogUploader.UploadDirectToAWSCarlos(path);
 
         return path;
+    }  
+    
+    public static string UploadXMLFile(string type, FinalReport report)
+    {
+        var nameFile =
+              SteamFriends.GetPersonaName() + "." + SteamUser.GetSteamID() +
+              "_" + DateTime.Now.ToString("yy.MM.dd") +
+              "_" + DateTime.Now.ToString("HH.mm.ss") +
+              "_" + type + ".zip";
+
+        var path = Application.dataPath + "/" + nameFile;
+        Debug.Log(path);
+
+        //write xml file
+        DataContainer DataCollection = new DataContainer();
+        DataCollection.FinalReport = report;
+        DataCollection.Save(path);
+        //
+
+        LogUploader.UploadDirectToAWSCarlos(path);
+        return path;
     }
 
     private static string FileHeader()

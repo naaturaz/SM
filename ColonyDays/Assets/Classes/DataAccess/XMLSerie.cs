@@ -253,4 +253,17 @@ public class XMLSerie
     }
 
 #endregion
+
+#region Reports
+    public static string WriteXMLFinalReport(FinalReport report)
+    {
+        DataContainer DataCollection = new DataContainer();
+        DataCollection.FinalReport = report;
+
+        var root = Path.Combine(Application.dataPath, "Final.txt");
+        DataCollection.Save(root);
+
+        return root;
+    }
+#endregion
 }

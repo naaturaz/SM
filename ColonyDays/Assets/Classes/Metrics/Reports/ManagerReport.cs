@@ -8,10 +8,11 @@ using UnityEngine;
 public class ManagerReport
 {
     static float _lastFPS;
+    private static FinalReport _finalReport;
 
     public static void Start()
     {
-        
+        _finalReport = new FinalReport();
     }
 
     public static void Update()
@@ -34,7 +35,7 @@ public class ManagerReport
 
         InputReport.FinishReport();
         FPSReport.FinishReport();
-        FinalReport.FinishReport();
+        _finalReport.FinishReport();
     }
 
 
@@ -48,7 +49,7 @@ public class ManagerReport
 
         InputReport.FinishReport(p);
         FPSReport.FinishReport(p);
-        FinalReport.FinishReport(p);
+        _finalReport.FinishReport(p);
     }
 }
 

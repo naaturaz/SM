@@ -71,11 +71,11 @@ public class RotateRTS : GenericCameraComponent {
         //new todo comment and test
         if (Input.GetKey(KeyCode.Q))
         {
-            changeValue = -.5f * camSensivity;
+            changeValue = .4f * camSensivity;
         }
         if (Input.GetKey(KeyCode.E))
         {
-            changeValue = .5f * camSensivity;
+            changeValue = -.4f * camSensivity;
         }
 
         if (changeValue != 0)

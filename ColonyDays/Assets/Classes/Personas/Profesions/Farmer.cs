@@ -47,8 +47,14 @@ public class Farmer : Profession
         //when get a number here is defined by wht worker is this on the building 
         //workers will be numbered on buildingsB
 
-        //todo cache 20 validated points in Farm and then no need of run this anymore
-        FinRoutePoint = DefineFinalPoint(); 
+        //will return cache 20 validated points in Farm and then no need of run this anymore
+        FinRoutePoint = _person.Work.ReturnFarmWorkPoint();
+
+        if (FinRoutePoint == new Vector3())
+        {
+            FinRoutePoint = DefineFinalPoint(); 
+        }
+
 
         InitRoute();
     }
@@ -67,6 +73,8 @@ public class Farmer : Profession
         {
             return middlePointOfArea;
         }
+        //since is validated will be added as cached point 
+        _person.Work.AddAsFarmWorkPoint(newPoint);
         return newPoint;
     }
 
