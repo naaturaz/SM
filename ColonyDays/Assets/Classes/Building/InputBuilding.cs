@@ -113,7 +113,7 @@ public class InputBuilding : BuildingPot {
 
     private void AdressIfBuildingMode()
     {
-        if (oldInputMode == InputMode)
+        if (oldInputMode == InputMode || count > 0)
         {
             return;
         }
@@ -171,7 +171,6 @@ public class InputBuilding : BuildingPot {
             else
             {
                 _orgStructuresFromMouseHitPoint[count].HideLineUpHelpers();
-                
             }
             count++;
         }
@@ -241,7 +240,7 @@ public class InputBuilding : BuildingPot {
             //Structures
             if (Input.GetKeyUp(KeyCode.R) && (DefineCategory(DoingNow) == Ca.Structure || (DefineCategory(DoingNow) == Ca.Shore)))
             {
-                InputReport.Add("RotateBuilding");
+                ManagerReport.AddInput("RotateBuilding");
                 Control.CurrentSpawnBuild.RotationAction();
                 AudioCollector.PlayOneShot("ClickMetal1",0);
             }
@@ -404,7 +403,7 @@ public class InputBuilding : BuildingPot {
         {
             if (Input.GetKeyUp(item.Key))
             {
-                InputReport.Add("SelecNewBuild: " + item.Key);
+                ManagerReport.AddInput("SelecNewBuild: " + item.Key);
 
                 //selection of the type of Building is goonna be build 
                 selection = item.Value;
@@ -438,7 +437,7 @@ public class InputBuilding : BuildingPot {
                         //print(indexSelection + ".indexSelection");
                         BuildNowNew(item.Value);
                         //print(selection + "."+item.Value );
-                        InputReport.Add("BuildNowNew: " + item.Value);
+                        ManagerReport.AddInput("BuildNowNew: " + item.Value);
 
                     }
                 }

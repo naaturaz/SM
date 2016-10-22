@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -20,9 +21,14 @@ public class ManagerReport
         //every 60sec
         if (Time.time > _lastFPS + 60f)
         {
-            FPSReport.Add(HUDFPS.FPS().ToString("n0"));
+            _finalReport.AddFPS(HUDFPS.FPS());
             _lastFPS = Time.time;
         }
+    }
+
+    public static void AddInput(string a)
+    {
+        _finalReport.AddInput(a);
     }
 
     public static void FinishAllReports()
@@ -33,8 +39,6 @@ public class ManagerReport
             return;
         }
 
-        InputReport.FinishReport();
-        FPSReport.FinishReport();
         _finalReport.FinishReport();
     }
 
@@ -47,8 +51,6 @@ public class ManagerReport
             return;
         }
 
-        InputReport.FinishReport(p);
-        FPSReport.FinishReport(p);
         _finalReport.FinishReport(p);
     }
 }

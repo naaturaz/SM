@@ -7,6 +7,9 @@ using UnityEngine.UI;
 public class ShowInvetoryItem : GUIElement
 {
     private GameObject _icon;
+    private GameObject _back;
+    private GameObject _back2;
+    private GameObject _back3;
 
     private InvItem _invItem;
 
@@ -42,6 +45,9 @@ public class ShowInvetoryItem : GUIElement
 	void Start ()
 	{
 	    _icon = FindGameObjectInHierarchy("Icon", gameObject);
+	    _back = FindGameObjectInHierarchy("Back", gameObject);
+        _back2 = FindGameObjectInHierarchy("Back2", gameObject);
+        _back3 = FindGameObjectInHierarchy("Back3", gameObject);
 
         _textCol1 = FindGameObjectInHierarchy("Text", gameObject).GetComponent<Text>();
 
@@ -149,9 +155,27 @@ public class ShowInvetoryItem : GUIElement
 
     void Set3Text()
     {
+        if (InvItem1.Key == P.Year)
+        {
+            Set3TextForReport();
+            return;
+        }
+
         _textCol1.text = InvItem1.Key+"";
         _textCol2.text = ReturnAmt();
         _textCol3.text = ReturnVol();
+    }
+
+    private void Set3TextForReport()
+    {
+        //-1 bz +1 is added when Year is added on invv
+        _textCol1.text = InvItem1.Key+": "+ (InvItem1.Amount -1);
+        _textCol2.text = "";
+        _textCol3.text = "";
+
+        _back.SetActive(false);
+        _back2.SetActive(false);
+        _back3.SetActive(false);
     }
 
     string ReturnAmt()

@@ -73,6 +73,7 @@ class TownLoader
     /// <returns></returns>
     static string GetRandomTownFile()
     {
+        //todo read below if needed
         //uncomment line below to create Template towns. Also make sure in PErsonController
         //the amt of people spawned will be zero
         //return "";

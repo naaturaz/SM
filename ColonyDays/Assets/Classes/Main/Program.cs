@@ -124,13 +124,13 @@ public class Program : MonoBehaviour {
     public void MouseClickListener(string type)
     {
         _mouseListener.DetectMouseClick(type);
-        InputReport.Add(type);
+        ManagerReport.AddInput(type);
     }
 
     public static void MouseClickListenerSt(string type)
     {
         _mouseListener.DetectMouseClick(type);
-        InputReport.Add(type);
+        ManagerReport.AddInput(type);
     }
 
     public static void KillGame()

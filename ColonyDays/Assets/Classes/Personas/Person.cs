@@ -540,6 +540,8 @@ public class Person : General
         Nutrition1 = pF.Nutrition1;
         Nutrition1.SetPerson(this);
 
+        WasFired = pF.WasFired;
+
         _body = new Body(this, pF);
 
         Program.InputMain.ChangeSpeed += _body.ChangedSpeedHandler;

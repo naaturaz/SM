@@ -86,7 +86,7 @@ public class ShowAPersonBuildingDetails
 
     float ReturnY(int i)
     {
-        return -5.5f * i;//-3.5
+        return -3.4f * i;//-3.5
     }
 
     string Home()
@@ -100,7 +100,7 @@ public class ShowAPersonBuildingDetails
 
     string Work()
     {
-        if (_person.Home != null)
+        if (_person.Work != null)
         {
             return _person.Work.HType+"";
         }

@@ -29,14 +29,14 @@ public class Languages
 	   { H.HeavyLoad + ".Desc","Really important building. This workers construct new buildings and work as wheelbarrowers once have nothing to do"},
 
        //House
-	   { "Bohio.Desc","Bohio house, really rudimentary conditions, people is unhappy living here, a family can have 1 kid maximum" +_houseTail},
-	   { "HouseA.Desc","Wooden Small house, a family can have 2 kids maximum" +_houseTail},
-	   { "HouseB.Desc","Small house, a family can have 2 kids maximum" +_houseTail },
-	   { "HouseTwoFloor.Desc","Wooden Medium house, a family can have 3 kids maximum"+_houseTail},
-	   { "HouseMed.Desc","Medium house, a family can have 2 or 3 kids maximum"+_houseTail},
-	   { "HouseLargeA.Desc","Large house, a family can have 6 kids maximum"+_houseTail},
-	   { "HouseLargeB.Desc","Large house, a family can have 6 kids maximum"+_houseTail},
-	   { "HouseLargeC.Desc","Large house, a family can have 6 kids maximum"+_houseTail},
+	   { "Bohio.Desc","Bohio house, really rudimentary conditions, people is unhappy living here, a family can have 2-3 kid maximum" +_houseTail},
+	   { "HouseA.Desc","Wooden Small house, a family can have 2-3 kids maximum" +_houseTail},
+	   { "HouseB.Desc","Small house, a family can have 2-3 kids maximum" +_houseTail },
+	   { "HouseTwoFloor.Desc","Wooden Medium house, a family can have 4 kids maximum"+_houseTail},
+	   { "HouseMed.Desc","Medium house, a family can have 4 kids maximum"+_houseTail},
+	   { "HouseLargeA.Desc","Large house, a family can have 4 kids maximum"+_houseTail},
+	   { "HouseLargeB.Desc","Large house, a family can have 4 kids maximum"+_houseTail},
+	   { "HouseLargeC.Desc","Large house, a family can have 4 kids maximum"+_houseTail},
        
        //Farms
        //Animal
@@ -171,6 +171,7 @@ public class Languages
        { "Inv_Btn.HoverSmall", "Inventory Tab"},
        { "Upg_Btn.HoverSmall", "Upgrades Tab"},
        { "Prd_Btn.HoverSmall", "Production Tab"},
+       { "Sta_Btn.HoverSmall", "Stats Tab"},
        { "Ord_Btn.HoverSmall", "Orders Tab"},
 	   { "Stop_Production.HoverSmall", "Stop Production"},
 	   { "Demolish_Btn.HoverSmall", "Demolish"},
@@ -178,10 +179,13 @@ public class Languages
 	   { "Less Salary.HoverSmall", "Pay less"},
 	   { "Next_Stage_Btn.HoverSmall", "Buy Next Stage"},
 	   { "Current_Salary.HoverSmall", "Current salary"},
+	   { "Current_Positions.HoverSmall", "Current positions"},
 	   { "Add_Import_Btn.HoverSmall", "Add an import"},
 	   { "Add_Export_Btn.HoverSmall", "Add an export"},
 	   { "Upg_Cap_Btn.HoverSmall", "Upgrades capacity"},
 	   { "Close_Btn.HoverSmall", "Close"},
+	   { "ShowPath.HoverSmall", "Show path"},
+	   { "ShowLocation.HoverSmall", "Show location"},
 
        //addOrder windiw
 	   { "Amt_Tip.HoverSmall", "Amount of prod"},
@@ -228,7 +232,7 @@ public class Languages
        { "BadWaterHeight", "The building is too low or high on the water"},
        { "LockedRegion", "You need to own this region to build in here"},
        { "HomeLess", "People in this house have no where to go. Please build a new house that" +
-                     " can hold this family and try again deleting this house"},   
+                     " can hold this family and try again"},   
        { "LastFood", "Can not destroy the only Storage in your village"},
        { "LastMasonry", "Can not destroy the only Masonry in your village"},
 

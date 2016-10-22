@@ -97,7 +97,7 @@ public class Structure : StructureParent
         //var scale = Anchors;
 
         //startin satge is save on ReSaveStartinStage()
-        BuildingPot.Control.Registro.AddBuildToAll(MyId, HType, scale, Category, transform.position,
+        BuildingPot.Control.Registro.AddBuildToAll(this, scale, Category, transform.position,
             Inventory,
             PeopleDict, 
             LandZone1,

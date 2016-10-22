@@ -629,9 +629,10 @@ public class Building : General, Iinfo
         if (!IsLoadingFromFile)
         {
             CurrentProd = BuildingPot.Control.ProductionProp.ReturnDefaultProd(HType);
+            InitJobRelated();
+
         }
         
-        InitJobRelated();
 
         StartCoroutine("ThirtySecUpdate");
         StartCoroutine("SixtySecUpdate");
@@ -704,7 +705,8 @@ public class Building : General, Iinfo
         while (true)
         {
             yield return new WaitForSeconds(60);
-            if (Instruction == H.WillBeDestroy)
+            if (Instruction == H.WillBeDestroy && PeopleDict.Count == 0 && 
+                (Inventory == null || Inventory.IsEmpty()))
             {
                 if (_checkDate != null)
                 {
@@ -3178,6 +3180,11 @@ public class Building : General, Iinfo
 
     private int _maxPeople;//max people this builging can hold. workers 
 
+    public int MaxPeople
+    {
+        get { return _maxPeople; }
+        set { _maxPeople = value; }
+    }
 
     internal string ChangeMaxAmoutOfWorkers(string action)
     {
@@ -3213,8 +3220,11 @@ public class Building : General, Iinfo
             var index = PeopleDict.Count - (1 + i);//starting from the last towards the first
             var person = Family.FindPerson(PeopleDict[index]);
             person.WasFired = true; 
+
             PersonPot.Control.RestartControllerForPerson(person.MyId);
-            person.Brain.SetNewWorkFound();
+            
+            
+            //person.Brain.SetNewWorkFound();
         }
     }
 
@@ -3288,10 +3298,7 @@ public class Building : General, Iinfo
     }
 
 
-    public int MaxPeople
-    {
-        get { return _maxPeople; }
-    }
+
 
 #endregion
 

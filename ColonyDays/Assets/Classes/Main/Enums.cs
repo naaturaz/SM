@@ -586,4 +586,9 @@ public enum G//for General Random stuff
     Home, Sea,
 }
 
+public enum Ron1
+{
+    Brick, Wood, Carpintery, Clay, SaltMine, BlackSmith, FishHut, Masonry, LightHouse, Church
+}
+
 public static class Enums { }

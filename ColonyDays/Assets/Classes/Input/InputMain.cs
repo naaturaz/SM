@@ -126,7 +126,7 @@ public class InputMain : InputParent {
     {
         if (Input.GetKeyUp(KeyCode.Escape))
         {
-            InputReport.Add(KeyCode.Escape+"");
+            ManagerReport.AddInput(KeyCode.Escape + "");
             EscapeKey();
         }
         else if (Input.GetMouseButtonUp(1))
@@ -139,7 +139,7 @@ public class InputMain : InputParent {
         }
         else if (!Dialog.IsActive() && Input.GetKeyUp(KeyCode.F))
         {
-            InputReport.Add("QuickSaveNow()");
+            ManagerReport.AddInput("QuickSaveNow()");
             QuickSaveNow();
         }
     }
@@ -248,7 +248,7 @@ public class InputMain : InputParent {
     {
         if (Input.GetKeyUp(KeyCode.B))
         {
-            InputReport.Add("Mode.Building");
+            ManagerReport.AddInput("Mode.Building");
             BuildingPot.InputMode = Mode.Building;
             //_audioPlayer.PlaySoundOneTime(RootSound.hoverMenuSound);
             DestroyCurrentSpawnBuild();

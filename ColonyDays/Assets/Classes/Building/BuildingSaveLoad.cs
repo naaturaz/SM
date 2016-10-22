@@ -216,6 +216,9 @@ public class BuildingSaveLoad : BuildingPot
         s.CurrentProd = regFile.CurrentProd;
         s.Anchors = regFile.Anchors.ToList();
 
+        s.ProductionReport = regFile.ProductionReport;
+        s.MaxPeople = regFile.MaxPeople;
+
         Program.gameScene.BatchAdd(s);
         Control.Registro.Structures.Add(s.MyId, Control.CurrentSpawnBuild as Structure);
         Control.Registro.AllBuilding.Add(s.MyId, Control.CurrentSpawnBuild);

@@ -882,6 +882,11 @@ public class Brain
     /// </summary>
     void ListOfActionsInHome()
     {
+        if (_person.WasFired)
+        {
+            SetNewWorkFound();
+        }
+
         _routesWereStarted = StartRoutes();
         _person.ProfessionProp.Update();//bz need to do somesutff when on home 
 
@@ -1861,7 +1866,7 @@ public class Brain
     /// <summary>
     /// Used when fired peoeple
     /// </summary>
-    public void SetNewWorkFound()
+    void SetNewWorkFound()
     {
         //so can reroutre and stuff
         AddMeToSystemWaitingList();

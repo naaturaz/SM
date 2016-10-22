@@ -4,15 +4,16 @@ using UnityEngine;
 /*
  * Each person and building will have one inventory
 */
-public class Inventory  {
+public class Inventory
+{
 
     //this is the items the inventory has inside
-    private List<InvItem> _inventItems =  new List<InvItem>();
+    private List<InvItem> _inventItems = new List<InvItem>();
     private string _info;
     private string _locMyId;
     private bool _isAStorage;
 
-    List<P> _foodItems=new List<P>(); 
+    List<P> _foodItems = new List<P>();
 
     //Cubic meters of a Inventory
     private float _capacityVol;
@@ -50,7 +51,7 @@ public class Inventory  {
         set { _isAStorage = value; }
     }
 
-    public Inventory(){}
+    public Inventory() { }
 
     public Inventory(string myId, H hTypeP)
     {
@@ -64,8 +65,8 @@ public class Inventory  {
         }
 
         if (hTypeP == H.YearReport)
-        {
-            Add(P.Year, float.Parse(LocMyId));
+        {//bz is called add will stop when the amt is zero //+1 is bz zero doesnt get added
+            _inventItems.Add(new InvItem(P.Year, float.Parse(LocMyId) +1));
         }
     }
 
@@ -156,13 +157,13 @@ public class Inventory  {
     {
         if (key == P.None || key == P.Food || amt == 0)
         {
-           //Debug.Log("ret Tried to add to inv:"+ key +" amt:"+ amt);
+            //Debug.Log("ret Tried to add to inv:"+ key +" amt:"+ amt);
             return;
         }
 
         if (key == P.RandomMineOutput || key == P.RandomFoundryOutput)
         {
-           //Debug.Log("trace random");
+            //Debug.Log("trace random");
             DealWithRandomOutput(key, amt);
             return;
         }
@@ -175,8 +176,8 @@ public class Inventory  {
         else
         {
             AddToCategory(key);
-            _inventItems.Add(new InvItem( key , amt));
-            SetAmtWithKey(key,amt);
+            _inventItems.Add(new InvItem(key, amt));
+            SetAmtWithKey(key, amt);
         }
 
         AddressGameInventory(key, amt, true);
@@ -197,14 +198,14 @@ public class Inventory  {
         else
         {
             GameController.ResumenInventory1.GameInventory.RemoveByWeight(key, amt);
-        } 
+        }
     }
 
     #region Main Inventory
     public void AddToSpecialInv(P key)
     {
         InventItems.Add(new InvItem(key, 0));
-        
+
     }
 
     public void SetToSpecialInv(P key, float amt)
@@ -212,11 +213,11 @@ public class Inventory  {
         SetAmtWithKey(key, amt);
     }
 
-#endregion
+    #endregion
 
     private void AddToCategory(P key)
     {
-        if (CategorizeProd(key)==PCat.Food)
+        if (CategorizeProd(key) == PCat.Food)
         {
             _foodItems.Add(key);
         }
@@ -242,7 +243,7 @@ public class Inventory  {
 
         AddItems(listItems);
     }
-    
+
     /// <summary>
     /// The add of more that one item to the inventory
     /// </summary>
@@ -296,11 +297,11 @@ public class Inventory  {
         }
     }
 
-    public string Info(){return _info;}
+    public string Info() { return _info; }
 
     public bool IsEmpty()
     {
-        if (_inventItems.Count == 0) { return true;}
+        if (_inventItems.Count == 0) { return true; }
         return false;
     }
 
@@ -349,7 +350,7 @@ public class Inventory  {
 
         if (build == null)
         {
-           //Debug.Log("building not found:"+LocMyId);
+            //Debug.Log("building not found:"+LocMyId);
             return 1;
         }
 
@@ -417,7 +418,7 @@ public class Inventory  {
 
 
 
-    
+
 
     /// <summary>
     /// Gives the best food
@@ -442,11 +443,11 @@ public class Inventory  {
     {
         if (prod == P.Bean || prod == P.Potato || prod == P.SugarCane || prod == P.Corn
             || prod == P.Chicken || prod == P.Egg || prod == P.Pork || prod == P.Beef
-            || prod == P.Fish  || prod == P.Sugar || prod == P.Coconut || prod == P.Banana ||
+            || prod == P.Fish || prod == P.Sugar || prod == P.Coconut || prod == P.Banana ||
 
             prod == P.CornFlower || prod == P.Bread || prod == P.Carrot || prod == P.Tomato
             || prod == P.Cucumber || prod == P.Cabbage || prod == P.Lettuce || prod == P.SweetPotato
-            || prod == P.Yucca || prod == P.Pineapple 
+            || prod == P.Yucca || prod == P.Pineapple
             //|| prod == P.Mango || prod == P.Avocado || prod == P.Guava || prod == P.Orange 
             || prod == P.Papaya || prod == P.Chocolate)
         {
@@ -465,11 +466,11 @@ public class Inventory  {
     {
         List<P> res = new List<P>();
 
-        if (pCat==PCat.Food)
+        if (pCat == PCat.Food)
         {
             return FoodCatItems;
         }
-        
+
         return res;
     }
 
@@ -490,8 +491,8 @@ public class Inventory  {
         }
 
         return res;
-    }   
-    
+    }
+
     /// <summary>
     /// Use for see how much food is it in all Storages
     /// </summary>
@@ -534,7 +535,7 @@ public class Inventory  {
     /// <param name="prod"></param>
     /// <param name="amt"></param>
     /// <returns></returns>
-    internal bool HasEnoughtCapacityToStoreThis( P prod, float amt)
+    internal bool HasEnoughtCapacityToStoreThis(P prod, float amt)
     {
         var volOfLoad = Program.gameScene.ExportImport1.CalculateVolume(prod, amt);
 
@@ -604,7 +605,7 @@ public class Inventory  {
         float newI = 0;
 
         //doing a Pseud While loop
-        for (i = 0; i < iniVol; i=i+newI)
+        for (i = 0; i < iniVol; i = i + newI)
         {
             //gets new item
             var newItem = GiveMeRandomItem(vol);
@@ -690,7 +691,7 @@ public class Inventory  {
         for (int i = 0; i < InventItems.Count; i++)
         {
             Order order = new Order(InventItems[i].Key, "", LocMyId);
-            res.Add(order);            
+            res.Add(order);
         }
         return res;
     }

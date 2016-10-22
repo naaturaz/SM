@@ -284,7 +284,7 @@ public class DragSquare : Trail
         var middleOfGameObj = MiddlePos(localOnScreenPoly);
 
         //this is the call when it add the collider rectangle to the world and save the RegFile in Registro
-        BuildingPot.Control.Registro.AddBuildToAll(MyId, HType, localOnScreenPoly, Category, middleOfGameObj, 
+        BuildingPot.Control.Registro.AddBuildToAll(this, localOnScreenPoly, Category, middleOfGameObj, 
             Inventory,  
             PeopleDict,
             LandZone1,

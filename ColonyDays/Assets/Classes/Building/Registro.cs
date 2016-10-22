@@ -24,7 +24,7 @@ public class Registro : MonoBehaviour
     private Dictionary<string, Building> _allBuilding = new Dictionary<string, Building>();
     private Building _selectBuilding = new Building();
 
-    
+
     private List<Building> _toDestroyBuilding = new List<Building>();
 
     /// <summary>
@@ -98,7 +98,7 @@ public class Registro : MonoBehaviour
                 a.Value.MyId.Contains("Church") == false &&
                 a.Value.MyId.Contains("Tavern") == false).ToList();
 
-        if (works.Count==0)
+        if (works.Count == 0)
         {
             return 0;
         }
@@ -106,11 +106,11 @@ public class Registro : MonoBehaviour
         var avg = works.Average(a => a.Value.DollarsPay);
         var workers = works.Sum(a => a.Value.PeopleDict.Count);
 
-        return (float)avg*workers;
+        return (float)avg * workers;
     }
 
 
-#region ToDestroyBuilding
+    #region ToDestroyBuilding
     public void AddToDestroyBuilding(Building build)
     {
         _toDestroyBuilding.Add(build);
@@ -125,7 +125,7 @@ public class Registro : MonoBehaviour
     {
         return _toDestroyBuilding.Find(a => a.MyId == myIdP);
     }
-#endregion
+    #endregion
 
 
 
@@ -140,13 +140,13 @@ public class Registro : MonoBehaviour
     {
         var build = Brain.GetBuildingFromKey(myId);
         AddToDestroyBuilding(Brain.GetBuildingFromKey(myId));
-        
-       //Debug.Log("Registro RemoveItem");
+
+        //Debug.Log("Registro RemoveItem");
         PersonPot.Control.BuildersManager1.RemoveConstruction(myId);//so its removed from the BuilderManager
 
         BuildingPot.Control.DockManager1.RemoveFromDockStructure(myId, build.HType);
 
-   
+
         ////so its save to AllRegFiles
         AllBuilding[myId].Instruction = H.WillBeDestroy;
         ResaveOnRegistro(myId);
@@ -193,7 +193,7 @@ public class Registro : MonoBehaviour
         {
             return;
         }
- 
+
         build.AddToClosestWheelBarrowAsOrderEvacuateAllInv();
     }
 
@@ -211,7 +211,7 @@ public class Registro : MonoBehaviour
         {
             return;
         }
-        
+
         AllRegFile.RemoveAt(index);
     }
 
@@ -251,7 +251,7 @@ public class Registro : MonoBehaviour
         //Poly List that only need a valid NW, NE, and SW
         SMe m = new SMe();
         //throwing rays so we keep the exact Y values 
-        Vector3 NW = m.Vertex.BuildVertexWithXandZ( minX, maxZ);
+        Vector3 NW = m.Vertex.BuildVertexWithXandZ(minX, maxZ);
         Vector3 NE = m.Vertex.BuildVertexWithXandZ(maxX, maxZ);
         Vector3 SE = m.Vertex.BuildVertexWithXandZ(maxX, minZ);
         Vector3 SW = m.Vertex.BuildVertexWithXandZ(minX, minZ);
@@ -324,8 +324,8 @@ public class Registro : MonoBehaviour
     /// Will add a poly with the seq NW, NE, SE, SW to the _allBuilding List. then will call UpdateCurrentVertexRect()
     /// Adds the file to Registro All that is the save list to file of buildings
     /// </summary>
-    public void AddBuildToAll(string myId, H type, List<Vector3> poly, Ca categ, Vector3 iniPosition,
-        Inventory inventory, 
+    public void AddBuildToAll(Building build, List<Vector3> poly, Ca categ, Vector3 iniPosition,
+        Inventory inventory,
         List<string> PeopleDict,
         List<VectorLand> LandZone1,
         List<Vector3> polyHoriz = null,
@@ -333,10 +333,10 @@ public class Registro : MonoBehaviour
         Vector3 tileScale = new Vector3(), List<int> parts = null,
         H dominantSide = H.None, H startingStage = H.None, int rotationFacerIndex = -1, string materialKey = "",
         List<Vector3> planesOnSoilPos = null, List<int> partsOnSoil = null, Vector3 min = new Vector3(),
-        Vector3 max = new Vector3(), H instructionP = H.None, BookedHome BookedHome1 = null, 
+        Vector3 max = new Vector3(), H instructionP = H.None, BookedHome BookedHome1 = null,
         Dispatch dispatch = null, Family[] Families = null,
         int dollarsPay = 0,
-        List<Vector3> anchors = null, Dock dock = null, string root = "" 
+        List<Vector3> anchors = null, Dock dock = null, string root = ""
         )
     {
         // 12 hours to find this OMG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -357,22 +357,22 @@ public class Registro : MonoBehaviour
         }
 
         //ading to All
-        RegFile regFile = new RegFile(myId, type, to, categ,iniPosition,
-            inventory, 
+        RegFile regFile = new RegFile(build, to, categ, iniPosition,
+            inventory,
             PeopleDict, LandZone1,
             toHoriz, tilePosVert: tilePosVert, tilePosHor: tilePosHor,
-            planesOnAirPos: planesOnAirPos, tileScale: tileScale, partsOnAir: parts, dominantSide: dominantSide, startingStage: startingStage, rotationFacerIndex: rotationFacerIndex, 
+            planesOnAirPos: planesOnAirPos, tileScale: tileScale, partsOnAir: parts, dominantSide: dominantSide, startingStage: startingStage, rotationFacerIndex: rotationFacerIndex,
             materialKey: materialKey, planesOnSoilPos: planesOnSoilPos, partsOnSoil: partsOnSoil, min: min, max: max,
-            instructionP: instructionP,  bookedHome: BookedHome1, dispatch: dispatch, familes: Families,
-            dollarsPay: dollarsPay, 
+            instructionP: instructionP, bookedHome: BookedHome1, dispatch: dispatch, familes: Families,
+            dollarsPay: dollarsPay,
             anchors: anchors, dock: dock, root: root);
 
         //UVisHelp.CreateHelpers(anchors, Root.blueCube);
         AddToAll(regFile);
-        AddToBuilderManager(myId);
+        AddToBuilderManager(build.MyId);
 
         AddSpecToList(categ);
-        if (_locHoverVert.Count > 0){UpdateCurrentVertexRect(_locHoverVert);}
+        if (_locHoverVert.Count > 0) { UpdateCurrentVertexRect(_locHoverVert); }
         //use on the drawing debug functionalitie only:
         //toDraw.Add(to);
         //toDraw.Add(toHoriz);
@@ -394,7 +394,7 @@ public class Registro : MonoBehaviour
         Building st = Brain.GetBuildingFromKey(myId);
         if (st.IsLoadingFromFile)
         {
-           return;
+            return;
         }
 
         PersonPot.Control.BuildersManager1.AddNewConstruction(st.MyId, st.HType, 2, st.transform.position);
@@ -421,7 +421,7 @@ public class Registro : MonoBehaviour
 
         var build = BuildingPot.Control.CurrentSpawnBuild;
         //means is a CancelDemolish
-        if (build==null)
+        if (build == null)
         {
             build = SelectBuilding;
             BuildingPot.Control.CurrentSpawnBuild = SelectBuilding;
@@ -552,6 +552,9 @@ public class Registro : MonoBehaviour
 
         regFile.PlantSave1 = build.PlantSave1;
         regFile.CurrentProd = build.CurrentProd;
+
+        regFile.ProductionReport = build.ProductionReport;
+        regFile.MaxPeople = build.MaxPeople;
     }
 
     /// <summary>
@@ -628,16 +631,16 @@ public class Registro : MonoBehaviour
 
         for (int i = 0; i < _allRegFile.Count; i++)
         {
-            if (!_allRegFile[i].IsCollidingWithMe(polyPass))           
-            {               
-                count++;          
+            if (!_allRegFile[i].IsCollidingWithMe(polyPass))
+            {
+                count++;
             }
         }
 
         //if all the obj are not colliding then...
-        if (count == _allRegFile.Count)     
-        {       
-            res = false;   
+        if (count == _allRegFile.Count)
+        {
+            res = false;
         }
         return res;
     }
@@ -673,7 +676,7 @@ public class Registro : MonoBehaviour
 
     internal List<Family> AllFamilies()
     {
-        List<Family>  res = new List<Family>();
+        List<Family> res = new List<Family>();
 
         for (int i = 0; i < AllRegFile.Count; i++)
         {
@@ -691,10 +694,24 @@ public class Registro : MonoBehaviour
     /// </summary>
     internal void ResaveAllBuildings()
     {
+        var error = 0;
         for (int i = 0; i < AllBuilding.Count; i++)
         {
-            ResaveOnRegistro(AllRegFile[i], AllBuilding.ElementAt(i).Value, false);
+            if (AllBuilding.ElementAt(i).Value.MyId == AllRegFile[i].MyId)
+            {
+                ResaveOnRegistro(AllRegFile[i], AllBuilding.ElementAt(i).Value, false);
+            }
+            //means that somehow are not in sync
+            //this happens only when destroyed a bulding befofre finished built
+            //still on game and save
+            else
+            {
+                error++;
+                var build = AllBuilding.First(a => a.Value.MyId == AllRegFile[i].MyId);
+                ResaveOnRegistro(AllRegFile[i], build.Value, false);
+            }
         }
+        Debug.Log("Margin error ReSaving: " + error);
     }
 
     /// <summary>
@@ -735,7 +752,7 @@ public class Registro : MonoBehaviour
         {
             sum += AllBuilding.ElementAt(i).Value.transform.position;
         }
-        return sum/AllBuilding.Count;
+        return sum / AllBuilding.Count;
     }
 
     internal List<string> StringOfAllBuildings()

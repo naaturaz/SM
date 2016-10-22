@@ -270,7 +270,7 @@ public class Trail : Way
 
     public void AddWayToRegistro()
     {
-        BuildingPot.Control.Registro.AddBuildToAll(MyId, HType, BoundsVertic, Category,
+        BuildingPot.Control.Registro.AddBuildToAll(this, BoundsVertic, Category,
             transform.position, 
             Inventory,  
             PeopleDict,
@@ -307,7 +307,7 @@ public class Trail : Way
 
         //anchors are resave set on GetAnchors.Bridge
 
-        BuildingPot.Control.Registro.AddBuildToAll(MyId, HType,  activeBound, Category,
+        BuildingPot.Control.Registro.AddBuildToAll(this,  activeBound, Category,
             transform.position,
             Inventory,  
             PeopleDict, LandZone1,

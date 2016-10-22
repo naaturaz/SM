@@ -20,9 +20,11 @@ public class BuildingWindow : GUIElement {
     private Rect _ordBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
     private Rect _prdBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
     private Rect _upgBtnRect;
+    private Rect _staBtnRect;
 
     private GameObject _ordBtn;//the btn for orders
     private GameObject _prdBtn;//the btn for 
+    private GameObject _staBtn;//the btn for 
 
     //tabs
     private GameObject _general;
@@ -30,8 +32,10 @@ public class BuildingWindow : GUIElement {
     private GameObject _upgrades;
     private GameObject _products;
     private GameObject _orders;
+    private GameObject _stats;
 
     private GameObject _invIniPos;
+    private GameObject _invIniPosSta;
 
     private Vector3 _importIniPos;
     private Vector3 _exportIniPos;    
@@ -100,6 +104,7 @@ public class BuildingWindow : GUIElement {
         _orders = GetChildThatContains(H.Orders);
         _products = GetChildThatContains(H.Products);
         _upgrades = GetChildCalled(H.Upgrades);
+        _stats = GetChildCalled("Stats");
 
         _salary = General.FindGameObjectInHierarchy("Salary", _general);
         _positions = General.FindGameObjectInHierarchy("Positions", _general);
@@ -120,6 +125,7 @@ public class BuildingWindow : GUIElement {
         _displayProdInfo = GetGrandChildCalled(H.Display_Lbl).GetComponent<Text>();//bolsa bz tht algorith has a bugg tht names cannot be the same or start with the same
 
         _invIniPos = GetGrandChildCalled(H.Inv_Ini_Pos);
+        _invIniPosSta = GetGrandChildCalled("Inv_Ini_Pos_Sta");
 
 
 
@@ -131,12 +137,16 @@ public class BuildingWindow : GUIElement {
         var prdBtn = GetChildCalled(H.Prd_Btn).transform;
         _prdBtn = GetChildThatContains(H.Prd_Btn);
 
+        _staBtn = GetChildCalled("Sta_Btn");
+        var staBtn = GetChildCalled("Sta_Btn").transform;
+
 
         _genBtnRect = GetRectFromBoxCollider2D(genBtn);
         _invBtnRect = GetRectFromBoxCollider2D(invBtn);
         _ordBtnRect = GetRectFromBoxCollider2D(_ordBtn.transform);
         _upgBtnRect = GetRectFromBoxCollider2D(upgBtn.transform);
         _prdBtnRect = GetRectFromBoxCollider2D(prdBtn.transform);
+        _staBtnRect = GetRectFromBoxCollider2D(staBtn.transform);
 
 
         _importIniPos = GetGrandChildCalled(H.IniPos_Import).transform.position;
@@ -181,7 +191,7 @@ public class BuildingWindow : GUIElement {
         
         
         //_upg_Mat_Btn.SetActive(true);
-        _upg_Cap_Btn.SetActive(true);
+        //_upg_Cap_Btn.SetActive(true);
 
         CheckIfMatMaxOut();
         CheckIfCapMaxOut();
@@ -211,11 +221,24 @@ public class BuildingWindow : GUIElement {
 
     private void HideSalaryIfHouseOrStorage()
     {
-        if (_building.IsHouse() || _building.MyId.Contains("Storage") || _building.Category == Ca.Way)
+        if (_building.IsHouse() || _building.MyId.Contains("Storage") || _building.Category == Ca.Way ||
+            _building.HType == H.Masonry || _building.HType == H.HeavyLoad 
+            || _building.HType == H.LightHouse
+            || _building.IsNaval())
         {
            _salary.SetActive(false);
+           _staBtn.SetActive(false);
+           _prdBtn.SetActive(false);
         }
         else
+        {
+            _salary.SetActive(true);
+            _staBtn.SetActive(true);
+            _prdBtn.SetActive(true);
+        }
+
+        if (_building.HType == H.Masonry || _building.HType == H.HeavyLoad || _building.HType == H.LightHouse
+            || _building.IsNaval())
         {
             _salary.SetActive(true);
         }
@@ -332,14 +355,28 @@ public class BuildingWindow : GUIElement {
         _reports.Clear();
 
         var pastItems = 0;
-        for (int i = 0; i < _building.ProductionReport.Count; i++)
+
+        for (int i = 0; i < ShowLastYears(); i++)
         {
-            var a = new ShowAInventory(_building.ProductionReport[i], _upgrades.gameObject, 
-                _invIniPos.transform.localPosition + new Vector3(0, pastItems*-3.5f*i,0));
+            var a = new ShowAInventory(_building.ProductionReport[i], _stats.gameObject, 
+                _invIniPosSta.transform.localPosition + new Vector3(0, pastItems*-3.5f*i,0));
 
             _reports.Add(a);
             pastItems = _building.ProductionReport[i].InventItems.Count;
         }
+    }
+
+    /// <summary>
+    /// so it only shows the last 5 years or less if less
+    /// </summary>
+    /// <returns></returns>
+    int ShowLastYears()
+    {
+        if (_building.ProductionReport.Count < 6)
+        {
+            return _building.ProductionReport.Count;
+        }
+        return 5;
     }
 
     /// <summary>
@@ -543,6 +580,10 @@ public class BuildingWindow : GUIElement {
         {
             MakeThisTabActive(_products);
         }
+        else if (_staBtnRect.Contains(Input.mousePosition) && Input.GetMouseButtonUp(0))
+        {
+            MakeThisTabActive(_stats);
+        }
     }
 
 
@@ -569,6 +610,7 @@ public class BuildingWindow : GUIElement {
         _orders.SetActive(false);
         _upgrades.SetActive(false);
         _products.SetActive(false);
+        _stats.SetActive(false);
 
         g.SetActive(true);
         oldTabActive = g;
@@ -732,7 +774,7 @@ public class BuildingWindow : GUIElement {
     /// </summary>
     void HideUpgCapBtn()
     {
-        _upg_Cap_Btn.SetActive(false);
+        //_upg_Cap_Btn.SetActive(false);
     }
 
 

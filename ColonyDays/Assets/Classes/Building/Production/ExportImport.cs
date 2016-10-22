@@ -183,6 +183,14 @@ public class ExportImport
 
         _prodSpecs.Add(new ProdSpec(P.RandomMineOutput, 150, 4100, 100));
         _prodSpecs.Add(new ProdSpec(P.RandomFoundryOutput, 150, 4100, 100));
+       
+        
+        
+
+
+
+        //for report purposes, and needed here only  for the icon root 
+        _prodSpecs.Add(new ProdSpec(P.Year, 150, 4100, 100));
     }
 
 

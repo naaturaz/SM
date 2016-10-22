@@ -175,8 +175,11 @@ public class RegFile  {
     //for now will be used only by HouseMed
     public string Root;
 
+    public List<Inventory> ProductionReport;
+    public int MaxPeople;
 
-    public RegFile(string myId, H type, Rect dimOnMap, Ca category, Vector3 iniPosition, 
+
+    public RegFile(Building build, Rect dimOnMap, Ca category, Vector3 iniPosition, 
         Inventory InventoryP, 
         List<string> peopleDict,
         List<VectorLand> LandZone1,
@@ -191,8 +194,8 @@ public class RegFile  {
         List<Vector3> anchors = null, Dock dock = null, string root = ""
         )
     {
-        MyId = myId;
-        HType = type;
+        MyId = build.MyId;
+        HType = build.HType;
         _dimOnMap = dimOnMap;
         Category = category;
         _iniPos = iniPosition;
@@ -226,6 +229,9 @@ public class RegFile  {
         Dock1 = dock;
 
         Root = root;
+
+        ProductionReport = build.ProductionReport;
+        MaxPeople = build.MaxPeople;
     }
 
     public RegFile() { }

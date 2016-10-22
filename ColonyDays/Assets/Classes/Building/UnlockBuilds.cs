@@ -320,7 +320,8 @@ class BRequires
         {
             return;
         }
-        string res = HType + " build is lock.\nTo Unlock: ";
+        //string res = HType + " build is lock.\nTo Unlock: ";
+        string res = "To unlock: ";
         int appends = 0;
 
         if (Persons != 0)

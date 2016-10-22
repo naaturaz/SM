@@ -997,9 +997,9 @@ public class StartingCondition
         iniGold = iniGoldP;
         iniDollar = iniDollarP;
         iniWheelBarrow = iniWheelBarrowP;
-        iniTool = iniWheelBarrowP;
-        iniCrate = iniWheelBarrowP;
-        iniCart = iniWheelBarrowP;
+        iniTool = iniWheelBarrowP/2;
+        iniCrate = iniWheelBarrowP/2;
+        iniCart = iniWheelBarrowP/2;
         _thisDifficultyLevel = thisDifficultyLevel;
     }
 }
