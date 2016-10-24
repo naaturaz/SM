@@ -9,6 +9,7 @@ public class FinalReport
 {
     public static  string Separator = "  |  ";
     public  int People;
+    public  MDate GameDate;
     public  int Emigrate;
     public  float Food;
     public  string Happy;
@@ -40,6 +41,7 @@ public class FinalReport
     private  void GatherReport()
     {
         People = PersonPot.Control.All.Count;
+        GameDate = Program.gameScene.GameTime1.CurrentDate();
         Emigrate = PersonPot.Control.EmigrateController1.Emigrates.Count;
         Food =GameController.ResumenInventory1.ReturnAmountOnCategory(PCat.Food);
         Happy = PersonPot.Control.OverAllHappiness();
