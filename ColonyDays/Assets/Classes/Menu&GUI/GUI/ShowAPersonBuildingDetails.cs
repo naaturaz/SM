@@ -52,6 +52,7 @@ public class ShowAPersonBuildingDetails
 
         _items.Add("Home", Home());
         _items.Add("Work", Work());
+        _items.Add("Food Source", Food());
     }
 
     private void InitPerson()
@@ -103,6 +104,15 @@ public class ShowAPersonBuildingDetails
         if (_person.Work != null)
         {
             return _person.Work.HType+"";
+        }
+        return "None";
+    }   
+    
+    string Food()
+    {
+        if (_person.Work != null)
+        {
+            return _person.FoodSource.HType+"";
         }
         return "None";
     }

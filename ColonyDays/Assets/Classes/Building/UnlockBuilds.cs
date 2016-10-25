@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 public class UnlockBuilds
 {
-    private List<BRequires> _list ;
+    private List<BRequires> _list;
     private Dictionary<H, BRequires> _dict = new Dictionary<H, BRequires>();
 
     public UnlockBuilds()
@@ -24,7 +24,7 @@ public class UnlockBuilds
 
     private void Init()
     {
-        _list  = new List<BRequires>()
+        _list = new List<BRequires>()
         {
             //infr
             new BRequires(H.Road, H.OnlyForDev),
@@ -140,7 +140,7 @@ public class UnlockBuilds
         }
     }
 
-    
+
 
     internal string RequirementsNeeded(H type)
     {
@@ -162,7 +162,7 @@ class BRequires
     public float PirateThreat;
 
     //priors build that need to exist 
-    public List<H> PriorBuilds = new List<H>(); 
+    public List<H> PriorBuilds = new List<H>();
 
     //The sugarMill for example needs 20,000KG of SugarCane on stock before can be built
     public List<Order> ProductRequired = new List<Order>();
@@ -179,7 +179,7 @@ class BRequires
 
     public BRequires(H hType, int persons = 50, float food = 1000, float dollars = 0,
         float portReputation = 5, float pirateTreath = 50, List<H> priorBuilds = null,
-        List<Order> prodRequired = null )
+        List<Order> prodRequired = null)
     {
         HType = hType;
         Persons = persons;
@@ -287,6 +287,13 @@ class BRequires
             SetRequirementsNeededInfoMsg();
         }
 
+        //for option playing all unlock buildings
+        if (CurrentState == H.Lock && Program.gameScene.IsAnUnLockGame())
+        {
+            CurrentState = H.Unlock;
+            InfoMsg = "";
+        }
+
         if (!IsAHouseBelowCapMax())
         {
             CurrentState = H.Max_Cap_Reach;
@@ -328,20 +335,20 @@ class BRequires
         {
             res += Persons + " persons. ";
             appends++;
-        }   
+        }
         if (Food != 0)
         {
-            res += Unit.WeightConverted(Food) + " " + Unit.WeightUnit() +" of food. ";
+            res += Unit.WeightConverted(Food) + " " + Unit.WeightUnit() + " of food. ";
             appends++;
-        }    
+        }
         if (Dollars != 0)
         {
             res += Dollars + " dollars. ";
             appends++;
-        }  
+        }
         if (PortReputation != 0)
         {
-            res += "Port reputation at least at " + PortReputation +". ";
+            res += "Port reputation at least at " + PortReputation + ". ";
             appends++;
         }
         if (PirateThreat != 0)
@@ -350,23 +357,23 @@ class BRequires
             appends++;
         }
 
-        if (ProductRequired!=null)
+        if (ProductRequired != null)
         {
             for (int i = 0; i < ProductRequired.Count; i++)
             {
                 res += ProductRequired[i].Product + " " + Unit.WeightConverted(ProductRequired[i].Amount)
                     + " " + Unit.WeightUnit() + ". ";
                 appends++;
-            } 
+            }
         }
 
-        if (PriorBuilds!=null)
+        if (PriorBuilds != null)
         {
             for (int i = 0; i < PriorBuilds.Count; i++)
             {
                 res += ".At least 1: " + PriorBuilds[i] + ". ";
                 appends++;
-            } 
+            }
         }
 
         res = DescriptionWindow.CheckIfAppend3(ref appends, res);

@@ -36,8 +36,12 @@ public class GameScene : General
     public static Structure dummySpawnPoint; //for help everywhere()
     private List<Structure> dummiesSpwnPoint = new List<Structure>(); //for help everywhere()
 
-
+    //load save in BuildingSaveLoad.cs
     private GameTime _gameTime = new GameTime();
+    //people will grow ard 3x faster than anything else bz game is boring like is now 
+    private GameTime _gameTimePeople;
+    
+    
     private GameController _gameController = new GameController();
     private ExportImport _exportImport = new ExportImport();
 
@@ -132,6 +136,14 @@ public class GameScene : General
         get { return _gameVersion; }
         set { _gameVersion = value; }
     }
+
+    public GameTime GameTimePeople
+    {
+        get { return _gameTimePeople; }
+        set { _gameTimePeople = value; }
+    }
+
+
 
     private void ProgramDataInit()
     {
@@ -245,6 +257,11 @@ public class GameScene : General
 
 
         ProgramDataInit();
+
+        if (GameTimePeople == null)
+        {
+            GameTimePeople = new GameTime(3f);
+        }
 
     }
 
@@ -414,7 +431,7 @@ public class GameScene : General
             return;
         }
         GameTime1.FixedUpdate();
-        
+        GameTimePeople.FixedUpdate();
     }
 
     string AddCachedReoutesCount()
@@ -779,4 +796,20 @@ public class GameScene : General
 
 
 #endregion
+
+    //there are at least two types: 
+    //lock: buildings are lock and user needs to unlock them 
+    //unlock: all buildings are unlock
+    private H _typeOfGame = H.Lock;//bz traditional is the default 
+
+    public H TypeOfGame
+    {
+        get { return _typeOfGame; }
+        set { _typeOfGame = value; }
+    }
+
+    internal bool IsAnUnLockGame()
+    {
+        return TypeOfGame == H.Unlock;
+    }
 }

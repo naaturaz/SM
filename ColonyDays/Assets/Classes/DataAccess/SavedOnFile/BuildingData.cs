@@ -63,7 +63,13 @@ public class BuildingControllerData
     ///GameTime Data
     /// 
     public GameTime _GameTime;
+    public GameTime GameTimePeople { get; set; }
+
 
     ///GameController Data
     public GameController _GameController;
+
+
+
+    public H TypeOfGame { get; set; }
 }

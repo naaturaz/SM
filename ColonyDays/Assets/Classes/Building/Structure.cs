@@ -403,14 +403,10 @@ public class Structure : StructureParent
             AddToConstruction(100000);
             //needed for in case this is saved and load
             PersonPot.Control.Queues.AddToDestroyBuildsQueue(Anchors, MyId);
+            HideAll();   
         }
-
         BuildingPot.Control.Registro.RemoveItem(Category, MyId);
-        //HideAll();   
     }
-
-    
-
 
     private void HideAll()
     {

@@ -24,10 +24,13 @@ public class FinalReport
     public  List<float> FPS = new List<float>();
     public int TtlFPS;
     public float AverageFPS;
+
+    public List<int> Speed = new List<int>();
+    public List<string> SpeedInfo = new List<string>();
+    public float AverageSpeed;
     
     public  float TimeSec;
     public  float TimeMin;
-    
 
 
 
@@ -57,14 +60,17 @@ public class FinalReport
             ttlTemp += FPS[i];
         }
         AverageFPS = ttlTemp/FPS.Count;
-        //
 
         TimeSec = Time.time;
         TimeMin = Time.time/60;
 
-        //
-        //var a = DateTime.Parse(TimeSec + "");
-        //TimeParsed = a+"";
+        // average
+        var tempSpeedTtl = 0;
+        for (int i = 0; i < Speed.Count; i++)
+        {
+            tempSpeedTtl += Speed[i];
+        }
+        AverageSpeed = (float)tempSpeedTtl/Speed.Count;
     }
 
     public void AddInput(string add)
@@ -73,11 +79,16 @@ public class FinalReport
         TtlInputs++;
     }
 
-
     public void AddFPS(float add)
     {
        FPS.Add(add) ;
         TtlFPS++;
+    }
+
+    internal void AddSpeed(int p)
+    {
+        Speed.Add(p);
+        SpeedInfo.Add(Time.time + " > " + p);
     }
 }
 

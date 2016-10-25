@@ -14,6 +14,7 @@ public class NewGameWindow : GUIElement
     //private Text _sizeTxt;//the btn tht contains the size 
     private Text _terraNameTxt;//the btn tht contains the size 
     private Text _diffTxt;//the btn tht contains the size 
+    private Text _typeTxt; 
     private InputField _inputTownName;
 
 
@@ -24,6 +25,8 @@ public class NewGameWindow : GUIElement
 
     private GameObject Terra_Name_Btn;
     private GameObject Diff_Btn;
+
+
 
 
 	// Use this for initialization
@@ -42,6 +45,12 @@ public class NewGameWindow : GUIElement
 
         Diff_Btn = GetGrandChildCalled("Diff_Btn");
         _diffTxt = Diff_Btn.GetComponentInChildren<Text>();
+   
+        
+        var t_Btn = GetGrandChildCalled("Type_Btn");
+        _typeTxt = t_Btn.GetComponentInChildren<Text>();
+        _typeTxt.text = "Traditional";
+
 
         _inputTownName = GetChildCalled("Input_Name").GetComponent<InputField>();
 
@@ -289,4 +298,20 @@ public class NewGameWindow : GUIElement
         _difficulty = difficulty;
         Display();
     }
+
+    public void ClickOnTypeOfGame(string pass)
+    {
+        if (pass == "Trad")
+        {
+            Program.gameScene.TypeOfGame = H.Lock;
+            _typeTxt.text = "Traditional";
+        } 
+        else if (pass == "Free")
+        {
+            Program.gameScene.TypeOfGame = H.Unlock;
+            _typeTxt.text = "Freewill";
+
+        }
+    }
+
 }

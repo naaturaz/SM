@@ -87,6 +87,10 @@ public class MyText : MonoBehaviour
         {
             thisText.text = PersonPot.Control.All.Count(a => a.Work==null && a.IsMajor)+"";
         }
+        if (name == "CurrSpeed")
+        {
+            thisText.text = Program.gameScene.GameSpeed+"x";
+        }
     }
 
 
@@ -116,6 +120,10 @@ public class MyText : MonoBehaviour
         }
 	}
 
+    public static void UpdateNow()
+    {
+        reMapCount = 190;
+    }
 
 
 }

@@ -401,5 +401,8 @@ public class InputMain : InputParent {
         }
         //needs to be call for Body.cs
         OnChangeSpeed(EventArgs.Empty);
+        ManagerReport.AddInput("Speed changed by:"+val + ". CurrSpeed: "+Program.gameScene.GameSpeed);
+        ManagerReport.AddNewSpeed(Program.gameScene.GameSpeed);
+        MyText.UpdateNow();
     }
 }

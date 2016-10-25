@@ -40,21 +40,17 @@ public class GameTime
         set { _year = value; }
     }
 
+    public float TimeFactor
+    {
+        get { return _timeFactor; }
+        set { _timeFactor = value; }
+    }
 
     public GameTime() { }
 
-    /// <summary>
-    /// To be used when loading 
-    /// </summary>
-    /// <param name="month"></param>
-    /// <param name="year"></param>
-    public GameTime(float accum, int day, int month, int year)
+    public GameTime(float timeFactorMulti)
     {
-        _accumDays = accum;
-        
-        _day = day;
-        _month = month;
-        _year = year;
+        _timeFactor *= timeFactorMulti;
     }
 
     public void FixedUpdate()

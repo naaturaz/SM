@@ -132,6 +132,15 @@ public class Languages
        { "Info", ""},//use for informational Dialogs
 
        //todo aadd to ESP
+
+       //MainMenu
+
+        { "Types_Explain", "Traditional: \nIs a game in where some buildings are locked at the beggining of the game and you have to unlock them. " +
+            "The good thing is that this provide you with guidance." +
+            "\n\nFreewill: \nAll available buildings are unlocked right away. " +
+            "The bad thing is that in this way you can fail easier."},
+
+
        //Tooltips 
        //Small Tooltips 
 	   { "Person.HoverSmall", "People"},
@@ -143,13 +152,17 @@ public class Languages
 	   { "Dollars.HoverSmall", "Dollars"},
 	   { "PirateThreat.HoverSmall", "Pirate Threat"},
 	   { "Date.HoverSmall", "Date"},
-	   { "MoreSpeed.HoverSmall", "More Speed"},
-	   { "LessSpeed.HoverSmall", "Less Speed"},
+	   { "MoreSpeed.HoverSmall", "More speed"},
+	   { "LessSpeed.HoverSmall", "Less speed"},
+	   { "PauseSpeed.HoverSmall", "Zero sped"},
+	   { "CurrSpeedBack.HoverSmall", "Current speed"},
 	   { "ShowNoti.HoverSmall", "Notifications"},
 	   { "Menu.HoverSmall", "Main Menu"},
 	   { "QuickSave.HoverSmall", "Quick Save [F]"},
 	   { "Bug Report.HoverSmall", "Report a bug"},
 	   { "Feedback.HoverSmall", "Feedback"},
+
+
 
        //down bar
 	   { "Infrastructure.HoverSmall", "Infrastructure"},

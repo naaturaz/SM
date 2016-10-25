@@ -778,7 +778,6 @@ public class Person : General
 
     void CheckOnNutrition()
     {
-        //ChangeNutritionLvl(-50f * Program.gameScene.GameTime1.TimeFactorInclSpeed());//-100
         KillStarve();
     }
 
@@ -928,15 +927,27 @@ public class Person : General
     /// <returns></returns>
     bool IsMyBD()
     {
-        var currYear = Program.gameScene.GameTime1.Year;
+        var currYear = Program.gameScene.GameTimePeople.Year;
 
-        if (_lastBDYear != currYear && _birthMonth == Program.gameScene.GameTime1.Month1)
+        if (_lastBDYear != currYear && _birthMonth <= Program.gameScene.GameTimePeople.Month1)
         {
             _lastBDYear = currYear;
             return true;
         }
         return false;
-    }
+    }   
+    
+    //bool IsMyBD()
+    //{
+    //    var currYear = Program.gameScene.GameTime1.Year;
+
+    //    if (_lastBDYear != currYear && _birthMonth == Program.gameScene.GameTime1.Month1)
+    //    {
+    //        _lastBDYear = currYear;
+    //        return true;
+    //    }
+    //    return false;
+    //}
 
     public PersonReport PersonReport = new PersonReport();
     /// <summary>
@@ -1268,9 +1279,7 @@ public class Person : General
         while (true)
         {
             yield return new WaitForSeconds(3); // wait
-            UpdateCallsToOneSec();
-
-
+            TimeChecks();
         }
     }
 
@@ -1310,6 +1319,10 @@ public class Person : General
             if (_showPathToWork != null)
             {
                 _showPathToWork.Update();
+            }
+            if (_showPathToFood != null)
+            {
+                _showPathToFood.Update();
             }
         }
     }
@@ -1362,17 +1375,6 @@ public class Person : General
 
     }
 
-    //void FixedUpdate()
-    //{
-    //    _body.Update();
-    //}
-
-
-    void UpdateCallsToOneSec()
-    {
-        TimeChecks();
-
-    }
 
     public void UpdateInfo(string add = "")
     {
@@ -2026,7 +2028,7 @@ public class Person : General
 
         bool nutrida = AmINutrida();
         bool happy = AmIHappy();
-        bool bodyReady = Mathf.Abs(_lastNewBornYear - Program.gameScene.GameTime1.Year) > 1;
+        bool bodyReady = Mathf.Abs(_lastNewBornYear - Program.gameScene.GameTimePeople.Year) > 2;
 
         //have to check Age>14 in case lost both parent really young and was made Family.HouseHeadPerson() on House 
         return nutrida && hasSpace && happy && bodyReady && Age > 14 && Age < 45 && IsSpouseAlive();
@@ -2128,12 +2130,12 @@ public class Person : General
     /// <returns></returns>
     bool IsMyDueDateOrPast()
     {
-        if (_dueMonth <= Program.gameScene.GameTime1.Month1
-            && _dueYear <= Program.gameScene.GameTime1.Year)
+        if (_dueMonth <= Program.gameScene.GameTimePeople.Month1
+            && _dueYear <= Program.gameScene.GameTimePeople.Year)
         {
             return true;
         }
-        if (_dueYear < Program.gameScene.GameTime1.Year)
+        if (_dueYear < Program.gameScene.GameTimePeople.Year)
         //so in case it missed bz moving to newer home took forever will deliver as soon get to new Place 
         {
             return true;
@@ -2149,16 +2151,16 @@ public class Person : General
     /// </summary>
     private void CalculateDueDate()
     {
-        var currMonth = Program.gameScene.GameTime1.Month1;
+        var currMonth = Program.gameScene.GameTimePeople.Month1;
         _dueMonth = UMath.GoAround(9, currMonth, 1, 12);
 
         if (_dueMonth < currMonth)
         {
-            _dueYear = Program.gameScene.GameTime1.Year + 1;
+            _dueYear = Program.gameScene.GameTimePeople.Year + 1;
         }
         else
         {
-            _dueYear = Program.gameScene.GameTime1.Year;
+            _dueYear = Program.gameScene.GameTimePeople.Year;
         }
     }
 
@@ -2412,7 +2414,7 @@ public class Person : General
     #region Showing Path
 
     /// <summary>
-    /// They all need a function calling its Update()
+    /// They all need a function calling its Update() 
     /// </summary>
     private ShowPathTo _showPathToHome;
     private ShowPathTo _showPathToWork;
@@ -2432,6 +2434,10 @@ public class Person : General
         {
             _showPathToWork.Toggle(which);
         }
+        if (_showPathToFood != null && which == "Food Source")
+        {
+            _showPathToFood.Toggle(which);
+        }
     }
 
     void InitShowPath(string which)
@@ -2443,6 +2449,10 @@ public class Person : General
         if (_showPathToWork == null && which == "Work" && Work != null)
         {
             _showPathToWork = new ShowPathTo(this, "Work");
+        }
+        if (_showPathToFood == null && which == "Food Source" && FoodSource != null)
+        {
+            _showPathToFood = new ShowPathTo(this, "Food Source");
         }
     }
 
@@ -2457,6 +2467,10 @@ public class Person : General
         {
             _showPathToWork.Hide();
         }
+        if (_showPathToFood != null)
+        {
+            _showPathToFood.Hide();
+        }
     }
 
     internal void ShowLocationOf(string _key)
@@ -2468,6 +2482,10 @@ public class Person : General
         if (_key == "Work" && Work != null)
         {
             CamControl.CAMRTS.InputRts.CenterCamTo(Work.transform);
+        }
+        if (_key == "Food Source" && FoodSource != null)
+        {
+            CamControl.CAMRTS.InputRts.CenterCamTo(FoodSource.transform);
         }
 
 

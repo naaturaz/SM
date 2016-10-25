@@ -53,5 +53,11 @@ public class ManagerReport
 
         _finalReport.FinishReport(p);
     }
+
+    internal static void AddNewSpeed(int p)
+    {
+        _finalReport.AddSpeed(p);
+
+    }
 }
 

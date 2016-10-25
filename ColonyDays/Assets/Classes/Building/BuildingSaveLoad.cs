@@ -411,7 +411,10 @@ public class BuildingSaveLoad : BuildingPot
         res.ShipManager1 = Control.ShipManager1;
 
         res._GameTime = Program.gameScene.GameTime1;
+        res.GameTimePeople = Program.gameScene.GameTimePeople;
         res._GameController = Program.gameScene.GameController1;
+
+        res.TypeOfGame = Program.gameScene.TypeOfGame;
 
         return res;
     }
@@ -436,10 +439,16 @@ public class BuildingSaveLoad : BuildingPot
         {
             Control.DispatchManager1 = BuildingData.BuildingControllerData.DispatchManager1;    
         }
+
         if (BuildingData.BuildingControllerData._GameTime != null)
         {
             Program.gameScene.GameTime1 = BuildingData.BuildingControllerData._GameTime;    
         }
+        if (BuildingData.BuildingControllerData.GameTimePeople != null)
+        {
+            Program.gameScene.GameTimePeople = BuildingData.BuildingControllerData.GameTimePeople;    
+        }
+
         if (BuildingData.BuildingControllerData._GameController != null)
         {
             Program.gameScene.GameController1 = BuildingData.BuildingControllerData._GameController;
@@ -458,6 +467,9 @@ public class BuildingSaveLoad : BuildingPot
         {
             Control.ShipManager1.MarkToLoadShips();
         }
+
+        Program.gameScene.TypeOfGame = BuildingData.BuildingControllerData.TypeOfGame;
+
     }
     #endregion
 
