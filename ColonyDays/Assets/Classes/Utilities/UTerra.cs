@@ -24,12 +24,20 @@ public class UTerra
         return false;
     }
 
+    private static List<Vector3> terrainPolyScaled;
     public static bool IsOnTerrainManipulateTerrainSize(Vector3 a, float manipulateBy)
     {
-        var terrainPolyScaled = UPoly.ScalePoly(Program.gameScene.controllerMain.MeshController.wholeMalla, manipulateBy);
+        //bz kkeeps getting smaller 
+        //if (terrainPolyScaled == null)
+        //{
+            //bz was referencing that List
+            var array = Program.gameScene.controllerMain.MeshController.wholeMalla.ToArray();
+            terrainPolyScaled = UPoly.ScalePoly(array.ToList(), manipulateBy);
+        //}
 
         Rect terra = U2D.FromPolyToRect(terrainPolyScaled);
         terra = U2D.ReturnRectYInverted(terra);//must be inverted to be on same Y values 
+        UVisHelp.CreateDebugLines(terra, Color.yellow);
 
         if (terra.Contains(new Vector2(a.x, a.z)))
         { return true; }

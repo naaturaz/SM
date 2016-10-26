@@ -433,12 +433,15 @@ public class CryRoute
             }
         }
 
-        UVisHelp.CreateHelpers(_eval, Root.blueCube);
-        UVisHelp.CreateHelpers(_curr.Position, Root.yellowCube);
-        UVisHelp.CreateHelpers(_two.Position, Root.yellowCube);
+        if (Developer.IsDev)
+        {
+            UVisHelp.CreateHelpers(_eval, Root.blueCube);
+            UVisHelp.CreateHelpers(_curr.Position, Root.yellowCube);
+            UVisHelp.CreateHelpers(_two.Position, Root.yellowCube);
 
-        UVisHelp.CreateText(_ini.transform.position, "ini:" + _ini.MyId, 40);
-        UVisHelp.CreateText(_fin.transform.position, "fin:" + _fin.MyId, 40);
+            UVisHelp.CreateText(_ini.transform.position, "ini:" + _ini.MyId, 40);
+            UVisHelp.CreateText(_fin.transform.position, "fin:" + _fin.MyId, 40);
+        }
 
         Debug.Log("At least the intersection should be reached. Go and investigate but at least once should " +
                             "pass this if all fail pls investigate" +

@@ -53,6 +53,8 @@ public class ShowAPersonBuildingDetails
         _items.Add("Home", Home());
         _items.Add("Work", Work());
         _items.Add("Food Source", Food());
+        _items.Add("Religion", Religion());
+        _items.Add("Chill", Chill());
     }
 
     private void InitPerson()
@@ -110,9 +112,27 @@ public class ShowAPersonBuildingDetails
     
     string Food()
     {
-        if (_person.Work != null)
+        if (_person.FoodSource != null)
         {
             return _person.FoodSource.HType+"";
+        }
+        return "None";
+    }   
+    
+    string Religion()
+    {
+        if (_person.Religion != null)
+        {
+            return _person.Religion.HType + "";
+        }
+        return "None";
+    }  
+    
+    string Chill()
+    {
+        if (_person.Chill != null)
+        {
+            return _person.Chill.HType + "";
         }
         return "None";
     }

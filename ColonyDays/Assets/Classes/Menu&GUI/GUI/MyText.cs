@@ -50,46 +50,46 @@ public class MyText : MonoBehaviour
 
         mappedOnce = true;
 
-        if (name == "Person")
+        if (name == "CurrSpeed")
+        {
+            thisText.text = Program.gameScene.GameSpeed + "x";
+        }
+        else if (name == "Person")
         {
             thisText.text = PersonPot.Control.All.Count + "";
         } 
-        if (name == "Emigrate")
+        else if (name == "Emigrate")
         {
             thisText.text = PersonPot.Control.EmigrateController1.Emigrates.Count + "";
         }
-        if (name == "Food")
+        else if (name == "Food")
         {
             var amt = GameController.ResumenInventory1.ReturnAmountOnCategory(PCat.Food);
 
             thisText.text =  Unit.WeightConverted(amt).ToString("N0") + " " +
                 Unit.WeightUnit();
         }
-        if (name == "Happy")
+        else if (name == "Happy")
         {
             thisText.text = PersonPot.Control.OverAllHappiness();
         }
 
-        if (name == "PortReputation")
+        else if (name == "PortReputation")
         {
             thisText.text = BuildingPot.Control.DockManager1.PortReputation.ToString("F1");
         }
-        if (name == "PirateThreat")
+        else if (name == "PirateThreat")
         {
             thisText.text = BuildingPot.Control.DockManager1.PirateThreat.ToString("F1");
         }
 
-        if (name == "Dollars")
+        else if (name == "Dollars")
         {
             thisText.text = Program.gameScene.GameController1.Dollars.ToString("C0");
         }   
-        if (name == "Lazy")
+        else if (name == "Lazy")
         {
             thisText.text = PersonPot.Control.All.Count(a => a.Work==null && a.IsMajor)+"";
-        }
-        if (name == "CurrSpeed")
-        {
-            thisText.text = Program.gameScene.GameSpeed+"x";
         }
     }
 

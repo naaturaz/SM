@@ -60,17 +60,27 @@ public class ShowPathTo
         if (_type == "Home")
         {
             _finPos = _person.Home.transform.position;
-            _finalGO = _person.Home.gameObject;
+            _finalGO = _person.Home.SpawnPoint;
         }
         else if (_type == "Work")
         {
             _finPos = _person.Work.transform.position;
-            _finalGO = _person.Work.gameObject;
+            _finalGO = _person.Work.SpawnPoint;
         } 
         else if (_type == "Food Source")
         {
             _finPos = _person.FoodSource.transform.position;
-            _finalGO = _person.FoodSource.gameObject;
+            _finalGO = _person.FoodSource.SpawnPoint;
+        }
+        else if (_type == "Religion")
+        {
+            _finPos = _person.Religion.transform.position;
+            _finalGO = _person.Religion.SpawnPoint;
+        }
+        else if (_type == "Chill")
+        {
+            _finPos = _person.Chill.transform.position;
+            _finalGO = _person.Chill.SpawnPoint;
         }
 
         Init();
@@ -99,7 +109,7 @@ public class ShowPathTo
 
     private void SetPrevAndNextIfNeed()
     {
-        if (_type == "Sea")
+        if (_type == "Sea" || _spawns.Count < 2)//sometimes needed if is too close to a builidng 
         {
             return;
         }
@@ -107,10 +117,8 @@ public class ShowPathTo
         _spawns[0].PrevGO = _person.gameObject;
         _spawns[0].NextGO = _spawns[1].gameObject;
 
-
         _spawns[_spawns.Count-1].PrevGO = _spawns[_spawns.Count-2].gameObject;
         _spawns[_spawns.Count-1].NextGO = _finalGO.gameObject;
-
 
         for (int i = 1; i < _spawns.Count-1; i++)
         {

@@ -1323,6 +1323,14 @@ public class Person : General
             if (_showPathToFood != null)
             {
                 _showPathToFood.Update();
+            } 
+            if (_showPathToReligion != null)
+            {
+                _showPathToReligion.Update();
+            }
+            if (_showPathToChill != null)
+            {
+                _showPathToChill.Update();
             }
         }
     }
@@ -2420,7 +2428,7 @@ public class Person : General
     private ShowPathTo _showPathToWork;
     private ShowPathTo _showPathToFood;
     private ShowPathTo _showPathToReligion;
-    private ShowPathTo _showPathTChill;
+    private ShowPathTo _showPathToChill;
 
     internal void ToggleShowPath(string which)
     {
@@ -2438,6 +2446,14 @@ public class Person : General
         {
             _showPathToFood.Toggle(which);
         }
+        if (_showPathToReligion != null && which == "Religion")
+        {
+            _showPathToReligion.Toggle(which);
+        }
+        if (_showPathToChill != null && which == "Chill")
+        {
+            _showPathToChill.Toggle(which);
+        }
     }
 
     void InitShowPath(string which)
@@ -2453,6 +2469,14 @@ public class Person : General
         if (_showPathToFood == null && which == "Food Source" && FoodSource != null)
         {
             _showPathToFood = new ShowPathTo(this, "Food Source");
+        }
+        if (_showPathToReligion == null && which == "Religion" && Religion != null)
+        {
+            _showPathToReligion = new ShowPathTo(this, "Religion");
+        }
+        if (_showPathToChill == null && which == "Chill" && Chill != null)
+        {
+            _showPathToChill = new ShowPathTo(this, "Chill");
         }
     }
 
@@ -2471,6 +2495,14 @@ public class Person : General
         {
             _showPathToFood.Hide();
         }
+        if (_showPathToReligion != null)
+        {
+            _showPathToReligion.Hide();
+        }
+        if (_showPathToChill != null)
+        {
+            _showPathToChill.Hide();
+        }
     }
 
     internal void ShowLocationOf(string _key)
@@ -2487,8 +2519,14 @@ public class Person : General
         {
             CamControl.CAMRTS.InputRts.CenterCamTo(FoodSource.transform);
         }
-
-
+        if (_key == "Religion" && Religion != null)
+        {
+            CamControl.CAMRTS.InputRts.CenterCamTo(Religion.transform);
+        }
+        if (_key == "Chill" && Chill != null)
+        {
+            CamControl.CAMRTS.InputRts.CenterCamTo(Chill.transform);
+        }
     }
 
     #endregion
@@ -2574,14 +2612,13 @@ public class Person : General
     /// </summary>
     internal void InitHeightAndWeight()
     {
-        if (Height != 0)
-        {
-            return;
-        }
         var fact = 170f/0.5f;
         Height = transform.localScale.x * fact;
-        Weight = NormalWeight();
 
+        if (Weight == 0)
+        {
+            Weight = NormalWeight();
+        }
     }
 
     //todo saveload

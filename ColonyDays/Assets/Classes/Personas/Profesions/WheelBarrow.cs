@@ -102,17 +102,14 @@ public class WheelBarrow : Profession
         if (_person == null)
         {
             return false;
-            throw new Exception();
         }
         if (_person.Work == null)
         {
             return false;
-            throw new Exception();
         }
         if (_person.Work.Dispatch1 == null)
         {
             return false;
-            throw new Exception();
         }
 
         Order1 = _person.Work.Dispatch1.GiveMeOrder(_person);

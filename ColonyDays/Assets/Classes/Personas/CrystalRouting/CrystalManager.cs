@@ -4,9 +4,11 @@
  * 
  */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CrystalManager  {
 
@@ -1328,6 +1330,36 @@ public class CrystalManager  {
                 //MeshController.CrystalManager1.CrystalRegions[Index].DebugHere();
             }
         }
+    }
+
+    private int count1;
+    List<CrystalRegion> _inLands; 
+    public Vector3 ReturnTownIniPos()
+    {
+        if (_inLands == null)
+        {
+            _inLands = CrystalRegions.Where(a => a.WhatAudioIReport == "InLand").ToList();
+        }
+        var indexA = UMath.GiveRandom(0, _inLands.Count);
+        var point = _inLands[indexA].Position();
+        
+        //UVisHelp.CreateHelpers(point, Root.yellowCube);
+        var inTerrain = UTerra.IsOnTerrainManipulateTerrainSize(point, -40f);//-1
+
+        if (!inTerrain)
+        {
+            if (count1 > 500)
+            {
+                throw new Exception("500 times ReturnTownIniPos() CrystalManager");
+            }
+            count1++;
+            _inLands.RemoveAt(indexA);
+
+            return ReturnTownIniPos();
+        }
+        Debug.Log("Count1: " + count1 + " ..ReturnTownIniPos() CrystalManager");
+        count1 = 0;
+        return point;
     }
 
 #endregion

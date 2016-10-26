@@ -265,6 +265,7 @@ public class Body //: MonoBehaviour //: General
         }
 
         AddToBodyScale(toAdd);
+        _person.InitHeightAndWeight();
     }
 
     /// <summary>

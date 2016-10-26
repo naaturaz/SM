@@ -210,19 +210,29 @@ public class UPoly
     //the Vector3 list must have this order: NW, NE, SE, SW
     public static List<Vector3> ScalePoly(List<Vector3> polyPass, float by)
     {
-        polyPass[0] = new Vector3(polyPass[0].x - by, polyPass[0].y, polyPass[0].z + by);
-        polyPass[1] = new Vector3(polyPass[1].x + by, polyPass[1].y, polyPass[1].z + by);
-        polyPass[2] = new Vector3(polyPass[2].x + by, polyPass[2].y, polyPass[2].z - by);
-        polyPass[3] = new Vector3(polyPass[3].x - by, polyPass[3].y, polyPass[3].z - by);
+        polyPass[0] = new Vector3(polyPass[0].x - @by, polyPass[0].y, polyPass[0].z + @by);
+        polyPass[1] = new Vector3(polyPass[1].x + @by, polyPass[1].y, polyPass[1].z + @by);
+        polyPass[2] = new Vector3(polyPass[2].x + @by, polyPass[2].y, polyPass[2].z - @by);
+        polyPass[3] = new Vector3(polyPass[3].x - @by, polyPass[3].y, polyPass[3].z - @by);
         return polyPass;
-    }
+    }   
+    
+    ////the Vector3 list must have this order: NW, NE, SE, SW
+    //public static List<Vector3> ScalePoly(List<Vector3> polyPass, float by)
+    //{
+    //    polyPass[0] = new Vector3(polyPass[0].x - @by, polyPass[0].y, polyPass[0].z + @by);
+    //    polyPass[1] = new Vector3(polyPass[1].x + @by, polyPass[1].y, polyPass[1].z + @by);
+    //    polyPass[2] = new Vector3(polyPass[2].x + @by, polyPass[2].y, polyPass[2].z - @by);
+    //    polyPass[3] = new Vector3(polyPass[3].x - @by, polyPass[3].y, polyPass[3].z - @by);
+    //    return polyPass;
+    //}
 
     public static Vector3[] ScalePoly(Vector3[] polyPass, float by)
     {
-        polyPass[0] = new Vector3(polyPass[0].x - by, polyPass[0].y, polyPass[0].z + by);
-        polyPass[1] = new Vector3(polyPass[1].x + by, polyPass[1].y, polyPass[1].z + by);
-        polyPass[2] = new Vector3(polyPass[2].x + by, polyPass[2].y, polyPass[2].z - by);
-        polyPass[3] = new Vector3(polyPass[3].x - by, polyPass[3].y, polyPass[3].z - by);
+        polyPass[0] = new Vector3(polyPass[0].x - @by, polyPass[0].y, polyPass[0].z + @by);
+        polyPass[1] = new Vector3(polyPass[1].x + @by, polyPass[1].y, polyPass[1].z + @by);
+        polyPass[2] = new Vector3(polyPass[2].x + @by, polyPass[2].y, polyPass[2].z - @by);
+        polyPass[3] = new Vector3(polyPass[3].x - @by, polyPass[3].y, polyPass[3].z - @by);
         return polyPass;
     }
 
@@ -231,10 +241,10 @@ public class UPoly
     public static List<Vector3> ScalePolyNewList(List<Vector3> polyPass, float by)
     {
         List<Vector3> newList= new List<Vector3>();
-        newList.Add( new Vector3(polyPass[0].x - by, polyPass[0].y, polyPass[0].z + by));
-        newList.Add( new Vector3(polyPass[1].x + by, polyPass[1].y, polyPass[1].z + by));
-        newList.Add(  new Vector3(polyPass[2].x + by, polyPass[2].y, polyPass[2].z - by));
-        newList.Add( new Vector3(polyPass[3].x - by, polyPass[3].y, polyPass[3].z - by));
+        newList.Add( new Vector3(polyPass[0].x - @by, polyPass[0].y, polyPass[0].z + @by));
+        newList.Add( new Vector3(polyPass[1].x + @by, polyPass[1].y, polyPass[1].z + @by));
+        newList.Add(  new Vector3(polyPass[2].x + @by, polyPass[2].y, polyPass[2].z - @by));
+        newList.Add( new Vector3(polyPass[3].x - @by, polyPass[3].y, polyPass[3].z - @by));
         return newList;
     }
 
@@ -576,5 +586,16 @@ public class UPoly
             }
         }
         return poly;
+    }
+
+
+    public static Vector3 MiddlePoint(List<Vector3> list)
+    {
+        var ttl = new Vector3();
+        for (int i = 0; i < list.Count; i++)
+        {
+            ttl += list[i];
+        }
+        return ttl/list.Count;
     }
 }

@@ -20,8 +20,8 @@ class TownLoader
     {
         get { return _townLoaded; }
         set { _townLoaded = value; }
-    }  
-    
+    }
+
     /// <summary>
     /// Called from builing.cs when a building is loaded 
     /// </summary>
@@ -33,7 +33,7 @@ class TownLoader
             Debug.Log("TownLoaded = false");
             TownLoaded = false;
             _loadedBuildCalls = 0;
-            
+
             //so the DimOnMap works
             BuildingPot.Control.Registro.RedoDimAndResaveAllBuildings();
         }
@@ -52,7 +52,7 @@ class TownLoader
         if (difficulty == 0)
         {
             var randTown = GetRandomTownFile();
-            Debug.Log("randTown:"+randTown);
+            Debug.Log("randTown:" + randTown);
 
             var file = DataContainer.Load(randTown);
             if (file != null)
@@ -77,10 +77,10 @@ class TownLoader
         //uncomment line below to create Template towns. Also make sure in PErsonController
         //the amt of people spawned will be zero
         //return "";
-       
+
         //game Difficulty is added for load 'Town4A.xml' for example
         var townName = "Town" + Program.MyScreen1.Difficulty + "*.xml";
-         
+
         var xmls = Directory.GetFiles(_dataPath, townName).ToList();
         return xmls[UMath.GiveRandom(0, xmls.Count)];
     }
@@ -88,18 +88,8 @@ class TownLoader
     private static int prot;
     static Vector3 GetRandomMapPos()
     {
-        var randPos = m.AllVertexs[UMath.GiveRandom(0, m.AllVertexs.Count)];
-        if (Building.IsVector3OnTheFloor(randPos, m.SubMesh.mostCommonYValue))
-        {
-            return randPos;
-        }
-
-        if (prot > 1000)
-        {
-            throw new Exception("GetRandomMapPos() over 1000 times. could not find spot to starts Loading town");
-        }
-        prot++;
-        return GetRandomMapPos();
+        var randPos = MeshController.CrystalManager1.ReturnTownIniPos();
+        return randPos;
     }
 
     /// <summary>
@@ -112,15 +102,9 @@ class TownLoader
         var randIniPos = GetRandomMapPos();
         //UVisHelp.CreateHelpers(randIniPos, Root.blueCubeBig);
         var townDim = GetTownDim(bData);
-        var fit = DoesSpotFitTown(randIniPos, townDim);
 
-        if (!fit)
-        {
-            return ShiftToRandBuildsPos(bData);
-        }
-
-        Debug.Log(prot + " TownLoaded Fit:" + fit);
-        MoveAllBuildingsToNewSpot(bData);
+        //Debug.Log(prot + " TownLoaded Fit:" + fit);
+        MoveAllBuildingsToNewSpot(bData, randIniPos, townDim);
         return bData;
     }
 
@@ -129,8 +113,10 @@ class TownLoader
     /// </summary>
     /// <param name="randIniPos"></param>
     /// <param name="bData"></param>
-    private static void MoveAllBuildingsToNewSpot(BuildingData bData)
+    private static void MoveAllBuildingsToNewSpot(BuildingData bData, Vector3 spot, List<Vector3> list)
     {
+        difference = spot - UPoly.MiddlePoint(list);
+
         for (int i = 0; i < bData.All.Count; i++)
         {
             var newPos = bData.All[i].IniPos + difference;
@@ -154,13 +140,13 @@ class TownLoader
         var movedTown = MoveTownToSpot(spot, townDim);
         //UVisHelp.CreateHelpers(movedTown, Root.yellowCube);
         var region = MeshController.CrystalManager1.ReturnMyRegion(movedTown[0]);
-        
+
         for (int i = 0; i < movedTown.Count; i++)
         {
             //throws ray to check where is in real ground
             var inRealGroundVal = m.Vertex.BuildVertexWithXandZ(movedTown[i].x, movedTown[i].z);
             var inFloor = Building.IsVector3OnTheFloor(inRealGroundVal, m.IniTerr.MathCenter.y);
-            
+
             //will check if the point is on terrain. Also manipulates '-50' the size of terrain and 
             //makes it a bit smaller so they town loaded is not right no the edge of terrain
             var inTerrain = UTerra.IsOnTerrainManipulateTerrainSize(movedTown[i], -1.2f);//-1
@@ -188,7 +174,8 @@ class TownLoader
     /// <returns></returns>
     private static List<Vector3> MoveTownToSpot(Vector3 spot, List<Vector3> list)
     {
-        difference = spot - list[0];
+        //difference = spot - UPoly.MiddlePoint(list);
+        //difference = spot - list[2];
         List<Vector3> movedTown = new List<Vector3>();
 
         for (int i = 0; i < list.Count; i++)
@@ -197,6 +184,8 @@ class TownLoader
         }
         return movedTown;
     }
+
+
 
     static List<Vector3> GetTownDim(BuildingData bData)
     {
@@ -209,9 +198,5 @@ class TownLoader
 
         return Registro.FromALotOfVertexToPoly(allAnchors);
     }
-
-
-
- 
 }
 
