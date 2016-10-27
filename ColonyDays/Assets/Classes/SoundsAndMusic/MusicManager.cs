@@ -17,6 +17,8 @@ public class MusicManager
         {"THEME 9", ""},
         {"THEME 10", ""},
         {"MODERN_CUBA", ""},
+        {"THEME 6_new", ""},
+        {"THEME 2_simple_CUBAN_BONGO", ""},
     };
     
     static Dictionary<string, string> _musicCivRoots = new Dictionary<string, string>()

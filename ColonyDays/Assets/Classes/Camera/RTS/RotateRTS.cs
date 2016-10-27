@@ -36,13 +36,14 @@ public class RotateRTS : GenericCameraComponent {
 
     void RotateCamVert(float camSensivity, Transform target, float smoothTimePass, ref Vector3 velocity)
     {
+        var qOrE = Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.E);
         TransformCam.parent = null;
         float changeValue = 0;
-        if (Input.GetAxis("Mouse Y") != 0)
+        if (Input.GetAxis("Mouse Y") != 0 && !qOrE)
         {
             changeValue = Input.GetAxis("Mouse Y") * camSensivity;
         }
-        if (Input.GetAxis("Vertical") != 0)
+        if (Input.GetAxis("Vertical") != 0 && !qOrE)
         {
             changeValue = Input.GetAxis("Vertical") * camSensivity;
         }
@@ -59,23 +60,26 @@ public class RotateRTS : GenericCameraComponent {
         TransformCam.parent = helpCam360GrabPosY.transform;
         float changeValue = 0;
 
-        if (Input.GetAxis("Mouse X") != 0)
-        {
-            changeValue = Input.GetAxis("Mouse X") * camSensivity;
-        }
-        if (Input.GetAxis("Horizontal") != 0)
-        {
-            changeValue = Input.GetAxis("Horizontal") * camSensivity;
-        }
-
-        //new todo comment and test
+        bool qOrE = false;
         if (Input.GetKey(KeyCode.Q))
         {
+            qOrE = true;
             changeValue = .4f * camSensivity;
         }
         if (Input.GetKey(KeyCode.E))
         {
+            qOrE = true;
             changeValue = -.4f * camSensivity;
+        }
+        
+        //when Q or E this wont work
+        if (Input.GetAxis("Mouse X") != 0 && !qOrE)
+        {
+            changeValue = Input.GetAxis("Mouse X") * camSensivity;
+        }
+        if (Input.GetAxis("Horizontal") != 0 && !qOrE)
+        {
+            changeValue = Input.GetAxis("Horizontal") * camSensivity;
         }
 
         if (changeValue != 0)

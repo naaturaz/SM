@@ -56,7 +56,10 @@ public class MyText : MonoBehaviour
         }
         else if (name == "Person")
         {
-            thisText.text = PersonPot.Control.All.Count + "";
+            var adult = PersonPot.Control.All.Count(a => a.Age >= JobManager.majorityAge) ;
+            var all = PersonPot.Control.All.Count;
+
+            thisText.text = all + " / " + adult + " / " + (all - adult);
         } 
         else if (name == "Emigrate")
         {
@@ -90,7 +93,8 @@ public class MyText : MonoBehaviour
         else if (name == "Lazy")
         {
             thisText.text = PersonPot.Control.All.Count(a => a.Work==null && a.IsMajor)+"";
-        }
+        } 
+     
     }
 
 
