@@ -88,7 +88,7 @@ public class MouseListener : InputMain
         mainTempIniPos = main.transform.position;
 
         Vector3 t = mainTempIniPos;
-        t.y += 400f;
+        t.y -= 1400f;
 
         main.transform.position = t;
     }

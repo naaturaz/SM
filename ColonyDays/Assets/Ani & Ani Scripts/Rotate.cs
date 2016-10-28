@@ -7,6 +7,7 @@ public class Rotate : MonoBehaviour
     public bool onY;
     public bool onZ;
     public bool CareAboutGameSpeed;
+    public bool ByMouse;
 
     private float finalSpeed;
 
@@ -27,6 +28,10 @@ public class Rotate : MonoBehaviour
         if (CareAboutGameSpeed)
         {
             finalSpeed = speed * Program.gameScene.GameSpeed;
+        }
+        if (ByMouse)
+        {
+            finalSpeed = speed* Input.GetAxis("Mouse X" );
         }
 
 	    if (onX)

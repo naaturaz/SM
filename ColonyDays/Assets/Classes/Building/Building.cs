@@ -594,10 +594,6 @@ public class Building : General, Iinfo
     // Use this for initialization
     protected void Start()
     {
-        if (wasFarmInited)
-        {
-            
-        }
 
         base.Start();
         float minHeightAboveSeaLevel = 1f;
@@ -630,9 +626,7 @@ public class Building : General, Iinfo
         {
             CurrentProd = BuildingPot.Control.ProductionProp.ReturnDefaultProd(HType);
             InitJobRelated();
-
         }
-        
 
         StartCoroutine("ThirtySecUpdate");
         StartCoroutine("SixtySecUpdate");
@@ -1133,6 +1127,7 @@ public class Building : General, Iinfo
         {
             Destroy(_maritimeBound);
             Destroy(_terraBound);
+            Destroy(_underTerraBound);
         }
         
 
@@ -1315,7 +1310,7 @@ public class Building : General, Iinfo
 
     List<H> doubleBounds = new List<H>(){H.FishingHut, 
         H.Dock, H.Shipyard, H.Supplier,
-        H.MountainMine, H.SaltMine};
+        H.MountainMine, H.SaltMine, H.LightHouse};
     private GameObject _maritimeBound;
     private GameObject _terraBound;
     private GameObject _underTerraBound;
@@ -2208,15 +2203,24 @@ public class Building : General, Iinfo
     internal float PercentageBuilt()
     {
         return (constructionAmt / amtNeeded) * 100;
-    } 
-    
+    }
+
+    private float oldPercent =0f;
     internal string PercentageBuiltCured()
     {
         var percent = PercentageBuilt();
         if (float.IsNaN(percent))
         {
+            SetConstructionPercent("0%");
             return "0";
         }
+
+        if (oldPercent != percent)
+        {
+            oldPercent = percent;
+            SetConstructionPercent(percent.ToString("N0") + "%");
+        }
+
         return percent.ToString("N0");
     }
 
@@ -2256,6 +2260,9 @@ public class Building : General, Iinfo
         DefineAmtNeeded();
         constructionAmt += (int)amt;
         CheckIfNewStageOrDone(person);
+
+        //so updates that if needed
+        PercentageBuiltCured();
     }
 
     /// <summary>
@@ -2340,6 +2347,31 @@ public class Building : General, Iinfo
         }
     }
 
+
+    private General _debugPercentage;
+    void SetConstructionPercent(string newVal)
+    {
+        var sp = this as StructureParent;
+
+        if (sp == null || sp.CurrentStage == 4)
+        {
+            return;
+        }
+
+        if (MyId.Contains("Unit") || MyId.Contains("Box"))
+        {
+            return;
+        }
+
+        if (_debugPercentage != null)
+        {
+            _debugPercentage.Destroy();
+        }
+
+        _debugPercentage = UVisHelp.CreateText(transform.position + new Vector3(0, 1f, 0), newVal);
+        _debugPercentage.transform.SetParent(transform);
+    }
+
     /// <summary>
     /// Created for modularity. Handles all things related onces the building is fully built 
     /// </summary>
@@ -2348,6 +2380,10 @@ public class Building : General, Iinfo
         //Debug.Log("construction built 100%:"+MyId+"." + Program.gameScene.GameTime1.TodayYMD());
         PersonPot.Control.RoutesCache1.RemoveAllMine(MyId);
 
+        if (_debugPercentage != null)
+        {
+            _debugPercentage.Destroy();
+        }
 
         if (IsNaval())
         {
@@ -3141,6 +3177,7 @@ public class Building : General, Iinfo
         {
             yield return new WaitForSeconds(Random.Range(10, 20)); // wait
             CheckIfOrdersAreNeeded();
+
         }
     }
 

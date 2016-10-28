@@ -165,16 +165,21 @@ public class InputMain : InputParent {
         //&& Program.gameScene.GameFullyLoaded() is to not allow touch ESC while is loadig
         if (mainMenu == null && Program.gameScene.GameFullyLoaded())
         {
+            CamControl.ChangeTo("Main");
+
             Program.gameScene.PauseGameSpeed();
             
             Program.MouseListener.HideMainGUI();
             Program.MyScreen1.LoadMainMenuWithResumeBtn();
 
             CamControl.CAMRTS.StopReportingAudioNow();
+
         }
         //is on main Menu
         else if (mainMenu != null && Program.gameScene.GameFullyLoaded())
         {
+            CamControl.ChangeTo("Game");
+
             Program.gameScene.ResumeGameSpeed();
 
             Program.MyScreen1.DestroyCurrentMenu();

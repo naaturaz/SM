@@ -311,10 +311,10 @@ public class USearch : MonoBehaviour
         {
             cc = CamControl.CAMFollow;
         }
-        else if (CamControl.CAMFPS != null)
-        {
-            print("CAMFPS doesnt inherit from CAMControl");
-        }
+        //else if (CamControl.CAMFPS != null)
+        //{
+        //    print("CAMFPS doesnt inherit from CAMControl");
+        //}
         else if (CamControl.CAMRTS != null)
         {
             cc  = CamControl.CAMRTS;

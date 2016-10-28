@@ -12,6 +12,11 @@ public class AudioReporter
 
     public void A2SecUpdate()
     {
+        if (Camera.main == null)
+        {
+            return;
+        }
+
         var dist = Vector3.Distance(Camera.main.transform.position, _general.transform.position);
 
         if (dist > 1000)

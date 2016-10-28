@@ -479,6 +479,7 @@ public class BuildingWindow : GUIElement {
         return res + " " + availPos;
     }
 
+
     /// <summary>
     /// If is in construction will add percentage of completion 
     /// </summary>

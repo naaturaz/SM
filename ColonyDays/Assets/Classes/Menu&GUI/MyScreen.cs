@@ -132,6 +132,7 @@ public class MyScreen : General
     {
         current = (MyForm)General.Create(Root.mainMenu, new Vector2());
         mainMenuForm = current;
+        CamControl.ChangeTo("Main");
     }
 
     /// <summary>
@@ -405,6 +406,9 @@ public class MyScreen : General
     /// </summary>
     public void DestroyCurrLoadLoading()
     {
+        CamControl.ChangeTo("Game");
+
+
         current.Destroy();
         LoadLoadingScreen();
     }

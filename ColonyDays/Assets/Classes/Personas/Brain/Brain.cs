@@ -644,7 +644,6 @@ public class Brain
         if (ReadyToGetFood() && _foodRoute!=null && _foodRoute.DestinyKey == _person.FoodSource.MyId)
         {
             //is called here right before leaves home to go find food 
-            _person.Eat();
             CurrentTask = HPers.GettingFood;
         }
         else if (CurrentTask == HPers.GettingFood && _person.Body.Location == HPers.Home && _routerFood.IsRouteReady

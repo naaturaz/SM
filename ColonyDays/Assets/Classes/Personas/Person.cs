@@ -1669,17 +1669,21 @@ public class Person : General
 
         DropFoodAtHome();
 
+        if (_lastTimeHome == null)
+        {
+            _lastTimeHome = Program.gameScene.GameTime1.CurrentDate();
+        }
 
-        //if (_lastTimeHome == Program.gameScene.GameTime1.CurrentDate()
-        //    //had to pass at least 20 days in caledar to eat
-        //    //other wise eats all the food really fast this should be called only once is gets home
-        //    || Program.gameScene.GameTime1.ElapsedDateInDaysToDate(_lastTimeHome) < 20)
-        //{
-        //   return; 
-        //}
+        if (_lastTimeHome == Program.gameScene.GameTime1.CurrentDate()
+            //had to pass at least 20 days in caledar to eat
+            //other wise eats all the food really fast this should be called only once is gets home
+            || Program.gameScene.GameTime1.ElapsedDateInDaysToDate(_lastTimeHome) < 20)
+        {
+            return;
+        }
 
-        //_lastTimeHome = Program.gameScene.GameTime1.CurrentDate();
-        //Eat();
+        _lastTimeHome = Program.gameScene.GameTime1.CurrentDate();
+        Eat();
     }
 
     float AdditionalFoodNeeds()
@@ -1691,10 +1695,15 @@ public class Person : General
         return 2;
     }
 
-    public void Eat()
+    void Eat()
     {
         P item = Home.Inventory.GiveRandomFood();
         var kgNeeded = ReturnAmountToEat(item) + AdditionalFoodNeeds();//in case is below normal it needs to eat more 
+
+        if (Name == "Vahloe")
+        {
+            var a = 1;
+        }
 
         float gotAmt = Home.Inventory.RemoveByWeight(item, kgNeeded);
         _nutrition.AteThisMuch(item, gotAmt);

@@ -407,6 +407,10 @@ public class AudioCollector
             {
                 PlayPerson("Man");
             }
+            else if (p.Age <= 11)
+            {
+                PlayPerson("Boy");
+            }
         }
 
     }
@@ -449,7 +453,7 @@ public class AudioCollector
     /// <param name="typeOfPerson"></param>
     static void InitInfoList(string typeOfPerson)
     {
-        if (info.Count > 0)
+        if (info.Count > 0 && info.Contains("/" + Languages.CurrentLang() + "/" + typeOfPerson +"/"))
         {
             return;
         }
