@@ -151,7 +151,7 @@ public class Languages
 	   { "PortReputation.HoverSmall", "Port Reputation"},
 	   { "Dollars.HoverSmall", "Dollars"},
 	   { "PirateThreat.HoverSmall", "Pirate Threat"},
-	   { "Date.HoverSmall", "Date"},
+	   { "Date.HoverSmall", "Date (d/m/y)"},
 	   { "MoreSpeed.HoverSmall", "More speed"},
 	   { "LessSpeed.HoverSmall", "Less speed"},
 	   { "PauseSpeed.HoverSmall", "Zero sped"},

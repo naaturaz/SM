@@ -17,6 +17,10 @@ public class FinalReport
     public  float PirateThr;
     public  float Dollar;
     public  List<string> Buildings;
+
+    public List<string> FeedBack = new List<string>();
+    public List<string> BugReport = new List<string>();
+    public List<string> Invitation = new List<string>();
     
     public  List<string> Inputs = new List<string>();
     public int TtlInputs;  
@@ -89,6 +93,21 @@ public class FinalReport
     {
         Speed.Add(p);
         SpeedInfo.Add(Time.time + " > " + p);
+    }
+
+    internal void AddToFeedBack(string text)
+    {
+        FeedBack.Add(text);
+    }
+
+    internal void AddToBugReport(string text)
+    {
+        BugReport.Add(text);
+    }
+
+    internal void AddToInvitation(string text)
+    {
+        Invitation.Add(text);
     }
 }
 

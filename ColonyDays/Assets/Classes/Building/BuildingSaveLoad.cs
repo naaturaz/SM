@@ -414,7 +414,7 @@ public class BuildingSaveLoad : BuildingPot
         res.GameTimePeople = Program.gameScene.GameTimePeople;
         res._GameController = Program.gameScene.GameController1;
 
-        res.TypeOfGame = Program.gameScene.TypeOfGame;
+        res.TypeOfGame = Program.TypeOfGame;
 
         return res;
     }
@@ -468,7 +468,12 @@ public class BuildingSaveLoad : BuildingPot
             Control.ShipManager1.MarkToLoadShips();
         }
 
-        Program.gameScene.TypeOfGame = BuildingData.BuildingControllerData.TypeOfGame;
+        var type = BuildingData.BuildingControllerData.TypeOfGame;
+        if (type != H.None)//loaded default town 
+        {
+            Program.TypeOfGame = type;
+        }
+
 
     }
     #endregion

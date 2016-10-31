@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Globalization;
 
 //THIS IS A STATIC FUNCTION CLASS
-public class CamControl : MonoBehaviour {
+public class CamControl : MonoBehaviour
+{
 
     public static SmoothFollow CAMFollow;
     //RTS cam object and is a CamRTSController reference obj
@@ -12,11 +14,12 @@ public class CamControl : MonoBehaviour {
     private static Camera rtsCamera;
     private static Camera mainMenuCamera;
 
-	// Use this for initialization
+    private GameObject menuCam;
+
+    // Use this for initialization
     void Start()
     {
-        mainMenuCamera = FindObjectOfType<Camera>();
-        
+        mainMenuCamera = GameObject.Find("MainMenuCamera").GetComponent<Camera>();
     }
 
     public static CamControl Create(string root, Vector3 origen = new Vector3())
@@ -42,38 +45,37 @@ public class CamControl : MonoBehaviour {
 
             CAMRTS = (CamRTSController)Create(Root.cameraRTS, Vector3.zero);
             rtsCamera = CAMRTS.GetComponent<Camera>();
-
-            if (mainMenuCamera != null)
-            {
-                mainMenuCamera.enabled = false;
-            }
-
-            //so when is loaded goes to mainMenu cam
-            //ChangeTo("Main");
+            //rtsCamera.enabled = false;
 
         }
     }
 
+    private static string currentCam;
     public static void ChangeTo(string newVal)
     {
+        if (currentCam != newVal)
+        {
+            currentCam = newVal;
+        }
+        else//if is reACtivating same cam will return 
+        {
+            return;
+        }
+
         if (newVal == "Main")
         {
             mainMenuCamera.enabled = true;
-
             if (rtsCamera != null)
             {
                 rtsCamera.enabled = false;
-                
             }
-
         }
-        else
+        else if(newVal == "Game")
         {
             mainMenuCamera.enabled = false;
             if (rtsCamera != null)
             {
                 rtsCamera.enabled = true;
-
             }
         }
     }

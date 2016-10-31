@@ -262,7 +262,8 @@ class BRequires
     public void DefineCurrentState(float currentAmtOfFood)
     {
         //to buildings that has not 3d yet done. or will be added in the future 
-        if (CurrentState == H.Coming_Soon)
+        if (CurrentState == H.Coming_Soon || 
+            (CurrentState == H.OnlyForDev && !Developer.IsDev))
         {
             return;
         }
@@ -288,7 +289,7 @@ class BRequires
         }
 
         //for option playing all unlock buildings
-        if (CurrentState == H.Lock && Program.gameScene.IsAnUnLockGame())
+        if (CurrentState == H.Lock && Program.IsAnUnLockGame())
         {
             CurrentState = H.Unlock;
             InfoMsg = "";

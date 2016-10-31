@@ -115,6 +115,8 @@ public class MusicManager
 
             _musics.Add(item.Key, audCont);
         }
+
+        CamControl.ChangeTo("Main");
     }
 
     private static void LoadMusicCiv()

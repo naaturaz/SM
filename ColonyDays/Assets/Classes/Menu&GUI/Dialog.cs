@@ -171,6 +171,8 @@ public class Dialog
     /// <param name="type"></param>
     public static string CreateFile(string type, string text)
     {
+        ManagerReport.AddNewText(type, text);
+
         var nameFile =
               SteamFriends.GetPersonaName() + "." + SteamUser.GetSteamID() +
               "_" + DateTime.Now.ToString("yy.MM.dd") +

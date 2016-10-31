@@ -59,5 +59,28 @@ public class ManagerReport
         _finalReport.AddSpeed(p);
 
     }
+
+    /// <summary>
+    /// Will find if FeedBack, BugReport or Invitation
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="text"></param>
+    internal static void AddNewText(string type, string text)
+    {
+        if (type == "Feedback")
+        {
+            _finalReport.AddToFeedBack(text);
+        }
+        else if (type == "BugReport")
+        {
+            _finalReport.AddToBugReport(text);
+            
+        }
+        else if (type == "Invitation")
+        {
+            _finalReport.AddToInvitation(text);
+            
+        }
+    }
 }
 

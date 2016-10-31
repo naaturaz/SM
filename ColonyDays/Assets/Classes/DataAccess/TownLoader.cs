@@ -73,9 +73,14 @@ class TownLoader
     /// <returns></returns>
     static string GetRandomTownFile()
     {
-        //todo read below if needed
-        //uncomment line below to create Template towns. Also make sure in PErsonController
-        //the amt of people spawned will be zero
+        ///to  create Template towns.
+        //-uncomment line below  
+        //-Also make sure in PErsonController the amt of people spawned will be zero
+        //-Also make sure that the saved BuildingData.BuildingControllerData.TypeOfGame = H.None
+        //other wise will give bugg changing btw Freewill and Traditional Mode
+        //may need to create that type of game jst for this purpose of edit mannually with text editor.
+        //If not then BuildingSaveLoad(472) will bugg
+
         //return "";
 
         //game Difficulty is added for load 'Town4A.xml' for example

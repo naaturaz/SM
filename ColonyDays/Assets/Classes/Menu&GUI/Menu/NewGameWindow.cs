@@ -303,12 +303,12 @@ public class NewGameWindow : GUIElement
     {
         if (pass == "Trad")
         {
-            Program.gameScene.TypeOfGame = H.Lock;
+            Program.TypeOfGame = H.Lock;
             _typeTxt.text = "Traditional";
         } 
         else if (pass == "Free")
         {
-            Program.gameScene.TypeOfGame = H.Unlock;
+            Program.TypeOfGame = H.Unlock;
             _typeTxt.text = "Freewill";
 
         }

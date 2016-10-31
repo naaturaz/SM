@@ -124,7 +124,7 @@ class DialogGO : GUIElement
 
     internal void ValidateInvitation()
     {
-        if (_inputTextEmail1.text == _inputTextEmail2.text && IsValidEmail(_inputTextEmail1.text)
+        if (IsValidEmail(_inputTextEmail1.text)
             && !string.IsNullOrEmpty(_inputTextEmail1.text))
         {
             CreateInviteOnThisPC();

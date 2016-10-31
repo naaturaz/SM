@@ -163,6 +163,25 @@ public class Program : MonoBehaviour {
         var prog = FindObjectOfType<Program>();
         prog.Start();
     }
+
+
+
+
+    //there are at least two types: 
+    //lock: buildings are lock and user needs to unlock them 
+    //unlock: all buildings are unlock
+    private static H _typeOfGame = H.None;//bz traditional is the default 
+
+    public static H TypeOfGame
+    {
+        get { return _typeOfGame; }
+        set { _typeOfGame = value; }
+    }
+
+    static internal bool IsAnUnLockGame()
+    {
+        return TypeOfGame == H.Unlock;
+    }
 }
 
 

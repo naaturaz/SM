@@ -797,19 +797,4 @@ public class GameScene : General
 
 #endregion
 
-    //there are at least two types: 
-    //lock: buildings are lock and user needs to unlock them 
-    //unlock: all buildings are unlock
-    private H _typeOfGame = H.Lock;//bz traditional is the default 
-
-    public H TypeOfGame
-    {
-        get { return _typeOfGame; }
-        set { _typeOfGame = value; }
-    }
-
-    internal bool IsAnUnLockGame()
-    {
-        return TypeOfGame == H.Unlock;
-    }
 }
