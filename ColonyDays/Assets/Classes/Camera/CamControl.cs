@@ -40,13 +40,10 @@ public class CamControl : MonoBehaviour
         }
         else if (cameraType == H.CamRTS && CAMRTS == null)
         {
-            //none here
-            //mainMenuCamera = FindObjectOfType<Camera>();
-
             CAMRTS = (CamRTSController)Create(Root.cameraRTS, Vector3.zero);
             rtsCamera = CAMRTS.GetComponent<Camera>();
-            //rtsCamera.enabled = false;
-
+            
+            //mainMenuCamera.enabled = false;
         }
     }
 

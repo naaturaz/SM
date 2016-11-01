@@ -17,7 +17,7 @@ public class TerrainSpawnerController : ControllerParent
     private int multiplier = 40;//80  
 
     int howManyTreesToSpawn = 20;//50
-    int howManyStonesToSpawn =3;//3
+    int howManyStonesToSpawn = 3;//3
     int howManyIronToSpawn = 3;//3
     int howManyGoldToSpawn = 3;//3
     int howManyOrnaToSpawn = 30;//30    50      20
@@ -26,7 +26,8 @@ public class TerrainSpawnerController : ControllerParent
     int howManyMarineBoundsToSpawn = 0;//
     int howManyMountainBoundsToSpawn = 0;//
 
-    List<TerrainRamdonSpawner> _treesPool = new List<TerrainRamdonSpawner>(); 
+    private SpawnPool _spawnPool;
+
 
     //will be use when spawing new obj to know if that position was used alread by another one
     bool[] usedVertexPos;
@@ -41,7 +42,7 @@ public class TerrainSpawnerController : ControllerParent
 
     };
 
-    List<string> allStones = new List<string>(){};
+    List<string> allStones = new List<string>() { };
 
     List<string> allIron = new List<string>()
     {
@@ -58,7 +59,7 @@ public class TerrainSpawnerController : ControllerParent
         //Root.gold4
     };
 
-    public static  List<string> allOrna = new List<string>(){ };
+    public static List<string> allOrna = new List<string>() { };
     public static List<string> allGrass = new List<string>() { };
     public static List<string> allMarine = new List<string>() { };
     public static List<string> allMountain = new List<string>() { };
@@ -140,9 +141,25 @@ public class TerrainSpawnerController : ControllerParent
     private int loadingAllowTimes = 1;//how many times system is allow to load 
     private int loadedTimes = 0;//loaded times
 
+
+
+    internal void SendAllToPool()
+    {
+        for (int i = 0; i < AllRandomObjList.Count; i++)
+        {
+            SendToPool((StillElement)AllRandomObjList[i]);
+        }
+    } 
+    
+    internal void SendToPool(StillElement stillElement)
+    {
+        _spawnPool.AddToPool(stillElement);
+    }
+
     // Use this for initialization
     void ManualStart()
     {
+        _spawnPool = FindObjectOfType<SpawnPool>();
         //CreateTreePool();
 
 #if UNITY_EDITOR
@@ -174,7 +191,7 @@ public class TerrainSpawnerController : ControllerParent
 
     private void DefineAllLawnRoots()
     {
-        var howManyLawnInEachFolder = 5+1;
+        var howManyLawnInEachFolder = 5 + 1;
         var add = "";
         for (int i = 1; i < howManyLawnInEachFolder; i++)
         {
@@ -190,23 +207,23 @@ public class TerrainSpawnerController : ControllerParent
 
     private void DefineAllOrnaRoots()
     {
-        for (int i = 1; i < 41+1; i++)
+        for (int i = 1; i < 41 + 1; i++)
         {
-            allOrna.Add("Prefab/Terrain/Spawner/Orna/Orna"+i);
+            allOrna.Add("Prefab/Terrain/Spawner/Orna/Orna" + i);
         }
-    }  
-    
+    }
+
     private void DefineAllStoneRoots()
     {
-        for (int i = 1; i < 3+1; i++)
+        for (int i = 1; i < 3 + 1; i++)
         {
             allStones.Add("Prefab/Terrain/Spawner/Stone/Stone" + i);
         }
-    }  
-    
+    }
+
     private void AddTreesToTreesRoots()
     {
-        for (int i = 1; i < 4+1; i++)
+        for (int i = 1; i < 4 + 1; i++)
         {
             allTrees.Add("Prefab/Terrain/Spawner/Tree" + i);
         }
@@ -235,14 +252,14 @@ public class TerrainSpawnerController : ControllerParent
     /// <returns></returns>
     int Multiplier(int mul)
     {
-        return mul*multiplier;
+        return mul * multiplier;
     }
 
     private bool wasStarted;
     // Update is called once per frame
     void Update()
     {
-        if (MeshController.CrystalManager1 == null || MeshController.CrystalManager1.CrystalRegions.Count==0)
+        if (MeshController.CrystalManager1 == null || MeshController.CrystalManager1.CrystalRegions.Count == 0)
         {
             return;
         }
@@ -262,7 +279,7 @@ public class TerrainSpawnerController : ControllerParent
         if (!p.MeshController.IsLoading && IsToSave)
         {
             SpawnAllObj();
-            print(IsToSave+ " isToSave = true, we are generating all spanwened obj now ");
+            print(IsToSave + " isToSave = true, we are generating all spanwened obj now ");
 
         }
 
@@ -277,11 +294,24 @@ public class TerrainSpawnerController : ControllerParent
         {
             LoadData();
             if (spawnedData == null || spawnedData.AllSpawnedObj.Count == 0)
-            {IsToSave = true;}
+            { IsToSave = true; }
             loadedTimes++;
         }
 
-        if (!p.MeshController.IsLoading && IsToLoadFromFile) { LoadFromFile(); }
+        if (!p.MeshController.IsLoading && IsToLoadFromFile)
+        {
+            for (int i = 0; i < 100; i++)
+            {
+                if (IsToLoadFromFile)
+                {
+                    LoadFromFile();
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
 
         if (AllRandomObjList.Count > 0 && !IsToSave && !IsToLoadFromFile && treeList.Count == 0)
         {
@@ -378,8 +408,8 @@ public class TerrainSpawnerController : ControllerParent
         }
         if (typeP == H.Mountain)
         {
-            var v3 =  m.SubMesh.MountainBounds[rand.Next(0, m.SubMesh.MountainBounds.Count)];
-            
+            var v3 = m.SubMesh.MountainBounds[rand.Next(0, m.SubMesh.MountainBounds.Count)];
+
             return new Vector3(v3.x, m.IniTerr.MathCenter.y, v3.z);
         }
         return AssignRandomIniPosition(iniPos, howFar);
@@ -403,9 +433,9 @@ public class TerrainSpawnerController : ControllerParent
 
     //Creates the main type of objects and add them to AllRandomObjList, at the end if IsToSave is true will save it on
     //SaveOnListData
-    public void CreateObjAndAddToMainList(H typePass, Vector3 pos, 
+    public void CreateObjAndAddToMainList(H typePass, Vector3 pos,
         int rootToSpawnIndex, int index, Quaternion rot = new Quaternion(), bool replantedTree = false,
-        float treeHeight = 0, MDate seedDate = null, float maxHeight = 0, bool treeFall=false, float weight=0,
+        float treeHeight = 0, MDate seedDate = null, float maxHeight = 0, bool treeFall = false, float weight = 0,
         string oldTreeID = "")
     {
         string root = ReturnRoot(typePass, rootToSpawnIndex);
@@ -421,13 +451,21 @@ public class TerrainSpawnerController : ControllerParent
         }
         else if (IsToLoadFromFile)
         {
-            temp = TerrainRamdonSpawner.CreateTerraSpawn(root, pos, new Vector3(), 
+            temp = _spawnPool.RetTerraSpawn(pos, new Vector3(),
                 index, typePass, typePass.ToString(),
                 transform, replantedTree, treeHeight, seedDate, maxHeight, rot);
 
-            if (typePass==H.Tree)
+            //pool emptied
+            if (temp == null)
             {
-                var st = (StillElement) temp;
+                temp = TerrainRamdonSpawner.CreateTerraSpawn(root, pos, new Vector3(),
+                    index, typePass, typePass.ToString(),
+                    transform, replantedTree, treeHeight, seedDate, maxHeight, rot);
+            }
+
+            if (typePass == H.Tree)
+            {
+                var st = (StillElement)temp;
                 st.Weight = weight;
                 st.TreeFall = treeFall;
             }
@@ -440,14 +478,14 @@ public class TerrainSpawnerController : ControllerParent
         {
             temp.MyId = oldTreeID;
             temp.name = oldTreeID;
-            AllRandomObjList.Insert(0,temp);
+            AllRandomObjList.Insert(0, temp);
         }
         else
         {
             Program.gameScene.BatchAdd(temp);
             AllRandomObjList.Add(temp);
         }
-        
+
         if (IsToSave)
         {
             SaveOnListData(temp, typePass, rootToSpawnIndex, index, replantedTree);
@@ -457,7 +495,7 @@ public class TerrainSpawnerController : ControllerParent
     //Save all the data into AllSpawnedDataList
     void SaveOnListData(General obj, H typeP, int rootToSpawnIndex, int indexPass, bool replantTree)
     {
-        if (obj == null) { return;}
+        if (obj == null) { return; }
         if (obj is StillElement)
         {
             SpawnedData sData = new SpawnedData(obj.transform.position, obj.transform.rotation, typeP, rootToSpawnIndex, indexPass);
@@ -475,7 +513,7 @@ public class TerrainSpawnerController : ControllerParent
     {
         if (replantTree)
         {
-            AllSpawnedDataList.Insert(0,sData);
+            AllSpawnedDataList.Insert(0, sData);
         }
         else
         {
@@ -535,7 +573,7 @@ public class TerrainSpawnerController : ControllerParent
         if (AllRandomObjList.Count == 0) { return; }
         for (int i = 0; i < AllRandomObjList.Count; i++)
         {
-            if(AllRandomObjList[i].IndexAllVertex == newObj.IndexAllVertex)
+            if (AllRandomObjList[i].IndexAllVertex == newObj.IndexAllVertex)
             {
                 AllRandomObjList[i] = newObj;
             }
@@ -565,8 +603,8 @@ public class TerrainSpawnerController : ControllerParent
             if (AllRandomObjList[i] != null)
             {
                 tempList.Add(new SpawnedData(
-                AllRandomObjList[i].transform.position, AllRandomObjList[i].transform.rotation, 
-                AllSpawnedDataList[i].Type, AllSpawnedDataList[i].RootStringIndex, 
+                AllRandomObjList[i].transform.position, AllRandomObjList[i].transform.rotation,
+                AllSpawnedDataList[i].Type, AllSpawnedDataList[i].RootStringIndex,
                 AllSpawnedDataList[i].AllVertexIndex,
                 AllSpawnedDataList[i].TreeHeight, AllSpawnedDataList[i].SeedDate, AllSpawnedDataList[i].MaxHeight,
                 AllSpawnedDataList[i].TreeFall, AllSpawnedDataList[i].Weight
@@ -587,7 +625,7 @@ public class TerrainSpawnerController : ControllerParent
         if (typePass == H.Tree)
         {
             if (action == H.Create) { treeList.Add((TreeVeget)temp); }
-            else if (action == H.Update){treeList = UList.UpdateAList(treeList, temp);}
+            else if (action == H.Update) { treeList = UList.UpdateAList(treeList, temp); }
         }
         else if (typePass == H.Stone)
         {
@@ -608,7 +646,7 @@ public class TerrainSpawnerController : ControllerParent
         {
             if (action == H.Create) { grassList.Add((StillElement)temp); }
             else if (action == H.Update) { grassList = UList.UpdateAList(grassList, temp); }
-        }  
+        }
         else if (typePass == H.Marine)
         {
             if (action == H.Create) { marineList.Add((StillElement)temp); }
@@ -623,7 +661,7 @@ public class TerrainSpawnerController : ControllerParent
 
     public void SaveData()
     {
-       //Debug.Log("Called SaveData");
+        //Debug.Log("Called SaveData");
 
         spawnedData = new SpawnedData();
         spawnedData.AllSpawnedObj = AllSpawnedDataList;
@@ -633,7 +671,17 @@ public class TerrainSpawnerController : ControllerParent
 
     public void LoadData()
     {
-        try { spawnedData = XMLSerie.ReadXMLSpawned(); }
+        try
+        {
+            if (!Program.gameScene.IsDefaultTerreno())
+            {
+                spawnedData = XMLSerie.ReadXMLSpawned(); 
+            }
+            else//the first teraain to load 
+            {
+                spawnedData = XMLSerie.ReadXMLSpawned(true); 
+            }
+        }
         catch (Exception exception)
         { print("error loading XMLSerie.ReadXMLSpawned()." + exception.GetBaseException().Message); }
 
@@ -658,10 +706,10 @@ public class TerrainSpawnerController : ControllerParent
         CreateObjAndAddToMainList(AllSpawnedDataList[loadingIndex].Type,
             AllSpawnedDataList[loadingIndex].Pos,
             AllSpawnedDataList[loadingIndex].RootStringIndex, AllSpawnedDataList[loadingIndex].AllVertexIndex,
-            AllSpawnedDataList[loadingIndex].Rot, 
-            
-            false, 
-            AllSpawnedDataList[loadingIndex].TreeHeight, AllSpawnedDataList[loadingIndex].SeedDate, 
+            AllSpawnedDataList[loadingIndex].Rot,
+
+            false,
+            AllSpawnedDataList[loadingIndex].TreeHeight, AllSpawnedDataList[loadingIndex].SeedDate,
             AllSpawnedDataList[loadingIndex].MaxHeight,
             AllSpawnedDataList[loadingIndex].TreeFall, AllSpawnedDataList[loadingIndex].Weight);
 
@@ -678,7 +726,7 @@ public class TerrainSpawnerController : ControllerParent
             IsToLoadFromFile = false;
             //CreateOrUpdateSpecificsList(AllSpawnedDataList[loaded)
             print(treeList.Count + " treeList.Count IsToLoadFromFile-false");
-            
+
             Program.gameScene.BatchInitial();
 
             //CreateTreePool();
@@ -689,7 +737,7 @@ public class TerrainSpawnerController : ControllerParent
     private int ttlToSpawn = 0;
     public string PercentageLoaded()
     {
-        if (AllSpawnedDataList.Count==0)
+        if (AllSpawnedDataList.Count == 0)
         {
             return "Wait Loading List on TerrainController";
         }
@@ -702,7 +750,7 @@ public class TerrainSpawnerController : ControllerParent
             }
         }
 
-        var perc = ((float)loadingIndex/(float)ttlToSpawn)*100;
+        var perc = ((float)loadingIndex / (float)ttlToSpawn) * 100;
 
         return (perc - 1).ToString("n0") + " %";
     }
@@ -853,4 +901,6 @@ public class TerrainSpawnerController : ControllerParent
 
         return isOrnamentingNow;
     }
+
+
 }

@@ -38,7 +38,7 @@ public class BridgeManager
     /// </summary>
     private void CreateTypes()
     {
-        if (m.MeshController.LandZoneManager1.LandZones.Count == 0)
+        if (!Program.gameScene.GameFullyLoaded() || m.MeshController.LandZoneManager1.LandZones.Count == 0)
         {
             return;
         }

@@ -53,7 +53,7 @@ public class StillElement : TerrainRamdonSpawner
     }
 
     // Use this for initialization
-	protected void Start ()
+	public void Start ()
 	{
 	    _billBoardGO = GetChildThatContains("Billboard", gameObject);
 
@@ -71,7 +71,7 @@ public class StillElement : TerrainRamdonSpawner
 	    StartCoroutine("TenSecUpdate");
 
         //is a decora object 
-        if (MyId.Contains("Decora"))//if is -1 is a pool tree
+        if (MyId.Contains("Decora"))//if is null is a pool tree
 	    {
 	        return;
 	    }
@@ -101,7 +101,7 @@ public class StillElement : TerrainRamdonSpawner
     /// <summary>
     /// The start for pool trees
     /// </summary>
-    void ManualStart()
+    public void ManualStart()
     {
         UpdateMinAndMaxVar();
         var bou = FindBounds(_min, _max);
@@ -362,7 +362,10 @@ public class StillElement : TerrainRamdonSpawner
         //PersonPot.Control.RoutesCache1.RemoveAllMine(MyId);
 
         //cool stuff
-        base.DestroyCool();
+        //base.DestroyCool();
+
+        Program.gameScene.controllerMain.TerraSpawnController.SendToPool(this);
+
         //removes from List in TerraSpawnerController
         Program.gameScene.controllerMain.TerraSpawnController.RemoveStillElement(this);
         

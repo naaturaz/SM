@@ -32,7 +32,7 @@ public class XMLSerie
         var SaveInfoRTSCollection =
             DataContainer.Load(Path.Combine(dataPath, "cameraSave.xml"));
 
-        if (SaveInfoRTSCollection==null)
+        if (SaveInfoRTSCollection == null)
         {
             //no file saved
             return null;
@@ -71,7 +71,7 @@ public class XMLSerie
             return null;
         }
 
-        Debug.Log("programXML loaded:"+ load.ProgramData.GameVersion);
+        Debug.Log("programXML loaded:" + load.ProgramData.GameVersion);
         ProgramData res = load.ProgramData;
         return res;
     }
@@ -108,7 +108,7 @@ public class XMLSerie
         ProgramData1 = ReadXMLProgram();
 
         SubMeshData res = null;
-        if (loaded != null) {res = loaded.SubMeshData; }
+        if (loaded != null) { res = loaded.SubMeshData; }
 
         ////if the FBX is newer than the pertaining XML will return null
         ////in that way ScanTerra() in MeshController.cs will fire up
@@ -133,8 +133,8 @@ public class XMLSerie
         DateTime lastWriteTimeXMLFile = File.GetLastWriteTime(dataPath + "/" + Program.gameScene.Terreno.name + ".xml");
         DateTime lastWriteTimeFBXFile = File.GetLastWriteTime(dataPath + "/RawFiles/3d/Geometry/All_Terrains/" + Program.gameScene.Terreno.name + ".fbx");
 
-        GameScene.ScreenPrint("XML last modified:"+lastWriteTimeXMLFile.ToString());
-        GameScene.ScreenPrint("FBX last modified:"+lastWriteTimeFBXFile.ToString());
+        GameScene.ScreenPrint("XML last modified:" + lastWriteTimeXMLFile.ToString());
+        GameScene.ScreenPrint("FBX last modified:" + lastWriteTimeFBXFile.ToString());
 
         if (lastWriteTimeFBXFile > lastWriteTimeXMLFile)
         {
@@ -152,14 +152,24 @@ public class XMLSerie
         DataCollection.Save(Path.Combine(dataPath, Program.gameScene.Terreno.name + ".Spawned" + ".xml"));
     }
 
-    public static SpawnedData ReadXMLSpawned()
+    public static SpawnedData ReadXMLSpawned(bool defaultP = false)
     {
-        var loaded =
-            DataContainer.Load(Path.Combine(ReturnRightSpawnerRoot(), Program.gameScene.Terreno.name + ".Spawned" + ".xml"));
+        DataContainer loaded = null;
+
+        if (defaultP)
+        {
+            //which is a small Spawed terrain of bayAndMountain1River
+            loaded =
+                DataContainer.Load(Path.Combine(ReturnRightSpawnerRoot(), "DefaultLoad.Spawned.xml"));
+        }
+        else
+        {
+            loaded =
+                DataContainer.Load(Path.Combine(ReturnRightSpawnerRoot(), Program.gameScene.Terreno.name + ".Spawned" + ".xml"));
+        }
 
         SpawnedData res = null;
         if (loaded != null) { res = loaded.SpawnedData; }
-
         return res;
     }
 
@@ -228,13 +238,13 @@ public class XMLSerie
         return res;
     }
 
-#region Main Menu
+    #region Main Menu
 
     public static void NewGame()
     {
         dataPath = "";
     }
-    
+
     public static void SaveGame(string path)
     {
         //set  last saved dataPath, 
@@ -252,9 +262,9 @@ public class XMLSerie
         dataPath = path;
     }
 
-#endregion
+    #endregion
 
-#region Reports
+    #region Reports
     public static string WriteXMLFinalReport(FinalReport report)
     {
         DataContainer DataCollection = new DataContainer();
@@ -265,5 +275,5 @@ public class XMLSerie
 
         return root;
     }
-#endregion
+    #endregion
 }

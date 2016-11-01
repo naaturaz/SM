@@ -412,8 +412,12 @@ public class GameScene : General
 
         if (hud==null)
         {
-            hud = FindObjectOfType<HUDFPS>().GuiText;
-            HideShowTextMsg();
+            var hudGO = FindObjectOfType<HUDFPS>();
+            if (hudGO != null)
+            {
+                hud = hudGO.GuiText;
+                HideShowTextMsg();
+            }
         }
 
         //if (Input.GetKeyUp(KeyCode.B))
@@ -578,8 +582,13 @@ public class GameScene : General
 
     public void Destroy()
     {
-        Terreno.Destroy();
-        controllerMain.Destroy();
+        if (Terreno!=null)
+        {
+            Program.gameScene.controllerMain.TerraSpawnController.SendAllToPool();
+            Terreno.Destroy();
+            controllerMain.Destroy();
+
+        }
 
         base.Destroy();
     }
@@ -594,24 +603,26 @@ public class GameScene : General
     /// <param name="terrainRoot"></param>
     public void LoadTerrain()
     {
-        //will create cvamera if is null
+        //bz music 
         CamControl.CreateCam(H.CamRTS);
 
         if (string.IsNullOrEmpty(Program.MyScreen1.TerraRoot))
         {
             //the default terrain 
-            Terreno = Terreno.CreateTerrain(Root.bayAndMountain1River);
+            Terreno = Terreno.CreateTerrain(Root.bayAndMountain1River, true);
         }
-        else Terreno = Terreno.CreateTerrain(Program.MyScreen1.TerraRoot);
-        //Terreno.name += "." + Time.time;
-
+        else
+        {
+            //will create cvamera if is null
+            Terreno = Terreno.CreateTerrain(Program.MyScreen1.TerraRoot);
+        }
+        
         if (WaterBody == null)
         {
             //at the Moment Water Small is not visible Apr1 2016. since the mirror was duplicating
             //the Draw calls
             _waterBody = General.Create(Root.waterSmall, new Vector3(0, 8, 0));
         }
-
         controllerMain = Create(Root.controllerMain, container: Program.ClassContainer.transform) as ControllerMain;
     }
 
@@ -797,4 +808,10 @@ public class GameScene : General
 
 #endregion
 
+
+    
+    internal bool IsDefaultTerreno()
+    {
+        return Terreno.Default;
+    }
 }
