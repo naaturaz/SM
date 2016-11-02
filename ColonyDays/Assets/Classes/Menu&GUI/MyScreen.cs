@@ -82,7 +82,12 @@ public class MyScreen : General
             return;    
         }
 
+
+
         LoadMainMenu();
+
+        var first = GameObject.Find("FirstScreen");
+        Destroy(first);
 
         //can only be one on scene to work 
         RedifineWindows();

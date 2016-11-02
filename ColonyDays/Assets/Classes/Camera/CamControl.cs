@@ -47,7 +47,7 @@ public class CamControl : MonoBehaviour
         }
     }
 
-    private static string currentCam;
+    private static string currentCam = "Main";//bz is the first camera on
     public static void ChangeTo(string newVal)
     {
         if (currentCam != newVal)

@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class SpawnPool : General
 {
-    //List<TerrainRamdonSpawner> _list = new List<TerrainRamdonSpawner>();
+    //List<GameObject> _list = new List<GameObject>();
     List<TerrainRamdonSpawner> _tree = new List<TerrainRamdonSpawner>();
     List<TerrainRamdonSpawner> _lawn = new List<TerrainRamdonSpawner>();
     List<TerrainRamdonSpawner> _stone = new List<TerrainRamdonSpawner>();
@@ -98,11 +98,11 @@ public class SpawnPool : General
 
     internal void AddToPool(StillElement stillElement)
     {
-        var res = stillElement;
+        TerrainRamdonSpawner res = stillElement;
         res.enabled = false;
-        res.gameObject.transform.SetParent(transform);
-        res.gameObject.transform.position = new Vector3();
-        //_list.Add(res);
+        res.transform.SetParent(transform);
+        res.transform.position = new Vector3();
+        //_list.Add(res.gameObject);
 
         if (res.HType == H.Tree)
         {
@@ -140,6 +140,7 @@ public class SpawnPool : General
         var index = UMath.GiveRandom(0, listP.Count);
         var res = listP[index];
         listP.RemoveAt(index);
+        //_list.Remove(res.gameObject);
         return res;
     }
 

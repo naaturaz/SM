@@ -327,9 +327,20 @@ public class GameScene : General
     {
         _batchManager.AddGen(gen);
     }
+
     internal void BatchRemove(General gen)
     {
         _batchManager.RemoveGen(gen);
+
+    }
+
+    /// <summary>
+    /// Will not redo the region again
+    /// </summary>
+    /// <param name="stillElement"></param>
+    internal void BatchRemoveNotRedo(General gen)
+    {
+        _batchManager.RemoveGen(gen, false);
 
     }
 
@@ -814,4 +825,6 @@ public class GameScene : General
     {
         return Terreno.Default;
     }
+
+
 }

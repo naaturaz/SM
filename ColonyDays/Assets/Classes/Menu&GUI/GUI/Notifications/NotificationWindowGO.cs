@@ -210,6 +210,13 @@ public class NotificationWindowGO : GUIElement
     {
         Show();
         Show("");
+    }    
+    
+    //called from GUI 
+    public void CleanAll()
+    {
+        _allNotifications.Clear();
+        Show("");
     }
 
     /// <summary>
@@ -224,5 +231,7 @@ public class NotificationWindowGO : GUIElement
         _allNotifications.Insert(0, notiKey);
         Show("");
     }
+
+
 }
 

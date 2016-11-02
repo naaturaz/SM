@@ -161,6 +161,9 @@ public class Languages
 	   { "QuickSave.HoverSmall", "Quick Save [F]"},
 	   { "Bug Report.HoverSmall", "Report a bug"},
 	   { "Feedback.HoverSmall", "Feedback"},
+	   { "Hide.HoverSmall", "Hide"},
+	   { "CleanAll.HoverSmall", "Clean"},
+	   { "Bulletin.HoverSmall", "Bulletin"},
 
 
 

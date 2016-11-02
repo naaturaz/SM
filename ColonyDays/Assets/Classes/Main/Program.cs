@@ -62,7 +62,8 @@ public class Program : MonoBehaviour {
     // Use this for initialization
 	public void Start ()
 	{
-        //Settings.Load();
+        //loads main menu
+        MyScreen1.Start();
 
         DataController.Start();
         Application.targetFrameRate = 60;
@@ -87,8 +88,7 @@ public class Program : MonoBehaviour {
             }
         }
 
-        //loads main menu
-        MyScreen1.Start();
+       
         MouseListener.Start();
 
         ManagerReport.Start();

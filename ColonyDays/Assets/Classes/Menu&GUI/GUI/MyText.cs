@@ -8,14 +8,14 @@ public class MyText : MonoBehaviour
     private bool mappedOnce;
     private Text thisText;
 
-	// Use this for initialization
-	void Start ()
-	{
-	    thisText = GetComponent<Text>();
-	    Map();
+    // Use this for initialization
+    void Start()
+    {
+        thisText = GetComponent<Text>();
+        Map();
 
         StartCoroutine("FiveSecUpdate");
-	}
+    }
 
     private IEnumerator FiveSecUpdate()
     {
@@ -56,11 +56,11 @@ public class MyText : MonoBehaviour
         }
         else if (name == "Person")
         {
-            var adult = PersonPot.Control.All.Count(a => a.Age >= JobManager.majorityAge) ;
+            var adult = PersonPot.Control.All.Count(a => a.Age >= JobManager.majorityAge);
             var all = PersonPot.Control.All.Count;
 
             thisText.text = all + " / " + adult + " / " + (all - adult);
-        } 
+        }
         else if (name == "Emigrate")
         {
             thisText.text = PersonPot.Control.EmigrateController1.Emigrates.Count + "";
@@ -69,7 +69,7 @@ public class MyText : MonoBehaviour
         {
             var amt = GameController.ResumenInventory1.ReturnAmountOnCategory(PCat.Food);
 
-            thisText.text =  Unit.WeightConverted(amt).ToString("N0") + " " +
+            thisText.text = Unit.WeightConverted(amt).ToString("N0") + " " +
                 Unit.WeightUnit();
         }
         else if (name == "Happy")
@@ -89,19 +89,18 @@ public class MyText : MonoBehaviour
         else if (name == "Dollars")
         {
             thisText.text = Program.gameScene.GameController1.Dollars.ToString("C0");
-        }   
+        }
         else if (name == "Lazy")
         {
-            thisText.text = PersonPot.Control.All.Count(a => a.Work==null && a.IsMajor)+"";
-        } 
-     
+            thisText.text = PersonPot.Control.All.Count(a => a.Work == null && a.IsMajor) + "";
+        }
     }
 
 
     private static int reMapCount;//since is static need to remap all the times exist MyText.cs scripts
 
-	// Update is called once per frame
-	void Update ()
+    // Update is called once per frame
+    void Update()
     {
         reMapCount++;
 
@@ -109,6 +108,12 @@ public class MyText : MonoBehaviour
         {
             reMapCount = 0;
             Map();
+        }
+
+        if (_speedChanged && name == "CurrSpeed")
+        {
+            _speedChanged = false;
+            thisText.text = Program.gameScene.GameSpeed + "x";
         }
 
         if (!mappedOnce)
@@ -122,11 +127,12 @@ public class MyText : MonoBehaviour
                 + Program.gameScene.GameTime1.MonthFormat() + " "
                 + Program.gameScene.GameTime1.Year;
         }
-	}
+    }
 
+    private static bool _speedChanged;
     public static void UpdateNow()
     {
-        reMapCount = 190;
+        _speedChanged = true;
     }
 
 

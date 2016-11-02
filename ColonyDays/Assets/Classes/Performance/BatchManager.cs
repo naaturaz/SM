@@ -130,7 +130,12 @@ public class BatchManager
         }
     }
 
-    internal void RemoveGen(General gen)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="gen"></param>
+    /// <param name="redo">redo batching again</param>
+    internal void RemoveGen(General gen, bool redo = true)
     {
         //a tree tht is not being added to Batch
         if (gen == null || string.IsNullOrEmpty(gen.BatchRegionId))
@@ -138,7 +143,7 @@ public class BatchManager
             return;
         }
 
-        _batchRegions[gen.BatchRegionId].Remove(gen);
+        _batchRegions[gen.BatchRegionId].Remove(gen, redo);
     }
 
 

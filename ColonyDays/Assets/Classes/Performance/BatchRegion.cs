@@ -184,11 +184,14 @@ public class BatchRegion
 
 
 
-    internal void Remove(General go)
+    internal void Remove(General go, bool redo = true)
     {
         RemoveFromAll(go);
 
-        DecideIfRedoBatch();
+        if (redo)
+        {
+            DecideIfRedoBatch();
+        }
     }
 
     internal bool IsClose()

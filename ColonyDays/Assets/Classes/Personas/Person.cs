@@ -2299,6 +2299,7 @@ public class Person : General
     public void UnselectPerson()
     {
         DestroyProjector();
+        HidePaths();
 
         //if is Dead not point to continue
         if (Brain.Partido)
@@ -2313,8 +2314,6 @@ public class Person : General
             Brain.BlackList.RemoveAt(index);
             RedoBrain(Brain.BlackList);
         }
-
-        HidePaths();
     }
 
 

@@ -147,6 +147,9 @@ public class TerrainSpawnerController : ControllerParent
     {
         for (int i = 0; i < AllRandomObjList.Count; i++)
         {
+            MeshController.CrystalManager1.Delete((StillElement)AllRandomObjList[i]);
+            Program.gameScene.BatchRemoveNotRedo((StillElement)AllRandomObjList[i]);
+
             SendToPool((StillElement)AllRandomObjList[i]);
         }
     } 
@@ -156,16 +159,63 @@ public class TerrainSpawnerController : ControllerParent
         _spawnPool.AddToPool(stillElement);
     }
 
+    void LeaveEditorPool(SpawnPool[] pools)
+    {
+        for (int i = 0; i < pools.Length; i++)
+        {
+            if (pools[i].name.Contains("Editor"))
+            {
+                _spawnPool = pools[i];
+            }
+            else
+            {
+                pools[i].Destroy();
+            }
+        }
+    }    
+    
+    void LeaveStandPool(SpawnPool[] pools)
+    {
+        //in editor but bz Unity bugg was in here 
+        if (_spawnPool!=null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < pools.Length; i++)
+        {
+            if (!pools[i].name.Contains("Editor"))
+            {
+                _spawnPool = pools[i];
+            }
+            else
+            {
+                pools[i].Destroy();
+            }
+        }
+    }
+
     // Use this for initialization
     void ManualStart()
     {
-        _spawnPool = FindObjectOfType<SpawnPool>();
-        //CreateTreePool();
+        var pools = GameObject.FindObjectsOfType<SpawnPool>();
+
+
 
 #if UNITY_EDITOR
         multiplier = 2;//2
         howManyGrassToSpawn = 2;//40
+        
+        LeaveEditorPool(pools);
 #endif
+#if UNITY_STANDALONE 
+        LeaveStandPool(pools);
+
+
+#endif
+
+
+
         AddTreesToTreesRoots();
         DefineAllOrnaRoots();
         DefineAllStoneRoots();
@@ -723,6 +773,9 @@ public class TerrainSpawnerController : ControllerParent
         //when index is the same as couunt that it
         if (loadingIndex >= AllSpawnedDataList.Count)
         {
+            //_spawnPool.gameObject.SetActive(false);
+
+
             IsToLoadFromFile = false;
             //CreateOrUpdateSpecificsList(AllSpawnedDataList[loaded)
             print(treeList.Count + " treeList.Count IsToLoadFromFile-false");
