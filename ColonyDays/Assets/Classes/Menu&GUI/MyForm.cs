@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class MyForm : General 
+public class MyForm : General
 {
     GameObject _canvas;
     GameObject _panel;
@@ -72,9 +72,9 @@ public class MyForm : General
         }
     }
 
-	// Use this for initialization
-	void Start ()
-	{
+    // Use this for initialization
+    void Start()
+    {
         StartCoroutine("UpdateEveryMinute");
         StartCoroutine("UpdateEvery2Sec");
 
@@ -84,17 +84,17 @@ public class MyForm : General
 
         //if resource is null is another Form. The MainMenu Form 
         if (_resources != null)
-	    {
+        {
             _startPosIni = GetChildCalled(H.Start, Resources);
-	        LoadMainInventory();   
-	    }
+            LoadMainInventory();
+        }
 
         //is the main gui 
-	    if (transform.name.Contains("MainGUI"))
-	    {
-	        _showPathToSea = new ShowPathTo();
-	        _miniHelper = FindObjectOfType<MiniHelper>();
-	    }
+        if (transform.name.Contains("MainGUI"))
+        {
+            _showPathToSea = new ShowPathTo();
+            _miniHelper = FindObjectOfType<MiniHelper>();
+        }
     }
 
     private IEnumerator UpdateEvery2Sec()
@@ -120,8 +120,8 @@ public class MyForm : General
             }
         }
     }
-	
-	// Update is called once per frame
+
+    // Update is called once per frame
     void Update()
     {
         if (_showAInventory != null)
@@ -152,8 +152,8 @@ public class MyForm : General
     public bool IsOverLapingPanel(Vector2 pos)
     {
         Collider2D c = Panel.GetComponent<Collider2D>();
-        
-        if(c.OverlapPoint(pos))
+
+        if (c.OverlapPoint(pos))
         {
             return true;
         }
@@ -196,7 +196,7 @@ public class MyForm : General
     /// </summary>
     public void ShowHideSeaPathToggle()
     {
-        if (_showPathToSea!=null)
+        if (_showPathToSea != null)
         {
             _showPathToSea.Toggle();
         }
@@ -207,9 +207,9 @@ public class MyForm : General
     /// </summary>
     public void CenterCamToTown()
     {
-        CamControl.CAMRTS.InputRts.CenterCam(true);
-    }  
-    
+        CamControl.CAMRTS.InputRts.LoadFirstCamPos();
+    }
+
     /// <summary>
     /// Called by the Helper on Gui
     /// </summary>
@@ -219,5 +219,5 @@ public class MyForm : General
     }
 
 
-#endregion
+    #endregion
 }

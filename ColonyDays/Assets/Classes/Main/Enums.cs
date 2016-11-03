@@ -589,7 +589,8 @@ public enum G//for General Random stuff
 public enum Ron1
 {
     Brick, Wood, Carpintery, Clay, SaltMine, BlackSmith, FishHut, Masonry, LightHouse,
-    Church, Tavern, //MountainMine
+    Church, Tavern, 
+    MountainMine, Mill, School, PostGuard
 }
 
 public static class Enums { }

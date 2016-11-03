@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// This class along wiht AudioPlayer are the only ones that play audio sounds
 /// </summary>
-public class AudioContainer: MonoBehaviour
+public class AudioContainer : MonoBehaviour
 {
     private string _key;
     private string _root;
@@ -63,21 +63,21 @@ public class AudioContainer: MonoBehaviour
         obj = (AudioContainer)Resources.Load("Prefab/Audio/Sound/TemplateAudioContainer",
             typeof(AudioContainer));
         obj = (AudioContainer)Instantiate(obj, origen, Quaternion.identity);
-        obj.transform.name = "AudioContaner: "+key;
+        obj.transform.name = "AudioContaner: " + key;
 
         obj.Key = key;
         obj.Root1 = root;
         obj.NewLevel = newLevel;
 
-        if (container != null) { obj.transform.SetParent( container); }
+        if (container != null) { obj.transform.SetParent(container); }
         return obj;
     }
 
-  
+
 
     void Start()
     {
-        Debug.Log("newAudioContainer: "+Root1);
+        Debug.Log("newAudioContainer: " + Root1);
         AddSpecificAudioSource();
 
         if (IsAmbience())
@@ -85,7 +85,7 @@ public class AudioContainer: MonoBehaviour
             _audioSource.loop = true;
             return;
         }
-        
+
         Play(_newLevel);
     }
 
@@ -119,7 +119,7 @@ public class AudioContainer: MonoBehaviour
     void FadesTo(float newDist)
     {
         var realVal = ConvertLevel(newDist);
-      
+
         if (_audioSource.volume > realVal)
         {
             volDown = true;
@@ -211,10 +211,10 @@ public class AudioContainer: MonoBehaviour
         }
 
         //if is not changign the vol and time has passed since las report and is playing
-        if (!IsThisAPersonSound() && 
+        if (!IsThisAPersonSound() &&
             !IsASpawnSound() && !IsAMusic() && !IsAmbience() &&
             !IsLanguage() &&
-            _audioSource.isPlaying && !volUp && !volDown 
+            _audioSource.isPlaying && !volUp && !volDown
             && Time.time + 2.6f > _lastReport)
         {
             Stop();
@@ -240,8 +240,8 @@ public class AudioContainer: MonoBehaviour
     bool IsThisAPersonSound()
     {
         return AudioCollector.PersonRoots.ContainsKey(_key);
-    }   
-    
+    }
+
     bool IsAMusic()
     {
         return MusicManager.IsMusic(_key);
@@ -296,10 +296,17 @@ public class AudioContainer: MonoBehaviour
     internal void PlayAmbience(float dist)
     {
         var volHere = ConvertLevel(dist);
-        _audioSource.volume = volHere * AudioCollector.SoundLevel; 
+
+        //bz call this right after spawn. and then Start was not executed
+        if (_audioSource == null)
+        {
+            return;
+        }
+
+        _audioSource.volume = volHere * AudioCollector.SoundLevel;
         _audioSource.loop = true;
         PlayAShot(dist);
-       // FadesTo(dist);
+        // FadesTo(dist);
     }
 
     private float lastShotPlayed;
@@ -308,7 +315,7 @@ public class AudioContainer: MonoBehaviour
     /// </summary>
     internal void PlayAShot(float dist)
     {
-        if (!Settings.ISSoundOn)
+        if (!Settings.ISSoundOn || _audioSource == null)//mean was just spawned
         {
             return;
         }
@@ -326,7 +333,7 @@ public class AudioContainer: MonoBehaviour
         lastShotPlayed = Time.time;
     }
 
-#region Music
+    #region Music
 
     private float timeToPlayNextSong;
     private float coolDownUntil;//used when play was hit before Start() happened
@@ -348,7 +355,7 @@ public class AudioContainer: MonoBehaviour
             return;
         }
         coolDownUntil = 0;
-        
+
         _audioSource.PlayOneShot(_audioClip, .15f * AudioCollector.MusicLevel);
         timeToPlayNextSong = Time.time + _audioClip.length;
     }
@@ -361,8 +368,8 @@ public class AudioContainer: MonoBehaviour
             _audioSource.Pause();
             wasPaused = true;
         }
-    }   
-    
+    }
+
     internal void UnPause()
     {
         if (wasPaused)
@@ -377,7 +384,7 @@ public class AudioContainer: MonoBehaviour
     }
 
 
-#endregion
+    #endregion
 
 
     public void LevelChanged(object sender, EventArgs e)

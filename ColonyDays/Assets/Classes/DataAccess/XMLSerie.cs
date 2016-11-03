@@ -24,13 +24,13 @@ public class XMLSerie
         DataContainer DataCollection = new DataContainer();
         DataCollection.SaveInfoRTSs = listP;
 
-        DataCollection.Save(Path.Combine(dataPath, "cameraSave.xml"));
+        DataCollection.Save(Path.Combine(Application.dataPath, "cameraSave.xml"));
     }
 
     public static List<RTSData> ReadXML()
     {
         var SaveInfoRTSCollection =
-            DataContainer.Load(Path.Combine(dataPath, "cameraSave.xml"));
+            DataContainer.Load(Path.Combine(Application.dataPath, "cameraSave.xml"));
 
         if (SaveInfoRTSCollection == null)
         {

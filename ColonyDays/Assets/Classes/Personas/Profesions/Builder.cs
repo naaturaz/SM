@@ -220,7 +220,7 @@ public class Builder : Profession
 
         //that ID will remove dummy so can be cache and will add the FinRoutePoint so if another builder
         //will go to that corner can use the cached one 
-        _person.MyDummyProf.MyId = _constructing.MyId + "." + FinRoutePoint;
+        _person.MyDummyProf.MyId = _constructing.MyId + ".Dummy." + FinRoutePoint;
         _person.MyDummyProf.transform.position = FinRoutePoint;
 
         //UVisHelp.CreateHelpers(FinRoutePoint, Root.yellowCube);

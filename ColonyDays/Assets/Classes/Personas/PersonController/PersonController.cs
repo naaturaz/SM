@@ -161,7 +161,6 @@ public class PersonController : PersonPot
             SpawnIniPersonas();
             GameController.LoadStartingConditions(conditions[Difficulty]);
             RestartController();
-            CamControl.CAMRTS.InputRts.CenterCam(true);
             
             //here bz trees all spawneed after buildings. 
             //so if tree is inside a building wont be deleted. bz the building
@@ -183,6 +182,9 @@ public class PersonController : PersonPot
         MeshController.InitBuyRegions();
 
         Program.gameScene.GameController1.ReCheckWhatsOnStorage();
+
+        Program.gameScene.ReleaseLoadingScreen();
+
     }
 
 
@@ -702,7 +704,7 @@ public class PersonController : PersonPot
     private List<CheckedIn> _onSystemNow = new List<CheckedIn>();
     
     //the number is not inclusinve so if u put a 3 will alow 2
-    private int _systemCap = 5;//2//4//amt of person
+    private int _systemCap = 7;//5   2   4  //amt of person
 
     //people waiting to be pass to _onSystemNow
     List<CheckedIn>  _waitList = new List<CheckedIn>();

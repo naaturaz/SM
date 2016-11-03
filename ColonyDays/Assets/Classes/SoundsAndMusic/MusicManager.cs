@@ -20,7 +20,7 @@ public class MusicManager
         {"THEME 6_new", ""},
         {"THEME 2_simple_CUBAN_BONGO", ""},
     };
-    
+
     static Dictionary<string, string> _musicCivRoots = new Dictionary<string, string>()
     {
         {"PIRATES_10%", ""},
@@ -45,9 +45,8 @@ public class MusicManager
 
     public static void Start()
     {
-        LoadMusics();
-        LoadMusicCiv();
         PlayRandom();
+        CamControl.ChangeTo("Main");
     }
 
 
@@ -57,7 +56,6 @@ public class MusicManager
     {
         _currMusic = PlayMaracasFirst();
 
-        
         secCount++;
 
         if (secCount > 1000)
@@ -87,67 +85,96 @@ public class MusicManager
         //never a song was played 
         if (_playedSongs.Count == 0)
         {
-            res = _musics.ElementAt(5).Value;//las maracas
+            res = ReturnOrCreate(_musicRoots.ElementAt(5));//las maracas
         }
         else
         {
-            res = _musics.ElementAt(Random.Range(0, _musics.Count)).Value;
+            res = ReturnOrCreate(_musicRoots.ElementAt(Random.Range(0, _musics.Count)));
         }
         return res;
     }
 
-
-
-    private static void LoadMusics()
+    /// <summary>
+    /// Will return if exist or will create and return 
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
+    static AudioContainer ReturnOrCreate(KeyValuePair<string, string> item)
     {
-        for (int i = 0; i < _musicRoots.Count; i++)
+        if (!_musics.ContainsKey(item.Key))
         {
-            var item = _musicRoots.ElementAt(i);
-            var root = DefineRoot(item.Key);
-
-
-            var audCont = AudioContainer.Create(_musicRoots.ElementAt(i).Key, root, 0,
-                container: AudioPlayer.SoundsCointaner.transform);
-
-            LevelChanged += audCont.LevelChanged;
-
-
-
-            _musics.Add(item.Key, audCont);
+            LoadAMusic(item);
         }
-
-        CamControl.ChangeTo("Main");
+        return _musics[item.Key];
     }
 
-    private static void LoadMusicCiv()
+    private static void LoadAMusic(KeyValuePair<string, string> item)
     {
-        for (int i = 0; i < _musicCivRoots.Count; i++)
-        {
-            var item = _musicCivRoots.ElementAt(i);
-            var root = DefineRoot(item.Key);
+        var root = DefineRoot(item.Key);
 
-            _musicsCiv.Add(item.Key, AudioContainer.Create(item.Key, root, 0,
-                container: AudioPlayer.SoundsCointaner.transform));
-        }
+        var audCont = AudioContainer.Create(item.Key, root, 0,
+            container: AudioPlayer.SoundsCointaner.transform);
+
+        LevelChanged += audCont.LevelChanged;
+
+        _musics.Add(item.Key, audCont);
     }
+
+
+    //private static void LoadMusics()
+    //{
+    //    for (int i = 0; i < _musicRoots.Count; i++)
+    //    {
+    //        var item = _musicRoots.ElementAt(i);
+    //        var root = DefineRoot(item.Key);
+
+
+    //        var audCont = AudioContainer.Create(_musicRoots.ElementAt(i).Key, root, 0,
+    //            container: AudioPlayer.SoundsCointaner.transform);
+
+    //        LevelChanged += audCont.LevelChanged;
+
+
+
+    //        _musics.Add(item.Key, audCont);
+    //    }
+
+    //}
+
+
+
+
+
+    //private static void LoadMusicCiv()
+    //{
+    //    for (int i = 0; i < _musicCivRoots.Count; i++)
+    //    {
+    //        var item = _musicCivRoots.ElementAt(i);
+    //        var root = DefineRoot(item.Key);
+
+    //        _musicsCiv.Add(item.Key, AudioContainer.Create(item.Key, root, 0,
+    //            container: AudioPlayer.SoundsCointaner.transform));
+    //    }
+    //}
 
 
     private static string DefineRoot(string key)
     {
         var plsFolders = "Prefab/Audio/Music/";
-        
+
         return plsFolders + key;
     }
 
     public static void MusicIsTurnedOFF()
     {
         _currMusic.Pause();
-    }  
-    
+    }
+
     public static void MusicIsTurnedON()
     {
         _currMusic.UnPause();
     }
+
 
     internal static void PlayANewSong(string key)
     {

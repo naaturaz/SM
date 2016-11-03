@@ -20,6 +20,7 @@ class MiniHelper : GUIElement
         "PortReputation.Help",
         "Emigrate.Help",
         "Food.Help",
+        "Weight.Help",
     };
 
     //which is being shown now 

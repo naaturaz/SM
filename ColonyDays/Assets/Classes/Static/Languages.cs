@@ -272,7 +272,10 @@ public class Languages
 	                          "is that they wont combeack, wont produce and wont have kids." +
 	                          "The only good thing is that they increase the 'Port Reputation'"},
 	   { "Food.Help", "Food: The more variety of foods a person has in their houses the happier they" +
-	                      "will be."},
+	                      "will be."},	  
+                          
+       { "Weight.Help", "Weight: All weights in game are in Kg or Lbs depending on which Unit system is selected." +
+                        " You can change it on 'Options' on the 'Main Menu'"},
 
 	};
 
@@ -577,11 +580,17 @@ public class Languages
     public static void SetCurrentLang(string lang)
     {
         _currentLang = lang;
+        AudioCollector.InitSpecPeoplesList();
     }
 
     internal static string CurrentLang()
     {
         return _currentLang;
+    }   
+    
+    internal static List<string> AllLang()
+    {
+        return new List<string>(){"English", "Spanish"};
     }
 
     internal static bool DoIHaveHoverMed(string key)

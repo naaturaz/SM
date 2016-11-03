@@ -43,7 +43,7 @@ public class AudioPlayer  {
         soundsCointaner = General.Create(Root.classesContainer, Camera.main.transform.position,
             "SoundContainer", Camera.main.transform);
 
-        AudioCollector.SpawnSounds();
+        //AudioCollector.SpawnSounds();
 
         //starts the music 
         MusicManager.Start();

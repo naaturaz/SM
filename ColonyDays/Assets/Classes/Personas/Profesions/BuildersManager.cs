@@ -231,6 +231,7 @@ public class BuildersManager
             _passedQueue.Remove(cons.Key);
             return true;
         }
+
         return false;
     }
 
@@ -238,6 +239,22 @@ public class BuildersManager
     {
         CheckIfAnyToGreenLight();
         RemoveFullyBuiltOrRemoved();
+
+        FreeUp();
+    }
+
+
+    private float _lastFreeUp;
+    /// <summary>
+    /// So people check their surroundings if constructions are up for over a minute 
+    /// </summary>
+    void FreeUp()
+    {
+        if (Time.time > _lastFreeUp + 60 && _constructions.Count > 0)
+        {
+            _lastFreeUp = Time.time;
+            PersonPot.Control.RestartController();
+        }
     }
 
     /// <summary>

@@ -81,4 +81,30 @@ public class UString : MonoBehaviour {
 
         return mostFrequest;
     }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="pass">pass The string pass</param>
+    /// <param name="max">amount of spaces</param>
+    /// <param name="riOrLeft">padding on the right or left</param>
+    /// <returns> Spaces depending on the pass.lenght and max </returns>
+    public static string PadThis(string pass, int max, char riOrLeft, string pad = " ")
+    {
+        int spaces = max - pass.Length;
+
+        for (int i = 0; i < spaces; i++)
+        {
+            if (riOrLeft == 'r')
+            {
+                pass += pad;
+            }
+            else if (riOrLeft == 'l')
+            {
+                pass = pad + pass;
+            }
+        }
+        return pass;
+    }
 }

@@ -296,7 +296,6 @@ public class GameScene : General
         Debug.Log("BatchInitial() gameScene");
         _batchManager.BatchInitial();
 
-        ReleaseLoadingScreen();
     }
 
     /// <summary>

@@ -213,39 +213,16 @@ public class ShowInvetoryItem : GUIElement
         if (InvType=="Main")
         {
             //return StandardFormat();
-            return ShortFormat(amt);
+            return amt.ToString("N0");
+            //return ShortFormat(amt);
         }
 
-        return PadThis(InvItem1.Key+"", 14, 'r') + " " + PadThis((int)amt+"", 8, 'l' )+  
-            PadThis(vol.ToString("F1"), 8, 'l');
+        return UString.PadThis(InvItem1.Key+"", 14, 'r') + " " + UString.PadThis((int)amt+"", 8, 'l' )
+            + UString.PadThis(vol.ToString("F1"), 8, 'l');
         //return InvItem1.Key + " " + (int)amt + BuildStringUnits() + vol.ToString("F1");
     }
 
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="pass">pass The string pass</param>
-    /// <param name="max">amount of spaces</param>
-    /// <param name="riOrLeft">padding on the right or left</param>
-    /// <returns> Spaces depending on the pass.lenght and max </returns>
-    private static string PadThis(string pass, int max, char riOrLeft, string pad = " ")
-    {
-        int spaces = max - pass.Length;
-
-        for (int i = 0; i < spaces; i++)
-        {
-            if (riOrLeft == 'r')
-            {
-                pass += pad;
-            }
-            else if (riOrLeft == 'l')
-            {
-                pass = pad + pass;
-            }
-        }
-        return pass;
-    }
 
 
     

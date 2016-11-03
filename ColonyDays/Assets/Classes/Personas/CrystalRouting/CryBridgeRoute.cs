@@ -161,11 +161,11 @@ public class CryBridgeRoute
     /// <returns></returns>
     Structure ReturnIniOrFinAsIDPass(string IdPass)
     {
-        if (IdPass == _fin.MyId)
+        if (IdPass.Contains(_fin.MyId))
         {
             return _fin;
         } 
-        if (IdPass == _ini.MyId)
+        if (IdPass.Contains(_ini.MyId))
         {
             return _ini;
         }

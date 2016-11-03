@@ -486,7 +486,7 @@ public class BuildingWindow : GUIElement {
     /// <returns></returns>
     private string IfInConstructionAddPercentageOfCompletion()
     {
-        var sP = (StructureParent) _building;
+        StructureParent sP = _building.ReturnCurrentStructureParent();
 
         if (sP.CurrentStage != 4)
         {

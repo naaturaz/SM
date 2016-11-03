@@ -456,7 +456,7 @@ public class Structure : StructureParent
 
         if (HType == H.Tavern && Inventory.IsEmpty())
         {
-            mul = 0.5f;
+            mul = 2f;
         }
 
         return ((float)PeopleDict.Count / (float)MaxPeople) * mul;

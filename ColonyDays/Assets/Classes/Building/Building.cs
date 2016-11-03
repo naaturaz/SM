@@ -2312,7 +2312,7 @@ public class Building : General, Iinfo
     /// Crated for modularity. And reutnr the indicate Structure Parent . if is a bridge will return the first piece
     /// </summary>
     /// <returns></returns>
-    StructureParent ReturnCurrentStructureParent()
+    public StructureParent ReturnCurrentStructureParent()
     {
         StructureParent sP = null;
 

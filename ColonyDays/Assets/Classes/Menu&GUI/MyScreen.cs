@@ -425,9 +425,12 @@ public class MyScreen : General
 
     public void LoadingScreenIsDone()
     {
+        CamControl.CAMRTS.InputRts.CenterCam(true);
+        CamControl.CAMRTS.InputRts.SaveFirstCamPos();
+
+
         Program.MouseListener.LoadMainGUI();
         Program.MouseListener.ApplyChangeScreenResolution();
-
 
         DestroyCurrentMenu();
     }

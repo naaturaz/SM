@@ -129,7 +129,6 @@ public class CamRTSController : CamControl
     }
 
 
-
     void InitializeObjects()
     {
         if (transform.position != new Vector3())
@@ -232,6 +231,8 @@ public class CamRTSController : CamControl
             centerTarget.transform.position = hitFront.point;
             transform.SetParent( centerTarget.transform);
             wasYAligned = true;
+
+            //CAMRTS.InputRts.SaveFirstCamPos();
         }
     }
 
@@ -602,4 +603,6 @@ public class CamRTSController : CamControl
         else { print("CamRTS.MoveToWhere() objToBeMoved was null"); };
         return moveTo;
     }
+
+
 }

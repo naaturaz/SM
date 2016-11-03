@@ -148,8 +148,8 @@ public class ShowAInventory
             {
                 return 0;
             }
-            return -(ReturnRelativeYSpace(32, _allItems[0].transform.localScale.y)) * _mainLines * factor;
-            //return -(ReturnRelativeYSpace(32, _allItems[0].transform.localScale.y)) * i;
+            return -(ReturnRelativeYSpace(27, _allItems[0].transform.localScale.y))
+                * _mainLines * factor;//32
         }
         return -3.5f*i;
     }

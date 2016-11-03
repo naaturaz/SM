@@ -1085,7 +1085,7 @@ public class Brain
     void ReRouteCallsCounter()
     {
         _timesCall++;
-        if (_waiting && _timesCall > 65)//20 60
+        if (_waiting && _timesCall > 10)//65 20 60
         {
             PersonPot.Control.DoneReRoute(_person.MyId);//so another people can use the Spot 
             _timesCall = 0;

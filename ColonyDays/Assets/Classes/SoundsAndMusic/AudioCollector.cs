@@ -172,23 +172,25 @@ public class AudioCollector
         }
     }
 
-    public static void SpawnSounds()
-    {
+    //public static void SpawnSounds()
+    //{
 
-        for (int i = 0; i < _roots.Count; i++)
-        {
-            var root = DefineRoot(_roots.ElementAt(i).Key);
-
-
-            var audCont = AudioContainer.Create(_roots.ElementAt(i).Key, root, 0,
-                container: AudioPlayer.SoundsCointaner.transform);
-
-            LevelChanged += audCont.LevelChanged;
+    //    for (int i = 0; i < _roots.Count; i++)
+    //    {
+    //        var root = DefineRoot(_roots.ElementAt(i).Key);
 
 
-            _audioContainers.Add(_roots.ElementAt(i).Key, audCont);
-        }
-    }
+    //        var audCont = AudioContainer.Create(_roots.ElementAt(i).Key, root, 0,
+    //            container: AudioPlayer.SoundsCointaner.transform);
+
+    //        LevelChanged += audCont.LevelChanged;
+
+
+    //        _audioContainers.Add(_roots.ElementAt(i).Key, audCont);
+    //    }
+    //}
+
+
 
 
 
@@ -296,6 +298,18 @@ public class AudioCollector
         }
     }
 
+    public static void SpawnASound(KeyValuePair<string, string> item)
+    {
+        var root = DefineRoot(item.Key);
+
+        var audCont = AudioContainer.Create(item.Key, root, 0,
+                container: AudioPlayer.SoundsCointaner.transform);
+
+        LevelChanged += audCont.LevelChanged;
+
+        _audioContainers.Add(item.Key, audCont);
+    }
+
 
     /// <summary>
     /// Mainly for Persons animations 
@@ -304,10 +318,12 @@ public class AudioCollector
     /// <param name="pos"></param>
     public static void PlayOneShot(string key, float dist)
     {
-        if (_audioContainers.ContainsKey(key))
+        if (!_audioContainers.ContainsKey(key))
         {
-            _audioContainers[key].PlayAShot(dist);
+            SpawnASound(new KeyValuePair<string, string>(key, ""));
         }
+        _audioContainers[key].PlayAShot(dist);
+
     }
 
     public static void PlayOneShot(string key, Vector3 urPos)
@@ -327,23 +343,38 @@ public class AudioCollector
         {
             StopCurrAmbienceThatIsNotNewSound(playThis);
 
-            if (_audioContainers[playThis].IsPlayingNow())
+            if (_audioContainers.ContainsKey(playThis) 
+                && _audioContainers[playThis].IsPlayingNow())
             {
                 //do nothing
             }
             else
             {
-                _audioContainers[playThis].PlayAmbience(dist);
+                //_audioContainers[playThis].PlayAmbience(dist);
+                PlayAmbience(playThis, dist);
             }
         }
     }
+
+    public static void PlayAmbience(string key, float dist)
+    {
+        if (!_audioContainers.ContainsKey(key))
+        {
+            SpawnASound(new KeyValuePair<string, string>(key, ""));
+        }
+        _audioContainers[key].PlayAmbience(dist);
+    }
+
+
 
     private static void StopCurrAmbienceThatIsNotNewSound(string playThis)
     {
         for (int i = 0; i < _ambience.Count; i++)
         {
             var keyHere = _ambience.ElementAt(i).Key;
-            if (_audioContainers[keyHere].IsPlayingNow() && keyHere != playThis)
+            if (_audioContainers.ContainsKey(keyHere) 
+                && _audioContainers[keyHere].IsPlayingNow() 
+                && keyHere != playThis)
             {
                 _audioContainers[keyHere].StopAmbience();
             }
@@ -397,19 +428,29 @@ public class AudioCollector
 
 
 
-#region Person Voice
+    #region Person Voice
 
+    /// <summary>
+    /// Make sure that a sound of man dont have any keywords like "Mujer" "Boy" "Girl"
+    /// and the same for each one 
+    /// </summary>
+    /// <param name="p"></param>
     public static void PlayPersonVoice(Person p)
     {
+        if (info.Count == 0)
+        {
+            InitInfoList();
+        }
+
         if (p.Gender == H.Male)
         {
             if (p.Age > 18 && p.Age < 70)
             {
-                PlayPerson("Man");
+                PlayPerson(_manList);
             }
             else if (p.Age <= 11)
             {
-                PlayPerson("Boy");
+                PlayPerson(_boyList);
             }
         }
 
@@ -417,17 +458,20 @@ public class AudioCollector
 
 
     static List<string> info = new List<string>();
+    static List<string> _kindOfPeople = new List<string>() { "Man", "Boy" };
+
+    static List<string> _manList = new List<string>();
+    static List<string> _boyList = new List<string>();
+
+
     private static int infoIndex;
-    static void PlayPerson(string typeOfPerson)
+    static void PlayPerson(List<string> list)
     {
         //the root is determined by the languages and the type of person
         //English/Man/ is an ex
-        var buildRoot = "Prefab/Audio/Sound/" + Languages.CurrentLang() + "/" + typeOfPerson + "/";
 
-        InitInfoList(typeOfPerson);
-
-        var key = info[Random.Range(0, info.Count)];
-        key = key.Substring(infoIndex, key.Length - (4 + infoIndex));
+        var buildRoot = list[Random.Range(0, list.Count)];
+        var key = buildRoot.Substring(infoIndex, buildRoot.Length - (4 + infoIndex));
 
         //Debug.Log("Key: " + key);
         //Debug.Log("buildRoot: " + buildRoot);
@@ -451,9 +495,9 @@ public class AudioCollector
     /// So in editor play the game and click a person so it talks 
     /// </summary>
     /// <param name="typeOfPerson"></param>
-    static void InitInfoList(string typeOfPerson)
+    static void InitInfoList()
     {
-        if (info.Count > 0 && info.Contains("/" + Languages.CurrentLang() + "/" + typeOfPerson +"/"))
+        if (info.Count > 0)
         {
             return;
         }
@@ -461,13 +505,24 @@ public class AudioCollector
         infoIndex = 0;
 
 #if UNITY_EDITOR
-        info = GetFilesInEditor(typeOfPerson);
+        info = GetFilesAllInEditor();
         SaveOnProgramData(info);
 #endif
 #if UNITY_STANDALONE
-        info = GetFilesInStandAlone(typeOfPerson);
+        info = GetFilesInStandAlone();
         infoIndex = 17;//bz needs to remove 'Assets/Resources/'
 #endif
+
+        InitSpecPeoplesList();
+    }
+
+    public static void InitSpecPeoplesList()
+    {
+        _manList.Clear();
+        _boyList.Clear();
+
+        _manList = info.Where(a => a.Contains("Man") && a.Contains(Languages.CurrentLang())).ToList();
+        _boyList = info.Where(a => a.Contains("Boy") && a.Contains(Languages.CurrentLang())).ToList();
     }
 
     private static void SaveOnProgramData(List<string> waves)
@@ -477,27 +532,51 @@ public class AudioCollector
         XMLSerie.WriteXMLProgram(pData);
     }
 
-    static List<string> GetFilesInStandAlone(string typeOfPerson)
+    static List<string> GetFilesInStandAlone()
     {
         var pData = XMLSerie.ReadXMLProgram();
 
         //needs to contain the current lang and the type of person
-        var res = pData.Voices.Where(a => a.Contains(Languages.CurrentLang()) &&
-            a.Contains(typeOfPerson)).ToList();
+        var res = pData.Voices;
 
         return res;
     }
 
-    static List<string> GetFilesInEditor(string typeOfPerson)
+    static List<string> GetFilesAllInEditor()
     {
-        var root = "Assets/Resources/Prefab/Audio/Sound/" + Languages.CurrentLang() + "/"
-            + typeOfPerson + "/";
+        List<string> res = new List<string>();
 
-        //Debug.Log("sound root:" + root);
-        var waves = Directory.GetFiles(root, "*.wav").ToList();
-        return waves;
+        for (int i = 0; i < Languages.AllLang().Count; i++)
+        {
+            for (int j = 0; j < _kindOfPeople.Count; j++)
+            {
+                res.AddRange(GetFilesInEditor(_kindOfPeople[j], Languages.AllLang()[i]));
+            }
+        }
+
+        return res;
     }
 
-#endregion
+
+    static List<string> GetFilesInEditor(string typeOfPerson, string lang)
+    {
+        var root = "Assets/Resources/Prefab/Audio/Sound/" + lang + "/"
+            + typeOfPerson + "/";
+
+        List<string> res = new List<string>();
+
+        try
+        {
+            res = Directory.GetFiles(root, "*.wav").ToList();
+        }
+        catch (Exception)
+        {
+            
+        }
+
+        return res;
+    }
+
+    #endregion
 
 }

@@ -17,8 +17,6 @@ public class InputRTS : GenericCameraComponent
     {
         InitializeList();
        
-        
-
     }
 
     // Update is called once per frame
@@ -66,7 +64,11 @@ public class InputRTS : GenericCameraComponent
         list.Add(new RTSData(KeyCode.Alpha4, KeyCode.Alpha9, TransformCam, CenterTarget));
         list.Add(new RTSData(KeyCode.Alpha5, KeyCode.Alpha0, TransformCam, CenterTarget));
 
+        //last cam
         list.Add(new RTSData(KeyCode.None, KeyCode.None, TransformCam, CenterTarget));
+
+        //first cam
+        list.Add(new RTSData(KeyCode.F, KeyCode.F, TransformCam, CenterTarget));
     }
 
     void CheckIfKeyWasPressed()
@@ -174,7 +176,10 @@ public class InputRTS : GenericCameraComponent
         SaveCamPos(KeyCode.None, TransformCam.position, TransformCam.rotation);
         //list.Add(new RTSData(KeyCode.None, KeyCode.None, TransformCam, CenterTarget));
         //list.Add(new RTSData(TransformCam, CenterTarget));
-    }
+    }    /// <summary>
+   
+    
+
 
     /// <summary>
     /// Load las position of camera, saved in last element of the list
@@ -183,6 +188,24 @@ public class InputRTS : GenericCameraComponent
     {
         LoadCamPos(KeyCode.None);
     }
+
+
+    /// <summary>
+    /// Use to reset the camera 
+    /// </summary>
+    public void SaveFirstCamPos()
+    {
+        SaveCamPos(KeyCode.F, TransformCam.position, TransformCam.rotation);
+    }
+
+    /// <summary>
+    /// Use to load and looks like a  reset camera
+    /// </summary>
+    public void LoadFirstCamPos()
+    {
+        LoadCamPos(KeyCode.F);
+    }
+
 
     /// <summary>
     /// centeer the cam to the newTarget position loops to gets the most accurate center 
