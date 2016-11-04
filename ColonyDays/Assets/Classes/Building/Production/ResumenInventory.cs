@@ -355,10 +355,10 @@ public class Coverage
     static List<BuildStat> _build = new List<BuildStat>(); 
     static private void LoadBuildStats()
     {
-        _build.Add(new BuildStat(H.School, 20, 4, 11));
+        _build.Add(new BuildStat(H.School, 10, 4, 11));
         _build.Add(new BuildStat(H.TradesSchool, 5, 10, 16));
-        _build.Add(new BuildStat(H.Church, 150, 0, 100));
-        _build.Add(new BuildStat(H.Tavern, 40, 20, 80));
+        _build.Add(new BuildStat(H.Church, 50, 0, 100));
+        _build.Add(new BuildStat(H.Tavern, 10, 20, 80));
     }
 
     static BuildStat GiveMeStat(H hTypeP)

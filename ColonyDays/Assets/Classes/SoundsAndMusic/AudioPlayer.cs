@@ -7,6 +7,9 @@ public class AudioPlayer  {
 
     private static bool isToPlayOneTimePlayed = true;
 
+    /// <summary>
+    /// use to contain the sounds of all buildings
+    /// </summary>
     static Dictionary<string, Sound> _soundsLib = new Dictionary<string, Sound>();
 
 
@@ -43,16 +46,13 @@ public class AudioPlayer  {
         soundsCointaner = General.Create(Root.classesContainer, Camera.main.transform.position,
             "SoundContainer", Camera.main.transform);
 
-        //AudioCollector.SpawnSounds();
-
         //starts the music 
         MusicManager.Start();
+    }
 
-        //var root = Application.dataPath + "/Resources/Prefab/Audio/Sound/";
-        
-        //Debug.Log("appData path: " + Application.dataPath);
-        
-        
+
+    static void InitSoundsLib()
+    {
         var root = "C:/GitHub/SM/ColonyDays/Assets/Resources/Prefab/Audio/Sound/";
         var waves = new List<string>();
 
@@ -146,6 +146,10 @@ public class AudioPlayer  {
         if (!Settings.ISSoundOn)
         {
             return;
+        }
+        if (_soundsLib.Count == 0)
+        {
+            InitSoundsLib();
         }
 
         var type = TreatType(hTypeP, currProd);

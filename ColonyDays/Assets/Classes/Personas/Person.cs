@@ -1700,13 +1700,10 @@ public class Person : General
         P item = Home.Inventory.GiveRandomFood();
         var kgNeeded = ReturnAmountToEat(item) + AdditionalFoodNeeds();//in case is below normal it needs to eat more 
 
-        if (Name == "Vahloe")
-        {
-            var a = 1;
-        }
-
         float gotAmt = Home.Inventory.RemoveByWeight(item, kgNeeded);
         _nutrition.AteThisMuch(item, gotAmt);
+
+        Home.AddConsumeThisYear(item, gotAmt);
     }
 
     /// <summary>

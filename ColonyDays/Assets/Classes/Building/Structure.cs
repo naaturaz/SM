@@ -454,12 +454,12 @@ public class Structure : StructureParent
     {
         var mul = 1f;
 
-        if (HType == H.Tavern && Inventory.IsEmpty())
+        if (HType == H.Tavern)
         {
-            mul = 2f;
+            mul = 1f;
         }
 
-        return ((float)PeopleDict.Count / (float)MaxPeople) * mul;
+        return PeopleDict.Count * mul;
     }
 
     public string CoverageInfo()
@@ -475,11 +475,7 @@ public class Structure : StructureParent
     }
 
 
-    bool IsACoverageBuilding()
-    {
-        return HType == H.School || HType == H.TradesSchool || HType == H.Church
-               || HType == H.Tavern;
-    }
+
 
     /// <summary>
     /// It is producing if current Product is not Stop 

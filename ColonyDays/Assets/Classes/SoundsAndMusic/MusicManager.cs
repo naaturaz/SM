@@ -46,7 +46,6 @@ public class MusicManager
     public static void Start()
     {
         PlayRandom();
-        CamControl.ChangeTo("Main");
     }
 
 

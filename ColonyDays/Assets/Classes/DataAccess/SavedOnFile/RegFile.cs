@@ -175,7 +175,7 @@ public class RegFile  {
     //for now will be used only by HouseMed
     public string Root;
 
-    public List<Inventory> ProductionReport;
+    public ProductionReport ProductionReport;
     public int MaxPeople;
 
 

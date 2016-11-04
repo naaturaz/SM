@@ -155,6 +155,8 @@ public class PersonController : PersonPot
         init = false;
 
         PersonData pData = XMLSerie.ReadXMLPerson();
+        CamControl.CAMRTS.InputRts.SaveFirstCamPos();
+
         //brand new game
         if (pData == null)
         {
@@ -182,9 +184,7 @@ public class PersonController : PersonPot
         MeshController.InitBuyRegions();
 
         Program.gameScene.GameController1.ReCheckWhatsOnStorage();
-
         Program.gameScene.ReleaseLoadingScreen();
-
     }
 
 

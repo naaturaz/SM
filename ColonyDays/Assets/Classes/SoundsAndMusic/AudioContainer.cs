@@ -300,7 +300,7 @@ public class AudioContainer : MonoBehaviour
         //bz call this right after spawn. and then Start was not executed
         if (_audioSource == null)
         {
-            return;
+            AddSpecificAudioSource();
         }
 
         _audioSource.volume = volHere * AudioCollector.SoundLevel;
@@ -315,9 +315,14 @@ public class AudioContainer : MonoBehaviour
     /// </summary>
     internal void PlayAShot(float dist)
     {
-        if (!Settings.ISSoundOn || _audioSource == null)//mean was just spawned
+        if (!Settings.ISSoundOn)
         {
             return;
+        }
+
+        if (_audioSource == null)//mean was just spawned
+        {
+            AddSpecificAudioSource();
         }
 
         //so 12 wheelBarrowers dont sound aweful

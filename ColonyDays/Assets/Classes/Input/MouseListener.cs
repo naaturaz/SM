@@ -80,6 +80,8 @@ public class MouseListener : InputMain
         _buildingWindow = FindObjectOfType<BuildingWindow>();
         _addOrderWindow = FindObjectOfType<AddOrderWindow>();
         _notificationWindow = FindObjectOfType<NotificationWindowGO>();
+
+        Debug.Log("LoadMain GUI");
     }
 
     private Vector3 mainTempIniPos;

@@ -1587,6 +1587,11 @@ public class Body //: MonoBehaviour //: General
     /// </summary>
     void CheckSound()
     {
+        if (Camera.main == null)
+        {
+            return;
+        }
+
         if (Time.time > timeToPlaySound && timeToPlaySound != -1)
         {
             var dist = Vector3.Distance(Camera.main.transform.position, _person.transform.position);

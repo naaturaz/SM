@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class MyForm : General
@@ -207,7 +208,9 @@ public class MyForm : General
     /// </summary>
     public void CenterCamToTown()
     {
-        CamControl.CAMRTS.InputRts.LoadFirstCamPos();
+        CamControl.CAMRTS.InputRts.CenterCam(true);
+   
+    
     }
 
     /// <summary>

@@ -1655,6 +1655,12 @@ public class Building : General, Iinfo
         return 5;
     }
 
+    public bool IsACoverageBuilding()
+    {
+        return HType == H.School || HType == H.TradesSchool || HType == H.Church
+               || HType == H.Tavern;
+    }
+
     /// <summary>
     /// The user wil click on the checkbox and tht will change the salary
     /// 
@@ -2790,38 +2796,36 @@ public class Building : General, Iinfo
         return false;
     }
 
-    #region Production Reporting
-
-
-    //for report purposes
-    List<Inventory> _productionReport = new List<Inventory>();
-
-
-    private void AddProductionThisYear(P p, float amt)
-    {
-        var thisYear = Program.gameScene.GameTime1.Year + "";
-       
-        //find this year report 
-        var thisYearReport = _productionReport.Find(a => a.LocMyId == thisYear);
-
-        //if none will create this year report right away
-        if (thisYearReport==null)
-        {
-            thisYearReport = new Inventory(thisYear, H.YearReport);
-            //so the newest in on top
-            _productionReport.Insert(0, thisYearReport);
-        }
-        thisYearReport.Add(p, amt);
-    }
-
-
-
-    public List<Inventory> ProductionReport
+#region Production Reporting (for report purposes)
+    
+    ProductionReport _productionReport;
+    public ProductionReport ProductionReport
     {
         get { return _productionReport; }
         set { _productionReport = value; }
     }
 
+    private void AddProductionThisYear(P p, float amt)
+    {
+        if (_productionReport == null)
+        {
+            _productionReport = new ProductionReport();
+        }
+
+        _productionReport.AddProductionThisYear(p, amt);
+        BulletinWindow.AddProduction(p, amt, "Prod");
+    }  
+    
+    public void AddConsumeThisYear(P p, float amt)
+    {
+        if (_productionReport == null)
+        {
+            _productionReport = new ProductionReport();
+        }
+
+        _productionReport.AddConsumeThisYear(p, amt);
+        BulletinWindow.AddProduction(p, amt, "Consume");
+    }
 
 #endregion
 

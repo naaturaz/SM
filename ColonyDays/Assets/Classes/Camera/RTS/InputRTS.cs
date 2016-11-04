@@ -15,8 +15,8 @@ public class InputRTS : GenericCameraComponent
     // Use this for initialization
     void Start()
     {
+        Load();
         InitializeList();
-       
     }
 
     // Update is called once per frame
@@ -58,6 +58,11 @@ public class InputRTS : GenericCameraComponent
     /// </summary>
     void InitializeList()
     {
+        if (list.Count >0)
+        {
+            return;
+        }
+
         list.Add(new RTSData(KeyCode.Alpha1, KeyCode.Alpha6, TransformCam, CenterTarget));
         list.Add(new RTSData(KeyCode.Alpha2, KeyCode.Alpha7, TransformCam, CenterTarget));
         list.Add(new RTSData(KeyCode.Alpha3, KeyCode.Alpha8, TransformCam, CenterTarget));
@@ -123,10 +128,26 @@ public class InputRTS : GenericCameraComponent
                 list[i].CenterTargetPos = CenterTarget.position;
             }
         }
+    }
 
+
+    void Load()
+    {
+        //is loading the whole list to 
+        list = XMLSerie.ReadXML();
+    }
+
+    void Save()
+    {
         //SaveLoad.Save(list);
         //saving the whole list to ...
         XMLSerie.WriteXML(list);
+    }
+
+
+    void OnApplicationQuit()
+    {
+        Save();
     }
 
     /// <summary>
@@ -140,8 +161,7 @@ public class InputRTS : GenericCameraComponent
             return;
         }
 
-        //is loading the whole list to 
-        list = XMLSerie.ReadXML();
+
 
         //no file was found 
         if (list==null)
@@ -245,6 +265,8 @@ public class InputRTS : GenericCameraComponent
         if (yes && !isFollowingPersonNow)
         {
             ManagerReport.AddInput("CenterCam to 1st Building");
+
+            LoadFirstCamPos();
             CenterCamTo(BuildingPot.Control.Registro.AllBuilding.ElementAt(0).Value.transform);
         }
     }

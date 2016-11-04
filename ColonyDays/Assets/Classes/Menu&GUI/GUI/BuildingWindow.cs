@@ -196,7 +196,7 @@ public class BuildingWindow : GUIElement {
         CheckIfMatMaxOut();
         CheckIfCapMaxOut();
 
-        HideSalaryIfHouseOrStorage();
+        HideStuff();
 
     }
 
@@ -219,7 +219,7 @@ public class BuildingWindow : GUIElement {
 
 
 
-    private void HideSalaryIfHouseOrStorage()
+    private void HideStuff()
     {
         if (_building.IsHouse() || _building.MyId.Contains("Storage") || _building.Category == Ca.Way ||
             _building.HType == H.Masonry || _building.HType == H.HeavyLoad 
@@ -242,6 +242,7 @@ public class BuildingWindow : GUIElement {
         {
             _salary.SetActive(true);
         }
+
     }
 
     /// <summary>
@@ -313,17 +314,30 @@ public class BuildingWindow : GUIElement {
         _title.text = _building.HType + "";
         _info.text = BuildInfo() + BuildCover();
 
+        Inventory();
+
+        _currSalaryTxt.text = BuildingPot.Control.Registro.SelectBuilding.DollarsPay+"";
+        _currPositionsTxt.text = BuildingPot.Control.Registro.SelectBuilding.MaxPeople + "";
+        DemolishBtn();
+    }
+
+    void Inventory()
+    {
+        if (_building.Inventory == null)
+        {
+            return;
+        }
+
         if (_showAInventory == null)
         {
             _showAInventory = new ShowAInventory(_building.Inventory, _gaveta.gameObject, _invIniPos.transform.localPosition);
             ShowProductionReport();
-        
+
         }
-        else if (_showAInventory != null && ( 
+        else if (_showAInventory != null && (
             oldItemsCount != _building.Inventory.InventItems.Count ||
             oldBuildID != _building.MyId ||
-            _building.IsToReloadInv())
-            )
+            _building.IsToReloadInv()))
         {
             oldItemsCount = _building.Inventory.InventItems.Count;
 
@@ -331,19 +345,12 @@ public class BuildingWindow : GUIElement {
             _showAInventory.DestroyAll();
             _showAInventory = new ShowAInventory(_building.Inventory, _gaveta.gameObject, _invIniPos.transform.localPosition);
             ShowProductionReport();
-        
         }
-        
+
         _showAInventory.ManualUpdate();
         _inv.text = BuildStringInv(_building);
-
-
-
-
-        _currSalaryTxt.text = BuildingPot.Control.Registro.SelectBuilding.DollarsPay+"";
-        _currPositionsTxt.text = BuildingPot.Control.Registro.SelectBuilding.MaxPeople + "";
-        DemolishBtn();
     }
+
 
     List<ShowAInventory> _reports = new List<ShowAInventory>(); 
     private void ShowProductionReport()
@@ -358,11 +365,11 @@ public class BuildingWindow : GUIElement {
 
         for (int i = 0; i < ShowLastYears(); i++)
         {
-            var a = new ShowAInventory(_building.ProductionReport[i], _stats.gameObject, 
+            var a = new ShowAInventory(_building.ProductionReport.ProduceReport[i], _stats.gameObject, 
                 _invIniPosSta.transform.localPosition + new Vector3(0, pastItems*-3.5f*i,0));
 
             _reports.Add(a);
-            pastItems = _building.ProductionReport[i].InventItems.Count;
+            pastItems = _building.ProductionReport.ProduceReport[i].InventItems.Count;
         }
     }
 
@@ -372,9 +379,14 @@ public class BuildingWindow : GUIElement {
     /// <returns></returns>
     int ShowLastYears()
     {
-        if (_building.ProductionReport.Count < 6)
+        if (_building.ProductionReport == null)
         {
-            return _building.ProductionReport.Count;
+            return 0;
+        }
+
+        if (_building.ProductionReport.ProduceReport.Count < 6)
+        {
+            return _building.ProductionReport.ProduceReport.Count;
         }
         return 5;
     }

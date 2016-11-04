@@ -759,19 +759,16 @@ public class GameScene : General
     /// </summary>
     void OnApplicationQuit()
     {
-
         Debug.Log("Application ending after " + Time.time + " seconds");
 
-#if UNITY_EDITOR
-        return;
-#endif
+//#if UNITY_EDITOR
+//        return;
+//#endif
 
-        if (IsCurrentUserOnLogUploadList())
-        {
-            OpenLogHandler();
-        }
-
-
+//        if (IsCurrentUserOnLogUploadList())
+//        {
+//            OpenLogHandler();
+//        }
     }
 
 

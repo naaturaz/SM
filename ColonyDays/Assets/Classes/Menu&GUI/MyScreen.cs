@@ -138,6 +138,8 @@ public class MyScreen : General
         current = (MyForm)General.Create(Root.mainMenu, new Vector2());
         mainMenuForm = current;
         CamControl.ChangeTo("Main");
+
+        Debug.Log("Load Main Menu");
     }
 
     /// <summary>
@@ -426,7 +428,6 @@ public class MyScreen : General
     public void LoadingScreenIsDone()
     {
         CamControl.CAMRTS.InputRts.CenterCam(true);
-        CamControl.CAMRTS.InputRts.SaveFirstCamPos();
 
 
         Program.MouseListener.LoadMainGUI();
@@ -502,7 +503,7 @@ public class MyScreen : General
 
                 DestroyCurrentMenu();
                 LoadMainMenu();
-                Debug.Log("Reload Main Menu");   
+                Debug.Log("Reload Main Menu  ReLoadMainMenuIfActive");   
          
                 RedifineWindows();
             }
