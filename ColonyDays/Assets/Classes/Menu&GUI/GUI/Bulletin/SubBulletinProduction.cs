@@ -10,6 +10,8 @@ public class SubBulletinProduction
     private ProductionReport _productionReport;
     private BulletinWindow _bulletinWindow;
 
+    public SubBulletinProduction() { }
+
     public SubBulletinProduction(BulletinWindow bulletinWindow)
     {
         _bulletinWindow = bulletinWindow;

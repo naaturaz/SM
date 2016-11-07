@@ -1310,7 +1310,10 @@ public class Building : General, Iinfo
 
     List<H> doubleBounds = new List<H>(){H.FishingHut, 
         H.Dock, H.Shipyard, H.Supplier,
-        H.MountainMine, H.SaltMine, H.LightHouse};
+        H.MountainMine, H.SaltMine, H.LightHouse,
+        H.PostGuard
+    };
+
     private GameObject _maritimeBound;
     private GameObject _terraBound;
     private GameObject _underTerraBound;

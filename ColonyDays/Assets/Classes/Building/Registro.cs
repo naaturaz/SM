@@ -763,5 +763,15 @@ public class Registro : MonoBehaviour
             res.Add(AllBuilding.ElementAt(i).Value.MyId);
         }
         return res;
+    }   
+    
+    internal List<string> StringOfAllBuildingsHType()
+    {
+        List<string> res = new List<string>();
+        for (int i = 0; i < AllBuilding.Count; i++)
+        {
+            res.Add(AllBuilding.ElementAt(i).Value.HType+"");
+        }
+        return res;
     }
 }

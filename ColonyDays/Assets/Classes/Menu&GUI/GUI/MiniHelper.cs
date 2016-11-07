@@ -71,6 +71,7 @@ class MiniHelper : GUIElement
 
     internal void Show()
     {
+        AudioCollector.PlayOneShotFullAudio("ClickMetal2");
         Program.MouseListener.HideAllWindows();
 
         transform.position = _iniPos;

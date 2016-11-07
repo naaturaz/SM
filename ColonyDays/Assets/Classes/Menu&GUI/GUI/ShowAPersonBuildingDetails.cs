@@ -38,23 +38,28 @@ public class ShowAPersonBuildingDetails
     {
         _items.Clear();
 
-        _items.Add("Age", _person.Age + "");
-        _items.Add("Gender", _person.Gender + "");
-        _items.Add("Height", _person.Height + "");
-        _items.Add("Weight", _person.Weight + "");
-        _items.Add("Calories", _person.Nutrition1.CalNeededNowUpdate().ToString("N0") + "");
-        _items.Add("Nutrition", _person.NutritionLevel + "");
-        _items.Add("Profession", _person.ProfessionProp.ProfDescription + "");
-        _items.Add("Spouse", Family.RemovePersonIDNumberOff(_person.Spouse));
-        _items.Add("Happinness", _person.Happinnes + "");
-        _items.Add("Years Of School", _person.YearsOfSchool + "");
-        _items.Add("Age majority reach", _person.IsMajor + "");
+        AddToItems("Age", _person.Age + "");
+        AddToItems("Gender", _person.Gender + "");
+        AddToItems("Height", _person.Height + "");
+        AddToItems("Weight", _person.Weight + "");
+        AddToItems("Calories", _person.Nutrition1.CalNeededNowUpdate().ToString("N0") + "");
+        AddToItems("Nutrition", _person.NutritionLevel + "");
+        AddToItems("Profession", _person.ProfessionProp.ProfDescription + "");
+        AddToItems("Spouse", Family.RemovePersonIDNumberOff(_person.Spouse));
+        AddToItems("Happinness", _person.Happinnes + "");
+        AddToItems("Years Of School", _person.YearsOfSchool + "");
+        AddToItems("Age majority reach", _person.IsMajor + "");
 
-        _items.Add("Home", Home());
-        _items.Add("Work", Work());
-        _items.Add("Food Source", Food());
-        _items.Add("Religion", Religion());
-        _items.Add("Chill", Chill());
+        AddToItems("Home", Home());
+        AddToItems("Work", Work());
+        AddToItems("Food Source", Food());
+        AddToItems("Religion", Religion());
+        AddToItems("Chill", Chill());
+    }
+
+    void AddToItems(string key, string val)
+    {
+        _items.Add(Languages.ReturnString(key), val);
     }
 
     private void InitPerson()

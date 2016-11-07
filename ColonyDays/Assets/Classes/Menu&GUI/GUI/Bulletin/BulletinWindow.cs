@@ -15,9 +15,8 @@ public class BulletinWindow : GUIElement
     private GameObject _scroll;
     private Scrollbar _verticScrollbar;
 
-
     //subBulletins
-    private SubBulletinWorkers _workers;
+    private SubBulletinGeneral _workers;
     private static SubBulletinProduction _production;
 
     public Text Body1
@@ -38,6 +37,12 @@ public class BulletinWindow : GUIElement
         set { _scroll_Ini_PosGO = value; }
     }
 
+    public static SubBulletinProduction SubBulletinProduction1
+    {
+        get { return _production; }
+        set { _production = value; }
+    }
+
 
     void Start()
     {
@@ -46,10 +51,10 @@ public class BulletinWindow : GUIElement
 
         Hide();
 
-        _workers = new SubBulletinWorkers(this);
+        _workers = new SubBulletinGeneral(this);
         _production = new SubBulletinProduction(this);
+        
         //
-
         _scroll = GetChildCalled("Scroll_View");
         _content = GetGrandChildCalledFromThis("Content", _scroll);
         _contentRectTransform = _content.GetComponent<RectTransform>();
@@ -61,9 +66,9 @@ public class BulletinWindow : GUIElement
 
     }
 
-
-
-
+    /// <summary>
+    /// Called from GUI 
+    /// </summary>
     public void Show()
     {
         base.Show();
@@ -92,9 +97,21 @@ public class BulletinWindow : GUIElement
     /// </summary>
     public void ShowWorkers()
     {
-        
+        AudioCollector.PlayOneShotFullAudio("ClickMetal2");
+
         HideAll();
-        _workers.Show();
+        _workers.ShowWorkers();
+    }  
+    
+    /// <summary>
+    /// Called from GUI
+    /// </summary>
+    public void ShowBuildings()
+    {
+        AudioCollector.PlayOneShotFullAudio("ClickMetal2");
+
+        HideAll();
+        _workers.ShowBuildings();
     }
 
     /// <summary>
@@ -102,6 +119,8 @@ public class BulletinWindow : GUIElement
     /// </summary>
     public void ShowProd()
     {
+        AudioCollector.PlayOneShotFullAudio("ClickMetal2");
+
         HideAll();
         _production.ShowProdReport();
     } 
@@ -111,6 +130,8 @@ public class BulletinWindow : GUIElement
     /// </summary>
     public void ShowConsume()
     {
+        AudioCollector.PlayOneShotFullAudio("ClickMetal2");
+
         HideAll();
         _production.ShowConsumeReport();
     }

@@ -152,6 +152,11 @@ public class XMLSerie
         DataCollection.Save(Path.Combine(dataPath, Program.gameScene.Terreno.name + ".Spawned" + ".xml"));
     }
 
+    /// <summary>
+    /// read on caller of this if trying to create Terrain.Spawner file 
+    /// </summary>
+    /// <param name="defaultP"></param>
+    /// <returns></returns>
     public static SpawnedData ReadXMLSpawned(bool defaultP = false)
     {
         DataContainer loaded = null;
@@ -160,7 +165,7 @@ public class XMLSerie
         {
             //which is a small Spawed terrain of bayAndMountain1River
             loaded =
-                DataContainer.Load(Path.Combine(ReturnRightSpawnerRoot(), "DefaultLoad.Spawned.xml"));
+                DataContainer.Load(Path.Combine(ReturnRightSpawnerRoot(), "DefaultLoad.xml"));
         }
         else
         {

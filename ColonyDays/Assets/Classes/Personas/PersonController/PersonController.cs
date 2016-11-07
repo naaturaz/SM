@@ -215,6 +215,8 @@ public class PersonController : PersonPot
 
         Program.MyScreen1.TownName = pData.PersonControllerSaveLoad.TownName;
 
+        BulletinWindow.SubBulletinProduction1 = pData.PersonControllerSaveLoad.SubBulletinProduction;
+
         //persons
         for (int i = 0; i < pData.All.Count; i++)
         {
@@ -1045,4 +1047,6 @@ public class PersonControllerSaveLoad
 
 
     public string TownName { get; set; }
+
+    public SubBulletinProduction SubBulletinProduction { get; set; }
 }

@@ -146,7 +146,8 @@ public class OptionsWindow : GUIElement
         if (resChanged && Time.time > resTimeChanged + .5f)
         {
             resChanged = false;
-            Program.MouseListener.ApplyChangeScreenResolution();
+            Program.MouseListener.ApplyChangeScreenResolution(true);
+
         }
     }
 

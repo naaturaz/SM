@@ -154,7 +154,7 @@ public class SpawnPool : General
 
         if (obj == null)
         {
-            Debug.Log("needed on Pool: " + hType);
+            //Debug.Log("needed on Pool: " + hType);
             return obj;
         }
 

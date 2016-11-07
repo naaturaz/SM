@@ -81,18 +81,18 @@ public class MouseListener : InputMain
         _addOrderWindow = FindObjectOfType<AddOrderWindow>();
         _notificationWindow = FindObjectOfType<NotificationWindowGO>();
 
-        Debug.Log("LoadMain GUI");
+        Debug.Log("LoadMainGUI() GUI");
     }
 
     private Vector3 mainTempIniPos;
     public void HideMainGUI()
     {
         mainTempIniPos = main.transform.position;
-
         Vector3 t = mainTempIniPos;
         t.y -= 1400f;
-
         main.transform.position = t;
+
+        Debug.Log("HideMainGUI() GUI");
     }
 
     public void ShowMainGUI()
@@ -100,7 +100,7 @@ public class MouseListener : InputMain
         main.transform.position = mainTempIniPos;
     }
 
-    public void ApplyChangeScreenResolution()
+    public void ApplyChangeScreenResolution(bool promtToGame = false)
     {
         Program.gameScene.Fustrum1.RedoRect();
         Program.MyScreen1.ReLoadMainMenuIfActive();
@@ -115,10 +115,19 @@ public class MouseListener : InputMain
 
         main.Destroy();
         main = null;
-
         LoadMainGUI();
+
         //in case PersonWindow was not null. So main menu is last 
         Program.MyScreen1.ReLoadMainMenuIfActive();
+
+        //bz gui was on top of main menu when changed resolution 
+        if (promtToGame)
+        {
+            //shows game
+            EscapeKey();
+            //show mainMenu
+            EscapeKey();
+        }
     }
 
     /// <summary>
@@ -254,6 +263,9 @@ public class MouseListener : InputMain
     /// <param name="action"></param>
     public void ActionFromForm(string action)
     {
+        //play click sound 
+        AudioCollector.PlayOneShot("ClickMetal2", 0);
+
         //btn from main menu
         if (action.Contains("MainMenu."))
         {

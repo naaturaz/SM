@@ -719,6 +719,14 @@ public class TerrainSpawnerController : ControllerParent
         XMLSerie.WriteXMLSpawned(spawnedData);
     }
 
+    /// <summary>
+    /// How To create new Spawned Data for terrain
+    ///  
+    /// make  :
+    ///spawnedData = XMLSerie.ReadXMLSpawned(true)
+    ///spawnedData = XMLSerie.ReadXMLSpawned() 
+    /// 
+    /// </summary>
     public void LoadData()
     {
         try
@@ -729,7 +737,7 @@ public class TerrainSpawnerController : ControllerParent
             }
             else//the first teraain to load 
             {
-                spawnedData = XMLSerie.ReadXMLSpawned(true); 
+                spawnedData = XMLSerie.ReadXMLSpawned(true);//true once Terrain.Spawned is created  
             }
         }
         catch (Exception exception)

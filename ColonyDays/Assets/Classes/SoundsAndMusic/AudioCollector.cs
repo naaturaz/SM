@@ -40,7 +40,6 @@ public class AudioCollector
         {"isAxe", ""},
         {"isHammer", ""},
 
-        
 
     };
 
@@ -67,6 +66,7 @@ public class AudioCollector
         {"ClickWood4", ""},
         {"ClickWood7", ""},
         {"ClickWoodSubtle", ""},
+        {"ClickMetal2", ""},
     };
 
 
@@ -310,6 +310,14 @@ public class AudioCollector
         _audioContainers.Add(item.Key, audCont);
     }
 
+    /// <summary>
+    /// SAme as PlayOneShot, but audio is at Full always>> PlayOneShot(p, 0)
+    /// </summary>
+    /// <param name="p"></param>
+    internal static void PlayOneShotFullAudio(string p)
+    {
+        PlayOneShot(p, 0);
+    }
 
     /// <summary>
     /// Mainly for Persons animations 
@@ -578,5 +586,6 @@ public class AudioCollector
     }
 
     #endregion
+
 
 }

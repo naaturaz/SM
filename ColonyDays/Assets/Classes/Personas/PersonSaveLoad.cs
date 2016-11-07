@@ -65,6 +65,7 @@ public class PersonSaveLoad : PersonPot {
         res.UnlockRegions = MeshController.BuyRegionManager1.UnlockRegions;
 
         res.TownName = Program.MyScreen1.TownName;
+        res.SubBulletinProduction = BulletinWindow.SubBulletinProduction1;
 
         return res;
     }

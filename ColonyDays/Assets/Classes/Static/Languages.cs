@@ -131,10 +131,8 @@ public class Languages
        { "Invitation", "Your friend's email for a chance to join the Private Beta"},  
        { "Info", ""},//use for informational Dialogs
 
-       //todo aadd to ESP
 
        //MainMenu
-
         { "Types_Explain", "Traditional: \nIs a game in where some buildings are locked at the beggining of the game and you have to unlock them. " +
             "The good thing is that this provide you with guidance." +
             "\n\nFreewill: \nAll available buildings are unlocked right away. " +
@@ -154,7 +152,7 @@ public class Languages
 	   { "Date.HoverSmall", "Date (d/m/y)"},
 	   { "MoreSpeed.HoverSmall", "More speed"},
 	   { "LessSpeed.HoverSmall", "Less speed"},
-	   { "PauseSpeed.HoverSmall", "Zero sped"},
+	   { "PauseSpeed.HoverSmall", "Pause game"},
 	   { "CurrSpeedBack.HoverSmall", "Current speed"},
 	   { "ShowNoti.HoverSmall", "Notifications"},
 	   { "Menu.HoverSmall", "Main Menu"},
@@ -239,7 +237,6 @@ public class Languages
        { "ShipArrived.Noti.Name", "Ship arrived"},
 	   { "ShipArrived.Noti.Desc", "A new ship has arrived to one of our maritimes buildings"},
 
-       //todo keep aadding to ESP
        //Main notificaion
        //Shows on the middle of the screen
        { "NotScaledOnFloor", "The building is too close to shore or to a mountain"},
@@ -269,7 +266,7 @@ public class Languages
 	                                "If you want to increase this make sure you always have some orders" +
 	                                "on the port, supplier and shipyard"},
 	   { "Emigrate.Help", "Emigrates: When people are unhappy for a few years they jusy leave. The bad" +
-	                          "is that they wont combeack, wont produce and wont have kids." +
+	                          "is that they wont comeback, wont produce and wont have kids." +
 	                          "The only good thing is that they increase the 'Port Reputation'"},
 	   { "Food.Help", "Food: The more variety of foods a person has in their houses the happier they" +
 	                      "will be."},	  
@@ -407,9 +404,191 @@ public class Languages
        { "Invitation", "Pon el email de un amigo, quizas sea invitado a la Beta"},  
        { "Info", ""},//use for informational Dialogs
 
+       //more Main GUI
+       { "Workers distribution", "Distribucion de los trabajadores"},
+       { "Buildings", "Construcciones"},
+       
+       { "Age", "Edad"},
+       { "Gender", "Genero"},
+       { "Height", "Altura"},
+       { "Weight", "Peso"},
+       { "Calories", "Calorias"},
+       { "Nutrition", "Nutricion"},
+       { "Profession", "Profesion"},
+       { "Spouse", "Conyugue"},
+       { "Happinness", "Felicidad"},
+       { "Years Of School", "Años de escuela"},
+       { "Age majority reach", "Mayor de edad"},
+       { "Home", "Hogar"},
+       { "Work", "Trabajo"},
+       { "Food Source", "Almacen"},
+       { "Religion", "Religion"},
+       { "Chill", "Relajamiento"},
+
+
+
+       //MainMenu
+
+        { "Types_Explain", "Tradicional: \nEn este juego algunas construcciones estan  " +
+                           "bloqueadas al principio y tienes que desbloquearlas. " +
+            "Lo bueno es que asi tienes alguna manera de guiarte." +
+            "\n\nFreewill: \nTodas las construcciones estan disponibles. " +
+            "Lo malo es que puedes perder el juego mas facilmente."},
+
+
+       //Tooltips 
+       //Small Tooltips 
+	   { "Person.HoverSmall", "Personas / Adultos / Niños"},
+	   { "Emigrate.HoverSmall", "Emigrados"},
+	   { "Lazy.HoverSmall", "Desempleados"},
+	   { "Food.HoverSmall", "Comida"},
+	   { "Happy.HoverSmall", "Felicidad"},
+	   { "PortReputation.HoverSmall", "Reputacion Portuaria"},
+	   { "Dollars.HoverSmall", "Dinero"},
+	   { "PirateThreat.HoverSmall", "Amenaza Pirate"},
+	   { "Date.HoverSmall", "Fecha (d/m/a)"},
+	   { "MoreSpeed.HoverSmall", "Mas velocidad"},
+	   { "LessSpeed.HoverSmall", "Menos velocidad"},
+	   { "PauseSpeed.HoverSmall", "Pausa"},
+	   { "CurrSpeedBack.HoverSmall", "Velocidad actual"},
+	   { "ShowNoti.HoverSmall", "Notificaciones"},
+	   { "Menu.HoverSmall", "Menu Principal"},
+	   { "QuickSave.HoverSmall", "Salva rapida [F]"},
+	   { "Bug Report.HoverSmall", "Reporte un bug"},
+	   { "Feedback.HoverSmall", "Sugerencias"},
+	   { "Hide.HoverSmall", "Esconder"},
+	   { "CleanAll.HoverSmall", "Limpiar"},
+	   { "Bulletin.HoverSmall", "Boletin"},
+
+
+
+       //down bar
+	   { "Infrastructure.HoverSmall", "Infraestructuras"},
+	   { "House.HoverSmall", "Casas"},
+	   { "Farming.HoverSmall", "Fincas"},
+	   { "Raw.HoverSmall", "Basico"},
+	   { "Prod.HoverSmall", "Produccion"},
+	   { "Ind.HoverSmall", "Industrias"},
+	   { "Trade.HoverSmall", "Comercio"},
+	   { "Gov.HoverSmall", "Govierno"},
+	   { "Other.HoverSmall", "Otros"},
+	   { "Militar.HoverSmall", "Militar"},
+	   { "WhereIsTown.HoverSmall", "Centrar el pueblo [P]"},
+	   { "WhereIsSea.HoverSmall", "Muestre/Esconda al mar"},
+	   { "Helper.HoverSmall", "Mini ayuda"},
+	   
+       //building window
+       { "Gen_Btn.HoverSmall", "General"},
+       { "Inv_Btn.HoverSmall", "Inventorio"},
+       { "Upg_Btn.HoverSmall", "Mejoras"},
+       { "Prd_Btn.HoverSmall", "Produccion"},
+       { "Sta_Btn.HoverSmall", "Stadisticas"},
+       { "Ord_Btn.HoverSmall", "Ordenes"},
+	   { "Stop_Production.HoverSmall", "Pare produccion"},
+	   { "Demolish_Btn.HoverSmall", "Demoler"},
+	   { "More Salary.HoverSmall", "Pagar mas"},
+	   { "Less Salary.HoverSmall", "Pagar menos"},
+	   { "Next_Stage_Btn.HoverSmall", "Compre"},
+	   { "Current_Salary.HoverSmall", "Salario actual"},
+	   { "Current_Positions.HoverSmall", "Posiciones actuales"},
+	   { "Add_Import_Btn.HoverSmall", "Añade una importacion"},
+	   { "Add_Export_Btn.HoverSmall", "Añade una exportacion"},
+	   { "Upg_Cap_Btn.HoverSmall", "Mejora la capacidad"},
+	   { "Close_Btn.HoverSmall", "Cerrar"},
+	   { "ShowPath.HoverSmall", "Enseñar camino"},
+	   { "ShowLocation.HoverSmall", "Enseñar lugar"},
+
+       //addOrder windiw
+	   { "Amt_Tip.HoverSmall", "Cantidad de productos"},
+
+       //Med Tooltips 
+	   { "Build.HoverMed", "Fijar construccion: 'Click izquierdo' \n" +
+	                       "Rotar construccion: tecla 'R' \n " +
+	                       "Cancelar: 'Click derecho'"},
+	   { "Current_Salary.HoverMed", "Los trabajadores prefieren trabajar donde se pague mas dinero." +
+	                                " Si dos lugares pagan igual entonces escogeran el que este mas cerca a" +
+	                                " casa."},
+
+
+
+       //Notifications
+	   { "BabyBorn.Noti.Name", "Recien nacido"},
+	   { "BabyBorn.Noti.Desc", "Un niño a nacido que alegria"},
+	   { "PirateUp.Noti.Name", "Los pirates se acercan"},
+	   { "PirateUp.Noti.Desc", "Un barco de bandera pirata se ha visto cerca de la costa"},
+       { "PirateDown.Noti.Name", "Los piratas te temen"},
+	   { "PirateDown.Noti.Desc", "Hoy los pirates te respetan un poco mas"},
+
+       { "Emigrate.Noti.Name", "Una persona a emigrado"},
+	   { "Emigrate.Noti.Desc", "Las personas emigran cuando no estan felices"},
+       { "PortUp.Noti.Name", "El puerto de conoce"},
+	   { "PortUp.Noti.Desc", "Tu puerto esta recibiendo mas atencion por los comerciantes"},
+       { "PortDown.Noti.Name", "Tu puerto es desconocido"},
+	   { "PortDown.Noti.Desc", "Tu puerto se conoce cada vez menos entre los comerciantes"},
+
+       { "BoughtLand.Noti.Name", "Nueva tierra"},
+	   { "BoughtLand.Noti.Desc", "Nueva tierra ha sido comprada"},
+
+       { "ShipPayed.Noti.Name", "Pago de comercio"},
+	   { "ShipPayed.Noti.Desc", "Un barco a pagado por los bienes adquiridos en tu puerto"}, 
+       { "ShipArrived.Noti.Name", "Barco ha llegado"},
+	   { "ShipArrived.Noti.Desc", "Un barco ha llegado a una de nuestras construcciones maritimas"},
+
+       //Main notificaion
+       //Shows on the middle of the screen
+       { "NotScaledOnFloor", "La construccion esta muy cerca al mar o una montaña"},
+       { "NotEven", "El piso no esta parejo en la base de la construccion"},
+       { "Colliding", "La construccion choca con otra"},
+       { "BadWaterHeight", "La construccion esta muy alta o muy baja en el agua"},
+       { "LockedRegion", "Necesitas ser dueño de esta tierra para construir aqui"},
+       { "HomeLess", "La gente en esta casa no tiene a donde ir. Por favor construye una" +
+                     " nueva casa que pueda albegar a esta familia"},   
+       { "LastFood", "No puedes destruir la unica almacen en la villa"},
+       { "LastMasonry", "No puedes destruir la unica casa de albañiles en la villa"},
+
+
+       //Mini help
+       { "Camera", "Camara: Use [AWSD] or el cursor para mover. " +
+                   "Presione el boton del medio del raton para rotar camara, o [Q] y [E]"},
+       { "SeaPath", "Presione en el boton 'Mostrar al mar' " +
+                    "y el camino mas cercano al mar sera mostrado"},
+       { "Region", "Region: Necesitas ser dueño de una region para construir en ella. " +
+                   "Presione en la señal 'Se vende' para comprar una"},
+       { "PeopleRange", "Rango: El circulo azul gigante es el rango de cada construccion"},
+
+       { "PirateThreat.Help", "Amenaza Pirata: Esto es cuan al dia estan los piratas con tu puerto. " +
+                              "Se incrementa a medida que acumules mas dinero y riquezas. " +
+                              "Si pasa 90 entonces pierdes el juego."},
+
+	   { "PortReputation.Help", "Reputacion Portuaria: Mientras mas comerciantes y marineros conozcan tu puerto mas lo visitaran." +
+	                                "Si quieres aumentar esto asegurate de que siempre haiga ordenes en tus construcciones maritimas" +
+	                            " (Puerto, Astillero, Abastecedor)"},
+	   { "Emigrate.Help", "Emigrados: Cuando la gente esta infeliz por algunos años se van de tus tierras. " +
+	                      "Lo malo es que no viraran, produciran bienes o tedran niños jamas." +
+	                          "Lo bueno es que aumentan 'La Reputacion Portuaria'"},
+	   { "Food.Help", "Comida: Mientras mas variedad de comidas las personas tengan mas felices seran."},	  
+                          
+       { "Weight.Help", "Peso: Todos los pesos en el juego estan en Kg o Lbs" +
+                        " dependiendo en el sistema de unidad seleccionado." +
+                        " Se puede cambiar en 'Opciones' en el 'Menu Principal'"},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
        //words
-       //Fiel Farms
+       //Field Farms
 	   { "Bean", "Frijol"},
 	   { "Potato", "Papa"},
 	   { "SugarCane", "Caña"},
@@ -551,6 +730,7 @@ public class Languages
        { "Menu", "Menu"},
 
 
+       
 
 	};
 

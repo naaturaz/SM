@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 
@@ -45,6 +46,13 @@ public class MusicManager
 
     public static void Start()
     {
+        //bz gets called again when level is started
+        if (_currMusic != null)
+        {
+            return;
+        }
+        Debug.Log("MusicManager.Start()");
+
         PlayRandom();
     }
 
@@ -53,6 +61,8 @@ public class MusicManager
     static int secCount;
     private static void PlayRandom()
     {
+        Debug.Log("MusicManager.PlayRandom()");
+
         _currMusic = PlayMaracasFirst();
 
         secCount++;

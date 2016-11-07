@@ -440,7 +440,7 @@ public class GameScene : General
     void FixedUpdate()
     {
         //means tht it has it loaded
-        if (_gameTime == null)
+        if (_gameTime == null || _gameTimePeople == null)
         {
             return;
         }
