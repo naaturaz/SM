@@ -336,7 +336,7 @@ public class AddOrderWindow : GUIElement {
     }
 
     //todo validation
-    bool IsTextValid(string text)
+    static public bool IsTextValid(string text)
     {
         int temp = 0;
         if (int.TryParse(text, out temp))

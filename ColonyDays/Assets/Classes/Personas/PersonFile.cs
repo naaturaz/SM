@@ -148,6 +148,7 @@ public class PersonFile  {
         Height = pers.Height;
         Nutrition1 = pers.Nutrition1;
         WasFired = pers.WasFired;
+        PersonBank = pers.PersonBank1;
     }
 
     void SavePersonStructs(Person pers)
@@ -200,4 +201,6 @@ public class PersonFile  {
     public Nutrition Nutrition1 { get; set; }
 
     public bool WasFired { get; set; }
+
+    public PersonBank PersonBank { get; set; }
 }

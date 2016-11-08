@@ -30,6 +30,7 @@ public class OptionsWindow : GUIElement
 
     private Slider _musicSlider;
     private Slider _soundSlider;
+    private Slider _cameraSlider;
 
     void Start()
     {
@@ -42,6 +43,7 @@ public class OptionsWindow : GUIElement
         
         _musicSlider = GetGrandChildCalled("Music_Slider").GetComponent<Slider>();
         _soundSlider = GetGrandChildCalled("Sound_Slider").GetComponent<Slider>();
+        _cameraSlider = GetGrandChildCalled("Camera_Slider").GetComponent<Slider>();
 
 
 
@@ -407,13 +409,16 @@ public class OptionsWindow : GUIElement
 #endregion
 
 
-#region Sliders Sound and Music
+
+
+
+#region Sliders Sound and Music , Camera
 
     void LoadSlidersValues()
     {
         _soundSlider.value = AudioCollector.SoundLevel;
         _musicSlider.value = AudioCollector.MusicLevel;
-
+        _cameraSlider.value = CamControl.CAMRTS.CamSensivity/factor;
     }
 
     public void NewSoundLevel()
@@ -424,6 +429,12 @@ public class OptionsWindow : GUIElement
     public void NewMusicLevel()
     {
         AudioCollector.SetNewMusicLevelTo(_musicSlider.value);
+    }
+
+    private float factor = 12f;//bz .5 in the slider is 6 for the cam senstivity
+    public void NewCamSensitivity()
+    {
+        CamControl.CAMRTS.CamSensivity = _cameraSlider.value*factor;
     }
 
 #endregion

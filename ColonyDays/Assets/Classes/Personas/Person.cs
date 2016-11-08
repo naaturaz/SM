@@ -90,6 +90,8 @@ public class Person : General
 
     private bool _isLoading; //use to know if person is being loaded from file 
 
+    private PersonBank _personBank;
+
     private Structure _myDummy;
     private Structure _myDummyProf;
     /// <summary>
@@ -107,6 +109,12 @@ public class Person : General
     {
         get { return _myDummyProf; }
         set { _myDummyProf = value; }
+    }
+
+    public PersonBank PersonBank1
+    {
+        get { return _personBank; }
+        set { _personBank = value; }
     }
 
     public string IsBooked
@@ -541,6 +549,8 @@ public class Person : General
         Nutrition1.SetPerson(this);
 
         WasFired = pF.WasFired;
+        PersonBank1 = pF.PersonBank;
+        PersonBank1.SetPerson(this);
 
         _body = new Body(this, pF);
 
@@ -850,6 +860,7 @@ public class Person : General
             return;
         }
 
+        GetPaid();
         AgeAction();
 
         CheckHappiness();
@@ -866,6 +877,8 @@ public class Person : General
             ProfessionProp.ProdXShift = 0;
         }
     }
+
+
 
     public override void DestroyCool()
     {
@@ -1201,6 +1214,12 @@ public class Person : General
 
         CreateTheTwoDummies();
 
+        if (PersonBank1 == null)
+        {
+            PersonBank1 = new PersonBank();
+            PersonBank1.SetPerson(this);
+        }
+
         //means is loading from file
         if (Inventory != null && Inventory.InventItems.Count > 0)
         {
@@ -1212,21 +1231,6 @@ public class Person : General
     float RestartTimes(float a, float b) { return Random.Range(a, b); }
 
 
-    //private float _quickTime;
-    //public float QuickTime
-    //{
-    //    get { return _quickTime; }
-    //    set { _quickTime = value; }
-    //}
-
-    //private IEnumerator QuickUpdate()
-    //{
-    //    while (true)
-    //    {
-    //        yield return new WaitForSeconds(_quickTime); // wait 
-    //        _quickTime = RestartTimes(0f, 1f);
-    //    }
-    //}
 
 
     //private float quickTime2;
@@ -1482,7 +1486,37 @@ public class Person : General
 
 
 
+#region Bank Money
 
+    private void GetPaid()
+    {
+        if (Work == null)
+        {
+            return;
+        }
+
+        var sal = Work.DollarsPay;
+
+        _personBank.Add(sal);
+        Program.gameScene.GameController1.Dollars -= sal;
+    }
+
+
+
+    private void PayProduct(float amt, P item)
+    {
+        var trans = Program.gameScene.ExportImport1.CalculateTransaction(item, amt);
+        _personBank.WithDraw(trans);
+
+        //if is in positive balance will pay to the Fisco. To the user 
+        if (_personBank.CheckingAcct > 0)
+        {
+            Program.gameScene.GameController1.Dollars += trans;
+        }
+    }
+
+
+#endregion
 
 
 
@@ -1779,10 +1813,13 @@ public class Person : General
         }
 
         var amt = HowMuchICanCarry();
+        PayProduct(amt, item);
 
         ExchangeInvetoryItem(FoodSource, this, item, amt);
         //UnityEngine.Debug.Log(MyId+" took food:"+item);
     }
+
+
 
     public void ExchangeInvetoryItem(General takenFrom, General givenTo, P product, float amt)
     {
@@ -2628,6 +2665,8 @@ public class Person : General
 
     //todo saveload
     public bool WasFired { get; set; }
+
+
 }
 
 public class PersonReport

@@ -49,6 +49,7 @@ public class ShowAPersonBuildingDetails
         AddToItems("Happinness", _person.Happinnes + "");
         AddToItems("Years Of School", _person.YearsOfSchool + "");
         AddToItems("Age majority reach", _person.IsMajor + "");
+        AddToItems("Account", _person.PersonBank1.CheckingAcct.ToString("C"));
 
         AddToItems("Home", Home());
         AddToItems("Work", Work());
@@ -59,7 +60,7 @@ public class ShowAPersonBuildingDetails
 
     void AddToItems(string key, string val)
     {
-        _items.Add(Languages.ReturnString(key), val);
+        _items.Add(key, val);
     }
 
     private void InitPerson()

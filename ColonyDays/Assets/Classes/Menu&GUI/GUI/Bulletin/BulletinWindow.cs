@@ -18,6 +18,7 @@ public class BulletinWindow : GUIElement
     //subBulletins
     private SubBulletinGeneral _workers;
     private static SubBulletinProduction _production;
+    private SubBulletinFinance _finance;
 
     public Text Body1
     {
@@ -53,6 +54,7 @@ public class BulletinWindow : GUIElement
 
         _workers = new SubBulletinGeneral(this);
         _production = new SubBulletinProduction(this);
+        _finance = new SubBulletinFinance(this);
         
         //
         _scroll = GetChildCalled("Scroll_View");
@@ -80,6 +82,7 @@ public class BulletinWindow : GUIElement
         _scroll.SetActive(false);
         _body.text = "";
         _production.Hide();
+        _finance.Hide();
     }
 
     public void ShowScrool()
@@ -97,9 +100,8 @@ public class BulletinWindow : GUIElement
     /// </summary>
     public void ShowWorkers()
     {
-        AudioCollector.PlayOneShotFullAudio("ClickMetal2");
+        ClickAndHideAll();
 
-        HideAll();
         _workers.ShowWorkers();
     }  
     
@@ -108,9 +110,8 @@ public class BulletinWindow : GUIElement
     /// </summary>
     public void ShowBuildings()
     {
-        AudioCollector.PlayOneShotFullAudio("ClickMetal2");
+        ClickAndHideAll();
 
-        HideAll();
         _workers.ShowBuildings();
     }
 
@@ -119,9 +120,8 @@ public class BulletinWindow : GUIElement
     /// </summary>
     public void ShowProd()
     {
-        AudioCollector.PlayOneShotFullAudio("ClickMetal2");
+        ClickAndHideAll();
 
-        HideAll();
         _production.ShowProdReport();
     } 
     
@@ -130,9 +130,8 @@ public class BulletinWindow : GUIElement
     /// </summary>
     public void ShowConsume()
     {
-        AudioCollector.PlayOneShotFullAudio("ClickMetal2");
+        ClickAndHideAll();
 
-        HideAll();
         _production.ShowConsumeReport();
     }
 
@@ -149,5 +148,27 @@ public class BulletinWindow : GUIElement
             _production.AddConsumeThisYear(p, amt);
         }
     }
+
+    void ClickAndHideAll()
+    {
+        AudioCollector.PlayOneShotFullAudio("ClickMetal2");
+        HideAll();
+    }
+
+#region Finance
+
+    public void ShowFinanceResume()
+    {
+        ClickAndHideAll();
+        _finance.ShowResume();
+    }
+
+    public void ShowFinancePrices()
+    {
+        ClickAndHideAll();
+        _finance.ShowPrices();
+    }
+
+#endregion
 }
 

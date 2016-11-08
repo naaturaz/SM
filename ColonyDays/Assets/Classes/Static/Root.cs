@@ -271,6 +271,7 @@ public class Root : MonoBehaviour
     public static string show_Invent_Item_Small_Med_NoBack = "Prefab/GUI/Forms/Show_Invent_Item_Small_Med_NoBack";
     public static string show_Invent_Item_Small_3_Text = "Prefab/GUI/Forms/Show_Invent_Item_Small_Med_3_Text";
     public static string show_Person_Place_Location = "Prefab/GUI/Forms/Show_Person_Place_Location";
+    public static string price_Tile = "Prefab/GUI/Forms/Price_Tile";
 
     //Menu
     public static string mainMenu = "Prefab/Menu/MainMenu";

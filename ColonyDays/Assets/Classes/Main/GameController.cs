@@ -254,17 +254,12 @@ public class GameController  {
             && Program.gameScene.GameTime1.Month1 == 1)
         {
             LastYearWorkersSalaryWasPaid = Program.gameScene.GameTime1.Year;
-            SalariesPay();
             PirateThreat();
         }
     }
 
 
 
-    void SalariesPay()
-    {
-        Dollars -= BuildingPot.Control.Registro.ReturnYearSalary();
-    }
 
     private void PirateThreat()
     {

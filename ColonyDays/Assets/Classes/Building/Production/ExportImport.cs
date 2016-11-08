@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 /*
  * Here will be the price Base for all products and the variability they will have 
@@ -29,6 +30,8 @@ public class ExportImport
 
     private void MapDict()
     {
+        _prodSpecs = _prodSpecs.OrderBy(a=>a.Product).ToList();
+
         for (int i = 0; i < _prodSpecs.Count    ; i++)
         {
             _prodSpecsGC.Add(_prodSpecs[i].Product, i);
@@ -266,7 +269,7 @@ public class ExportImport
         Program.gameScene.GameController1.Dollars -= trans;
     }
 
-    float CalculateTransaction(P prod, float amt)
+    public float CalculateTransaction(P prod, float amt)
     {
         return ReturnPrice(prod) * amt;
     }
@@ -312,7 +315,6 @@ public class ExportImport
     public float ReturnPrice(P prod)
     {
         var prodFound = FindProdSpec(prod);
-
 
         if (prodFound == null)
         {
@@ -395,7 +397,7 @@ public class ProdSpec
     public ProdSpec(P prod, float price, float density = 1, float produceFactor = 1)
     {
         Product = prod;
-        Price = price/100;
+        Price = price/1000;
         Density = density;
         ProduceFactor = produceFactor;
 
