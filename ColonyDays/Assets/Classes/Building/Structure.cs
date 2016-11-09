@@ -502,4 +502,7 @@ public class Structure : StructureParent
     {
         _cachedWorkPoints.Add(newPoint);
     }
+
+
+
 }

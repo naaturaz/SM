@@ -26,7 +26,8 @@ public class Languages
 	   { "BridgeRoad.Desc","Allows people pass from one side of the terrain to the other. People loves this bridges. Give them a prosperity and happinnes sense" +_houseTail},
 	   { "LightHouse.Desc","Helps to make the port more discoverable. Adds to Port Reputation as long the flame is glowing"},
 	   { H.Masonry + ".Desc","Really important building. This workers construct new buildings and work as wheelbarrowers once have nothing to do"},
-	   { H.HeavyLoad + ".Desc","Really important building. This workers construct new buildings and work as wheelbarrowers once have nothing to do"},
+	   { H.Loader + ".Desc","This workers use carts to move goods around"},
+	   { H.HeavyLoad + ".Desc","This workers use big carts to move goods around"},
 
        //House
 	   { "Bohio.Desc","Bohio house, really rudimentary conditions, people is unhappy living here, a family can have 2-3 kid maximum" +_houseTail},
@@ -179,6 +180,9 @@ public class Languages
 	   { "WhereIsTown.HoverSmall", "Back to town [P]"},
 	   { "WhereIsSea.HoverSmall", "Show/hide path to sea"},
 	   { "Helper.HoverSmall", "Mini help"},
+
+       //Todo add to ESP
+	   { "Tempeture.HoverSmall", "Tempeture"},
 	   
        //building window
        { "Gen_Btn.HoverSmall", "General Tab"},

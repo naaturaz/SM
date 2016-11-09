@@ -63,6 +63,9 @@ public class PersonalObject
         _prodCarry.Add(P.Ore, Root.ore);
         _prodCarry.Add(P.Tonel, Root.tonel);
         _prodCarry.Add(P.Wood, Root.wood);
+
+        _prodCarry.Add(P.Water, Root.tonel);
+
     }
 
 
@@ -179,7 +182,11 @@ public class PersonalObject
         {
             _currentPoint = _stomach;
             SetRootForCarrying();
-        }
+        } 
+        //else if (_currentAni == "isBucket")
+        //{
+        //    _currentRoot = Root.bucket;
+        //}
         else if (_currentAni == "isWheelBarrow")
         {
             _currentPoint = _person.gameObject;

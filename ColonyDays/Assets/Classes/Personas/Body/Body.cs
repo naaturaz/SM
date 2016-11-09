@@ -355,6 +355,10 @@ public class Body //: MonoBehaviour //: General
         {
             _speed = UMath.GiveRandom(0.09f, 0.12f);//.09   .12
         }
+        //else if (aniToEval == "isBucket")
+        //{
+        //    _speed = UMath.GiveRandom(0.42f, 0.45f);
+        //}
         else if (aniToEval == "isWheelBarrow")
         {
             _speed = UMath.GiveRandom(0.49f, 0.59f);
@@ -442,6 +446,10 @@ public class Body //: MonoBehaviour //: General
             return;
         }
 
+        //if (!_person.Inventory.IsEmpty() && _person.Inventory.CarryLiquid() && _loadedAni != "isBucket")
+        //{
+        //    _loadedAni = "isBucket";
+        //}
         if (!_person.Inventory.IsEmpty() && _loadedAni != "isCarry")
         {
             //defines _loadedAni so will be taken care of in InitWalk
@@ -500,7 +508,8 @@ public class Body //: MonoBehaviour //: General
     /// </summary>
     private void AskForAnimalIfNeeded()
     {
-        if (_person.Work != null && _person.Work.HType == H.HeavyLoad 
+        if (_person.Work != null && 
+            (_person.Work.HType == H.Loader  || _person.Work.HType == H.HeavyLoad  )
             && _person.ProfessionProp.ProfDescription == Job.WheelBarrow  
             && Location == HPers.Work 
             && GoingTo == HPers.InWork
@@ -516,7 +525,8 @@ public class Body //: MonoBehaviour //: General
     /// </summary>
     private void ReturnAnimalIfNeeded()
     {
-        if (_person.Work != null && _person.Work.HType == H.HeavyLoad
+        if (_person.Work != null &&
+             (_person.Work.HType == H.Loader || _person.Work.HType == H.HeavyLoad)
             && _person.ProfessionProp.ProfDescription == Job.Homer
             && Location == HPers.InWork
             && GoingTo == HPers.Home
@@ -1371,14 +1381,20 @@ public class Body //: MonoBehaviour //: General
             return;
         }
 
+
+        //if (!_person.Inventory.IsEmpty() && _person.Inventory.CarryLiquid() && _currentAni != "isBucket")
+        //{
+        //    TurnCurrentAniAndStartNew("isBucket");
+        //}
         if (!_person.Inventory.IsEmpty() && _currentAni != "isCarry")
         {
             TurnCurrentAniAndStartNew("isCarry");
-            DefineSpeed();
-
-            //so its gets show 
-            _personalObject.Show();
         }
+       
+        DefineSpeed();
+
+        //so its gets show 
+        _personalObject.Show();
     }
 
     /// <summary>

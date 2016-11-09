@@ -50,7 +50,7 @@ public class Animal : General
         while (true)
         {
             yield return new WaitForSeconds(.045f); // wait
-            _levelOfDetail.A45msUpdate();
+            //_levelOfDetail.A45msUpdate();
         }
     }
 

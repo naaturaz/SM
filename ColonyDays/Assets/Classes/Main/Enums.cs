@@ -225,7 +225,7 @@ public enum H
 
     //infr F1
     Trail, Road, BridgeTrail, BridgeRoad, CoachMan, LightHouse, WheelBarrow, StockPile, Masonry,
-    HeavyLoad,
+    Loader, HeavyLoad,
 
     //house F2 ... bugg bz they had numbers on it .. They cant have numbers
     Bohio, HouseA, HouseB, HouseTwoFloor, HouseMed,
@@ -428,7 +428,7 @@ public enum StInfr //for structures game structure.cs
     //WheelBarrow, 
     //b4StockPile, 
     Masonry,
-    HeavyLoad
+    Loader, HeavyLoad
 }
 
 public enum StHous //for structures game structure.cs 
@@ -591,6 +591,11 @@ public enum Ron1
     Brick, Wood, Carpintery, Clay, SaltMine, BlackSmith, FishHut, Masonry, LightHouse,
     Church, Tavern, 
     MountainMine, Mill, School, PostGuard
+}
+
+public enum Ron2
+{
+    Library
 }
 
 public static class Enums { }

@@ -93,6 +93,10 @@ public class MyText : MonoBehaviour
         else if (name == "Lazy")
         {
             thisText.text = PersonPot.Control.All.Count(a => a.Work == null && a.IsMajor) + "";
+        }   
+        else if (name == "Temp")
+        {
+            thisText.text = Tempeture.Current()+ "";
         }
     }
 

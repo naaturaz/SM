@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 /*
@@ -39,6 +40,11 @@ public class AddOrderWindow : GUIElement {
 
     private GameObject _priceGroup;
 
+
+
+    private GameObject _content;
+    private GameObject _scroll_Ini_PosGO;
+
     // Use this for initialization
     private void Start()
     {
@@ -73,6 +79,12 @@ public class AddOrderWindow : GUIElement {
         _inputPrice = GetGrandChildCalled(H.Input_Price).GetComponent<InputField>();
 
         _priceGroup = GetChildThatContains(H.PriceGroup);
+
+
+        var _scroll = GetChildCalled("Scroll_View");
+        _content = GetGrandChildCalledFromThis("Content", _scroll);
+        //_contentRectTransform = _content.GetComponent<RectTransform>();
+        _scroll_Ini_PosGO = GetChildCalledOnThis("Scroll_Ini_Pos", _content);
     }
 
     public void Show(string val)
@@ -91,7 +103,42 @@ public class AddOrderWindow : GUIElement {
         HandlePriceGroup();
 
         _title.text = "Add new " + _orderType + " order";
+
+        PopulateScrollView();
     }
+
+
+#region Scroll
+
+    private void PopulateScrollView()
+    {
+        if (_btns.Count>0)
+        {
+            return;
+        }
+
+        ShowButtons(Program.gameScene.ExportImport1.ProdSpecs);
+    }
+
+
+
+    List<ButtonTile> _btns = new List<ButtonTile>();
+    private void ShowButtons(List<ProdSpec> list)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            var iniPosHere = _scroll_Ini_PosGO.transform.localPosition +
+                             new Vector3(0, -3.5f * i, 0);
+
+            var a = ButtonTile.CreateTile(_content.gameObject.transform, list[i].Product+"",
+                iniPosHere, this);
+
+            _btns.Add(a);
+        }
+    }
+
+
+#endregion
 
     void HandlePriceGroup()
     {
@@ -192,6 +239,7 @@ public class AddOrderWindow : GUIElement {
     }
 
     private string _errorMsg;
+
     bool IsOrderComplete()
     {
         if (!WasProdSelected())
@@ -238,11 +286,11 @@ public class AddOrderWindow : GUIElement {
         //remove the 'AddOrder.'
         var sub = feed.Substring(9);
 
-        if (sub.Contains("Prod."))
-        {
-            ProdSelected(sub);
-        }
-        else if (sub.Contains("Amt"))
+        //if (sub.Contains("Prod."))
+        //{
+        //    ProdSelected(sub);
+        //}
+        if (sub.Contains("Amt"))
         {
             AmtSelected();
         }
@@ -312,13 +360,11 @@ public class AddOrderWindow : GUIElement {
 
 
 
-    void ProdSelected(string prod)
+    public void ProdSelected(string prod)
     {
-        var sub = prod.Substring(5);
-
-        P MyStatus = (P)Enum.Parse(typeof(P), sub, true);
-
+        P MyStatus = (P)Enum.Parse(typeof(P), prod, true);
         _prodSelect = MyStatus;
+        Display();
     }
 
     /// <summary>

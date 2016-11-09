@@ -272,6 +272,7 @@ public class Root : MonoBehaviour
     public static string show_Invent_Item_Small_3_Text = "Prefab/GUI/Forms/Show_Invent_Item_Small_Med_3_Text";
     public static string show_Person_Place_Location = "Prefab/GUI/Forms/Show_Person_Place_Location";
     public static string price_Tile = "Prefab/GUI/Forms/Price_Tile";
+    public static string button_Tile = "Prefab/GUI/Forms/Button_Tile";
 
     //Menu
     public static string mainMenu = "Prefab/Menu/MainMenu";
@@ -367,6 +368,7 @@ public class Root : MonoBehaviour
     public static string hammer = "Prefab/Personas/PersonalObject/Hammer";
     public static string ore = "Prefab/Personas/PersonalObject/Ore";
     public static string tonel = "Prefab/Personas/PersonalObject/Tonel";
+    public static string bucket = "Prefab/Personas/PersonalObject/Bucket";
     public static string vara = "Prefab/Personas/PersonalObject/Vara";
     public static string wheelBarrow = "Prefab/Personas/PersonalObject/WheelBarrow";
     public static string wheelBarrowWithBoxes = "Prefab/Personas/PersonalObject/WheelBarrowWithBoxes";
@@ -648,6 +650,7 @@ public class Root : MonoBehaviour
         
         buildsRoot.Add(H.CoachMan, "Prefab/Building/Infrastructure/CoachMan");
         buildsRoot.Add(H.Masonry, "Prefab/Building/Infrastructure/Masonry");
+        buildsRoot.Add(H.Loader, "Prefab/Building/Infrastructure/Loader");
         buildsRoot.Add(H.HeavyLoad, "Prefab/Building/Infrastructure/HeavyLoad");
        
         buildsRoot.Add(H.LightHouse, "Prefab/Building/Infrastructure/LightHouse");

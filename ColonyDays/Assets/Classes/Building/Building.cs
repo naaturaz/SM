@@ -58,7 +58,6 @@ public class Building : General, Iinfo
 
 
 
-
     //the zone this building landed. The bridges have two landing zones and are not kept here
     private List<VectorLand> _landZone = new List<VectorLand>();
     /// <summary>
@@ -633,8 +632,6 @@ public class Building : General, Iinfo
 
         DefinePreferedStorage();
     }
-
-
 
 #region Building preview
 
@@ -3099,14 +3096,26 @@ public class Building : General, Iinfo
 
 
 
+
+
+
+
     /// <summary>
     /// Will find closest WheelBarrow office from here and will add the order 
     /// </summary>
     /// <param name="order"></param>
     public void AddToClosestWheelBarrowAsOrder(Order order, H typeOfOrder)
     {
-        var closest = FindClosestWheelBarrowerOrHeavyLoad();
+        var closest = FindClosestWheelBarrowerAndHeavyLoad();
 
+        for (int i = 0; i < closest.Count; i++)
+        {
+            AddOrderToBuild(order, typeOfOrder, closest[i]);
+        }
+    }
+
+    void AddOrderToBuild(Order order, H typeOfOrder, Structure closest)
+    {
         //only for debug bz a WheelBarrow always should be up
         if (closest == null)
         {
@@ -3117,13 +3126,21 @@ public class Building : General, Iinfo
 
         if (typeOfOrder == H.None)
         {
-            closest.Dispatch1.AddToOrdersToWheelBarrow(order);            
+            closest.Dispatch1.AddToOrdersToWheelBarrow(order);
         }
         else if (typeOfOrder == H.Evacuation)
         {
             closest.Dispatch1.AddEvacuationOrderToWheelBarrow(order);
         }
     }
+
+
+
+
+
+
+
+
 
 
     private bool evacAll;
@@ -3140,8 +3157,16 @@ public class Building : General, Iinfo
             return;
         }
 
-        var closest = FindClosestWheelBarrowerOrHeavyLoad();
+        var closest = FindClosestWheelBarrowerAndHeavyLoad();
 
+        for (int i = 0; i < closest.Count; i++)
+        {
+            AddEvaToAllInv(closest[i]);
+        }
+    }
+
+    void AddEvaToAllInv(Structure closest)
+    {
         //only for debug bz a WheelBarrow always should be up
         if (closest == null)
         {
@@ -3161,21 +3186,38 @@ public class Building : General, Iinfo
 
 
 
+
+
+
+
+
+
     /// <summary>
     /// If amount is less than 500kg will only look for WheelBarrowOffice but if is bigger
     /// will try to find a HeavyLoad around
+    /// 
+    /// Here loader will be called if load is bigger thn 1000KG
+    /// Here heavyloader will be called if load is bigger thn 2000KG
     /// </summary>
     /// <returns></returns>
-    Structure FindClosestWheelBarrowerOrHeavyLoad()
+    List<Structure> FindClosestWheelBarrowerAndHeavyLoad()
     {
         var wheel = BuildingController.FindTheClosestOfThisType(H.Masonry, transform.position, Brain.Maxdistance);
+        var loader = BuildingController.FindTheClosestOfThisType(H.Loader, transform.position, Brain.Maxdistance);
         var heavy = BuildingController.FindTheClosestOfThisType(H.HeavyLoad, transform.position, Brain.Maxdistance);
 
-        if (Inventory.CurrentKGsOnInv() > 500 && heavy != null)
+        var res = new List<Structure> { wheel };
+
+        if (Inventory.CurrentKGsOnInv() > 1000 && loader != null)
         {
-            return heavy;
+            res.Add(loader);
+        } 
+        if (Inventory.CurrentKGsOnInv() > 2000 && heavy != null)
+        {
+            res.Add(heavy);
         }
-        return wheel;
+
+        return new List<Structure>{ wheel};
     }
 
     private IEnumerator ThirtySecUpdate()
@@ -3209,7 +3251,7 @@ public class Building : General, Iinfo
             return;
         }
 
-        if (HType == H.HeavyLoad || HType == H.Masonry)
+        if (HType == H.Loader || HType == H.HeavyLoad || HType == H.Masonry)
         {
             _dispatch = new Dispatch();
 
@@ -3499,7 +3541,7 @@ public class Building : General, Iinfo
         }
         wasFarmInited = true;
 
-        if (HType.ToString().Contains(H.AnimalFarm + "") || HType == H.HeavyLoad)
+        if (HType.ToString().Contains(H.AnimalFarm + "") || HType == H.Loader || HType == H.HeavyLoad)
         {
             InitAnimalFarm();
         }
@@ -3515,7 +3557,7 @@ public class Building : General, Iinfo
         {
             SpawnFarmAnimals(H.Med);
         }
-        else if (HType == H.AnimalFarmLarge || HType == H.HeavyLoad)
+        else if (HType == H.AnimalFarmLarge || HType == H.HeavyLoad || HType == H.Loader)
         {
             SpawnFarmAnimals(H.Large );
         }
@@ -3580,7 +3622,7 @@ public class Building : General, Iinfo
     {
         Animal t = null;
 
-        if (HType == H.HeavyLoad)
+        if (HType == H.Loader || HType == H.HeavyLoad)
         {
             t = Beef.CreateBeef(iniPos, this);
         }
@@ -3728,7 +3770,8 @@ public class Building : General, Iinfo
         var animalType = CurrentProd.Product;
 
         //so HeavyLoad spawns cows at start 
-        if (animalType == P.None && HType == H.HeavyLoad)
+        if (animalType == P.None && 
+            (HType == H.Loader || HType == H.HeavyLoad))
         {
             animalType = P.Beef;
         }

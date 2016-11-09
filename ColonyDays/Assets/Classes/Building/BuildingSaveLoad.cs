@@ -199,7 +199,6 @@ public class BuildingSaveLoad : BuildingPot
         
         s.Inventory = regFile.Inventory;
 
-
         s.Instruction = regFile.Instruction;
         s.PeopleDict = regFile.PeopleDict;
         s.BookedHome1 = regFile.BookedHome1;

@@ -1805,7 +1805,7 @@ public class Person : General
             return;
         }
 
-        P item = theFoodSrc.Inventory.GiveRandomFood();
+        P item = ItemToGetAtFoodSource(theFoodSrc);
 
         if (item == P.None)
         {
@@ -1816,18 +1816,22 @@ public class Person : General
         PayProduct(amt, item);
 
         ExchangeInvetoryItem(FoodSource, this, item, amt);
-        //UnityEngine.Debug.Log(MyId+" took food:"+item);
     }
 
+
+    P ItemToGetAtFoodSource(Structure theFoodSrc)
+    {
+        if (Home.Inventory.IsFullForThisProd(P.Water))
+        {
+            return theFoodSrc.Inventory.GiveRandomFood();
+        }
+        return P.Water;
+    }
 
 
     public void ExchangeInvetoryItem(General takenFrom, General givenTo, P product, float amt)
     {
-        //if there are not crates and needs a crate then cant carry this item
-        if (!GameController.AreThereCratesOnStorage && DoesNeedACrate(product))
-        {
-            return;
-        }
+
 
         //to address when food Src is destroyed when person on its way 
         if (takenFrom == null)
@@ -1841,29 +1845,10 @@ public class Person : General
 
         float amtTook = takenFrom.Inventory.RemoveByWeight(product, amt);
         givenTo.Inventory.Add(product, amtTook);
-        RemoveCrateUsed(product);
     }
 
 
-    //Usage of crates
-    void RemoveCrateUsed(P prod)
-    {
-        if (DoesNeedACrate(prod))
-        {
-            //each time a person uses a crrate
-            //they get used and diminished
-            GameController.ResumenInventory1.Remove(P.Crate, .01f);
-        }
-    }
 
-    bool DoesNeedACrate(P prod)
-    {
-        if (prod == P.Wood || prod == P.Stone || prod == P.Ore)
-        {
-            return false;
-        }
-        return true;
-    }
 
 
 

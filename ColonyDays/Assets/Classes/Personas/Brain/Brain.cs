@@ -2010,7 +2010,7 @@ public class Brain
         else if (which == HPers.Chill)
         {
             _person.Chill = st;
-
+            
             return _person.Chill;
         }
         return null;

@@ -286,6 +286,12 @@ public class Inventory
             AddressGameInventory(key, kg, false);
             return t;
         }
+        //storages has a well attached 
+        if (key == P.Water && LocMyId.Contains("Storage"))
+        {
+            return kg;
+        }
+
         return 0;
     }
 
@@ -441,7 +447,9 @@ public class Inventory
 
     public static PCat CategorizeProd(P prod)
     {
-        if (prod == P.Bean || prod == P.Potato || prod == P.SugarCane || prod == P.Corn
+        if (prod == P.Water ||
+            
+            prod == P.Bean || prod == P.Potato || prod == P.SugarCane || prod == P.Corn
             || prod == P.Chicken || prod == P.Egg || prod == P.Pork || prod == P.Beef
             || prod == P.Fish || prod == P.Sugar || prod == P.Coconut || prod == P.Banana ||
 
@@ -731,6 +739,21 @@ public class Inventory
     public bool DoWeHaveOfThisCat(PCat cat)
     {
         return ReturnAmountOnCategory(cat) > 0;
+    }
+
+    internal bool CarryLiquid()
+    {
+        if (_inventItems.Count == 0)
+        {
+            return false;
+        }
+
+        return IsLiquid(_inventItems[0].Key);
+    }
+
+    bool IsLiquid(P prod)
+    {
+        return prod == P.Water || prod == P.Beer || prod == P.Rum || prod == P.Ink;
     }
 }
 

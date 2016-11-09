@@ -145,9 +145,29 @@ public class Production  {
         Coins();
         PaperNewsAndBook();
         Sugar();
+
+        Houses();
     }
 
+    /// <summary>
+    /// just bz they need water as input so inventory works fine
+    /// </summary>
+    void Houses()
+    {
+        List<H> listH = new List<H>()
+        {
+            H.Bohio, H.HouseA, H.HouseB,
+            H.HouseLargeA ,
+            H.HouseLargeB ,
+            H.HouseLargeC ,
+            H.HouseMed,
+            H.HouseTwoFloor,
+        };
 
+        InputElement water = new InputElement(P.Water, 1f);
+        List<InputElement> waterForm = new List<InputElement>() { water };
+        InputProdCheckAndAdd(new ProductInfo(P.None, waterForm, listH));
+    }
 
     private void CannonParts()
     {

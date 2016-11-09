@@ -74,16 +74,6 @@ public class GameController  {
     static public void LoadStartingConditions(StartingCondition startingCondition)
     {
         _startingCondition = startingCondition;
-
-        //if (!Inventory1.IsEmpty())// the inventory here is not empty means was loaded already)
-        //{
-        //    return;
-        //}
-        
-
-        //var inv = CreateInitialInv(startingCondition);
-
-        //LoadIntoInv(inv);
     }
 
     Inventory CreateInitialInv(StartingCondition startingCondition)
@@ -104,10 +94,7 @@ public class GameController  {
         inv.Add(P.Crate, startingCondition.iniCrate);
         
         inv.Add(P.Cart, startingCondition.iniCart);
-
-        //todo remove when release
-        //inv.Add(P.Coal, 100000);
-        //inv.Add(P.Sugar, 100000);
+        inv.Add(P.Tonel, startingCondition.iniTonel);
 
         return inv;
     }
@@ -167,7 +154,15 @@ public class GameController  {
     {
         get { return _areThereCartsOnStorage; }
         set { _areThereCartsOnStorage = value; }
+    }  
+    
+    private static bool _areThereBucketsOnStorage;
+    public static bool AreThereBucketsOnStorage
+    {
+        get { return _areThereBucketsOnStorage; }
+        set { _areThereBucketsOnStorage = value; }
     }
+
 
 
 
@@ -176,6 +171,7 @@ public class GameController  {
         AreThereWheelBarrowsOnStorage = ThereIsAtLeastOneOfThisOnStorage(P.WheelBarrow);
         AreThereCratesOnStorage = ThereIsAtLeastOneOfThisOnStorage(P.Crate);
         AreThereCartsOnStorage = ThereIsAtLeastOneOfThisOnStorage(P.Cart);
+        AreThereBucketsOnStorage = ThereIsAtLeastOneOfThisOnStorage(P.Bucket);
 
     }
 
@@ -221,7 +217,6 @@ public class GameController  {
         get { return _isGameOver; }
         set { _isGameOver = value; }
     }
-
 
 
 
