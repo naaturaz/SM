@@ -228,7 +228,7 @@ public class GameTime
         return days2nd - days1st;
     }
 
-    int FromMDateToDays(MDate val)
+    public int FromMDateToDays(MDate val)
     {
         return val.Day + (val.Month1 * 30) + (val.Year * 360);
     }

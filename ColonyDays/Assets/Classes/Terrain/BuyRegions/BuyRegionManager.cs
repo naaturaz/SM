@@ -20,7 +20,10 @@ public class BuyRegionManager
 
     public BuyRegionManager()
     {
-        //return;
+        if (TownLoader.IsTemplate)
+        {
+            return;
+        }
 
         LoadUnlockRegions();
         AssignUnlockRegionsToNewGame();

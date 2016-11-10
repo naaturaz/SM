@@ -156,11 +156,11 @@ public class GameController  {
         set { _areThereCartsOnStorage = value; }
     }  
     
-    private static bool _areThereBucketsOnStorage;
-    public static bool AreThereBucketsOnStorage
+    private static bool _areThereTonelsOnStorage;
+    public static bool AreThereTonelsOnStorage
     {
-        get { return _areThereBucketsOnStorage; }
-        set { _areThereBucketsOnStorage = value; }
+        get { return _areThereTonelsOnStorage; }
+        set { _areThereTonelsOnStorage = value; }
     }
 
 
@@ -171,7 +171,7 @@ public class GameController  {
         AreThereWheelBarrowsOnStorage = ThereIsAtLeastOneOfThisOnStorage(P.WheelBarrow);
         AreThereCratesOnStorage = ThereIsAtLeastOneOfThisOnStorage(P.Crate);
         AreThereCartsOnStorage = ThereIsAtLeastOneOfThisOnStorage(P.Cart);
-        AreThereBucketsOnStorage = ThereIsAtLeastOneOfThisOnStorage(P.Bucket);
+        AreThereTonelsOnStorage = ThereIsAtLeastOneOfThisOnStorage(P.Tonel);
 
     }
 

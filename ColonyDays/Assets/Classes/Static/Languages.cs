@@ -162,7 +162,7 @@ public class Languages
 	   { "Feedback.HoverSmall", "Feedback"},
 	   { "Hide.HoverSmall", "Hide"},
 	   { "CleanAll.HoverSmall", "Clean"},
-	   { "Bulletin.HoverSmall", "Bulletin"},
+	   { "Bulletin.HoverSmall", "Control/Bulletin"},
 
 
 
@@ -462,7 +462,7 @@ public class Languages
 	   { "Feedback.HoverSmall", "Sugerencias"},
 	   { "Hide.HoverSmall", "Esconder"},
 	   { "CleanAll.HoverSmall", "Limpiar"},
-	   { "Bulletin.HoverSmall", "Boletin"},
+	   { "Bulletin.HoverSmall", "Control/Boletin"},
 
 
 

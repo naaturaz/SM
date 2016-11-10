@@ -12,6 +12,7 @@ public class Inventory
     private string _info;
     private string _locMyId;
     private bool _isAStorage;
+    private H _hType;
 
     List<P> _foodItems = new List<P>();
 
@@ -51,11 +52,17 @@ public class Inventory
         set { _isAStorage = value; }
     }
 
+    public H HType
+    {
+        get { return _hType; }
+        set { _hType = value; }
+    }
+
     public Inventory() { }
 
     public Inventory(string myId, H hTypeP)
     {
-        //LoadFromFile();
+        _hType = hTypeP;
         _locMyId = myId;
         CapacityVol = Book.GiveMeStat(hTypeP).Capacity;
 
@@ -66,7 +73,7 @@ public class Inventory
 
         if (hTypeP == H.YearReport)
         {//bz is called add will stop when the amt is zero //+1 is bz zero doesnt get added
-            _inventItems.Add(new InvItem(P.Year, float.Parse(LocMyId) +1));
+            _inventItems.Add(new InvItem(P.Year, float.Parse(LocMyId) + 1));
         }
     }
 
@@ -94,18 +101,20 @@ public class Inventory
     /// </summary>
     /// <param name="Key"></param>
     /// <returns></returns>
-    public void SetAmtWithKey(P Key, float newVal)
+    InvItem SetAmtWithKey(P Key, float newVal)
     {
         for (int i = 0; i < _inventItems.Count; i++)
         {
             if (Key == _inventItems[i].Key)
             {
                 _inventItems[i].Amount = newVal;
+                return _inventItems[i];
             }
         }
+        return null;
     }
 
-    public void RemoveWithKey(P Key)
+    void RemoveWithKey(P Key)
     {
         for (int i = 0; i < _inventItems.Count; i++)
         {
@@ -153,14 +162,13 @@ public class Inventory
     /// </summary>
     /// <param name="key"></param>
     /// <param name="amt"></param>
-    public void Add(P key, float amt)
+    public void Add(P key, float amt, MDate expiration = null)
     {
         if (key == P.None || key == P.Food || amt == 0)
         {
             //Debug.Log("ret Tried to add to inv:"+ key +" amt:"+ amt);
             return;
         }
-
         if (key == P.RandomMineOutput || key == P.RandomFoundryOutput)
         {
             //Debug.Log("trace random");
@@ -168,21 +176,69 @@ public class Inventory
             return;
         }
 
+        //in this way a new expiration date is going to be set as soon a prod is
+        //added to a new inventory. is not pefect bz doesnt carry old expiration date 
+        //foward but at the same time the majority of the product expires as stays behind and
+        //gets check in the inventory
+        var expireCalc = ExpirationDate(key, expiration);
+        InvItem curr = null;
         if (IsItemOnInv(key))
         {
             float intT = ReturnAmtOfItemOnInv(key) + amt;
-            SetAmtWithKey(key, intT);
+            curr = SetAmtWithKey(key, intT);
         }
         else
         {
             AddToCategory(key);
             _inventItems.Add(new InvItem(key, amt));
-            SetAmtWithKey(key, amt);
+            curr = SetAmtWithKey(key, amt);
         }
-
+        SetAmtExpiration(curr, amt, expireCalc);
         AddressGameInventory(key, amt, true);
     }
 
+    #region Expiration
+
+    /// <summary>
+    /// Will calcluate the expiration date of a product 
+    /// 
+    /// if already has one will return that one that has already
+    /// 
+    /// if product doestn have expiration will return null 
+    /// </summary>
+    /// <param name="prod"></param>
+    /// <param name="current"></param>
+    /// <returns></returns>
+    public static MDate ExpirationDate(P prod, MDate current = null)
+    {
+        if (current != null)
+        {
+            return current;
+        }
+
+        var days = Program.gameScene.ExportImport1.ReturnExpireDays(prod);
+        if (days == -1)
+        {
+            return null;
+        }
+        return Program.gameScene.GameTime1.ReturnCurrentDatePlsAdded(days);
+    }
+
+    private void SetAmtExpiration(InvItem item, float amt, MDate expiration)
+    {
+        if (expiration == null || item == null)
+        {
+            return;
+        }
+
+        item.AddExpirationDate(amt, expiration, this);
+    }
+
+    private void CheckIfAnAmtHasExpired(InvItem curr)
+    {
+        curr.CheckIfAnyHasExpired(this);
+    }
+    #endregion
 
     void AddressGameInventory(P key, float amt, bool add)
     {
@@ -267,22 +323,26 @@ public class Inventory
     /// <returns></returns>
     public float RemoveByWeight(P key, float kg)
     {
+        InvItem curr = null;
+
         if (IsItemOnInv(key))
         {
             //it means it can cover the amount asked to be removed
             if (ReturnAmtOfItemOnInv(key) - kg > 0)
             {
                 float intT = ReturnAmtOfItemOnInv(key) - kg;
-                SetAmtWithKey(key, intT);
+                curr = SetAmtWithKey(key, intT);
+                CheckIfAnAmtHasExpired(curr);
 
                 AddressGameInventory(key, kg, false);
                 return kg;
             }
             //other wise will depleted
             float t = ReturnAmtOfItemOnInv(key);
-            SetAmtWithKey(key, 0);
-            RemoveWithKey(key);
+            curr = SetAmtWithKey(key, 0);
+            CheckIfAnAmtHasExpired(curr);
 
+            RemoveWithKey(key);
             AddressGameInventory(key, kg, false);
             return t;
         }
@@ -291,9 +351,10 @@ public class Inventory
         {
             return kg;
         }
-
         return 0;
     }
+
+
 
     public void RemoveItems(List<InvItem> items)
     {
@@ -301,6 +362,15 @@ public class Inventory
         {
             RemoveByWeight(items[i].Key, items[i].Amount);
         }
+    }
+
+    /// <summary>
+    /// Will remove an item from the Inv. U should know tht item amt is zero to call this 
+    /// </summary>
+    /// <param name="key"></param>
+    internal void RemoveItem(P key)
+    {
+        RemoveWithKey(key);
     }
 
     public string Info() { return _info; }
@@ -448,7 +518,7 @@ public class Inventory
     public static PCat CategorizeProd(P prod)
     {
         if (prod == P.Water ||
-            
+
             prod == P.Bean || prod == P.Potato || prod == P.SugarCane || prod == P.Corn
             || prod == P.Chicken || prod == P.Egg || prod == P.Pork || prod == P.Beef
             || prod == P.Fish || prod == P.Sugar || prod == P.Coconut || prod == P.Banana ||
@@ -751,10 +821,56 @@ public class Inventory
         return IsLiquid(_inventItems[0].Key);
     }
 
-    bool IsLiquid(P prod)
+
+
+
+
+#region Containers
+
+    static bool IsLiquid(P prod)
     {
         return prod == P.Water || prod == P.Beer || prod == P.Rum || prod == P.Ink;
     }
+
+    public static bool ThereIsContainerForThis(P prod)
+    {
+        if (IsLiquid(prod))
+        {
+            return GameController.AreThereTonelsOnStorage;
+        }
+        else if (DoesNeedACrate(prod))
+        {
+            return GameController.AreThereCratesOnStorage;
+        }
+        return true;
+    }
+
+    public static void RemoveContainerUsed(P prod)
+    {
+        if (DoesNeedACrate(prod))
+        {
+            //each time a person uses a crrate
+            //they get used and diminished
+            GameController.ResumenInventory1.Remove(P.Crate, .01f);
+        }
+        else if (IsLiquid(prod))
+        {
+            GameController.ResumenInventory1.Remove(P.Tonel, .01f);
+        }
+    }
+
+
+    static bool DoesNeedACrate(P prod)
+    {
+        if (prod == P.Wood || prod == P.Stone || prod == P.Ore)
+        {
+            return false;
+        }
+        return true;
+    }
+
+#endregion
+
 }
 
 public class InvItem
@@ -763,6 +879,7 @@ public class InvItem
     private float _amount;
     private float _volume;
     private string _info;//for year for reports
+    List<SubInvItem> _expiresAmts = new List<SubInvItem>();
 
     /// <summary>
     /// How many KG of this Item 
@@ -795,6 +912,12 @@ public class InvItem
         set { _info = value; }
     }
 
+    public List<SubInvItem> ExpiresAmts
+    {
+        get { return _expiresAmts; }
+        set { _expiresAmts = value; }
+    }
+
     public InvItem(P KeyP, float amtP)
     {
         Key = KeyP;
@@ -804,4 +927,82 @@ public class InvItem
 
     public InvItem() { }
 
+
+    internal void AddExpirationDate(float amt, MDate expiration, Inventory inv)
+    {
+        //no expiration needed for this 2 below 
+        if (inv.HType == H.Person || inv.HType == H.None || inv.HType == H.YearReport)
+        {
+            return;
+        }
+
+        //found is lumping expiration dates by month and year so if day is not the same
+        //will be still lumped toghether
+        var found = _expiresAmts.Find(a => a.Expires.Month1 == expiration.Month1 &&
+            a.Expires.Year == expiration.Year);
+        if (found != null)
+        {
+            found.Amt += amt;
+        }
+        else
+        {
+            _expiresAmts.Add(new SubInvItem(amt, expiration));
+        }
+    }
+
+    internal void CheckIfAnyHasExpired(Inventory inv)
+    {
+        if (_expiresAmts.Count == 0)
+        {
+            return;
+        }
+
+        if (GameTime.IsPastOrNow(_expiresAmts[0].Expires))
+        {
+            BulletinWindow.AddProduction(Key, _expiresAmts[0].Amt, "Expire");
+            if (inv.IsAStorage)
+            {
+                GameController.ResumenInventory1.GameInventory.RemoveByWeight(Key, _expiresAmts[0].Amt);
+            }
+
+            Amount -= _expiresAmts[0].Amt;
+            if (Amount <= 0)
+            {
+                Amount = 0;
+                inv.RemoveItem(Key);
+            }
+
+            _expiresAmts.RemoveAt(0);
+            CheckIfAnyHasExpired(inv);
+        }
+    }
+}
+
+/// <summary>
+/// So the expirattion of a product can be done 
+/// </summary>
+public class SubInvItem
+{
+    private float _amt;
+    private MDate _expires;
+
+    public SubInvItem() { }
+
+    public SubInvItem(float amt, MDate expires)
+    {
+        _amt = amt;
+        _expires = expires;
+    }
+
+    public float Amt
+    {
+        get { return _amt; }
+        set { _amt = value; }
+    }
+
+    public MDate Expires
+    {
+        get { return _expires; }
+        set { _expires = value; }
+    }
 }

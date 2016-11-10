@@ -133,6 +133,15 @@ public class BulletinWindow : GUIElement
         ClickAndHideAll();
 
         _production.ShowConsumeReport();
+    } 
+    
+    /// <summary>
+    /// Called from GUI
+    /// </summary>
+    public void ShowExpiration()
+    {
+        ClickAndHideAll();
+        _production.ShowExpirationReport();
     }
 
 
@@ -141,11 +150,14 @@ public class BulletinWindow : GUIElement
         if (type == "Prod")
         {
             _production.AddProductionThisYear(p, amt);
-            
         }
         else if (type == "Consume")
         {
             _production.AddConsumeThisYear(p, amt);
+        }   
+        else if (type == "Expire")
+        {
+            _production.AddToExpirationThisYear(p, amt);
         }
     }
 

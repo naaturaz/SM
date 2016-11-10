@@ -8,6 +8,7 @@ using UnityEngine;
 public class SubBulletinProduction
 {
     private ProductionReport _productionReport;
+    private ProductionReport _expirationReport;
     private BulletinWindow _bulletinWindow;
 
     public SubBulletinProduction() { }
@@ -21,6 +22,12 @@ public class SubBulletinProduction
     {
         get { return _productionReport; }
         set { _productionReport = value; }
+    }
+
+    public ProductionReport ExpirationReport
+    {
+        get { return _expirationReport; }
+        set { _expirationReport = value; }
     }
 
 
@@ -40,7 +47,15 @@ public class SubBulletinProduction
             _productionReport = new ProductionReport();
         }
         _productionReport.AddConsumeThisYear(p, amt);
-
+    }  
+    
+    internal void AddToExpirationThisYear(P p, float amt)
+    {
+        if (_expirationReport == null)
+        {
+            _expirationReport = new ProductionReport();
+        }
+        _expirationReport.AddProductionThisYear(p, amt);
     }
 
     public void ShowProdReport()
@@ -63,6 +78,17 @@ public class SubBulletinProduction
         }
 
         ShowProductionReport(_productionReport.ConsumeReport);
+    }   
+    
+    public void ShowExpirationReport()
+    {
+        if (_expirationReport == null)
+        {
+            _bulletinWindow.ShowInBody("Nothing");
+            return;
+        }
+
+        ShowProductionReport(_expirationReport.ProduceReport);
     }
 
 

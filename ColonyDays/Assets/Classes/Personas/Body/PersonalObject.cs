@@ -53,7 +53,6 @@ public class PersonalObject
         _rightHand = General.FindGameObjectInHierarchy("RightHand", _person.gameObject);//Bip001 R Hand    RightHand 
         _stomach = General.FindGameObjectInHierarchy("Stomach", _person.gameObject);//Bip001 Spine    Stomach
         _bip001Pelvis = General.FindGameObjectInHierarchy("Culo", _person.gameObject);//Bip001 Spine    Stomach
-        
     }
 
     void LoadCarrying()
@@ -65,7 +64,6 @@ public class PersonalObject
         _prodCarry.Add(P.Wood, Root.wood);
 
         _prodCarry.Add(P.Water, Root.tonel);
-
     }
 
 

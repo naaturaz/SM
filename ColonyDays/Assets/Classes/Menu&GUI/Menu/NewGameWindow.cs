@@ -310,8 +310,12 @@ public class NewGameWindow : GUIElement
         {
             Program.TypeOfGame = H.Unlock;
             _typeTxt.text = "Freewill";
-
         }
+        if (TownLoader.IsTemplate)
+        {
+            _typeTxt.text = "None";
+        }
+
     }
 
 }

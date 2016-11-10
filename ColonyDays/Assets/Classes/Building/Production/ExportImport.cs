@@ -98,7 +98,8 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.SugarCane, 50, 200.2f, 100));
         _prodSpecs.Add(new ProdSpec(P.TobaccoLeaf, 50, 300, 90));
 
-        _prodSpecs.Add(new ProdSpec(P.Corn, 60, 540, 120));
+        _prodSpecs.Add(new ProdSpec(P.Corn, 60, 540, 120, 6*30));
+        _prodSpecs.Add(new ProdSpec(P.CornMeal, 90, 700, 130, 12*30));
 
         _prodSpecs.Add(new ProdSpec(P.Chicken, 200, 881, 80));
         _prodSpecs.Add(new ProdSpec(P.Egg, 150, 400, 100));
@@ -311,6 +312,18 @@ public class ExportImport
         }
         return prodFound.ProduceFactor;
     }   
+    
+    public int ReturnExpireDays(P prod)
+    {
+        var prodFound = FindProdSpec(prod);
+
+        if (prodFound == null)
+        {
+           //Debug.Log("Prod Factor asked of not found prod:" + prod);
+            return 0;
+        }
+        return prodFound.ExpireDays;
+    }   
  
     public float ReturnPrice(P prod)
     {
@@ -355,6 +368,9 @@ public class ProdSpec
 
     private string _iconRoot;
 
+    //how many days can be used before is expired 
+    private int _expireDays;
+
     /// <summary>
     /// The amount of Cubic Meters Needed to fit one KG of this Product
     /// 
@@ -385,6 +401,12 @@ public class ProdSpec
         set { _iconRoot = value; }
     }
 
+    public int ExpireDays
+    {
+        get { return _expireDays; }
+        set { _expireDays = value; }
+    }
+
     public ProdSpec(){}
 
     /// <summary>
@@ -394,7 +416,7 @@ public class ProdSpec
     /// <param name="price"></param>
     /// <param name="density"></param>
     /// <param name="produceFactor"></param>
-    public ProdSpec(P prod, float price, float density = 1, float produceFactor = 1)
+    public ProdSpec(P prod, float price, float density = 1, float produceFactor = 1, int expireDays = -1)
     {
         Product = prod;
         Price = price/1000;
@@ -402,6 +424,6 @@ public class ProdSpec
         ProduceFactor = produceFactor;
 
         _iconRoot = "Prefab/GUI/Inventory_Icons/" + prod;
-
+        _expireDays = expireDays;
     }
 }

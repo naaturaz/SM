@@ -136,11 +136,17 @@ public class PersonController : PersonPot
         int factor = 100;
         int ini = multiplier*factor;
 
+        int templateFactor = 1;
+        if (TownLoader.IsTemplate)
+        {
+            templateFactor = 0;
+        }
+
         StartingCondition insane = new StartingCondition(4, 600, 600, 600, 600, 600, 600, 10000, 1 * factor, 1);
         StartingCondition hard = new StartingCondition(5, 700, 700, 700, 700, 700, 700, 20000, 2 * factor, 2);
         StartingCondition med = new StartingCondition(6, 800, 800, 800, 800, 800, 800, 30000, 3 * factor, 3);
         StartingCondition easy = new StartingCondition(7, 900, 900, 900, 900, 900, 900, 40000, 4 * factor, 4);
-        StartingCondition newbie = new StartingCondition(8, ini, ini, ini, ini, ini, ini, 100000, 5 * factor, 5);
+        StartingCondition newbie = new StartingCondition(8 * templateFactor, ini, ini, ini, ini, ini, ini, 100000, 5 * factor, 5);
 
         Conditions = new StartingCondition[] { insane, hard, med, easy, newbie, };
     }

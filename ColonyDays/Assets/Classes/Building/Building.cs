@@ -218,7 +218,9 @@ public class Building : General, Iinfo
         }
 
         NotifyBuildingProblem(isScaledOnFloor);
-        return _isEven && !_isColliding && _isGoodWaterHeight && isScaledOnFloor && AreAnchorsOnUnlockRegions();
+        return _isEven && !_isColliding && _isGoodWaterHeight && isScaledOnFloor 
+            //&& AreAnchorsOnUnlockRegions()
+            ;
     }
 
     /// <summary>

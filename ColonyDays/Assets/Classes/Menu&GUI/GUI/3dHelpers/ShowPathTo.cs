@@ -28,6 +28,11 @@ public class ShowPathTo
     /// </summary>
     public ShowPathTo()
     {
+        if (TownLoader.IsTemplate)
+        {
+            return;
+        }
+
         _iniPos = BuildingPot.Control.Registro.ReturnFirstThatContains("Storage").
     SpawnPoint.transform.position;
         _finPos = MeshController.CrystalManager1.GiveMeTheClosestSeaRegionToMe(_iniPos);

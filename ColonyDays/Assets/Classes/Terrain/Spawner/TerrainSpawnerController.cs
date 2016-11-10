@@ -733,11 +733,21 @@ public class TerrainSpawnerController : ControllerParent
         {
             if (!Program.gameScene.IsDefaultTerreno())
             {
-                spawnedData = XMLSerie.ReadXMLSpawned(); 
+                spawnedData = XMLSerie.ReadXMLSpawned();
+                
+                if (spawnedData == null)
+                {
+                    Debug.Log("spawnedData == null big");
+                }
             }
             else//the first teraain to load 
             {
                 spawnedData = XMLSerie.ReadXMLSpawned(true);//true once Terrain.Spawned is created  
+
+                if (spawnedData == null)
+                {
+                    Debug.Log("spawnedData == null DefaultLoad");
+                }
             }
         }
         catch (Exception exception)

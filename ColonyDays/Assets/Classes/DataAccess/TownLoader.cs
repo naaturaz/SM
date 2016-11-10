@@ -22,6 +22,7 @@ class TownLoader
         set { _townLoaded = value; }
     }
 
+
     /// <summary>
     /// Called from builing.cs when a building is loaded 
     /// </summary>
@@ -67,6 +68,13 @@ class TownLoader
         return res;
     }
 
+    private static bool _isTemplate = false;
+
+    public static bool IsTemplate
+    {
+        get { return _isTemplate; }
+        set { _isTemplate = value; }
+    }
     /// <summary>
     /// Gets random Town*.xml file
     /// </summary>
@@ -74,14 +82,22 @@ class TownLoader
     static string GetRandomTownFile()
     {
         ///to  create Template towns.
-        //-uncomment line below  
+        //new:
+        //-make _isTemplate = true
+
+        //old instruccions:
+        //-uncomment 2 line below  
         //-Also make sure in PErsonController the amt of people spawned will be zero
         //-Also make sure that the saved BuildingData.BuildingControllerData.TypeOfGame = H.None
         //other wise will give bugg changing btw Freewill and Traditional Mode
         //may need to create that type of game jst for this purpose of edit mannually with text editor.
         //If not then BuildingSaveLoad(472) will bugg
+        //-To do that uncomment last line on NewGameWindow.ClickOnTypeOfGame()
 
-        //return "";
+        if (IsTemplate)
+        {
+            return "";
+        }
 
         //game Difficulty is added for load 'Town4A.xml' for example
         var townName = "Town" + Program.MyScreen1.Difficulty + "*.xml";

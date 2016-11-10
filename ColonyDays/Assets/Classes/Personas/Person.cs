@@ -1831,8 +1831,6 @@ public class Person : General
 
     public void ExchangeInvetoryItem(General takenFrom, General givenTo, P product, float amt)
     {
-
-
         //to address when food Src is destroyed when person on its way 
         if (takenFrom == null)
         { return; }
@@ -1843,11 +1841,16 @@ public class Person : General
             return;
         }
 
+        if (!Inventory.ThereIsContainerForThis(product))
+        {
+            Debug.Log("Not cont for:"+product);
+            return;
+        }
+
         float amtTook = takenFrom.Inventory.RemoveByWeight(product, amt);
         givenTo.Inventory.Add(product, amtTook);
+        Inventory.RemoveContainerUsed(product);
     }
-
-
 
 
 

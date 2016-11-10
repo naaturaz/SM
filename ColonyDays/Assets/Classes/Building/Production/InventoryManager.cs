@@ -39,7 +39,7 @@ public class InventoryManager
         if (IsLiquid(product))
         {
             //if not bukkect 
-            if (!GameController.AreThereBucketsOnStorage && IsLiquid(product))
+            if (!GameController.AreThereTonelsOnStorage && IsLiquid(product))
             {
                 return;
             }

@@ -267,6 +267,12 @@ public class InputRTS : GenericCameraComponent
             ManagerReport.AddInput("CenterCam to 1st Building");
 
             LoadFirstCamPos();
+
+            if (TownLoader.IsTemplate)
+            {
+                return;
+            }
+
             CenterCamTo(BuildingPot.Control.Registro.AllBuilding.ElementAt(0).Value.transform);
         }
     }
