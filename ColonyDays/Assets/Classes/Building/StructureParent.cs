@@ -583,7 +583,36 @@ public class StructureParent : Building {
         LoadBottomsAndTops();
 
         return _bottoms[1];
+    }   
+    
+    public Vector3 BottonIn()
+    {
+        LoadBottomsAndTops();
+
+        return _bottoms[2].transform.position;
+    }   
+    
+    public Vector3 BottonOut()
+    {
+        LoadBottomsAndTops();
+
+        return _bottoms[0].transform.position;
     }
+
+    internal Vector3 TopIn()
+    {
+        LoadBottomsAndTops();
+
+        return _tops[2].transform.position;
+    }
+
+    internal Vector3 TopOut()
+    {
+        LoadBottomsAndTops();
+
+        return _tops[0].transform.position;
+    }
+
 
     internal GameObject TopMiddle()
     {
@@ -676,5 +705,7 @@ public class StructureParent : Building {
 
 
 
-  
+
+
+
 }

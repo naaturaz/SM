@@ -8,9 +8,15 @@ public class InputRTS : GenericCameraComponent
     Vector3 lastClosedPos;
     List<RTSData> list = new List<RTSData>();
 
-    public static bool isFollowingPersonNow;
+    static bool _isFollowingPersonNow;
     Vector3 storedPos;
     private Transform personToFollow;
+
+    public static bool IsFollowingPersonNow
+    {
+        get { return _isFollowingPersonNow; }
+        set { _isFollowingPersonNow = value; }
+    }
 
     // Use this for initialization
     void Start()
@@ -22,13 +28,13 @@ public class InputRTS : GenericCameraComponent
     // Update is called once per frame
     void LateUpdate()
     {
-        if (!isFollowingPersonNow && BuildingPot.InputMode == Mode.None)
+        if (!_isFollowingPersonNow && BuildingPot.InputMode == Mode.None)
         { CheckIfKeyWasPressed(); }
 
         CenterCam();
         FollowPersonCam();
 
-        if (isFollowingPersonNow)
+        if (_isFollowingPersonNow)
         {
             CamFollowAction(personToFollow);
         }
@@ -262,7 +268,7 @@ public class InputRTS : GenericCameraComponent
 
         var yes = Input.GetKeyUp(KeyCode.P) || fakedPressKeyP;
 
-        if (yes && !isFollowingPersonNow)
+        if (yes && !_isFollowingPersonNow)
         {
             ManagerReport.AddInput("CenterCam to 1st Building");
 
@@ -296,7 +302,7 @@ public class InputRTS : GenericCameraComponent
             return;
         }
         
-        if (Input.GetKeyUp(KeyCode.O) && !isFollowingPersonNow)
+        if (Input.GetKeyUp(KeyCode.O) && !_isFollowingPersonNow)
         {
             CenterCamTo(personToFollow);
             CamControl.CAMRTS.CreateTargetAndUpdate();
@@ -306,18 +312,20 @@ public class InputRTS : GenericCameraComponent
                 storedPos = CamControl.CAMRTS.centerTarget.transform.position;
             }
 
-            isFollowingPersonNow = true;
+            _isFollowingPersonNow = true;
         }
-        else if (Input.GetKeyUp(KeyCode.O) && isFollowingPersonNow)
+        else if (Input.GetKeyUp(KeyCode.O) && _isFollowingPersonNow)
         {
             CamControl.CAMRTS.CleanUpRotHelp();
-            isFollowingPersonNow = false;
+            _isFollowingPersonNow = false;
         }
     }
 
     Transform GetSelectedPerson()
     {
-        if (Program.MouseListener == null || Program.MouseListener.PersonWindow1 == null)
+        if (BuildingPot.Control == null || !BuildingPot.Control.Registro.IsFullyLoaded
+            || Program.MouseListener.PersonWindow1 == null
+            || Program.MouseListener.PersonWindow1.Person1 == null)
         {
             return null;
         }

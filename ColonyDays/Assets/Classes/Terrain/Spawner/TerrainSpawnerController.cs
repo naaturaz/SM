@@ -23,7 +23,7 @@ public class TerrainSpawnerController : ControllerParent
     int howManyOrnaToSpawn = 30;//30    50      20
     int howManyGrassToSpawn = 20;//40
     //the ones spawn in the marine bounds 
-    int howManyMarineBoundsToSpawn = 0;//
+    int howManyMarineBoundsToSpawn = 1;//
     int howManyMountainBoundsToSpawn = 0;//
 
     private SpawnPool _spawnPool;
@@ -150,7 +150,8 @@ public class TerrainSpawnerController : ControllerParent
             MeshController.CrystalManager1.Delete((StillElement)AllRandomObjList[i]);
             Program.gameScene.BatchRemoveNotRedo((StillElement)AllRandomObjList[i]);
 
-            SendToPool((StillElement)AllRandomObjList[i]);
+            var still =(StillElement)AllRandomObjList[i];
+            still.DestroyCool();
         }
     } 
     
@@ -281,7 +282,7 @@ public class TerrainSpawnerController : ControllerParent
 
     private void DefineMarinesToRoots()
     {
-        for (int i = 1; i < 3 + 1; i++)
+        for (int i = 1; i < 5 + 1; i++)
         {
             allMarine.Add("Prefab/Terrain/Spawner/Marine/Marine" + i);
         }
@@ -540,6 +541,14 @@ public class TerrainSpawnerController : ControllerParent
         {
             SaveOnListData(temp, typePass, rootToSpawnIndex, index, replantedTree);
         }
+
+        StillElement still = (StillElement) temp;
+        if (still!=null)
+        {
+            still.Start();
+        }
+
+
     }
 
     //Save all the data into AllSpawnedDataList
@@ -742,7 +751,8 @@ public class TerrainSpawnerController : ControllerParent
             }
             else//the first teraain to load 
             {
-                spawnedData = XMLSerie.ReadXMLSpawned(true);//true once Terrain.Spawned is created  
+
+                spawnedData = XMLSerie.ReadXMLSpawned();//true once Terrain.Spawned is created  
 
                 if (spawnedData == null)
                 {

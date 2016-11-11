@@ -55,6 +55,8 @@ public class CamRTSController : CamControl
     //the minimap fully functioning. 
     MiniMapRTS miniMapRTS;
 
+    private Rotate _rotateScript;
+
     public MiniMapRTS MiniMapRts
     {
         get { return miniMapRTS; }
@@ -161,7 +163,7 @@ public class CamRTSController : CamControl
         inputRTS = (InputRTS)InputRTS.CreateCamComponent(Root.inputRTS, transform, centerTarget: centerTarget.transform,
             classContainer: transform);
 
-
+        _rotateScript = GetComponent<Rotate>();
     }
 
     #region Audio Reporting
@@ -219,6 +221,37 @@ public class CamRTSController : CamControl
         }
 
         AlignYInZero();
+
+        RotateScript();
+    }
+
+    private void RotateScript()
+    {
+        if (Input.GetKeyUp(KeyCode.R))
+        {
+            _rotateScript.ToggleOn();
+        }
+        if (Input.GetKeyUp(KeyCode.X))
+        {
+            _rotateScript.ToggleOn('X');
+        } 
+        if (Input.GetKeyUp(KeyCode.Y))
+        {
+            _rotateScript.ToggleOn('Y');
+        } 
+        if (Input.GetKeyUp(KeyCode.Z))
+        {
+            _rotateScript.ToggleOn('Z');
+        } 
+        if (Input.GetKeyUp(KeyCode.KeypadPlus))
+        {
+            _rotateScript.ChangeSpeed(0.01f);
+        } 
+        if (Input.GetKeyUp(KeyCode.KeypadMinus))
+        {
+            _rotateScript.ChangeSpeed(-0.01f);
+
+        }
     }
 
     /// <summary>
@@ -246,7 +279,7 @@ public class CamRTSController : CamControl
     {
         mouseInBorderDir = Dir.None;
         mouseInBorderDir = border.ReturnMouseDirection();
-        if (mouseInBorderDir != Dir.None && !InputRTS.isFollowingPersonNow)
+        if (mouseInBorderDir != Dir.None && !InputRTS.IsFollowingPersonNow)
         {
             AssignPosTo(mouseInBorderDir);
         }
@@ -312,7 +345,7 @@ public class CamRTSController : CamControl
     {
         QandEKeys();
         MiddleMouse();
-        if (!IsMouseMiddle && mouseInBorderDir == Dir.None && !InputRTS.isFollowingPersonNow)
+        if (!IsMouseMiddle && mouseInBorderDir == Dir.None && !InputRTS.IsFollowingPersonNow)
         {
             AssignPosTo();
         }
@@ -377,13 +410,15 @@ public class CamRTSController : CamControl
     void MiddleMouse()
     {
         //if middle mouse btn is pressed
-        if (Input.GetMouseButton(2) && !InputRTS.isFollowingPersonNow)
+        if (Input.GetMouseButton(2) //&& !InputRTS.IsFollowingPersonNow
+            )
         {
             IsMouseMiddle = true;
             RotateDealer();
         }
         //if is realeased
-        else if (Input.GetMouseButtonUp(2) && !InputRTS.isFollowingPersonNow)
+        else if (Input.GetMouseButtonUp(2)// && !InputRTS.IsFollowingPersonNow
+            )
         {
             //transform.SetParent( null;
             CleanUpRotHelp();

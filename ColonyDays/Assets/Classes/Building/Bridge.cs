@@ -676,24 +676,49 @@ public class Bridge : Trail
     /// Will give the 2 ends of a brdige 
     /// </summary>
     /// <returns></returns>
-    public List<Vector3> GiveTwoEnds()
+    public List<Vector3> GiveTwoBottoms(Vector3 from)
     {
-        List<StructureParent> currentBridgeParts12 = GiveTheTwoEndsParts10and12();
-        var part12ABotton = currentBridgeParts12[0].BottonMiddle().transform.position;
-        var part12BBottom = currentBridgeParts12[1].BottonMiddle().transform.position;
+        List<StructureParent> parts = GiveTheTwoEndsParts10and12();
 
-        return new List<Vector3>(){part12ABotton, part12BBottom};
+        StructureParent close = null;
+        StructureParent far = null;
+
+        FindCloseAndFar(from, parts, out close, out far);
+
+        return new List<Vector3>() { close.BottonIn(), far.BottonOut() };
+
     }
 
-    private List<Vector3> GiveTwoTops()
+    private List<Vector3> GiveTwoTops(Vector3 from)
     {
-        List<StructureParent> currentBridgeParts12 = GiveTheTwoEndsParts10and12();
-        var part12A = currentBridgeParts12[0].TopMiddle().transform.position;
-        var part12 = currentBridgeParts12[1].TopMiddle().transform.position;
+        List<StructureParent> parts = GiveTheTwoEndsParts10and12();
 
-        return new List<Vector3>() { part12A, part12 };
+        StructureParent close = null;
+        StructureParent far = null;
+
+        FindCloseAndFar(from, parts, out close, out far);
+
+        return new List<Vector3>() { close.TopIn(), far.TopOut() };
     }
 
+
+    void FindCloseAndFar(Vector3 from, List<StructureParent> list, out StructureParent close,
+        out StructureParent far)
+    {
+        float dist0 = Vector3.Distance(from, list[0].transform.position);
+        float dist1 = Vector3.Distance(from, list[1].transform.position);
+
+        if (dist0 < dist1)
+        {
+            close = list[0];
+            far = list[1];
+        }
+        else
+        {
+            close = list[1];
+            far = list[0];
+        }
+    }
 
 
 
@@ -794,28 +819,28 @@ public class Bridge : Trail
 
         if (which == H.Bottom)
         {
-            compare = GiveTwoEnds();
+            compare = GiveTwoBottoms(from);
         }
         else
         {
-            compare = GiveTwoTops();
+            compare = GiveTwoTops(from);
         }
 
-        float dist0 = Vector3.Distance(from, compare[0]);
-        float dist1 = Vector3.Distance(from, compare[1]);
+        //float dist0 = Vector3.Distance(from, compare[0]);
+        //float dist1 = Vector3.Distance(from, compare[1]);
 
-        if (dist0 < dist1)
-        {
-            res.Add(compare[0]);
-            res.Add(compare[1]);
-        }
-        else
-        {
-            res.Add(compare[1]);
-            res.Add(compare[0]);
-        }
+        //if (dist0 < dist1)
+        //{
+        //    res.Add(compare[0]);
+        //    res.Add(compare[1]);
+        //}
+        //else
+        //{
+        //    res.Add(compare[1]);
+        //    res.Add(compare[0]);
+        //}
 
-        return res;
+        return compare;
     }
 
 

@@ -52,9 +52,18 @@ public class StillElement : TerrainRamdonSpawner
         set { _weight = value; }
     }
 
+    private bool _hasStart;
+
+
     // Use this for initialization
 	public void Start ()
 	{
+        if (_hasStart)
+	    {
+            return;
+	    }
+	    _hasStart = true;
+
 	    _billBoardGO = GetChildThatContains("Billboard", gameObject);
 
         //only will be used for palms 
@@ -70,8 +79,7 @@ public class StillElement : TerrainRamdonSpawner
 
 	    StartCoroutine("TenSecUpdate");
 
-        //is a decora object 
-        if (MyId.Contains("Decora"))//if is null is a pool tree
+        if (MyId.Contains("Decora") || MyId.Contains("Marine"))
 	    {
 	        return;
 	    }
@@ -281,7 +289,7 @@ public class StillElement : TerrainRamdonSpawner
         {
             return;
         }
-        //Debug.Log("add cyrstals :" + MyId);
+        Debug.Log("add cyrstals :" + MyId);
         MeshController.CrystalManager1.Add(this);
     }
 
@@ -358,11 +366,7 @@ public class StillElement : TerrainRamdonSpawner
 
     public override void DestroyCool()
     {
-        //Debug.Log("DestroyCool():" + MyId);
-        //PersonPot.Control.RoutesCache1.RemoveAllMine(MyId);
-
-        //cool stuff
-        //base.DestroyCool();
+        _hasStart = false;
 
         Program.gameScene.controllerMain.TerraSpawnController.SendToPool(this);
 
@@ -379,6 +383,8 @@ public class StillElement : TerrainRamdonSpawner
             MeshController.CrystalManager1.Delete(this);
         }
     }
+
+
 
     /// <summary>
     /// So a still element is not mined endessly this 
@@ -595,4 +601,6 @@ public class StillElement : TerrainRamdonSpawner
         }
         return anchorOrdered.OrderBy(a => a.Distance).ToList();
     }
+
+
 }

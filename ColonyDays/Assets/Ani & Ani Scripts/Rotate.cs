@@ -12,32 +12,32 @@ public class Rotate : MonoBehaviour
     private float finalSpeed;
 
 
-	// Use this for initialization
-	void Start ()
-	{
-	    finalSpeed = speed;
+    // Use this for initialization
+    void Start()
+    {
+        finalSpeed = speed;
         if (CareAboutGameSpeed)
         {
-            finalSpeed = speed*Program.gameScene.GameSpeed;
+            finalSpeed = speed * Program.gameScene.GameSpeed;
         }
-	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         if (CareAboutGameSpeed)
         {
             finalSpeed = speed * Program.gameScene.GameSpeed;
         }
         if (ByMouse)
         {
-            finalSpeed = speed* Input.GetAxis("Mouse X" );
+            finalSpeed = speed * Input.GetAxis("Mouse X");
         }
 
-	    if (onX)
-	    {
+        if (onX)
+        {
             gameObject.transform.Rotate(finalSpeed, 0, 0);
-	    }
+        }
         if (onY)
         {
             gameObject.transform.Rotate(0, finalSpeed, 0);
@@ -50,6 +50,52 @@ public class Rotate : MonoBehaviour
 
     public static void SpeedChanged()
     {
+
+    }
+
+    internal void ToggleOn()
+    {
+        if (speed == 0)
+        {
+            speed = 0.01f;
+        }
+        else
+        {
+            speed = 0;
+        }
+        finalSpeed = speed;
+
+    }
+
+
+
+    internal void ToggleOn(char axis)
+    {
+        if (speed == 0)
+        {
+            return;
+        }
+        if (axis == 'X')
+        {
+            onX = !onX;
+        } 
+        if (axis == 'Y')
+        {
+            onY = !onY;
+        }
+        if (axis == 'Z')
+        {
+            onZ = !onZ;
+        }
+        finalSpeed = speed;
+
+    }
+
+
+    internal void ChangeSpeed(float p)
+    {
+        speed += p;
+        finalSpeed = speed;
 
     }
 }

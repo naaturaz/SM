@@ -98,8 +98,8 @@ public class SpawnPool : General
 
     internal void AddToPool(StillElement stillElement)
     {
+        stillElement.enabled = false;
         TerrainRamdonSpawner res = stillElement;
-        res.enabled = false;
         res.transform.SetParent(transform);
         res.transform.position = new Vector3();
         //_list.Add(res.gameObject);
@@ -158,6 +158,8 @@ public class SpawnPool : General
             return obj;
         }
 
+        var still = (StillElement) obj;
+        still.enabled = true;
         obj.enabled = true;
 
         if (name != "") { obj.name = name; }

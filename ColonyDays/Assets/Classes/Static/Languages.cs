@@ -8,36 +8,39 @@ public class Languages
 
 
     private static string _houseTail = ". SugarMiller's live here and enjoy having a nice meal at least once in a while";
-    private static string _animalFarmTail = ", can raise different animals in this building";
-    private static string _fieldFarmTail = ", can seed different crops and fruits in this building";
-    private static string _asLongHasInput = ", as long it has the necessary inputs";
-    private static string _produce = "In this building workers will produce the selected product, as long it has the necessary inputs";
+    private static string _animalFarmTail = ", you can raise different animals in this building";
+    private static string _fieldFarmTail = ", you can seed different crops and fruits in this building";
+    private static string _asLongHasInput = ", as long as it has the necessary inputs";
+    private static string _produce = "In this building workers will produce the selected product, as long as it has the necessary inputs";
     private static string _storage =
-        "In this building you store all kind of items, if gets full people won't work if they dont have where to take their product";
-    private static string _militar = "This building helps decreasing the Pirate Threath in your port, to be effective must have workers on it. The more the better";
+        "You can use this building as storage, however if it gets full people won't work if they dont have room where to store their products";
+    private static string _militar = "This building helps to decrease the Pirate Threat on your port, to be effective it must have workers. The more workers the better";
 
 
     static Dictionary<string, string> _english = new Dictionary<string, string>()
 	{
        //Descriptions
        //Infr
-	   { "Road.Desc","Only for decoration purpose. However people is happier if there is roads around them"},
-	   { "BridgeTrail.Desc","Allows people pass from one side of the terrain to the other"},
-	   { "BridgeRoad.Desc","Allows people pass from one side of the terrain to the other. People loves this bridges. Give them a prosperity and happinnes sense" +_houseTail},
-	   { "LightHouse.Desc","Helps to make the port more discoverable. Adds to Port Reputation as long the flame is glowing"},
-	   { H.Masonry + ".Desc","Really important building. This workers construct new buildings and work as wheelbarrowers once have nothing to do"},
-	   { H.Loader + ".Desc","This workers use carts to move goods around"},
-	   { H.HeavyLoad + ".Desc","This workers use big carts to move goods around"},
+	   { "Road.Desc","Only for decoration purposes. However people are happier if there are roads around them"},
+	   { "BridgeTrail.Desc","Allows people to pass from one side of the terrain to the other"},
+	   { "BridgeRoad.Desc","Allows people to pass from one side of the terrain to the other. People love these bridges. It gives a sense of prosperity and happinnes" +_houseTail},
+	   { "LightHouse.Desc","Helps to increase Port visibility. Adds to Port Reputation as long as the flame is glowing"},
+	   { H.Masonry + ".Desc","Important building, workers construct new buildings and work as wheelbarrowers once they have nothing to do"},
+	   { H.Loader + ".Desc","These workers use horse wagons to move goods around"},
+	   { H.HeavyLoad + ".Desc","These workers use horse wagons to move goods around"},
+
+       //todo Fatima
+
 
        //House
-	   { "Bohio.Desc","Bohio house, really rudimentary conditions, people is unhappy living here, a family can have 2-3 kid maximum" +_houseTail},
-	   { "HouseA.Desc","Wooden Small house, a family can have 2-3 kids maximum" +_houseTail},
-	   { "HouseB.Desc","Small house, a family can have 2-3 kids maximum" +_houseTail },
-	   { "HouseTwoFloor.Desc","Wooden Medium house, a family can have 4 kids maximum"+_houseTail},
-	   { "HouseMed.Desc","Medium house, a family can have 4 kids maximum"+_houseTail},
-	   { "HouseLargeA.Desc","Large house, a family can have 4 kids maximum"+_houseTail},
-	   { "HouseLargeB.Desc","Large house, a family can have 4 kids maximum"+_houseTail},
-	   { "HouseLargeC.Desc","Large house, a family can have 4 kids maximum"+_houseTail},
+	   { "Bohio.Desc","Bohio house, primitive conditionns with unhappy people whom can only have a maximum of 2 to 3 kids" +_houseTail},
+	   { "HouseA.Desc","Small Wooden house, a family can have 2-3 kids max" +_houseTail},
+	   { "HouseB.Desc","Small house, a family can have 2-3 kids max" +_houseTail },
+	   { "HouseTwoFloor.Desc","Medium Wooden house, a family can have 4 kids max"+_houseTail},
+	   { "HouseMed.Desc","Medium house, a family can have 4 kids max"+_houseTail},
+	   { "HouseLargeA.Desc","Large house, a family can have 4 kids max"+_houseTail},
+	   { "HouseLargeB.Desc","Large house, a family can have 4 kids max"+_houseTail},
+	   { "HouseLargeC.Desc","Large house, a family can have 4 kids max"+_houseTail},
        
        //Farms
        //Animal
@@ -52,25 +55,25 @@ public class Languages
 	   { "FieldFarmXLarge.Desc","Extra large field farm"+_fieldFarmTail},
 
        //Raw
-	   { "Clay.Desc","In this building a worker will produce Clay, raw material needed for bricks and more"},
-	   { "Ceramic.Desc","In this building a worker will produce Ceramic products, such as dishes, jars, etc"},
-	   { H.FishingHut + ".Desc","In this building a worker will catch fishes on a river"},
-	   { "FishRegular.Desc","In this building a worker will catch fishes on a waterbody"},
-	   { "Mine.Desc","In this building a worker will catch fishes on a waterbody"},
-	   { "MountainMine.Desc","In this building a worker will mine the mine and will produce always a random output"},
-	   { "Resin.Desc","In this building a worker will mine the mine and will produce always a random output"},
-	   {  H.LumberMill +".Desc","In this building workers will find and mine land resources such as wood, stone, and ore"},
-	   { "BlackSmith.Desc","In this building workers will produce the selected product"+_asLongHasInput},
-	   { "SaltMine.Desc","In this building workers will produce salt"},
+	   { "Clay.Desc","Here a worker will produce Clay, raw material is needed for bricks and more"},
+	   { "Ceramic.Desc","Here a worker will produce Ceramic products, such as dishes, jars, etc"},
+	   { H.FishingHut + ".Desc","Here a worker can catch fish in a river"},
+	   { "FishRegular.Desc","Here a worker can fish in a river"},
+	   { "Mine.Desc","Here a worker can fish in a river"},
+	   { "MountainMine.Desc","Here a worker will work the mine by extracting minerals and metals randomly"},
+	   { "Resin.Desc","Here a worker will work the mine by extracting minerals and metals randomly"},
+	   {  H.LumberMill +".Desc","Here workers will either mine or find resources such as wood, stone, and ore"},
+	   { "BlackSmith.Desc","Here workers will produce the product selected"+_asLongHasInput},
+	   { "SaltMine.Desc","Here workers will produce salt"},
 
        //Prod
-	   { "Brick.Desc","In this building a worker will produce Ceramic products, such as dishes, jars, etc"},
-	   { "Carpintery.Desc","In this building a worker will produce Ceramic products, such as dishes, jars, etc"},
-	   { "Cigars.Desc","In this building workers will produce cigars"+_asLongHasInput},
-	   { "Mill.Desc","In this building workers will produce cigars"+_asLongHasInput},
-	   { H.Tailor+".Desc","In this building workers will produce cigars"+_asLongHasInput},
-	   { "Tilery.Desc","In this building workers will produce roof tiles"+_asLongHasInput},
-	   { "CannonParts.Desc","In this building workers will produce cannon parts"+_asLongHasInput},
+	   { "Brick.Desc","Here a worker will produce Ceramic products, such as dishes, jars, etc"},
+	   { "Carpintery.Desc","Here a worker will produce Ceramic products, such as dishes, jars, etc"},
+	   { "Cigars.Desc","Here workers will produce cigars"+_asLongHasInput},
+	   { "Mill.Desc","Here workers will produce cigars"+_asLongHasInput},
+	   { H.Tailor+".Desc","Here workers will produce cigars"+_asLongHasInput},
+	   { "Tilery.Desc","Here workers will produce roof tiles"+_asLongHasInput},
+	   { "CannonParts.Desc","Here workers will produce cannon parts"+_asLongHasInput},
 	   { H.Distillery+".Desc",_produce},
 	   { "Chocolate.Desc",_produce},
 	   { "Ink.Desc",_produce},
@@ -87,9 +90,9 @@ public class Languages
 	   { "SteelFoundry.Desc",_produce},
 
        //trade
-	   { "Dock.Desc","In this building you can add import or export orders"},
-	   { H.Shipyard + ".Desc","In this building you can repair ships, must have ship repair materials on the inventory to be effective"},
-	   { "Supplier.Desc","In this building you can supply ships, must have items on inventory that a ship can use for their long trip"},
+	   { "Dock.Desc","Here you can add import or export orders"},
+	   { H.Shipyard + ".Desc","You can repairs your ships here, but you must have ship repair materials in inventory"},
+	   { "Supplier.Desc","You can supply ships with goods here, but you must have items in inventory that a ship can use for their long trip"},
 	   { "StorageSmall.Desc",_storage},
 	   { "StorageMed.Desc",_storage},
 	   { "StorageBig.Desc",_storage},
@@ -97,20 +100,20 @@ public class Languages
 	   { "StorageExtraBig.Desc",_storage},
 
        //gov
-	   { "Library.Desc","People come to this building to read and borrow books for their knowledge. The more books your libraries has the better"},
-	   { "School.Desc","Here the SugarMillers get education. The more the better"},
-	   { "TradesSchool.Desc","Here the SugarMillers get a specialized education on trades. The more the better"},
-	   { "TownHouse.Desc","The townhouse gives happinnes and sense of prosperity to your people"},
+	   { "Library.Desc","People come to this building to read and borrow books for their knowledge. The more inventory in the libraries the better"},
+	   { "School.Desc","Here people will get an education. Here more is better"},
+	   { "TradesSchool.Desc","Here people will get specialized education on trades. The more the better"},
+	   { "TownHouse.Desc","The townhouse increases happiness and prosperity to your people"},
 
        //other
 	   { "Church.Desc","The church gives happinnes and hope to your people"},
-	   { "Tavern.Desc","The tavern gives some relax and enjoy to your people"},
+	   { "Tavern.Desc","The tavern gives some relaxation and entertainment to your people"},
 	   { "Shack.Desc","Shack"},
 
        //Militar
 	   { "PostGuard.Desc",_militar},
 	   { "Fort.Desc",_militar},
-	   { "Morro.Desc",_militar+". Once you build this Pirates should know better"},
+	   { "Morro.Desc",_militar+". Once you build this, Pirates should know better"},
 
 
 
@@ -120,24 +123,24 @@ public class Languages
 	   { "LoadGame.Dialog", "Load a game"},
 	   { "NameToSave", "Save your game as:"},
 	   { "NameToLoad", "Game to load selected:"},
-	   { "OverWrite", "There is a saved game with same name. Do you want to overwrite the file?"},
-	   { "DeleteDialog", "Are you sure want to delete the saved game?"},
+	   { "OverWrite", "There is already a saved game with the same name. Do you want to overwrite the file?"},
+	   { "DeleteDialog", "Are you sure you want to delete the saved game?"},
 	   { "NotHDDSpace", "Not enough space on {0} drive to save the game"},
-	   { "GameOverPirate", "Sorry, you lost the game! Pirates attack your town and killed everyone."},
-	   { "GameOverMoney", "Sorry, you lost the game! The crown wont support your Caribbean island anymore."},
+	   { "GameOverPirate", "Sorry, you lost the game! Pirates attacked your town and killed everyone."},
+	   { "GameOverMoney", "Sorry, you lost the game! The crown won't support your Caribbean island anymore."},
 	   { "BuyRegion.WithMoney", "Are you sure want to buy this region."},
 	   { "BuyRegion.WithOutMoney", "Sorry, you can't afford this now."},
 	   { "Feedback", "Feedback!? Awesome...:) Thanks. 8) "},
-	   { "BugReport", "Catched a bug? uhmm yummy.... Send it this way!! Thanks"},	  
+	   { "BugReport", "Caught a bug? uhmm yummy.... Send it this way!! Thanks"},	  
        { "Invitation", "Your friend's email for a chance to join the Private Beta"},  
        { "Info", ""},//use for informational Dialogs
 
 
        //MainMenu
-        { "Types_Explain", "Traditional: \nIs a game in where some buildings are locked at the beggining of the game and you have to unlock them. " +
-            "The good thing is that this provide you with guidance." +
+        { "Types_Explain", "Traditional: \nIt's a game where in the begining some buildings are locked and you have to unlock them. " +
+            "The good thing is that this provides you with guidance." +
             "\n\nFreewill: \nAll available buildings are unlocked right away. " +
-            "The bad thing is that in this way you can fail easier."},
+            "The bad thing is this way you can fail very easily."},
 
 
        //Tooltips 
@@ -147,7 +150,7 @@ public class Languages
 	   { "Lazy.HoverSmall", "Unemployed people"},
 	   { "Food.HoverSmall", "Food"},
 	   { "Happy.HoverSmall", "Happiness"},
-	   { "PortReputation.HoverSmall", "Port Reputation"},
+	   { "PortReputation.HoverSmall", "Reputation of Port"},
 	   { "Dollars.HoverSmall", "Dollars"},
 	   { "PirateThreat.HoverSmall", "Pirate Threat"},
 	   { "Date.HoverSmall", "Date (d/m/y)"},
@@ -174,15 +177,15 @@ public class Languages
 	   { "Prod.HoverSmall", "Production"},
 	   { "Ind.HoverSmall", "Industry"},
 	   { "Trade.HoverSmall", "Trade"},
-	   { "Gov.HoverSmall", "Goverment"},
+	   { "Gov.HoverSmall", "Government"},
 	   { "Other.HoverSmall", "Other"},
-	   { "Militar.HoverSmall", "Militar"},
+	   { "Militar.HoverSmall", "Military"},
 	   { "WhereIsTown.HoverSmall", "Back to town [P]"},
 	   { "WhereIsSea.HoverSmall", "Show/hide path to sea"},
 	   { "Helper.HoverSmall", "Mini help"},
 
        //Todo add to ESP
-	   { "Tempeture.HoverSmall", "Tempeture"},
+	   { "Tempeture.HoverSmall", "Temperature"},
 	   
        //building window
        { "Gen_Btn.HoverSmall", "General Tab"},
@@ -212,8 +215,8 @@ public class Languages
 	   { "Build.HoverMed", "Place building: 'Left click' \n" +
 	                       "Rotate building: 'R' key \n " +
 	                       "Cancel: 'Right click'"},
-	   { "Current_Salary.HoverMed", "Workers will work in the place that pays the highest salary." +
-	                                " If 2 places pay the same salary, then the closest to home will be the one" +
+	   { "Current_Salary.HoverMed", "Workers will go to work, where the highest salary is paid." +
+	                                " If 2 places pay the same salary, then the closest to home will be chosen" +
 	                                " they will choose."},
 
 
@@ -222,14 +225,14 @@ public class Languages
 	   { "BabyBorn.Noti.Name", "New Born"},
 	   { "BabyBorn.Noti.Desc", "A new baby was born"},
 	   { "PirateUp.Noti.Name", "Pirates Closer"},
-	   { "PirateUp.Noti.Desc", "Pirates close to the shore"},
+	   { "PirateUp.Noti.Desc", "Pirates close to shore"},
        { "PirateDown.Noti.Name", "Pirates Respect You"},
 	   { "PirateDown.Noti.Desc", "Pirates respect you a bit more today"},
 
        { "Emigrate.Noti.Name", "A person emigrated"},
-	   { "Emigrate.Noti.Desc", "People emigrate when not happy in your goverment"},
+	   { "Emigrate.Noti.Desc", "People emigrate when they are not happy with your government"},
        { "PortUp.Noti.Name", "Port is known"},
-	   { "PortUp.Noti.Desc", "Your port is getting more reputation in the area routes"},
+	   { "PortUp.Noti.Desc", "Your port reputation is ramping up with neighbouring ports and routes"},
        { "PortDown.Noti.Name", "Port is less known"},
 	   { "PortDown.Noti.Desc", "Your port reputation went down"},
 
@@ -238,45 +241,45 @@ public class Languages
 
        { "ShipPayed.Noti.Name", "Ship payed"},
 	   { "ShipPayed.Noti.Desc", "A ship has payed for goods or service"}, 
-       { "ShipArrived.Noti.Name", "Ship arrived"},
+       { "ShipArrived.Noti.Name", "A ship has arrived"},
 	   { "ShipArrived.Noti.Desc", "A new ship has arrived to one of our maritimes buildings"},
 
        //Main notificaion
        //Shows on the middle of the screen
-       { "NotScaledOnFloor", "The building is too close to shore or to a mountain"},
+       { "NotScaledOnFloor", "The building is either to close to shore or moutain"},
        { "NotEven", "The ground underneath the building is not even"},
        { "Colliding", "Building is colliding with another one"},
        { "BadWaterHeight", "The building is too low or high on the water"},
-       { "LockedRegion", "You need to own this region to build in here"},
+       { "LockedRegion", "You need to own this region to build here"},
        { "HomeLess", "People in this house have no where to go. Please build a new house that" +
                      " can hold this family and try again"},   
-       { "LastFood", "Can not destroy the only Storage in your village"},
-       { "LastMasonry", "Can not destroy the only Masonry in your village"},
+       { "LastFood", "Cannot destroy, this is the only Storage in your village"},
+       { "LastMasonry", "Cannot destroy, this is the only Masonry in your village"},
 
 
        //Mini help
        { "Camera", "Camera: Use [AWSD] or cursor to move. " +
-                   "Press mouse middle button and keep pressed to rotate, or [Q] and [E]"},
-       { "SeaPath", "Click on the left botton corner 'Show/hide sea path' " +
+                   "Press the scroll wheel on your mouse, keep it pressed to rotate, or [Q] and [E]"},
+       { "SeaPath", "Click on the left bottom corner 'Show/hide sea path' " +
                     "button to show the closest path to the sea"},
-       { "Region", "Region: You need to own a region to be able to build on it. Click on the For Sale sign in the" +
+       { "Region", "Region: You need to own a region to be able to build in it. Click on the For Sale sign in the" +
                    " middle of each region to buy it"},
        { "PeopleRange", "The huge blue circle around each building marks the range of it"},
 
        { "PirateThreat.Help", "Pirate Threat: This is how aware are the pirates of your port. This increases as" +
 	                              "you have more money. If this reaches over 90 you will lose the game"},
 
-	   { "PortReputation.Help", "Port Reputation: The more people know about your port the more they will visit it." +
+	   { "PortReputation.Help", "Port Reputation: The more people know your port, the more they will visit" +
 	                                "If you want to increase this make sure you always have some orders" +
-	                                "on the port, supplier and shipyard"},
-	   { "Emigrate.Help", "Emigrates: When people are unhappy for a few years they jusy leave. The bad" +
-	                          "is that they wont comeback, wont produce and wont have kids." +
+	                                "in the port, supplier and shipyard"},
+	   { "Emigrate.Help", "Emigrates: When people are unhappy for a few years they leave. The bad" +
+	                          "part of this is they won't come back, they won't produce or have children." +
 	                          "The only good thing is that they increase the 'Port Reputation'"},
-	   { "Food.Help", "Food: The more variety of foods a person has in their houses the happier they" +
+	   { "Food.Help", "Food: The higher the variety of food available in a household, the happier they" +
 	                      "will be."},	  
                           
-       { "Weight.Help", "Weight: All weights in game are in Kg or Lbs depending on which Unit system is selected." +
-                        " You can change it on 'Options' on the 'Main Menu'"},
+       { "Weight.Help", "Weight: All the weights in the game are in Kg or Lbs depending on which Unit system is selected." +
+                        " You can change it in 'Options' in the 'Main Menu'"},
 
 	};
 
