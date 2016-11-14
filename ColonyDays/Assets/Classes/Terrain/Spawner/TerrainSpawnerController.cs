@@ -23,7 +23,7 @@ public class TerrainSpawnerController : ControllerParent
     int howManyOrnaToSpawn = 30;//30    50      20
     int howManyGrassToSpawn = 20;//40
     //the ones spawn in the marine bounds 
-    int howManyMarineBoundsToSpawn = 1;//
+    int howManyMarineBoundsToSpawn = 1;//1
     int howManyMountainBoundsToSpawn = 0;//
 
     private SpawnPool _spawnPool;
@@ -229,7 +229,8 @@ public class TerrainSpawnerController : ControllerParent
             Multiplier(howManyTreesToSpawn), Multiplier(howManyStonesToSpawn), 
             Multiplier(howManyIronToSpawn), Multiplier(howManyGoldToSpawn),
             Multiplier(howManyOrnaToSpawn), Multiplier(howManyGrassToSpawn),
-            Multiplier(howManyMarineBoundsToSpawn),
+            //Marines
+            Multiplier(howManyMarineBoundsToSpawn) / 2,
             Multiplier(howManyMountainBoundsToSpawn),
 
         };
@@ -266,7 +267,7 @@ public class TerrainSpawnerController : ControllerParent
 
     private void DefineAllStoneRoots()
     {
-        for (int i = 1; i < 3 + 1; i++)
+        for (int i = 1; i < 4 + 1; i++)
         {
             allStones.Add("Prefab/Terrain/Spawner/Stone/Stone" + i);
         }
@@ -274,7 +275,7 @@ public class TerrainSpawnerController : ControllerParent
 
     private void AddTreesToTreesRoots()
     {
-        for (int i = 1; i < 4 + 1; i++)
+        for (int i = 1; i < 5 + 1; i++)
         {
             allTrees.Add("Prefab/Terrain/Spawner/Tree" + i);
         }
@@ -282,7 +283,7 @@ public class TerrainSpawnerController : ControllerParent
 
     private void DefineMarinesToRoots()
     {
-        for (int i = 1; i < 5 + 1; i++)
+        for (int i = 1; i < 4 + 1; i++)
         {
             allMarine.Add("Prefab/Terrain/Spawner/Marine/Marine" + i);
         }
@@ -751,7 +752,6 @@ public class TerrainSpawnerController : ControllerParent
             }
             else//the first teraain to load 
             {
-
                 spawnedData = XMLSerie.ReadXMLSpawned();//true once Terrain.Spawned is created  
 
                 if (spawnedData == null)

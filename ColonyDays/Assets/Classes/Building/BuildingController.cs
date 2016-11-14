@@ -305,7 +305,7 @@ public class BuildingController : BuildingPot
     HPers SelectCurrentList(H hTypeP)
     {
         if (hTypeP == H.Bohio|| 
-            hTypeP == H.HouseA || hTypeP == H.HouseB || hTypeP == H.HouseTwoFloor
+            hTypeP == H.WoodHouseA || hTypeP == H.WoodHouseB || hTypeP == H.WoodHouseC
             || hTypeP == H.HouseMed// || hTypeP == H.HouseMedB 
             || hTypeP == H.HouseLargeA || hTypeP == H.HouseLargeB || hTypeP == H.HouseLargeC
             )
@@ -342,7 +342,7 @@ public class BuildingController : BuildingPot
     public static HPers ReturnBuildingFunction(H hTypeP)
     {
         if (hTypeP == H.Bohio ||
-           hTypeP == H.HouseA || hTypeP == H.HouseB || hTypeP == H.HouseTwoFloor
+           hTypeP == H.WoodHouseA || hTypeP == H.WoodHouseB || hTypeP == H.WoodHouseC
            || hTypeP == H.HouseMed// || hTypeP == H.HouseMedB 
            || hTypeP == H.HouseLargeA || hTypeP == H.HouseLargeB || hTypeP == H.HouseLargeC
            )

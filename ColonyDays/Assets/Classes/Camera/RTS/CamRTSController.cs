@@ -75,6 +75,8 @@ public class CamRTSController : CamControl
         set { camSensivity = value; }
     }
 
+
+
     /// <summary>
     /// Create the guides that will grab all the point to the camera move thru when doing the 360 
     /// Rotation
@@ -450,6 +452,15 @@ public class CamRTSController : CamControl
         }
     }
 
+
+
+    private float _desiredSpeed = 1f;
+    public float DesiredSpeed
+    {
+        get { return _desiredSpeed; }
+        set { _desiredSpeed = value; }
+    }
+
     /// <summary>
     /// Will decompose a Compose Direction (ex: UpRight), into Up and Right so the 
     /// mouse direction will be valid if is in a corner, if is a simpel direction
@@ -491,7 +502,6 @@ public class CamRTSController : CamControl
             localDirs.Add(composeDir);
         }
 
-        float desiredSpeed = 1f;
         float horChange = 0;
         float vertChange = 0;
 
@@ -505,9 +515,9 @@ public class CamRTSController : CamControl
         //if user is using mouse horChange and vertChange will remaing at 0 therefore
         //subsequente method will find where to go based on mouse direction 
 
-        float horValue = UMath.ResponsiveInputAxisTo(desiredSpeed, Dir.Horizontal,
+        float horValue = UMath.ResponsiveInputAxisTo(_desiredSpeed, Dir.Horizontal,
         horChange, localDirs[0]);
-        float vertValue = UMath.ResponsiveInputAxisTo(desiredSpeed, Dir.Vertical,
+        float vertValue = UMath.ResponsiveInputAxisTo(_desiredSpeed, Dir.Vertical,
         vertChange, localDirs[1]);
 
         return new List<float> {horValue, vertValue};

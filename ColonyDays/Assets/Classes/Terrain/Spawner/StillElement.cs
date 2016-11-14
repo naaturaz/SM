@@ -79,7 +79,7 @@ public class StillElement : TerrainRamdonSpawner
 
 	    StartCoroutine("TenSecUpdate");
 
-        if (MyId.Contains("Decora") || MyId.Contains("Marine"))
+        if (MyId.Contains("Decora"))
 	    {
 	        return;
 	    }

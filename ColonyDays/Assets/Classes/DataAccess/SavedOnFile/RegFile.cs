@@ -232,6 +232,7 @@ public class RegFile  {
 
         ProductionReport = build.ProductionReport;
         MaxPeople = build.MaxPeople;
+        Decoration = build.Decoration1;
     }
 
     public RegFile() { }
@@ -259,4 +260,6 @@ public class RegFile  {
     public BuildersManager BuildersManager1 { get; set; }
 
     public ProductInfo CurrentProd { get; set; }
+
+    public Decoration Decoration { get; set; }
 }

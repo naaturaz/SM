@@ -29,7 +29,20 @@ public class Decoration  {
     List<Vector3> _positionsToSpawnDecor=new List<Vector3>();
     private General _spwnedObj;
 
+    public Decoration() { }
+
     public Decoration(Building build)
+    {
+        B4Init(build);
+    }
+
+    public void LoadDecora(Building build)
+    {
+        B4Init(build);
+    }
+
+
+    void B4Init(Building build)
     {
         _building = build;
         for (int i = 1; i < 36 + 1; i++)
@@ -50,10 +63,52 @@ public class Decoration  {
         AddToBatchMesh();
 
         //IfHouseMedAssignRandomMat();
+        InitUVMap();
     }
 
+    #region UVMap move
+    //Houses have 10 list on a 4096 map to choose from 
 
+    private float _xOffset = 0;
+    private float _yOffset = 409.6f;
 
+    private int _yMulti = -1;
+    public int YMulti
+    {
+        get { return _yMulti; }
+        set { _yMulti = value; }
+    }
+
+    void InitUVMap()
+    {
+        if (!_building.HType.ToString().Contains("WoodHouse"))
+        {
+            return;
+        }
+
+        if (_yMulti == -1)
+        {
+            _yMulti = UMath.GiveRandom(0, 10);
+        }
+
+        _main = General.GetChildThatContains("Main", _building.gameObject);
+
+        // Build the uvs 
+        var uvs = new Vector2[(_main.GetComponent<MeshFilter>()).mesh.vertices.Length]; 
+        uvs = (_main.GetComponent<MeshFilter>()).mesh.uv; // Take the existing UVs 
+
+        //so it moves down randomwly 
+        _yOffset = _yOffset * _yMulti;
+
+        for (int i = 0; i < uvs.Length; i++)
+        {
+            uvs[i] = new Vector2(uvs[i].x + _xOffset, uvs[i].y + _yOffset);
+        }
+
+        _main.GetComponent<MeshFilter>().mesh.uv = uvs;
+    }
+
+    #endregion
 
     #region Romeo Bravo Pirate
 

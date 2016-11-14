@@ -418,7 +418,7 @@ public class OptionsWindow : GUIElement
     {
         _soundSlider.value = AudioCollector.SoundLevel;
         _musicSlider.value = AudioCollector.MusicLevel;
-        _cameraSlider.value = CamControl.CAMRTS.CamSensivity/factor;
+        _cameraSlider.value = CamControl.CAMRTS.CamSensivity/factorSens;
     }
 
     public void NewSoundLevel()
@@ -431,10 +431,12 @@ public class OptionsWindow : GUIElement
         AudioCollector.SetNewMusicLevelTo(_musicSlider.value);
     }
 
-    private float factor = 12f;//bz .5 in the slider is 6 for the cam senstivity
+    private float factorSens = 12f;//bz .5 in the slider is 6 for the cam senstivity
+    private float factorDesi = 2f;//bz .5 in the slider is 1 
     public void NewCamSensitivity()
     {
-        CamControl.CAMRTS.CamSensivity = _cameraSlider.value*factor;
+        CamControl.CAMRTS.CamSensivity = _cameraSlider.value*factorSens;
+        CamControl.CAMRTS.DesiredSpeed = _cameraSlider.value * factorDesi;
     }
 
 #endregion

@@ -37,9 +37,9 @@ public class UnlockBuilds
 
             //houses
             new BRequires(H.Bohio, true),
-            new BRequires(H.HouseA, 17),
-            new BRequires(H.HouseB, 25),
-            new BRequires(H.HouseTwoFloor, 55),
+            new BRequires(H.WoodHouseA, 17),
+            new BRequires(H.WoodHouseB, 25),
+            new BRequires(H.WoodHouseC, 55),
             new BRequires(H.HouseMed, H.OnlyForDev),
             new BRequires(H.HouseLargeA, H.OnlyForDev),
             new BRequires(H.HouseLargeB, H.OnlyForDev),

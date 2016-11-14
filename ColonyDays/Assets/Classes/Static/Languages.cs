@@ -29,14 +29,12 @@ public class Languages
 	   { H.Loader + ".Desc","These workers use horse wagons to move goods around"},
 	   { H.HeavyLoad + ".Desc","These workers use horse wagons to move goods around"},
 
-       //todo Fatima
-
 
        //House
 	   { "Bohio.Desc","Bohio house, primitive conditionns with unhappy people whom can only have a maximum of 2 to 3 kids" +_houseTail},
-	   { "HouseA.Desc","Small Wooden house, a family can have 2-3 kids max" +_houseTail},
-	   { "HouseB.Desc","Small house, a family can have 2-3 kids max" +_houseTail },
-	   { "HouseTwoFloor.Desc","Medium Wooden house, a family can have 4 kids max"+_houseTail},
+	   { "WoodHouse1.Desc","Small wooden house, a family can have 2-4 kids max" +_houseTail},
+	   { "WoodHouse2.Desc","Medium wooden house, a family can have 4 kids max" +_houseTail },
+	   { "WoodHouse3.Desc","Small and confortable wooden house, a family can have 2-4 kids max"+_houseTail},
 	   { "HouseMed.Desc","Medium house, a family can have 4 kids max"+_houseTail},
 	   { "HouseLargeA.Desc","Large house, a family can have 4 kids max"+_houseTail},
 	   { "HouseLargeB.Desc","Large house, a family can have 4 kids max"+_houseTail},

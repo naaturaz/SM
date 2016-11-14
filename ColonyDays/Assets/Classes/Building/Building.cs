@@ -219,7 +219,7 @@ public class Building : General, Iinfo
 
         NotifyBuildingProblem(isScaledOnFloor);
         return _isEven && !_isColliding && _isGoodWaterHeight && isScaledOnFloor 
-            //&& AreAnchorsOnUnlockRegions()
+            && AreAnchorsOnUnlockRegions()
             ;
     }
 
@@ -722,6 +722,13 @@ public class Building : General, Iinfo
 
     private Decoration _decoration;
     private bool isDecorated;
+
+    public Decoration Decoration1
+    {
+        get { return _decoration; }
+        set { _decoration = value; }
+    }
+
     protected void InitDecoration()
     {
         if (isDecorated || !PositionFixed || Anchors.Count == 0 )
@@ -735,7 +742,16 @@ public class Building : General, Iinfo
         }
 
         isDecorated = true;
-        _decoration = new Decoration(this);
+
+        if (!IsLoadingFromFile || _decoration == null)//for town loader 
+        {
+            _decoration = new Decoration(this);
+        }
+        else
+        {
+            //so it doesnt loose the loaded val
+            _decoration.LoadDecora(this);
+        }
     }
 
     #region Current Product
@@ -945,8 +961,8 @@ public class Building : General, Iinfo
         {
             LandZoneLoader(); 
         }
-        
 
+        //here I set : IsLoadingFromFile = false
         LoadingWillBeDestroyBuild();
 
         if (!PositionFixed)
@@ -1761,13 +1777,13 @@ public class Building : General, Iinfo
             Families[0] = new Family(UMath.GiveRandom(2,4), MyId, 0);
         }
         //can hhave 1 famili with 3 kids
-        else if (HType == H.HouseA || HType == H.HouseB)
+        else if (HType == H.WoodHouseA || HType == H.WoodHouseC)
         {
             Families = new Family[1];
             Families[0] = new Family(UMath.GiveRandom(2, 4), MyId, 0);
         }
         //can hhave 2 famili with 3 kids each
-        else if (HType == H.HouseTwoFloor)
+        else if (HType == H.WoodHouseB)
         {
             Families = new Family[1];
             Families[0] = new Family(4, MyId,0);
@@ -1968,11 +1984,11 @@ public class Building : General, Iinfo
         {
             _confort = 1;
         }
-        else if (HType == H.HouseTwoFloor)
+        else if (HType == H.WoodHouseC)
         {
             _confort = 3;
         }
-        else if (HType == H.HouseA || HType == H.HouseB)
+        else if (HType == H.WoodHouseA || HType == H.WoodHouseB)
         {
             _confort = 4;
         }
@@ -3881,11 +3897,11 @@ public class Building : General, Iinfo
         {
             return true;
         }
-        else if (HTypeP == H.HouseTwoFloor)
+        else if (HTypeP == H.WoodHouseC)
         {
             return true;
         }
-        else if (HTypeP == H.HouseA || HTypeP == H.HouseB)
+        else if (HTypeP == H.WoodHouseA || HTypeP == H.WoodHouseB)
         {
             return true;
         }

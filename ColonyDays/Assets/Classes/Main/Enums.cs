@@ -229,7 +229,7 @@ public enum H
     Loader, HeavyLoad,
 
     //house F2 ... bugg bz they had numbers on it .. They cant have numbers
-    Bohio, HouseA, HouseB, HouseTwoFloor, HouseMed,
+    Bohio, WoodHouseA, WoodHouseB, WoodHouseC, HouseMed,
     HouseLargeA,
     HouseLargeB,
     HouseLargeC,
@@ -435,7 +435,9 @@ public enum StInfr //for structures game structure.cs
 public enum StHous //for structures game structure.cs 
 {
     //Housing
-    Bohio, HouseA, HouseB, HouseTwoFloor, HouseMed,
+    Bohio,
+    WoodHouseA, WoodHouseB, WoodHouseC,
+    HouseMed,
     HouseLargeA,
     HouseLargeB,
     HouseLargeC,
@@ -587,6 +589,9 @@ public enum G//for General Random stuff
     Home, Sea,
 }
 
+/// <summary>
+/// By Ronny and they share same material too
+/// </summary>
 public enum Ron1
 {
     Brick, Wood, Carpintery, Clay, SaltMine, BlackSmith, FishHut, Masonry, LightHouse,
@@ -596,7 +601,13 @@ public enum Ron1
 
 public enum Ron2
 {
-    Library
+    Library,
+    TradesSchool,
+}
+
+public enum RonWoodHouse
+{
+    WoodHouseA, WoodHouseB, WoodHouseC,
 }
 
 public static class Enums { }

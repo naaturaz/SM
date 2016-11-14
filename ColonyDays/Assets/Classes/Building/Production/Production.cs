@@ -156,12 +156,12 @@ public class Production  {
     {
         List<H> listH = new List<H>()
         {
-            H.Bohio, H.HouseA, H.HouseB,
+            H.Bohio, H.WoodHouseA, H.WoodHouseB,
             H.HouseLargeA ,
             H.HouseLargeB ,
             H.HouseLargeC ,
             H.HouseMed,
-            H.HouseTwoFloor,
+            H.WoodHouseC,
         };
 
         InputElement water = new InputElement(P.Water, 1f);
