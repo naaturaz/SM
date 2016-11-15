@@ -7,9 +7,6 @@ using UnityEngine;
 
 public class BatchManager
 {
-
-
-
     //here with an Int that is the CrystalRegion you can find to which Batch Region you belong to
     //mostly to be use by semiOpaque 
     Dictionary<int, string> _semiIndeces = new Dictionary<int, string>();  
@@ -20,30 +17,30 @@ public class BatchManager
     //the Opaque region is open to add more GameObj
     private string _openOpaque;
 
-    public BatchManager()
+    public BatchManager(string id)
     {
-        SemiOpaqueSetUp();
+        SetUp(id, _semiIndeces);
         Debug.Log("BathMnanager init");
     }
 
-    private void SemiOpaqueSetUp()
+    private void SetUp(string id, Dictionary<int, string> dict)
     {
         int loc = 0;
-        string id = "Semi";
         List<int> regions = new List<int>();
+        var idH = id;
 
         for (int i = 0; i < MeshController.CrystalManager1.CrystalRegions.Count; i++)
         {
             if (loc < 1)//3
             {
-                id += "."+i;
+                idH += "." + i;
                 regions.Add(i);
             }
             else
             {
-                Set2BatchRegions(id, regions);
+                Set2BatchRegions(idH, regions, dict);
                 loc = 0;
-                id = "Semi";
+                idH = id;
                 regions.Clear();
                 i--;//so the 3 is included
                 continue;
@@ -51,7 +48,7 @@ public class BatchManager
             loc++;
         }
         //the last 2 never get to the 'else'
-        Set2BatchRegions(id, regions);
+        Set2BatchRegions(idH, regions, dict);
         Debug.Log("_semiIndeces ct:" + _semiIndeces.Count + ". Cryst.Regions ct:" +
             MeshController.CrystalManager1.CrystalRegions.Count);
     }
@@ -61,11 +58,11 @@ public class BatchManager
     /// </summary>
     /// <param name="id"></param>
     /// <param name="regions"></param>
-    private void Set2BatchRegions(string id, List<int> regions)
+    private void Set2BatchRegions(string id, List<int> regions, Dictionary<int, string> dict)
     {
         for (int i = 0; i < regions.Count; i++)
         {
-            _semiIndeces.Add(regions[i], id);
+            dict.Add(regions[i], id);
         }
         _batchRegions.Add(id, new BatchRegion(id));
     }
@@ -91,25 +88,16 @@ public class BatchManager
         }
 
         //todo address if Road, Bridge
-        if (go.Category == Ca.Spawn)
+        if (go.Category == Ca.Spawn || go.HType == H.Plant)
         {
-            //Debug.Log("added:"+go.MyId);
-            //if (go.HType == H.Tree)
-            //{
-            //    //Debug.Log("Return tree");
-            //    return;
-            //}
-
             var i = MeshController.CrystalManager1.ReturnMyRegion(U2D.FromV3ToV2(go.transform.position));
 
             if (!_semiIndeces.ContainsKey(i))
             {
                 //destroy and remove GO
                 Debug.Log("go out:" + go.MyId);
-
                 return;
             }
-
 
             var id = _semiIndeces[i];
             _batchRegions[id].AddToRegion(go);
@@ -182,6 +170,19 @@ public class BatchManager
         for (int i = 0; i < _batchRegions.Count; i++)
         {
             _batchRegions.ElementAt(i).Value.DecideIfRedoBatch();
+        }
+    }    
+    
+    internal void BatchDestroy()
+    {
+        for (int i = 0; i < _batchRegions.Count; i++)
+        {
+            if (_batchRegions.ElementAt(i).Value.IsAlive())
+            {
+                _batchRegions.ElementAt(i).Value.Destroy();
+                
+            }
+
         }
     }
 

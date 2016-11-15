@@ -279,6 +279,9 @@ public class Structure : StructureParent
 	        }
 	    }
 
+        UpdateFarm();
+
+
 	    base.Update();
 	    if (!PositionFixed)
 	    {
@@ -309,7 +312,6 @@ public class Structure : StructureParent
 	        
 	    }
 
-	    UpdateFarm();
     }
 
     #region FieldFarm 
@@ -322,6 +324,11 @@ public class Structure : StructureParent
             {
                 var ff = (FieldFarm)_farm;
                 ff.Update();
+
+                if (_isOrderToDestroy)
+                {
+                    ff.BatchDestroy();
+                }
             }
         }
     }
@@ -343,6 +350,12 @@ public class Structure : StructureParent
     //so a new farm can be created 
     internal void DestroyFarm()
     {
+        if (MyId.Contains("FieldFarm"))
+        {
+            var field = (FieldFarm) _farm;
+            field.BatchDestroy();
+        }
+
         _farm = null;
     }
 

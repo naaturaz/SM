@@ -71,7 +71,7 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Cabbage, 100, 550, 100));
         _prodSpecs.Add(new ProdSpec(P.Lettuce, 100, 550, 100));
         _prodSpecs.Add(new ProdSpec(P.SweetPotato, 100, 550, 100));
-        _prodSpecs.Add(new ProdSpec(P.Yucca, 100, 550, 100));
+        _prodSpecs.Add(new ProdSpec(P.Cassava, 100, 550, 100));
         _prodSpecs.Add(new ProdSpec(P.Pineapple, 100, 550, 100));
         _prodSpecs.Add(new ProdSpec(P.Papaya, 100, 550, 100));
 

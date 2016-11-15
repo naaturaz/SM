@@ -339,6 +339,7 @@ public class Root : MonoBehaviour
 
     //Atlas
     public static string alphaAtlas = "Prefab/Mats/Atlas/AlphaAtlas";
+    public static string plantAtlas = "Prefab/Mats/Atlas/PlantAtlas";
 
     //they are now pull in Person.ReturnRandoPersonMaterialRoot()
     //public static string personGuy1 = "Prefab/Mats/Person/Guy1UV 1";

@@ -58,7 +58,7 @@ public class Food
         _nValues.Add(new NutritionValue(P.Cabbage, 1f));
         _nValues.Add(new NutritionValue(P.Lettuce, 1f));
         _nValues.Add(new NutritionValue(P.SweetPotato, 1f));
-        _nValues.Add(new NutritionValue(P.Yucca, 1f));
+        _nValues.Add(new NutritionValue(P.Cassava, 1f));
         _nValues.Add(new NutritionValue(P.Pineapple, 1f));
         //_nValues.Add(new NutritionValue(P.Mango, 1f));
         //_nValues.Add(new NutritionValue(P.Avocado, 1f));

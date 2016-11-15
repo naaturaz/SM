@@ -1,7 +1,7 @@
 ﻿//life cycle corn 4 month
 using UnityEngine;
 
-public class Plant : MonoBehaviour
+public class Plant : General
 {
     private P _type;//type of plant. ex : Bean
     private Building _building;//the buildign tht contains this plant 
@@ -107,6 +107,7 @@ public class Plant : MonoBehaviour
 
     public void ObjInit(Building container, FieldFarm fieldFarm, P plantType)
     {
+        HType = H.Plant;
         _type = plantType;
         _building = container;
         _fieldFarm = fieldFarm;
@@ -118,6 +119,10 @@ public class Plant : MonoBehaviour
 
         //define
         DefineLifeDuration();
+
+        transform.name = "";//so it renames 
+        DefineNameAndMyID();
+        _fieldFarm.BatchAdd(this);
     }
 
     void CreateBasePlane()
@@ -351,6 +356,7 @@ public class Plant : MonoBehaviour
 
     private void DestroyPlant()
     {
+        //_fieldFarm.BatchRemove(this);
         Destroy(gameObject);
     }
 

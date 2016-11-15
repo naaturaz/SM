@@ -17,7 +17,7 @@ public class BatchRegion
 {
     private string _id;
     private General _batchMaster;
-    GameObject [] _all = new GameObject[500];
+    GameObject [] _all = new GameObject[1500];
 
     //the object ID and the INT in the array
     Dictionary<string, int> _keymap = new Dictionary<string, int>();
@@ -120,6 +120,8 @@ public class BatchRegion
                 return;
             }
         }
+
+        throw new Exception("Region Full : " + _id);
     }
 
     internal void AddToRegion(General go)
@@ -138,7 +140,7 @@ public class BatchRegion
             AddToAll(go.Geometry.gameObject, go.MyId);
             DecideIfRedoBatch();
         }
-        else if (go.Category == Ca.Spawn)
+        else if (go.Category == Ca.Spawn || go.HType == H.Plant)
         {
             if (go.HType == H.Tree)
             {
@@ -295,6 +297,10 @@ public class BatchRegion
         {
             return (Material)Resources.Load(Root.matTavernBase);
         }
+        if (_id.Contains("Farm"))
+        {
+            return (Material)Resources.Load(Root.plantAtlas);
+        }
         return (Material)Resources.Load(Root.alphaAtlas);
     }
 
@@ -345,6 +351,18 @@ public class BatchRegion
 
         //Reset position
         onGO.transform.position = position;
+    }
+
+    internal void Destroy()
+    {
+        _batchMaster.Destroy();
+        _batchMaster = null;
+        //_all = null;
+    }
+
+    internal bool IsAlive()
+    {
+        return _batchMaster != null;
     }
 }
 

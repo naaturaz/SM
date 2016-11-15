@@ -297,7 +297,7 @@ public class Production  {
         InputProdCheckAndAdd(new ProductInfo(P.Cabbage, null, listH));
         InputProdCheckAndAdd(new ProductInfo(P.Lettuce, null, listH));
         InputProdCheckAndAdd(new ProductInfo(P.SweetPotato, null, listH));
-        InputProdCheckAndAdd(new ProductInfo(P.Yucca, null, listH));
+        InputProdCheckAndAdd(new ProductInfo(P.Cassava, null, listH));
         InputProdCheckAndAdd(new ProductInfo(P.Pineapple, null, listH));
         //InputProdCheckAndAdd(new ProductInfo(P.Mango, null, listH));
         //InputProdCheckAndAdd(new ProductInfo(P.Avocado, null, listH));

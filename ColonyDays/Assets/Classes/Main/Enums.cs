@@ -159,7 +159,7 @@ public enum P
     Cabbage,
     Lettuce,
     SweetPotato,
-    Yucca,
+    Cassava,
     Pineapple,
     //Mango,
     //Avocado,
@@ -407,6 +407,7 @@ public enum H
     AtFarm,
     Home,
     YearReport,
+    Plant,
 
 
 }

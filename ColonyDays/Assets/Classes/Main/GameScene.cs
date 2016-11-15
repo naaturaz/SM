@@ -276,7 +276,7 @@ public class GameScene : General
     /// </summary>
     public void BatchManagerCreate()
     {
-        _batchManager = new BatchManager();
+        _batchManager = new BatchManager("Semi");
     }
 
     /// <summary>

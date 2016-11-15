@@ -4,16 +4,17 @@ using UnityEngine;
 /*
  * This class is contained in Structure.cs and is the one that handles all with a Field Farm
  */
+
 public class FieldFarm : Farm
 {
-    SMe m = new SMe();
+    private SMe m = new SMe();
 
-    private Structure _building;//the building structure contains the Field Farm 
-    List<Plant> _plants = new List<Plant>();
-    List<Vector3> _seedLoc=new List<Vector3>();//the location of the seeds in this Field Farm  
+    private Structure _building; //the building structure contains the Field Farm 
+    private List<Plant> _plants = new List<Plant>();
+    private List<Vector3> _seedLoc = new List<Vector3>(); //the location of the seeds in this Field Farm  
     private P _plantType;
 
-    private float _spaceBtwPlants;//this is the space btw plants will be different for each 
+    private float _spaceBtwPlants; //this is the space btw plants will be different for each 
 
     //of the FarmZone
     private Vector3 _NW;
@@ -27,7 +28,9 @@ public class FieldFarm : Farm
 
     private PlantSave _plantSave;
 
-    public FieldFarm() { }
+    public FieldFarm()
+    {
+    }
 
     public FieldFarm(Structure building)
     {
@@ -49,7 +52,7 @@ public class FieldFarm : Farm
         get { return _spaceBtwPlants; }
     }
 
-    void Init()
+    private void Init()
     {
         FindWherePlantSeeds();
         CreatePlants();
@@ -60,7 +63,7 @@ public class FieldFarm : Farm
     /// </summary>
     private void DefineSpaceBtnPlants()
     {
-        _spaceBtwPlants =  Mathf.Abs(m.SubDivide.XSubStep)/1.5f ;
+        _spaceBtwPlants = Mathf.Abs(m.SubDivide.XSubStep)/2.5f; //1.5
 
         if (_plantType == P.Banana)
         {
@@ -74,6 +77,7 @@ public class FieldFarm : Farm
 
     private bool createPlantNow;
     private int creaCount;
+
     /// <summary>
     /// After we got the Location of the seeds will procede to plant seeds 
     /// </summary>
@@ -82,13 +86,13 @@ public class FieldFarm : Farm
         createPlantNow = true;
     }
 
-    void CreatePlantsLoop()
+    private void CreatePlantsLoop()
     {
         if (creaCount < _seedLoc.Count)
         {
             var plantNew = Plant.Create(_plantType, _seedLoc[creaCount], _building, this);
 
-            if (_plantSave!=null)
+            if (_plantSave != null)
             {
                 plantNew.LoadPlant(_plantSave);
             }
@@ -101,10 +105,11 @@ public class FieldFarm : Farm
         {
             createPlantNow = false;
             creaCount = 0;
+            BatchInitial();
         }
     }
 
-    void FindWherePlantSeeds()
+    private void FindWherePlantSeeds()
     {
         PullFarmZoneVars();
         DefineFarmNWandSE();
@@ -128,10 +133,11 @@ public class FieldFarm : Farm
             DefineSpaceBtnPlants();
         }
         _seedLoc = RetuFillPoly(_NW, _SE, _spaceBtwPlants, _spaceBtwPlants);
+        Debug.Log(_building.MyId + ". seeds: " + _seedLoc.Count);
         //UVisHelp.CreateHelpers(_seedLoc, Root.blueCube);
     }
 
-    List<Vector3> RetuFillPoly(Vector3 NW, Vector3 SE, float xStep, float zStep)
+    private List<Vector3> RetuFillPoly(Vector3 NW, Vector3 SE, float xStep, float zStep)
     {
         List<Vector3> res = new List<Vector3>();
 
@@ -139,14 +145,14 @@ public class FieldFarm : Farm
         {
             for (float z = NW.z; z > SE.z; z -= zStep)
             {
-                res.Add(new Vector3(x, NW.y, z)); 
+                res.Add(new Vector3(x, NW.y, z));
             }
         }
         return res;
     }
 
 
-    void PullFarmZoneVars()
+    private void PullFarmZoneVars()
     {
         var farmZone = _building.FarmZone();
         _min = farmZone.GetComponent<Collider>().bounds.min;
@@ -169,6 +175,7 @@ public class FieldFarm : Farm
 
 
     private int plantsCount;
+
     /// <summary>
     /// Use to keep track of plants grw once all of them grw will make _workAdded = 0
     /// </summary>
@@ -184,6 +191,7 @@ public class FieldFarm : Farm
     }
 
     private int harvestCount;
+
     internal void HarvestCheck()
     {
         harvestCount++;
@@ -229,4 +237,36 @@ public class FieldFarm : Farm
             _building.DestroyFarm();
         }
     }
+
+
+    #region Batching
+
+    private BatchManager _batchManager;
+
+    public void BatchAdd(General gen)
+    {
+        if (_batchManager == null)
+        {
+            _batchManager = new BatchManager(_building.HType + "." + _building.Id);
+        }
+
+        _batchManager.AddGen(gen);
+    }
+
+    internal void BatchRemove(General gen)
+    {
+        _batchManager.RemoveGen(gen);
+    }
+
+    private void BatchInitial()
+    {
+        _batchManager.BatchInitial();
+    }
+
+    public void BatchDestroy()
+    {
+        _batchManager.BatchDestroy();
+    }
+
+#endregion
 }

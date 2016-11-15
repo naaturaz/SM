@@ -204,7 +204,12 @@ public class General : MonoBehaviour
 	    if (container != null){obj.transform.SetParent( container);}
 		return obj;
 	}
- 
+
+    public void DefineNameAndMyID()
+    {
+        transform.name = _myId = Rename(transform.name, Id, HType, name);
+    }
+
     public Ca DefineCategory(H hTypeP)
     {
         Ca res = Ca.None;
@@ -591,7 +596,7 @@ public class General : MonoBehaviour
 
     private static void RecuLoop()
     {
-        if (count > 1000){throw new Exception("infinete loop general.cs");}
+        if (count > 1500){throw new Exception("infinete loop general.cs");}
 
         if (count < list.Count)
         {
