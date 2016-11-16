@@ -402,7 +402,9 @@ public class Person : General
         obj.HType = H.Person;
         obj.Gender = obj.OtherGender();
         obj.InitObj(iniAge);
-        obj.Geometry.GetComponent<Renderer>().sharedMaterial = ReturnRandoPersonMaterialRoot();
+        
+        //todo change 
+        //obj.Geometry.GetComponent<Renderer>().sharedMaterial = ReturnRandoPersonMaterialRoot();
 
         //this to when Person dont have where to leave and then they find a place the teletranport effect
         //wont be seeable bz there are spawneed hidden. 
