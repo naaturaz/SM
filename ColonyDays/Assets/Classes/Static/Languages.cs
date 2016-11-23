@@ -36,9 +36,9 @@ public class Languages
 	   { "WoodHouse2.Desc","Medium wooden house, a family can have 4 kids max" +_houseTail },
 	   { "WoodHouse3.Desc","Small and confortable wooden house, a family can have 2-4 kids max"+_houseTail},
 	   { "HouseMed.Desc","Medium house, a family can have 4 kids max"+_houseTail},
-	   { "HouseLargeA.Desc","Large house, a family can have 4 kids max"+_houseTail},
-	   { "HouseLargeB.Desc","Large house, a family can have 4 kids max"+_houseTail},
-	   { "HouseLargeC.Desc","Large house, a family can have 4 kids max"+_houseTail},
+	   { "BrickHouseA.Desc","Large house, a family can have 4 kids max"+_houseTail},
+	   { "BrickHouseB.Desc","Large house, a family can have 4 kids max"+_houseTail},
+	   { "BrickHouseC.Desc","Large house, a family can have 4 kids max"+_houseTail},
        
        //Farms
        //Animal
@@ -311,9 +311,9 @@ public class Languages
 	   { "HouseB.Desc","Small house, una familia puede tener el maximo de 2 niños aqui" +_houseTailES },
 	   { "HouseTwoFloor.Desc","Wooden Medium house, una familia puede tener el maximo de 3 niños aqui"+_houseTailES},
 	   { "HouseMed.Desc","Medium house, una familia puede tener el maximo de 2 a 3 niños aqui"+_houseTailES},
-	   { "HouseLargeA.Desc","Large house, una familia puede tener el maximo de 3 a 4 niños aqui"+_houseTailES},
-	   { "HouseLargeB.Desc","Large house, una familia puede tener el maximo de 3 a 4 niños aqui"+_houseTailES},
-	   { "HouseLargeC.Desc","Large house, una familia puede tener el maximo de 4 niños aqui"+_houseTailES},
+	   { "BrickHouseA.Desc","Large house, una familia puede tener el maximo de 3 a 4 niños aqui"+_houseTailES},
+	   { "BrickHouseB.Desc","Large house, una familia puede tener el maximo de 3 a 4 niños aqui"+_houseTailES},
+	   { "BrickHouseC.Desc","Large house, una familia puede tener el maximo de 4 niños aqui"+_houseTailES},
        
        //Farms
        //Animal

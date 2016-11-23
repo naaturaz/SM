@@ -1796,7 +1796,7 @@ public class Building : General, Iinfo
             Families[0] = new Family(4, MyId,0);
         }
         //can hhave 1 famili with 5 kids
-        else if (HType == H.HouseLargeA || HType == H.HouseLargeB || HType == H.HouseLargeC)
+        else if (HType == H.BrickHouseA || HType == H.BrickHouseB || HType == H.BrickHouseC)
         {
             Families = new Family[1];
             Families[0] = new Family(4, MyId, 0);
@@ -1997,7 +1997,7 @@ public class Building : General, Iinfo
         {
             _confort = 6;
         }
-        else if ( HType == H.HouseLargeA || HType == H.HouseLargeB || HType == H.HouseLargeC)
+        else if ( HType == H.BrickHouseA || HType == H.BrickHouseB || HType == H.BrickHouseC)
         {
             _confort = 7;
         }
@@ -3226,16 +3226,16 @@ public class Building : General, Iinfo
 
         var res = new List<Structure> { wheel };
 
-        if (Inventory.CurrentKGsOnInv() > 1000 && loader != null)
+        if (Inventory.CurrentKGsOnInv() > 000 && loader != null)//1000
         {
             res.Add(loader);
         } 
-        if (Inventory.CurrentKGsOnInv() > 2000 && heavy != null)
+        if (Inventory.CurrentKGsOnInv() > 000 && heavy != null)//2000
         {
             res.Add(heavy);
         }
 
-        return new List<Structure>{ wheel};
+        return res;
     }
 
     private IEnumerator ThirtySecUpdate()
@@ -3910,7 +3910,7 @@ public class Building : General, Iinfo
         {
             return true;
         }
-        else if (HTypeP == H.HouseLargeA || HTypeP == H.HouseLargeB || HTypeP == H.HouseLargeC)
+        else if (HTypeP == H.BrickHouseA || HTypeP == H.BrickHouseB || HTypeP == H.BrickHouseC)
         {
             return true;
         }

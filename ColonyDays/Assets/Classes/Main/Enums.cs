@@ -230,9 +230,9 @@ public enum H
 
     //house F2 ... bugg bz they had numbers on it .. They cant have numbers
     Bohio, WoodHouseA, WoodHouseB, WoodHouseC, HouseMed,
-    HouseLargeA,
-    HouseLargeB,
-    HouseLargeC,
+    BrickHouseA,
+    BrickHouseB,
+    BrickHouseC,
 
     //farming F3
     //Farm, this farm removed is the draggable farm 
@@ -439,9 +439,9 @@ public enum StHous //for structures game structure.cs
     Bohio,
     WoodHouseA, WoodHouseB, WoodHouseC,
     HouseMed,
-    HouseLargeA,
-    HouseLargeB,
-    HouseLargeC,
+    BrickHouseA,
+    BrickHouseB,
+    BrickHouseC,
 }
 
 public enum StFarm
@@ -602,13 +602,18 @@ public enum Ron1
 
 public enum Ron2
 {
-    Library,
-    TradesSchool,
+    Library, TradesSchool, 
+    Dock, StorageSmall
 }
 
 public enum RonWoodHouse
 {
     WoodHouseA, WoodHouseB, WoodHouseC,
+}
+
+public enum RonBrickHouse
+{
+    BrickHouseA, BrickHouseB, BrickHouseC,
 }
 
 public static class Enums { }

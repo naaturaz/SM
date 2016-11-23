@@ -91,6 +91,9 @@ public class Person : General
     private bool _isLoading; //use to know if person is being loaded from file 
 
     private PersonBank _personBank;
+    private RandomUV _randomUV;
+
+
 
     private Structure _myDummy;
     private Structure _myDummyProf;
@@ -442,7 +445,7 @@ public class Person : General
 
         obj.IsLoading = true;
         obj.InitLoadedPerson(pF);
-        obj.Geometry.GetComponent<Renderer>().sharedMaterial = ReturnRandoPersonMaterialRoot();
+        //obj.Geometry.GetComponent<Renderer>().sharedMaterial = ReturnRandoPersonMaterialRoot();
         obj.HType = H.Person;
 
         return obj;
@@ -484,7 +487,7 @@ public class Person : General
         obj = (Person)Instantiate(obj, iniPos, Quaternion.identity);
         obj.Gender = obj.OtherGender();
         obj.InitObj(0);//15    5
-        obj.Geometry.GetComponent<Renderer>().sharedMaterial = ReturnRandoPersonMaterialRoot();
+        //obj.Geometry.GetComponent<Renderer>().sharedMaterial = ReturnRandoPersonMaterialRoot();
         obj.HType = H.Person;
 
 
@@ -598,6 +601,7 @@ public class Person : General
         DefineBirthMonth();
         InitGeneralStuff();
 
+
     }
 
     /// <summary>
@@ -615,6 +619,8 @@ public class Person : General
     {
         NameTransform();
         DefineColliders();
+
+        //_randomUV = new RandomUV(Geometry.gameObject, H.Person);
     }
 
     /// <summary>

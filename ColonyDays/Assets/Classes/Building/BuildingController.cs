@@ -307,7 +307,7 @@ public class BuildingController : BuildingPot
         if (hTypeP == H.Bohio|| 
             hTypeP == H.WoodHouseA || hTypeP == H.WoodHouseB || hTypeP == H.WoodHouseC
             || hTypeP == H.HouseMed// || hTypeP == H.HouseMedB 
-            || hTypeP == H.HouseLargeA || hTypeP == H.HouseLargeB || hTypeP == H.HouseLargeC
+            || hTypeP == H.BrickHouseA || hTypeP == H.BrickHouseB || hTypeP == H.BrickHouseC
             )
         {
             current = HousesWithSpace;
@@ -344,7 +344,7 @@ public class BuildingController : BuildingPot
         if (hTypeP == H.Bohio ||
            hTypeP == H.WoodHouseA || hTypeP == H.WoodHouseB || hTypeP == H.WoodHouseC
            || hTypeP == H.HouseMed// || hTypeP == H.HouseMedB 
-           || hTypeP == H.HouseLargeA || hTypeP == H.HouseLargeB || hTypeP == H.HouseLargeC
+           || hTypeP == H.BrickHouseA || hTypeP == H.BrickHouseB || hTypeP == H.BrickHouseC
            )
         {
             return HPers.Home;

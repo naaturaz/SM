@@ -157,9 +157,9 @@ public class Production  {
         List<H> listH = new List<H>()
         {
             H.Bohio, H.WoodHouseA, H.WoodHouseB,
-            H.HouseLargeA ,
-            H.HouseLargeB ,
-            H.HouseLargeC ,
+            H.BrickHouseA ,
+            H.BrickHouseB ,
+            H.BrickHouseC ,
             H.HouseMed,
             H.WoodHouseC,
         };

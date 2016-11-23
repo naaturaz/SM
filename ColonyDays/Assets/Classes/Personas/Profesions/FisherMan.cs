@@ -21,7 +21,7 @@ public class FisherMan : Profession {
 
 
         IsRouterBackUsed = false;
-        MyAnimation = "isSummon";
+        MyAnimation = "isFishing";
         _person = person;
 
         HandleNewProfDescrpSavedAndPrevJob(Job.FisherMan);

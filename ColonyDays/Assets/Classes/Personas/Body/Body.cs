@@ -355,21 +355,17 @@ public class Body //: MonoBehaviour //: General
         {
             _speed = UMath.GiveRandom(0.09f, 0.12f);//.09   .12
         }
-        //else if (aniToEval == "isBucket")
-        //{
-        //    _speed = UMath.GiveRandom(0.42f, 0.45f);
-        //}
         else if (aniToEval == "isWheelBarrow")
         {
             _speed = UMath.GiveRandom(0.49f, 0.59f);
         } 
         else if (aniToEval == "isCartRide")
         {
-            _speed = UMath.GiveRandom(0.1f, 0.11f);
+            _speed = UMath.GiveRandom(0.67f, 0.68f);//7f, 0.72f
         }
         else
         {
-            _speed = UMath.GiveRandom(0.45f, 0.55f);
+            _speed = UMath.GiveRandom(0.45f, 0.47f);//.45f, 0.55
         }
         _speed = _speed*CorrectSpeedPeopleAge();
         //_speed = CorrectSpeedByWeight(aniToEval);
@@ -550,7 +546,7 @@ public class Body //: MonoBehaviour //: General
             //|| _loadedAni == "isIdle"
             )
         {
-            SetCurrentAni("isWalk", "isIdle");
+            SetCurrentAni(RetWalkAni(), "isIdle");
         }
         else
         {
@@ -559,6 +555,17 @@ public class Body //: MonoBehaviour //: General
             _loadedAni = "";//so its used only once 
         }
     }
+
+    string RetWalkAni()
+    {
+        if (_person.Gender == H.Female)
+        {
+            return "isFemaleWalk";
+        }
+        //for male 
+        return "isWalk";
+    }
+
 
     /// <summary>
     /// Is gonnabe ethier 0 or currentROute.count -1 

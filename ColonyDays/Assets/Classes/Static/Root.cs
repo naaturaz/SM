@@ -665,9 +665,9 @@ public class Root : MonoBehaviour
         buildsRoot.Add(H.WoodHouseC, "Prefab/Building/House/WoodHouseC");
         buildsRoot.Add(H.HouseMed, "Prefab/Building/House/HouseMed");//only used for icon and banner 
         //buildsRoot.Add(H.HouseMedB, "Prefab/Building/House/HouseMedB");
-        buildsRoot.Add(H.HouseLargeA, "Prefab/Building/House/HouseLargeA");
-        buildsRoot.Add(H.HouseLargeB, "Prefab/Building/House/HouseLargeB");
-        buildsRoot.Add(H.HouseLargeC, "Prefab/Building/House/HouseLargeC");
+        buildsRoot.Add(H.BrickHouseA, "Prefab/Building/House/BrickHouseA");
+        buildsRoot.Add(H.BrickHouseB, "Prefab/Building/House/BrickHouseB");
+        buildsRoot.Add(H.BrickHouseC, "Prefab/Building/House/BrickHouseC");
         
 
         //farming 
