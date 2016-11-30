@@ -70,10 +70,4 @@ public class ForSaleRegionGO : General
         Debug.Log(name);
         Dialog.OKCancelDialog(H.BuyRegion);
     }
-
-    void OnMouseOver()
-    {
-        
-    }
-
 }

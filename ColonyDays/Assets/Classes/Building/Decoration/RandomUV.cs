@@ -98,7 +98,8 @@ public class RandomUV
     bool IsA10Stripes()
     {
         return HType.ToString().Contains("WoodHouse") ||
-               HType.ToString().Contains("BrickHouse");
+               HType.ToString().Contains("BrickHouse") ||
+               HType.ToString().Contains("Bohio");
     }
 }
 

@@ -2410,7 +2410,7 @@ public class Brain
         get { return MAXDISTANCE; }
         set { MAXDISTANCE = value; }
     }
-    private static float MAXDISTANCE = 50f;//the max distance a person will go to find a building //50
+    private static float MAXDISTANCE = 150f;//50 the max distance a person will go to find a building //50
     /// <summary>
     /// Return an ordered list of places ordered by distance by stone . If the place element is farther then 
     /// MAXDISTANCE wont be added to the final result 

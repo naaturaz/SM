@@ -90,6 +90,9 @@ public class NotificationsManager
 
     public void Notify(string which)
     {
+        //todo remove 
+        return;
+
         Program.MouseListener.NotificationWindow.Notify(which);
     }
 

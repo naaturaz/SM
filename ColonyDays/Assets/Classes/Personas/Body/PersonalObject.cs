@@ -208,13 +208,23 @@ public class PersonalObject
         return Root.wheelBarrowWithBoxes;
     }   
     
+    List<string> _heavy = new List<string>()
+    {
+        Root.wagon,
+        Root.cart, 
+        Root.conestogo
+    }; 
     string DefineCurrentCartRoot()
     {
-        if (_person.Inventory.IsEmpty())
+        string res = "";
+
+        res = _heavy[UMath.GiveRandom(0, _heavy.Count)];
+
+        if (!_person.Inventory.IsEmpty())
         {
-            return Root.cart;
+            res += "WithBoxes";
         }
-        return Root.cartWithBoxes;
+        return res;
     }
 
     /// <summary>

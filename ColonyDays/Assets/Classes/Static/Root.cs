@@ -376,13 +376,16 @@ public class Root : MonoBehaviour
     public static string wood = "Prefab/Personas/PersonalObject/Wood";
 
     public static string cart = "Prefab/Personas/PersonalObject/Cart";
-    public static string cartWithBoxes = "Prefab/Personas/PersonalObject/CartWithBoxes";
+    public static string wagon = "Prefab/Personas/PersonalObject/Wagon";
+    public static string conestogo = "Prefab/Personas/PersonalObject/Conestogo";
+    //public static string cartWithBoxes = "Prefab/Personas/PersonalObject/CartWithBoxes";
 
 
     /// <summary>
     /// Animals
     /// </summary>
     public static string beefMale1 = "Prefab/Animals/BeefMale1";
+    public static string horse = "Prefab/Animals/Horse";
 
 
     public static string beefMat1 = "Prefab/Mats/Animals/Animals";
@@ -404,6 +407,7 @@ public class Root : MonoBehaviour
 
         matDict.Add(H.Road + "." + Ma.matBuildBase, matGravillaRoad);
 
+        //todo here is the base color of a bridgeRoad
         matDict.Add(H.BridgeTrail + "." + Ma.matBuildBase, matGravilla);
         matDict.Add(H.BridgeRoad + "." + Ma.matBuildBase, matGravillaRoad);
 
@@ -455,12 +459,12 @@ public class Root : MonoBehaviour
         if (buildsRoot.Count == 0)
         {
             LoadDictionaryRoots();
-            LoadHouseMed();
+            LoadHouseMedAndBohio();
         }
 
-        if (key == H.HouseMed)
+        if (key == H.Bohio)
         {
-            return HouseMed();
+            //return BohioRand();
         }
 
         return buildsRoot[key];
@@ -468,14 +472,19 @@ public class Root : MonoBehaviour
 
 
     static List<string>houseMed = new List<string>(); 
-    private static string HouseMed()
+    static List<string>bohio = new List<string>(); 
+    private static string BohioRand()
     {
-        return houseMed[UMath.GiveRandom(0, houseMed.Count)];
+        return bohio[UMath.GiveRandom(0, bohio.Count)];
         //return houseMed[UMath.GiveRandom(0,1)];
     }
 
-    static void LoadHouseMed()
+    static void LoadHouseMedAndBohio()
     {
+        //houseMed.Add("Prefab/Building/House/BohioA");
+        //houseMed.Add("Prefab/Building/House/BohioB");
+        //houseMed.Add("Prefab/Building/House/BohioC");
+
         houseMed.Add("Prefab/Building/House/BuildsFactory/HouseMA");
         houseMed.Add("Prefab/Building/House/BuildsFactory/HouseMB");
         houseMed.Add("Prefab/Building/House/BuildsFactory/HouseMC");
@@ -660,11 +669,10 @@ public class Root : MonoBehaviour
 
         //house
         buildsRoot.Add(H.Bohio, "Prefab/Building/House/Bohio");
+        buildsRoot.Add(H.BohioB, "Prefab/Building/House/BohioB");
         buildsRoot.Add(H.WoodHouseA, "Prefab/Building/House/WoodHouseA");
         buildsRoot.Add(H.WoodHouseB, "Prefab/Building/House/WoodHouseB");
         buildsRoot.Add(H.WoodHouseC, "Prefab/Building/House/WoodHouseC");
-        buildsRoot.Add(H.HouseMed, "Prefab/Building/House/HouseMed");//only used for icon and banner 
-        //buildsRoot.Add(H.HouseMedB, "Prefab/Building/House/HouseMedB");
         buildsRoot.Add(H.BrickHouseA, "Prefab/Building/House/BrickHouseA");
         buildsRoot.Add(H.BrickHouseB, "Prefab/Building/House/BrickHouseB");
         buildsRoot.Add(H.BrickHouseC, "Prefab/Building/House/BrickHouseC");

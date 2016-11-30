@@ -67,6 +67,13 @@ public class OutOfScreen
     {
         _animator = _animal.gameObject.GetComponent<Animator>();
         _boxCollider = _animal.gameObject.GetComponent<BoxCollider>();
+
+
+        if (_animal.Geometry == null)
+        {
+            return;
+        }
+
         _renderer = _animal.Geometry.gameObject.GetComponent<Renderer>();
     }
 

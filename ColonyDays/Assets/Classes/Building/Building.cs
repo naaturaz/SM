@@ -267,6 +267,11 @@ public class Building : General, Iinfo
 
     bool AreAnchorsOnUnlockRegions()
     {
+        if (TownLoader.IsTemplate)
+        {
+            return true;
+        }
+
         if (MeshController.BuyRegionManager1 == null)
         {
             return true;
@@ -595,7 +600,6 @@ public class Building : General, Iinfo
     // Use this for initialization
     protected void Start()
     {
-
         base.Start();
         float minHeightAboveSeaLevel = 1f;
 
@@ -633,6 +637,11 @@ public class Building : General, Iinfo
         StartCoroutine("SixtySecUpdate");
 
         DefinePreferedStorage();
+
+        if (IsLoadingFromFile)
+        {
+            DestroyDoubleBoundHelp();
+        }
     }
 
 #region Building preview
@@ -1104,6 +1113,21 @@ public class Building : General, Iinfo
         return currentVal;
     }
 
+    void DestroyDoubleBoundHelp()
+    {
+        //so it donest show the help 
+        if (doubleBounds.Contains(HType))
+        {
+            _terraBound = GetChildLastWordIs(H.TerraBound);
+            _maritimeBound = GetChildLastWordIs(H.MaritimeBound);
+            _underTerraBound = GetChildLastWordIs(H.TerraUnderBound);
+
+            Destroy(_maritimeBound);
+            Destroy(_terraBound);
+            Destroy(_underTerraBound);
+        }
+    }
+
     /// <summary>
     /// This is call when we finish placing a building 
     /// </summary>
@@ -1137,14 +1161,7 @@ public class Building : General, Iinfo
         LayerRoutine("done");
         PositionFixed = true;
 
-        //so it donest show the help 
-        if (doubleBounds.Contains(HType))
-        {
-            Destroy(_maritimeBound);
-            Destroy(_terraBound);
-            Destroy(_underTerraBound);
-        }
-        
+        DestroyDoubleBoundHelp();
 
         //Preview of the Base to help aling
         if (!IsLoadingFromFile)
@@ -1789,13 +1806,6 @@ public class Building : General, Iinfo
             Families[0] = new Family(4, MyId,0);
         }
         //can hhave 1 famili with 5 kids
-        else if (HType == H.HouseMed //|| HType == H.HouseMedB 
-            )
-        {
-            Families = new Family[1];
-            Families[0] = new Family(4, MyId,0);
-        }
-        //can hhave 1 famili with 5 kids
         else if (HType == H.BrickHouseA || HType == H.BrickHouseB || HType == H.BrickHouseC)
         {
             Families = new Family[1];
@@ -1992,14 +2002,9 @@ public class Building : General, Iinfo
         {
             _confort = 4;
         }
-        else if (HType == H.HouseMed //|| HType == H.HouseMedB 
-            )
-        {
-            _confort = 6;
-        }
         else if ( HType == H.BrickHouseA || HType == H.BrickHouseB || HType == H.BrickHouseC)
         {
-            _confort = 7;
+            _confort = 5;
         }
     }
 
@@ -3221,18 +3226,18 @@ public class Building : General, Iinfo
     List<Structure> FindClosestWheelBarrowerAndHeavyLoad()
     {
         var wheel = BuildingController.FindTheClosestOfThisType(H.Masonry, transform.position, Brain.Maxdistance);
-        var loader = BuildingController.FindTheClosestOfThisType(H.Loader, transform.position, Brain.Maxdistance);
-        var heavy = BuildingController.FindTheClosestOfThisType(H.HeavyLoad, transform.position, Brain.Maxdistance);
+        //var loader = BuildingController.FindTheClosestOfThisType(H.Loader, transform.position, Brain.Maxdistance);
+        var heavy = BuildingController.FindAllStructOfThisType(H.HeavyLoad);
 
         var res = new List<Structure> { wheel };
 
-        if (Inventory.CurrentKGsOnInv() > 000 && loader != null)//1000
-        {
-            res.Add(loader);
-        } 
+        //if (Inventory.CurrentKGsOnInv() > 000 && loader != null)//1000
+        //{
+        //    res.Add(loader);
+        //} 
         if (Inventory.CurrentKGsOnInv() > 000 && heavy != null)//2000
         {
-            res.Add(heavy);
+            res.AddRange(heavy);
         }
 
         return res;
@@ -3575,11 +3580,11 @@ public class Building : General, Iinfo
         {
             SpawnFarmAnimals(H.Med);
         }
-        else if (HType == H.AnimalFarmLarge || HType == H.HeavyLoad || HType == H.Loader)
+        else if (HType == H.AnimalFarmLarge|| HType == H.Loader)
         {
             SpawnFarmAnimals(H.Large );
         }
-        else if (HType == H.AnimalFarmXLarge)
+        else if (HType == H.AnimalFarmXLarge || HType == H.HeavyLoad)
         {
             SpawnFarmAnimals(H.XLarge);
         } 
@@ -3642,7 +3647,7 @@ public class Building : General, Iinfo
 
         if (HType == H.Loader || HType == H.HeavyLoad)
         {
-            t = Beef.CreateBeef(iniPos, this);
+            t = Horse.Create(iniPos, this);
         }
         else if (CurrentProd.Product == P.Beef)
         {
@@ -3791,7 +3796,7 @@ public class Building : General, Iinfo
         if (animalType == P.None && 
             (HType == H.Loader || HType == H.HeavyLoad))
         {
-            animalType = P.Beef;
+            animalType = P.Horse;
         }
 
         if (animalType == P.Chicken)
@@ -3802,7 +3807,7 @@ public class Building : General, Iinfo
         {
             return 3;
         }
-        if (animalType == P.Beef)
+        if (animalType == P.Beef || animalType == P.Horse)
         {
             return 1;
         }
@@ -3902,11 +3907,6 @@ public class Building : General, Iinfo
             return true;
         }
         else if (HTypeP == H.WoodHouseA || HTypeP == H.WoodHouseB)
-        {
-            return true;
-        }
-        else if (HTypeP == H.HouseMed //|| HType == H.HouseMedB 
-            )
         {
             return true;
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class InputMain : InputParent {
 
@@ -64,7 +65,31 @@ public class InputMain : InputParent {
         GeneralSwitch();
         ModeSwitcher();
         ChangeGameSpeed();
+
+        FirstPersonCam();
+
         //AddressPointerOutOfScreen();
+    }
+
+    private FirstPersonController firstPersonController;
+    private bool isFirstCamOn;
+    void FirstPersonCam()
+    {
+        if (Input.GetKeyUp(KeyCode.F10) && !isFirstCamOn)
+        {
+            var ini = CamControl.CAMRTS.centerTarget.transform.position;
+            ini = new Vector3(ini.x, m.IniTerr.MathCenter.y, ini.z);
+
+            firstPersonController=FirstPersonController.Create(ini);
+            isFirstCamOn = true;
+            CamControl.ChangeTo("First");
+        }
+        else if (Input.GetKeyUp(KeyCode.F10) && isFirstCamOn)
+        {
+            isFirstCamOn = false;
+            CamControl.ChangeTo("Game");
+            Destroy(firstPersonController.gameObject);
+        }
     }
 
     void AddressPointerOutOfScreen()

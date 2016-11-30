@@ -160,7 +160,6 @@ public class Production  {
             H.BrickHouseA ,
             H.BrickHouseB ,
             H.BrickHouseC ,
-            H.HouseMed,
             H.WoodHouseC,
         };
 

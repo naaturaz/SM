@@ -179,6 +179,7 @@ public enum P
     Stop,
     Year,
     CornMeal,
+    Horse,
 
 
 }
@@ -229,7 +230,8 @@ public enum H
     Loader, HeavyLoad,
 
     //house F2 ... bugg bz they had numbers on it .. They cant have numbers
-    Bohio, WoodHouseA, WoodHouseB, WoodHouseC, HouseMed,
+    Bohio, BohioB,
+    WoodHouseA, WoodHouseB, WoodHouseC, 
     BrickHouseA,
     BrickHouseB,
     BrickHouseC,
@@ -437,8 +439,8 @@ public enum StHous //for structures game structure.cs
 {
     //Housing
     Bohio,
+    BohioB,
     WoodHouseA, WoodHouseB, WoodHouseC,
-    HouseMed,
     BrickHouseA,
     BrickHouseB,
     BrickHouseC,

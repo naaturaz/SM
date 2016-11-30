@@ -32,6 +32,7 @@ public class Languages
 
        //House
 	   { "Bohio.Desc","Bohio house, primitive conditionns with unhappy people whom can only have a maximum of 2 to 3 kids" +_houseTail},
+	   { "BohioB.Desc","Bohio house, primitive conditionns with unhappy people whom can only have a maximum of 2 to 3 kids" +_houseTail},
 	   { "WoodHouse1.Desc","Small wooden house, a family can have 2-4 kids max" +_houseTail},
 	   { "WoodHouse2.Desc","Medium wooden house, a family can have 4 kids max" +_houseTail },
 	   { "WoodHouse3.Desc","Small and confortable wooden house, a family can have 2-4 kids max"+_houseTail},
@@ -307,6 +308,7 @@ public class Languages
 
        //House
 	   { "Bohio.Desc","El Bohio, una casa con condiciones muy rudimentarias, los ciudadanos se abochornan de vivir aqui, una familia puede tener el maximo de 1 niño aqui" +_houseTail},
+	   { "BohioB.Desc","El Bohio, una casa con condiciones muy rudimentarias, los ciudadanos se abochornan de vivir aqui, una familia puede tener el maximo de 1 niño aqui" +_houseTail},
 	   { "HouseA.Desc","Casa pequeña de madera, una familia puede tener el maximo de 2 niños aqui" +_houseTailES},
 	   { "HouseB.Desc","Small house, una familia puede tener el maximo de 2 niños aqui" +_houseTailES },
 	   { "HouseTwoFloor.Desc","Wooden Medium house, una familia puede tener el maximo de 3 niños aqui"+_houseTailES},
@@ -450,7 +452,7 @@ public class Languages
 	   { "Happy.HoverSmall", "Felicidad"},
 	   { "PortReputation.HoverSmall", "Reputacion Portuaria"},
 	   { "Dollars.HoverSmall", "Dinero"},
-	   { "PirateThreat.HoverSmall", "Amenaza Pirate"},
+	   { "PirateThreat.HoverSmall", "Amenaza Pirata"},
 	   { "Date.HoverSmall", "Fecha (d/m/a)"},
 	   { "MoreSpeed.HoverSmall", "Mas velocidad"},
 	   { "LessSpeed.HoverSmall", "Menos velocidad"},

@@ -74,11 +74,10 @@ public class Book : General
 
         //houses 
         Build.Add(new BuildStat(H.Bohio, 400, 3, 0, 0, 0, maxPeople: 5, capacity: .3f));
+        Build.Add(new BuildStat(H.BohioB, 500, 3, 0, 0, 0, maxPeople: 5, capacity: .5f));
         Build.Add(new BuildStat(H.WoodHouseA, 400, 15, 1, 0, 0, maxPeople: 5, capacity: .4f));
         Build.Add(new BuildStat(H.WoodHouseB, 400, 5, 5, 25, 1, maxPeople: 5, capacity: .5f));
         Build.Add(new BuildStat(H.WoodHouseC, 800, 30, 5, 5, 5, maxPeople: 10, capacity: .6f));
-        Build.Add(new BuildStat(H.HouseMed, 800, 10, 5, 50, 5, maxPeople: 7, capacity: .6f));
-        //Build.Add(new BuildStat(H.HouseMedB, 800, 30, 5, 50, 5, maxPeople: 7, capacity: 2));
         Build.Add(new BuildStat(H.BrickHouseA, 1, 0.01f, 0, 0, 0, maxPeople: 7, capacity: 1));
         Build.Add(new BuildStat(H.BrickHouseB, 800, 10, 5, 50, 5, maxPeople: 7, capacity: 1));
         Build.Add(new BuildStat(H.BrickHouseC, 800, 10, 5, 50, 5, maxPeople: 7, capacity: 1));
@@ -142,7 +141,7 @@ public class Book : General
         Build.Add(new BuildStat(H.Shipyard, 900, 30, 20, 0, 5, maxPeople: 10));
         Build.Add(new BuildStat(H.Supplier, 900, 30, 20, 0, 5, maxPeople: 10));
 
-        Build.Add(new BuildStat(H.StorageSmall, 400, 10, 20, 10, 5, maxPeople: 0, capacity: 150));
+        Build.Add(new BuildStat(H.StorageSmall, 400, 10, 20, 10, 5, maxPeople: 0, capacity: 500));
         Build.Add(new BuildStat(H.StorageMed, 600, 15, 20, 20, 5, maxPeople: 0, capacity: 200));
         Build.Add(new BuildStat(H.StorageBig, 600, 20, 20, 35, 5, maxPeople: 0, capacity: 300));
         Build.Add(new BuildStat(H.StorageBigTwoDoors, 600, 25, 20, 50, 5, maxPeople: 0, capacity: 300));

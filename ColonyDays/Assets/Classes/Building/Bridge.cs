@@ -543,7 +543,7 @@ public class Bridge : Trail
     public static bool isAEvenNumb(int value)
     {return value % 2 == 0;}
 
- 
+ //todo below sequence
     /// <summary>
     /// Create The sequence of a bridge is 1,2,3,4,1,2,3,4,1... ,  1 is the tallest part and 3 the middle one 
     /// </summary>

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Globalization;
+using UnityStandardAssets.Characters.FirstPerson;
 
 //THIS IS A STATIC FUNCTION CLASS
 public class CamControl : MonoBehaviour
@@ -13,6 +14,7 @@ public class CamControl : MonoBehaviour
 
     private static Camera rtsCamera;
     private static Camera mainMenuCamera;
+    private static Camera firstPersonCamera;
 
     private GameObject menuCam;
 
@@ -59,6 +61,8 @@ public class CamControl : MonoBehaviour
             return;
         }
 
+        //so if is FPS active the cam wont go anywhere 
+
         if (newVal == "Main")
         {
             mainMenuCamera.enabled = true;
@@ -69,10 +73,31 @@ public class CamControl : MonoBehaviour
         }
         else if(newVal == "Game")
         {
+            CAMRTS.CamSensivity = 6;
+
+            Cursor.visible = true;
+
             mainMenuCamera.enabled = false;
             if (rtsCamera != null)
             {
                 rtsCamera.enabled = true;
+            }
+            if (firstPersonCamera != null)
+            {
+                firstPersonCamera.enabled = false;
+            }
+        } 
+        else if(newVal == "First")
+        {
+            CAMRTS.CamSensivity = 0;
+
+            firstPersonCamera = GameObject.Find("FirstPersonCharacter").GetComponent<Camera>();
+            mainMenuCamera.enabled = false;
+            rtsCamera.enabled = false;
+
+            if (firstPersonCamera != null)
+            {
+                firstPersonCamera.enabled = true;
             }
         }
     }

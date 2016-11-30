@@ -65,7 +65,8 @@ public class Decoration  {
         AddToBatchMesh();
 
         if (_building.HType.ToString().Contains("WoodHouse") ||
-            _building.HType.ToString().Contains("BrickHouse"))
+            _building.HType.ToString().Contains("BrickHouse") ||
+        _building.HType.ToString().Contains("Bohio"))
         {
             _randomUV = new RandomUV(_building.Geometry.gameObject, _building.HType);
         }
@@ -79,10 +80,7 @@ public class Decoration  {
     private GameObject _main;
     private void IfHouseMedAssignRandomMat()
     {
-        if (_building.HType != H.HouseMed)
-        {
-            return;
-        }
+
         DefineRamdonSelection();
 
         _main = General.GetChildThatContains("Main", _building.gameObject);

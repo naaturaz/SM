@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 
 public class BuyRegionManager
@@ -62,6 +63,11 @@ public class BuyRegionManager
             var index = _forSaleRegions[i];
             var reg = MeshController.CrystalManager1.CrystalRegions[index].Region;
 
+            if (MeshController.CrystalManager1.CrystalRegions[index].WhatAudioIReport == "FullOcean")
+            {
+                continue;
+            }
+
             _forSaleRegionGoes.Add(ForSaleRegionGO.CreateForSaleRegionGO(Root.forSaleRegion, index, 
                 reg, container: Program.gameScene.Terreno.transform));
         }
@@ -121,11 +127,21 @@ public class BuyRegionManager
 
     float MoneyNeeded()
     {
+        if (Developer.IsDev && Input.GetKey(KeyCode.F9))
+        {
+            return 0;
+        }
+
         return moneyMul*_unlockRegions.Count;
     }
 
     float FoodNeeded()
     {
+        if (Developer.IsDev && Input.GetKey(KeyCode.F9))
+        {
+            return 0;
+        }
+
         return foodMul*_unlockRegions.Count;
     }
 
@@ -152,6 +168,16 @@ public class BuyRegionManager
         _forSaleRegions.Remove(_currentRegion);
 
         var gO = _forSaleRegionGoes.Find(a => a.Index == _currentRegion);
+        gO.Destroy();
+    }
+
+    /// <summary>
+    /// bz FullOceans dont need to be spanwed 
+    /// </summary>
+    /// <param name="indexP"></param>
+    public void DestroyForSaleGO(int indexP)
+    {
+        var gO = _forSaleRegionGoes.Find(a => a.Index == indexP);
         gO.Destroy();
     }
 

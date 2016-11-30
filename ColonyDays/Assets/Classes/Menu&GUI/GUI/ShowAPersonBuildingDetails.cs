@@ -46,7 +46,7 @@ public class ShowAPersonBuildingDetails
         AddToItems("Nutrition", _person.NutritionLevel + "");
         AddToItems("Profession", _person.ProfessionProp.ProfDescription + "");
         AddToItems("Spouse", Family.RemovePersonIDNumberOff(_person.Spouse));
-        AddToItems("Happinness", _person.Happinnes + "");
+        AddToItems("Happinness", _person.Happinnes.ToString("n1") + "");
         AddToItems("Years Of School", _person.YearsOfSchool + "");
         AddToItems("Age majority reach", _person.IsMajor + "");
         AddToItems("Account", _person.PersonBank1.CheckingAcct.ToString("C"));

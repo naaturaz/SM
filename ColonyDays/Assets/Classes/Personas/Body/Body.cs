@@ -790,7 +790,7 @@ public class Body //: MonoBehaviour //: General
                          _person.ProfessionProp.ProfDescription != Job.Builder;
         //so prevJob being wheelBarrow and working on a Farm Spawns wheelbarrow
         bool isCurrentCart = profesion &&
-            (_person.Work.HType == H.HeavyLoad);
+            (_person.Work.HType == H.Loader || _person.Work.HType == H.HeavyLoad);
 
         if (isCurrentCart)
         {

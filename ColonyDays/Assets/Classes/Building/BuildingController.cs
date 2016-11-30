@@ -306,7 +306,6 @@ public class BuildingController : BuildingPot
     {
         if (hTypeP == H.Bohio|| 
             hTypeP == H.WoodHouseA || hTypeP == H.WoodHouseB || hTypeP == H.WoodHouseC
-            || hTypeP == H.HouseMed// || hTypeP == H.HouseMedB 
             || hTypeP == H.BrickHouseA || hTypeP == H.BrickHouseB || hTypeP == H.BrickHouseC
             )
         {
@@ -343,7 +342,7 @@ public class BuildingController : BuildingPot
     {
         if (hTypeP == H.Bohio ||
            hTypeP == H.WoodHouseA || hTypeP == H.WoodHouseB || hTypeP == H.WoodHouseC
-           || hTypeP == H.HouseMed// || hTypeP == H.HouseMedB 
+           
            || hTypeP == H.BrickHouseA || hTypeP == H.BrickHouseB || hTypeP == H.BrickHouseC
            )
         {
