@@ -505,7 +505,7 @@ public class Body //: MonoBehaviour //: General
     private void AskForAnimalIfNeeded()
     {
         if (_person.Work != null && 
-            (_person.Work.HType == H.Loader  || _person.Work.HType == H.HeavyLoad  )
+            ( _person.Work.HType == H.HeavyLoad  )
             && _person.ProfessionProp.ProfDescription == Job.WheelBarrow  
             && Location == HPers.Work 
             && GoingTo == HPers.InWork
@@ -522,7 +522,7 @@ public class Body //: MonoBehaviour //: General
     private void ReturnAnimalIfNeeded()
     {
         if (_person.Work != null &&
-             (_person.Work.HType == H.Loader || _person.Work.HType == H.HeavyLoad)
+             (_person.Work.HType == H.HeavyLoad)
             && _person.ProfessionProp.ProfDescription == Job.Homer
             && Location == HPers.InWork
             && GoingTo == HPers.Home
@@ -790,7 +790,7 @@ public class Body //: MonoBehaviour //: General
                          _person.ProfessionProp.ProfDescription != Job.Builder;
         //so prevJob being wheelBarrow and working on a Farm Spawns wheelbarrow
         bool isCurrentCart = profesion &&
-            (_person.Work.HType == H.Loader || _person.Work.HType == H.HeavyLoad);
+            (_person.Work.HType == H.HeavyLoad);
 
         if (isCurrentCart)
         {

@@ -65,6 +65,7 @@ public class BuildingWindow : GUIElement {
     // Use this for initialization
     void Start()
     {
+        base.Start();
         InitObj();
 
         Hide();
@@ -311,7 +312,7 @@ public class BuildingWindow : GUIElement {
     {
         HideShowSalAndPositions();
 
-        _title.text = _building.HType + "";
+        _title.text = _building.Name();
         _info.text = BuildInfo() + BuildCover();
 
         Inventory();
@@ -865,5 +866,27 @@ public class BuildingWindow : GUIElement {
     internal void Reload()
     {
         Show(_building);
+    }
+
+
+
+
+
+    /// <summary>
+    /// called from gui
+    /// </summary>
+    public void UpdateInputTitle()
+    {
+        _titleInputField.text = _building.Name();
+    }
+
+    /// <summary>
+    /// called from gui
+    /// </summary>
+    public void NewAlias()
+    {
+        _building.Name1 = _titleInputField.text;
+        _titleInputFieldGO.SetActive(false);
+        _title.text = _building.Name();
     }
 }

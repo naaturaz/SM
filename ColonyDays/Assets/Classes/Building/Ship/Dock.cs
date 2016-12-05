@@ -194,4 +194,9 @@ public class Dock
 
         return index == -1;
     }
+
+    internal void AssignBuild(Building building)
+    {
+        ReInit();
+    }
 }

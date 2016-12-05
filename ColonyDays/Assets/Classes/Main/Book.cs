@@ -67,10 +67,8 @@ public class Book : General
 
         Build.Add(new BuildStat(H.CoachMan, 800, 80, 20, 0, 5, maxPeople: 8));
         Build.Add(new BuildStat(H.Masonry, 800, 80, 20, 0, 5, maxPeople: 12));
-        Build.Add(new BuildStat(H.Loader, 800, 80, 20, 0, 5, maxPeople: 3));
         Build.Add(new BuildStat(H.HeavyLoad, 800, 80, 20, 0, 5, maxPeople: 3));
         Build.Add(new BuildStat(H.LightHouse, 800, 80, 20, 0, 5, maxPeople: 3));
-
 
         //houses 
         Build.Add(new BuildStat(H.Bohio, 400, 3, 0, 0, 0, maxPeople: 5, capacity: .3f));
@@ -81,7 +79,6 @@ public class Book : General
         Build.Add(new BuildStat(H.BrickHouseA, 1, 0.01f, 0, 0, 0, maxPeople: 7, capacity: 1));
         Build.Add(new BuildStat(H.BrickHouseB, 800, 10, 5, 50, 5, maxPeople: 7, capacity: 1));
         Build.Add(new BuildStat(H.BrickHouseC, 800, 10, 5, 50, 5, maxPeople: 7, capacity: 1));
-
 
         //farming
         Build.Add(new BuildStat(H.AnimalFarmSmall, 400, 5, 5, 5, 5, maxPeople: 5,  capacity: 1));
@@ -98,15 +95,11 @@ public class Book : General
         Build.Add(new BuildStat(H.Clay, 400, 15, 5, 15, 5, maxPeople: 5, capacity: 160));
         Build.Add(new BuildStat(H.Ceramic, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.FishingHut, 400, 15, 5, 25, 5, maxPeople: 5));
-        //Build.Add(new BuildStat(H.Mine, 400, 15, 5, 25, 5, maxPeople: 5));
-
         Build.Add(new BuildStat(H.MountainMine, 400, 15, 5, 25, 5, maxPeople: 5));
-        //Build.Add(new BuildStat(H.Resin, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.LumberMill, 400, 30, 5, 0, 1, maxPeople: 5));
         Build.Add(new BuildStat(H.BlackSmith, 400, 15, 5, 25, 5, maxPeople: 5));
 
         Build.Add(new BuildStat(H.SaltMine, 400, 15, 5, 25, 5, maxPeople: 5));
-
 
         //Prod
         Build.Add(new BuildStat(H.Brick, 400, 15, 5, 25, 5, maxPeople: 5, capacity: 50));
@@ -117,7 +110,7 @@ public class Book : General
         Build.Add(new BuildStat(H.Tailor, 400, 15, 5, 25, 5, maxPeople: 5));
         //Build.Add(new BuildStat(H.Tilery, 400, 15, 5, 25, 5, maxPeople: 5));
 
-        Build.Add(new BuildStat(H.CannonParts, 400, 15, 5, 25, 5, maxPeople: 5));
+        Build.Add(new BuildStat(H.Armory, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.Distillery, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.Chocolate, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.Ink, 400, 15, 5, 25, 5, maxPeople: 5));
@@ -135,7 +128,6 @@ public class Book : General
         Build.Add(new BuildStat(H.Foundry, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.SteelFoundry, 400, 15, 5, 25, 5, maxPeople: 5));
 
-
         //Trade
         Build.Add(new BuildStat(H.Dock, 900, 30, 20, 0, 5, maxPeople: 10));
         Build.Add(new BuildStat(H.Shipyard, 900, 30, 20, 0, 5, maxPeople: 10));
@@ -148,10 +140,6 @@ public class Book : General
         Build.Add(new BuildStat(H.StorageExtraBig, 600, 30, 20, 60, 5, maxPeople: 0, capacity: 4200));
 
         //Gov
-        //Build.Add(new BuildStat(H.Clinic, 400, 15, 5, 25, 5, maxPeople: 5));
-        //Build.Add(new BuildStat(H.CommerceChamber, 400, 15, 5, 25, 5, maxPeople: 5));
-        //Build.Add(new BuildStat(H.Customs, 400, 15, 5, 25, 5, maxPeople: 5));
-
         Build.Add(new BuildStat(H.Library, 400, 15, 5, 25, 5, maxPeople: 1));
         Build.Add(new BuildStat(H.School, 400, 15, 5, 25, 5, maxPeople: 2));
         Build.Add(new BuildStat(H.TradesSchool, 400, 15, 5, 25, 5, maxPeople: 5));

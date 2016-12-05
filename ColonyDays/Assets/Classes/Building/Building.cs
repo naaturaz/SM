@@ -163,7 +163,27 @@ public class Building : General, Iinfo
         get { return _min; }
         set { _min = value; }
     }
+
+    string _name;
+
+    public string Name1
+    {
+        get { return _name; }
+        set { _name = value; }
+    }
+
     #endregion
+
+    internal string Name()
+    {
+        if (string.IsNullOrEmpty(_name))
+        {
+            _name = HType + "";
+        }
+
+        return _name;
+    }
+
 
     //create method
     static public Building CreateBuild(string root, Vector3 origen, H hType, string name = "", Transform container = null,
@@ -3274,7 +3294,7 @@ public class Building : General, Iinfo
             return;
         }
 
-        if (HType == H.Loader || HType == H.HeavyLoad || HType == H.Masonry)
+        if (HType == H.HeavyLoad || HType == H.Masonry)
         {
             _dispatch = new Dispatch();
 
@@ -3564,7 +3584,7 @@ public class Building : General, Iinfo
         }
         wasFarmInited = true;
 
-        if (HType.ToString().Contains(H.AnimalFarm + "") || HType == H.Loader || HType == H.HeavyLoad)
+        if (HType.ToString().Contains(H.AnimalFarm + "") || HType == H.HeavyLoad)
         {
             InitAnimalFarm();
         }
@@ -3580,7 +3600,7 @@ public class Building : General, Iinfo
         {
             SpawnFarmAnimals(H.Med);
         }
-        else if (HType == H.AnimalFarmLarge|| HType == H.Loader)
+        else if (HType == H.AnimalFarmLarge)
         {
             SpawnFarmAnimals(H.Large );
         }
@@ -3645,7 +3665,7 @@ public class Building : General, Iinfo
     {
         Animal t = null;
 
-        if (HType == H.Loader || HType == H.HeavyLoad)
+        if (HType == H.HeavyLoad)
         {
             t = Horse.Create(iniPos, this);
         }
@@ -3794,7 +3814,7 @@ public class Building : General, Iinfo
 
         //so HeavyLoad spawns cows at start 
         if (animalType == P.None && 
-            (HType == H.Loader || HType == H.HeavyLoad))
+            (HType == H.HeavyLoad))
         {
             animalType = P.Horse;
         }
@@ -3936,8 +3956,10 @@ public class Building : General, Iinfo
 
     private void InitDockDryDockAndSupplier()
     {
-        if (IsLoadingFromFile || _dock!=null)
+        if (IsLoadingFromFile && _dock != null)
         {
+            _dock.AssignBuild(this);
+
             return;
         }
 
@@ -4261,6 +4283,8 @@ public class Building : General, Iinfo
     }
 
 #endregion
+
+
 
 
 

@@ -26,7 +26,6 @@ public class Languages
 	   { "BridgeRoad.Desc","Allows people to pass from one side of the terrain to the other. People love these bridges. It gives a sense of prosperity and happinnes" +_houseTail},
 	   { "LightHouse.Desc","Helps to increase Port visibility. Adds to Port Reputation as long as the flame is glowing"},
 	   { H.Masonry + ".Desc","Important building, workers construct new buildings and work as wheelbarrowers once they have nothing to do"},
-	   { H.Loader + ".Desc","These workers use horse wagons to move goods around"},
 	   { H.HeavyLoad + ".Desc","These workers use horse wagons to move goods around"},
 
 
@@ -70,7 +69,7 @@ public class Languages
 	   { "Carpintery.Desc","Here a worker will produce Ceramic products, such as dishes, jars, etc"},
 	   { "Cigars.Desc","Here workers will produce cigars"+_asLongHasInput},
 	   { "Mill.Desc","Here workers will produce cigars"+_asLongHasInput},
-	   { H.Tailor+".Desc","Here workers will produce cigars"+_asLongHasInput},
+	   { H.Tailor+".Desc","Here workers will produce clothes"+_asLongHasInput},
 	   { "Tilery.Desc","Here workers will produce roof tiles"+_asLongHasInput},
 	   { "CannonParts.Desc","Here workers will produce cannon parts"+_asLongHasInput},
 	   { H.Distillery+".Desc",_produce},

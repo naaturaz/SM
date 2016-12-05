@@ -65,7 +65,7 @@ public class WheelBarrow : Profession
         MyAnimation = "isWheelBarrow";
 
         if (_person.Work != null && 
-            (_person.Work.HType == H.HeavyLoad || _person.Work.HType == H.Loader)  )
+            (_person.Work.HType == H.HeavyLoad )  )
         {
             MyAnimation = "isCartRide";
         }

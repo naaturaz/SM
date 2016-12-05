@@ -6,6 +6,10 @@ public class PersonWindow : GUIElement
 {
 
     private Text _title;
+    
+
+
+
     private Text _info;
     private Text _inv;
 
@@ -37,12 +41,16 @@ public class PersonWindow : GUIElement
     // Use this for initialization
     void Start()
     {
+        base.Start();
+
         InitObj();
         Hide();
     }
 
     void InitObj()
     {
+
+
         _general = GetChildThatContains(H.General);
         _gaveta = GetChildThatContains(H.Gaveta);
 
@@ -52,6 +60,9 @@ public class PersonWindow : GUIElement
         iniPos = transform.position;
 
         _title = GetChildThatContains(H.Title).GetComponent<Text>();
+
+
+
         _info = GetChildThatContains(H.Info).GetComponent<Text>();
         _inv = FindGameObjectInHierarchy("Bolsa", _gaveta).GetComponent<Text>();
 
@@ -74,12 +85,16 @@ public class PersonWindow : GUIElement
         _person = val;
         //CheckIfIsDiffNewPerson();
 
+
+        UpdateInputTitle();
+
         LoadMenu();
         MakeAlphaColorZero(_inv);
 
         transform.position = iniPos;
         _person.SelectPerson();
     }
+
 
 
     private void LoadMenu()
@@ -296,4 +311,23 @@ public class PersonWindow : GUIElement
     }
 
 
+
+
+
+    protected void UpdateInputTitle()
+    {
+        _titleInputFieldGO.SetActive(true);
+
+        _titleInputField.text = _person.Name;
+        _titleInputFieldGO.SetActive(false);
+
+    }
+
+
+    public void NewAlias()
+    {
+        _person.Name = _titleInputField.text;
+        _titleInputFieldGO.SetActive(false);
+        _title.text = _person.Name;
+    }
 }

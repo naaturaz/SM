@@ -227,7 +227,7 @@ public enum H
 
     //infr F1
     Trail, Road, BridgeTrail, BridgeRoad, CoachMan, LightHouse, WheelBarrow, StockPile, Masonry,
-    Loader, HeavyLoad,
+    HeavyLoad,
 
     //house F2 ... bugg bz they had numbers on it .. They cant have numbers
     Bohio, BohioB,
@@ -250,7 +250,7 @@ public enum H
     //prod F5
     Brick, Carpintery, Cigars, Mill, Tailor,
     //Tilery, 
-    CannonParts, Distillery, Chocolate, Ink,
+    Armory, Distillery, Chocolate, Ink,
     //industry F6
     Cloth, GunPowder, Paper_Mill, Printer, CoinStamp, Silk, SugarMill, Foundry, SteelFoundry,
     //Trade F7
@@ -432,7 +432,7 @@ public enum StInfr //for structures game structure.cs
     //WheelBarrow, 
     //b4StockPile, 
     Masonry,
-    Loader, HeavyLoad
+    HeavyLoad
 }
 
 public enum StHous //for structures game structure.cs 
@@ -469,7 +469,7 @@ public enum StProd //for structures game structure.cs
     //Production
     Brick, Carpintery, Cigars, Mill, Tailor, 
     //Tilery, 
-    CannonParts, Distillery, Chocolate, Ink,
+    Armory, Distillery, Chocolate, Ink,
 }
 
 //Ind
@@ -605,7 +605,8 @@ public enum Ron1
 public enum Ron2
 {
     Library, TradesSchool, 
-    Dock, StorageSmall
+    Dock, StorageSmall,
+    BridgeRoad, GunPowder, Armory, Tailor, Ceramic
 }
 
 public enum RonWoodHouse
@@ -616,6 +617,11 @@ public enum RonWoodHouse
 public enum RonBrickHouse
 {
     BrickHouseA, BrickHouseB, BrickHouseC,
+}
+
+public enum RonBohioHouse
+{
+    Bohio, BohioB
 }
 
 public static class Enums { }

@@ -32,7 +32,6 @@ public class UnlockBuilds
             new BRequires(H.BridgeRoad, H.OnlyForDev),
             new BRequires(H.LightHouse, 40),
             new BRequires(H.Masonry, true),
-            new BRequires(H.Loader, H.OnlyForDev),
             new BRequires(H.HeavyLoad, H.OnlyForDev),
 
             //houses
@@ -55,7 +54,6 @@ public class UnlockBuilds
             new BRequires(H.FieldFarmLarge, 100),
             new BRequires(H.FieldFarmXLarge, 150),
 
-
             //raw
             new BRequires(H.Clay, true),
             new BRequires(H.Ceramic, true),
@@ -72,9 +70,8 @@ public class UnlockBuilds
             new BRequires(H.Carpintery, 50, 500, 900),
             new BRequires(H.Cigars, 50, 500, 900),
             new BRequires(H.Mill, 50, 500, 900),
-            new BRequires(H.Tailor, H.Coming_Soon),
-            //new BRequires(H.Tilery, 50, 500, 900),
-            new BRequires(H.CannonParts, 50, 500, 900),
+            new BRequires(H.Tailor, 50, 500, 900),
+            new BRequires(H.Armory, 50, 500, 900),
             new BRequires(H.Distillery, 50, 500, 900),
             new BRequires(H.Chocolate, 50, 500, 900),
             new BRequires(H.Ink, 50, 500, 900),
@@ -91,13 +88,9 @@ public class UnlockBuilds
             new BRequires(H.SteelFoundry, 100, 500, 900, priorBuilds: new List<H>(){H.Foundry}),
 
             //trade
-            new BRequires(H.Dock, 50, 500, 900, priorBuilds: new List<H>(){H.Shipyard}),
+            new BRequires(H.Dock, true),
             new BRequires(H.Shipyard, 50, 500, 500, priorBuilds: new List<H>(){H.Supplier}),
             new BRequires(H.Supplier, 50, 500, 1000, priorBuilds: new List<H>(){H.LightHouse}),
-
-            //new BRequires(H.Dock, true),
-            //new BRequires(H.Shipyard, true),
-            //new BRequires(H.Supplier, true),
 
             new BRequires(H.StorageSmall, true),
             new BRequires(H.StorageMed, 50, 500, 900, priorBuilds: new List<H>(){H.StorageSmall}),
@@ -110,7 +103,6 @@ public class UnlockBuilds
             new BRequires(H.School, 50, 500, 900),
             new BRequires(H.TradesSchool, 50, 500, 900, priorBuilds: new List<H>(){H.School}),
             new BRequires(H.TownHouse, H.Coming_Soon),
-
 
             //other
             new BRequires(H.Church, 50, 500, 900),

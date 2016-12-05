@@ -173,11 +173,11 @@ public class Production  {
         InputElement iron = new InputElement(P.Iron, 10);
         List<InputElement> i1 = new List<InputElement>() { iron, _eleWoodComb };
         List<InputElement> i2 = new List<InputElement>() { iron, _eleCoalComb };
-        InputProdCheckAndAdd(new ProductInfo(P.CannonPart, i1, H.CannonParts));
-        InputProdCheckAndAdd(new ProductInfo(P.CannonPart, i2, H.CannonParts));
+        InputProdCheckAndAdd(new ProductInfo(P.CannonPart, i1, H.Armory));
+        InputProdCheckAndAdd(new ProductInfo(P.CannonPart, i2, H.Armory));
 
-        InputProdCheckAndAdd(new ProductInfo(P.CannonBall, i1, H.CannonParts));
-        InputProdCheckAndAdd(new ProductInfo(P.CannonBall, i2, H.CannonParts));
+        InputProdCheckAndAdd(new ProductInfo(P.CannonBall, i1, H.Armory));
+        InputProdCheckAndAdd(new ProductInfo(P.CannonBall, i2, H.Armory));
     }
 
     private void Rum()

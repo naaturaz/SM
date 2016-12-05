@@ -660,7 +660,6 @@ public class Root : MonoBehaviour
         
         buildsRoot.Add(H.CoachMan, "Prefab/Building/Infrastructure/CoachMan");
         buildsRoot.Add(H.Masonry, "Prefab/Building/Infrastructure/Masonry");
-        buildsRoot.Add(H.Loader, "Prefab/Building/Infrastructure/Loader");
         buildsRoot.Add(H.HeavyLoad, "Prefab/Building/Infrastructure/HeavyLoad");
        
         buildsRoot.Add(H.LightHouse, "Prefab/Building/Infrastructure/LightHouse");
@@ -713,10 +712,8 @@ public class Root : MonoBehaviour
         buildsRoot.Add(H.Carpintery, "Prefab/Building/Prod/Carpintery");
         buildsRoot.Add(H.Cigars, "Prefab/Building/Prod/Cigars");
         buildsRoot.Add(H.Mill, "Prefab/Building/Prod/Mill");
-        buildsRoot.Add(H.Tailor, "Prefab/Building/Prod/Slat");
-        //buildsRoot.Add(H.Tilery, "Prefab/Building/Prod/Tilery");
-
-        buildsRoot.Add(H.CannonParts, "Prefab/Building/Prod/CannonParts");
+        buildsRoot.Add(H.Tailor, "Prefab/Building/Prod/Tailor");
+        buildsRoot.Add(H.Armory, "Prefab/Building/Prod/Armory");
         buildsRoot.Add(H.Distillery, "Prefab/Building/Prod/Rum");
         buildsRoot.Add(H.Chocolate, "Prefab/Building/Prod/Chocolate");
         buildsRoot.Add(H.Ink, "Prefab/Building/Prod/Ink");

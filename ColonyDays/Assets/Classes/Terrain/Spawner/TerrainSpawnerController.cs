@@ -752,7 +752,7 @@ public class TerrainSpawnerController : ControllerParent
             }
             else//the first teraain to load 
             {
-                spawnedData = XMLSerie.ReadXMLSpawned();//true once Terrain.Spawned is created  
+                spawnedData = XMLSerie.ReadXMLSpawned(true);//true once Terrain.Spawned is created  
 
                 if (spawnedData == null)
                 {

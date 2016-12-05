@@ -7,14 +7,28 @@ public class GUIElement : General {
     //inipos is used for Hide and show 
     protected Vector3 iniPos;
 
+    protected InputField _titleInputField;
+    protected GameObject _titleInputFieldGO;
+
 	// Use this for initialization
-	void Start () {
-	
+	protected void Start () {
+
+        _titleInputFieldGO = GetGrandChildCalled("TitleInputField");
+        _titleInputField = _titleInputFieldGO.GetComponent<InputField>();
+        _titleInputFieldGO.SetActive(false);
+
 	}
-	
+
+
+
+
+
+
 	// Update is called once per frame
-	void Update () {
+	protected void Update ()
+    {
 	
+
 	}
 
     public void Show()

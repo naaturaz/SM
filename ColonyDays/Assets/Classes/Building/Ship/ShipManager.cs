@@ -53,6 +53,11 @@ public class ShipManager
     {
         Building build = BuildingPot.Control.DockManager1.GiveMeRandomBuilding();
 
+        if (build == null)
+        {
+            return;
+        }
+
         //_ships.Add(ShipGO.Create(Root.shipSmall, new Vector3(), build, H.ShipSmall));
         _ships.Add(new Ship(_shipsRoot[UMath.GiveRandom(0,_shipsRoot.Count)], build, H.ShipSmall));
     }
