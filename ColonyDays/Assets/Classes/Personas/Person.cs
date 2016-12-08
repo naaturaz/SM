@@ -878,12 +878,21 @@ public class Person : General
         AddHappyForVarietyOfFoods();
 
         Program.MouseListener.MStatsAndAchievements.CheckOnManualAchievements(years: Age);
+        UseMyFairAmt();
 
         if (ProfessionProp != null)
         {
             //so it relecfts new age 
             ProfessionProp.ProdXShift = 0;
         }
+    }
+
+    private void UseMyFairAmt()
+    {
+        GameController.ResumenInventory1.Remove(P.Cloth, .01f);
+        GameController.ResumenInventory1.Remove(P.Utensil, .01f);
+        GameController.ResumenInventory1.Remove(P.Crockery, .01f);
+        GameController.ResumenInventory1.Remove(P.Furniture, .01f);
     }
 
 
@@ -1835,6 +1844,7 @@ public class Person : General
         }
         return P.Water;
     }
+
 
 
     public void ExchangeInvetoryItem(General takenFrom, General givenTo, P product, float amt)

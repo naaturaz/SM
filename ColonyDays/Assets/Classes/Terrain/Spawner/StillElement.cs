@@ -216,12 +216,6 @@ public class StillElement : TerrainRamdonSpawner
 
     }
 
-    public void GetTreeBackToStandTree()
-    {
-        _myAnimator.SetBool("isTreeFall", false);
-        _myAnimator.SetBool("isTreeIdle", true);
-    }
-
     /// <summary>
     /// Will tel if anchors are colliding with anyohter obstacle on Scene . if so will remove it 
     /// This is only need to be done the first time the obj is spwaning if is loadin from file is not needed
@@ -367,15 +361,20 @@ public class StillElement : TerrainRamdonSpawner
     public override void DestroyCool()
     {
         _hasStart = false;
+        var savedPos = transform.position;
 
-        Program.gameScene.controllerMain.TerraSpawnController.SendToPool(this);
+        if (!ShouldReplant)
+        {
+            Program.gameScene.controllerMain.TerraSpawnController.SendToPool(this);
+        }
 
         //removes from List in TerraSpawnerController
         Program.gameScene.controllerMain.TerraSpawnController.RemoveStillElement(this);
         
         if (HType == H.Tree && ShouldReplant)
         {
-            Program.gameScene.controllerMain.TerraSpawnController.SpawnRandomTreeInThisPos(transform.position, MyId);
+            Program.gameScene.controllerMain.TerraSpawnController.SpawnRandomTreeInThisPos(savedPos, MyId);
+            Destroy(gameObject);//so it not laying in the pool
         }
         else if (!ShouldReplant || HType != H.Tree)//for GC will remove only if is not getting replanted 
         {
@@ -413,7 +412,7 @@ public class StillElement : TerrainRamdonSpawner
             _weight = Random.Range(4000, 5000);
         }
 #if UNITY_EDITOR
-        _weight = 10;
+        //_weight = 10;
 #endif
     }
 

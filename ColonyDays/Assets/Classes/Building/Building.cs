@@ -1699,7 +1699,7 @@ public class Building : General, Iinfo
     /// <returns></returns>
     int BasePay()
     {
-        if (HType == H.Ceramic)
+        if (HType == H.Pottery)
         {
             //return  10;
         }

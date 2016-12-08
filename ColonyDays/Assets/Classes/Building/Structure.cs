@@ -177,6 +177,11 @@ public class Structure : StructureParent
             {
                 howBigTheCollidingSphere = 12;
             }
+            else if(Developer.IsDev && Input.GetKeyDown(KeyCode.LeftControl))
+            {
+                howBigTheCollidingSphere = 50;
+            }
+
 
             MarkTerraSpawnRoutine(howBigTheCollidingSphere, from: transform.position);
         }

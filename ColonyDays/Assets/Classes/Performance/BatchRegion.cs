@@ -256,7 +256,7 @@ public class BatchRegion
         if (_totalVertices > highestVert)
         {
             highestVert = _totalVertices;
-            Debug.Log("highest Vert :" + _totalVertices);
+            Debug.Log("highest Vert :" + _totalVertices + ", id:" + _id);
         }
     }
 

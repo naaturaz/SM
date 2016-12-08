@@ -94,7 +94,13 @@ public class GameController  {
         inv.Add(P.Crate, startingCondition.iniCrate);
         
         inv.Add(P.Cart, startingCondition.iniCart);
-        inv.Add(P.Tonel, startingCondition.iniTonel);
+        inv.Add(P.Barrel, startingCondition.iniTonel);
+
+        inv.Add(P.Cloth, startingCondition.iniCloth);
+        inv.Add(P.Utensil, startingCondition.iniUtensil);
+        inv.Add(P.Crockery, startingCondition.iniCrockery);
+        inv.Add(P.Furniture, startingCondition.iniFurniture);
+
 
         return inv;
     }
@@ -171,7 +177,7 @@ public class GameController  {
         AreThereWheelBarrowsOnStorage = ThereIsAtLeastOneOfThisOnStorage(P.WheelBarrow);
         AreThereCratesOnStorage = ThereIsAtLeastOneOfThisOnStorage(P.Crate);
         AreThereCartsOnStorage = ThereIsAtLeastOneOfThisOnStorage(P.Cart);
-        AreThereTonelsOnStorage = ThereIsAtLeastOneOfThisOnStorage(P.Tonel);
+        AreThereTonelsOnStorage = ThereIsAtLeastOneOfThisOnStorage(P.Barrel);
 
     }
 

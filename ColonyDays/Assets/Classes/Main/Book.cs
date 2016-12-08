@@ -93,7 +93,7 @@ public class Book : General
 
         //Raw
         Build.Add(new BuildStat(H.Clay, 400, 15, 5, 15, 5, maxPeople: 5, capacity: 160));
-        Build.Add(new BuildStat(H.Ceramic, 400, 15, 5, 25, 5, maxPeople: 5));
+        Build.Add(new BuildStat(H.Pottery, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.FishingHut, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.MountainMine, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.LumberMill, 400, 30, 5, 0, 1, maxPeople: 5));

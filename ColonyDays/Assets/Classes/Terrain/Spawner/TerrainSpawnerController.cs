@@ -17,9 +17,9 @@ public class TerrainSpawnerController : ControllerParent
     private int multiplier = 40;//80  
 
     int howManyTreesToSpawn = 20;//50
-    int howManyStonesToSpawn = 3;//3
-    int howManyIronToSpawn = 3;//3
-    int howManyGoldToSpawn = 3;//3
+    int howManyStonesToSpawn = 1;//3
+    int howManyIronToSpawn = 1;//3
+    int howManyGoldToSpawn = 1;//3
     int howManyOrnaToSpawn = 30;//30    50      20
     int howManyGrassToSpawn = 20;//40
     //the ones spawn in the marine bounds 
@@ -206,7 +206,7 @@ public class TerrainSpawnerController : ControllerParent
 #if UNITY_EDITOR
         multiplier = 2;//2
         howManyGrassToSpawn = 2;//40
-        
+
         LeaveEditorPool(pools);
 #endif
 #if UNITY_STANDALONE 
@@ -259,7 +259,7 @@ public class TerrainSpawnerController : ControllerParent
 
     private void DefineAllOrnaRoots()
     {
-        for (int i = 1; i < 41 + 1; i++)
+        for (int i = 1; i < 25 + 1; i++)
         {
             allOrna.Add("Prefab/Terrain/Spawner/Orna/Orna" + i);
         }
@@ -275,7 +275,7 @@ public class TerrainSpawnerController : ControllerParent
 
     private void AddTreesToTreesRoots()
     {
-        for (int i = 1; i < 5 + 1; i++)
+        for (int i = 1; i < 4 + 1; i++)
         {
             allTrees.Add("Prefab/Terrain/Spawner/Tree" + i);
         }
@@ -605,18 +605,50 @@ public class TerrainSpawnerController : ControllerParent
     /// </summary>
     /// <param name="typePass">Tpye of object</param>
     /// <returns>Random string root</returns>
-    string ReturnRoot(H typePass, int index)
+    string ReturnRoot(H typePass, int indexP)
     {
+        //Coomment out if not need pls
+        indexP = CorrectRootIfAmountOfObjectsChanged(typePass, indexP);
+
         string rootToSpawn = "";
-        if (typePass == H.Tree) { rootToSpawn = allTrees[index]; }
-        else if (typePass == H.Stone) { rootToSpawn = allStones[index]; }
-        else if (typePass == H.Iron) { rootToSpawn = allIron[index]; }
-        else if (typePass == H.Gold) { rootToSpawn = allGold[index]; }
-        else if (typePass == H.Ornament) { rootToSpawn = allOrna[index]; }
-        else if (typePass == H.Grass) { rootToSpawn = allGrass[index]; }
-        else if (typePass == H.Marine) { rootToSpawn = allMarine[index]; }
-        else if (typePass == H.Mountain) { rootToSpawn = allMountain[index]; }
+        if (typePass == H.Tree) { rootToSpawn = allTrees[indexP]; }
+        else if (typePass == H.Stone) { rootToSpawn = allStones[indexP]; }
+        else if (typePass == H.Iron) { rootToSpawn = allIron[indexP]; }
+        else if (typePass == H.Gold) { rootToSpawn = allGold[indexP]; }
+        else if (typePass == H.Ornament) { rootToSpawn = allOrna[indexP]; }
+        else if (typePass == H.Grass) { rootToSpawn = allGrass[indexP]; }
+        else if (typePass == H.Marine) { rootToSpawn = allMarine[indexP]; }
+        else if (typePass == H.Mountain) { rootToSpawn = allMountain[indexP]; }
         return rootToSpawn;
+    }
+
+    /// <summary>
+    /// When changed the amout of Trees or Orna then a Save file will brake 
+    /// bz they save which one was there. Now with this method I will reassign 
+    /// a new int value if the numner pass is too big
+    /// 
+    /// Addressing now only Tree and Ornament changed
+    /// 
+    /// Coomment out if not need pls
+    /// </summary>
+    /// <param name="typePass"></param>
+    /// <param name="indexP"></param>
+    /// <returns></returns>
+    int CorrectRootIfAmountOfObjectsChanged(H typePass, int indexP)
+    {
+        if (typePass == H.Tree)
+        {
+            indexP = UMath.GiveRandom(0, allTrees.Count);
+        }
+        else if (typePass == H.Ornament) 
+        {
+            indexP = UMath.GiveRandom(0, allOrna.Count);
+        }
+        else if (typePass == H.Grass )
+        {
+            indexP = UMath.GiveRandom(0, allGrass.Count);
+        }
+        return indexP;
     }
 
     //thisis the area where not trees or rocks or anything else will be spawned

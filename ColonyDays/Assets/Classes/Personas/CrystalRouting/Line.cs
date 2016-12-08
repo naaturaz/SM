@@ -168,7 +168,7 @@ public class Line
     }
 
     #region Return Random Points In Line
-    private float howFarPoints = .8f;//.55
+    private float howFarPoints = .95f;//.8 .55
     private float distanceLeft;
     /// <summary>
     /// Will return random point in line 

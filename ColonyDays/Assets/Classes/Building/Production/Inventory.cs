@@ -750,7 +750,7 @@ public class Inventory
 
     bool IfSpecialItem(P prod)
     {
-        if (prod == P.Tool || prod == P.Cloth || prod == P.Ceramic || prod == P.Tonel || prod == P.Crate)
+        if (prod == P.Tool || prod == P.Cloth || prod == P.Crockery || prod == P.Barrel || prod == P.Crate)
         {
             return true;
         }
@@ -855,14 +855,14 @@ public class Inventory
         }
         else if (IsLiquid(prod))
         {
-            GameController.ResumenInventory1.Remove(P.Tonel, .01f);
+            GameController.ResumenInventory1.Remove(P.Barrel, .01f);
         }
     }
 
 
     static bool DoesNeedACrate(P prod)
     {
-        if (prod == P.Wood || prod == P.Stone || prod == P.Ore)
+        if (prod == P.Wood || prod == P.Stone || prod == P.Ore || IsLiquid(prod))
         {
             return false;
         }

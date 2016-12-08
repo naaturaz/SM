@@ -54,7 +54,7 @@ public class Languages
 
        //Raw
 	   { "Clay.Desc","Here a worker will produce Clay, raw material is needed for bricks and more"},
-	   { "Ceramic.Desc","Here a worker will produce Ceramic products, such as dishes, jars, etc"},
+	   { "Pottery.Desc","Here a worker will produce crockery products, such as dishes, jars, etc"},
 	   { H.FishingHut + ".Desc","Here a worker can catch fish in a river"},
 	   { "FishRegular.Desc","Here a worker can fish in a river"},
 	   { "Mine.Desc","Here a worker can fish in a river"},
@@ -65,13 +65,13 @@ public class Languages
 	   { "SaltMine.Desc","Here workers will produce salt"},
 
        //Prod
-	   { "Brick.Desc","Here a worker will produce Ceramic products, such as dishes, jars, etc"},
-	   { "Carpintery.Desc","Here a worker will produce Ceramic products, such as dishes, jars, etc"},
+	   { "Brick.Desc","Here a worker will produce clay made products, such as bricks, etc"},
+	   { "Carpintery.Desc","Here a worker will produce wood made products, such as crates, barrels, etc"},
 	   { "Cigars.Desc","Here workers will produce cigars"+_asLongHasInput},
-	   { "Mill.Desc","Here workers will produce cigars"+_asLongHasInput},
+	   { "Mill.Desc","Here workers will ground some grains"+_asLongHasInput},
 	   { H.Tailor+".Desc","Here workers will produce clothes"+_asLongHasInput},
 	   { "Tilery.Desc","Here workers will produce roof tiles"+_asLongHasInput},
-	   { "CannonParts.Desc","Here workers will produce cannon parts"+_asLongHasInput},
+	   { "Armory.Desc","Here workers will produce weapons"+_asLongHasInput},
 	   { H.Distillery+".Desc",_produce},
 	   { "Chocolate.Desc",_produce},
 	   { "Ink.Desc",_produce},
@@ -106,7 +106,6 @@ public class Languages
        //other
 	   { "Church.Desc","The church gives happinnes and hope to your people"},
 	   { "Tavern.Desc","The tavern gives some relaxation and entertainment to your people"},
-	   { "Shack.Desc","Shack"},
 
        //Militar
 	   { "PostGuard.Desc",_militar},
@@ -331,7 +330,7 @@ public class Languages
        //Raw
 	   { "Clay.Desc","Aqui se produce barro, necesaria para construir ladrillos y otros productos mas"},
 
-	   { "Ceramic.Desc","Aqui se producen productos de ceramica como platos, jarras, etc"},
+	   { "Pottery.Desc","Aqui se producen productos de ceramica como platos, jarras, etc"},
 	   { H.FishingHut + ".Desc","Aqui se pescan peces"},
 	   { "FishRegular.Desc","Aqui se pescan peces"},
 	   { "Mine.Desc","Esta es una mina"},
@@ -348,7 +347,7 @@ public class Languages
 	   { "Mill.Desc",_produceES},
 	   { H.Tailor+".Desc",_produceES},
 	   { "Tilery.Desc",_produceES},
-	   { "CannonParts.Desc",_produceES},
+	   { "Armory.Desc",_produceES},
 	   { H.Distillery+".Desc",_produceES},
 	   { "Chocolate.Desc",_produceES},
 	   { "Ink.Desc",_produceES},

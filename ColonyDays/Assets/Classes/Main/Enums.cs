@@ -80,7 +80,7 @@ public enum P
     //Animal Farm
     Chicken, Egg, Pork, Beef, Leather,
     Clay, PalmLeaf,
-    Ceramic,
+    Crockery,
     //Fishes
     Fish,
     //Mines
@@ -95,7 +95,7 @@ public enum P
     //Brick, 
     Brick,
     //Carpintery,
-    Tonel,
+    Barrel,
     //Cigars,
     Cigar,
     //Slat,
@@ -180,6 +180,7 @@ public enum P
     Year,
     CornMeal,
     Horse,
+    Furniture,
 
 
 }
@@ -241,7 +242,7 @@ public enum H
     AnimalFarmSmall, AnimalFarmMed, AnimalFarmLarge, AnimalFarmXLarge,
     FieldFarmSmall, FieldFarmMed, FieldFarmLarge, FieldFarmXLarge,
     //raw F4
-    Clay, Ceramic, FishingHut,
+    Clay, Pottery, FishingHut,
     //FishRegular, 
     //Mine, 
     MountainMine,
@@ -457,7 +458,7 @@ public enum StFarm
 public enum StRaw //for structures game structure.cs 
 {
     //Raw
-    Clay, Ceramic, FishingHut, 
+    Clay, Pottery, FishingHut, 
     //Mine, 
     MountainMine, 
     //Resin, 
@@ -606,7 +607,7 @@ public enum Ron2
 {
     Library, TradesSchool, 
     Dock, StorageSmall,
-    BridgeRoad, GunPowder, Armory, Tailor, Ceramic
+    BridgeRoad, GunPowder, Armory, Tailor, Pottery
 }
 
 public enum RonWoodHouse

@@ -154,7 +154,8 @@ public class Forester : Profession
                 continue;
             }
 
-            if (t.HType == H.Tree || t.HType == H.Stone || t.HType == H.Iron || t.HType == H.Gold)
+            if (t.HType == H.Tree //|| t.HType == H.Stone || t.HType == H.Iron || t.HType == H.Gold
+                )
             {
                 _spawnersList.Add(t);
             }
@@ -198,6 +199,7 @@ public class Forester : Profession
         CheckIfRoute1IsReady();
         CheckIfStillEleWasBlackListedOrIsDiff();
         CheckIfShouldReDoProf();
+        CheckIfBlackList();
 
         if (_takeABreakNow)
         {
@@ -207,6 +209,21 @@ public class Forester : Profession
 
         base.Update();
         Execute();
+    }
+
+    int count;
+    /// <summary>
+    /// bz sometimes they blacklist the Storage
+    /// </summary>
+    private void CheckIfBlackList()
+    {
+        count++;
+
+        if (_person != null && count > 1800)
+        {
+            count = 0;
+            _person.Brain.ClearEachBlackListedBuilding();
+        }
     }
 
     /// <summary>

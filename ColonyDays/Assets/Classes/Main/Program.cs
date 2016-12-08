@@ -96,7 +96,7 @@ public class Program : MonoBehaviour {
 
     private void OnApplicationQuit()
     {
-        ManagerReport.FinishAllReports();
+        //ManagerReport.FinishAllReports();
         Settings.SaveToFile();
     }
 
@@ -140,7 +140,7 @@ public class Program : MonoBehaviour {
             PersonPot.Control.ClearAll();
         }
 
-        ManagerReport.FinishAllReports("NewMap");
+        //ManagerReport.FinishAllReports("NewMap");
 
         ClassContainer.Destroy();
         BuildsContainer.Destroy();

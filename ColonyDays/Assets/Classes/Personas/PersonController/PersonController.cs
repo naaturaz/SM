@@ -990,7 +990,8 @@ public class StartingCondition
     public int iniBrick;
     public int iniIron;
     //if adding a new prod for initial val also add in GameController.CreateInitialInv()
-    public int iniGold, iniDollar, iniWheelBarrow, iniTool, iniCrate, iniCart, iniTonel;
+    public int iniGold, iniDollar, iniWheelBarrow, iniTool, iniCrate, iniCart, iniTonel,
+        iniCloth, iniUtensil, iniCrockery, iniFurniture;
 
     private int _thisDifficultyLevel;//    //0 insane, 4 newbie 
 
@@ -1011,6 +1012,12 @@ public class StartingCondition
         iniCrate = iniWheelBarrowP/2;
         iniCart = iniWheelBarrowP/4;
         iniTonel = iniWheelBarrowP/2;
+
+        iniCloth = iniTonel;
+        iniUtensil= iniTonel;
+        iniCrockery = iniTonel;
+        iniFurniture = iniTonel;
+
         _thisDifficultyLevel = thisDifficultyLevel;
     }
 }

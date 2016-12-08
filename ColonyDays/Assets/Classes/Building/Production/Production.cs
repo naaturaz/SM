@@ -183,7 +183,7 @@ public class Production  {
     private void Rum()
     {
         InputElement element = new InputElement(P.SugarCane, 10);
-        InputElement tonelEle = new InputElement(P.Tonel, 1);
+        InputElement tonelEle = new InputElement(P.Barrel, 1);
 
         List<InputElement> prodFormu1 = new List<InputElement>() { element, _eleWoodComb, tonelEle };
         List<InputElement> prodFormu2 = new List<InputElement>() { element, _eleCoalComb, tonelEle };
@@ -363,8 +363,8 @@ public class Production  {
         List<InputElement> prod = new List<InputElement>() { element, _eleWoodComb };
         List<InputElement> prod2 = new List<InputElement>() { element, _eleCoalComb };
 
-        InputProdCheckAndAdd(new ProductInfo(P.Ceramic, prod, H.Ceramic));
-        InputProdCheckAndAdd(new ProductInfo(P.Ceramic, prod2, H.Ceramic));
+        InputProdCheckAndAdd(new ProductInfo(P.Crockery, prod, H.Pottery));
+        InputProdCheckAndAdd(new ProductInfo(P.Crockery, prod2, H.Pottery));
     }
 
     private void Tile()
@@ -391,15 +391,15 @@ public class Production  {
 
 
         List<InputElement> cigarBox = new List<InputElement>() { new InputElement(P.Wood, 1), new InputElement(P.Iron, 0.2f) };
+        List<InputElement> furni = new List<InputElement>() { new InputElement(P.Wood, 20), new InputElement(P.Nail, 0.2f) };
 
         InputProdCheckAndAdd(new ProductInfo(P.Crate, tonel, H.Carpintery));
         InputProdCheckAndAdd(new ProductInfo(P.WheelBarrow, wheelBar, H.Carpintery));
         InputProdCheckAndAdd(new ProductInfo(P.Cart, cart, H.Carpintery));
-        InputProdCheckAndAdd(new ProductInfo(P.Tonel, tonel, H.Carpintery));
+        InputProdCheckAndAdd(new ProductInfo(P.Barrel, tonel, H.Carpintery));
         InputProdCheckAndAdd(new ProductInfo(P.CigarBox, cigarBox, H.Carpintery));
         InputProdCheckAndAdd(new ProductInfo(P.Bucket, cigarBox, H.Carpintery));
-
-
+        InputProdCheckAndAdd(new ProductInfo(P.Furniture, furni, H.Carpintery));
     }
 
     void BlackSmith()

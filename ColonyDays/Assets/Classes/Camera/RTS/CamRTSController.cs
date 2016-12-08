@@ -33,8 +33,8 @@ public class CamRTSController : CamControl
 
     public static bool IsMouseMiddle;
 
-     float MIN_FIELD_CAM = 25f;// 5
-     float MAX_FIELD_CAM = 42f;//48
+     float MIN_FIELD_CAM = 41f;//25    5
+     float MAX_FIELD_CAM = 41f;//42   48
 
     //Target
     public Transform target;
@@ -229,6 +229,11 @@ public class CamRTSController : CamControl
 
     private void RotateScript()
     {
+        if (!Developer.IsDev)
+        {
+            return;
+        }
+
         if (Input.GetKeyUp(KeyCode.R))
         {
             _rotateScript.ToggleOn();

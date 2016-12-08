@@ -521,7 +521,8 @@ public class Brain
             _person.Body.Location = HPers.None;
         }
 
-        return   CurrentTask == HPers.IdleInHome &&
+        return CurrentTask == HPers.IdleInHome && 
+            _person.FoodSource != null &&//person shoudld not go work if that is null 
                (_person.Body.Location == HPers.Home || _person.Body.Location == HPers.None);
     }
 
@@ -3009,7 +3010,7 @@ public class Brain
     /// can search again for those kind of places .. just in case the ones blacklisted now are
     /// closer for him 
     /// </summary>
-    void ClearEachBlackListedBuilding()
+    public void ClearEachBlackListedBuilding()
     {
         string[] arr = _blackList.ToArray();
         _blackList.Clear();

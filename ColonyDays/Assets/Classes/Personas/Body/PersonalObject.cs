@@ -61,7 +61,7 @@ public class PersonalObject
         _prodCarry.Add(P.Crate, Root.crate);
         _prodCarry.Add(P.Ore, Root.ore);
         _prodCarry.Add(P.Stone, Root.ore);
-        _prodCarry.Add(P.Tonel, Root.tonel);
+        _prodCarry.Add(P.Barrel, Root.tonel);
         _prodCarry.Add(P.Wood, Root.wood);
 
         _prodCarry.Add(P.Water, Root.tonel);

@@ -56,7 +56,7 @@ public class UnlockBuilds
 
             //raw
             new BRequires(H.Clay, true),
-            new BRequires(H.Ceramic, true),
+            new BRequires(H.Pottery, true),
             new BRequires(H.FishingHut, true),
             //new BRequires(H.Mine, true),
             new BRequires(H.MountainMine, true),

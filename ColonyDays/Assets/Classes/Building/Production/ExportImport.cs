@@ -56,24 +56,40 @@ public class ExportImport
     private void LoadBasePrices()
     {
         _prodSpecs.Add(new ProdSpec(P.Bean, 90, 368, 100));
-        _prodSpecs.Add(new ProdSpec(P.CoffeeBean, 100, 308, 100));
-        _prodSpecs.Add(new ProdSpec(P.Cacao, 110, 250, 100));
-        _prodSpecs.Add(new ProdSpec(P.Potato, 70, 380, 100));
+        _prodSpecs.Add(new ProdSpec(P.CoffeeBean, 100, 308, 100, 30*6));
+        _prodSpecs.Add(new ProdSpec(P.Cacao, 110, 250, 100, 360*3));
+        _prodSpecs.Add(new ProdSpec(P.Potato, 70, 380, 100, 30*8));
         _prodSpecs.Add(new ProdSpec(P.Banana, 100, 350, 100));
         _prodSpecs.Add(new ProdSpec(P.Coconut, 100, 550, 100));
         
         //new foods
-        _prodSpecs.Add(new ProdSpec(P.CornFlower, 100, 550, 100));
-        _prodSpecs.Add(new ProdSpec(P.Bread, 100, 550, 100));
-        _prodSpecs.Add(new ProdSpec(P.Carrot, 100, 550, 100));
-        _prodSpecs.Add(new ProdSpec(P.Tomato, 100, 550, 100));
-        _prodSpecs.Add(new ProdSpec(P.Cucumber, 100, 550, 100));
-        _prodSpecs.Add(new ProdSpec(P.Cabbage, 100, 550, 100));
-        _prodSpecs.Add(new ProdSpec(P.Lettuce, 100, 550, 100));
-        _prodSpecs.Add(new ProdSpec(P.SweetPotato, 100, 550, 100));
-        _prodSpecs.Add(new ProdSpec(P.Cassava, 100, 550, 100));
-        _prodSpecs.Add(new ProdSpec(P.Pineapple, 100, 550, 100));
-        _prodSpecs.Add(new ProdSpec(P.Papaya, 100, 550, 100));
+        _prodSpecs.Add(new ProdSpec(P.CornFlower, 100, 550, 100, 30*12));
+        _prodSpecs.Add(new ProdSpec(P.Bread, 100, 550, 100, 30*1));
+        _prodSpecs.Add(new ProdSpec(P.Carrot, 100, 550, 100, 7*5));
+        _prodSpecs.Add(new ProdSpec(P.Tomato, 100, 550, 100, 30*1));
+        _prodSpecs.Add(new ProdSpec(P.Cucumber, 100, 550, 100, 30 * 1));
+        _prodSpecs.Add(new ProdSpec(P.Cabbage, 100, 550, 100, 30 * 1));
+        _prodSpecs.Add(new ProdSpec(P.Lettuce, 100, 550, 100, 30 * 1));
+        _prodSpecs.Add(new ProdSpec(P.SweetPotato, 100, 550, 100, 30 * 8));
+        _prodSpecs.Add(new ProdSpec(P.Cassava, 100, 550, 100, 30 * 8));
+        _prodSpecs.Add(new ProdSpec(P.Pineapple, 100, 550, 100, 30*1));
+        _prodSpecs.Add(new ProdSpec(P.Papaya, 100, 550, 100, 30*1));
+
+        //foods
+        _prodSpecs.Add(new ProdSpec(P.Corn, 60, 540, 120, 6 * 30));
+        _prodSpecs.Add(new ProdSpec(P.CornMeal, 90, 700, 130, 12 * 30));
+
+        _prodSpecs.Add(new ProdSpec(P.Chicken, 200, 881, 80, 30 * 1));
+        _prodSpecs.Add(new ProdSpec(P.Egg, 150, 400, 100, 30 * 1));
+        _prodSpecs.Add(new ProdSpec(P.Pork, 200, 881, 70, 30 * 1));
+        _prodSpecs.Add(new ProdSpec(P.Beef, 300, 881, 60, 30 * 1));
+
+        _prodSpecs.Add(new ProdSpec(P.Fish, 300, 932, 70, 30 * 1));
+        _prodSpecs.Add(new ProdSpec(P.Chocolate, 300, 600, 70, 30 * 12));
+        _prodSpecs.Add(new ProdSpec(P.Salt, 30, 900, 85));
+
+        _prodSpecs.Add(new ProdSpec(P.Sugar, 50, 900, 70));
+        _prodSpecs.Add(new ProdSpec(P.SugarCane, 50, 200.2f, 100, 30 * 12));
 
         //frutas
         //_prodSpecs.Add(new ProdSpec(P.Mango, 100, 550, 100));
@@ -95,34 +111,17 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Sulfur, 20, 1960, 70));
         _prodSpecs.Add(new ProdSpec(P.Potassium, 30, 862, 60));
 
-        _prodSpecs.Add(new ProdSpec(P.SugarCane, 50, 200.2f, 100));
         _prodSpecs.Add(new ProdSpec(P.TobaccoLeaf, 50, 300, 90));
-
-        _prodSpecs.Add(new ProdSpec(P.Corn, 60, 540, 120, 6*30));
-        _prodSpecs.Add(new ProdSpec(P.CornMeal, 90, 700, 130, 12*30));
-
-        _prodSpecs.Add(new ProdSpec(P.Chicken, 200, 881, 80));
-        _prodSpecs.Add(new ProdSpec(P.Egg, 150, 400, 100));
-        _prodSpecs.Add(new ProdSpec(P.Pork, 200, 881, 70));
-        _prodSpecs.Add(new ProdSpec(P.Beef, 300, 881, 60));
-
-        _prodSpecs.Add(new ProdSpec(P.Fish, 300, 932, 70));
-        _prodSpecs.Add(new ProdSpec(P.Chocolate, 300, 600, 70));
-        _prodSpecs.Add(new ProdSpec(P.Salt, 30, 900, 85));
-
-        _prodSpecs.Add(new ProdSpec(P.Sugar, 50, 900, 70));
 
         _prodSpecs.Add(new ProdSpec(P.Henequen, 15, 400, 90));
         _prodSpecs.Add(new ProdSpec(P.Cotton, 40, 360, 120));
         _prodSpecs.Add(new ProdSpec(P.Leather, 70, 570, 20));
 
-
-        _prodSpecs.Add(new ProdSpec(P.Ceramic, 10, 100, 10));//ceramic
+        _prodSpecs.Add(new ProdSpec(P.Crockery, 10, 100, 10));//ceramic
         _prodSpecs.Add(new ProdSpec(P.Gold, 500, 19300, 5));
         _prodSpecs.Add(new ProdSpec(P.Diamond, 500, 3539, 5));
         _prodSpecs.Add(new ProdSpec(P.Silver, 450, 10490, 8));
         _prodSpecs.Add(new ProdSpec(P.Jewel, 450, 8490, 8));
-
         
         //_prodSpecs.Add(new ProdSpec(P.CrystalCoin, 1000, 8120, 5));
         //_prodSpecs.Add(new ProdSpec(P.CaribbeanCoin, 1500, 11441, 5));
@@ -157,11 +156,13 @@ public class ExportImport
 
         _prodSpecs.Add(new ProdSpec(P.Brick, 50, 2000, 100));
         
-        _prodSpecs.Add(new ProdSpec(P.Tonel, 60, 100, 50));
+        _prodSpecs.Add(new ProdSpec(P.Barrel, 60, 100, 50));
         _prodSpecs.Add(new ProdSpec(P.Bucket, 30, 90, 60));
         _prodSpecs.Add(new ProdSpec(P.Crate, 40, 80, 50));
         _prodSpecs.Add(new ProdSpec(P.WheelBarrow, 140, 40, 25));
-        _prodSpecs.Add(new ProdSpec(P.Cart, 140, 10, 25));
+        _prodSpecs.Add(new ProdSpec(P.Cart, 240, 20, 20));
+        _prodSpecs.Add(new ProdSpec(P.Furniture, 440, 10, 15));
+
 
         _prodSpecs.Add(new ProdSpec(P.Cigar, 200, 700, 50));
         _prodSpecs.Add(new ProdSpec(P.CigarBox, 20, 200, 60));
@@ -182,16 +183,8 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Book, 300, 502, 5));
        // _prodSpecs.Add(new ProdSpec(P.Silk, 150, 1300, 5));
 
-        //so far 47 Products 
-
-
         _prodSpecs.Add(new ProdSpec(P.RandomMineOutput, 150, 4100, 100));
         _prodSpecs.Add(new ProdSpec(P.RandomFoundryOutput, 150, 4100, 100));
-       
-        
-        
-
-
 
         //for report purposes, and needed here only  for the icon root 
         _prodSpecs.Add(new ProdSpec(P.Year, 150, 4100, 100));
