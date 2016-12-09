@@ -98,7 +98,7 @@ public class MusicManager
         }
         else
         {
-            res = ReturnOrCreate(_musicRoots.ElementAt(Random.Range(0, _musics.Count)));
+            res = ReturnOrCreate(_musicRoots.ElementAt(Random.Range(0, _musicRoots.Count)));
         }
         return res;
     }

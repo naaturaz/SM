@@ -316,8 +316,15 @@ public class StillElement : TerrainRamdonSpawner
 
     protected void UpdateMinAndMaxVar()
     {
-        _min = gameObject.transform.GetComponent<Collider>().bounds.min;
-        _max = gameObject.transform.GetComponent<Collider>().bounds.max;
+        var go = gameObject;
+
+        if (HType == H.Tree)
+        {
+            go = GetChildCalled("BoxColl");
+        }
+
+        _min = go.transform.GetComponent<Collider>().bounds.min;
+        _max = go.transform.GetComponent<Collider>().bounds.max;
         //UVisHelp.CreateText(_min, "min", 60);
         //UVisHelp.CreateText(_max, "max", 60);
     }
@@ -374,13 +381,14 @@ public class StillElement : TerrainRamdonSpawner
         if (HType == H.Tree && ShouldReplant)
         {
             Program.gameScene.controllerMain.TerraSpawnController.SpawnRandomTreeInThisPos(savedPos, MyId);
-            Destroy(gameObject);//so it not laying in the pool
         }
         else if (!ShouldReplant || HType != H.Tree)//for GC will remove only if is not getting replanted 
         {
             //remove from CrystalManager
             MeshController.CrystalManager1.Delete(this);
         }
+
+        Destroy(gameObject);
     }
 
 
@@ -409,7 +417,7 @@ public class StillElement : TerrainRamdonSpawner
         }
         else//ore. stone
         {
-            _weight = Random.Range(4000, 5000);
+            _weight = Random.Range(100, 100);
         }
 #if UNITY_EDITOR
         //_weight = 10;

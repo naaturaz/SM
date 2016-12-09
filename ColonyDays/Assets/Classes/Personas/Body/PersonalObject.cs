@@ -210,15 +210,22 @@ public class PersonalObject
     
     List<string> _heavy = new List<string>()
     {
-        Root.wagon,
+        //Root.wagon,
         Root.cart, 
-        Root.conestogo
-    }; 
+        //Root.conestogo
+    };
+
+
+    int _myCart = -1;
     string DefineCurrentCartRoot()
     {
         string res = "";
+        if (_myCart == -1)
+        {
+            _myCart = UMath.GiveRandom(0, _heavy.Count);
+        }
 
-        res = _heavy[UMath.GiveRandom(0, _heavy.Count)];
+        res = _heavy[_myCart];
 
         if (!_person.Inventory.IsEmpty())
         {

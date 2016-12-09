@@ -51,6 +51,9 @@ public class Person : General
 
 
     private string _nutritionLevel = "Normal";
+    private string _thirst = "Quenched";
+
+
 
     ///Variables to allow the class be independet 
     //how often will check if obj has eaten
@@ -112,6 +115,12 @@ public class Person : General
     {
         get { return _myDummyProf; }
         set { _myDummyProf = value; }
+    }
+
+    public string Thirst
+    {
+        get { return _thirst; }
+        set { _thirst = value; }
     }
 
     public PersonBank PersonBank1
@@ -789,33 +798,22 @@ public class Person : General
 
     #region Person Nutrition
 
-    //void ChangeNutritionLvl(float change)
-    //{
-    //    _nutritionLevel += change;
-    //}
-
-    void CheckOnNutrition()
+    MDate _lastWater;
+    void CheckOnNutritionAndThirst()
     {
         KillStarve();
+
+        if (_lastWater == null)
+        {
+            _thirst = "Low";
+        }
+        else if (Program.gameScene.GameTime1.ElapsedDateInDaysToDate(_lastWater) > 60)
+        {
+            _thirst = "Low";
+        }
     }
 
-    ///// <summary>
-    ///// The action of getting some nutrition, sets the _nutritionLevel
-    ///// </summary>
-    ///// <param name="amt"></param>
-    ///// <param name="item"></param>
-    //void Nutrive(float amt, P item)
-    //{
-    //    var nutriValue = BuildingPot.Control.ProductionProp.Food1.FindNutritionValue(item);
 
-    //    if (nutriValue == null)
-    //    {
-    //        Debug.Log("Not found nutriVal for:" + item);
-    //        return;
-    //    }
-    //    _nutritionLevel += (amt * nutriValue.NutritionVal * 3);//5 //the five is bz people is dying with food in there places 
-    //    //UnityEngine.Debug.Log(MyId + " nutrived nutriVal:" + amt * nutriValue + ". curr:" + _nutritionLevel);
-    //}
 
     /// <summary>
     /// Of _nutrition level is so low will kill person
@@ -1272,7 +1270,7 @@ public class Person : General
         {
             yield return new WaitForSeconds(checkFoodElapsed); // wait
             ParentPersonToHome();
-            CheckOnNutrition();
+            CheckOnNutritionAndThirst();
             _brain.SlowCheckUp();
             TryHaveKids();
         }
@@ -1734,7 +1732,7 @@ public class Person : General
         }
 
         _lastTimeHome = Program.gameScene.GameTime1.CurrentDate();
-        Eat();
+        EatDrink();
     }
 
     float AdditionalFoodNeeds()
@@ -1746,14 +1744,21 @@ public class Person : General
         return 2;
     }
 
-    void Eat()
+    void EatDrink()
     {
-        P item = Home.Inventory.GiveRandomFood();
+        P item = ItemToGetAtHome();
         var kgNeeded = ReturnAmountToEat(item) + AdditionalFoodNeeds();//in case is below normal it needs to eat more 
 
-        float gotAmt = Home.Inventory.RemoveByWeight(item, kgNeeded);
-        _nutrition.AteThisMuch(item, gotAmt);
+        if (item == P.Water)
+        {
+            _thirst = "Quenched";
+            kgNeeded = 2;
+            _lastWater = Program.gameScene.GameTime1.CurrentDate();
+        }
 
+        float gotAmt = Home.Inventory.RemoveByWeight(item, kgNeeded);
+
+        _nutrition.AteThisMuch(item, gotAmt);
         Home.AddConsumeThisYear(item, gotAmt);
     }
 
@@ -1838,11 +1843,20 @@ public class Person : General
 
     P ItemToGetAtFoodSource(Structure theFoodSrc)
     {
-        if (Home.Inventory.IsFullForThisProd(P.Water))
+        if (_thirst == "Quenched")
         {
             return theFoodSrc.Inventory.GiveRandomFood();
         }
         return P.Water;
+    }
+
+    P ItemToGetAtHome()
+    {
+        if (_thirst != "Quenched" && Home.Inventory.Contains(P.Water))
+        {
+            return P.Water;
+        }
+        return Home.Inventory.GiveRandomFood();
     }
 
 
@@ -2671,6 +2685,7 @@ public class Person : General
 
     //todo saveload
     public bool WasFired { get; set; }
+
 
 
 }

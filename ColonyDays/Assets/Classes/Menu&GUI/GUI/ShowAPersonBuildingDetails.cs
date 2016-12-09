@@ -42,7 +42,7 @@ public class ShowAPersonBuildingDetails
         AddToItems("Gender", _person.Gender + "");
         AddToItems("Height", _person.Height + "");
         AddToItems("Weight", _person.Weight + "");
-        AddToItems("Thirst", "Quenched");//thirst quenched
+        AddToItems("Thirst", _person.Thirst);//thirst quenched
         AddToItems("Calories", _person.Nutrition1.CalNeededNowUpdate().ToString("N0") + "");
         AddToItems("Nutrition", _person.NutritionLevel + "");
         AddToItems("Profession", _person.ProfessionProp.ProfDescription + "");

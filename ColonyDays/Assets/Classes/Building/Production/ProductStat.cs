@@ -77,7 +77,7 @@ public class ProductInfo
     {
         var dens = Program.gameScene.ExportImport1.ReturnDensityKGM3(_product);
         var prodF = Program.gameScene.ExportImport1.ReturnProduceFactor(_product);
-        var price = Program.gameScene.ExportImport1.ReturnPrice(_product);
+        var price = Program.gameScene.ExportImport1.ReturnPriceTown(_product);
 
         _details = "Product " + _product + " details: \n";
 

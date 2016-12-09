@@ -61,6 +61,8 @@ public class Nutrition
         return _calNeededNow / nutritionPerKG;
     }
 
+    //todo table with cal per prod
+
     /// <summary>
     /// Cal x KG of a product 
     /// </summary>
@@ -68,6 +70,11 @@ public class Nutrition
     /// <returns></returns>
     private float GetProdCalPerKG(P prod)
     {
+        if (prod == P.Water)
+        {
+            return 0;
+        }
+
         //corn is 3600 all corn
         //cob 113 calories per cob, and a cob is 1.2lbs
         return 3600;

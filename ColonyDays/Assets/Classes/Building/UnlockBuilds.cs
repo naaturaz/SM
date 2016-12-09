@@ -32,7 +32,7 @@ public class UnlockBuilds
             new BRequires(H.BridgeRoad, H.OnlyForDev),
             new BRequires(H.LightHouse, 40),
             new BRequires(H.Masonry, true),
-            new BRequires(H.HeavyLoad, H.OnlyForDev),
+            new BRequires(H.HeavyLoad, 50),
 
             //houses
             new BRequires(H.Bohio, true),
@@ -40,15 +40,15 @@ public class UnlockBuilds
             new BRequires(H.WoodHouseA, 17),
             new BRequires(H.WoodHouseB, 25),
             new BRequires(H.WoodHouseC, 55),
-            new BRequires(H.BrickHouseA, H.OnlyForDev),
-            new BRequires(H.BrickHouseB, H.OnlyForDev),
+            new BRequires(H.BrickHouseA, 65),
+            new BRequires(H.BrickHouseB, 75),
             new BRequires(H.BrickHouseC, 150),
 
             //farm
-            new BRequires(H.AnimalFarmSmall, true),
-            new BRequires(H.AnimalFarmMed, 35),
-            new BRequires(H.AnimalFarmLarge, 100),
-            new BRequires(H.AnimalFarmXLarge, 150),  
+            new BRequires(H.AnimalFarmSmall, H.OnlyForDev),
+            new BRequires(H.AnimalFarmMed, H.OnlyForDev),
+            new BRequires(H.AnimalFarmLarge, H.OnlyForDev),
+            new BRequires(H.AnimalFarmXLarge, H.OnlyForDev),  
             new BRequires(H.FieldFarmSmall, true),
             new BRequires(H.FieldFarmMed, 35),
             new BRequires(H.FieldFarmLarge, 100),
@@ -85,7 +85,6 @@ public class UnlockBuilds
             new BRequires(H.Silk, 50, 500, 900),
             new BRequires(H.SugarMill, 50, 500, 900),
             new BRequires(H.Foundry, 50, 500, 900),
-            new BRequires(H.SteelFoundry, 100, 500, 900, priorBuilds: new List<H>(){H.Foundry}),
 
             //trade
             new BRequires(H.Dock, true),
@@ -99,7 +98,7 @@ public class UnlockBuilds
             new BRequires(H.StorageExtraBig, 350, 2500, 900, priorBuilds: new List<H>(){H.StorageBigTwoDoors}),
 
             //gov
-            new BRequires(H.Library, 50, 500, 900),
+            new BRequires(H.Library, H.OnlyForDev),
             new BRequires(H.School, 50, 500, 900),
             new BRequires(H.TradesSchool, 50, 500, 900, priorBuilds: new List<H>(){H.School}),
             new BRequires(H.TownHouse, H.Coming_Soon),

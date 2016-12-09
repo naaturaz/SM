@@ -117,7 +117,7 @@ public class AddOrderWindow : GUIElement {
             return;
         }
 
-        ShowButtons(Program.gameScene.ExportImport1.ProdSpecs);
+        ShowButtons(Program.gameScene.ExportImport1.ProdSpecsCured());
     }
 
 

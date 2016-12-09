@@ -154,7 +154,7 @@ public class Forester : Profession
                 continue;
             }
 
-            if (t.HType == H.Tree //|| t.HType == H.Stone || t.HType == H.Iron || t.HType == H.Gold
+            if (t.HType == H.Tree || t.HType == H.Stone || t.HType == H.Iron || t.HType == H.Gold
                 )
             {
                 _spawnersList.Add(t);

@@ -28,10 +28,7 @@ namespace Assets.Classes.Menu_GUI.GUI.Bulletin
         List<ProdSpec> GetAllInInventories()
         {
             List<ProdSpec> res = new List<ProdSpec>();
-
-
-
-            return Program.gameScene.ExportImport1.ProdSpecs;
+            return Program.gameScene.ExportImport1.TownProdSpecs;
         }
 
 

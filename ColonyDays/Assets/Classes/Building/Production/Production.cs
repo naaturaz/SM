@@ -120,7 +120,6 @@ public class Production  {
         Rum();
         Chocolate();
         Ink();
-        SteelFoundry();
         Foundry();
 
         //Meats();
@@ -146,7 +145,7 @@ public class Production  {
         PaperNewsAndBook();
         Sugar();
 
-        Houses();
+        //Houses();
     }
 
     /// <summary>
@@ -206,17 +205,6 @@ public class Production  {
         InputProdCheckAndAdd(new ProductInfo(P.Ink, prodFormu1, H.Ink));
     }
 
-    private void SteelFoundry()
-    {
-        InputElement elementI = new InputElement(P.Iron, 5);
-        InputElement elementC = new InputElement(P.Coal, 5);
-
-        List<InputElement> prodFormu1 = new List<InputElement>() { elementI, elementC, _eleWoodComb };
-        List<InputElement> prodFormu2 = new List<InputElement>() {  elementI, elementC, _eleCoalComb };
-        InputProdCheckAndAdd(new ProductInfo(P.Steel, prodFormu1, H.SteelFoundry));
-        InputProdCheckAndAdd(new ProductInfo(P.Steel, prodFormu2, H.SteelFoundry));
-    }
-
     private void Foundry()
     {
         //doesnt have Coal as Combustion element bz then leaves a lot of Coal in the inventory
@@ -243,6 +231,19 @@ public class Production  {
 
         InputProdCheckAndAdd(productInfo1);
         //InputProdCheckAndAdd(productInfo2);
+
+
+
+
+        //Steel
+        InputElement elementI = new InputElement(P.Iron, 5);
+        InputElement elementC = new InputElement(P.Coal, 5);
+
+        List<InputElement> prodFormuA = new List<InputElement>() { elementI, elementC, _eleWoodComb };
+        List<InputElement> prodFormuB = new List<InputElement>() { elementI, elementC, _eleCoalComb };
+        InputProdCheckAndAdd(new ProductInfo(P.Steel, prodFormuA, H.Foundry));
+        InputProdCheckAndAdd(new ProductInfo(P.Steel, prodFormuB, H.Foundry));
+
     }
 
     private void LoadAllGenerics()

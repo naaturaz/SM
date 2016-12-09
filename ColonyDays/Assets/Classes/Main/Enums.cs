@@ -250,10 +250,9 @@ public enum H
     LumberMill, BlackSmith, SaltMine,
     //prod F5
     Brick, Carpintery, Cigars, Mill, Tailor,
-    //Tilery, 
     Armory, Distillery, Chocolate, Ink,
     //industry F6
-    Cloth, GunPowder, Paper_Mill, Printer, CoinStamp, Silk, SugarMill, Foundry, SteelFoundry,
+    Cloth, GunPowder, Paper_Mill, Printer, CoinStamp, Silk, SugarMill, Foundry, 
     //Trade F7
     Dock, Shipyard, Supplier, StorageSmall, StorageMed, StorageBig, StorageBigTwoDoors, StorageExtraBig,
     //gov F8
@@ -469,13 +468,12 @@ public enum StProd //for structures game structure.cs
 {
     //Production
     Brick, Carpintery, Cigars, Mill, Tailor, 
-    //Tilery, 
     Armory, Distillery, Chocolate, Ink,
 }
 
 //Ind
 public enum StInd
-{ Cloth, GunPowder, Paper_Mill, Printer, CoinStamp, Silk, SugarMill, Foundry, SteelFoundry }
+{ Cloth, GunPowder, Paper_Mill, Printer, CoinStamp, Silk, SugarMill, Foundry,}
 
 public enum StTrade //for structures game structure.cs 
 {
@@ -607,8 +605,11 @@ public enum Ron2
 {
     Library, TradesSchool, 
     Dock, StorageSmall,
-    BridgeRoad, GunPowder, Armory, Tailor, Pottery
+    BridgeRoad, GunPowder, Armory, Tailor, Pottery,
+
+    CoinStamp, Chocolate, Distillery, Foundry, Printer, Cigars, Ink
 }
+
 
 public enum RonWoodHouse
 {

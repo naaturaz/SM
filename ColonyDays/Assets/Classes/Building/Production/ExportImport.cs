@@ -5,21 +5,36 @@ using UnityEngine;
  * Here will be the price Base for all products and the variability they will have 
  * 
  * The Export and Import action happen in Dispatch.cs
- * 
- * 
  */
 
 public class ExportImport
 {
-    List<ProdSpec> _prodSpecs = new List<ProdSpec>(); 
+    List<ProdSpec> _prodSpecs = new List<ProdSpec>();
+    List<ProdSpec> _townProdSpecs = new List<ProdSpec>();
+
+
 
     //craeted for GC reasons
     Dictionary<P, int> _prodSpecsGC = new Dictionary<P, int>();
+    Dictionary<P, int> _townProdSpecsGC = new Dictionary<P, int>();
+
 
     public ExportImport()
     {
         LoadBasePrices();
+
+        _townProdSpecs.AddRange(_prodSpecs);
+        _townProdSpecs.RemoveAt(0);
+        _townProdSpecs.RemoveAt(0);
+        _townProdSpecs.RemoveAt(0);
+
         MapDict();
+    }
+
+    public List<ProdSpec> TownProdSpecs
+    {
+        get { return _townProdSpecs; }
+        set { _townProdSpecs = value; }
     }
 
     public List<ProdSpec> ProdSpecs
@@ -36,7 +51,37 @@ public class ExportImport
         {
             _prodSpecsGC.Add(_prodSpecs[i].Product, i);
         }
+
+        //town
+        _townProdSpecs = _townProdSpecs.OrderBy(a => a.Product).ToList();
+        for (int i = 0; i < _townProdSpecs.Count; i++)
+        {
+            _townProdSpecsGC.Add(_townProdSpecs[i].Product, i);
+        }
     }
+
+
+
+
+    //
+    List<ProdSpec> _prodSpecsCured = new List<ProdSpec>();
+    /// <summary>
+    /// Is just a called for one that doesnt have the Random and YEar
+    /// </summary>
+    /// <returns></returns>
+    internal List<ProdSpec> ProdSpecsCured()
+    {
+        if (_prodSpecsCured.Count == 0)
+        {
+            _prodSpecsCured.AddRange(_prodSpecs);
+            _prodSpecsCured.RemoveAt(0);
+            _prodSpecsCured.RemoveAt(0);
+            _prodSpecsCured.RemoveAt(0);
+        }
+        return _prodSpecsCured;
+    }
+
+
 
     //Densities
     //http://www.engineeringtoolbox.com/foods-materials-bulk-density-d_1819.html
@@ -55,6 +100,15 @@ public class ExportImport
     /// </summary>
     private void LoadBasePrices()
     {
+        _prodSpecs.Add(new ProdSpec(P.RandomMineOutput, 150, 4100, 100));
+        _prodSpecs.Add(new ProdSpec(P.RandomFoundryOutput, 150, 4100, 100));
+
+        //for report purposes, and needed here only  for the icon root 
+        _prodSpecs.Add(new ProdSpec(P.Year, 150, 4100, 100));
+
+
+
+
         _prodSpecs.Add(new ProdSpec(P.Bean, 90, 368, 100));
         _prodSpecs.Add(new ProdSpec(P.CoffeeBean, 100, 308, 100, 30*6));
         _prodSpecs.Add(new ProdSpec(P.Cacao, 110, 250, 100, 360*3));
@@ -183,11 +237,7 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Book, 300, 502, 5));
        // _prodSpecs.Add(new ProdSpec(P.Silk, 150, 1300, 5));
 
-        _prodSpecs.Add(new ProdSpec(P.RandomMineOutput, 150, 4100, 100));
-        _prodSpecs.Add(new ProdSpec(P.RandomFoundryOutput, 150, 4100, 100));
 
-        //for report purposes, and needed here only  for the icon root 
-        _prodSpecs.Add(new ProdSpec(P.Year, 150, 4100, 100));
     }
 
 
@@ -340,6 +390,36 @@ public class ExportImport
         }
         return prodFound.IconRoot;
     }
+
+
+
+
+
+    //Town Prices
+    internal object ReturnPriceTown(P prod)
+    {
+        var prodFound = FindTownProdSpec(prod);
+
+        if (prodFound == null)
+        {
+            //Debug.Log("ReturnPrice asked of not found prod:" + prod);
+            return 0;
+        }
+        return prodFound.Price;
+    }
+
+    //todo GC . pass Index of List. map index to Prod while creating the Dict 
+    ProdSpec FindTownProdSpec(P prod)
+    {
+        if (_townProdSpecsGC.ContainsKey(prod))
+        {
+            var index = _townProdSpecsGC[prod];
+            return _townProdSpecs[index];
+        }
+        return null;
+    }
+
+
 }
 
 /// <summary>
