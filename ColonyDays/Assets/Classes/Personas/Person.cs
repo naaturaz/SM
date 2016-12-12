@@ -498,7 +498,7 @@ public class Person : General
         obj.InitObj(0);//15    5
         //obj.Geometry.GetComponent<Renderer>().sharedMaterial = ReturnRandoPersonMaterialRoot();
         obj.HType = H.Person;
-
+        
 
         //this to when Person dont have where to leave and then they find a place the teletranport effect
         //wont be seeable bz there are spawneed hidden. 
@@ -887,9 +887,9 @@ public class Person : General
 
     private void UseMyFairAmt()
     {
-        GameController.ResumenInventory1.Remove(P.Cloth, .01f);
-        GameController.ResumenInventory1.Remove(P.Utensil, .01f);
-        GameController.ResumenInventory1.Remove(P.Crockery, .01f);
+        GameController.ResumenInventory1.Remove(P.Cloth, .03f);
+        GameController.ResumenInventory1.Remove(P.Utensil, .001f);
+        GameController.ResumenInventory1.Remove(P.Crockery, .02f);
         GameController.ResumenInventory1.Remove(P.Furniture, .01f);
     }
 
@@ -1270,7 +1270,7 @@ public class Person : General
         {
             yield return new WaitForSeconds(checkFoodElapsed); // wait
             ParentPersonToHome();
-            CheckOnNutritionAndThirst();
+            
             _brain.SlowCheckUp();
             TryHaveKids();
         }
@@ -1691,7 +1691,7 @@ public class Person : General
         {
             return Job.Farmer;
         }
-        else if (Work.HType.ToString().Contains(H.SaltMine.ToString()))
+        else if (Work.HType.ToString().Contains(H.ShoreMine.ToString()))
         {
             return Job.SaltMiner;
         }
@@ -1733,6 +1733,8 @@ public class Person : General
 
         _lastTimeHome = Program.gameScene.GameTime1.CurrentDate();
         EatDrink();
+
+        CheckOnNutritionAndThirst();
     }
 
     float AdditionalFoodNeeds()
@@ -1741,7 +1743,7 @@ public class Person : General
         {
             return 0;
         }
-        return 2;
+        return 6;
     }
 
     void EatDrink()

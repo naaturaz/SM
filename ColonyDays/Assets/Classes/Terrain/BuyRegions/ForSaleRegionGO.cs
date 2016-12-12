@@ -62,6 +62,11 @@ public class ForSaleRegionGO : General
 
     void OnMouseUp()
     {
+        if (Program.IsInputLocked)
+        {
+            return;
+        }
+
         //in case one is up. gets destroyed
         Dialog.Listen("Dialog.Cancel");
 

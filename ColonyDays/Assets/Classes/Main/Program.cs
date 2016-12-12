@@ -96,7 +96,7 @@ public class Program : MonoBehaviour {
 
     private void OnApplicationQuit()
     {
-        //ManagerReport.FinishAllReports();
+        ManagerReport.FinishAllReports();
         Settings.SaveToFile();
     }
 
@@ -181,6 +181,45 @@ public class Program : MonoBehaviour {
     static internal bool IsAnUnLockGame()
     {
         return TypeOfGame == H.Unlock;
+    }
+
+
+
+    //input locking
+    static bool _isInputLocked;
+    public static bool IsInputLocked
+    {
+        get { return Program._isInputLocked; }
+        set { Program._isInputLocked = value; }
+    }
+
+    public void LockInput()
+    {
+        IsInputLocked = true;
+    }
+
+    /// <summary>
+    /// Called  from INputFields when get inActive 
+    /// </summary>
+    public void UnLockInput()
+    {
+        IsInputLocked = false;
+    }
+
+    /// <summary>
+    /// Called  from INputFields when get active 
+    /// </summary>
+    static public void LockInputSt()
+    {
+        IsInputLocked = true;
+    }
+
+    /// <summary>
+    /// Called  from INputFields when get inActive 
+    /// </summary>
+    static public void UnLockInputSt()
+    {
+        IsInputLocked = false;
     }
 }
 

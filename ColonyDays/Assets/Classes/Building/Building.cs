@@ -168,7 +168,6 @@ public class Building : General, Iinfo
 
     public string Name1
     {
-        get { return _name; }
         set { _name = value; }
     }
 
@@ -1362,7 +1361,7 @@ public class Building : General, Iinfo
 
     List<H> doubleBounds = new List<H>(){H.FishingHut, 
         H.Dock, H.Shipyard, H.Supplier,
-        H.MountainMine, H.SaltMine, H.LightHouse,
+        H.MountainMine, H.ShoreMine, H.LightHouse,
         H.PostGuard
     };
 
@@ -1784,7 +1783,7 @@ public class Building : General, Iinfo
         if (Inventory.IsEmpty() && amtOfStorages == 1)
         {
             int amtFood = PersonPot.Control.CurrentCondition().iniFood;
-            Inventory.Add(P.Corn, amtFood);
+            Inventory.Add(P.Bean, amtFood);
 
 
             Program.gameScene.GameController1.SetInitialLote();

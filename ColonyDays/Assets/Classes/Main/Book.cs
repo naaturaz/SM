@@ -92,6 +92,8 @@ public class Book : General
         Build.Add(new BuildStat(H.FieldFarmXLarge, 400, 1, 0, 0,  maxPeople: 9, capacity: 3));
 
         //Raw
+        Build.Add(new BuildStat(H.Mortar, 400, 15, 5, 15, 5, maxPeople: 5, capacity: 160));
+
         Build.Add(new BuildStat(H.Clay, 400, 15, 5, 15, 5, maxPeople: 5, capacity: 160));
         Build.Add(new BuildStat(H.Pottery, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.FishingHut, 400, 15, 5, 25, 5, maxPeople: 5));
@@ -99,7 +101,7 @@ public class Book : General
         Build.Add(new BuildStat(H.LumberMill, 400, 30, 5, 0, 1, maxPeople: 5));
         Build.Add(new BuildStat(H.BlackSmith, 400, 15, 5, 25, 5, maxPeople: 5));
 
-        Build.Add(new BuildStat(H.SaltMine, 400, 15, 5, 25, 5, maxPeople: 5));
+        Build.Add(new BuildStat(H.ShoreMine, 400, 15, 5, 25, 5, maxPeople: 5));
 
         //Prod
         Build.Add(new BuildStat(H.Brick, 400, 15, 5, 25, 5, maxPeople: 5, capacity: 50));
@@ -122,7 +124,6 @@ public class Book : General
 
         Build.Add(new BuildStat(H.Printer, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.CoinStamp, 400, 15, 5, 25, 5, maxPeople: 5));
-        Build.Add(new BuildStat(H.Silk, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.SugarMill, 400, 15, 5, 25, 5, maxPeople: 5));
 
         Build.Add(new BuildStat(H.Foundry, 400, 15, 5, 25, 5, maxPeople: 5));
@@ -223,6 +224,14 @@ public class BuildStat
     private float _gold;
     private float _dollar;//Money 
 
+    private float _nail;
+    private float _furniture;
+    private float _mortar;
+    private float _machinery;
+    private float _floorTile;
+    private float _roofTile;
+  
+
     //Cubic Meters of storage for a build
     private float _capacity;
 
@@ -250,20 +259,32 @@ public class BuildStat
     public BuildStat(H hType, float amountOfLabour = 0, float wood = 0, float stone = 0, float brick = 0, float iron = 0,
         float gold = 0, float colonyDollar = 0, int maxPeople = 0, float capacity = 10)
     {
-        float multiplier = 100;
+        float multiplier = 300;
 
         AmountOfLabour = amountOfLabour * 2;
         HType = hType;
         Root = global::Root.RetBuildingRoot(hType);
         Wood = wood * multiplier;
-        Stone = stone * multiplier;
+        Stone = stone * multiplier/10;
         Brick = brick * multiplier;
-        Iron = iron * multiplier;
+        Iron = iron * multiplier/10;
         Gold = gold * multiplier;
 
         Dollar = colonyDollar;
         _maxPeople = maxPeople;
         _capacity = capacity;
+
+        Nail = Wood / 2000;
+        Furniture = Capacity;
+
+        Mortar = Brick / 200;
+        RoofTile = Brick / 5;
+        FloorTile = Brick / 6;
+
+        if (hType == H.Bohio)
+        {
+            Furniture = 0;
+        }
     }   
     
 
@@ -341,6 +362,47 @@ public class BuildStat
         get { return _maxPeople; }
         set { _maxPeople = value; }
     }
+
+    public float Nail
+    {
+        get { return _nail; }
+        set { _nail = value; }
+    }
+
+    public float Furniture
+    {
+        get { return _furniture; }
+        set { _furniture = value; }
+    }
+
+    public float Mortar
+    {
+        get { return _mortar; }
+        set { _mortar = value; }
+    }
+
+    public float Machinery
+    {
+        get { return _machinery; }
+        set { _machinery = value; }
+    }
+
+    public float FloorTile
+    {
+        get { return _floorTile; }
+        set { _floorTile = value; }
+    }
+
+    public float RoofTile
+    {
+        get { return _roofTile; }
+        set { _roofTile = value; }
+    }
+
+
+
+
+
 
   
 

@@ -53,6 +53,8 @@ public class Languages
 	   { "FieldFarmXLarge.Desc","Extra large field farm"+_fieldFarmTail},
 
        //Raw
+	   { "Mortar.Desc","Here a worker will produce Mortar"},
+
 	   { "Clay.Desc","Here a worker will produce Clay, raw material is needed for bricks and more"},
 	   { "Pottery.Desc","Here a worker will produce crockery products, such as dishes, jars, etc"},
 	   { H.FishingHut + ".Desc","Here a worker can catch fish in a river"},
@@ -62,7 +64,7 @@ public class Languages
 	   { "Resin.Desc","Here a worker will work the mine by extracting minerals and metals randomly"},
 	   {  H.LumberMill +".Desc","Here workers will either mine or find resources such as wood, stone, and ore"},
 	   { "BlackSmith.Desc","Here workers will produce the product selected"+_asLongHasInput},
-	   { "SaltMine.Desc","Here workers will produce salt"},
+	   { "ShoreMine.Desc","Here workers will produce salt, sand or quicklime"},
 
        //Prod
 	   { "Brick.Desc","Here a worker will produce clay made products, such as bricks, etc"},
@@ -266,14 +268,14 @@ public class Languages
        { "PirateThreat.Help", "Pirate Threat: This is how aware are the pirates of your port. This increases as" +
 	                              "you have more money. If this reaches over 90 you will lose the game"},
 
-	   { "PortReputation.Help", "Port Reputation: The more people know your port, the more they will visit" +
-	                                "If you want to increase this make sure you always have some orders" +
-	                                "in the port, supplier and shipyard"},
+	   { "PortReputation.Help", "Port Reputation: The more people know your port, the more they will visit." +
+	                                " If you want to increase this make sure you always have some orders" +
+	                                " in the port, supplier and shipyard"},
 	   { "Emigrate.Help", "Emigrates: When people are unhappy for a few years they leave. The bad" +
-	                          "part of this is they won't come back, they won't produce or have children." +
-	                          "The only good thing is that they increase the 'Port Reputation'"},
+	                          " part of this is they won't come back, they won't produce or have children." +
+	                          " The only good thing is that they increase the 'Port Reputation'"},
 	   { "Food.Help", "Food: The higher the variety of food available in a household, the happier they" +
-	                      "will be."},	  
+	                      " will be."},	  
                           
        { "Weight.Help", "Weight: All the weights in the game are in Kg or Lbs depending on which Unit system is selected." +
                         " You can change it in 'Options' in the 'Main Menu'"},
@@ -328,8 +330,8 @@ public class Languages
 	   { "FieldFarmXLarge.Desc","Finca de cultivos super grande"+_fieldFarmTailES},
 
        //Raw
+       { "Mortar.Desc","Here a worker will produce Mortar"},
 	   { "Clay.Desc","Aqui se produce barro, necesaria para construir ladrillos y otros productos mas"},
-
 	   { "Pottery.Desc","Aqui se producen productos de ceramica como platos, jarras, etc"},
 	   { H.FishingHut + ".Desc","Aqui se pescan peces"},
 	   { "FishRegular.Desc","Aqui se pescan peces"},
@@ -338,7 +340,7 @@ public class Languages
 	   { "Resin.Desc","La Resina de saca de los arboles aqui"},
 	   {  H.LumberMill +".Desc","Aqui los trabajadores buscan y extraen recursos naturales como madera, piedra y minerales"},
 	   { "BlackSmith.Desc","Aqui el trabajador produce elementos de la forja "+_asLongHasInputES},
-	   { "SaltMine.Desc","Aqui se produce la sal"},
+	   { "ShoreMine.Desc","Aqui se produce la sal, arena o cal"},
 
        //Prod
 	   { "Brick.Desc",_produceES},

@@ -99,7 +99,13 @@ public class GameController  {
         inv.Add(P.Cloth, startingCondition.iniCloth);
         inv.Add(P.Utensil, startingCondition.iniUtensil);
         inv.Add(P.Crockery, startingCondition.iniCrockery);
+       
         inv.Add(P.Furniture, startingCondition.iniFurniture);
+        inv.Add(P.Nail, startingCondition.iniNail);
+        inv.Add(P.Mortar, startingCondition.iniMortar);
+        inv.Add(P.FloorTile, startingCondition.iniFloor);
+        inv.Add(P.RoofTile, startingCondition.iniRoof);
+
 
 
         return inv;

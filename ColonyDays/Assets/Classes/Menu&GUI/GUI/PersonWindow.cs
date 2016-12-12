@@ -329,5 +329,11 @@ public class PersonWindow : GUIElement
         _person.Name = _titleInputField.text;
         _titleInputFieldGO.SetActive(false);
         _title.text = _person.Name;
+        Program.UnLockInputSt();
+    }
+
+    public void LockInput()
+    {
+        Program.LockInputSt();
     }
 }

@@ -318,4 +318,21 @@ public class NewGameWindow : GUIElement
 
     }
 
+
+    /// <summary>
+    /// Called from GUI
+    /// </summary>
+    public void LockInput()
+    {
+        Program.LockInputSt();
+    }
+
+    /// <summary>
+    /// Called from GUI
+    /// </summary>
+    public void UnLockInput()
+    {
+        Program.UnLockInputSt();
+    }
+
 }

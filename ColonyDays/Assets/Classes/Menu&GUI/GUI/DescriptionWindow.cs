@@ -132,6 +132,18 @@ public class DescriptionWindow : General
 
 
         //unlock
+        return CostOfABuilding(type, 3);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="returnEvery">When appending every how many lines will do a return, To show in 
+    /// Descriptions window the normal used until now is : 3</param>
+    /// <returns></returns>
+    public static string CostOfABuilding(H type, int returnEvery)
+    {
         var stat = Book.GiveMeStat(type);
         int appends = 0;
 
@@ -147,41 +159,84 @@ public class DescriptionWindow : General
             res += " Gold: " + Unit.WeightConverted(stat.Gold) + " " + Unit.WeightUnit();
             appends++;
         }
-        
+
         if (stat.Iron != 0)
         {
             res += " Iron: " + Unit.WeightConverted(stat.Iron) + " " + Unit.WeightUnit();
             appends++;
         }
-        res = CheckIfAppend3(ref appends, res);
+        res = CheckIfAppend3(ref appends, res, returnEvery);
 
         if (stat.Stone != 0)
         {
             res += " Stone: " + Unit.WeightConverted(stat.Stone) + " " + Unit.WeightUnit();
             appends++;
         }
-        res = CheckIfAppend3(ref appends, res);
- 
+        res = CheckIfAppend3(ref appends, res, returnEvery);
+
         if (stat.Brick != 0)
         {
             res += " Brick: " + Unit.WeightConverted(stat.Brick) + " " + Unit.WeightUnit();
             appends++;
         }
-        res = CheckIfAppend3(ref appends, res);
+        res = CheckIfAppend3(ref appends, res, returnEvery);
 
         if (stat.Wood != 0)
         {
             res += " Wood: " + Unit.WeightConverted(stat.Wood) + " " + Unit.WeightUnit();
             appends++;
-        } 
-        res = CheckIfAppend3(ref appends, res);
+        }
+        res = CheckIfAppend3(ref appends, res, returnEvery);
+
+        if (stat.Nail != 0)
+        {
+            res += " Nail: " + Unit.WeightConverted(stat.Nail) + " " + Unit.WeightUnit();
+            appends++;
+        }
+        res = CheckIfAppend3(ref appends, res, returnEvery);
+
+        if (stat.Furniture != 0)
+        {
+            res += " Furniture: " + Unit.WeightConverted(stat.Furniture) + " " + Unit.WeightUnit();
+            appends++;
+        }
+        res = CheckIfAppend3(ref appends, res, returnEvery);
+
+        if (stat.Mortar != 0)
+        {
+            res += " Mortar: " + Unit.WeightConverted(stat.Mortar) + " " + Unit.WeightUnit();
+            appends++;
+        }
+        res = CheckIfAppend3(ref appends, res, returnEvery);
+
+        if (stat.RoofTile != 0)
+        {
+            res += " RoofTile: " + Unit.WeightConverted(stat.RoofTile) + " " + Unit.WeightUnit();
+            appends++;
+        }
+        res = CheckIfAppend3(ref appends, res, returnEvery);
+
+        if (stat.FloorTile != 0)
+        {
+            res += " FloorTile: " + Unit.WeightConverted(stat.FloorTile) + " " + Unit.WeightUnit();
+            appends++;
+        }
+        res = CheckIfAppend3(ref appends, res, returnEvery);
+
+        if (stat.Machinery != 0)
+        {
+            res += " Machinery: " + Unit.WeightConverted(stat.Machinery) + " " + Unit.WeightUnit();
+            appends++;
+        }
+        res = CheckIfAppend3(ref appends, res, returnEvery);
 
         return res;
     }
 
-    public static string CheckIfAppend3(ref int append , string msg )
+
+    public static string CheckIfAppend3(ref int append , string msg, int returnEvery)
     {
-        if (append >= 3)
+        if (append >= returnEvery)
         {
             append = 0;
             return msg + "\n";

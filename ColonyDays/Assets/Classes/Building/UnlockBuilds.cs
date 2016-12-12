@@ -55,15 +55,14 @@ public class UnlockBuilds
             new BRequires(H.FieldFarmXLarge, 150),
 
             //raw
+            new BRequires(H.Mortar, true),
             new BRequires(H.Clay, true),
             new BRequires(H.Pottery, true),
             new BRequires(H.FishingHut, true),
-            //new BRequires(H.Mine, true),
             new BRequires(H.MountainMine, true),
-            //new BRequires(H.Resin, true),
             new BRequires(H.LumberMill, true),
             new BRequires(H.BlackSmith),
-            new BRequires(H.SaltMine, true),
+            new BRequires(H.ShoreMine, true),
 
             //prod
             new BRequires(H.Brick, true),
@@ -77,20 +76,19 @@ public class UnlockBuilds
             new BRequires(H.Ink, 50, 500, 900),
 
             //ind
-            new BRequires(H.Cloth, 50, 500, 900),
+            new BRequires(H.Cloth, H.OnlyForDev),
             new BRequires(H.GunPowder, 50, 500, 900),
-            new BRequires(H.Paper_Mill, 50, 500, 900),
+            new BRequires(H.Paper_Mill, H.OnlyForDev),
             new BRequires(H.Printer, 50, 500, 900),
             new BRequires(H.CoinStamp, 150, 500, 900),
-            new BRequires(H.Silk, 50, 500, 900),
-            new BRequires(H.SugarMill, 50, 500, 900),
+            new BRequires(H.SugarMill, H.OnlyForDev),
             new BRequires(H.Foundry, 50, 500, 900),
 
             //trade
             new BRequires(H.Dock, true),
             new BRequires(H.Shipyard, 50, 500, 500, priorBuilds: new List<H>(){H.Supplier}),
             new BRequires(H.Supplier, 50, 500, 1000, priorBuilds: new List<H>(){H.LightHouse}),
-
+            
             new BRequires(H.StorageSmall, true),
             new BRequires(H.StorageMed, 50, 500, 900, priorBuilds: new List<H>(){H.StorageSmall}),
             new BRequires(H.StorageBig, 150, 10000, 900, priorBuilds: new List<H>(){H.StorageMed}),
@@ -369,7 +367,7 @@ class BRequires
             }
         }
 
-        res = DescriptionWindow.CheckIfAppend3(ref appends, res);
+        res = DescriptionWindow.CheckIfAppend3(ref appends, res, 3);
 
         InfoMsg = res;
 

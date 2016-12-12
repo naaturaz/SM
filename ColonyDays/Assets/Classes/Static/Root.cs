@@ -695,6 +695,7 @@ public class Root : MonoBehaviour
 
 
         //Raw
+        buildsRoot.Add(H.Mortar, "Prefab/Building/Raw/Mortar");
         buildsRoot.Add(H.Clay, "Prefab/Building/Raw/Clay");
         buildsRoot.Add(H.Pottery, "Prefab/Building/Raw/Pottery");
         buildsRoot.Add(H.FishingHut, "Prefab/Building/Raw/FishingHut");
@@ -704,7 +705,7 @@ public class Root : MonoBehaviour
         //buildsRoot.Add(H.Resin, "Prefab/Building/Raw/Resin");
         buildsRoot.Add(H.LumberMill, "Prefab/Building/Raw/Wood");
         buildsRoot.Add(H.BlackSmith, "Prefab/Building/Raw/BlackSmith");
-        buildsRoot.Add(H.SaltMine, "Prefab/Building/Raw/SaltMine");
+        buildsRoot.Add(H.ShoreMine, "Prefab/Building/Raw/ShoreMine");
 
 
         //Prod
@@ -724,7 +725,6 @@ public class Root : MonoBehaviour
         buildsRoot.Add(H.Paper_Mill, "Prefab/Building/Industry/Paper");
         buildsRoot.Add(H.Printer, "Prefab/Building/Industry/Printer");
         buildsRoot.Add(H.CoinStamp, "Prefab/Building/Industry/CoinStamp");
-        buildsRoot.Add(H.Silk, "Prefab/Building/Industry/Silk");
         buildsRoot.Add(H.SugarMill, "Prefab/Building/Industry/SugarMill");
         buildsRoot.Add(H.Foundry, "Prefab/Building/Industry/Foundry");
 

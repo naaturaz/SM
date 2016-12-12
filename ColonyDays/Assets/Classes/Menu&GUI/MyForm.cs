@@ -87,7 +87,7 @@ public class MyForm : General
         if (_resources != null)
         {
             _startPosIni = GetChildCalled(H.Start, Resources);
-            LoadMainInventory();
+            //LoadMainInventory();
         }
 
         //is the main gui 

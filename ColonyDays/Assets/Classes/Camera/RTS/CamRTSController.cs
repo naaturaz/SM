@@ -215,7 +215,8 @@ public class CamRTSController : CamControl
         InitializeObjects();
         CreateTargetAndUpdate();
 
-        if (U2D.IsMouseOnScreen() &&
+        if (!Program.IsInputLocked &&
+            U2D.IsMouseOnScreen() &&
             !MiniMapRTS.isOnTheLimits && BuildingPot.Control != null && BuildingPot.Control.Registro.AllBuilding.Count>0)
         {
             ControlInput();
@@ -361,6 +362,8 @@ public class CamRTSController : CamControl
 
     private void QandEKeys()
     {
+        
+
         if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.E))
         {
             //CreateRotCam360GuidesY();

@@ -225,7 +225,7 @@ public class General : MonoBehaviour
         }
         else if (hTypeP == H.Dock || hTypeP == H.Shipyard || hTypeP == H.Supplier
             || hTypeP == H.FishingHut 
-            || hTypeP == H.SaltMine)
+            || hTypeP == H.ShoreMine)
         {
             res = Ca.Shore;
         }

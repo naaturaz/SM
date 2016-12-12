@@ -86,8 +86,16 @@ public class Hover : MonoBehaviour
         return transform.name;
     }
 
+
+    static string oldMsg = "";
     void SpawnHelp()
     {
+        if (oldMsg == MyMsg())
+        {
+            return;
+        }
+
+        oldMsg = MyMsg();
         hoverWindow.ShowMsg(ReturnHoverPos(), MyMsg());
     } 
     

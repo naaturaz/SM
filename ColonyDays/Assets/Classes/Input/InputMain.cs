@@ -419,7 +419,8 @@ public class InputMain : InputParent {
             return;
         }
 
-        Program.gameScene.GameSpeed += val;
+        val = DefineChangedVal(val);
+        Program.gameScene.GameSpeed = val;
 
         if (Program.gameScene.GameSpeed < 0)
         {
@@ -435,4 +436,25 @@ public class InputMain : InputParent {
         ManagerReport.AddNewSpeed(Program.gameScene.GameSpeed);
         MyText.UpdateNow();
     }
+
+    int _currIndex = 1;//bz games starts at 1x speed
+    //the only posibles values of speed 
+    List<int> _values = new List<int>() { 0, 1, 2, 5, 10 };
+
+    private int DefineChangedVal(int val)
+    {
+        _currIndex = _currIndex + val;
+
+        //limits
+        if (_currIndex < 0)
+        {
+            _currIndex = 0;
+        }
+        else if (_currIndex >= _values.Count)
+        {
+            _currIndex = _values.Count-1;
+        }
+        return _values[_currIndex];
+    }
+
 }

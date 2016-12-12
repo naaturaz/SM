@@ -145,7 +145,17 @@ public class Production  {
         PaperNewsAndBook();
         Sugar();
 
-        //Houses();
+        Mortar();
+    }
+
+    private void Mortar()
+    {
+        InputElement elementS = new InputElement(P.Sand, 2);
+        InputElement elementC = new InputElement(P.QuickLime, 1);
+
+        List<InputElement> prodFormu1 = new List<InputElement>() { elementS,  elementC };
+        List<InputElement> prodFormu2 = new List<InputElement>() { elementS,  elementC };
+        InputProdCheckAndAdd(new ProductInfo(P.Mortar, prodFormu1, H.Mortar));
     }
 
     /// <summary>
@@ -262,8 +272,11 @@ public class Production  {
 
 
         InputProdCheckAndAdd(new ProductInfo(P.Wood, null, H.LumberMill));
-        InputProdCheckAndAdd(new ProductInfo(P.Salt, null, H.SaltMine));
-       // InputProdCheckAndAdd(new ProductInfo(P.FloorTile, null, H.Tilery));
+
+
+        InputProdCheckAndAdd(new ProductInfo(P.Salt, null, H.ShoreMine));
+        InputProdCheckAndAdd(new ProductInfo(P.Sand, null, H.ShoreMine));
+        InputProdCheckAndAdd(new ProductInfo(P.QuickLime, null, H.ShoreMine));
     }
 
     private void Mine()
@@ -283,28 +296,31 @@ public class Production  {
 
         InputProdCheckAndAdd(new ProductInfo(P.Corn, null, listH));
         InputProdCheckAndAdd(new ProductInfo(P.Bean, null, listH));
-        InputProdCheckAndAdd(new ProductInfo(P.Coconut, null, listH));
-        InputProdCheckAndAdd(new ProductInfo(P.Banana, null, listH));
-        InputProdCheckAndAdd(new ProductInfo(P.Potato, null, listH));
         InputProdCheckAndAdd(new ProductInfo(P.SugarCane, null, listH));
-        InputProdCheckAndAdd(new ProductInfo(P.Cotton, null, listH));
-        InputProdCheckAndAdd(new ProductInfo(P.TobaccoLeaf, null, listH));
-        InputProdCheckAndAdd(new ProductInfo(P.Henequen, null, listH));
-
-        //new
         InputProdCheckAndAdd(new ProductInfo(P.Carrot, null, listH));
         InputProdCheckAndAdd(new ProductInfo(P.Tomato, null, listH));
-        InputProdCheckAndAdd(new ProductInfo(P.Cabbage, null, listH));
-        InputProdCheckAndAdd(new ProductInfo(P.Lettuce, null, listH));
-        InputProdCheckAndAdd(new ProductInfo(P.SweetPotato, null, listH));
-        InputProdCheckAndAdd(new ProductInfo(P.Cassava, null, listH));
-        InputProdCheckAndAdd(new ProductInfo(P.Pineapple, null, listH));
+
+        //InputProdCheckAndAdd(new ProductInfo(P.Coconut, null, listH));
+        //InputProdCheckAndAdd(new ProductInfo(P.Banana, null, listH));
+        //InputProdCheckAndAdd(new ProductInfo(P.Potato, null, listH));
+        //InputProdCheckAndAdd(new ProductInfo(P.Cotton, null, listH));
+        //InputProdCheckAndAdd(new ProductInfo(P.TobaccoLeaf, null, listH));
+        //InputProdCheckAndAdd(new ProductInfo(P.Henequen, null, listH));
+        //InputProdCheckAndAdd(new ProductInfo(P.Cabbage, null, listH));
+        //InputProdCheckAndAdd(new ProductInfo(P.Lettuce, null, listH));
+        //InputProdCheckAndAdd(new ProductInfo(P.SweetPotato, null, listH));
+        //InputProdCheckAndAdd(new ProductInfo(P.Cassava, null, listH));
+        //InputProdCheckAndAdd(new ProductInfo(P.Pineapple, null, listH));
+        //InputProdCheckAndAdd(new ProductInfo(P.Papaya, null, listH));
+
+
+
+
+
         //InputProdCheckAndAdd(new ProductInfo(P.Mango, null, listH));
         //InputProdCheckAndAdd(new ProductInfo(P.Avocado, null, listH));
         //InputProdCheckAndAdd(new ProductInfo(P.Guava, null, listH));
         //InputProdCheckAndAdd(new ProductInfo(P.Orange, null, listH));
-        InputProdCheckAndAdd(new ProductInfo(P.Papaya, null, listH));
-
     }
 
    

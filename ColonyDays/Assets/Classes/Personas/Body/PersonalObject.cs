@@ -195,6 +195,7 @@ public class PersonalObject
         {
             _currentPoint = _bip001Pelvis;
             _currentRoot = DefineCurrentCartRoot();
+            GameController.ResumenInventory1.Remove(P.Cart, .01f);
         }
         else _currentRoot = "";
     }

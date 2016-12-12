@@ -508,7 +508,7 @@ public class Registro : MonoBehaviour
         AllRegFile[index].BuildersManager1 = build.BuildersManager1;
         AllRegFile[index].PlantSave1 = build.PlantSave1;
         AllRegFile[index].CurrentProd = build.CurrentProd;
-
+        AllRegFile[index].Name = build.Name();
     }
 
     /// <summary>
@@ -555,6 +555,8 @@ public class Registro : MonoBehaviour
 
         regFile.ProductionReport = build.ProductionReport;
         regFile.MaxPeople = build.MaxPeople;
+        regFile.Name = build.Name();
+
     }
 
     /// <summary>

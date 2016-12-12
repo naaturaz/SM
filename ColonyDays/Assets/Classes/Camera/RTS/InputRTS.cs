@@ -301,8 +301,8 @@ public class InputRTS : GenericCameraComponent
         {
             return;
         }
-        
-        if (Input.GetKeyUp(KeyCode.O) && !_isFollowingPersonNow)
+
+        if (Input.GetKeyUp(KeyCode.O) && Input.GetKey(KeyCode.LeftControl) && !_isFollowingPersonNow)
         {
             CenterCamTo(personToFollow);
             CamControl.CAMRTS.CreateTargetAndUpdate();
@@ -314,7 +314,7 @@ public class InputRTS : GenericCameraComponent
 
             _isFollowingPersonNow = true;
         }
-        else if (Input.GetKeyUp(KeyCode.O) && _isFollowingPersonNow)
+        else if (Input.GetKeyUp(KeyCode.O) && Input.GetKey(KeyCode.LeftControl) && _isFollowingPersonNow)
         {
             CamControl.CAMRTS.CleanUpRotHelp();
             _isFollowingPersonNow = false;

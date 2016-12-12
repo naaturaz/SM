@@ -224,9 +224,22 @@ public class BuildersManager
         bool dollar = Program.gameScene.GameController1.Dollars >= stat.Dollar || stat.Dollar == 0;
         bool passedQue = _passedQueue.Contains(cons.Key);
 
+       
+        bool nail = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Nail) >= stat.Nail || stat.Nail == 0;
+        bool furniture = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Furniture) >= stat.Furniture
+            || stat.Furniture == 0;
+        bool mortar = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Mortar) >= stat.Mortar || stat.Mortar == 0;
+        bool floor = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.FloorTile) >= stat.FloorTile 
+            || stat.FloorTile == 0;
+        bool roof = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.RoofTile) >= stat.RoofTile
+          || stat.RoofTile == 0;
+        bool machine = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Machinery) >= stat.Machinery
+          || stat.Machinery == 0;
+
         //other wise would remove it from _passedQueue if was mising Brick for example and wont be 
         //build it ever again
-        if (wood && stone && brick && iron && gold && dollar && passedQue)
+        if (wood && stone && brick && iron && gold && dollar && passedQue
+            && nail && furniture && mortar && floor && roof && machine)
         {
             _passedQueue.Remove(cons.Key);
             return true;
@@ -341,6 +354,14 @@ public class BuildersManager
         GameController.ResumenInventory1.Remove(P.Iron, stat.Iron);
         GameController.ResumenInventory1.Remove(P.Gold, stat.Gold);
         GameController.ResumenInventory1.Remove(P.Dollar, stat.Dollar);
+
+        GameController.ResumenInventory1.Remove(P.Nail, stat.Nail);
+        GameController.ResumenInventory1.Remove(P.Furniture, stat.Furniture);
+        GameController.ResumenInventory1.Remove(P.Mortar, stat.Mortar);
+        GameController.ResumenInventory1.Remove(P.FloorTile, stat.FloorTile);
+        GameController.ResumenInventory1.Remove(P.RoofTile, stat.RoofTile);
+        GameController.ResumenInventory1.Remove(P.Machinery, stat.Machinery);
+
     }
 
     public bool IsAtLeastOneBuildUp()

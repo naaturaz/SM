@@ -504,9 +504,15 @@ public class BuildingWindow : GUIElement {
         if (sP.CurrentStage != 4)
         {
             var percentage = sP.PercentageBuiltCured();
-            return "Construction progress at: " + percentage + "%\n\n";
+            return "Construction progress at: " + percentage + "%\n" + 
+                MaterialsGathered() + "\n\n";
         }
         return "";
+    }
+
+    string MaterialsGathered()
+    {
+        return DescriptionWindow.CostOfABuilding(_building.HType, 1);
     }
 
     private string DebugInfo()
@@ -878,6 +884,7 @@ public class BuildingWindow : GUIElement {
     public void UpdateInputTitle()
     {
         _titleInputField.text = _building.Name();
+        Program.LockInputSt();
     }
 
     /// <summary>
@@ -888,5 +895,6 @@ public class BuildingWindow : GUIElement {
         _building.Name1 = _titleInputField.text;
         _titleInputFieldGO.SetActive(false);
         _title.text = _building.Name();
+        Program.UnLockInputSt();
     }
 }

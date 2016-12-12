@@ -185,6 +185,8 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Stone, 50, 2515, 20));
         _prodSpecs.Add(new ProdSpec(P.Ore, 70, 4200, 20));
         _prodSpecs.Add(new ProdSpec(P.Iron, 150, 7874, 15));
+        _prodSpecs.Add(new ProdSpec(P.Machinery, 1050, 2487, 5));
+
         _prodSpecs.Add(new ProdSpec(P.Steel, 200, 7850, 15));
         _prodSpecs.Add(new ProdSpec(P.Nail, 200, 4874, 20));//for ship repairs
 
@@ -202,13 +204,17 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.PalmLeaf, 10, 30));
 
 
-        _prodSpecs.Add(new ProdSpec(P.Wood, 10, 500, 90));
-        //_prodSpecs.Add(new ProdSpec(P.HolyWood, 100, 700, 30));
+        _prodSpecs.Add(new ProdSpec(P.Wood, 10, 800, 90));
         _prodSpecs.Add(new ProdSpec(P.Tool, 150, 3000, 15));
         _prodSpecs.Add(new ProdSpec(P.Utensil, 150, 3000, 15));
 
 
         _prodSpecs.Add(new ProdSpec(P.Brick, 50, 2000, 100));
+        _prodSpecs.Add(new ProdSpec(P.Mortar, 75, 2500, 100));
+        _prodSpecs.Add(new ProdSpec(P.QuickLime, 25, 1800, 100));
+        _prodSpecs.Add(new ProdSpec(P.Sand, 20, 1500, 100));
+
+
         
         _prodSpecs.Add(new ProdSpec(P.Barrel, 60, 100, 50));
         _prodSpecs.Add(new ProdSpec(P.Bucket, 30, 90, 60));

@@ -169,7 +169,7 @@ public class Structure : StructureParent
             }
             else if (MyId.Contains("Large") 
                 || HType == H.Clay || HType == H.Brick || HType == H.LumberMill
-                || HType == H.SaltMine)
+                || HType == H.ShoreMine)
             {
                 howBigTheCollidingSphere = 10;
             }

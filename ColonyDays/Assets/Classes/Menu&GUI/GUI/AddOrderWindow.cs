@@ -392,4 +392,12 @@ public class AddOrderWindow : GUIElement {
 
         return false;
     }
+
+    /// <summary>
+    /// Called from GUI
+    /// </summary>
+    public void LockInput()
+    {
+        Program.LockInputSt();
+    }
 }

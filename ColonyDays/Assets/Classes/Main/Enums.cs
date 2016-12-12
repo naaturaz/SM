@@ -181,6 +181,10 @@ public enum P
     CornMeal,
     Horse,
     Furniture,
+    Mortar,
+    QuickLime,
+    Sand,
+    Machinery,
 
 
 }
@@ -242,17 +246,17 @@ public enum H
     AnimalFarmSmall, AnimalFarmMed, AnimalFarmLarge, AnimalFarmXLarge,
     FieldFarmSmall, FieldFarmMed, FieldFarmLarge, FieldFarmXLarge,
     //raw F4
-    Clay, Pottery, FishingHut,
+    Mortar, Clay, Pottery, FishingHut,
     //FishRegular, 
     //Mine, 
     MountainMine,
     //Resin, 
-    LumberMill, BlackSmith, SaltMine,
+    LumberMill, BlackSmith, ShoreMine,
     //prod F5
     Brick, Carpintery, Cigars, Mill, Tailor,
     Armory, Distillery, Chocolate, Ink,
     //industry F6
-    Cloth, GunPowder, Paper_Mill, Printer, CoinStamp, Silk, SugarMill, Foundry, 
+    Cloth, GunPowder, Paper_Mill, Printer, CoinStamp, SugarMill, Foundry, 
     //Trade F7
     Dock, Shipyard, Supplier, StorageSmall, StorageMed, StorageBig, StorageBigTwoDoors, StorageExtraBig,
     //gov F8
@@ -439,7 +443,7 @@ public enum StHous //for structures game structure.cs
 {
     //Housing
     Bohio,
-    BohioB,
+    //BohioB,
     WoodHouseA, WoodHouseB, WoodHouseC,
     BrickHouseA,
     BrickHouseB,
@@ -457,11 +461,11 @@ public enum StFarm
 public enum StRaw //for structures game structure.cs 
 {
     //Raw
-    Clay, Pottery, FishingHut, 
+    Mortar, Clay, Pottery, FishingHut, 
     //Mine, 
     MountainMine, 
     //Resin, 
-    LumberMill, BlackSmith, SaltMine
+    LumberMill, BlackSmith, ShoreMine
 }
 
 public enum StProd //for structures game structure.cs 
@@ -473,12 +477,14 @@ public enum StProd //for structures game structure.cs
 
 //Ind
 public enum StInd
-{ Cloth, GunPowder, Paper_Mill, Printer, CoinStamp, Silk, SugarMill, Foundry,}
+{ Cloth, GunPowder, Paper_Mill, Printer, CoinStamp, SugarMill, Foundry,}
 
 public enum StTrade //for structures game structure.cs 
 {
     //Trade
-    Dock, Shipyard, Supplier, StorageSmall, StorageMed, StorageBig, StorageBigTwoDoors, StorageExtraBig,
+    Dock, //Shipyard, Supplier, 
+    StorageSmall,
+    //StorageMed, StorageBig, StorageBigTwoDoors, StorageExtraBig,
 }
 
 
