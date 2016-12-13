@@ -51,6 +51,9 @@ public class RotateRTS : GenericCameraComponent {
         {
             TransformCam.position = MoveThruY(TransformCam, MIN_Y, MAX_Y, changeValue);
             TransformCam.LookAt(target);
+
+            Program.gameScene.TutoStepCompleted("CamRot.Tuto");
+
         }
     }
 
@@ -86,6 +89,9 @@ public class RotateRTS : GenericCameraComponent {
         {
             helpCam360MainY.transform.Rotate(new Vector3(0, changeValue, 0));
             TransformCam.LookAt(target);
+
+            Program.gameScene.TutoStepCompleted("CamRot.Tuto");
+
         }
     }
 }

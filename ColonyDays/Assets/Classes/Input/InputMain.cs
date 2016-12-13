@@ -430,6 +430,12 @@ public class InputMain : InputParent {
         {
             Program.gameScene.GameSpeed = 10;
         }
+
+        if (Program.gameScene.GameSpeed == 10)
+        {
+            Program.gameScene.TutoStepCompleted("MaxSpeed.Tuto");
+        }
+
         //needs to be call for Body.cs
         OnChangeSpeed(EventArgs.Empty);
         ManagerReport.AddInput("Speed changed by:"+val + ". CurrSpeed: "+Program.gameScene.GameSpeed);

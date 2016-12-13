@@ -107,8 +107,20 @@ public class NewGameWindow : GUIElement
         {
             Program.MyScreen1.HideWindowShowMain(this);
         }
+        else if (action == "Tutorial")
+        {
+            Tutorial();
+            return;
+        }
 
         Display();
+    }
+
+    private void Tutorial()
+    {
+        _townName = "Tutorial Sugar";
+        //save load window set
+        DataController.LoadGameTuto();
     }
 
     /// <summary>

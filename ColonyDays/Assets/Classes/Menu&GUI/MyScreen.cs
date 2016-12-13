@@ -14,6 +14,8 @@ public class MyScreen : General
     private MainMenuWindow _mainMenuWindow;//the window of the main menu. so can be hidden and shw back
     private NewGameWindow _newGameWindow;
     private SaveLoadGameWindow _saveLoadGameWindow;
+
+
     private OptionsWindow _optionsWindow;
     private AchieveWindow _achieveWindow;
     private MyForm current;
@@ -29,6 +31,11 @@ public class MyScreen : General
     private string _townName;//the town name 
 
 
+    internal SaveLoadGameWindow SaveLoadGameWindow
+    {
+        get { return _saveLoadGameWindow; }
+        set { _saveLoadGameWindow = value; }
+    }
 
     public NewGameWindow NewGameWindow1
     {
@@ -103,9 +110,9 @@ public class MyScreen : General
         {
             _newGameWindow = FindObjectOfType<NewGameWindow>();
         }
-        if (_saveLoadGameWindow == null)
+        if (SaveLoadGameWindow == null)
         {
-            _saveLoadGameWindow = FindObjectOfType<SaveLoadGameWindow>();
+            SaveLoadGameWindow = FindObjectOfType<SaveLoadGameWindow>();
         }
         if (_optionsWindow == null)
         {
@@ -154,9 +161,13 @@ public class MyScreen : General
         {
             _newGameWindow.MouseListen(sub);
         }
+        else if (sub.Contains("Tutorial"))
+        {
+            _newGameWindow.MouseListen(sub);
+        }
         else if (sub.Contains("Save."))
         {
-            _saveLoadGameWindow.MouseListen(sub);
+            SaveLoadGameWindow.MouseListen(sub);
         }
         else if (sub == "Continue")
         {
@@ -179,12 +190,12 @@ public class MyScreen : General
         else if(sub == "SaveGame")
         {
             RedifineWindows();
-            _saveLoadGameWindow.Show("Save");
+            SaveLoadGameWindow.Show("Save");
         }    
         else if(sub == "LoadGame")
         {
             RedifineWindows();
-            _saveLoadGameWindow.Show("Load");
+            SaveLoadGameWindow.Show("Load");
         }   
         else if (sub.Contains("Options"))
         {
@@ -437,6 +448,12 @@ public class MyScreen : General
     }
 
 
+    public void ReloadGUI()
+    {
+        Program.MouseListener.ReloadMainGUI();
+        Program.MouseListener.ApplyChangeScreenResolution();
+    }
+
     public void DestroyCurrentMenu()
     {
         current.Destroy();
@@ -471,7 +488,7 @@ public class MyScreen : General
     public void DeleteSavedGameCallBack()
     {
         RedifineWindows();
-        _saveLoadGameWindow.DeleteCallBack();
+        SaveLoadGameWindow.DeleteCallBack();
     }
 
     /// <summary>
@@ -492,8 +509,8 @@ public class MyScreen : General
                 _newGameWindow.Destroy();
                 _newGameWindow = null;
 
-                _saveLoadGameWindow.Destroy();
-                _saveLoadGameWindow = null;
+                SaveLoadGameWindow.Destroy();
+                SaveLoadGameWindow = null;
 
                 _optionsWindow.Destroy();
                 _optionsWindow = null;

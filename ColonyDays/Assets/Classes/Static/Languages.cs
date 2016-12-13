@@ -280,6 +280,32 @@ public class Languages
        { "Weight.Help", "Weight: All the weights in the game are in Kg or Lbs depending on which Unit system is selected." +
                         " You can change it in 'Options' in the 'Main Menu'"},
 
+
+
+
+
+
+
+
+
+
+       //to correct and add on spanish
+       { "TutoOver", "The tutorial is over now you can keep playing this game or start new one"},
+
+
+       //Tuto
+       { "CamMov.Tuto", "Use [AWSD] or cursor to move the Camera."},
+       { "CamRot.Tuto", "Keep pressed down the scroll wheel on your mouse and move your mouse to rotate the Camera."},
+       { "BackToTown.Tuto", "Now press the key [P] on the keyboard to go the initial camera position"},
+       { "Raw.Tuto", "Now click on the 'Raw' buildings button in the middle bottom bar, is the 4th. Once hovered will"+
+           " say 'Raw'"},
+       { "Clay.Tuto", "Now click on the 'Clay' building, is the 1st button. Once hovered will"+
+           " show it cost and description"},
+       { "Clay.Placed.Tuto", "Now find a good spot and left click to place the building. Notice that can use the "+
+           "key 'R' to Rotate, and right click to cancel the building"},
+       { "MaxSpeed.Tuto", "Go to max speed. On the middle top screen simulation speed controller, click the "
+            +" 'More Speed' button 3 times until 10x is displayed"},
+
 	};
 
     //ESPANNOL

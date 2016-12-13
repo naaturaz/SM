@@ -84,6 +84,12 @@ public class MouseListener : InputMain
         Debug.Log("LoadMainGUI() GUI");
     }
 
+    public void ReloadMainGUI()
+    {
+        main.Destroy();
+        LoadMainGUI();
+    }
+
     private Vector3 mainTempIniPos;
     public void HideMainGUI()
     {
@@ -263,13 +269,14 @@ public class MouseListener : InputMain
     /// <param name="action"></param>
     public void ActionFromForm(string action)
     {
-        //play click sound 
-        AudioCollector.PlayOneShot("ClickMetal2", 0);
+        
 
         //btn from main menu
         if (action.Contains("MainMenu."))
         {
             Program.MyScreen1.MouseListenAction(action);
+            //play click sound 
+            AudioCollector.PlayOneShot("ClickMetal2", 0);
         }
         else if (action == "upgBuildMat")
         {
@@ -305,6 +312,9 @@ public class MouseListener : InputMain
         else if (action.Contains("GUIBtn."))
         {
             GUIBtnHandlers(action);
+
+            //play click sound 
+            AudioCollector.PlayOneShot("ClickMetal2", 0);
         }
         else if (action == H.Next_Stage_Btn.ToString())
         {
@@ -323,6 +333,8 @@ public class MouseListener : InputMain
         else
         {
             HandleGUIClicks(action);
+            //play click sound 
+            AudioCollector.PlayOneShot("ClickMetal2", 0);
         }
     }
 
@@ -596,6 +608,7 @@ public class MouseListener : InputMain
         else if (action == "Raw")
         {
             res = 3;
+            Program.gameScene.TutoStepCompleted("Raw.Tuto");
         }
         else if (action == "Prod")
         {

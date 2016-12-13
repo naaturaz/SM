@@ -469,6 +469,11 @@ public class InputBuilding : BuildingPot {
         if (DefineCategory(buildWhat) == Ca.Structure || DefineCategory(buildWhat) == Ca.Shore)
         {
             BuildStructure( buildWhat,  iniPos);
+
+            if (buildWhat == H.Clay)
+            {
+                Program.gameScene.TutoStepCompleted("Clay.Tuto");
+            }
         }
         else if (DefineCategory(buildWhat) == Ca.Way)
         {

@@ -316,7 +316,32 @@ public class GameScene : General
         Program.MyScreen1.LoadingScreenIsDone();
         //so its loaded to the right Screen resolution 
         Program.MouseListener.ApplyChangeScreenResolution();
+
     }
+
+
+
+
+    #region Tutorial
+    private TutoWindow _tutoWindow;
+
+    public void TutoStepCompleted(string step)
+    {
+        if (_tutoWindow == null)
+        {
+            _tutoWindow = FindObjectOfType<TutoWindow>();
+        }
+
+        if (_tutoWindow == null)
+        {
+            return;
+        }
+
+        _tutoWindow.Next(step);
+    }
+
+    #endregion
+
 
     /// <summary>
     /// Add the Object to the BatchMesh

@@ -267,6 +267,11 @@ public class XMLSerie
         dataPath = path;
     }
 
+    public static bool IsTutorial()
+    {
+        return dataPath == Application.dataPath + @"\" + "Tutorial";
+    }
+
     #endregion
 
     #region Reports

@@ -273,6 +273,7 @@ public class InputRTS : GenericCameraComponent
             ManagerReport.AddInput("CenterCam to 1st Building");
 
             LoadFirstCamPos();
+            Program.gameScene.TutoStepCompleted("BackToTown.Tuto");
 
             if (TownLoader.IsTemplate)
             {

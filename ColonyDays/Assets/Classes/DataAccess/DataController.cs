@@ -153,28 +153,42 @@ public class DataController
         return _path;
     }
 
+
+
     internal static void LoadGame(string p)
     {
         PlayerPrefs.SetString("Last_Saved", p);
         PlayerPrefs.Save();
 
         XMLSerie.LoadGame(_path + @"\" + p);
+        Load2ndStep();
+    }
 
-        SetLoadedTerrainInTerraRoot(p);
+    internal static void LoadGameTuto()
+    {
+        //PlayerPrefs.SetString("Last_Saved", "");
+        //PlayerPrefs.Save();
+
+        XMLSerie.LoadGame(Application.dataPath + @"\" + "Tutorial");
+        Load2ndStep();
+    }
+
+    static void Load2ndStep()
+    {
+        SetLoadedTerrainInTerraRoot();
 
         Program.RedoGame();
-        
+
         //now action the continue button event
         BuildingPot.LoadBuildingsNow();
         Program.MyScreen1.DestroyCurrLoadLoading();
     }
 
-
     /// <summary>
     /// It sets Program.MyScreen1.TerraRoot so it loads the terrain saved 
     /// </summary>
     /// <param name="p"></param>
-    static void SetLoadedTerrainInTerraRoot(string p)
+    static void SetLoadedTerrainInTerraRoot()
     {
         PersonData pData = XMLSerie.ReadXMLPerson();
 
@@ -264,6 +278,8 @@ public class DataController
 
         return false;
     }
+
+
 }
 
 

@@ -658,6 +658,8 @@ public class CamRTSController : CamControl
         {
             moveTo = Vector3.MoveTowards(objToBeMoved.position, moveToInternal,
             multiplier * camDiminigFactor);
+
+            Program.gameScene.TutoStepCompleted("CamMov.Tuto");
         }
         else { print("CamRTS.MoveToWhere() objToBeMoved was null"); };
         return moveTo;

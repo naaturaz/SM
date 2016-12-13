@@ -236,7 +236,7 @@ public enum H
 
     //house F2 ... bugg bz they had numbers on it .. They cant have numbers
     Bohio, BohioB,
-    WoodHouseA, WoodHouseB, WoodHouseC, 
+    WoodHouseA, WoodHouseB, WoodHouseC,
     BrickHouseA,
     BrickHouseB,
     BrickHouseC,
@@ -246,17 +246,14 @@ public enum H
     AnimalFarmSmall, AnimalFarmMed, AnimalFarmLarge, AnimalFarmXLarge,
     FieldFarmSmall, FieldFarmMed, FieldFarmLarge, FieldFarmXLarge,
     //raw F4
-    Mortar, Clay, Pottery, FishingHut,
-    //FishRegular, 
-    //Mine, 
+    Clay, Pottery, FishingHut,
     MountainMine,
-    //Resin, 
-    LumberMill, BlackSmith, ShoreMine,
+    LumberMill, BlackSmith, ShoreMine, Mortar, 
     //prod F5
     Brick, Carpintery, Cigars, Mill, Tailor,
     Armory, Distillery, Chocolate, Ink,
     //industry F6
-    Cloth, GunPowder, Paper_Mill, Printer, CoinStamp, SugarMill, Foundry, 
+    Cloth, GunPowder, Paper_Mill, Printer, CoinStamp, SugarMill, Foundry,
     //Trade F7
     Dock, Shipyard, Supplier, StorageSmall, StorageMed, StorageBig, StorageBigTwoDoors, StorageExtraBig,
     //gov F8
@@ -414,6 +411,7 @@ public enum H
     Home,
     YearReport,
     Plant,
+    TutoOver,
 
 
 }
@@ -461,11 +459,9 @@ public enum StFarm
 public enum StRaw //for structures game structure.cs 
 {
     //Raw
-    Mortar, Clay, Pottery, FishingHut, 
-    //Mine, 
+    Clay, Pottery, FishingHut, 
     MountainMine, 
-    //Resin, 
-    LumberMill, BlackSmith, ShoreMine
+    LumberMill, BlackSmith, ShoreMine, Mortar,
 }
 
 public enum StProd //for structures game structure.cs 

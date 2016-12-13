@@ -161,6 +161,11 @@ public class Structure : StructureParent
         //Mark the Spawns below this obj
         if (action != H.Cancel)
         {
+            if (HType == H.Clay)
+            {
+                Program.gameScene.TutoStepCompleted("Clay.Placed.Tuto");
+            }
+
             float howBigTheCollidingSphere = 5f;
 
             if (MyId.Contains("Med") || HType == H.BlackSmith)
