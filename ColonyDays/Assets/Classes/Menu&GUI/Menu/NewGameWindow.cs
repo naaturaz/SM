@@ -282,16 +282,16 @@ public class NewGameWindow : GUIElement
     public void ClickDifficultyDropDown()
     {
         var newbie = GetGrandChildCalledFromThis("Btn_Newbie", Diff_Btn);
-        var easy = GetGrandChildCalledFromThis("Btn_Easy", Diff_Btn);
-        var moderate = GetGrandChildCalledFromThis("Btn_Moderate", Diff_Btn);
-        var hard = GetGrandChildCalledFromThis("Btn_Hard", Diff_Btn);
-        var insane = GetGrandChildCalledFromThis("Btn_Insane", Diff_Btn);
+        //var easy = GetGrandChildCalledFromThis("Btn_Easy", Diff_Btn);
+        //var moderate = GetGrandChildCalledFromThis("Btn_Moderate", Diff_Btn);
+        //var hard = GetGrandChildCalledFromThis("Btn_Hard", Diff_Btn);
+        //var insane = GetGrandChildCalledFromThis("Btn_Insane", Diff_Btn);
 
         SetDiffButton(newbie, "Newbie");
-        SetDiffButton(easy, "Easy");
-        SetDiffButton(moderate, "Moderate");
-        SetDiffButton(hard, "Hard");
-        SetDiffButton(insane, "Insane");
+        //SetDiffButton(easy, "Easy");
+        //SetDiffButton(moderate, "Moderate");
+        //SetDiffButton(hard, "Hard");
+        //SetDiffButton(insane, "Insane");
 
     }
 

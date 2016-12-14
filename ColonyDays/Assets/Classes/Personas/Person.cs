@@ -1743,7 +1743,7 @@ public class Person : General
         {
             return 0;
         }
-        return 6;
+        return 16;
     }
 
     void EatDrink()

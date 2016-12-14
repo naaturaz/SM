@@ -283,7 +283,7 @@ public class StillElement : TerrainRamdonSpawner
         {
             return;
         }
-        Debug.Log("add cyrstals :" + MyId);
+        //Debug.Log("add cyrstals :" + MyId);
         MeshController.CrystalManager1.Add(this);
     }
 

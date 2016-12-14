@@ -143,8 +143,6 @@ public class PersonWindow : GUIElement
 
     string BuildPersonInfo()
     {
-
-
         return "";
         string res = "Age: " + _person.Age + "\n Gender: " + _person.Gender
                      + "\n Nutrition: " + _person.NutritionLevel

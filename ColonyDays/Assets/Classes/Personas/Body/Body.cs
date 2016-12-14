@@ -1020,7 +1020,8 @@ public class Body //: MonoBehaviour //: General
     void ReCalculateWalkStep()
     {
         CheckOnGameSpeed();
-        _walkStep = _speed*Program.gameScene.GameSpeed * 0.02f * FPSCorrection();
+        _walkStep = _speed*Program.gameScene.GameSpeed * 0.02f //* FPSCorrection()
+            ;
     }
 
     /// <summary>

@@ -162,7 +162,7 @@ public class InputMain : InputParent {
         {
             Program.gameScene.controllerMain.MeshController.ForcedTerraScanning();
         }
-        else if (!Dialog.IsActive() && Input.GetKeyUp(KeyCode.F))
+        else if (!Dialog.IsActive() && Input.GetKeyUp(KeyCode.F) && !Program.IsInputLocked)
         {
             ManagerReport.AddInput("QuickSaveNow()");
             QuickSaveNow();

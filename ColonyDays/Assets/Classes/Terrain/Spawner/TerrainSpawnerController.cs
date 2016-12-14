@@ -542,6 +542,10 @@ public class TerrainSpawnerController : ControllerParent
         {
             SaveOnListData(temp, typePass, rootToSpawnIndex, index, replantedTree);
         }
+        else
+        {
+            var a = 1;
+        }
 
         StillElement still = (StillElement) temp;
         if (still!=null)
@@ -692,7 +696,7 @@ public class TerrainSpawnerController : ControllerParent
             }
 
             //if is null was deelleted by user 
-            if (AllRandomObjList[i] != null)
+            if (AllRandomObjList[i] != null && i < AllSpawnedDataList.Count)//bz bugg there is more Rand than Data
             {
                 tempList.Add(new SpawnedData(
                 AllRandomObjList[i].transform.position, AllRandomObjList[i].transform.rotation,

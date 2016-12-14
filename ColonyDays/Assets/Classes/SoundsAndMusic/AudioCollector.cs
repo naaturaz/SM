@@ -461,14 +461,22 @@ public class AudioCollector
                 PlayPerson(_boyList);
             }
         }
+        else if (p.Gender == H.Female)
+        {
+            if (p.Age > 18 && p.Age < 70)
+            {
+                PlayPerson(_womanList);
+            }
+        }
 
     }
 
 
     static List<string> info = new List<string>();
-    static List<string> _kindOfPeople = new List<string>() { "Man", "Boy" };
+    static List<string> _kindOfPeople = new List<string>() { "Man", "Woman", "Boy" };
 
     static List<string> _manList = new List<string>();
+    static List<string> _womanList = new List<string>();
     static List<string> _boyList = new List<string>();
 
 
@@ -527,9 +535,11 @@ public class AudioCollector
     public static void InitSpecPeoplesList()
     {
         _manList.Clear();
+        _womanList.Clear();
         _boyList.Clear();
 
         _manList = info.Where(a => a.Contains("Man") && a.Contains(Languages.CurrentLang())).ToList();
+        _womanList = info.Where(a => a.Contains("Woman") && a.Contains(Languages.CurrentLang())).ToList();
         _boyList = info.Where(a => a.Contains("Boy") && a.Contains(Languages.CurrentLang())).ToList();
     }
 

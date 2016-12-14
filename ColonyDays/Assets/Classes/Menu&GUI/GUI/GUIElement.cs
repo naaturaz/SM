@@ -94,11 +94,16 @@ public class GUIElement : General {
         var percentOcup = obj.Inventory.CurrentVolumeOcuppied()/obj.Inventory.CapacityVol;
         percentOcup = percentOcup*100;
 
+        if (percentOcup > 100)
+        {
+            percentOcup = 100;  
+        }
+
         var volOccupied = Unit.VolConverted(obj.Inventory.CurrentVolumeOcuppied());
         var volCap = Unit.VolConverted(obj.Inventory.CapacityVol);
 
-        var res = "Ocuppied:" + volOccupied.ToString("F1") +
-            ". Inv Cap:" + volCap + " " + Unit.VolumeUnit() +" \n" +
+        var res = "Occupied:" + volOccupied.ToString("F1") + " " + Unit.VolumeUnit() +
+            "/ Inv Cap:" + volCap + " " + Unit.VolumeUnit() +" \n" +
             "Fill: "+percentOcup.ToString("F1") + "% \n";
 
         return res;

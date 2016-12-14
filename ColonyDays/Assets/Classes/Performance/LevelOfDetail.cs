@@ -79,11 +79,11 @@ public class LevelOfDetail
         //var dist = Vector3.Distance(_gO.transform.position, Camera.main.transform.position);
         var dist = Vector3.Distance(_gO.transform.position, CamControl.CAMRTS.transform.position);
 
-        if (dist > CloserDistLOD1() && dist <= 66)//25 66     35 66     45 76
+        if (dist > CloserDistLOD1() && dist <= 76)//66
         {
             return H.LOD1;
         }
-        if (dist > 65)//65      75
+        if (dist > 75)//65      75
         {
             return H.LOD2;
         }
@@ -94,7 +94,7 @@ public class LevelOfDetail
     {
         if (_type == H.Person)
         {
-            return 32f;
+            return 42f;//32
         }
         return 25;
     }

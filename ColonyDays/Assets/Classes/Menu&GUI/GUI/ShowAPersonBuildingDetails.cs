@@ -36,6 +36,8 @@ public class ShowAPersonBuildingDetails
 
     void CreateItemsPerson()
     {
+        //return;
+
         _items.Clear();
 
         AddToItems("Age", _person.Age + "");

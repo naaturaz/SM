@@ -343,9 +343,6 @@ public class Profession
 
         ReadyToWork = prof.ReadyToWork;
 
-        _destinyBuild = Brain.GetStructureFromKey(DestinyBuildKey);
-        _sourceBuild = Brain.GetStructureFromKey(SourceBuildKey);
-
         StillElementId = prof.StillElementId;
         FigureProdCarryingAndAmt();
     }
@@ -879,7 +876,15 @@ public class Profession
             _person.Inventory.Delete();
             return;
         }
-        
+
+        if (_order == null)
+        {
+            Debug.Log("order null whelbarr:" + _person.MyId);
+            _person.Inventory.Delete();
+
+            return;
+        }
+
         _person.ExchangeInvetoryItem(_person, destinyBuild, _order.Product, _order.Amount);
 
         //each time a wheelbarrow or docker uses a wheelBarrow dimish them a bit in the main storages

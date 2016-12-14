@@ -33,14 +33,18 @@ public class WheelBarrow : Profession
     void InitForLoading()
     {
         //if did not load a order will return, and take a break now  
-        if (Order1 == null || _destinyBuild == null)
+        if (Order1 == null// || _destinyBuild == null
+            )
         {
             _takeABreakNow = true;
             return; 
         }
 
+        _destinyBuild = Brain.GetStructureFromKey(Order1.DestinyBuild);
+        _sourceBuild = Brain.GetStructureFromKey(Order1.SourceBuild);
+        _person.PrevOrder = Order1;
+
         InitRoute();
-        
     }
 
 

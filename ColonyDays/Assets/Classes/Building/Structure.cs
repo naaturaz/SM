@@ -311,7 +311,7 @@ public class Structure : StructureParent
             }
         }
         
-        if (PositionFixed && _startingStage == H.Done && MyId.Contains("Farm") && CurrentProd!=null)
+        if (PositionFixed && PeopleDict.Count > 0 && MyId.Contains("Farm") && CurrentProd!=null)
         {
             CreateFarm();
         }
@@ -319,7 +319,7 @@ public class Structure : StructureParent
 	    if (PlantSave1!=null && IsLoadingFromFile && _farm==null)
 	    {
             _farm = new FieldFarm(this, PlantSave1);
-	        
+            IsLoadingFromFile = false;
 	    }
 
     }
