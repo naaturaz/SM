@@ -73,7 +73,7 @@ public class NewGameWindow : GUIElement
     /// </summary>
     void LoadDefaultForNewGame()
     {
-        _townName = "Toronto";
+        _townName = "Havana";
 #if UNITY_EDITOR
         _townName = "Editor";
 #endif

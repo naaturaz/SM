@@ -38,7 +38,7 @@ public class GUIElement : General {
 
     public bool IsShownNow()
     {
-        return transform.position == iniPos;
+        return UMath.nearEqualByDistance(transform.position, iniPos, 0.01f);
     }
 
     protected void MakeAlphaColorZero(Text g)

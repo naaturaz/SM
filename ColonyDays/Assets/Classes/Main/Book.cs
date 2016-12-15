@@ -76,9 +76,9 @@ public class Book : General
         Build.Add(new BuildStat(H.WoodHouseA, 400, 15, 1, 0, 0, maxPeople: 5, capacity: .4f));
         Build.Add(new BuildStat(H.WoodHouseB, 400, 5, 5, 25, 1, maxPeople: 5, capacity: .5f));
         Build.Add(new BuildStat(H.WoodHouseC, 800, 30, 5, 5, 5, maxPeople: 10, capacity: .6f));
-        Build.Add(new BuildStat(H.BrickHouseA, 1, 0.01f, 0, 0, 0, maxPeople: 7, capacity: 1));
+        Build.Add(new BuildStat(H.BrickHouseA, 700, 10, 5, 50, 5, maxPeople: 7, capacity: 1));
         Build.Add(new BuildStat(H.BrickHouseB, 800, 10, 5, 50, 5, maxPeople: 7, capacity: 1));
-        Build.Add(new BuildStat(H.BrickHouseC, 800, 10, 5, 50, 5, maxPeople: 7, capacity: 1));
+        Build.Add(new BuildStat(H.BrickHouseC, 900, 10, 5, 50, 5, maxPeople: 7, capacity: 1));
 
         //farming
         Build.Add(new BuildStat(H.AnimalFarmSmall, 400, 5, 5, 5, 5, maxPeople: 5,  capacity: 1));
@@ -140,21 +140,21 @@ public class Book : General
         Build.Add(new BuildStat(H.StorageExtraBig, 600, 30, 20, 60, 5, maxPeople: 0, capacity: 4200));
 
         //Gov
-        Build.Add(new BuildStat(H.Library, 400, 15, 5, 25, 5, maxPeople: 1));
-        Build.Add(new BuildStat(H.School, 400, 15, 5, 25, 5, maxPeople: 2));
-        Build.Add(new BuildStat(H.TradesSchool, 400, 15, 5, 25, 5, maxPeople: 5));
-        Build.Add(new BuildStat(H.TownHouse, 400, 15, 5, 25, 5, maxPeople: 5));
+        Build.Add(new BuildStat(H.Library, 1600, 15, 5, 25, 5, maxPeople: 1));
+        Build.Add(new BuildStat(H.School, 1800, 15, 5, 25, 5, maxPeople: 2));
+        Build.Add(new BuildStat(H.TradesSchool, 2000, 15, 5, 25, 5, maxPeople: 5));
+        Build.Add(new BuildStat(H.TownHouse, 2000, 15, 5, 25, 5, maxPeople: 5));
 
         //Other
-        Build.Add(new BuildStat(H.Church, 1600, 80, 20, 0, 5, maxPeople: 3));
-        Build.Add(new BuildStat(H.Tavern, 400, 30, 5, 50, 5, maxPeople: 2));
+        Build.Add(new BuildStat(H.Church, 2600, 20, 500, 10, 5, maxPeople: 3));
+        Build.Add(new BuildStat(H.Tavern, 400, 30, 80, 50, 5, maxPeople: 2));
 
         //Militar
-        Build.Add(new BuildStat(H.PostGuard, 600, 80, 20, 0, 5, maxPeople: 10));
+        Build.Add(new BuildStat(H.PostGuard, 2600, 20, 800, 5, 5, maxPeople: 10));
 
        // Build.Add(new BuildStat(H.Tower, 600, 80, 20, 0, 5, maxPeople: 10));
-        Build.Add(new BuildStat(H.Fort, 600, 80, 20, 0, 5, maxPeople: 10));
-        Build.Add(new BuildStat(H.Morro, 600, 80, 20, 0, 5, maxPeople: 10));
+        Build.Add(new BuildStat(H.Fort, 2600, 80, 20, 0, 5, maxPeople: 10));
+        Build.Add(new BuildStat(H.Morro, 2600, 80, 20, 0, 5, maxPeople: 10));
     }
 
     // Use this for initialization
@@ -257,7 +257,7 @@ public class BuildStat
     /// <param name="maxPeople"></param>
     /// <param name="capacity"></param>
     public BuildStat(H hType, float amountOfLabour = 0, float wood = 0, float stone = 0, float brick = 0, float iron = 0,
-        float gold = 0, float colonyDollar = 0, int maxPeople = 0, float capacity = 10)
+        float gold = 0, float colonyDollar = 0, int maxPeople = 0, float capacity = 50)
     {
         float multiplier = 300;
 

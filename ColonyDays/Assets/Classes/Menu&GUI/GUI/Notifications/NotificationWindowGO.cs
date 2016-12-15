@@ -57,11 +57,13 @@ public class NotificationWindowGO : GUIElement
         _scroll_Ini_PosGO = GetChildCalledOnThis("Scroll_Ini_Pos", _content);
     }
 
+    float _showedAt;
     public void Show(string which)
     {
         ClearForm();
         PopulateScrollView();
         Show();
+        _showedAt = Time.time;
     }
 
     void ClearForm()
@@ -101,13 +103,26 @@ public class NotificationWindowGO : GUIElement
         {
             Vector2 newPos = new Vector2(transform.position.x - speed, transform.position.y);
             transform.position = newPos;
-            speed *= 2f;
+            speed *= 2.2f;
 
             if (transform.position.x <= iniPos.x - 400f)
             {
                 _hideSlideToLeft = false;
-                speed = .05f;
+                speed = .02f;
             }
+        }
+
+        HideIfIsBeingOutTooLong();
+    }
+
+    private void HideIfIsBeingOutTooLong()
+    {
+        var show = IsShownNow();
+        var time = Time.time > _showedAt + 3 ;
+
+        if (show && time && !_hideSlideToLeft)
+        {
+            _hideSlideToLeft = true;
         }
     }
 

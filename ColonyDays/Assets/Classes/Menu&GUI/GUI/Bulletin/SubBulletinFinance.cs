@@ -17,7 +17,7 @@ namespace Assets.Classes.Menu_GUI.GUI.Bulletin
 
         internal void ShowResume()
         {
-            _bulletinWindow.ShowInBody("Finance Resume");
+            _bulletinWindow.ShowInBody("Finance Resume (Coming soon)");
         }
 
         internal void ShowPrices()

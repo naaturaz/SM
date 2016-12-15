@@ -332,7 +332,7 @@ public class CrystalRegion
         for (int i = 0; i < crystals.Count; i++)
         {
             _obstaCrystals.Remove(crystals[i]);
-            Debug.Log("Crystal removed: " + parentId+".date:"+Program.gameScene.GameTime1.TodayYMD());
+            //Debug.Log("Crystal removed: " + parentId+".date:"+Program.gameScene.GameTime1.TodayYMD());
         }
     }
 

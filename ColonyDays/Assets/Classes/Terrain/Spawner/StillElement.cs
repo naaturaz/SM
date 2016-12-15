@@ -192,7 +192,7 @@ public class StillElement : TerrainRamdonSpawner
 
     public void CutDownTree()
     {
-
+        _myAnimator.enabled = true;
         _myAnimator.SetBool("isTreeIdle", false);
         _myAnimator.SetBool("isTreeFall", true);
 
@@ -365,8 +365,15 @@ public class StillElement : TerrainRamdonSpawner
         return res;
     }
 
+    bool wasDestroyed;
     public override void DestroyCool()
     {
+        if (wasDestroyed)
+        {
+            return;
+        }
+        wasDestroyed = true;
+
         _hasStart = false;
         var savedPos = transform.position;
 
@@ -376,7 +383,7 @@ public class StillElement : TerrainRamdonSpawner
         }
 
         //removes from List in TerraSpawnerController
-        Program.gameScene.controllerMain.TerraSpawnController.RemoveStillElement(this);
+        Program.gameScene.controllerMain.TerraSpawnController.RemoveStillElement(this, savedPos);
         
         if (HType == H.Tree && ShouldReplant)
         {

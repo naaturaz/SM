@@ -248,7 +248,8 @@ public enum H
     //raw F4
     Clay, Pottery, FishingHut,
     MountainMine,
-    LumberMill, BlackSmith, ShoreMine, Mortar, 
+    LumberMill, BlackSmith, ShoreMine,// QuickLime, 
+    Mortar, 
     //prod F5
     Brick, Carpintery, Cigars, Mill, Tailor,
     Armory, Distillery, Chocolate, Ink,
@@ -461,7 +462,8 @@ public enum StRaw //for structures game structure.cs
     //Raw
     Clay, Pottery, FishingHut, 
     MountainMine, 
-    LumberMill, BlackSmith, ShoreMine, Mortar,
+    LumberMill, BlackSmith, ShoreMine, //QuickLime,
+    Mortar,
 }
 
 public enum StProd //for structures game structure.cs 
@@ -609,7 +611,8 @@ public enum Ron2
     Dock, StorageSmall,
     BridgeRoad, GunPowder, Armory, Tailor, Pottery,
 
-    CoinStamp, Chocolate, Distillery, Foundry, Printer, Cigars, Ink
+    CoinStamp, Chocolate, Distillery, Foundry, Printer, Cigars, Ink,
+    //QuickLime
 }
 
 

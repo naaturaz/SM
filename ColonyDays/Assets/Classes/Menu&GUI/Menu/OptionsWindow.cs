@@ -278,7 +278,7 @@ public class OptionsWindow : GUIElement
     public void ClickLanguagesDropDown()
     {
         SetButtonsList(_langBtn);
-        List<string> names = new List<string>() { "English", "Español" };
+        List<string> names = new List<string>() { "English", "Español(Beta)" };
 
         for (int i = 0; i < _buttonsName.Count; i++)
         {

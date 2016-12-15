@@ -48,7 +48,8 @@ public class RoutesCache
         {
             var key = ReturnKey(_itemsLoadSave[i]);
 
-            if (!_items.ContainsKey(key))
+            if (!_items.ContainsKey(key) && !key.Contains("Tree")
+                )
             {
                 _items.Add(key, _itemsLoadSave[i]);
             }

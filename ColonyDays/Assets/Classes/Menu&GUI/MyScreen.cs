@@ -149,6 +149,11 @@ public class MyScreen : General
         Debug.Log("Load Main Menu");
     }
 
+    public bool IsMainMenuOn()
+    {
+        return current != null && current.name.Contains("Menu");
+    }
+
     /// <summary>
     /// Depending on the btn was clicked will do action 
     /// </summary>

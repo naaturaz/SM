@@ -77,7 +77,8 @@ public class Nutrition
 
         //corn is 3600 all corn
         //cob 113 calories per cob, and a cob is 1.2lbs
-        return 3600 / 2;//  /2 so people eat more
+        //Corn all Corn is 3600 x KG
+        return 2200;
     }
 
     //If you eliminate 500 kcal per day from your diet (or approximately 3500 kcal/week),

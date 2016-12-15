@@ -148,7 +148,9 @@ public class AddOrderWindow : GUIElement {
         }
         else if (_orderType == "Export")
         {
-            _priceGroup.SetActive(true);
+            //_priceGroup.SetActive(true);
+            _priceGroup.SetActive(false);
+
         }
     }
 

@@ -90,6 +90,11 @@ public class NotificationsManager
 
     public void Notify(string which)
     {
+        if (Program.MouseListener.NotificationWindow == null || Program.MyScreen1.IsMainMenuOn())
+        {
+            return;
+        }
+
         Program.MouseListener.NotificationWindow.Notify(which);
     }
 

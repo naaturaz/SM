@@ -95,12 +95,23 @@ public class TerrainSpawnerController : ControllerParent
         set { _isToLoadFromFile = value; }
     }
 
-    public void RemoveStillElement(StillElement ele)
+    public void RemoveStillElement(StillElement ele, Vector3 savedPos)
     {
         var index = AllRandomObjList.IndexOf(ele);
-
-        AllSpawnedDataList.RemoveAt(index);
         AllRandomObjList.RemoveAt(index);
+
+        //SpawnedData sData = new SpawnedData(ele.transform.position, ele.transform.rotation, ele.HType, 
+        //    ele.RootToSpawnIndex, ele.IndexAllVertex);
+
+        var sData = AllSpawnedDataList.Where(a => a.Pos == savedPos).FirstOrDefault();
+
+        //a not valid Spawner calling this 
+        if (sData == null)
+        {
+            return;
+        }
+        index = AllSpawnedDataList.IndexOf(sData);
+        AllSpawnedDataList.RemoveAt(index);
     }
 
     public void ReSaveStillElement(StillElement ele)
@@ -688,29 +699,50 @@ public class TerrainSpawnerController : ControllerParent
 
         for (int i = 0; i < AllRandomObjList.Count; i++)
         {
-            bool isMarkToMineLocal = false;
-            if (AllRandomObjList[i] is StillElement)
-            {
-                //print("ReSaveData() stillEle");
-                StillElement still = (StillElement)AllRandomObjList[i];
-            }
-
             //if is null was deelleted by user 
-            if (AllRandomObjList[i] != null && i < AllSpawnedDataList.Count)//bz bugg there is more Rand than Data
+            if (AllRandomObjList[i] != null)//bz bugg there is more Rand than Data
             {
-                tempList.Add(new SpawnedData(
-                AllRandomObjList[i].transform.position, AllRandomObjList[i].transform.rotation,
-                AllSpawnedDataList[i].Type, AllSpawnedDataList[i].RootStringIndex,
-                AllSpawnedDataList[i].AllVertexIndex,
-                AllSpawnedDataList[i].TreeHeight, AllSpawnedDataList[i].SeedDate, AllSpawnedDataList[i].MaxHeight,
-                AllSpawnedDataList[i].TreeFall, AllSpawnedDataList[i].Weight
-                ));
+                var ele = AllRandomObjList[i];
+
+                var sData = CreateApropData(ele);
+
+                tempList.Add(sData);
+
+                //tempList.Add(new SpawnedData(
+                //AllRandomObjList[i].transform.position, AllRandomObjList[i].transform.rotation,
+                //AllSpawnedDataList[i].Type, AllSpawnedDataList[i].RootStringIndex,
+                //AllSpawnedDataList[i].AllVertexIndex,
+                //AllSpawnedDataList[i].TreeHeight, AllSpawnedDataList[i].SeedDate, AllSpawnedDataList[i].MaxHeight,
+                //AllSpawnedDataList[i].TreeFall, AllSpawnedDataList[i].Weight
+                //));
             }
         }
 
         AllSpawnedDataList.Clear();
         AllSpawnedDataList = tempList;
         SaveData();
+    }
+
+
+    SpawnedData CreateApropData(TerrainRamdonSpawner ele)
+    {
+        SpawnedData sData = null;
+
+        if (ele.HType == H.Tree)
+        {
+            var still = (StillElement)ele;
+
+            sData = new SpawnedData(ele.transform.position, ele.transform.rotation, ele.HType,
+            ele.RootToSpawnIndex, ele.IndexAllVertex, still.Height, still.SeedDate, still.MaxHeight,
+            still.TreeFall, still.Weight);
+        }
+        else
+        {
+            sData = new SpawnedData(ele.transform.position, ele.transform.rotation, ele.HType,
+            ele.RootToSpawnIndex, ele.IndexAllVertex);
+        }
+
+        return sData;
     }
 
     //create or updates specific lists 

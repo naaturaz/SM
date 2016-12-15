@@ -68,7 +68,7 @@ public class UnlockBuilds
             new BRequires(H.Brick, true),
             new BRequires(H.Carpintery, 50, 500, 900),
             new BRequires(H.Cigars, 50, 500, 900),
-            new BRequires(H.Mill, 50, 500, 900),
+            new BRequires(H.Mill, H.OnlyForDev),
             new BRequires(H.Tailor, 50, 500, 900),
             new BRequires(H.Armory, 50, 500, 900),
             new BRequires(H.Distillery, 50, 500, 900),
@@ -80,7 +80,7 @@ public class UnlockBuilds
             new BRequires(H.GunPowder, 50, 500, 900),
             new BRequires(H.Paper_Mill, H.OnlyForDev),
             new BRequires(H.Printer, 50, 500, 900),
-            new BRequires(H.CoinStamp, 150, 500, 900),
+            new BRequires(H.CoinStamp, H.OnlyForDev),
             new BRequires(H.SugarMill, H.OnlyForDev),
             new BRequires(H.Foundry, 50, 500, 900),
 

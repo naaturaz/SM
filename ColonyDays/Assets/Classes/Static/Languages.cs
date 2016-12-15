@@ -32,9 +32,9 @@ public class Languages
        //House
 	   { "Bohio.Desc","Bohio house, primitive conditionns with unhappy people whom can only have a maximum of 2 to 3 kids" +_houseTail},
 	   { "BohioB.Desc","Bohio house, primitive conditionns with unhappy people whom can only have a maximum of 2 to 3 kids" +_houseTail},
-	   { "WoodHouse1.Desc","Small wooden house, a family can have 2-4 kids max" +_houseTail},
-	   { "WoodHouse2.Desc","Medium wooden house, a family can have 4 kids max" +_houseTail },
-	   { "WoodHouse3.Desc","Small and confortable wooden house, a family can have 2-4 kids max"+_houseTail},
+	   { "WoodHouseA.Desc","Small wooden house, a family can have 2-4 kids max" +_houseTail},
+	   { "WoodHouseB.Desc","Medium wooden house, a family can have 4 kids max" +_houseTail },
+	   { "WoodHouseC.Desc","Small and confortable wooden house, a family can have 2-4 kids max"+_houseTail},
 	   { "HouseMed.Desc","Medium house, a family can have 4 kids max"+_houseTail},
 	   { "BrickHouseA.Desc","Large house, a family can have 4 kids max"+_houseTail},
 	   { "BrickHouseB.Desc","Large house, a family can have 4 kids max"+_houseTail},
@@ -60,9 +60,9 @@ public class Languages
 	   { H.FishingHut + ".Desc","Here a worker can catch fish in a river"},
 	   { "FishRegular.Desc","Here a worker can fish in a river"},
 	   { "Mine.Desc","Here a worker can fish in a river"},
-	   { "MountainMine.Desc","Here a worker will work the mine by extracting minerals and metals randomly"},
+	   { "MountainMine.Desc","Here a worker will work the mine by extracting ore"},
 	   { "Resin.Desc","Here a worker will work the mine by extracting minerals and metals randomly"},
-	   {  H.LumberMill +".Desc","Here workers will either mine or find resources such as wood, stone, and ore"},
+	   {  H.LumberMill +".Desc","Here workers will find resources such as wood, stone, and ore"},
 	   { "BlackSmith.Desc","Here workers will produce the product selected"+_asLongHasInput},
 	   { "ShoreMine.Desc","Here workers will produce salt, sand or quicklime"},
 
@@ -215,8 +215,7 @@ public class Languages
 	                       "Rotate building: 'R' key \n " +
 	                       "Cancel: 'Right click'"},
 	   { "Current_Salary.HoverMed", "Workers will go to work, where the highest salary is paid." +
-	                                " If 2 places pay the same salary, then the closest to home will be chosen" +
-	                                " they will choose."},
+	                                " If 2 places pay the same salary, then the closest to home will be chosen."},
 
 
 
@@ -266,7 +265,7 @@ public class Languages
        { "PeopleRange", "The huge blue circle around each building marks the range of it"},
 
        { "PirateThreat.Help", "Pirate Threat: This is how aware are the pirates of your port. This increases as" +
-	                              "you have more money. If this reaches over 90 you will lose the game"},
+	                              " you have more money. If this reaches over 90 you will lose the game"},
 
 	   { "PortReputation.Help", "Port Reputation: The more people know your port, the more they will visit." +
 	                                " If you want to increase this make sure you always have some orders" +
@@ -779,7 +778,7 @@ public class Languages
             //'Potato' is an ex, will passed as a key and is not even in the Dict
             return key;
         }
-        else if (_currentLang == "Español")
+        else if (_currentLang == "Español(Beta)")
         {
             if (_spanish.ContainsKey(key))
             {

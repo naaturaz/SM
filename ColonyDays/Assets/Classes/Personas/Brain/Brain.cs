@@ -654,7 +654,8 @@ public class Brain
             _person.Body.WalkRoutine(_foodRoute, HPers.FoodSource);
             CurrentTask = HPers.Walking;
         }
-        else if (CurrentTask == HPers.Walking && _person.Body.Location == HPers.FoodSource && _person.Body.GoingTo == HPers.FoodSource)
+        else if (CurrentTask == HPers.Walking && _person.Body.Location == HPers.FoodSource && _person.Body.GoingTo == HPers.FoodSource
+            && _foodRoute.CheckPoints.Count > 0)
         {
             _person.ProfessionProp.DropGoods();
             _person.GetFood(_person.FoodSource);

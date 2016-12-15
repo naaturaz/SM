@@ -254,11 +254,12 @@ public class MouseListener : InputMain
         //used to be UPoly.RayCastAll()
         Transform clicked = UPoly.RayCastLayer(Input.mousePosition, 10).transform;//10: personBlock   
 
-        //try ways then
-        if (clicked == null)
-        {
-            clicked = UPoly.RayCastLayer(Input.mousePosition, 12).transform;//12: way  
-        }
+        //Removed bz was pulling the Previews of the Buildiggs and in that way will select that building
+        ////try ways then
+        //if (clicked == null)
+        //{
+        //    clicked = UPoly.RayCastLayer(Input.mousePosition, 12).transform;//12: way  
+        //}
 
         return clicked;
     }
@@ -269,7 +270,8 @@ public class MouseListener : InputMain
     /// <param name="action"></param>
     public void ActionFromForm(string action)
     {
-        
+        //play click sound 
+        //AudioCollector.PlayOneShot("ClickMetal2", 0);
 
         //btn from main menu
         if (action.Contains("MainMenu."))
@@ -313,8 +315,7 @@ public class MouseListener : InputMain
         {
             GUIBtnHandlers(action);
 
-            //play click sound 
-            AudioCollector.PlayOneShot("ClickMetal2", 0);
+
         }
         else if (action == H.Next_Stage_Btn.ToString())
         {
@@ -333,8 +334,8 @@ public class MouseListener : InputMain
         else
         {
             HandleGUIClicks(action);
-            //play click sound 
-            AudioCollector.PlayOneShot("ClickMetal2", 0);
+
+
         }
     }
 
