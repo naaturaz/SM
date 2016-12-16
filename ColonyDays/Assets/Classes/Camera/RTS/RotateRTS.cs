@@ -13,6 +13,7 @@ public class RotateRTS : GenericCameraComponent {
         temp.y += change;
         if (temp.y > max)
         {
+            Program.gameScene.TutoStepCompleted("CamHeaven.Tuto");
             temp.y = max;
         }
         else if (temp.y < min)

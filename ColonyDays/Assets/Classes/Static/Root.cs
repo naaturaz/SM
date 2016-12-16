@@ -337,6 +337,9 @@ public class Root : MonoBehaviour
     public static string matWoodA = "Prefab/Mats/Building/WoodA";
     public static string matHouse2 = "Prefab/Mats/Building/house2";
 
+    public static string blue_Semi_T = "Prefab/Mats/Blue_Semi_T";
+
+
     //Atlas
     public static string alphaAtlas = "Prefab/Mats/Atlas/AlphaAtlas";
     public static string plantAtlas = "Prefab/Mats/Atlas/PlantAtlas";

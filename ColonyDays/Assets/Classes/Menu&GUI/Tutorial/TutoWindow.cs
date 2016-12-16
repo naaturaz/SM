@@ -18,6 +18,7 @@ class TutoWindow : GUIElement
     {
         "CamMov.Tuto",
         "CamRot.Tuto",
+        "CamHeaven.Tuto",
         "BackToTown.Tuto",
         "Raw.Tuto",
         "Clay.Tuto",

@@ -236,7 +236,14 @@ public class Building : General, Iinfo
             isScaledOnFloor = IsScaledAnchorsOnFloor();
         }
 
-        NotifyBuildingProblem(isScaledOnFloor);
+        if (!IsThisADoubleBoundedStructure())
+        {
+            NotifyBuildingProblem(isScaledOnFloor);
+            
+        }
+
+        
+        
         return _isEven && !_isColliding && _isGoodWaterHeight && isScaledOnFloor 
             && AreAnchorsOnUnlockRegions()
             ;
@@ -253,11 +260,11 @@ public class Building : General, Iinfo
             return;
         }
 
-        if (!isScaledOnFloor)
+        if (!isScaledOnFloor && !IsThisADoubleBoundedStructure())
         {
             Program.gameScene.GameController1.NotificationsManager1.MainNotify("NotScaledOnFloor");
         }
-        else if (!_isEven)
+        else if (!_isEven && !IsThisADoubleBoundedStructure())
         {
             Program.gameScene.GameController1.NotificationsManager1.MainNotify("NotEven");
 
@@ -267,7 +274,7 @@ public class Building : General, Iinfo
             Program.gameScene.GameController1.NotificationsManager1.MainNotify("Colliding");
             
         }
-        else if (!_isGoodWaterHeight)
+        else if (!_isGoodWaterHeight && !IsThisADoubleBoundedStructure())
         {
             Program.gameScene.GameController1.NotificationsManager1.MainNotify("BadWaterHeight");
             
@@ -1047,6 +1054,7 @@ public class Building : General, Iinfo
             {
                 _isBuildOk = CheckDoubleBoundedStructureIsOkRoutine();
             }
+            NotifyBuildingProblem(true);
         }
         else
         {
@@ -1393,6 +1401,7 @@ public class Building : General, Iinfo
         return false;
     }
 
+
     /// <summary>
     /// Check if the double bouded structure is ok
     /// </summary>
@@ -1402,7 +1411,8 @@ public class Building : General, Iinfo
         if (HType == H.MountainMine)
         {
            DefineBoundsGameObj(H.TerraUnderBound);
-           return RoutineToFindIfAnchorsAreGood(_terraBound, _underTerraBound, H.TerraUnderBound);
+           return RoutineToFindIfAnchorsAreGood(_terraBound, _underTerraBound, H.TerraUnderBound) &&
+               AreAnchorsOnUnlockRegions();
         }
         else
         {
@@ -1414,9 +1424,15 @@ public class Building : General, Iinfo
             }
 
             DefineBoundsGameObj(H.MaritimeBound);
-            return RoutineToFindIfAnchorsAreGood(_terraBound, _maritimeBound, H.MaritimeBound) && reachRoute;
+            return RoutineToFindIfAnchorsAreGood(_terraBound, _maritimeBound, H.MaritimeBound) && reachRoute
+                && AreAnchorsOnUnlockRegions();
+
+
         }
+
+
     }
+
 
     /// <summary>
     /// Update the bounds and anchors of the 2 bounds

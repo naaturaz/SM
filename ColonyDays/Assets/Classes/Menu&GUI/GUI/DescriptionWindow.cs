@@ -50,6 +50,11 @@ public class DescriptionWindow : General
 
     public void Show(H val)
     {
+        if (Program.MyScreen1.IsMainMenuOn())
+        {
+            return;
+        }
+
         _type = val;
         LoadMenu(val);
 

@@ -289,20 +289,24 @@ public class Languages
 
 
        //to correct and add on spanish
-       { "TutoOver", "The tutorial is over now you can keep playing this game or start new one"},
+       { "TutoOver", "The tutorial is over now you can keep playing this game or start a new one"},
 
 
        //Tuto
        { "CamMov.Tuto", "Use [AWSD] or cursor to move the Camera."},
-       { "CamRot.Tuto", "Keep pressed down the scroll wheel on your mouse and move your mouse to rotate the Camera."},
-       { "BackToTown.Tuto", "Now press the key [P] on the keyboard to go the initial camera position"},
-       { "Raw.Tuto", "Now click on the 'Raw' buildings button in the middle bottom bar, is the 4th. Once hovered will"+
-           " say 'Raw'"},
-       { "Clay.Tuto", "Now click on the 'Clay' building, is the 1st button. Once hovered will"+
-           " show it cost and description"},
-       { "Clay.Placed.Tuto", "Now find a good spot and left click to place the building. Notice that can use the "+
+       { "CamRot.Tuto", "Now press the scroll wheel down on your mouse and move your mouse to rotate the Camera."},
+       { "CamHeaven.Tuto", "Keep the scroll wheel pressed down on your mouse and move your mouse foward so the Camera reaches "
+            + " the sky. This view is useful to place bigger buildings such as the Port"},
+       
+       
+       { "BackToTown.Tuto", "Press the key [P] on the keyboard to go to the initial position of the camera"},
+       { "Raw.Tuto", "Click on the 'Raw' buildings button, located in the middle bottom bar, 'Raw' is the 4th button. "+
+           "When you hover over it, it will popup 'Raw'"},
+       { "Clay.Tuto", "Now click on the 'Clay' building, it is the 1st button. When you hover over it, it will"+
+           " show it's cost and description"},
+       { "Clay.Placed.Tuto", "Now find a good spot and left click to place the building. Notice that you can use the "+
            "key 'R' to Rotate, and right click to cancel the building"},
-       { "MaxSpeed.Tuto", "Go to max speed. On the middle top screen simulation speed controller, click the "
+       { "MaxSpeed.Tuto", "To go to max speed, go to the middle top screen simulation speed controller, click the "
             +" 'More Speed' button 3 times until 10x is displayed"},
 
 	};

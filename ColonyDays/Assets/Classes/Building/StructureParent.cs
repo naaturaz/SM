@@ -505,6 +505,7 @@ public class StructureParent : Building {
         return 500;
     }
 
+
     //assign the material Stage to all Stage 2 or 3 passed but a few ex
     //this is here to address the exepctions
     void AssignMaterialToStage(GameObject passP)
@@ -517,9 +518,10 @@ public class StructureParent : Building {
         }
         if (Category == Ca.Shore)
         {
-            passP.GetComponent<Renderer>().sharedMaterial = Resources.Load(Root.matWoodForRaw) as Material;
+            passP.GetComponent<Renderer>().sharedMaterial = Resources.Load(Root.blue_Semi_T) as Material;
         }
     }
+
 
 	// Use this for initialization
 	protected void Start ()

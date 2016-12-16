@@ -63,10 +63,10 @@ public class BuyRegionManager
             var index = _forSaleRegions[i];
             var reg = MeshController.CrystalManager1.CrystalRegions[index].Region;
 
-            if (MeshController.CrystalManager1.CrystalRegions[index].WhatAudioIReport == "FullOcean")
-            {
-                continue;
-            }
+            //if (MeshController.CrystalManager1.CrystalRegions[index].WhatAudioIReport == "FullOcean")
+            //{
+            //    continue;
+            //}
 
             _forSaleRegionGoes.Add(ForSaleRegionGO.CreateForSaleRegionGO(Root.forSaleRegion, index, 
                 reg, container: Program.gameScene.Terreno.transform));

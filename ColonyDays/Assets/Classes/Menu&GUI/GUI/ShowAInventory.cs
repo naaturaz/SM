@@ -55,6 +55,15 @@ public class ShowAInventory
         }
     }
 
+
+
+         //if (allProdSpec[i].Product.ToString().Contains("Random") || allProdSpec[i].Product.ToString().Contains("Coin")
+         //       //foods wont be shown in main inventory
+         //       || Inventory.CategorizeProd(allProdSpec[i].Product)==PCat.Food)
+
+    List<P> allowOnMain = new List<P>() 
+    { P.Wood, P.Stone, P.Brick, P.Iron, P.Nail, P.Furniture, P.Mortar, P.RoofTile, P.FloorTile
+    };
     /// <summary>
     /// Create a inventory with all the Products annd pull the infor from all Storages in game 
     /// </summary>
@@ -65,13 +74,10 @@ public class ShowAInventory
 
         for (int i = 0; i < allProdSpec.Count; i++)
         {
-            if (allProdSpec[i].Product.ToString().Contains("Random") || allProdSpec[i].Product.ToString().Contains("Coin")
-                //foods wont be shown in main inventory
-                || Inventory.CategorizeProd(allProdSpec[i].Product)==PCat.Food)
+            if (allowOnMain.Contains(allProdSpec[i].Product))
             {
-                continue;
+                _inv.AddToSpecialInv(allProdSpec[i].Product);
             }
-            _inv.AddToSpecialInv(allProdSpec[i].Product);
         }
     }
 
@@ -151,7 +157,22 @@ public class ShowAInventory
             return -(ReturnRelativeYSpace(27, _allItems[0].transform.localScale.y))
                 * _mainLines * factor;//32
         }
-        return -3.5f*i;
+
+        //var screenY = Screen.height / 3.5f;
+        //Debug.Log("Screen.height / 3.5f= " + screenY);//254.8571
+
+        //return -3.5f*i;
+        //return -(Screen.height / 254.8571f) * i;
+        return -(ReturnRelativeYSpace(33, ReturnTileYScale())) * i;
+    }
+
+    float ReturnTileYScale()
+    {
+        if (_allItems.Count > 0)
+        {
+            return _allItems[0].transform.localScale.y;
+        }
+        return 0;
     }
 
     public static float ReturnRelativeYSpace(float relative, float ySpaceOfTile)

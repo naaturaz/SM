@@ -244,6 +244,12 @@ public class BuildingWindow : GUIElement {
             _salary.SetActive(true);
         }
 
+        if (_building.Instruction == H.WillBeDestroy)
+        {
+           _salary.SetActive(false);
+           _staBtn.SetActive(false);
+           _prdBtn.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -293,7 +299,7 @@ public class BuildingWindow : GUIElement {
         bool fullyBuilt = _building.IsFullyBuilt();
         bool isAWorkPlace = isAWorkBuild(_building);
 
-        if (fullyBuilt && isAWorkPlace)
+        if (fullyBuilt && isAWorkPlace && _building.Instruction != H.WillBeDestroy)
         {
             _salary.SetActive(true);
             _positions.SetActive(true);
@@ -473,11 +479,22 @@ public class BuildingWindow : GUIElement {
             }
         }
 
+        res = DestroyingBuilding(res);
+
         return res
 #if UNITY_EDITOR
                + DebugInfo()
 #endif
             ;
+    }
+
+    string DestroyingBuilding(string current)
+    {
+        if (_building.Instruction == H.WillBeDestroy)
+        {
+            return "This building will be destroyed soon";
+        }
+        return current;
     }
 
     string ReturnAvailablePositions()
