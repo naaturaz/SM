@@ -339,7 +339,7 @@ public class AddOrderWindow : GUIElement {
 
     private void PriceSelected()
     {
-        if (IsTextValid(_inputPrice.text))
+        if (IsTextAValidInt(_inputPrice.text))
         {
             _price = int.Parse(_inputPrice.text);
         }
@@ -351,7 +351,7 @@ public class AddOrderWindow : GUIElement {
     /// </summary>
     private void AmtSelected()
     {
-        if (IsTextValid(_inputAmt.text))
+        if (IsTextAValidInt(_inputAmt.text))
         {
 
 
@@ -384,7 +384,7 @@ public class AddOrderWindow : GUIElement {
     }
 
     //todo validation
-    static public bool IsTextValid(string text)
+    static public bool IsTextAValidInt(string text)
     {
         int temp = 0;
         if (int.TryParse(text, out temp))

@@ -164,6 +164,10 @@ public class BuildingWindow : GUIElement {
         _demolish_Btn = GetGrandChildCalled(H.Demolish_Btn);//Cancel_Demolish_Btn
         _cancelDemolish_Btn = GetGrandChildCalled(H.Cancel_Demolish_Btn);//Cancel_Demolish_Btn
 
+
+
+
+        _salary.SetActive(false);
     }
 
     /// <summary>
@@ -246,10 +250,13 @@ public class BuildingWindow : GUIElement {
 
         if (_building.Instruction == H.WillBeDestroy)
         {
-           _salary.SetActive(false);
+            _salary.SetActive(false);
            _staBtn.SetActive(false);
            _prdBtn.SetActive(false);
         }
+
+        _salary.SetActive(false);
+
     }
 
     /// <summary>
@@ -301,7 +308,7 @@ public class BuildingWindow : GUIElement {
 
         if (fullyBuilt && isAWorkPlace && _building.Instruction != H.WillBeDestroy)
         {
-            _salary.SetActive(true);
+            //_salary.SetActive(true);
             _positions.SetActive(true);
         }
         else

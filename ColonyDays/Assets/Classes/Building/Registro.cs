@@ -776,4 +776,50 @@ public class Registro : MonoBehaviour
         }
         return res;
     }
+
+    /// <summary>
+    /// All the positions in all work buildings 
+    /// </summary>
+    /// <returns></returns>
+    internal int MaxPositions()
+    {
+        int res = 0;
+        for (int i = 0; i < AllBuilding.Count; i++)
+        {
+            if (BuildingWindow.isAWorkBuild(AllBuilding.ElementAt(i).Value))
+            {
+                res += AllBuilding.ElementAt(i).Value.MaxPeople;
+            }
+        }
+        return res;
+    }
+
+    /// <summary>
+    /// a list string of all the building types that are a work 
+    /// </summary>
+    /// <returns></returns>
+    internal List<string> StringOfAllBuildingsThatAreAWork()
+    {
+        List<string> res = new List<string>();
+        for (int i = 0; i < AllBuilding.Count; i++)
+        {
+            if (BuildingWindow.isAWorkBuild(AllBuilding.ElementAt(i).Value))
+            {
+                res.Add(AllBuilding.ElementAt(i).Value.HType + "");
+            }
+        }
+        return res;
+    }
+
+    internal void DoEquealPaymentForAllWorks()
+    {
+        List<string> res = new List<string>();
+        for (int i = 0; i < AllBuilding.Count; i++)
+        {
+            if (BuildingWindow.isAWorkBuild(AllBuilding.ElementAt(i).Value))
+            {
+               AllBuilding.ElementAt(i).Value.DollarsPay = 5;
+            }
+        }
+    }
 }

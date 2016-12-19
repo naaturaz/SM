@@ -251,7 +251,7 @@ public enum H
     LumberMill, BlackSmith, ShoreMine,// QuickLime, 
     Mortar, 
     //prod F5
-    Brick, Carpintery, Cigars, Mill, Tailor,
+    Brick, Carpentry, Cigars, Mill, Tailor,
     Armory, Distillery, Chocolate, Ink,
     //industry F6
     Cloth, GunPowder, Paper_Mill, Printer, CoinStamp, SugarMill, Foundry,
@@ -469,7 +469,7 @@ public enum StRaw //for structures game structure.cs
 public enum StProd //for structures game structure.cs 
 {
     //Production
-    Brick, Carpintery, Cigars, Mill, Tailor, 
+    Brick, Carpentry, Cigars, Mill, Tailor, 
     Armory, Distillery, Chocolate, Ink,
 }
 

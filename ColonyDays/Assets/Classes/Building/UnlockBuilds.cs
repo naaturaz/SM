@@ -66,7 +66,7 @@ public class UnlockBuilds
 
             //prod
             new BRequires(H.Brick, true),
-            new BRequires(H.Carpintery, 50, 500, 900),
+            new BRequires(H.Carpentry, 50, 500, 900),
             new BRequires(H.Cigars, 50, 500, 900),
             new BRequires(H.Mill, H.OnlyForDev),
             new BRequires(H.Tailor, 50, 500, 900),

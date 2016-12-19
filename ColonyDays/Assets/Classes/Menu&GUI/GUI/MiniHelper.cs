@@ -11,7 +11,7 @@ class MiniHelper : GUIElement
     //helps available. u can add anything here, but need to be add on Langugaes.cs
     List<string> _helps = new List<string>()
     {
-        "Current_Salary.HoverMed",
+        //"Current_Salary.HoverMed",
         "Camera",
         "SeaPath",
         "PeopleRange",
@@ -71,6 +71,9 @@ class MiniHelper : GUIElement
 
     internal void Show()
     {
+        Program.gameScene.TutoStepCompleted("ShowMiniHelp.Tuto");
+
+
         AudioCollector.PlayOneShotFullAudio("ClickMetal2");
         Program.MouseListener.HideAllWindows();
 

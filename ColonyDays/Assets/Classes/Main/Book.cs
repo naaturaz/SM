@@ -94,18 +94,18 @@ public class Book : General
         //Raw
         Build.Add(new BuildStat(H.Mortar, 1000, 15, 5, 15, 5, maxPeople: 5, capacity: 160));
 
-        Build.Add(new BuildStat(H.Clay, 1000, 15, 5, 15, 5, maxPeople: 5, capacity: 160));
-        Build.Add(new BuildStat(H.Pottery, 1000, 15, 5, 25, 5, maxPeople: 5));
-        Build.Add(new BuildStat(H.FishingHut, 1000, 15, 5, 25, 5, maxPeople: 5));
-        Build.Add(new BuildStat(H.MountainMine, 1000, 15, 5, 25, 5, maxPeople: 5));
-        Build.Add(new BuildStat(H.LumberMill, 500, 30, 5, 0, 1, maxPeople: 5));
-        Build.Add(new BuildStat(H.BlackSmith, 1000, 15, 5, 25, 5, maxPeople: 5));
+        Build.Add(new BuildStat(H.Clay, 1000, 15, 5, 15, 5, maxPeople: 12, capacity: 160));
+        Build.Add(new BuildStat(H.Pottery, 1000, 15, 5, 25, 5, maxPeople: 10));
+        Build.Add(new BuildStat(H.FishingHut, 1000, 15, 0, 0, 0, maxPeople: 10));
+        Build.Add(new BuildStat(H.MountainMine, 1000, 15, 5, 25, 5, maxPeople: 20));
+        Build.Add(new BuildStat(H.LumberMill, 500, 30, 5, 0, 1, maxPeople: 50));
+        Build.Add(new BuildStat(H.BlackSmith, 1000, 15, 5, 25, 5, maxPeople: 10));
 
-        Build.Add(new BuildStat(H.ShoreMine, 400, 15, 5, 25, 5, maxPeople: 5));
+        Build.Add(new BuildStat(H.ShoreMine, 400, 15, 5, 25, 5, maxPeople: 20));
 
         //Prod
-        Build.Add(new BuildStat(H.Brick, 400, 15, 5, 25, 5, maxPeople: 5, capacity: 50));
-        Build.Add(new BuildStat(H.Carpintery, 400, 15, 5, 25, 5, maxPeople: 5));
+        Build.Add(new BuildStat(H.Brick, 400, 15, 5, 25, 5, maxPeople: 20, capacity: 50));
+        Build.Add(new BuildStat(H.Carpentry, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.Cigars, 400, 15, 5, 25, 5, maxPeople: 5));
 
         Build.Add(new BuildStat(H.Mill, 400, 15, 5, 25, 5, maxPeople: 5));
@@ -261,7 +261,7 @@ public class BuildStat
     {
         float multiplier = 300;
 
-        AmountOfLabour = amountOfLabour * 2;
+        AmountOfLabour = amountOfLabour ;
         HType = hType;
         Root = global::Root.RetBuildingRoot(hType);
         Wood = wood * multiplier;

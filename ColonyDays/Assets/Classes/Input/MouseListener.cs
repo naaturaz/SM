@@ -81,6 +81,8 @@ public class MouseListener : InputMain
         _addOrderWindow = FindObjectOfType<AddOrderWindow>();
         _notificationWindow = FindObjectOfType<NotificationWindowGO>();
 
+        _bulletinWindow = FindObjectOfType<BulletinWindow>();
+
         Debug.Log("LoadMainGUI() GUI");
     }
 
@@ -153,6 +155,7 @@ public class MouseListener : InputMain
 
             _addOrderWindow.Hide();
             _buildingWindow.Hide();
+            _bulletinWindow.Hide();
 
             //try to select person first
             if (!SelectPerson())
@@ -764,6 +767,7 @@ public class MouseListener : InputMain
 
     private Person _personSelect;
     private MiniHelper _miniHelper;
+    private BulletinWindow _bulletinWindow;
 
 
 

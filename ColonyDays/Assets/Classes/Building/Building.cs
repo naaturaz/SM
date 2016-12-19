@@ -656,8 +656,13 @@ public class Building : General, Iinfo
         if (!IsLoadingFromFile)
         {
             CurrentProd = BuildingPot.Control.ProductionProp.ReturnDefaultProd(HType);
-            InitJobRelated();
+            
         }
+
+        InitJobRelated();
+
+
+
 
         StartCoroutine("ThirtySecUpdate");
         StartCoroutine("SixtySecUpdate");
@@ -3322,7 +3327,39 @@ public class Building : General, Iinfo
 
     #region Job Related
 
-    private int _maxPeople;//max people this builging can hold. workers 
+    /// <summary>
+    /// Will say if this building can hire or fire a new person
+    /// </summary>
+    /// <param name="newEmploys">This will be decresead by one towards 0 if was able to hire or fire
+    /// If was able to hire. For ex a 3 was passed and a 2 is return
+    /// If was able to fire. For ex a -3 is passed and a -2 is return</param>
+    /// <returns></returns>
+    internal int CanYouChangeOne(int newEmploys)
+    {
+        //need to fire people
+        if (newEmploys < 0 && _maxPeople > 0)
+        {
+            ChangeMaxAmoutOfWorkers("Less");
+            return newEmploys + 1;//one less that needs to be fire 
+        }
+        else if(newEmploys > 0 && _maxPeople < AbsMaxPeople)
+        {
+            ChangeMaxAmoutOfWorkers("More");
+            return newEmploys - 1;//one less that needs to be hire
+        }
+        //else return the same amount
+        return newEmploys;
+    }
+
+
+    private int _maxPeople;//max people this builging can hold. workers this one can change
+    private int _absMaxPeople;//this one doesnt change 
+
+    public int AbsMaxPeople
+    {
+        get { return _absMaxPeople; }
+        set { _absMaxPeople = value; }
+    }
 
     public int MaxPeople
     {
@@ -3336,7 +3373,7 @@ public class Building : General, Iinfo
         {
             _maxPeople--;
         }
-        else if (action == "More")
+        else if (action == "More" && MyText.Lazy() > 0)
         {
             _maxPeople++;
         }
@@ -3344,6 +3381,10 @@ public class Building : General, Iinfo
         if (_maxPeople < 0)
         {
             _maxPeople = 0;
+        }
+        if (_maxPeople >= AbsMaxPeople)
+        {
+            _maxPeople = AbsMaxPeople;
         }
 
         //fire people
@@ -3375,7 +3416,8 @@ public class Building : General, Iinfo
 
     private void InitJobRelated()
     {
-        _maxPeople = Book.GiveMeStat(HType).MaxPeople;
+        AbsMaxPeople = Book.GiveMeStat(HType).MaxPeople;
+        MaxPeople = PeopleDict.Count;
     }
 
     /// <summary>

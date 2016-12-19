@@ -30,6 +30,7 @@ public class MyText : MonoBehaviour
         }
     }
 
+    int adult;
     private void Map()
     {
         if (Program.InputMain == null)
@@ -56,7 +57,7 @@ public class MyText : MonoBehaviour
         }
         else if (name == "Person")
         {
-            var adult = PersonPot.Control.All.Count(a => a.Age >= JobManager.majorityAge);
+            adult = PersonPot.Control.All.Count(a => a.Age >= JobManager.majorityAge);
             var all = PersonPot.Control.All.Count;
 
             thisText.text = all + " / " + adult + " / " + (all - adult);
@@ -92,13 +93,23 @@ public class MyText : MonoBehaviour
         }
         else if (name == "Lazy")
         {
-            thisText.text = PersonPot.Control.All.Count(a => a.Work == null && a.IsMajor) + "";
+            thisText.text = Lazy() + "";
         }   
         else if (name == "Temp")
         {
             thisText.text = Tempeture.Current()+ "";
         }
     }
+
+
+    public static int Lazy()
+    {
+        return PersonPot.Control.All.Count(a => a.Age >= JobManager.majorityAge)
+            - BuildingPot.Control.Registro.MaxPositions(); 
+    }
+
+
+
 
 
     private static int reMapCount;//since is static need to remap all the times exist MyText.cs scripts

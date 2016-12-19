@@ -26,7 +26,7 @@ public class GameController  {
 
 
 
-    private static int _capMaxPerson = 400;
+    private static int _capMaxPerson = 1100;
     /// <summary>
     /// tHE Max amt of person in a game 
     /// </summary>

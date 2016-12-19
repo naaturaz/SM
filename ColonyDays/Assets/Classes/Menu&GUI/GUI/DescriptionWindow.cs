@@ -161,76 +161,76 @@ public class DescriptionWindow : General
         }
         if (stat.Gold != 0)
         {
-            res += " Gold: " + Unit.WeightConverted(stat.Gold) + " " + Unit.WeightUnit();
+            res += " Gold: " + Unit.WeightConverted(stat.Gold).ToString("n0") + " " + Unit.WeightUnit();
             appends++;
         }
 
         if (stat.Iron != 0)
         {
-            res += " Iron: " + Unit.WeightConverted(stat.Iron) + " " + Unit.WeightUnit();
+            res += " Iron: " + Unit.WeightConverted(stat.Iron).ToString("n0") + " " + Unit.WeightUnit();
             appends++;
         }
         res = CheckIfAppend3(ref appends, res, returnEvery);
 
         if (stat.Stone != 0)
         {
-            res += " Stone: " + Unit.WeightConverted(stat.Stone) + " " + Unit.WeightUnit();
+            res += " Stone: " + Unit.WeightConverted(stat.Stone).ToString("n0") + " " + Unit.WeightUnit();
             appends++;
         }
         res = CheckIfAppend3(ref appends, res, returnEvery);
 
         if (stat.Brick != 0)
         {
-            res += " Brick: " + Unit.WeightConverted(stat.Brick) + " " + Unit.WeightUnit();
+            res += " Brick: " + Unit.WeightConverted(stat.Brick).ToString("n0") + " " + Unit.WeightUnit();
             appends++;
         }
         res = CheckIfAppend3(ref appends, res, returnEvery);
 
         if (stat.Wood != 0)
         {
-            res += " Wood: " + Unit.WeightConverted(stat.Wood) + " " + Unit.WeightUnit();
+            res += " Wood: " + Unit.WeightConverted(stat.Wood).ToString("n0") + " " + Unit.WeightUnit();
             appends++;
         }
         res = CheckIfAppend3(ref appends, res, returnEvery);
 
         if (stat.Nail != 0)
         {
-            res += " Nail: " + Unit.WeightConverted(stat.Nail) + " " + Unit.WeightUnit();
+            res += " Nail: " + Unit.WeightConverted(stat.Nail).ToString("n0") + " " + Unit.WeightUnit();
             appends++;
         }
         res = CheckIfAppend3(ref appends, res, returnEvery);
 
         if (stat.Furniture != 0)
         {
-            res += " Furniture: " + Unit.WeightConverted(stat.Furniture) + " " + Unit.WeightUnit();
+            res += " Furniture: " + Unit.WeightConverted(stat.Furniture).ToString("n0") + " " + Unit.WeightUnit();
             appends++;
         }
         res = CheckIfAppend3(ref appends, res, returnEvery);
 
         if (stat.Mortar != 0)
         {
-            res += " Mortar: " + Unit.WeightConverted(stat.Mortar) + " " + Unit.WeightUnit();
+            res += " Mortar: " + Unit.WeightConverted(stat.Mortar).ToString("n0") + " " + Unit.WeightUnit();
             appends++;
         }
         res = CheckIfAppend3(ref appends, res, returnEvery);
 
         if (stat.RoofTile != 0)
         {
-            res += " RoofTile: " + Unit.WeightConverted(stat.RoofTile) + " " + Unit.WeightUnit();
+            res += " RoofTile: " + Unit.WeightConverted(stat.RoofTile).ToString("n0") + " " + Unit.WeightUnit();
             appends++;
         }
         res = CheckIfAppend3(ref appends, res, returnEvery);
 
         if (stat.FloorTile != 0)
         {
-            res += " FloorTile: " + Unit.WeightConverted(stat.FloorTile) + " " + Unit.WeightUnit();
+            res += " FloorTile: " + Unit.WeightConverted(stat.FloorTile).ToString("n0") + " " + Unit.WeightUnit();
             appends++;
         }
         res = CheckIfAppend3(ref appends, res, returnEvery);
 
         if (stat.Machinery != 0)
         {
-            res += " Machinery: " + Unit.WeightConverted(stat.Machinery) + " " + Unit.WeightUnit();
+            res += " Machinery: " + Unit.WeightConverted(stat.Machinery).ToString("n0") + " " + Unit.WeightUnit();
             appends++;
         }
         res = CheckIfAppend3(ref appends, res, returnEvery);
@@ -244,7 +244,7 @@ public class DescriptionWindow : General
         if (append >= returnEvery)
         {
             append = 0;
-            return msg + "\n";
+            //return msg + "\n";
         }
         return msg;
     }

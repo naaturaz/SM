@@ -17,13 +17,18 @@ class TutoWindow : GUIElement
     List<string> _steps = new List<string>()
     {
         "CamMov.Tuto",
+        "CamMov5x.Tuto",
         "CamRot.Tuto",
         "CamHeaven.Tuto",
         "BackToTown.Tuto",
         "Raw.Tuto",
         "Clay.Tuto",
         "Clay.Placed.Tuto",
-        "MaxSpeed.Tuto"
+        "MaxSpeed.Tuto",
+        "ShowWorkersControl.Tuto",
+        "AddWorkers.Tuto",
+        "HideBulletin.Tuto",
+        "ShowMiniHelp.Tuto"
     };
 
     //which is being shown now 

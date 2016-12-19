@@ -226,6 +226,7 @@ public class CamRTSController : CamControl
         AlignYInZero();
 
         RotateScript();
+        rotateRTS.Update();
     }
 
     private void RotateScript()
@@ -357,12 +358,15 @@ public class CamRTSController : CamControl
         {
             AssignPosTo();
         }
-        ScrollMouse();
+        //ScrollMouse();
     }
 
     private void QandEKeys()
     {
-        
+        if (Program.IsInputLocked)
+        {
+            return;
+        }
 
         if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.E))
         {
@@ -406,28 +410,37 @@ public class CamRTSController : CamControl
 
     void ScrollMouse()
     {
-        int localMultiplier = 900;
+        int localMultiplier = 100;
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {
-            float fieldOfView = UMath.changeValSmooth(transform.GetComponent<Camera>().fieldOfView,
-                -Input.GetAxis("Mouse ScrollWheel"), localMultiplier, 
-                MIN_FIELD_CAM, MAX_FIELD_CAM,
-                camSensivity);
-            transform.GetComponent<Camera>().fieldOfView = fieldOfView;
+            //float fieldOfView = UMath.changeValSmooth(transform.GetComponent<Camera>().fieldOfView,
+            //    -Input.GetAxis("Mouse ScrollWheel"), localMultiplier,
+            //    MIN_FIELD_CAM, MAX_FIELD_CAM,
+            //    camSensivity);
+            //transform.GetComponent<Camera>().fieldOfView = fieldOfView;
+            //IsMouseMiddle = true;
+            RotateDealer();
+            rotateRTS.RotateCamVert(camSensivity, target, -Input.GetAxis("Mouse ScrollWheel") * localMultiplier);
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") == 0)
+        {
+            CleanUpRotHelp();
+            //IsMouseMiddle = false;
+            mouseInBorderDir = Dir.None;
         }
     }
 
     void MiddleMouse()
     {
         //if middle mouse btn is pressed
-        if (Input.GetMouseButton(2) //&& !InputRTS.IsFollowingPersonNow
+        if (Input.GetMouseButton(2) || Input.GetAxis("Mouse ScrollWheel") != 0 //&& !InputRTS.IsFollowingPersonNow
             )
         {
             IsMouseMiddle = true;
             RotateDealer();
         }
         //if is realeased
-        else if (Input.GetMouseButtonUp(2)// && !InputRTS.IsFollowingPersonNow
+        else if (Input.GetMouseButtonUp(2) || Input.GetAxis("Mouse ScrollWheel") == 0// && !InputRTS.IsFollowingPersonNow
             )
         {
             //transform.SetParent( null;
@@ -555,6 +568,9 @@ public class CamRTSController : CamControl
     {
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
         {
+
+            Program.gameScene.TutoStepCompleted("CamMov5x.Tuto");
+
             return 5;
         }
         return 1;

@@ -66,7 +66,7 @@ public class PriceTile : GUIElement
     /// </summary>
     public void SetNewPrice()
     {
-        if (AddOrderWindow.IsTextValid(_input.text))
+        if (AddOrderWindow.IsTextAValidInt(_input.text))
         {
             _prodSpec.Price = float.Parse(_input.text);
         }

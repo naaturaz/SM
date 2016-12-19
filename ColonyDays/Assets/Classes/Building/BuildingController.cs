@@ -385,7 +385,7 @@ public class BuildingController : BuildingPot
         }
         else if (which == HPers.Work)
         {
-            WorkOpenPos = current;
+            //WorkOpenPos = current;
         }
         else if (which == HPers.Religion)
         {
@@ -644,6 +644,24 @@ public class BuildingController : BuildingPot
             var build = BuildingPot.Control.Registro.AllBuilding.ElementAt(i).Value;
 
             if (build.HType == hType)
+            {
+                res.Add((Structure)build);
+            }
+        }
+
+        return res;
+    }
+
+    static public List<Structure> FindAllStructOfThisTypeAndFullyBuilt(string hType)
+    {
+        List<Structure> res = new List<Structure>();
+
+        for (int i = 0; i < BuildingPot.Control.Registro.AllBuilding.Count; i++)
+        {
+            var build = BuildingPot.Control.Registro.AllBuilding.ElementAt(i).Value;
+            var st = (Structure)build;
+
+            if (build.HType+"" == hType && (build.StartingStage==H.Done || st.CurrentStage==4))
             {
                 res.Add((Structure)build);
             }

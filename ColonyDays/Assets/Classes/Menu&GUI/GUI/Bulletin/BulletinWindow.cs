@@ -75,6 +75,8 @@ public class BulletinWindow : GUIElement
     {
         base.Show();
         ShowWorkers();
+
+        Program.gameScene.TutoStepCompleted("ShowWorkersControl.Tuto");
     }
 
     void HideAll()

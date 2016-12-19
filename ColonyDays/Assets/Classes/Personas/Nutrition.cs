@@ -118,11 +118,17 @@ public class Nutrition
         return (cal/500f)*0.0643f;
     }
 
+    float tempCalNeededNow = 30f;
     internal float CalNeededNowUpdate()
     {
+        if (Program.gameScene.GameSpeed == 0)
+        {
+            return tempCalNeededNow;
+        }
+
         var days = _daysWithoutEat;
 
-        var tempCalNeededNow = CalculateCalNeedNow() * days;
+        tempCalNeededNow = CalculateCalNeedNow() * days;
 
         return tempCalNeededNow;
     }

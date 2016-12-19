@@ -2,7 +2,7 @@
 
 public class RotateRTS : GenericCameraComponent {
 
-    float MIN_Y = 10.8f;//14   20
+    float MIN_Y = 25f;//10.8   14   20
     float MAX_Y = 120f;//60 50
     Vector3 oldPos;
 
@@ -27,33 +27,41 @@ public class RotateRTS : GenericCameraComponent {
     public void RotateCam(General helpCam360GrabPosY, General helpCam360MainY,
         Transform target, float camSensivity, float smoothTime, ref Vector3 velocity)
     {
+
+        if (Input.GetAxis("Mouse ScrollWheel") == 0)
+        {
             RotateCamHor(helpCam360GrabPosY.transform,
                 helpCam360MainY.transform, target, camSensivity);
-            RotateCamVert(camSensivity, target, smoothTime, ref velocity);
+        }
 
-            CamControl.CAMRTS.centerTarget.transform.rotation = TransformCam.rotation;
-            TransformCam.parent = CamControl.CAMRTS.centerTarget.transform;
+        RotateCamVert(camSensivity, target, -Input.GetAxis("Mouse ScrollWheel") * 100);
+
+        CamControl.CAMRTS.centerTarget.transform.rotation = TransformCam.rotation;
+        TransformCam.parent = CamControl.CAMRTS.centerTarget.transform;
     }
 
-    void RotateCamVert(float camSensivity, Transform target, float smoothTimePass, ref Vector3 velocity)
+    public void RotateCamVert(float camSensivity, Transform target, float smoothTimePass)
     {
         var qOrE = Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.E);
         TransformCam.parent = null;
-        float changeValue = 0;
-        if (Input.GetAxis("Mouse Y") != 0 && !qOrE)
-        {
-            changeValue = Input.GetAxis("Mouse Y") * camSensivity;
-        }
-        if (Input.GetAxis("Vertical") != 0 && !qOrE)
-        {
-            changeValue = Input.GetAxis("Vertical") * camSensivity;
-        }
+        float changeValue = smoothTimePass;
+        //if (Input.GetAxis("Mouse Y") != 0 && !qOrE)
+        //{
+        //    changeValue = Input.GetAxis("Mouse Y") * camSensivity;
+        //}
+        //if (Input.GetAxis("Vertical") != 0 && !qOrE)
+        //{
+        //    changeValue = Input.GetAxis("Vertical") * camSensivity;
+        //}
+
+
+
         if (changeValue != 0)
         {
             TransformCam.position = MoveThruY(TransformCam, MIN_Y, MAX_Y, changeValue);
             TransformCam.LookAt(target);
 
-            Program.gameScene.TutoStepCompleted("CamRot.Tuto");
+            //Program.gameScene.TutoStepCompleted("CamRot.Tuto");
 
         }
     }
@@ -91,8 +99,20 @@ public class RotateRTS : GenericCameraComponent {
             helpCam360MainY.transform.Rotate(new Vector3(0, changeValue, 0));
             TransformCam.LookAt(target);
 
+            leftChangeVal = changeValue;
+
             Program.gameScene.TutoStepCompleted("CamRot.Tuto");
 
         }
+    }
+
+    float leftChangeVal;
+    public void Update()
+    {
+        //if (leftChangeVal != 0)
+        //{
+        //    helpCam360MainY.transform.Rotate(new Vector3(0, changeValue, 0));
+        //    TransformCam.LookAt(target);
+        //}
     }
 }

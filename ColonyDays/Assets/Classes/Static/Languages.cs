@@ -68,7 +68,7 @@ public class Languages
 
        //Prod
 	   { "Brick.Desc","Here a worker will produce clay made products, such as bricks, etc"},
-	   { "Carpintery.Desc","Here a worker will produce wood made products, such as crates, barrels, etc"},
+	   { "Carpentry.Desc","Here a worker will produce wood made products, such as crates, barrels, etc"},
 	   { "Cigars.Desc","Here workers will produce cigars"+_asLongHasInput},
 	   { "Mill.Desc","Here workers will ground some grains"+_asLongHasInput},
 	   { H.Tailor+".Desc","Here workers will produce clothes"+_asLongHasInput},
@@ -167,6 +167,9 @@ public class Languages
 	   { "Bulletin.HoverSmall", "Control/Bulletin"},
 
 
+       
+       { "More.HoverSmall", "More"},
+	   { "Less.HoverSmall", "Less"},
 
        //down bar
 	   { "Infrastructure.HoverSmall", "Infrastructure"},
@@ -256,7 +259,7 @@ public class Languages
 
 
        //Mini help
-       { "Camera", "Camera: Use [AWSD] or cursor to move. " +
+       { "Camera", "Camera: Use [WASD] or cursor to move. " +
                    "Press the scroll wheel on your mouse, keep it pressed to rotate, or [Q] and [E]"},
        { "SeaPath", "Click on the left bottom corner 'Show/hide sea path' " +
                     "button to show the closest path to the sea"},
@@ -288,14 +291,15 @@ public class Languages
 
 
 
-       //to correct and add on spanish
+       //to  add on spanish
        { "TutoOver", "The tutorial is over now you can keep playing this game or start a new one"},
 
 
        //Tuto
-       { "CamMov.Tuto", "Use [AWSD] or cursor to move the Camera."},
+       { "CamMov.Tuto", "Use [WASD] to move the Camera."},
+       { "CamMov5x.Tuto", "Use [WASD] and keep press the 'Left Shift' key to move the Camera faster."},
        { "CamRot.Tuto", "Now press the scroll wheel down on your mouse and move your mouse to rotate the Camera."},
-       { "CamHeaven.Tuto", "Keep the scroll wheel pressed down on your mouse and move your mouse foward so the Camera reaches "
+       { "CamHeaven.Tuto", "Scroll back with your mouse middle button until the camera reaches"
             + " the sky. This view is useful to place bigger buildings such as the Port"},
        
        
@@ -309,7 +313,20 @@ public class Languages
        { "MaxSpeed.Tuto", "To go to max speed, go to the middle top screen simulation speed controller, click the "
             +" 'More Speed' button 3 times until 10x is displayed"},
 
-	};
+
+  
+        //to correct   
+       { "ShowWorkersControl.Tuto", "Click on the 'Control/Bullentin' button, located in the right bottom bar. "+
+           "When you hover over it, it will popup 'Control/Bullentin'"},
+       { "AddWorkers.Tuto", "Click on the 'More' button in the Mansory building, this is the way you assign new workers to buildings."},
+	
+       { "HideBulletin.Tuto", "Click outside the Bulletin window to close it or the 'Cancel' button."},
+           
+
+       { "ShowMiniHelp.Tuto", "Click on the 'MiniHelp' button, located in the right bottom bar. "+
+           "When you hover over it, it will popup 'MiniHelp'. There you can find some tips"},
+    
+    };
 
     //ESPANNOL
     private static string _houseTailES = ". A los Azucareros les encanta comerse una buena comida de vez en cuando";
@@ -373,7 +390,7 @@ public class Languages
 
        //Prod
 	   { "Brick.Desc",_produceES},
-	   { "Carpintery.Desc",_produceES},
+	   { "Carpentry.Desc",_produceES},
 	   { "Cigars.Desc",_produceES},
 	   { "Mill.Desc",_produceES},
 	   { H.Tailor+".Desc",_produceES},
@@ -496,7 +513,8 @@ public class Languages
 	   { "CleanAll.HoverSmall", "Limpiar"},
 	   { "Bulletin.HoverSmall", "Control/Boletin"},
 
-
+       { "More.HoverSmall", "More"},
+	   { "Less.HoverSmall", "Less"},
 
        //down bar
 	   { "Infrastructure.HoverSmall", "Infraestructuras"},

@@ -12,12 +12,20 @@ public class Tempeture
 
     static List<int> _max = new List<int>() { 26, 27, 28, 30, 31, 32, 32, 32, 31, 30, 28, 27 };
 
+    static float oldTemp;
     public static float Current()
     {
+        if (Program.gameScene.GameSpeed == 0)
+	    {
+            return oldTemp;
+	    }
+
         var min = _min[Program.gameScene.GameTime1.Month1-1];
         var max = _max[Program.gameScene.GameTime1.Month1-1];
 
-        return UMath.GiveRandom(min, max);
+        oldTemp = UMath.GiveRandom(min, max);
+
+        return oldTemp;
     }
 }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Assets.Classes.Menu_GUI.GUI.Bulletin
 {
@@ -19,29 +20,74 @@ namespace Assets.Classes.Menu_GUI.GUI.Bulletin
             _bulletinWindow = win;
         }
 
+
+        #region Control Workers
+        bool reDoneSalaries;//for users  that changed salaries already
         public void ShowWorkers()
         {
-            _report.Clear();
-            _finReport.Clear();
-
-            _bulletinWindow.ShowInBody(Workers());
-        }
-
-        private string Workers()
-        {
-            var workers = PersonPot.Control.All.Where(a => a.Work != null).ToList();
-            CreateDict(workers);
-
-            string res = Languages.ReturnString("Workers distribution")+ ":\n ";
-
-            for (int i = 0; i < _finReport.Count; i++)
+            if (!reDoneSalaries)
             {
-                var pad = Pad(" ", (_finReport[i].Key + ": ").Length, 15, 0);
-                res += _finReport[i].Key + ": " + pad + _finReport[i].Value + "\n ";
+                reDoneSalaries = true;
+                BuildingPot.Control.Registro.DoEquealPaymentForAllWorks();
             }
 
-            return res;
+            _report.Clear();
+
+            var list = BuildingPot.Control.Registro.StringOfAllBuildingsThatAreAWork().Distinct().ToList();
+
+            list.Insert(0, "Unemployed");
+            ShowWorkers(list);
         }
+
+        List<WorkerTile> _reports = new List<WorkerTile>();
+        private void ShowWorkers(List<string> list)
+        {
+            Hide();
+            _bulletinWindow.ShowScrool();
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                var iniPosHere = _bulletinWindow.ScrollIniPosGo.transform.localPosition +
+                                 new Vector3(0, -(ReturnRelativeYSpace(3.5f, ReturnTileYScale())) * i, 0);
+
+                var a = WorkerTile.CreateTile(_bulletinWindow.Content.gameObject.transform, list[i],
+                    iniPosHere);
+
+                _reports.Add(a);
+            }
+        }
+
+
+
+        float ReturnTileYScale()
+        {
+            if (_reports.Count > 0)
+            {
+                return _reports[0].transform.localScale.y;
+            }
+            return 0;
+        }
+
+        public static float ReturnRelativeYSpace(float relative, float ySpaceOfTile)
+        {
+            return relative * ySpaceOfTile;
+        }
+
+
+        internal void Hide()
+        {
+            for (int i = 0; i < _reports.Count; i++)
+            {
+                _reports[i].Destroy();
+            }
+            _reports.Clear();
+        }
+
+
+        #endregion
+
+
+
 
 
 
@@ -57,6 +103,8 @@ namespace Assets.Classes.Menu_GUI.GUI.Bulletin
             }
             return res;
         }
+
+
 
         void CreateDict(List<Person> workers)
         {
@@ -88,14 +136,14 @@ namespace Assets.Classes.Menu_GUI.GUI.Bulletin
 
         void AddKeyToReport(string key)
         {
-            if (key.Contains("AnimalFarm"))
-            {
-                key = "AnimalFarm";
-            }
-            else if (key.Contains("FieldFarm"))
-            {
-                key = "FieldFarm";
-            }
+            //if (key.Contains("AnimalFarm"))
+            //{
+            //    key = "AnimalFarm";
+            //}
+            //else if (key.Contains("FieldFarm"))
+            //{
+            //    key = "FieldFarm";
+            //}
 
             //addig
             if (_report.ContainsKey(key))
@@ -143,6 +191,11 @@ namespace Assets.Classes.Menu_GUI.GUI.Bulletin
 
 
 #endregion
+
+
+    
+
+
 
 
 

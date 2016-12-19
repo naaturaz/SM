@@ -73,6 +73,12 @@ public class GUIElement : General {
     /// </summary>
     public virtual void Hide()
     {
+        if(name.Contains("Bulletin"))
+        {
+            Program.gameScene.TutoStepCompleted("HideBulletin.Tuto");
+        }
+
+
         Vector3 newPos = transform.position;
         newPos.y = -800f;
         transform.position = newPos;

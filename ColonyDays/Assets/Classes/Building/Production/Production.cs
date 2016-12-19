@@ -410,13 +410,13 @@ public class Production  {
         List<InputElement> cigarBox = new List<InputElement>() { new InputElement(P.Wood, 1), new InputElement(P.Iron, 0.2f) };
         List<InputElement> furni = new List<InputElement>() { new InputElement(P.Wood, 20), new InputElement(P.Nail, 0.2f) };
 
-        InputProdCheckAndAdd(new ProductInfo(P.Crate, tonel, H.Carpintery));
-        InputProdCheckAndAdd(new ProductInfo(P.WheelBarrow, wheelBar, H.Carpintery));
-        InputProdCheckAndAdd(new ProductInfo(P.Cart, cart, H.Carpintery));
-        InputProdCheckAndAdd(new ProductInfo(P.Barrel, tonel, H.Carpintery));
-        InputProdCheckAndAdd(new ProductInfo(P.CigarBox, cigarBox, H.Carpintery));
-        InputProdCheckAndAdd(new ProductInfo(P.Bucket, cigarBox, H.Carpintery));
-        InputProdCheckAndAdd(new ProductInfo(P.Furniture, furni, H.Carpintery));
+        InputProdCheckAndAdd(new ProductInfo(P.Crate, tonel, H.Carpentry));
+        InputProdCheckAndAdd(new ProductInfo(P.WheelBarrow, wheelBar, H.Carpentry));
+        InputProdCheckAndAdd(new ProductInfo(P.Cart, cart, H.Carpentry));
+        InputProdCheckAndAdd(new ProductInfo(P.Barrel, tonel, H.Carpentry));
+        InputProdCheckAndAdd(new ProductInfo(P.CigarBox, cigarBox, H.Carpentry));
+        InputProdCheckAndAdd(new ProductInfo(P.Bucket, cigarBox, H.Carpentry));
+        InputProdCheckAndAdd(new ProductInfo(P.Furniture, furni, H.Carpentry));
     }
 
     void BlackSmith()
