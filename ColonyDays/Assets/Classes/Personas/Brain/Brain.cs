@@ -3118,7 +3118,7 @@ public class Brain
 
         if (_person.Work!=null)
         {
-            _person.Work.RemovePosition();
+            _person.Work.RemovePosition(true);
         }
     }
 

@@ -292,7 +292,8 @@ public class JobManager
 
             var score = ScoreABuild(struc, comparePoint);
 
-            if (struc.Instruction != H.WillBeDestroy && !person.Brain.BlackList.Contains(key))
+            if (struc.Instruction != H.WillBeDestroy && !person.Brain.BlackList.Contains(key)
+                && struc.HasOpenPositions())
             {
                 var dist = Vector3.Distance(struc.transform.position, comparePoint);
                 res.Add(new BuildRank(key, score, dist));

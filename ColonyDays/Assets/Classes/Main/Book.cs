@@ -129,7 +129,7 @@ public class Book : General
         Build.Add(new BuildStat(H.Foundry, 400, 15, 5, 25, 5, maxPeople: 5));
 
         //Trade
-        Build.Add(new BuildStat(H.Dock, 900, 30, 20, 0, 5, maxPeople: 10));
+        Build.Add(new BuildStat(H.Dock, 900, 30, 20, 0, 5, maxPeople: 10, capacity: 400));
         Build.Add(new BuildStat(H.Shipyard, 900, 30, 20, 0, 5, maxPeople: 10));
         Build.Add(new BuildStat(H.Supplier, 900, 30, 20, 0, 5, maxPeople: 10));
 
@@ -261,7 +261,7 @@ public class BuildStat
     {
         float multiplier = 300;
 
-        AmountOfLabour = amountOfLabour ;
+        AmountOfLabour = amountOfLabour/2 ;
         HType = hType;
         Root = global::Root.RetBuildingRoot(hType);
         Wood = wood * multiplier;

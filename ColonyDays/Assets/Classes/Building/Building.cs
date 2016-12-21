@@ -3387,13 +3387,20 @@ public class Building : General, Iinfo
             _maxPeople = AbsMaxPeople;
         }
 
+        UpdateWorkersRoutine();
+
+        return _maxPeople + "";
+    }
+
+    void UpdateWorkersRoutine()
+    {
         //fire people
         FirePeopleIfNeeded();
 
         CheckIfNoOpenPosLeftThenRemoveFromList();
         CheckIfNeedsToBeAddedToList();
 
-        return _maxPeople + "";
+        
     }
 
     private void FirePeopleIfNeeded()
@@ -3405,11 +3412,19 @@ public class Building : General, Iinfo
             var index = PeopleDict.Count - (1 + i);//starting from the last towards the first
             var person = Family.FindPerson(PeopleDict[index]);
             person.WasFired = true; 
-
             PersonPot.Control.RestartControllerForPerson(person.MyId);
-            
-            
-            //person.Brain.SetNewWorkFound();
+        }
+
+        //if not people was to fired then make sure all are hired that are less than MaxPeople and PeopleDict.Count
+        if (peopleToBeFired == 0 && Program.gameScene.GameFullyLoaded())
+        {
+            for (int i = 0; i < MaxPeople && i < PeopleDict.Count; i++)
+            {
+                var index = i;
+                var person = Family.FindPerson(PeopleDict[index]);
+                person.WasFired = false; 
+                PersonPot.Control.RestartControllerForPerson(person.MyId);
+            }
         }
     }
 
@@ -3418,6 +3433,8 @@ public class Building : General, Iinfo
     {
         AbsMaxPeople = Book.GiveMeStat(HType).MaxPeople;
         MaxPeople = PeopleDict.Count;
+
+        UpdateWorkersRoutine();
     }
 
     /// <summary>
@@ -3442,9 +3459,9 @@ public class Building : General, Iinfo
     }
 
     /// <summary>
-    /// Called when a person leave this job to find a better one 
+    /// Called when a person leave this job to find a better one or dies
     /// </summary>
-    public void RemovePosition()
+    public void RemovePosition(bool removeMaxAmtWorkers = false)
     {
         if (Instruction == H.WillBeDestroy)
         {
@@ -3452,6 +3469,11 @@ public class Building : General, Iinfo
         }
 
         CheckIfNeedsToBeAddedToList();
+
+        if (removeMaxAmtWorkers)
+        {
+            ChangeMaxAmoutOfWorkers("Less");
+        }
     }
 
     /// <summary>

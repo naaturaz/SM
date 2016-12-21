@@ -49,7 +49,7 @@ public class NewGameWindow : GUIElement
         
         var t_Btn = GetGrandChildCalled("Type_Btn");
         _typeTxt = t_Btn.GetComponentInChildren<Text>();
-        _typeTxt.text = "Traditional";
+        _typeTxt.text = "Freewill";
 
 
         _inputTownName = GetChildCalled("Input_Name").GetComponent<InputField>();
@@ -164,6 +164,9 @@ public class NewGameWindow : GUIElement
     void DefineTownName()
     {
         _townName = _inputTownName.text;
+        
+        //so that gets define 
+        ClickOnTypeOfGame(_typeTxt.text);
     }
 
 
@@ -311,20 +314,25 @@ public class NewGameWindow : GUIElement
         Display();
     }
 
+    /// <summary>
+    /// And is called from GUI also
+    /// </summary>
+    /// <param name="pass"></param>
     public void ClickOnTypeOfGame(string pass)
     {
-        if (pass == "Trad")
+        if (pass == "Traditional")
         {
             Program.TypeOfGame = H.Lock;
             _typeTxt.text = "Traditional";
-        } 
-        else if (pass == "Free")
+        }
+        else if (pass == "Freewill")
         {
             Program.TypeOfGame = H.Unlock;
             _typeTxt.text = "Freewill";
         }
         if (TownLoader.IsTemplate)
         {
+            Program.TypeOfGame = H.None;
             _typeTxt.text = "None";
         }
 
