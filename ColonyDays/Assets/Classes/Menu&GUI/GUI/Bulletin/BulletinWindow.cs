@@ -85,6 +85,7 @@ public class BulletinWindow : GUIElement
         _body.text = "";
         _production.Hide();
         _finance.Hide();
+        _workers.Hide();
     }
 
     public void ShowScrool()

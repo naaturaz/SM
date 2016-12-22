@@ -15,7 +15,6 @@ class MiniHelper : GUIElement
         "Camera",
         "SeaPath",
         "PeopleRange",
-        "Region",
         "PirateThreat.Help",
         "PortReputation.Help",
         "Emigrate.Help",

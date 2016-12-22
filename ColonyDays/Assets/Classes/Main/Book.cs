@@ -129,9 +129,9 @@ public class Book : General
         Build.Add(new BuildStat(H.Foundry, 400, 15, 5, 25, 5, maxPeople: 5));
 
         //Trade
-        Build.Add(new BuildStat(H.Dock, 900, 30, 20, 0, 5, maxPeople: 10, capacity: 400));
-        Build.Add(new BuildStat(H.Shipyard, 900, 30, 20, 0, 5, maxPeople: 10));
-        Build.Add(new BuildStat(H.Supplier, 900, 30, 20, 0, 5, maxPeople: 10));
+        Build.Add(new BuildStat(H.Dock, 900, 30, 20, 0, 5, maxPeople: 30, capacity: 400));
+        Build.Add(new BuildStat(H.Shipyard, 900, 30, 20, 0, 5, maxPeople: 30, capacity: 400));
+        Build.Add(new BuildStat(H.Supplier, 900, 30, 20, 0, 5, maxPeople: 30, capacity: 400));
 
         Build.Add(new BuildStat(H.StorageSmall, 400, 10, 20, 10, 5, maxPeople: 0, capacity: 500));
         Build.Add(new BuildStat(H.StorageMed, 600, 15, 20, 20, 5, maxPeople: 0, capacity: 200));
@@ -280,6 +280,20 @@ public class BuildStat
         Mortar = Brick / 200;
         RoofTile = Brick / 5;
         FloorTile = Brick / 6;
+        
+        //set the diiffculty
+        AmountOfLabour /= DiffDivider();
+        Wood /= DiffDivider();
+        Stone /= DiffDivider();
+        Brick /= DiffDivider();
+        Iron /= DiffDivider();
+        Gold /= DiffDivider();
+        Dollar /= DiffDivider();
+        Nail /= DiffDivider();
+        Furniture /= DiffDivider();
+        Mortar /= DiffDivider();
+        RoofTile /= DiffDivider();
+        FloorTile /= DiffDivider();
 
         if (hType == H.Bohio)
         {
@@ -287,7 +301,16 @@ public class BuildStat
         }
     }   
     
+    int DiffDivider()
+    {
+        if (PersonPot.Control == null)
+        {
+            return 1;
+        }
 
+        //plus 1 because Insane Program.MyScreen1.Difficulty = 0
+        return PersonPot.Control.Difficulty + 1;
+    }
 
     public BuildStat()
     {

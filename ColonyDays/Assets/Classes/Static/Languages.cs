@@ -35,7 +35,6 @@ public class Languages
 	   { "WoodHouseA.Desc","Small wooden house, a family can have 2-4 kids max" +_houseTail},
 	   { "WoodHouseB.Desc","Medium wooden house, a family can have 4 kids max" +_houseTail },
 	   { "WoodHouseC.Desc","Small and confortable wooden house, a family can have 2-4 kids max"+_houseTail},
-	   { "HouseMed.Desc","Medium house, a family can have 4 kids max"+_houseTail},
 	   { "BrickHouseA.Desc","Large house, a family can have 4 kids max"+_houseTail},
 	   { "BrickHouseB.Desc","Large house, a family can have 4 kids max"+_houseTail},
 	   { "BrickHouseC.Desc","Large house, a family can have 4 kids max"+_houseTail},
@@ -139,7 +138,8 @@ public class Languages
         { "Types_Explain", "Traditional: \nIt's a game where in the begining some buildings are locked and you have to unlock them. " +
             "The good thing is that this provides you with guidance." +
             "\n\nFreewill: \nAll available buildings are unlocked right away. " +
-            "The bad thing is this way you can fail very easily."},
+            "The bad thing is this way you can fail very easily." + 
+            "\n\nThe 'Hard' difficulty is the closest to reality"},
 
 
        //Tooltips 
@@ -152,7 +152,7 @@ public class Languages
 	   { "PortReputation.HoverSmall", "Reputation of Port"},
 	   { "Dollars.HoverSmall", "Dollars"},
 	   { "PirateThreat.HoverSmall", "Pirate Threat"},
-	   { "Date.HoverSmall", "Date (d/m/y)"},
+	   { "Date.HoverSmall", "Date (m/y)"},
 	   { "MoreSpeed.HoverSmall", "More speed"},
 	   { "LessSpeed.HoverSmall", "Less speed"},
 	   { "PauseSpeed.HoverSmall", "Pause game"},
@@ -263,8 +263,7 @@ public class Languages
                    "Press the scroll wheel on your mouse, keep it pressed to rotate, or [Q] and [E]"},
        { "SeaPath", "Click on the left bottom corner 'Show/hide sea path' " +
                     "button to show the closest path to the sea"},
-       { "Region", "Region: You need to own a region to be able to build in it. Click on the For Sale sign in the" +
-                   " middle of each region to buy it"},
+
        { "PeopleRange", "The huge blue circle around each building marks the range of it"},
 
        { "PirateThreat.Help", "Pirate Threat: This is how aware are the pirates of your port. This increases as" +
@@ -318,10 +317,14 @@ public class Languages
         //to correct   
        { "ShowWorkersControl.Tuto", "Click on the 'Control/Bullentin' button, located in the right bottom bar. "+
            "When you hover over it, it will popup 'Control/Bullentin'"},
-       { "AddWorkers.Tuto", "Click on the 'More' button in the Mansory building, this is the way you assign new workers to buildings."},
-	
-       { "HideBulletin.Tuto", "Click outside the Bulletin window to close it or the 'Cancel' button."},
-           
+       { "AddWorkers.Tuto", "Click the '+' sign to the right of the Masonry building, this is how you add more workers."
+        + " You can also assign workers in the buildings"},
+       { "HideBulletin.Tuto", "Click outside the Bulletin window to close it or the 'OK' button."},
+       
+       { "BuyRegion.Tuto", "Regions, you need to own a region to be able to build in it. Click on the 'For Sale' sign in the" +
+                   " middle of a region to buy it. Some buildings are exempt, they can be built without ownig the region" +
+                   " (FishingHut, Dock, MountainMine, ShoreMine, LightHouse, PostGuard)"
+                   },
 
        { "ShowMiniHelp.Tuto", "Click on the 'MiniHelp' button, located in the right bottom bar. "+
            "When you hover over it, it will popup 'MiniHelp'. There you can find some tips"},
@@ -499,7 +502,7 @@ public class Languages
 	   { "PortReputation.HoverSmall", "Reputacion Portuaria"},
 	   { "Dollars.HoverSmall", "Dinero"},
 	   { "PirateThreat.HoverSmall", "Amenaza Pirata"},
-	   { "Date.HoverSmall", "Fecha (d/m/a)"},
+	   { "Date.HoverSmall", "Fecha (m/a)"},
 	   { "MoreSpeed.HoverSmall", "Mas velocidad"},
 	   { "LessSpeed.HoverSmall", "Menos velocidad"},
 	   { "PauseSpeed.HoverSmall", "Pausa"},

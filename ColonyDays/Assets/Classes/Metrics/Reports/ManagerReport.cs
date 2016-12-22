@@ -26,6 +26,14 @@ public class ManagerReport
         }
     }
 
+    /// <summary>
+    /// To be called when game is loaded 
+    /// </summary>
+    public static void AddFPS()
+    {
+        _finalReport.AddFPS(HUDFPS.FPS());
+    }
+
     public static void AddInput(string a)
     {
         _finalReport.AddInput(a);

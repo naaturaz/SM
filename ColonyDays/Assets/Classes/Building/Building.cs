@@ -279,7 +279,7 @@ public class Building : General, Iinfo
             Program.gameScene.GameController1.NotificationsManager1.MainNotify("BadWaterHeight");
             
         }
-        else if (!AreAnchorsOnUnlockRegions())
+        else if (!AreAnchorsOnUnlockRegions() && !IsThisADoubleBoundedStructure())
         {
             Program.gameScene.GameController1.NotificationsManager1.MainNotify("LockedRegion");
         }
@@ -1416,8 +1416,9 @@ public class Building : General, Iinfo
         if (HType == H.MountainMine)
         {
            DefineBoundsGameObj(H.TerraUnderBound);
-           return RoutineToFindIfAnchorsAreGood(_terraBound, _underTerraBound, H.TerraUnderBound) &&
-               AreAnchorsOnUnlockRegions();
+           return RoutineToFindIfAnchorsAreGood(_terraBound, _underTerraBound, H.TerraUnderBound) 
+               //&& AreAnchorsOnUnlockRegions()
+               ;
         }
         else
         {
@@ -1430,12 +1431,9 @@ public class Building : General, Iinfo
 
             DefineBoundsGameObj(H.MaritimeBound);
             return RoutineToFindIfAnchorsAreGood(_terraBound, _maritimeBound, H.MaritimeBound) && reachRoute
-                && AreAnchorsOnUnlockRegions();
-
-
+                //&& AreAnchorsOnUnlockRegions()
+                ;
         }
-
-
     }
 
 
@@ -1820,6 +1818,7 @@ public class Building : General, Iinfo
         info = Inventory.Info();
     }
 
+
     protected void InitHouseProp()
     {
         if (IsLoadingFromFile)
@@ -2034,11 +2033,7 @@ public class Building : General, Iinfo
         {
             _confort = 1;
         }
-        else if (HType == H.WoodHouseC)
-        {
-            _confort = 3;
-        }
-        else if (HType == H.WoodHouseA || HType == H.WoodHouseB)
+        else if (HType == H.WoodHouseA || HType == H.WoodHouseB || HType == H.WoodHouseC)
         {
             _confort = 4;
         }
@@ -3468,12 +3463,11 @@ public class Building : General, Iinfo
             return;
         }
 
-        CheckIfNeedsToBeAddedToList();
-
-        if (removeMaxAmtWorkers)
+        if (removeMaxAmtWorkers && MyText.Lazy() == 0)//bz if there are lazy people then we need to hire
         {
             ChangeMaxAmoutOfWorkers("Less");
         }
+        CheckIfNeedsToBeAddedToList();
     }
 
     /// <summary>

@@ -294,8 +294,8 @@ public class Production  {
     {
         List<H> listH = new List<H>() { H.FieldFarmSmall, H.FieldFarmMed, H.FieldFarmLarge, H.FieldFarmXLarge };
 
-        InputProdCheckAndAdd(new ProductInfo(P.Corn, null, listH));
         InputProdCheckAndAdd(new ProductInfo(P.Bean, null, listH));
+        InputProdCheckAndAdd(new ProductInfo(P.Corn, null, listH));
         InputProdCheckAndAdd(new ProductInfo(P.SugarCane, null, listH));
         //InputProdCheckAndAdd(new ProductInfo(P.Carrot, null, listH));
         //InputProdCheckAndAdd(new ProductInfo(P.Tomato, null, listH));

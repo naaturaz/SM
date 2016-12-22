@@ -26,7 +26,7 @@ public class MyScreen : General
 
     private string _terraRoot;//the terrain root
     private string _diff;//the game difficulty
-    private int _difficulty;//in 0-4
+    //private int _difficulty;//in 0-4
 
     private string _townName;//the town name 
 
@@ -61,14 +61,14 @@ public class MyScreen : General
         set { _optionsWindow = value; }
     }
 
-    /// <summary>
-    /// THe dificulty of the game selected by user 
-    /// </summary>
-    public int Difficulty
-    {
-        get { return _difficulty; }
-        set { _difficulty = value; }
-    }
+    ///// <summary>
+    ///// THe dificulty of the game selected by user 
+    ///// </summary>
+    //public int Difficulty
+    //{
+    //    get { return _difficulty; }
+    //    set { _difficulty = value; }
+    //}
 
     public MainMenuWindow MainMenuWindow1
     {
@@ -269,32 +269,37 @@ public class MyScreen : General
         _townName = townName;
     }
 
+
+
+
+    int _holdDifficulty;
+    public int HoldDifficulty
+    {
+        get { return _holdDifficulty; }
+        set { _holdDifficulty = value; }
+    }
+    
     void AssignDificulty()
     {
-        //todo. Change so all work
-
-        Difficulty = 4;
-        return;
-
         if (_diff == "Newbie")
         {
-            Difficulty = 4;
+            HoldDifficulty = 4;
         }
         else if (_diff == "Easy")
         {
-            Difficulty = 3;
+            HoldDifficulty = 3;
         }
         else if (_diff == "Moderate")
         {
-            Difficulty = 2;
+            HoldDifficulty = 2;
         } 
         else if (_diff == "Hard")
         {
-            Difficulty = 1;
+            HoldDifficulty = 1;
         }
         else if (_diff == "Insane")
         {
-            Difficulty = 0;
+            HoldDifficulty = 0;
         }
     }
 
@@ -450,6 +455,7 @@ public class MyScreen : General
         Program.MouseListener.ApplyChangeScreenResolution();
 
         DestroyCurrentMenu();
+        ManagerReport.AddFPS();
     }
 
 

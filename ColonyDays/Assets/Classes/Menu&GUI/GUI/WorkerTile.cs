@@ -95,7 +95,7 @@ public class WorkerTile : GUIElement
         _oldEmploy = _employ;
 
         _input.text = _employ + "";
-        _totalText.text = " / " + AbsMaxPeople()+"";
+        _totalText.text = "" + AbsMaxPeople()+"";
     }
 
     private void TakeActionOnNewNumber()

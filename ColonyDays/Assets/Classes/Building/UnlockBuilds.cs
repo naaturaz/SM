@@ -367,7 +367,7 @@ class BRequires
             }
         }
 
-        res = DescriptionWindow.CheckIfAppend3(ref appends, res, 3);
+        res = DescriptionWindow.CheckIfAppend3(ref appends, res, 1);
 
         InfoMsg = res;
 

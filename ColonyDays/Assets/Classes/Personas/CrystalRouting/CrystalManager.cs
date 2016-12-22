@@ -1332,8 +1332,16 @@ public class CrystalManager  {
         }
     }
 
+
     private int count1;
-    List<CrystalRegion> _inLands; 
+    List<CrystalRegion> _inLands;
+    int _initialRegionIndex;//only used for reporting purposees
+    public int InitialRegionIndex
+    {
+        get { return _initialRegionIndex; }
+        set { _initialRegionIndex = value; }
+    }
+
     public Vector3 ReturnTownIniPos()
     {
         if (_inLands == null)
@@ -1342,11 +1350,12 @@ public class CrystalManager  {
         }
         var indexA = UMath.GiveRandom(0, _inLands.Count);
         var point = _inLands[indexA].Position();
+        var realIndex = _inLands[indexA].Index;
         
         //UVisHelp.CreateHelpers(point, Root.yellowCube);
         var inTerrain = UTerra.IsOnTerrainManipulateTerrainSize(point, -40f);//-1
 
-        if (!inTerrain)
+        if (!inTerrain || !IsAdjacentToShore(realIndex))
         {
             if (count1 > 500)
             {
@@ -1359,8 +1368,40 @@ public class CrystalManager  {
         }
         Debug.Log("Count1: " + count1 + " ..ReturnTownIniPos() CrystalManager");
         count1 = 0;
+        _initialRegionIndex = realIndex;
         return point;
     }
+
+
+    /// <summary>
+    /// Will say if the region pass is adjacent to a OceanShore region
+    /// </summary>
+    /// <param name="regionIndex"></param>
+    /// <returns></returns>
+    bool IsAdjacentToShore(int regionIndex)
+    {
+        var adjacents = ReturnCurrentSurroundIndexRegions(regionIndex, 3);
+        var shoresCount = 0;
+
+        for (int i = 0; i < adjacents.Count; i++)
+        {
+            var curIndex = adjacents[i];
+            if (CrystalRegions[curIndex].WhatAudioIReport == "OceanShore")
+            {
+                shoresCount++;
+
+                //at least 2 OceanShores regiosn should be adjacent
+                if (shoresCount > 1)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+
 
 #endregion
 

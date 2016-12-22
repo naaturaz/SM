@@ -77,7 +77,8 @@ public class Dialog
             } 
             else if (_type == H.BuyRegion)
             {
-                MeshController.BuyRegionManager1.CurrentRegionBuy();               
+                MeshController.BuyRegionManager1.CurrentRegionBuy();
+                Program.gameScene.TutoStepCompleted("BuyRegion.Tuto");
             }
             else if (_type == H.Feedback || _type == H.BugReport)
             {

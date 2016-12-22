@@ -100,7 +100,7 @@ class TownLoader
         }
 
         //game Difficulty is added for load 'Town4A.xml' for example
-        var townName = "Town" + Program.MyScreen1.Difficulty + "*.xml";
+        var townName = "Town" + Program.MyScreen1.HoldDifficulty + "*.xml";
 
         var xmls = Directory.GetFiles(_dataPath, townName).ToList();
         return xmls[UMath.GiveRandom(0, xmls.Count)];

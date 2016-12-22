@@ -63,8 +63,12 @@ public class BuyRegionManager
             var index = _forSaleRegions[i];
             var reg = MeshController.CrystalManager1.CrystalRegions[index].Region;
 
-            //if (MeshController.CrystalManager1.CrystalRegions[index].WhatAudioIReport == "FullOcean")
+            ////if is not inland will remove it from Sale will added to unlock 
+            //if (MeshController.CrystalManager1.CrystalRegions[index].WhatAudioIReport != "InLand")
             //{
+            //    //_forSaleRegions.RemoveAt(i);
+            //    //_unlockRegions.Add(i);
+            //    //i--;
             //    continue;
             //}
 
@@ -105,24 +109,19 @@ public class BuyRegionManager
         _unlockRegions = pData.PersonControllerSaveLoad.UnlockRegions;
     }
 
-    private int foodMul = 1000;
-    private int moneyMul = 1000;
+    private int moneyMul = 2000;
     public bool HasEnoughResourcesToBuy()
     {
-        var foodNeeded = FoodNeeded();
         var moneyNeeded = MoneyNeeded();
 
         var hasMoney = Program.gameScene.GameController1.Dollars > moneyNeeded;
-        var hasFood = GameController.ResumenInventory1.ReturnAmountOnCategory(PCat.Food) > foodNeeded;
 
-        return hasFood && hasMoney;
+        return hasMoney;
     }
 
     public string Cost()
     {
-        var foodString = Unit.WeightConverted(FoodNeeded()).ToString("f0") + " " + Unit.WeightUnit();
-
-        return " Food: " + foodString + " Money: " + MoneyNeeded();
+        return "Money: " + MoneyNeeded();
     }
 
     float MoneyNeeded()
@@ -132,22 +131,11 @@ public class BuyRegionManager
             return 0;
         }
 
-        return moneyMul*_unlockRegions.Count;
-    }
-
-    float FoodNeeded()
-    {
-        if (Developer.IsDev && Input.GetKey(KeyCode.F9))
-        {
-            return 0;
-        }
-
-        return foodMul*_unlockRegions.Count;
+        return moneyMul * _unlockRegions.Count ;
     }
 
     private void RemoveCost()
     {
-        GameController.ResumenInventory1.RemoveOnCategory(PCat.Food, FoodNeeded());
         Program.gameScene.GameController1.Dollars -= MoneyNeeded();
     }
 

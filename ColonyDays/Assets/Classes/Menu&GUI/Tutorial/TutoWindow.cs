@@ -28,6 +28,8 @@ class TutoWindow : GUIElement
         "ShowWorkersControl.Tuto",
         "AddWorkers.Tuto",
         "HideBulletin.Tuto",
+        "BuyRegion.Tuto",
+
         "ShowMiniHelp.Tuto"
     };
 

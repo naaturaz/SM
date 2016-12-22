@@ -138,8 +138,7 @@ public class MyText : MonoBehaviour
 
         if (name == "Date")
         {
-            thisText.text = Program.gameScene.GameTime1.Day + " "
-                + Program.gameScene.GameTime1.MonthFormat() + " "
+            thisText.text = Program.gameScene.GameTime1.MonthFormat() + " "
                 + Program.gameScene.GameTime1.Year;
         }
     }

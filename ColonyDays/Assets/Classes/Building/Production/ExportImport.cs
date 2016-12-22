@@ -73,10 +73,9 @@ public class ExportImport
     {
         if (_prodSpecsCured.Count == 0)
         {
-            _prodSpecsCured.AddRange(_prodSpecs);
-            _prodSpecsCured.RemoveAt(0);
-            _prodSpecsCured.RemoveAt(0);
-            _prodSpecsCured.RemoveAt(0);
+            _prodSpecsCured.AddRange(_townProdSpecs);
+
+            _prodSpecsCured = _prodSpecsCured.OrderBy(a => a.Product.ToString()).ToList();
         }
         return _prodSpecsCured;
     }

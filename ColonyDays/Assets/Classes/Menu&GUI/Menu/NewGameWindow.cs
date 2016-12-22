@@ -77,7 +77,7 @@ public class NewGameWindow : GUIElement
 #if UNITY_EDITOR
         _townName = "Editor";
 #endif
-        _difficulty = "Newbie";
+        _difficulty = "Easy";
 
         DefineTerrainNames();
         Display();
@@ -284,16 +284,16 @@ public class NewGameWindow : GUIElement
     /// </summary>
     public void ClickDifficultyDropDown()
     {
-        var newbie = GetGrandChildCalledFromThis("Btn_Newbie", Diff_Btn);
-        //var easy = GetGrandChildCalledFromThis("Btn_Easy", Diff_Btn);
-        //var moderate = GetGrandChildCalledFromThis("Btn_Moderate", Diff_Btn);
-        //var hard = GetGrandChildCalledFromThis("Btn_Hard", Diff_Btn);
+        //var newbie = GetGrandChildCalledFromThis("Btn_Newbie", Diff_Btn);
+        var easy = GetGrandChildCalledFromThis("Btn_Easy", Diff_Btn);
+        var moderate = GetGrandChildCalledFromThis("Btn_Moderate", Diff_Btn);
+        var hard = GetGrandChildCalledFromThis("Btn_Hard", Diff_Btn);
         //var insane = GetGrandChildCalledFromThis("Btn_Insane", Diff_Btn);
 
-        SetDiffButton(newbie, "Newbie");
-        //SetDiffButton(easy, "Easy");
-        //SetDiffButton(moderate, "Moderate");
-        //SetDiffButton(hard, "Hard");
+        //SetDiffButton(newbie, "Newbie");
+        SetDiffButton(easy, "Easy");
+        SetDiffButton(moderate, "Moderate");
+        SetDiffButton(hard, "Hard");
         //SetDiffButton(insane, "Insane");
 
     }

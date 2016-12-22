@@ -164,10 +164,14 @@ public class BuildingWindow : GUIElement {
         _demolish_Btn = GetGrandChildCalled(H.Demolish_Btn);//Cancel_Demolish_Btn
         _cancelDemolish_Btn = GetGrandChildCalled(H.Cancel_Demolish_Btn);//Cancel_Demolish_Btn
 
-
+        _plusBtn = FindGameObjectInHierarchy("More Positions", gameObject);
+        _lessBtn = FindGameObjectInHierarchy("Less Positions", gameObject);
 
 
         _salary.SetActive(false);
+
+
+
     }
 
     /// <summary>
@@ -628,7 +632,13 @@ public class BuildingWindow : GUIElement {
         {
             MakeThisTabActive(_stats);
         }
+
+        CheckIfLessIsActive();
+        CheckIfPlusIsActive();
     }
+
+
+
 
 
     private GameObject oldTabActive;
@@ -921,4 +931,78 @@ public class BuildingWindow : GUIElement {
         _title.text = _building.Name();
         Program.UnLockInputSt();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #region plus and less sign on workers max
+
+    GameObject _plusBtn;
+    GameObject _lessBtn;
+
+
+    private void CheckIfPlusIsActive()
+    {
+        if (MaxPeople() >= AbsMaxPeople() || MyText.Lazy() == 0)
+        {
+            MakeInactiveButton(_plusBtn);
+        }
+        else
+        {
+            MakeActiveButton(_plusBtn);
+        }
+    }
+
+    private void CheckIfLessIsActive()
+    {
+        if (MaxPeople() == 0)
+        {
+            MakeInactiveButton(_lessBtn);
+        }
+        else
+        {
+            MakeActiveButton(_lessBtn);
+        }
+    }
+
+    private void MakeInactiveButton(GameObject btn)
+    {
+        btn.SetActive(false);
+    }
+
+    private void MakeActiveButton(GameObject btn)
+    {
+        btn.SetActive(true);
+    }
+
+
+    int MaxPeople()
+    {
+        if (_building == null)
+        {
+            return 0;
+        }
+
+        return _building.MaxPeople;
+    }
+
+    int AbsMaxPeople()
+    {
+        if (_building == null)
+        {
+            return 0;
+        }
+
+        return _building.AbsMaxPeople;
+    }
+    #endregion
 }
