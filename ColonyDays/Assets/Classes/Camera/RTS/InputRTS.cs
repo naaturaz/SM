@@ -85,7 +85,7 @@ public class InputRTS : GenericCameraComponent
     void CheckIfKeyWasPressed()
     {
         //didnt load so one need to be redone
-        if (list==null)
+        if (Program.IsInputLocked || list==null)
         {
             return;
         }

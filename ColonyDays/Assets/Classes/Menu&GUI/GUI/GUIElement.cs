@@ -77,7 +77,10 @@ public class GUIElement : General {
         {
             Program.gameScene.TutoStepCompleted("HideBulletin.Tuto");
         }
-
+        if (name.Contains("Building"))
+        {
+            Program.gameScene.TutoStepCompleted("CloseDockWindow.Tuto");
+        }
 
         Vector3 newPos = transform.position;
         newPos.y = -800f;

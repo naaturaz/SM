@@ -272,7 +272,9 @@ public class MyScreen : General
 
 
 
-    int _holdDifficulty;
+
+
+    int _holdDifficulty = -1;
     public int HoldDifficulty
     {
         get { return _holdDifficulty; }
@@ -302,6 +304,13 @@ public class MyScreen : General
             HoldDifficulty = 0;
         }
     }
+
+    internal int HoldDifficultyReal()
+    {
+        return HoldDifficulty + 1;
+    }
+
+
 
 
 
@@ -537,4 +546,17 @@ public class MyScreen : General
             }
         }
     }
+
+
+    ///// <summary>
+    ///// loads data from PersonController loading
+    ///// </summary>
+    ///// <param name="pData"></param>
+    //internal void LoadData(PersonData pData)
+    //{
+    //    HoldDifficulty = pData.PersonControllerSaveLoad.Difficulty;
+
+
+    //    Program.gameScene.RedoStuffWithLoadedData();
+    //}
 }

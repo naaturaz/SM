@@ -328,6 +328,9 @@ public class PersonWindow : GUIElement
         _titleInputFieldGO.SetActive(false);
         _title.text = _person.Name;
         Program.UnLockInputSt();
+
+        Program.gameScene.TutoStepCompleted("Rename.Tuto");
+
     }
 
     public void LockInput()

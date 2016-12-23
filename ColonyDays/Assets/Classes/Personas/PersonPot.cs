@@ -3,8 +3,7 @@
     private static PersonController _control;
     private static PersonSaveLoad _saveLoad;
 
-    //game start brand new  dificulty
-    private int _gameDifficulty = 0;
+
 
     public static PersonController Control
     {
@@ -17,12 +16,7 @@
         get { return _saveLoad; }
         set { _saveLoad = value; }
     }
-////////////////////
-    public int IniAmount
-    {
-        get { return _gameDifficulty; }
-        set { _gameDifficulty = value; }
-    }
+
 
     // Use this for initialization
 	void Start ()

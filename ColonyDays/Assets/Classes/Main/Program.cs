@@ -221,6 +221,21 @@ public class Program : MonoBehaviour {
     {
         IsInputLocked = false;
     }
+
+
+
+
+
+
+    /// <summary>
+    /// It has pirate threat
+    /// </summary>
+    public static bool IsPirate { get; set; }
+
+    /// <summary>
+    /// Does food expires 
+    /// </summary>
+    public static bool IsFood { get; set; }
 }
 
 

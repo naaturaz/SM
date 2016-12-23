@@ -2260,7 +2260,6 @@ public class Building : General, Iinfo
 
     private float constructionAmt;
     private float amtNeeded;
-    Book book = new Book();
     BuildStat buildStat = new BuildStat();
 
 
@@ -2443,6 +2442,11 @@ public class Building : General, Iinfo
     {
         //Debug.Log("construction built 100%:"+MyId+"." + Program.gameScene.GameTime1.TodayYMD());
         PersonPot.Control.RoutesCache1.RemoveAllMine(MyId);
+
+        if (HType == H.Dock)
+        {
+            Program.gameScene.TutoStepCompleted("FinishDock.Tuto");
+        }
 
         if (_debugPercentage != null)
         {

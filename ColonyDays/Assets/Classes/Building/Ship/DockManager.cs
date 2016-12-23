@@ -123,6 +123,11 @@ public class DockManager
 
     internal void AddToPirateThreat(float amtChange)
     {
+        if (!Program.IsPirate)
+        {
+            return;
+        }
+
         PirateThreat = UMath.Clamper(amtChange, PirateThreat, 0, 100);
     }
 

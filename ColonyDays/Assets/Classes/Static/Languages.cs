@@ -290,7 +290,7 @@ public class Languages
 
 
 
-       //to  add on spanish
+       //to  add on spanish         //to correct  
        { "TutoOver", "The tutorial is over now you can keep playing this game or start a new one"},
 
 
@@ -301,34 +301,45 @@ public class Languages
        { "CamHeaven.Tuto", "Scroll back with your mouse middle button until the camera reaches"
             + " the sky. This view is useful to place bigger buildings such as the Port"},
        
-       
        { "BackToTown.Tuto", "Press the key [P] on the keyboard to go to the initial position of the camera"},
-       { "Raw.Tuto", "Click on the 'Raw' buildings button, located in the middle bottom bar, 'Raw' is the 4th button. "+
-           "When you hover over it, it will popup 'Raw'"},
-       { "Clay.Tuto", "Now click on the 'Clay' building, it is the 1st button. When you hover over it, it will"+
+      
+       { "BuyRegion.Tuto", "Regions, you need to own a region to be able to build in it. Click on the 'For Sale' sign in the" +
+            " middle of a region to buy it. Some buildings are exempt, they can be built without ownig the region" +
+            " (FishingHut, Dock, MountainMine, ShoreMine, LightHouse, PostGuard)"
+            },
+       
+       { "Trade.Tuto", "Click on the 'Trade' buildings button, located in the middle bottom bar, 'Trade' is the 7th button. "+
+           "When you hover over it, it will popup 'Trade'"},
+       { "Dock.Tuto", "Now click on the 'Dock' building, it is the 1st button. When you hover over it, it will"+
            " show it's cost and description"},
-       { "Clay.Placed.Tuto", "Now find a good spot and left click to place the building. Notice that you can use the "+
-           "key 'R' to Rotate, and right click to cancel the building"},
+       { "Dock.Placed.Tuto", "Now find a good spot and left click to place the building. Notice that you can use the "+
+           "key 'R' to Rotate, and right click to cancel the building. Also this building has a part in the ocean and other in land." +
+           " Once the arrow is white you can place the building"},
        { "MaxSpeed.Tuto", "To go to max speed, go to the middle top screen simulation speed controller, click the "
             +" 'More Speed' button 3 times until 10x is displayed"},
 
-
-  
-        //to correct   
-       { "ShowWorkersControl.Tuto", "Click on the 'Control/Bullentin' button, located in the right bottom bar. "+
-           "When you hover over it, it will popup 'Control/Bullentin'"},
+       { "ShowWorkersControl.Tuto", "Click on the 'Control/Bulletin' button, located in the right bottom bar. "+
+           "When you hover over it, it will popup 'Control/Bulletin'"},
        { "AddWorkers.Tuto", "Click the '+' sign to the right of the Masonry building, this is how you add more workers."
-        + " You can also assign workers in the buildings"},
+        + " You can also assign workers in the buildings."},
        { "HideBulletin.Tuto", "Click outside the Bulletin window to close it or the 'OK' button."},
-       
-       { "BuyRegion.Tuto", "Regions, you need to own a region to be able to build in it. Click on the 'For Sale' sign in the" +
-                   " middle of a region to buy it. Some buildings are exempt, they can be built without ownig the region" +
-                   " (FishingHut, Dock, MountainMine, ShoreMine, LightHouse, PostGuard)"
-                   },
-
+       { "FinishDock.Tuto", "Now finish the Dock building. The more workers are in the Masonry the quicker is going to get done too."
+       + " Also make sure you have all materials needed to build it"},
        { "ShowMiniHelp.Tuto", "Click on the 'MiniHelp' button, located in the right bottom bar. "+
-           "When you hover over it, it will popup 'MiniHelp'. There you can find some tips"},
-    
+           "When you hover over it, it will popup 'MiniHelp'. There you can find some tips. " +
+           " When you are done click outside the 'MiniHelp' window and will close."},
+
+
+
+       { "SelectDock.Tuto", "Ships drop and pick goods at random from the dock's inventory. Workers are needed to move dock goods. This workers use wheelbarrows and crates. if are not this items on store they won't work. Now click on the Dock."},
+       { "OrderTab.Tuto", "Go to the Orders tab."},
+       { "ImportOrder.Tuto", "Click on the '+' sign besides Add Import Order."},
+       
+       { "AddOrder.Tuto", "Now scroll down in the products and select wood and enter 100 as the amount. Then click the 'Add' button."},
+       { "CloseDockWindow.Tuto", "Now the order is added. A random ship will drop this item in the dock inventory. And then your dock workers will take it to the closest Storage building. Now click outside the window so the window closes."},
+       { "Rename.Tuto", "Click on a person and then click on the title bar of the person. Like this you can change the name of any person or building in the game. Click outside so the change is saved"},
+
+
     };
 
     //ESPANNOL

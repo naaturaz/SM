@@ -16,7 +16,7 @@ public class TerrainSpawnerController : ControllerParent
     //UNITY EDITOR ManualStart()
     private int multiplier = 40;//80  
 
-    int howManyTreesToSpawn = 20;//50
+    int howManyTreesToSpawn = 30;//20    50
     int howManyStonesToSpawn = 1;//3
     int howManyIronToSpawn = 1;//3
     int howManyGoldToSpawn = 1;//3
@@ -215,8 +215,8 @@ public class TerrainSpawnerController : ControllerParent
 
 
 #if UNITY_EDITOR
-        multiplier = 2;//2
-        howManyGrassToSpawn = 2;//40
+        //multiplier = 2;//2
+        //howManyGrassToSpawn = 2;//40
 
         LeaveEditorPool(pools);
 #endif

@@ -21,16 +21,23 @@ class TutoWindow : GUIElement
         "CamRot.Tuto",
         "CamHeaven.Tuto",
         "BackToTown.Tuto",
-        "Raw.Tuto",
-        "Clay.Tuto",
-        "Clay.Placed.Tuto",
+        "BuyRegion.Tuto",
+        "Trade.Tuto",
+        "Dock.Tuto",
+        "Dock.Placed.Tuto",
         "MaxSpeed.Tuto",
         "ShowWorkersControl.Tuto",
         "AddWorkers.Tuto",
         "HideBulletin.Tuto",
-        "BuyRegion.Tuto",
-
-        "ShowMiniHelp.Tuto"
+        "FinishDock.Tuto",
+        "ShowMiniHelp.Tuto",
+        
+        "SelectDock.Tuto",
+        "OrderTab.Tuto",
+        "ImportOrder.Tuto",
+        "AddOrder.Tuto",
+        "CloseDockWindow.Tuto",
+        "Rename.Tuto",
     };
 
     //which is being shown now 
@@ -60,7 +67,9 @@ class TutoWindow : GUIElement
     bool wasShown;
     void Update()
     {
-        if (Program.gameScene.GameFullyLoaded() && XMLSerie.IsTutorial() && !wasShown)
+        if (Program.gameScene.GameFullyLoaded() && !wasShown
+            //XMLSerie.IsTutorial() &&
+            )
         {
             wasShown = true;
             Show();
@@ -105,7 +114,9 @@ class TutoWindow : GUIElement
 
     public void Next(string step)
     {
-        if (!XMLSerie.IsTutorial() || _currentIndex == -1 || step != _steps[_currentIndex])
+        if (_currentIndex == -1 || step != _steps[_currentIndex]
+            // || !XMLSerie.IsTutorial() 
+            )
         {
             return;
         }
@@ -131,6 +142,16 @@ class TutoWindow : GUIElement
     {
         _currentIndex = UMath.Clamper(-1, _currentIndex, 0, _steps.Count - 1);
         Show();
+    }
+
+    /// <summary>
+    /// Called from GUI
+    /// </summary>
+    public void SkipTuto()
+    {
+        AudioCollector.PlayOneShot("ClickMetal2", 0);
+        _currentIndex = -1;
+        Hide();
     }
 
 }

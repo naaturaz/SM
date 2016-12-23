@@ -84,6 +84,12 @@ public class MyText : MonoBehaviour
         }
         else if (name == "PirateThreat")
         {
+            if (!Program.IsPirate)
+            {
+                thisText.text = "-";
+                return;
+            }
+
             thisText.text = BuildingPot.Control.DockManager1.PirateThreat.ToString("F1");
         }
 

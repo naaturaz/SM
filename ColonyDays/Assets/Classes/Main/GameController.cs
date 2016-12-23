@@ -213,7 +213,7 @@ public class GameController  {
             GameOver('m');
         }
         if (BuildingPot.Control!=null &&  BuildingPot.Control.DockManager1!=null &&
-            BuildingPot.Control.DockManager1.PirateThreat > 90)
+            BuildingPot.Control.DockManager1.PirateThreat > 90 && Program.IsPirate)
         {
             GameOver('p');
         }

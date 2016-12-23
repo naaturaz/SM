@@ -320,6 +320,7 @@ public class GameScene : General
         //so its loaded to the right Screen resolution 
         Program.MouseListener.ApplyChangeScreenResolution();
 
+        RedoStuffWithLoadedData();
     }
 
 
@@ -851,4 +852,26 @@ public class GameScene : General
     }
 
 
+
+    /// <summary>
+    /// Once data is loaded the Book has to be redo
+    /// </summary>
+    void RedoStuffWithLoadedData()
+    {
+        //means is a new game and this below is not needed 
+        if (Program.MyScreen1.HoldDifficulty != -1)
+        {
+            return;
+        }
+
+        Program.MyScreen1.HoldDifficulty = PersonPot.Control.Difficulty;
+
+        _book = new Book();
+        _book.Start();
+
+        PersonData pData = XMLSerie.ReadXMLPerson();
+
+        Program.IsPirate = pData.PersonControllerSaveLoad.IsPirate;
+        Program.IsFood = pData.PersonControllerSaveLoad.IsFood;
+    }
 }

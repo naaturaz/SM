@@ -144,6 +144,8 @@ public class AddOrderWindow : GUIElement {
     {
         if (_orderType == "Import")
         {
+            Program.gameScene.TutoStepCompleted("ImportOrder.Tuto");
+
             _priceGroup.SetActive(false);
         }
         else if (_orderType == "Export")
@@ -223,6 +225,11 @@ public class AddOrderWindow : GUIElement {
             Order order = new Order(_prodSelect, "", "Ship");
             order.Amount = _amt;
             dockBuild.Dock1.Import(order);
+
+            if (_prodSelect == P.Wood && _amt == 100)
+            {
+                Program.gameScene.TutoStepCompleted("AddOrder.Tuto");
+            }
         }
 
         //so orders are updated 
@@ -274,6 +281,12 @@ public class AddOrderWindow : GUIElement {
 
     bool ThereIsSpaceRequiredAvail()
     {
+        //breaks with the TUto
+        if (BuildingPot.Control.Registro.SelectBuilding == null)
+        {
+            BuildingPot.Control.Registro.SelectBuilding = Program.MouseListener.BuildingWindow1.Building;
+        }
+
         var dock = BuildingPot.Control.Registro.SelectBuilding;
 
         return dock.Inventory.HasEnoughtCapacityToStoreThis(_prodSelect, _amt);

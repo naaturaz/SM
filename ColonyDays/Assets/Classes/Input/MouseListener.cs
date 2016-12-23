@@ -612,7 +612,7 @@ public class MouseListener : InputMain
         else if (action == "Raw")
         {
             res = 3;
-            Program.gameScene.TutoStepCompleted("Raw.Tuto");
+            
         }
         else if (action == "Prod")
         {
@@ -624,6 +624,7 @@ public class MouseListener : InputMain
         }
         else if (action == "Trade")
         {
+            Program.gameScene.TutoStepCompleted("Trade.Tuto");
             res = 6;
         }
         else if (action == "Gov")

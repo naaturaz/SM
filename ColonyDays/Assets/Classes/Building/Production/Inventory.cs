@@ -931,7 +931,7 @@ public class InvItem
     internal void AddExpirationDate(float amt, MDate expiration, Inventory inv)
     {
         //no expiration needed for this 2 below 
-        if (inv.HType == H.Person || inv.HType == H.None || inv.HType == H.YearReport)
+        if (inv.HType == H.Person || inv.HType == H.None || inv.HType == H.YearReport || !Program.IsFood)
         {
             return;
         }
@@ -952,7 +952,7 @@ public class InvItem
 
     internal void CheckIfAnyHasExpired(Inventory inv)
     {
-        if (_expiresAmts.Count == 0)
+        if (_expiresAmts.Count == 0 || !Program.IsFood)
         {
             return;
         }

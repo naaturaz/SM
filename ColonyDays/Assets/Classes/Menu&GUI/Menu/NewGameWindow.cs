@@ -25,6 +25,8 @@ public class NewGameWindow : GUIElement
 
     private GameObject Terra_Name_Btn;
     private GameObject Diff_Btn;
+    private Toggle _pirateToggle;
+    private Toggle _foodToggle;
 
 
 
@@ -53,6 +55,10 @@ public class NewGameWindow : GUIElement
 
 
         _inputTownName = GetChildCalled("Input_Name").GetComponent<InputField>();
+
+        _pirateToggle = GetChildCalled("Pirate_Toggle").GetComponent<Toggle>();
+        _foodToggle = GetChildCalled("Food_Toggle").GetComponent<Toggle>();
+
 
 
         LoadDefaultForNewGame();
@@ -92,14 +98,12 @@ public class NewGameWindow : GUIElement
     {
         var sub = action.Substring(4);
 
-        //if (sub == "Easy" || sub == "Moderate" || sub == "Hard")
-        //{
-        //    _difficulty = sub;
-        //}
         //create new game 
         if (sub == "OKBtn")
         {
             DefineTownName();
+            Program.IsPirate = _pirateToggle.isOn;
+            Program.IsFood = _foodToggle.isOn;
             Program.MyScreen1.NewGameCreated(_terraRoot, _difficulty, _townName);
         }
         //Reloadd main menu
@@ -355,4 +359,13 @@ public class NewGameWindow : GUIElement
         Program.UnLockInputSt();
     }
 
+    public void PirateChange()
+    {
+
+
+    }
+
+    public void FoodChange()
+    {
+    }
 }

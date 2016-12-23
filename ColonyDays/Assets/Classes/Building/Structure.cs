@@ -161,31 +161,31 @@ public class Structure : StructureParent
         //Mark the Spawns below this obj
         if (action != H.Cancel)
         {
-            if (HType == H.Clay)
+            if (HType == H.Dock)
             {
-                Program.gameScene.TutoStepCompleted("Clay.Placed.Tuto");
+                Program.gameScene.TutoStepCompleted("Dock.Placed.Tuto");
             }
 
-            float howBigTheCollidingSphere = 5f;
+            float howBigTheCollidingSphere = 15f;
 
-            if (MyId.Contains("Med") || HType == H.BlackSmith)
-            {
-                howBigTheCollidingSphere = 8;
-            }
-            else if (MyId.Contains("Large") 
-                || HType == H.Clay || HType == H.Brick || HType == H.LumberMill
-                || HType == H.ShoreMine)
-            {
-                howBigTheCollidingSphere = 10;
-            }
-            else if (MyId.Contains("XLarge"))
-            {
-                howBigTheCollidingSphere = 12;
-            }
-            else if(Developer.IsDev && Input.GetKeyDown(KeyCode.LeftControl))
-            {
-                howBigTheCollidingSphere = 50;
-            }
+            //if (MyId.Contains("Med") || HType == H.BlackSmith)
+            //{
+            //    howBigTheCollidingSphere = 8;
+            //}
+            //else if (MyId.Contains("Large") 
+            //    || HType == H.Clay || HType == H.Brick || HType == H.LumberMill
+            //    || HType == H.ShoreMine)
+            //{
+            //    howBigTheCollidingSphere = 10;
+            //}
+            //else if (MyId.Contains("XLarge"))
+            //{
+            //    howBigTheCollidingSphere = 12;
+            //}
+            //else if(Developer.IsDev && Input.GetKeyDown(KeyCode.LeftControl))
+            //{
+            //    howBigTheCollidingSphere = 50;
+            //}
 
 
             MarkTerraSpawnRoutine(howBigTheCollidingSphere, from: transform.position);

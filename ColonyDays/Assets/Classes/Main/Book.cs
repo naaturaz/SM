@@ -303,13 +303,8 @@ public class BuildStat
     
     int DiffDivider()
     {
-        if (PersonPot.Control == null)
-        {
-            return 1;
-        }
-
         //plus 1 because Insane Program.MyScreen1.Difficulty = 0
-        return PersonPot.Control.Difficulty + 1;
+        return Program.MyScreen1.HoldDifficultyReal();
     }
 
     public BuildStat()

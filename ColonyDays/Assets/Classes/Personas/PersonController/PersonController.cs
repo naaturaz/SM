@@ -85,7 +85,7 @@ public class PersonController : PersonPot
     /// <summary>
     /// 
     ///game difficulty
-    ///0 newbie, 1 easy, 2 med, 3 hard, 4 insane
+    ///
     /// </summary>
     public int Difficulty
     {
@@ -143,9 +143,9 @@ public class PersonController : PersonPot
         }
 
         StartingCondition insane = new StartingCondition(4, 600, 600, 600, 600, 600, 600, 10000, 1 * factor, 1);
-        StartingCondition hard = new StartingCondition(8 * templateFactor, ini, ini, ini, ini, ini, ini, 50000, 5 * factor, 2);
-        StartingCondition med = new StartingCondition(12 * templateFactor, ini, ini, ini, ini, ini, ini, 80000, 5 * factor, 3);
-        StartingCondition easy = new StartingCondition(16 * templateFactor, ini, ini, ini, ini, ini, ini, 100000, 5 * factor, 4);
+        StartingCondition hard = new StartingCondition(6 * templateFactor, ini, ini, ini, ini, ini, ini, 50000, 5 * factor, 2);
+        StartingCondition med = new StartingCondition(7 * templateFactor, ini, ini, ini, ini, ini, ini, 80000, 5 * factor, 3);
+        StartingCondition easy = new StartingCondition(8 * templateFactor, ini, ini, ini, ini, ini, ini, 100000, 5 * factor, 4);
         StartingCondition newbie = new StartingCondition(8 * templateFactor, ini, ini, ini, ini, ini, ini, 100000, 5 * factor, 5);
 
         Conditions = new StartingCondition[] { insane, hard, med, easy, newbie, };
@@ -231,7 +231,9 @@ public class PersonController : PersonPot
 
             All.Add(t);
             _allGC.Add(t.MyId, t);
-        }  
+        }
+
+        //Program.MyScreen1.LoadData(pData);
     }
 
     private Person tempPerson;
@@ -1067,4 +1069,8 @@ public class PersonControllerSaveLoad
     public string TownName { get; set; }
 
     public SubBulletinProduction SubBulletinProduction { get; set; }
+
+    public bool IsPirate { get; set; }
+
+    public bool IsFood { get; set; }
 }

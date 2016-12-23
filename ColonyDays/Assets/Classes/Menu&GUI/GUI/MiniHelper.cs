@@ -66,6 +66,8 @@ class MiniHelper : GUIElement
 
         _rectTransform.position = new Vector3(2500, 2500);
         _text.text = "";
+
+        Program.gameScene.TutoStepCompleted("CloseMiniHelp.Tuto");
     }
 
     internal void Show()
