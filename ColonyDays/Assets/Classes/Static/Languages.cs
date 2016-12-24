@@ -132,6 +132,7 @@ public class Languages
 	   { "BugReport", "Caught a bug? uhmm yummy.... Send it this way!! Thanks"},	  
        { "Invitation", "Your friend's email for a chance to join the Private Beta"},  
        { "Info", ""},//use for informational Dialogs
+       { "Negative", "The Crown extended a line of credit for you. If you own more than 100 000 is game over"},  
 
 
        //MainMenu
@@ -291,11 +292,10 @@ public class Languages
 
 
        //to  add on spanish         //to correct  
-       { "TutoOver", "The tutorial is over now you can keep playing this game or start a new one"},
-
+       { "TutoOver", "The tutorial is over now you can keep playing this game or start a new one."},
 
        //Tuto
-       { "CamMov.Tuto", "Use [WASD] to move the Camera."},
+       { "CamMov.Tuto", "Tutorial: ...  Step1: Use [WASD] to move the Camera."},
        { "CamMov5x.Tuto", "Use [WASD] and keep press the 'Left Shift' key to move the Camera faster."},
        { "CamRot.Tuto", "Now press the scroll wheel down on your mouse and move your mouse to rotate the Camera."},
        { "CamHeaven.Tuto", "Scroll back with your mouse middle button until the camera reaches"
@@ -308,13 +308,13 @@ public class Languages
             " (FishingHut, Dock, MountainMine, ShoreMine, LightHouse, PostGuard)"
             },
        
-       { "Trade.Tuto", "Click on the 'Trade' buildings button, located in the middle bottom bar, 'Trade' is the 7th button. "+
+       { "Trade.Tuto", "That was easy, the hard part is coming. Click on the 'Trade' buildings button, located in the middle bottom bar, 'Trade' is the 7th button. "+
            "When you hover over it, it will popup 'Trade'"},
        { "Dock.Tuto", "Now click on the 'Dock' building, it is the 1st button. When you hover over it, it will"+
            " show it's cost and description"},
-       { "Dock.Placed.Tuto", "Now find a good spot and left click to place the building. Notice that you can use the "+
-           "key 'R' to Rotate, and right click to cancel the building. Also this building has a part in the ocean and other in land." +
-           " Once the arrow is white you can place the building"},
+       { "Dock.Placed.Tuto", "Now the hard, read carefully. Notice that you can use the "+
+           "'R' key to Rotate, and right click to cancel the building. You can cancel the building and respawned at you wish. This building has a part in the ocean and other in land." +
+           " The arrow goes to the sea, the storage section goes to land. Once the arrow is white left click."},
        { "MaxSpeed.Tuto", "To go to max speed, go to the middle top screen simulation speed controller, click the "
             +" 'More Speed' button 3 times until 10x is displayed"},
 

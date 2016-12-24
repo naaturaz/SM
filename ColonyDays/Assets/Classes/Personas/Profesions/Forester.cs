@@ -185,7 +185,7 @@ public class Forester : Profession
             var hType = listP[i].HType;
             var distance = Vector3.Distance(pos, _person.Work.transform.position);
 
-            if (distance < Radius)
+            if (distance < Brain.Maxdistance)
             {
                 loc.Add(new VectorM(pos, _person.Work.transform.position, key, hType));
             }

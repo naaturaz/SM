@@ -14,11 +14,14 @@ using UnityEngine;
 public class DataController
 {
     private static string _path;
+    static float _iconShown;
+
 
     public static void Start()
     {
         DefinePath();
         CheckIfSugarMillFolderExists();
+
     }
 
 
@@ -77,7 +80,13 @@ public class DataController
 
         }
         PlayerPrefs.Save();
+
+        _iconShown = Time.time;
+        Program.MouseListener.CurrForm.ShowAutoSave();
+
     }
+
+   
 
     public static bool ThereIsALastSavedFile()
     {
@@ -242,7 +251,14 @@ public class DataController
             AutoSave();
             lastAutoSavedFile = Time.time;
         }
+        if (Time.time > _iconShown + 3 && _iconShown > 0)
+        {
+            _iconShown = -1;
+            Program.MouseListener.CurrForm.HideAutoSaveIcon();
+        }
     }
+
+
 
     static void AutoSave()
     {

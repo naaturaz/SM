@@ -249,7 +249,7 @@ public enum H
     Clay, Pottery, FishingHut,
     MountainMine,
     LumberMill, BlackSmith, ShoreMine,// QuickLime, 
-    Mortar, 
+    Mortar,
     //prod F5
     Brick, Carpentry, Cigars, Mill, Tailor,
     Armory, Distillery, Chocolate, Ink,
@@ -413,6 +413,7 @@ public enum H
     YearReport,
     Plant,
     TutoOver,
+    Negative,
 
 
 }

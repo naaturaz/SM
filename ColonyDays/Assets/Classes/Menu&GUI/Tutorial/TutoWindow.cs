@@ -21,7 +21,7 @@ class TutoWindow : GUIElement
         "CamRot.Tuto",
         "CamHeaven.Tuto",
         "BackToTown.Tuto",
-        "BuyRegion.Tuto",
+        //"BuyRegion.Tuto",
         "Trade.Tuto",
         "Dock.Tuto",
         "Dock.Placed.Tuto",
@@ -65,6 +65,7 @@ class TutoWindow : GUIElement
 
 
     bool wasShown;
+    private bool wasCompleted;
     void Update()
     {
         if (Program.gameScene.GameFullyLoaded() && !wasShown
@@ -128,10 +129,14 @@ class TutoWindow : GUIElement
             _currentIndex = -1;
             Hide();
             Dialog.OKDialog(H.TutoOver);
+            //Program.gameScene.GameController1.Dollars += 5000;
+            //AudioCollector.PlayOneShot("BoughtLand", 0);
+            wasCompleted = true;
             return;
         }
-
-        AudioCollector.PlayOneShot("ClickMetal2", 0);
+        
+        //Program.gameScene.GameController1.Dollars += 1500;
+        //AudioCollector.PlayOneShot("BoughtLand", 0);
         Show();
     }
 
@@ -150,8 +155,22 @@ class TutoWindow : GUIElement
     public void SkipTuto()
     {
         AudioCollector.PlayOneShot("ClickMetal2", 0);
-        _currentIndex = -1;
+        //_currentIndex = -1;
         Hide();
     }
 
+    public void ReShowMeAgain()
+    {
+        if(!wasCompleted)
+        {
+            wasShown = false;
+        }
+    }
 }
+
+
+
+
+
+
+

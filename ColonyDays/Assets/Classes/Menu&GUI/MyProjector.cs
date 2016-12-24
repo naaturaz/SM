@@ -98,11 +98,10 @@ public class MyProjector : General
 
     void MoveToThere(Vector3 to)
     {
-
         if (transform.position != to)
         {
             transform.position = Vector3.Lerp(transform.position, to + heightCompound,
-                0.1f);
+                0.5f);//0.1
         }
     }
 
@@ -110,7 +109,7 @@ public class MyProjector : General
     {
         if (transform.position != to)
         {
-            transform.position = Vector3.Lerp(transform.position, to, 0.2f);
+            transform.position = Vector3.Lerp(transform.position, to, 1f);//0.2
         }
     }
 

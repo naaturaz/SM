@@ -1022,8 +1022,19 @@ public class Body //: MonoBehaviour //: General
         CheckOnGameSpeed();
         _walkStep = _speed*Program.gameScene.GameSpeed * 0.02f //* FPSCorrection()
             ;
+
+        //cap on walkStep
+        if (_walkStep > 0.3f)
+        {
+            _walkStep = 0.3f;
+        }
+
+        //Debug.Log("Step: " + _walkStep.ToString("n1"));
     }
 
+
+    int times = 10;//the first 10 times wont FPS Correct. just bz whn starts right when loads people could go
+    //really fast
     /// <summary>
     /// This corrects the current FPS
     /// 
@@ -1032,6 +1043,12 @@ public class Body //: MonoBehaviour //: General
     /// <returns></returns>
     private float FPSCorrection()
     {
+        if (times > 0)
+        {
+            times--;
+            return 1;
+        }
+
         //avoiding math issues
         if (HUDFPS.FPS() > 60 || HUDFPS.FPS() == 0)//if over 60 then is good to lock it at one bz sometimes happens
             //when game is paused or something then people will go really slow bz in a small portion the 

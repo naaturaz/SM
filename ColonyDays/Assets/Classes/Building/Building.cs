@@ -330,7 +330,7 @@ public class Building : General, Iinfo
         if (MyId.Contains("Farm"))
         {
             //Farms need to check Further so they are not close to a shore 
-            return 16f;
+            return 10f;//16
         }
         return 1.25f;
     }

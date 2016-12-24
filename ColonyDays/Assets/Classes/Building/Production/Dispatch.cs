@@ -611,7 +611,7 @@ public class Dispatch
             var foodSrc = Brain.GetStructureFromKey(key);
 
             var score = ScoreABuild(person, foodSrc);//tht in this case is just Distance
-            if (score < Profession.Radius && foodSrc.Instruction == H.None)
+            if (score < Brain.Maxdistance && foodSrc.Instruction == H.None)
             {
                 rank.Add(new BuildRank(key, score, score));     
             }

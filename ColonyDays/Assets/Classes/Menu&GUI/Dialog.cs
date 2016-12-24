@@ -93,6 +93,10 @@ public class Dialog
             {
                 //does nothing bz was a information dialog
             }
+            else if (_type == H.Negative)
+            {
+                
+            }
         }
 
         DestroyCurrDialog();

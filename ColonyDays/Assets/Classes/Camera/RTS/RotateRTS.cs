@@ -40,6 +40,7 @@ public class RotateRTS : GenericCameraComponent {
         TransformCam.parent = CamControl.CAMRTS.centerTarget.transform;
     }
 
+    Transform _target;
     public void RotateCamVert(float camSensivity, Transform target, float smoothTimePass)
     {
         var qOrE = Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.E);
@@ -54,15 +55,15 @@ public class RotateRTS : GenericCameraComponent {
         //    changeValue = Input.GetAxis("Vertical") * camSensivity;
         //}
 
-
-
-        if (changeValue != 0)
+        _target = target;
+        if (changeValue != 0 && !qOrE)
         {
+            //leftChangeVal -= changeValue;
+
             TransformCam.position = MoveThruY(TransformCam, MIN_Y, MAX_Y, changeValue);
             TransformCam.LookAt(target);
 
             //Program.gameScene.TutoStepCompleted("CamRot.Tuto");
-
         }
     }
 
@@ -99,7 +100,7 @@ public class RotateRTS : GenericCameraComponent {
             helpCam360MainY.transform.Rotate(new Vector3(0, changeValue, 0));
             TransformCam.LookAt(target);
 
-            leftChangeVal = changeValue;
+            //leftChangeVal = changeValue;
 
             Program.gameScene.TutoStepCompleted("CamRot.Tuto");
 
@@ -107,12 +108,48 @@ public class RotateRTS : GenericCameraComponent {
     }
 
     float leftChangeVal;
+    
     public void Update()
     {
         //if (leftChangeVal != 0)
         //{
-        //    helpCam360MainY.transform.Rotate(new Vector3(0, changeValue, 0));
-        //    TransformCam.LookAt(target);
+        //    TransformCam.position = MoveThruY(TransformCam, MIN_Y, MAX_Y, ChangeValHand());
+        //    TransformCam.LookAt(_target);
         //}
+    }
+
+    float ChangeValHand()
+    {
+        if (leftChangeVal < 0.5 && leftChangeVal > -.5f)
+        {
+            leftChangeVal = 0;
+            valorMove = 0.1f;
+            return 0;
+        }
+        var locChange = ValorMove() * GetSign();
+        leftChangeVal += locChange;
+
+        return locChange;
+    }
+
+
+    float valorMove = .1f;
+    float ValorMove()
+    {
+        valorMove += .05f;
+        return valorMove;
+    }
+
+    /// <summary>
+    /// bz needs to find the zero
+    /// </summary>
+    /// <returns></returns>
+    float GetSign()
+    {
+        if (leftChangeVal < 0)
+        {
+            return 1;
+        }
+        return -1;
     }
 }

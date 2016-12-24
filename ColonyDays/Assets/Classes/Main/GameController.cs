@@ -12,6 +12,8 @@ using UnityEngine;
 
 public class GameController  {
 
+    bool _wasNegativeAlerted;
+    
     //Main inventory of the game .. wht u see on the GUI 
     //will have all tht is in all Storages combined 
     //is a total inventory. Representing all tht is in those inventories 
@@ -58,6 +60,21 @@ public class GameController  {
         set
         {
             _dollars = value;
+            AlertIfOnNegative();
+        }
+    }
+
+    private void AlertIfOnNegative()
+    {
+        if (_wasNegativeAlerted)
+        {
+            return;
+        }
+
+        if (Dollars < 0)
+        {
+            _wasNegativeAlerted = true;
+            Dialog.OKDialog(H.Negative);
         }
     }
 

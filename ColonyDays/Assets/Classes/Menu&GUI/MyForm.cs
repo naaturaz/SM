@@ -96,7 +96,52 @@ public class MyForm : General
             _showPathToSea = new ShowPathTo();
             _miniHelper = FindObjectOfType<MiniHelper>();
         }
+
+        InitSaveIcon();
+
     }
+
+
+
+    #region AutoSave
+    static GameObject _autoSaveIcon;
+    void InitSaveIcon()
+    {
+        if (name.Contains("GUI"))
+        {
+            _autoSaveIcon = General.FindGameObjectInHierarchy("AutoSave_Icon", gameObject);
+        }
+
+        if (_autoSaveIcon != null)
+        {
+            _autoSaveIcon.SetActive(false);
+        }
+    }
+
+    public void ShowAutoSave()
+    {
+        if (_autoSaveIcon == null)
+        {
+            return;
+        }
+
+        _autoSaveIcon.SetActive(true);
+    }
+
+    public void HideAutoSaveIcon()
+    {
+        if (_autoSaveIcon == null)
+        {
+            return;
+        }
+
+        _autoSaveIcon.SetActive(false);
+    }
+    #endregion
+
+
+
+
 
     private IEnumerator UpdateEvery2Sec()
     {
