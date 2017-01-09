@@ -66,19 +66,19 @@ public class BuyRegionManager
             //if is not inland will remove it from Sale will added to unlock 
             if (MeshController.CrystalManager1.CrystalRegions[index].WhatAudioIReport != "InLand")
             {
-                _unlockRegions.Add(i);
-                continue;
+                //_unlockRegions.Add(i);
+                //continue;
             }
 
             _forSaleRegionGoes.Add(ForSaleRegionGO.CreateForSaleRegionGO(Root.forSaleRegion, index, 
                 reg, container: Program.gameScene.Terreno.transform));
         }
 
-        //removes the unlock regions from the _forSaleRegions
-        for (int i = 0; i < _unlockRegions.Count; i++)
-        {
-            _forSaleRegions.Remove(_unlockRegions[i]);
-        }
+        ////removes the unlock regions from the _forSaleRegions
+        //for (int i = 0; i < _unlockRegions.Count; i++)
+        //{
+        //    _forSaleRegions.Remove(_unlockRegions[i]);
+        //}
     }
 
     /// <summary>
@@ -113,7 +113,7 @@ public class BuyRegionManager
         _unlockRegions = pData.PersonControllerSaveLoad.UnlockRegions;
     }
 
-    private int moneyMul = 100;
+    private int moneyMul = 2000;
     public bool HasEnoughResourcesToBuy()
     {
         var moneyNeeded = MoneyNeeded();
@@ -130,9 +130,9 @@ public class BuyRegionManager
 
     float MoneyNeeded()
     {
-        if (Developer.IsDev && Input.GetKey(KeyCode.F9))
+        if ((Developer.IsDev && Input.GetKey(KeyCode.F9)))
         {
-            return 0;
+            return 1;
         }
 
         return moneyMul * _unlockRegions.Count ;

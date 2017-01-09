@@ -497,7 +497,7 @@ public class ProdSpec
     public ProdSpec(P prod, float price, float density = 1, float produceFactor = 1, int expireDays = -1)
     {
         Product = prod;
-        Price = price/1000;
+        Price = price/900;//1000
         Density = density;
         ProduceFactor = produceFactor;
 

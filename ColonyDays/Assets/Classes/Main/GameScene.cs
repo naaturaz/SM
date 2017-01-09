@@ -344,6 +344,11 @@ public class GameScene : General
         _tutoWindow.Next(step);
     }
 
+    public bool IsPassingTheTutoNow()
+    {
+        return _tutoWindow.IsPassingTheTutoNow();
+    }
+
     #endregion
 
 

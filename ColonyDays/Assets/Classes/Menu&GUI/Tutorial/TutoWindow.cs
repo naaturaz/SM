@@ -21,8 +21,8 @@ class TutoWindow : GUIElement
         "CamRot.Tuto",
         "CamHeaven.Tuto",
         "BackToTown.Tuto",
-        //"BuyRegion.Tuto",
-        "Trade.Tuto",
+        "BuyRegion.Tuto",//they most be one after
+        "Trade.Tuto",//the other
         "Dock.Tuto",
         "Dock.Placed.Tuto",
         "MaxSpeed.Tuto",
@@ -65,7 +65,6 @@ class TutoWindow : GUIElement
 
 
     bool wasShown;
-    private bool wasCompleted;
     void Update()
     {
         if (Program.gameScene.GameFullyLoaded() && !wasShown
@@ -131,14 +130,25 @@ class TutoWindow : GUIElement
             Dialog.OKDialog(H.TutoOver);
             //Program.gameScene.GameController1.Dollars += 5000;
             //AudioCollector.PlayOneShot("BoughtLand", 0);
-            wasCompleted = true;
             return;
         }
-        
+
+        if ("Trade.Tuto" == step)
+        {
+            Program.gameScene.GameController1.Dollars += 1000;
+            
+        }
+
         //Program.gameScene.GameController1.Dollars += 1500;
         //AudioCollector.PlayOneShot("BoughtLand", 0);
         Show();
     }
+
+    public bool IsPassingTheTutoNow()
+    {
+        return _currentIndex != -1;
+    }
+
 
     /// <summary>
     /// Called from GUI
@@ -155,17 +165,13 @@ class TutoWindow : GUIElement
     public void SkipTuto()
     {
         AudioCollector.PlayOneShot("ClickMetal2", 0);
-        //_currentIndex = -1;
+        _currentIndex = -1;
         Hide();
     }
 
-    public void ReShowMeAgain()
-    {
-        if(!wasCompleted)
-        {
-            wasShown = false;
-        }
-    }
+
+
+
 }
 
 

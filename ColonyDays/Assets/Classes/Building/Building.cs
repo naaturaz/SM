@@ -4369,6 +4369,28 @@ public class Building : General, Iinfo
 
 
 
+    Vector3 _middlePoint = new Vector3();
+    /// <summary>
+    /// Must be called only if Anchors were defined already. Otherwise returns transform.position
+    /// </summary>
+    /// <returns></returns>
+    internal Vector3 MiddlePoint()
+    {
+        if (_anchors.Count == 0)
+	    {
+	        return transform.position;
+	    }
+
+        if (_middlePoint == new Vector3())
+        {
+            for (int i = 0; i < _anchors.Count; i++)
+			{
+			    _middlePoint+= _anchors[i];  
+			}
+            _middlePoint /= 4;
+        }
+        return _middlePoint;
+    }
 }
 
 

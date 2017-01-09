@@ -1161,8 +1161,10 @@ public class CryRoute
         }
 
 
-
-        if (UMath.nearEqualByDistance(U2D.FromV2ToV3(_curr.Position), _two.Position, .1f))
+        //2d only bz then it wont care about Y difference so Docks cant get built
+        var currPos = new Vector3(_curr.Position.x, _two.Position.y, _curr.Position.y);
+        if (UMath.nearEqualByDistance(currPos, _two.Position, .1f))
+        //if (UMath.nearEqualByDistance(U2D.FromV2ToV3(_curr.Position), _two.Position, .1f))
         {
             return true;
         }

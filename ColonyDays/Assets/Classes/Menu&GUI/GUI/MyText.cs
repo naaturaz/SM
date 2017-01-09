@@ -97,10 +97,7 @@ public class MyText : MonoBehaviour
         {
             thisText.text = Program.gameScene.GameController1.Dollars.ToString("C0");
         }
-        else if (name == "Lazy")
-        {
-            thisText.text = Lazy() + "";
-        }   
+      
         else if (name == "Temp")
         {
             thisText.text = Tempeture.Current()+ "";
@@ -146,6 +143,10 @@ public class MyText : MonoBehaviour
         {
             thisText.text = Program.gameScene.GameTime1.MonthFormat() + " "
                 + Program.gameScene.GameTime1.Year;
+        }
+        else if (name == "Lazy")
+        {
+            thisText.text = Lazy() + "";
         }
     }
 

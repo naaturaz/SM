@@ -176,11 +176,13 @@ public class Builder : Profession
         {
             if (_constructing.Anchors.Count > 0)
             {
-                //return the closest anchor to SpawnPoint 
+                //return the closest anchor to SpawnPoint . must be the SpawnPoint so it always selects
+                //the one on the shore
                 var sp = (StructureParent) _constructing;
-               // dummySpawnerId = _constructing.MyId;
 
-                return Brain.ReturnClosestVector3(sp.SpawnPoint.transform.position, _constructing.Anchors);
+                //return _constructing.Anchors[UMath.GiveRandom(0, 4)];
+                var closest = Brain.ReturnClosestVector3(sp.SpawnPoint.transform.position, _constructing.Anchors);
+                return Vector3.MoveTowards(closest, _constructing.transform.position, -.2f);
             }
         }
 

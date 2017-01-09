@@ -62,7 +62,7 @@ public class ForSaleRegionGO : General
 
     void OnMouseUp()
     {
-        if (Program.IsInputLocked)
+        if (Program.IsInputLocked || Dialog.IsActive())
         {
             return;
         }
