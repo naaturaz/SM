@@ -22,27 +22,28 @@ public class NotificationWindowGO : GUIElement
     /// <summary>
     /// IMPORTANT
     /// To add notification :
-    /// Add below,
     /// Add name and desc and Languages.cs
     /// Add sound file on Prefab/audio/sound/other and icon on GUI/Notification_Icon/
     /// Then add it in sound name added it on _rootsToSpawn on AudioCollector.cs
     /// </summary>
-    Dictionary<string, Notification> _bank = new Dictionary<string, Notification>()
-    {
-        {"BabyBorn", new Notification("BabyBorn")},
-        {"PirateUp", new Notification("PirateUp")},            
-        {"PirateDown", new Notification("PirateDown")},
+    //Dictionary<string, Notification> _bank = new Dictionary<string, Notification>()
+    //{
+    //    {"BabyBorn", new Notification("BabyBorn")},
+    //    {"PirateUp", new Notification("PirateUp")},            
+    //    {"PirateDown", new Notification("PirateDown")},
         
-        {"Emigrate", new Notification("Emigrate")},
-        {"PortUp", new Notification("PortUp")},
-        {"PortDown", new Notification("PortDown")},
-        {"BoughtLand", new Notification("BoughtLand")},
-        {"ShipPayed", new Notification("ShipPayed")},
-        {"ShipArrived", new Notification("ShipArrived")},
+    //    {"Emigrate", new Notification("Emigrate")},
+    //    {"PortUp", new Notification("PortUp")},
+    //    {"PortDown", new Notification("PortDown")},
+    //    {"BoughtLand", new Notification("BoughtLand")},
+    //    {"ShipPayed", new Notification("ShipPayed")},
+    //    {"ShipArrived", new Notification("ShipArrived")},
+
+    //    {"AgeMajor", new Notification("AgeMajor")},
+    //    {"PersonDie", new Notification("PersonDie")},
 
 
-
-    }; 
+    //}; 
 
     void Start()
     {
@@ -118,7 +119,7 @@ public class NotificationWindowGO : GUIElement
     private void HideIfIsBeingOutTooLong()
     {
         var show = IsShownNow();
-        var time = Time.time > _showedAt + 3 ;
+        var time = Time.time > _showedAt + 20;
 
         if (show && time && !_hideSlideToLeft)
         {
@@ -164,8 +165,11 @@ public class NotificationWindowGO : GUIElement
     {
         for (int i = 0; i < _allNotifications.Count; i++)
         {
-            var key = _allNotifications[i];
-            var noti = _bank[key];
+            var key = GetKey(_allNotifications[i]);
+            var noti = new Notification(key);
+
+            var param1 = GetParam1(_allNotifications[i]);
+            noti.SetParam1(param1);
 
             var iniPos = ReturnIniPos(i);
             var tile = NotificationTile.Create(Root.notificationTile, _content.transform, iniPos,
@@ -173,6 +177,32 @@ public class NotificationWindowGO : GUIElement
 
             _tilesSpawn.Add(tile);
         }
+    }
+
+    string GetKey(string notificationString)
+    {
+        var arr = notificationString.Split('|');
+
+        //when has additional 
+        if (arr.Length > 1)
+        {
+            return arr[0]; 
+        }
+        //doesnt have additional info
+        return notificationString;
+    }
+
+    string GetParam1(string notificationString)
+    {
+        var arr = notificationString.Split('|');
+
+        //when has additional 
+        if (arr.Length > 1)
+        {
+            return arr[1];
+        }
+        //doesnt have additional info
+        return "";
     }
 
     /// <summary>
@@ -247,6 +277,13 @@ public class NotificationWindowGO : GUIElement
         Show("");
     }
 
+    public void Notify(string notiKey, string addP)
+    {
+        //plays the sound of the notification
+        AudioCollector.PlayOneShot(notiKey, 15);
 
+        _allNotifications.Insert(0, notiKey+"|"+addP);
+        Show("");
+    }
 }
 

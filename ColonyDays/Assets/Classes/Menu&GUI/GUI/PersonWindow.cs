@@ -148,7 +148,7 @@ public class PersonWindow : GUIElement
                      + "\n Nutrition: " + _person.NutritionLevel
                      + "\n Profession: " + _person.ProfessionProp.ProfDescription
 
-                     + "\n Spouse: " + Family.RemovePersonIDNumberOff(_person.Spouse)
+                     + "\n Spouse: " + Family.GetPersonName(_person.Spouse)
                      + "\n Happinness: " + _person.Happinnes
                      + "\n Years Of School: " + _person.YearsOfSchool
                      + "\n Age majority reach: " + _person.IsMajor;

@@ -139,7 +139,8 @@ public class MoveThruPoints
 
     public void Init()
     {
-        myAnimator = _gameObject.GetComponent<Animator>(); 
+        var child = General.FindGameObjectInHierarchy("Child", _gameObject);
+        myAnimator = child.GetComponent<Animator>(); 
         oldGameSpeed = Program.gameScene.GameSpeed;
         renderer = _gameObject.GetComponent<Renderer>();
 
@@ -554,7 +555,9 @@ public class MoveThruPoints
 
     //if dist btw Person and neext point is less than 'param':distToChangeRot we fire ChangeRot()
     private float distToChangeRot = 0.275f;//.299 is the max can be 
-    private int smoothDivider = 4;//use to make smooth transition on route points the higher the smoother
+
+    //use to make smooth transition on route points the higher the smoother
+    private int smoothDivider = 20;//4
     void CheckRotation()
     {
         //correction needed when loading the _idle route inverse.. to avoid out of range excp
@@ -566,7 +569,9 @@ public class MoveThruPoints
             //print(currentRoutePoint + ".currentRoutePoint." + currRoute.Count + ".currRoute.Count");
             var currDist = Vector3.Distance(_gameObject.transform.position, _routePoins[_currentRoutePoint].Point);
             if (currDist < distToChangeRot)
-            { ChangeRotation(currDist); }
+            {
+                ChangeRotation(currDist);
+            }
         }
     }
 
@@ -595,13 +600,12 @@ public class MoveThruPoints
         if (_inverse)
         {
             _gameObject.transform.rotation = Quaternion.RotateTowards(_gameObject.transform.rotation,
-         _routePoins[_currentRoutePoint].QuaterniRotationInv, finRot );
+         _routePoins[_currentRoutePoint].QuaterniRotationInv, finRot / smoothDivider);
         }
         else
         {
             _gameObject.transform.rotation = Quaternion.RotateTowards(_gameObject.transform.rotation,
-                // currRoute[currentRoutePoint].QuaterniRotation, (finRot  / smoothDivider)* Program.gameScene.GameSpeed);
-            _routePoins[_currentRoutePoint].QuaterniRotation, finRot );
+            _routePoins[_currentRoutePoint].QuaterniRotation, finRot / smoothDivider);
         }
     }
 

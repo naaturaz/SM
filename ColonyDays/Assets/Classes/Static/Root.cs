@@ -695,6 +695,7 @@ public class Root : MonoBehaviour
         buildsRoot.Add(H.FieldFarmLarge, "Prefab/Building/Farming/FieldFarmLarge");
         buildsRoot.Add(H.FieldFarmXLarge, "Prefab/Building/Farming/FieldFarmXLarge");
 
+        buildsRoot.Add(H.FishingHut, "Prefab/Building/Farming/FishingHut");
 
 
 
@@ -703,11 +704,7 @@ public class Root : MonoBehaviour
         buildsRoot.Add(H.Mortar, "Prefab/Building/Raw/Mortar");
         buildsRoot.Add(H.Clay, "Prefab/Building/Raw/Clay");
         buildsRoot.Add(H.Pottery, "Prefab/Building/Raw/Pottery");
-        buildsRoot.Add(H.FishingHut, "Prefab/Building/Raw/FishingHut");
-        //buildsRoot.Add(H.FishRegular, "Prefab/Building/Raw/FishRegular");
-        //buildsRoot.Add(H.Mine, "Prefab/Building/Raw/Mine");
         buildsRoot.Add(H.MountainMine, "Prefab/Building/Raw/MountainMine");
-        //buildsRoot.Add(H.Resin, "Prefab/Building/Raw/Resin");
         buildsRoot.Add(H.LumberMill, "Prefab/Building/Raw/Wood");
         buildsRoot.Add(H.BlackSmith, "Prefab/Building/Raw/BlackSmith");
         buildsRoot.Add(H.ShoreMine, "Prefab/Building/Raw/ShoreMine");

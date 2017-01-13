@@ -12,6 +12,13 @@ using UnityEngine;
 
 public class GameController  {
 
+    static float _notificationFrec = 120;
+
+    public static float NotificationFrec
+    {
+        get { return GameController._notificationFrec; }
+        set { GameController._notificationFrec = value; }
+    }
     bool _wasNegativeAlerted;
     
     //Main inventory of the game .. wht u see on the GUI 
@@ -71,7 +78,7 @@ public class GameController  {
             return;
         }
 
-        if (Dollars < 0)
+        if (Dollars < 0 && Program.gameScene.GameWasFullyLoadedAnd10SecAgo())
         {
             _wasNegativeAlerted = true;
             Dialog.OKDialog(H.Negative);

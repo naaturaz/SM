@@ -50,14 +50,13 @@ public class Languages
 	   { "FieldFarmMed.Desc","Medium field farm"+_fieldFarmTail},
 	   { "FieldFarmLarge.Desc","Large field farm"+_fieldFarmTail},
 	   { "FieldFarmXLarge.Desc","Extra large field farm"+_fieldFarmTail},
+	   { H.FishingHut + ".Desc","Here a worker can catch fish in a river"},
 
        //Raw
 	   { "Mortar.Desc","Here a worker will produce Mortar"},
 
 	   { "Clay.Desc","Here a worker will produce Clay, raw material is needed for bricks and more"},
 	   { "Pottery.Desc","Here a worker will produce crockery products, such as dishes, jars, etc"},
-	   { H.FishingHut + ".Desc","Here a worker can catch fish in a river"},
-	   { "FishRegular.Desc","Here a worker can fish in a river"},
 	   { "Mine.Desc","Here a worker can fish in a river"},
 	   { "MountainMine.Desc","Here a worker will work the mine by extracting ore"},
 	   { "Resin.Desc","Here a worker will work the mine by extracting minerals and metals randomly"},
@@ -225,7 +224,7 @@ public class Languages
 
        //Notifications
 	   { "BabyBorn.Noti.Name", "New Born"},
-	   { "BabyBorn.Noti.Desc", "A new baby was born"},
+	   { "BabyBorn.Noti.Desc", "{0} was born"},
 	   { "PirateUp.Noti.Name", "Pirates Closer"},
 	   { "PirateUp.Noti.Desc", "Pirates close to shore"},
        { "PirateDown.Noti.Name", "Pirates Respect You"},
@@ -242,9 +241,27 @@ public class Languages
 	   { "BoughtLand.Noti.Desc", "A new land region was purchased"},
 
        { "ShipPayed.Noti.Name", "Ship payed"},
-	   { "ShipPayed.Noti.Desc", "A ship has payed for goods or service"}, 
+	   { "ShipPayed.Noti.Desc", "A ship has payed {0} for goods or service"}, 
        { "ShipArrived.Noti.Name", "A ship has arrived"},
 	   { "ShipArrived.Noti.Desc", "A new ship has arrived to one of our maritimes buildings"},
+
+       { "AgeMajor.Noti.Name", "New worker"},
+	   { "AgeMajor.Noti.Desc", "{0} is ready to work"},
+
+       { "PersonDie.Noti.Name", "A person has died"},
+	   { "PersonDie.Noti.Desc", "{0} has died"},
+
+       { "FullStore.Noti.Name", "A storage is getting full"},
+	   { "FullStore.Noti.Desc", "A storage is at {0}% capacity"},
+
+       { "CantProduceBzFullStore.Noti.Name", "A worker cannot produce"},
+       { "CantProduceBzFullStore.Noti.Desc", "{0} because his destination storage is full"},
+
+       { "NoInput.Noti.Name", "At least an input is missing in building"},
+	   { "NoInput.Noti.Desc", "A building cannot produce {0} because is missing at least one input"},
+
+       { "cannot produce", "cannot produce"},
+
 
        //Main notificaion
        //Shows on the middle of the screen
@@ -388,13 +405,12 @@ public class Languages
 	   { "FieldFarmMed.Desc","Finca de cultivos mediana"+_fieldFarmTailES},
 	   { "FieldFarmLarge.Desc","Finca de cultivos grande"+_fieldFarmTailES},
 	   { "FieldFarmXLarge.Desc","Finca de cultivos super grande"+_fieldFarmTailES},
+	   { H.FishingHut + ".Desc","Aqui se pescan peces"},
 
        //Raw
        { "Mortar.Desc","Here a worker will produce Mortar"},
 	   { "Clay.Desc","Aqui se produce barro, necesaria para construir ladrillos y otros productos mas"},
 	   { "Pottery.Desc","Aqui se producen productos de ceramica como platos, jarras, etc"},
-	   { H.FishingHut + ".Desc","Aqui se pescan peces"},
-	   { "FishRegular.Desc","Aqui se pescan peces"},
 	   { "Mine.Desc","Esta es una mina"},
 	   { "MountainMine.Desc","Esta es una mina"},
 	   { "Resin.Desc","La Resina de saca de los arboles aqui"},

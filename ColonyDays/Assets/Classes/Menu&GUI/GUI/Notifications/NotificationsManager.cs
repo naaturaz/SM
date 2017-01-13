@@ -10,6 +10,17 @@ using UnityEngine;
 /// </summary>
 public class NotificationsManager
 {
+    /// <summary>
+    /// Some notifications repeat like full storage or cant produce bz full storage they will repeat every:
+    /// </summary>
+    static float _notiFrec = 120;
+
+    public static float NotiFrec
+    {
+        get { return NotificationsManager._notiFrec; }
+        set { NotificationsManager._notiFrec = value; }
+    }
+
     //set of notifications to uncheck on Options
     private bool _pirates;
     private float _lowPirate10;//the low 10%, means if im in 25% this is going to be 20%
@@ -98,6 +109,18 @@ public class NotificationsManager
         Program.MouseListener.NotificationWindow.Notify(which);
     }
 
+    internal void Notify(string which, string addP)
+    {
+        if (Program.MouseListener.NotificationWindow == null || Program.MyScreen1.IsMainMenuOn())
+        {
+            return;
+        }
+
+        Program.MouseListener.NotificationWindow.Notify(which, addP);
+    }
+
+
+
     public void MainNotify(string which)
     {
         if (_mainNotificationGo == null)
@@ -118,4 +141,6 @@ public class NotificationsManager
         _mainNotificationGo.Hide();
 
     }
+
+
 }

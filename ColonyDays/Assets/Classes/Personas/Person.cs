@@ -504,7 +504,6 @@ public class Person : General
         //wont be seeable bz there are spawneed hidden. 
         //obj.Body.Hide();
 
-        Program.gameScene.GameController1.NotificationsManager1.Notify("BabyBorn");
 
         return obj;
     }
@@ -610,6 +609,12 @@ public class Person : General
         DefineBirthMonth();
         InitGeneralStuff();
 
+
+        if (Age != 0)
+        {
+            return;
+        }
+        Program.gameScene.GameController1.NotificationsManager1.Notify("BabyBorn", _name);
 
     }
 
@@ -1006,7 +1011,8 @@ public class Person : General
             _isMajor = true;
             Brain.MajorAge.MarkMajorityAgeReached();
             PersonPot.Control.IsAPersonHomeLessNow = MyId;
-            print("Age Major: " + MyId);
+
+            //print("Age Major: " + MyId);
 
             //needed here so can addres the new stuff
             Brain.CheckConditions();
@@ -1112,7 +1118,8 @@ public class Person : General
     {
         if (Age > _lifeLimit && !IsPregnant)
         {
-            print(MyId + " gone , se partio.To old" + " home:" + Home.MyId);
+            //print(MyId + " gone , se partio.To old" + " home:" + Home.MyId);
+            Program.gameScene.GameController1.NotificationsManager1.Notify("PersonDie", _name);
             ActionOfDisappear();
         }
     }
@@ -1173,7 +1180,7 @@ public class Person : General
         if (spouse != "") { return false; }
         if (isWidow) { return false; }
         if (other.Gender == Gender) { return false; }
-        if (Mathf.Abs(other.Age - _age) > 15) { return false; }
+        if (Mathf.Abs(other.Age - _age) > 20) { return false; }
 
         if (Age < 16 || other.Age < 16)
         {
@@ -1397,9 +1404,30 @@ public class Person : General
           && Brain.IAmHomeNow())
         {
             ReachAgeMajority();
+            NotifyAgeMajority();
+        }
+    }
+
+    bool wasNotiAge;
+    /// <summary>
+    /// Notiftyng for the purpose thaty the personc an work
+    /// </summary>
+    private void NotifyAgeMajority()
+    {
+        if (wasNotiAge)
+        {
+            return;
         }
 
+        //so when loads not notify a lot of people that are older
+        if (!wasNotiAge && (IsMajor || Work != null || Age > JobManager.majorityAge + 1))
+        {
+            wasNotiAge = true;
+            return;
+        }
 
+        Program.gameScene.GameController1.NotificationsManager1.Notify("AgeMajor", _name);
+        wasNotiAge = true;
     }
 
 

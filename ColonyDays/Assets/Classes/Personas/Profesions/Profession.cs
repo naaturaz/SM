@@ -375,8 +375,13 @@ public class Profession
     /// </summary>
     public virtual void WorkAction(HPers p)
     {
-//      Debug.Log("workActionCalled:" + _person.MyId + " _readyToWork:" + _readyToWork);
-        if (_readyToWork)
+        var others = ProfDescription != Job.Forester && _readyToWork;
+
+        //if cant take anything out of work should it go
+        var forester = ProfDescription == Job.Forester && _readyToWork && _person.Work.CanTakeItOut(_person);
+
+
+        if (others || forester)
         {
             //Debug.Log("workingNow:" + _person.MyId);
             _workingNow = true;
@@ -678,7 +683,10 @@ public class Profession
         //for forester //ChopWood
         else if (_workerTask == HPers.AniFullyTrans)
         {
-            var forester = ProfDescription == Job.Forester && (ElementWasCut() || LoadedDifferentElement());
+            var forester = ProfDescription == Job.Forester && (ElementWasCut() || LoadedDifferentElement()
+                //|| !_person.Work.CanTakeItOut(_person)
+                );
+
             var builder = ProfDescription == Job.Builder && CurrentConstructionIsNullOrDone();
             if (forester || builder)
             {

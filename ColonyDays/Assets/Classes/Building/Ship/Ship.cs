@@ -154,7 +154,6 @@ public class Ship
 
             if (_didDockExport)
             {
-                Program.gameScene.GameController1.NotificationsManager1.Notify("ShipPayed");
             }
         }
     }

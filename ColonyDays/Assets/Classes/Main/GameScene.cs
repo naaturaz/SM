@@ -12,7 +12,7 @@ using Debug = UnityEngine.Debug;
 public class GameScene : General
 {
 
-
+    float _gameLoadedTime;//when this game fullyLoaded 
     public Terreno Terreno;
 
     private static Btn3D textMessage;
@@ -229,7 +229,6 @@ public class GameScene : General
 //#if UNITY_EDITOR
 //        Developer.IsDev = true;
 //#endif
-
 
         Book.Start();
 
@@ -737,7 +736,14 @@ public class GameScene : General
             return false;
         }
 
-        return !p.TerraSpawnController.IsToLoadFromFile && BuildingPot.Control.Registro.IsFullyLoaded;
+        var res = !p.TerraSpawnController.IsToLoadFromFile && BuildingPot.Control.Registro.IsFullyLoaded;
+
+        if (res && _gameLoadedTime == 0)
+        {
+            _gameLoadedTime = Time.time;
+        }
+
+        return res;
     }
 
 
@@ -878,5 +884,11 @@ public class GameScene : General
 
         Program.IsPirate = pData.PersonControllerSaveLoad.IsPirate;
         Program.IsFood = pData.PersonControllerSaveLoad.IsFood;
+    }
+
+
+    internal bool GameWasFullyLoadedAnd10SecAgo()
+    {
+        return Time.time > _gameLoadedTime + 10 && _gameLoadedTime != 0;
     }
 }

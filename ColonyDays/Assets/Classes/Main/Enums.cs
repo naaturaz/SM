@@ -245,8 +245,9 @@ public enum H
     //Farm, this farm removed is the draggable farm 
     AnimalFarmSmall, AnimalFarmMed, AnimalFarmLarge, AnimalFarmXLarge,
     FieldFarmSmall, FieldFarmMed, FieldFarmLarge, FieldFarmXLarge,
+    FishingHut,
     //raw F4
-    Clay, Pottery, FishingHut,
+    Clay, Pottery, 
     MountainMine,
     LumberMill, BlackSmith, ShoreMine,// QuickLime, 
     Mortar,
@@ -455,13 +456,14 @@ public enum StFarm
     //Farm,
     AnimalFarmSmall, AnimalFarmMed, AnimalFarmLarge, AnimalFarmXLarge,
     FieldFarmSmall, FieldFarmMed, FieldFarmLarge, FieldFarmXLarge,
+    FishingHut, 
 }
 
 
 public enum StRaw //for structures game structure.cs 
 {
     //Raw
-    Clay, Pottery, FishingHut, 
+    Clay, Pottery, 
     MountainMine, 
     LumberMill, BlackSmith, ShoreMine, //QuickLime,
     Mortar,
@@ -482,8 +484,8 @@ public enum StTrade //for structures game structure.cs
 {
     //Trade
     Dock, //Shipyard, Supplier, 
-    StorageSmall,
-    //StorageMed, StorageBig, StorageBigTwoDoors, StorageExtraBig,
+    StorageSmall, StorageMed, StorageBig, 
+    StorageBigTwoDoors, StorageExtraBig,
 }
 
 

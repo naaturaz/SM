@@ -480,7 +480,7 @@ public class BuildingWindow : GUIElement {
                 res += "Workers:" + Building.PeopleDict.Count + "\n";
                 for (int i = 0; i < Building.PeopleDict.Count; i++)
                 {
-                    res += "\n " + Family.RemovePersonIDNumberOff(Building.PeopleDict[i]);
+                    res += "\n " + Family.GetPersonName(Building.PeopleDict[i]);
                 }
             }
 
@@ -688,9 +688,10 @@ public class BuildingWindow : GUIElement {
         _upgrades.SetActive(false);
         _products.SetActive(false);
         _stats.SetActive(false);
-
         g.SetActive(true);
-        oldTabActive = g;
+        
+        //so the old tab is active from building to building
+        //oldTabActive = g;
 
         //then orders need to be Pull from dispatch and shown on Tab
         if (g == _orders)

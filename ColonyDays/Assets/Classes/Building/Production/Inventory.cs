@@ -389,11 +389,27 @@ public class Inventory
             total += _inventItems[i].Volume;
         }
 
+        NotifyIfFilling(total);
+
         if (total > _capacityVol)
         {
             return true;
         }
         return false;
+    }
+
+
+    float lastNoti;//so it notifies every 3min
+    void NotifyIfFilling(float currentOccupied)
+    {
+        var perc = currentOccupied / _capacityVol;
+
+        if (perc > 0.74f && (lastNoti + NotificationsManager.NotiFrec < Time.time || lastNoti == 0) && IsAStorage)
+        {
+            lastNoti = Time.time;
+            var realPerc = perc * 100;
+            Program.gameScene.GameController1.NotificationsManager1.Notify("FullStore", realPerc.ToString("N0"));
+        }
     }
 
     /// <summary>

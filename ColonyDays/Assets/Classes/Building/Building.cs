@@ -2938,23 +2938,9 @@ public class Building : General, Iinfo
         }
     }
 
-    ///// <summary>
-    ///// Custom product. use so far by Forester:
-    ///// 
-    ///// Will find the product it has the most amount of units and will add the evacuation orders 
-    ///// with that Product
-    ///// </summary>
-    ///// <param name="prod"></param>
-    //public void AddEvacuationOrderMost()
-    //{
-    //    //order the Products by amout
-    //    var prods = Inventory.InventItems.OrderBy(a => a.Amount).ToList();
 
-    //    //uses the one prod has the most to be added on the Evac Order
-    //    Order t = new Order(prods[0].Key, "", MyId);
-    //    AddToClosestWheelBarrowAsOrder(t, H.Evacuation);
-    //}
 
+    float lastNoti;
     /// <summary>
     /// Will tell worker if can take products out of the biulding
     /// 
@@ -2963,9 +2949,22 @@ public class Building : General, Iinfo
     /// <returns></returns>
     public bool CanTakeItOut(Person person)
     {
-        return (person.FoodSource != null && DoesStorageHaveCapacity());
+        var res = (person.FoodSource != null && DoesStorageHaveCapacity());
+
+        if (!res && (lastNoti == 0 || Time.time > lastNoti + NotificationsManager.NotiFrec)
+            && DoBuildHaveRawResources())
+        {
+            Program.gameScene.GameController1.NotificationsManager1.
+                Notify("CantProduceBzFullStore", person.Name + " " + Languages.ReturnString("cannot produce")
+                + " " + CurrentProd.Product);
+            lastNoti = Time.time;
+        }
+
+        return res;
     }
 
+
+    float lastNoti2;
     /// <summary>
     /// For the buildings that need raw products as an input for the output will will tell u if 
     /// has input enough or not 
@@ -2973,7 +2972,16 @@ public class Building : General, Iinfo
     /// <returns></returns>
     public bool DoBuildHaveRawResources()
     {
-        return BuildingPot.Control.ProductionProp.DoIHaveEnoughOnInvToProdThis(this);
+        var res = BuildingPot.Control.ProductionProp.DoIHaveEnoughOnInvToProdThis(this);
+
+        if (!res && (lastNoti2 == 0 || Time.time > lastNoti2 + NotificationsManager.NotiFrec))
+        {
+            Program.gameScene.GameController1.NotificationsManager1.
+              Notify("NoInput", CurrentProd.Product+"");
+            lastNoti2 = Time.time;
+        }
+
+        return res;
     }
 
     /// <summary>
@@ -2983,6 +2991,7 @@ public class Building : General, Iinfo
     bool DoesStorageHaveCapacity()
     {
         DefinePreferedStorage();
+
 
         return PreferedStorage != null && !PreferedStorage.Inventory.IsFull();
     }
@@ -3126,13 +3135,6 @@ public class Building : General, Iinfo
             return;
         }
 
-        ////if masory need wheelBarrows 
-        //if (HType == H.Masonry && Inventory.ReturnAmtOfItemOnInv(P.WheelBarrow) < 10)
-        //{
-        //    Order prodNeed = new Order(P.WheelBarrow, MyId, 100);
-        //    AddToClosestWheelBarrowAsOrder(prodNeed, H.None);
-        //}
-
         var rawsOnNeed = BuildingPot.Control.ProductionProp.ReturnIngredients(CurrentProd.Product);
         if (rawsOnNeed == null)
         {
@@ -3146,14 +3148,12 @@ public class Building : General, Iinfo
             if (!HaveThisProdOnInv(prod))
             {
                 //todo use 10000 to put a large number of units needed
-                Order prodNeed = new Order(prod, MyId, 200);
+                Order prodNeed = new Order(prod, MyId, 300);//200
 
                 //BuildingPot.Control.Dispatch1.AddToOrders(prodNeed);
                 AddToClosestWheelBarrowAsOrder(prodNeed, H.None);
             }
         }
-
-        
     }
 
 

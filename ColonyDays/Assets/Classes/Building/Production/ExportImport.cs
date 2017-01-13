@@ -303,6 +303,8 @@ public class ExportImport
     {
         var trans = CalculateTransaction(prod, amt);
         Program.gameScene.GameController1.Dollars += trans;
+
+        Program.gameScene.GameController1.NotificationsManager1.Notify("ShipPayed", trans.ToString("N0"));
     }
 
     /// <summary>
@@ -497,7 +499,7 @@ public class ProdSpec
     public ProdSpec(P prod, float price, float density = 1, float produceFactor = 1, int expireDays = -1)
     {
         Product = prod;
-        Price = price/900;//1000
+        Price = price/100;//500  900 1000
         Density = density;
         ProduceFactor = produceFactor;
 

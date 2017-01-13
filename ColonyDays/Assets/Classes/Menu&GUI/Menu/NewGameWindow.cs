@@ -165,7 +165,10 @@ public class NewGameWindow : GUIElement
         _diffTxt.text = _difficulty;
     }
 
-    void DefineTownName()
+    /// <summary>
+    /// Is also called from GUI
+    /// </summary>
+    public void DefineTownName()
     {
         _townName = _inputTownName.text;
         

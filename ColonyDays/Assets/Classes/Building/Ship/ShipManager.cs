@@ -8,7 +8,8 @@ public class ShipManager
     private int _isToLoadShips = -1;
 
     List<string> _shipsRoot = new List<string>()
-    { "Prefab/Ship/ShipSmall1", "Prefab/Ship/ShipSmall2", "Prefab/Ship/ShipSmall3" }; 
+    { "Prefab/Ship/ShipSmall1", //"Prefab/Ship/ShipSmall2", "Prefab/Ship/ShipSmall3" 
+    }; 
 
     public MDate NextVisit
     {

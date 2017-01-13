@@ -603,7 +603,7 @@ public class Brain
     void GoWork()
     {
         if (ReadyToWork() && _routerWork.IsRouteReady && _workRoute.CheckPoints.Count > 0
-            && _workRoute.DestinyKey == _person.Work.MyId
+            && _workRoute.DestinyKey == _person.Work.MyId 
             
             )
         {

@@ -731,25 +731,38 @@ public class Family
     public string InfoShow()
     {
         var res = "\n\n Family:" +
-               "\n   Dad : " + RemovePersonIDNumberOff(Father) +
-               "\n   Mom : " + RemovePersonIDNumberOff(Mother);
+               "\n   Dad : " + GetPersonName(Father) +// RemovePersonIDNumberOff(Father) +
+               "\n   Mom : " + GetPersonName(Mother) //RemovePersonIDNumberOff(Mother)
+               ;
 
         for (int i = 0; i < Kids.Count; i++)
         {
-            res = res + "\n     Kid#" + (i + 1) + " : " + RemovePersonIDNumberOff(Kids[i]);
+            res = res + "\n     Kid#" + (i + 1) + " : " + GetPersonName(Kids[i]);
         }
         return res;
     }
 
-    public static string RemovePersonIDNumberOff(string pass)
-    {
-        var spl = pass.Split('.');
 
-        if (spl.Length > 1)
+
+    public static string GetPersonName(string pass)
+    {
+        var pers = FindPerson(pass);
+
+        //for when spouse is not being set yet
+        if (pers == null)
         {
-            //the name
-            return spl[0];
+            return "";
         }
-        return "";
+        
+        return pers.Name;
+
+        //var spl = pass.Split('.');
+
+        //if (spl.Length > 1)
+        //{
+        //    //the name
+        //    return spl[0];
+        //}
+        //return "";
     }
 }

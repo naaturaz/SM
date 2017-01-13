@@ -133,11 +133,11 @@ public class Book : General
         Build.Add(new BuildStat(H.Shipyard, 900, 30, 20, 0, 5, maxPeople: 30, capacity: 400));
         Build.Add(new BuildStat(H.Supplier, 900, 30, 20, 0, 5, maxPeople: 30, capacity: 400));
 
-        Build.Add(new BuildStat(H.StorageSmall, 400, 10, 20, 10, 5, maxPeople: 0, capacity: 500));
-        Build.Add(new BuildStat(H.StorageMed, 600, 15, 20, 20, 5, maxPeople: 0, capacity: 200));
-        Build.Add(new BuildStat(H.StorageBig, 600, 20, 20, 35, 5, maxPeople: 0, capacity: 300));
-        Build.Add(new BuildStat(H.StorageBigTwoDoors, 600, 25, 20, 50, 5, maxPeople: 0, capacity: 300));
-        Build.Add(new BuildStat(H.StorageExtraBig, 600, 30, 20, 60, 5, maxPeople: 0, capacity: 4200));
+        Build.Add(new BuildStat(H.StorageSmall, 400, 10, 20, 10, 5, maxPeople: 0, capacity: 300));
+        Build.Add(new BuildStat(H.StorageMed, 600, 15, 20, 20, 5, maxPeople: 0, capacity: 400));
+        Build.Add(new BuildStat(H.StorageBig, 800, 20, 20, 35, 5, maxPeople: 0, capacity: 500));
+        Build.Add(new BuildStat(H.StorageBigTwoDoors, 1000, 25, 20, 50, 5, maxPeople: 0, capacity: 700));
+        Build.Add(new BuildStat(H.StorageExtraBig, 1200, 30, 20, 60, 5, maxPeople: 0, capacity: 900));
 
         //Gov
         Build.Add(new BuildStat(H.Library, 1600, 15, 5, 25, 5, maxPeople: 1));
