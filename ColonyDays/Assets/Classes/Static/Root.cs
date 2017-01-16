@@ -249,6 +249,8 @@ public class Root : MonoBehaviour
 
 
     public static string ArrowLookAt = "Prefab/GUI/3dHelpers/ArrowLookAt";
+    public static string ConstructionSign = "Prefab/GUI/3dHelpers/Construction_Sign";
+
     public static string CubeLookAt = "Prefab/GUI/3dHelpers/CubeLookAt";
 
 
@@ -285,6 +287,8 @@ public class Root : MonoBehaviour
     public static string dialogOKCancel = "Prefab/Menu/DialogOKCancel";
     public static string dialogOK = "Prefab/Menu/DialogOK";
     public static string inputFormDialog = "Prefab/Menu/InputFormDialog";
+    public static string inputFormDialogBeforeExit = "Prefab/Menu/InputFormDialogBeforeExit";
+
     public static string inputFormDialogInvitation = "Prefab/Menu/InputFormDialogInvitation";
 
 

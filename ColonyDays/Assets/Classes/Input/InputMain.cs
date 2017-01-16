@@ -190,6 +190,12 @@ public class InputMain : InputParent {
         //&& Program.gameScene.GameFullyLoaded() is to not allow touch ESC while is loadig
         if (mainMenu == null && Program.gameScene.GameFullyLoaded())
         {
+            if (Program.MouseListener.IsAWindowShownNow())
+            {
+                Program.MouseListener.HideAllWindowsIncludingBuildingWindowAndBulletin();
+                return;
+            }
+
             CamControl.ChangeTo("Main");
 
             Program.gameScene.PauseGameSpeed();

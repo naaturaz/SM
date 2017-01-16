@@ -46,6 +46,7 @@ class TutoWindow : GUIElement
     private Text _text;
     private RectTransform _rectTransform;
     private Vector3 _iniPos;
+    GameObject _showAgainTuto;
 
     void Start()
     {
@@ -58,9 +59,8 @@ class TutoWindow : GUIElement
 
         _rectTransform = transform.GetComponent<RectTransform>();
 
-        Hide();
-       
 
+        Hide();
     }
 
 
@@ -103,6 +103,18 @@ class TutoWindow : GUIElement
 
     internal void Show()
     {
+        //when retake from Skipped 
+        if (_currentIndex < 0)
+        {
+            _currentIndex = 0;
+        }
+
+        if (_showAgainTuto == null)
+        {
+            _showAgainTuto = GameObject.Find("ShowAgainTuto");
+        }
+        _showAgainTuto.SetActive(false);
+
         AudioCollector.PlayOneShotFullAudio("ClickMetal2");
         Program.MouseListener.HideAllWindows();
 
@@ -114,9 +126,7 @@ class TutoWindow : GUIElement
 
     public void Next(string step)
     {
-        if (_currentIndex == -1 || step != _steps[_currentIndex]
-            // || !XMLSerie.IsTutorial() 
-            )
+        if (_currentIndex == -1 || step != _steps[_currentIndex])
         {
             return;
         }
@@ -128,16 +138,16 @@ class TutoWindow : GUIElement
             _currentIndex = -1;
             Hide();
             Dialog.OKDialog(H.TutoOver);
-            //Program.gameScene.GameController1.Dollars += 5000;
-            //AudioCollector.PlayOneShot("BoughtLand", 0);
+            Program.gameScene.GameController1.Dollars += 10000;
+            AudioCollector.PlayOneShot("BoughtLand", 0);
             return;
         }
 
-        if ("Trade.Tuto" == step)
-        {
-            Program.gameScene.GameController1.Dollars += 1000;
+        //if ("Trade.Tuto" == step)
+        //{
+        //    Program.gameScene.GameController1.Dollars += 1000;
             
-        }
+        //}
 
         //Program.gameScene.GameController1.Dollars += 1500;
         //AudioCollector.PlayOneShot("BoughtLand", 0);
@@ -167,11 +177,9 @@ class TutoWindow : GUIElement
         AudioCollector.PlayOneShot("ClickMetal2", 0);
         _currentIndex = -1;
         Hide();
+
+        _showAgainTuto.SetActive(true);
     }
-
-
-
-
 }
 
 

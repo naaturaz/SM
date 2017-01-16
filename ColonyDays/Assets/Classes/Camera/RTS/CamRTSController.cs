@@ -211,6 +211,11 @@ public class CamRTSController : CamControl
     //void LateUpdate()
     void Update()
     {
+        if (Program.MouseListener.IsAWindowScrollableShownNow())
+        {
+            return;
+        }
+
         //initiales current obj pos and rot to...
         InitializeObjects();
         CreateTargetAndUpdate();

@@ -247,7 +247,7 @@ public enum H
     FieldFarmSmall, FieldFarmMed, FieldFarmLarge, FieldFarmXLarge,
     FishingHut,
     //raw F4
-    Clay, Pottery, 
+    Clay, Pottery,
     MountainMine,
     LumberMill, BlackSmith, ShoreMine,// QuickLime, 
     Mortar,
@@ -415,6 +415,7 @@ public enum H
     Plant,
     TutoOver,
     Negative,
+    OptionalFeedback,
 
 
 }

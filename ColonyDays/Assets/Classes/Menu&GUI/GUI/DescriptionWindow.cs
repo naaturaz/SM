@@ -6,7 +6,7 @@ using UnityEngine.UI;
 /// 
 /// When a building  is hover this description windows pop up
 /// </summary>
-public class DescriptionWindow : General
+public class DescriptionWindow : GUIElement
 {
     private GameObject _title;
     private GameObject _cost;

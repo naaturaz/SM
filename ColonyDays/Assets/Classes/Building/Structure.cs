@@ -143,6 +143,7 @@ public class Structure : StructureParent
         Geometry.GetComponent<Renderer>().sharedMaterial = newMat;
     }
 
+    
     /// <summary>
     /// The action when user finish placing a building 
     /// </summary>
@@ -167,6 +168,11 @@ public class Structure : StructureParent
             }
 
             float howBigTheCollidingSphere = 15f;
+
+            if (!IsLoadingFromFile)
+            {
+                _construcionSign = General.Create(Root.ConstructionSign, MiddlePoint(), "Construction", transform);
+            }
 
             //if (MyId.Contains("Med") || HType == H.BlackSmith)
             //{

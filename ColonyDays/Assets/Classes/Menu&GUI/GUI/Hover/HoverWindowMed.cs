@@ -47,12 +47,26 @@ class HoverWindowMed : MonoBehaviour
         _text.text = "";
         _geometry.SetActive(false);
     }
+
     public void Show(Vector3 pos, string key)
     {
         AudioCollector.PlayOneShot("ClickWoodSubtle", 0);
 
         _key = key;
         _msg = Languages.ReturnString(key + ".HoverMed");
+        _rectTransform.position = pos;
+
+        _text.text = _msg;
+        _geometry.SetActive(true);
+
+        diffToMouse = pos - Input.mousePosition;
+        showedAt = Time.time;
+    }
+
+    public void ShowExplicitThis(Vector3 pos, string key)
+    {
+        AudioCollector.PlayOneShot("ClickWoodSubtle", 0);
+
         _rectTransform.position = pos;
 
         _text.text = _msg;

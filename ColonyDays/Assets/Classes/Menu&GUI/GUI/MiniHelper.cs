@@ -11,7 +11,7 @@ class MiniHelper : GUIElement
     //helps available. u can add anything here, but need to be add on Langugaes.cs
     List<string> _helps = new List<string>()
     {
-        //"Current_Salary.HoverMed",
+        "Construction.HoverMed",
         "Camera",
         "SeaPath",
         "PeopleRange",
@@ -103,5 +103,10 @@ class MiniHelper : GUIElement
         Show();
     }
 
+    public void ShowConstructionHelp()
+    {
+        _currentIndex = 0;
+        Show();
+    }
 }
 

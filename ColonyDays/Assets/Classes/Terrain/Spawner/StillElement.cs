@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using Random = UnityEngine.Random;
+using System;
 
 public class StillElement : TerrainRamdonSpawner
 {
@@ -57,7 +58,10 @@ public class StillElement : TerrainRamdonSpawner
 
     // Use this for initialization
 	public void Start ()
-	{
+    {
+
+
+
         if (_hasStart)
 	    {
             return;
@@ -617,4 +621,106 @@ public class StillElement : TerrainRamdonSpawner
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+    //#region Hover All Objects. All objects that have a collider will be hoverable
+
+    ////private HoverWindow hoverWindow;//the window tht will pop up msg
+    //HoverWindowMed hoverWindowMed;
+
+    //void OnMouseEnter()
+    //{
+    //    PublicSpawnHelp();
+    //}
+
+    //void OnMouseExit()
+    //{
+    //    PublicDestroyHelp();
+    //}
+
+    ///// <
+    ///// summary>
+    ///// For unity eventTrigger
+    ///// 
+    ///// </summary>
+    //void PublicSpawnHelp()
+    //{
+    //    if (hoverWindowMed == null)
+    //    {
+    //        hoverWindowMed = FindObjectOfType<HoverWindowMed>();
+    //    }
+
+    //    if (hoverWindowMed == null)
+    //    {
+    //        return;
+    //    }
+
+    //    var pos = MoveItTowardsScreenCenter(CorrectMouseCenterPos());
+    //    //hoverWindow.Show(pos, MyMsg());
+    //    hoverWindowMed.ShowExplicitThis(pos, MyMsg());
+    //}
+
+    ///// <summary>
+    ///// If mouse is too close to center on the screen want to add a bit
+    ///// on Y so it doesnt keep entering and exiting bz the hover window is
+    ///// being spawned on it 
+    ///// </summary>
+    ///// <returns></returns>
+    //Vector3 CorrectMouseCenterPos()
+    //{
+    //    var half = Screen.height / 2;
+    //    var difference = Input.mousePosition.y - half;
+
+    //    //means is in the middle of the screen
+    //    if (Math.Abs(difference) < 220)
+    //    {
+    //        return Input.mousePosition + new Vector3(0, 100, 0);
+    //    }
+    //    return Input.mousePosition;
+    //}
+
+    //private Vector2 MoveItTowardsScreenCenter(Vector3 v3)
+    //{
+    //    var w = Screen.width / 2;
+    //    var h = Screen.height / 2;
+
+    //    //so its depending on the screen size. roughly +45 px
+    //    var howFar = h / 7;//9
+
+
+
+    //    Vector2 center = new Vector2(w, h);
+    //    var moved = Vector2.MoveTowards(v3, center, howFar);
+    //    return moved;
+    //}
+
+    ///// <summary>
+    ///// For unity event
+    ///// </summary>
+    //void PublicDestroyHelp()
+    //{
+    //    if (hoverWindowMed == null)
+    //    {
+    //        return;
+    //    }
+    //    hoverWindowMed.Hide();
+    //}
+
+    //string MyMsg()
+    //{
+    //    return transform.name;
+    //}
+
+
+    //#endregion
 }

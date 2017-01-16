@@ -154,6 +154,8 @@ public class MyScreen : General
         return current != null && current.name.Contains("Menu");
     }
 
+
+    bool wasOptionalFeedbackShown;
     /// <summary>
     /// Depending on the btn was clicked will do action 
     /// </summary>
@@ -190,6 +192,13 @@ public class MyScreen : General
         }
         else if(sub == "Exit")
         {
+            if (!wasOptionalFeedbackShown)
+            {
+                Dialog.InputFormDialog(H.OptionalFeedback);
+                wasOptionalFeedbackShown = true;
+                return;
+            }
+
              Application.Quit();
         }    
         else if(sub == "SaveGame")

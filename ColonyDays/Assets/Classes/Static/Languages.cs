@@ -128,6 +128,8 @@ public class Languages
 	   { "BuyRegion.WithMoney", "Are you sure want to buy this region."},
 	   { "BuyRegion.WithOutMoney", "Sorry, you can't afford this now."},
 	   { "Feedback", "Feedback!? Awesome...:) Thanks. 8) "},
+	   { "OptionalFeedback", "wait... before you leave... one sentence of feedback would be awesome!"},
+
 	   { "BugReport", "Caught a bug? uhmm yummy.... Send it this way!! Thanks"},	  
        { "Invitation", "Your friend's email for a chance to join the Private Beta"},  
        { "Info", ""},//use for informational Dialogs
@@ -165,7 +167,7 @@ public class Languages
 	   { "Hide.HoverSmall", "Hide"},
 	   { "CleanAll.HoverSmall", "Clean"},
 	   { "Bulletin.HoverSmall", "Control/Bulletin"},
-
+       {"ShowAgainTuto.HoverSmall","Tutorial"},
 
        
        { "More.HoverSmall", "More"},
@@ -277,6 +279,9 @@ public class Languages
 
 
        //Mini help
+
+       { "Construction.HoverMed", "For the construction of any building you need to have workers in the Masonry. "+
+            " Click the Masonry, then the '+' sign in the general tab. Make sure you have enough resources"},
        { "Camera", "Camera: Use [WASD] or cursor to move. " +
                    "Press the scroll wheel on your mouse, keep it pressed to rotate, or [Q] and [E]"},
        { "SeaPath", "Click on the left bottom corner 'Show/hide sea path' " +
@@ -309,11 +314,11 @@ public class Languages
 
 
        //to  add on spanish         //to correct  
-       { "TutoOver", "The tutorial is over now you can keep playing this game or start a new one."},
+       { "TutoOver", "Your reward is $10,000. The tutorial is over now you can keep playing this game or start a new one."},
 
        //Tuto
-       { "CamMov.Tuto", "Tutorial: ...  Step1: Use [WASD] to move the Camera."},
-       { "CamMov5x.Tuto", "Use [WASD] and keep press the 'Left Shift' key to move the Camera faster."},
+       { "CamMov.Tuto", "Tutorial: There is a $10,000 reward for finishing the tutorial. Step1: Use [WASD] or arrow keys to move the Camera."},
+       { "CamMov5x.Tuto", "Use [WASD] or arrow keys and keep press the 'Left Shift' key to move the Camera 5 times quicker."},
        { "CamRot.Tuto", "Now press the scroll wheel down on your mouse and move your mouse to rotate the Camera."},
        { "CamHeaven.Tuto", "Scroll back with your mouse middle button until the camera reaches"
             + " the sky. This view is useful to place bigger buildings such as the Port"},

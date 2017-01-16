@@ -297,6 +297,9 @@ public class General : MonoBehaviour
         }
 
         StartCoroutine("TwoSecUpdate");
+
+
+
     }
 
     private IEnumerator TwoSecUpdate()
@@ -654,6 +657,18 @@ public class General : MonoBehaviour
         }
     }
     #endregion
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

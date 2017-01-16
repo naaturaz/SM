@@ -548,6 +548,16 @@ public class MouseListener : InputMain
         _notificationWindow.Hide();
     }
 
+    public void HideAllWindowsIncludingBuildingWindowAndBulletin()
+    {
+        HideAllWindows();
+
+        _buildingsMenu.Hide();
+        _buildingWindow.Hide();
+        _bulletinWindow.Hide();
+    }
+
+
     /// <summary>
     /// This is when click on , Road, or House 
     /// </summary>
@@ -828,31 +838,6 @@ public class MouseListener : InputMain
 
 
 
-    #region Update Building Material
-
-   
-    void UpgradeBuildMatRoutine()
-    {
-
-
-
-
-
-
-
-    }
-
-
-
-
-
-   
-
-
-#endregion
-
-
-
 
 	// Update is called once per frame
     public void Update()
@@ -877,5 +862,27 @@ public class MouseListener : InputMain
             _currForm.Destroy();
             _currForm = null;
         }
+    }
+
+    public bool IsAWindowShownNow()
+    {
+        if (_buildingsMenu == null)
+        {
+            return false;
+        }
+
+        return _buildingsMenu.IsShownNow() || _descriptionWindow.IsShownNow() ||
+            _personWindow.IsShownNow() || _buildingWindow.IsShownNow() || _addOrderWindow.IsShownNow() ||
+            _bulletinWindow.IsShownNow();
+    }
+
+    public bool IsAWindowScrollableShownNow()
+    {
+        if (_buildingsMenu == null)
+        {
+            return false;
+        }
+
+        return _addOrderWindow.IsShownNow() || _bulletinWindow.IsShownNow();
     }
 }

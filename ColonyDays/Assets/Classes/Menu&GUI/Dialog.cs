@@ -99,6 +99,11 @@ public class Dialog
             }
         }
 
+        if (_type == H.OptionalFeedback)
+        {
+            Application.Quit();
+        }
+
         DestroyCurrDialog();
     }
 
