@@ -75,7 +75,7 @@ public class ManagerReport
     /// <param name="text"></param>
     internal static void AddNewText(string type, string text)
     {
-        if (type == "Feedback")
+        if (type == "Feedback" || type == "OptionalFeedback")
         {
             _finalReport.AddToFeedBack(text);
         }

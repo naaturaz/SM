@@ -152,6 +152,7 @@ public class Program : MonoBehaviour {
         InputMain.Destroy();
 
         GameController.ResumenInventory1.GameInventory.Delete();
+        QuestManager.ResetNewGame();
     }
 
     /// <summary>

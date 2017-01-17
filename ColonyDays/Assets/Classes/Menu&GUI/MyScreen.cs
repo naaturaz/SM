@@ -485,6 +485,11 @@ public class MyScreen : General
 
     public void DestroyCurrentMenu()
     {
+        if (current == null)
+        {
+            return;
+        }
+
         current.Destroy();
         current = null;
     }

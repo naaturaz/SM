@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Person : General
+public class Person : Hoverable
 {
 
 
@@ -37,7 +37,6 @@ public class Person : General
     private int _unHappyYears; //if is over X amount will emmigrate
 
     private int _lifeLimit;
-    private string _name;
     private EducationLevel _educationLevel;
     private double _happinnes = 5, _prosperity = 5;
     private H _gender;
@@ -300,11 +299,7 @@ public class Person : General
         set { _nutritionLevel = value; }
     }
 
-    public string Name
-    {
-        get { return _name; }
-        set { _name = value; }
-    }
+
 
     public string Spouse
     {
@@ -525,7 +520,7 @@ public class Person : General
         _birthMonth = pF.BirthMonth; //the birthday of the person
         UnHappyYears = pF.UnHappyYears;
 
-        _name = pF._name;
+        Name = pF._name;
         _lifeLimit = pF._lifeLimit;
         MyId = pF.MyId;
         Gender = pF._gender;
@@ -594,10 +589,10 @@ public class Person : General
     public void InitObj(int iniAge)
     {
         Age = iniAge;
-        _name = BuildRandomName();
+        Name = BuildRandomName();
 
         _lifeLimit = GiveRandom(75, 85);//        40
-        MyId = _name + "." + Id;
+        MyId = Name + "." + Id;
 
         Brain = new Brain(this);
         _body = new Body(this);
@@ -614,7 +609,7 @@ public class Person : General
         {
             return;
         }
-        Program.gameScene.GameController1.NotificationsManager1.Notify("BabyBorn", _name);
+        Program.gameScene.GameController1.NotificationsManager1.Notify("BabyBorn", Name);
 
     }
 
@@ -1119,7 +1114,7 @@ public class Person : General
         if (Age > _lifeLimit && !IsPregnant)
         {
             //print(MyId + " gone , se partio.To old" + " home:" + Home.MyId);
-            Program.gameScene.GameController1.NotificationsManager1.Notify("PersonDie", _name);
+            Program.gameScene.GameController1.NotificationsManager1.Notify("PersonDie", Name);
             ActionOfDisappear();
         }
     }
@@ -1427,7 +1422,7 @@ public class Person : General
             return;
         }
 
-        Program.gameScene.GameController1.NotificationsManager1.Notify("AgeMajor", _name);
+        Program.gameScene.GameController1.NotificationsManager1.Notify("AgeMajor", Name);
         wasNotiAge = true;
     }
 
@@ -2285,7 +2280,7 @@ public class Person : General
         if (_unHappyYears > 2 && !Brain.Partido
             && IsMajor && string.IsNullOrEmpty(IsBooked))
         {
-            Emmigrate();
+            //Emmigrate();
         }
     }
 
@@ -2728,87 +2723,19 @@ public class Person : General
 
 
 
-    //#region Hover All Objects. All objects that have a collider will be hoverable
+    #region Hover All Objects. All objects that have a collider will be hoverable
 
-    ////private HoverWindow hoverWindow;//the window tht will pop up msg
-    //HoverWindowMed hoverWindowMed;
+    protected void OnMouseEnter()
+    {
+        base.OnMouseEnter();
+    }
 
-    //void OnMouseEnter()
-    //{
-    //    PublicSpawnHelp();
-    //}
+    protected void OnMouseExit()
+    {
+        base.OnMouseExit();
+    }
 
-    //void OnMouseExit()
-    //{
-    //    PublicDestroyHelp();
-    //}
-
-    ///// <
-    ///// summary>
-    ///// For unity eventTrigger
-    ///// 
-    ///// </summary>
-    //void PublicSpawnHelp()
-    //{
-    //    if (hoverWindowMed == null)
-    //    {
-    //        hoverWindowMed = FindObjectOfType<HoverWindowMed>();
-    //    }
-
-    //    var pos = MoveItTowardsScreenCenter(CorrectMouseCenterPos());
-    //    //hoverWindow.Show(pos, MyMsg());
-    //    hoverWindowMed.ShowExplicitThis(pos, MyMsg());
-    //}
-
-    ///// <summary>
-    ///// If mouse is too close to center on the screen want to add a bit
-    ///// on Y so it doesnt keep entering and exiting bz the hover window is
-    ///// being spawned on it 
-    ///// </summary>
-    ///// <returns></returns>
-    //Vector3 CorrectMouseCenterPos()
-    //{
-    //    var half = Screen.height / 2;
-    //    var difference = Input.mousePosition.y - half;
-
-    //    //means is in the middle of the screen
-    //    if (Math.Abs(difference) < 220)
-    //    {
-    //        return Input.mousePosition + new Vector3(0, 100, 0);
-    //    }
-    //    return Input.mousePosition;
-    //}
-
-    //private Vector2 MoveItTowardsScreenCenter(Vector3 v3)
-    //{
-    //    var w = Screen.width / 2;
-    //    var h = Screen.height / 2;
-
-    //    //so its depending on the screen size. roughly +45 px
-    //    var howFar = h / 7;//9
-
-
-
-    //    Vector2 center = new Vector2(w, h);
-    //    var moved = Vector2.MoveTowards(v3, center, howFar);
-    //    return moved;
-    //}
-
-    ///// <summary>
-    ///// For unity event
-    ///// </summary>
-    //void PublicDestroyHelp()
-    //{
-    //    hoverWindowMed.Hide();
-    //}
-
-    //string MyMsg()
-    //{
-    //    return transform.name;
-    //}
-
-
-    //#endregion
+    #endregion
 
 }
 

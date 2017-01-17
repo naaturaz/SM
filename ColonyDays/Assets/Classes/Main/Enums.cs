@@ -247,10 +247,10 @@ public enum H
     FieldFarmSmall, FieldFarmMed, FieldFarmLarge, FieldFarmXLarge,
     FishingHut,
     //raw F4
-    Clay, Pottery,
+    LumberMill, Clay, ShoreMine,
     MountainMine,
-    LumberMill, BlackSmith, ShoreMine,// QuickLime, 
-    Mortar,
+    BlackSmith, // QuickLime, 
+    Mortar, Pottery,
     //prod F5
     Brick, Carpentry, Cigars, Mill, Tailor,
     Armory, Distillery, Chocolate, Ink,
@@ -416,6 +416,8 @@ public enum H
     TutoOver,
     Negative,
     OptionalFeedback,
+    InfoKey,
+    CompleteQuest,
 
 
 }
@@ -463,11 +465,10 @@ public enum StFarm
 
 public enum StRaw //for structures game structure.cs 
 {
-    //Raw
-    Clay, Pottery, 
-    MountainMine, 
-    LumberMill, BlackSmith, ShoreMine, //QuickLime,
-    Mortar,
+    LumberMill, Clay, ShoreMine,
+    MountainMine,
+    BlackSmith, // QuickLime, 
+    Mortar, Pottery,
 }
 
 public enum StProd //for structures game structure.cs 
@@ -486,7 +487,7 @@ public enum StTrade //for structures game structure.cs
     //Trade
     Dock, //Shipyard, Supplier, 
     StorageSmall, StorageMed, StorageBig, 
-    StorageBigTwoDoors, StorageExtraBig,
+    //StorageBigTwoDoors, StorageExtraBig,
 }
 
 

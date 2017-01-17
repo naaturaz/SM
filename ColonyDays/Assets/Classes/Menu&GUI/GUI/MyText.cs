@@ -100,7 +100,7 @@ public class MyText : MonoBehaviour
       
         else if (name == "Temp")
         {
-            thisText.text = Tempeture.Current()+ "";
+            thisText.text = Tempeture.Current().ToString("n0");
         }
     }
 

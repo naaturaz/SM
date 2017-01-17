@@ -233,7 +233,7 @@ public class RegFile  {
         ProductionReport = build.ProductionReport;
         MaxPeople = build.MaxPeople;
         Decoration = build.Decoration1;
-        Name = build.Name();
+        Name = build.NameBuilding();
     }
 
     public RegFile() { }

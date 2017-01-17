@@ -168,10 +168,10 @@ public class Languages
 	   { "CleanAll.HoverSmall", "Clean"},
 	   { "Bulletin.HoverSmall", "Control/Bulletin"},
        {"ShowAgainTuto.HoverSmall","Tutorial"},
-
        
        { "More.HoverSmall", "More"},
 	   { "Less.HoverSmall", "Less"},
+	   { "Prev.HoverSmall", "Previous"},
 
        //down bar
 	   { "Infrastructure.HoverSmall", "Infrastructure"},
@@ -317,7 +317,7 @@ public class Languages
        { "TutoOver", "Your reward is $10,000. The tutorial is over now you can keep playing this game or start a new one."},
 
        //Tuto
-       { "CamMov.Tuto", "Tutorial: There is a $10,000 reward for finishing the tutorial. Step1: Use [WASD] or arrow keys to move the Camera."},
+       { "CamMov.Tuto", "Tutorial: Step1: Use [WASD] or arrow keys to move the Camera."},
        { "CamMov5x.Tuto", "Use [WASD] or arrow keys and keep press the 'Left Shift' key to move the Camera 5 times quicker."},
        { "CamRot.Tuto", "Now press the scroll wheel down on your mouse and move your mouse to rotate the Camera."},
        { "CamHeaven.Tuto", "Scroll back with your mouse middle button until the camera reaches"
@@ -361,6 +361,16 @@ public class Languages
        { "CloseDockWindow.Tuto", "Now the order is added. A random ship will drop this item in the dock inventory. And then your dock workers will take it to the closest Storage building. Now click outside the window so the window closes."},
        { "Rename.Tuto", "Click on a person and then click on the title bar of the person. Like this you can change the name of any person or building in the game. Click outside so the change is saved"},
 
+
+
+
+
+       //Quest
+       { "Tutorial.Quest", "Quest: Finish the tutorial. Reward $10,000. It takes roughly 3 minutes to complete"},
+       { "SmallFarm.Quest", "Quest: Build a small farm. Reward $5,000. You need farms to feed your people"},
+       { "Bohio.Quest", "Quest: Build a bohio. Reward $2,000. This are cheap houses. When people turn 16 they will move to a free house if found"},
+
+       {"CompleteQuest", "Your reward was ${0}"}
 
     };
 

@@ -80,7 +80,7 @@ public class Dialog
                 MeshController.BuyRegionManager1.CurrentRegionBuy();
                 Program.gameScene.TutoStepCompleted("BuyRegion.Tuto");
             }
-            else if (_type == H.Feedback || _type == H.BugReport)
+            else if (_type == H.Feedback || _type == H.BugReport || _type == H.OptionalFeedback)
             {
                 CreateFile(_type + "", _dialogGo.InputText.text);
             }
@@ -97,11 +97,10 @@ public class Dialog
             {
                 
             }
-        }
-
-        if (_type == H.OptionalFeedback)
-        {
-            Application.Quit();
+            else if(_type == H.CompleteQuest)
+            {
+                QuestManager.QuestCompletedAcknowled();
+            }
         }
 
         DestroyCurrDialog();

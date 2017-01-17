@@ -340,7 +340,7 @@ public class BuildingWindow : GUIElement {
     {
         HideShowSalAndPositions();
 
-        _title.text = Building.Name();
+        _title.text = Building.NameBuilding();
         _info.text = BuildInfo() + BuildCover();
 
         Inventory();
@@ -941,7 +941,7 @@ public class BuildingWindow : GUIElement {
     /// </summary>
     public void UpdateInputTitle()
     {
-        _titleInputField.text = Building.Name();
+        _titleInputField.text = Building.NameBuilding();
         Program.LockInputSt();
     }
 
@@ -950,9 +950,9 @@ public class BuildingWindow : GUIElement {
     /// </summary>
     public void NewAlias()
     {
-        Building.Name1 = _titleInputField.text;
+        Building.Name = _titleInputField.text;
         _titleInputFieldGO.SetActive(false);
-        _title.text = Building.Name();
+        _title.text = Building.NameBuilding();
         Program.UnLockInputSt();
     }
 

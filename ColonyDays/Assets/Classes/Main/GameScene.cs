@@ -427,7 +427,8 @@ public class GameScene : General
         {
             return;
         }
-        
+
+        QuestManager.Update();
         AudioCollector.Update();
         CreateDummySpawnPoint();
         

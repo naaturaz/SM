@@ -211,7 +211,7 @@ public class CamRTSController : CamControl
     //void LateUpdate()
     void Update()
     {
-        if (Program.MouseListener.IsAWindowScrollableShownNow())
+        if (Program.MouseListener.IsAWindowScrollableShownNow() || Program.InputMain.IsMainMenuOn())
         {
             return;
         }

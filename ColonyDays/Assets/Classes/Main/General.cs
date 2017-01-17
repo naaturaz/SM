@@ -10,6 +10,15 @@ public class General : MonoBehaviour
 {
     #region Field and Properties 
 
+    string _name;
+
+    public string Name
+    {
+        get { return _name; }
+        set { _name = value; }
+    }
+
+
     private Renderer _renderer;
     public Renderer Renderer1
     {

@@ -11,7 +11,7 @@ public class Naming
 
     private static List<string> _peoplesName = new List<string>();//if is not here then can be assign 
 
-    private int longestName = 10;//longest name lenght
+    private int longestName = 8;//longest name lenght
 
     public Naming(H gender)
     {
@@ -27,14 +27,16 @@ public class Naming
 
     public string NewName()
     {
-        string name = NamingTechnics(_random.Next(0, 2));
+        string name = NamingTechnics(_random.Next(0, 3));
         name = CaseItRight(name);
         name = Capped(name);
 
-        if (!IsNewName(name))
-        { name = NewName(); }
+        //if (!IsNewName(name))
+        //{
+        //    return NewName();
+        //}
 
-        _peoplesName.Add(name);
+        //_peoplesName.Add(name);
         return name;
     }
 
@@ -71,10 +73,82 @@ public class Naming
     string NamingTechnics(int tech)
     {
         if (tech == 1)
-        { return NameMeRealName(); }
-
+        {
+            return NameMeRealName();
+        }
+        if (tech == 2)
+        {
+            return ReplaceOneCharacter();//0
+        }
         return Add2Names();//0
     }
+
+    /// <summary>
+    /// Gets a real name and replace a character on it 
+    /// </summary>
+    /// <returns></returns>
+    string ReplaceOneCharacter()
+    {
+        var real = NameMeRealName();
+        var charPickedIndex = UMath.GiveRandom(1, real.Length);//1 so its always lover case
+        var charP = real.ToCharArray()[charPickedIndex];
+       
+        var newReplacement = 'a';
+
+        if (IsVowel(charP.ToString()))
+	    {
+		     newReplacement = GiveMeRandomVowel();
+	    }
+        else
+        {
+             newReplacement = GiveMeRandomConsonant();
+        }
+
+        return ReplaceLetterInWord(charPickedIndex, real, newReplacement + "");
+    }
+
+    /// <summary>
+    /// The actual replacement of the new consonant or vowel goes on the word
+    /// </summary>
+    /// <param name="index">where the replacement happens</param>
+    /// <param name="original">original word</param>
+    /// <param name="replacement">the new consontnat or vowel</param>
+    /// <returns></returns>
+    string ReplaceLetterInWord(int index, string original, string replacement)
+    {
+        string res = "";
+        for (int i = 0; i < original.Length; i++)
+        {
+            if (index == i)
+            {
+                res += replacement;
+            }
+            else
+            {
+                res += original[i];
+            }
+        }
+        return res;
+    }
+
+    bool IsVowel(string charpass)
+    {
+        var all = "aeiou";
+        return all.Contains(charpass);
+    }
+
+    char GiveMeRandomConsonant()
+    {
+        var bank = "bcdfghjklmnpqrstvwxyz";
+        return bank[UMath.GiveRandom(0, bank.Length)];
+    }
+
+    char GiveMeRandomVowel()
+    {
+        var bank = "aeiou";
+        return bank[UMath.GiveRandom(0, bank.Length)];
+    }
+
 
     string Add2Names()
     {

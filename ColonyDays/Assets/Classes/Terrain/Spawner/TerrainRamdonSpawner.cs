@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class TerrainRamdonSpawner : General {
+public class TerrainRamdonSpawner : Hoverable {
 
     //the tree height 
     //used when a tree is replanted 

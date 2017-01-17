@@ -137,20 +137,12 @@ class TutoWindow : GUIElement
         {
             _currentIndex = -1;
             Hide();
-            Dialog.OKDialog(H.TutoOver);
-            Program.gameScene.GameController1.Dollars += 10000;
-            AudioCollector.PlayOneShot("BoughtLand", 0);
+            //Dialog.OKDialog(H.TutoOver);
+            QuestManager.QuestFinished("Tutorial");
             return;
         }
 
-        //if ("Trade.Tuto" == step)
-        //{
-        //    Program.gameScene.GameController1.Dollars += 1000;
-            
-        //}
-
-        //Program.gameScene.GameController1.Dollars += 1500;
-        //AudioCollector.PlayOneShot("BoughtLand", 0);
+        //QuestManager.QuestFinished("Tutorial");
         Show();
     }
 

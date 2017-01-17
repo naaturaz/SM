@@ -5,7 +5,7 @@ using System.Text;
 using UnityEngine;
 
 
-public class ForSaleRegionGO : General
+public class ForSaleRegionGO : Hoverable
 {
     private int _index;
     private Rect _region;
@@ -53,6 +53,8 @@ public class ForSaleRegionGO : General
         buildingPrev.transform.position = U2D.FromV2ToV3(Region.center);
         
         //MeshController.CrystalManager1.CrystalRegions[Index].StartWithAudioReport();
+        Name = "Buy region";
+        HType = H.BuyRegion;
     }
 
     void Update()
@@ -75,4 +77,19 @@ public class ForSaleRegionGO : General
         Debug.Log(name);
         Dialog.OKCancelDialog(H.BuyRegion);
     }
+
+
+    #region Hover All Objects. All objects that have a collider will be hoverable
+
+    protected void OnMouseEnter()
+    {
+        base.OnMouseEnter();
+    }
+
+    protected void OnMouseExit()
+    {
+        base.OnMouseExit();
+    }
+
+    #endregion
 }

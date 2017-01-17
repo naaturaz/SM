@@ -327,4 +327,20 @@ public class Unit
     {
         return _units;
     }
+
+    internal static bool IsCurrentSystemMetric()
+    {
+        return _units == 'm';
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns></returns>
+    public static float CelsiusToFarenheit(float input)
+    {
+        return (input * 1.8f) + 32;
+    }
+
 }

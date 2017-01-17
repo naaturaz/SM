@@ -25,7 +25,17 @@ public class Tempeture
 
         oldTemp = UMath.GiveRandom(min, max);
 
-        return oldTemp;
+        return ConvertToImperialIfNeeded(oldTemp);
+    }
+
+    static float ConvertToImperialIfNeeded(float curr)
+    {
+        if (!Unit.IsCurrentSystemMetric())
+	    {
+            return Unit.CelsiusToFarenheit(curr);
+	    }
+        return curr;
+
     }
 }
 

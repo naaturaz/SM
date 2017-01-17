@@ -147,4 +147,17 @@ public class HoverWindow : MonoBehaviour
     {
         return _msg;
     }
+
+    public void ShowExplicitThis(Vector3 pos, string key)
+    {
+        AudioCollector.PlayOneShot("ClickWoodSubtle", 0);
+
+        _rectTransform.position = pos;
+
+        _text.text = key;
+        _geometry.SetActive(true);
+
+        diffToMouse = pos - Input.mousePosition;
+        showedAt = Time.time;
+    }
 }

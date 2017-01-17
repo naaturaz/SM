@@ -184,11 +184,9 @@ public class InputMain : InputParent {
 
     public void EscapeKey()
     {
-        var mainMenu = FindObjectOfType<MainMenuWindow>();
-
         //means is playing
         //&& Program.gameScene.GameFullyLoaded() is to not allow touch ESC while is loadig
-        if (mainMenu == null && Program.gameScene.GameFullyLoaded())
+        if (!IsMainMenuOn() && Program.gameScene.GameFullyLoaded())
         {
             if (Program.MouseListener.IsAWindowShownNow())
             {
@@ -207,7 +205,7 @@ public class InputMain : InputParent {
 
         }
         //is on main Menu
-        else if (mainMenu != null && Program.gameScene.GameFullyLoaded())
+        else if (IsMainMenuOn() && Program.gameScene.GameFullyLoaded())
         {
             CamControl.ChangeTo("Game");
 
@@ -218,6 +216,12 @@ public class InputMain : InputParent {
 
             CamControl.CAMRTS.ReportAudioNow();
         }
+    }
+
+    public bool IsMainMenuOn()
+    {
+        var mainMenu = FindObjectOfType<MainMenuWindow>();
+        return mainMenu != null;
     }
 
  

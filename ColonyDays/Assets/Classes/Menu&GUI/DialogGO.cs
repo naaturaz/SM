@@ -93,7 +93,29 @@ class DialogGO : GUIElement
 
 
         AddressBuyRegionType();
+
+        AddressInfoKeyedDialog();
+        AddressCompleteQuest();
     }
+
+    private void AddressInfoKeyedDialog()
+    {
+        if (_type != H.InfoKey)
+        {
+            return;
+        }
+        _textHere.text = Languages.ReturnString(Str1);
+    }
+
+    private void AddressCompleteQuest()
+    {
+        if (_type != H.CompleteQuest)
+        {
+            return;
+        }
+        _textHere.text = String.Format(Languages.ReturnString(Type1+""), Str1);
+    }
+
 
     private void AddressBuyRegionType()
     {
