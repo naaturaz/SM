@@ -1185,8 +1185,11 @@ public class Building : Hoverable, Iinfo
             HideBuildingPrev();
             DestroyCool();
             Program.MouseListener.HideAllWindows();
+            ManagerReport.AddInput("Building Canceled: " + transform.name);
             return;
         }
+
+        ManagerReport.AddInput("Building Placed: " + transform.name);
 
         LayerRoutine("done");
         PositionFixed = true;
@@ -3385,10 +3388,13 @@ public class Building : Hoverable, Iinfo
         if (action == "Less")
         {
             _maxPeople--;
+            ManagerReport.AddInput("Less workers on: " + transform.name + ". now:" + _maxPeople);
+
         }
         else if (action == "More" && MyText.Lazy() > 0)
         {
             _maxPeople++;
+            ManagerReport.AddInput("More workers on: " + transform.name + ". now:" + _maxPeople);
         }
 
         if (_maxPeople < 0)
@@ -3401,7 +3407,6 @@ public class Building : Hoverable, Iinfo
         }
 
         UpdateWorkersRoutine();
-
         return _maxPeople + "";
     }
 

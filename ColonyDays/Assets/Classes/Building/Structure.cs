@@ -411,7 +411,11 @@ public class Structure : StructureParent
         //if is a house need to know 
         if (MyId.Contains("House") || MyId.Contains("Bohio"))
         {
-            if (BuildingPot.Control.HowManyEmptyFamilies() >= Families.Length)
+            var empty = CurrentStage == 4 && Families[0].IsFamilyEmpty();
+            var space = CurrentStage == 4 && !Families[0].IsFamilyEmpty() &&
+                BuildingPot.Control.HowManyEmptyFamilies() > 0;
+
+            if (CurrentStage != 4 || empty || space)
             {
                 StartDemolishProcess();
             }

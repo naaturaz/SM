@@ -185,7 +185,7 @@ public class MouseListener : InputMain
 
         if (clicked != null)
         {
-            print("Clicked:" + clicked.name);
+            ManagerReport.AddInput("Selected person: " + clicked.name);
 
             _personSelect = clicked.GetComponent<Person>();
             _personWindow.Show(_personSelect);
@@ -227,6 +227,7 @@ public class MouseListener : InputMain
                 H typeL = Program.InputMain.InputMouse.FindType(names[i]);
                 Ca cat = DefineCategory(typeL);
                 Program.InputMain.InputMouse.Select(cat, names[i]);
+                ManagerReport.AddInput("Selected building: " + names[i]);
 
                 if (BuildingPot.Control.Registro.SelectBuilding != null)
                 {

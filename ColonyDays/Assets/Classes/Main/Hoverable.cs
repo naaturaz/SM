@@ -33,9 +33,12 @@ public class Hoverable : General
         {
             return;
         }
+        if (Program.MouseListener.IsAWindowShownNow() || Program.InputMain.IsMainMenuOn())
+        {
+            return;
+        }
 
         PublicSpawnHelp();
-
     }
 
     protected void OnMouseExit()
@@ -70,10 +73,12 @@ public class Hoverable : General
         {
             hoverWindow.ShowExplicitThis(pos, Name);
         }
-        else
+        //bz if more than 6 he know how to build already 
+        else if (transform.name == "Construction" && BuildingPot.Control.Registro.AllBuilding.Count < 8)
         {
             hoverWindowMed.Show(pos, transform.name);
         }
+     
     }
 
     /// <summary>

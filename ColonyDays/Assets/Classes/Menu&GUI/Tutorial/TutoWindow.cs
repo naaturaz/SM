@@ -131,6 +131,7 @@ class TutoWindow : GUIElement
             return;
         }
 
+        ManagerReport.AddInput("Tuto.Step.Achieved:" + _steps[_currentIndex]);
         _currentIndex++;
 
         if (_currentIndex >= _steps.Count)
@@ -138,10 +139,10 @@ class TutoWindow : GUIElement
             _currentIndex = -1;
             Hide();
             //Dialog.OKDialog(H.TutoOver);
+            ManagerReport.AddInput("Tutorial.Done:");
             QuestManager.QuestFinished("Tutorial");
             return;
         }
-
         //QuestManager.QuestFinished("Tutorial");
         Show();
     }

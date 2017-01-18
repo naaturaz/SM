@@ -389,7 +389,7 @@ public class CamRTSController : CamControl
 
     private void AssignPosTo(Dir dir = Dir.None)
     {
-        dir = FilterNorthAndSouth(dir);
+        //dir = BlockNorthAndSouth(dir);
 
         Vector3 newPos = MoveLocalDealer(centerTarget.transform, dir);
         centerTarget.transform.position = miniMapRTS.ConstrainLimits(newPos);
@@ -400,7 +400,7 @@ public class CamRTSController : CamControl
     /// </summary>
     /// <param name="dir"></param>
     /// <returns></returns>
-    Dir FilterNorthAndSouth(Dir dir)
+    Dir BlockNorthAndSouth(Dir dir)
     {
         if (dir == Dir.N || dir == Dir.Up)
         {

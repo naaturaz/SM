@@ -40,6 +40,7 @@ public class FinalReport
     public string ScreenSize;
     public int InitialRegionIndex;
     public H TypeOfGame;
+    public int Quality;
 
     public  void FinishReport(string addName = "")
     {
@@ -80,9 +81,10 @@ public class FinalReport
         AverageSpeed = (float)tempSpeedTtl/Speed.Count;
 
         Difficulty = PersonPot.Control.Difficulty;
-        ScreenSize = "Screen: Height: " + Screen.height + ". Width" + Screen.width;
+        ScreenSize = " Screen: Width: " + Screen.width + ". Height: " + Screen.height;
         InitialRegionIndex = MeshController.CrystalManager1.InitialRegionIndex;
         TypeOfGame = Program.TypeOfGame;
+        Quality = QualitySettings.GetQualityLevel();
     }
 
     public void AddInput(string add)

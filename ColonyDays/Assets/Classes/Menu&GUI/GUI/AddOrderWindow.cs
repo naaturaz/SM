@@ -298,6 +298,11 @@ public class AddOrderWindow : GUIElement {
     /// <param name="feed"></param>
     public void FeedFromForm(string feed)
     {
+        if (!IsShownNow())//bz amt is being called all the time from the keyboard 
+        {
+            return;
+        }
+
         //remove the 'AddOrder.'
         var sub = feed.Substring(9);
 

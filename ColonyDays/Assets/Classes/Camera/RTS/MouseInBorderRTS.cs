@@ -4,6 +4,8 @@ public class MouseInBorderRTS : GenericCameraComponent {
 
     public static Dir GlobalDir;
     private int gUIsize = 10;
+    private int gUIsizeUpDown = 5;//
+
 
     private int cornerSize = 3;
 
@@ -33,8 +35,8 @@ public class MouseInBorderRTS : GenericCameraComponent {
         direction = Dir.None;
 
         //create single dir rectagles
-        var recdown = new Rect(0, 0, Screen.width, gUIsize);
-        var recup = new Rect(0, Screen.height - gUIsize, Screen.width, gUIsize);
+        var recdown = new Rect(0, 0, Screen.width, gUIsizeUpDown);
+        var recup = new Rect(0, Screen.height - gUIsizeUpDown, Screen.width, gUIsizeUpDown);
         var recleft = new Rect(0, 0, gUIsize, Screen.height);
         var recright = new Rect(Screen.width - gUIsize, 0, gUIsize, Screen.height);
 

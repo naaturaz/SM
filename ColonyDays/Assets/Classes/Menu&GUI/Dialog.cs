@@ -178,8 +178,13 @@ public class Dialog
     /// 
     /// </summary>
     /// <param name="type"></param>
-    public static string CreateFile(string type, string text)
+    public static void CreateFile(string type, string text)
     {
+        if (string.IsNullOrEmpty(text))
+        {
+            return;
+        }
+
         ManagerReport.AddNewText(type, text);
 
         var nameFile =
@@ -193,8 +198,6 @@ public class Dialog
         File.WriteAllText(path, FileHeader()  + text);
 
         LogUploader.UploadDirectToAWSCarlos(path);
-
-        return path;
     }  
     
     public static string UploadXMLFile(string type, FinalReport report)
