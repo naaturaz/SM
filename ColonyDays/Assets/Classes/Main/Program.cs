@@ -104,11 +104,11 @@ public class Program : MonoBehaviour {
     private void ProfilerHere()
     {
         // write FPS to "profilerLog.txt"
-        Profiler.logFile = Application.persistentDataPath + "/profilerLog.txt";
+        UnityEngine.Profiling.Profiler.logFile = Application.persistentDataPath + "/profilerLog.txt";
 
         // write Profiler Data to "profilerLog.txt.data"                                                                                        
-        Profiler.enableBinaryLog = true;
-        Profiler.enabled = true;
+        UnityEngine.Profiling.Profiler.enableBinaryLog = true;
+        UnityEngine.Profiling.Profiler.enabled = true;
     }
 
     

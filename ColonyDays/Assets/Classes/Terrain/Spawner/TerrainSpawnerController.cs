@@ -16,12 +16,12 @@ public class TerrainSpawnerController : ControllerParent
     //UNITY EDITOR ManualStart()
     private int multiplier = 40;//80  
 
-    int howManyTreesToSpawn = 30;//20    50
+    int howManyTreesToSpawn = 80;//30  20    50
     int howManyStonesToSpawn = 1;//3
     int howManyIronToSpawn = 1;//3
     int howManyGoldToSpawn = 1;//3
-    int howManyOrnaToSpawn = 30;//30    50      20
-    int howManyGrassToSpawn = 20;//40
+    int howManyOrnaToSpawn = 0;//30  
+    int howManyGrassToSpawn = 0;//20  40
     //the ones spawn in the marine bounds 
     int howManyMarineBoundsToSpawn = 1;//1
     int howManyMountainBoundsToSpawn = 0;//
@@ -820,7 +820,7 @@ public class TerrainSpawnerController : ControllerParent
             }
             else//the first teraain to load 
             {
-                spawnedData = XMLSerie.ReadXMLSpawned(true);//true once Terrain.Spawned is created  
+                spawnedData = XMLSerie.ReadXMLSpawned();//true once Terrain.Spawned is created  
 
                 if (spawnedData == null)
                 {

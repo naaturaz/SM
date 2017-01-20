@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Selection : General {
+public class SelectionGO : General {
 
     int _indexAllVertex;
 
@@ -23,13 +23,13 @@ public class Selection : General {
 
     public int AllVertexIndex;//this is the correspondent allvertex index
 
-    static public Selection CreateSelection(string root, Vector3 origen, int indexAllVertex,
+    static public SelectionGO CreateSelection(string root, Vector3 origen, int indexAllVertex,
        string name = "", Transform container = null)
     {
         WAKEUP = true;
-        Selection obj = null;
-        obj = (Selection)Resources.Load(root, typeof(Selection));
-        obj = (Selection)Instantiate(obj, origen, Quaternion.identity);
+        SelectionGO obj = null;
+        obj = (SelectionGO)Resources.Load(root, typeof(SelectionGO));
+        obj = (SelectionGO)Instantiate(obj, origen, Quaternion.identity);
         if (name != "") { obj.name = name; }
         if (container != null) { obj.transform.SetParent( container); }
         obj.IndexAllVertex = indexAllVertex;

@@ -11,7 +11,7 @@ public class InputMeshSpawn : InputParent {
 
     //contains the elements that are selected to be mined
     private List<TerrainRamdonSpawner> toMineSelectList = new List<TerrainRamdonSpawner>();
-    List<Selection> currentMineVisHelp = new List<Selection>();
+    List<SelectionGO> currentMineVisHelp = new List<SelectionGO>();
 
     public List<TerrainRamdonSpawner> ToMineSelectList
     {
@@ -114,7 +114,7 @@ public class InputMeshSpawn : InputParent {
         if (isToAdd)
         {
             //print(obj.name + " added to selection");
-            currentMineVisHelp.Add(Selection.CreateSelection(Root.selectMine1, obj.transform.position, obj.IndexAllVertex,
+            currentMineVisHelp.Add(SelectionGO.CreateSelection(Root.selectMine1, obj.transform.position, obj.IndexAllVertex,
                obj.name + " Selection", container: transform));
         }
         else if (!isToAdd && currentMineVisHelp.Count > 0)
