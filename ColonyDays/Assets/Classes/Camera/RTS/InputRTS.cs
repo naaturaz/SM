@@ -28,6 +28,11 @@ public class InputRTS : GenericCameraComponent
     // Update is called once per frame
     void LateUpdate()
     {
+        if (Program.MouseListener.IsAWindowShownNow() || CamControl.IsMainMenuOn())
+        {
+            return;
+        }
+
         if (!_isFollowingPersonNow && BuildingPot.InputMode == Mode.None)
         { CheckIfKeyWasPressed(); }
 

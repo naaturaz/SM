@@ -81,6 +81,8 @@ public class QuestManager
 
     public static void Update()
     {
+        return;
+
         if (_lastCompleted < 0)
         {
             return;

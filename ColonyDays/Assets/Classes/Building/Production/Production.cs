@@ -292,7 +292,9 @@ public class Production  {
 
     private void FieldFarm()
     {
-        List<H> listH = new List<H>() { H.FieldFarmSmall, H.FieldFarmMed, H.FieldFarmLarge, H.FieldFarmXLarge };
+        List<H> listH = new List<H>() { H.FieldFarmSmall, H.FieldFarmMed, 
+            //H.FieldFarmLarge, H.FieldFarmXLarge
+        };
 
         InputProdCheckAndAdd(new ProductInfo(P.Bean, null, listH));
         InputProdCheckAndAdd(new ProductInfo(P.Corn, null, listH));

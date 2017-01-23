@@ -589,7 +589,7 @@ public class Person : Hoverable
     public void InitObj(int iniAge)
     {
         Age = iniAge;
-        Name = BuildRandomName();
+        Name = GiveMeMyName();
 
         _lifeLimit = GiveRandom(75, 85);//        40
         MyId = Name + "." + Id;
@@ -658,15 +658,30 @@ public class Person : Hoverable
         transform.name = MyId + "...|" + Age + "|" + Gender;
     }
 
-    private string BuildRandomName()
+
+    /// <summary>
+    /// Static so they respect not repeating names 
+    /// </summary>
+    static Naming namingMale = new Naming(H.Male);
+    static Naming namingFeMale = new Naming(H.Female);
+
+    string GiveMeMyName()
     {
-        Naming n = new Naming(Gender);
-        return n.NewName();
+        if (Gender == H.Male)
+        {
+            return namingMale.NewName();
+        }
+        return namingFeMale.NewName();
     }
 
+
+    /// <summary>
+    /// Used by crystals and other to get an unique ID
+    /// </summary>
+    /// <returns></returns>
     public static string GiveRandomID()
     {
-        Naming n = new Naming(H.Female);
+        Naming n = new Naming(H.Male);
         int numb = GiveRandom(0, 10000);
         return n.NewName() + "." + numb;
     }

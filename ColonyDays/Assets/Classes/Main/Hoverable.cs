@@ -33,7 +33,7 @@ public class Hoverable : General
         {
             return;
         }
-        if (Program.MouseListener.IsAWindowShownNow() || Program.InputMain.IsMainMenuOn())
+        if (Program.MouseListener.IsAWindowShownNow() || CamControl.IsMainMenuOn())
         {
             return;
         }
@@ -68,7 +68,7 @@ public class Hoverable : General
 
         if (HType == H.Person ||
             Category == Ca.Structure || Category == Ca.Shore || Category == Ca.Way ||
-            Category == Ca.Spawn ||
+            //Category == Ca.Spawn ||
             HType == H.BuyRegion)
         {
             hoverWindow.ShowExplicitThis(pos, Name);

@@ -317,7 +317,7 @@ public class Languages
        { "TutoOver", "Your reward is $10,000. The tutorial is over now you can keep playing this game or start a new one."},
 
        //Tuto
-       { "CamMov.Tuto", "Tutorial: Step1: Use [WASD] or arrow keys to move the Camera."},
+       { "CamMov.Tuto", "Tutorial completion reward is $10,000. Step1: Use [WASD] or arrow keys to move the Camera."},
        { "CamMov5x.Tuto", "Use [WASD] or arrow keys and keep press the 'Left Shift' key to move the Camera 5 times quicker."},
        { "CamRot.Tuto", "Now press the scroll wheel down on your mouse and move your mouse to rotate the Camera."},
        { "CamHeaven.Tuto", "Scroll back with your mouse middle button until the camera reaches"

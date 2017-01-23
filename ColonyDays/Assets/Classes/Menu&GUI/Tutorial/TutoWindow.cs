@@ -138,7 +138,13 @@ class TutoWindow : GUIElement
         {
             _currentIndex = -1;
             Hide();
-            //Dialog.OKDialog(H.TutoOver);
+            
+            //temporal
+            Dialog.OKDialog(H.TutoOver);
+            Program.gameScene.GameController1.Dollars += 10000;
+            AudioCollector.PlayOneShot("BoughtLand", 0);
+
+            
             ManagerReport.AddInput("Tutorial.Done:");
             QuestManager.QuestFinished("Tutorial");
             return;

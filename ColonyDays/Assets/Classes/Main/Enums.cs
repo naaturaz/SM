@@ -244,7 +244,8 @@ public enum H
     //farming F3
     //Farm, this farm removed is the draggable farm 
     AnimalFarmSmall, AnimalFarmMed, AnimalFarmLarge, AnimalFarmXLarge,
-    FieldFarmSmall, FieldFarmMed, FieldFarmLarge, FieldFarmXLarge,
+    FieldFarmSmall, FieldFarmMed,
+    // FieldFarmLarge, FieldFarmXLarge, blockin the game, when they are selected 
     FishingHut,
     //raw F4
     LumberMill, Clay, ShoreMine,
@@ -458,7 +459,8 @@ public enum StFarm
 {
     //Farm,
     AnimalFarmSmall, AnimalFarmMed, AnimalFarmLarge, AnimalFarmXLarge,
-    FieldFarmSmall, FieldFarmMed, FieldFarmLarge, FieldFarmXLarge,
+    FieldFarmSmall, FieldFarmMed, 
+    //FieldFarmLarge, FieldFarmXLarge,
     FishingHut, 
 }
 

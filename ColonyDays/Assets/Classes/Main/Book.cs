@@ -88,8 +88,8 @@ public class Book : General
 
         Build.Add(new BuildStat(H.FieldFarmSmall, 100, .5f, 0, 0,  maxPeople: 2, capacity: 1));
         Build.Add(new BuildStat(H.FieldFarmMed, 200, .75f, 0, 0,  maxPeople: 4, capacity: 1));
-        Build.Add(new BuildStat(H.FieldFarmLarge, 300, .9f, 0, 0,  maxPeople: 6, capacity: 2));
-        Build.Add(new BuildStat(H.FieldFarmXLarge, 1000, 5, 0, 0,  maxPeople: 9, capacity: 3));
+        //Build.Add(new BuildStat(H.FieldFarmLarge, 300, .9f, 0, 0,  maxPeople: 6, capacity: 2));
+        //Build.Add(new BuildStat(H.FieldFarmXLarge, 1000, 5, 0, 0,  maxPeople: 9, capacity: 3));
 
         //Raw
         Build.Add(new BuildStat(H.Mortar, 1000, 15, 5, 15, 5, maxPeople: 5, capacity: 160));

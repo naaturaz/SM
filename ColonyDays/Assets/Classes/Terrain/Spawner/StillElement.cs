@@ -27,7 +27,8 @@ public class StillElement : TerrainRamdonSpawner
     List<Vector3> _anchors = new List<Vector3>();
 
     private GameObject _billBoardGO;
-    private List<GameObject> _collObjects = new List<GameObject>();//for palms 
+    private List<GameObject> _collObjects = new List<GameObject>();//for palms
+    float _startTime;
 
     public List<Vector3> Anchors
     {
@@ -67,6 +68,7 @@ public class StillElement : TerrainRamdonSpawner
             return;
 	    }
 	    _hasStart = true;
+        _startTime = Time.time;
 
 	    _billBoardGO = GetChildThatContains("Billboard", gameObject);
 
@@ -296,9 +298,33 @@ public class StillElement : TerrainRamdonSpawner
 	protected void Update () 
     {
         CheckIfCanGrow();
-	    CheckIfWasDestroyAndPlayedFullAnimation();
+        CheckIfWasDestroyAndPlayedFullAnimation();
 
         CouldGrowPlantNow();
+
+        MakeInactiveWhenNeeded();
+    }
+
+    /// <summary>
+    /// Will make it inactive if is not being used for Performance 
+    /// </summary>
+    private void MakeInactiveWhenNeeded()
+    {
+        if (SeedDate != null || _destroyElement || _amtToGrow > 0)
+        {
+            return;
+        }
+
+        if (this.enabled && Time.time > _startTime + 5)
+        {
+            this.enabled = false;
+            //Debug.Log(MyId + " went to sleep");
+        }
+    }
+
+    protected void UpdateTree()
+    {
+
     }
 
     private void CheckIfWasDestroyAndPlayedFullAnimation()
@@ -442,6 +468,11 @@ public class StillElement : TerrainRamdonSpawner
     /// <param name="ProdXShift"></param>
     internal void RemoveWeight(float ProdXShift, Person pers)
     {
+        if (!this.enabled)
+        {
+            this.enabled = true;
+        }
+
         CheckIfTreeMustBeCut();
         _weight -= ProdXShift;
         
@@ -634,15 +665,15 @@ public class StillElement : TerrainRamdonSpawner
 
     #region Hover All Objects. All objects that have a collider will be hoverable
 
-    protected void OnMouseEnter()
-    {
-        base.OnMouseEnter();
-    }
+    //protected void OnMouseEnter()
+    //{
+    //    base.OnMouseEnter();
+    //}
 
-    protected void OnMouseExit()
-    {
-        base.OnMouseExit();
-    }
+    //protected void OnMouseExit()
+    //{
+    //    base.OnMouseExit();
+    //}
 
     #endregion
 }

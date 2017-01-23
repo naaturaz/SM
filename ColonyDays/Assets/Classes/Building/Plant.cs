@@ -122,6 +122,8 @@ public class Plant : General
 
         transform.name = "";//so it renames 
         DefineNameAndMyID();
+        
+        //re add
         _fieldFarm.BatchAdd(this);
     }
 

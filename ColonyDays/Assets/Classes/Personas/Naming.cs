@@ -31,12 +31,12 @@ public class Naming
         name = CaseItRight(name);
         name = Capped(name);
 
-        //if (!IsNewName(name))
-        //{
-        //    return NewName();
-        //}
+        if (!IsNewName(name))
+        {
+            return NewName();
+        }
 
-        //_peoplesName.Add(name);
+        _peoplesName.Add(name);
         return name;
     }
 

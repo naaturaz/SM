@@ -49,6 +49,11 @@ public class CamControl : MonoBehaviour
         }
     }
 
+    public static bool IsMainMenuOn()
+    {
+        return currentCam == "Main";
+    }
+
     private static string currentCam = "Main";//bz is the first camera on
     public static void ChangeTo(string newVal)
     {

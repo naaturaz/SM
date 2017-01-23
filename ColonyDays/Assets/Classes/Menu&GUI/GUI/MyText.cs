@@ -139,6 +139,12 @@ public class MyText : MonoBehaviour
             Map();
         }
 
+        if (reMapCount %2 != 0)
+        {
+            return;
+        }
+
+
         if (name == "Date")
         {
             thisText.text = Program.gameScene.GameTime1.MonthFormat() + " "

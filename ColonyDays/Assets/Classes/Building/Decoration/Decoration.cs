@@ -47,7 +47,7 @@ public class Decoration  {
     void B4Init(Building build)
     {
         _building = build;
-        for (int i = 1; i < 24 + 1; i++)
+        for (int i = 1; i < 10 + 1; i++)
         {
             _roots.Add("Prefab/Terrain/Spawner/Orna/Orna" + i);
         }
