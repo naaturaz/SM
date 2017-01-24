@@ -17,7 +17,7 @@ public class Dialog
 
     public static void Start()
     {
-        
+
     }
 
     public static void OKCancelDialog(H type)
@@ -26,16 +26,16 @@ public class Dialog
 
         _type = type;
         _dialogGo = DialogGO.Create(Root.dialogOKCancel, _canvas, _middleOfScreen, _type);
-    }  
-    
+    }
+
     public static void OKDialog(H type, string str1 = "")
     {
         RoutineSetUp();
 
         _type = type;
         _dialogGo = DialogGO.Create(Root.dialogOK, _canvas, _middleOfScreen, _type, str1);
-    }   
-    
+    }
+
     public static void InputFormDialog(H type, string str1 = "")
     {
         RoutineSetUp();
@@ -45,6 +45,14 @@ public class Dialog
         if (type == H.Invitation)
         {
             _dialogGo = DialogGO.Create(Root.inputFormDialogInvitation, _canvas, _middleOfScreen, _type, str1);
+        }
+        else if (type == H.OptionalFeedback)
+        {
+            _dialogGo = DialogGO.Create(Root.inputFormOptionalFeedBack, _canvas, _middleOfScreen, _type, str1);
+        }
+        else if (type == H.MandatoryFeedback)
+        {
+            _dialogGo = DialogGO.Create(Root.mandatoryFeedBack, _canvas, _middleOfScreen, _type, str1);
         }
         else
         {
@@ -70,11 +78,11 @@ public class Dialog
             else if (_type == H.DeleteDialog)
             {
                 DataController.DeleteNow();
-            } 
+            }
             else if (_type == H.GameOverPirate)
             {
                 Program.InputMain.EscapeKey();
-            } 
+            }
             else if (_type == H.BuyRegion)
             {
                 MeshController.BuyRegionManager1.CurrentRegionBuy();
@@ -95,15 +103,25 @@ public class Dialog
             }
             else if (_type == H.Negative)
             {
-                
+
             }
-            else if(_type == H.CompleteQuest)
+            else if (_type == H.CompleteQuest)
             {
                 QuestManager.QuestCompletedAcknowled();
             }
         }
-
+        //cant create dialog b4 bz will get destroyed 
         DestroyCurrDialog();
+
+        //after destroy
+        if (sub == "OKBtn")
+        {
+            if (_type == H.Feedback || _type == H.BugReport)
+            {
+                Dialog.OKDialog(H.Info, "Done! Thank you :)");
+            }
+        }
+
     }
 
 
@@ -126,7 +144,7 @@ public class Dialog
         DestroyCurrDialog();
 
         RefindCanvas();
-        RedoMiddleOfScreen();    
+        RedoMiddleOfScreen();
     }
 
     /// <summary>
@@ -134,7 +152,7 @@ public class Dialog
     /// </summary>
     public static void RedoMiddleOfScreen()
     {
-        _middleOfScreen = new Vector3(Screen.width/2, Screen.height/2, 0);
+        _middleOfScreen = new Vector3(Screen.width / 2, Screen.height / 2, 0);
     }
 
     static void RefindCanvas()
@@ -195,11 +213,11 @@ public class Dialog
 
         var path = Application.dataPath + "/" + nameFile;
         Debug.Log(path);
-        File.WriteAllText(path, FileHeader()  + text);
+        File.WriteAllText(path, FileHeader() + text);
 
         LogUploader.UploadDirectToAWSCarlos(path);
-    }  
-    
+    }
+
     public static string UploadXMLFile(string type, FinalReport report)
     {
         var nameFile =
@@ -224,15 +242,15 @@ public class Dialog
     private static string FileHeader()
     {
         return
-            
+
             "User: " + SteamFriends.GetPersonaName() + "" +
             "ID: " + SteamUser.GetSteamID() + "\n\n" +
 
-            "Current Version: " + GameScene.VersionLoaded() 
+            "Current Version: " + GameScene.VersionLoaded()
 
             + "\n" +
-            "Now Time: " + DateTime.Now.ToLongDateString() + " - " 
-            +DateTime.Now.ToLongTimeString() +
+            "Now Time: " + DateTime.Now.ToLongDateString() + " - "
+            + DateTime.Now.ToLongTimeString() +
             "\n" +
             "___________________________________________" +
             "\n\n";

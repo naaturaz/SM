@@ -128,7 +128,8 @@ public class Languages
 	   { "BuyRegion.WithMoney", "Are you sure want to buy this region."},
 	   { "BuyRegion.WithOutMoney", "Sorry, you can't afford this now."},
 	   { "Feedback", "Feedback!? Awesome...:) Thanks. 8) "},
-	   { "OptionalFeedback", "wait... before you leave... one sentence of feedback would be awesome!"},
+	   { "OptionalFeedback", "Feedback is crucial. Pls drop a word"},
+	   { "MandatoryFeedback", "Only the dev team will see this. Your rate is?"},
 
 	   { "BugReport", "Caught a bug? uhmm yummy.... Send it this way!! Thanks"},	  
        { "Invitation", "Your friend's email for a chance to join the Private Beta"},  

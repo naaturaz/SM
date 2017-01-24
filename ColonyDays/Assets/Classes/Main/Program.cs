@@ -92,6 +92,7 @@ public class Program : MonoBehaviour {
         MouseListener.Start();
 
         ManagerReport.Start();
+        AudioCollector.RedoGame();
 	}
 
     private void OnApplicationQuit()

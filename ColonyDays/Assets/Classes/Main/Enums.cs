@@ -419,6 +419,7 @@ public enum H
     OptionalFeedback,
     InfoKey,
     CompleteQuest,
+    MandatoryFeedback,
 
 
 }
@@ -616,8 +617,8 @@ public enum Ron2
 {
     Library, TradesSchool, 
     Dock, StorageSmall,
-    BridgeRoad, GunPowder, Armory, Tailor, Pottery,
-
+    BridgeRoad, 
+    GunPowder, Armory, Tailor, Pottery,
     CoinStamp, Chocolate, Distillery, Foundry, Printer, Cigars, Ink,
     //QuickLime
 }

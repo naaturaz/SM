@@ -550,7 +550,10 @@ public class TerrainSpawnerController : ControllerParent
         }
         else
         {
-            Program.gameScene.BatchAdd(temp);
+            if (typePass != H.Grass)
+            {
+                Program.gameScene.BatchAdd(temp);
+            }
             AllRandomObjList.Add(temp);
         }
 

@@ -287,6 +287,7 @@ public class AudioCollector
         return plsFolders + key;
     }
 
+    static bool _peopleVoiceStarted;
     public static void Update()
     {
         StartRoots();
@@ -296,6 +297,25 @@ public class AudioCollector
         {
             ExecuteReport();
         }
+
+        if (!_peopleVoiceStarted && Program.gameScene.GameWasFullyLoadedAnd10SecAgo()
+            && info.Count == 0)
+        {
+            InitInfoList();
+            //AudioPlayer.InitSoundsLib();
+        }
+
+        if (!_peopleVoiceStarted && Program.gameScene.GameWasFullyLoadedAnd10SecAgo()
+           )
+        {
+            _peopleVoiceStarted = true;
+            AudioPlayer.InitSoundsLib();
+        }
+    }
+
+    public static void RedoGame()
+    {
+        _peopleVoiceStarted = false;
     }
 
     public static void SpawnASound(KeyValuePair<string, string> item)
@@ -445,10 +465,10 @@ public class AudioCollector
     /// <param name="p"></param>
     public static void PlayPersonVoice(Person p)
     {
-        if (info.Count == 0)
-        {
-            InitInfoList();
-        }
+        //if (info.Count == 0)
+        //{
+        //    InitInfoList();
+        //}
 
         if (p.Gender == H.Male)
         {
@@ -518,6 +538,8 @@ public class AudioCollector
             return;
         }
 
+        _peopleVoiceStarted = true;
+
         infoIndex = 0;
 
 #if UNITY_EDITOR
@@ -541,6 +563,8 @@ public class AudioCollector
         _manList = info.Where(a => a.Contains("Man") && a.Contains(Languages.CurrentLang())).ToList();
         _womanList = info.Where(a => a.Contains("Woman") && a.Contains(Languages.CurrentLang())).ToList();
         _boyList = info.Where(a => a.Contains("Boy") && a.Contains(Languages.CurrentLang())).ToList();
+
+        InitInfoList();
     }
 
     private static void SaveOnProgramData(List<string> waves)

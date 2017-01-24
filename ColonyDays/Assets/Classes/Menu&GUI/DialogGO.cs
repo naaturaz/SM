@@ -67,6 +67,12 @@ class DialogGO : GUIElement
 
         _textHere.text = Languages.ReturnString(Type1+"") + Str1;
 
+        //doesnt have any of below
+        if (Type1 == H.MandatoryFeedback)
+        {
+            return;
+        }
+
         _okBtnGO = GetChildCalled("Ok_Btn");
         _ok = _okBtnGO.GetComponent<UnityEngine.UI.Button>();
 
@@ -91,9 +97,7 @@ class DialogGO : GUIElement
             _inputTextEmail2 = email2.GetComponent<InputField>();
         }
 
-
         AddressBuyRegionType();
-
         AddressInfoKeyedDialog();
         AddressCompleteQuest();
     }
@@ -191,6 +195,23 @@ class DialogGO : GUIElement
 
 
 
+    /// <summary>
+    /// Called from GUI
+    /// </summary>
+    /// <param name="add"></param>
+    public void AddToInput(string add)
+    {
+        _inputText.text += add + ". \n";
+    }
 
 
+    /// <summary>
+    /// Called from GUI
+    /// </summary>
+    /// <param name="add"></param>
+    public void ThumbsCall(string add)
+    {
+        Dialog.CreateFile("MandatoryFeedBack", add);
+        Program.MouseClickListenerSt("Dialog.OKBtn");
+    }
 }

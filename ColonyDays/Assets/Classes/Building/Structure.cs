@@ -167,7 +167,7 @@ public class Structure : StructureParent
                 Program.gameScene.TutoStepCompleted("Dock.Placed.Tuto");
             }
 
-            float howBigTheCollidingSphere = 11f;
+            float howBigTheCollidingSphere = 10f;
 
             if (!IsLoadingFromFile)
             {

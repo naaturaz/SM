@@ -51,7 +51,7 @@ public class AudioPlayer  {
     }
 
 
-    static void InitSoundsLib()
+    public static void InitSoundsLib()
     {
         var root = "C:/GitHub/SM/ColonyDays/Assets/Resources/Prefab/Audio/Sound/";
         var waves = new List<string>();
@@ -147,10 +147,11 @@ public class AudioPlayer  {
         {
             return;
         }
-        if (_soundsLib.Count == 0)
-        {
-            InitSoundsLib();
-        }
+
+        //if (_soundsLib.Count == 0)
+        //{
+        //    InitSoundsLib();
+        //}
 
         var type = TreatType(hTypeP, currProd);
         if (_sounds.ContainsKey(type))

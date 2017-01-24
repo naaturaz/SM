@@ -287,10 +287,12 @@ public class Root : MonoBehaviour
     public static string dialogOKCancel = "Prefab/Menu/DialogOKCancel";
     public static string dialogOK = "Prefab/Menu/DialogOK";
     public static string inputFormDialog = "Prefab/Menu/InputFormDialog";
-    public static string inputFormDialogBeforeExit = "Prefab/Menu/InputFormDialogBeforeExit";
+
+    public static string inputFormOptionalFeedBack = "Prefab/Menu/InputFormOptionalFeedBack";
 
     public static string inputFormDialogInvitation = "Prefab/Menu/InputFormDialogInvitation";
 
+    public static string mandatoryFeedBack = "Prefab/Menu/MandatoryFeedBack";
 
 
 
