@@ -90,6 +90,7 @@ public class AddOrderWindow : GUIElement {
     public void Show(string val)
     {
         _orderType = val;
+        _inputAmt.text = "";
 
         LoadMenu();
 
@@ -219,6 +220,12 @@ public class AddOrderWindow : GUIElement {
         if (_orderType == "Export")
         {
             dockBuild.Dock1.Export(new Order(_prodSelect, "Ship", _amt));
+
+
+            if (_prodSelect == P.Bean && _amt == 300)
+            {
+                QuestManager.QuestFinished("Export");
+            }
         }
         else if (_orderType == "Import")
         {

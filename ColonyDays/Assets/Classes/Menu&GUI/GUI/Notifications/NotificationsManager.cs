@@ -109,6 +109,11 @@ public class NotificationsManager
         Program.MouseListener.NotificationWindow.Notify(which);
     }
 
+    /// <summary>
+    /// When something needs to be specify
+    /// </summary>
+    /// <param name="which"></param>
+    /// <param name="addP"></param>
     internal void Notify(string which, string addP)
     {
         if (Program.MouseListener.NotificationWindow == null || Program.MyScreen1.IsMainMenuOn())

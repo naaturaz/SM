@@ -263,6 +263,9 @@ public class Languages
        { "NoInput.Noti.Name", "At least an input is missing in building"},
 	   { "NoInput.Noti.Desc", "A building cannot produce {0} because is missing at least one input"},
 
+       { "Built.Noti.Name", "A building has being built"},
+	   { "Built.Noti.Desc", "{0} has being fully built"},
+
        { "cannot produce", "cannot produce"},
 
 
@@ -368,10 +371,23 @@ public class Languages
 
        //Quest
        { "Tutorial.Quest", "Quest: Finish the tutorial. Reward $10,000. It takes roughly 3 minutes to complete"},
-       { "SmallFarm.Quest", "Quest: Build a small farm. Reward $5,000. You need farms to feed your people"},
-       { "Bohio.Quest", "Quest: Build a bohio. Reward $2,000. This are cheap houses. When people turn 16 they will move to a free house if found"},
+       
+       { "Bohio.Quest", "Quest: Build a bohio. This are cheap houses. When people turn 16 they will move to a free house if found"},
+       { "SmallFarm.Quest", "Quest: Build a FieldFarmSmall. You need farms to feed your people"},
+       { "FarmHire.Quest", "Quest: Hire two farmers. Click on the farm and in the plus sign assign workers. You need to have unemployed"
+            +" people to be able to assign them into a new building"},
+       { "FarmProduce.Quest", "Quest: Now produce 300KG of beans"},
+       { "Transport.Quest", "Quest: Transport the beans from the farm to the Storage. To do that make sure you have" + 
+            " workers on the masonry. They act as wheelbarrowers when not building"},
+       { "Export.Quest", "Quest: Now export 300KG of beans. On the Dock add a order of export. If oyu have not dock then build one."+
+           "Find it in Trade. Once built click on the orders tab and add a export order with the '+' sign."+
+           " Select product and enter amount"},
+       { "HireDocker.Quest", "Quest: Hire four dockers. The dockers will move the goods into the Dock from the Storage if you are exporting."+
+           " Or viceversa if importing"},
+       { "Make100Bucks.Quest", "Quest: Make $100 exporting goods in the Dock"},
 
-       {"CompleteQuest", "Your reward was ${0}"}
+
+       {"CompleteQuest", "Your reward is ${0}"}
 
     };
 

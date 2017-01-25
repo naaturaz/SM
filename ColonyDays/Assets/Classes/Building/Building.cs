@@ -10,6 +10,16 @@ public class Building : Hoverable, Iinfo
 {
     #region Fields and Prop
 
+    bool _wasGreenlit;
+    /// <summary>
+    /// if I was greenlit on the BuildersManager
+    /// </summary>
+    public bool WasGreenlit
+    {
+        get { return _wasGreenlit; }
+        set { _wasGreenlit = value; }
+    }
+
     /// <summary>
     /// The root of a building 
     /// </summary>
@@ -2436,6 +2446,7 @@ public class Building : Hoverable, Iinfo
         _debugPercentage.transform.SetParent(transform);
     }
 
+    bool didBuiltNotify;
     protected General _construcionSign;
     /// <summary>
     /// Created for modularity. Handles all things related onces the building is fully built 
@@ -2457,6 +2468,14 @@ public class Building : Hoverable, Iinfo
         {
             QuestManager.QuestFinished("Bohio");
         }
+
+        if (!didBuiltNotify && !IsLoadingFromFile)
+        {
+            didBuiltNotify = true;
+            Program.gameScene.GameController1.NotificationsManager1.Notify("Built", HType + "");
+        }
+
+
 
         if (_debugPercentage != null)
         {
@@ -2914,6 +2933,7 @@ public class Building : Hoverable, Iinfo
     /// <param name="amt"></param>
     internal void Produce(float amt)
     {
+        Quest(amt);
         var doIHaveInput = DoBuildHaveRawResources();
         var hasThisBuildRoom = DoWeHaveCapacityInThisBuilding();
 
@@ -2931,6 +2951,24 @@ public class Building : Hoverable, Iinfo
         {
             //todo show 3d icon
             //Debug.Log(MyId + " doesnt have input");
+        }
+    }
+
+    private void Quest(float amt = 0)
+    {
+        if (CurrentProd.Product == P.Bean && HType == H.FieldFarmSmall)
+        {
+            QuestManager.AddToQuest("FarmProduce", amt);
+        }
+
+        if (HType == H.FieldFarmSmall && _maxPeople == 2)
+        {
+            QuestManager.QuestFinished("FarmHire");
+        }
+
+        if (HType == H.Dock && _maxPeople == 4)
+        {
+            QuestManager.QuestFinished("HireDocker");
         }
     }
 
@@ -3395,6 +3433,7 @@ public class Building : Hoverable, Iinfo
         {
             _maxPeople++;
             ManagerReport.AddInput("More workers on: " + transform.name + ". now:" + _maxPeople);
+            Quest();
         }
 
         if (_maxPeople < 0)
@@ -3409,6 +3448,8 @@ public class Building : Hoverable, Iinfo
         UpdateWorkersRoutine();
         return _maxPeople + "";
     }
+
+
 
     void UpdateWorkersRoutine()
     {

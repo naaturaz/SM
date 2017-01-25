@@ -25,6 +25,9 @@ public class NotificationWindowGO : GUIElement
     /// Add name and desc and Languages.cs
     /// Add sound file on Prefab/audio/sound/other and icon on GUI/Notification_Icon/
     /// Then add it in sound name added it on _rootsToSpawn on AudioCollector.cs
+    /// 
+    /// Also if want to have a sound place the sound in Prefab/Audio/Sound/Other with the
+    /// same name of the Notification as called in Languages.cs
     /// </summary>
     //Dictionary<string, Notification> _bank = new Dictionary<string, Notification>()
     //{

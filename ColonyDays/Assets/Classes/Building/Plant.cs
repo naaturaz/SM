@@ -353,6 +353,8 @@ public class Plant : General
 
         var amt = WhatIProduce();
         _building.Produce(amt);
+
+
         DestroyPlant();
     }
 

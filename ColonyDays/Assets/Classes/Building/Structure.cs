@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 
 public class Structure : StructureParent
@@ -439,7 +440,52 @@ public class Structure : StructureParent
             HideAll();   
         }
         BuildingPot.Control.Registro.RemoveItem(Category, MyId);
+
+        _construcionSign = General.Create(Root.DemolishSign, MiddlePoint(), "Construction", transform);
+        AudioCollector.PlayOneShot("ClickMetal2", 0);
+
+        ReturnWhatThisCost();
     }
+
+    /// <summary>
+    /// Will return the materials this building cost to the player 
+    /// </summary>
+    private void ReturnWhatThisCost()
+    {
+        //only greenlit will return materials
+        if (!WasGreenlit)
+        {
+            return;
+        }
+
+        var stats = Book.GiveMeStat(HType);
+
+        foreach (PropertyInfo prop in typeof(BuildStat).GetProperties())
+        {
+            //Debug.Log(string.Format( "{0} === {1}", prop.Name, prop.GetValue(stats, null)));
+
+            if (prop.Name == "MaxPeople" || prop.Name == "Capacity")
+            {
+                return;
+            }
+
+            P prod = Enums.ParseEnum<P>(prop.Name);
+
+            if (prod == P.None)
+            {
+                //Debug.Log(string.Format("{0} = None = {1}", prop.Name, prop.GetValue(stats, null)));
+            }
+            else
+            {
+                GameController.ResumenInventory1.GameInventory.Add(prod, 
+                    float.Parse(prop.GetValue(stats, null).ToString()));
+            }
+        }
+    }
+
+
+
+
 
     private void HideAll()
     {

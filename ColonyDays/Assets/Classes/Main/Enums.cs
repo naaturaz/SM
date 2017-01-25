@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public enum Job
 {
@@ -639,4 +640,28 @@ public enum RonBohioHouse
     Bohio, BohioB
 }
 
-public static class Enums { }
+public static class Enums 
+{
+
+
+    /// <summary>
+    /// All Enums pass here need to have a None defined as an element 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public static T ParseEnum<T>(string value)
+    {
+        try
+        {
+            return (T)Enum.Parse(typeof(T), value, true);
+
+        }
+        catch (Exception)
+        {
+            return (T)Enum.Parse(typeof(T), "None", true);
+            //throw;
+        }
+    }
+
+}

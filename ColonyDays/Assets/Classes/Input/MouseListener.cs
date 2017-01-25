@@ -109,7 +109,12 @@ public class MouseListener : InputMain
     public void ShowMainGUI()
     {
 //        main.transform.position = mainTempIniPos;
-        main.gameObject.SetActive(true);
+
+        if (!main.gameObject.activeSelf)
+        {
+            main.gameObject.SetActive(true);
+        }
+
 
     }
 

@@ -345,6 +345,11 @@ public class GameScene : General
 
     public bool IsPassingTheTutoNow()
     {
+        if (_tutoWindow == null)
+        {
+            return true;
+        }
+
         return _tutoWindow.IsPassingTheTutoNow();
     }
 

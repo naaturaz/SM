@@ -250,6 +250,7 @@ public class Root : MonoBehaviour
 
     public static string ArrowLookAt = "Prefab/GUI/3dHelpers/ArrowLookAt";
     public static string ConstructionSign = "Prefab/GUI/3dHelpers/Construction_Sign";
+    public static string DemolishSign = "Prefab/GUI/3dHelpers/Demolish_Sign";
 
     public static string CubeLookAt = "Prefab/GUI/3dHelpers/CubeLookAt";
 

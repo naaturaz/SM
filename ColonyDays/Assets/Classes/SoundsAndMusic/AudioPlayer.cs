@@ -53,6 +53,11 @@ public class AudioPlayer  {
 
     public static void InitSoundsLib()
     {
+        if (_soundsLib.Count > 0)
+        {
+            return;
+        }
+
         var root = "C:/GitHub/SM/ColonyDays/Assets/Resources/Prefab/Audio/Sound/";
         var waves = new List<string>();
 

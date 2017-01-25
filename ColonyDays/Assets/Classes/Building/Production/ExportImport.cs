@@ -305,7 +305,21 @@ public class ExportImport
         Program.gameScene.GameController1.Dollars += trans;
 
         Program.gameScene.GameController1.NotificationsManager1.Notify("ShipPayed", trans.ToString("N0"));
+
+      
+
+        Quest(prod, amt);
     }
+
+    private void Quest(P prod, float amt)
+    {
+        if (prod == P.Bean)
+        {
+            QuestManager.AddToQuest("Make100Bucks", amt);
+        }
+    }
+
+
 
     /// <summary>
     /// The action of buying a Product and the amount

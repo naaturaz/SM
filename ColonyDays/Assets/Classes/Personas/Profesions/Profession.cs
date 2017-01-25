@@ -894,6 +894,16 @@ public class Profession
         //each time a wheelbarrow or docker uses a wheelBarrow dimish them a bit in the main storages
         //as the wheelbarrows get use they get destroy
         GameController.ResumenInventory1.Remove(P.WheelBarrow, .1f);
+
+        Quest();
+    }
+
+    private void Quest()
+    {
+        if (_order.Product == P.Bean && _order.SourceBuild.Contains("FieldFarmSmall"))
+        {
+            QuestManager.QuestFinished("Transport");   
+        }
     }
 
     /// <summary>

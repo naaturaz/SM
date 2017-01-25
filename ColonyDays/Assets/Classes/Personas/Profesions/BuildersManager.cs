@@ -241,6 +241,9 @@ public class BuildersManager
         if (wood && stone && brick && iron && gold && dollar && passedQue
             && nail && furniture && mortar && floor && roof && machine)
         {
+            var build = Brain.GetBuildingFromKey(cons.Key);
+            build.WasGreenlit = true;
+
             _passedQueue.Remove(cons.Key);
             return true;
         }

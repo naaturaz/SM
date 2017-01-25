@@ -178,6 +178,8 @@ public class MyForm : General
         {
             _showPathToSea.Update();
         }
+
+        var a = this;
     }
 
     protected GameObject GetChildCalled(H childName, GameObject parent)
