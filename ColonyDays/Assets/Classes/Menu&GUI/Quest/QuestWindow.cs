@@ -95,7 +95,7 @@ public class QuestWindow : GUIElement
         var button = _gOs[index-1];//bz starts at 1 on GUI 
         var text = GetChildCalledOnThis("Text", button).GetComponent<Text>();
 
-        QuestManager.SpawnDialog(text.text+".Quest");
+        Program.gameScene.QuestManager.SpawnDialog(text.text+".Quest");
     }
 }
 

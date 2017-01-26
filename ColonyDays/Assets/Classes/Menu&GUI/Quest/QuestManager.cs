@@ -7,12 +7,46 @@ using UnityEngine;
 
 public class QuestManager
 {
-    static int _current;
-    static float _lastCompleted;
-    static bool _showed;
-    static QuestWindow _questWindow;
+    int _current;
 
-    static List<Quest> _bank = new List<Quest>()
+    float _lastCompleted;
+    bool _showed;
+
+    QuestWindow _questWindow;
+
+    List<int> _currentQuests = new List<int>();
+    List<int> _doneQuest = new List<int>();
+
+    bool _wasLoaded;//whe is a loaded game
+
+    public int CurrentQuest
+    {
+        get { return _current; }
+        set { _current = value; }
+    }
+
+    public bool Showed
+    {
+        get { return _showed; }
+        set { _showed = value; }
+    }
+
+    public List<int> CurrentQuests
+    {
+        get { return _currentQuests; }
+        set { _currentQuests = value; }
+    }
+
+    public List<int> DoneQuest
+    {
+        get { return _doneQuest; }
+        set { _doneQuest = value; }
+    }
+
+
+
+
+    List<Quest> _bank = new List<Quest>()
     { 
         //need to mention reward still 
         new Quest("Bohio.Quest", 500, 7),
@@ -25,23 +59,34 @@ public class QuestManager
         new Quest("Make100Bucks.Quest", 850, 7, 100),
     };
 
-    public static void QuestFinished(string which)
+    public QuestManager() { }
+
+
+    public void QuestFinished(string which)
     {
         //wont complete a quest if is not shown yet
-        if (!_showed || _current >= _bank.Count)//bz Building.cs calls like 5 times when is done 
+        if (!Showed || CurrentQuest >= _bank.Count)//bz Building.cs calls like 5 times when is done 
         {
             return;
         }
 
-        if (_bank[_current].Key == which + ".Quest")
+        if (_bank[CurrentQuest].Key == which + ".Quest")
         {
-            ShowCurrentPrize();
+            Show_currentPrize();
 
-            Program.gameScene.GameController1.Dollars += _bank[_current].Prize;
+            Program.gameScene.GameController1.Dollars += _bank[CurrentQuest].Prize;
             AudioCollector.PlayOneShot("BoughtLand", 0);
 
             _questWindow.RemoveAQuest(which);
-            _current++;
+            _currentQuests.Remove(CurrentQuest);//remove from _current list
+            _doneQuest.Add(CurrentQuest);//adds to done list 
+
+            CurrentQuest++;
+            //adds to _current list
+            if (CurrentQuest < _bank.Count)
+            {
+                _currentQuests.Add(CurrentQuest);
+            }
         }
     }
 
@@ -50,71 +95,77 @@ public class QuestManager
     /// </summary>
     /// <param name="which"></param>
     /// <param name="amt"></param>
-    public static void AddToQuest(string which, float amt)
+    public void AddToQuest(string which, float amt)
     {
         //wont complete a quest if is not shown yet
-        if (!_showed || _current >= _bank.Count)//bz Building.cs calls like 5 times when is done 
+        if (!Showed || CurrentQuest >= _bank.Count)//bz Building.cs calls like 5 times when is done 
         {
             return;
         }
 
-        if (_bank[_current].Key == which + ".Quest")
+        if (_bank[CurrentQuest].Key == which + ".Quest")
         {
             //adds
-            _bank[_current].AddToProgress(amt);
+            _bank[CurrentQuest].AddToProgress(amt);
             //checks if is completed
-            if (_bank[_current].IsQuestCompleted())
+            if (_bank[CurrentQuest].IsQuestCompleted())
             {
                 QuestFinished(which);
             }
         }
     }
 
-    static void ShowCurrentQuest()
+    void ShowCurrentQuest()
     {
         if (_questWindow == null)
         {
             _questWindow = MonoBehaviour.FindObjectOfType<QuestWindow>();
         }
-        if (_questWindow == null || _current < 0)
+        if (_questWindow == null || CurrentQuest < 0)
         {
             return;
         }
 
-        _showed = true;
-        _questWindow.SetAQuest(_bank.ElementAt(_current).Key);
+        Showed = true;
+        _questWindow.SetAQuest(_bank.ElementAt(CurrentQuest).Key);
 
-        SpawnDialog(_bank.ElementAt(_current).Key);
+        if (_wasLoaded)
+        {
+            _wasLoaded = false;
+            return;
+        }
+
+        SpawnDialog(_bank.ElementAt(CurrentQuest).Key);
     }
 
-    public static void SpawnDialog(string which)
+    public void SpawnDialog(string which)
     {
         //spawn dialog 
         Dialog.OKDialog(H.InfoKey, which);
     }
 
-    static void ShowCurrentPrize()
+    void Show_currentPrize()
     {
-        Dialog.OKDialog(H.CompleteQuest, _bank[_current].Prize + "");
+        Dialog.OKDialog(H.CompleteQuest, _bank[CurrentQuest].Prize + "");
     }
 
-    public static void QuestCompletedAcknowled()
+    public void QuestCompletedAcknowled()
     {
         _lastCompleted = Time.time;
-        _showed = false;
+        Showed = false;
 
-        if (_current >= _bank.Count)
+        if (CurrentQuest >= _bank.Count)
         {
             _lastCompleted = -1;
-            _current = -1;
+            CurrentQuest = -1;
         }
     }
 
-    public static void Update()
+    public void Update()
     {
         //return;
 
-        if (_current < 0 || _current >= _bank.Count || _lastCompleted < 0)
+        if (CurrentQuest < 0 || CurrentQuest >= _bank.Count || _lastCompleted < 0)
         {
             return;
         }
@@ -124,25 +175,44 @@ public class QuestManager
             return;
         }
 
-        if (_lastCompleted == 0 && !_showed && Program.gameScene.GameWasFullyLoadedAnd10SecAgo())
+        if (_lastCompleted == 0 && !Showed && Program.gameScene.GameWasFullyLoadedAnd10SecAgo())
         {
             ShowCurrentQuest();
         }
 
-        if (Time.time > _lastCompleted + _bank[_current].SecWait && !_showed)
+        if (Time.time > _lastCompleted + _bank[CurrentQuest].SecWait && !Showed)
         {
             ShowCurrentQuest();
         }
     }
 
-    public static void ResetNewGame()
+    public void ResetNewGame()
     {
         _lastCompleted = 0;
-        _showed = false;
-        _current = 0;
+        Showed = false;
+        CurrentQuest = 0;
     }
 
+
+    /// <summary>
+    /// Called right after loaded meant to show current 
+    /// </summary>
+    internal void JustLoadedShowCurrent()
+    {
+        _wasLoaded = true;
+        Showed = false;
+    }
+
+    internal bool IsQuestingNow()
+    {
+        return CurrentQuest != -1;
+    }
 }
+
+
+
+
+
 
 class Quest
 {
@@ -168,7 +238,7 @@ class Quest
         set { _secWait = value; }
     }
 
-    
+
     float _progress;
     /// <summary>
     /// How far the quest has progressed. This will be used for ex to see how much 

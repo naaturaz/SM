@@ -477,11 +477,11 @@ public class MyScreen : General
     }
 
 
-    public void ReloadGUI()
-    {
-        Program.MouseListener.ReloadMainGUI();
-        Program.MouseListener.ApplyChangeScreenResolution();
-    }
+    //public void ReloadGUI()
+    //{
+    //    Program.MouseListener.ReloadMainGUI();
+    //    Program.MouseListener.ApplyChangeScreenResolution();
+    //}
 
     public void DestroyCurrentMenu()
     {

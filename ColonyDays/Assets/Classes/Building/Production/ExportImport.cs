@@ -315,7 +315,7 @@ public class ExportImport
     {
         if (prod == P.Bean)
         {
-            QuestManager.AddToQuest("Make100Bucks", amt);
+            Program.gameScene.QuestManager.AddToQuest("Make100Bucks", amt);
         }
     }
 

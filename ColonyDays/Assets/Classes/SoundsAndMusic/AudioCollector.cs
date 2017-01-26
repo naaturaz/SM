@@ -305,8 +305,8 @@ public class AudioCollector
             //AudioPlayer.InitSoundsLib();
         }
 
-        if (!_peopleVoiceStarted && Program.gameScene.GameWasFullyLoadedAnd10SecAgo()
-           )
+        if (!_peopleVoiceStarted && Program.gameScene.GameWasFullyLoadedAnd10SecAgo() &&
+           Camera.main != null)
         {
             _peopleVoiceStarted = true;
             AudioPlayer.InitSoundsLib();

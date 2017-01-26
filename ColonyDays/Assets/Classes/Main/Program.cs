@@ -148,12 +148,16 @@ public class Program : MonoBehaviour {
         PersonObjectContainer.Destroy();
         MeshBatchContainer.Destroy();
 
+        gameScene.QuestManager.ResetNewGame();
+
+
         gameScene.Destroy();
         gameScene = null;
         InputMain.Destroy();
 
         GameController.ResumenInventory1.GameInventory.Delete();
-        QuestManager.ResetNewGame();
+
+
     }
 
     /// <summary>
@@ -238,6 +242,18 @@ public class Program : MonoBehaviour {
     /// Does food expires 
     /// </summary>
     public static bool IsFood { get; set; }
+
+
+    static bool _wasTutoDone;
+    internal static bool TutoWasDone()
+    {
+        return _wasTutoDone;
+    }
+
+    internal static void TutoWasDoneNow()
+    {
+        _wasTutoDone = true;
+    }
 }
 
 

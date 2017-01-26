@@ -70,6 +70,8 @@ public class PersonSaveLoad : PersonPot {
         res.IsPirate = Program.IsPirate;
         res.IsFood = Program.IsFood;
 
+        res.QuestManager = Program.gameScene.QuestManager;
+
         return res;
     }
 }

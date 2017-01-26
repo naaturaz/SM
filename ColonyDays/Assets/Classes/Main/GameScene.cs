@@ -54,6 +54,13 @@ public class GameScene : General
 
     private AudioPlayer _audioPlayer;
 
+    QuestManager _questManager;
+
+    public QuestManager QuestManager
+    {
+        get { return _questManager; }
+        set { _questManager = value; }
+    }
 
     public float SubDivideBlockYVal
     {
@@ -431,6 +438,11 @@ public class GameScene : General
         if (_gameTime == null)
         {
             return;
+        }
+
+        if (QuestManager == null)
+        {
+            QuestManager = new QuestManager();
         }
 
         QuestManager.Update();

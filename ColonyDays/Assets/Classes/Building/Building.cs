@@ -2462,11 +2462,11 @@ public class Building : Hoverable, Iinfo
         }
         else if(HType == H.FieldFarmSmall)
         {
-            QuestManager.QuestFinished("SmallFarm");
+            Program.gameScene.QuestManager.QuestFinished("SmallFarm");
         }
         else if (HType == H.Bohio)
         {
-            QuestManager.QuestFinished("Bohio");
+            Program.gameScene.QuestManager.QuestFinished("Bohio");
         }
 
         if (!didBuiltNotify && !IsLoadingFromFile)
@@ -2958,17 +2958,17 @@ public class Building : Hoverable, Iinfo
     {
         if (CurrentProd.Product == P.Bean && HType == H.FieldFarmSmall)
         {
-            QuestManager.AddToQuest("FarmProduce", amt);
+            Program.gameScene.QuestManager.AddToQuest("FarmProduce", amt);
         }
 
         if (HType == H.FieldFarmSmall && _maxPeople == 2)
         {
-            QuestManager.QuestFinished("FarmHire");
+            Program.gameScene.QuestManager.QuestFinished("FarmHire");
         }
 
         if (HType == H.Dock && _maxPeople == 4)
         {
-            QuestManager.QuestFinished("HireDocker");
+            Program.gameScene.QuestManager.QuestFinished("HireDocker");
         }
     }
 

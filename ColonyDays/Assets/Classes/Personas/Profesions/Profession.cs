@@ -902,7 +902,7 @@ public class Profession
     {
         if (_order.Product == P.Bean && _order.SourceBuild.Contains("FieldFarmSmall"))
         {
-            QuestManager.QuestFinished("Transport");   
+            Program.gameScene.QuestManager.QuestFinished("Transport");   
         }
     }
 

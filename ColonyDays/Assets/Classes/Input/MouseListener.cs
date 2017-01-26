@@ -73,8 +73,6 @@ public class MouseListener : InputMain
             main = (MyForm)Create(Root.mainGUI, new Vector2());
         }
 
-        main.gameObject.SetActive(true);
-
         //can only be one on scene to work 
         _buildingsMenu = FindObjectOfType<BuildingsMenu>();
         _descriptionWindow = FindObjectOfType<DescriptionWindow>();
@@ -86,13 +84,13 @@ public class MouseListener : InputMain
         _bulletinWindow = FindObjectOfType<BulletinWindow>();
 
         Debug.Log("LoadMainGUI() GUI");
+
+        if (CamControl.IsMainMenuOn())
+        {
+            HideMainGUI();
+        }
     }
 
-    public void ReloadMainGUI()
-    {
-        main.Destroy();
-        LoadMainGUI();
-    }
 
     private Vector3 mainTempIniPos;
     public void HideMainGUI()
@@ -101,21 +99,19 @@ public class MouseListener : InputMain
         //Vector3 t = mainTempIniPos;
         //t.y -= 1400f;
         //main.transform.position = t;
-        main.gameObject.SetActive(false);
 
-        Debug.Log("HideMainGUI() GUI");
+        main.gameObject.SetActive(false);
+        //Debug.Log("HideMainGUI() GUI");
     }
 
     public void ShowMainGUI()
     {
-//        main.transform.position = mainTempIniPos;
+        //main.transform.position = mainTempIniPos;
 
         if (!main.gameObject.activeSelf)
         {
             main.gameObject.SetActive(true);
         }
-
-
     }
 
     public void ApplyChangeScreenResolution(bool promtToGame = false)
@@ -134,18 +130,19 @@ public class MouseListener : InputMain
         main.Destroy();
         main = null;
         LoadMainGUI();
+     
 
         //in case PersonWindow was not null. So main menu is last 
         Program.MyScreen1.ReLoadMainMenuIfActive();
 
-        //bz gui was on top of main menu when changed resolution 
-        if (promtToGame)
-        {
-            //shows game
-            EscapeKey();
-            //show mainMenu
-            EscapeKey();
-        }
+        ////bz gui was on top of main menu when changed resolution 
+        //if (promtToGame)
+        //{
+        //    //shows game
+        //    EscapeKey();
+        //    //show mainMenu
+        //    EscapeKey();
+        //}
     }
 
     /// <summary>

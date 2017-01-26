@@ -38,13 +38,35 @@ public class PersonWindow : GUIElement
         set { _person = value; }
     }
 
+
+
     // Use this for initialization
     void Start()
     {
         base.Start();
 
         InitObj();
-        Hide();
+        Hide();  
+
+        StartCoroutine("OneSecUpdate");
+
+    }
+
+
+    bool wasStarted;
+    private IEnumerator OneSecUpdate()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(3); // wait
+
+            if (!wasStarted)
+            {
+                wasStarted = true;
+
+               
+            }
+        }
     }
 
     void InitObj()

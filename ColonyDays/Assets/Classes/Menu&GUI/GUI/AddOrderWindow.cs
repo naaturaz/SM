@@ -224,7 +224,7 @@ public class AddOrderWindow : GUIElement {
 
             if (_prodSelect == P.Bean && _amt == 300)
             {
-                QuestManager.QuestFinished("Export");
+                Program.gameScene.QuestManager.QuestFinished("Export");
             }
         }
         else if (_orderType == "Import")

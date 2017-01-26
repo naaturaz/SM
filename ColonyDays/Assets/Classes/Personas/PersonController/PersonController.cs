@@ -223,6 +223,9 @@ public class PersonController : PersonPot
 
         BulletinWindow.SubBulletinProduction1 = pData.PersonControllerSaveLoad.SubBulletinProduction;
 
+        Program.gameScene.QuestManager = pData.PersonControllerSaveLoad.QuestManager;
+        Program.gameScene.QuestManager.JustLoadedShowCurrent();
+
         //persons
         for (int i = 0; i < pData.All.Count; i++)
         {
@@ -1073,4 +1076,8 @@ public class PersonControllerSaveLoad
     public bool IsPirate { get; set; }
 
     public bool IsFood { get; set; }
+
+
+
+    public QuestManager QuestManager { get; set; }
 }

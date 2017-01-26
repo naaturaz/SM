@@ -67,10 +67,27 @@ class TutoWindow : GUIElement
     bool wasShown;
     void Update()
     {
-        if (Program.gameScene.GameFullyLoaded() && !wasShown
-            //XMLSerie.IsTutorial() &&
-            )
+        if (_showAgainTuto == null)
         {
+            return;
+        }
+
+        //if loads needs this
+        if (IsPassingTheTutoNow() && Program.gameScene.QuestManager.IsQuestingNow())
+        {
+            SkipTuto();
+            return;
+        }
+
+        if (!wasShown && Program.TutoWasDone())
+        {
+            wasShown = true;
+            SkipTuto();
+        }
+
+        if (Program.gameScene.GameFullyLoaded() && !wasShown)
+        {
+            Program.TutoWasDoneNow();
             wasShown = true;
             Show();
         }
@@ -146,7 +163,7 @@ class TutoWindow : GUIElement
 
             
             ManagerReport.AddInput("Tutorial.Done:");
-            QuestManager.QuestFinished("Tutorial");
+            Program.gameScene.QuestManager.QuestFinished("Tutorial");
             return;
         }
         //QuestManager.QuestFinished("Tutorial");

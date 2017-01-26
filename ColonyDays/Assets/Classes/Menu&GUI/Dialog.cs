@@ -107,7 +107,7 @@ public class Dialog
             }
             else if (_type == H.CompleteQuest)
             {
-                QuestManager.QuestCompletedAcknowled();
+                Program.gameScene.QuestManager.QuestCompletedAcknowled();
             }
         }
         //cant create dialog b4 bz will get destroyed 
