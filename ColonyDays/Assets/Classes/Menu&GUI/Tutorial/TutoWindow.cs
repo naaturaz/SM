@@ -60,34 +60,22 @@ class TutoWindow : GUIElement
         _rectTransform = transform.GetComponent<RectTransform>();
 
 
-        Hide();
+        //Hide();
     }
 
 
     bool wasShown;
     void Update()
     {
-        if (_showAgainTuto == null)
-        {
-            return;
-        }
-
         //if loads needs this
-        if (IsPassingTheTutoNow() && Program.gameScene.QuestManager.IsQuestingNow())
-        {
-            SkipTuto();
-            return;
-        }
-
-        if (!wasShown && Program.TutoWasDone())
-        {
-            wasShown = true;
-            SkipTuto();
-        }
+        //if (IsPassingTheTutoNow() && Program.gameScene.QuestManager.IsQuestingNow())
+        //{
+        //    SkipTuto();
+        //    return;
+        //}
 
         if (Program.gameScene.GameFullyLoaded() && !wasShown)
         {
-            Program.TutoWasDoneNow();
             wasShown = true;
             Show();
         }
@@ -195,6 +183,9 @@ class TutoWindow : GUIElement
         Hide();
 
         _showAgainTuto.SetActive(true);
+
+        Program.gameScene.QuestManager.TutoCallWhenDone();
+
     }
 }
 

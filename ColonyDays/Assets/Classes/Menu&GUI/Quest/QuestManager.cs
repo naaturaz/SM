@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class QuestManager
 {
-    int _current;
+    int _current = -1;
 
     float _lastCompleted;
     bool _showed;
@@ -165,7 +165,7 @@ public class QuestManager
     {
         //return;
 
-        if (CurrentQuest < 0 || CurrentQuest >= _bank.Count || _lastCompleted < 0)
+        if (CurrentQuest >= _bank.Count || _lastCompleted < 0)
         {
             return;
         }
@@ -177,6 +177,7 @@ public class QuestManager
 
         if (_lastCompleted == 0 && !Showed && Program.gameScene.GameWasFullyLoadedAnd10SecAgo())
         {
+            CurrentQuest = 0;
             ShowCurrentQuest();
         }
 
@@ -206,6 +207,11 @@ public class QuestManager
     internal bool IsQuestingNow()
     {
         return CurrentQuest != -1;
+    }
+
+    public void TutoCallWhenDone()
+    {
+        CurrentQuest = 0;
     }
 }
 

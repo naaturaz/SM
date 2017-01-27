@@ -12,7 +12,7 @@ public class BuyRegionManager
 
     //regions that are not being unlock. they are up for sale 
     List<int> _forSaleRegions = new List<int>();
- 
+
     List<ForSaleRegionGO> _forSaleRegionGoes = new List<ForSaleRegionGO>();
 
     //the region we might be able to unlock now
@@ -70,7 +70,7 @@ public class BuyRegionManager
                 //continue;
             }
 
-            _forSaleRegionGoes.Add(ForSaleRegionGO.CreateForSaleRegionGO(Root.forSaleRegion, index, 
+            _forSaleRegionGoes.Add(ForSaleRegionGO.CreateForSaleRegionGO(Root.forSaleRegion, index,
                 reg, container: Program.gameScene.Terreno.transform));
         }
 
@@ -98,7 +98,7 @@ public class BuyRegionManager
         _unlockRegions.AddRange(first1x1Regions);
     }
 
-   
+
     private void LoadUnlockRegions()
     {
         PersonData pData = XMLSerie.ReadXMLPerson();
@@ -135,7 +135,7 @@ public class BuyRegionManager
             return 1;
         }
 
-        return moneyMul * _unlockRegions.Count ;
+        return moneyMul * _unlockRegions.Count;
     }
 
     private void RemoveCost()
@@ -193,5 +193,63 @@ public class BuyRegionManager
             }
         }
         return true;
+    }
+
+
+
+    #region Showing Regions
+
+
+    bool _isToShowNow;
+    float _showedAt;
+
+    public float ShowedAt
+    {
+        get { return _showedAt; }
+        set { _showedAt = value; }
+    }
+
+    internal void ShowRegionsToggle()
+    {
+        if (_isToShowNow)
+        {
+            _isToShowNow = false;
+            return;
+        }
+
+        _isToShowNow = true;
+        ShowedAt = Time.time;
+    }
+
+    internal void ShowRegions()
+    {
+        _isToShowNow = true;
+        ShowedAt = Time.time;
+    }
+
+
+
+    public bool IsToShowNow()
+    {
+        return _isToShowNow;
+    }
+
+
+
+    #endregion
+
+
+    public void Update()
+    {
+        //so while a dialog is up dont disapear, that dialog could be a BuyRegion dialog 
+        if (Dialog.IsActive())
+        {
+            return;
+        }
+
+        if (Time.time > ShowedAt + 10)
+        {
+            _isToShowNow = false;
+        }
     }
 }

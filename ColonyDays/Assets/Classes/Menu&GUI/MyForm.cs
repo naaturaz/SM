@@ -250,6 +250,12 @@ public class MyForm : General
         }
     }
 
+    public void ShowRegions()
+    {
+        MeshController.BuyRegionManager1.ShowRegionsToggle();
+
+    }
+
     /// <summary>
     /// Called by the WhereIsTown on Gui
     /// </summary>

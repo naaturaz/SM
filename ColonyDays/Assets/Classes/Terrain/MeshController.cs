@@ -144,6 +144,12 @@ public class MeshController : ControllerParent
         UpdateHitMouseOnTerrain();
         DrawDebug90Deg();
 
+        if (_buyRegionManager!=null)
+        {
+            _buyRegionManager.Update();
+        }
+
+
         if (isTerraScanning && IsLoading)
         {
             ScanProcedure(globalInPolyDiv, globalXStep, globalZStep);

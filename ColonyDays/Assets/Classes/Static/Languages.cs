@@ -169,7 +169,9 @@ public class Languages
 	   { "CleanAll.HoverSmall", "Clean"},
 	   { "Bulletin.HoverSmall", "Control/Bulletin"},
        {"ShowAgainTuto.HoverSmall","Tutorial"},
+	   { "BuyRegion.HoverSmall", "Buy Regions"},
        
+
        { "More.HoverSmall", "More"},
 	   { "Less.HoverSmall", "Less"},
 	   { "Prev.HoverSmall", "Previous"},
@@ -329,7 +331,7 @@ public class Languages
        
        { "BackToTown.Tuto", "Press the key [P] on the keyboard to go to the initial position of the camera"},
       
-       { "BuyRegion.Tuto", "Regions, you need to own a region to be able to build in it. Click on the 'For Sale' sign in the" +
+       { "BuyRegion.Tuto", "Regions, you need to own a region to be able to build in it. Click on '+' sign on the botton bar, then on the 'For Sale' sign in the" +
             " middle of a region to buy it. Some buildings are exempt, they can be built without ownig the region" +
             " (FishingHut, Dock, MountainMine, ShoreMine, LightHouse, PostGuard)"
             },
@@ -387,7 +389,12 @@ public class Languages
        { "Make100Bucks.Quest", "Quest: Make $100 exporting goods in the Dock"},
 
 
-       {"CompleteQuest", "Your reward is ${0}"}
+       {"CompleteQuest", "Your reward is ${0}"},
+
+
+       //
+       {"Tutorial.Arrow", "This is the tutorial. Once finished you will win $10,000"},
+       {"Quest.Arrow", "This is the quest panel. You can access the quest by clicking on it"},
 
     };
 

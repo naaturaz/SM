@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class QuestWindow : GUIElement
 {
     List<GameObject> _gOs = new List<GameObject>();
+    GameObject _arrow;
 
     void Start()
     {
@@ -18,7 +19,11 @@ public class QuestWindow : GUIElement
             GetChildCalled("Quest3"),GetChildCalled("Quest4")
         };
 
+        _arrow = GetChildCalled("Arrow");
+        _arrow.gameObject.SetActive(false);
+
         HideAll();
+        //Hide();
     }
 
     void HideAll()
@@ -36,6 +41,13 @@ public class QuestWindow : GUIElement
 
     public void SetAQuest(string which)
     {
+        //1st
+        if (which == "Bohio.Quest")
+        {
+            _arrow.gameObject.SetActive(true);
+        }
+
+        //Show();
         for (int i = 0; i < _gOs.Count; i++)
         {
             if (!_gOs[i].activeSelf)

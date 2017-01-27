@@ -378,7 +378,7 @@ public class Registro : MonoBehaviour
         //toDraw.Add(toHoriz);
     }
 
-    Rect ReturnDimOnMap(List<Vector3> poly)
+    public static Rect ReturnDimOnMap(List<Vector3> poly)
     {
         Rect to = U2D.FromPolyToRect(poly);
         to = U2D.ReturnRectYInverted(to);

@@ -308,7 +308,13 @@ public class Building : Hoverable, Iinfo
             return true;
         }
 
-        return MeshController.BuyRegionManager1.AreAnchorsOnUnlockRegions(Anchors);
+        var res = MeshController.BuyRegionManager1.AreAnchorsOnUnlockRegions(Anchors);
+
+        if (!res)
+        {
+            MeshController.BuyRegionManager1.ShowRegions();
+        }
+        return res;
     }
 
     /// <summary>
@@ -1335,17 +1341,35 @@ public class Building : Hoverable, Iinfo
     {
         if (p.TerraSpawnController.AllRandomObjList.Contains(key))
         {
+            if (!CrystalsAreContainedInThisBuilding(key) && 
+                !key.Contains("Orna") && !key.Contains("Grass"))//refer to StillElement.AddCrystals. They
+                //dont add to the crsytals manager, so they will be removed this way
+            {
+                return;
+            }
+
             StillElement still = (StillElement)p.TerraSpawnController.AllRandomObjList[key];
-            
             //so they get remved from their region 
             Program.gameScene.BatchRemove(still);
-
             //so they disappear, remove Crystals and Routing can work properly
             still.DestroyCool();
         }
         else
             Debug.Log("key not cointained in AllRandomObjList." + key);
     }
+
+    /// <summary>
+    /// Will say if the Spawn has any cristals that faill in in this building 
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
+   private bool CrystalsAreContainedInThisBuilding(string key)
+   {
+       var scale = UPoly.ScalePoly(Bounds, 0.4f);
+       var rect = Registro.ReturnDimOnMap(scale);
+
+       return MeshController.CrystalManager1.AreTheyContained(key, rect);
+   }
 
     /// <summary>
     /// Given a list of strings will reutn only the ones tat are contained in the KeyedColl
@@ -2455,52 +2479,34 @@ public class Building : Hoverable, Iinfo
     {
         //Debug.Log("construction built 100%:"+MyId+"." + Program.gameScene.GameTime1.TodayYMD());
         PersonPot.Control.RoutesCache1.RemoveAllMine(MyId);
+        Quest();
 
-        if (HType == H.Dock)
+        //bz when demolishes adds 10,000
+        if (constructionAmt < 9500)
         {
-            Program.gameScene.TutoStepCompleted("FinishDock.Tuto");
+            if (!didBuiltNotify && !IsLoadingFromFile)
+            {
+                didBuiltNotify = true;
+                Program.gameScene.GameController1.NotificationsManager1.Notify("Built", HType + "");
+            } 
         }
-        else if(HType == H.FieldFarmSmall)
-        {
-            Program.gameScene.QuestManager.QuestFinished("SmallFarm");
-        }
-        else if (HType == H.Bohio)
-        {
-            Program.gameScene.QuestManager.QuestFinished("Bohio");
-        }
-
-        if (!didBuiltNotify && !IsLoadingFromFile)
-        {
-            didBuiltNotify = true;
-            Program.gameScene.GameController1.NotificationsManager1.Notify("Built", HType + "");
-        }
-
-
-
         if (_debugPercentage != null)
         {
             _debugPercentage.Destroy();
         }
-
         if (IsNaval())
         {
             BuildingPot.Control.DockManager1.AddToDockStructure(MyId, HType);
         }
-
         if (person!=null)
         {
             person.Work.BuildersManager1.RemoveConstruction(MyId);
-            
         }
-        //PersonPot.Control.BuildersManager1.RemoveConstruction(MyId);
-
         if (_construcionSign != null)
         {
             _construcionSign.Destroy();
             _construcionSign = null;
         }
-
-
         //if is a Unit from a bridge doesnt need to be added there 
         //Bridge bz needs to be called when all bridge elements are spanwed
         if (HType.ToString().Contains(H.Unit.ToString()))
@@ -2514,12 +2520,6 @@ public class Building : Hoverable, Iinfo
         Program.gameScene.BatchAdd(this);
 
         Program.MouseListener.MStatsAndAchievements.CheckOnManualAchievements(HType+"");
-
-        ////bz trhu this way is the only way brdige can call it 
-        //if (MyId.Contains("Bridge"))
-        //{
-        //    PrivHandleZoningAddCrystals();
-        //}
     }
 
     #endregion
@@ -2970,6 +2970,28 @@ public class Building : Hoverable, Iinfo
         {
             Program.gameScene.QuestManager.QuestFinished("HireDocker");
         }
+
+
+
+
+        //called from Handle Last stage quest, tuto
+        //bz when demolishes adds 10,000
+        if (constructionAmt < 9500)
+        {
+            if (HType == H.Dock)
+            {
+                Program.gameScene.TutoStepCompleted("FinishDock.Tuto");
+            }
+            else if (HType == H.FieldFarmSmall)
+            {
+                Program.gameScene.QuestManager.QuestFinished("SmallFarm");
+            }
+            else if (HType == H.Bohio)
+            {
+                Program.gameScene.QuestManager.QuestFinished("Bohio");
+            }
+        }
+
     }
 
  

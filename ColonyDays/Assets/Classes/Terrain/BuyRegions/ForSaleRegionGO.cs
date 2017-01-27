@@ -11,7 +11,9 @@ public class ForSaleRegionGO : Hoverable
     private Rect _region;
 
     BigBoxPrev buildingPrev;
+    Animator _animator;
 
+    GameObject _hover;
 
     /// <summary>
     /// The index of the region 
@@ -47,6 +49,10 @@ public class ForSaleRegionGO : Hoverable
 
     void Start()
     {
+        _animator = gameObject.GetComponent<Animator>();
+        _hover = GetChildCalled("Hover");
+        _hover.gameObject.SetActive(false);
+
         var poly = U2D.FromRectToPoly(Region);
         buildingPrev = (BigBoxPrev)CreatePlane.CreatePlan(Root.bigBoxPrev, Root.dashedLinedSquare, container: transform);
         buildingPrev.UpdatePos(poly, .25f);
@@ -55,13 +61,60 @@ public class ForSaleRegionGO : Hoverable
         //MeshController.CrystalManager1.CrystalRegions[Index].StartWithAudioReport();
         Name = "Buy region";
         HType = H.BuyRegion;
+
+        transform.position += new Vector3(0, -1000, 0);
+        
     }
 
+
+
+    bool _isShown;
     void Update()
     {
+        if (!_isShown && MeshController.BuyRegionManager1.IsToShowNow())
+        {
+            _isShown = true;
+        }
+
+        if (_isShown && !MeshController.BuyRegionManager1.IsToShowNow())
+        {
+            _isShown = false;
+        }
+
+        AddressShow();
+        AddressHide();
+    }
+
+
+
+    private void AddressHide()
+    {
+        if (IsUpNow() && !_isShown)
+        {
+            transform.position += new Vector3(0, -1000, 0);
+        }
 
     }
 
+
+    
+
+    private void AddressShow()
+    {
+        if (!IsUpNow() && _isShown)
+        {
+            transform.position += new Vector3(0, 1000, 0);
+        }
+    }
+
+    bool IsUpNow()
+    {
+        return transform.position.y > 0;
+    }
+
+    /// <summary>
+    /// On mouse click
+    /// </summary>
     void OnMouseUp()
     {
         if (Program.IsInputLocked || Dialog.IsActive())
@@ -71,10 +124,7 @@ public class ForSaleRegionGO : Hoverable
 
         //in case one is up. gets destroyed
         Dialog.Listen("Dialog.Cancel");
-
         MeshController.BuyRegionManager1.SetCurrentRegion(Index);
-
-        Debug.Log(name);
         Dialog.OKCancelDialog(H.BuyRegion);
     }
 
@@ -84,12 +134,18 @@ public class ForSaleRegionGO : Hoverable
     protected void OnMouseEnter()
     {
         base.OnMouseEnter();
+        //if (!_hover.activeSelf)
+        //{
+        //    _hover.SetActive(true);
+        //}
     }
 
     protected void OnMouseExit()
     {
         base.OnMouseExit();
+        //_hover.SetActive(false);
     }
 
     #endregion
+
 }

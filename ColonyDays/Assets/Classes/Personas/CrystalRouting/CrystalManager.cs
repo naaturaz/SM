@@ -88,6 +88,25 @@ public class CrystalManager  {
 
 
 
+    public bool AreTheyContained(string spawnerKey, Rect buildRect)
+    {
+        var crystals = _allObstas.Where(a => a.ParentId == spawnerKey).ToList();
+
+        for (int i = 0; i < crystals.Count; i++)
+        {
+            if (buildRect.Contains(crystals[i].Position))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+
+
+
     /// <summary>
     /// Will return the region index where all the StillElement points are
     /// </summary>
