@@ -386,7 +386,8 @@ public class Languages
            " Select product and enter amount"},
        { "HireDocker.Quest", "Quest: Hire four dockers. The dockers will move the goods into the Dock from the Storage if you are exporting."+
            " Or viceversa if importing"},
-       { "Make100Bucks.Quest", "Quest: Make $100 exporting goods in the Dock"},
+       { "Make100Bucks.Quest", "Quest: Make $100 exporting goods in the Dock. "+
+           "Once a ship arrives will randomly pay product(s) in your Dock's inventory"},
 
 
        {"CompleteQuest", "Your reward is ${0}"},

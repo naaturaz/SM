@@ -327,6 +327,8 @@ public class GameScene : General
         Program.MouseListener.ApplyChangeScreenResolution();
 
         RedoStuffWithLoadedData();
+
+        Program.MouseListener.ReActivateGUIIfNeeded();
     }
 
 

@@ -186,6 +186,10 @@ public enum P
     QuickLime,
     Sand,
     Machinery,
+    Product,
+    Input1,
+    Input2,
+    Input3,
 
 
 }
@@ -421,6 +425,7 @@ public enum H
     InfoKey,
     CompleteQuest,
     MandatoryFeedback,
+    Building,
 
 
 }

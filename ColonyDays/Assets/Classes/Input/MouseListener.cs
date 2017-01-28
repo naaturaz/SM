@@ -81,38 +81,47 @@ public class MouseListener : InputMain
         _addOrderWindow = FindObjectOfType<AddOrderWindow>();
         _notificationWindow = FindObjectOfType<NotificationWindowGO>();
 
-        _bulletinWindow = FindObjectOfType<BulletinWindow>();
+        BulletinWindow = FindObjectOfType<BulletinWindow>();
 
-        Debug.Log("LoadMainGUI() GUI");
+        //Debug.Log("LoadMainGUI() GUI");
 
         if (CamControl.IsMainMenuOn())
         {
             HideMainGUI();
         }
     }
-
+    
 
     private Vector3 mainTempIniPos;
     public void HideMainGUI()
     {
-        //mainTempIniPos = main.transform.position;
-        //Vector3 t = mainTempIniPos;
-        //t.y -= 1400f;
-        //main.transform.position = t;
-
         main.gameObject.SetActive(false);
         //Debug.Log("HideMainGUI() GUI");
     }
 
     public void ShowMainGUI()
     {
-        //main.transform.position = mainTempIniPos;
-
         if (!main.gameObject.activeSelf)
         {
             main.gameObject.SetActive(true);
         }
     }
+
+    /// <summary>
+    /// CAlled from Release loading screen, only needed for 2nd game loaded
+    /// </summary>
+    internal void ReActivateGUIIfNeeded()
+    {
+        main.Destroy();
+        main = null;
+        LoadMainGUI();
+
+        if (main != null)
+        {
+            ShowMainGUI();
+        }
+    }
+
 
     public void ApplyChangeScreenResolution(bool promtToGame = false)
     {
@@ -162,7 +171,7 @@ public class MouseListener : InputMain
 
             _addOrderWindow.Hide();
             _buildingWindow.Hide();
-            _bulletinWindow.Hide();
+            BulletinWindow.Hide();
 
             //try to select person first
             if (!SelectPerson())
@@ -562,7 +571,7 @@ public class MouseListener : InputMain
 
         _buildingsMenu.Hide();
         _buildingWindow.Hide();
-        _bulletinWindow.Hide();
+        BulletinWindow.Hide();
     }
 
 
@@ -788,6 +797,12 @@ public class MouseListener : InputMain
     private MiniHelper _miniHelper;
     private BulletinWindow _bulletinWindow;
 
+    public BulletinWindow BulletinWindow
+    {
+        get { return _bulletinWindow; }
+        set { _bulletinWindow = value; }
+    }
+
 
 
 #endregion
@@ -881,7 +896,7 @@ public class MouseListener : InputMain
 
         return _buildingsMenu.IsShownNow() || _descriptionWindow.IsShownNow() ||
             _personWindow.IsShownNow() || _buildingWindow.IsShownNow() || _addOrderWindow.IsShownNow() ||
-            _bulletinWindow.IsShownNow();
+            BulletinWindow.IsShownNow();
     }
 
     public bool IsAWindowScrollableShownNow()
@@ -891,6 +906,15 @@ public class MouseListener : InputMain
             return false;
         }
 
-        return _addOrderWindow.IsShownNow() || _bulletinWindow.IsShownNow();
+        return _addOrderWindow.IsShownNow() || BulletinWindow.IsShownNow();
     }
+
+    internal void ClickOnAnInvItem(InvItem _invItem)
+    {
+        HideAllWindows();
+        BulletinWindow.Show();
+        BulletinWindow.ShowSpecs();
+    }
+
+
 }

@@ -194,7 +194,7 @@ public class MyScreen : General
         {
             if (!wasOptionalFeedbackShown)
             {
-                Dialog.InputFormDialog(H.MandatoryFeedback);
+                Dialog.InputFormDialog(H.OptionalFeedback);
                 wasOptionalFeedbackShown = true;
                 return;
             }

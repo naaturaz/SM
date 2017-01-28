@@ -101,6 +101,10 @@ public class Production  {
     InputElement _eleWoodComb = new InputElement(P.Wood, 0.1f);
     InputElement _eleCoalComb = new InputElement(P.Coal, 0.1f);
 
+    public List<ProductInfo> InputProducts()
+    {
+        return _inputProducts;
+    }
 
     void InputProdCheckAndAdd(ProductInfo pInfo)
     {
@@ -432,9 +436,7 @@ public class Production  {
         InputProdCheckAndAdd(new ProductInfo(P.Weapon, tool, H.BlackSmith));
         InputProdCheckAndAdd(new ProductInfo(P.Nail, tool, H.BlackSmith));
         InputProdCheckAndAdd(new ProductInfo(P.Utensil, tool, H.BlackSmith));
-
-
-
+        InputProdCheckAndAdd(new ProductInfo(P.Machinery, tool, H.BlackSmith));
 
         //InputProdCheckAndAdd(new ProductInfo(P.Axe, tool, H.BlackSmith));
         //InputProdCheckAndAdd(new ProductInfo(P.Sword, tool, H.BlackSmith));

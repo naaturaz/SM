@@ -131,7 +131,7 @@ public class AddOrderWindow : GUIElement {
             var iniPosHere = _scroll_Ini_PosGO.transform.localPosition +
                              new Vector3(0, -3.5f * i, 0);
 
-            var a = ButtonTile.CreateTile(_content.gameObject.transform, list[i].Product+"",
+            var a = ButtonTile.CreateTile(_content.gameObject.transform, list[i],
                 iniPosHere, this);
 
             _btns.Add(a);

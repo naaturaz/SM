@@ -259,4 +259,14 @@ public class ShowInvetoryItem : GUIElement
 
         return (int)amt + "";
     }
+
+
+    /// <summary>
+    /// Called from GUI
+    /// </summary>
+    public void ClickOnIt()
+    {
+        Program.MouseListener.ClickOnAnInvItem(_invItem);
+
+    }
 }

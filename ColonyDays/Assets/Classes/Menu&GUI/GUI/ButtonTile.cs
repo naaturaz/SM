@@ -9,9 +9,11 @@ using UnityEngine.UI;
 public class ButtonTile : GUIElement
 {
     private Text _descText;
+    private Text _priceText;
+
     private AddOrderWindow _addOrderWindow;
-    
-    public string Value { get; set; }
+
+    public ProdSpec Value { get; set; }
 
     public AddOrderWindow OrderWindow
     {
@@ -22,13 +24,16 @@ public class ButtonTile : GUIElement
     void Start()
     {
         _descText = FindGameObjectInHierarchy("Item_Desc", gameObject).GetComponent<Text>();
+        _priceText = FindGameObjectInHierarchy("Price_Desc", gameObject).GetComponent<Text>();
         
         Init();
     }
 
     private void Init()
     {
-        _descText.text = Value;
+        _descText.text = Value.Product+"";
+        _priceText.text = Value.Price.ToString("C2");
+
     }
 
     void Update()
@@ -45,7 +50,7 @@ public class ButtonTile : GUIElement
     }
 
     internal static ButtonTile CreateTile(Transform container,
-        string val, Vector3 iniPos, AddOrderWindow win)
+        ProdSpec val, Vector3 iniPos, AddOrderWindow win)
     {
         ButtonTile obj = null;
 

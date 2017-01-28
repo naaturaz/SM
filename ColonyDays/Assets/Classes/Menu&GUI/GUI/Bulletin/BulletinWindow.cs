@@ -61,6 +61,10 @@ public class BulletinWindow : GUIElement
         _content = GetGrandChildCalledFromThis("Content", _scroll);
         _contentRectTransform = _content.GetComponent<RectTransform>();
         _scroll_Ini_PosGO = GetChildCalledOnThis("Scroll_Ini_Pos", _content);
+
+
+        _verticScrollbar = FindGameObjectInHierarchy("Scrollbar Vertical", gameObject).GetComponent<Scrollbar>();
+
     }
 
     void Update()
@@ -91,6 +95,8 @@ public class BulletinWindow : GUIElement
     public void ShowScrool()
     {
         _scroll.SetActive(true);
+        //all the way up 
+        _verticScrollbar.value = 1;
     }
 
     public void ShowInBody(string text)
@@ -146,6 +152,18 @@ public class BulletinWindow : GUIElement
         ClickAndHideAll();
         _production.ShowExpirationReport();
     }
+
+    /// <summary>
+    /// Called from GUI
+    /// 
+    /// Also from GUI on Show_Invent_Item_Small_Med_3_Text
+    /// </summary>
+    public void ShowSpecs()
+    {
+        ClickAndHideAll();
+        _finance.ShowSpecs();
+    }
+
 
 
     public static void AddProduction(P p, float amt, string type)

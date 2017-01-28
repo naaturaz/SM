@@ -138,10 +138,10 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Beef, 300, 881, 60, 30 * 1));
 
         _prodSpecs.Add(new ProdSpec(P.Fish, 300, 932, 70, 30 * 1));
-        _prodSpecs.Add(new ProdSpec(P.Chocolate, 300, 600, 70, 30 * 12));
+        _prodSpecs.Add(new ProdSpec(P.Chocolate, 900, 600, 70, 30 * 12));
         _prodSpecs.Add(new ProdSpec(P.Salt, 30, 900, 85));
 
-        _prodSpecs.Add(new ProdSpec(P.Sugar, 50, 900, 70));
+        _prodSpecs.Add(new ProdSpec(P.Sugar, 1000, 900, 70));
         _prodSpecs.Add(new ProdSpec(P.SugarCane, 50, 200.2f, 100, 30 * 12));
 
         //frutas
@@ -156,8 +156,8 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Water, 1, 1000, 100));
         _prodSpecs.Add(new ProdSpec(P.Honey, 50, 1000, 100));
         _prodSpecs.Add(new ProdSpec(P.Beer, 80, 1000, 100));
-        _prodSpecs.Add(new ProdSpec(P.Rum, 80, 1000, 100));
-        _prodSpecs.Add(new ProdSpec(P.Wine, 90, 990, 100));
+        _prodSpecs.Add(new ProdSpec(P.Rum, 800, 1000, 100));
+        _prodSpecs.Add(new ProdSpec(P.Wine, 900, 990, 100));
         _prodSpecs.Add(new ProdSpec(P.Ink, 100, 990, 100));
 
         _prodSpecs.Add(new ProdSpec(P.Coal, 20, 180, 70));
@@ -170,11 +170,11 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Cotton, 40, 360, 120));
         _prodSpecs.Add(new ProdSpec(P.Leather, 70, 570, 20));
 
-        _prodSpecs.Add(new ProdSpec(P.Crockery, 10, 100, 10));//ceramic
-        _prodSpecs.Add(new ProdSpec(P.Gold, 500, 19300, 5));
-        _prodSpecs.Add(new ProdSpec(P.Diamond, 500, 3539, 5));
-        _prodSpecs.Add(new ProdSpec(P.Silver, 450, 10490, 8));
-        _prodSpecs.Add(new ProdSpec(P.Jewel, 450, 8490, 8));
+        _prodSpecs.Add(new ProdSpec(P.Crockery, 100, 100, 10));//ceramic
+        _prodSpecs.Add(new ProdSpec(P.Gold, 1000, 19300, 5));
+        _prodSpecs.Add(new ProdSpec(P.Diamond, 5000, 3539, 5));
+        _prodSpecs.Add(new ProdSpec(P.Silver, 900, 10490, 8));
+        _prodSpecs.Add(new ProdSpec(P.Jewel, 10000, 8490, 8));
         
         //_prodSpecs.Add(new ProdSpec(P.CrystalCoin, 1000, 8120, 5));
         //_prodSpecs.Add(new ProdSpec(P.CaribbeanCoin, 1500, 11441, 5));
@@ -204,30 +204,30 @@ public class ExportImport
 
 
         _prodSpecs.Add(new ProdSpec(P.Wood, 10, 800, 90));
-        _prodSpecs.Add(new ProdSpec(P.Tool, 150, 3000, 15));
-        _prodSpecs.Add(new ProdSpec(P.Utensil, 150, 3000, 15));
+        _prodSpecs.Add(new ProdSpec(P.Tool, 600, 3000, 15));
+        _prodSpecs.Add(new ProdSpec(P.Utensil, 400, 3000, 15));
 
 
-        _prodSpecs.Add(new ProdSpec(P.Brick, 50, 2000, 100));
-        _prodSpecs.Add(new ProdSpec(P.Mortar, 75, 2500, 100));
+        _prodSpecs.Add(new ProdSpec(P.Brick, 400, 2000, 100));
+        _prodSpecs.Add(new ProdSpec(P.Mortar, 350, 2500, 100));
         _prodSpecs.Add(new ProdSpec(P.QuickLime, 25, 1800, 100));
         _prodSpecs.Add(new ProdSpec(P.Sand, 20, 1500, 100));
 
 
         
-        _prodSpecs.Add(new ProdSpec(P.Barrel, 60, 100, 50));
-        _prodSpecs.Add(new ProdSpec(P.Bucket, 30, 90, 60));
-        _prodSpecs.Add(new ProdSpec(P.Crate, 40, 80, 50));
-        _prodSpecs.Add(new ProdSpec(P.WheelBarrow, 140, 40, 25));
-        _prodSpecs.Add(new ProdSpec(P.Cart, 240, 20, 20));
-        _prodSpecs.Add(new ProdSpec(P.Furniture, 440, 10, 15));
+        _prodSpecs.Add(new ProdSpec(P.Barrel, 600, 100, 50));
+        _prodSpecs.Add(new ProdSpec(P.Bucket, 300, 90, 60));
+        _prodSpecs.Add(new ProdSpec(P.Crate, 400, 80, 50));
+        _prodSpecs.Add(new ProdSpec(P.WheelBarrow, 1400, 40, 25));
+        _prodSpecs.Add(new ProdSpec(P.Cart, 2400, 20, 20));
+        _prodSpecs.Add(new ProdSpec(P.Furniture, 840, 10, 15));
 
 
         _prodSpecs.Add(new ProdSpec(P.Cigar, 200, 700, 50));
-        _prodSpecs.Add(new ProdSpec(P.CigarBox, 20, 200, 60));
+        _prodSpecs.Add(new ProdSpec(P.CigarBox, 200, 200, 60));
         //_prodSpecs.Add(new ProdSpec(P.Slat, 40, 600, 70));
-        _prodSpecs.Add(new ProdSpec(P.FloorTile, 60, 2100, 90));
-        _prodSpecs.Add(new ProdSpec(P.RoofTile, 60, 2100, 90));
+        _prodSpecs.Add(new ProdSpec(P.FloorTile, 600, 2100, 90));
+        _prodSpecs.Add(new ProdSpec(P.RoofTile, 600, 2100, 90));
 
 
         _prodSpecs.Add(new ProdSpec(P.Fabric, 100, 400, 20));
@@ -238,8 +238,8 @@ public class ExportImport
 
 
         _prodSpecs.Add(new ProdSpec(P.Paper, 150, 192, 30));
-        _prodSpecs.Add(new ProdSpec(P.Map, 50, 292, 50));
-        _prodSpecs.Add(new ProdSpec(P.Book, 300, 502, 5));
+        _prodSpecs.Add(new ProdSpec(P.Map, 500, 292, 50));
+        _prodSpecs.Add(new ProdSpec(P.Book, 900, 502, 5));
        // _prodSpecs.Add(new ProdSpec(P.Silk, 150, 1300, 5));
 
 

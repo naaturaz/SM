@@ -49,14 +49,14 @@ public class QuestManager
     List<Quest> _bank = new List<Quest>()
     { 
         //need to mention reward still 
-        new Quest("Bohio.Quest", 500, 7),
-        new Quest("SmallFarm.Quest", 550, 7),
+        new Quest("Bohio.Quest", 500, 30),
+        new Quest("SmallFarm.Quest", 550, 90),
         new Quest("FarmHire.Quest", 600, 5),
-        new Quest("FarmProduce.Quest", 650, 7, 300),
-        new Quest("Transport.Quest", 700, 7),
-        new Quest("Export.Quest", 750, 7),
-        new Quest("HireDocker.Quest", 800, 7),
-        new Quest("Make100Bucks.Quest", 850, 7, 100),
+        new Quest("FarmProduce.Quest", 650, 90, 300),
+        new Quest("Transport.Quest", 700, 90),
+        new Quest("Export.Quest", 750, 90),
+        new Quest("HireDocker.Quest", 800, 90),
+        new Quest("Make100Bucks.Quest", 850, 90, 100),
     };
 
     public QuestManager() { }
@@ -163,9 +163,8 @@ public class QuestManager
 
     public void Update()
     {
-        //return;
-
-        if (CurrentQuest >= _bank.Count || _lastCompleted < 0)
+        if (Program.MouseListener.IsAWindowShownNow() || CamControl.IsMainMenuOn() ||
+            CurrentQuest >= _bank.Count || _lastCompleted < 0)
         {
             return;
         }
@@ -175,12 +174,14 @@ public class QuestManager
             return;
         }
 
-        if (_lastCompleted == 0 && !Showed && Program.gameScene.GameWasFullyLoadedAnd10SecAgo())
+        //starts up
+        if (CurrentQuest == -1 && _lastCompleted == 0 && !Showed && Program.gameScene.GameWasFullyLoadedAnd10SecAgo())
         {
             CurrentQuest = 0;
             ShowCurrentQuest();
         }
 
+        //to show  others  and loaded 
         if (Time.time > _lastCompleted + _bank[CurrentQuest].SecWait && !Showed)
         {
             ShowCurrentQuest();
