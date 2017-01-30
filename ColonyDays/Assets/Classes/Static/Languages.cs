@@ -326,8 +326,7 @@ public class Languages
        { "CamMov.Tuto", "Tutorial completion reward is $10,000. Step1: Use [WASD] or arrow keys to move the Camera."},
        { "CamMov5x.Tuto", "Use [WASD] or arrow keys and keep press the 'Left Shift' key to move the Camera 5 times quicker."},
        { "CamRot.Tuto", "Now press the scroll wheel down on your mouse and move your mouse to rotate the Camera."},
-       { "CamHeaven.Tuto", "Scroll back with your mouse middle button until the camera reaches"
-            + " the sky. This view is useful to place bigger buildings such as the Port"},
+
        
        { "BackToTown.Tuto", "Press the key [P] on the keyboard to go to the initial position of the camera"},
       
@@ -338,6 +337,9 @@ public class Languages
        
        { "Trade.Tuto", "That was easy, the hard part is coming. Click on the 'Trade' buildings button, located in the middle bottom bar, 'Trade' is the 7th button. "+
            "When you hover over it, it will popup 'Trade'"},
+       { "CamHeaven.Tuto", "Scroll back with your mouse middle button until the camera reaches"
+            + " the sky. This view is useful to place bigger buildings such as the Port"},
+
        { "Dock.Tuto", "Now click on the 'Dock' building, it is the 1st button. When you hover over it, it will"+
            " show it's cost and description"},
        { "Dock.Placed.Tuto", "Now the hard, read carefully. Notice that you can use the "+

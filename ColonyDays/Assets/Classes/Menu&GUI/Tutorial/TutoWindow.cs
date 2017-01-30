@@ -19,10 +19,12 @@ class TutoWindow : GUIElement
         "CamMov.Tuto",
         "CamMov5x.Tuto",
         "CamRot.Tuto",
-        "CamHeaven.Tuto",
         "BackToTown.Tuto",
         "BuyRegion.Tuto",//they most be one after
+        
+        "CamHeaven.Tuto",
         "Trade.Tuto",//the other
+
         "Dock.Tuto",
         "Dock.Placed.Tuto",
         "MaxSpeed.Tuto",

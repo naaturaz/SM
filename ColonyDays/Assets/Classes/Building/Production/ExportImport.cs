@@ -191,11 +191,11 @@ public class ExportImport
 
         //militar
         _prodSpecs.Add(new ProdSpec(P.CannonBall, 500, 6874, 20));
-        _prodSpecs.Add(new ProdSpec(P.CannonPart, 500, 5944, 20));
-        _prodSpecs.Add(new ProdSpec(P.Weapon, 150, 5000, 8));
+        _prodSpecs.Add(new ProdSpec(P.CannonPart, 1000, 5944, 20));
+        _prodSpecs.Add(new ProdSpec(P.Weapon, 1200, 5000, 8));
         //_prodSpecs.Add(new ProdSpec(P.Sword, 150, 6000, 8));
         //_prodSpecs.Add(new ProdSpec(P.Axe, 50, 2500, 10));
-        _prodSpecs.Add(new ProdSpec(P.GunPowder, 100, 1281, 60));
+        _prodSpecs.Add(new ProdSpec(P.GunPowder, 900, 1281, 60));
 
 
 
@@ -223,7 +223,7 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Furniture, 840, 10, 15));
 
 
-        _prodSpecs.Add(new ProdSpec(P.Cigar, 200, 700, 50));
+        _prodSpecs.Add(new ProdSpec(P.Cigar, 950, 700, 50));
         _prodSpecs.Add(new ProdSpec(P.CigarBox, 200, 200, 60));
         //_prodSpecs.Add(new ProdSpec(P.Slat, 40, 600, 70));
         _prodSpecs.Add(new ProdSpec(P.FloorTile, 600, 2100, 90));

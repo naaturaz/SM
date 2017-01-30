@@ -161,6 +161,8 @@ public class BuyRegionManager
 
         var gO = _forSaleRegionGoes.Find(a => a.Index == _currentRegion);
         gO.Destroy();
+
+        HideRegions();
     }
 
     /// <summary>
@@ -227,7 +229,10 @@ public class BuyRegionManager
         ShowedAt = Time.time;
     }
 
-
+    internal void HideRegions()
+    {
+        _isToShowNow = false;
+    }
 
     public bool IsToShowNow()
     {
