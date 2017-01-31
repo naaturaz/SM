@@ -372,7 +372,7 @@ public class Plant : General
     {
         //how much grew
         var localScale = gameObject.transform.localScale;
-        return localScale.y * _productionFactor * .5f; // .75f  1.25  2.5
+        return localScale.y * _productionFactor * .1f; //.5   .75f 
     }
 
 

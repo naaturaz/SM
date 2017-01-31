@@ -1365,8 +1365,9 @@ public class Building : Hoverable, Iinfo
     /// <returns></returns>
    private bool CrystalsAreContainedInThisBuilding(string key)
    {
-       var scale = UPoly.ScalePoly(Bounds, 0.4f);
-       var rect = Registro.ReturnDimOnMap(scale);
+       var loBound = Bounds.ToArray();
+       var scale = UPoly.ScalePoly(loBound, 0.4f).ToArray();
+       var rect = Registro.ReturnDimOnMap(scale.ToList());
 
        return MeshController.CrystalManager1.AreTheyContained(key, rect);
    }

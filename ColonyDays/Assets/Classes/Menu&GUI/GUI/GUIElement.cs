@@ -9,6 +9,7 @@ public class GUIElement : General {
 
     protected InputField _titleInputField;
     protected GameObject _titleInputFieldGO;
+    private Scrollbar _verticScrollbar;
 
 	// Use this for initialization
 	protected void Start () {
@@ -117,5 +118,16 @@ public class GUIElement : General {
             "Fill: "+percentOcup.ToString("F1") + "% \n";
 
         return res;
+    }
+
+    internal void ResetScroolPos()
+    {
+
+        if (_verticScrollbar == null)
+        {
+            _verticScrollbar = FindGameObjectInHierarchy("Scrollbar Vertical", gameObject).GetComponent<Scrollbar>();
+        }
+
+        _verticScrollbar.value = 1;
     }
 }

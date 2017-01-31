@@ -1129,10 +1129,24 @@ public class Person : Hoverable
         if (Age > _lifeLimit && !IsPregnant)
         {
             //print(MyId + " gone , se partio.To old" + " home:" + Home.MyId);
-            Program.gameScene.GameController1.NotificationsManager1.Notify("PersonDie", Name);
+
+            var noti = "PersonDie";
+            if (Work != null && MyText.Lazy() > 0)
+            {
+                noti="DieReplacementFound";
+            }
+            else if (Work != null && MyText.Lazy() == 0)
+            {
+                noti="DieReplacementNotFound";
+            }
+            Program.gameScene.GameController1.NotificationsManager1.Notify(noti, Name);
             ActionOfDisappear();
         }
     }
+
+
+
+
 
     /// <summary>
     /// Will order to the brain to disapper 
@@ -2457,6 +2471,8 @@ public class Person : Hoverable
     private Camera cam;
     internal void CheckMouseClicked()
     {
+        return;
+
         if (!LevelOfDetail1.OutOfScreen1.OnScreenRenderNow || cam == null)
         {
             return;
@@ -2605,6 +2621,31 @@ public class Person : Hoverable
         if (_showPathToChill != null)
         {
             _showPathToChill.Hide();
+        }
+    }
+
+
+    public void DestroyPaths()
+    {
+        if (_showPathToHome != null)
+        {
+            _showPathToHome.Destroy();
+        }
+        if (_showPathToWork != null)
+        {
+            _showPathToWork.Destroy();
+        }
+        if (_showPathToFood != null)
+        {
+            _showPathToFood.Destroy();
+        }
+        if (_showPathToReligion != null)
+        {
+            _showPathToReligion.Destroy();
+        }
+        if (_showPathToChill != null)
+        {
+            _showPathToChill.Destroy();
         }
     }
 

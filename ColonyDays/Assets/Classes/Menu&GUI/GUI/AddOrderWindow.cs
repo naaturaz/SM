@@ -96,6 +96,8 @@ public class AddOrderWindow : GUIElement {
 
         transform.position = iniPos;
 
+        ResetScroolPos();
+
         Display();
     }
 

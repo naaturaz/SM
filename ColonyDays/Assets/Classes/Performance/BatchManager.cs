@@ -20,7 +20,7 @@ public class BatchManager
     public BatchManager(string id)
     {
         SetUp(id, _semiIndeces);
-        Debug.Log("BathMnanager init");
+        //Debug.Log("BathMnanager init");
     }
 
     private void SetUp(string id, Dictionary<int, string> dict)
@@ -49,8 +49,8 @@ public class BatchManager
         }
         //the last 2 never get to the 'else'
         Set2BatchRegions(idH, regions, dict);
-        Debug.Log("_semiIndeces ct:" + _semiIndeces.Count + ". Cryst.Regions ct:" +
-            MeshController.CrystalManager1.CrystalRegions.Count);
+        //Debug.Log("_semiIndeces ct:" + _semiIndeces.Count + ". Cryst.Regions ct:" +
+            //MeshController.CrystalManager1.CrystalRegions.Count);
     }
 
     /// <summary>

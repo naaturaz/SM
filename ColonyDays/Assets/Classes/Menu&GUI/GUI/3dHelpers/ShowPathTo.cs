@@ -252,5 +252,13 @@ public class ShowPathTo
         //if not togle so it hides
         Toggle();
     }
+
+    internal void Destroy()
+    {
+        for (int i = 0; i < _spawns.Count; i++)
+        {
+            _spawns[i].Destroy();
+        }
+    }
 }
 

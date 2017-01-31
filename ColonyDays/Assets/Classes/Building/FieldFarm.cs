@@ -133,7 +133,7 @@ public class FieldFarm : Farm
             DefineSpaceBtnPlants();
         }
         _seedLoc = RetuFillPoly(_NW, _SE, _spaceBtwPlants, _spaceBtwPlants);
-        Debug.Log(_building.MyId + ". seeds: " + _seedLoc.Count);
+        //Debug.Log(_building.MyId + ". seeds: " + _seedLoc.Count);
         //UVisHelp.CreateHelpers(_seedLoc, Root.blueCube);
     }
 

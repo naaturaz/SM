@@ -253,8 +253,16 @@ public class Languages
        { "AgeMajor.Noti.Name", "New worker"},
 	   { "AgeMajor.Noti.Desc", "{0} is ready to work"},
 
+
        { "PersonDie.Noti.Name", "A person has died"},
-	   { "PersonDie.Noti.Desc", "{0} has died"},
+       { "PersonDie.Noti.Desc", "{0} has died"},
+
+       { "DieReplacementFound.Noti.Name", "A person has died"},
+       { "DieReplacementFound.Noti.Desc", "{0} has died. A job replacement was found."},
+       
+       { "DieReplacementNotFound.Noti.Name", "A person has died"},
+       { "DieReplacementNotFound.Noti.Desc", "{0} has died. No job replacement was found"},
+
 
        { "FullStore.Noti.Name", "A storage is getting full"},
 	   { "FullStore.Noti.Desc", "A storage is at {0}% capacity"},
@@ -269,6 +277,9 @@ public class Languages
 	   { "Built.Noti.Desc", "{0} has being fully built"},
 
        { "cannot produce", "cannot produce"},
+       
+       
+
 
 
        //Main notificaion

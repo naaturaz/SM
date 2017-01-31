@@ -13,7 +13,6 @@ public class BulletinWindow : GUIElement
     private RectTransform _contentRectTransform;
     private GameObject _scroll_Ini_PosGO;
     private GameObject _scroll;
-    private Scrollbar _verticScrollbar;
 
     //subBulletins
     private SubBulletinGeneral _workers;
@@ -63,7 +62,6 @@ public class BulletinWindow : GUIElement
         _scroll_Ini_PosGO = GetChildCalledOnThis("Scroll_Ini_Pos", _content);
 
 
-        _verticScrollbar = FindGameObjectInHierarchy("Scrollbar Vertical", gameObject).GetComponent<Scrollbar>();
 
     }
 
@@ -96,8 +94,13 @@ public class BulletinWindow : GUIElement
     {
         _scroll.SetActive(true);
         //all the way up 
-        _verticScrollbar.value = 1;
+
+        base.ResetScroolPos();
+
+
     }
+
+
 
     public void ShowInBody(string text)
     {

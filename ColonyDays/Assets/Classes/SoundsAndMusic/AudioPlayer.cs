@@ -153,16 +153,11 @@ public class AudioPlayer  {
             return;
         }
 
-        //if (_soundsLib.Count == 0)
-        //{
-        //    InitSoundsLib();
-        //}
-
         var type = TreatType(hTypeP, currProd);
         if (_sounds.ContainsKey(type))
         {
             //play sound
-            Debug.Log("play sound " + type);
+            //Debug.Log("play sound " + type);
             _sounds[type].Play();
         }
         else

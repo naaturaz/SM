@@ -3060,6 +3060,8 @@ public class Brain
         if (Partido && string.IsNullOrEmpty(_person.IsBooked))
         {
             _person.UnselectPerson();
+            //called bz doesnt hide as person obj disapears 
+            _person.DestroyPaths();
 
             _person.Body.DestroyAllPersonalObj();
             PersonPot.Control.Queues.PersonDie();

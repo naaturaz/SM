@@ -74,7 +74,7 @@ public class InputMouse : InputParent
     /// </summary>
     public void Select(Ca cat, string keyName)
     {
-        print("Select() " + cat + ".keyName:" + keyName);
+        //print("Select() " + cat + ".keyName:" + keyName);
         if (cat == Ca.Structure || cat == Ca.Shore)
         {
             if (BuildingPot.Control.Registro.Structures.Count > 0)
