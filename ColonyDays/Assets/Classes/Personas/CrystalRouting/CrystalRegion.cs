@@ -260,6 +260,10 @@ public class CrystalRegion
         {
             var a = 1;
         }
+        if (Index == 51)
+        {
+            var a = 1;
+        }
 
         var myCrsytals = ReturnDiffCrystalsNames();
         //crystals that are seaType 

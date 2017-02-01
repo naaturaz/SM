@@ -348,7 +348,6 @@ public class TerrainSpawnerController : ControllerParent
         {
             SpawnAllObj();
             print(IsToSave + " isToSave = true, we are generating all spanwened obj now ");
-
         }
 
         if (toSpawnListCounter == toSpawnList.Count && IsToSave && toSpawnList.Count > 0)
@@ -470,11 +469,11 @@ public class TerrainSpawnerController : ControllerParent
     Vector3 ReturnIniPosOfSpawn(H typeP, Vector3 iniPos, float howFar)
     {
         //if is a marine will 
-        if (typeP == H.Marine)
+        if (typeP == H.Marine && m.SubMesh.MarineBounds.Count > 0)
         {
             return m.SubMesh.MarineBounds[rand.Next(0, m.SubMesh.MarineBounds.Count)];
         }
-        if (typeP == H.Mountain)
+        if (typeP == H.Mountain && m.SubMesh.MountainBounds.Count > 0)
         {
             var v3 = m.SubMesh.MountainBounds[rand.Next(0, m.SubMesh.MountainBounds.Count)];
 

@@ -1348,6 +1348,8 @@ public class CrystalManager  {
                 MeshController.CrystalManager1.CrystalRegions[Index].DoAroundAudioSurvey();
                 //MeshController.CrystalManager1.CrystalRegions[Index].DebugHere();
             }
+
+            //Debug.Log("Reg Audio Report: " + CrystalRegions[Index].WhatAudioIReport);
         }
     }
 

@@ -8,7 +8,10 @@ using UnityEngine;
 public class SubMeshData 
 {
     public int amountOfSubVertices;// how many subvertices has
-    public float mostCommonYValue;//basically the ground level
+   
+    //hard coded bz an island the mostcomom value is 2.5f bz is the ground of the floor
+    //public float mostCommonYValue = 10.2f;//basically the ground level
+   
     public List<Lot> AllSubMeshedLots = new List<Lot>();
     //public Grid grid = new Grid();
 

@@ -264,7 +264,7 @@ public class MeshController : ControllerParent
             Malla.Lots = Lots;
             subMesh.AllSubMeshedLots = Malla.Lots;
             subMesh.amountOfSubVertices = AllVertexs.Count;
-            subMesh.mostCommonYValue = UList.FindMostCommonValue(H.Y, Vertices.ToList());
+            //subMesh.mostCommonYValue = UList.FindMostCommonValue(H.Y, Vertices.ToList());
            
             WriteXML();
             //print(subMesh.amountOfSubVertices + " subMesh.amountOfSubVertices ");

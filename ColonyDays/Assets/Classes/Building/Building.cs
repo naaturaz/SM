@@ -1525,7 +1525,7 @@ public class Building : Hoverable, Iinfo
     {
         for (int i = 0; i < anchorsListP.Count; i++)
         {
-            bool isV3onFloor = IsVector3OnTheFloor(anchorsListP[i], m.SubMesh.mostCommonYValue, variance);
+            bool isV3onFloor = IsVector3OnTheFloor(anchorsListP[i], 10.2f, variance);
             if (!isV3onFloor)
             {
                 return false;

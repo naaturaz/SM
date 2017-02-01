@@ -66,6 +66,8 @@ public class Root : MonoBehaviour
         {
             //bayAndMountain, bayAndMountainSoft, 
             bayAndMountain1River, 
+            "Prefab/Terrain/Center_Island",//
+
             //two_Islands_1_River,
             oneLand2Islands, 
             narrowIslandsLand,
