@@ -426,6 +426,8 @@ public enum H
     CompleteQuest,
     MandatoryFeedback,
     Building,
+    Day,
+    Night,
 
 
 }

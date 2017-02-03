@@ -206,7 +206,7 @@ public class SubDivider : General
         RaycastHit hit;
         // Bit shift the index of the layer (8) to get a bit mask
         // This would cast rays only against colliders in layer 8.
-        int layerMask = 1 << 8;
+        int layerMask = 1 << 8;//8
         // Does the ray intersect any objects in the layer 8 "Terrain Layer"
         if (Physics.Raycast(origin, Vector3.down, out hit, Mathf.Infinity, layerMask))
         {

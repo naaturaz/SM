@@ -77,7 +77,7 @@ public class AudioContainer : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("newAudioContainer: " + Root1);
+        //Debug.Log("newAudioContainer: " + Root1);
         AddSpecificAudioSource();
 
         if (IsAmbience())

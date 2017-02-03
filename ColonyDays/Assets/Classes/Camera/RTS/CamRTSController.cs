@@ -322,6 +322,7 @@ public class CamRTSController : CamControl
         }
     }
 
+
     /// <summary>
     /// Creates obj in center of screen on the terrain that is used to 
     /// be the center of camera when rotates
@@ -333,7 +334,7 @@ public class CamRTSController : CamControl
 
         // Bit shift the index of the layer (8) to get a bit mask
         // This would cast rays only against colliders in layer 8.
-        int layerMask = 1 << 8;
+        int layerMask = 1 << 8;//8
 
         // Does the ray intersect any objects in the layer 8 "Terrain Layer"
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward),

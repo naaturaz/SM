@@ -1525,7 +1525,7 @@ public class Building : Hoverable, Iinfo
     {
         for (int i = 0; i < anchorsListP.Count; i++)
         {
-            bool isV3onFloor = IsVector3OnTheFloor(anchorsListP[i], 10.2f, variance);
+            bool isV3onFloor = IsVector3OnTheFloor(anchorsListP[i], m.SubMesh.mostCommonYValue, variance);
             if (!isV3onFloor)
             {
                 return false;
@@ -2564,7 +2564,7 @@ public class Building : Hoverable, Iinfo
             Anchors.Clear();
             _polyOnGrid.Clear();
 
-            Debug.Log("townLoaded:" + MyId);
+            //Debug.Log("townLoaded:" + MyId);
             Anchors = GetAnchors();
             
             LandZone1.Clear();
