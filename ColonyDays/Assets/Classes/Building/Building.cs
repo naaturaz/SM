@@ -2972,9 +2972,6 @@ public class Building : Hoverable, Iinfo
             Program.gameScene.QuestManager.QuestFinished("HireDocker");
         }
 
-
-
-
         //called from Handle Last stage quest, tuto
         //bz when demolishes adds 10,000
         if (constructionAmt < 9500)
@@ -2991,8 +2988,11 @@ public class Building : Hoverable, Iinfo
             {
                 Program.gameScene.QuestManager.QuestFinished("Bohio");
             }
+            else if (HType == H.HeavyLoad)
+            {
+                Program.gameScene.QuestManager.QuestFinished("HeavyLoad");
+            }
         }
-
     }
 
  

@@ -215,8 +215,8 @@ public class TerrainSpawnerController : ControllerParent
 
 
 #if UNITY_EDITOR
-        //multiplier = 2;//2
-        //howManyGrassToSpawn = 2;//40
+        multiplier = 2;//2
+        howManyGrassToSpawn = 2;//40
 
         LeaveEditorPool(pools);
 #endif
@@ -275,7 +275,7 @@ public class TerrainSpawnerController : ControllerParent
     /// </summary>
     private void DefineAllOrnaRoots()
     {
-        for (int i = 1; i < 10 + 1; i++)
+        for (int i = 1; i < 9 + 1; i++)
         {
             allOrna.Add("Prefab/Terrain/Spawner/Orna/Orna" + i);
         }

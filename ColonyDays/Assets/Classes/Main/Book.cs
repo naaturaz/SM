@@ -67,6 +67,8 @@ public class Book : General
 
         Build.Add(new BuildStat(H.CoachMan, 800, 80, 20, 0, 5, maxPeople: 8));
         Build.Add(new BuildStat(H.Masonry, 800, 10, 50, 0, 5, maxPeople: 12));
+        Build.Add(new BuildStat(H.StandLamp, 100, 0, 0, 0, 5, maxPeople: 0, capacity: 0f));
+
         Build.Add(new BuildStat(H.HeavyLoad, 1800, 10, 0, 0, 5, maxPeople: 3));
         Build.Add(new BuildStat(H.LightHouse, 800, 80, 20, 0, 5, maxPeople: 3));
 
@@ -86,7 +88,7 @@ public class Book : General
         Build.Add(new BuildStat(H.AnimalFarmLarge, 600, 9, 5, 9, 5, maxPeople: 9, capacity: 2));
         Build.Add(new BuildStat(H.AnimalFarmXLarge, 1000, 11, 5, 11, 5, maxPeople: 12, capacity: 3));
 
-        Build.Add(new BuildStat(H.FieldFarmSmall, 100, .5f, 0, 0,  maxPeople: 2, capacity: 1));
+        Build.Add(new BuildStat(H.FieldFarmSmall, 100, .5f, 0, 0,  maxPeople: 2, capacity: .5f));
         Build.Add(new BuildStat(H.FieldFarmMed, 200, .75f, 0, 0,  maxPeople: 4, capacity: 1));
         //Build.Add(new BuildStat(H.FieldFarmLarge, 300, .9f, 0, 0,  maxPeople: 6, capacity: 2));
         //Build.Add(new BuildStat(H.FieldFarmXLarge, 1000, 5, 0, 0,  maxPeople: 9, capacity: 3));

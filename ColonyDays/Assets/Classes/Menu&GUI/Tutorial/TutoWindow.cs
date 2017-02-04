@@ -32,7 +32,7 @@ class TutoWindow : GUIElement
         "AddWorkers.Tuto",
         "HideBulletin.Tuto",
         "FinishDock.Tuto",
-        "ShowMiniHelp.Tuto",
+        "ShowHelp.Tuto",
         
         "SelectDock.Tuto",
         "OrderTab.Tuto",
@@ -40,6 +40,8 @@ class TutoWindow : GUIElement
         "AddOrder.Tuto",
         "CloseDockWindow.Tuto",
         "Rename.Tuto",
+        "Spec.Tuto",
+
     };
 
     //which is being shown now 

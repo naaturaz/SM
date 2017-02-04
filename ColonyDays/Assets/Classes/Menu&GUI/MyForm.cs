@@ -179,7 +179,11 @@ public class MyForm : General
             _showPathToSea.Update();
         }
 
-        var a = this;
+        if (_miniHelper!= null && Input.GetKeyUp(KeyCode.F1))
+        {
+            ManagerReport.AddInput("KeyCode.F1");
+            _miniHelper.Show();
+        }
     }
 
     protected GameObject GetChildCalled(H childName, GameObject parent)

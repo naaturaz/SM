@@ -165,6 +165,7 @@ public class BulletinWindow : GUIElement
     {
         ClickAndHideAll();
         _finance.ShowSpecs();
+        Program.gameScene.TutoStepCompleted("Spec.Tuto");
     }
 
 

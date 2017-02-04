@@ -17,9 +17,10 @@ class MiniHelper : GUIElement
         "PeopleRange",
         "PirateThreat.Help",
         "PortReputation.Help",
-        "Emigrate.Help",
+        //"Emigrate.Help",
         "Food.Help",
         "Weight.Help",
+        "More.Help"
     };
 
     //which is being shown now 
@@ -67,12 +68,12 @@ class MiniHelper : GUIElement
         _rectTransform.position = new Vector3(2500, 2500);
         _text.text = "";
 
-        Program.gameScene.TutoStepCompleted("CloseMiniHelp.Tuto");
+        //Program.gameScene.TutoStepCompleted("CloseHelp.Tuto");
     }
 
     internal void Show()
     {
-        Program.gameScene.TutoStepCompleted("ShowMiniHelp.Tuto");
+        Program.gameScene.TutoStepCompleted("ShowHelp.Tuto");
 
 
         AudioCollector.PlayOneShotFullAudio("ClickMetal2");

@@ -676,6 +676,8 @@ public class Root : MonoBehaviour
         
         buildsRoot.Add(H.CoachMan, "Prefab/Building/Infrastructure/CoachMan");
         buildsRoot.Add(H.Masonry, "Prefab/Building/Infrastructure/Masonry");
+        buildsRoot.Add(H.StandLamp, "Prefab/Building/Infrastructure/StandLamp");
+
         buildsRoot.Add(H.HeavyLoad, "Prefab/Building/Infrastructure/HeavyLoad");
        
         buildsRoot.Add(H.LightHouse, "Prefab/Building/Infrastructure/LightHouse");

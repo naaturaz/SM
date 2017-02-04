@@ -19,8 +19,8 @@ public class StageManager : General
     int _dayLenght = 300;
     int _nightLenght = 60;
 
-    float _daySpeed = .1f;
-    float _nightSpeed = 2f;
+    float _daySpeed = .6f;
+    float _nightSpeed = .6f;
 
     bool _isOnTransition;
 
@@ -38,7 +38,7 @@ public class StageManager : General
     /// 
     /// At night time is the same but divided /5
     /// </summary>
-    List<float> _times = new List<float>() { 1, 15, 15, 15, 15, 5 };
+    List<float> _times = new List<float>() { 1, 5, 5, 5, 5, 5 };
 
     float _startedCycleAt = 0;
 
@@ -100,7 +100,7 @@ public class StageManager : General
     private void BlendIntoNextStage()
     {
         var transfTo = _stages[_currentStage].transform.position;
-        float step = _daySpeed * Time.deltaTime;
+        float step = ReturnSpeed() * Time.deltaTime;
 
         _main.transform.position = Vector3.MoveTowards(_main.transform.position, transfTo, step);
         _main.transform.LookAt(_center);
@@ -234,6 +234,16 @@ public class StageManager : General
             }
         }
         return -1;
+    }
+
+    internal bool IsSunsetOrLater()
+    {
+        return _currentCycle == H.Night || (_currentCycle == H.Day && _currentStage > 4);
+    }
+
+    internal bool IsDawnOrLater()
+    {
+        return _currentCycle == H.Day && _currentStage > 0;
     }
 }
 

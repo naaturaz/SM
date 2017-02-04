@@ -49,14 +49,16 @@ public class QuestManager
     List<Quest> _bank = new List<Quest>()
     { 
         //need to mention reward still 
-        new Quest("Bohio.Quest", 500, 30),
-        new Quest("SmallFarm.Quest", 550, 90),
-        new Quest("FarmHire.Quest", 600, 5),
-        new Quest("FarmProduce.Quest", 650, 90, 300),
-        new Quest("Transport.Quest", 700, 90),
-        new Quest("Export.Quest", 750, 90),
-        new Quest("HireDocker.Quest", 800, 90),
-        new Quest("Make100Bucks.Quest", 850, 90, 100),
+        new Quest("Bohio.Quest", 500, 90.5f),
+        new Quest("SmallFarm.Quest", 550, 90.5f),
+        new Quest("FarmHire.Quest", 600, 5.5f),
+        new Quest("FarmProduce.Quest", 650, 5.5f, 300),
+        //new Quest("Transport.Quest", 700, 90.5f),
+        new Quest("Export.Quest", 750, 120.5f),
+        new Quest("HireDocker.Quest", 800, 120.5f),
+        new Quest("MakeBucks.Quest", 850, 120.5f, 100),
+        new Quest("HeavyLoad.Quest", 900, 120.5f),
+
     };
 
     public QuestManager() { }
@@ -77,7 +79,7 @@ public class QuestManager
             Program.gameScene.GameController1.Dollars += _bank[CurrentQuest].Prize;
             AudioCollector.PlayOneShot("BoughtLand", 0);
 
-            _questWindow.RemoveAQuest(which);
+            _questWindow.RemoveAQuest(_bank[CurrentQuest]);
             _currentQuests.Remove(CurrentQuest);//remove from _current list
             _doneQuest.Add(CurrentQuest);//adds to done list 
 
@@ -127,7 +129,7 @@ public class QuestManager
         }
 
         Showed = true;
-        _questWindow.SetAQuest(_bank.ElementAt(CurrentQuest).Key);
+        _questWindow.SetAQuest(_bank.ElementAt(CurrentQuest));
 
         if (_wasLoaded)
         {
@@ -221,7 +223,7 @@ public class QuestManager
 
 
 
-class Quest
+public class Quest
 {
     string _key;
 
@@ -291,4 +293,14 @@ class Quest
         return Progress >= Goal;
     }
 
+
+    internal bool IsAPercetangeOne()
+    {
+        return _goal != -1;
+    }
+
+    internal float PercetageDone()
+    {
+        return _progress / _goal;
+    }
 }

@@ -158,7 +158,7 @@ public class InputMain : InputParent {
         {
             RightClickRoutine();
         }
-        else if (!Dialog.IsActive() && Developer.IsDev && Input.GetKeyUp(KeyCode.J))
+        else if (!Dialog.IsActive() && Developer.IsDev && Input.GetKeyUp(KeyCode.F11))
         {
             Program.gameScene.controllerMain.MeshController.ForcedTerraScanning();
         }

@@ -26,7 +26,9 @@ public class Languages
 	   { "BridgeRoad.Desc","Allows people to pass from one side of the terrain to the other. People love these bridges. It gives a sense of prosperity and happinnes" +_houseTail},
 	   { "LightHouse.Desc","Helps to increase Port visibility. Adds to Port Reputation as long as the flame is glowing"},
 	   { H.Masonry + ".Desc","Important building, workers construct new buildings and work as wheelbarrowers once they have nothing to do"},
-	   { H.HeavyLoad + ".Desc","These workers use horse wagons to move goods around"},
+	   { H.StandLamp + ".Desc","Iluminates at night"},
+	   
+       { H.HeavyLoad + ".Desc","These workers use horse wagons to move goods around"},
 
 
        //House
@@ -189,7 +191,7 @@ public class Languages
 	   { "Militar.HoverSmall", "Military"},
 	   { "WhereIsTown.HoverSmall", "Back to town [P]"},
 	   { "WhereIsSea.HoverSmall", "Show/hide path to sea"},
-	   { "Helper.HoverSmall", "Mini help"},
+	   { "Helper.HoverSmall", "Help"},
 
        //Todo add to ESP
 	   { "Tempeture.HoverSmall", "Temperature"},
@@ -295,7 +297,7 @@ public class Languages
        { "LastMasonry", "Cannot destroy, this is the only Masonry in your village"},
 
 
-       //Mini help
+       //help
 
        { "Construction.HoverMed", "For the construction of any building you need to have workers in the Masonry. "+
             " Click the Masonry, then the '+' sign in the general tab. Make sure you have enough resources"},
@@ -322,6 +324,7 @@ public class Languages
                         " You can change it in 'Options' in the 'Main Menu'"},
 
 
+       { "More.Help", "If you need more help might be a good idea completing the tutorial"},
 
 
 
@@ -360,15 +363,15 @@ public class Languages
             +" 'More Speed' button 3 times until 10x is displayed"},
 
        { "ShowWorkersControl.Tuto", "Click on the 'Control/Bulletin' button, located in the right bottom bar. "+
-           "When you hover over it, it will popup 'Control/Bulletin'"},
+           "When you hover over it, it will popup 'Control/Bulletin'. "},
        { "AddWorkers.Tuto", "Click the '+' sign to the right of the Masonry building, this is how you add more workers."
         + " You can also assign workers in the buildings."},
-       { "HideBulletin.Tuto", "Click outside the Bulletin window to close it or the 'OK' button."},
+       { "HideBulletin.Tuto", "Keep in mind that in this window you are able to control and see differents aspects of the game. Click outside the window to close it or 'OK' button."},
        { "FinishDock.Tuto", "Now finish the Dock building. The more workers are in the Masonry the quicker is going to get done too."
        + " Also make sure you have all materials needed to build it"},
-       { "ShowMiniHelp.Tuto", "Click on the 'MiniHelp' button, located in the right bottom bar. "+
-           "When you hover over it, it will popup 'MiniHelp'. There you can find some tips. " +
-           " When you are done click outside the 'MiniHelp' window and will close."},
+       { "ShowHelp.Tuto", "Click on the 'Help' button, located in the right bottom bar. "+
+           "When you hover over it, it will popup 'Help'. There you can find some tips. " +
+           " When you are done click outside the 'Help' window and will close."},
 
 
 
@@ -380,6 +383,7 @@ public class Languages
        { "CloseDockWindow.Tuto", "Now the order is added. A random ship will drop this item in the dock inventory. And then your dock workers will take it to the closest Storage building. Now click outside the window so the window closes."},
        { "Rename.Tuto", "Click on a person and then click on the title bar of the person. Like this you can change the name of any person or building in the game. Click outside so the change is saved"},
 
+       { "Spec.Tuto", "Click on the 'Control/Bulletin' button, then on the 'Prod' menu and then on the 'Spec'. Here you can see exactly how to make each product on the game. The inputs necesaries and where is produced. Also the price"},
 
 
 
@@ -387,11 +391,11 @@ public class Languages
        //Quest
        { "Tutorial.Quest", "Quest: Finish the tutorial. Reward $10,000. It takes roughly 3 minutes to complete"},
        
-       { "Bohio.Quest", "Quest: Build a bohio. This are cheap houses. When people turn 16 they will move to a free house if found"},
+       { "Bohio.Quest", "Quest: Build a bohio. This are cheap houses. When people turn 16 they will move to a free house if found. Make sure you have workers assigned in the Masonry. [F1] Help"},
        { "SmallFarm.Quest", "Quest: Build a FieldFarmSmall. You need farms to feed your people"},
        { "FarmHire.Quest", "Quest: Hire two farmers. Click on the farm and in the plus sign assign workers. You need to have unemployed"
             +" people to be able to assign them into a new building"},
-       { "FarmProduce.Quest", "Quest: Now produce 300KG of beans"},
+       { "FarmProduce.Quest", "Quest: Now produce 300KG of beans. On the farm you can click on the 'Stat' tab and will show you the production of the last 5 years"},
        { "Transport.Quest", "Quest: Transport the beans from the farm to the Storage. To do that make sure you have" + 
             " workers on the masonry. They act as wheelbarrowers when not building"},
        { "Export.Quest", "Quest: Now export 300KG of beans. On the Dock add a order of export. If oyu have not dock then build one."+
@@ -399,8 +403,9 @@ public class Languages
            " Select product and enter amount"},
        { "HireDocker.Quest", "Quest: Hire four dockers. The dockers will move the goods into the Dock from the Storage if you are exporting."+
            " Or viceversa if importing"},
-       { "Make100Bucks.Quest", "Quest: Make $100 exporting goods in the Dock. "+
+       { "MakeBucks.Quest", "Quest: Make $100 exporting goods in the Dock. "+
            "Once a ship arrives will randomly pay product(s) in your Dock's inventory"},
+       { "HeavyLoad.Quest", "Quest: Build a HeavyLoad building. This are haulers that carry more weight. They will come handy when transporting goods around is needed"},
 
 
        {"CompleteQuest", "Your reward is ${0}"},

@@ -44,10 +44,20 @@ public class Decoration  {
     }
 
 
+    int HowMany()
+    {
+        //bz it should be small so it doest cover the lamp 
+        if (_building.HType == H.StandLamp)
+        {
+            return 6 + 1;
+        }
+        return 9 + 1;
+    }
+
     void B4Init(Building build)
     {
         _building = build;
-        for (int i = 1; i < 10 + 1; i++)
+        for (int i = 1; i < HowMany(); i++)
         {
             _roots.Add("Prefab/Terrain/Spawner/Orna/Orna" + i);
         }

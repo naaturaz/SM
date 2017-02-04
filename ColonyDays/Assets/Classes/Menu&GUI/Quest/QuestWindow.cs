@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,8 @@ public class QuestWindow : GUIElement
 {
     List<GameObject> _gOs = new List<GameObject>();
     GameObject _arrow;
+    Quest _currentQ;
+    private Text _text;
 
     void Start()
     {
@@ -24,6 +27,20 @@ public class QuestWindow : GUIElement
 
         HideAll();
         //Hide();
+
+        StartCoroutine("FiveSecUpd");
+    }
+    private IEnumerator FiveSecUpd()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(5); // wait
+
+            if (_currentQ != null && _currentQ.IsAPercetangeOne())
+            {
+                _text.text = RemoveLastPart(_currentQ.Key) + Percentage();
+            }
+        }
     }
 
     void HideAll()
@@ -39,10 +56,11 @@ public class QuestWindow : GUIElement
 
     }
 
-    public void SetAQuest(string which)
+    public void SetAQuest(Quest quest)
     {
+        _currentQ = quest;
         //1st
-        if (which == "Bohio.Quest")
+        if (quest.Key == "Bohio.Quest")
         {
             _arrow.gameObject.SetActive(true);
         }
@@ -52,7 +70,7 @@ public class QuestWindow : GUIElement
         {
             if (!_gOs[i].activeSelf)
             {
-                ShowHere(_gOs[i], which);
+                ShowHere(_gOs[i], quest.Key);
                 return;
             }
         }
@@ -62,8 +80,18 @@ public class QuestWindow : GUIElement
     {
         gameObjectP.SetActive(true);
         var button = gameObjectP.GetComponent<UnityEngine.UI.Button>();
-        var text = GetChildCalledOnThis("Text", gameObjectP).GetComponent<Text>();
-        text.text = RemoveLastPart(which);
+        _text = GetChildCalledOnThis("Text", gameObjectP).GetComponent<Text>();
+        _text.text = RemoveLastPart(which) + Percentage();
+    }
+
+    private string Percentage()
+    {
+        if (_currentQ.IsAPercetangeOne())
+        {
+            return " - " + _currentQ.PercetageDone().ToString("0%");
+        }
+
+        return "";
     }
 
     string RemoveLastPart(string pass)
@@ -72,7 +100,7 @@ public class QuestWindow : GUIElement
         return arr[0];
     }
 
-    public void RemoveAQuest(string which)
+    public void RemoveAQuest(Quest which)
     {
         for (int i = 0; i < _gOs.Count; i++)
         {
@@ -83,8 +111,9 @@ public class QuestWindow : GUIElement
             }
 
             var text = GetChildCalledOnThis("Text", button).GetComponent<Text>();
-            if (text.text == which)
+            if (_currentQ.Key == which.Key)
             {
+                _currentQ = null;
                 HideButton(_gOs[i]);
                 return;
             }
@@ -107,7 +136,7 @@ public class QuestWindow : GUIElement
         var button = _gOs[index-1];//bz starts at 1 on GUI 
         var text = GetChildCalledOnThis("Text", button).GetComponent<Text>();
 
-        Program.gameScene.QuestManager.SpawnDialog(text.text+".Quest");
+        Program.gameScene.QuestManager.SpawnDialog(_currentQ.Key);
     }
 }
 
