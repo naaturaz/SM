@@ -353,11 +353,11 @@ public class Body //: MonoBehaviour //: General
         var aniToEval = FindAnimationToEvalSpeed();
         if (aniToEval == "isCarry")
         {
-            _speed = UMath.GiveRandom(0.09f, 0.12f);//.09   .12
+            _speed = UMath.GiveRandom(0.11f, 0.12f);//.09   .12
         }
         else if (aniToEval == "isWheelBarrow")
         {
-            _speed = UMath.GiveRandom(0.49f, 0.59f);
+            _speed = UMath.GiveRandom(0.55f, 0.56f);
         } 
         else if (aniToEval == "isCartRide")
         {
@@ -365,9 +365,11 @@ public class Body //: MonoBehaviour //: General
         }
         else
         {
-            _speed = UMath.GiveRandom(0.45f, 0.47f);//.45f, 0.55
+            _speed = UMath.GiveRandom(0.45f, 0.46f);//.45f, 0.55
         }
-        _speed = _speed*CorrectSpeedPeopleAge();
+        
+        //_speed = _speed*CorrectSpeedPeopleAge();
+        
         //_speed = CorrectSpeedByWeight(aniToEval);
         //bz the speed changes and then looks bad 
         ReCalculateWalkStep();
@@ -1020,7 +1022,7 @@ public class Body //: MonoBehaviour //: General
     void ReCalculateWalkStep()
     {
         CheckOnGameSpeed();
-        _walkStep = _speed*Program.gameScene.GameSpeed * 0.02f //* FPSCorrection()
+        _walkStep = _speed*Program.gameScene.GameSpeed * 0.02f * FPSCorrection()
             ;
 
         //cap on walkStep
@@ -1050,7 +1052,7 @@ public class Body //: MonoBehaviour //: General
         }
 
         //avoiding math issues
-        if (HUDFPS.FPS() > 60 || HUDFPS.FPS() == 0)//if over 60 then is good to lock it at one bz sometimes happens
+        if (HUDFPS.FPS() > 60 || HUDFPS.FPS() < 5)//if over 60 then is good to lock it at one bz sometimes happens
             //when game is paused or something then people will go really slow bz in a small portion the 
             //fps was really high ex 120fps when saving 
         {

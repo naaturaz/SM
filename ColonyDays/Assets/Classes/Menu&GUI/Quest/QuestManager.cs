@@ -49,15 +49,15 @@ public class QuestManager
     List<Quest> _bank = new List<Quest>()
     { 
         //need to mention reward still 
-        new Quest("Bohio.Quest", 500, 90.5f),
-        new Quest("SmallFarm.Quest", 550, 90.5f),
-        new Quest("FarmHire.Quest", 600, 5.5f),
-        new Quest("FarmProduce.Quest", 650, 5.5f, 300),
-        //new Quest("Transport.Quest", 700, 90.5f),
-        new Quest("Export.Quest", 750, 120.5f),
-        new Quest("HireDocker.Quest", 800, 120.5f),
-        new Quest("MakeBucks.Quest", 850, 120.5f, 100),
-        new Quest("HeavyLoad.Quest", 900, 120.5f),
+        new Quest("Bohio.Quest", 500, 5.5f),
+        new Quest("SmallFarm.Quest", 550, 5.5f),
+        new Quest("FarmHire.Quest", 600, 5.1f),
+        new Quest("FarmProduce.Quest", 650, 5.1f, 100),
+        //new Quest("Transport.Quest", 700, 5.5f),
+        new Quest("Export.Quest", 750, 5.5f),
+        new Quest("HireDocker.Quest", 800, 5.5f),
+        new Quest("MakeBucks.Quest", 850, 5.5f, 100),
+        new Quest("HeavyLoad.Quest", 900, 5.5f),
 
     };
 

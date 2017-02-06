@@ -395,7 +395,7 @@ public class Languages
        { "SmallFarm.Quest", "Quest: Build a FieldFarmSmall. You need farms to feed your people"},
        { "FarmHire.Quest", "Quest: Hire two farmers. Click on the farm and in the plus sign assign workers. You need to have unemployed"
             +" people to be able to assign them into a new building"},
-       { "FarmProduce.Quest", "Quest: Now produce 300KG of beans. On the farm you can click on the 'Stat' tab and will show you the production of the last 5 years"},
+       { "FarmProduce.Quest", "Quest: Now produce 100KG of beans. On the farm you can click on the 'Stat' tab and will show you the production of the last 5 years"},
        { "Transport.Quest", "Quest: Transport the beans from the farm to the Storage. To do that make sure you have" + 
             " workers on the masonry. They act as wheelbarrowers when not building"},
        { "Export.Quest", "Quest: Now export 300KG of beans. On the Dock add a order of export. If oyu have not dock then build one."+
