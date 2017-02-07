@@ -213,8 +213,8 @@ public class ShowInvetoryItem : GUIElement
         if (InvType=="Main")
         {
             //return StandardFormat();
-            return amt.ToString("N0");
-            //return ShortFormat(amt);
+            //return amt.ToString("N0");
+            return ShortFormat(amt);
         }
 
         return UString.PadThis(InvItem1.Key+"", 14, 'r') + " " + UString.PadThis((int)amt+"", 8, 'l' )

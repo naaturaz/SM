@@ -243,7 +243,7 @@ public class NotificationWindowGO : GUIElement
             return 0;
         }
         //30
-        var y = (Screen.height * 70) / 892;
+        var y = (Screen.height * 52) / 892;
         return -y * i;
     }
 
