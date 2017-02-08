@@ -11,7 +11,7 @@ public class RandomUV
     private H _hType = H.None;
 
     private float _xOffset = 0;
-    private float _yOffset = 409.6f;
+    private float _yOffset = 409.6f * 2;
 
     private int _yMulti = -1;
     private int _yMaxSteps;
@@ -53,7 +53,7 @@ public class RandomUV
 
         Mesh myMesh = null;
         Vector2[] uvs = null;
-        if (IsA10Stripes())
+        if (IsA5Stripes() || IsA4Stripes())
         {
             uvs = (_main.GetComponent<MeshFilter>()).mesh.uv; // Take the existing UVs
         }
@@ -71,7 +71,7 @@ public class RandomUV
         }
 
         //assign
-        if (IsA10Stripes())
+        if (IsA5Stripes())
         {
             _main.GetComponent<MeshFilter>().mesh.uv = uvs;
         }
@@ -83,10 +83,15 @@ public class RandomUV
 
     private void SetYs()
     {
-        if (IsA10Stripes())
+        if (IsA5Stripes())
         {
-            _yOffset = 409.6f;
-            _yMaxSteps = 10;
+            _yOffset = 409.6f *2;
+            _yMaxSteps = 5;
+        }
+        else if (IsA4Stripes())
+        {
+            _yOffset = 1024;
+            _yMaxSteps = 4;
         }
         else if(HType == H.Person)
         {
@@ -95,11 +100,16 @@ public class RandomUV
         }
     }
 
-    bool IsA10Stripes()
+    bool IsA5Stripes()
     {
-        return HType.ToString().Contains("WoodHouse") ||
+        return 
                HType.ToString().Contains("BrickHouse") ||
                HType.ToString().Contains("Bohio");
+    }
+
+    bool IsA4Stripes()
+    {
+        return HType.ToString().Contains("WoodHouse");
     }
 }
 

@@ -149,7 +149,7 @@ public class Languages
 
        //Tooltips 
        //Small Tooltips 
-	   { "Person.HoverSmall", "People / Adults / Kids"},
+	   { "Person.HoverSmall", "Adults / Kids"},
 	   { "Emigrate.HoverSmall", "Emigrated"},
 	   { "Lazy.HoverSmall", "Unemployed people"},
 	   { "Food.HoverSmall", "Food"},

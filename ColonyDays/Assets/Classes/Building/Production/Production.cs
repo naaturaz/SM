@@ -39,6 +39,12 @@ public class Production  {
         return new ProductInfo(P.None, null, H.None);
     }
 
+    public bool IsAProductionPlace(H type)
+    {
+        return ReturnDefaultProd(type).Product != P.None;
+    }
+
+
     /// <summary>
     /// Will return the prod the building can produce
     /// </summary>

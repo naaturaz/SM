@@ -60,7 +60,7 @@ public class MyText : MonoBehaviour
             adult = PersonPot.Control.All.Count(a => a.Age >= JobManager.majorityAge);
             var all = PersonPot.Control.All.Count;
 
-            thisText.text = all + " / " + adult + " / " + (all - adult);
+            thisText.text = adult + " / " + (all - adult);
         }
         else if (name == "Emigrate")
         {

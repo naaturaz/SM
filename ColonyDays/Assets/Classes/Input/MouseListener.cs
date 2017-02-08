@@ -574,6 +574,22 @@ public class MouseListener : InputMain
         BulletinWindow.Hide();
     }
 
+    public void HidePersonBuildingOrderBulletin()
+    {
+        _personWindow.Hide();
+        _buildingWindow.Hide();
+        BulletinWindow.Hide();
+        _addOrderWindow.Hide();
+    }
+
+    public void HideBuildingsMenu()
+    {
+        _buildingsMenu.Hide();
+        _dictSelection = -1;
+
+        _descriptionWindow.Hide();
+    }
+
 
     /// <summary>
     /// This is when click on , Road, or House 

@@ -97,6 +97,9 @@ public class PersonWindow : GUIElement
 
     public void Show(Person val)
     {
+        Program.MouseListener.HideBuildingsMenu();
+
+
         if (_person != null)
         {
             _person.UnselectPerson();

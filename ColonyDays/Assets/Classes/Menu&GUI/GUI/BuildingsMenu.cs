@@ -76,6 +76,7 @@ public class BuildingsMenu : GUIElement
             BuildingPot.CreateUnlockBuilds();
         }
 
+
         BuildingPot.UnlockBuilds1.UpdateBuildsStatuses();
         LoadMenu(vals);
         transform.position = iniPos;
@@ -88,6 +89,9 @@ public class BuildingsMenu : GUIElement
     /// <param name="vals"></param>
     void LoadMenu(List<H> vals)
     {
+        Program.MouseListener.HidePersonBuildingOrderBulletin();
+
+
         for (int i = 0; i < slots.Count; i++)
         {
             if (i < vals.Count)

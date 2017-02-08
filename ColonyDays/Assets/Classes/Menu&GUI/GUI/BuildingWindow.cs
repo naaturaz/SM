@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.UI;
 
-public class BuildingWindow : GUIElement {
+public class BuildingWindow : GUIElement
+{
 
     private Text _title;
     private Text _info;
@@ -44,13 +45,14 @@ public class BuildingWindow : GUIElement {
     private GameObject _invIniPosSta;
 
     private Vector3 _importIniPos;
-    private Vector3 _exportIniPos;    
-    
+    private Vector3 _exportIniPos;
+
     private Vector3 _importIniPosOnProcess;
     private Vector3 _exportIniPosOnProcess;
 
     private GameObject _salary;
     private GameObject _positions;
+    //private GameObject _productionSelector;
 
 
     //upg btns
@@ -64,8 +66,9 @@ public class BuildingWindow : GUIElement {
     //Texts
     private Text _currSalaryTxt;
     private Text _currPositionsTxt;
+    private Text _maxPositionsTxt;
 
-
+    Image _imageIcon;
 
 
     // Use this for initialization
@@ -87,7 +90,7 @@ public class BuildingWindow : GUIElement {
 
             var samePos = UMath.nearEqualByDistance(transform.position, iniPos, 1);
             var buildNull = Building == null;
-            
+
             //means is showing 
             if (samePos && !buildNull && BuildingPot.Control.Registro.SelectBuilding != null)
             {
@@ -97,7 +100,7 @@ public class BuildingWindow : GUIElement {
                 if (_orders.gameObject.activeSelf == _orders)
                 {
                     ShowOrders();
-                } 
+                }
             }
         }
     }
@@ -115,25 +118,32 @@ public class BuildingWindow : GUIElement {
 
         _salary = General.FindGameObjectInHierarchy("Salary", _general);
         _positions = General.FindGameObjectInHierarchy("Positions", _general);
-        
+
         var currSalary = FindGameObjectInHierarchy("Current_Salary", _salary);
         _currSalaryTxt = currSalary.GetComponent<Text>();
 
         var currPos = FindGameObjectInHierarchy("Current_Positions", _positions);
         _currPositionsTxt = currPos.GetComponent<Text>();
 
-        
+
+        var maxPos = FindGameObjectInHierarchy("Max_Positions", _positions);
+        _maxPositionsTxt = maxPos.GetComponent<Text>();
+
+
+        //_productionSelector = FindGameObjectInHierarchy("Production_Selector", gameObject);
+
         _title = GetChildCalled(H.Title).GetComponent<Text>();
 
 
         _info = GetGrandChildCalled(H.Info).GetComponent<Text>();
         _inv = GetGrandChildCalled(H.Bolsa).GetComponent<Text>();//bolsa bz tht algorith has a bugg tht names cannot be the same or start with the same
-        
+
         _displayProdInfo = GetGrandChildCalled(H.Display_Lbl).GetComponent<Text>();//bolsa bz tht algorith has a bugg tht names cannot be the same or start with the same
 
         _invIniPos = GetGrandChildCalled(H.Inv_Ini_Pos);
         _invIniPosSta = GetGrandChildCalled("Inv_Ini_Pos_Sta");
 
+        _imageIcon = GetChildCalled("Image_Icon").GetComponent<Image>();
 
 
         var genBtn = GetChildThatContains(H.Gen_Btn).transform;
@@ -187,6 +197,7 @@ public class BuildingWindow : GUIElement {
     public void Show(Building val)
     {
         Building = val;
+        Program.MouseListener.HideBuildingsMenu();
 
         if (Building.HType == H.Road)
         {
@@ -208,8 +219,8 @@ public class BuildingWindow : GUIElement {
         HandlePrdBtn();
 
         //in case were inactive 
-        
-        
+
+
         //_upg_Mat_Btn.SetActive(true);
         //_upg_Cap_Btn.SetActive(true);
 
@@ -223,7 +234,7 @@ public class BuildingWindow : GUIElement {
     private void DemolishBtn()
     {
         _cancelDemolish_Btn.SetActive(false);
-       
+
         if (Building.Instruction == H.WillBeDestroy //|| !fullyBuilt
             )
         {
@@ -242,13 +253,13 @@ public class BuildingWindow : GUIElement {
     private void HideStuff()
     {
         if (Building.IsHouse() || Building.MyId.Contains("Storage") || Building.Category == Ca.Way ||
-            Building.HType == H.Masonry || Building.HType == H.HeavyLoad 
+            Building.HType == H.Masonry || Building.HType == H.HeavyLoad
             || Building.HType == H.LightHouse
             || Building.IsNaval())
         {
-           _salary.SetActive(false);
-           _staBtn.SetActive(false);
-           _prdBtn.SetActive(false);
+            _salary.SetActive(false);
+            _staBtn.SetActive(false);
+            _prdBtn.SetActive(false);
         }
         else
         {
@@ -266,8 +277,8 @@ public class BuildingWindow : GUIElement {
         if (Building.Instruction == H.WillBeDestroy)
         {
             _salary.SetActive(false);
-           _staBtn.SetActive(false);
-           _prdBtn.SetActive(false);
+            _staBtn.SetActive(false);
+            _prdBtn.SetActive(false);
         }
 
         _salary.SetActive(false);
@@ -320,8 +331,10 @@ public class BuildingWindow : GUIElement {
     {
         bool fullyBuilt = Building.IsFullyBuilt();
         bool isAWorkPlace = isAWorkBuild(Building);
+        //bool allowedTab = currentActiveTab != null && currentActiveTab != _gaveta;
 
-        if (fullyBuilt && isAWorkPlace && Building.Instruction != H.WillBeDestroy)
+        if (fullyBuilt && isAWorkPlace && Building.Instruction != H.WillBeDestroy //&& allowedTab
+            )
         {
             //_salary.SetActive(true);
             _positions.SetActive(true);
@@ -333,12 +346,34 @@ public class BuildingWindow : GUIElement {
         }
     }
 
+    //void HideShowProductionSelector()
+    //{
+    //    bool fullyBuilt = Building.IsFullyBuilt();
+    //    bool isAWorkPlace = isAWorkBuild(Building);
+    //    bool isAProdPlace = BuildingPot.Control.ProductionProp.IsAProductionPlace(Building.HType);
+    //    //bool allowedTab = currentActiveTab != null && currentActiveTab != _gaveta;
+
+    //    if (fullyBuilt && isAWorkPlace && isAProdPlace && Building.Instruction != H.WillBeDestroy //&& allowedTab
+    //        )
+    //    {
+    //        _productionSelector.SetActive(true);
+    //    }
+    //    else
+    //    {
+    //        _productionSelector.SetActive(false);
+    //    }
+    //}
+
+ 
+
     private ShowAInventory _showAInventory;
     private int oldItemsCount;
     private string oldBuildID;
     private void LoadMenu()
     {
         HideShowSalAndPositions();
+        //HideShowProductionSelector();
+        LoadImageIcon();
 
         _title.text = Building.NameBuilding();
         _info.text = BuildInfo() + BuildCover();
@@ -351,13 +386,23 @@ public class BuildingWindow : GUIElement {
             BuildingPot.Control.Registro.SelectBuilding = Building;
         }
 
-        _currSalaryTxt.text = BuildingPot.Control.Registro.SelectBuilding.DollarsPay+"";
+        _currSalaryTxt.text = BuildingPot.Control.Registro.SelectBuilding.DollarsPay + "";
         _currPositionsTxt.text = BuildingPot.Control.Registro.SelectBuilding.MaxPeople + "";
+        _maxPositionsTxt.text = Book.GiveMeStat(Building.HType).MaxPeople + "";
 
         //_currSalaryTxt.text = _building.DollarsPay+"";
         //_currPositionsTxt.text = _building.MaxPeople + "";
-        
+
         DemolishBtn();
+    }
+
+    private void LoadImageIcon()
+    {
+        var iconRoot = Root.RetBuildingIconRoot(_building.HType);
+        var s = (Sprite)Resources.Load(iconRoot, typeof(Sprite));
+
+        _imageIcon.sprite = s;
+
     }
 
     void Inventory()
@@ -391,7 +436,7 @@ public class BuildingWindow : GUIElement {
     }
 
 
-    List<ShowAInventory> _reports = new List<ShowAInventory>(); 
+    List<ShowAInventory> _reports = new List<ShowAInventory>();
     private void ShowProductionReport()
     {
         for (int i = 0; i < _reports.Count; i++)
@@ -404,8 +449,8 @@ public class BuildingWindow : GUIElement {
 
         for (int i = 0; i < ShowLastYears(); i++)
         {
-            var a = new ShowAInventory(Building.ProductionReport.ProduceReport[i], _stats.gameObject, 
-                _invIniPosSta.transform.localPosition + new Vector3(0, pastItems*-3.5f*i,0));
+            var a = new ShowAInventory(Building.ProductionReport.ProduceReport[i], _stats.gameObject,
+                _invIniPosSta.transform.localPosition + new Vector3(0, pastItems * -3.5f * i, 0));
 
             _reports.Add(a);
             pastItems = Building.ProductionReport.ProduceReport[i].InventItems.Count;
@@ -441,7 +486,7 @@ public class BuildingWindow : GUIElement {
             return "";
         }
 
-        var st = (Structure) Building;
+        var st = (Structure)Building;
         return st.CoverageInfo();
     }
 
@@ -458,10 +503,10 @@ public class BuildingWindow : GUIElement {
 
     string BuildInfo()
     {
-        string res = Languages.ReturnString(Building.HType+".Desc") + "\n";
+        string res = Languages.ReturnString(Building.HType + ".Desc") + "\n";
 
         res += IfInConstructionAddPercentageOfCompletion();
-        
+
         var isAHouse = Building.HType.ToString().Contains("House") || Building.HType == H.Bohio;
 
         //is not a house or bohio 
@@ -475,13 +520,14 @@ public class BuildingWindow : GUIElement {
             //others
             else
             {
-                res += "\n  " + ReturnAvailablePositions() + "\n";
-                
-                res += "Workers:" + Building.PeopleDict.Count + "\n";
-                for (int i = 0; i < Building.PeopleDict.Count; i++)
-                {
-                    res += "\n " + Family.GetPersonName(Building.PeopleDict[i]);
-                }
+                //Workers list 
+                //res += "\n  " + ReturnAvailablePositions() + "\n";
+
+                //res += "Workers:" + Building.PeopleDict.Count + "\n";
+                //for (int i = 0; i < Building.PeopleDict.Count; i++)
+                //{
+                //    res += "\n " + Family.GetPersonName(Building.PeopleDict[i]);
+                //}
             }
 
             if (Building.HType == H.Masonry)
@@ -515,7 +561,7 @@ public class BuildingWindow : GUIElement {
 
         return res
 #if UNITY_EDITOR
-               + DebugInfo()
+            //+ DebugInfo()
 #endif
             ;
     }
@@ -553,7 +599,7 @@ public class BuildingWindow : GUIElement {
         if (sP.CurrentStage != 4)
         {
             var percentage = sP.PercentageBuiltCured();
-            return "Construction progress at: " + percentage + "%\n" + 
+            return "Construction progress at: " + percentage + "%\n" +
                 MaterialsGathered() + "\n\n";
         }
         return "";
@@ -577,18 +623,18 @@ public class BuildingWindow : GUIElement {
         }
         else
         {
-           res += "Type:" + Building.HType + 
-                " ID:" + Building.MyId
-                ;
+            res += "Type:" + Building.HType +
+                 " ID:" + Building.MyId
+                 ;
 
-           if (Building.BookedHome1 != null)
-           {
-               res += " IsBooked:" + Building.BookedHome1.IsBooked();
-           }
-           else
-           {
-               res += " IsBooked: no";
-           }
+            if (Building.BookedHome1 != null)
+            {
+                res += " IsBooked:" + Building.BookedHome1.IsBooked();
+            }
+            else
+            {
+                res += " IsBooked: no";
+            }
         }
 
         return res;
@@ -609,8 +655,8 @@ public class BuildingWindow : GUIElement {
 
         //change salary
         _currSalaryTxt.text = BuildingPot.Control.Registro.SelectBuilding.ChangeSalary(action);
-    }  
-    
+    }
+
     public void ClickedOnChangeMaxAmtOfWorkers(string action)
     {
         _currPositionsTxt.text = BuildingPot.Control.Registro.SelectBuilding.ChangeMaxAmoutOfWorkers(action);
@@ -620,7 +666,7 @@ public class BuildingWindow : GUIElement {
 
 
 
-#endregion
+    #endregion
 
     // Update is called once per frame
     void Update()
@@ -636,7 +682,7 @@ public class BuildingWindow : GUIElement {
             MakeThisTabActive(_gaveta);
         }
         //if click ord
-        else if (Building!=null && _ordBtnRect.Contains(Input.mousePosition) && Input.GetMouseButtonUp(0) 
+        else if (Building != null && _ordBtnRect.Contains(Input.mousePosition) && Input.GetMouseButtonUp(0)
             && Building.IsNaval())
         {
             MakeThisTabActive(_orders);
@@ -665,6 +711,7 @@ public class BuildingWindow : GUIElement {
 
 
     private GameObject oldTabActive;
+    GameObject currentActiveTab;
     /// <summary>
     /// Use to swith Tabs on Window. Will hide all and make the pass one as active
     /// </summary>
@@ -689,7 +736,7 @@ public class BuildingWindow : GUIElement {
         _products.SetActive(false);
         _stats.SetActive(false);
         g.SetActive(true);
-        
+        currentActiveTab = g;
         //so the old tab is active from building to building
         //oldTabActive = g;
 
@@ -702,7 +749,9 @@ public class BuildingWindow : GUIElement {
         {
             ShowProducts();
         }
+
     }
+
 
 
     //Show Prod on Tab
@@ -770,7 +819,7 @@ public class BuildingWindow : GUIElement {
 
     void ShowExportOrdersOnProcess()
     {
-        var expOrd  =  Building.Dispatch1.ReturnRegularOrdersOnProcess();
+        var expOrd = Building.Dispatch1.ReturnRegularOrdersOnProcess();
         DisplayOrders(expOrd, _exportIniPosOnProcess, Root.orderShow);
     }
 
@@ -806,7 +855,7 @@ public class BuildingWindow : GUIElement {
     }
 
 
-    List<OrderShow> _showOrders = new List<OrderShow>(); 
+    List<OrderShow> _showOrders = new List<OrderShow>();
     /// <summary>
     /// Will display the order is pass as param. Bz 'i' will keep looping and puttin the towards the botton of the 
     /// _orders tab. Will make the orders Childs of _order tab
