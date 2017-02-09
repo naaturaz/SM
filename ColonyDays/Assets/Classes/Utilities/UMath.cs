@@ -331,6 +331,19 @@ public class UMath : MonoBehaviour {
         return max;
     }
 
+    public static int ReturnMax(List<int> list)
+    {
+        int max = list[0];
+        for (int i = 0; i < list.Count; i++)
+        {
+            if (list[i] > max)
+            {
+                max = list[i];
+            }
+        }
+        return max;
+    }
+
     public static float Clamper(float amountToChange, float currentValue, float minValue, float maxValue)
     {
         currentValue = currentValue + amountToChange;

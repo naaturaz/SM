@@ -3493,7 +3493,8 @@ public class Building : Hoverable, Iinfo
         {
             var index = PeopleDict.Count - (1 + i);//starting from the last towards the first
             var person = Family.FindPerson(PeopleDict[index]);
-            person.WasFired = true; 
+            person.WasFired = true;
+            person.ShowEmotion("Fired");
             PersonPot.Control.RestartControllerForPerson(person.MyId);
         }
 

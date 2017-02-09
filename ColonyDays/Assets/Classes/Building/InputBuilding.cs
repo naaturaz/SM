@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
 
@@ -317,6 +318,18 @@ public class InputBuilding : BuildingPot {
         }
     }
 
+
+    public EventHandler<EventArgs> BuildPlaced;
+    void OnBuildPlaced(EventArgs e)
+    {
+        if (BuildPlaced != null)
+        {
+            BuildPlaced(this, e);
+        }
+    }
+
+
+
     /// <summary>
     /// Routine when mouse is clicked 
     /// </summary>
@@ -326,6 +339,10 @@ public class InputBuilding : BuildingPot {
         {
             Structure h = Control.CurrentSpawnBuild as Structure;
             h.DonePlace();
+
+            OnBuildPlaced(EventArgs.Empty);
+
+
             if (h.PositionFixed)
             {
                 BuildNowNew(DoingNow);

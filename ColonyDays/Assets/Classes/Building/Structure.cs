@@ -406,8 +406,10 @@ public class Structure : StructureParent
 
     /// <summary>
     /// Demolishing a building 
+    /// 
+    /// returns if was demolished
     /// </summary>
-    public void Demolish()
+    public bool Demolish()
     {
         //if is a house need to know 
         if (MyId.Contains("House") || MyId.Contains("Bohio"))
@@ -424,10 +426,20 @@ public class Structure : StructureParent
             {
                 Program.gameScene.GameController1.NotificationsManager1.MainNotify("HomeLess");
                 _isOrderToDestroy = false;
+                return false;
             }
         }
-        else StartDemolishProcess();
+        else
+        {
+            StartDemolishProcess();
+        }
+        return true;
     }
+
+
+
+
+
 
     void StartDemolishProcess()
     {
@@ -440,11 +452,12 @@ public class Structure : StructureParent
             HideAll();   
         }
         BuildingPot.Control.Registro.RemoveItem(Category, MyId);
-
         _construcionSign = General.Create(Root.DemolishSign, MiddlePoint(), "Construction", transform);
-        AudioCollector.PlayOneShot("ClickMetal2", 0);
 
         ReturnWhatThisCost();
+        AudioCollector.PlayOneShot("BUILDING_DEMOLISH_1", 0);
+
+
     }
 
     /// <summary>

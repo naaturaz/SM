@@ -1250,6 +1250,9 @@ public class Person : Hoverable
         StartCoroutine("FiveSecUpdate");
         StartCoroutine("OneSecUpdate");
 
+        StartCoroutine("EmoticonUpdate");
+
+
         //StartCoroutine("A45msUpdate");
 
         //for body
@@ -2188,6 +2191,8 @@ public class Person : Hoverable
     {
         IsPregnant = true;
         CalculateDueDate();
+        EmoticonManager.Show("Heart", transform.position);
+
     }
 
     void CheckIfReadyForGiveBirth()
@@ -2196,6 +2201,7 @@ public class Person : Hoverable
         if (IsPregnant && IsMyDueDateOrPast() && string.IsNullOrEmpty(IsBooked))
         {
             GiveBirth();
+            EmoticonManager.Show("Stork", transform.position);
         }
     }
 
@@ -2792,6 +2798,52 @@ public class Person : Hoverable
     }
 
     #endregion
+
+    #region Emoticon
+
+    bool _toShowEmoticon;
+    string _instructionEmoticon;
+    float _rEmoTime = 1;
+    private IEnumerator EmoticonUpdate()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(_rEmoTime); // wait
+
+            if (_toShowEmoticon)
+            {
+                _rEmoTime = UMath.GiveRandom(0, 4f);
+                _toShowEmoticon = false;
+                EmoticonManager.Show(_instructionEmoticon, transform.position);
+            }
+        }
+    }
+
+
+    internal void BuildPlacedHandler(object sender, EventArgs e)
+    {
+        //EmoticonManager.Show("Built", transform.position);
+        _toShowEmoticon = true;
+        _instructionEmoticon = "Built";
+    }
+
+    internal void BuildWasDemolished(object sender, EventArgs e)
+    {
+        //EmoticonManager.Show("Demolish", transform.position);
+        //Debug.Log("Detected de" + Name);
+
+        _toShowEmoticon = true;
+        _instructionEmoticon = "Demolish";
+    }
+
+    internal void ShowEmotion(string p)
+    {
+        EmoticonManager.Show(p, transform.position);
+    }
+
+
+    #endregion
+
 
 }
 

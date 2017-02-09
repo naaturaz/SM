@@ -2623,7 +2623,8 @@ public class Brain
             if (buildCurrWork!=null && !buildCurrWork.IsBuildingCustomerType(_person))
             {
                 AddToPeopleDict(currWork);
-                RemoveAndAddPositionsToJob();         
+                RemoveAndAddPositionsToJob();
+                _person.ShowEmotion("Hired");
             }
        
 

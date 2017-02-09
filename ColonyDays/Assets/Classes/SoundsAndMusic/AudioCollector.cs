@@ -67,6 +67,13 @@ public class AudioCollector
         {"ClickWood7", ""},
         {"ClickWoodSubtle", ""},
         {"ClickMetal2", ""},
+
+
+        {"BUILDING_DEMOLISH_1", ""},
+        {"Built", ""},
+        {"QUEST_COMPLETED_1", ""},
+        {"NEW_QUEST_1", ""},
+
     };
 
 

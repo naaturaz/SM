@@ -98,7 +98,7 @@ public class ShowAPersonBuildingDetails
 
     float ReturnY(int i)
     {
-        return -3.4f * i;//-3.5
+        return -3.6f * i;
     }
 
     string Home()

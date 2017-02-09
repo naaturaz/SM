@@ -282,6 +282,7 @@ public class Root : MonoBehaviour
     public static string worker_Tile = "Prefab/GUI/Forms/Worker_Tile";
 
     public static string button_Tile = "Prefab/GUI/Forms/Button_Tile";
+    public static string quest_Tile = "Prefab/GUI/Forms/Quest_Tile";
 
     //Menu
     public static string mainMenu = "Prefab/Menu/MainMenu";

@@ -210,6 +210,8 @@ public class Languages
 	   { "Next_Stage_Btn.HoverSmall", "Buy Next Stage"},
 	   { "Current_Salary.HoverSmall", "Current salary"},
 	   { "Current_Positions.HoverSmall", "Current positions"},
+	   { "Max_Positions.HoverSmall", "Max positions"},
+
 	   { "Add_Import_Btn.HoverSmall", "Add an import"},
 	   { "Add_Export_Btn.HoverSmall", "Add an export"},
 	   { "Upg_Cap_Btn.HoverSmall", "Upgrades capacity"},
@@ -391,14 +393,14 @@ public class Languages
        //Quest
        { "Tutorial.Quest", "Quest: Finish the tutorial. Reward $10,000. It takes roughly 3 minutes to complete"},
        
-       { "Bohio.Quest", "Quest: Build a bohio. This are cheap houses. When people turn 16 they will move to a free house if found. Make sure you have workers assigned in the Masonry. [F1] Help"},
+       { "Bohio.Quest", "Quest: Build a bohio. This are cheap houses. When people turn 16 they will move to a free house if found. In this way population growth will be guaranteed. [F1] Help"},
        { "SmallFarm.Quest", "Quest: Build a FieldFarmSmall. You need farms to feed your people"},
        { "FarmHire.Quest", "Quest: Hire two farmers. Click on the farm and in the plus sign assign workers. You need to have unemployed"
             +" people to be able to assign them into a new building"},
        { "FarmProduce.Quest", "Quest: Now produce 100KG of beans. On the farm you can click on the 'Stat' tab and will show you the production of the last 5 years"},
        { "Transport.Quest", "Quest: Transport the beans from the farm to the Storage. To do that make sure you have" + 
             " workers on the masonry. They act as wheelbarrowers when not building"},
-       { "Export.Quest", "Quest: Now export 300KG of beans. On the Dock add a order of export. If oyu have not dock then build one."+
+       { "Export.Quest", "Quest: Now export 300KG of beans. On the Dock add a order of export. If you have not dock then build one."+
            "Find it in Trade. Once built click on the orders tab and add a export order with the '+' sign."+
            " Select product and enter amount"},
        { "HireDocker.Quest", "Quest: Hire four dockers. The dockers will move the goods into the Dock from the Storage if you are exporting."+
@@ -414,6 +416,8 @@ public class Languages
        //
        {"Tutorial.Arrow", "This is the tutorial. Once finished you will win $10,000"},
        {"Quest.Arrow", "This is the quest panel. You can access the quest by clicking on it"},
+       {"New.Quest.Avail", "At least one quest is available"},
+       {"Quest_Button.HoverSmall", "Quest"},
 
     };
 

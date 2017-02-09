@@ -232,6 +232,10 @@ public class PersonController : PersonPot
             Person t = Person.CreatePersonFromFile(pData.All[i]);
             MouseClick += t.MouseClickHandler;
 
+            BuildingPot.InputU.BuildPlaced += t.BuildPlacedHandler;
+            Program.MouseListener.Demolished += t.BuildWasDemolished;
+
+
             All.Add(t);
             _allGC.Add(t.MyId, t);
         }
@@ -251,6 +255,12 @@ public class PersonController : PersonPot
         {
             Person t = Person.CreatePerson(iniPos);
             MouseClick += t.MouseClickHandler;
+
+            //
+            BuildingPot.InputU.BuildPlaced += t.BuildPlacedHandler;
+            Program.MouseListener.Demolished += t.BuildWasDemolished;
+
+
             All.Add( t);
             _allGC.Add(t.MyId, t);
         }
@@ -265,6 +275,10 @@ public class PersonController : PersonPot
     {
         Person t = Person.CreatePersonKid(iniPos);
         MouseClick += t.MouseClickHandler;
+
+        BuildingPot.InputU.BuildPlaced += t.BuildPlacedHandler;
+        Program.MouseListener.Demolished += t.BuildWasDemolished;
+
 
         All.Add(t);
         _allGC.Add(t.MyId, t);

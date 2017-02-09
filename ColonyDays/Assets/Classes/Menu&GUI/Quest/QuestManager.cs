@@ -7,29 +7,14 @@ using UnityEngine;
 
 public class QuestManager
 {
-    int _current = -1;
-
     float _lastCompleted;
-    bool _showed;
 
-    QuestWindow _questWindow;
-
+    QuestButton _questBtn;
     List<int> _currentQuests = new List<int>();
     List<int> _doneQuest = new List<int>();
-
     bool _wasLoaded;//whe is a loaded game
 
-    public int CurrentQuest
-    {
-        get { return _current; }
-        set { _current = value; }
-    }
 
-    public bool Showed
-    {
-        get { return _showed; }
-        set { _showed = value; }
-    }
 
     public List<int> CurrentQuests
     {
@@ -43,9 +28,6 @@ public class QuestManager
         set { _doneQuest = value; }
     }
 
-
-
-
     List<Quest> _bank = new List<Quest>()
     { 
         //need to mention reward still 
@@ -58,36 +40,97 @@ public class QuestManager
         new Quest("HireDocker.Quest", 800, 5.5f),
         new Quest("MakeBucks.Quest", 850, 5.5f, 100),
         new Quest("HeavyLoad.Quest", 900, 5.5f),
-
     };
+
+
+    public List<Quest> CurrentPlsDone()
+    {
+        var res = _currentQuests.ToArray();
+
+        var listRes = res.ToList();
+        listRes.AddRange(_doneQuest);
+        listRes = listRes.Distinct().ToList();
+
+        List<Quest> fin = new List<Quest>();
+        for (int i = 0; i < listRes.Count; i++)
+        {
+            fin.Add(_bank[listRes[i]]);
+        }
+
+        return fin;
+    }
+
+    public bool IsDone(Quest q)
+    {
+        var which = _bank.FindIndex(a => a.Key == q.Key);
+
+        return _doneQuest.Contains(which);
+    }
 
     public QuestManager() { }
 
 
+    bool IsAnyActiveQuestMatchThisKey(string key)
+    {
+        for (int i = 0; i < _currentQuests.Count; i++)
+        {
+            if (key == _bank[_currentQuests[i]].Key)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    Quest GetQuestWithKey(string key)
+    {
+        var ind = _bank.FindIndex(a => a.Key == key);
+        return _bank[ind];
+    }
+
+    int GetIndexOfQuest(Quest q)
+    {
+        return _bank.FindIndex(a => a.Key == q.Key);
+    }
+
+
+    void Init()
+    {
+        if (_questBtn == null)
+        {
+            _questBtn = MonoBehaviour.FindObjectOfType<QuestButton>();
+        }
+    }
+
+
+
     public void QuestFinished(string which)
     {
-        //wont complete a quest if is not shown yet
-        if (!Showed || CurrentQuest >= _bank.Count)//bz Building.cs calls like 5 times when is done 
-        {
-            return;
-        }
+        Init();
 
-        if (_bank[CurrentQuest].Key == which + ".Quest")
-        {
-            Show_currentPrize();
+        which = which + ".Quest";
 
-            Program.gameScene.GameController1.Dollars += _bank[CurrentQuest].Prize;
+        if (IsAnyActiveQuestMatchThisKey(which))
+        {
+            var quest = GetQuestWithKey(which);
+            var indexQ = GetIndexOfQuest(quest);
+
+            ShowPrize(quest);
+
+            Program.gameScene.GameController1.Dollars += quest.Prize;
             AudioCollector.PlayOneShot("BoughtLand", 0);
 
-            _questWindow.RemoveAQuest(_bank[CurrentQuest]);
-            _currentQuests.Remove(CurrentQuest);//remove from _current list
-            _doneQuest.Add(CurrentQuest);//adds to done list 
+            _currentQuests.Remove(indexQ);//remove from _current list
+            _doneQuest.Add(indexQ);//adds to done list 
 
-            CurrentQuest++;
             //adds to _current list
-            if (CurrentQuest < _bank.Count)
+            if (indexQ +1 < _bank.Count)
             {
-                _currentQuests.Add(CurrentQuest);
+                if (!_currentQuests.Contains(indexQ + 1))
+                {
+                    _currentQuests.Add(indexQ + 1);
+                    _questBtn.ShowNewQuestAvail();
+                }
             }
         }
     }
@@ -99,45 +142,19 @@ public class QuestManager
     /// <param name="amt"></param>
     public void AddToQuest(string which, float amt)
     {
-        //wont complete a quest if is not shown yet
-        if (!Showed || CurrentQuest >= _bank.Count)//bz Building.cs calls like 5 times when is done 
+        if (IsAnyActiveQuestMatchThisKey(which + ".Quest"))
         {
-            return;
-        }
+            var quest = GetQuestWithKey(which + ".Quest");
+            var indexQ = GetIndexOfQuest(quest);
 
-        if (_bank[CurrentQuest].Key == which + ".Quest")
-        {
             //adds
-            _bank[CurrentQuest].AddToProgress(amt);
+            quest.AddToProgress(amt);
             //checks if is completed
-            if (_bank[CurrentQuest].IsQuestCompleted())
+            if (quest.IsQuestCompleted())
             {
                 QuestFinished(which);
             }
         }
-    }
-
-    void ShowCurrentQuest()
-    {
-        if (_questWindow == null)
-        {
-            _questWindow = MonoBehaviour.FindObjectOfType<QuestWindow>();
-        }
-        if (_questWindow == null || CurrentQuest < 0)
-        {
-            return;
-        }
-
-        Showed = true;
-        _questWindow.SetAQuest(_bank.ElementAt(CurrentQuest));
-
-        if (_wasLoaded)
-        {
-            _wasLoaded = false;
-            return;
-        }
-
-        SpawnDialog(_bank.ElementAt(CurrentQuest).Key);
     }
 
     public void SpawnDialog(string which)
@@ -146,27 +163,22 @@ public class QuestManager
         Dialog.OKDialog(H.InfoKey, which);
     }
 
-    void Show_currentPrize()
+    void ShowPrize(Quest q)
     {
-        Dialog.OKDialog(H.CompleteQuest, _bank[CurrentQuest].Prize + "");
+        Dialog.OKDialog(H.CompleteQuest, q.Prize + "");
+        AudioCollector.PlayOneShot("QUEST_COMPLETED_1", 0);
     }
 
     public void QuestCompletedAcknowled()
     {
         _lastCompleted = Time.time;
-        Showed = false;
 
-        if (CurrentQuest >= _bank.Count)
-        {
-            _lastCompleted = -1;
-            CurrentQuest = -1;
-        }
+        
     }
 
     public void Update()
     {
-        if (Program.MouseListener.IsAWindowShownNow() || CamControl.IsMainMenuOn() ||
-            CurrentQuest >= _bank.Count || _lastCompleted < 0)
+        if (Program.MouseListener.IsAWindowShownNow() || CamControl.IsMainMenuOn() || _lastCompleted < 0)
         {
             return;
         }
@@ -176,25 +188,33 @@ public class QuestManager
             return;
         }
 
-        //starts up
-        if (CurrentQuest == -1 && _lastCompleted == 0 && !Showed && Program.gameScene.GameWasFullyLoadedAnd10SecAgo())
-        {
-            CurrentQuest = 0;
-            ShowCurrentQuest();
-        }
-
         //to show  others  and loaded 
-        if (Time.time > _lastCompleted + _bank[CurrentQuest].SecWait && !Showed)
+        if (Time.time > _lastCompleted + 90 && _currentQuests.Count < 2)
         {
-            ShowCurrentQuest();
+            AddANewQuest();
+        }
+    }
+
+    private void AddANewQuest()
+    {
+        var highest = UMath.ReturnMax(_currentQuests);
+
+        if (highest+1 >= _bank.Count)
+        {
+            _lastCompleted = -1;
+        }
+        else
+        {
+            _currentQuests.Add(highest + 1);
         }
     }
 
     public void ResetNewGame()
     {
         _lastCompleted = 0;
-        Showed = false;
-        CurrentQuest = 0;
+     
+        _currentQuests.Clear();
+        _doneQuest.Clear();
     }
 
 
@@ -204,18 +224,15 @@ public class QuestManager
     internal void JustLoadedShowCurrent()
     {
         _wasLoaded = true;
-        Showed = false;
     }
 
-    internal bool IsQuestingNow()
-    {
-        return CurrentQuest != -1;
-    }
 
     public void TutoCallWhenDone()
     {
-        CurrentQuest = 0;
+        _currentQuests.Add(0);
     }
+
+
 }
 
 
@@ -270,6 +287,7 @@ public class Quest
         set { _goal = value; }
     }
 
+    public Quest() { }
 
     public Quest(string key, float prize, float secWait, float goal = -1)
     {
@@ -299,6 +317,10 @@ public class Quest
         return _goal != -1;
     }
 
+    /// <summary>
+    /// Not formated: pls add ToString("0%") for string
+    /// </summary>
+    /// <returns></returns>
     internal float PercetageDone()
     {
         return _progress / _goal;

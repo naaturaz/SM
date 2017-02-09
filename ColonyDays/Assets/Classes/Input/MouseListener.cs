@@ -82,6 +82,8 @@ public class MouseListener : InputMain
         _notificationWindow = FindObjectOfType<NotificationWindowGO>();
 
         BulletinWindow = FindObjectOfType<BulletinWindow>();
+        _questWindow = FindObjectOfType<QuestWindow>();
+
 
         //Debug.Log("LoadMainGUI() GUI");
 
@@ -492,6 +494,9 @@ public class MouseListener : InputMain
     private AddOrderWindow _addOrderWindow;
     private NotificationWindowGO _notificationWindow;
 
+    private QuestWindow _questWindow;
+
+
     /// <summary>
     /// Will handle all the inputs from the buttons on the GUI 
     /// </summary>
@@ -861,7 +866,12 @@ public class MouseListener : InputMain
                 return;
             }
 
-            b.Demolish();
+
+            var wasDemolished =b.Demolish();
+            if (wasDemolished)
+            {
+                OnDemolish(EventArgs.Empty);
+            }
         }
         else if (BuildingPot.Control.Registro.SelectBuilding.Category == Ca.DraggableSquare)
         {
@@ -872,6 +882,25 @@ public class MouseListener : InputMain
         //Program.InputMain.InputMouse.UnSelectCurrent();
         //DestroyForm();
     }
+
+
+
+
+
+    EventHandler<EventArgs> _demolished;
+    public EventHandler<EventArgs> Demolished
+    {
+        get { return _demolished; }
+        set { _demolished = value; }
+    }
+    void OnDemolish(EventArgs e)
+    {
+        if (Demolished != null)
+        {
+            Demolished(this, e);
+        }
+    }
+
 
 
 
@@ -912,7 +941,7 @@ public class MouseListener : InputMain
 
         return _buildingsMenu.IsShownNow() || _descriptionWindow.IsShownNow() ||
             _personWindow.IsShownNow() || _buildingWindow.IsShownNow() || _addOrderWindow.IsShownNow() ||
-            BulletinWindow.IsShownNow();
+            BulletinWindow.IsShownNow() || _questWindow.IsShownNow();
     }
 
     public bool IsAWindowScrollableShownNow()
@@ -922,7 +951,8 @@ public class MouseListener : InputMain
             return false;
         }
 
-        return _addOrderWindow.IsShownNow() || BulletinWindow.IsShownNow();
+        return _addOrderWindow.IsShownNow() || BulletinWindow.IsShownNow() || _notificationWindow.IsShownNow()
+            || _questWindow.IsShownNow();
     }
 
     internal void ClickOnAnInvItem(InvItem _invItem)

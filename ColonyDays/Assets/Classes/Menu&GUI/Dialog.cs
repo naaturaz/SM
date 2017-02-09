@@ -13,6 +13,13 @@ public class Dialog
     private static H _type;
     private static DialogGO _dialogGo;
     private static Transform _canvas;
+
+    public static Transform Canvas
+    {
+        get { return Dialog._canvas; }
+        set { Dialog._canvas = value; }
+    }
+    
     private static Vector3 _middleOfScreen;
 
     public static void Start()
