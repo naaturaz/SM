@@ -236,8 +236,9 @@ public enum H
     Infrastructure, Housing, Farming, Raw, Production, Industry, Trade, GovServices, Other, Militar,
 
     //infr F1
+    StandLamp,
     Trail, Road, BridgeTrail, BridgeRoad, CoachMan, LightHouse, WheelBarrow, StockPile, Masonry,
-    HeavyLoad, StandLamp,
+    HeavyLoad, 
 
     //house F2 ... bugg bz they had numbers on it .. They cant have numbers
     Bohio, BohioB,
@@ -442,6 +443,7 @@ public enum StCat //strucutre categories
 public enum StInfr //for structures game structure.cs 
 {
     //Infrastructure
+    StandLamp,
     //Trail,
     Road, 
     BridgeTrail, BridgeRoad,
@@ -451,7 +453,7 @@ public enum StInfr //for structures game structure.cs
     //b4StockPile, 
     Masonry,
     HeavyLoad,
-    //StandLamp
+    
 }
 
 public enum StHous //for structures game structure.cs 

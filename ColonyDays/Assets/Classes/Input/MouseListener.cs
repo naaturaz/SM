@@ -951,7 +951,7 @@ public class MouseListener : InputMain
             return false;
         }
 
-        return _addOrderWindow.IsShownNow() || BulletinWindow.IsShownNow() || _notificationWindow.IsShownNow()
+        return _addOrderWindow.IsShownNow() || BulletinWindow.IsShownNow() //|| _notificationWindow.IsShownNow()
             || _questWindow.IsShownNow();
     }
 
