@@ -1013,6 +1013,7 @@ public class StartingCondition
         iniCloth, iniUtensil, iniCrockery, iniFurniture, iniNail, iniMortar, iniRoof, iniFloor;
 
     private int _thisDifficultyLevel;//    //0 insane, 4 newbie 
+    public float iniWhaleOil;
 
 
     public StartingCondition(int iniPersonP, int iniWoodP, int iniFoodP, int iniStoneP, int iniBrickP, int iniIronP,
@@ -1040,6 +1041,8 @@ public class StartingCondition
         iniNail = iniTonel/2;
         iniRoof = iniMortar;
         iniFloor = iniMortar;
+
+        iniWhaleOil = 100;
 
         _thisDifficultyLevel = thisDifficultyLevel;
     }

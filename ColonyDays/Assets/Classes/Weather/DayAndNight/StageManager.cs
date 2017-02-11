@@ -19,8 +19,8 @@ public class StageManager : General
     int _dayLenght = 300;
     int _nightLenght = 60;
 
-    float _daySpeed = .6f;
-    float _nightSpeed = .6f;
+    float _daySpeed = .03f;
+    float _nightSpeed = .5f;//.6
 
     bool _isOnTransition;
 
@@ -69,6 +69,11 @@ public class StageManager : General
 
     void Update()
     {
+        if (Program.gameScene.GameSpeed == 0)
+        {
+            return;
+        }
+
         CheckIfMoveStages();
 
         CheckIfInTrans();
@@ -239,6 +244,11 @@ public class StageManager : General
     internal bool IsSunsetOrLater()
     {
         return _currentCycle == H.Night || (_currentCycle == H.Day && _currentStage > 4);
+    }
+
+    internal bool IsMidNightOrLater()
+    {
+        return _currentCycle == H.Night  && _currentStage > 2;
     }
 
     internal bool IsDawnOrLater()

@@ -15,7 +15,6 @@ public class QuestManager
     bool _wasLoaded;//whe is a loaded game
 
 
-
     public List<int> CurrentQuests
     {
         get { return _currentQuests; }
@@ -31,15 +30,23 @@ public class QuestManager
     List<Quest> _bank = new List<Quest>()
     { 
         //need to mention reward still 
+
         new Quest("Bohio.Quest", 500, 5.5f),
+
+        new Quest("Lamp.Quest", 500, 5.5f),
+
+
         new Quest("SmallFarm.Quest", 550, 5.5f),
         new Quest("FarmHire.Quest", 600, 5.1f),
         new Quest("FarmProduce.Quest", 650, 5.1f, 100),
         //new Quest("Transport.Quest", 700, 5.5f),
         new Quest("Export.Quest", 750, 5.5f),
         new Quest("HireDocker.Quest", 800, 5.5f),
+        new Quest("ImportOil.Quest", 950, 5.5f, 500),
         new Quest("MakeBucks.Quest", 850, 5.5f, 100),
-        new Quest("HeavyLoad.Quest", 900, 5.5f),
+        //new Quest("HeavyLoad.Quest", 900, 5.5f),
+
+
     };
 
 
@@ -124,14 +131,14 @@ public class QuestManager
             _doneQuest.Add(indexQ);//adds to done list 
 
             //adds to _current list
-            if (indexQ +1 < _bank.Count)
-            {
-                if (!_currentQuests.Contains(indexQ + 1))
-                {
-                    _currentQuests.Add(indexQ + 1);
-                    _questBtn.ShowNewQuestAvail();
-                }
-            }
+            //if (indexQ +1 < _bank.Count)
+            //{
+            //    if (!_currentQuests.Contains(indexQ + 1))
+            //    {
+            //        _currentQuests.Add(indexQ + 1);
+            //        _questBtn.ShowNewQuestAvail();
+            //    }
+            //}
         }
     }
 
@@ -161,6 +168,7 @@ public class QuestManager
     {
         //spawn dialog 
         Dialog.OKDialog(H.InfoKey, which);
+        _questBtn.ShowNewQuestAvail();
     }
 
     void ShowPrize(Quest q)
@@ -191,14 +199,28 @@ public class QuestManager
         //to show  others  and loaded 
         if (Time.time > _lastCompleted + 90 && _currentQuests.Count < 2)
         {
+            if (Dialog.IsActive())
+            {
+                //so goes trhu again in 5s
+                //_lastCompleted = Time.time - 0;
+                return;
+            }
+
             AddANewQuest();
         }
     }
 
     private void AddANewQuest()
     {
-        var highest = UMath.ReturnMax(_currentQuests);
+        //1st time ever
+        if (_currentQuests.Count == 0 && _doneQuest.Count == 0)
+        {
+            _currentQuests.Add(0);
+            SpawnDialog(_bank[0].Key);
+            return;
+        }
 
+        var highest = GetHighestQuestCompletedOrCurrent();
         if (highest+1 >= _bank.Count)
         {
             _lastCompleted = -1;
@@ -206,7 +228,27 @@ public class QuestManager
         else
         {
             _currentQuests.Add(highest + 1);
+            SpawnDialog(_bank[highest + 1].Key);
         }
+    }
+
+    int GetHighestQuestCompletedOrCurrent()
+    {
+        var highestC = 0;
+        var highestD = 0;
+
+        if (_currentQuests.Count > 0)
+        {
+            highestC = UMath.ReturnMax(_currentQuests);
+        }
+        if (_doneQuest.Count > 0)
+        {
+            highestD = UMath.ReturnMax(_doneQuest);
+        }
+
+        List<int> temp = new List<int>() { highestC, highestD };
+
+        return UMath.ReturnMax(temp);
     }
 
     public void ResetNewGame()
@@ -229,7 +271,9 @@ public class QuestManager
 
     public void TutoCallWhenDone()
     {
-        _currentQuests.Add(0);
+        Init();
+
+        AddANewQuest();
     }
 
 

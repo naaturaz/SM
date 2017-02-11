@@ -22,6 +22,8 @@ class TutoWindow : GUIElement
         "BackToTown.Tuto",
         "BuyRegion.Tuto",//they most be one after
         
+
+
         "CamHeaven.Tuto",
         "Trade.Tuto",//the other
 

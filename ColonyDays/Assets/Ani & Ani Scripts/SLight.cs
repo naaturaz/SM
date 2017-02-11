@@ -33,19 +33,27 @@ class SLight : General
     }
 
 
+
+    float lastCheck;
     void Update()
     {
-        if (_stageManager.IsSunsetOrLater() && _light.intensity == 0)
+        if (Time.time < lastCheck + randomTime)
+        {
+            return;
+        }
+
+        lastCheck = Time.time;
+        if (_stageManager.IsSunsetOrLater() && _light.intensity == 0 && GameController.AreThereWhaleOil)
         {
             _light.intensity = 1.1f;
             TurnThisOneOn(_nightGlass);
             randomTime = UMath.GiveRandom(5f, 10f);
         }
-
-        if (_stageManager.IsDawnOrLater() && _light.intensity > 0)
+        else if (_stageManager.IsDawnOrLater() && _light.intensity > 0)
         {
             _light.intensity = 0f;
             TurnThisOneOn(_dayGlass);
+            GameController.ResumenInventory1.Remove(P.WhaleOil, 1f);
         }
     }
 

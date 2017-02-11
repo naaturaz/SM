@@ -9,8 +9,8 @@ public class Floating : MonoBehaviour
     public float minSpeed;
     public float maxSpeed;
 
-    public float minInterval;
-    public float maxInterval;
+    public float minIntervalTime;
+    public float maxIntervalTime;
 
 
     float changedTime;
@@ -29,7 +29,7 @@ public class Floating : MonoBehaviour
     void Start()
     {
         definedSpeed = UMath.GiveRandom(minSpeed, maxSpeed);
-        definedInterval = UMath.GiveRandom(minInterval, maxInterval);
+        definedInterval = UMath.GiveRandom(minIntervalTime, maxIntervalTime);
     }
 
 

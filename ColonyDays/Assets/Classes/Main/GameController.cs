@@ -12,6 +12,53 @@ using UnityEngine;
 
 public class GameController  {
 
+
+
+    private static bool _areThereWheelBarrowsOnStorage;
+    /// <summary>
+    /// updated every 60sec from GameScene
+    /// </summary>
+    public static bool AreThereWheelBarrowsOnStorage
+    {
+        get { return _areThereWheelBarrowsOnStorage; }
+        set { _areThereWheelBarrowsOnStorage = value; }
+    }
+
+
+
+    private static bool _areThereCratesOnStorage;
+    public static bool AreThereCratesOnStorage
+    {
+        get { return _areThereCratesOnStorage; }
+        set { _areThereCratesOnStorage = value; }
+    }
+
+
+    private static bool _areThereCartsOnStorage;
+    public static bool AreThereCartsOnStorage
+    {
+        get { return _areThereCartsOnStorage; }
+        set { _areThereCartsOnStorage = value; }
+    }
+
+    private static bool _areThereTonelsOnStorage;
+    public static bool AreThereTonelsOnStorage
+    {
+        get { return _areThereTonelsOnStorage; }
+        set { _areThereTonelsOnStorage = value; }
+    }
+
+
+    private static bool _areThereWhaleOil;
+
+    public static bool AreThereWhaleOil
+    {
+        get { return GameController._areThereWhaleOil; }
+        set { GameController._areThereWhaleOil = value; }
+    }
+
+
+
     static float _notificationFrec = 120;
 
     public static float NotificationFrec
@@ -100,6 +147,7 @@ public class GameController  {
         _startingCondition = startingCondition;
     }
 
+
     Inventory CreateInitialInv(StartingCondition startingCondition)
     {
         Dollars += startingCondition.iniDollar;
@@ -130,6 +178,7 @@ public class GameController  {
         inv.Add(P.FloorTile, startingCondition.iniFloor);
         inv.Add(P.RoofTile, startingCondition.iniRoof);
 
+        inv.Add(P.WhaleOil, startingCondition.iniWhaleOil);
 
 
         return inv;
@@ -165,40 +214,6 @@ public class GameController  {
 
 
 
-    private static bool _areThereWheelBarrowsOnStorage;
-    /// <summary>
-    /// updated every 60sec from GameScene
-    /// </summary>
-    public static bool AreThereWheelBarrowsOnStorage
-    {
-        get { return _areThereWheelBarrowsOnStorage; }
-        set { _areThereWheelBarrowsOnStorage = value; }
-    }
-
-
-
-    private static bool _areThereCratesOnStorage;
-    public static bool AreThereCratesOnStorage
-    {
-        get { return _areThereCratesOnStorage; }
-        set { _areThereCratesOnStorage = value; }
-    }
-
-
-    private static bool _areThereCartsOnStorage;
-    public static bool AreThereCartsOnStorage
-    {
-        get { return _areThereCartsOnStorage; }
-        set { _areThereCartsOnStorage = value; }
-    }  
-    
-    private static bool _areThereTonelsOnStorage;
-    public static bool AreThereTonelsOnStorage
-    {
-        get { return _areThereTonelsOnStorage; }
-        set { _areThereTonelsOnStorage = value; }
-    }
-
 
 
 
@@ -208,7 +223,7 @@ public class GameController  {
         AreThereCratesOnStorage = ThereIsAtLeastOneOfThisOnStorage(P.Crate);
         AreThereCartsOnStorage = ThereIsAtLeastOneOfThisOnStorage(P.Cart);
         AreThereTonelsOnStorage = ThereIsAtLeastOneOfThisOnStorage(P.Barrel);
-
+        AreThereWhaleOil = ThereIsAtLeastOneOfThisOnStorage(P.WhaleOil);
     }
 
 

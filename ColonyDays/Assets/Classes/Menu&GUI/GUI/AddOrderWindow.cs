@@ -226,7 +226,7 @@ public class AddOrderWindow : GUIElement {
 
             if (_prodSelect == P.Bean && _amt == 300)
             {
-                Program.gameScene.QuestManager.QuestFinished("Export");
+                Program.gameScene.QuestManager.QuestFinished("Export"); //.ImportOil
             }
         }
         else if (_orderType == "Import")
@@ -238,6 +238,10 @@ public class AddOrderWindow : GUIElement {
             if (_prodSelect == P.Wood && _amt == 100)
             {
                 Program.gameScene.TutoStepCompleted("AddOrder.Tuto");
+            }
+            if (_prodSelect == P.WhaleOil && _amt == 500)
+            {
+                Program.gameScene.QuestManager.QuestFinished("ImportOil");
             }
         }
 

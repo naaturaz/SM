@@ -44,13 +44,17 @@ public class EmoticonManager
         which = ReturnIsGoodOrBad(which);
         var root = ReturnRootOfEmoticon(which);
 
+        General go = General.Create(root, pos);
+
+
+
         //root = "Prefab/GUI/Emoticon/Good_1";
 
-        var p2 = CamControl.CAMRTS.GetComponent<Camera>().WorldToScreenPoint(pos);
+        //var p2 = CamControl.CAMRTS.GetComponent<Camera>().WorldToScreenPoint(pos);
 
-        var sp = (Image)Resources.Load(root, typeof(Image));
-        var ins = GameObject.Instantiate(sp, p2, Quaternion.identity, _canvas);
-        ins.transform.SetParent(_canvas);
+        //var sp = (Image)Resources.Load(root, typeof(Image));
+        //var ins = GameObject.Instantiate(sp, p2, Quaternion.identity, _canvas);
+        //ins.transform.SetParent(_canvas);
     }
 
     static string ReturnIsGoodOrBad(string which)
@@ -71,12 +75,12 @@ public class EmoticonManager
     {
         if (which == "Good")
         {
-            var r = UMath.GiveRandom(1, 5);
+            var r = UMath.GiveRandom(1, 1);
             return "Prefab/GUI/Emoticon/Good_" + r;
         }
         else if (which == "Bad")
         {
-            var r = UMath.GiveRandom(1, 4);
+            var r = UMath.GiveRandom(1, 1);
             return "Prefab/GUI/Emoticon/Bad_" + r;
         }
         else if (which == "Heart")

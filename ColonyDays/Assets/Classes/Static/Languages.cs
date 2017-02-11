@@ -26,7 +26,7 @@ public class Languages
 	   { "BridgeRoad.Desc","Allows people to pass from one side of the terrain to the other. People love these bridges. It gives a sense of prosperity and happinnes" +_houseTail},
 	   { "LightHouse.Desc","Helps to increase Port visibility. Adds to Port Reputation as long as the flame is glowing"},
 	   { H.Masonry + ".Desc","Important building, workers construct new buildings and work as wheelbarrowers once they have nothing to do"},
-	   { H.StandLamp + ".Desc","Iluminates at night"},
+	   { H.StandLamp + ".Desc","Iluminates at night if Whale Oil is available on the town's storage."},
 	   
        { H.HeavyLoad + ".Desc","These workers use horse wagons to move goods around"},
 
@@ -149,7 +149,7 @@ public class Languages
 
        //Tooltips 
        //Small Tooltips 
-	   { "Person.HoverSmall", "Adults / Kids"},
+	   { "Person.HoverSmall", "People / Adults / Kids"},
 	   { "Emigrate.HoverSmall", "Emigrated"},
 	   { "Lazy.HoverSmall", "Unemployed people"},
 	   { "Food.HoverSmall", "Food"},
@@ -217,7 +217,8 @@ public class Languages
 	   { "Upg_Cap_Btn.HoverSmall", "Upgrades capacity"},
 	   { "Close_Btn.HoverSmall", "Close"},
 	   { "ShowPath.HoverSmall", "Show path"},
-	   { "ShowLocation.HoverSmall", "Show location"},
+	   { "ShowLocation.HoverSmall", "Show location"},//TownTitle
+       { "TownTitle.HoverSmall", "Town"},
 
        //addOrder windiw
 	   { "Amt_Tip.HoverSmall", "Amount of prod"},
@@ -351,7 +352,7 @@ public class Languages
             " (FishingHut, Dock, MountainMine, ShoreMine, LightHouse, PostGuard)"
             },
        
-       { "Trade.Tuto", "That was easy, the hard part is coming. Click on the 'Trade' buildings button, located in the middle bottom bar, 'Trade' is the 7th button. "+
+       { "Trade.Tuto", "That was easy, the hard part is coming. Click on the 'Trade' buildings button, located in the right bottom bar. "+
            "When you hover over it, it will popup 'Trade'"},
        { "CamHeaven.Tuto", "Scroll back with your mouse middle button until the camera reaches"
             + " the sky. This view is useful to place bigger buildings such as the Port"},
@@ -364,7 +365,7 @@ public class Languages
        { "MaxSpeed.Tuto", "To go to max speed, go to the middle top screen simulation speed controller, click the "
             +" 'More Speed' button 3 times until 10x is displayed"},
 
-       { "ShowWorkersControl.Tuto", "Click on the 'Control/Bulletin' button, located in the right bottom bar. "+
+       { "ShowWorkersControl.Tuto", "Click on the 'Control/Bulletin' button, located in the bottom bar. "+
            "When you hover over it, it will popup 'Control/Bulletin'. "},
        { "AddWorkers.Tuto", "Click the '+' sign to the right of the Masonry building, this is how you add more workers."
         + " You can also assign workers in the buildings."},
@@ -393,11 +394,13 @@ public class Languages
        //Quest
        { "Tutorial.Quest", "Quest: Finish the tutorial. Reward $10,000. It takes roughly 3 minutes to complete"},
        
+       { "Lamp.Quest", "Quest: Build a StandLamp. Find it on Infrastructure, it shines at night if there is Whale Oil on Storage"},
+
        { "Bohio.Quest", "Quest: Build a bohio. This are cheap houses. When people turn 16 they will move to a free house if found. In this way population growth will be guaranteed. [F1] Help"},
        { "SmallFarm.Quest", "Quest: Build a FieldFarmSmall. You need farms to feed your people"},
-       { "FarmHire.Quest", "Quest: Hire two farmers. Click on the farm and in the plus sign assign workers. You need to have unemployed"
+       { "FarmHire.Quest", "Quest: Hire two farmers in a FieldFarmSmall. Click on the farm and in the plus sign assign workers. You need to have unemployed"
             +" people to be able to assign them into a new building"},
-       { "FarmProduce.Quest", "Quest: Now produce 100KG of beans. On the farm you can click on the 'Stat' tab and will show you the production of the last 5 years"},
+       { "FarmProduce.Quest", "Quest: Now produce 100KG of beans on the FieldFarmSmall. Click on the 'Stat' tab and will show you the production of the last 5 years"},
        { "Transport.Quest", "Quest: Transport the beans from the farm to the Storage. To do that make sure you have" + 
             " workers on the masonry. They act as wheelbarrowers when not building"},
        { "Export.Quest", "Quest: Now export 300KG of beans. On the Dock add a order of export. If you have not dock then build one."+
@@ -408,6 +411,9 @@ public class Languages
        { "MakeBucks.Quest", "Quest: Make $100 exporting goods in the Dock. "+
            "Once a ship arrives will randomly pay product(s) in your Dock's inventory"},
        { "HeavyLoad.Quest", "Quest: Build a HeavyLoad building. This are haulers that carry more weight. They will come handy when transporting goods around is needed"},
+       { "ImportOil.Quest", "Quest: Import 500KG of Whale Oil at the Dock. This is needed to keep your lights on at night."},
+
+
 
 
        {"CompleteQuest", "Your reward is ${0}"},
@@ -418,6 +424,18 @@ public class Languages
        {"Quest.Arrow", "This is the quest panel. You can access the quest by clicking on it"},
        {"New.Quest.Avail", "At least one quest is available"},
        {"Quest_Button.HoverSmall", "Quest"},
+
+
+
+
+
+
+       //Bulleting helps
+       {"Help.Bulletin/Prod/Spec", "In this window you can see the inputs needed for each product, where is built and the price. "
+       + " Scroll to the top to see the headers. Notice that one simple product may have more than a formula to produce."},
+
+              {"Help.Bulletin/General/Workers", "In this window you can assign workers to work in various buildings. "
+       + " For a building allow more people in to work, must be less than capacity and must find at least an unemployed person."},
 
     };
 

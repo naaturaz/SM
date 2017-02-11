@@ -246,13 +246,26 @@ public class Building : Hoverable, Iinfo
             NotifyBuildingProblem(isScaledOnFloor);
             
         }
-
-        
         
         return _isEven && !_isColliding && _isGoodWaterHeight && isScaledOnFloor 
-            && AreAnchorsOnUnlockRegions()
+            && AreAnchorsOnUnlockRegions() //&& IfIsLampIsFarEnough()
             ;
     }
+
+    ///// <summary>
+    ///// If building is a Lamp must be far enough from other lamps 
+    ///// </summary>
+    ///// <returns></returns>
+    //private bool IfIsLampIsFarEnough()
+    //{
+    //    if (HType != H.StandLamp)
+    //    {
+    //        return true;
+    //    }
+
+    //    //return BuildingPot.Control.Registro.IsFarEnoughFromLights();
+
+    //}
 
     /// <summary>
     /// Will notify why current buliding cant be placed here 
@@ -2991,6 +3004,10 @@ public class Building : Hoverable, Iinfo
             else if (HType == H.HeavyLoad)
             {
                 Program.gameScene.QuestManager.QuestFinished("HeavyLoad");
+            }
+            else if (HType == H.StandLamp)
+            {
+                Program.gameScene.QuestManager.QuestFinished("Lamp");
             }
         }
     }

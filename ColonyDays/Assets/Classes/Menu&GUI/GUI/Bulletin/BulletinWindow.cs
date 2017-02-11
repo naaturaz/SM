@@ -19,6 +19,8 @@ public class BulletinWindow : GUIElement
     private static SubBulletinProduction _production;
     private SubBulletinFinance _finance;
 
+    Text _help;//help in this window
+
     public Text Body1
     {
         get { return _body; }
@@ -61,7 +63,9 @@ public class BulletinWindow : GUIElement
         _contentRectTransform = _content.GetComponent<RectTransform>();
         _scroll_Ini_PosGO = GetChildCalledOnThis("Scroll_Ini_Pos", _content);
 
-
+        var h = GetChildCalled("Help");
+        _help = h.GetComponent<Text>();
+        _help.text = "";
 
     }
 
@@ -83,6 +87,7 @@ public class BulletinWindow : GUIElement
 
     void HideAll()
     {
+        _help.text = "";
         _scroll.SetActive(false);
         _body.text = "";
         _production.Hide();
@@ -115,6 +120,9 @@ public class BulletinWindow : GUIElement
         ClickAndHideAll();
 
         _workers.ShowWorkers();
+
+        _help.text = "Bulletin/General/Workers \n" + Languages.ReturnString("Help.Bulletin/General/Workers");
+
     }  
     
     /// <summary>
@@ -166,6 +174,7 @@ public class BulletinWindow : GUIElement
         ClickAndHideAll();
         _finance.ShowSpecs();
         Program.gameScene.TutoStepCompleted("Spec.Tuto");
+        _help.text = "Bulletin/Prod/Spec \n" + Languages.ReturnString("Help.Bulletin/Prod/Spec");
     }
 
 

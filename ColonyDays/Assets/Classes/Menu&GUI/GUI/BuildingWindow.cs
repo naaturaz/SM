@@ -496,7 +496,7 @@ public class BuildingWindow : GUIElement
         var isAHouse = build.HType.ToString().Contains("House") || build.HType == H.Bohio;
         var isStorage = build.HType.ToString().Contains("Storage");
 
-        return !isAHouse && !isStorage;
+        return !isAHouse && !isStorage && build.HType != H.StandLamp;
     }
 
 

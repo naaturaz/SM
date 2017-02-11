@@ -12,18 +12,27 @@ public class QuestButton : GUIElement
     GameObject _arrow;
     QuestWindow _questWin;
     GameObject _redCircle;
+    GameObject _text;
 
     void Start()
     {
         _arrow = GetChildCalled("Arrow");
         _arrow.gameObject.SetActive(false);
 
+        _text = GetChildCalled("Text");
         _redCircle = GetChildCalled("Red_Circle");
-        _redCircle.SetActive(false);
+        SetCircleAndTextTo(false);
+
 
         StartCoroutine("FiveSecUpd");
 
         _questWin = FindObjectOfType<QuestWindow>();
+    }
+
+    void SetCircleAndTextTo(bool active)
+    {
+        _redCircle.SetActive(active);
+        _text.SetActive(active);
     }
 
     private IEnumerator FiveSecUpd()
@@ -38,7 +47,11 @@ public class QuestButton : GUIElement
 
     void Update()
     {
+        if (Program.gameScene.QuestManager.CurrentQuests.Count == 0 && _redCircle.activeSelf)
+        {
+            SetCircleAndTextTo(false);
 
+        }
     }
 
     private void ShowHere(GameObject gameObjectP, string which)
@@ -69,12 +82,11 @@ public class QuestButton : GUIElement
     public void ClickOnButton()
     {
         _questWin.Show("");
-        _redCircle.SetActive(false);
     }
 
     internal void ShowNewQuestAvail()
     {
-        _redCircle.SetActive(true);
+        SetCircleAndTextTo(true);
         AudioCollector.PlayOneShot("NEW_QUEST_1", 0);
     }
 }

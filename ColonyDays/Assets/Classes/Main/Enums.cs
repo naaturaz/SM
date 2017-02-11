@@ -190,6 +190,7 @@ public enum P
     Input1,
     Input2,
     Input3,
+    WhaleOil,
 
 
 }

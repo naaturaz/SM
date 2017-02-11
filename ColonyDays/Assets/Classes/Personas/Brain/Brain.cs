@@ -41,7 +41,9 @@ public class Brain
     //breaing down 2700 lines of codes in subclasses
     private MoveToNewHome _moveToNewHome;
     private MajorityAgeReached _majorAge;
-    
+
+    StageManager _stageManager;
+
     public HPers CurrentTask
     {
         get { return _currentTask; }
@@ -251,6 +253,8 @@ public class Brain
         _routerWork = new CryRouteManager();
         _routerReligion = new CryRouteManager();
         _routerChill = new CryRouteManager();
+
+        _stageManager = GameObject.FindObjectOfType<StageManager>();
     }
 
     private DateTime askWork = new DateTime();
@@ -444,9 +448,9 @@ public class Brain
     void SkipWork()
     {
         //if is ready to work and Work is null or is not producing now, then Skip work
-        if (ReadyToWork() && 
-            
-            (_person.Work == null || !_person.Work.IsProducingNow())
+        if (ReadyToWork() &&
+
+            (_person.Work == null || !_person.Work.IsProducingNow() || _stageManager.IsSunsetOrLater())
             //without FoodSource wont go to work
             //|| _person.FoodSource == null)
             ) 
@@ -464,7 +468,7 @@ public class Brain
         }
 
         if (ReadyToGetFood() &&
-            (_person.FoodSource == null || _person.Age < _jobManager.startSchool || invFull))
+            (_person.FoodSource == null || _person.Age < _jobManager.startSchool || invFull || _stageManager.IsMidNightOrLater()))
         {
             ReadyToGoToReligion(true);
         }
@@ -472,7 +476,7 @@ public class Brain
 
     private void SkipReligion()
     {
-        if (ReadyToGoToReligion() && _person.Religion == null)
+        if (ReadyToGoToReligion() && (_person.Religion == null || _stageManager.IsMidNightOrLater() ))
         {
             ReadyToGoChill(true);
         }
@@ -483,7 +487,8 @@ public class Brain
     /// </summary>
     private void SkipChill()
     {
-        if (ReadyToGoChill() && (_person.Chill == null || !UPerson.IsMajor(_person.Age)))
+        if (ReadyToGoChill() &&
+            (_person.Chill == null || !UPerson.IsMajor(_person.Age) || _stageManager.IsMidNightOrLater()))
         {
             ReadyToIdleInHome(true);
         }

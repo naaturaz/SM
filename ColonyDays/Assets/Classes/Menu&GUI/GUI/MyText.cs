@@ -60,7 +60,7 @@ public class MyText : MonoBehaviour
             adult = PersonPot.Control.All.Count(a => a.Age >= JobManager.majorityAge);
             var all = PersonPot.Control.All.Count;
 
-            thisText.text = adult + " / " + (all - adult);
+            thisText.text = all + " / " + adult + " / " + (all - adult);
         }
         else if (name == "Emigrate")
         {
@@ -80,7 +80,7 @@ public class MyText : MonoBehaviour
 
         else if (name == "PortReputation")
         {
-            thisText.text = BuildingPot.Control.DockManager1.PortReputation.ToString("F1");
+            thisText.text = BuildingPot.Control.DockManager1.PortReputation.ToString("F0");
         }
         else if (name == "PirateThreat")
         {
@@ -90,7 +90,7 @@ public class MyText : MonoBehaviour
                 return;
             }
 
-            thisText.text = BuildingPot.Control.DockManager1.PirateThreat.ToString("F1");
+            thisText.text = BuildingPot.Control.DockManager1.PirateThreat.ToString("F0");
         }
 
         else if (name == "Dollars")
@@ -101,6 +101,10 @@ public class MyText : MonoBehaviour
         else if (name == "Temp")
         {
             thisText.text = Tempeture.Current().ToString("n0");
+        }
+        else if (name == "Town")
+        {
+            thisText.text = Program.MyScreen1.TownName; 
         }
     }
 
