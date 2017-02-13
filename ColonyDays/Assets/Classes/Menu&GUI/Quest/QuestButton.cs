@@ -13,6 +13,8 @@ public class QuestButton : GUIElement
     QuestWindow _questWin;
     GameObject _redCircle;
     GameObject _text;
+    bool _shownArrow;
+
 
     void Start()
     {
@@ -88,6 +90,12 @@ public class QuestButton : GUIElement
     {
         SetCircleAndTextTo(true);
         AudioCollector.PlayOneShot("NEW_QUEST_1", 0);
+
+        if (!_shownArrow)
+        {
+            _shownArrow = true;
+            _arrow.SetActive(true);
+        }
     }
 }
 

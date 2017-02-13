@@ -15,11 +15,9 @@ public class StageManager : General
     int _startStage = 2;
     int _currentStage = 2;
 
-    //in second
-    int _dayLenght = 300;
-    int _nightLenght = 60;
 
-    float _daySpeed = .03f;
+
+    float _daySpeed = .5f;
     float _nightSpeed = .5f;//.6
 
     bool _isOnTransition;
@@ -33,12 +31,12 @@ public class StageManager : General
     /// <summary>
     /// times to move from a stage
     /// Fox ex
-    /// in stage 0 will move a 0sec
-    /// in stage 1 will move a 10sec
+    /// in stage 0 will move at 1sec
+    /// in stage 1 will move at 20sec
     /// 
-    /// At night time is the same but divided /5
+    /// At night time is the same but divided / 10
     /// </summary>
-    List<float> _times = new List<float>() { 1, 5, 5, 5, 5, 5 };
+    List<float> _times = new List<float>() { 1, 20, 120, 120, 20, 5 };
 
     float _startedCycleAt = 0;
 
@@ -192,7 +190,7 @@ public class StageManager : General
             return _times[_currentStage];
         }
         //night time is a fifth of the day
-        return _times[_currentStage]/5;
+        return _times[_currentStage]/10;
     }
 
     /// <summary>

@@ -213,10 +213,10 @@ public class NotificationWindowGO : GUIElement
     /// </summary>
     void SetTileIniPos()
     {
-        var ySpace = Screen.height / 59.46667f;    //15 on editor
+        //var ySpace = Screen.height / 59.46667f;    //15 on editor
 
         _scrollIniPos = _scroll_Ini_PosGO.transform.position;
-        _scrollIniPos = new Vector3(_scrollIniPos.x, _scrollIniPos.y - ySpace, _scrollIniPos.z);
+        //_scrollIniPos = new Vector3(_scrollIniPos.x, _scrollIniPos.y - ySpace, _scrollIniPos.z);
     }
 
     private void SetHeightOfContentRect(int tiles)

@@ -133,6 +133,10 @@ public class BulletinWindow : GUIElement
         ClickAndHideAll();
 
         _workers.ShowBuildings();
+
+        //""
+        _help.text = "Bulletin/General/Buildings \n" + Languages.ReturnString("Help.Bulletin/General/Buildings");
+
     }
 
     /// <summary>
@@ -143,6 +147,8 @@ public class BulletinWindow : GUIElement
         ClickAndHideAll();
 
         _production.ShowProdReport();
+        _help.text = "Bulletin/Prod/Produce \n" + Languages.ReturnString("Help.Bulletin/Prod/Produce");
+
     } 
     
     /// <summary>
@@ -153,6 +159,8 @@ public class BulletinWindow : GUIElement
         ClickAndHideAll();
 
         _production.ShowConsumeReport();
+        _help.text = "Bulletin/Prod/Consume \n" + Languages.ReturnString("Help.Bulletin/Prod/Consume");
+
     } 
     
     /// <summary>
@@ -162,6 +170,8 @@ public class BulletinWindow : GUIElement
     {
         ClickAndHideAll();
         _production.ShowExpirationReport();
+        _help.text = "Bulletin/Prod/Expire \n" + Languages.ReturnString("Help.Bulletin/Prod/Expire");
+
     }
 
     /// <summary>

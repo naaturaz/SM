@@ -330,6 +330,7 @@ public class Languages
        { "More.Help", "If you need more help might be a good idea completing the tutorial"},
 
 
+       { "F1.Help", "Press [F1] for help"},
 
 
 
@@ -421,7 +422,7 @@ public class Languages
 
        //
        {"Tutorial.Arrow", "This is the tutorial. Once finished you will win $10,000"},
-       {"Quest.Arrow", "This is the quest panel. You can access the quest by clicking on it"},
+       {"Quest.Arrow", "This is the quest button. You can access the quest window by clicking on it"},
        {"New.Quest.Avail", "At least one quest is available"},
        {"Quest_Button.HoverSmall", "Quest"},
 
@@ -430,12 +431,25 @@ public class Languages
 
 
 
+
        //Bulleting helps
+       {"Help.Bulletin/Prod/Produce", "Here is shown what is being produced on village."},
+       {"Help.Bulletin/Prod/Expire", "Here is shown what has expired on village."},
+       {"Help.Bulletin/Prod/Consume", "Here is shown what is being consumed by your people."},
+
+
        {"Help.Bulletin/Prod/Spec", "In this window you can see the inputs needed for each product, where is built and the price. "
-       + " Scroll to the top to see the headers. Notice that one simple product may have more than a formula to produce."},
+       + "Scroll to the top to see the headers. Notice that one simple product may have more than a formula to produce."},
+
+
+
+      {"Help.Bulletin/General/Buildings", "This is a resume of how many buildings are of each type."},
+
 
               {"Help.Bulletin/General/Workers", "In this window you can assign workers to work in various buildings. "
-       + " For a building allow more people in to work, must be less than capacity and must find at least an unemployed person."},
+       + "For a building allow more people in to work, must be less than capacity and must find at least an unemployed person."},
+
+
 
     };
 
