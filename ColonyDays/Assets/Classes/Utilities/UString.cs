@@ -107,4 +107,19 @@ public class UString : MonoBehaviour {
         }
         return pass;
     }
+
+
+    /// <summary>
+    /// Returns only the first part of a String
+    /// 
+    /// ex in: 'Cuco.Perez' out 'Cuco'
+    /// </summary>
+    /// <param name="pass"></param>
+    /// <returns></returns>
+    public static string RemoveLastPart(string pass)
+    {
+        var arr = pass.Split('.');
+        return arr[0];
+    }
+
 }

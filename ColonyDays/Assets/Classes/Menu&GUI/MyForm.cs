@@ -182,7 +182,7 @@ public class MyForm : General
         if (_miniHelper!= null && Input.GetKeyUp(KeyCode.F1))
         {
             ManagerReport.AddInput("KeyCode.F1");
-            _miniHelper.Show();
+            Program.MouseListener.HelpWindow.Show("");
         }
     }
 

@@ -64,11 +64,6 @@ public class QuestButton : GUIElement
 
 
 
-    string RemoveLastPart(string pass)
-    {
-        var arr = pass.Split('.');
-        return arr[0];
-    }
 
 
 

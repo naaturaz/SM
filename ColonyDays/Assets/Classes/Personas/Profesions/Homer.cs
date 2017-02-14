@@ -195,7 +195,8 @@ public class Homer : Profession
 
 //         //Debug.Log(_person.MyId + " not homer anymore now will be a: " + _person.PrevJob);
 
-            if (_person.PrevJob == Job.WheelBarrow || _person.PrevJob == Job.Builder || _person.PrevJob == Job.None)
+            if (_person.PrevJob == Job.WheelBarrow || _person.PrevJob == Job.Builder// || _person.PrevJob == Job.None
+                )
             {
                 ConvertToWheelBarrOrBuilder();
             }

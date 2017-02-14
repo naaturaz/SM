@@ -304,19 +304,23 @@ public class Languages
 
        { "Construction.HoverMed", "For the construction of any building you need to have workers in the Masonry. "+
             " Click the Masonry, then the '+' sign in the general tab. Make sure you have enough resources"},
-       { "Camera", "Camera: Use [WASD] or cursor to move. " +
+      
+            
+       { "Construction.Help", "For the construction of any building you need to have workers in the Masonry. "+
+            " Click the Masonry, then the '+' sign in the general tab. Make sure you have enough resources"},     
+       { "Camera.Help", "Camera: Use [WASD] or cursor to move. " +
                    "Press the scroll wheel on your mouse, keep it pressed to rotate, or [Q] and [E]"},
-       { "SeaPath", "Click on the left bottom corner 'Show/hide sea path' " +
+       { "Sea Path.Help", "Click on the left bottom corner 'Show/hide sea path' " +
                     "button to show the closest path to the sea"},
 
-       { "PeopleRange", "The huge blue circle around each building marks the range of it"},
+       { "People Range.Help", "The huge blue circle around each building marks the range of it"},
 
-       { "PirateThreat.Help", "Pirate Threat: This is how aware are the pirates of your port. This increases as" +
-	                              " you have more money. If this reaches over 90 you will lose the game"},
+       { "Pirate Threat.Help", "Pirate Threat: This is how aware are the pirates of your port. This increases as" +
+	                              " you have more money. If this reaches over 90 you will lose the game. You can counter this constructing militar buildings"},
 
-	   { "PortReputation.Help", "Port Reputation: The more people know your port, the more they will visit." +
+	   { "Port Reputation.Help", "Port Reputation: The more people know your port, the more they will visit." +
 	                                " If you want to increase this make sure you always have some orders" +
-	                                " in the port, supplier and shipyard"},
+	                                " in the Dock"},
 	   { "Emigrate.Help", "Emigrates: When people are unhappy for a few years they leave. The bad" +
 	                          " part of this is they won't come back, they won't produce or have children." +
 	                          " The only good thing is that they increase the 'Port Reputation'"},
@@ -327,7 +331,20 @@ public class Languages
                         " You can change it in 'Options' in the 'Main Menu'"},
 
 
-       { "More.Help", "If you need more help might be a good idea completing the tutorial"},
+       { "More.Help", "If you need more help might be a good idea completing the tutorial, or simply posting a question on SugarMill's Forums"},
+
+
+       //more 
+       { "Products Expiration.Help", "Products expiration: Just like in real life, in this game every product expires. Some food items expire sooner than others. You can see how many products had expire on Bulletin/Prod/Expire"},
+       { "Horse Carriages.Help", "As the game has real measurements people can carry only so much. That's when horse drawn carriages come into place. They carry a lot more, as a result your economy gets boosted. A person in their best years might carry around 15KG, a wheelbarrower closer to 60KG, but the smaller cart can carry 240KG. To use them build a HeavyLoad"},
+       { "Usage of goods.Help", "Usage of goods: Crates, barrels, wheelbarrows, carts, tools, cloth, crockery, furniture and utensils are all needed to do the traditional activities of a town. As these goods get used, they diminish, as a result a person won't carry anything if there are no crates. Keep an eye on that ;)"},
+       { "Happiness.Help", "Happiness: People's happiness is influenced by various factors. How much money they have, food variety, religion satisfaction, access to leisure, house comfort and education level. Also if a person has access to utensils, crockery and cloth will influence their happiness."},
+       { "Line production.Help", "Line production: To make a simple nail you need to mine ore, in the foundry melt the iron, and finally in the blacksmith make the nail. If you got enough money, you can always buy the nail directly from a ship, or any other product."},
+       { "Bulletin.Help", "The pages icon on the bottom bar is the Bulletin/Control Window. Please get a minute to explore it."},
+       { "Trading.Help", "You will need to have at least one Dock to be able to trade. On it you can add import/export orders and make some cash. If you need help adding an order you might want to complete the Tutorial"},
+
+
+
 
 
        { "F1.Help", "Press [F1] for help"},

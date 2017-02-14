@@ -128,7 +128,7 @@ public class PersonFile  {
         Mother = pers.Mother;
 
         IsBooked = pers.IsBooked;
-        HomerFoodSrc = pers.HomerFoodSrc;
+        //HomerFoodSrc = pers.HomerFoodSrc;
 
         Order = pers.ProfessionProp.Order1;
         PrevOrder = pers.PrevOrder;

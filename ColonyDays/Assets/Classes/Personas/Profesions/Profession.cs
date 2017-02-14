@@ -850,7 +850,7 @@ public class Profession
         _person.Body.Location = HPers.Work;
         _workerTask = HPers.None;
 
-        _person.HomerFoodSrc = _sourceBuildKey;
+        //_person.HomerFoodSrc = _sourceBuildKey;
         _person.CreateProfession(Job.Homer);
     }
 

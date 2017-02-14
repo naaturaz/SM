@@ -83,6 +83,7 @@ public class MouseListener : InputMain
 
         BulletinWindow = FindObjectOfType<BulletinWindow>();
         _questWindow = FindObjectOfType<QuestWindow>();
+        _helpWindow = FindObjectOfType<HelpWindow>();
 
 
         //Debug.Log("LoadMainGUI() GUI");
@@ -495,6 +496,13 @@ public class MouseListener : InputMain
     private NotificationWindowGO _notificationWindow;
 
     private QuestWindow _questWindow;
+    private HelpWindow _helpWindow;
+
+    public HelpWindow HelpWindow
+    {
+        get { return _helpWindow; }
+        set { _helpWindow = value; }
+    }
 
 
     /// <summary>
@@ -941,7 +949,8 @@ public class MouseListener : InputMain
 
         return _buildingsMenu.IsShownNow() || _descriptionWindow.IsShownNow() ||
             _personWindow.IsShownNow() || _buildingWindow.IsShownNow() || _addOrderWindow.IsShownNow() ||
-            BulletinWindow.IsShownNow() || _questWindow.IsShownNow();
+            BulletinWindow.IsShownNow() 
+            || _questWindow.IsShownNow() || _helpWindow.IsShownNow();
     }
 
     public bool IsAWindowScrollableShownNow()
@@ -952,7 +961,7 @@ public class MouseListener : InputMain
         }
 
         return _addOrderWindow.IsShownNow() || BulletinWindow.IsShownNow() //|| _notificationWindow.IsShownNow()
-            || _questWindow.IsShownNow();
+            || _questWindow.IsShownNow() || _helpWindow.IsShownNow();
     }
 
     internal void ClickOnAnInvItem(InvItem _invItem)

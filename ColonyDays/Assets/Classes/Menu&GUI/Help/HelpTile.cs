@@ -6,16 +6,22 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class QuestTile : GUIElement
+public class HelpTile : GUIElement
 {
     private Text _descText;
     private Text _priceText;
 
-    private QuestWindow _window;
+    private HelpWindow _window;
 
-    public Quest Value { get; set; }
+    string _key;
 
-    public QuestWindow Window
+    public string Key
+    {
+        get { return _key; }
+        set { _key = value; }
+    }
+
+    public HelpWindow Window
     {
         get { return _window; }
         set { _window = value; }
@@ -31,8 +37,8 @@ public class QuestTile : GUIElement
 
     private void Init()
     {
-        _descText.text = Value.Key;
-        _priceText.text = _window.Status(Value);
+        _descText.text = UString.RemoveLastPart( Key);
+        _priceText.text = "";
     }
 
     void Update()
@@ -45,25 +51,25 @@ public class QuestTile : GUIElement
     /// </summary>
     public void ButtonClick()
     {
-        _window.QuestSelected(Value);
+        _window.HelpSelected(Key);
     }
 
-    internal static QuestTile CreateTile(Transform container,
-        Quest val, Vector3 iniPos, QuestWindow win)
+    internal static HelpTile CreateTile(Transform container,
+        string key, Vector3 iniPos, HelpWindow win)
     {
-        QuestTile obj = null;
+        HelpTile obj = null;
 
         var root = "";
 
-        obj = (QuestTile)Resources.Load(Root.quest_Tile, typeof(QuestTile));
-        obj = (QuestTile)Instantiate(obj, new Vector3(), Quaternion.identity);
+        obj = (HelpTile)Resources.Load(Root.help_Tile, typeof(HelpTile));
+        obj = (HelpTile)Instantiate(obj, new Vector3(), Quaternion.identity);
 
         var iniScale = obj.transform.localScale;
         obj.transform.SetParent(container);
         obj.transform.localPosition = iniPos;
         obj.transform.localScale = iniScale;
 
-        obj.Value = val;
+        obj.Key = key;
         obj.Window = win;
 
         return obj;

@@ -88,7 +88,7 @@ public class Person : Hoverable
     private string _mother;
 
     private string _isBooked = ""; //says if the person is Booked in a building to be his new home
-    private string _homerFoodSrc; //where the Homer will grab the food  
+    //private string _homerFoodSrc; //where the Homer will grab the food  
 
     private bool _isLoading; //use to know if person is being loaded from file 
 
@@ -134,11 +134,11 @@ public class Person : Hoverable
         set { _isBooked = value; }
     }
 
-    public string HomerFoodSrc
-    {
-        get { return _homerFoodSrc; }
-        set { _homerFoodSrc = value; }
-    }
+    //public string HomerFoodSrc
+    //{
+    //    get { return _homerFoodSrc; }
+    //    set { _homerFoodSrc = value; }
+    //}
 
     public float Weight
     {
@@ -536,7 +536,7 @@ public class Person : Hoverable
         Mother = pF.Mother;
 
         IsBooked = pF.IsBooked;
-        HomerFoodSrc = pF.HomerFoodSrc;
+        //HomerFoodSrc = pF.HomerFoodSrc;
 
         Inventory = pF.Inventory;
 
@@ -2191,7 +2191,7 @@ public class Person : Hoverable
     {
         IsPregnant = true;
         CalculateDueDate();
-        EmoticonManager.Show("Heart", transform.position);
+        EmoticonManager.Show("Heart", Home.transform.position);
 
     }
 
@@ -2201,7 +2201,7 @@ public class Person : Hoverable
         if (IsPregnant && IsMyDueDateOrPast() && string.IsNullOrEmpty(IsBooked))
         {
             GiveBirth();
-            EmoticonManager.Show("Stork", transform.position);
+            EmoticonManager.Show("Stork", Home.transform.position);
         }
     }
 
