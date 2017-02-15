@@ -603,7 +603,7 @@ public enum Month
 
 public enum Tile//for roads
 {
-    NW, N, NE, E, SE, S, SW, W, Inside,
+    NW, N, NE, E, SE, S, SW, W, In,
     None,
     NSW, NSE, NS,
     NWE, SWE, WE,

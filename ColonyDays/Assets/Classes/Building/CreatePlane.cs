@@ -99,6 +99,8 @@ public class CreatePlane : Building
      float raiseFromFloor = 0.09f, Material mat = null, Vector3 scale = new Vector3(), bool isAnInvisiblePlane = false,
         bool isLoadingFromFile = false)
     {
+        //root = "Prefab/Mats/SmartTile/Road3D/In";
+
         WAKEUP = true;
         CreatePlane obj = null;
         obj = (CreatePlane)Resources.Load(root, typeof(CreatePlane));
@@ -107,12 +109,11 @@ public class CreatePlane : Building
         obj.transform.name = obj.MyId = obj.Rename(obj.transform.name, obj.Id, obj.HType, name);
         obj.Scale = scale;
 
-        if (mat == null)
-        {
-            obj.Material = (Material)Resources.Load(materialRoot);
-        }
-        else obj.Material = mat;
-
+        //if (mat == null)
+        //{
+        //    obj.Material = (Material)Resources.Load(materialRoot);
+        //}
+        //else obj.Material = mat;
 
         obj.RaisedFromFloor = raiseFromFloor;
         obj.IsAnInVisiblePlane = isAnInvisiblePlane;
@@ -131,6 +132,7 @@ public class CreatePlane : Building
 
 
 
+
     /// <summary>
     /// Initialize Material Color. Define initial color as Geometry.renderer.material.color
     /// </summary>
@@ -142,7 +144,7 @@ public class CreatePlane : Building
 
     void Awake()
     {
-        GameObject loc = Resources.Load<GameObject>(Root.createPlaneUnit);
+        GameObject loc = Resources.Load<GameObject>(ReturnGeometryRoot());
         _geometry = (GameObject) Instantiate(loc);
         _geometry.name = H.Geometry.ToString();
 
@@ -151,13 +153,26 @@ public class CreatePlane : Building
         _geometry.GetComponent<Renderer>().castShadows = false;
     }
 
+
+    string ReturnGeometryRoot()
+    {
+
+            return Root.createPlaneUnit;
+        
+        
+    }
+
+
+
     protected void Start()
     {
+        if (MyId==null)
+        {
+            return;
+        }
+
         base.Start();
         Geometry.GetComponent<Renderer>().sharedMaterial = _material;
-        
-        //InitialColor = _material.color;
-
 
         //This is when the Plane is called from the loading fuction
         if (_scale != new Vector3() && _scale != null)
@@ -174,14 +189,71 @@ public class CreatePlane : Building
             _geometry.transform.SetParent(transform);
             InitializeMatColors();
         }
-        //else print("_scale was not initialize");
+
+        //UpdatePos(GetAnchors(), transform.localScale.y);
+
+        StartSmart();
     }
 
 
+    #region SmartTile
+    bool wasScaled;
+    GameObject _geometrySmart;
+    List<Tile> _onPrefab = new List<Tile>(){
+       Tile. NW, Tile.N, Tile.NE, Tile.E, Tile.SE, Tile.S, Tile.SW, Tile.W, Tile.In
+    };
+
+    private void StartSmart()
+    {
+        if (!_isSmartTile)
+        {
+            return;
+        }
+
+        if (_geometrySmart!=null)
+        {
+            Destroy(_geometrySmart);
+        }
+
+        GameObject loc = Resources.Load<GameObject>(ReturnSmartTileRoot());
+        _geometrySmart = (GameObject)Instantiate(loc);
+        _geometrySmart.name = H.Geometry.ToString()+"Smart";
+
+        _geometrySmart.transform.SetParent(gameObject.transform);
+        _geometrySmart.transform.localPosition = new Vector3();
+
+        Geometry.SetActive(false);
+        ScaleSmart();
+    }
+
+    void ScaleSmart()
+    {
+        Vector3 scale = _geometry.transform.localScale;
+        scale.y = _geometrySmart.transform.localScale.y;
+        _geometrySmart.transform.localScale = scale;
+    }
+
+    string ReturnSmartTileRoot()
+    {
+        if (_onPrefab.Contains(_tile))
+        {
+            return "Prefab/Mats/SmartTile/Road3D/"+_tile+"Pre";
+        }
+
+        //if (_tile == Tile.Inside)
+        //{
+        //    return "Prefab/Mats/SmartTile/Road3D/InT";
+        //}
+        return "Prefab/Mats/SmartTile/Road3D/OtherPre";
+
+    }
+
+
+    #endregion
 
 
 
-	// Update is called once per frame
+    // Update is called once per frame
     void Update()
     {
         //then wait so all gets loaded into Regist
@@ -238,19 +310,21 @@ public class CreatePlane : Building
         {
             return;
         }
-        DetermineTileImAndAssignSharedMat();
+        //DetermineTileImAndAssignSharedMat();
 
-        Geometry.transform.Rotate(new Vector3(0, 90, 0));
+        //Geometry.transform.Rotate(new Vector3(0, 90, 0));
         //addressing the rotation
-        Scale = new Vector3(Scale.z, 0.001f, Scale.x);
-        _geometry.transform.localScale = Scale;
+        //Scale = new Vector3(Scale.z, 0.001f, Scale.x);
+        //_geometry.transform.localScale = Scale;
     }
 
     private General debugTileType;
     void DetermineTileImAndAssignSharedMat()
     {
         DetermineWhichTileIAm();
-        AssignSharedMaterial(ReturnTileMaterialRoot());
+        //AssignSharedMaterial(ReturnTileMaterialRoot());
+        StartSmart();
+
 
         if (debugTileType!=null)
         {
@@ -337,7 +411,7 @@ public class CreatePlane : Building
 
         if (concat=="")
         {
-            _tile = Tile.Inside;
+            _tile = Tile.In;
             return;
         }
         //bz I ask them like NS then WS
@@ -378,7 +452,7 @@ public class CreatePlane : Building
             throw new Exception("Tile cant be  Tile.None ReturnTileMaterialRoot()");
         }
         //making inside random
-        if (_tile == Tile.Inside)
+        if (_tile == Tile.In)
         {
             var probOfRamdom = UMath.GiveRandom(0, 2);//50%
 
@@ -396,7 +470,7 @@ public class CreatePlane : Building
     public void AssignSharedMaterial(string materialRoot)
     {
 
-        Geometry.GetComponent<Renderer>().sharedMaterial = (Material)Resources.Load(materialRoot);
+        //Geometry.GetComponent<Renderer>().sharedMaterial = (Material)Resources.Load(materialRoot);
     }
 
     #endregion
@@ -412,6 +486,7 @@ public class CreatePlane : Building
     public void UpdatePos(List<Vector3> newVert, float blockthickNess = 0, bool makeThisInvisible = false,
         bool corretMinimuScaleOnBigBoxP = false)
     {
+
         //if is on the BigBox Class will correct minumulliy the scale for Big Box Prev Purposes
         corretMinimuScaleOnBigBox = corretMinimuScaleOnBigBoxP;
 
@@ -437,6 +512,7 @@ public class CreatePlane : Building
             _isAnInVisiblePlane = true;
         }
     }
+
 
     #region Rectifys this(class) when are used on a Road or Trail so it looks seamleas when built.
     private float rectifyOnX = 0.01374f;

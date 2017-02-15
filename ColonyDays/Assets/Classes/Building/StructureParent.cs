@@ -415,7 +415,6 @@ public class StructureParent : Building {
     {
         var locPoly = UPoly.ScalePoly(Anchors, 0.04f);
         basePlane = CreatePlane.CreatePlan(Root.createPlane, ReturnMatBase(), raiseFromFloor: 0.08f, container: transform);
-        basePlane.UpdatePos(locPoly);
     }
 
     string ReturnMatBase()
@@ -558,13 +557,24 @@ public class StructureParent : Building {
             }
         }
 	}
-	
+
+
+    bool wasBasePlaneUpdated;
 	// Update is called once per frame
     protected void Update()
     {
 	    base.Update();
 
         if (rotateWheel) { RotateWheel();}
+
+
+        if (wasBasePlaneUpdated)
+        {
+            return;
+        }
+        wasBasePlaneUpdated = true;
+        basePlane.UpdatePos(Anchors);
+
 	}
 
 
