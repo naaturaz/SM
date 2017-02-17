@@ -10,6 +10,8 @@ public class ColorManager : MonoBehaviour
     public DayStage[] Day = new DayStage[6];
     public DayStage[] Night = new DayStage[1];
 
+    public Color DayGrass;
+
     void Start()
     {
 

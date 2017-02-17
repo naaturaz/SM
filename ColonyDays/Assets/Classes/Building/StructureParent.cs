@@ -568,13 +568,12 @@ public class StructureParent : Building {
         if (rotateWheel) { RotateWheel();}
 
 
-        if (wasBasePlaneUpdated)
+        if (wasBasePlaneUpdated || basePlane==null)
         {
             return;
         }
         wasBasePlaneUpdated = true;
         basePlane.UpdatePos(Anchors);
-
 	}
 
 

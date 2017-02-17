@@ -632,7 +632,12 @@ public enum Ron2
     BridgeRoad, 
     GunPowder, Armory, Tailor, Pottery,
     CoinStamp, Chocolate, Distillery, Foundry, Printer, Cigars, Ink,
-    //QuickLime
+    Cloth,
+    
+    //QuickLime,
+    Mortar,//might miss banner or ICOn
+    PaperMill,//might miss banner or ICOn
+
 }
 
 

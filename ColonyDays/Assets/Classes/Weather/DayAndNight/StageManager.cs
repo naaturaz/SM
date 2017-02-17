@@ -15,7 +15,11 @@ public class StageManager : General
     int _startStage = 2;
     int _currentStage = 2;
 
-
+    /// <summary>
+    /// This is the shared material for all AlphaAtlasShake instances . here I change the main
+    /// color so at night is not white
+    /// </summary>
+    Material _waveMat;
 
     float _daySpeed = .5f;
     float _nightSpeed = .5f;//.6
@@ -63,6 +67,9 @@ public class StageManager : General
         _center = GetChildCalled("Center").transform.position;
 
         _colorManager = FindObjectOfType<ColorManager>();
+
+        _waveMat = GetChildCalled("WaveMaterial").GetComponent<Renderer>().sharedMaterial;
+        _waveMat.color = _colorManager.DayGrass;
     }
 
     void Update()
@@ -152,8 +159,35 @@ public class StageManager : General
         var mainAmbience = RenderSettings.ambientLight;
         var newAmbience = Color.Lerp(mainAmbience,
             _colorManager.GetMeAmbienceColor(_currentStage, _currentCycle), step);
+        
         RenderSettings.ambientLight = newAmbience;
+
+
+        ReachNewColorForWaveGrass();
     }
+
+    #region Grass Wave
+
+    void ReachNewColorForWaveGrass()
+    {
+       
+
+        float step = ReturnSpeed() * Time.deltaTime;//bz color doest finish blending
+
+        var newAmbience = Color.Lerp(_waveMat.color, ColorWaveColorTarget(), step);
+        
+        _waveMat.color = newAmbience;
+    }
+
+    Color ColorWaveColorTarget()
+    {
+        if (_currentCycle == H.Day && (_currentStage == 2 || _currentStage == 3))
+        {
+            return _colorManager.DayGrass;
+        }
+        return RenderSettings.ambientLight;
+    }
+    #endregion
 
     /// <summary>
     /// Checks if needs to move to next stage 
@@ -187,7 +221,7 @@ public class StageManager : General
     {
         if (_currentCycle == H.Day)
         {
-            return _times[_currentStage];
+            return _times[_currentStage]/1;
         }
         //night time is a fifth of the day
         return _times[_currentStage]/10;

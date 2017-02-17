@@ -21,7 +21,7 @@ public class TerrainSpawnerController : ControllerParent
     int howManyIronToSpawn = 1;//3
     int howManyGoldToSpawn = 1;//3
     int howManyOrnaToSpawn = 1;//30  
-    int howManyGrassToSpawn = 0;//20  40
+    int howManyGrassToSpawn = 20;//20  40
     //the ones spawn in the marine bounds 
     int howManyMarineBoundsToSpawn = 1;//1
     int howManyMountainBoundsToSpawn = 0;//
@@ -254,7 +254,7 @@ public class TerrainSpawnerController : ControllerParent
 
     private void DefineAllLawnRoots()
     {
-        var howManyLawnInEachFolder = 5 + 1;
+        var howManyLawnInEachFolder = 1 + 1;
         var add = "";
         for (int i = 1; i < howManyLawnInEachFolder; i++)
         {
@@ -827,7 +827,7 @@ public class TerrainSpawnerController : ControllerParent
             }
             else//the first teraain to load 
             {
-                spawnedData = XMLSerie.ReadXMLSpawned(true);//true once Terrain.Spawned is created  
+                spawnedData = XMLSerie.ReadXMLSpawned();//true once Terrain.Spawned is created  
 
                 if (spawnedData == null)
                 {
