@@ -585,6 +585,7 @@ public class MouseListener : InputMain
         _buildingsMenu.Hide();
         _buildingWindow.Hide();
         BulletinWindow.Hide();
+        _helpWindow.Hide();
     }
 
     public void HidePersonBuildingOrderBulletin()

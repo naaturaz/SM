@@ -44,6 +44,7 @@ public class Settings
 
         Screen.SetResolution(width, height, Screen.fullScreen);
 
+        //var scnLoaded = PlayerPrefs.GetString("SceneSaved");
     }
 
 
@@ -59,6 +60,8 @@ public class Settings
         var splt = newResolution.Split(' ');
         PlayerPrefs.SetInt("Res.Width", Int32.Parse(splt[0]));
         PlayerPrefs.SetInt("Res.Height", Int32.Parse(splt[2]));
+
+        //PlayerPrefs.SetString("SceneSaved", "Scn02");
     }
 
 

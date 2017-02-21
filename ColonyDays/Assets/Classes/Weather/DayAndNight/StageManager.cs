@@ -199,7 +199,7 @@ public class StageManager : General
             MoveToNextStage();
             _startedCycleAt = Time.time;
 
-            Debug.Log("Moving to:" + _currentStage);
+            //Debug.Log("Moving to:" + _currentStage);
         }
     }
     

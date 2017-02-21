@@ -302,7 +302,7 @@ public class GameScene : General
             return;
         }
 
-        Debug.Log("BatchInitial() gameScene");
+        //Debug.Log("BatchInitial() gameScene");
         _batchManager.BatchInitial();
 
     }

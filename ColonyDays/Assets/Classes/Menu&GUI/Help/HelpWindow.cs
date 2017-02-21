@@ -61,6 +61,9 @@ public class HelpWindow : GUIElement
     {
         HelpSelected("Construction.Help");
 
+        Program.gameScene.TutoStepCompleted("ShowHelp.Tuto");
+
+
         transform.position = iniPos;
         ResetScroolPos();
         PopulateScrollView();

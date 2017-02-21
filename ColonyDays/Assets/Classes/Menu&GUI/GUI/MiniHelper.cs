@@ -73,7 +73,6 @@ class MiniHelper : GUIElement
 
     internal void Show()
     {
-        Program.gameScene.TutoStepCompleted("ShowHelp.Tuto");
 
 
         AudioCollector.PlayOneShotFullAudio("ClickMetal2");

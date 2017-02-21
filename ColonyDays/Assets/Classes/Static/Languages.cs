@@ -390,9 +390,8 @@ public class Languages
        { "HideBulletin.Tuto", "Keep in mind that in this window you are able to control and see differents aspects of the game. Click outside the window to close it or 'OK' button."},
        { "FinishDock.Tuto", "Now finish the Dock building. The more workers are in the Masonry the quicker is going to get done too."
        + " Also make sure you have all materials needed to build it"},
-       { "ShowHelp.Tuto", "Click on the 'Help' button, located in the right bottom bar. "+
-           "When you hover over it, it will popup 'Help'. There you can find some tips. " +
-           " When you are done click outside the 'Help' window and will close."},
+       { "ShowHelp.Tuto", "Click on the 'Help' button, located in the bottom bar. "+
+           "When you hover over it, it will popup 'Help'. There you can find some tips."},
 
 
 
