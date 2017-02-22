@@ -215,7 +215,7 @@ public class TerrainSpawnerController : ControllerParent
 
 
 #if UNITY_EDITOR
-        multiplier = 2;//2
+        multiplier = 10;//2
         howManyGrassToSpawn = 2;//40
 
         LeaveEditorPool(pools);
@@ -323,11 +323,20 @@ public class TerrainSpawnerController : ControllerParent
         return mul * multiplier;
     }
 
+
+
+    int frameCount;
+    //everyhow many frames will spawn an StilElement 
+    int everyFrames = 1;
+
+    int loopSize = 100;
     private bool wasStarted;
     // Update is called once per frame
     void Update()
     {
-        if (MeshController.CrystalManager1 == null || MeshController.CrystalManager1.CrystalRegions.Count == 0)
+        if (MeshController.CrystalManager1 == null || MeshController.CrystalManager1.CrystalRegions.Count == 0
+            || (!TownLoader.TownLoaded && BuildingPot.Control.Registro.AllBuilding.Count == 0
+            ))
         {
             return;
         }
@@ -365,9 +374,11 @@ public class TerrainSpawnerController : ControllerParent
             loadedTimes++;
         }
 
-        if (!p.MeshController.IsLoading && IsToLoadFromFile)
+        if (!p.MeshController.IsLoading && IsToLoadFromFile && frameCount > everyFrames)
         {
-            for (int i = 0; i < 100; i++)
+            frameCount = 0;
+            OrganizeSavedData();
+            for (int i = 0; i < loopSize; i++)//100
             {
                 if (IsToLoadFromFile)
                 {
@@ -379,6 +390,7 @@ public class TerrainSpawnerController : ControllerParent
                 }
             }
         }
+        frameCount++;
 
         if (AllRandomObjList.Count > 0 && !IsToSave && !IsToLoadFromFile && treeList.Count == 0)
         {
@@ -390,6 +402,8 @@ public class TerrainSpawnerController : ControllerParent
             }
         }
     }
+
+
 
     /// <summary>
     /// Spawn all objects routine, trys to spawn current obj list.
@@ -505,6 +519,8 @@ public class TerrainSpawnerController : ControllerParent
         float treeHeight = 0, MDate seedDate = null, float maxHeight = 0, bool treeFall = false, float weight = 0,
         string oldTreeID = "")
     {
+        var region = MeshController.CrystalManager1.ReturnMyRegion(pos);
+
         string root = ReturnRoot(typePass, rootToSpawnIndex);
         TerrainRamdonSpawner temp = null;
         if (IsToSave)
@@ -537,8 +553,7 @@ public class TerrainSpawnerController : ControllerParent
                 st.TreeFall = treeFall;
             }
         }
-        //AssignSharedMaterial(temp);
-        //temp.AssignToAllGeometryAsSharedMat(temp.gameObject, "Enviroment");
+        temp.Region = region;
 
         //if is replant tree we want to place it first so when loading is faster 
         if (replantedTree)
@@ -558,7 +573,7 @@ public class TerrainSpawnerController : ControllerParent
 
         if (IsToSave)
         {
-            SaveOnListData(temp, typePass, rootToSpawnIndex, index, replantedTree);
+            SaveOnListData(temp, typePass, rootToSpawnIndex, index, replantedTree, region);
         }
         else
         {
@@ -570,23 +585,22 @@ public class TerrainSpawnerController : ControllerParent
         {
             still.Start();
         }
-
-
     }
 
     //Save all the data into AllSpawnedDataList
-    void SaveOnListData(General obj, H typeP, int rootToSpawnIndex, int indexPass, bool replantTree)
+    void SaveOnListData(General obj, H typeP, int rootToSpawnIndex, int indexPass, bool replantTree, int region)
     {
         if (obj == null) { return; }
         if (obj is StillElement)
         {
-            SpawnedData sData = new SpawnedData(obj.transform.position, obj.transform.rotation, typeP, rootToSpawnIndex, indexPass);
+            SpawnedData sData = new SpawnedData(obj.transform.position, obj.transform.rotation, typeP, 
+                rootToSpawnIndex, indexPass, region: region);
             AddToAllSpawnedDataOnSpecificIndex(sData, replantTree);
         }
         else
         {
             SpawnedData sData = new SpawnedData(obj.transform.position, obj.transform.rotation, typeP, rootToSpawnIndex,
-                indexPass);
+                indexPass, region: region);
             AddToAllSpawnedDataOnSpecificIndex(sData, replantTree);
         }
     }
@@ -714,14 +728,6 @@ public class TerrainSpawnerController : ControllerParent
                 var sData = CreateApropData(ele);
 
                 tempList.Add(sData);
-
-                //tempList.Add(new SpawnedData(
-                //AllRandomObjList[i].transform.position, AllRandomObjList[i].transform.rotation,
-                //AllSpawnedDataList[i].Type, AllSpawnedDataList[i].RootStringIndex,
-                //AllSpawnedDataList[i].AllVertexIndex,
-                //AllSpawnedDataList[i].TreeHeight, AllSpawnedDataList[i].SeedDate, AllSpawnedDataList[i].MaxHeight,
-                //AllSpawnedDataList[i].TreeFall, AllSpawnedDataList[i].Weight
-                //));
             }
         }
 
@@ -741,12 +747,12 @@ public class TerrainSpawnerController : ControllerParent
 
             sData = new SpawnedData(ele.transform.position, ele.transform.rotation, ele.HType,
             ele.RootToSpawnIndex, ele.IndexAllVertex, still.Height, still.SeedDate, still.MaxHeight,
-            still.TreeFall, still.Weight);
+            still.TreeFall, still.Weight, ele.Region);
         }
         else
         {
             sData = new SpawnedData(ele.transform.position, ele.transform.rotation, ele.HType,
-            ele.RootToSpawnIndex, ele.IndexAllVertex);
+            ele.RootToSpawnIndex, ele.IndexAllVertex, ele.Region);
         }
 
         return sData;
@@ -827,7 +833,7 @@ public class TerrainSpawnerController : ControllerParent
             }
             else//the first teraain to load 
             {
-                spawnedData = XMLSerie.ReadXMLSpawned(true);//true once Terrain.Spawned is created  
+                spawnedData = XMLSerie.ReadXMLSpawned();//true once Terrain.Spawned is created  
 
                 if (spawnedData == null)
                 {
@@ -854,7 +860,103 @@ public class TerrainSpawnerController : ControllerParent
         p.TerraSpawnController.IsToLoadFromFile = true;
     }
 
-    public void LoadFromFile()
+
+
+    #region Regions 
+
+    bool wasDataOrganized;
+    List<RegionD> _closest9 = new List<RegionD>();
+    List<RegionD> _rest = new List<RegionD>();
+
+    bool _releaseLoadingScreen;
+
+    public bool ReleaseLoadingScreen
+    {
+        get { return _releaseLoadingScreen; }
+        set { _releaseLoadingScreen = value; }
+    }
+
+    /// <summary>
+    /// Based on the Initial town the AllSpawnedDataList will be organize so it loads from the
+    /// initial position up to the farthest
+    /// </summary>
+    private void OrganizeSavedData()
+    {
+        if (wasDataOrganized)
+        {
+            return;
+        }
+        wasDataOrganized = true;
+        HandleRegions();
+        
+        //organize data by regions, split in 2 lists, 9 regions and the rest 
+        AllSpawnedDataList = AllSpawnedDataList.OrderBy(a => a.RegionDistanceToInit()).ToList();
+    }
+
+    void HandleRegions()
+    {
+        //find regions distances
+        for (int i = 0; i < MeshController.CrystalManager1.CrystalRegions.Count; i++)
+        {
+            _rest.Add(new RegionD(MeshController.CrystalManager1.CrystalRegions[i].Index,
+                MeshController.CrystalManager1.CrystalRegions[i].Position()));
+        }
+        //organize regions by distances
+        _rest = _rest.OrderBy(a => a.DistanceToInit).ToList();
+
+        //get closer 9 regions 3x3
+        for (int i = 0; i < 9; i++)
+        {
+            _closest9.Add(_rest[i]);
+        }
+
+        //remove from rest of regions
+        for (int i = 0; i < 9; i++)
+        {
+            //_rest.RemoveAt(0);
+        }
+    }
+
+
+
+    int lastRegion = -1;
+    List<int> regionsLoaded = new List<int>();
+    /// <summary>
+    /// This will release loading screeen when the 25th region was loaded and will
+    /// keep loading the rest 
+    /// </summary>
+    void HandleLoadingRegions()
+    {
+        if (lastRegion != AllSpawnedDataList[loadingIndex].Region)
+        {
+            if (lastRegion != -1 && !regionsLoaded.Contains(lastRegion))
+            {
+                regionsLoaded.Add(lastRegion);
+                //destroy loading sign on Region GO
+
+            }
+            lastRegion = AllSpawnedDataList[loadingIndex].Region;
+        }
+
+        BuildingPot.Control.Registro.MarkTerraIfNeeded(AllSpawnedDataList[loadingIndex], _closest9);
+
+        if (regionsLoaded.Count>55)//
+        {
+            //release loading screen
+            ReleaseLoadingScreen = true;
+            loopSize = 1;
+            everyFrames = 10;
+        }
+
+        if (regionsLoaded.Count == _rest.Count)
+        {
+            //done loading 
+        }
+    }
+
+#endregion
+
+    void LoadFromFile()
     {
         CreateObjAndAddToMainList(AllSpawnedDataList[loadingIndex].Type,
             AllSpawnedDataList[loadingIndex].Pos,
@@ -869,6 +971,8 @@ public class TerrainSpawnerController : ControllerParent
         //will restart the value of this array so I know which ones are being used
         usedVertexPos = new bool[spawnedData.TerraMshCntrlAllVertexIndexCount];
         usedVertexPos[AllSpawnedDataList[loadingIndex].AllVertexIndex] = true;
+
+        HandleLoadingRegions();
 
         loadingIndex++;
 
@@ -1052,4 +1156,43 @@ public class TerrainSpawnerController : ControllerParent
     }
 
 
+}
+
+/// <summary>
+/// This is to contain the int id and distance from the initial region .
+/// D for dummy
+/// </summary>
+class RegionD
+{
+    int _region;
+
+    public int Region
+    {
+        get { return _region; }
+        set { _region = value; }
+    }
+    float _distanceToInit;
+
+    public float DistanceToInit
+    {
+        get { return _distanceToInit; }
+        set { _distanceToInit = value; }
+    }
+
+    Vector3 _pos;
+
+    public Vector3 Pos
+    {
+        get { return _pos; }
+        set { _pos = value; }
+    }
+
+    public RegionD(int region, Vector3 pos)
+    {
+        _region = region;
+        _pos = pos;
+
+        var cryRegion = MeshController.CrystalManager1.CrystalRegions[TownLoader.InitRegion];
+        _distanceToInit = Vector3.Distance(_pos, cryRegion.Position());
+    }
 }

@@ -1317,7 +1317,20 @@ public class Building : Hoverable, Iinfo
         DestroyOrdered(true);   
     }
 
+
+
+
     #region Mark Terra Spawn Obj When Create Building
+    
+    /// <summary>
+    /// Still spawners will call this to check
+    /// </summary>
+    public void CheckOnMarkTerra()
+    {
+        MarkTerraSpawnRoutine(20, from: transform.position);
+    }
+    
+    
     /// <summary>
     /// This is the routine to gather the object we are surroundig and then 
     /// marking them

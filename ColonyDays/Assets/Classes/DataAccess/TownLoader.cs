@@ -16,6 +16,14 @@ class TownLoader
     static private int _buildCounts;
     static bool _townLoaded;
     static string _dataPath;
+    static int _initRegion;
+
+    public static int InitRegion
+    {
+        get { return TownLoader._initRegion; }
+        set { TownLoader._initRegion = value; }
+    }
+
     public static bool TownLoaded
     {
         get { return _townLoaded; }
@@ -121,6 +129,9 @@ class TownLoader
     static BuildingData ShiftToRandBuildsPos(BuildingData bData)
     {
         var randIniPos = GetRandomMapPos();
+
+        _initRegion = MeshController.CrystalManager1.ReturnMyRegion(randIniPos);
+
         //UVisHelp.CreateHelpers(randIniPos, Root.blueCubeBig);
         var townDim = GetTownDim(bData);
 

@@ -30,6 +30,8 @@ public class StillElement : TerrainRamdonSpawner
     private List<GameObject> _collObjects = new List<GameObject>();//for palms
     float _startTime;
 
+
+
     public List<Vector3> Anchors
     {
         get { return _anchors; }
@@ -60,13 +62,12 @@ public class StillElement : TerrainRamdonSpawner
     // Use this for initialization
 	public void Start ()
     {
-
-
-
         if (_hasStart)
 	    {
             return;
 	    }
+
+
 	    _hasStart = true;
         _startTime = Time.time;
 

@@ -17,6 +17,18 @@ public class TerrainRamdonSpawner : Hoverable {
 
     private int _rootToSpawnIndex;
 
+
+    int _region;
+
+    /// <summary>
+    /// The region they fall into 
+    /// </summary>
+    public int Region
+    {
+        get { return _region; }
+        set { _region = value; }
+    }
+
     //set in UnityEditor Mannually
     public float MaxHeight
     {

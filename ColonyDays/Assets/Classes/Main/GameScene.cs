@@ -756,7 +756,8 @@ public class GameScene : General
             return false;
         }
 
-        var res = !p.TerraSpawnController.IsToLoadFromFile && BuildingPot.Control.Registro.IsFullyLoaded;
+        //var res = !p.TerraSpawnController.IsToLoadFromFile && BuildingPot.Control.Registro.IsFullyLoaded;
+        var res = p.TerraSpawnController.ReleaseLoadingScreen && BuildingPot.Control.Registro.IsFullyLoaded;
 
         if (res && _gameLoadedTime == 0)
         {

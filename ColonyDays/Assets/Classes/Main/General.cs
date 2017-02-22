@@ -581,6 +581,8 @@ public class General : MonoBehaviour
         set { _batchRegionId = value; }
     }
 
+
+
     #region Search GameObj in GameObject until find it
 
 

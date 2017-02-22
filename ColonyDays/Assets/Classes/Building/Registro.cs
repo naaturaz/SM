@@ -822,4 +822,30 @@ public class Registro : MonoBehaviour
             }
         }
     }
+
+
+    /// <summary>
+    /// todo... 
+    /// to be used only when loading a brand new Terra Spawner file 
+    /// 
+    /// if spawnedData is in the closest9 regions will check if needs to remove itself bz
+    /// could fall into a building 
+    /// </summary>
+    /// <param name="spawnedData"></param>
+    /// <param name="closest9"></param>
+    internal void MarkTerraIfNeeded(SpawnedData spawnedData, List<RegionD> closest9)
+    {
+        var index = closest9.FindIndex(a => a.Region == spawnedData.Region);
+
+        if (index == -1)
+        {
+            return;
+        }
+
+        for (int i = 0; i < AllBuilding.Count; i++)
+        {
+            AllBuilding.ElementAt(i).Value.CheckOnMarkTerra();
+        }
+
+    }
 }

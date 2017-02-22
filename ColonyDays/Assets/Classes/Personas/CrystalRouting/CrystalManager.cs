@@ -87,7 +87,12 @@ public class CrystalManager  {
     }
 
 
-
+    /// <summary>
+    /// Is the Spawner contained in the Rect
+    /// </summary>
+    /// <param name="spawnerKey"></param>
+    /// <param name="buildRect"></param>
+    /// <returns></returns>
     public bool AreTheyContained(string spawnerKey, Rect buildRect)
     {
         var crystals = _allObstas.Where(a => a.ParentId == spawnerKey).ToList();
@@ -649,6 +654,14 @@ public class CrystalManager  {
 
         return ReturnCurrentSurroundIndexRegions(curr, muchTiles);
     }
+
+    public List<int> ReturnSurroundingsOfInitTownRegions(int muchTiles = 3)
+    {
+        var curr = ReturnMyRegion(ReturnTownIniPos());
+
+        return ReturnCurrentSurroundIndexRegions(curr, muchTiles);
+    }
+
 
     /// <summary>
     /// Will tell if rect contain any line point, A or B, if does. then is colliding  
