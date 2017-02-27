@@ -14,45 +14,47 @@ public class QuestButton : GUIElement
     GameObject _redCircle;
     GameObject _text;
     bool _shownArrow;
-
+    bool _wasHidden;
 
     void Start()
     {
-        _arrow = GetChildCalled("Arrow");
-        _arrow.gameObject.SetActive(false);
+        GatherAllGO();
 
-        _text = GetChildCalled("Text");
-        _redCircle = GetChildCalled("Red_Circle");
+        //_arrow.gameObject.SetActive(false);
+        
         SetCircleAndTextTo(false);
 
-
-        StartCoroutine("FiveSecUpd");
-
         _questWin = FindObjectOfType<QuestWindow>();
+
+        if (!_wasHidden)
+        {
+            Program.gameScene.QuestManager.HideQuestBtn();
+        }
+    }
+
+    void GatherAllGO()
+    {
+        _arrow = GetChildCalled("Arrow");
+        _text = GetChildCalled("Text");
+        _redCircle = GetChildCalled("Red_Circle");
     }
 
     void SetCircleAndTextTo(bool active)
     {
         _redCircle.SetActive(active);
-        _text.SetActive(active);
+        //_text.SetActive(active);
     }
 
-    private IEnumerator FiveSecUpd()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(5); // wait
-
-        
-        }
-    }
 
     void Update()
     {
         if (Program.gameScene.QuestManager.CurrentQuests.Count == 0 && _redCircle.activeSelf)
         {
             SetCircleAndTextTo(false);
-
+        }
+        else if (Program.gameScene.QuestManager.CurrentQuests.Count > 0 && !_redCircle.activeSelf)
+        {
+            SetCircleAndTextTo(true);
         }
     }
 
@@ -79,12 +81,18 @@ public class QuestButton : GUIElement
     public void ClickOnButton()
     {
         _questWin.Show("");
+
+        //so it not shown anymore
+        _shownArrow = true;
     }
 
     internal void ShowNewQuestAvail()
     {
+        _wasHidden = true;
+        GatherAllGO();
+
         SetCircleAndTextTo(true);
-        AudioCollector.PlayOneShot("NEW_QUEST_1", 0);
+        //AudioCollector.PlayOneShot("NEW_QUEST_1", 0);
 
         if (!_shownArrow)
         {
@@ -92,5 +100,6 @@ public class QuestButton : GUIElement
             _arrow.SetActive(true);
         }
     }
+
 }
 

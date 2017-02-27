@@ -101,19 +101,30 @@ public class QuestManager
     }
 
 
-    void Init()
+
+
+    internal void HideQuestBtn()
     {
         if (_questBtn == null)
         {
             _questBtn = MonoBehaviour.FindObjectOfType<QuestButton>();
         }
+        _questBtn.gameObject.SetActive(false);
+
     }
 
-
+    private void ShowQuestBtn()
+    {
+        if (_questBtn == null)
+        {
+            _questBtn = MonoBehaviour.FindObjectOfType<QuestButton>();
+        }
+        _questBtn.gameObject.SetActive(true);
+    }
 
     public void QuestFinished(string which)
     {
-        Init();
+        ShowQuestBtn();//in case questBtn is null 
 
         which = which + ".Quest";
 
@@ -129,16 +140,6 @@ public class QuestManager
 
             _currentQuests.Remove(indexQ);//remove from _current list
             _doneQuest.Add(indexQ);//adds to done list 
-
-            //adds to _current list
-            //if (indexQ +1 < _bank.Count)
-            //{
-            //    if (!_currentQuests.Contains(indexQ + 1))
-            //    {
-            //        _currentQuests.Add(indexQ + 1);
-            //        _questBtn.ShowNewQuestAvail();
-            //    }
-            //}
         }
     }
 
@@ -168,13 +169,16 @@ public class QuestManager
     {
         //spawn dialog 
         Dialog.OKDialog(H.InfoKey, which);
+
+        ShowQuestBtn();
+
         _questBtn.ShowNewQuestAvail();
     }
 
     void ShowPrize(Quest q)
     {
         Dialog.OKDialog(H.CompleteQuest, q.Prize + "");
-        AudioCollector.PlayOneShot("QUEST_COMPLETED_1", 0);
+        //AudioCollector.PlayOneShot("QUEST_COMPLETED_1", 0);
     }
 
     public void QuestCompletedAcknowled()
@@ -197,16 +201,23 @@ public class QuestManager
         }
 
         //to show  others  and loaded 
-        if (Time.time > _lastCompleted + 90 && _currentQuests.Count < 2)
+        if (Time.time > _lastCompleted + 90)
         {
             if (Dialog.IsActive())
             {
-                //so goes trhu again in 5s
-                //_lastCompleted = Time.time - 0;
+                //so goes trhu again in 30s
+                _lastCompleted = Time.time - 60;
                 return;
             }
 
-            AddANewQuest();
+            if (_currentQuests.Count == 0)
+	        {
+                AddANewQuest();
+	        }
+            else
+            {
+                ShowQuestBtn();
+            }
         }
     }
 
@@ -271,10 +282,12 @@ public class QuestManager
 
     public void TutoCallWhenDone()
     {
-        Init();
-
-        AddANewQuest();
+        _lastCompleted = Time.time;
     }
+
+
+
+
 
 
 }

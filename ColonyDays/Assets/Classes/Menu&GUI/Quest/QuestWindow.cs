@@ -31,6 +31,12 @@ public class QuestWindow : GUIElement
 
     public void Show(string val)
     {
+        if (Program.gameScene.QuestManager.CurrentPlsDone().Count == 0)
+        {
+
+            return;
+        }
+
         transform.position = iniPos;
 
         ResetScroolPos();

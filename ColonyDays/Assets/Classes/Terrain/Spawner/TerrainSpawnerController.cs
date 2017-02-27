@@ -5,6 +5,18 @@ using System.Linq;
 
 public class TerrainSpawnerController : ControllerParent
 {
+    //will load a bunch of regions first and then the rest slowly based on 
+    //distance from the initial town 
+    //
+    //if spawning brand new terrain this must be off
+    //
+    //is not being used the time bz in the StandAlone version slows down the FPS
+    //until finish off all... also if a customer happens to save a game will lose
+    //the spawners have not spawned yet... so 
+    //at the moment this is not completed yet
+    private bool _asyncLoad;
+
+
     int loadingIndex;
     private SpawnedData spawnedData;
 
@@ -215,7 +227,7 @@ public class TerrainSpawnerController : ControllerParent
 
 
 #if UNITY_EDITOR
-        multiplier = 10;//2
+        multiplier = 2;//2
         howManyGrassToSpawn = 2;//40
 
         LeaveEditorPool(pools);
@@ -377,7 +389,13 @@ public class TerrainSpawnerController : ControllerParent
         if (!p.MeshController.IsLoading && IsToLoadFromFile && frameCount > everyFrames)
         {
             frameCount = 0;
-            OrganizeSavedData();
+
+            if (_asyncLoad)
+            {
+                OrganizeSavedData();
+            }
+
+
             for (int i = 0; i < loopSize; i++)//100
             {
                 if (IsToLoadFromFile)
@@ -922,7 +940,7 @@ public class TerrainSpawnerController : ControllerParent
     int lastRegion = -1;
     List<int> regionsLoaded = new List<int>();
     /// <summary>
-    /// This will release loading screeen when the 25th region was loaded and will
+    /// This will release loading screeen when the x region was loaded and will
     /// keep loading the rest 
     /// </summary>
     void HandleLoadingRegions()
@@ -940,9 +958,10 @@ public class TerrainSpawnerController : ControllerParent
 
         BuildingPot.Control.Registro.MarkTerraIfNeeded(AllSpawnedDataList[loadingIndex], _closest9);
 
-        if (regionsLoaded.Count>55)//
+        if (regionsLoaded.Count>55)//55
         {
             //release loading screen
+            //and then is loading slowly the other elements 
             ReleaseLoadingScreen = true;
             loopSize = 1;
             everyFrames = 10;
@@ -972,7 +991,10 @@ public class TerrainSpawnerController : ControllerParent
         usedVertexPos = new bool[spawnedData.TerraMshCntrlAllVertexIndexCount];
         usedVertexPos[AllSpawnedDataList[loadingIndex].AllVertexIndex] = true;
 
-        HandleLoadingRegions();
+        if (_asyncLoad)
+        {
+            HandleLoadingRegions();
+        }
 
         loadingIndex++;
 
@@ -981,8 +1003,13 @@ public class TerrainSpawnerController : ControllerParent
         {
             IsToLoadFromFile = false;
             print(treeList.Count + " treeList.Count IsToLoadFromFile-false");
-
             Program.gameScene.BatchInitial();
+
+            //will release here if is not an asyncLoad
+            if (!_asyncLoad)
+            {
+                ReleaseLoadingScreen = true;
+            }
         }
     }
 
