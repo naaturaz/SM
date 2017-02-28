@@ -34,7 +34,10 @@ public class CryRoute
     private Building _ini;
     private Building _fin;
 
-    private float durationOfLines = 20f;
+    //debug lines duration shown on Scene view 
+    private float durationOfLines = 1f;//20
+    //kept in case are needed to be shown for any reason... like finding a bug 
+    List<Line> _debugLines = new List<Line>();
 
     private bool _iniDoor;
     private bool _finDoor;
@@ -262,6 +265,11 @@ public class CryRoute
             //tha adding of a good point to the Route 
             _checkPoints.Add(new CheckPoint(U2D.FromV2ToV3(_curr.Position), _curr.Type1));
 
+            if (wasThrow)
+            {
+                var a = 1;
+            }
+
             if (CheckIfDone())
             {
                 CanIReach2PointAfter();
@@ -353,11 +361,17 @@ public class CryRoute
         _crystals = _crystals.Distinct().ToList();
     }
 
+    bool debugMarkedOnLand;
     /// <summary>
     /// Will try to reach any of the _eval Crystals
     /// </summary>
     private bool TryReachEval()
     {
+        if (wasThrow)
+        {
+            var a = 1;
+        }
+
         var canI = CanPrepareLoop("TryReachEval");
         if (!canI) { return false; }//means tht another llop is running now 
         var i = loopCount;
@@ -373,6 +387,7 @@ public class CryRoute
         if (loopCount < _eval.Count)
         {
             Line aLine = new Line(U2D.FromV2ToV3(_curr.Position), U2D.FromV2ToV3(_eval[i].Position), durationOfLines);
+            _debugLines.Add(aLine);
 
             var linesIntersected = IntersectCount(aLine);
             var isIntersectingOnlyTheDoorSide = IsCrystalOnDoorCorners(_eval[i]) && linesIntersected == 1;
@@ -387,20 +402,25 @@ public class CryRoute
 
                 //make current _eval[i] and loop 
                 _curr = _eval[i];
-                ////Debug.Log("_curr set on Terrain Routing");
 
                 loop = true;
-                //Crystal.DebugCrystal.AddGameObjInPosition(U2D.FromV2ToV3(_curr.Position), Root.yellowSphereHelp);
 
                 ResetExplorer();
-                //UVisHelp.CreateHelpers(U2D.FromV2ToV3(_eval[i].Position), Root.blueCube);
-                //UVisHelp.CreateText(U2D.FromV2ToV3(_curr.Position), _curr.CalcWeight + "");
+                
+
 
                 ResetLoop();
                 ClearPrevLoop();//so can restart Recursive()
                 return true;
             }
             loopCount++;
+
+
+
+
+
+          
+
 
             CheckIfIsToBlackList();
             return false;
@@ -420,6 +440,8 @@ public class CryRoute
         for (int i = 0; i < _eval.Count; i++)
         {
             Line aLine = new Line(U2D.FromV2ToV3(_curr.Position), U2D.FromV2ToV3(_eval[i].Position), durationOfLines);
+            _debugLines.Add(aLine);
+            
             var linesIntersected = IntersectCount(aLine);
 
             if (linesIntersected == 0 && !IsOnTheRoute(_eval[i].Position))
@@ -433,15 +455,15 @@ public class CryRoute
             }
         }
 
-        //if (Developer.IsDev)
-        //{
-        //    UVisHelp.CreateHelpers(_eval, Root.blueCube);
-        //    UVisHelp.CreateHelpers(_curr.Position, Root.yellowCube);
-        //    UVisHelp.CreateHelpers(_two.Position, Root.yellowCube);
+#if UNITY_EDITOR
 
-        //    UVisHelp.CreateText(_ini.transform.position, "ini:" + _ini.MyId, 40);
-        //    UVisHelp.CreateText(_fin.transform.position, "fin:" + _fin.MyId, 40);
-        //}
+        UVisHelp.CreateHelpers(_eval, Root.blueCube);
+        UVisHelp.CreateHelpers(_curr.Position, Root.yellowCube);
+        UVisHelp.CreateHelpers(_two.Position, Root.yellowCube);
+
+        UVisHelp.CreateText(_ini.transform.position, "ini:" + _ini.MyId, 40);
+        UVisHelp.CreateText(_fin.transform.position, "fin:" + _fin.MyId, 40);
+#endif
 
         Debug.Log("At least the intersection should be reached. Go and investigate but at least once should " +
                             "pass this if all fail pls investigate" +
@@ -506,7 +528,10 @@ public class CryRoute
     private bool wasBlackListed;
     private int blackCount;
     //the rect will be allow to grow only 10 times. then will be black list tht building if was not reach
-    private int maxCounts = 100;
+    private int maxCounts = 100;//100
+
+
+    bool wasThrow;
     void CheckIfIsToBlackList()
     {
         if (Program.gameScene.GameSpeed == 0)
@@ -528,6 +553,16 @@ public class CryRoute
             Debug.Log("Backlisting :" + _person.MyId + " ." + _fin.MyId + "blackCount > maxCounts");
             BlackList();
         }
+        else if (blackCount > maxCounts - 10)
+        {
+            Debug.Log("abt to Backlisting :" + _person.MyId + " ." + _fin.MyId + "blackCount > maxCounts");
+            DebugBlackThrow();
+        }
+        else if (Time.time > _timeStamp + 80f)//45 //90  //maybe can add someFactor with PC Ram and CPU Speed
+        {
+            Debug.Log("abt to Backlisting :" + _person.MyId + " ." + _fin.MyId);
+            DebugBlackThrow();
+        }
         //is being a minute since started then can be blaclisted
         else if (Time.time > _timeStamp + 90f)//45 //90  //maybe can add someFactor with PC Ram and CPU Speed
         {
@@ -535,6 +570,41 @@ public class CryRoute
             BlackList();
         }
     }
+
+
+
+    void DebugBlackThrow()
+    {
+#if UNITY_EDITOR
+
+        if (!wasThrow)
+        {
+            if (!debugMarkedOnLand)
+            {
+                debugMarkedOnLand = true;
+
+                //curr pos is yellow
+                Crystal.DebugCrystal.AddGameObjInPosition(U2D.FromV2ToV3(_curr.Position), Root.yellowSphereHelp);
+
+                //eval are blue
+                UVisHelp.CreateHelpers(_eval, Root.blueCube);
+
+                //UVisHelp.CreateText(U2D.FromV2ToV3(_curr.Position), _curr.CalcWeight + "");
+
+                for (int i = 0; i < _debugLines.Count; i++)
+                {
+                    _debugLines[i].DebugRender(Color.yellow, 100);
+                }
+            }
+
+            wasThrow = true;
+            //Program.gameScene.GameSpeed = 0;
+            //throw new Exception("Debug to find why is going to blacklist");
+        }
+
+#endif
+    }
+
 
     private void BlackList()
     {
@@ -914,6 +984,8 @@ public class CryRoute
         //        //Debug.Log("Exploring");
         canIExplore = false;
         Line line = new Line(U2D.FromV2ToV3(_curr.Position), stepFinalPos, durationOfLines);
+        _debugLines.Add(line);
+
         var interCount = IntersectCount(line);
 
         if (interCount == 0)
@@ -954,7 +1026,7 @@ public class CryRoute
 
         //the C Vector on the Rect
         Vector3 cVect = Vector3.MoveTowards(curr, two, howFarIsRectC);//20
-        _currRect = new CryRect(U2D.FromV2ToV3(_curr.Position), cVect, grow);
+        _currRect = new CryRect(U2D.FromV2ToV3(_curr.Position), cVect, grow, debugDuration: durationOfLines);
         _oldCurr = _curr;
 
         AddToHistoricalRegions(cVect);
@@ -1050,6 +1122,7 @@ public class CryRoute
         // AddToHistoricalRegions(twoAfter);
 
         Line draw = new Line(firstP, twoAfter, durationOfLines);
+        _debugLines.Add(draw);
 
         //IF DOesnt intersect . will remove the point in the middle and will recurse here 
         if (!Intersect(draw))

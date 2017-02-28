@@ -83,7 +83,7 @@ public class CryRect
     /// <param name="minimuSize">must have one side with a mimunum side like 10f
     /// this is to allow Mountain Routing to happen</param>
     /// <param name="grow">The grow of the rect on scale to make sure contain first and last </param>
-    public CryRect(Vector3 ini, Vector3 end, float grow, bool minimuSize=true)
+    public CryRect(Vector3 ini, Vector3 end, float grow, bool minimuSize=true, float debugDuration = 20f)
     {
         _a = U2D.FromV3ToV2(ini);
         
@@ -117,7 +117,7 @@ public class CryRect
         _theRect = Registro.FromALotOfVertexToRect(newPoly);
 
         //RectifyCorners(poly);
-        UVisHelp.CreateDebugLines(TheRect, Color.magenta, 20f);
+        UVisHelp.CreateDebugLines(TheRect, Color.magenta, debugDuration);
         SetCrystals();
     }
 

@@ -969,6 +969,11 @@ public class Profession
 
     protected void CheckIfProfHasToBeReCreated()
     {
+        if (_person.Work == null)
+        {
+            return;
+        }
+
         if (ForesterHasNullEle() || ForesterCurrentStillEleIsBlackListed() || //|| LoadedDifferentElement()
             string.IsNullOrEmpty(StillElementId))
         {
@@ -1319,6 +1324,11 @@ public class Profession
 
     protected bool ShouldITakeBreakInit()
     {
+        if (_person.Work == null)
+        {
+            return true;
+        }
+
         if (_person.Brain._workRoute.CheckPoints.Count == 0 ||
           _person.Brain._workRoute.DestinyKey != _person.Work.MyId)
         {
