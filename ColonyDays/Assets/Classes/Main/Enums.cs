@@ -53,6 +53,7 @@ public enum HPers //to be use for the person class
     WheelBarrow,
     DoneAtWheelBarrow,
     DoneAtHome,
+    Enemy,
 }
 
 public enum EducationLevel
@@ -239,7 +240,7 @@ public enum H
     //infr F1
     StandLamp,
     Trail, Road, BridgeTrail, BridgeRoad, CoachMan, LightHouse, WheelBarrow, StockPile, Masonry,
-    HeavyLoad, 
+    HeavyLoad,
 
     //house F2 ... bugg bz they had numbers on it .. They cant have numbers
     Bohio, BohioB,
@@ -257,7 +258,7 @@ public enum H
     //raw F4
     LumberMill, Clay, ShoreMine,
     MountainMine,
-    BlackSmith, // QuickLime, 
+    BlackSmith,  QuickLime, 
     Mortar, Pottery,
     //prod F5
     Brick, Carpentry, Cigars, Mill, Tailor,
@@ -430,6 +431,8 @@ public enum H
     Building,
     Day,
     Night,
+    Enemy,
+    War,
 
 
 }
@@ -482,7 +485,7 @@ public enum StRaw //for structures game structure.cs
 {
     LumberMill, Clay, ShoreMine,
     MountainMine,
-    BlackSmith, // QuickLime, 
+    BlackSmith, QuickLime, 
     Mortar, Pottery,
 }
 
@@ -633,13 +636,17 @@ public enum Ron2
     GunPowder, Armory, Tailor, Pottery,
     CoinStamp, Chocolate, Distillery, Foundry, Printer, Cigars, Ink,
     Cloth,
-    
-    //QuickLime,
-    Mortar,//might miss banner or ICOn
-    PaperMill,//might miss banner or ICOn
 
+    PaperMill,
+    Mortar,
+    //QuickLime,
 }
 
+
+public enum Ron3
+{
+
+}
 
 public enum RonWoodHouse
 {

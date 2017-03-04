@@ -97,26 +97,32 @@ public class MyForm : General
             _miniHelper = FindObjectOfType<MiniHelper>();
         }
 
-        InitSaveIcon();
+        InitIconsAndNotis();
 
     }
 
 
 
-    #region AutoSave
+    #region GUI Hides Shows
     static GameObject _autoSaveIcon;
-    void InitSaveIcon()
+    static GameObject _warModeNoti;
+
+    void InitIconsAndNotis()
     {
         if (name.Contains("GUI"))
         {
             _autoSaveIcon = General.FindGameObjectInHierarchy("AutoSave_Icon", gameObject);
+            _warModeNoti = General.FindGameObjectInHierarchy("WarMode", gameObject);
+
         }
 
         if (_autoSaveIcon != null)
         {
             _autoSaveIcon.SetActive(false);
+            _warModeNoti.SetActive(false);
         }
     }
+
 
     public void ShowAutoSave()
     {
@@ -136,6 +142,27 @@ public class MyForm : General
         }
 
         _autoSaveIcon.SetActive(false);
+    }
+
+
+    public void ShowWarMode()
+    {
+        if (_warModeNoti == null)
+        {
+            return;
+        }
+
+        _warModeNoti.SetActive(true);
+    }
+
+    public void HideWarMode()
+    {
+        if (_warModeNoti == null)
+        {
+            return;
+        }
+
+        _warModeNoti.SetActive(false);
     }
     #endregion
 

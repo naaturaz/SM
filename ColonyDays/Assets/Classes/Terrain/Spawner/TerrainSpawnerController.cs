@@ -14,7 +14,7 @@ public class TerrainSpawnerController : ControllerParent
     //until finish off all... also if a customer happens to save a game will lose
     //the spawners have not spawned yet... so 
     //at the moment this is not completed yet
-    private bool _asyncLoad;
+    //private bool _asyncLoad;
 
 
     int loadingIndex;
@@ -33,7 +33,7 @@ public class TerrainSpawnerController : ControllerParent
     int howManyIronToSpawn = 1;//3
     int howManyGoldToSpawn = 1;//3
     int howManyOrnaToSpawn = 1;//30  
-    int howManyGrassToSpawn = 1;//20  40
+    int howManyGrassToSpawn = 5;//20  40
     //the ones spawn in the marine bounds 
     int howManyMarineBoundsToSpawn = 1;//1
     int howManyMountainBoundsToSpawn = 0;//
@@ -390,10 +390,10 @@ public class TerrainSpawnerController : ControllerParent
         {
             frameCount = 0;
 
-            if (_asyncLoad)
-            {
+            //if (_asyncLoad)
+            //{
                 OrganizeSavedData();
-            }
+            //}
 
 
             for (int i = 0; i < loopSize; i++)//100
@@ -851,7 +851,7 @@ public class TerrainSpawnerController : ControllerParent
             }
             else//the first teraain to load 
             {
-                spawnedData = XMLSerie.ReadXMLSpawned();//true once Terrain.Spawned is created  
+                spawnedData = XMLSerie.ReadXMLSpawned(true);//true once Terrain.Spawned is created  
 
                 if (spawnedData == null)
                 {
@@ -908,9 +908,14 @@ public class TerrainSpawnerController : ControllerParent
         HandleRegions();
         
         //organize data by regions, split in 2 lists, 9 regions and the rest 
-        AllSpawnedDataList = AllSpawnedDataList.OrderBy(a => a.RegionDistanceToInit()).ToList();
+        //AllSpawnedDataList = AllSpawnedDataList.OrderBy(a => a.RegionDistanceToInit()).ToList();
     }
 
+    /// <summary>
+    /// Will orginze regions by distance to initial region 
+    /// 
+    /// also defines the closest9 regions to init 
+    /// </summary>
     void HandleRegions()
     {
         //find regions distances
@@ -973,6 +978,27 @@ public class TerrainSpawnerController : ControllerParent
         }
     }
 
+    /// <summary>
+    /// Will find a locked region that is at least 1 region in the middle far so
+    /// Lineally looking at the regions
+    /// Owned | Locked1 | Locked2
+    /// Will return Locked2 regions
+    /// 
+    /// Used to spawn Ghost town with enemies
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 ReturnCenterPosOfLockedNearbyRegion()
+    {
+        for (int i = 0; i < _rest.Count; i++)
+        {
+            if (!MeshController.BuyRegionManager1.UnlockRegions.Contains(_rest[i].Region))
+            {
+                return _rest[i].Pos;
+            }
+        }
+        return new Vector3();
+    }
+
 #endregion
 
     void LoadFromFile()
@@ -991,10 +1017,10 @@ public class TerrainSpawnerController : ControllerParent
         usedVertexPos = new bool[spawnedData.TerraMshCntrlAllVertexIndexCount];
         usedVertexPos[AllSpawnedDataList[loadingIndex].AllVertexIndex] = true;
 
-        if (_asyncLoad)
-        {
-            HandleLoadingRegions();
-        }
+        //if (_asyncLoad)
+        //{
+        //    HandleLoadingRegions();
+        //}
 
         loadingIndex++;
 
@@ -1005,11 +1031,11 @@ public class TerrainSpawnerController : ControllerParent
             print(treeList.Count + " treeList.Count IsToLoadFromFile-false");
             Program.gameScene.BatchInitial();
 
-            //will release here if is not an asyncLoad
-            if (!_asyncLoad)
-            {
+            ////will release here if is not an asyncLoad
+            //if (!_asyncLoad)
+            //{
                 ReleaseLoadingScreen = true;
-            }
+            //}
         }
     }
 

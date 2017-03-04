@@ -55,6 +55,13 @@ public class GameScene : General
     private AudioPlayer _audioPlayer;
 
     QuestManager _questManager;
+    EnemyManager _enemyManager;
+
+    public EnemyManager EnemyManager
+    {
+        get { return _enemyManager; }
+        set { _enemyManager = value; }
+    }
 
     public QuestManager QuestManager
     {
@@ -233,21 +240,13 @@ public class GameScene : General
     private void Start()
     {
         FB.Init();
-//#if UNITY_EDITOR
-//        Developer.IsDev = true;
-//#endif
 
         Book.Start();
-
         LoadTerrain();
 
         GameController1.Start();
         StartCoroutine("SixtySecUpdate");
-
         StartCoroutine("OneSecUpdate");
-
-
-        //Settings.PlayMusic();
 
         textMessage = (Btn3D) General.Create(Root.menusTextMiddle, new Vector3(0.85f, 0.3f, 0));
         textMessage.MoveSpeed = 40f; //so fade happens
@@ -446,8 +445,21 @@ public class GameScene : General
         {
             QuestManager = new QuestManager();
         }
+    
 
         QuestManager.Update();
+
+
+        //if (EnemyManager == null)
+        //{
+        //    EnemyManager = new EnemyManager();
+        //}
+        //if (GameWasFullyLoadedAnd10SecAgo())
+        //{
+        //    EnemyManager.Update();
+        //}
+
+
         AudioCollector.Update();
         CreateDummySpawnPoint();
         

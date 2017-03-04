@@ -286,7 +286,8 @@ public class Production  {
 
         InputProdCheckAndAdd(new ProductInfo(P.Salt, null, H.ShoreMine));
         InputProdCheckAndAdd(new ProductInfo(P.Sand, null, H.ShoreMine));
-        InputProdCheckAndAdd(new ProductInfo(P.QuickLime, null, H.ShoreMine));
+        
+        InputProdCheckAndAdd(new ProductInfo(P.QuickLime, null, H.QuickLime));
     }
 
     private void Mine()
@@ -546,7 +547,7 @@ public class Production  {
 
 
         //books
-        InputElement paper2 = new InputElement(P.Paper, 100);
+        InputElement paper2 = new InputElement(P.Paper, 10);
         InputElement leather = new InputElement(P.Leather, 1);
         List<InputElement> bookForm1 = new List<InputElement>() { paper2, leather, eleWoodComb };
         List<InputElement> bookForm2 = new List<InputElement>() { paper2, leather, eleCoalComb };

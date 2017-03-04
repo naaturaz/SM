@@ -21,15 +21,13 @@ class TutoWindow : GUIElement
         "CamRot.Tuto",
         "BackToTown.Tuto",
         "BuyRegion.Tuto",//they most be one after
-        
-
 
         "CamHeaven.Tuto",
         "Trade.Tuto",//the other
 
         "Dock.Tuto",
         "Dock.Placed.Tuto",
-        "MaxSpeed.Tuto",
+        "2XSpeed.Tuto",
         "ShowWorkersControl.Tuto",
         "AddWorkers.Tuto",
         "HideBulletin.Tuto",
@@ -43,6 +41,7 @@ class TutoWindow : GUIElement
         "CloseDockWindow.Tuto",
         "Rename.Tuto",
         "Spec.Tuto",
+
 
     };
 
@@ -193,6 +192,34 @@ class TutoWindow : GUIElement
         Program.gameScene.QuestManager.TutoCallWhenDone();
 
     }
+
+
+    #region Manage delay on tutorials
+
+    static float _thisStepStartedAt = -1;
+    static string _thisStepIs = "";
+
+    static public bool IsStepReady(string step)
+    {
+        if (_thisStepStartedAt == -1 && _thisStepIs == "")
+        {
+            _thisStepIs = step;
+            _thisStepStartedAt = Time.time;
+            return false;
+        }
+
+        if (Time.time > _thisStepStartedAt + 5)
+        {
+            _thisStepIs = "";
+            _thisStepStartedAt = -1;
+            return true;
+        }
+
+        return false;
+    }
+
+    #endregion
+
 }
 
 

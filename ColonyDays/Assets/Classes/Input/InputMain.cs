@@ -439,9 +439,9 @@ public class InputMain : InputParent {
             Program.gameScene.GameSpeed = 10;
         }
 
-        if (Program.gameScene.GameSpeed == 10)
+        if (Program.gameScene.GameSpeed == 2)
         {
-            Program.gameScene.TutoStepCompleted("MaxSpeed.Tuto");
+            Program.gameScene.TutoStepCompleted("2XSpeed.Tuto");
         }
 
         //needs to be call for Body.cs

@@ -219,6 +219,7 @@ public class Languages
 	   { "ShowPath.HoverSmall", "Show path"},
 	   { "ShowLocation.HoverSmall", "Show location"},//TownTitle
        { "TownTitle.HoverSmall", "Town"},
+       {"WarMode.HoverSmall", "Combat Mode"},
 
        //addOrder windiw
 	   { "Amt_Tip.HoverSmall", "Amount of prod"},
@@ -343,6 +344,7 @@ public class Languages
        { "Bulletin.Help", "The pages icon on the bottom bar is the Bulletin/Control Window. Please get a minute to explore it."},
        { "Trading.Help", "You will need to have at least one Dock to be able to trade. On it you can add import/export orders and make some cash. If you need help adding an order you might want to complete the Tutorial"},
 
+       { "Combat Mode.Help", "It activates when a Pirate/Bandit is detected by one of your citizens. Once the mode is active you can command units directly to attack. Select them and right click to objetive to attack"},
 
 
 
@@ -352,15 +354,16 @@ public class Languages
 
 
 
+       
 
 
        //to  add on spanish         //to correct  
        { "TutoOver", "Your reward is $10,000. The tutorial is over now you can keep playing this game or start a new one."},
 
        //Tuto
-       { "CamMov.Tuto", "Tutorial completion reward is $10,000. Step1: Use [WASD] or arrow keys to move the Camera."},
-       { "CamMov5x.Tuto", "Use [WASD] or arrow keys and keep press the 'Left Shift' key to move the Camera 5 times quicker."},
-       { "CamRot.Tuto", "Now press the scroll wheel down on your mouse and move your mouse to rotate the Camera."},
+       { "CamMov.Tuto", "Tutorial completion reward is $10,000. Step1: Use [WASD] or arrow keys to move the Camera. Do this for at least 5 seconds"},
+       { "CamMov5x.Tuto", "Use [WASD] or arrow keys and keep press the 'Left Shift' key to move the Camera 5 times quicker. Do this for at least 5 seconds"},
+       { "CamRot.Tuto", "Now press the scroll wheel down on your mouse and move your mouse to rotate the Camera. Do this for at least 5 seconds"},
 
        
        { "BackToTown.Tuto", "Press the key [P] on the keyboard to go to the initial position of the camera"},
@@ -380,8 +383,8 @@ public class Languages
        { "Dock.Placed.Tuto", "Now the hard, read carefully. Notice that you can use the "+
            "'R' key to Rotate, and right click to cancel the building. You can cancel the building and respawned at you wish. This building has a part in the ocean and other in land." +
            " The arrow goes to the sea, the storage section goes to land. Once the arrow is white left click."},
-       { "MaxSpeed.Tuto", "To go to max speed, go to the middle top screen simulation speed controller, click the "
-            +" 'More Speed' button 3 times until 10x is displayed"},
+       { "2XSpeed.Tuto", "Increase the game's speed, go to the middle top screen simulation speed controller, click the "
+            +" 'More Speed' button 1 time until 2x is displayed"},
 
        { "ShowWorkersControl.Tuto", "Click on the 'Control/Bulletin' button, located in the bottom bar. "+
            "When you hover over it, it will popup 'Control/Bulletin'. "},
@@ -527,6 +530,7 @@ public class Languages
 	   {  H.LumberMill +".Desc","Aqui los trabajadores buscan y extraen recursos naturales como madera, piedra y minerales"},
 	   { "BlackSmith.Desc","Aqui el trabajador produce elementos de la forja "+_asLongHasInputES},
 	   { "ShoreMine.Desc","Aqui se produce la sal, arena o cal"},
+       { "QuickLime.Desc","Here a worker will produce QuickLime"},
 
        //Prod
 	   { "Brick.Desc",_produceES},

@@ -65,6 +65,7 @@ public class UnlockBuilds
             new BRequires(H.LumberMill, true),
             new BRequires(H.BlackSmith),
             new BRequires(H.ShoreMine, true),
+            new BRequires(H.QuickLime, true),
 
             //prod
             new BRequires(H.Brick, true),
@@ -80,7 +81,7 @@ public class UnlockBuilds
             //ind
             new BRequires(H.Cloth, 50, 500, 900),
             new BRequires(H.GunPowder, 50, 500, 900),
-            new BRequires(H.Paper_Mill, H.OnlyForDev),
+            new BRequires(H.Paper_Mill, 50, 500, 900),
             new BRequires(H.Printer, 50, 500, 900),
             new BRequires(H.CoinStamp, H.OnlyForDev),
             new BRequires(H.SugarMill, H.OnlyForDev),

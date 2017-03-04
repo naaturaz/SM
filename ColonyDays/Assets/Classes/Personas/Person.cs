@@ -20,7 +20,6 @@ public class Person : Hoverable
 
 
 
-
     //Debug
     private List<General> _debugList = new List<General>();
 
@@ -75,6 +74,10 @@ public class Person : Hoverable
 
     //Person Own Objects and fields
     private Brain _brain;
+    
+    MilitarBrain _militarBrain;
+    EnemyBrain _enemyBrain;
+
     private Body _body;
     private string spouse = "";
     private bool isWidow; //if is wont get married again
@@ -114,6 +117,11 @@ public class Person : Hoverable
     {
         get { return _myDummyProf; }
         set { _myDummyProf = value; }
+    }
+    public MilitarBrain MilitarBrain
+    {
+        get { return _militarBrain; }
+        set { _militarBrain = value; }
     }
 
     public string Thirst
@@ -455,6 +463,45 @@ public class Person : Hoverable
         return obj;
     }
 
+
+
+    #region Enemy
+    
+    /// <summary>
+    /// Intended to be used For the first load of people spawned
+    /// </summary>
+    public static Person CreatePersonEnemy(Vector3 iniPos = new Vector3())
+    {
+        Person obj = null;
+        obj = (Person)Resources.Load(Root.personaMale1, typeof(Person));
+
+        int iniAge = General.GiveRandom(19, 32); 
+        obj = (Person)Instantiate(obj, iniPos, Quaternion.identity);
+
+        obj.HType = H.Enemy;
+        obj.InitObj(iniAge);
+
+        //this to when Person dont have where to leave and then they find a place the teletranport effect
+        //wont be seeable bz there are spawneed hidden. 
+        //obj.Body.HideNoQuestion();
+
+        return obj;
+    }
+
+
+
+
+    #endregion 
+
+
+
+
+
+
+
+
+
+
     /// <summary>
     /// Returns the gennder other than the last used , keeps that saved on PersonController.GenderLast
     /// </summary>	
@@ -490,9 +537,11 @@ public class Person : Hoverable
 
         obj = (Person)Instantiate(obj, iniPos, Quaternion.identity);
         obj.Gender = obj.OtherGender();
+
+        obj.HType = H.Person;
+        
         obj.InitObj(0);//15    5
         //obj.Geometry.GetComponent<Renderer>().sharedMaterial = ReturnRandoPersonMaterialRoot();
-        obj.HType = H.Person;
         
 
         //this to when Person dont have where to leave and then they find a place the teletranport effect
@@ -562,8 +611,7 @@ public class Person : Hoverable
 
         _body = new Body(this, pF);
 
-        Program.InputMain.ChangeSpeed += _body.ChangedSpeedHandler;
-        Program.gameScene.ChangeSpeed += _body.ChangedSpeedHandler;
+        InitEvents();
 
         Brain = new Brain(this, pF);
 
@@ -594,24 +642,33 @@ public class Person : Hoverable
         _lifeLimit = GiveRandom(75, 85);//        40
         MyId = Name + "." + Id;
 
-        Brain = new Brain(this);
+        if (HType == H.Person)
+        {
+            Brain = new Brain(this);
+        }
+        
         _body = new Body(this);
 
-        Program.InputMain.ChangeSpeed += _body.ChangedSpeedHandler;
-        Program.gameScene.ChangeSpeed += _body.ChangedSpeedHandler;
+        InitEvents();
 
         DefineIfIsMajor();
         DefineBirthMonth();
         InitGeneralStuff();
-
 
         if (Age != 0)
         {
             return;
         }
         Program.gameScene.GameController1.NotificationsManager1.Notify("BabyBorn", Name);
-
     }
+
+    void InitEvents()
+    {
+        Program.InputMain.ChangeSpeed += _body.ChangedSpeedHandler;
+        Program.gameScene.ChangeSpeed += _body.ChangedSpeedHandler;
+        GameController.War += WarHandler;
+    }
+
 
     /// <summary>
     /// redoes brain and restartCOntroller for person
@@ -1237,8 +1294,6 @@ public class Person : Hoverable
     // Use this for initialization
     void Start()
     {
-  
-
         if (_nutrition == null)
         {
             _nutrition = new Nutrition(this);
@@ -1263,6 +1318,11 @@ public class Person : Hoverable
         //StartCoroutine("QuickUpdate");
 
         CreateTheTwoDummies();
+        
+        if (HType == H.Enemy)
+        {
+            _militarBrain = new EnemyBrain(this);
+        }
 
         if (PersonBank1 == null)
         {
@@ -1305,8 +1365,12 @@ public class Person : Hoverable
         {
             yield return new WaitForSeconds(checkFoodElapsed); // wait
             ParentPersonToHome();
-            
-            _brain.SlowCheckUp();
+
+            if (HType == H.Person)
+            {
+                _brain.SlowCheckUp();
+            }
+
             TryHaveKids();
         }
     }
@@ -1404,9 +1468,13 @@ public class Person : Hoverable
 #if UNITY_EDITOR
             random1020Time = .1f;
 #endif
-            _brain.MindState();
+            if (HType == H.Person)
+            {
+                _brain.MindState(); 
+            }
         }
     }
+
 
     // Update is called once per frame
     void Update()
@@ -1414,12 +1482,27 @@ public class Person : Hoverable
         _levelOfDetail.A45msUpdate();
 
         //was on update so new PeopleFind their new home 
-        if (_home == null && !PersonPot.Control.Locked)
+        if (_home == null && !PersonPot.Control.Locked && HType == H.Person)
         {
             _brain.CheckConditions();
         }
+        if (HType == H.Person)
+        {
+            _brain.Update();
+        }
+        
 
-        _brain.Update();
+        //enemy
+        if (HType == H.Enemy && _enemyBrain == null)
+        {
+            _enemyBrain = (EnemyBrain)_militarBrain;
+        }
+        if (_enemyBrain != null)
+        {
+            _enemyBrain.Update();
+        }  
+ 
+
         _body.Update();
         //UpdateInfo();
         if (_profession != null)
@@ -2416,6 +2499,12 @@ public class Person : Hoverable
         DestroyProjector();
         HidePaths();
 
+        //for militar brain
+        if (Brain == null)
+        {
+            return;
+        }
+
         //if is Dead not point to continue
         if (Brain.Partido)
         {
@@ -2435,6 +2524,7 @@ public class Person : Hoverable
 
     private General _projector;
     private General _light;
+    private General _reachArea;
 
     /// <summary>
     /// this is the projector that hover when creating a nw building, or the current selected building
@@ -2455,6 +2545,11 @@ public class Person : Hoverable
             Projector.transform.Rotate(new Vector3(90, 0, 0));
 
             _light = Create(Root.lightCilPerson, transform.position, container: transform);
+
+            _reachArea = Create(Root.reachArea, transform.position, container: transform);
+            // *2 bz is from where the person is at so 'Brain.Maxdistance' is a  Radius
+            _reachArea.transform.localScale = new Vector3(2, 0.1f, 2);
+
         }
     }
 
@@ -2467,6 +2562,9 @@ public class Person : Hoverable
 
             _light.Destroy();
             _light = null;
+
+            _reachArea.Destroy();
+            _reachArea = null;
         }
     }
     #endregion
@@ -2845,6 +2943,18 @@ public class Person : Hoverable
     #endregion
 
 
+    #region Militar
+    internal bool IsMilitarNow()
+    {
+        return _militarBrain != null;
+    }
+
+    public void WarHandler(object sender, EventArgs e)
+    {
+        Debug.Log(Name + " war");
+    }
+
+    #endregion
 }
 
 public class PersonReport

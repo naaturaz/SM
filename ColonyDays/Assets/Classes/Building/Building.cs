@@ -3252,11 +3252,13 @@ public class Building : Hoverable, Iinfo
         for (int i = 0; i < rawsOnNeed.Count; i++)
         {
             P prod = rawsOnNeed[i].Element;
+            //so for nails for example for a Furnitrue will only order 0.2 x 30 = 6kg
+            var amtNeeded = (int) rawsOnNeed[i].Units * 30;
 
             if (!HaveThisProdOnInv(prod))
             {
                 //todo use 10000 to put a large number of units needed
-                Order prodNeed = new Order(prod, MyId, 300);//200
+                Order prodNeed = new Order(prod, MyId, amtNeeded);//300
 
                 //BuildingPot.Control.Dispatch1.AddToOrders(prodNeed);
                 AddToClosestWheelBarrowAsOrder(prodNeed, H.None);

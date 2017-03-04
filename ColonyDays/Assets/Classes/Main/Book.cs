@@ -104,6 +104,8 @@ public class Book : General
         Build.Add(new BuildStat(H.BlackSmith, 1000, 15, 5, 25, 5, maxPeople: 10));
 
         Build.Add(new BuildStat(H.ShoreMine, 400, 15, 5, 25, 5, maxPeople: 20));
+        Build.Add(new BuildStat(H.QuickLime, 1000, 15, 5, 15, 5, maxPeople: 5, capacity: 160));
+
 
         //Prod
         Build.Add(new BuildStat(H.Brick, 400, 15, 5, 25, 5, maxPeople: 20, capacity: 50));

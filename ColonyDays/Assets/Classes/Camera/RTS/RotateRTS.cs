@@ -6,6 +6,8 @@ public class RotateRTS : GenericCameraComponent {
     float MAX_Y = 120f;//60 50
     Vector3 oldPos;
 
+    float tutorialStepStartedAt = -1;
+
     //move down and up thru Y
     public Vector3 MoveThruY(Transform current, float min, float max, float change)
     {
@@ -15,10 +17,12 @@ public class RotateRTS : GenericCameraComponent {
         {
             Program.gameScene.TutoStepCompleted("CamHeaven.Tuto");
             temp.y = max;
+            ResetLeftChangeVal();
         }
         else if (temp.y < min)
         {
             temp.y = min;
+            ResetLeftChangeVal();
         }
         return temp;
     }
@@ -58,10 +62,21 @@ public class RotateRTS : GenericCameraComponent {
         _target = target;
         if (changeValue != 0 && !qOrE)
         {
-            //leftChangeVal -= changeValue;
+            //reset leftChange if val change direction 
+            if (leftChangeVal < 0 && changeValue > 0)
+            {
+                leftChangeVal = 0;
+            }
+            else if (leftChangeVal > 0 && changeValue < 0)
+            {
+                leftChangeVal = 0;
+            }
+            leftChangeVal += changeValue;//-=
 
-            TransformCam.position = MoveThruY(TransformCam, MIN_Y, MAX_Y, changeValue);
-            TransformCam.LookAt(target);
+            //ChangeLeftChangeVal(changeValue, -1);
+
+            //TransformCam.position = MoveThruY(TransformCam, MIN_Y, MAX_Y, changeValue);
+            //TransformCam.LookAt(target);
 
             //Program.gameScene.TutoStepCompleted("CamRot.Tuto");
         }
@@ -102,41 +117,78 @@ public class RotateRTS : GenericCameraComponent {
 
             //leftChangeVal = changeValue;
 
-            Program.gameScene.TutoStepCompleted("CamRot.Tuto");
+            if (TutoWindow.IsStepReady("CamRot.Tuto"))
+            {
+                Program.gameScene.TutoStepCompleted("CamRot.Tuto");
+            }
 
         }
     }
 
     float leftChangeVal;
+
     
     public void Update()
     {
-        //if (leftChangeVal != 0)
-        //{
-        //    TransformCam.position = MoveThruY(TransformCam, MIN_Y, MAX_Y, ChangeValHand());
-        //    TransformCam.LookAt(_target);
-        //}
+        if (leftChangeVal != 0)
+        {
+            TransformCam.position = MoveThruY(TransformCam, MIN_Y, MAX_Y, ChangeValHand());
+            TransformCam.LookAt(_target);
+        }
+    }
+
+    void ResetLeftChangeVal()
+    {
+        leftChangeVal = 0;
+    }
+
+    void ResetValorMove()
+    {
+        valorMove = .1f + (TransformCam.position.y/100);
     }
 
     float ChangeValHand()
     {
-        if (leftChangeVal < 0.5 && leftChangeVal > -.5f)
+        if (leftChangeVal < 1.5 && leftChangeVal > -1.5)
         {
-            leftChangeVal = 0;
-            valorMove = 0.1f;
+            ResetLeftChangeVal();
             return 0;
         }
         var locChange = ValorMove() * GetSign();
-        leftChangeVal += locChange;
+
+        ChangeLeftChangeVal(locChange, -1);
 
         return locChange;
     }
 
+    /// <summary>
+    /// Will change LeftToCHangeVal however if the new 
+    /// </summary>
+    /// <param name="locChange"></param>
+    /// <param name="sign"></param>
+    void ChangeLeftChangeVal(float locChange, int sign)
+    {
+        var oldSign = GetSign();
+        leftChangeVal += (locChange * sign);
 
-    float valorMove = .1f;
+        //means it went over to the other sign
+        if (oldSign != GetSign())
+        {
+            leftChangeVal = 0;
+        }
+    }
+
+
+    float valorMove = -1;
+    /// <summary>
+    /// lineal increase
+    /// </summary>
+    /// <returns></returns>
     float ValorMove()
     {
-        valorMove += .05f;
+        ResetValorMove();
+
+        //valorMove += .03f;
         return valorMove;
     }
 
@@ -148,8 +200,8 @@ public class RotateRTS : GenericCameraComponent {
     {
         if (leftChangeVal < 0)
         {
-            return 1;
+            return -1;
         }
-        return -1;
+        return 1;
     }
 }

@@ -1206,7 +1206,10 @@ public class Body //: MonoBehaviour //: General
 
     bool ShouldHide()
     {
-        //return false;
+        if (_person.IsMilitarNow())
+        {
+            return false;
+        }
 
         if (CurrTheRoute==null )
         {

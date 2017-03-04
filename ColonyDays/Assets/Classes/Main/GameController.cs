@@ -7,10 +7,13 @@
  * Or create new game 
  */
 
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class GameController  {
+
+
 
 
 
@@ -353,4 +356,48 @@ public class GameController  {
         _notificationsManager = new NotificationsManager();
 
     }
+
+
+
+    #region GameMode Could be Normal( Peace) or War
+
+    static H _gameMode = H.Normal;
+
+    public static H GameMode
+    {
+        get { return GameController._gameMode; }
+        set { GameController._gameMode = value; }
+    }
+
+    public static void ChangeGameModeTo(H to)
+    {
+        if (_gameMode != to && to == H.War)
+        {
+            //notify the user 
+            OnWar(EventArgs.Empty);
+            Program.MouseListener.CurrForm.ShowWarMode();
+        }
+        else if (_gameMode != to && to == H.Normal)
+        {
+            Program.MouseListener.CurrForm.HideWarMode();
+        }
+
+        _gameMode = to;
+    }
+
+
+
+
+    public static EventHandler<EventArgs> War;
+    static void OnWar(EventArgs e)
+    {
+        if (War != null)
+        {
+            War("", e);
+        }
+    }
+
+
+
+    #endregion
 }

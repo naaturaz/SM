@@ -723,6 +723,7 @@ public class Root : MonoBehaviour
         buildsRoot.Add(H.LumberMill, "Prefab/Building/Raw/Wood");
         buildsRoot.Add(H.BlackSmith, "Prefab/Building/Raw/BlackSmith");
         buildsRoot.Add(H.ShoreMine, "Prefab/Building/Raw/ShoreMine");
+        buildsRoot.Add(H.QuickLime, "Prefab/Building/Raw/QuickLime");
 
 
         //Prod
