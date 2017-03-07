@@ -599,5 +599,23 @@ public class Structure : StructureParent
 
 
 
- 
+
+    /// <summary>
+    /// Will tell u if in this building there is work to do
+    /// 
+    /// For a docker for ex will be if are orders available
+    /// For a insider if all inputs are available
+    /// </summary>
+    /// <returns></returns>
+    internal bool ThereIsWorkToDo(Person pers)
+    {
+        if (HType == H.Dock)
+        {
+            var order = Dispatch1.GiveMeOrderDocker(pers);
+            return order != null;
+        }
+
+
+        return true;
+    }
 }

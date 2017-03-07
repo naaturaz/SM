@@ -105,6 +105,18 @@ public class NewGameWindow : GUIElement
             Program.IsPirate = _pirateToggle.isOn;
             Program.IsFood = _foodToggle.isOn;
             Program.MyScreen1.NewGameCreated(_terraRoot, _difficulty, _townName);
+
+
+            //Defines type of game here only when OK is cliked
+            if (_typeTxt.text == "Traditional")
+            {
+                Program.TypeOfGame = H.Lock;
+            }
+            else if (_typeTxt.text == "Freewill")
+            {
+                Program.TypeOfGame = H.Unlock;
+            }
+
         }
         //Reloadd main menu
         else if (sub == "CancelBtn")
@@ -329,12 +341,10 @@ public class NewGameWindow : GUIElement
     {
         if (pass == "Traditional")
         {
-            Program.TypeOfGame = H.Lock;
             _typeTxt.text = "Traditional";
         }
         else if (pass == "Freewill")
         {
-            Program.TypeOfGame = H.Unlock;
             _typeTxt.text = "Freewill";
         }
         if (TownLoader.IsTemplate)
@@ -342,7 +352,6 @@ public class NewGameWindow : GUIElement
             Program.TypeOfGame = H.None;
             _typeTxt.text = "None";
         }
-
     }
 
 

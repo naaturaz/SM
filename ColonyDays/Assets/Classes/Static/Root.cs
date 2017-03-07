@@ -774,6 +774,12 @@ public class Root : MonoBehaviour
         //buildsRoot.Add(H.Tower, "Prefab/Building/Militar/Tower");
         buildsRoot.Add(H.Fort, "Prefab/Building/Militar/Fort");
         buildsRoot.Add(H.Morro, "Prefab/Building/Militar/Morro");
+
+
+
+        //Helper
+        buildsRoot.Add(H.BullDozer, "Prefab/Building/Helper/BullDozer");
+
     }
 
 

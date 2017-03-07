@@ -5,6 +5,8 @@ using Facebook.Unity;
 
 public class MouseListener : InputMain
 {
+    Building _bullDozerGO;
+
     private MyForm _currForm = new MyForm();
     public MyForm CurrForm
     {
@@ -287,6 +289,10 @@ public class MouseListener : InputMain
         return clicked;
     }
 
+
+
+
+
     /// <summary>
     /// Actions to perform from form
     /// </summary>
@@ -329,7 +335,13 @@ public class MouseListener : InputMain
             CancelDemolishAction();
             _buildingWindow.Reload();
 
-        }    
+        }
+        else if (action == "BullDozer")
+        {
+            BuildingPot.InputU.BuildNowNew(H.BullDozer);
+            Debug.Log(action);
+            //_bullDozerGO = Building.CreateBuild("Prefab/Building/BullDozer", m.HitMouseOnTerrain.point, H.BullDozer);
+        }
         else if (action.Contains("Dialog."))
         {
             Dialog.Listen(action);

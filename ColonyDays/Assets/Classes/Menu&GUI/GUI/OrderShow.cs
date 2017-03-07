@@ -64,7 +64,7 @@ public class OrderShow : GUIElement
 
         Start();
 
-        _title.text = _prod + " : " + _amt;
+        _title.text = _prod + " : " + (Unit.WeightConverted(_amt)).ToString("#");
         transform.name = _title.text + " | " + Id;
 
         if (_closeBtn == null)

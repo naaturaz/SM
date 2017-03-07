@@ -258,7 +258,7 @@ public enum H
     //raw F4
     LumberMill, Clay, ShoreMine,
     MountainMine,
-    BlackSmith,  QuickLime, 
+    BlackSmith, QuickLime,
     Mortar, Pottery,
     //prod F5
     Brick, Carpentry, Cigars, Mill, Tailor,
@@ -433,6 +433,7 @@ public enum H
     Night,
     Enemy,
     War,
+    BullDozer,
 
 
 }

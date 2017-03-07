@@ -220,6 +220,7 @@ public class Languages
 	   { "ShowLocation.HoverSmall", "Show location"},//TownTitle
        { "TownTitle.HoverSmall", "Town"},
        {"WarMode.HoverSmall", "Combat Mode"},
+       {"BullDozer.HoverSmall", "Bulldozer"},
 
        //addOrder windiw
 	   { "Amt_Tip.HoverSmall", "Amount of prod"},
@@ -420,18 +421,20 @@ public class Languages
        { "SmallFarm.Quest", "Quest: Build a FieldFarmSmall. You need farms to feed your people"},
        { "FarmHire.Quest", "Quest: Hire two farmers in a FieldFarmSmall. Click on the farm and in the plus sign assign workers. You need to have unemployed"
             +" people to be able to assign them into a new building"},
-       { "FarmProduce.Quest", "Quest: Now produce 100KG of beans on the FieldFarmSmall. Click on the 'Stat' tab and will show you the production of the last 5 years"},
+      
+            { "FarmProduce.Quest", "Quest: Now produce " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " of beans on the FieldFarmSmall. Click on the 'Stat' tab and will show you the production of the last 5 years"},
        { "Transport.Quest", "Quest: Transport the beans from the farm to the Storage. To do that make sure you have" + 
             " workers on the masonry. They act as wheelbarrowers when not building"},
-       { "Export.Quest", "Quest: Now export 300KG of beans. On the Dock add a order of export. If you have not dock then build one."+
+       
+            { "Export.Quest", "Quest: Now export 300 " + Unit.CurrentWeightUnitsString() + " of beans. On the Dock add a order of export. If you have not dock then build one."+
            "Find it in Trade. Once built click on the orders tab and add a export order with the '+' sign."+
            " Select product and enter amount"},
-       { "HireDocker.Quest", "Quest: Hire four dockers. The dockers will move the goods into the Dock from the Storage if you are exporting."+
-           " Or viceversa if importing"},
+       { "HireDocker.Quest", "Quest: Hire a docker. Dockers only task is to move the goods into the Dock from the Storage if you are exporting."+
+           " Or viceversa if importing. They work when there is an order in place and the goods are ready to transport. Otherwise they stay at home resting"},
        { "MakeBucks.Quest", "Quest: Make $100 exporting goods in the Dock. "+
            "Once a ship arrives will randomly pay product(s) in your Dock's inventory"},
        { "HeavyLoad.Quest", "Quest: Build a HeavyLoad building. This are haulers that carry more weight. They will come handy when transporting goods around is needed"},
-       { "ImportOil.Quest", "Quest: Import 500KG of Whale Oil at the Dock. This is needed to keep your lights on at night."},
+       { "ImportOil.Quest", "Quest: Import 500 " + Unit.CurrentWeightUnitsString() + " of Whale Oil at the Dock. This is needed to keep your lights on at night."},
 
 
 

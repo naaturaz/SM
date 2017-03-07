@@ -2993,7 +2993,7 @@ public class Building : Hoverable, Iinfo
             Program.gameScene.QuestManager.QuestFinished("FarmHire");
         }
 
-        if (HType == H.Dock && _maxPeople == 4)
+        if (HType == H.Dock && _maxPeople == 1)
         {
             Program.gameScene.QuestManager.QuestFinished("HireDocker");
         }

@@ -282,6 +282,13 @@ public class Unit
     {
         return input*2.2046f;
     }
+
+    private static float WeightFromImpToMetric(float input)
+    {
+        return input / 2.2046f;
+    }
+
+
     /// <summary>
     /// From m3 to ft3
     /// </summary>
@@ -305,8 +312,10 @@ public class Unit
 
     /// <summary>
     /// Weight converted to proper current Unit
+    /// 
+    /// 
     /// </summary>
-    /// <param name="p"></param>
+    /// <param name="p">The metric amount</param>
     /// <returns></returns>
     internal static float  WeightConverted(float p)
     {
@@ -316,6 +325,23 @@ public class Unit
         }
         return WeightFromMetricToImp(p);
     }
+
+    /// <summary>
+    /// used to The input amt in order Converted if needed
+    /// </summary>
+    /// <param name="p"></param>
+    /// <returns></returns>
+    public static float ConvertFromKGToCurrent(float p)
+    {
+        if (_units == 'm')
+        {
+            return p;
+        }
+        return WeightFromImpToMetric(p);
+
+    }
+
+
 
     internal static float VolConverted(float p)
     {
@@ -346,4 +372,13 @@ public class Unit
         return (input * 1.8f) + 32;
     }
 
+
+    internal static string CurrentWeightUnitsString()
+    {
+        if (_units == 'm')
+        {
+            return "KG";
+        }
+        return "Lbs";
+    }
 }

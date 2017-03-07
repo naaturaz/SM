@@ -29,7 +29,7 @@ public class AddOrderWindow : GUIElement {
 
     //order elements
     private P _prodSelect = P.None;
-    private int _amt;
+    private float _amt;
     private H _frecuency = H.Once;
     private int _price;
 
@@ -219,12 +219,18 @@ public class AddOrderWindow : GUIElement {
 
         var dockBuild = BuildingPot.Control.Registro.SelectBuilding;
 
+        //used in case the conversion has something off. 
+        int locAmt = -1;
+        if (int.TryParse(_inputAmt.text, out locAmt))
+        {
+        } 
+
         if (_orderType == "Export")
         {
-            dockBuild.Dock1.Export(new Order(_prodSelect, "Ship", _amt));
+            dockBuild.Dock1.Export(new Order(_prodSelect, "Ship", (int)_amt));
 
 
-            if (_prodSelect == P.Bean && _amt == 300)
+            if (_prodSelect == P.Bean && locAmt == 300)
             {
                 Program.gameScene.QuestManager.QuestFinished("Export"); //.ImportOil
             }
@@ -235,11 +241,11 @@ public class AddOrderWindow : GUIElement {
             order.Amount = _amt;
             dockBuild.Dock1.Import(order);
 
-            if (_prodSelect == P.Wood && _amt == 100)
+            if (_prodSelect == P.Wood && locAmt == 100)
             {
                 Program.gameScene.TutoStepCompleted("AddOrder.Tuto");
             }
-            if (_prodSelect == P.WhaleOil && _amt == 500)
+            if (_prodSelect == P.WhaleOil && locAmt == 500)
             {
                 Program.gameScene.QuestManager.QuestFinished("ImportOil");
             }
@@ -384,9 +390,9 @@ public class AddOrderWindow : GUIElement {
     {
         if (IsTextAValidInt(_inputAmt.text))
         {
+            var loc = int.Parse(_inputAmt.text);
 
-
-            _amt = int.Parse(_inputAmt.text);
+            _amt = Unit.ConvertFromKGToCurrent((float)loc);
         }
         else _inputAmt.text = "";
     }
@@ -406,7 +412,7 @@ public class AddOrderWindow : GUIElement {
     void Display()
     {
         _prodSelLbl.text = _prodSelect.ToString();
-        _amtEnterLbl.text = _amt+"";
+        _amtEnterLbl.text = _inputAmt.text;
 
         if (_orderType == "Export")
         {

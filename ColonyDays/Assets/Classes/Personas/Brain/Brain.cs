@@ -526,9 +526,15 @@ public class Brain
             _person.Body.Location = HPers.None;
         }
 
-        return CurrentTask == HPers.IdleInHome && 
+        return 
+            CurrentTask == HPers.IdleInHome && 
             _person.FoodSource != null &&//person shoudld not go work if that is null 
                (_person.Body.Location == HPers.Home || _person.Body.Location == HPers.None);
+    }
+
+    bool SomeThingToDoAtWork()
+    {
+        return _person.Work != null && _person.Work.ThereIsWorkToDo(_person);
     }
 
     bool ReadyToGetFood(bool makeItTrue = false)
@@ -607,9 +613,9 @@ public class Brain
 
     void GoWork()
     {
-        if (ReadyToWork() && _routerWork.IsRouteReady && _workRoute.CheckPoints.Count > 0
+        if (ReadyToWork() && SomeThingToDoAtWork()
+            && _routerWork.IsRouteReady && _workRoute.CheckPoints.Count > 0
             && _workRoute.DestinyKey == _person.Work.MyId 
-            
             )
         {
             _person.Body.WalkRoutine(_workRoute, HPers.Work);
