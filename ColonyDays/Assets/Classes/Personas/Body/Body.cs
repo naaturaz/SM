@@ -302,9 +302,13 @@ public class Body //: MonoBehaviour //: General
             return;
         }
 
-
         //CheckIfNeedsToActivateAniCheck(animationPass, oldAnimation);
         //CleanIfNewAni(animationPass);
+
+        if (animationPass == "isCarry")
+        {
+            var a = 1;
+        }
 
 
         savedAnimation = "";
@@ -436,7 +440,10 @@ public class Body //: MonoBehaviour //: General
         return _currentAni;
     }
 
-
+    /// <summary>
+    /// Mar 7th 2017 now the standard carry animation is 'isWheelBarrow'
+    /// before was 'isCarry'
+    /// </summary>
     private void DefineAnimation()
     {
         if (!string.IsNullOrEmpty(_loadedAni))
@@ -451,9 +458,24 @@ public class Body //: MonoBehaviour //: General
         if (!_person.Inventory.IsEmpty() && _loadedAni != "isCarry")
         {
             //defines _loadedAni so will be taken care of in InitWalk
-            _loadedAni = "isCarry";
+            _loadedAni = ReturnWheelBarrowIfPosible();
         }
     }
+
+    /// <summary>
+    /// Will return wheelbarrow animation if posible 
+    /// </summary>
+    /// <returns></returns>
+    string ReturnWheelBarrowIfPosible()
+    {
+        if (GameController.AreThereWheelBarrowsOnStorage && _person.IsMajor)
+        {
+            return "isWheelBarrow";
+        }
+        return "isCarry";
+    }
+
+
 
     /// <summary>
     /// Init the Variables to walk
@@ -1404,6 +1426,7 @@ public class Body //: MonoBehaviour //: General
         DefineIfCarryAni();
     }
 
+
     private void DefineIfCarryAni()
     {
         if (_currentAni == "isWheelBarrow")
@@ -1416,9 +1439,9 @@ public class Body //: MonoBehaviour //: General
         //{
         //    TurnCurrentAniAndStartNew("isBucket");
         //}
-        if (!_person.Inventory.IsEmpty() && _currentAni != "isCarry")
+        if (!_person.Inventory.IsEmpty() && _currentAni != "isCarry")//isCarry
         {
-            TurnCurrentAniAndStartNew("isCarry");
+            TurnCurrentAniAndStartNew("isCarry");//isCarry
         }
        
         DefineSpeed();

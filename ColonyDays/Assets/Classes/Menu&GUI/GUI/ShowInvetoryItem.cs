@@ -178,8 +178,22 @@ public class ShowInvetoryItem : GUIElement
         _back3.SetActive(false);
     }
 
+
+
+
+
+    ProdSpec _pSpec;
     string ReturnAmt()
     {
+        if (_pSpec == null)
+        {
+            _pSpec = Program.gameScene.ExportImport1.FindProdSpec(InvItem1.Key);
+        }
+        if (_pSpec.WeightPerUnit > -1)
+        {
+            return ReturnAmtOnUnit();
+        }
+
         if (InvItem1.Amount <= 0)
         {
             return "-";
@@ -187,6 +201,15 @@ public class ShowInvetoryItem : GUIElement
         var amt = Unit.WeightConverted(InvItem1.Amount);
         return (int) amt + " " + Unit.WeightUnit();
     }
+
+    private string ReturnAmtOnUnit()
+    {
+        return (InvItem1.Amount / _pSpec.WeightPerUnit).ToString("n0") + " u";
+    }
+
+
+
+
 
     string ReturnVol()
     {

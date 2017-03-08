@@ -27,6 +27,11 @@ public class Structure : StructureParent
     /// </summary>
     public override void UpdateClosestVertexAndOld()
     {
+        if (gameObject == null)
+        {
+            return;
+        }
+
         if (!isStageObjHidden)
         {
             Geometry.SetActive(true);
@@ -86,10 +91,30 @@ public class Structure : StructureParent
         {
             GameScene.ScreenPrint("could be the sea Struct.cs");
         }
+
+        if (HType == H.BullDozer)
+        {
+            DestroyCool();
+
+            Program.gameScene.GameController1.Dollars -= 100;
+            BulletinWindow.SubBulletinFinance1.FinanceLogger.AddToAcct("Construction", 100);
+
+            AudioCollector.PlayOneShot("BoughtLand", 0);
+
+            //in case ladns on top of other building
+            Program.InputMain.RightClickRoutine();
+            //in case was notifiying somehting
+            Program.gameScene.GameController1.NotificationsManager1.HideMainNotify();
+        }
     }
 
     public void AddOnRegistro()
     {
+        if (HType == H.BullDozer)
+        {
+            return;
+        }
+
         RedoCategoryOnShack();
 
         //so the rect for collision is bigger
@@ -232,7 +257,7 @@ public class Structure : StructureParent
 	    //so bounds get updateds
         CheckIfIsEvenRoutine();
 
-        if (!IsLoadingFromFile )
+        if (!IsLoadingFromFile && HType != H.BullDozer )
         {
             CreateArrow();
         }

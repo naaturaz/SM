@@ -277,6 +277,10 @@ public class Root : MonoBehaviour
     public static string show_Invent_Item_Small_3_Text = "Prefab/GUI/Forms/Show_Invent_Item_Small_Med_3_Text";
     public static string show_Person_Place_Location = "Prefab/GUI/Forms/Show_Person_Place_Location";
     public static string price_Tile = "Prefab/GUI/Forms/Price_Tile";
+    public static string acct_Tile = "Prefab/GUI/Forms/Acct_Tile";
+    public static string person_Tile = "Prefab/GUI/Forms/Person_Tile";
+
+
     public static string spec_Tile = "Prefab/GUI/Forms/Spec_Tile";
 
     public static string worker_Tile = "Prefab/GUI/Forms/Worker_Tile";

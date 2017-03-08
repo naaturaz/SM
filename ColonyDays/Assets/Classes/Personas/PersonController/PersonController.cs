@@ -222,6 +222,8 @@ public class PersonController : PersonPot
         Program.MyScreen1.TownName = pData.PersonControllerSaveLoad.TownName;
 
         BulletinWindow.SubBulletinProduction1 = pData.PersonControllerSaveLoad.SubBulletinProduction;
+        BulletinWindow.SubBulletinFinance1 = pData.PersonControllerSaveLoad.SubBulletinFinance;
+        
 
         Program.gameScene.QuestManager = pData.PersonControllerSaveLoad.QuestManager;
         Program.gameScene.QuestManager.JustLoadedShowCurrent();
@@ -1088,7 +1090,9 @@ public class PersonControllerSaveLoad
 
     public string TownName { get; set; }
 
+
     public SubBulletinProduction SubBulletinProduction { get; set; }
+    public SubBulletinFinance SubBulletinFinance { get; set; }
 
     public bool IsPirate { get; set; }
 

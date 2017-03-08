@@ -765,4 +765,31 @@ public class Family
         //}
         //return "";
     }
+
+    /// <summary>
+    /// Based on the family hieracchy will return the personon the inxed 
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns></returns>
+    internal Person MemberAt(int index)
+    {
+        List<string> allIDs = new List<string>();
+
+        if (!string.IsNullOrEmpty(_mother))
+        {
+            allIDs.Add(_mother);
+        }
+        if (!string.IsNullOrEmpty(_father))
+        {
+            allIDs.Add(_father);
+        }
+
+        for (int i = 0; i < Kids.Count; i++)
+        {
+            allIDs.Add(Kids[i]);
+        }
+
+        return FindPerson(allIDs[index]);
+
+    }
 }

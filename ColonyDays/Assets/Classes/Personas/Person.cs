@@ -1652,7 +1652,10 @@ public class Person : Hoverable
         var sal = Work.DollarsPay;
 
         _personBank.Add(sal);
+
         Program.gameScene.GameController1.Dollars -= sal;
+        BulletinWindow.SubBulletinFinance1.FinanceLogger.AddToAcct("Salary", sal);
+
     }
 
 
@@ -2138,14 +2141,20 @@ public class Person : Hoverable
     /// Age + Genre values 
     /// </summary>
     /// <param name="item"></param>
-    public float HowMuchICanCarry()
+    public float HowMuchICanCarry(float maxNeeded = 100f)
     {
         var age = AgeFactor();
         var genre = ReturnGenreVal();
 
         var mul = 0.5f;
 
-        return (age + genre) * mul * ProfessionMultiplierCarryWeight();
+        var res = (age + genre) * mul * ProfessionMultiplierCarryWeight();
+
+        if (maxNeeded < res)
+        {
+            return maxNeeded;
+        }
+        return res;
     }
 
     float ProfessionMultiplierCarryWeight()

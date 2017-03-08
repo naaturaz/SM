@@ -1079,7 +1079,16 @@ public class Order
     public P Product;
     public string DestinyBuild;
     public string SourceBuild;
-    public float Amount;//the amount dispatched in an order
+
+    //the amount dispatched in an order
+    float _amount;
+
+    public float Amount
+    {
+        get { return _amount; }
+        set { _amount = value; }
+    }
+
     public DateTime PlacedTime;
 
     public string ID;//the id of an order. Used to find and removed

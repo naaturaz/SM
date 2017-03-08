@@ -220,6 +220,16 @@ public class MouseListener : InputMain
         return false;
     }
 
+    public void SelectPerson(Person pers)
+    {
+        ManagerReport.AddInput("Selected person: " + pers.name);
+        _personSelect = pers;
+        _personWindow.Show(_personSelect);
+        UnselectingBuild();
+        _buildingWindow.Hide();
+    }
+
+
     /// <summary>
     /// Will select clicked building and ret true if one was seelected 
     /// </summary>

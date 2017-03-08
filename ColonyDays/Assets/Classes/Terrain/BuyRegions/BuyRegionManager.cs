@@ -141,6 +141,8 @@ public class BuyRegionManager
     private void RemoveCost()
     {
         Program.gameScene.GameController1.Dollars -= MoneyNeeded();
+
+
     }
 
 
@@ -153,6 +155,7 @@ public class BuyRegionManager
     {
         //play sound
         Program.gameScene.GameController1.NotificationsManager1.Notify("BoughtLand");
+        BulletinWindow.SubBulletinFinance1.FinanceLogger.AddToAcct("New bought lands", MoneyNeeded());
 
         RemoveCost();
 

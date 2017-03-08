@@ -134,14 +134,11 @@ public class Docker : Profession
             {
                //Debug.Log(_person.MyId + " Docker got from:" + Order1.SourceBuild +" : " + Order1.Product + ".amt:" + Order1.Amount);
 
-                Order1.Amount = _person.HowMuchICanCarry();
-                _person.ExchangeInvetoryItem(_sourceBuild, _person, Order1.Product, Order1.Amount );
+                Order1.Amount = _person.HowMuchICanCarry(Order1.Amount);
                 
-                
+                _person.ExchangeInvetoryItem(_sourceBuild, _person, Order1.Product, Order1.Amount);
                 _sourceBuild.CheckIfCanBeDestroyNow(Order1.Product);
                 _person.Body.UpdatePersonalForWheelBa();
-
-
 
                 //will remove the import order(evacuation) from diispatch if is completed already
                 _person.Work.Dispatch1.RemoveImportOrder(_person.Work, Order1);

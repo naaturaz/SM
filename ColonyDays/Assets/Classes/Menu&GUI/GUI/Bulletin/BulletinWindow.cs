@@ -17,7 +17,9 @@ public class BulletinWindow : GUIElement
     //subBulletins
     private SubBulletinGeneral _workers;
     private static SubBulletinProduction _production;
-    private SubBulletinFinance _finance;
+    private static SubBulletinFinance _finance;
+
+
 
     Text _help;//help in this window
 
@@ -45,6 +47,11 @@ public class BulletinWindow : GUIElement
         set { _production = value; }
     }
 
+    public static SubBulletinFinance SubBulletinFinance1
+    {
+        get { return _finance; }
+        set { _finance = value; }
+    }
 
     void Start()
     {
@@ -213,18 +220,46 @@ public class BulletinWindow : GUIElement
 
 #region Finance
 
-    public void ShowFinanceResume()
+    public void ShowFinanceBudget()
     {
         ClickAndHideAll();
-        _finance.ShowResume();
+        _finance.ShowBudget();
+
+        //Program.gameScene.TutoStepCompleted("Spec.Tuto");
+        _help.text = "Bulletin/Finance/Budget \n" + Languages.ReturnString("Help.Bulletin/Finance/Budget");
     }
+
+    /// <summary>
+    /// Called from GUI
+    /// </summary>
+    public void ShowNextYearBudget()
+    {
+        _finance.FinanceLogger.SetResumenToNextYear();
+        ShowFinanceBudget();
+    }
+
+    /// <summary>
+    /// Called from GUI
+    /// </summary>
+    public void ShowPrevYearBudget()
+    {
+        _finance.FinanceLogger.SetResumenToPrevYear();
+        ShowFinanceBudget();
+    }
+
+
 
     public void ShowFinancePrices()
     {
         ClickAndHideAll();
         _finance.ShowPrices();
+
+        //Program.gameScene.TutoStepCompleted("Spec.Tuto");
+        _help.text = "Bulletin/Finance/Prices \n" + Languages.ReturnString("Help.Bulletin/Finance/Prices");
     }
 
+
+ 
 #endregion
 }
 

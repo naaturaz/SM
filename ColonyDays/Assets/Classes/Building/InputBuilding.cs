@@ -119,7 +119,7 @@ public class InputBuilding : BuildingPot {
             return;
         }
 
-        if (InputMode == Mode.Placing)
+        if (InputMode == Mode.Placing && Control.CurrentSpawnBuild.HType != H.BullDozer)
         {
             ShowHelp();
         }
@@ -221,7 +221,12 @@ public class InputBuilding : BuildingPot {
             if (Control.CurrentSpawnBuild.Category == Ca.Structure || Control.CurrentSpawnBuild.Category == Ca.Shore)
             {
                 Structure str = Control.CurrentSpawnBuild as Structure;
-                str.UpdateClosestVertexAndOld();
+
+                //for bulldozer 
+                if (str != null)
+                {
+                    str.UpdateClosestVertexAndOld();
+                }
             }
 
             //Ways and Farm
@@ -338,11 +343,18 @@ public class InputBuilding : BuildingPot {
         if (Control.CurrentSpawnBuild.Category == Ca.Structure || Control.CurrentSpawnBuild.Category == Ca.Shore)
         {
             Structure h = Control.CurrentSpawnBuild as Structure;
-            h.DonePlace();
+            //for bulldozer 
+            if (h != null)
+            {
+                h.DonePlace();
+            }
 
-            OnBuildPlaced(EventArgs.Empty);
-
-
+            if (Control.CurrentSpawnBuild.HType != H.BullDozer)
+            {
+                OnBuildPlaced(EventArgs.Empty);
+            }
+            
+            
             if (h.PositionFixed)
             {
                 BuildNowNew(DoingNow);
@@ -510,7 +522,16 @@ public class InputBuilding : BuildingPot {
 
         _hoverWindowMed = FindObjectOfType<HoverWindowMed>();
 
-        _hoverWindowMed.ShowSemiTut("Build");
+        if (Control.CurrentSpawnBuild.HType == H.BullDozer)
+        {
+
+            _hoverWindowMed.ShowSemiTut("BullDozer");
+        }
+        else
+        {
+            _hoverWindowMed.ShowSemiTut("Build");
+
+        }
         
         GameScene.ScreenPrint("Ready to build a " + buildWhat);
         InputMode = Mode.Placing;

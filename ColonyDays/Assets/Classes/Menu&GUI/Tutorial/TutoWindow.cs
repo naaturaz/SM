@@ -136,7 +136,7 @@ class TutoWindow : GUIElement
 
     public void Next(string step)
     {
-        if (_currentIndex == -1 || step != _steps[_currentIndex])
+        if (_currentIndex == -1 || step != _steps[_currentIndex] || _showAgainTuto.activeSelf)
         {
             return;
         }
@@ -153,7 +153,7 @@ class TutoWindow : GUIElement
             Dialog.OKDialog(H.TutoOver);
             Program.gameScene.GameController1.Dollars += 10000;
             AudioCollector.PlayOneShot("BoughtLand", 0);
-
+            BulletinWindow.SubBulletinFinance1.FinanceLogger.AddToAcct("Quests Completion" ,10000);
             
             ManagerReport.AddInput("Tutorial.Done:");
             Program.gameScene.QuestManager.QuestFinished("Tutorial");
@@ -184,13 +184,12 @@ class TutoWindow : GUIElement
     public void SkipTuto()
     {
         AudioCollector.PlayOneShot("ClickMetal2", 0);
-        _currentIndex = -1;
+        //_currentIndex = -1;
         Hide();
 
         _showAgainTuto.SetActive(true);
 
         Program.gameScene.QuestManager.TutoCallWhenDone();
-
     }
 
 

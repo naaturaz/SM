@@ -137,6 +137,7 @@ public class QuestManager
 
             Program.gameScene.GameController1.Dollars += quest.Prize;
             AudioCollector.PlayOneShot("BoughtLand", 0);
+            BulletinWindow.SubBulletinFinance1.FinanceLogger.AddToAcct("Quests Completion", quest.Prize);
 
             _currentQuests.Remove(indexQ);//remove from _current list
             _doneQuest.Add(indexQ);//adds to done list 

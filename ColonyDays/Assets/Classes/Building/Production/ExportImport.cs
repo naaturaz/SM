@@ -220,9 +220,9 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Barrel, 300, 100, 50));
         _prodSpecs.Add(new ProdSpec(P.Bucket, 300, 90, 60));
         _prodSpecs.Add(new ProdSpec(P.Crate, 300, 80, 50));
-        _prodSpecs.Add(new ProdSpec(P.WheelBarrow, 1400, 40, 25));
-        _prodSpecs.Add(new ProdSpec(P.Cart, 1400, 20, 20));
-        _prodSpecs.Add(new ProdSpec(P.Furniture, 840, 10, 15));
+        _prodSpecs.Add(new ProdSpec(P.WheelBarrow, 1400, 40, 25, weightPerUnit: 12));
+        _prodSpecs.Add(new ProdSpec(P.Cart, 1400, 20, 20, weightPerUnit: 120));
+        _prodSpecs.Add(new ProdSpec(P.Furniture, 840, 10, 15, weightPerUnit: 20));
 
 
         _prodSpecs.Add(new ProdSpec(P.Cigar, 450, 700, 50));
@@ -308,7 +308,7 @@ public class ExportImport
 
         Program.gameScene.GameController1.NotificationsManager1.Notify("ShipPayed", trans.ToString("N0"));
 
-      
+        BulletinWindow.SubBulletinFinance1.FinanceLogger.AddToAcct("Exports", trans);
 
         Quest(prod, amt);
     }
@@ -334,6 +334,10 @@ public class ExportImport
     {
         var trans = CalculateTransaction(prod, amt);
         Program.gameScene.GameController1.Dollars -= trans;
+
+        //Program.gameScene.GameController1.NotificationsManager1.Notify("ShipPayed", trans.ToString("N0"));
+
+        BulletinWindow.SubBulletinFinance1.FinanceLogger.AddToAcct("Imports", trans);
     }
 
     public float CalculateTransaction(P prod, float amt)
@@ -356,7 +360,7 @@ public class ExportImport
     }
 
     //todo GC . pass Index of List. map index to Prod while creating the Dict 
-    ProdSpec FindProdSpec(P prod)
+    public ProdSpec FindProdSpec(P prod)
     {
         if (_prodSpecsGC.ContainsKey(prod))
         {
@@ -468,6 +472,18 @@ public class ProdSpec
     private int _expireDays;
 
     /// <summary>
+    /// how muach weight a unit of this 
+    /// Useful for WheelBarrow, Furniture, etc
+    /// </summary>
+    float _weightPerUnit;
+
+    public float WeightPerUnit
+    {
+        get { return _weightPerUnit; }
+        set { _weightPerUnit = value; }
+    }
+
+    /// <summary>
     /// The amount of Cubic Meters Needed to fit one KG of this Product
     /// 
     /// Density in kg/m3
@@ -512,7 +528,8 @@ public class ProdSpec
     /// <param name="price"></param>
     /// <param name="density"></param>
     /// <param name="produceFactor"></param>
-    public ProdSpec(P prod, float price, float density = 1, float produceFactor = 1, int expireDays = -1)
+    public ProdSpec(P prod, float price, float density = 1, float produceFactor = 1, int expireDays = -1, 
+        float weightPerUnit = -1)
     {
         Product = prod;
         Price = price/100;//500  900 1000
@@ -521,5 +538,6 @@ public class ProdSpec
 
         _iconRoot = "Prefab/GUI/Inventory_Icons/" + prod;
         _expireDays = expireDays;
+        _weightPerUnit = weightPerUnit;
     }
 }

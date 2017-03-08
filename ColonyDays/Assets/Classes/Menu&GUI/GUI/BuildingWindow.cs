@@ -503,6 +503,7 @@ public class BuildingWindow : GUIElement
 
     string BuildInfo()
     {
+        CleanPeopleTile();
         string res = Languages.ReturnString(Building.HType + ".Desc") + "\n";
 
         res += IfInConstructionAddPercentageOfCompletion();
@@ -550,11 +551,7 @@ public class BuildingWindow : GUIElement
             }
 
             res += " People living in this house:" + amt + "";
-
-            for (int i = 0; i < Building.Families.Count(); i++)
-            {
-                res += Building.Families[i].InfoShow();
-            }
+            TilesOfPeopleInAHouse();
         }
 
         res = DestroyingBuilding(res);
@@ -565,6 +562,69 @@ public class BuildingWindow : GUIElement
 #endif
             ;
     }
+
+
+
+
+    #region PeopleTile
+
+    private int iForSpwItem;
+    private Vector3 _peopleTileIniPos;
+    //this is the items they are a Key and a Value
+    List<PersonTile> _tiles = new List<PersonTile>();
+    Building _oldBuilding;
+
+    void CleanPeopleTile()
+    {
+        var oldBuild =_oldBuilding != null && _oldBuilding == _building;
+        var sameTiles = Building.Families != null && Building.Families[0].MembersOfAFamily() == _tiles.Count;
+
+        if (oldBuild && sameTiles)
+        {
+            return;
+        }
+
+        for (int i = 0; i < _tiles.Count; i++)
+        {
+            _tiles[i].Destroy();
+        }
+        _tiles.Clear();
+        iForSpwItem = 0;
+    }
+
+    void TilesOfPeopleInAHouse()
+    {
+        if (_tiles.Count > 0)
+        {
+            return;
+        }
+
+        _oldBuilding = _building;
+        var iniGO = FindGameObjectInHierarchy("IniPos_Person_Tile", gameObject);
+        _peopleTileIniPos = iniGO.transform.localPosition;
+
+        for (int i = 0; i < Building.Families[0].MembersOfAFamily(); i++)
+        {
+            var personP = Building.Families[0].MemberAt(i);
+
+            _tiles.Add(PersonTile.Create(_general.transform, ReturnIniPos(iForSpwItem), personP));
+            iForSpwItem++;
+        }
+    }
+
+    Vector3 ReturnIniPos(int i)
+    {
+        return new Vector3(_peopleTileIniPos.x, ReturnY(i) + _peopleTileIniPos.y, _peopleTileIniPos.z);
+    }
+
+    float ReturnY(int i)
+    {
+        return -3.9f * i;
+    }
+    #endregion
+
+
+
 
     string DestroyingBuilding(string current)
     {
@@ -1022,6 +1082,7 @@ public class BuildingWindow : GUIElement
     GameObject _plusBtn;
     GameObject _lessBtn;
 
+ 
 
     private void CheckIfPlusIsActive()
     {

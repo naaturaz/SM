@@ -66,6 +66,8 @@ public class PersonSaveLoad : PersonPot {
 
         res.TownName = Program.MyScreen1.TownName;
         res.SubBulletinProduction = BulletinWindow.SubBulletinProduction1;
+        res.SubBulletinFinance = BulletinWindow.SubBulletinFinance1;
+
 
         res.IsPirate = Program.IsPirate;
         res.IsFood = Program.IsFood;

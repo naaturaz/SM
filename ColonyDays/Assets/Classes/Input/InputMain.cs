@@ -131,7 +131,7 @@ public class InputMain : InputParent {
         return true;
     }
 
-    void RightClickRoutine()
+    public void RightClickRoutine()
     {
         if (BuildingPot.InputMode == Mode.None)
         {

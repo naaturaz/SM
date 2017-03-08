@@ -229,6 +229,9 @@ public class Languages
 	   { "Build.HoverMed", "Place building: 'Left click' \n" +
 	                       "Rotate building: 'R' key \n " +
 	                       "Cancel: 'Right click'"},
+        { "BullDozer.HoverMed", "Clean area: 'Left click' \n" +
+	      "Cancel: 'Right click' \nCost: $100 per use "},
+
 	   { "Current_Salary.HoverMed", "Workers will go to work, where the highest salary is paid." +
 	                                " If 2 places pay the same salary, then the closest to home will be chosen."},
 
@@ -294,6 +297,8 @@ public class Languages
        { "NotScaledOnFloor", "The building is either to close to shore or moutain"},
        { "NotEven", "The ground underneath the building is not even"},
        { "Colliding", "Building is colliding with another one"},
+       { "Colliding.BullDozer", "Bulldozer is colliding with a building. Can only be used on terrain (trees, rocks, etc)"},
+
        { "BadWaterHeight", "The building is too low or high on the water"},
        { "LockedRegion", "You need to own this region to build here"},
        { "HomeLess", "People in this house have no where to go. Please build a new house that" +

@@ -289,7 +289,16 @@ public class Building : Hoverable, Iinfo
         }
         else if (_isColliding)
         {
-            Program.gameScene.GameController1.NotificationsManager1.MainNotify("Colliding");
+            if (HType == H.BullDozer)
+            {
+                Program.gameScene.GameController1.NotificationsManager1.MainNotify("Colliding.BullDozer");
+                
+            }
+            else
+            {
+                Program.gameScene.GameController1.NotificationsManager1.MainNotify("Colliding");
+
+            }
             
         }
         else if (!_isGoodWaterHeight && !IsThisADoubleBoundedStructure())
@@ -311,7 +320,7 @@ public class Building : Hoverable, Iinfo
 
     bool AreAnchorsOnUnlockRegions()
     {
-        if (TownLoader.IsTemplate)
+        if (TownLoader.IsTemplate || HType == H.BullDozer)
         {
             return true;
         }
