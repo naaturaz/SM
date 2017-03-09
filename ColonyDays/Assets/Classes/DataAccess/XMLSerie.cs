@@ -208,7 +208,10 @@ public class XMLSerie
             res = loaded.BuildingData;
         }
         //if not saved town found will load Deffault town         
-        else res = LoadDefaultTown();
+        else
+        {
+            res = LoadDefaultTown(); 
+        }
 
         return res;
     }

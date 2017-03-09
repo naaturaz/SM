@@ -1222,7 +1222,7 @@ public class Building : Hoverable, Iinfo
 
             HideBuildingPrev();
             DestroyCool();
-            Program.MouseListener.HideAllWindows();
+            Program.MouseListener.HidePersonBuildOrderNotiWindows();
             ManagerReport.AddInput("Building Canceled: " + transform.name);
             return;
         }
@@ -1241,7 +1241,7 @@ public class Building : Hoverable, Iinfo
         }
 
 
-        if (!HType.ToString().Contains("Unit") && !IsLoadingFromFile)
+        if (!HType.ToString().Contains("Unit") && !IsLoadingFromFile && HType != H.BullDozer)
         {
             PrivHandleZoningAddCrystals(); ;
         }

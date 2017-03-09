@@ -190,7 +190,7 @@ public class InputMain : InputParent {
         {
             if (Program.MouseListener.IsAWindowShownNow())
             {
-                Program.MouseListener.HideAllWindowsIncludingBuildingWindowAndBulletin();
+                Program.MouseListener.HidePersonBuildOrderNotiBulletinHelpWin();
                 return;
             }
 

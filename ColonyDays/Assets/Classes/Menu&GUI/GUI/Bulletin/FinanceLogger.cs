@@ -9,7 +9,7 @@ public class FinanceLogger
 {
     List<Budget> _budgets = new List<Budget>();
 
-    internal List<Budget> Budgets
+    public List<Budget> Budgets
     {
         get { return _budgets; }
         set { _budgets = value; }
@@ -19,12 +19,17 @@ public class FinanceLogger
 
     public FinanceLogger(bool first)
     {
-        AddYearBudget();
+        //AddYearBudget();
     }
 
     public void AddYearBudget()
     {
-        _budgets.Add(new Budget(Program.gameScene.GameTime1.Year));
+        var index = _budgets.FindIndex(a => a.Year == Program.gameScene.GameTime1.Year);
+
+        if (index == -1)
+        {
+            _budgets.Add(new Budget(Program.gameScene.GameTime1.Year));
+        }
     }
 
     public void AddToAcct(string acct, float bal)
@@ -33,35 +38,44 @@ public class FinanceLogger
         curr.AddToAcct(acct, bal);
     }
 
+    public void Clean()
+    {
+        yearModified = 0;
+    }
 
 
 
 
-
-    int showCurrent = -1;
     /// <summary>
     /// Will create the resume of the current budget 
     /// </summary>
     /// <returns></returns>
-    internal List<DisplayAccount> ResumenCurrentBudget()
+    internal List<DisplayAccount> ResumenCurrentBudget(int which)
     {
-        if (showCurrent == -1)
+        which += yearModified;
+        var index = _budgets.FindIndex(a => a.Year == which);
+        Budget curr = null;;
+
+        if (index == -1)
         {
-            showCurrent = _budgets.Count - 1;
+            return null;
         }
 
-        var curr = _budgets[showCurrent];
+        index = _budgets.FindIndex(a => a.Year == which);
+        curr = _budgets[index];
+
         return CreateDisplayAccts(curr);
     }
 
 
+    int yearModified;
     public void SetResumenToPrevYear()
     {
-        showCurrent -= 1;
+        yearModified -= 1;
     }
     public void SetResumenToNextYear()
     {
-        showCurrent += 1;
+        yearModified += 1;
     }
 
 
@@ -87,7 +101,7 @@ public class FinanceLogger
     }
 }
 
-class Budget
+public class Budget
 {
     int _year;
 
@@ -124,7 +138,7 @@ class Budget
 
     List<Account> _accounts = new List<Account>();
 
-    internal List<Account> Accounts
+    public List<Account> Accounts
     {
         get { return _accounts; }
         set { _accounts = value; }
@@ -207,7 +221,7 @@ class Budget
         var yearBal =  SubTotal(_posAcctNames) - SubTotal(_negativeAcctNames);
         res.Add(new DisplayAccount(Color.yellow, 1, "Year balance"
             , yearBal, false, 0));
-        res.Add(new DisplayAccount(Color.black, 0, "Current Balance", InitBalAcct + yearBal, true, 2));
+        res.Add(new DisplayAccount(Color.black, 0, "Ending Balance", InitBalAcct + yearBal, true, 2));
 
 
 
@@ -215,7 +229,7 @@ class Budget
     }
 }
 
-class Account
+public class Account
 {
     string _name;
 

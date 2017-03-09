@@ -21,6 +21,14 @@ public class AcctTile : GUIElement
 
     Sprite _back;
 
+    SubBulletinFinance _finance;
+
+    public SubBulletinFinance Finance
+    {
+        get { return _finance; }
+        set { _finance = value; }
+    }
+
     public DisplayAccount Acct
     {
         get { return _acct; }
@@ -70,6 +78,8 @@ public class AcctTile : GUIElement
 
     private void Year()
     {
+        //uncoomment to deal with the Next, Prev year featuree 
+
         if (Acct.Name != "Year")
         {
             _prevBtn.SetActive(false);
@@ -82,7 +92,6 @@ public class AcctTile : GUIElement
             {
                 _nextBtn.SetActive(false);
             }
-
             if (!BulletinWindow.SubBulletinFinance1.FinanceLogger.ThereIsAPrevYear((int)Acct.Balance))
             {
                 _prevBtn.SetActive(false);
@@ -117,7 +126,7 @@ public class AcctTile : GUIElement
 
 
     internal static AcctTile CreateTile(Transform container,
-        DisplayAccount acct, Vector3 iniPos)
+        DisplayAccount acct, Vector3 iniPos, SubBulletinFinance finance)
     {
         AcctTile obj = null;
 
@@ -132,10 +141,19 @@ public class AcctTile : GUIElement
         obj.transform.localScale = iniScale;
 
         obj.Acct = acct;
-
+        obj.Finance = finance;
         return obj;
     }
 
 
+    public void NextYear()
+    {
+        _finance.BulletinWindow1.ShowNextYearBudget();
+    }
 
+    public void PrevYear()
+    {
+        _finance.BulletinWindow1.ShowPrevYearBudget();
+
+    }
 }

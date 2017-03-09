@@ -74,7 +74,32 @@ public class BulletinWindow : GUIElement
         _help = h.GetComponent<Text>();
         _help.text = "";
 
+
+        //bz GUI Loades like 4 times 
+        PersonData pData = XMLSerie.ReadXMLPerson();
+
+
+        //loading 
+        if (pData != null)
+        {
+            SubBulletinProduction1 = pData.PersonControllerSaveLoad.SubBulletinProduction;
+            SubBulletinFinance1 = pData.PersonControllerSaveLoad.SubBulletinFinance;
+
+
+            SubBulletinProduction1.BulletinWindow1 = this;
+            SubBulletinFinance1.BulletinWindow1 = this;
+        }
+
+
+
+        //means is brand new game 
+        if (_finance.FinanceLogger.Budgets.Count == 0)
+        {
+            _finance.FinanceLogger.AddYearBudget();
+        }
     }
+
+
 
     void Update()
     {
@@ -220,6 +245,7 @@ public class BulletinWindow : GUIElement
 
 #region Finance
 
+
     public void ShowFinanceBudget()
     {
         ClickAndHideAll();
@@ -230,10 +256,21 @@ public class BulletinWindow : GUIElement
     }
 
     /// <summary>
+    /// called from GUI  Dollars
+    /// </summary>
+    public void ShowFinanceBudgetGUI()
+    {
+        Program.MouseListener.HidePersonBuildOrderNotiBulletinHelpWin();
+        base.Show();
+        ShowFinanceBudget();
+    }
+
+    /// <summary>
     /// Called from GUI
     /// </summary>
     public void ShowNextYearBudget()
     {
+        HideAll();
         _finance.FinanceLogger.SetResumenToNextYear();
         ShowFinanceBudget();
     }
@@ -243,6 +280,7 @@ public class BulletinWindow : GUIElement
     /// </summary>
     public void ShowPrevYearBudget()
     {
+        HideAll();
         _finance.FinanceLogger.SetResumenToPrevYear();
         ShowFinanceBudget();
     }
@@ -252,7 +290,8 @@ public class BulletinWindow : GUIElement
     public void ShowFinancePrices()
     {
         ClickAndHideAll();
-        _finance.ShowPrices();
+        _body.text = "Coming Soon";
+        //_finance.ShowPrices();
 
         //Program.gameScene.TutoStepCompleted("Spec.Tuto");
         _help.text = "Bulletin/Finance/Prices \n" + Languages.ReturnString("Help.Bulletin/Finance/Prices");

@@ -112,6 +112,8 @@ public class GameTime
     private void NewYear()
     {
         _year++;
+
+        BulletinWindow.SubBulletinFinance1.FinanceLogger.AddYearBudget();
     }
 
     /// <summary>

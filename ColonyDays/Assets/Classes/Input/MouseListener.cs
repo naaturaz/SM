@@ -139,7 +139,7 @@ public class MouseListener : InputMain
             return;
         }
 
-        HideAllWindows();
+        HidePersonBuildOrderNotiWindows();
 
         main.Destroy();
         main = null;
@@ -185,7 +185,7 @@ public class MouseListener : InputMain
                 if (!SelectClickedBuild())
                 {
                     //if was not posible to seelct a building 
-                    HideAllWindows();       
+                    HidePersonBuildOrderNotiWindows();       
                 }
             }
         }
@@ -583,7 +583,7 @@ public class MouseListener : InputMain
     /// <summary>
     /// Will hide the Person, Building, and AddOrder Window
     /// </summary>
-    public void HideAllWindows()
+    public void HidePersonBuildOrderNotiWindows()
     {
         if (_miniHelper == null)
         {
@@ -600,9 +600,9 @@ public class MouseListener : InputMain
         _notificationWindow.Hide();
     }
 
-    public void HideAllWindowsIncludingBuildingWindowAndBulletin()
+    public void HidePersonBuildOrderNotiBulletinHelpWin()
     {
-        HideAllWindows();
+        HidePersonBuildOrderNotiWindows();
 
         _buildingsMenu.Hide();
         _buildingWindow.Hide();
@@ -633,7 +633,7 @@ public class MouseListener : InputMain
     /// <param name="action"></param>
     private void HandleBuildCat(string action)
     {
-        HideAllWindows();
+        HidePersonBuildOrderNotiWindows();
 
         _dictSelection = ReturnDictSelection(action);
 
@@ -989,7 +989,7 @@ public class MouseListener : InputMain
 
     internal void ClickOnAnInvItem(InvItem _invItem)
     {
-        HideAllWindows();
+        HidePersonBuildOrderNotiWindows();
         BulletinWindow.Show();
         BulletinWindow.ShowSpecs();
     }

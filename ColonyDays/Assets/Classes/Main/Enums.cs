@@ -638,15 +638,17 @@ public enum Ron2
     CoinStamp, Chocolate, Distillery, Foundry, Printer, Cigars, Ink,
     Cloth,
 
-    PaperMill,
-    Mortar,
-    //QuickLime,
+
+    
 }
 
 
 public enum Ron3
 {
-
+    PaperMill,
+    Mortar,
+    TownHouse
+    //QuickLime,
 }
 
 public enum RonWoodHouse

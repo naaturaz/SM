@@ -118,6 +118,11 @@ public class GameController  {
         {
             _dollars = value;
             AlertIfOnNegative();
+
+            if (value == -500)
+            {
+                Debug.Log("$500 were removed ");
+            }
         }
     }
 

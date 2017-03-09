@@ -2,11 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 using UnityEngine;
 
 public class SubBulletinFinance
 {
     private BulletinWindow _bulletinWindow;
+
+    [XmlIgnore]
+    public BulletinWindow BulletinWindow1
+    {
+        get { return _bulletinWindow; }
+        set { _bulletinWindow = value; }
+    }
 
 
     FinanceLogger _financeLogger;
@@ -32,11 +40,7 @@ public class SubBulletinFinance
     #region Budget
     internal void ShowBudget()
     {
-        
-
-        //_bulletinWindow.ShowInBody("Finance B (Coming soon)");
-
-        ShowBudgetAccts(_financeLogger.ResumenCurrentBudget());
+        ShowBudgetAccts(_financeLogger.ResumenCurrentBudget(Program.gameScene.GameTime1.Year));
     }
 
 
@@ -50,10 +54,10 @@ public class SubBulletinFinance
         for (int i = 0; i < list.Count; i++)
         {
             var iniPosHere = _bulletinWindow.ScrollIniPosGo.transform.localPosition +
-                             new Vector3(0, -5f * i, 0);
+                             new Vector3(0, -4.2f * i, 0);
 
             var a = AcctTile.CreateTile(_bulletinWindow.Content.gameObject.transform, list[i],
-                iniPosHere);
+                iniPosHere, this);
 
             _reportsBudget.Add(a);
         }
@@ -127,7 +131,7 @@ public class SubBulletinFinance
             _reportsBudget[i].Destroy();
         }
         _reportsBudget.Clear();
-
+        //_financeLogger.Clean();
     }
 
 

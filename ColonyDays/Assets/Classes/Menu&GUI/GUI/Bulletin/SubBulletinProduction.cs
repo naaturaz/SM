@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 using UnityEngine;
 
 
@@ -10,6 +11,13 @@ public class SubBulletinProduction
     private ProductionReport _productionReport;
     private ProductionReport _expirationReport;
     private BulletinWindow _bulletinWindow;
+
+    [XmlIgnore]
+    public BulletinWindow BulletinWindow1
+    {
+        get { return _bulletinWindow; }
+        set { _bulletinWindow = value; }
+    }
 
     public SubBulletinProduction() { }
 

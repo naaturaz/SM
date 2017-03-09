@@ -191,6 +191,8 @@ public class PersonController : PersonPot
 
         Program.gameScene.GameController1.ReCheckWhatsOnStorage();
         Program.gameScene.ReleaseLoadingScreen();
+
+
     }
 
 
@@ -221,8 +223,8 @@ public class PersonController : PersonPot
 
         Program.MyScreen1.TownName = pData.PersonControllerSaveLoad.TownName;
 
-        BulletinWindow.SubBulletinProduction1 = pData.PersonControllerSaveLoad.SubBulletinProduction;
-        BulletinWindow.SubBulletinFinance1 = pData.PersonControllerSaveLoad.SubBulletinFinance;
+        //BulletinWindow.SubBulletinProduction1 = pData.PersonControllerSaveLoad.SubBulletinProduction;
+        //BulletinWindow.SubBulletinFinance1 = pData.PersonControllerSaveLoad.SubBulletinFinance;
         
 
         Program.gameScene.QuestManager = pData.PersonControllerSaveLoad.QuestManager;

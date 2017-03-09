@@ -107,7 +107,7 @@ class TutoWindow : GUIElement
             return;
         }
 
-        _rectTransform.position = new Vector3(2500, 2500);
+        _rectTransform.position = new Vector3(0, -2500);
         _text.text = "";
     }
 
@@ -126,7 +126,7 @@ class TutoWindow : GUIElement
         _showAgainTuto.SetActive(false);
 
         AudioCollector.PlayOneShotFullAudio("ClickMetal2");
-        Program.MouseListener.HideAllWindows();
+        Program.MouseListener.HidePersonBuildOrderNotiWindows();
 
         transform.position = _iniPos;
 
@@ -162,12 +162,6 @@ class TutoWindow : GUIElement
         //QuestManager.QuestFinished("Tutorial");
         Show();
     }
-
-    public bool IsPassingTheTutoNow()
-    {
-        return _currentIndex != -1;
-    }
-
 
     /// <summary>
     /// Called from GUI

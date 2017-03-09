@@ -76,7 +76,7 @@ class MiniHelper : GUIElement
 
 
         AudioCollector.PlayOneShotFullAudio("ClickMetal2");
-        Program.MouseListener.HideAllWindows();
+        Program.MouseListener.HidePersonBuildOrderNotiWindows();
 
         transform.position = _iniPos;
 

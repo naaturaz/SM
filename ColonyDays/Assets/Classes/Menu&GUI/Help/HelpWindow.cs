@@ -134,6 +134,7 @@ public class HelpWindow : GUIElement
 
     public void ShowSpecificItem(string Key)
     {
+        Program.MouseListener.HidePersonBuildOrderNotiBulletinHelpWin();
         Show("");
         HelpSelected(Key);
     }

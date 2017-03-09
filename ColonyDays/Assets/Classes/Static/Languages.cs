@@ -477,6 +477,8 @@ public class Languages
        + "For a building allow more people in to work, must be less than capacity and must find at least an unemployed person."},
 
 
+       {"Help.Bulletin/Finance/Budget", "Here is shown your budget. Salary is the amount of money paid to a worker. The more people working the more salary will be paid out."},
+       {"Help.Bulletin/Finance/Prices", "...."},
 
     };
 

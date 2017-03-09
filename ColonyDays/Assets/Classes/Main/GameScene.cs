@@ -358,7 +358,7 @@ public class GameScene : General
             return true;
         }
 
-        return _tutoWindow.IsPassingTheTutoNow();
+        return _tutoWindow.IsShownNow();
     }
 
     #endregion

@@ -189,10 +189,10 @@ public class ShowInvetoryItem : GUIElement
         {
             _pSpec = Program.gameScene.ExportImport1.FindProdSpec(InvItem1.Key);
         }
-        if (_pSpec.WeightPerUnit > -1)
-        {
-            return ReturnAmtOnUnit();
-        }
+        //if (_pSpec.WeightPerUnit > -1)
+        //{
+        //    return ReturnAmtOnUnit();
+        //}
 
         if (InvItem1.Amount <= 0)
         {
