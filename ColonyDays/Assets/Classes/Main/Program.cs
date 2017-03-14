@@ -244,16 +244,9 @@ public class Program : MonoBehaviour {
     public static bool IsFood { get; set; }
 
 
-    //static bool _wasTutoDone;
-    //internal static bool TutoWasDone()
-    //{
-    //    return _wasTutoDone;
-    //}
 
-    //internal static void TutoWasDoneNow()
-    //{
-    //    _wasTutoDone = true;
-    //}
+
+    public static bool WasTutoPassed { get; set; }
 }
 
 

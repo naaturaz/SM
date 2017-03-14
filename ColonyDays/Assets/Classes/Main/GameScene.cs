@@ -917,6 +917,8 @@ public class GameScene : General
 
         Program.IsPirate = pData.PersonControllerSaveLoad.IsPirate;
         Program.IsFood = pData.PersonControllerSaveLoad.IsFood;
+        Program.WasTutoPassed = pData.PersonControllerSaveLoad.WasTutoPassed;
+
     }
 
 

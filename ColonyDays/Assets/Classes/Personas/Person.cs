@@ -386,6 +386,9 @@ public class Person : Hoverable
         set { _isLoading = value; }
     }
 
+
+
+
     /// <summary>
     /// Intended to be used For the first load of people spawned
     /// </summary>
@@ -1318,7 +1321,9 @@ public class Person : Hoverable
         //StartCoroutine("QuickUpdate");
 
         CreateTheTwoDummies();
-        
+
+        CheckQuest();
+
         if (HType == H.Enemy)
         {
             _militarBrain = new EnemyBrain(this);
@@ -1341,7 +1346,13 @@ public class Person : Hoverable
     float RestartTimes(float a, float b) { return Random.Range(a, b); }
 
 
-
+    void CheckQuest()
+    {
+        if (PersonPot.Control.All.Count > 49)
+        {
+            Program.gameScene.QuestManager.QuestFinished("Population50");
+        }
+    }
 
     //private float quickTime2;
     ///// <summary>

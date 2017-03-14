@@ -46,6 +46,7 @@ public class QuestManager
         new Quest("MakeBucks.Quest", 850, 5.5f, 100),
         //new Quest("HeavyLoad.Quest", 900, 5.5f),
 
+        new Quest("Population50.Quest", 900, 5.5f),
 
     };
 

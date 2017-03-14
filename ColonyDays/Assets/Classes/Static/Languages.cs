@@ -110,6 +110,7 @@ public class Languages
 	   { "Tavern.Desc","The tavern gives some relaxation and entertainment to your people"},
 
        //Militar
+	   { "WoodPost.Desc", "They spot bandits and pirates quicker so you can prepare in advance"},
 	   { "PostGuard.Desc",_militar},
 	   { "Fort.Desc",_militar},
 	   { "Morro.Desc",_militar+". Once you build this, Pirates should know better"},
@@ -364,10 +365,10 @@ public class Languages
 
 
        //to  add on spanish         //to correct  
-       { "TutoOver", "Your reward is $10,000. The tutorial is over now you can keep playing this game or start a new one."},
+       { "TutoOver", "Your reward is $10,000 if is the first time you complete it. The tutorial is over now you can keep playing this game or start a new one."},
 
        //Tuto
-       { "CamMov.Tuto", "Tutorial completion reward is $10,000. Step1: Use [WASD] or arrow keys to move the Camera. Do this for at least 5 seconds"},
+       { "CamMov.Tuto", "Tutorial completion reward is $10,000 (one time reward per game). Step1: Use [WASD] or arrow keys to move the Camera. Do this for at least 5 seconds"},
        { "CamMov5x.Tuto", "Use [WASD] or arrow keys and keep press the 'Left Shift' key to move the Camera 5 times quicker. Do this for at least 5 seconds"},
        { "CamRot.Tuto", "Now press the scroll wheel down on your mouse and move your mouse to rotate the Camera. Do this for at least 5 seconds"},
 
@@ -412,8 +413,9 @@ public class Languages
        { "CloseDockWindow.Tuto", "Now the order is added. A random ship will drop this item in the dock inventory. And then your dock workers will take it to the closest Storage building. Now click outside the window so the window closes."},
        { "Rename.Tuto", "Click on a person and then click on the title bar of the person. Like this you can change the name of any person or building in the game. Click outside so the change is saved"},
 
-       { "Spec.Tuto", "Click on the 'Control/Bulletin' button, then on the 'Prod' menu and then on the 'Spec'. Here you can see exactly how to make each product on the game. The inputs necesaries and where is produced. Also the price"},
+       { "Spec.Tuto", "Click on the 'Control/Bulletin' button, then on the 'Prod' menu and then on 'Spec'. Here you can see exactly how to make each product on the game. The inputs necesaries and where is produced. Also the price"},
 
+       { "Budget.Tuto", "Click on 'Finance' menu and then on 'Budget'. This is the game budget"},
 
 
 
@@ -441,7 +443,7 @@ public class Languages
        { "HeavyLoad.Quest", "Quest: Build a HeavyLoad building. This are haulers that carry more weight. They will come handy when transporting goods around is needed"},
        { "ImportOil.Quest", "Quest: Import 500 " + Unit.CurrentWeightUnitsString() + " of Whale Oil at the Dock. This is needed to keep your lights on at night."},
 
-
+       { "Population50.Quest", "Reach a total population of 50 citizens"},
 
 
        {"CompleteQuest", "Your reward is ${0}"},

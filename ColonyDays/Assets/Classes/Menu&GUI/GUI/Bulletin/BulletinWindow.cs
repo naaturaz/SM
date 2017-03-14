@@ -253,6 +253,8 @@ public class BulletinWindow : GUIElement
 
         //Program.gameScene.TutoStepCompleted("Spec.Tuto");
         _help.text = "Bulletin/Finance/Budget \n" + Languages.ReturnString("Help.Bulletin/Finance/Budget");
+        Program.gameScene.TutoStepCompleted("Budget.Tuto");
+
     }
 
     /// <summary>
@@ -260,9 +262,11 @@ public class BulletinWindow : GUIElement
     /// </summary>
     public void ShowFinanceBudgetGUI()
     {
+
         Program.MouseListener.HidePersonBuildOrderNotiBulletinHelpWin();
         base.Show();
         ShowFinanceBudget();
+
     }
 
     /// <summary>

@@ -109,6 +109,7 @@ public class UnlockBuilds
             new BRequires(H.Tavern, 50, 500, 900),
 
             //military
+            new BRequires(H.WoodPost, H.OnlyForDev),
             new BRequires(H.PostGuard, 50, 500, 900, 0, 95),
             new BRequires(H.Fort, H.Coming_Soon),       
             new BRequires(H.Morro, H.Coming_Soon),

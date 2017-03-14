@@ -154,9 +154,8 @@ public class Book : General
         Build.Add(new BuildStat(H.Tavern, 400, 30, 80, 50, 5, maxPeople: 2));
 
         //Militar
+        Build.Add(new BuildStat(H.WoodPost, 2600, 100, 20, 0, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.PostGuard, 2600, 20, 100, 5, 5, maxPeople: 10));
-
-       // Build.Add(new BuildStat(H.Tower, 600, 80, 20, 0, 5, maxPeople: 10));
         Build.Add(new BuildStat(H.Fort, 2600, 80, 20, 0, 5, maxPeople: 10));
         Build.Add(new BuildStat(H.Morro, 2600, 80, 20, 0, 5, maxPeople: 10));
 

@@ -278,7 +278,7 @@ public enum H
     Tavern,
 
     //Militar
-    PostGuard, Fort, Morro,
+    WoodPost, PostGuard, Fort, Morro, 
 
 
 
@@ -528,7 +528,7 @@ public enum StOther //for structures game structure.cs
 
 public enum StMil //for structures game structure.cs 
 {
-    PostGuard , Fort, Morro,
+    WoodPost, PostGuard, Fort, Morro,
 }
 
 
@@ -647,8 +647,11 @@ public enum Ron3
 {
     PaperMill,
     Mortar,
-    TownHouse
-    //QuickLime,
+    TownHouse,
+    QuickLime,
+    WoodPost,
+    StorageSmall2,
+
 }
 
 public enum RonWoodHouse

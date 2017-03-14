@@ -41,6 +41,7 @@ class TutoWindow : GUIElement
         "CloseDockWindow.Tuto",
         "Rename.Tuto",
         "Spec.Tuto",
+        "Budget.Tuto",
 
 
     };
@@ -64,8 +65,10 @@ class TutoWindow : GUIElement
 
         _rectTransform = transform.GetComponent<RectTransform>();
 
-
-        //Hide();
+        if (Program.WasTutoPassed)
+        {
+            SkipTuto();
+        }
     }
 
 
@@ -151,12 +154,18 @@ class TutoWindow : GUIElement
             
             //temporal
             Dialog.OKDialog(H.TutoOver);
-            Program.gameScene.GameController1.Dollars += 10000;
-            AudioCollector.PlayOneShot("BoughtLand", 0);
-            BulletinWindow.SubBulletinFinance1.FinanceLogger.AddToAcct("Quests Completion" ,10000);
+
+            if (!Program.WasTutoPassed)
+            {
+                Program.gameScene.GameController1.Dollars += 10000;
+                AudioCollector.PlayOneShot("BoughtLand", 0);
+                BulletinWindow.SubBulletinFinance1.FinanceLogger.AddToAcct("Quests Completion", 10000);
+            }
             
             ManagerReport.AddInput("Tutorial.Done:");
             Program.gameScene.QuestManager.QuestFinished("Tutorial");
+            Program.WasTutoPassed = true;
+
             return;
         }
         //QuestManager.QuestFinished("Tutorial");

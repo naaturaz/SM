@@ -652,6 +652,11 @@ public class BuildingController : BuildingPot
         return res;
     }
 
+    /// <summary>
+    /// wont find Road 
+    /// </summary>
+    /// <param name="hType"></param>
+    /// <returns></returns>
     static public List<Structure> FindAllStructOfThisTypeAndFullyBuilt(string hType)
     {
         List<Structure> res = new List<Structure>();
@@ -659,8 +664,13 @@ public class BuildingController : BuildingPot
         for (int i = 0; i < BuildingPot.Control.Registro.AllBuilding.Count; i++)
         {
             var build = BuildingPot.Control.Registro.AllBuilding.ElementAt(i).Value;
-            var st = (Structure)build;
 
+            if (build.HType.ToString().Contains("Road"))
+            {
+                continue;
+            }
+
+            var st = (Structure)build;
             if (build.HType+"" == hType && (build.StartingStage==H.Done || st.CurrentStage==4))
             {
                 res.Add((Structure)build);

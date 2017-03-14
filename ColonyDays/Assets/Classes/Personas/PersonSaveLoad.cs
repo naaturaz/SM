@@ -71,6 +71,7 @@ public class PersonSaveLoad : PersonPot {
 
         res.IsPirate = Program.IsPirate;
         res.IsFood = Program.IsFood;
+        res.WasTutoPassed = Program.WasTutoPassed;
 
         res.QuestManager = Program.gameScene.QuestManager;
 

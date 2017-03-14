@@ -919,7 +919,8 @@ public class Dispatch
         else
         {
             //todo notify
-           Debug.Log("Will not handle over 10 Export Import orders at the same time . 10 is the max");
+            Debug.Log("Will not handle over 10 Export Import orders at the same time . 10 is the max");
+            Dialog.OKDialog(H.Info , "Ten orders is the limit on this building");
         }
     }
 

@@ -1100,7 +1100,10 @@ public class PersonControllerSaveLoad
 
     public bool IsFood { get; set; }
 
+    public bool WasTutoPassed { get; set; }
+
 
 
     public QuestManager QuestManager { get; set; }
+
 }
