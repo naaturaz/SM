@@ -137,8 +137,13 @@ public class Dock
     {
         Order exp = new Order();
         exp = order;
-        _building.Dispatch1.AddToExpImpOrders(exp);
+        var wasAdded = _building.Dispatch1.AddToExpImpOrders(exp);
 
+        //to avoid more than 10 orders 
+        if (!wasAdded)
+        {
+            return;
+        }
 
         //so Dockers starts looking for this in the Storage Buildings 
         Order local = new Order();

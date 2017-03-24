@@ -65,7 +65,7 @@ public class DescriptionWindow : GUIElement
     {
         _title.GetComponent<Text>().text = val + "";
         _cost.GetComponent<Text>().text = BuildCostString(val);
-        _description.GetComponent<Text>().text = Languages.ReturnString(val+".Desc");
+        _description.GetComponent<Text>().text = Languages.ReturnString(val+".Desc") + HouseDescription(val);
 
         ////means Im a creating new Towns to be saved as Initial(Templates) towns
         //if (Developer.IsDev && BuildingPot.Control.Registro.AllBuilding.Count == 0)
@@ -103,6 +103,16 @@ public class DescriptionWindow : GUIElement
         }
 
         _buildBanner.sprite = s;
+    }
+
+    private string HouseDescription(H val)
+    {
+        if (!val.ToString().Contains("House") || val.ToString() == "LightHouse")
+        {
+            return "";
+        }
+
+        return "\nConfort: ";
     }
 
     /// <summary>

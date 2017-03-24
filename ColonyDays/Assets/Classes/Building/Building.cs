@@ -10,6 +10,8 @@ public class Building : Hoverable, Iinfo
 {
     #region Fields and Prop
 
+    ConstructionProgress _constructionProgress;
+
     bool _wasGreenlit;
     /// <summary>
     /// if I was greenlit on the BuildersManager
@@ -709,6 +711,20 @@ public class Building : Hoverable, Iinfo
         {
             DestroyDoubleBoundHelp();
         }
+
+
+
+        var smokes = FindAllChildsGameObjectInHierarchyContain(gameObject, "Smoke");
+        if (smokes != null)
+        {
+            _pSystem = new List<ParticleSystem>();
+
+            for (int i = 0; i < smokes.Length; i++)
+            {
+                _pSystem.Add(smokes[i].GetComponent<ParticleSystem>());
+            }
+        }
+        _stageManager = FindObjectOfType<StageManager>();
     }
 
 #region Building preview
@@ -1026,9 +1042,16 @@ public class Building : Hoverable, Iinfo
         InitFarm();
         InitDecoration();
 
+        CheckIfNightSmoke();
+
         if (_militar!=null)
         {
             _militar.Update();
+        }
+
+        if (_constructionProgress != null)
+        {
+            _constructionProgress.Update();
         }
 
         //if is way not need to know this.
@@ -1239,11 +1262,16 @@ public class Building : Hoverable, Iinfo
         {
             BuildingPot.InputU.AddToOrginizeStructures(this);
         }
-
-
+        
         if (!HType.ToString().Contains("Unit") && !IsLoadingFromFile && HType != H.BullDozer)
         {
             PrivHandleZoningAddCrystals(); ;
+        }
+
+        if (!HType.ToString().Contains("Unit") && !IsLoadingFromFile && HType != H.BullDozer
+            && HType != H.Road)
+        {
+            //_constructionProgress = new ConstructionProgress(this);
         }
 
         //the brdige was calling since a brand new was not even set to ground yet
@@ -2783,6 +2811,7 @@ public class Building : Hoverable, Iinfo
         if (doIHaveInput && (hasStorageRoom || hasThisBuildRoom))
         {
             amt = ConsumeInputs(amt);
+            SmokePlay(true);
 
             //if is a farm
             if (MyId.Contains("Farm"))
@@ -4541,6 +4570,50 @@ public class Building : Hoverable, Iinfo
     }
 
     #endregion
+
+
+
+
+    StageManager _stageManager;
+    List<ParticleSystem> _pSystem;
+    public void SmokePlay(bool isToPlayNow)
+    {
+        if (_pSystem == null || _pSystem.Count == 0 ||
+            Inventory.IsEmpty() || _stageManager.IsSunsetOrLater())
+        {
+            return;
+        }
+
+        for (int i = 0; i < _pSystem.Count; i++)
+        {
+            PlayThisSystemPart(isToPlayNow, _pSystem[i]);
+        }
+        
+    }
+
+    void PlayThisSystemPart(bool isToPlayNow, ParticleSystem pSystem)
+    {
+        if (isToPlayNow)
+        {
+            pSystem.Play();
+        }
+        else
+        {
+            pSystem.Stop();
+        }
+    }
+
+    void CheckIfNightSmoke()
+    {
+        var isEmit = _pSystem!=null && _pSystem.Count > 0 && _pSystem[0].isEmitting;
+
+        if (isEmit && ( _stageManager.IsSunsetOrLater() || PeopleDict.Count == 0) )
+        {
+            SmokePlay(false);
+        }
+
+    }
+
 }
 
 

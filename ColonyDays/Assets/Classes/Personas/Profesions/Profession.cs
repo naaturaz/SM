@@ -399,6 +399,8 @@ public class Profession
     public virtual void DoneWork()
     {
         _person.Brain.CurrentTask = HPers.None;
+
+        _person.Work.SmokePlay(false);
         //GameScene.print("Done work:" + _person.MyId);
 
         ////foresters reset when done work

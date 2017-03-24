@@ -64,10 +64,11 @@ public class HelpWindow : GUIElement
 
         Program.gameScene.TutoStepCompleted("ShowHelp.Tuto");
 
-
         transform.position = iniPos;
         ResetScroolPos();
         PopulateScrollView();
+
+        Program.MouseListener.HidePersonBuildOrderNotiWindows();
     }
 
 

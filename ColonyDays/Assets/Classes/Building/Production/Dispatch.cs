@@ -909,18 +909,19 @@ public class Dispatch
         Debug.Log("Exported:" + ord.Product + " . " + amtExpThisTime + ".Still left:" + leftOnOrder);
     }
 
-    internal void AddToExpImpOrders(Order order)
+    public bool AddToExpImpOrders(Order order)
     {
         if (ExpImpOrders.Count < maxAmtOfExpImpOrders)
         {
             ExpImpOrders.Add(order);
-            
+            return true;
         }
         else
         {
             //todo notify
             Debug.Log("Will not handle over 10 Export Import orders at the same time . 10 is the max");
             Dialog.OKDialog(H.Info , "Ten orders is the limit on this building");
+            return false;
         }
     }
 

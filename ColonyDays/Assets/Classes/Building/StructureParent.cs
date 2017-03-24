@@ -338,23 +338,8 @@ public class StructureParent : Building {
         }
     }
 
-    protected void SmokePlay(bool isToPlayNow)
-    {
-        if (HType == H.BlackSmith || 
-            //HType == H.Tilery || 
-            HType == H.Brick
-            || HType == H.Paper_Mill || HType == H.SugarMill)
-        {
-            GameObject smoke = GetChildLastWordIs(H.Smoke);
-            ParticleSystem pSystem = smoke.GetComponent<ParticleSystem>();
 
-            if (isToPlayNow)
-            {
-                pSystem.Play();
-            }
-            else pSystem.Stop();
-        }
-    }
+
 
     int ReturnCurrentStageInt(H stage)
     {
@@ -527,8 +512,6 @@ public class StructureParent : Building {
 	{
         //just i know it works 
         ToggleWheelRotate();
-
-        SmokePlay(false);
 
         //this is here bz gave me a null ref ex
 	    if (!HType.ToString().Contains(H.Bridge.ToString()))

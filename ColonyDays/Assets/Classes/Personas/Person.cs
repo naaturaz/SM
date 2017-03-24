@@ -1199,6 +1199,7 @@ public class Person : Hoverable
             {
                 noti="DieReplacementNotFound";
             }
+            
             Program.gameScene.GameController1.NotificationsManager1.Notify(noti, Name);
             ActionOfDisappear();
         }
@@ -1869,6 +1870,7 @@ public class Person : Hoverable
             )
         { return; }
 
+        Home.SmokePlay(true);
         DropFoodAtHome();
 
         if (_lastTimeHome == null)

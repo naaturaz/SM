@@ -164,7 +164,6 @@ public class Structure : StructureParent
     {
         //this is here for testing and shwoing purpose
         reverse = !reverse;
-        SmokePlay(reverse);
         //
         Geometry.GetComponent<Renderer>().sharedMaterial = newMat;
     }

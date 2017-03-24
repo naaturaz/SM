@@ -113,7 +113,7 @@ public class BuyRegionManager
         _unlockRegions = pData.PersonControllerSaveLoad.UnlockRegions;
     }
 
-    private int moneyMul = 2000;
+    private int moneyMul = 3000;//2000
     public bool HasEnoughResourcesToBuy()
     {
         var moneyNeeded = MoneyNeeded();

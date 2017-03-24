@@ -651,6 +651,11 @@ public class General : MonoBehaviour
     }
 
 
+    public static GameObject[] FindAllChildsGameObjectInHierarchyContain(GameObject gameO, string pass)
+    {
+        return FindAllChildsGameObjectInHierarchy(gameO).Where(a => a.name.Contains(pass)).ToArray();
+    }
+
 
     public void AssignToAllGeometryAsSharedMat(GameObject gameO, string MaterialKey)
     {

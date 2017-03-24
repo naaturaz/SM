@@ -275,6 +275,7 @@ public class MouseListener : InputMain
     void UnselectingBuild()
     {
         _buildingsMenu.Hide();
+        _descriptionWindow.Hide();
         _dictSelection = -1;
 
         Program.InputMain.InputMouse.UnSelectCurrent();
@@ -605,6 +606,8 @@ public class MouseListener : InputMain
         HidePersonBuildOrderNotiWindows();
 
         _buildingsMenu.Hide();
+        _descriptionWindow.Hide();
+
         _buildingWindow.Hide();
         BulletinWindow.Hide();
         _helpWindow.Hide();
@@ -621,6 +624,8 @@ public class MouseListener : InputMain
     public void HideBuildingsMenu()
     {
         _buildingsMenu.Hide();
+        _descriptionWindow.Hide();
+
         _dictSelection = -1;
 
         _descriptionWindow.Hide();
