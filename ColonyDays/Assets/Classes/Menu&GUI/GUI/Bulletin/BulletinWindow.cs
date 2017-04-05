@@ -83,11 +83,13 @@ public class BulletinWindow : GUIElement
         if (pData != null)
         {
             SubBulletinProduction1 = pData.PersonControllerSaveLoad.SubBulletinProduction;
-            SubBulletinFinance1 = pData.PersonControllerSaveLoad.SubBulletinFinance;
-
-
             SubBulletinProduction1.BulletinWindow1 = this;
-            SubBulletinFinance1.BulletinWindow1 = this;
+
+            if (pData.PersonControllerSaveLoad.SubBulletinFinance != null)
+            {
+                SubBulletinFinance1 = pData.PersonControllerSaveLoad.SubBulletinFinance;
+                SubBulletinFinance1.BulletinWindow1 = this;
+            }
         }
 
 
@@ -181,8 +183,9 @@ public class BulletinWindow : GUIElement
         _production.ShowProdReport();
         _help.text = "Bulletin/Prod/Produce \n" + Languages.ReturnString("Help.Bulletin/Prod/Produce");
 
-    } 
-    
+        Program.gameScene.TutoStepCompleted("Prod.Tuto");
+    }
+
     /// <summary>
     /// Called from GUI
     /// </summary>

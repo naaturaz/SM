@@ -64,7 +64,8 @@ public class Languages
 	   { "Resin.Desc","Here a worker will work the mine by extracting minerals and metals randomly"},
 	   {  H.LumberMill +".Desc","Here workers will find resources such as wood, stone, and ore"},
 	   { "BlackSmith.Desc","Here workers will produce the product selected"+_asLongHasInput},
-	   { "ShoreMine.Desc","Here workers will produce salt, sand or quicklime"},
+	   { "ShoreMine.Desc","Here workers will produce salt and sand"},
+       { "QuickLime.Desc","Here workers will produce quicklime"},
 
        //Prod
 	   { "Brick.Desc","Here a worker will produce clay made products, such as bricks, etc"},
@@ -406,16 +407,16 @@ public class Languages
 
 
        { "SelectDock.Tuto", "Ships drop and pick goods at random from the dock's inventory. Workers are needed to move dock goods. This workers use wheelbarrows and crates. if are not this items on store they won't work. Now click on the Dock."},
-       { "OrderTab.Tuto", "Go to the Orders tab."},
+       { "OrderTab.Tuto", "Go to the Orders tab on the Dock's Window."},
        { "ImportOrder.Tuto", "Click on the '+' sign besides Add Import Order."},
        
        { "AddOrder.Tuto", "Now scroll down in the products and select wood and enter 100 as the amount. Then click the 'Add' button."},
        { "CloseDockWindow.Tuto", "Now the order is added. A random ship will drop this item in the dock inventory. And then your dock workers will take it to the closest Storage building. Now click outside the window so the window closes."},
        { "Rename.Tuto", "Click on a person and then click on the title bar of the person. Like this you can change the name of any person or building in the game. Click outside so the change is saved"},
 
-       { "Spec.Tuto", "Click on the 'Control/Bulletin' button, then on the 'Prod' menu and then on 'Spec'. Here you can see exactly how to make each product on the game. The inputs necesaries and where is produced. Also the price"},
-
-       { "Budget.Tuto", "Click on 'Finance' menu and then on 'Budget'. This is the game budget"},
+       { "Budget.Tuto", "Click on the 'Control/Bulletin' button, then on 'Finance' menu and then on 'Budget'. This is the game budget"},
+       { "Prod.Tuto", "Click on 'Prod' menu and then on 'Produce'. Will show the village's production for the last 5 years"},
+        { "Spec.Tuto", "Click the 'Prod' menu and then on 'Spec'. Here you can see exactly how to make each product on the game. The inputs necesaries and where is produced. Also the price"},
 
 
 
@@ -437,7 +438,8 @@ public class Languages
            "Find it in Trade. Once built click on the orders tab and add a export order with the '+' sign."+
            " Select product and enter amount"},
        { "HireDocker.Quest", "Quest: Hire a docker. Dockers only task is to move the goods into the Dock from the Storage if you are exporting."+
-           " Or viceversa if importing. They work when there is an order in place and the goods are ready to transport. Otherwise they stay at home resting"},
+           " Or viceversa if importing. They work when there is an order in place and the goods are ready to transport. Otherwise they stay at home resting." +
+            " If you have more than one docker already fire all of them and then hire one"},
        { "MakeBucks.Quest", "Quest: Make $100 exporting goods in the Dock. "+
            "Once a ship arrives will randomly pay product(s) in your Dock's inventory"},
        { "HeavyLoad.Quest", "Quest: Build a HeavyLoad building. This are haulers that carry more weight. They will come handy when transporting goods around is needed"},
@@ -481,6 +483,13 @@ public class Languages
 
        {"Help.Bulletin/Finance/Budget", "Here is shown your budget. Salary is the amount of money paid to a worker. The more people working the more salary will be paid out."},
        {"Help.Bulletin/Finance/Prices", "...."},
+
+
+
+
+
+       {"LoadWontFit", "This load won't fit in the storage area"},
+
 
     };
 

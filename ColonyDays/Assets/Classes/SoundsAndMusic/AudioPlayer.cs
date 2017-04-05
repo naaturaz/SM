@@ -58,7 +58,7 @@ public class AudioPlayer  {
             return;
         }
 
-        var root = "C:/GitHub/SM/ColonyDays/Assets/Resources/Prefab/Audio/Sound/";
+        var root = "F:/GitHub/SM/ColonyDays/Assets/Resources/Prefab/Audio/Sound/";
         var waves = new List<string>();
 
 #if UNITY_EDITOR

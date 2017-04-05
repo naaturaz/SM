@@ -282,7 +282,7 @@ public class AddOrderWindow : GUIElement {
         }
         if (!ThereIsSpaceRequiredAvail())
         {
-            _errorMsg = "ur load wont fit in our storage area";
+            _errorMsg = Languages.ReturnString("LoadWontFit"); 
             return false;
         }
         _errorMsg = "";

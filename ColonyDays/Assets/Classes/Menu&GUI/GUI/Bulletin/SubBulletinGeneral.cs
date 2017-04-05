@@ -48,7 +48,7 @@ namespace Assets.Classes.Menu_GUI.GUI.Bulletin
             for (int i = 0; i < list.Count; i++)
             {
                 var iniPosHere = _bulletinWindow.ScrollIniPosGo.transform.localPosition +
-                                 new Vector3(0, -(ReturnRelativeYSpace(3.5f, ReturnTileYScale())) * i, 0);
+                                 new Vector3(0, -(ReturnRelativeYSpace(9.5f, ReturnTileYScale())) * i, 0);
 
                 var a = WorkerTile.CreateTile(_bulletinWindow.Content.gameObject.transform, list[i],
                     iniPosHere);
