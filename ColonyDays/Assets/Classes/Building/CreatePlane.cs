@@ -237,6 +237,12 @@ public class CreatePlane : Building
     {
         if (_onPrefab.Contains(_tile))
         {
+            //if is in will be randomw selected 
+            if (_tile == Tile.In)
+            {
+                return "Prefab/Mats/SmartTile/Road3D/" + _tile  + "Pre" + UMath.GiveRandom(0, 7);
+            }
+
             return "Prefab/Mats/SmartTile/Road3D/"+_tile+"Pre";
         }
 
@@ -244,7 +250,8 @@ public class CreatePlane : Building
         //{
         //    return "Prefab/Mats/SmartTile/Road3D/InT";
         //}
-        return "Prefab/Mats/SmartTile/Road3D/OtherPre";
+        //return "Prefab/Mats/SmartTile/Road3D/OtherPre";
+        return "Prefab/Mats/SmartTile/Road3D/" +"InPre" + UMath.GiveRandom(0, 7);
 
     }
 
