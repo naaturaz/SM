@@ -134,16 +134,18 @@ public class ForSaleRegionGO : Hoverable
     protected void OnMouseEnter()
     {
         base.OnMouseEnter();
+
         //if (!_hover.activeSelf)
         //{
-        //    _hover.SetActive(true);
+            _hover.SetActive(true);
         //}
     }
 
     protected void OnMouseExit()
     {
         base.OnMouseExit();
-        //_hover.SetActive(false);
+
+        _hover.SetActive(false);
     }
 
     #endregion

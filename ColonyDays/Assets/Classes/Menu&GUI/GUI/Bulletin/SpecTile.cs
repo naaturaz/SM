@@ -9,7 +9,8 @@ using UnityEngine;
 public class SpecTile : GUIElement
 {
     private SpecData _spec;
-    
+    ExportData _export;
+
     private Text _prodLbl;
     private Text _input1Lbl;
     private Text _input2Lbl;
@@ -25,6 +26,19 @@ public class SpecTile : GUIElement
     {
         get { return _spec; }
         set { _spec = value; }
+    }
+
+    public ExportData Export
+    {
+        get
+        {
+            return _export;
+        }
+
+        set
+        {
+            _export = value;
+        }
     }
 
     void Start()
@@ -47,15 +61,43 @@ public class SpecTile : GUIElement
         _priceLbl = GetChildCalled("Price_Lbl").GetComponent<Text>();
         _priceLbl.text = "-";
 
+        if (Spec != null)
+        {
+            InitSpec();
+        }
+        if (Export != null)
+        {
+            InitExport();
+        }
+    }
+
+    private void InitExport()
+    {
+        //HandleTitleBar
+        if (Export.MDate == null)
+        {
+            _prodLbl.text = "Date";
+            _input1Lbl.text = "Building";
+            _input2Lbl.text = "Product";
+            _input3Lbl.text = "Amount";
+            _priceLbl.text = "Transaction";
+            return;
+        }
+
+        _prodLbl.text = Export.MDate.ToStringFormat();
+        _input1Lbl.text = Export.Building;
+        _input2Lbl.text = Export.Prod;
+        _input3Lbl.text = Unit.ConvertFromKGToCurrent(Export.Amt).ToString("N0") + " " 
+            + Unit.CurrentWeightUnitsString();
+        _priceLbl.text = Export.Money.ToString("C0");
+    }
+
+    private void InitSpec()
+    {
         _inputs.Add(_input1Lbl);
         _inputs.Add(_input2Lbl);
         _inputs.Add(_input3Lbl);
 
-        Init();
-    }
-
-    private void Init()
-    {
         _prodLbl.text = _spec.ProdInfo.Product + "";
 
         if (_spec.ProdInfo.Ingredients != null)
@@ -69,12 +111,12 @@ public class SpecTile : GUIElement
 
         _buildingLbl.text = "-";
 
-        if (_spec.ProdInfo.HType.Count>0)
+        if (_spec.ProdInfo.HType.Count > 0)
         {
             _buildingLbl.text = _spec.ProdInfo.HType[0].ToString();
-            
+
         }
-        
+
         _priceLbl.text = _spec.Price;
     }
 
@@ -101,5 +143,23 @@ public class SpecTile : GUIElement
         return obj;
     }
 
+
+    internal static SpecTile CreateTile(Transform container,
+    ExportData export, Vector3 iniPos)
+    {
+        SpecTile obj = null;
+
+        obj = (SpecTile)Resources.Load(Root.spec_Tile, typeof(SpecTile));
+        obj = (SpecTile)Instantiate(obj, new Vector3(), Quaternion.identity);
+
+        var iniScale = obj.transform.localScale;
+        obj.transform.SetParent(container);
+        obj.transform.localPosition = iniPos;
+        obj.transform.localScale = iniScale;
+
+        obj.Export = export;
+
+        return obj;
+    }
 }
 

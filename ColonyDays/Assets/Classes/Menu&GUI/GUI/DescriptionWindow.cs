@@ -122,8 +122,6 @@ public class DescriptionWindow : GUIElement
     /// <returns></returns>
     string BuildCostString(H type)
     {
-     
-
         var state = BuildingPot.UnlockBuilds1.ReturnBuildingState(type);
         if (state == H.Lock)
         {
@@ -145,9 +143,17 @@ public class DescriptionWindow : GUIElement
             return "Hope u are Dev and creating template town";
         }
 
-
         //unlock
-        return CostOfABuilding(type, 2);
+        return CostOfABuilding(type, 2) + AddPerUnitIfNeeded(type);
+    }
+
+    string AddPerUnitIfNeeded(H typeP)
+    {
+        if (typeP == H.Road || typeP.ToString().Contains("Bridge"))
+        {
+            return " (per unit)";
+        }
+        return "";
     }
 
     /// <summary>

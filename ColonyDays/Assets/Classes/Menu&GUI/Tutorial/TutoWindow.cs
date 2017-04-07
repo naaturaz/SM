@@ -44,6 +44,7 @@ class TutoWindow : GUIElement
         "Budget.Tuto",
         "Prod.Tuto",
         "Spec.Tuto",
+        "Exports.Tuto",
 
 
     };
@@ -137,6 +138,12 @@ class TutoWindow : GUIElement
 
         var which = _steps[_currentIndex];
         _text.text = Languages.ReturnString(which);
+    }
+
+    internal void HideArrow()
+    {
+        var arrowGO = GetChildCalled("Arrow");
+        arrowGO.SetActive(false);
     }
 
     public void Next(string step)

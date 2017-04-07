@@ -530,6 +530,12 @@ public class Root : MonoBehaviour
             LoadDictionaryRoots();
         }
 
+        //execption 
+        if (key == H.Road)
+        {
+            return "Prefab/Building/Infrastructure/Road" + "_Icon";
+        }
+
         return buildsRoot[key]+"_Icon";
     }
 
@@ -543,6 +549,12 @@ public class Root : MonoBehaviour
         if (buildsRoot.Count == 0)
         {
             LoadDictionaryRoots();
+        }
+
+        //execption 
+        if (key == H.Road)
+        {
+            return "Prefab/Building/Infrastructure/Road" + "_Banner";
         }
 
         return buildsRoot[key] + "_Banner";

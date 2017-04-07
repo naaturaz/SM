@@ -251,8 +251,12 @@ public class Building : Hoverable, Iinfo
         
         return _isEven && !_isColliding && _isGoodWaterHeight && isScaledOnFloor 
             && AreAnchorsOnUnlockRegions() //&& IfIsLampIsFarEnough()
+
             ;
     }
+
+
+   
 
     ///// <summary>
     ///// If building is a Lamp must be far enough from other lamps 
@@ -1083,19 +1087,6 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Otherwise will keep rayCasting blue 
-    /// </summary>
-    private void NeutralizeDummy()
-    {
-        if (Anchors.Count > 0 && HType == H.Dummy && !PositionFixed)
-        {
-            PositionFixed = true;
-        }
-    }
-
-   
-
-    /// <summary>
     /// Updates all from Bounds to anchors 
     /// </summary>
     protected void UpdateBuild()
@@ -1285,6 +1276,8 @@ public class Building : Hoverable, Iinfo
         BuildingPot.Control.AddToQueuesRestartPersonControl(MyId);
     }
 
+
+
     /// <summary>
     /// Checks if is colliding with another building 
     /// </summary>
@@ -1428,6 +1421,12 @@ public class Building : Hoverable, Iinfo
     /// <returns></returns>
    private bool CrystalsAreContainedInThisBuilding(string key)
    {
+        if (Bounds == null || Bounds.Count == 0)
+        {
+            Bounds = FindBounds();
+        }
+
+
        var loBound = Bounds.ToArray();
        var scale = UPoly.ScalePoly(loBound, 0.4f).ToArray();
        var rect = Registro.ReturnDimOnMap(scale.ToList());
@@ -4566,7 +4565,12 @@ public class Building : Hoverable, Iinfo
 
     protected void OnMouseExit()
     {
-        base.OnMouseExit();
+        //if (transform.name.Contains("Preview"))
+        //{
+        //    return;
+        //}
+
+        //base.OnMouseExit();
     }
 
     #endregion

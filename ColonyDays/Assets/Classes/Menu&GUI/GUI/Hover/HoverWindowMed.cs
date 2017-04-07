@@ -40,6 +40,7 @@ class HoverWindowMed : MonoBehaviour
         _rectTransform = transform.GetComponent<RectTransform>();
         Hide();
     }
+
     public void Hide()
     {
         _rectTransform.position = new Vector3(500, 500);
@@ -119,7 +120,16 @@ class HoverWindowMed : MonoBehaviour
 
     void OnGUI()
     {
-        if (Event.current.type == EventType.MouseUp)
+        var isAStructure = BuildingPot.Control.CurrentSpawnBuild != null &&
+            BuildingPot.Control.CurrentSpawnBuild.Category == Ca.Structure;
+
+        if (Event.current.type == EventType.MouseUp && isAStructure)
+        {
+            Hide();
+        }
+
+        //Cancel
+        if (Input.GetMouseButtonUp(1))
         {
             Hide();
         }

@@ -82,6 +82,30 @@ public class ResumenInventory {
     }
 
     /// <summary>
+    /// Will tell u if item on inventories and amount on inventories bigger than the asked for 'amt'
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="amt"></param>
+    /// <returns></returns>
+    public bool HasThisItemAndAmt(P item, float amt)
+    {
+        float accum = 0;
+
+        var storages = BuildingController.FindAllStructOfThisTypeContain(H.Storage);
+
+        for (int i = 0; i < storages.Count; i++)
+        {
+            if (storages[i].Inventory.IsItemOnInv(item))
+            {
+                accum += storages[i].Inventory.ReturnAmtOfItemOnInv(item);
+            }
+        }
+
+        return accum > amt;
+    }
+
+
+    /// <summary>
     /// Will remove the item and the amount from the inventories.
     /// 
     /// This method is use for an building was built and 40 wood for ex needs to be removed 

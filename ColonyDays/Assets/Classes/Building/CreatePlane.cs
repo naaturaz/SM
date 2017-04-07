@@ -242,17 +242,18 @@ public class CreatePlane : Building
             {
                 return "Prefab/Mats/SmartTile/Road3D/" + _tile  + "Pre" + UMath.GiveRandom(0, 7);
             }
+            //means is N , S, E, or W
+            if (_tile.ToString().ToCharArray().Length == 1)
+            {
+                return "Prefab/Mats/SmartTile/Road3D/" + _tile + "Pre" + UMath.GiveRandom(0, 3);
+            }
 
+            //corners
             return "Prefab/Mats/SmartTile/Road3D/"+_tile+"Pre";
         }
 
-        //if (_tile == Tile.Inside)
-        //{
-        //    return "Prefab/Mats/SmartTile/Road3D/InT";
-        //}
-        //return "Prefab/Mats/SmartTile/Road3D/OtherPre";
+        //path that are only one square wide 
         return "Prefab/Mats/SmartTile/Road3D/" +"InPre" + UMath.GiveRandom(0, 7);
-
     }
 
 

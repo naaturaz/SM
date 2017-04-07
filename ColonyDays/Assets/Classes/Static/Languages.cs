@@ -16,12 +16,13 @@ public class Languages
         "You can use this building as storage, however if it gets full people won't work if they dont have room where to store their products";
     private static string _militar = "This building helps to decrease the Pirate Threat on your port, to be effective it must have workers. The more workers the better";
 
+    private static string _notRegionNeeded = " Can be built without owning the region.";
 
     static Dictionary<string, string> _english = new Dictionary<string, string>()
 	{
        //Descriptions
        //Infr
-	   { "Road.Desc","Only for decoration purposes. However people are happier if there are roads around them"},
+	   { "Road.Desc","Used for decoration purposes. People are happier if there are roads around them"},
 	   { "BridgeTrail.Desc","Allows people to pass from one side of the terrain to the other"},
 	   { "BridgeRoad.Desc","Allows people to pass from one side of the terrain to the other. People love these bridges. It gives a sense of prosperity and happinnes" +_houseTail},
 	   { "LightHouse.Desc","Helps to increase Port visibility. Adds to Port Reputation as long as the flame is glowing"},
@@ -52,7 +53,7 @@ public class Languages
 	   { "FieldFarmMed.Desc","Medium field farm"+_fieldFarmTail},
 	   { "FieldFarmLarge.Desc","Large field farm"+_fieldFarmTail},
 	   { "FieldFarmXLarge.Desc","Extra large field farm"+_fieldFarmTail},
-	   { H.FishingHut + ".Desc","Here a worker can catch fish in a river"},
+	   { H.FishingHut + ".Desc","Here a worker can catch fish in a river (must be place by the river)." + _notRegionNeeded},
 
        //Raw
 	   { "Mortar.Desc","Here a worker will produce Mortar"},
@@ -91,7 +92,7 @@ public class Languages
 	   { "SteelFoundry.Desc",_produce},
 
        //trade
-	   { "Dock.Desc","Here you can add import or export orders"},
+	   { "Dock.Desc","Here you can add import or export orders (must be placed by the ocean)." + _notRegionNeeded},
 	   { H.Shipyard + ".Desc","You can repairs your ships here, but you must have ship repair materials in inventory"},
 	   { "Supplier.Desc","You can supply ships with goods here, but you must have items in inventory that a ship can use for their long trip"},
 	   { "StorageSmall.Desc",_storage},
@@ -234,7 +235,12 @@ public class Languages
         { "BullDozer.HoverMed", "Clean area: 'Left click' \n" +
 	      "Cancel: 'Right click' \nCost: $100 per use "},
 
-	   { "Current_Salary.HoverMed", "Workers will go to work, where the highest salary is paid." +
+        { "Road.HoverMed", "Start: 'Left click' \n" +
+            "Expand: 'Move mouse' \n" +
+            "Set: 'Left click again' \n" +
+          "Cancel: 'Right click'"},
+
+       { "Current_Salary.HoverMed", "Workers will go to work, where the highest salary is paid." +
 	                                " If 2 places pay the same salary, then the closest to home will be chosen."},
 
 
@@ -417,7 +423,7 @@ public class Languages
        { "Budget.Tuto", "Click on the 'Control/Bulletin' button, then on 'Finance' menu and then on 'Budget'. This is the game budget"},
        { "Prod.Tuto", "Click on 'Prod' menu and then on 'Produce'. Will show the village's production for the last 5 years"},
         { "Spec.Tuto", "Click the 'Prod' menu and then on 'Spec'. Here you can see exactly how to make each product on the game. The inputs necesaries and where is produced. Also the price"},
-
+        { "Exports.Tuto", "Click the 'Finance' menu and then on 'Export'. Here you can see a breakdown of your village's exports"},
 
 
        //Quest
@@ -482,7 +488,9 @@ public class Languages
 
 
        {"Help.Bulletin/Finance/Budget", "Here is shown your budget. Salary is the amount of money paid to a worker. The more people working the more salary will be paid out."},
-       {"Help.Bulletin/Finance/Prices", "...."},
+       {"Help.Bulletin/Finance/Exports", "A break down of the exports"},
+
+        { "Help.Bulletin/Finance/Prices", "...."},
 
 
 

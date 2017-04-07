@@ -117,6 +117,8 @@ public class BulletinWindow : GUIElement
         ShowWorkers();
 
         Program.gameScene.TutoStepCompleted("ShowWorkersControl.Tuto");
+        Program.MouseListener.TutoWindow1.HideArrow();
+        Program.MouseListener.HelpWindow.Hide();
     }
 
     void HideAll()
@@ -305,7 +307,21 @@ public class BulletinWindow : GUIElement
     }
 
 
- 
-#endregion
+
+
+
+    /// <summary>
+    /// Called from GUI
+    /// </summary>
+    public void ShowExports()
+    {
+        ClickAndHideAll();
+        _finance.ShowExports();
+        Program.gameScene.TutoStepCompleted("Exports.Tuto");
+        _help.text = "Bulletin/Finance/Exports \n" + Languages.ReturnString("Help.Bulletin/Finance/Exports");
+    }
+
+
+    #endregion
 }
 

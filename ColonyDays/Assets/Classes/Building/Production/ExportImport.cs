@@ -301,15 +301,19 @@ public class ExportImport
     /// </summary>
     /// <param name="prod"></param>
     /// <param name="amt"></param>
-    public void Sale(P prod, float amt)
+    public void Sale(P prod, float amt, string building)
     {
         var trans = CalculateTransaction(prod, amt);
         Program.gameScene.GameController1.Dollars += trans;
-
         Program.gameScene.GameController1.NotificationsManager1.Notify("ShipPayed", trans.ToString("N0"));
 
-        BulletinWindow.SubBulletinFinance1.FinanceLogger.AddToAcct("Exports", trans);
+        if (trans == 0 || BulletinWindow.SubBulletinFinance1 == null)
+        {
+            return;
+        }
 
+        BulletinWindow.SubBulletinFinance1.FinanceLogger.AddToAcct("Exports", trans);
+        BulletinWindow.SubBulletinFinance1.AddNewExport(building, prod, amt, trans);
         Quest(prod, amt);
     }
 

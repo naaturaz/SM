@@ -50,7 +50,8 @@ public class Book : General
         {
             if (_build[i].HType == hTypeP)
             {
-                res = _build[i];
+                var arr = _build.ToArray();
+                res = arr[i];
             }
         }
         return res;
@@ -60,7 +61,7 @@ public class Book : General
     void LoadBuildDict()
     {
         //infr
-        Build.Add(new BuildStat(H.Road, 100, 8, 2, 0, 5, maxPeople: 0));
+        Build.Add(new BuildStat(H.Road, 100, 0.002f, 1f, 0, 0, maxPeople: 0));
 
         Build.Add(new BuildStat(H.BridgeTrail, 400, 8, 2, 0, 5, maxPeople: 0));
         Build.Add(new BuildStat(H.BridgeRoad, 1000, 8, 10, 0, 8, maxPeople: 0));
@@ -303,11 +304,23 @@ public class BuildStat
         RoofTile /= DiffDivider();
         FloorTile /= DiffDivider();
 
-        if (hType == H.Bohio)
+        UniqueBuildings();
+    }   
+
+    void UniqueBuildings()
+    {
+        if (_hType == H.Bohio)
         {
             Furniture = 0;
         }
-    }   
+        if (_hType == H.Road || _hType.ToString().Contains("Bridge"))
+        {
+            Nail = 0;
+            Furniture = 0;
+        }
+
+    }
+
     
     int DiffDivider()
     {
@@ -463,5 +476,24 @@ public class BuildStat
         get { return _maxAge; }
         set { _maxAge = value; }
     }
+
+
+
+    /// <summary>
+    /// Multiplies only Wood and Stone
+    /// </summary>
+    /// <param name="stat"></param>
+    /// <param name="multiplier"></param>
+    /// <returns></returns>
+    public static BuildStat Multiply(BuildStat stat, int multiplier)
+    {
+        BuildStat s = new BuildStat();
+
+        s.Wood = stat.Wood * multiplier;
+        s.Stone = stat.Stone * multiplier;
+
+        return s;
+    }
+
 
 }

@@ -24,6 +24,8 @@ public class SubBulletinFinance
         set { _financeLogger = value; }
     }
 
+
+
     public SubBulletinFinance() { }
 
     public SubBulletinFinance(BulletinWindow bulletinWindow)
@@ -203,6 +205,68 @@ public class SubBulletinFinance
         }
     }
 
+
+
+
+
+    //Exports
+
+    List<ExportData> _exports = new List<ExportData>();
+    public List<ExportData> Exports
+    {
+        get
+        {
+            return _exports;
+        }
+
+        set
+        {
+            _exports = value;
+        }
+    }
+
+    public void AddNewExport(string building, P prod, float amt, float money)
+    {
+        var data = new ExportData(Program.gameScene.GameTime1.CurrentDate(),
+            building, prod + "", amt, money);
+
+        _exports.Insert(1, data);
+    }
+
+    internal void ShowExports()
+    {
+        if (_exports.Count == 0)
+        {
+            _exports.Add(AddTitleBarExports());
+        }
+
+        ShowExports(_exports);
+    }
+
+
+    List<SpecTile> _reportsExports = new List<SpecTile>();
+    private void ShowExports(List<ExportData> list)
+    {
+        Hide();
+        _bulletinWindow.ShowScrool();
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            var iniPosHere = _bulletinWindow.ScrollIniPosGo.transform.localPosition +
+                             new Vector3(0, -3.5f * i, 0);
+
+            var a = SpecTile.CreateTile(_bulletinWindow.Content.gameObject.transform, list[i],
+                iniPosHere);
+
+            _reportsExports.Add(a);
+        }
+    }
+
+    ExportData AddTitleBarExports()
+    {
+        return new ExportData(null, "Building", "Product", 0, 0);
+    }
+
     #endregion
 }
 
@@ -239,4 +303,89 @@ public class SpecData
         }
     }
 
+}
+
+public class ExportData
+{
+    MDate _mDate;
+    string _building;
+    string _prod;
+    float _amt;
+    float _money;
+
+    public MDate MDate
+    {
+        get
+        {
+            return _mDate;
+        }
+
+        set
+        {
+            _mDate = value;
+        }
+    }
+
+    public string Building
+    {
+        get
+        {
+            return _building;
+        }
+
+        set
+        {
+            _building = value;
+        }
+    }
+
+    public string Prod
+    {
+        get
+        {
+            return _prod;
+        }
+
+        set
+        {
+            _prod = value;
+        }
+    }
+
+    public float Amt
+    {
+        get
+        {
+            return _amt;
+        }
+
+        set
+        {
+            _amt = value;
+        }
+    }
+
+    public float Money
+    {
+        get
+        {
+            return _money;
+        }
+
+        set
+        {
+            _money = value;
+        }
+    }
+
+    public ExportData() { }
+
+    public ExportData(MDate mDate, string building, string prod, float amt, float money)
+    {
+        MDate = mDate;
+        Building = building;
+        Prod = prod;
+        Amt = amt;
+        Money = money;
+    }
 }

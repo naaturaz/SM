@@ -637,6 +637,10 @@ public class Registro : MonoBehaviour
             {
                 count++;
             }
+            else
+            {
+                var a = 1;
+            }
         }
 
         //if all the obj are not colliding then...

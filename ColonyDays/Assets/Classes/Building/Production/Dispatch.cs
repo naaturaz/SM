@@ -898,7 +898,7 @@ public class Dispatch
         float leftOnOrder = ord.Amount;
         float amtExpThisTime = (initialAmtNeed - leftOnOrder);
 
-        Program.gameScene.ExportImport1.Sale(ord.Product, amtExpThisTime);
+        Program.gameScene.ExportImport1.Sale(ord.Product, amtExpThisTime, dock.Name);
         if (ord.Amount == 0)
         {
             Debug.Log("Exported of:" + ord.Product + " done");

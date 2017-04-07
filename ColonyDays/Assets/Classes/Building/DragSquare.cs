@@ -217,7 +217,58 @@ public class DragSquare : Trail
         }
         return anchorOrdered.OrderBy(a => a.Distance).ToList();
     }
-#endregion
+    #endregion
+
+    BuildStat _unitStat;//what a unit stat total is. Used for Road
+    /// <summary>
+    /// If is a Road for example will find out if we have enough materials to 
+    /// cover this building 
+    /// 
+    /// Only convering now :
+    /// Wood, Stone 
+    /// </summary>
+    /// <returns></returns>
+    protected bool IsUnitBuildCostCovered()
+    {
+        if (HType != H.Road)
+        {
+            return true;
+        }
+
+        _unitStat = Book.GiveMeStat(HType);
+        var arr = OnScreenPoly.ToArray();
+
+        var soilTemp = RetuFillPolyRealY(arr[0], arr[2],
+            Mathf.Abs(m.SubDivide.XSubStep),
+            Mathf.Abs(m.SubDivide.ZSubStep), false);
+
+        var units = soilTemp.Count;
+        _unitStat = BuildStat.Multiply(_unitStat, units);
+
+        var wood = GameController.ResumenInventory1.HasThisItemAndAmt(P.Wood, units);
+        var stone = GameController.ResumenInventory1.HasThisItemAndAmt(P.Stone, units);
+
+        return wood && stone;
+    }
+
+    /// <summary>
+    /// Removign the total cost of a Unit Building... like Road 
+    /// </summary>
+    protected void RemoveTotalUnitCost()
+    {
+        if (HType != H.Road)
+        {
+            return;
+        }
+
+        //_unitStat = Book.GiveMeStat(HType);
+
+        //var units = soil.Count;
+        //_unitStat = BuildStat.Multiply(_unitStat, units);
+
+        GameController.ResumenInventory1.Remove(P.Wood, _unitStat.Wood);
+        GameController.ResumenInventory1.Remove(P.Stone, _unitStat.Stone);
+    }
 
 
 
@@ -226,12 +277,13 @@ public class DragSquare : Trail
     /// </summary>
     void SetFarmOkAndHandleColor(bool condition)
     {
-        if (IsBuildOk && condition)
+        if (IsBuildOk && condition && IsUnitBuildCostCovered()
+            )
         {
             farmPrev.Geometry.GetComponent<Renderer>().material.color = farmPrev.InitialColor;
             IsFarmOk = true;
         }
-        else if (!IsBuildOk || !condition)
+        else if (!IsBuildOk || !condition || !IsUnitBuildCostCovered())
         {
             farmPrev.Geometry.GetComponent<Renderer>().material.color = Color.red;
             IsFarmOk = false;
@@ -257,7 +309,11 @@ public class DragSquare : Trail
 
         MarkTerraSpawnRoutine(2f, soil);
         BuildingPot.InputU.DoneFarmRoutine();
+
+        RemoveTotalUnitCost();
     }
+
+
 
     void AfterLoopRoutine()
     {

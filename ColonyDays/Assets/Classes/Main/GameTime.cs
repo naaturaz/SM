@@ -135,7 +135,7 @@ public class GameTime
         return FromIntToMonth(_month);
     }
 
-    Month FromIntToMonth(int val)
+    public static Month FromIntToMonth(int val)
     {
         if (val == 1)
         {
@@ -332,5 +332,10 @@ public class MDate
         _day = day;
         _month = mon;
         _year = year;
+    }
+
+    internal string ToStringFormat()
+    {
+        return GameTime.FromIntToMonth(Month1) + " " + Day + ", " + Year;
     }
 }

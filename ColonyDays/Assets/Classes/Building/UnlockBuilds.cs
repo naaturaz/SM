@@ -27,7 +27,7 @@ public class UnlockBuilds
         _list = new List<BRequires>()
         {
             //infr
-            new BRequires(H.Road, H.OnlyForDev),
+            new BRequires(H.Road, true),
             new BRequires(H.BridgeTrail, H.OnlyForDev),
             new BRequires(H.BridgeRoad, H.OnlyForDev),
             new BRequires(H.LightHouse, 40),

@@ -86,6 +86,7 @@ public class MouseListener : InputMain
         BulletinWindow = FindObjectOfType<BulletinWindow>();
         _questWindow = FindObjectOfType<QuestWindow>();
         _helpWindow = FindObjectOfType<HelpWindow>();
+        TutoWindow1 = FindObjectOfType<TutoWindow>();
 
 
         //Debug.Log("LoadMainGUI() GUI");
@@ -520,11 +521,25 @@ public class MouseListener : InputMain
 
     private QuestWindow _questWindow;
     private HelpWindow _helpWindow;
+    TutoWindow _tutoWindow;
 
     public HelpWindow HelpWindow
     {
         get { return _helpWindow; }
         set { _helpWindow = value; }
+    }
+
+    internal TutoWindow TutoWindow1
+    {
+        get
+        {
+            return _tutoWindow;
+        }
+
+        set
+        {
+            _tutoWindow = value;
+        }
     }
 
 
@@ -929,6 +944,9 @@ public class MouseListener : InputMain
         get { return _demolished; }
         set { _demolished = value; }
     }
+
+
+
     void OnDemolish(EventArgs e)
     {
         if (Demolished != null)

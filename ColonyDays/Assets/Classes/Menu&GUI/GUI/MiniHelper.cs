@@ -82,6 +82,9 @@ class MiniHelper : GUIElement
 
         var which = _helps[_currentIndex];
         _text.text = Languages.ReturnString(which);
+
+        Program.MouseListener.TutoWindow1.HideArrow();
+        Program.MouseListener.BulletinWindow.Hide();
     }
 
 

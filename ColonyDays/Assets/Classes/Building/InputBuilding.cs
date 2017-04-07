@@ -524,13 +524,15 @@ public class InputBuilding : BuildingPot {
 
         if (Control.CurrentSpawnBuild.HType == H.BullDozer)
         {
-
             _hoverWindowMed.ShowSemiTut("BullDozer");
+        }
+        else if (Control.CurrentSpawnBuild.HType == H.Road)
+        {
+            _hoverWindowMed.ShowSemiTut("Road");
         }
         else
         {
             _hoverWindowMed.ShowSemiTut("Build");
-
         }
         
         GameScene.ScreenPrint("Ready to build a " + buildWhat);
