@@ -27,6 +27,20 @@ public class QuestManager
         set { _doneQuest = value; }
     }
 
+
+    internal QuestButton QuestBtn
+    {
+        get
+        {
+            return _questBtn;
+        }
+
+        set
+        {
+            _questBtn = value;
+        }
+    }
+
     List<Quest> _bank = new List<Quest>()
     { 
         //need to mention reward still 
@@ -128,6 +142,7 @@ public class QuestManager
         ShowQuestBtn();//in case questBtn is null 
 
         which = which + ".Quest";
+        _questBtn.HideArrow();
 
         if (IsAnyActiveQuestMatchThisKey(which))
         {

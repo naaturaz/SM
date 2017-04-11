@@ -495,8 +495,9 @@ public class BuildingWindow : GUIElement
     {
         var isAHouse = build.HType.ToString().Contains("House") || build.HType == H.Bohio;
         var isStorage = build.HType.ToString().Contains("Storage");
+        var isRoadorBridge = build.HType.ToString().Contains("Road") || build.HType.ToString().Contains("Bridge");
 
-        return !isAHouse && !isStorage && build.HType != H.StandLamp;
+        return !isAHouse && !isStorage && build.HType != H.StandLamp && !isRoadorBridge;
     }
 
 

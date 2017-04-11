@@ -15,6 +15,7 @@ public class HelpWindow : GUIElement
     private GameObject _scroll_Ini_PosGO;
 
     InputField _searchInput;
+    GameObject _f1forHelp;
 
     //helps available. u can add anything here, but need to be add on Langugaes.cs
     List<string> _helps = new List<string>()
@@ -40,8 +41,12 @@ public class HelpWindow : GUIElement
         "Combat Mode.Help",
     };
 
+
+
     void Start()
     {
+       
+
         iniPos = transform.position;
 
         _contentText = GetChildCalled("Content_Text").GetComponent<Text>();
@@ -69,6 +74,15 @@ public class HelpWindow : GUIElement
         PopulateScrollView();
 
         Program.MouseListener.HidePersonBuildOrderNotiWindows();
+
+
+        if (_f1forHelp == null)
+        {
+            //F1 for help
+            _f1forHelp = GameObject.Find("F1 for help");
+        }
+
+        _f1forHelp.SetActive(false);
     }
 
 

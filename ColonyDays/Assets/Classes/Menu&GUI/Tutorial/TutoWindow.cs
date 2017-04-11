@@ -140,11 +140,7 @@ class TutoWindow : GUIElement
         _text.text = Languages.ReturnString(which);
     }
 
-    internal void HideArrow()
-    {
-        var arrowGO = GetChildCalled("Arrow");
-        arrowGO.SetActive(false);
-    }
+
 
     public void Next(string step)
     {
@@ -153,6 +149,7 @@ class TutoWindow : GUIElement
             return;
         }
 
+        HideArrow();
         ManagerReport.AddInput("Tuto.Step.Achieved:" + _steps[_currentIndex]);
         _currentIndex++;
 

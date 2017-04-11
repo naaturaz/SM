@@ -44,6 +44,8 @@ public class QuestWindow : GUIElement
         PopulateScrollView();
 
         QuestSelected(Program.gameScene.QuestManager.CurrentPlsDone()[0]);
+
+        Program.gameScene.QuestManager.QuestBtn.HideArrow();
     }
 
 

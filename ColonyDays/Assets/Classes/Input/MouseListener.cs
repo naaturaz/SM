@@ -84,7 +84,7 @@ public class MouseListener : InputMain
         _notificationWindow = FindObjectOfType<NotificationWindowGO>();
 
         BulletinWindow = FindObjectOfType<BulletinWindow>();
-        _questWindow = FindObjectOfType<QuestWindow>();
+        QuestWindow = FindObjectOfType<QuestWindow>();
         _helpWindow = FindObjectOfType<HelpWindow>();
         TutoWindow1 = FindObjectOfType<TutoWindow>();
 
@@ -945,7 +945,18 @@ public class MouseListener : InputMain
         set { _demolished = value; }
     }
 
+    public QuestWindow QuestWindow
+    {
+        get
+        {
+            return _questWindow;
+        }
 
+        set
+        {
+            _questWindow = value;
+        }
+    }
 
     void OnDemolish(EventArgs e)
     {
@@ -996,7 +1007,7 @@ public class MouseListener : InputMain
         return _buildingsMenu.IsShownNow() || _descriptionWindow.IsShownNow() ||
             _personWindow.IsShownNow() || _buildingWindow.IsShownNow() || _addOrderWindow.IsShownNow() ||
             BulletinWindow.IsShownNow() 
-            || _questWindow.IsShownNow() || _helpWindow.IsShownNow();
+            || QuestWindow.IsShownNow() || _helpWindow.IsShownNow();
     }
 
     public bool IsAWindowScrollableShownNow()
@@ -1007,7 +1018,7 @@ public class MouseListener : InputMain
         }
 
         return _addOrderWindow.IsShownNow() || BulletinWindow.IsShownNow() //|| _notificationWindow.IsShownNow()
-            || _questWindow.IsShownNow() || _helpWindow.IsShownNow();
+            || QuestWindow.IsShownNow() || _helpWindow.IsShownNow();
     }
 
     internal void ClickOnAnInvItem(InvItem _invItem)

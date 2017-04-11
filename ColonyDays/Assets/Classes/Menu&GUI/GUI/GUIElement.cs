@@ -130,4 +130,16 @@ public class GUIElement : General {
 
         _verticScrollbar.value = 1;
     }
+
+    internal void HideArrow()
+    {
+        var arrowGO = GetChildCalled("Arrow");
+
+        if (arrowGO == null)
+        {
+            return;
+        }
+
+        arrowGO.SetActive(false);
+    }
 }
