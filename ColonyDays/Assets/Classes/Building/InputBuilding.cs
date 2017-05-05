@@ -381,12 +381,12 @@ public class InputBuilding : BuildingPot {
     {
         DragSquare f = Control.CurrentSpawnBuild as DragSquare;
         //if the farm is ok and farm is not being added to refistro
-        if (f.IsFarmOk && !Control.Registro.Farms.ContainsKey(Control.CurrentSpawnBuild.MyId))
+        if (f.IsFarmOk && !Control.Registro.DragSquares.ContainsKey(Control.CurrentSpawnBuild.MyId))
         {
             f.FinishPlacingFarm();
         }
         //is here so we prevent from building a new one before the old obj was added to registro
-        else if (f.IsFarmOk && Control.Registro.Farms.ContainsKey(Control.CurrentSpawnBuild.MyId))
+        else if (f.IsFarmOk && Control.Registro.DragSquares.ContainsKey(Control.CurrentSpawnBuild.MyId))
         {
             BuildNowNew(DoingNow);
         }
@@ -526,11 +526,11 @@ public class InputBuilding : BuildingPot {
         {
             _hoverWindowMed.ShowSemiTut("BullDozer");
         }
-        else if (Control.CurrentSpawnBuild.HType == H.Road)
+        else if (Control.CurrentSpawnBuild.HType == H.Road && Control.Registro.DragSquares.Count < 4)
         {
             _hoverWindowMed.ShowSemiTut("Road");
         }
-        else
+        else if(Control.Registro.AllBuilding.Count < 10)
         {
             _hoverWindowMed.ShowSemiTut("Build");
         }

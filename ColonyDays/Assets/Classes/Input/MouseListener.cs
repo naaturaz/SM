@@ -186,7 +186,9 @@ public class MouseListener : InputMain
                 if (!SelectClickedBuild())
                 {
                     //if was not posible to seelct a building 
-                    HidePersonBuildOrderNotiWindows();       
+                    HidePersonBuildOrderNotiWindows();
+
+                    var tryBuy = SelectSellRegion();
                 }
             }
         }
@@ -270,10 +272,30 @@ public class MouseListener : InputMain
         return false;
     }
 
-    /// <summary>
-    /// Method tht address when a building is unseletced
-    /// </summary>
-    void UnselectingBuild()
+    bool SelectSellRegion()
+    {
+        if (!Input.GetMouseButtonUp(0))
+        {
+            return false;
+        }
+
+        List<string> names = new List<string>();
+        var clicked = UPoly.RayCastLayer(Input.mousePosition, 10).transform;
+
+        if (clicked != null && clicked.name.Contains("ForSaleRegion"))
+        {
+            var sell = clicked.GetComponent<ForSaleRegionGO>();
+            sell.ClickOnMe();
+            return true;
+        }
+        return false;
+    }
+
+
+        /// <summary>
+        /// Method tht address when a building is unseletced
+        /// </summary>
+        void UnselectingBuild()
     {
         _buildingsMenu.Hide();
         _descriptionWindow.Hide();

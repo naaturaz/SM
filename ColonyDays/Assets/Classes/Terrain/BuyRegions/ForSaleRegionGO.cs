@@ -115,9 +115,9 @@ public class ForSaleRegionGO : Hoverable
     /// <summary>
     /// On mouse click
     /// </summary>
-    void OnMouseUp()
+    public void ClickOnMe()
     {
-        if (Program.IsInputLocked || Dialog.IsActive())
+        if (Program.IsInputLocked || Dialog.IsActive() || BuildingPot.Control.CurrentSpawnBuild!=null)
         {
             return;
         }

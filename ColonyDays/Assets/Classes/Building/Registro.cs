@@ -19,7 +19,7 @@ public class Registro : MonoBehaviour
 
     private Dictionary<string, Structure> _structures = new Dictionary<string, Structure>();
     private Dictionary<string, Way> _ways = new Dictionary<string, Way>();
-    private Dictionary<string, DragSquare> _farms = new Dictionary<string, DragSquare>();
+    private Dictionary<string, DragSquare> _dragSquare = new Dictionary<string, DragSquare>();
 
     private Dictionary<string, Building> _allBuilding = new Dictionary<string, Building>();
     private Building _selectBuilding = new Building();
@@ -54,10 +54,10 @@ public class Registro : MonoBehaviour
         set { _ways = value; }
     }
 
-    public Dictionary<string, DragSquare> Farms
+    public Dictionary<string, DragSquare> DragSquares
     {
-        get { return _farms; }
-        set { _farms = value; }
+        get { return _dragSquare; }
+        set { _dragSquare = value; }
     }
 
     public Building SelectBuilding
@@ -166,7 +166,7 @@ public class Registro : MonoBehaviour
         }
         else if (cat == Ca.DraggableSquare)
         {
-            _farms.Remove(myId);
+            _dragSquare.Remove(myId);
         }
     }
 
@@ -233,7 +233,7 @@ public class Registro : MonoBehaviour
         }
         else if (cat == Ca.DraggableSquare)
         {
-            Farms[myId].MaterialKey = newMatKey;
+            DragSquares[myId].MaterialKey = newMatKey;
         }
     }
 
@@ -451,8 +451,8 @@ public class Registro : MonoBehaviour
         else if (cat == Ca.DraggableSquare)
         {
             DragSquare f = BuildingPot.Control.CurrentSpawnBuild as DragSquare;
-            f = (DragSquare)CheckIfOnDict(Farms, f);
-            Farms.Add(f.MyId, f);
+            f = (DragSquare)CheckIfOnDict(DragSquares, f);
+            DragSquares.Add(f.MyId, f);
         }
     }
 

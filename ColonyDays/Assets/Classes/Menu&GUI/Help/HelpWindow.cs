@@ -82,7 +82,11 @@ public class HelpWindow : GUIElement
             _f1forHelp = GameObject.Find("F1 for help");
         }
 
-        _f1forHelp.SetActive(false);
+        if (_f1forHelp!=null)
+        {
+            _f1forHelp.SetActive(false);
+
+        }
     }
 
 

@@ -136,7 +136,7 @@ public class BuildingSaveLoad : BuildingPot
 
         Program.gameScene.BatchAdd(f);
 
-        Control.Registro.Farms.Add(regFile.MyId, Control.CurrentSpawnBuild as DragSquare);
+        Control.Registro.DragSquares.Add(regFile.MyId, Control.CurrentSpawnBuild as DragSquare);
         Control.Registro.AllBuilding.Add(regFile.MyId, Control.CurrentSpawnBuild);
     }
 

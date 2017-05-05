@@ -114,14 +114,14 @@ public class InputMouse : InputParent
         else if (cat == Ca.DraggableSquare)
         {
             //print("Famrs count:" + BuilderPot.Control.Registro.Farms.Count);
-            if (BuildingPot.Control.Registro.Farms.Count > 0)
+            if (BuildingPot.Control.Registro.DragSquares.Count > 0)
             {
                 //print("keyName:" + keyName);
                 //print("1st MyId:" + BuilderPot.Control.Registro.Farms[0]);
-                if (BuildingPot.Control.Registro.Farms.ContainsKey(keyName))
+                if (BuildingPot.Control.Registro.DragSquares.ContainsKey(keyName))
                 {
                     //print("Famrs Famrs Selected");
-                    BuildingPot.Control.Registro.SelectBuilding = BuildingPot.Control.Registro.Farms[keyName];
+                    BuildingPot.Control.Registro.SelectBuilding = BuildingPot.Control.Registro.DragSquares[keyName];
                 }
             }
         }

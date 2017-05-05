@@ -23,6 +23,8 @@ class DialogGO : GUIElement
     private InputField _inputTextEmail1;
     private InputField _inputTextEmail2;
 
+    GameObject _rateBtnGO;
+
     public H Type1
     {
         get { return _type; }
@@ -51,7 +53,7 @@ class DialogGO : GUIElement
         var localScale = obj.transform.localScale;
 
         obj.transform.position = iniPos;
-        obj.transform.SetParent( container);
+        obj.transform.SetParent(container);
 
         obj.transform.localScale = localScale;
         obj.Type1 = type;
@@ -65,7 +67,7 @@ class DialogGO : GUIElement
         var t = GetChildCalled("TextHere");
         _textHere = t.GetComponentInChildren<Text>();
 
-        _textHere.text = Languages.ReturnString(Type1+"") + Str1;
+        _textHere.text = Languages.ReturnString(Type1 + "") + Str1;
 
         //doesnt have any of below
         if (Type1 == H.MandatoryFeedback)
@@ -76,6 +78,12 @@ class DialogGO : GUIElement
         _okBtnGO = GetChildCalled("Ok_Btn");
         _ok = _okBtnGO.GetComponent<UnityEngine.UI.Button>();
 
+        _rateBtnGO = GetChildCalled("Rate_Btn");
+        if (_rateBtnGO != null)
+        {
+            _rateBtnGO.SetActive(false);
+
+        }
 
         var inText = GetChildCalled("Input_Field");
         if (inText != null)
@@ -117,7 +125,7 @@ class DialogGO : GUIElement
         {
             return;
         }
-        _textHere.text = String.Format(Languages.ReturnString(Type1+""), Str1);
+        _textHere.text = String.Format(Languages.ReturnString(Type1 + ""), Str1);
     }
 
 
@@ -174,7 +182,7 @@ class DialogGO : GUIElement
     }
 
     private void CreateInviteOnThisPC()
-    {        
+    {
         var text = "Email: " + _inputTextEmail1.text;
         //if (SteamFriends.GetPersonaName() != null)
         //{
@@ -183,7 +191,7 @@ class DialogGO : GUIElement
 
         try
         {
-            Dialog.CreateFile(Type1+"", text);   
+            Dialog.CreateFile(Type1 + "", text);
             print("mail Send");
         }
         catch (Exception ex)
@@ -201,7 +209,47 @@ class DialogGO : GUIElement
     /// <param name="add"></param>
     public void AddToInput(string add)
     {
+        var isGood = add == "Thumbs up" || add == "Love it" || add == "Best ever"
+            || add == "Can't stop playing" || add == "I will recommend it";
+
         _inputText.text += add + ". \n";
+
+        if (isGood)
+        {
+            _rateBtnGO.SetActive(true);
+            _inputText.text += "Thanks for the support.Dev Team\n";
+        }
+
+
+        if (add == "Game art is not good")
+        {
+            _inputText.text += "What is exactly what bothers you the most? Thanks\n";
+        }
+        if (add == "Game is confusing")
+        {
+            _inputText.text += "What is exactly what confuses you the most? Thanks\n";
+        }
+        if (add == "Like it a bit")
+        {
+            _inputText.text += "What you like the least and most? Thanks\n";
+        }
+        if (add == "Thumbs down")
+        {
+            _inputText.text += "How could we change that to 'Thumbs up'? Thanks\n";
+        }
+        if (add == "Is bad")
+        {
+            _inputText.text += "How could we change that to 'Is good!'? Thanks\n";
+        }
+        if (add == "Is bad")
+        {
+            _inputText.text += "How could we change that to 'Is good!'? Thanks\n";
+        }
+    }
+
+    public void Rate()
+    {
+        Application.OpenURL("http://store.steampowered.com/recommended/recommendgame/538990");
     }
 
 
