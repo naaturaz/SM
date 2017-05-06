@@ -1,9 +1,18 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.AI;
 
 public class Body //: MonoBehaviour //: General
 {
+    NavMeshAgent _agent;
+    Vector3 _destiny;
+
+    private BodyAgent _bodyAgent;
+
+
+
+
     private bool _movingNow;//says if body is moving 
     private int _currentRoutePoint;
     private int iniRoutePoint;//so i can access the first point of a route
@@ -193,11 +202,14 @@ public class Body //: MonoBehaviour //: General
 
         SetScaleByAge();
 
-        renderer = _person.Geometry.GetComponent<Renderer>(); 
+        renderer = _person.Geometry.GetComponent<Renderer>();
+
+        _bodyAgent = new BodyAgent(_person);
+
     }
 
-	//the yearly grow for each Gender. For this be effective the GameObj scale must
-	// be initiated at 0.26f in all axis
+    //the yearly grow for each Gender. For this be effective the GameObj scale must
+    // be initiated at 0.26f in all axis
     private float maleGrow = 0.01333f;
     private float femaleGrow = 0.01111f;
     /// <summary>
@@ -738,6 +750,10 @@ public class Body //: MonoBehaviour //: General
 
     public void WalkRoutine(TheRoute route, HPers goingTo ,bool inverse = false, HPers whichRouteP = HPers.None)
     {
+
+        _bodyAgent.Walk(route.CheckPoints[route.CheckPoints.Count - 2].Point);
+        //ureturn;
+
         InitWalk(route, inverse);
         WalkRoutineTail(goingTo, whichRouteP);
 
@@ -953,31 +969,10 @@ public class Body //: MonoBehaviour //: General
     /// </summary>
     void WalkHandler()
     {
-        if (oldCurrent != _currentRoutePoint)
+        if (UMath.nearEqualByDistance(_person.transform.position, _bodyAgent.Destiny, 0.5f))// 
         {
-            InitRotaVars();
-            oldCurrent = _currentRoutePoint;
-            InitRotaVarsOnSpeed();
-        }
-
-        //CheckRotation();
-        if (_routePoins.Count == 0)
-        {
-            return;
-        }
-
-        //correction needed when loading the _idle route inverse.. to avoid out of range excp
-        _currentRoutePoint = CorrectBounds(_currentRoutePoint, 0, _routePoins.Count - 1);
-        MoveAction();
-
-        Vector3 next = _routePoins[_currentRoutePoint].Point;
-        if (UMath.nearEqualByDistance(_currentPosition, next, 0.01f))// 0.001f
-        {
-            CheckRotation();
-
-            if (next == _routePoins[lastRoutePoint].Point)
-            {WalkDone();}
-            SetNextPoint();
+            //CheckRotation();
+            WalkDone();
         }
     }
 
@@ -986,6 +981,7 @@ public class Body //: MonoBehaviour //: General
     /// </summary>
     void MoveAction()
     {
+        return;
         LoadPosition();
 
         var newPos = Vector3.MoveTowards(_currentPosition, _routePoins[_currentRoutePoint].Point,
@@ -1204,6 +1200,8 @@ public class Body //: MonoBehaviour //: General
 
     public void HideNoQuestion()
     {
+        return;
+
         renderer.enabled = false;
 
         if (_personalObject != null)
@@ -1215,6 +1213,9 @@ public class Body //: MonoBehaviour //: General
     private Renderer renderer;
     public void Hide()
     {
+        return;
+
+
         if (ShouldHide())
         {
             renderer.enabled = false;
@@ -1282,15 +1283,18 @@ public class Body //: MonoBehaviour //: General
 	// Update is called once per frame
 	public void Update ()
     {
-	    if (_movingNow)
-	    {
-            //ThreadPool.RunThis(_person);
-	        WalkHandler();
-	    }
-	    //CheckOnGameSpeed();
+        if (_bodyAgent!=null)
+        {
+            _bodyAgent.Update();
+        }
+
+        //if (_movingNow)
+        //{
+        WalkHandler();
+        //}
         CheckIfGoingIntoBuild();
 
-	CheckSound();
+        CheckSound();
     }
 
 
@@ -1303,9 +1307,9 @@ public class Body //: MonoBehaviour //: General
         if (  _person == null || _routePoins == null || _routePoins.Count == 0){ return; }
 
         var dist = 0.9f;//.2 //.25
-        var currDist = Vector3.Distance(_currentPosition, _routePoins[lastRoutePoint].Point);
+        var currDist = Vector3.Distance(_person.transform.position, _bodyAgent.Destiny);
         //getting close to last point
-        if (currDist < dist && CurrentRoutePointIsTheOneBeforeLast()) 
+        if (currDist < dist) 
         {
             Hide();
             //not when gonna idle .. other wise will just hide body on miuddle of iddle
@@ -1611,6 +1615,7 @@ public class Body //: MonoBehaviour //: General
 
     private float timeToPlaySound = -1;
     private float timeToUnBan;//time was given a -1
+
     private void AddressNewAniSound()
     {
         if (!_aniDelayToPlaySound.ContainsKey(CurrentAni))

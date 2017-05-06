@@ -138,6 +138,8 @@ public class OutOfScreen
 
     private void SwitchNow()
     {
+        return;
+
         if ((_onScreenRenderNow || _onScreenRectNow) && _currentLOD == H.LOD0)
         {
             OnBecameVisible();

@@ -2,6 +2,8 @@
 
 public class Terreno : General
 {
+    NavigationArea _navArea;
+
     private string _root;
     private bool _default;//the one loaded at first time
 
@@ -26,5 +28,16 @@ public class Terreno : General
         obj.Root1 = root;
         obj.Default = defaultP;
         return obj;
+    }
+
+    private void Start()
+    {
+        base.Start();
+        _navArea = new NavigationArea(gameObject);
+    }
+
+    void Update()
+    {
+        _navArea.AddNavArea();
     }
 }
