@@ -748,11 +748,45 @@ public class Body //: MonoBehaviour //: General
         }
     }
 
+
+
+    List<General> deb = new List<General>();
+
+    Vector3 RetDestiny(TheRoute route, HPers goingTo, bool inverse = false, HPers whichRouteP = HPers.None)
+    {
+        if (deb.Count > 0)
+        {
+            for (int i = 0; i < deb.Count; i++)
+            {
+                deb[i].Destroy();
+            }
+            deb.Clear();
+        }
+        deb = UVisHelp.CreateTextEnumarate(route.CheckPoints);
+
+        var indexH = route.CheckPoints.Count - 2;
+        if (inverse)
+        {
+            indexH = 1;
+        }
+
+        if (goingTo == HPers.InWork || goingTo == HPers.IdleSpot)
+        {
+            indexH = route.CheckPoints.Count - 1;
+        }
+        //if (inverse && Location == HPers.IdleSpot)
+        //{
+        //    indexH = 0;
+        //}
+
+        return route.CheckPoints[indexH].Point;
+    }
+
+    
     public void WalkRoutine(TheRoute route, HPers goingTo ,bool inverse = false, HPers whichRouteP = HPers.None)
     {
-
-        _bodyAgent.Walk(route.CheckPoints[route.CheckPoints.Count - 2].Point);
-        //ureturn;
+        var dest = RetDestiny(route, goingTo, inverse, whichRouteP);
+        _bodyAgent.Walk(dest);
 
         InitWalk(route, inverse);
         WalkRoutineTail(goingTo, whichRouteP);
@@ -969,7 +1003,7 @@ public class Body //: MonoBehaviour //: General
     /// </summary>
     void WalkHandler()
     {
-        if (UMath.nearEqualByDistance(_person.transform.position, _bodyAgent.Destiny, 0.5f))// 
+        if (UMath.nearEqualByDistance(_person.transform.position, _bodyAgent.Destiny, 0.1f))// 
         {
             //CheckRotation();
             WalkDone();
@@ -1399,19 +1433,10 @@ public class Body //: MonoBehaviour //: General
         {
             myAnimator.speed = Program.gameScene.GameSpeed;
             oldGameSpeed = Program.gameScene.GameSpeed;
+            _bodyAgent.NewSpeed(Program.gameScene.GameSpeed);
         }
     }
-
-    /// <summary>
-    /// Used to slow down or speed up speed of the person if person is on the same 
-	/// spot that other person	
-    /// </summary>
-    public void ChangeSpeed(float amt)
-    {
-        myAnimator.speed += amt;
-        _speed += amt;
-    }
-
+    
     internal void UpdatePersonalForWheelBa()
     {
         //need to put isCarry if dont have wheel barrow

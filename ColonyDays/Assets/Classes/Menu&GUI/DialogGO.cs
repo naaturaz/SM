@@ -218,8 +218,12 @@ class DialogGO : GUIElement
         {
             _rateBtnGO.SetActive(true);
             _inputText.text += "Thanks for the support.Dev Team\n";
+            PlayerPrefs.SetInt("Rate", 1);
         }
-
+        else
+        {
+            PlayerPrefs.SetInt("Rate", 0);
+        }
 
         if (add == "Game art is not good")
         {
@@ -236,10 +240,6 @@ class DialogGO : GUIElement
         if (add == "Thumbs down")
         {
             _inputText.text += "How could we change that to 'Thumbs up'? Thanks\n";
-        }
-        if (add == "Is bad")
-        {
-            _inputText.text += "How could we change that to 'Is good!'? Thanks\n";
         }
         if (add == "Is bad")
         {

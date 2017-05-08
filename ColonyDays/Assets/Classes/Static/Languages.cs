@@ -223,6 +223,7 @@ public class Languages
        { "TownTitle.HoverSmall", "Town"},
        {"WarMode.HoverSmall", "Combat Mode"},
        {"BullDozer.HoverSmall", "Bulldozer"},
+       {"Rate.HoverSmall", "Rate"},
 
        //addOrder windiw
 	   { "Amt_Tip.HoverSmall", "Amount of prod"},

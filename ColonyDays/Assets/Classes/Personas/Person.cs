@@ -687,7 +687,6 @@ public class Person : Hoverable
     private void InitGeneralStuff()
     {
         NameTransform();
-        DefineColliders();
 
         //_randomUV = new RandomUV(Geometry.gameObject, H.Person);
     }
@@ -1585,69 +1584,7 @@ public class Person : Hoverable
     }
 
 
-
-
-
-    #region Section that detect and handles if is colliding with another person while moving
-
-    private GameObject _frontCollider;
-    private GameObject _rearCollider;
-    void DefineColliders()
-    {
-        _frontCollider = GetChildLastWordIs(H.FrontCollider);
-        _rearCollider = GetChildLastWordIs(H.RearCollider);
-    }
-
-    private bool frontCollision;
-    private bool rearCollision;
-    void UpdateCollBools()
-    {
-        frontCollision = _frontCollider.GetComponent<CollideWith>().IsCollidingNow;
-        rearCollision = _rearCollider.GetComponent<CollideWith>().IsCollidingNow;
-    }
-
-    void CheckPersonColl()
-    {
-        if (!Body.MovingNow) { return; }
-
-        if (rearCollision && frontCollision)
-        { //do nothing
-            print("do nothing");
-        }
-        else if (frontCollision)
-        {
-            ChangeBodySpeed(-0.1f);
-        }
-        else if (rearCollision)
-        {
-            ChangeBodySpeed(0.1f);
-        }
-        else if (!rearCollision && !frontCollision)
-        {
-            SetBodySpeedToDefault();
-        }
-    }
-
-    private bool speedChanged;//acuumulates the changes of speed 
-    void ChangeBodySpeed(float amt)
-    {
-        if (Body.Speed != 0.5f) { return; }//will only change it if is at is initial value
-
-        speedChanged = true;
-        Body.ChangeSpeed(amt);
-        print("speed chng");
-    }
-
-    void SetBodySpeedToDefault()
-    {
-        if (speedChanged)
-        {
-            Body.Speed = 0.5f;
-            speedChanged = false;
-        }
-    }
-
-    #endregion
+    
 
 
 
