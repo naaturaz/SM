@@ -21,8 +21,8 @@ public class StageManager : General
     /// </summary>
     Material _waveMat;
 
-    float _daySpeed = .5f;
-    float _nightSpeed = .5f;//.6
+    float _daySpeed = .5f;//.5 
+    float _nightSpeed = .5f;//.5    .6
 
     bool _isOnTransition;
 
@@ -41,6 +41,7 @@ public class StageManager : General
     /// At night time is the same but divided / 10
     /// </summary>
     List<float> _times = new List<float>() { 1, 20, 120, 120, 20, 5 };
+    //List<float> _times = new List<float>() { 1, 1, 1, 1, 1, 5 };
 
     float _startedCycleAt = 0;
 

@@ -85,7 +85,7 @@ public class HelpWindow : GUIElement
         if (_f1forHelp!=null)
         {
             _f1forHelp.SetActive(false);
-
+            PlayerPrefs.SetString("F1", "Used");
         }
     }
 

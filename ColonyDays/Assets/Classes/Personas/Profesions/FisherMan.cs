@@ -80,7 +80,7 @@ public class FisherMan : Profession {
         Router1 = new CryRouteManager();
 
 
-        if (PersonPot.Control.RoutesCache1.ContainANewerOrSameRoute(_person.Work.MyId + ".OFish", _person.Work.MyId + ".DFish",
+        if (PersonPot.Control.RoutesCache1.ContainANewerOrSameRoute(_person.Work.MyId + ".O", _person.Work.MyId + ".D",
            new DateTime()))
         {
             Router1.TheRoute = PersonPot.Control.RoutesCache1.GiveMeTheNewerRoute();
@@ -94,8 +94,8 @@ public class FisherMan : Profession {
         var TheRoute = ReachBean.RouteVector3s(inBuildPoints);
 
         //the .O is to pass the profession or brain reurn 
-        TheRoute.OriginKey = _person.Work.MyId + ".OFish";
-        TheRoute.DestinyKey = _person.Work.MyId + ".DFish";
+        TheRoute.OriginKey = _person.Work.MyId + ".O";
+        TheRoute.DestinyKey = _person.Work.MyId + ".D";
 
         Router1.TheRoute=TheRoute;
         Router1.IsRouteReady = true;

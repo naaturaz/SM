@@ -68,7 +68,7 @@ class TutoWindow : GUIElement
 
         _rectTransform = transform.GetComponent<RectTransform>();
 
-        if (Program.WasTutoPassed)
+        if (Program.WasTutoPassed || !string.IsNullOrEmpty(PlayerPrefs.GetString("Tuto")))
         {
             SkipTuto();
         }
@@ -78,14 +78,7 @@ class TutoWindow : GUIElement
     bool wasShown;
     void Update()
     {
-        //if loads needs this
-        //if (IsPassingTheTutoNow() && Program.gameScene.QuestManager.IsQuestingNow())
-        //{
-        //    SkipTuto();
-        //    return;
-        //}
-
-        if (Program.gameScene.GameFullyLoaded() && !wasShown)
+        if (Program.gameScene.GameFullyLoaded() && !wasShown && string.IsNullOrEmpty(PlayerPrefs.GetString("Tuto")))
         {
             wasShown = true;
             Show();
@@ -144,6 +137,11 @@ class TutoWindow : GUIElement
 
     public void Next(string step)
     {
+        if (_showAgainTuto == null)
+        {
+            return;
+        }
+
         if (_currentIndex == -1 || step != _steps[_currentIndex] || _showAgainTuto.activeSelf)
         {
             return;
@@ -172,6 +170,9 @@ class TutoWindow : GUIElement
             Program.gameScene.QuestManager.QuestFinished("Tutorial");
             Program.WasTutoPassed = true;
 
+            PlayerPrefs.SetString("Tuto", "Done");
+
+
             return;
         }
         //QuestManager.QuestFinished("Tutorial");
@@ -196,9 +197,15 @@ class TutoWindow : GUIElement
         //_currentIndex = -1;
         Hide();
 
+        if (_showAgainTuto == null)
+        {
+            _showAgainTuto = GameObject.Find("ShowAgainTuto");
+        }
         _showAgainTuto.SetActive(true);
 
         Program.gameScene.QuestManager.TutoCallWhenDone();
+        PlayerPrefs.SetString("Tuto", "Skip");
+
     }
 
 

@@ -33,6 +33,12 @@ public class BodyAgent  {
         _person = person;
         _agent = _person.GetComponent<NavMeshAgent>();
         _speedInitial = _agent.speed;
+        //so they get up to speed 
+        NewSpeed();
+
+        _agent.enabled = false;
+
+
     }
 
 
@@ -43,32 +49,19 @@ public class BodyAgent  {
 
 
 
-
-
-
-
-
-
-
-
-    ///////
-    public void WalkRoutine(TheRoute route, HPers goingTo, bool inverse = false, HPers whichRouteP = HPers.None)
-    {
-        Destiny = route.CheckPoints[route.CheckPoints.Count - 1].Point;
-        return;
-    }
 
     // Update is called once per frame
     public void Update()
     {
-        if (_nextDest != new Vector3() && !_destWasSet && _agent.isOnNavMesh)
+
+
+        if (_nextDest != new Vector3() && !_destWasSet             && _agent.isOnNavMesh)
         {
             _destWasSet = true;
             _agent.SetDestination(Destiny);
         }
 
         CheckIfGoingIntoBuild();
-
     }
 
     private void CheckIfGoingIntoBuild()
@@ -90,6 +83,8 @@ public class BodyAgent  {
             deb.Destroy();
         }
 
+        _agent.enabled = false;
+
         _destWasSet = false;
         Destiny = point;
         _nextDest = point;
@@ -97,8 +92,32 @@ public class BodyAgent  {
         deb = UVisHelp.CreateHelpers(point, Root.yellowCube);
     }
 
-    internal void NewSpeed(float speed)
+    internal void NewSpeed()
     {
-        _agent.speed = _speedInitial * speed;
+        _agent.speed = _speedInitial * Program.gameScene.GameSpeed;
+    }
+
+    internal void PutOnNavMeshIfNeeded(Vector3 vector3)
+    {
+        if (!_agent.isOnNavMesh)
+        {
+            _agent.enabled = false;
+
+            _person.transform.position = vector3;
+            _destWasSet = false;
+            _agent.enabled = true;
+        }
+    }
+
+    internal bool OnNavMesh()
+    {
+        return _agent.isOnNavMesh;
+    }
+
+    internal void GotBackFromOutOfNavMesh()
+    {
+        _agent.enabled = false;
+        _destWasSet = false;
+        _agent.enabled = true;
     }
 }

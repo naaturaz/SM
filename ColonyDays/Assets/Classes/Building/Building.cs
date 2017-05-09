@@ -338,7 +338,7 @@ public class Building : Hoverable, Iinfo
 
         var res = MeshController.BuyRegionManager1.AreAnchorsOnUnlockRegions(Anchors);
 
-        if (!res)
+        if (!res && !IsThisADoubleBoundedStructure())//double bounded strucutres dont need unlocked regions to be placed  
         {
             MeshController.BuyRegionManager1.ShowRegions();
         }
@@ -4582,8 +4582,7 @@ public class Building : Hoverable, Iinfo
     List<ParticleSystem> _pSystem;
     public void SmokePlay(bool isToPlayNow)
     {
-        if (_pSystem == null || _pSystem.Count == 0 ||
-            Inventory.IsEmpty() || _stageManager.IsSunsetOrLater())
+        if (_pSystem == null || _pSystem.Count == 0)
         {
             return;
         }
@@ -4592,16 +4591,17 @@ public class Building : Hoverable, Iinfo
         {
             PlayThisSystemPart(isToPlayNow, _pSystem[i]);
         }
-        
     }
 
     void PlayThisSystemPart(bool isToPlayNow, ParticleSystem pSystem)
     {
-        if (isToPlayNow)
+        if (isToPlayNow && pSystem.isStopped)
         {
             pSystem.Play();
+            pSystem.Clear(true);
+
         }
-        else
+        else if(!isToPlayNow && !pSystem.isStopped)
         {
             pSystem.Stop();
         }
@@ -4616,6 +4616,14 @@ public class Building : Hoverable, Iinfo
             SmokePlay(false);
         }
 
+    }
+
+    internal void HomeSmokePlay()
+    {
+        if (!_stageManager.IsSunsetOrLater())
+        {
+            SmokePlay(true);
+        }
     }
 
 }

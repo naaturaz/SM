@@ -45,9 +45,9 @@ public class ExportImport
 
     private void MapDict()
     {
-        _prodSpecs = _prodSpecs.OrderBy(a=>a.Product).ToList();
+        _prodSpecs = _prodSpecs.OrderBy(a => a.Product).ToList();
 
-        for (int i = 0; i < _prodSpecs.Count    ; i++)
+        for (int i = 0; i < _prodSpecs.Count; i++)
         {
             _prodSpecsGC.Add(_prodSpecs[i].Product, i);
         }
@@ -109,24 +109,24 @@ public class ExportImport
 
 
         _prodSpecs.Add(new ProdSpec(P.Bean, 90, 368, 100));
-        _prodSpecs.Add(new ProdSpec(P.CoffeeBean, 100, 308, 100, 30*6));
-        _prodSpecs.Add(new ProdSpec(P.Cacao, 110, 250, 100, 360*3));
-        _prodSpecs.Add(new ProdSpec(P.Potato, 70, 380, 100, 30*8));
+        _prodSpecs.Add(new ProdSpec(P.CoffeeBean, 100, 308, 100, 30 * 6));
+        _prodSpecs.Add(new ProdSpec(P.Cacao, 110, 250, 100, 360 * 3));
+        _prodSpecs.Add(new ProdSpec(P.Potato, 70, 380, 100, 30 * 8));
         _prodSpecs.Add(new ProdSpec(P.Banana, 100, 350, 100));
         _prodSpecs.Add(new ProdSpec(P.Coconut, 100, 550, 100));
-        
+
         //new foods
-        _prodSpecs.Add(new ProdSpec(P.CornFlower, 100, 550, 100, 30*12));
-        _prodSpecs.Add(new ProdSpec(P.Bread, 100, 550, 100, 30*1));
-        _prodSpecs.Add(new ProdSpec(P.Carrot, 100, 550, 100, 7*5));
-        _prodSpecs.Add(new ProdSpec(P.Tomato, 100, 550, 100, 30*1));
+        _prodSpecs.Add(new ProdSpec(P.CornFlower, 100, 550, 100, 30 * 12));
+        _prodSpecs.Add(new ProdSpec(P.Bread, 100, 550, 100, 30 * 1));
+        _prodSpecs.Add(new ProdSpec(P.Carrot, 100, 550, 100, 7 * 5));
+        _prodSpecs.Add(new ProdSpec(P.Tomato, 100, 550, 100, 30 * 1));
         _prodSpecs.Add(new ProdSpec(P.Cucumber, 100, 550, 100, 30 * 1));
         _prodSpecs.Add(new ProdSpec(P.Cabbage, 100, 550, 100, 30 * 1));
         _prodSpecs.Add(new ProdSpec(P.Lettuce, 100, 550, 100, 30 * 1));
         _prodSpecs.Add(new ProdSpec(P.SweetPotato, 100, 550, 100, 30 * 8));
         _prodSpecs.Add(new ProdSpec(P.Cassava, 100, 550, 100, 30 * 8));
-        _prodSpecs.Add(new ProdSpec(P.Pineapple, 100, 550, 100, 30*1));
-        _prodSpecs.Add(new ProdSpec(P.Papaya, 100, 550, 100, 30*1));
+        _prodSpecs.Add(new ProdSpec(P.Pineapple, 100, 550, 100, 30 * 1));
+        _prodSpecs.Add(new ProdSpec(P.Papaya, 100, 550, 100, 30 * 1));
 
         //foods
         _prodSpecs.Add(new ProdSpec(P.Corn, 60, 540, 120, 6 * 30));
@@ -177,7 +177,7 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Diamond, 2000, 3539, 5));
         _prodSpecs.Add(new ProdSpec(P.Silver, 900, 10490, 8));
         _prodSpecs.Add(new ProdSpec(P.Jewel, 3000, 8490, 8));
-        
+
         //_prodSpecs.Add(new ProdSpec(P.CrystalCoin, 1000, 8120, 5));
         //_prodSpecs.Add(new ProdSpec(P.CaribbeanCoin, 1500, 11441, 5));
         _prodSpecs.Add(new ProdSpec(P.Coin, 1500, 14550, 5));
@@ -216,7 +216,7 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Sand, 20, 1500, 100));
 
 
-        
+
         _prodSpecs.Add(new ProdSpec(P.Barrel, 300, 100, 50));
         _prodSpecs.Add(new ProdSpec(P.Bucket, 300, 90, 60));
         _prodSpecs.Add(new ProdSpec(P.Crate, 300, 80, 50));
@@ -242,7 +242,7 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Paper, 150, 192, 30));
         _prodSpecs.Add(new ProdSpec(P.Map, 300, 292, 50));
         _prodSpecs.Add(new ProdSpec(P.Book, 500, 502, 5));
-       // _prodSpecs.Add(new ProdSpec(P.Silk, 150, 1300, 5));
+        // _prodSpecs.Add(new ProdSpec(P.Silk, 150, 1300, 5));
 
 
     }
@@ -269,7 +269,7 @@ public class ExportImport
 
         var dens = prodLo.Density;
 
-        return mass/dens;
+        return mass / dens;
     }
 
     /// <summary>
@@ -290,7 +290,7 @@ public class ExportImport
         }
 
         //returns the Mass
-        return prodLo.Density*cubicMetersVol;
+        return prodLo.Density * cubicMetersVol;
     }
 
 
@@ -319,10 +319,7 @@ public class ExportImport
 
     private void Quest(P prod, float amt)
     {
-        if (prod == P.Bean)
-        {
-            Program.gameScene.QuestManager.AddToQuest("MakeBucks", amt);
-        }
+        Program.gameScene.QuestManager.AddToQuest("MakeBucks", amt);
     }
 
 
@@ -373,7 +370,7 @@ public class ExportImport
         }
         return null;
     }
-    
+
     public float ReturnProduceFactor(P prod)
     {
 
@@ -381,24 +378,24 @@ public class ExportImport
 
         if (prodFound == null)
         {
-           //Debug.Log("Prod Factor asked of not found prod:" + prod);
+            //Debug.Log("Prod Factor asked of not found prod:" + prod);
             return 0;
         }
         return prodFound.ProduceFactor;
-    }   
-    
+    }
+
     public int ReturnExpireDays(P prod)
     {
         var prodFound = FindProdSpec(prod);
 
         if (prodFound == null)
         {
-           //Debug.Log("Prod Factor asked of not found prod:" + prod);
+            //Debug.Log("Prod Factor asked of not found prod:" + prod);
             return 0;
         }
         return prodFound.ExpireDays;
-    }   
- 
+    }
+
     public float ReturnPrice(P prod)
     {
         var prodFound = FindProdSpec(prod);
@@ -523,7 +520,7 @@ public class ProdSpec
         set { _expireDays = value; }
     }
 
-    public ProdSpec(){}
+    public ProdSpec() { }
 
     /// <summary>
     /// The price is divided by 100 in Constructor
@@ -532,11 +529,11 @@ public class ProdSpec
     /// <param name="price"></param>
     /// <param name="density"></param>
     /// <param name="produceFactor"></param>
-    public ProdSpec(P prod, float price, float density = 1, float produceFactor = 1, int expireDays = -1, 
+    public ProdSpec(P prod, float price, float density = 1, float produceFactor = 1, int expireDays = -1,
         float weightPerUnit = -1)
     {
         Product = prod;
-        Price = price/100;//500  900 1000
+        Price = price / 100;//500  900 1000
         Density = density;
         ProduceFactor = produceFactor;
 

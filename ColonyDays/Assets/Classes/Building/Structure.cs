@@ -642,4 +642,6 @@ public class Structure : StructureParent
 
         return true;
     }
+
+
 }

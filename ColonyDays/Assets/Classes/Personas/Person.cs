@@ -1807,7 +1807,11 @@ public class Person : Hoverable
             )
         { return; }
 
-        Home.SmokePlay(true);
+
+
+        Home.HomeSmokePlay();
+
+
         DropFoodAtHome();
 
         if (_lastTimeHome == null)

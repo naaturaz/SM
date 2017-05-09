@@ -83,6 +83,7 @@ public class ForSaleRegionGO : Hoverable
 
         AddressShow();
         AddressHide();
+        CheckMouse();
     }
 
 
@@ -93,7 +94,6 @@ public class ForSaleRegionGO : Hoverable
         {
             transform.position += new Vector3(0, -1000, 0);
         }
-
     }
 
 
@@ -131,21 +131,30 @@ public class ForSaleRegionGO : Hoverable
 
     #region Hover All Objects. All objects that have a collider will be hoverable
 
-    protected void OnMouseEnter()
+    float lastMouseOver;
+
+    private void OnMouseEnter()
     {
         base.OnMouseEnter();
+    }
 
-        //if (!_hover.activeSelf)
-        //{
-            _hover.SetActive(true);
-        //}
+    protected void OnMouseOver()
+    {
+        lastMouseOver = Time.time;
+        _hover.SetActive(true);
     }
 
     protected void OnMouseExit()
     {
         base.OnMouseExit();
+    }
 
-        _hover.SetActive(false);
+    void CheckMouse()
+    {
+        if (Time.time > lastMouseOver + 0.5f)
+        {
+            _hover.SetActive(false);
+        }
     }
 
     #endregion
