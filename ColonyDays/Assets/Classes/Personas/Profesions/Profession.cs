@@ -848,6 +848,9 @@ public class Profession
         {
             return;
         }
+        var a = _person.Name;
+
+
         //so work Profession Mini States
         _person.Body.Location = HPers.Work;
         _workerTask = HPers.None;
@@ -1084,7 +1087,17 @@ public class Profession
 
             //this is recreateing the initial point 
             var t = Vector3.MoveTowards(_finRoutePoint, lookAtWork, -_moveTowOrigin);
-            _person.transform.LookAt(t);
+
+            if (_person.Work!=null && ProfDescription == Job.Builder)
+            {
+                _person.transform.LookAt(new Vector3(_constructing.MiddlePoint().x, _person.transform.position.y,
+                    _constructing.MiddlePoint().z));
+            }
+            else
+            {
+                _person.transform.LookAt(t);
+            }
+
             startIdleTime = Time.time;
         }
 

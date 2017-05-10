@@ -218,7 +218,7 @@ public class QuestManager
         }
 
         //to show  others  and loaded 
-        if (Time.time > _lastCompleted + 0//90
+        if (Time.time > _lastCompleted + 90//90
             )
         {
             if (Dialog.IsActive())

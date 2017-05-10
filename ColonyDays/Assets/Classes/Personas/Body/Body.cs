@@ -53,13 +53,12 @@ public class Body //: MonoBehaviour //: General
         get { return _location; }
         set
         {
-            if (_location == HPers.MovingToNewHome && value != HPers.Restarting)
+            if (_location == HPers.WheelBarrow )
             {
-                //                //Debug.Log("Ret Body Location: "+_person.MyId);
+                var a = _person.Name;
             }
 
             _location = value;
-            //_person.Brain.MindState();
         }
     }
 
@@ -769,22 +768,33 @@ public class Body //: MonoBehaviour //: General
     {
         DebugRoutePoints(route);
 
-        var indexH = route.CheckPoints.Count - 2;
-        if (inverse)
-        {
-            indexH = 1;
-        }
+        //var indexH = route.CheckPoints.Count - 2;
+        //if (inverse)
+        //{
+        //    indexH = 1;
+        //}
 
-        var inWork = goingTo == HPers.InWork && _person.Work != null && 
+        var inWork = goingTo == HPers.InWork && _person.Work != null &&
+            //not the workers below  
             !_person.Work.HType.ToString().Contains("Farm") &&
             !_person.Work.HType.ToString().Contains("Fish") &&
-            !_person.Work.HType.ToString().Contains("ShoreMine");
+            !_person.Work.HType.ToString().Contains("ShoreMine") &&
+            !_person.Work.HType.ToString().Contains("Dock");
+
 
         if (inWork || goingTo == HPers.IdleSpot)
         {
-            indexH = route.CheckPoints.Count - 1;
+            return route.CheckPoints[route.CheckPoints.Count - 1].Point;
         }
-        return route.CheckPoints[indexH].Point;
+        //// Docker
+        //if (route.DestinyKey.Contains("Dock") || route.OriginKey.Contains("Dock"))
+        //{
+        if (inverse)
+        {
+            return Brain.GetStructureFromKey(route.OriginKey).SpawnPoint.transform.position;
+        }
+        return Brain.GetStructureFromKey(route.DestinyKey).SpawnPoint.transform.position;
+        //}
     }
 
     Vector3 RetInitPoint(TheRoute route, HPers goingTo, bool inverse = false, HPers whichRouteP = HPers.None)
@@ -1059,6 +1069,7 @@ public class Body //: MonoBehaviour //: General
 
         if (UMath.nearEqualByDistance(_person.transform.position, _bodyAgent.Destiny, 0.1f))// 
         {
+            _bodyAgent.CleanDestiny();
             //CheckRotation();
             WalkDone();
         }
@@ -1297,6 +1308,8 @@ public class Body //: MonoBehaviour //: General
     //Called when the last point of a route was reached
     void WalkDone()
     {
+        var a = _person.Name;
+
         Location = GoingTo;
         _movingNow = false;
         SetCurrentAni("isIdle", _currentAni);//_current ani could be walk or carry

@@ -227,7 +227,7 @@ public class Builder : Profession
 
         //UVisHelp.CreateHelpers(FinRoutePoint, Root.yellowCube);
 
-        _person.MyDummyProf.transform.LookAt(_constructing.transform.position);
+        //_person.MyDummyProf.transform.LookAt(_constructing.transform.position);
         _person.MyDummyProf.HandleLandZoning(_constructing, FinRoutePoint);
 
         _person.MyDummyProf.DummyIdSpawner = _constructing.MyId;

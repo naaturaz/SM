@@ -2244,7 +2244,7 @@ public class Person : Hoverable
     void CheckIfReadyForGiveBirth()
     {
         //bz is is moving should noy give birth
-        if (IsPregnant && IsMyDueDateOrPast() && string.IsNullOrEmpty(IsBooked))
+        if (IsPregnant && IsMyDueDateOrPast() && string.IsNullOrEmpty(IsBooked) && Brain.IAmHomeNow())
         {
             GiveBirth();
             EmoticonManager.Show("Stork", Home.transform.position);

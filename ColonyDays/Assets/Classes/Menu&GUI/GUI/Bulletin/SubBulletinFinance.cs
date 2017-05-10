@@ -230,7 +230,7 @@ public class SubBulletinFinance
         var data = new ExportData(Program.gameScene.GameTime1.CurrentDate(),
             building, prod + "", amt, money);
 
-        _exports.Insert(1, data);
+        _exports.Insert(0, data);//1
     }
 
     internal void ShowExports()

@@ -53,14 +53,11 @@ public class BodyAgent  {
     // Update is called once per frame
     public void Update()
     {
-
-
-        if (_nextDest != new Vector3() && !_destWasSet             && _agent.isOnNavMesh)
+        if (_nextDest != new Vector3() && !_destWasSet && _agent.isOnNavMesh)
         {
             _destWasSet = true;
             _agent.SetDestination(Destiny);
         }
-
         CheckIfGoingIntoBuild();
     }
 
@@ -70,6 +67,11 @@ public class BodyAgent  {
 
         if (UMath.nearEqualByDistance(Destiny, _person.transform.position, 0.1f))
         {
+            if (_nextDest != new Vector3())
+            {
+                Debug.Log("Point reached:" + _person.Name);
+            }
+
             _nextDest = new Vector3();
             _agent.enabled = false;
         }
@@ -109,15 +111,8 @@ public class BodyAgent  {
         }
     }
 
-    internal bool OnNavMesh()
+    internal void CleanDestiny()
     {
-        return _agent.isOnNavMesh;
-    }
-
-    internal void GotBackFromOutOfNavMesh()
-    {
-        _agent.enabled = false;
-        _destWasSet = false;
-        _agent.enabled = true;
+        _destiny = new Vector3();
     }
 }
