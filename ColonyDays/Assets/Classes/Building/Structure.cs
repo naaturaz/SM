@@ -635,10 +635,10 @@ public class Structure : StructureParent
     {
         if (HType == H.Dock)
         {
-            var order = Dispatch1.GiveMeOrderDocker(pers);
-            return order != null;
+            //var order = Dispatch1.GiveMeOrderDocker(pers);
+            //return order != null;
+            return Dispatch1.ThereIsWorkAtDock();
         }
-
 
         return true;
     }

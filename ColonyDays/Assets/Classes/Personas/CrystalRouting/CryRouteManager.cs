@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
 
@@ -148,6 +149,8 @@ public class CryRouteManager
            //Debug.Log("One Routing was stopped bz 1 or more Lanzones were empty");
             return;
         }
+
+
 
         if (PersonPot.Control.RoutesCache1.ContainANewerOrSameRoute(_ini.MyId, _fin.MyId, _askDateTime)
             && string.IsNullOrEmpty(_person.IsBooked))

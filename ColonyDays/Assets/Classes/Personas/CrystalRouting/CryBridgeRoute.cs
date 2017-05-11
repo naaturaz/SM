@@ -69,6 +69,10 @@ public class CryBridgeRoute
 
     private void Init()
     {
+        //NavMesh();
+        //return;
+
+
         _bridgePsuedoPath = BuildingPot.Control.BridgeManager1.ReturnBestPath(_one, _two);
 
         if (_bridgePsuedoPath == null)
@@ -79,6 +83,24 @@ public class CryBridgeRoute
 
         FindTheLegsPoints();
         InitIndividualRoutes();
+    }
+
+
+    void NavMesh()
+    {
+        var iniH = (Structure)_ini;
+        var finH = (Structure)_fin;
+
+        //bz navmesh now this is all I needed 
+        List<CheckPoint> pts = new List<CheckPoint>()
+        {
+            new CheckPoint(iniH.BehindMainDoorPoint),
+            new CheckPoint(iniH.SpawnPoint.transform.position),
+            new CheckPoint(finH.SpawnPoint.transform.position),
+            new CheckPoint(finH.BehindMainDoorPoint),
+        };
+        TheRoute = new TheRoute(pts, _ini.MyId, _fin.MyId);
+        IsRouteReady = true;
     }
 
     /// <summary>

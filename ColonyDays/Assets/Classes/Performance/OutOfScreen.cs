@@ -80,14 +80,6 @@ public class OutOfScreen
     // Update is called once per frame
     public void A45msUpdate()
     {
-        //if (_person == null 
-        //    //|| Program.gameScene.Fustrum1 == null 
-        //    //|| _renderer == null || _person.Body == null
-        //    )
-        //{
-        //     return;
-        //}
-
         _onScreenRectNow = Program.gameScene.Fustrum1.OnScreen(ExtractObjPos());
         //if is moving now can be reshown bz might be on his way somewhere 
         if (_onScreenRectNow &&

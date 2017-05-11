@@ -113,6 +113,11 @@ public class GameTime
     {
         _year++;
 
+        if (BulletinWindow.SubBulletinFinance1 == null)
+        {
+            return;
+        }
+
         BulletinWindow.SubBulletinFinance1.FinanceLogger.AddYearBudget();
     }
 

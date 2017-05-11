@@ -340,7 +340,7 @@ public class Body //: MonoBehaviour //: General
         {
             _personalObject = new PersonalObject(_person);
         }
-        _personalObject.AddressNewAni(animationPass, ShouldHide());
+        _personalObject.AddressNewAni(animationPass, ShouldHidePersonalObject());
         AddressNewAniSound();
     }
 
@@ -768,12 +768,6 @@ public class Body //: MonoBehaviour //: General
     {
         DebugRoutePoints(route);
 
-        //var indexH = route.CheckPoints.Count - 2;
-        //if (inverse)
-        //{
-        //    indexH = 1;
-        //}
-
         var inWork = goingTo == HPers.InWork && _person.Work != null &&
             //not the workers below  
             !_person.Work.HType.ToString().Contains("Farm") &&
@@ -786,15 +780,15 @@ public class Body //: MonoBehaviour //: General
         {
             return route.CheckPoints[route.CheckPoints.Count - 1].Point;
         }
-        //// Docker
-        //if (route.DestinyKey.Contains("Dock") || route.OriginKey.Contains("Dock"))
-        //{
         if (inverse)
         {
             return Brain.GetStructureFromKey(route.OriginKey).SpawnPoint.transform.position;
         }
+        if (route.DestinyKey.Contains("Dummy"))
+        {
+            return route.CheckPoints[route.CheckPoints.Count - 1].Point;
+        }
         return Brain.GetStructureFromKey(route.DestinyKey).SpawnPoint.transform.position;
-        //}
     }
 
     Vector3 RetInitPoint(TheRoute route, HPers goingTo, bool inverse = false, HPers whichRouteP = HPers.None)
@@ -1069,9 +1063,9 @@ public class Body //: MonoBehaviour //: General
 
         if (UMath.nearEqualByDistance(_person.transform.position, _bodyAgent.Destiny, 0.1f))// 
         {
-            _bodyAgent.CleanDestiny();
             //CheckRotation();
             WalkDone();
+            _bodyAgent.CleanDestiny();
         }
     }
 
@@ -1350,10 +1344,7 @@ public class Body //: MonoBehaviour //: General
     private Renderer renderer;
     public void Hide()
     {
-        return;
-
-
-        if (ShouldHide())
+        if (ShouldPersonHide())
         {
             renderer.enabled = false;
 
@@ -1364,7 +1355,43 @@ public class Body //: MonoBehaviour //: General
         }
     }
 
-    bool ShouldHide()
+    bool ShouldPersonHide()
+    {
+        if (_bodyAgent.Destiny != new Vector3())
+        {
+            return false;
+        }
+        if (_movingNow || Location == HPers.IdleSpot //|| Location.ToString().Contains("Work")
+            )
+        {
+            return false;
+        }
+        if (CurrentAni != "isIdle")
+        {
+            return false;
+        }
+
+        var foresterAtStillElement = _person.ProfessionProp.ProfDescription == Job.Forester
+            && _person.ProfessionProp.WorkingNow;
+        var builderAtConstruction = _person.ProfessionProp.ProfDescription == Job.Builder;
+        var farmer = _person.ProfessionProp != null && _person.ProfessionProp.ProfDescription == Job.Farmer;
+        var fishOrOther = CurrTheRoute != null && CurrentAni != "isIdle" &&
+            (CurrTheRoute.DestinyKey.Contains("Dummy") || CurrTheRoute.DestinyKey.Contains("Fish"));
+
+        if (foresterAtStillElement || builderAtConstruction || farmer || fishOrOther)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+
+    /// <summary>
+    /// Use to determine if PersonalObject needs to be hidden
+    /// </summary>
+    /// <returns></returns>
+    bool ShouldHidePersonalObject()
     {
         if (_person.IsMilitarNow())
         {
@@ -1376,10 +1403,10 @@ public class Body //: MonoBehaviour //: General
             return false;
         }
 
-        if (!Inverse && !ContainsOpenAirJob(CurrTheRoute.DestinyKey))
-        {
-            return true;
-        }
+        //if (!Inverse && !ContainsOpenAirJob(CurrTheRoute.DestinyKey))
+        //{
+        //    return true;
+        //}
         //if (Inverse && !ContainsOpenAirJob(CurrTheRoute.OriginKey))
         //{
         //    return true;
@@ -1396,8 +1423,10 @@ public class Body //: MonoBehaviour //: General
 
         var foresterAtStillElement = _person.ProfessionProp.ProfDescription == Job.Forester;
         var builderAtConstruction = _person.ProfessionProp.ProfDescription == Job.Builder;
+        var docker = _person.ProfessionProp.ProfDescription == Job.Docker || _person.PrevJob == Job.Docker;
 
-        if (foresterAtStillElement || builderAtConstruction)
+        if (foresterAtStillElement || builderAtConstruction || docker
+            )
         {
             return true;
         }
@@ -1443,12 +1472,12 @@ public class Body //: MonoBehaviour //: General
     {
         if (_person == null || _routePoins == null || _routePoins.Count == 0) { return; }
 
-        var dist = 0.9f;//.2 //.25
+        //var dist = 0.9f;//.2 //.25
         var currDist = Vector3.Distance(_person.transform.position, _bodyAgent.Destiny);
         //getting close to last point
-        if (currDist < dist)
+        if (!_movingNow)
         {
-            Hide();
+            //Hide();
             //not when gonna idle .. other wise will just hide body on miuddle of iddle
             //when is coming back ca be hidden not problem bz will be in the house again 
             if (_whichRoute == HPers.IdleSpot && !_inverse)
@@ -1495,7 +1524,7 @@ public class Body //: MonoBehaviour //: General
         //getting close to last point
         if (currDist < dist)
         {
-            Hide();
+            //Hide();
             //not when gonna idle .. other wise will just hide body on miuddle of iddle
             //when is coming back ca be hidden not problem bz will be in the house again 
             if (_whichRoute == HPers.IdleSpot && !_inverse)
@@ -1550,7 +1579,7 @@ public class Body //: MonoBehaviour //: General
             return;
         }
 
-        _personalObject.AddressNewAni(_currentAni, true);
+        _personalObject.AddressNewAni(_currentAni, false);
     }
 
     public void UpdatePersonalObjAniSpeed()

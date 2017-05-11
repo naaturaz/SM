@@ -138,16 +138,39 @@ public class CryRoute
 
     private void Init()
     {
+        //NavMesh();
+        //return;
+
         //Debug.Log("init route:" + _person.MyId);
         _timeStamp = Time.time;
 
         _curr.Position = U2D.FromV3ToV2(_one.Position);
-        loop = true;
+        //loop = true;
 
         ClearDebugLocal();
 
         _finCrystal = new Crystal(_two.Position, H.Door, _fin.MyId, true, false);
     }
+
+
+    void NavMesh()
+    {
+        var iniH = (Structure)_ini;
+        var finH = (Structure)_fin;
+
+        //bz navmesh now this is all I needed 
+        List<CheckPoint> pts = new List<CheckPoint>()
+        {
+            new CheckPoint(iniH.BehindMainDoorPoint),
+            new CheckPoint(iniH.SpawnPoint.transform.position),
+            new CheckPoint(finH.SpawnPoint.transform.position),
+            new CheckPoint(finH.BehindMainDoorPoint),
+        };
+        TheRoute = new TheRoute(pts, _ini.MyId, _fin.MyId);
+        IsRouteReady = true;
+    }
+
+
 
     void ClearDebugLocal()
     {

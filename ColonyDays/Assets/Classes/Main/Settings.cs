@@ -121,6 +121,11 @@ public class Settings
             return;
         }
         loadedOnce = true;
+        Debug.Log("Loading Settings");
+
+        LoadFromFilePlayerPref();
+        return;
+
         var pData = XMLSerie.ReadXMLProgram();
 
         Settings.ISSoundOn = pData.SoundIsOn;
@@ -144,15 +149,21 @@ public class Settings
             Languages.SetCurrentLang("English");
         }
 
-        Debug.Log("Loading Settings");
 
     }
+
+
 
     /// <summary>
     /// Saves to file audio settings 
     /// </summary>
     public static void SaveToFile()
     {
+        SaveToFilePlayerPref();
+        Debug.Log("Saving settings");
+
+        return;
+
         var pData = XMLSerie.ReadXMLProgram();
 
         pData.SoundIsOn = Settings.ISSoundOn;
@@ -171,13 +182,74 @@ public class Settings
         pData.Lang = Languages.CurrentLang();
 
         XMLSerie.WriteXMLProgram(pData);
-        Debug.Log("Saving settings");
+
+    }
+
+
+    private static void LoadFromFilePlayerPref()
+    {
+        var rr = PlayerPrefs.GetString("P1Once");
+        if (PlayerPrefs.GetString("P1Once") != "Yes")
+        {
+            //first time ever loadded and is better use defaiult stuff
+            return;
+        }
+
+        var l = PlayerPrefs.GetString("Sound");
+        ISSoundOn =  PlayerPrefs.GetString("Sound") == "True";
+        ISMusicOn = PlayerPrefs.GetString("Music") == "True";
+
+        AudioCollector.SoundLevel = PlayerPrefs.GetFloat("SoundLevel");
+        AudioCollector.MusicLevel = PlayerPrefs.GetFloat("MusicLevel");
+
+        char u;
+        char.TryParse(PlayerPrefs.GetString("CurrentSystem"), out u);
+        if (u==null)
+        {
+            Unit.Units = 'i';
+        }
+        else
+        {
+            Unit.Units = u;
+        }
+        AutoSaveFrec = (int)PlayerPrefs.GetFloat("AutoSaveFrec");
+
+        //screen
+        QualitySettings.SetQualityLevel((int)PlayerPrefs.GetFloat("QualityLevel"));
+        Screen.fullScreen = PlayerPrefs.GetString("FullScreen") =="True";
+        Languages.SetCurrentLang(PlayerPrefs.GetString("Lang"));
+        //in case was deleted or somehting
+        if (string.IsNullOrEmpty(Languages.CurrentLang()))
+        {
+            Languages.SetCurrentLang("English");
+        }
+    }
+
+    static void SaveToFilePlayerPref()
+    {
+        PlayerPrefs.SetString("Sound", ISSoundOn+"");
+        PlayerPrefs.SetString("Music", ISMusicOn + "");
+
+        PlayerPrefs.SetFloat("SoundLevel", AudioCollector.SoundLevel);
+        PlayerPrefs.SetFloat("MusicLevel", AudioCollector.MusicLevel);
+
+        PlayerPrefs.SetString("CurrentSystem", Unit.CurrentSystem()+"");
+        PlayerPrefs.SetFloat("AutoSaveFrec", AutoSaveFrec);
+
+        //screen
+        PlayerPrefs.SetFloat("QualityLevel", QualitySettings.GetQualityLevel());
+        PlayerPrefs.SetString("FullScreen", Screen.fullScreen + "");
+
+        PlayerPrefs.SetString("Lang", Languages.CurrentLang() + "");
+
+        //it was saved b4,,, if not will use default stuff
+        PlayerPrefs.SetString("P1Once", "Yes");
 
     }
 
     #endregion
 
-#region Change Params 
+    #region Change Params 
     internal static void SetQuality(string qual)
     {
         string[] names = QualitySettings.names;

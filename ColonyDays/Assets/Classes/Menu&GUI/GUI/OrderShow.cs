@@ -60,7 +60,7 @@ public class OrderShow : GUIElement
     public void Show(Order order)
     {
         _prod = order.Product;
-        _amt = order.Amount;
+        _amt = order.Left();
 
         Start();
 

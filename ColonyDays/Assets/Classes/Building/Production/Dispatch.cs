@@ -373,10 +373,10 @@ public class Dispatch
         for (int i = 0; i < currOrders.Count; i++)
         {
             //if the Inventory of destiny build is full will skip that order 
-            if (IsDestinyBuildInvFullForThisProd(currOrders[i]))
+            if (IsDestinyBuildInvFullForThisProd(currOrders[i]) || currOrders[i].IsCompleted)
             {
                 //todo Notify
-                //Debug.Log("Inv full to DestBuild:"+currOrders[i].DestinyBuild+"|for prod:"+currOrders[i].Product+"" +"|order removed");
+                Debug.Log("Inv full to DestBuild:"+currOrders[i].DestinyBuild+"|for prod:"+currOrders[i].Product+"" +"|order removed");
 
                 RemoveOrderByIDExIm(currOrders[i].ID);
                 i--;
@@ -512,23 +512,37 @@ public class Dispatch
     {
         var foodSrc = FindFoodSrcWithProd(person, order.Product);
 
-        //bz dock inventory amount of this item must be less other wise wont be given
-        //this is to avoid dockkers keep dumping an item into Dock Inventory until a ship arrives 
-        if (foodSrc != "" && person.Work.Inventory.ReturnAmtOfItemOnInv(order.Product) < order.Amount)
+        if (foodSrc != "" //&& person.Work.Inventory.ReturnAmtOfItemOnInv(order.Product) < order.Amount
+            )
         {
             Order temp = new Order();
             temp = Order.Copy( order);
             OrderFound(order);
 
-            temp.Amount = person.HowMuchICanCarry();
+            temp.Amount = order.ApproveThisAmt(person.HowMuchICanCarry());
+            order.AddToFullFilled(temp.Amount);
             temp.SourceBuild = foodSrc;
             return temp;
+        }
+        //bz dock inventory amount of this item must be less other wise wont be given
+        //this is to avoid dockkers keep dumping an item into Dock Inventory until a ship arrives 
+        else if (foodSrc != "" && person.Work.Inventory.ReturnAmtOfItemOnInv(order.Product) > order.Amount)
+        {
+            //this is once the invnetory in the port has more than the ammount. u need
+            //to find a way to see how much is left of the order so that amt will become
+            //the current order for this person... order object maybe needs a feel with completion amt, and completed bool
+
         }
         //if not found a FoodSrc with the Product need to seend it to the back of the queue
         //or send it to Recycled Orders
         OrderFound(order);
         
         return null;        
+    }
+
+    internal bool ThereIsWorkAtDock()
+    {
+        return _expImpOrders.Count > 0;
     }
 
     ///// <summary>
@@ -980,15 +994,14 @@ public class Dispatch
     /// <param name="id"></param>
     internal bool RemoveOrderByIDExIm(string id)
     {
+        var res = false;
         for (int i = 0; i < _orders.Count; i++)
         {
             if (_orders[i].ID == id)
             {
                 _orders.RemoveAt(i);
                 CheckIfExportAndStillOnDockStorage();
-
-                return true;
-
+                res = true;
             }
         }
         for (int i = 0; i < _recycledOrders.Count; i++)
@@ -997,9 +1010,7 @@ public class Dispatch
             {
                 _recycledOrders.RemoveAt(i);
                 CheckIfExportAndStillOnDockStorage();
-
-                return true;
-
+                res = true;
             }
         }
 
@@ -1008,11 +1019,10 @@ public class Dispatch
             if (_expImpOrders[i].ID == id)
             {
                 _expImpOrders.RemoveAt(i);
-                return true;
+                res = true;
             }
         }
-        return false;
-
+        return res;
     }
 
     void RemoveOrderFromAllListByID(string id)
@@ -1085,10 +1095,39 @@ public class Order
     //the amount dispatched in an order
     float _amount;
 
+    float _fullFilled;
+    bool _isCompleted;
+
     public float Amount
     {
         get { return _amount; }
         set { _amount = value; }
+    }
+
+    public float FullFilled
+    {
+        get
+        {
+            return _fullFilled;
+        }
+
+        set
+        {
+            _fullFilled = value;
+        }
+    }
+
+    public bool IsCompleted
+    {
+        get
+        {
+            return _isCompleted;
+        }
+
+        set
+        {
+            _isCompleted = value;
+        }
     }
 
     public DateTime PlacedTime;
@@ -1159,5 +1198,34 @@ public class Order
         Amount = amt;
     }
 
- 
+    public void AddToFullFilled(float pls)
+    {
+        FullFilled += pls;
+
+        if (FullFilled >= _amount)
+        {
+            IsCompleted=true;
+        }
+    }
+
+    public float ApproveThisAmt(float pls)
+    {
+        if (IsCompleted)
+        {
+            return 0;
+        }
+
+        var left = _amount - FullFilled;
+
+        if (left > pls)
+        {
+            return pls;
+        }
+        return left;
+    }
+
+    internal float Left()
+    {
+        return _amount - FullFilled;
+    }
 }

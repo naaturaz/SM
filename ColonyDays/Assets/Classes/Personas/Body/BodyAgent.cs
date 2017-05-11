@@ -37,8 +37,6 @@ public class BodyAgent  {
         NewSpeed();
 
         _agent.enabled = false;
-
-
     }
 
 
@@ -70,10 +68,9 @@ public class BodyAgent  {
             if (_nextDest != new Vector3())
             {
                 Debug.Log("Point reached:" + _person.Name);
+                _nextDest = new Vector3();
+                _agent.enabled = false;
             }
-
-            _nextDest = new Vector3();
-            _agent.enabled = false;
         }
     }
 
@@ -92,6 +89,11 @@ public class BodyAgent  {
         _nextDest = point;
         _agent.enabled = true;
         deb = UVisHelp.CreateHelpers(point, Root.yellowCube);
+
+        if (_person.Body != null)
+        {
+            _person.Body.Show();
+        }
     }
 
     internal void NewSpeed()
@@ -111,8 +113,12 @@ public class BodyAgent  {
         }
     }
 
+    /// <summary>
+    /// Called after  WalkDone() from body.cs
+    /// </summary>
     internal void CleanDestiny()
     {
         _destiny = new Vector3();
+        _person.Body.Hide();
     }
 }
