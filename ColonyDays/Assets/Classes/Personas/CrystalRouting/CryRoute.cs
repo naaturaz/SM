@@ -145,7 +145,7 @@ public class CryRoute
         _timeStamp = Time.time;
 
         _curr.Position = U2D.FromV3ToV2(_one.Position);
-        //loop = true;
+        loop = true;
 
         ClearDebugLocal();
 

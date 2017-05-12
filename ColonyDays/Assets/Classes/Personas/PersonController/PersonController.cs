@@ -248,7 +248,7 @@ public class PersonController : PersonPot
     }
 
     private Person tempPerson;
-    public void SpawnIniPersonas(int amtP = 0, Vector3 iniPos = new Vector3())
+    public void SpawnIniPersonas(int amtP = 0, Vector3 iniPos = new Vector3(), int age = 0)
     {
         if (amtP == 0)
         {
@@ -257,7 +257,7 @@ public class PersonController : PersonPot
 
         for (int i = 0; i < amtP; i++)
         {
-            Person t = Person.CreatePerson(iniPos);
+            Person t = Person.CreatePerson(iniPos, age);
             MouseClick += t.MouseClickHandler;
 
             //
@@ -446,6 +446,11 @@ public class PersonController : PersonPot
         if (Input.GetKeyUp(KeyCode.N))
         {
             DebugSpawnMorePeople(1 * AmtOfPeople());
+        }
+        //spawns a kid 
+        if (Input.GetKeyUp(KeyCode.K))
+        {
+            SpawnIniPersonas(1, new Vector3(), 8);
         }
     }
 

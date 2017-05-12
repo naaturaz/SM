@@ -2894,6 +2894,8 @@ public class Brain
 
         //the route key is added so we dont blaclist 2 buildings of a same route
         //only the 1st one need to be blacklisted. this applys for BridgeRouting 
+        
+        //bz of navMesh im commeting this out
         _blackList = AddToList(_blackList, buildID);
 
         if (routeType == HPers.InWork || routeType == HPers.InWorkBack)

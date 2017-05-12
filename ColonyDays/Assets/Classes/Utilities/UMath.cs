@@ -517,5 +517,14 @@ public class UMath : MonoBehaviour {
         return res;
     }
 
-
+    /// <summary>
+    /// Scale the val by a percentage.... the sign of the percentage matters 
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="percentage"></param>
+    /// <returns></returns>
+    public static float ScalePercentage(float val, float percentage)
+    {
+        return val + (val/100* percentage);
+    }
 }

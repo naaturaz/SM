@@ -764,31 +764,33 @@ public class Body //: MonoBehaviour //: General
 
     }
 
-    Vector3 RetDestiny(TheRoute route, HPers goingTo, bool inverse = false, HPers whichRouteP = HPers.None)
+    Vector3 RetDestiny(TheRoute route, HPers goingTo, out Vector3 doorPt, bool inverse = false, HPers whichRouteP = HPers.None
+       )
     {
-        DebugRoutePoints(route);
+        //DebugRoutePoints(route);
 
-        var inWork = goingTo == HPers.InWork && _person.Work != null &&
-            //not the workers below  
-            !_person.Work.HType.ToString().Contains("Farm") &&
-            !_person.Work.HType.ToString().Contains("Fish") &&
-            !_person.Work.HType.ToString().Contains("ShoreMine") &&
-            !_person.Work.HType.ToString().Contains("Dock");
-
-
-        if (inWork || goingTo == HPers.IdleSpot)
+        if (goingTo == HPers.IdleSpot || route.DestinyKey.Contains("Dummy"))
         {
+            //coming back from Idle pos to house
+            if (inverse)
+            {
+                return RetuInverse(route, out doorPt);
+            }
+            doorPt = new Vector3();
             return route.CheckPoints[route.CheckPoints.Count - 1].Point;
         }
         if (inverse)
         {
-            return Brain.GetStructureFromKey(route.OriginKey).SpawnPoint.transform.position;
+            return RetuInverse(route, out doorPt);
         }
-        if (route.DestinyKey.Contains("Dummy"))
-        {
-            return route.CheckPoints[route.CheckPoints.Count - 1].Point;
-        }
+        doorPt = Brain.GetStructureFromKey(route.DestinyKey).BehindMainDoorPoint;
         return Brain.GetStructureFromKey(route.DestinyKey).SpawnPoint.transform.position;
+    }
+
+    Vector3 RetuInverse(TheRoute route, out Vector3 doorPt)
+    {
+        doorPt = Brain.GetStructureFromKey(route.OriginKey).BehindMainDoorPoint;
+        return Brain.GetStructureFromKey(route.OriginKey).SpawnPoint.transform.position;
     }
 
     Vector3 RetInitPoint(TheRoute route, HPers goingTo, bool inverse = false, HPers whichRouteP = HPers.None)
@@ -815,8 +817,15 @@ public class Body //: MonoBehaviour //: General
 
         if (!_bodyCall)
         {
-            var dest = RetDestiny(route, goingTo, inverse, whichRouteP);
-            _bodyAgent.Walk(dest);
+            Vector3 moveToAtStartWalk = new Vector3();
+            if (Brain.GetStructureFromKey(route.OriginKey) != null)
+            {
+                moveToAtStartWalk = Brain.GetStructureFromKey(route.OriginKey).SpawnPoint.transform.position;
+            }
+
+            Vector3 doorPt;
+            var dest = RetDestiny(route, goingTo, out doorPt, inverse, whichRouteP);
+            _bodyAgent.Walk(dest, doorPt, moveToAtStartWalk);
         }
 
 
@@ -1063,9 +1072,10 @@ public class Body //: MonoBehaviour //: General
 
         if (UMath.nearEqualByDistance(_person.transform.position, _bodyAgent.Destiny, 0.1f))// 
         {
+            _bodyAgent.CleanDestiny();
             //CheckRotation();
             WalkDone();
-            _bodyAgent.CleanDestiny();
+            _person.Body.Hide();
         }
     }
 
@@ -1344,6 +1354,8 @@ public class Body //: MonoBehaviour //: General
     private Renderer renderer;
     public void Hide()
     {
+        return;
+
         if (ShouldPersonHide())
         {
             renderer.enabled = false;

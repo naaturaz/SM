@@ -222,7 +222,9 @@ public class BuildersManager
         bool iron = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Iron) >= stat.Iron || stat.Iron == 0;
         bool gold = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Gold) >= stat.Gold || stat.Gold == 0;
         bool dollar = Program.gameScene.GameController1.Dollars >= stat.Dollar || stat.Dollar == 0;
-        bool passedQue = _passedQueue.Contains(cons.Key);
+
+        //passed the queue so all people check in with a new or updated route 
+        //bool passedQue = _passedQueue.Contains(cons.Key);
 
        
         bool nail = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Nail) >= stat.Nail || stat.Nail == 0;
@@ -238,7 +240,7 @@ public class BuildersManager
 
         //other wise would remove it from _passedQueue if was mising Brick for example and wont be 
         //build it ever again
-        if (wood && stone && brick && iron && gold && dollar && passedQue
+        if (wood && stone && brick && iron && gold && dollar //&& passedQue
             && nail && furniture && mortar && floor && roof && machine)
         {
             var build = Brain.GetBuildingFromKey(cons.Key);

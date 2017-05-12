@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Random = UnityEngine.Random;
+using UnityEngine.AI;
 
 public class Building : Hoverable, Iinfo
 {
@@ -1241,6 +1242,7 @@ public class Building : Hoverable, Iinfo
             return;
         }
 
+        AddNavMeshObst();
         ManagerReport.AddInput("Building Placed: " + transform.name);
 
         LayerRoutine("done");
@@ -1275,6 +1277,59 @@ public class Building : Hoverable, Iinfo
         //by all
         BuildingPot.Control.AddToQueuesRestartPersonControl(MyId);
     }
+
+
+
+
+
+    #region NavMesh
+    
+
+
+    Dictionary<H, Vector3> _percetagesReduction = new Dictionary<H, Vector3>()
+    {
+        {H.Bohio, new Vector3(-37,0,-53)},
+        {H.StandLamp, new Vector3(0,0,0)},//wont get carved
+
+    };
+
+    /// <summary>
+    /// called on Start
+    /// </summary>
+    void AddNavMeshObst()
+    {
+        Geometry.AddComponent<NavMeshObstacle>();
+        SetNavMeshObstacle();
+    }
+
+    /// <summary>
+    /// Called once is fully built 
+    /// Needs to be added to Main GameObect or Geometry GO
+    /// </summary>
+    private void SetNavMeshObstacle()
+    {
+        var perc = new Vector3(-15, 0, -15);
+        if (_percetagesReduction.ContainsKey(HType))
+        {
+            perc = _percetagesReduction[HType];
+        }
+
+        if (perc == new Vector3())
+        {
+            return;
+        }
+
+        var nav = Geometry.GetComponent<NavMeshObstacle>();
+        nav.carving = true;
+        nav.carvingMoveThreshold = 0;
+        nav.size = new Vector3(
+            UMath.ScalePercentage(nav.size.x, perc.x),
+            UMath.ScalePercentage(nav.size.y, perc.y),
+            UMath.ScalePercentage(nav.size.z, perc.z));
+    }
+
+
+    #endregion
 
 
 

@@ -4,13 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BodyAgent  {
+public class BodyAgent
+{
 
     float _speedInitial;
     NavMeshAgent _agent;
     Person _person;
 
     private Vector3 _destiny;
+    Vector3 _afterDestiny;
     bool _destWasSet;
 
     Vector3 _nextDest;
@@ -57,6 +59,12 @@ public class BodyAgent  {
             _agent.SetDestination(Destiny);
         }
         CheckIfGoingIntoBuild();
+
+        //if something is built while he is in it 
+        if (_agent.enabled && !_agent.isOnNavMesh)
+        {
+            _person.transform.position = Vector3.MoveTowards(_person.transform.position, _person.transform.forward, _agent.speed);
+        }
     }
 
     private void CheckIfGoingIntoBuild()
@@ -75,17 +83,19 @@ public class BodyAgent  {
     }
 
     General deb;
-    internal void Walk(Vector3 point)
+    internal void Walk(Vector3 point, Vector3 afterDest, Vector3 moveNowTo)
     {
-        if (deb !=null)
+        if (deb != null)
         {
             deb.Destroy();
         }
 
         _agent.enabled = false;
+        _person.transform.position = moveNowTo;
 
         _destWasSet = false;
         Destiny = point;
+        _afterDestiny = afterDest;
         _nextDest = point;
         _agent.enabled = true;
         deb = UVisHelp.CreateHelpers(point, Root.yellowCube);
@@ -119,6 +129,12 @@ public class BodyAgent  {
     internal void CleanDestiny()
     {
         _destiny = new Vector3();
-        _person.Body.Hide();
+
+        if (_afterDestiny == new Vector3())
+        {
+            return;
+        }
+        //will positioned there on after destiny tthat is a door 
+        _person.transform.position = _afterDestiny;
     }
 }

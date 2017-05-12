@@ -10,7 +10,7 @@ public class OnlyShowOnce : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        if (!string.IsNullOrEmpty(PlayerPrefs.GetString("F1")))
+        if (!string.IsNullOrEmpty(PlayerPrefs.GetString(PlayerPrefStringParam)))
         {
             gameObject.SetActive(false);
         }

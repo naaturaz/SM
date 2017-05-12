@@ -392,7 +392,7 @@ public class Person : Hoverable
     /// <summary>
     /// Intended to be used For the first load of people spawned
     /// </summary>
-    public static Person CreatePerson(Vector3 iniPos = new Vector3())
+    public static Person CreatePerson(Vector3 iniPos = new Vector3(), int age = 0)
     {
         Person obj = null;
 
@@ -407,6 +407,11 @@ public class Person : Hoverable
 
         //better like 17/29. since if they are less than 16 and have not parent is not addressed
         int iniAge = General.GiveRandom(17, 29); //5, 29
+
+        if (age > 0)
+        {
+            iniAge = age;
+        }
 
         obj = (Person)Instantiate(obj, iniPos, Quaternion.identity);
 

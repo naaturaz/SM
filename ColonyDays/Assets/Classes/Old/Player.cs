@@ -164,7 +164,7 @@ public class Player : Character {
         //Die
         else if (Input.GetKeyDown(KeyCode.K))
         {
-            SetCurrentAni("isYoga", FindCurrentAni());
+            //SetCurrentAni("isYoga", FindCurrentAni());
         }
         //Rotates 
         transform.Rotate(0, Input.GetAxis("Horizontal") * 100f * Time.deltaTime, 0);
