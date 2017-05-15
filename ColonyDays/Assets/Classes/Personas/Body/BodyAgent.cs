@@ -59,12 +59,6 @@ public class BodyAgent
             _agent.SetDestination(Destiny);
         }
         CheckIfGoingIntoBuild();
-
-        //if something is built while he is in it 
-        if (_agent.enabled && !_agent.isOnNavMesh)
-        {
-            _person.transform.position = Vector3.MoveTowards(_person.transform.position, _person.transform.forward, _agent.speed);
-        }
     }
 
     private void CheckIfGoingIntoBuild()
@@ -75,7 +69,7 @@ public class BodyAgent
         {
             if (_nextDest != new Vector3())
             {
-                Debug.Log("Point reached:" + _person.Name);
+                //Debug.Log("Point reached:" + _person.Name);
                 _nextDest = new Vector3();
                 _agent.enabled = false;
             }

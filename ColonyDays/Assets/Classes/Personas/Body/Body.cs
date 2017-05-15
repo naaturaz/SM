@@ -769,7 +769,7 @@ public class Body //: MonoBehaviour //: General
     {
         //DebugRoutePoints(route);
 
-        if (goingTo == HPers.IdleSpot || route.DestinyKey.Contains("Dummy"))
+        if (goingTo == HPers.IdleSpot || route.DestinyKey.Contains("Dummy") || route.DestinyKey.Contains("Tree"))
         {
             //coming back from Idle pos to house
             if (inverse)
@@ -795,6 +795,12 @@ public class Body //: MonoBehaviour //: General
 
     Vector3 RetInitPoint(TheRoute route, HPers goingTo, bool inverse = false, HPers whichRouteP = HPers.None)
     {
+        //builder going from Built plce to Storage 
+        if (route.OriginKey.Contains("Dummy") || route.OriginKey.Contains("Tree"))
+        {
+            return route.CheckPoints[0].Point;
+        }
+
         var indexH = 1;
         if (inverse)
         {
@@ -1607,14 +1613,14 @@ public class Body //: MonoBehaviour //: General
             return;
         }
 
-
-        //if (!_person.Inventory.IsEmpty() && _person.Inventory.CarryLiquid() && _currentAni != "isBucket")
-        //{
-        //    TurnCurrentAniAndStartNew("isBucket");
-        //}
-        if (!_person.Inventory.IsEmpty() && _currentAni != "isCarry")//isCarry
+        if (!_person.Inventory.IsEmpty())
         {
-            TurnCurrentAniAndStartNew("isCarry");//isCarry
+            var carryAni = "isCarry";
+            if (GameController.AreThereWheelBarrowsOnStorage)
+            {
+                carryAni = "isWheelBarrow";
+            }
+            TurnCurrentAniAndStartNew(carryAni);
         }
 
         DefineSpeed();

@@ -699,7 +699,6 @@ public class Building : Hoverable, Iinfo
         if (!IsLoadingFromFile)
         {
             CurrentProd = BuildingPot.Control.ProductionProp.ReturnDefaultProd(HType);
-            
         }
 
         InitJobRelated();
@@ -709,11 +708,13 @@ public class Building : Hoverable, Iinfo
 
         StartCoroutine("ThirtySecUpdate");
         StartCoroutine("SixtySecUpdate");
+        StartCoroutine("OneSecUpdate");
 
         DefinePreferedStorage();
 
         if (IsLoadingFromFile)
         {
+            _lastStageTime = Time.time;
             DestroyDoubleBoundHelp();
         }
 
@@ -1242,6 +1243,8 @@ public class Building : Hoverable, Iinfo
             return;
         }
 
+        PlacedBuildingFX();
+
         AddNavMeshObst();
         ManagerReport.AddInput("Building Placed: " + transform.name);
 
@@ -1279,17 +1282,61 @@ public class Building : Hoverable, Iinfo
     }
 
 
+    #region PlacedFX
 
+    List<General> _placedBuildFX = new List<General>();
+    void PlacedBuildingFX()
+    {
+        if (IsLoadingFromFile            )
+        {
+            return;
+        }
 
+        //placed building
+        var dust = General.Create("Prefab/Particles/PlaceBuildDust", MiddlePoint());
+        AudioCollector.PlayOneShot("ConstructionPlaced", transform.position);
+
+        if (HType == H.StandLamp)
+        {
+            return;
+        }
+
+        _placedBuildFX.Add(Create("Prefab/Building/Show/Center", MiddlePoint(), "Placed", transform));
+        for (int i = 0; i < _anchors.Count; i++)
+        {
+            var c = Create("Prefab/Building/Show/Corner", _anchors[i], "Placed", transform);
+            c.transform.LookAt(MiddlePoint());
+            _placedBuildFX.Add(c);
+        }
+    }
+
+    void DestroyAllPlacedFX()
+    {
+        for (int i = 0; i < _placedBuildFX.Count; i++)
+        {
+            Destroy(_placedBuildFX[i].gameObject);
+        }
+        _placedBuildFX.Clear();
+    }
+
+    #endregion
 
     #region NavMesh
-    
 
+    NavMeshObstacle _nav;
+    float _lastStageTime = -1;
+    bool _wasNavSet;
+    Vector3 _navInitSize;
 
     Dictionary<H, Vector3> _percetagesReduction = new Dictionary<H, Vector3>()
     {
         {H.Bohio, new Vector3(-37,0,-53)},
         {H.StandLamp, new Vector3(0,0,0)},//wont get carved
+        {H.FieldFarmMed, new Vector3(-19,0,-35)},
+        {H.LumberMill, new Vector3(-19,0,-45)},
+
+        { H.HeavyLoad, new Vector3(-8,0,-8)},
+        { H.LightHouse, new Vector3(-20,0,-40)},
 
     };
 
@@ -1299,7 +1346,28 @@ public class Building : Hoverable, Iinfo
     void AddNavMeshObst()
     {
         Geometry.AddComponent<NavMeshObstacle>();
-        SetNavMeshObstacle();
+        _nav = Geometry.GetComponent<NavMeshObstacle>();
+        _navInitSize = _nav.size;
+
+        Vector3 perc = new Vector3(12,0, 12);
+        //it grows a bit so move people away a bit so when carving the are not
+        //in the middle of noWhere
+        _nav.size = new Vector3(
+            UMath.ScalePercentage(_nav.size.x, perc.x),
+            UMath.ScalePercentage(_nav.size.y, perc.y),
+            UMath.ScalePercentage(_nav.size.z, perc.z));
+    }
+
+    void CheckOnSetNavMeshObst()
+    {
+        if (!_wasNavSet && Time.time > _lastStageTime + 5 && _lastStageTime > 0)
+        {
+            _wasNavSet = true;
+            if (_nav!=null)
+            {
+                SetNavMeshObstacle();
+            }
+        }
     }
 
     /// <summary>
@@ -1308,24 +1376,36 @@ public class Building : Hoverable, Iinfo
     /// </summary>
     private void SetNavMeshObstacle()
     {
-        var perc = new Vector3(-15, 0, -15);
+        //restores initial size 
+        _nav.size = _navInitSize;
+
+        var perc = new Vector3(-16, 0, -16);
         if (_percetagesReduction.ContainsKey(HType))
         {
             perc = _percetagesReduction[HType];
         }
-
         if (perc == new Vector3())
         {
             return;
         }
 
-        var nav = Geometry.GetComponent<NavMeshObstacle>();
-        nav.carving = true;
-        nav.carvingMoveThreshold = 0;
-        nav.size = new Vector3(
-            UMath.ScalePercentage(nav.size.x, perc.x),
-            UMath.ScalePercentage(nav.size.y, perc.y),
-            UMath.ScalePercentage(nav.size.z, perc.z));
+        //then scales 
+        _nav.size = new Vector3(
+            UMath.ScalePercentage(_nav.size.x, perc.x),
+            UMath.ScalePercentage(_nav.size.y, perc.y),
+            UMath.ScalePercentage(_nav.size.z, perc.z));
+        _nav.carving = true;
+        _nav.carvingMoveThreshold = 0;
+    }
+
+
+    private IEnumerator OneSecUpdate()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1); // wait
+            CheckOnSetNavMeshObst();
+        }
     }
 
 
@@ -2595,7 +2675,10 @@ public class Building : Hoverable, Iinfo
     /// </summary>
     protected void HandleLastStage(Person person=null)
     {
-        //Debug.Log("construction built 100%:"+MyId+"." + Program.gameScene.GameTime1.TodayYMD());
+        _lastStageTime = Time.time;
+        DestroyAllPlacedFX();
+
+        Debug.Log("construction built 100%:"+MyId+"." + Program.gameScene.GameTime1.TodayYMD());
         PersonPot.Control.RoutesCache1.RemoveAllMine(MyId);
         Quest();
 
@@ -3483,6 +3566,8 @@ public class Building : Hoverable, Iinfo
 
         return res;
     }
+
+
 
     private IEnumerator ThirtySecUpdate()
     {

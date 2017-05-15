@@ -2102,6 +2102,12 @@ public class Person : Hoverable
     /// <param name="item"></param>
     public float HowMuchICanCarry(float maxNeeded = 100f)
     {
+        if (!GameController.AreThereCratesOnStorage)
+        {
+            //todo notify that people are not carrying bz there is not crates
+            return 0;
+        }
+
         var age = AgeFactor();
         var genre = ReturnGenreVal();
 
