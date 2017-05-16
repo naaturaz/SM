@@ -1286,7 +1286,12 @@ public class Brain
         if (!string.IsNullOrEmpty(oldWork))
         {
             var build = GetBuildingFromKey(oldWork);
-            build.RemovePosition();
+
+            if (build!=null)
+            {
+                build.RemovePosition();
+            }
+
         }
 
         if (_person.Work != null)

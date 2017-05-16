@@ -75,11 +75,12 @@ public class Forester : Profession
         }
         HandleStillElement();
 
-
-        var closerAnchorToUs = _stillElement.FindCloserAnchorTo(_person.Work);
-
+        //var closerAnchorToUs = _stillElement.FindCloserAnchorTo(_person.Work);
+        //FinRoutePoint = Vector3.MoveTowards(closerAnchorToUs, _person.Work.transform.position, MoveTowOrigin);//.05
+        //FinRoutePoint = closerAnchorToUs;
+       
         //moving the route point a bit towards the origin so when chopping tree its not inside the tree 
-        FinRoutePoint = Vector3.MoveTowards(closerAnchorToUs, _person.Work.transform.position, MoveTowOrigin * 0.3f);//.05
+        FinRoutePoint = Vector3.MoveTowards(_stillElement.transform.position, _person.Work.transform.position, 0.4f);
 
         //Debug.Log("routerBackWasInit set false");
         routerBackWasInit = false;
@@ -126,7 +127,8 @@ public class Forester : Profession
         _person.MyDummyProf.MyId = StillElementId;
         _person.MyDummyProf.transform.position = FinRoutePoint;
         
-        _person.MyDummyProf.transform.LookAt(_treeCenterPos);
+        _person.MyDummyProf.transform.LookAt(new Vector3(_treeCenterPos.x, _person.MyDummyProf.transform.position.y,
+            _treeCenterPos.z) );
 
         _person.MyDummyProf.LandZone1.Clear();
         _person.MyDummyProf.HandleLandZoning();
@@ -135,7 +137,7 @@ public class Forester : Profession
         //UVisHelp.CreateText(FinRoutePoint, StillElementId, 60);
 
         //bz sometimes falls inside the Still element
-        MoveDummyAwayFromEleSoDoesntFallInsideOfIt();
+        //MoveDummyAwayFromEleSoDoesntFallInsideOfIt();
 
         //so it doesnt add like a door at the end when gets to tree
         Router1 = new CryRouteManager(_person.Work, _person.MyDummyProf, _person,HPers.InWork, true, false);

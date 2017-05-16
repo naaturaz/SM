@@ -307,7 +307,13 @@ public class Dispatch
         RemoveOrderFromTheList(Orders, prod);
         if (!ListContains(_recycledOrders, prod))
         {
-            _recycledOrders.Add(prod);    
+            if (_recycledOrders.Count == 0)
+            {
+                _recycledOrders.Add(prod);
+                return;
+            }
+
+            _recycledOrders.Insert(0,prod);    
         }
     }
 
@@ -338,11 +344,12 @@ public class Dispatch
         for (int i = 0; i < currOrders.Count; i++)
         {
             //if the Inventory of destiny build is full will skip that order 
-            if (IsDestinyBuildInvFullForThisProd(currOrders[i]) || IsDestinyWithOverSoManyKGOfThisProd(500, currOrders[i]))
+            if (IsDestinyBuildInvFullForThisProd(currOrders[i]) || IsDestinyWithOverSoManyKGOfThisProd(500, currOrders[i])
+                || currOrders[i].IsCompleted)
             {
                 //todo Notify
                 Debug.Log("Inv full to DestBuild:"+currOrders[i].DestinyBuild+"|for prod:"+currOrders[i].Product+"" 
-                    +"|order removed. Or  had >500KG on Destiny of the prod");
+                    +"|order removed. Or  had >500KG on Destiny of the prod. or was completed");
                 
                 bool wasRemoved = RemoveOrderByIDExIm(currOrders[i].ID);
 
@@ -495,9 +502,11 @@ public class Dispatch
         {
             Order temp = new Order();
             temp = Order.Copy( order);
-            OrderFound(order);
+            //OrderFound(order);
 
-            temp.Amount = person.HowMuchICanCarry();
+            temp.Amount = order.ApproveThisAmt(person.HowMuchICanCarry());
+            order.AddToFullFilled(temp.Amount);
+
             temp.SourceBuild = foodSrc;
             return temp;
         }

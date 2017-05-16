@@ -1332,11 +1332,21 @@ public class Building : Hoverable, Iinfo
     {
         {H.Bohio, new Vector3(-37,0,-53)},
         {H.StandLamp, new Vector3(0,0,0)},//wont get carved
-        {H.FieldFarmMed, new Vector3(-19,0,-35)},
-        {H.LumberMill, new Vector3(-19,0,-45)},
+
+        { H.FieldFarmSmall, new Vector3(-19,0,-32)},
+        { H.FieldFarmMed, new Vector3(-19,0,-27)},
+
+        { H.LumberMill, new Vector3(-19,0,-45)},
 
         { H.HeavyLoad, new Vector3(-8,0,-8)},
         { H.LightHouse, new Vector3(-20,0,-40)},
+
+        { H.FishingHut, new Vector3(-40,0,-40)},
+
+        { H.QuickLime, new Vector3(-40,0,-40)},
+
+        { H.Carpentry, new Vector3(-40,0,-40)},
+        { H.Carpentry, new Vector3(-5,0,-5)},
 
     };
 
@@ -3428,7 +3438,7 @@ public class Building : Hoverable, Iinfo
         {
             P prod = rawsOnNeed[i].Element;
             //so for nails for example for a Furnitrue will only order 0.2 x 30 = 6kg
-            var amtNeeded = (int) rawsOnNeed[i].Units * 30;
+            var amtNeeded = (int) rawsOnNeed[i].Units * 10;
 
             if (!HaveThisProdOnInv(prod))
             {

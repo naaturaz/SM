@@ -54,6 +54,9 @@ public class Homer : Profession
         BuildToGoBackTo = BuildToGoBackToDefine();
         FinRoutePoint = DefineFinRoute();
 
+        _routingStarted = null;
+        _routingStartPos = new Vector3();
+
         InitRoute();
     }
 
@@ -110,6 +113,11 @@ public class Homer : Profession
     /// </summary>
     void InitRouteWithFoodSrc()
     {
+        //if (IsRouterBackUsed && AnFarmer())
+        //{
+        //    return;
+        //}
+
 //       //Debug.Log(_person.MyId+ ".Prev job:" + _person.PrevJob);
         IsRouterBackUsed = true;
 
@@ -128,7 +136,20 @@ public class Homer : Profession
         Router1 = new CryRouteManager(building, BuildToGoBackTo, _person);
         //Router1 = new RouterManager(building, MyFoodSrc, _person, HPers.InWork);
         RouterBack = new CryRouteManager(BuildToGoBackTo, _person.Home, _person,  HPers.InWork);
+
+        _routingStarted = Program.gameScene.GameTime1.CurrentDate();
+        _routingStartPos = _person.transform.position;
+
+        //if (AnFarmer())
+        //{
+        //    _takeABreakNow = true;
+        //}
     }
+
+    //bool AnFarmer()
+    //{
+    //    return _person.Work != null && _person.Work.HType.ToString().Contains("Farm");
+    //}
 
     public override void Update()
     {
@@ -148,6 +169,17 @@ public class Homer : Profession
         WorkAction(HPers.None);
         Execute();
         CheckWhenDone();
+
+        CheckIfNeedToBeRedone();
+    }
+
+    private void CheckIfNeedToBeRedone()
+    {
+        //if (_routingStarted != null &&  Program.gameScene.GameTime1.ElapsedDateInDaysToDate(_routingStarted) > 10)
+        //{
+        //    Debug.Log("more than 10 days homer.");
+        //    Init();
+        //}
     }
 
     void Execute()
@@ -257,6 +289,9 @@ public class Homer : Profession
     private float _breakDuration = 1f;
     private float startIdleTime;
     private bool _reInit;
+    private MDate _routingStarted;
+    private Vector3 _routingStartPos;
+
     /// <summary>
     /// Used so a person is asking for bridges anchors takes a break and let brdige anchors complete then can 
     /// work on it

@@ -138,18 +138,19 @@ public class CryRoute
 
     private void Init()
     {
-        //NavMesh();
-        //return;
-
-        //Debug.Log("init route:" + _person.MyId);
         _timeStamp = Time.time;
 
+        //Debug.Log("init route:" + _person.MyId);
         _curr.Position = U2D.FromV3ToV2(_one.Position);
         loop = true;
-
-        ClearDebugLocal();
-
+        //ClearDebugLocal();
         _finCrystal = new Crystal(_two.Position, H.Door, _fin.MyId, true, false);
+
+//        NavMesh();
+
+        return;
+
+
     }
 
 
@@ -166,8 +167,21 @@ public class CryRoute
             new CheckPoint(finH.SpawnPoint.transform.position),
             new CheckPoint(finH.BehindMainDoorPoint),
         };
+
+        if (!_iniDoor)
+        {
+            pts.RemoveAt(0);
+        }
+        if (!_finDoor)
+        {
+            pts.RemoveAt(pts.Count - 1);
+        }
+
+        loop = false;
+
         TheRoute = new TheRoute(pts, _ini.MyId, _fin.MyId);
         IsRouteReady = true;
+
     }
 
 
@@ -252,6 +266,12 @@ public class CryRoute
 
     internal void Update()
     {
+        if (loop && Time.time > _timeStamp + 3)
+        {
+            NavMesh();
+            return;
+        }
+
         if (wasBlackListed)
         {
             return;
@@ -480,12 +500,12 @@ public class CryRoute
 
 #if UNITY_EDITOR
 
-        UVisHelp.CreateHelpers(_eval, Root.blueCube);
-        UVisHelp.CreateHelpers(_curr.Position, Root.yellowCube);
-        UVisHelp.CreateHelpers(_two.Position, Root.yellowCube);
+        //UVisHelp.CreateHelpers(_eval, Root.blueCube);
+        //UVisHelp.CreateHelpers(_curr.Position, Root.yellowCube);
+        //UVisHelp.CreateHelpers(_two.Position, Root.yellowCube);
 
-        UVisHelp.CreateText(_ini.transform.position, "ini:" + _ini.MyId, 40);
-        UVisHelp.CreateText(_fin.transform.position, "fin:" + _fin.MyId, 40);
+        //UVisHelp.CreateText(_ini.transform.position, "ini:" + _ini.MyId, 40);
+        //UVisHelp.CreateText(_fin.transform.position, "fin:" + _fin.MyId, 40);
 #endif
 
         Debug.Log("At least the intersection should be reached. Go and investigate but at least once should " +
@@ -610,7 +630,7 @@ public class CryRoute
                 Crystal.DebugCrystal.AddGameObjInPosition(U2D.FromV2ToV3(_curr.Position), Root.yellowSphereHelp);
 
                 //eval are blue
-                UVisHelp.CreateHelpers(_eval, Root.blueCube);
+                //UVisHelp.CreateHelpers(_eval, Root.blueCube);
 
                 //UVisHelp.CreateText(U2D.FromV2ToV3(_curr.Position), _curr.CalcWeight + "");
 
