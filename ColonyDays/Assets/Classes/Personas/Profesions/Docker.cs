@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Docker : Profession
 {
@@ -52,13 +53,13 @@ public class Docker : Profession
 
         PickUpOrder();
 
-        //means no Orders avail 
-        if (_destinyBuild == null)
-        {
+        ////means no Orders avail 
+        //if (_destinyBuild == null)
+        //{
 
-            _takeABreakNow = true;
-            return;
-        }
+        //    _takeABreakNow = true;
+        //    return;
+        //}
 
         InitRoute();
     }
@@ -90,63 +91,141 @@ public class Docker : Profession
 
     void SetSourceAndDestinyBuild()
     {
-        _destinyBuild = GetStructureSrcAndDestiny(Order1.DestinyBuild, _person);
-        _sourceBuild = GetStructureSrcAndDestiny(Order1.SourceBuild, _person);
+        _destinyBuild = GetStructureSrcAndDestinyExpImp();
+        _sourceBuild = GetStructureSrcAndDestinyExpImp();
 
         DestinyBuildKey = Order1.DestinyBuild;
-        SourceBuildKey = Order1.SourceBuild;        
+        SourceBuildKey = Order1.SourceBuild;
     }
 
     void InitRoute()
     {
         RouterActive = true;
-        Router1 = new CryRouteManager(_person.Work, _sourceBuild, _person , HPers.InWork);
+        Router1 = new CryRouteManager(_person.Work, _person.FoodSource, _person, HPers.InWork);
 
-        IsRouterBackUsed = true;
-        RouterBack = new CryRouteManager(_sourceBuild, _destinyBuild, _person, HPers.InWorkBack);
+        //IsRouterBackUsed = true;
+        //RouterBack = new CryRouteManager(_sourceBuild, _person.Work, _person, HPers.InWorkBack);
     }
 
     public override void Update()
     {
-        base.Update();
-
         if (_takeABreakNow)
         {
             TakeABreak();
             return;
         }
 
-        Execute();
+        if (!Router1.IsRouteReady)
+        {
+            Router1.Update();
+        }
+
+        DockerStates();
     }
 
-    void Execute()
+    void CheckIfCanPickUoNewOrder()
     {
-        if (ExecuteNow)
+        if (Order1 == null || Order1.IsCompleted)
         {
-            ExecuteNow = false;
-
-            if (_sourceBuild==null)
-            {
-                _sourceBuild = GetStructureSrcAndDestiny(SourceBuildKey, _person);
-            }
-
-            if (_sourceBuild.HasEnoughToCoverOrder(Order1))
-            {
-               //Debug.Log(_person.MyId + " Docker got from:" + Order1.SourceBuild +" : " + Order1.Product + ".amt:" + Order1.Amount);
-
-                Order1.Amount = _person.HowMuchICanCarry(Order1.Amount);
-                
-                _person.ExchangeInvetoryItem(_sourceBuild, _person, Order1.Product, Order1.Amount);
-                _sourceBuild.CheckIfCanBeDestroyNow(Order1.Product);
-                _person.Body.UpdatePersonalForWheelBa();
-
-                //will remove the import order(evacuation) from diispatch if is completed already
-                _person.Work.Dispatch1.RemoveImportOrder(_person.Work, Order1);
-            }
+            PickUpOrder();
         }
     }
 
- 
+
+    void DockerStates()
+    {
+        //at dock at first
+        if (_person.Body.Location == HPers.Work && _person.Body.GoingTo != HPers.DockerSupply)
+        {
+            CheckIfCanPickUoNewOrder();
+
+            ImportIfPossible();
+            _person.Body.WalkRoutine(Router1.TheRoute, HPers.DockerSupply);
+        }
+        //at food source at first
+        else if (_person.Body.Location == HPers.DockerSupply && _person.Body.GoingTo != HPers.DockerBackToDock)
+        {
+            DropAllMyGoods(_person.FoodSource);//so drop imports if any
+
+            CheckIfCanPickUoNewOrder();
+
+            ExportIfPossible();
+            _person.Body.WalkRoutine(Router1.TheRoute, HPers.DockerBackToDock, true);
+        }
+        //back at dock
+        else if (_person.Body.Location == HPers.DockerBackToDock && _person.Body.GoingTo != HPers.FoodSource)
+        {
+            DropAllMyGoods(_person.Work);//so drops exports if any 
+            _person.Body.WalkRoutine(Router1.TheRoute, HPers.FoodSource);
+
+            _person.Body.UpdatePersonalForWheelBa();
+        }
+    }
+
+    private void ExportIfPossible()
+    {
+        Execute();
+        if (_export)
+        {
+            HandleInventoriesAndOrder();
+        }
+    }
+
+    private void ImportIfPossible()
+    {
+        Execute();
+        if (_import)
+        {
+            HandleInventoriesAndOrder();
+        }
+    }
+
+    bool _export;
+    bool _import;
+    void Execute()
+    {
+        _export = _order != null && _order.SourceBuild != "Ship";
+
+        _import = _order != null && _order.SourceBuild == "Ship";
+    }
+
+    void HandleInventoriesAndOrder()
+    {
+        _sourceBuild = GetStructureSrcAndDestinyExpImp();
+
+        if (_sourceBuild == null)
+        {
+            return;
+        }
+
+        if (_sourceBuild.HasEnoughToCoverOrder(Order1))
+        {
+            var amt = Order1.ApproveThisAmt(_person.HowMuchICanCarry(Order1.Amount));
+            Order1.AddToFullFilled(amt);
+
+            Debug.Log(_person.MyId + " Docker got from:" + Order1.SourceBuild + " : " + Order1.Product + ".amt:" + amt);
+
+            _person.ExchangeInvetoryItem(_sourceBuild, _person, Order1.Product, amt);
+            _sourceBuild.CheckIfCanBeDestroyNow(Order1.Product);
+            _person.Body.UpdatePersonalForWheelBa();
+        }
+    }
+
+
+    MDate _lastAct;
+    string _act;
+    bool NewAct(string act)
+    {
+        if (_lastAct != null && Program.gameScene.GameTime1.ElapsedDateInDaysToDate(_lastAct) < 15)
+        {
+            return false;
+        }
+        _lastAct = Program.gameScene.GameTime1.CurrentDate();
+        _act = act;
+        return true;
+    }
+
+
 
     private bool _takeABreakNow;
     private float _breakDuration = 1f;
@@ -166,5 +245,20 @@ public class Docker : Profession
             startIdleTime = 0;
             Init();
         }
+    }
+
+
+
+    Structure GetStructureSrcAndDestinyExpImp()
+    {
+        if (_export)
+        {
+            return (Structure)_person.FoodSource;
+        }
+        if (_import)
+        {
+            return _person.Work;
+        }
+        return null;
     }
 }

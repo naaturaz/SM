@@ -383,7 +383,7 @@ public class Dispatch
             if (IsDestinyBuildInvFullForThisProd(currOrders[i]) || currOrders[i].IsCompleted)
             {
                 //todo Notify
-                Debug.Log("Inv full to DestBuild:"+currOrders[i].DestinyBuild+"|for prod:"+currOrders[i].Product+"" +"|order removed");
+                Debug.Log("Docker order removed:"+currOrders[i].DestinyBuild+"|for prod:"+currOrders[i].Product+"" +"");
 
                 RemoveOrderByIDExIm(currOrders[i].ID);
                 i--;
@@ -396,7 +396,7 @@ public class Dispatch
             }
             else if (currOrders[i].TypeOrder == H.Evacuation)
             {
-                return EvacuationOrder(person, currOrders[i]);
+                return EvacuationOrderDocker(person, currOrders[i]);
             }
         }
         return null;
@@ -459,6 +459,32 @@ public class Dispatch
         return false;
     }
 
+
+    private Order EvacuationOrderDocker(Person person, Order order)
+    {
+        var destinFoodSrc = FindClosestFoodSrcNotFull(person, order.Product);
+
+        if (destinFoodSrc != "")
+        {
+            Order temp = new Order();
+            temp = Order.Copy(order);
+
+            temp.Amount = order.ApproveThisAmt(person.HowMuchICanCarry());
+            order.AddToFullFilled(temp.Amount);
+
+            temp.DestinyBuild = destinFoodSrc;
+            return temp;
+        }
+        else//could nt find any Food Source
+        {
+            if (!ListContainsCheckID(_dormantOrders, order))
+            {
+                _dormantOrders.Add(order);
+            }
+            RemoveOrderFromTheList(Orders, order);
+        }
+        return null;
+    }
 
 
     private Order EvacuationOrder(Person person, Order order)
@@ -551,7 +577,7 @@ public class Dispatch
 
     internal bool ThereIsWorkAtDock()
     {
-        return _expImpOrders.Count > 0;
+        return _expImpOrders.Count > 0 || _orders.Count > 0;
     }
 
     ///// <summary>
@@ -790,6 +816,14 @@ public class Dispatch
         for (int i = 0; i < ExpImpOrders.Count; i++)
         {
             if (ExpImpOrders[i].SourceBuild == "Ship")
+            {
+                return true;
+            }
+        }
+
+        for (int i = 0; i < Orders.Count; i++)
+        {
+            if (Orders[i].SourceBuild == "Ship")
             {
                 return true;
             }

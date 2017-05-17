@@ -1346,7 +1346,9 @@ public class Building : Hoverable, Iinfo
         { H.QuickLime, new Vector3(-40,0,-40)},
 
         { H.Carpentry, new Vector3(-40,0,-40)},
-        { H.Carpentry, new Vector3(-5,0,-5)},
+        { H.Dock, new Vector3(-5,0,-5)},
+
+        { H.Tailor, new Vector3(-40,0,-25)},
 
     };
 
@@ -3417,6 +3419,7 @@ public class Building : Hoverable, Iinfo
         return false;
     }
 
+
     /// <summary>
     /// This is the one will add order to the Dispatch if dont have the Raw input
     /// </summary>
@@ -3434,13 +3437,15 @@ public class Building : Hoverable, Iinfo
             return;
         }
 
+        var doIHaveInput = DoBuildHaveRawResources();
+
         for (int i = 0; i < rawsOnNeed.Count; i++)
         {
             P prod = rawsOnNeed[i].Element;
             //so for nails for example for a Furnitrue will only order 0.2 x 30 = 6kg
             var amtNeeded = (int) rawsOnNeed[i].Units * 10;
 
-            if (!HaveThisProdOnInv(prod))
+            if (!HaveThisProdOnInv(prod) || !doIHaveInput)
             {
                 //todo use 10000 to put a large number of units needed
                 Order prodNeed = new Order(prod, MyId, amtNeeded);//300

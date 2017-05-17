@@ -81,11 +81,16 @@ public class ShipManager
 
     private void SetNextVisit()
     {
+        var unit = 6000;
+
+#if UNITY_EDITOR
+        unit = 60;
+#endif
         //+1 in case is too low or zero
         //so if is 10 the PortRep 3600 / 10 is 1 year
         //so if is 100 the PortRep 3600 / 100 is 36 days
         //with 6000 is every 60 days, 2 month with 100 as PortRep
-        var daysFromNow = 6000 / (BuildingPot.Control.DockManager1.PortReputation + 1);
+        var daysFromNow = unit / (BuildingPot.Control.DockManager1.PortReputation + 1);
         _nextVisit = Program.gameScene.GameTime1.ReturnCurrentDatePlsAdded(daysFromNow);
     }
 

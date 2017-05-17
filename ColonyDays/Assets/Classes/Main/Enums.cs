@@ -54,6 +54,8 @@ public enum HPers //to be use for the person class
     DoneAtWheelBarrow,
     DoneAtHome,
     Enemy,
+    DockerSupply,
+    DockerBackToDock,
 }
 
 public enum EducationLevel

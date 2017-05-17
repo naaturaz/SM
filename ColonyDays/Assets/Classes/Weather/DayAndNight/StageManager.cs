@@ -80,6 +80,10 @@ public class StageManager : General
             return;
         }
 
+#if UNITY_EDITOR
+        return;
+#endif
+
         CheckIfMoveStages();
 
         CheckIfInTrans();

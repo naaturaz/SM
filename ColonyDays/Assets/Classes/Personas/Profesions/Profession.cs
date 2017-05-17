@@ -1321,11 +1321,14 @@ public class Profession
     /// <returns></returns>
     public static Structure GetStructureSrcAndDestiny(string id, Person person)
     {
-        if (id == "Ship")
-        {
-            return person.Work;
-        }
+        //if (id == "Ship")
+        //{
+        //    return person.Work;
+        //}
         return Brain.GetStructureFromKey(id);
+
+      
+
     }
 
 

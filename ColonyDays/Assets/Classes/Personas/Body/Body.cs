@@ -306,24 +306,11 @@ public class Body //: MonoBehaviour //: General
             savedAnimation = animationPass;
             return;
         }
-
         if (string.IsNullOrEmpty(animationPass))
         {
             return;
         }
-
-        //CheckIfNeedsToActivateAniCheck(animationPass, oldAnimation);
-        //CleanIfNewAni(animationPass);
-
-        if (animationPass == "isCarry")
-        {
-            var a = 1;
-        }
-
-
         savedAnimation = "";
-
-
 
         _currentAni = animationPass;
         myAnimator.SetBool(animationPass, true);
@@ -335,7 +322,6 @@ public class Body //: MonoBehaviour //: General
         }
 
         //Debug.Log(_person.Name + " " + animationPass);
-
         if (_personalObject == null)
         {
             _personalObject = new PersonalObject(_person);
@@ -1002,6 +988,11 @@ public class Body //: MonoBehaviour //: General
     /// <returns></returns>
     bool CanNavalWorkerSpawnWheelBarrow()
     {
+        if (Location == HPers.DockerBackToDock)
+        {
+            return true;
+        }
+
         if (_person.Brain.PreviousTask == HPers.IdleSpot || GoingTo == HPers.FoodSource || GoingTo == HPers.IdleSpot
             || Location == HPers.FoodSource)
         {
