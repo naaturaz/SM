@@ -260,4 +260,26 @@ public class BuyRegionManager
             _isToShowNow = false;
         }
     }
+
+
+
+
+    /// <summary>
+    /// Will find a locked region that is at least 1 region in the middle far so
+    /// Lineally looking at the regions
+    /// Owned | Locked1 | Locked2
+    /// Will return Locked2 regions
+    /// 
+    /// Used to spawn Ghost town with enemies
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 ReturnCenterPosOfLockedNearbyRegion()
+    {
+        var reg = _unlockRegions[0];
+        var index = reg - 2;
+
+        return
+        MeshController.CrystalManager1.CrystalRegions[index].Position();
+
+    }
 }

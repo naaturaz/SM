@@ -178,10 +178,11 @@ public class CryRoute
         }
 
         loop = false;
+        _checkPoints.AddRange(pts);
+        AddAnglesToRoute();
 
-        TheRoute = new TheRoute(pts, _ini.MyId, _fin.MyId);
+        TheRoute = new TheRoute(_checkPoints, _ini.MyId, _fin.MyId);
         IsRouteReady = true;
-
     }
 
 
@@ -269,8 +270,9 @@ public class CryRoute
         if (loop && Time.time > _timeStamp + 3)
         {
             NavMesh();
-            return;
         }
+        return;
+
 
         if (wasBlackListed)
         {

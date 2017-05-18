@@ -978,26 +978,7 @@ public class TerrainSpawnerController : ControllerParent
         }
     }
 
-    /// <summary>
-    /// Will find a locked region that is at least 1 region in the middle far so
-    /// Lineally looking at the regions
-    /// Owned | Locked1 | Locked2
-    /// Will return Locked2 regions
-    /// 
-    /// Used to spawn Ghost town with enemies
-    /// </summary>
-    /// <returns></returns>
-    public Vector3 ReturnCenterPosOfLockedNearbyRegion()
-    {
-        for (int i = 0; i < _rest.Count; i++)
-        {
-            if (!MeshController.BuyRegionManager1.UnlockRegions.Contains(_rest[i].Region))
-            {
-                return _rest[i].Pos;
-            }
-        }
-        return new Vector3();
-    }
+
 
 #endregion
 

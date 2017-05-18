@@ -157,6 +157,27 @@ public class GameScene : General
         set { _gameTimePeople = value; }
     }
 
+    public UnitsManager UnitsManager
+    {
+        get
+        {
+            return _unitsManager;
+        }
+
+        set
+        {
+            _unitsManager = value;
+        }
+    }
+
+
+    //from Toy Army
+
+    UnitsManager _unitsManager;
+
+
+
+
 
 
     private void ProgramDataInit()
@@ -271,6 +292,8 @@ public class GameScene : General
             GameTimePeople = new GameTime(3f);
         }
 
+        _unitsManager = FindObjectOfType<UnitsManager>();
+        _enemyManager = FindObjectOfType<EnemyManager>();
     }
 
    

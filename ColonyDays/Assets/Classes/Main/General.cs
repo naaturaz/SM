@@ -682,10 +682,34 @@ public class General : MonoBehaviour
 
 
 
+    //toy army
 
+    bool _isGood;
+    public bool IsGood
+    {
+        get
+        {
+            return _isGood;
+        }
 
-
-
-
+        set
+        {
+            _isGood = value;
+        }
+    }
+    /// <summary>
+    /// most ve a 3dText attached
+    /// </summary>
+    /// <param name="newText"></param>
+    internal void SetText(string newText)
+    {
+        var t = GetComponent<TextMesh>();
+        t.text = newText + "";
+    }
+    protected void ShowText(string pass)
+    {
+        var a = General.Create("Prefab/GUI/3dText", transform.position, "3dText");
+        a.SetText(pass);
+    }
 }
 

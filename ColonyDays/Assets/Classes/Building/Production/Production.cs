@@ -534,8 +534,8 @@ public class Production  {
         List<InputElement> formula1 = new List<InputElement>() { eleInputWood, eleWoodComb };
         //2nd forumala that do paper 
         List<InputElement> formula2 = new List<InputElement>() { eleInputWood, eleCoalComb };
-        InputProdCheckAndAdd(new ProductInfo(P.Paper, formula1, H.Paper_Mill));
-        InputProdCheckAndAdd(new ProductInfo(P.Paper, formula2, H.Paper_Mill));
+        InputProdCheckAndAdd(new ProductInfo(P.Paper, formula1, H.PaperMill));
+        InputProdCheckAndAdd(new ProductInfo(P.Paper, formula2, H.PaperMill));
 
 
         //paper news

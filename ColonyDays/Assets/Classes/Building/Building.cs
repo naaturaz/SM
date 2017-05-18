@@ -1334,7 +1334,7 @@ public class Building : Hoverable, Iinfo
         {H.StandLamp, new Vector3(0,0,0)},//wont get carved
 
         { H.FieldFarmSmall, new Vector3(-19,0,-32)},
-        { H.FieldFarmMed, new Vector3(-19,0,-27)},
+        { H.FieldFarmMed, new Vector3(-19,0,-20)},
 
         { H.LumberMill, new Vector3(-19,0,-45)},
 
@@ -1349,6 +1349,15 @@ public class Building : Hoverable, Iinfo
         { H.Dock, new Vector3(-5,0,-5)},
 
         { H.Tailor, new Vector3(-40,0,-25)},
+
+
+        { H.StorageMed, new Vector3(-30,0,-20)},
+        { H.StorageSmall, new Vector3(-30,0,-20)},
+
+
+        { H.School, new Vector3(-5,0,-5)},
+
+        { H.Tavern, new Vector3(-35,0,-20)},
 
     };
 

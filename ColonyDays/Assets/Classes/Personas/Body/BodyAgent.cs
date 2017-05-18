@@ -65,7 +65,7 @@ public class BodyAgent
     {
         if (_person == null) { return; }
 
-        if (UMath.nearEqualByDistance(Destiny, _person.transform.position, 0.1f))
+        if (UMath.nearEqualByDistance(Destiny, _person.transform.position, 0.2f))
         {
             if (_nextDest != new Vector3())
             {
@@ -77,7 +77,7 @@ public class BodyAgent
     }
 
     General deb;
-    internal void Walk(Vector3 point, Vector3 afterDest, Vector3 moveNowTo)
+    internal void Walk(Vector3 point, Vector3 afterDest, Vector3 moveNowTo, HPers goingTo)
     {
         if (deb != null)
         {
@@ -97,6 +97,16 @@ public class BodyAgent
         if (_person.Body != null)
         {
             _person.Body.Show();
+        }
+
+        if (goingTo == HPers.InWork && _person.ProfessionProp!=null
+            && _person.ProfessionProp.ProfDescription == Job.Builder)
+        {
+            _agent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
+        }
+        else
+        {
+            _agent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
         }
     }
 

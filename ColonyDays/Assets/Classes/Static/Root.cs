@@ -756,7 +756,7 @@ public class Root : MonoBehaviour
         //Industry
         buildsRoot.Add(H.Cloth, "Prefab/Building/Industry/Cloth");
         buildsRoot.Add(H.GunPowder, "Prefab/Building/Industry/GunPowder");
-        buildsRoot.Add(H.Paper_Mill, "Prefab/Building/Industry/Paper");
+        buildsRoot.Add(H.PaperMill, "Prefab/Building/Industry/PaperMill");
         buildsRoot.Add(H.Printer, "Prefab/Building/Industry/Printer");
         buildsRoot.Add(H.CoinStamp, "Prefab/Building/Industry/CoinStamp");
         buildsRoot.Add(H.SugarMill, "Prefab/Building/Industry/SugarMill");

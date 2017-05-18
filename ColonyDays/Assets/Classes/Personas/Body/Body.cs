@@ -817,7 +817,7 @@ public class Body //: MonoBehaviour //: General
 
             Vector3 doorPt;
             var dest = RetDestiny(route, goingTo, out doorPt, inverse, whichRouteP);
-            _bodyAgent.Walk(dest, doorPt, moveToAtStartWalk);
+            _bodyAgent.Walk(dest, doorPt, moveToAtStartWalk, goingTo);
         }
 
 
@@ -1067,7 +1067,7 @@ public class Body //: MonoBehaviour //: General
 
 
 
-        if (UMath.nearEqualByDistance(_person.transform.position, _bodyAgent.Destiny, 0.1f))// 
+        if (UMath.nearEqualByDistance(_person.transform.position, _bodyAgent.Destiny, 0.2f))// 
         {
             _bodyAgent.CleanDestiny();
             //CheckRotation();

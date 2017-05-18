@@ -125,7 +125,7 @@ public class Book : General
         //Industry
         Build.Add(new BuildStat(H.Cloth, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.GunPowder, 400, 15, 5, 25, 5, maxPeople: 5));
-        Build.Add(new BuildStat(H.Paper_Mill, 400, 15, 5, 25, 5, maxPeople: 5));
+        Build.Add(new BuildStat(H.PaperMill, 400, 15, 5, 25, 5, maxPeople: 5));
 
         Build.Add(new BuildStat(H.Printer, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.CoinStamp, 400, 15, 5, 25, 5, maxPeople: 5));

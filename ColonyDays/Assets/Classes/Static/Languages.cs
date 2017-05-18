@@ -83,7 +83,7 @@ public class Languages
        //Ind
 	   { "Cloth.Desc",_produce},
        { "GunPowder.Desc",_produce},
-       { "Paper_Mill.Desc",_produce},
+       { "PaperMill.Desc",_produce},
        { "Printer.Desc",_produce},
        { "CoinStamp.Desc",_produce},
        { "Silk.Desc",_produce},
@@ -561,7 +561,7 @@ public class Languages
        //Ind
 	   { "Cloth.Desc",_produceES},
        { "GunPowder.Desc",_produceES},
-       { "Paper_Mill.Desc",_produceES},
+       { "PaperMill.Desc",_produceES},
        { "Printer.Desc",_produceES},
        { "CoinStamp.Desc",_produceES},
        { "Silk.Desc",_produceES},

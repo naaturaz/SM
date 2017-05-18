@@ -1502,11 +1502,17 @@ public class Person : Hoverable
         {
             _brain.CheckConditions();
         }
+
         if (HType == H.Person)
         {
             _brain.Update();
         }
-        
+
+        //defenders
+        if (HType == H.Defender)
+        {
+
+        }
 
         //enemy
         if (HType == H.Enemy && _enemyBrain == null)

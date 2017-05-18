@@ -266,7 +266,7 @@ public enum H
     Brick, Carpentry, Cigars, Mill, Tailor,
     Armory, Distillery, Chocolate, Ink,
     //industry F6
-    Cloth, GunPowder, Paper_Mill, Printer, CoinStamp, SugarMill, Foundry,
+    Cloth, GunPowder, PaperMill, Printer, CoinStamp, SugarMill, Foundry,
     //Trade F7
     Dock, Shipyard, Supplier, StorageSmall, StorageMed, StorageBig, StorageBigTwoDoors, StorageExtraBig,
     //gov F8
@@ -436,8 +436,7 @@ public enum H
     Enemy,
     War,
     BullDozer,
-
-
+    Defender,
 }
 
 //if new categorY IS ADDED PLS ADD ON BOOK.CS
@@ -501,7 +500,7 @@ public enum StProd //for structures game structure.cs
 
 //Ind
 public enum StInd
-{ Cloth, GunPowder, Paper_Mill, Printer, CoinStamp, SugarMill, Foundry,}
+{ Cloth, GunPowder, PaperMill, Printer, CoinStamp, SugarMill, Foundry,}
 
 public enum StTrade //for structures game structure.cs 
 {
