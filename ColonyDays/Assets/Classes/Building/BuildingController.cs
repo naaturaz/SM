@@ -304,10 +304,7 @@ public class BuildingController : BuildingPot
     #region This 2 Methods are doing the same juts that the last one doesnt select Anything if one is change the second must be changed too
     HPers SelectCurrentList(H hTypeP)
     {
-        if (hTypeP == H.Bohio|| 
-            hTypeP == H.WoodHouseA || hTypeP == H.WoodHouseB || hTypeP == H.WoodHouseC
-            || hTypeP == H.BrickHouseA || hTypeP == H.BrickHouseB || hTypeP == H.BrickHouseC
-            )
+        if (Building.IsHouseType(hTypeP+""))
         {
             current = HousesWithSpace;
             return HPers.Home;
@@ -340,11 +337,7 @@ public class BuildingController : BuildingPot
 
     public static HPers ReturnBuildingFunction(H hTypeP)
     {
-        if (hTypeP == H.Bohio ||
-           hTypeP == H.WoodHouseA || hTypeP == H.WoodHouseB || hTypeP == H.WoodHouseC
-           
-           || hTypeP == H.BrickHouseA || hTypeP == H.BrickHouseB || hTypeP == H.BrickHouseC
-           )
+        if (Building.IsHouseType(hTypeP + ""))
         {
             return HPers.Home;
         }

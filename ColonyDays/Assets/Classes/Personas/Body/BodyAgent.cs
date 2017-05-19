@@ -92,7 +92,8 @@ public class BodyAgent
         _afterDestiny = afterDest;
         _nextDest = point;
         _agent.enabled = true;
-        deb = UVisHelp.CreateHelpers(point, Root.yellowCube);
+
+        //deb = UVisHelp.CreateHelpers(point, Root.yellowCube);
 
         if (_person.Body != null)
         {

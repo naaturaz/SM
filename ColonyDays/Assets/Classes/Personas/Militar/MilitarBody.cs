@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -8,10 +9,24 @@ public class MilitarBody
     NavMeshAgent _agent;
     GameObject _go;
 
-
     Animator _myAnimator;
     private string _currentAni;
     private string savedAnimation;
+
+    private float _initialAgentSpeed;
+
+    public NavMeshAgent Agent
+    {
+        get
+        {
+            return _agent;
+        }
+
+        set
+        {
+            _agent = value;
+        }
+    }
 
     public MilitarBody(GameObject go)
     {
@@ -19,12 +34,28 @@ public class MilitarBody
         SetScaleByAge();
         _myAnimator = _go.GetComponent<Animator>();
         SetCurrentAni("isIdle", _currentAni);
+        _agent = _go.GetComponent<NavMeshAgent>();
+        _initialAgentSpeed = Agent.speed;
 
     }
 
-    public void NewSpeed(int newSpeed)
+    public void NewSpeed()
     {
-        _myAnimator.speed = newSpeed;
+        //like when running needs to speed up a bit;
+        var speedAdd = CalculateNewAdd(_currentAni);
+        var speedFin = (_initialAgentSpeed + speedAdd) * Program.gameScene.GameSpeed;
+
+        _myAnimator.speed = speedFin;
+        //_agent.speed = speedFin;
+    }
+
+    static private float CalculateNewAdd(string currentAni)
+    {
+        if (currentAni == "isRun")
+        {
+            return 0.4f;
+        }
+        return 0;
     }
 
     public void MusketAttack()
@@ -63,12 +94,44 @@ public class MilitarBody
         {
             _myAnimator.SetBool(oldAnimation, false);
         }
+        NewSpeed();
+    }
+
+    internal void DisableAgent()
+    {
+        Agent.enabled = false;
+    }
+
+
+    General deb;
+
+    void Debugg(Vector3 pt)
+    {
+        if (deb != null)
+        {
+            deb.Destroy();
+        }
+        deb = UVisHelp.CreateHelpers(pt, Root.redCube);
+    }
+
+    internal void ActivateAgent(Vector3 dest)
+    {
+        Agent.enabled = true;
+        if (Agent.isOnNavMesh)
+        {
+            Debugg(dest);
+            Agent.SetDestination(dest);
+            Run();
+        }
     }
 
 
 
 
 
+
+
+    #region Scale
     //the yearly grow for each Gender. For this be effective the GameObj scale must
     // be initiated at 0.26f in all axis
     private float maleGrow = 0.01333f;
@@ -92,6 +155,8 @@ public class MilitarBody
         AddToBodyScale(toAdd);
     }
 
+
+
     /// <summary>
     /// Will add the scale phisically to the body
     /// </summary>
@@ -103,16 +168,6 @@ public class MilitarBody
         var newScale = new Vector3(singleS, singleS, singleS);
         _go.transform.localScale = newScale;
     }
+    #endregion
 
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

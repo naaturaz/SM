@@ -246,6 +246,7 @@ public enum H
 
     //house F2 ... bugg bz they had numbers on it .. They cant have numbers
     Bohio, BohioB,
+    Shack,
     WoodHouseA, WoodHouseB, WoodHouseC,
     BrickHouseA,
     BrickHouseB,
@@ -466,7 +467,7 @@ public enum StHous //for structures game structure.cs
 {
     //Housing
     Bohio,
-    //BohioB,
+    Shack,
     WoodHouseA, WoodHouseB, WoodHouseC,
     BrickHouseA,
     BrickHouseB,

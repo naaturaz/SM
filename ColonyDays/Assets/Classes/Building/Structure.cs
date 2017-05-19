@@ -115,8 +115,6 @@ public class Structure : StructureParent
             return;
         }
 
-        RedoCategoryOnShack();
-
         //so the rect for collision is bigger
         //to address SpawnPoint not falling into another build
         var scale = UPoly.ScalePoly(Bounds, 0.2f);
@@ -151,13 +149,7 @@ public class Structure : StructureParent
         BuildingPot.Control.Registro.RemoveFromDestroyBuildings(this);
     }
 
-    /// <summary>
-    /// Just bz Shack is loosing is a Strucute ... so i will re assign it here 
-    /// </summary>
-    void RedoCategoryOnShack()
-    {
-        Category = DefineCategory(HType);
-    }
+
 
     private bool reverse;
     public void AssignNewMaterial(Material newMat)
@@ -437,7 +429,7 @@ public class Structure : StructureParent
     public bool Demolish()
     {
         //if is a house need to know 
-        if (MyId.Contains("House") || MyId.Contains("Bohio"))
+        if (IsThisAHouseType())
         {
             var empty = CurrentStage == 4 && Families[0].IsFamilyEmpty();
             var space = CurrentStage == 4 && !Families[0].IsFamilyEmpty() &&

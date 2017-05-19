@@ -45,7 +45,7 @@ public class QuestManager
     { 
         //need to mention reward still 
 
-        new Quest("Bohio.Quest", 500, 5.5f),
+        new Quest("Shack.Quest", 500, 5.5f),
 
         new Quest("Lamp.Quest", 500, 5.5f),
 

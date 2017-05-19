@@ -5,26 +5,26 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-
     float _firtSpawnsAt = 1;
     float _othersSpawnsAt = 10;//120
     float _lastSpawn = -1;
 
     //every 8 adult will spawn 1 enemy
     int _personPer1Enemy = 4;//8
-
-
     private Vector3 _iniPoint;
 
-    public EnemyManager()
+    // Use this for initialization
+    void Start()
     {
 
     }
 
-
-    public void LateUpdate()
+    void Update()
     {
-        if (MeshController.BuyRegionManager1 == null)
+        return;
+
+        if (MeshController.BuyRegionManager1 == null || _enemies.Count > 0
+            )
         {
             return;
         }
@@ -101,88 +101,17 @@ public class EnemyManager : MonoBehaviour
 
 
 
-    float _nextWaveAt;
-    int _nextWaveEnemies;
 
     List<UnitT> _enemies = new List<UnitT>();
     List<Transform> _enemiesTransform = new List<Transform>();
 
-    Vector3 _spawnPos;
-    int _xSing;
-    int _zSign;
 
-    int _waveNumb = 1;
-    int _kills;
-
-    float _thisGameStartedAt;
-
-    Building _base;
-
-    // Use this for initialization
-    void Start()
-    {
-        _thisGameStartedAt = Time.time;
-        _xSing = UMath.RandomSign();
-        _zSign = UMath.RandomSign();
-
-        var currLevel = PlayerPrefs.GetInt("Current");
-        _nextWaveAt = Time.time + 9 + currLevel;
-    }
-
-
-
-
-    List<string> _addBuilds = new List<string>() {"Prefab/Building/Militar/Bunker",
-        "Prefab/Building/Militar/Defense_Tower"
-    };
-    string ReturnRandomAddBuilding()
-    {
-        return _addBuilds[UMath.GiveRandom(0, _addBuilds.Count)];
-    }
 
     internal bool ThereIsAnAttackNow()
     {
         return _enemies.Count > 0;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        ////player should not be on air other wise nav weird message 
-        //if (Time.time > _nextWaveAt)
-        //{
-        //    count = 0;
-        //    var levlDif = 1;
-
-        //    SetNextWave();
-        //    _nextWaveEnemies = _waveNumb * (UMath.GiveRandom(1 + levlDif, 6 + levlDif));
-        //    Program.gameScene.CameraK.Attack();
-
-        //    _waveNumb++;
-        //}
-        //SpawnEnemies();
-
-    }
-
-    void SetNextWave()
-    {
-        _nextWaveAt = Time.time + 90;
-    }
-
-
-    int count = -1;
-    void SpawnEnemies()
-    {
-        if (count > -1 && count < _nextWaveEnemies)
-        {
-            SpawnEnemy();
-            count++;
-        }
-        else if (count >= _nextWaveEnemies)
-        {
-            count = -1;
-        }
-    }
 
 
     void SpawnEnemy()
@@ -194,7 +123,6 @@ public class EnemyManager : MonoBehaviour
         var root = ReturnRandomAttackUnit();
         SpawnEnemy(root, _iniPoint);
     }
-
 
     void SpawnEnemy(string rootP, Vector3 spawnPos)
     {
@@ -208,8 +136,6 @@ public class EnemyManager : MonoBehaviour
         SpawnEnemy("Prefab/TA/Units/Infantry", pos);
     }
 
-
-
     List<string> _attackUnit = new List<string>() {
         "Prefab/TA/Units/Infantry",
     };
@@ -217,8 +143,6 @@ public class EnemyManager : MonoBehaviour
     {
         return _attackUnit[UMath.GiveRandom(0, _attackUnit.Count)];
     }
-
-
 
     public Transform GiveMeClosestEnemy(Vector3 from)
     {
@@ -260,8 +184,6 @@ public class EnemyManager : MonoBehaviour
         _enemies.RemoveAt(index);
         _enemiesTransform.RemoveAt(index);
 
-        _kills++;
-
         if (_enemies.Count == 0)
         {
             Program.gameScene.EnemyManager.Peace();
@@ -274,20 +196,8 @@ public class EnemyManager : MonoBehaviour
         throw new NotImplementedException();
     }
 
-    internal float TtlTimeOfCurrentGame()
-    {
-        return Time.time - _thisGameStartedAt;
-    }
-
-    internal int Kills()
-    {
-        return _kills;
-    }
-
-
     public void DestroyAllUnits()
     {
-
         for (int i = 0; i < _enemies.Count; i++)
         {
             Destroy(_enemies[i].gameObject);

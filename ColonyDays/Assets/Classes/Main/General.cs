@@ -684,7 +684,7 @@ public class General : MonoBehaviour
 
     //toy army
 
-    bool _isGood;
+    bool _isGood = true;
     public bool IsGood
     {
         get
@@ -708,7 +708,7 @@ public class General : MonoBehaviour
     }
     protected void ShowText(string pass)
     {
-        var a = General.Create("Prefab/GUI/3dText", transform.position, "3dText");
+        var a = General.Create("Prefab/TA/GUI/3dText", transform.position, "3dText");
         a.SetText(pass);
     }
 }

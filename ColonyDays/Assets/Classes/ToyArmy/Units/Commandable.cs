@@ -5,11 +5,10 @@ using UnityEngine.AI;
 
 public class Commandable : UnitT
 {
-    NavMeshAgent _agent;
-    float _initialAgentSpeed;
-
     Vector3 _agentDest;
-    float _startTime;
+    Vector3 _oldDest = Vector3.forward;
+
+
     float _distToDisable;
     MilitarBody _militarBody;
 
@@ -22,17 +21,9 @@ public class Commandable : UnitT
         }
         base.Start();
 
-        Agent = GetComponent<NavMeshAgent>();
-        _initialAgentSpeed = Agent.speed;
-
-        _startTime = Time.time;
-
-       // LoadBulletGO();
-        _distToDisable = UMath.GiveRandom(0.4f + Program.gameScene.UnitsManager.Units.Count / 200,
-            1.2f + Program.gameScene.UnitsManager.Units.Count / 200);
-
-        _militarBody = new MilitarBody(gameObject);
-
+        // LoadBulletGO();
+        _distToDisable = 0.1f;
+        MilitarBody = new MilitarBody(gameObject);
     }
 
     // Update is called once per frame
@@ -47,88 +38,47 @@ public class Commandable : UnitT
         //var good = Input.GetMouseButtonUp(1) && !Program.gameScene.BuildingManager.IsBuildingNow() &&
         //    Program.gameScene.CameraK.Hit.transform != null && SelectedGO != null && SelectedGO.activeSelf;
 
-        if (1==1)
+        if (1 == 1)
         {
             //_agentDest = Program.gameScene.CameraK.Hit.point;
             //var a = General.Create("Prefab/Debug/Sphere", Program.GameScene.CameraK.Hit.transform.position, "Debug");
             //ActivateAgent();
         }
-        if (Enemy != null)
+        if (Enemy != null && _oldDest != _agentDest)
         {
-            ActivateAgent();
-            transform.LookAt(Enemy);
-
             if (IsGood)
             {
 
             }
-            else if(!IsGood && !CheckOnShortDest())
+            else if (!IsGood && !CheckOnShortDest())
             {
                 _agentDest = Enemy.position;
             }
+
+            _oldDest = _agentDest;
+            MilitarBody.ActivateAgent(_agentDest);
         }
 
         CheckOnShortDest();
     }
 
-
-    static float _lastScream;
-
-    public NavMeshAgent Agent
+    public MilitarBody MilitarBody
     {
         get
         {
-            return _agent;
+            return _militarBody;
         }
-
         set
         {
-            _agent = value;
+            _militarBody = value;
         }
     }
-
-    void ActivateAgent()
-    {
-        if (Time.time > _startTime + 10 && Time.time > _lastScream + 10 && !Agent.enabled)
-        {
-            //scream
-            //Program.GameScene.SoundManager.PlaySound(7, 0.05f);
-            _lastScream = Time.time;
-        }
-
-        Agent.enabled = true;
-
-        if (Agent.isOnNavMesh)
-        {
-            if (!IsGood)
-            {
-                Agent.SetDestination(_agentDest + new Vector3(5, 0, 5));
-                _militarBody.Run();
-            }
-            else
-            {
-                Agent.SetDestination(_agentDest);
-                _militarBody.Run();
-
-            }
-        }
-        else
-        {
-            Program.gameScene.UnitsManager.RemoveUnit(this);
-            Destroy(gameObject);
-        }
-
-    }
-
-
-
-
 
     bool CheckOnShortDest()
     {
         if (UMath.nearEqualByDistance(transform.position, _agentDest, _distToDisable))
         {
-            Agent.enabled = false;
+            MilitarBody.DisableAgent();
             return true;
         }
         return false;

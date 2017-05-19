@@ -252,7 +252,7 @@ public class BuildingWindow : GUIElement
 
     private void HideStuff()
     {
-        if (Building.IsHouse() || Building.MyId.Contains("Storage") || Building.Category == Ca.Way ||
+        if (Building.IsHouseType(Building.MyId) || Building.MyId.Contains("Storage") || Building.Category == Ca.Way ||
             Building.HType == H.Masonry || Building.HType == H.HeavyLoad
             || Building.HType == H.LightHouse
             || Building.IsNaval())
@@ -493,7 +493,7 @@ public class BuildingWindow : GUIElement
 
     public static bool isAWorkBuild(Building build)
     {
-        var isAHouse = build.HType.ToString().Contains("House") || build.HType == H.Bohio;
+        var isAHouse = build.IsThisAHouseType();
         var isStorage = build.HType.ToString().Contains("Storage");
         var isRoadorBridge = build.HType.ToString().Contains("Road") || build.HType.ToString().Contains("Bridge");
 
@@ -509,7 +509,7 @@ public class BuildingWindow : GUIElement
 
         res += IfInConstructionAddPercentageOfCompletion();
 
-        var isAHouse = Building.HType.ToString().Contains("House") || Building.HType == H.Bohio;
+        var isAHouse = Building.IsThisAHouseType();
 
         //is not a house or bohio 
         if (!isAHouse || Building.HType == H.LightHouse)//must say lightHouse here bz actualkly contains House
@@ -819,6 +819,12 @@ public class BuildingWindow : GUIElement
     private void ShowProductDetail()
     {
         _displayProdInfo.text = Building.CurrentProd.Details;
+
+        if (!_building.DoIHaveInput())
+        {
+            _displayProdInfo.text = _building.MissingInputs();
+        }
+
     }
 
     private void ShowProducts()

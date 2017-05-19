@@ -855,7 +855,7 @@ public class GameScene : General
     /// </summary>
     void OnApplicationQuit()
     {
-        Debug.Log("Application ending after " + Time.time + " seconds");
+        //Debug.Log("Application ending after " + Time.time + " seconds");
 
 //#if UNITY_EDITOR
 //        return;

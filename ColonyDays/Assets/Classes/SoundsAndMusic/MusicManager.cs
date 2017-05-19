@@ -51,7 +51,7 @@ public class MusicManager
         {
             return;
         }
-        Debug.Log("MusicManager.Start()");
+        //Debug.Log("MusicManager.Start()");
 
         PlayRandom();
     }
@@ -61,7 +61,7 @@ public class MusicManager
     static int secCount;
     private static void PlayRandom()
     {
-        Debug.Log("MusicManager.PlayRandom()");
+        //Debug.Log("MusicManager.PlayRandom()");
 
         _currMusic = PlayMaracasFirst();
 

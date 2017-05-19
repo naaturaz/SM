@@ -37,8 +37,8 @@ public class UnlockBuilds
             new BRequires(H.HeavyLoad, 50),
 
             //houses
-            new BRequires(H.Bohio, true),
-            new BRequires(H.BohioB, true),
+            new BRequires(H.Bohio, H.OnlyForDev),
+            new BRequires(H.Shack, true),
             new BRequires(H.WoodHouseA, 17),
             new BRequires(H.WoodHouseB, 25),
             new BRequires(H.WoodHouseC, 55),
@@ -311,8 +311,7 @@ class BRequires
     /// <returns>if is not below and a house will return false</returns>
     private bool IsAHouseBelowCapMax()
     {
-        var aHouse = HType.ToString().Contains("House") || HType == H.Bohio;
-        if (!aHouse)
+        if (! Building.IsHouseType(HType+""))
         {
             return true;
         }

@@ -517,6 +517,11 @@ public class Building : Hoverable, Iinfo
         }
     }
 
+    internal bool IsThisAHouseType()
+    {
+        return Building.IsHouseType(MyId);
+    }
+
     /// <summary>
     /// Defines : _polyOnGrid. use to spawn Preview Box , and helper to aling Lines 
     /// </summary>
@@ -677,8 +682,6 @@ public class Building : Hoverable, Iinfo
         {
             _rotationFacerIndex = UnivRotationFacer;
             Inventory = new Inventory(MyId, HType); 
-  
-            //IfShackResaveInventoryOnRegistro();
         }
 
 
@@ -777,6 +780,22 @@ public class Building : Hoverable, Iinfo
             buildingPrev.transform.position = buildingPrevPos;
         }
     }
+
+
+
+    internal bool DoIHaveInput()
+    {
+        var doIHaveInput = DoBuildHaveRawResources();
+        return doIHaveInput;
+    }
+
+    internal string MissingInputs()
+    {
+        return Languages.ReturnString("Missing.Input")+
+            BuildingPot.Control.ProductionProp.ReturnInputsINeed(this);
+    }
+
+
 
     /// <summary>
     /// When rotates needs to redo the whole thing 
@@ -967,8 +986,8 @@ public class Building : Hoverable, Iinfo
     public void CreateProjector()
     {
         if (Category != Ca.None && Category != Ca.DraggableSquare 
-            && Category != Ca.Way && Projector == null && !MyId.Contains("Dummy") &&
-            !MyId.Contains("Shack") && HType != H.None)//none are the CreatePlanes 
+            && Category != Ca.Way && Projector == null && !MyId.Contains("Dummy") 
+            && HType != H.None)//none are the CreatePlanes 
         {
             Projector = (MyProjector) Create(Root.projector, container: transform);
             _light = Create(Root.lightCilWithProjScript, container: transform);
@@ -1328,36 +1347,47 @@ public class Building : Hoverable, Iinfo
     bool _wasNavSet;
     Vector3 _navInitSize;
 
+    /// <summary>
+    /// if is not here then will be reduced standard amt , on SetNavMeshObstacle()
+    /// </summary>
     Dictionary<H, Vector3> _percetagesReduction = new Dictionary<H, Vector3>()
     {
-        {H.Bohio, new Vector3(-37,0,-53)},
         {H.StandLamp, new Vector3(0,0,0)},//wont get carved
+
+
+        {H.Bohio, new Vector3(-37,0,-53)},
+
+        {H.Shack, new Vector3(-37,0,-53)},
+
 
         { H.FieldFarmSmall, new Vector3(-19,0,-32)},
         { H.FieldFarmMed, new Vector3(-19,0,-20)},
+        { H.FishingHut, new Vector3(-40,0,-40)},
 
         { H.LumberMill, new Vector3(-19,0,-45)},
 
         { H.HeavyLoad, new Vector3(-8,0,-8)},
         { H.LightHouse, new Vector3(-20,0,-40)},
 
-        { H.FishingHut, new Vector3(-40,0,-40)},
 
         { H.QuickLime, new Vector3(-40,0,-40)},
 
         { H.Carpentry, new Vector3(-40,0,-40)},
-        { H.Dock, new Vector3(-5,0,-5)},
 
         { H.Tailor, new Vector3(-40,0,-25)},
 
 
         { H.StorageMed, new Vector3(-30,0,-20)},
         { H.StorageSmall, new Vector3(-30,0,-20)},
+        { H.Dock, new Vector3(-5,0,-5)},
 
 
         { H.School, new Vector3(-5,0,-5)},
 
+
+        { H.Church, new Vector3(-8,0,-20)},
         { H.Tavern, new Vector3(-35,0,-20)},
+
 
     };
 
@@ -2081,7 +2111,7 @@ public class Building : Hoverable, Iinfo
         }
 
         //can hhave 1 famili with 3 kids
-        if (HType == H.Bohio)
+        if (HType == H.Bohio || HType == H.Shack )
         {
             Families = new Family[1];
             Families[0] = new Family(UMath.GiveRandom(2,4), MyId, 0);
@@ -2283,7 +2313,7 @@ public class Building : Hoverable, Iinfo
 
     void SetHouseConfort()
     {
-        if ( HType == H.Bohio)
+        if ( HType == H.Bohio || HType == H.Shack)
         {
             _confort = 1;
         }
@@ -2301,8 +2331,6 @@ public class Building : Hoverable, Iinfo
 
     public bool ThisPersonFitInThisHouse(Person newPerson, ref string famID)
     {
-        //means another person is asking for this buiding before hit the Start()
-        //is addressing the case when a lot of people is getting out of a house to a Shack
         if (Families == null)
         {
             return false;
@@ -2408,15 +2436,7 @@ public class Building : Hoverable, Iinfo
         prefabLayer = gameObject.layer;
     }
 
-    //protected void AssignLayer(int layer)
-    //{
-    //    //just bz shack starts with layer 0 .. i dont know why 
-    //    if (HType == H.Shack)
-    //    {
-    //        gameObject.layer = 10;
-    //    }
-    //    else gameObject.layer = layer;
-    //}
+
     #endregion
 
     public void DestroydHiddenBuild()
@@ -3206,9 +3226,9 @@ public class Building : Hoverable, Iinfo
             {
                 Program.gameScene.QuestManager.QuestFinished("SmallFarm");
             }
-            else if (HType == H.Bohio)
+            else if (HType == H.Shack)
             {
-                Program.gameScene.QuestManager.QuestFinished("Bohio");
+                Program.gameScene.QuestManager.QuestFinished("Shack");
             }
             else if (HType == H.HeavyLoad)
             {
@@ -4295,11 +4315,6 @@ public class Building : Hoverable, Iinfo
 #endregion
 
 
-    public bool IsHouse()
-    {
-        return MyId.Contains("House") || MyId.Contains("Bohio");
-    }
-
     /// <summary>
     /// Check if contain Bohio or House
     /// </summary>
@@ -4307,29 +4322,29 @@ public class Building : Hoverable, Iinfo
     /// <returns></returns>
     static public bool IsHouseType(string passID)
     {
-        return passID.Contains("House") || passID.Contains("Bohio");
+        return passID.Contains("House") || passID.Contains("Bohio") || passID.Contains("Shack");
     }
 
-    public static bool IsHouseType(H HTypeP)
-    {
-        if (HTypeP == H.Bohio)
-        {
-            return true;
-        }
-        else if (HTypeP == H.WoodHouseC)
-        {
-            return true;
-        }
-        else if (HTypeP == H.WoodHouseA || HTypeP == H.WoodHouseB)
-        {
-            return true;
-        }
-        else if (HTypeP == H.BrickHouseA || HTypeP == H.BrickHouseB || HTypeP == H.BrickHouseC)
-        {
-            return true;
-        }
-        return false;
-    }
+    //public static bool IsHouseType(H HTypeP)
+    //{
+    //    if (HTypeP == H.Bohio)
+    //    {
+    //        return true;
+    //    }
+    //    else if (HTypeP == H.WoodHouseC)
+    //    {
+    //        return true;
+    //    }
+    //    else if (HTypeP == H.WoodHouseA || HTypeP == H.WoodHouseB)
+    //    {
+    //        return true;
+    //    }
+    //    else if (HTypeP == H.BrickHouseA || HTypeP == H.BrickHouseB || HTypeP == H.BrickHouseC)
+    //    {
+    //        return true;
+    //    }
+    //    return false;
+    //}
 
     #region Dock  DryDock and Supplier
 

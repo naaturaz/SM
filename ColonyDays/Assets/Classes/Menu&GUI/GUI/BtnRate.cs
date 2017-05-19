@@ -14,8 +14,8 @@ public class BtnRate : MonoBehaviour
 
         var id = SteamUser.GetSteamID().m_SteamID;
 
-        Debug.Log("id1:" + SteamUser.GetSteamID());
-        Debug.Log("id1 inner:" + SteamUser.GetSteamID().m_SteamID);
+        //Debug.Log("id1:" + SteamUser.GetSteamID());
+        //Debug.Log("id1 inner:" + SteamUser.GetSteamID().m_SteamID);
 
 
         if (!_isGoodPlayer)

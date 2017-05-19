@@ -168,24 +168,7 @@ public class Production  {
         InputProdCheckAndAdd(new ProductInfo(P.Mortar, prodFormu1, H.Mortar));
     }
 
-    /// <summary>
-    /// just bz they need water as input so inventory works fine
-    /// </summary>
-    void Houses()
-    {
-        List<H> listH = new List<H>()
-        {
-            H.Bohio, H.WoodHouseA, H.WoodHouseB,
-            H.BrickHouseA ,
-            H.BrickHouseB ,
-            H.BrickHouseC ,
-            H.WoodHouseC,
-        };
 
-        InputElement water = new InputElement(P.Water, 1f);
-        List<InputElement> waterForm = new List<InputElement>() { water };
-        InputProdCheckAndAdd(new ProductInfo(P.None, waterForm, listH));
-    }
 
     private void CannonParts()
     {
@@ -787,5 +770,33 @@ public class Production  {
         return false;
     }
 
-#endregion
+
+
+    /// <summary>
+    /// Will  ret string with inputs is missing to prod current prod 
+    /// </summary>
+    /// <param name="building"></param>
+    /// <returns></returns>
+    public string ReturnInputsINeed(Building building)
+    {
+        var ingredients = ReturnIngredients(building.CurrentProd.Product);
+        string res="";
+
+        //this is for buildings tht Produce and dont need any input 
+        if (ingredients == null)
+        {
+            return "";
+        }
+
+        for (int i = 0; i < ingredients.Count; i++)
+        {
+            if (!building.Inventory.IsHasEnoughToCoverThisIngredient(ingredients[i]))
+            {
+                res += "-" + ingredients[i].Element + "\n";
+            }
+        }
+        return res;
+    }
+
+    #endregion
 }

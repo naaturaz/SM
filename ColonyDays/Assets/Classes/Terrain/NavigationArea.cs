@@ -53,7 +53,7 @@ public class NavigationArea
             //aaa.enabled = true;
 
             WasAdded = true;
-            Debug.Log("nav area added:" + _go.name);
+            //Debug.Log("nav area added:" + _go.name);
         }
     }
 }

@@ -232,7 +232,7 @@ public class ShowAInventory
     {
         if (!UMath.nearlyEqual(_oldVolumeOccupied, Inv.CurrentVolumeOcuppied(), 0.01f))//0.001
         {
-            Debug.Log("Redone InvShow");
+            //Debug.Log("Redone InvShow");
             DestroyAll();
             ShowAllItems();
         }

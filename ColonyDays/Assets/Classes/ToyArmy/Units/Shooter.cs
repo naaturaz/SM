@@ -234,18 +234,16 @@ public class Shooter : General
 
     protected void OnTriggerEnter(Collider other)
     {
-        if (!other.name.Contains("Bullet"))
+        //touching a building
+        if (other.gameObject.layer == 10)
         {
-            return;
+            Debug.Log("10");
         }
-
-        var bulletComponent = other.gameObject.GetComponent<Bullet>();
-        //so friendly fire doesnt affect units  
-        if (IsGood == bulletComponent.IsGood)
+        //touching a person
+        else if(other.gameObject.layer == 11)
         {
-            return;
+            Debug.Log("11");
         }
-
 
 
 

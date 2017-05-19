@@ -34,8 +34,11 @@ public class Languages
 
        //House
 	   { "Bohio.Desc", "Bohio house, primitive conditions with unhappy people whom can only have a maximum of 2 to 3 kids" +_houseTail},
-       { "BohioB.Desc", "Bohio house, primitive conditions with unhappy people whom can only have a maximum of 2 to 3 kids" +_houseTail},
-       { "WoodHouseA.Desc", "Small wooden house, a family can have 2-4 kids max" +_houseTail},
+
+       { "Shack.Desc", "Shack, primitive conditions with unhappy people whom can only have a maximum of 2 to 3 kids" +_houseTail},
+
+
+        { "WoodHouseA.Desc", "Small wooden house, a family can have 2-4 kids max" +_houseTail},
        { "WoodHouseB.Desc", "Medium wooden house, a family can have 4 kids max" +_houseTail },
        { "WoodHouseC.Desc", "Small and comfortable wooden house, a family can have 2-4 kids max"+_houseTail},
        { "BrickHouseA.Desc", "Large house, a family can have 4 kids max"+_houseTail},
@@ -430,7 +433,7 @@ public class Languages
 
        { "Lamp.Quest", "Quest: Build a StandLamp. Find it on Infrastructure, it shines at night if there is Whale Oil on Storage"},
 
-       { "Bohio.Quest", "Quest: Build a bohio. These are cheap houses. When people turn 16 they will move to a free house if found. In this way, population growth will be guaranteed. [F1] Help"},
+       { "Shack.Quest", "Quest: Build a Shack. These are cheap houses. When people turn 16 they will move to a free house if found. In this way, population growth will be guaranteed. [F1] Help"},
        { "SmallFarm.Quest", "Quest: Build a FieldFarmSmall. You need farms to feed your people"},
        { "FarmHire.Quest", "Quest: Hire two farmers in a FieldFarmSmall. Click on the farm and in the plus sign assign workers. You need to have unemployed"
             +" people to be able to assign them into a new building"},
@@ -484,6 +487,22 @@ public class Languages
        {"LoadWontFit", "This load won't fit in the storage area"},
 
 
+
+
+
+
+
+
+        //and so on
+        {"Missing.Input", "Building can't produce. Missing inputs: \n" }
+
+
+
+
+
+
+
+
     };
 
     //ESPANNOL
@@ -512,7 +531,6 @@ public class Languages
 
        //House
 	   { "Bohio.Desc","El Bohio, una casa con condiciones muy rudimentarias, los ciudadanos se abochornan de vivir aqui, una familia puede tener el maximo de 1 niño aqui" +_houseTail},
-       { "BohioB.Desc","El Bohio, una casa con condiciones muy rudimentarias, los ciudadanos se abochornan de vivir aqui, una familia puede tener el maximo de 1 niño aqui" +_houseTail},
        { "HouseA.Desc","Casa pequeña de madera, una familia puede tener el maximo de 2 niños aqui" +_houseTailES},
        { "HouseB.Desc","Small house, una familia puede tener el maximo de 2 niños aqui" +_houseTailES },
        { "HouseTwoFloor.Desc","Wooden Medium house, una familia puede tener el maximo de 3 niños aqui"+_houseTailES},

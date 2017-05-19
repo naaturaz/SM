@@ -121,7 +121,7 @@ public class Settings
             return;
         }
         loadedOnce = true;
-        Debug.Log("Loading Settings");
+        //Debug.Log("Loading Settings");
 
         LoadFromFilePlayerPref();
         return;
@@ -160,7 +160,7 @@ public class Settings
     public static void SaveToFile()
     {
         SaveToFilePlayerPref();
-        Debug.Log("Saving settings");
+        //Debug.Log("Saving settings");
 
         return;
 

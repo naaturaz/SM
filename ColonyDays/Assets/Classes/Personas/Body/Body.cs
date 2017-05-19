@@ -1351,8 +1351,6 @@ public class Body //: MonoBehaviour //: General
     private Renderer renderer;
     public void Hide()
     {
-        return;
-
         if (ShouldPersonHide())
         {
             renderer.enabled = false;
