@@ -347,8 +347,10 @@ public class TerrainSpawnerController : ControllerParent
     void Update()
     {
         if (MeshController.CrystalManager1 == null || MeshController.CrystalManager1.CrystalRegions.Count == 0
-            || (!TownLoader.TownLoaded && BuildingPot.Control.Registro.AllBuilding.Count == 0
-            ))
+            || 
+            (!TownLoader.TownLoaded && !TownLoader.IsTemplate
+            && BuildingPot.Control.Registro.AllBuilding.Count == 0)
+            )
         {
             return;
         }

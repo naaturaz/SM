@@ -92,6 +92,8 @@ class TownLoader
         ///to  create Template towns.
         //new:
         //-make _isTemplate = true
+        //-make isDev = true
+
 
         //old instruccions:
         //-uncomment 2 line below  

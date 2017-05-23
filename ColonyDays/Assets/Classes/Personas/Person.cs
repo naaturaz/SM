@@ -543,7 +543,8 @@ public class Person : Hoverable
             obj = (Person)Resources.Load(Root.personaMale1, typeof(Person));
         }
 
-        obj = (Person)Instantiate(obj, iniPos, Quaternion.identity);
+        obj = (Person)Instantiate(obj, iniPos,
+            Quaternion.identity);
         obj.Gender = obj.OtherGender();
 
         obj.HType = H.Person;
@@ -554,7 +555,7 @@ public class Person : Hoverable
 
         //this to when Person dont have where to leave and then they find a place the teletranport effect
         //wont be seeable bz there are spawneed hidden. 
-        //obj.Body.Hide();
+        obj.Body.HideNoQuestion();
 
 
         return obj;

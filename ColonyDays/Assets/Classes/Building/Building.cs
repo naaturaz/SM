@@ -1348,7 +1348,7 @@ public class Building : Hoverable, Iinfo
     Vector3 _navInitSize;
 
     /// <summary>
-    /// if is not here then will be reduced standard amt , on SetNavMeshObstacle()
+    /// if is not here then will be reduced standard amt , on SetNavMeshObstacle() (-16, 0, -16)
     /// </summary>
     Dictionary<H, Vector3> _percetagesReduction = new Dictionary<H, Vector3>()
     {
@@ -1379,6 +1379,8 @@ public class Building : Hoverable, Iinfo
 
         { H.StorageMed, new Vector3(-30,0,-20)},
         { H.StorageSmall, new Vector3(-30,0,-20)},
+        { H.StorageBig, new Vector3(-15,0,-16)},
+
         { H.Dock, new Vector3(-5,0,-5)},
 
 

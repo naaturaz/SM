@@ -1338,14 +1338,14 @@ public class Body //: MonoBehaviour //: General
 
     public void HideNoQuestion()
     {
-        return;
-
         renderer.enabled = false;
 
         if (_personalObject != null)
         {
             _personalObject.Hide();
         }
+
+        _bodyAgent.HideNoQuestion();
     }
 
     private Renderer renderer;
@@ -1368,8 +1368,7 @@ public class Body //: MonoBehaviour //: General
         {
             return false;
         }
-        if (_movingNow || Location == HPers.IdleSpot //|| Location.ToString().Contains("Work")
-            )
+        if (_movingNow || Location == HPers.IdleSpot)
         {
             return false;
         }
@@ -1381,11 +1380,12 @@ public class Body //: MonoBehaviour //: General
         var foresterAtStillElement = _person.ProfessionProp.ProfDescription == Job.Forester
             && _person.ProfessionProp.WorkingNow;
         var builderAtConstruction = _person.ProfessionProp.ProfDescription == Job.Builder;
-        var farmer = _person.ProfessionProp != null && _person.ProfessionProp.ProfDescription == Job.Farmer;
+        var farmerAtWork = _person.ProfessionProp != null && _person.ProfessionProp.ProfDescription == Job.Farmer
+            && Location == HPers.Work;
         var fishOrOther = CurrTheRoute != null && CurrentAni != "isIdle" &&
             (CurrTheRoute.DestinyKey.Contains("Dummy") || CurrTheRoute.DestinyKey.Contains("Fish"));
 
-        if (foresterAtStillElement || builderAtConstruction || farmer || fishOrOther)
+        if (foresterAtStillElement || builderAtConstruction || farmerAtWork || fishOrOther)
         {
             return false;
         }

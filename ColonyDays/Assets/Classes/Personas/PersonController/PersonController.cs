@@ -142,11 +142,11 @@ public class PersonController : PersonPot
             templateFactor = 0;
         }
 
-        StartingCondition insane = new StartingCondition(4, 600, 600, 600, 600, 600, 600, 10000, 1 * factor, 1);
-        StartingCondition hard = new StartingCondition(6 * templateFactor, ini, ini, ini, ini, ini, ini, 0000, 5 * factor, 2);
-        StartingCondition med = new StartingCondition(7 * templateFactor, ini, ini, ini, ini, ini, ini, 0000, 5 * factor, 3);
-        StartingCondition easy = new StartingCondition(0 * templateFactor, ini, ini, ini, ini, ini, ini, 0000, 5 * factor, 4);
-        StartingCondition newbie = new StartingCondition(0 * templateFactor, ini, ini, ini, ini, ini, ini, 0000, 5 * factor, 5);
+        StartingCondition insane = new StartingCondition(4 * templateFactor, 600, 600, 600, 600, 600, 600, 10000, 1 * factor, 1);
+        StartingCondition hard = new StartingCondition(6 * templateFactor, ini, ini, ini, ini, ini, ini, 11000, 5 * factor, 2);
+        StartingCondition med = new StartingCondition(7 * templateFactor, ini, ini, ini, ini, ini, ini, 12000, 5 * factor, 3);
+        StartingCondition easy = new StartingCondition(1 * templateFactor, ini, ini, ini, ini, ini, ini, 25000, 5 * factor, 4);
+        StartingCondition newbie = new StartingCondition(9 * templateFactor, ini, ini, ini, ini, ini, ini, 0000, 5 * factor, 5);
 
         Conditions = new StartingCondition[] { insane, hard, med, easy, newbie, };
     }
