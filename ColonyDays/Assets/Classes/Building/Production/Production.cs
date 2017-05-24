@@ -172,7 +172,7 @@ public class Production  {
 
     private void CannonParts()
     {
-        InputElement iron = new InputElement(P.Iron, 10);
+        InputElement iron = new InputElement(P.Iron, 5);
         List<InputElement> i1 = new List<InputElement>() { iron, _eleWoodComb };
         List<InputElement> i2 = new List<InputElement>() { iron, _eleCoalComb };
         InputProdCheckAndAdd(new ProductInfo(P.CannonPart, i1, H.Armory));
@@ -184,7 +184,7 @@ public class Production  {
 
     private void Rum()
     {
-        InputElement element = new InputElement(P.SugarCane, 10);
+        InputElement element = new InputElement(P.SugarCane, 3);
         InputElement tonelEle = new InputElement(P.Barrel, 1);
 
         List<InputElement> prodFormu1 = new List<InputElement>() { element, _eleWoodComb, tonelEle };
@@ -194,8 +194,8 @@ public class Production  {
     }
     private void Chocolate()
     {
-        InputElement elementS = new InputElement(P.Sugar, 5);
-        InputElement elementC = new InputElement(P.Cacao, 5);
+        InputElement elementS = new InputElement(P.Sugar, 2);
+        InputElement elementC = new InputElement(P.Cacao, 2);
 
         List<InputElement> prodFormu1 = new List<InputElement>() { elementS, _eleWoodComb, elementC };
         List<InputElement> prodFormu2 = new List<InputElement>() { elementS, _eleCoalComb, elementC };
@@ -372,7 +372,7 @@ public class Production  {
     
     private void Ceramic()
     {
-        InputElement element = new InputElement(P.Clay, 5);
+        InputElement element = new InputElement(P.Clay, 3);
         List<InputElement> prod = new List<InputElement>() { element, _eleWoodComb };
         List<InputElement> prod2 = new List<InputElement>() { element, _eleCoalComb };
 
@@ -391,8 +391,8 @@ public class Production  {
 
     void Carpintery()
     {
-        InputElement wood = new InputElement(P.Wood, 10);
-        InputElement wood2 = new InputElement(P.Wood, 20);
+        InputElement wood = new InputElement(P.Wood, 2);
+        InputElement wood2 = new InputElement(P.Wood, 4);
         InputElement iron = new InputElement(P.Iron, 1);
         InputElement iron2 = new InputElement(P.Iron, 3);
 
@@ -417,8 +417,8 @@ public class Production  {
 
     void BlackSmith()
     {
-        InputElement wood = new InputElement(P.Wood, 10);
-        InputElement iron = new InputElement(P.Iron, 10);
+        InputElement wood = new InputElement(P.Wood, 3);
+        InputElement iron = new InputElement(P.Iron, 2);
         
         List<InputElement> tool = new List<InputElement>() { wood, iron };
 
@@ -436,8 +436,8 @@ public class Production  {
     private void Cigar()
     {
         //H.Cigar
-        InputElement element = new InputElement(P.TobaccoLeaf, 15);
-        InputElement cigarBox = new InputElement(P.CigarBox, 2);
+        InputElement element = new InputElement(P.TobaccoLeaf, 3);
+        InputElement cigarBox = new InputElement(P.CigarBox, 1);
         
         List<InputElement> prodFormu1 = new List<InputElement>() { element,cigarBox, _eleWoodComb };
         List<InputElement> prodFormu2 = new List<InputElement>() { element,cigarBox, _eleCoalComb};
@@ -468,8 +468,8 @@ public class Production  {
 
     private void Fabric()
     {
-        InputElement cotton = new InputElement(P.Cotton, 10);
-        InputElement henequen = new InputElement(P.Henequen, 10);
+        InputElement cotton = new InputElement(P.Cotton, 2);
+        InputElement henequen = new InputElement(P.Henequen, 2);
         
         List<InputElement> cloth1 = new List<InputElement>() { cotton, _eleWoodComb };
         List<InputElement> cloth2 = new List<InputElement>() { cotton, _eleCoalComb };
@@ -509,7 +509,7 @@ public class Production  {
     {
         //good sample Paper:
         //paper
-        InputElement eleInputWood = new InputElement(P.Wood, 10);
+        InputElement eleInputWood = new InputElement(P.Wood, 2);
         InputElement eleWoodComb = new InputElement(P.Wood, 2);
         InputElement eleCoalComb = new InputElement(P.Coal, 1);
 
@@ -522,7 +522,7 @@ public class Production  {
 
 
         //paper news
-        InputElement paper1 = new InputElement(P.Paper, 10);
+        InputElement paper1 = new InputElement(P.Paper, 2);
         List<InputElement> paperForm1 = new List<InputElement>() { paper1, eleWoodComb};
         List<InputElement> paperForm2 = new List<InputElement>() { paper1, eleCoalComb};
         InputProdCheckAndAdd(new ProductInfo(P.Map, paperForm1, H.Printer));
@@ -530,7 +530,7 @@ public class Production  {
 
 
         //books
-        InputElement paper2 = new InputElement(P.Paper, 10);
+        InputElement paper2 = new InputElement(P.Paper, 2);
         InputElement leather = new InputElement(P.Leather, 1);
         List<InputElement> bookForm1 = new List<InputElement>() { paper2, leather, eleWoodComb };
         List<InputElement> bookForm2 = new List<InputElement>() { paper2, leather, eleCoalComb };
@@ -542,7 +542,7 @@ public class Production  {
 
     private void Sugar()
     {
-        InputElement element = new InputElement(P.SugarCane, 10);
+        InputElement element = new InputElement(P.SugarCane, 2);
         List<InputElement> prodFormu1 = new List<InputElement>() { element, _eleWoodComb };
         List<InputElement> prodFormu2 = new List<InputElement>() { element, _eleCoalComb };
         InputProdCheckAndAdd(new ProductInfo(P.Sugar, prodFormu1, H.SugarMill));

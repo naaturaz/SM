@@ -236,7 +236,7 @@ public class Languages
                            "Rotate building: 'R' key \n " +
                            "Cancel: 'Right click'"},
         { "BullDozer.HoverMed", "Clean area: 'Left click' \n" +
-          "Cancel: 'Right click' \nCost: $100 per use "},
+          "Cancel: 'Right click' \nCost: $10 per use "},
 
         { "Road.HoverMed", "Start: 'Left click' \n" +
             "Expand: 'Move mouse' \n" +

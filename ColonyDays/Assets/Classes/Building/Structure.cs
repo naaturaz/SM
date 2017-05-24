@@ -96,8 +96,8 @@ public class Structure : StructureParent
         {
             DestroyCool();
 
-            Program.gameScene.GameController1.Dollars -= 100;
-            BulletinWindow.SubBulletinFinance1.FinanceLogger.AddToAcct("Construction", 100);
+            Program.gameScene.GameController1.Dollars -= 10;
+            BulletinWindow.SubBulletinFinance1.FinanceLogger.AddToAcct("Construction", 10);
 
             AudioCollector.PlayOneShot("BoughtLand", 0);
 

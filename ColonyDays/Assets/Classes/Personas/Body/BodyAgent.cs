@@ -49,24 +49,9 @@ public class BodyAgent
 
 
 
-    float refresh;
     // Update is called once per frame
     public void Update()
     {
-        //refresh use for new kids coming out of homes 
-        if (_nextDest != new Vector3() && !_destWasSet && !_agent.isOnNavMesh && Time.time > refresh + 2)
-        {
-            refresh = Time.time;
-            if ( _agent.enabled)
-            {
-                _agent.enabled = false;
-            }
-            else if (!_agent.enabled)
-            {
-                _agent.enabled = true;
-            }
-        }
-
         if (_nextDest != new Vector3() && !_destWasSet && _agent.isOnNavMesh && _agent.enabled)
         {
             _destWasSet = true;
@@ -90,14 +75,22 @@ public class BodyAgent
         }
     }
 
+
     General deb;
-    internal void Walk(Vector3 point, Vector3 afterDest, Vector3 moveNowTo, HPers goingTo)
+    void Debugg(Vector3 point)
     {
         if (deb != null)
         {
             deb.Destroy();
         }
 
+        deb = UVisHelp.CreateHelpers(point, Root.yellowCube);
+        deb.name = "Yellow > " + _person.MyId;
+    }
+
+
+    internal void Walk(Vector3 point, Vector3 afterDest, Vector3 moveNowTo, HPers goingTo)
+    {
         _agent.enabled = false;
         _person.transform.position = moveNowTo;
 
@@ -107,7 +100,7 @@ public class BodyAgent
         _nextDest = point;
         _agent.enabled = true;
 
-        deb = UVisHelp.CreateHelpers(point, Root.yellowCube);
+        //Debugg(point);
 
         if (_person.Body != null)
         {
@@ -157,8 +150,5 @@ public class BodyAgent
         _person.transform.position = _afterDestiny;
     }
 
-    internal void HideNoQuestion()
-    {
-        _agent.enabled = false;
-    }
+
 }

@@ -543,7 +543,7 @@ public class Person : Hoverable
             obj = (Person)Resources.Load(Root.personaMale1, typeof(Person));
         }
 
-        obj = (Person)Instantiate(obj, iniPos,
+        obj = (Person)Instantiate(obj, new Vector3( iniPos.x, 0.06f, iniPos.z),
             Quaternion.identity);
         obj.Gender = obj.OtherGender();
 
@@ -2273,7 +2273,7 @@ public class Person : Hoverable
 
     void GiveBirth()
     {
-        PersonPot.Control.HaveNewKid(Home.transform.position);
+        PersonPot.Control.HaveNewKid(Home.SpawnPoint.transform.position);
         Person kid = PersonPot.Control.All[PersonPot.Control.All.Count - 1];
         kid.Mother = MyId;
         kid.Father = Spouse;

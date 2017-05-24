@@ -304,9 +304,7 @@ public class Building : Hoverable, Iinfo
             else
             {
                 Program.gameScene.GameController1.NotificationsManager1.MainNotify("Colliding");
-
             }
-            
         }
         else if (!_isGoodWaterHeight && !IsThisADoubleBoundedStructure())
         {
@@ -355,6 +353,11 @@ public class Building : Hoverable, Iinfo
     /// <returns></returns>
     bool IsScaledAnchorsOnFloor()
     {
+        if (HType == H.BullDozer)
+        {
+            return true;
+        }
+
         var scale = ScaleVal();//0.2f was choose arbitrary. How far I gonna check
         //I scaled to address the problem when building is too close to water or cliff or moutain.
         //I make Anchors a bit bigger so checks for a bit bigger that Anchor area 

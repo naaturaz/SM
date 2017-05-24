@@ -413,7 +413,20 @@ public class Unit
 
     }
 
+    public static float ConvertFromCMToCurrent(float p)
+    {
+        if (_units == 'm')
+        {
+            return p;
+        }
+        return HeightFromMetricToImp(p);
 
+    }
+
+    private static float HeightFromMetricToImp(float p)
+    {
+        return p * 0.393701f;
+    }
 
     internal static float VolConverted(float p)
     {

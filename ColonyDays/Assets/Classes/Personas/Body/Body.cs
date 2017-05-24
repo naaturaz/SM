@@ -1344,8 +1344,6 @@ public class Body //: MonoBehaviour //: General
         {
             _personalObject.Hide();
         }
-
-        _bodyAgent.HideNoQuestion();
     }
 
     private Renderer renderer;

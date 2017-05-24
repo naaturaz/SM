@@ -42,8 +42,8 @@ public class ShowAPersonBuildingDetails
 
         AddToItems("Age", _person.Age + "");
         AddToItems("Gender", _person.Gender + "");
-        AddToItems("Height", _person.Height.ToString("n1") + "");
-        AddToItems("Weight", _person.Weight.ToString("n1") + "");
+        AddToItems("Height", Unit.ConvertFromCMToCurrent( _person.Height).ToString("n1") + "");
+        AddToItems("Weight",  Unit.WeightConverted(_person.Weight).ToString("n1") + "");
         AddToItems("Thirst", _person.Thirst);//thirst quenched
         AddToItems("Calories", _person.Nutrition1.CalNeededNowUpdate().ToString("N0") + "");
         AddToItems("Nutrition", _person.NutritionLevel + "");

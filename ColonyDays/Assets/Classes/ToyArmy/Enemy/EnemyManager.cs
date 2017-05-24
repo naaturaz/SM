@@ -23,8 +23,7 @@ public class EnemyManager : MonoBehaviour
     {
         return;
 
-        if (MeshController.BuyRegionManager1 == null || _enemies.Count > 0
-            )
+        if (MeshController.BuyRegionManager1 == null || _enemies.Count > 0)
         {
             return;
         }

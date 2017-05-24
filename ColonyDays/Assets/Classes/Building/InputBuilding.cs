@@ -121,7 +121,7 @@ public class InputBuilding : BuildingPot {
 
         if (InputMode == Mode.Placing && Control.CurrentSpawnBuild.HType != H.BullDozer)
         {
-            ShowHelp();
+            //ShowHelp();
         }
         else if (oldInputMode == Mode.Placing)
         {
@@ -545,11 +545,13 @@ public class InputBuilding : BuildingPot {
     /// </summary>
     void CleanCurrentSpawnBuildIfNewBuildIsADiffType(H buildWhat)
     {
-        if(Control.CurrentSpawnBuild == null){return;}
-        if (buildWhat != Control.CurrentSpawnBuild.HType)
+        if(Control.CurrentSpawnBuild == null || Control.CurrentSpawnBuild.PositionFixed)
         {
-            Control.CurrentSpawnBuild.Destroy();
+            return;
         }
+       
+        Control.CurrentSpawnBuild.Destroy();
+        
     }
 
     #region Building the 3 types of posible buildins
