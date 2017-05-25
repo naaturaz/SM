@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.AI;
+using System.Xml.Serialization;
 
 public class Body //: MonoBehaviour //: General
 {
@@ -143,6 +144,20 @@ public class Body //: MonoBehaviour //: General
         set { _currentPosition = value; }
     }
 
+    [XmlIgnore]
+    public BodyAgent BodyAgent
+    {
+        get
+        {
+            return _bodyAgent;
+        }
+
+        set
+        {
+            _bodyAgent = value;
+        }
+    }
+
     public Body() { }
 
     public Body(Person person)
@@ -202,7 +217,7 @@ public class Body //: MonoBehaviour //: General
 
         renderer = _person.Geometry.GetComponent<Renderer>();
 
-        _bodyAgent = new BodyAgent(_person);
+        BodyAgent = new BodyAgent(_person);
 
     }
 
@@ -817,7 +832,7 @@ public class Body //: MonoBehaviour //: General
 
             Vector3 doorPt;
             var dest = RetDestiny(route, goingTo, out doorPt, inverse, whichRouteP);
-            _bodyAgent.Walk(dest, doorPt, moveToAtStartWalk, goingTo);
+            BodyAgent.Walk(dest, doorPt, moveToAtStartWalk, goingTo);
         }
 
 
@@ -829,7 +844,7 @@ public class Body //: MonoBehaviour //: General
 
         if (!_bodyCall)
         {
-            _bodyAgent.PutOnNavMeshIfNeeded(RetInitPoint(route, goingTo, inverse, whichRouteP));
+            BodyAgent.PutOnNavMeshIfNeeded(RetInitPoint(route, goingTo, inverse, whichRouteP));
         }
     }
 
@@ -1067,9 +1082,9 @@ public class Body //: MonoBehaviour //: General
 
 
 
-        if (UMath.nearEqualByDistance(_person.transform.position, _bodyAgent.Destiny, 0.2f))// 
+        if (UMath.nearEqualByDistance(_person.transform.position, BodyAgent.Destiny, 0.2f))// 
         {
-            _bodyAgent.CleanDestiny();
+            BodyAgent.CleanDestiny();
             //CheckRotation();
             WalkDone();
             _person.Body.Hide();
@@ -1362,7 +1377,7 @@ public class Body //: MonoBehaviour //: General
 
     bool ShouldPersonHide()
     {
-        if (_bodyAgent.Destiny != new Vector3())
+        if (BodyAgent.Destiny != new Vector3())
         {
             return false;
         }
@@ -1377,7 +1392,8 @@ public class Body //: MonoBehaviour //: General
 
         var foresterAtStillElement = _person.ProfessionProp.ProfDescription == Job.Forester
             && _person.ProfessionProp.WorkingNow;
-        var builderAtConstruction = _person.ProfessionProp.ProfDescription == Job.Builder;
+        var builderAtConstruction = _person.ProfessionProp.ProfDescription == Job.Builder
+            && (_person.Body.Location == HPers.InWork);
         var farmerAtWork = _person.ProfessionProp != null && _person.ProfessionProp.ProfDescription == Job.Farmer
             && Location == HPers.Work;
         var fishOrOther = CurrTheRoute != null && CurrentAni != "isIdle" &&
@@ -1419,6 +1435,11 @@ public class Body //: MonoBehaviour //: General
         return false;
     }
 
+    //internal void ReachDestinyAgentBody()
+    //{
+    //    BodyAgent.ReachDestiny();
+    //}
+
     bool ContainsOpenAirJob(string key)
     {
         if (key == null)
@@ -1454,9 +1475,9 @@ public class Body //: MonoBehaviour //: General
     // Update is called once per frame
     public void Update()
     {
-        if (_bodyAgent != null)
+        if (BodyAgent != null)
         {
-            _bodyAgent.Update();
+            BodyAgent.Update();
         }
 
         //if (_movingNow)
@@ -1478,7 +1499,7 @@ public class Body //: MonoBehaviour //: General
         if (_person == null || _routePoins == null || _routePoins.Count == 0) { return; }
 
         //var dist = 0.9f;//.2 //.25
-        var currDist = Vector3.Distance(_person.transform.position, _bodyAgent.Destiny);
+        var currDist = Vector3.Distance(_person.transform.position, BodyAgent.Destiny);
         //getting close to last point
         if (!_movingNow)
         {
@@ -1570,7 +1591,7 @@ public class Body //: MonoBehaviour //: General
         {
             myAnimator.speed = Program.gameScene.GameSpeed;
             oldGameSpeed = Program.gameScene.GameSpeed;
-            _bodyAgent.NewSpeed();
+            BodyAgent.NewSpeed();
         }
     }
 

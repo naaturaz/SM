@@ -151,6 +151,8 @@ public class OutOfScreen
     /// </summary>
     private void HideShow()
     {
+        return;
+
         if (OnScreenRectNow == oldScreenRectState)
         {
             return;

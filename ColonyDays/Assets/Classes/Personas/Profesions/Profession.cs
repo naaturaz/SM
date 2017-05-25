@@ -1375,4 +1375,16 @@ public class Profession
 
     #endregion
 
+
+
+
+
+    internal void OnBuildDoneHandler(object sender, EventArgs e)
+    {
+        if (_person != null && _person.Body.Location == HPers.Work)
+        {
+            //Debug.Log("Called event to back to ooffice " + _person.name);
+            //_person.Body.ReachDestinyAgentBody();
+        }
+    }
 }

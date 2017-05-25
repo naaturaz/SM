@@ -302,7 +302,27 @@ public class PersonController : PersonPot
         }
     }
 
-#endregion
+
+
+
+
+
+
+    public EventHandler<EventArgs> BuildDone;
+
+    public void OnBuildDone(EventArgs e)
+    {
+        if (BuildDone != null)
+        {
+            BuildDone(this, e);
+        }
+    }
+
+
+    #endregion
+
+
+
 
 
 

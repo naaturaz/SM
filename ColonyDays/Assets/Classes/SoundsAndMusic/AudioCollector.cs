@@ -522,14 +522,14 @@ public class AudioCollector
 
         if (!_audioContainers.ContainsKey(key))
         {
-            var audioConta = AudioContainer.Create(key, key, 15,
+            var audioConta = AudioContainer.Create(key, key, 20,
             container: AudioPlayer.SoundsCointaner.transform);
             _audioContainers.Add(key, audioConta);
             _languages.Add(key, buildRoot + key);
         }
         else
         {
-            _audioContainers[key].PlayAShot(15);//15 is half way
+            _audioContainers[key].PlayAShot(20);//15 is half way
         }
     }
 

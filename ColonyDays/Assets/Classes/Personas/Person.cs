@@ -1729,7 +1729,9 @@ public class Person : Hoverable
         else if (jType == Job.Builder)
         {
             _profession = new Builder(this, pF);
-            //print("new Builder:"+MyId);
+
+            //caller, broadcaster           //client
+            PersonPot.Control.BuildDone += _profession.OnBuildDoneHandler;
         }
         else if (jType == Job.FisherMan)
         {

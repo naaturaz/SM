@@ -545,13 +545,13 @@ public class InputBuilding : BuildingPot {
     /// </summary>
     void CleanCurrentSpawnBuildIfNewBuildIsADiffType(H buildWhat)
     {
-        if(Control.CurrentSpawnBuild == null || Control.CurrentSpawnBuild.PositionFixed)
+        if(Control.CurrentSpawnBuild == null || Control.CurrentSpawnBuild.PositionFixed 
+            || buildWhat.ToString().Contains("Road"))
         {
             return;
         }
        
         Control.CurrentSpawnBuild.Destroy();
-        
     }
 
     #region Building the 3 types of posible buildins

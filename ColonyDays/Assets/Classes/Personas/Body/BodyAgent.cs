@@ -17,6 +17,11 @@ public class BodyAgent
 
     Vector3 _nextDest;
 
+    ////if a route was interrupt
+    //private bool _wasInterrupt;
+
+
+
     public Vector3 Destiny
     {
         get
@@ -77,6 +82,7 @@ public class BodyAgent
 
 
     General deb;
+
     void Debugg(Vector3 point)
     {
         if (deb != null)
@@ -92,7 +98,18 @@ public class BodyAgent
     internal void Walk(Vector3 point, Vector3 afterDest, Vector3 moveNowTo, HPers goingTo)
     {
         _agent.enabled = false;
-        _person.transform.position = moveNowTo;
+
+        ////if was interrupt wont move it to that position.
+        //if (!_wasInterrupt)
+        //{
+            _person.transform.position = moveNowTo;
+        //}
+        //else if (_wasInterrupt && moveNowTo != _person.transform.position && moveNowTo != new Vector3())
+        //{
+        //    //so next time works just fine
+        //    _wasInterrupt = false;
+        //}
+
 
         _destWasSet = false;
         Destiny = point;
@@ -107,7 +124,7 @@ public class BodyAgent
             _person.Body.Show();
         }
 
-        if (goingTo == HPers.InWork && _person.ProfessionProp!=null
+        if (goingTo == HPers.InWork && _person.ProfessionProp != null
             && _person.ProfessionProp.ProfDescription == Job.Builder)
         {
             _agent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
@@ -150,5 +167,12 @@ public class BodyAgent
         _person.transform.position = _afterDestiny;
     }
 
-
+    ///// <summary>
+    ///// Used when a person is building a building and was completly done before he got there . Needs to go back 
+    ///// </summary>
+    //internal void ReachDestiny()
+    //{
+    //    Destiny = _person.transform.position;
+    //    _wasInterrupt = true;
+    //}
 }

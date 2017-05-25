@@ -1387,7 +1387,7 @@ public class Building : Hoverable, Iinfo
         { H.Dock, new Vector3(-5,0,-5)},
 
 
-        { H.School, new Vector3(-5,0,-5)},
+        { H.School, new Vector3(-10,0,-15)},
 
 
         { H.Church, new Vector3(-8,0,-20)},
@@ -1405,7 +1405,7 @@ public class Building : Hoverable, Iinfo
         _nav = Geometry.GetComponent<NavMeshObstacle>();
         _navInitSize = _nav.size;
 
-        Vector3 perc = new Vector3(12,0, 12);
+        Vector3 perc = new Vector3(10,0, 10);
         //it grows a bit so move people away a bit so when carving the are not
         //in the middle of noWhere
         _nav.size = new Vector3(
@@ -1416,7 +1416,7 @@ public class Building : Hoverable, Iinfo
 
     void CheckOnSetNavMeshObst()
     {
-        if (!_wasNavSet && Time.time > _lastStageTime + 5 && _lastStageTime > 0)
+        if (!_wasNavSet && Time.time > _lastStageTime + 0.01f && _lastStageTime > 0)
         {
             _wasNavSet = true;
             if (_nav!=null)
@@ -2727,6 +2727,8 @@ public class Building : Hoverable, Iinfo
         Debug.Log("construction built 100%:"+MyId+"." + Program.gameScene.GameTime1.TodayYMD());
         PersonPot.Control.RoutesCache1.RemoveAllMine(MyId);
         Quest();
+
+        PersonPot.Control.OnBuildDone(EventArgs.Empty);
 
         //bz when demolishes adds 10,000
         if (constructionAmt < 9500)
