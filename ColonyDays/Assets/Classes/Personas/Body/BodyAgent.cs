@@ -57,6 +57,16 @@ public class BodyAgent
     // Update is called once per frame
     public void Update()
     {
+        //correcting bug where kids stay in front of storage with path completed
+        if (_destWasSet && _agent.isOnNavMesh && _agent.enabled && !_person.IsMajor 
+            && _agent.destination != Destiny && 
+            _agent.pathStatus == NavMeshPathStatus.PathComplete)
+        {
+            //so i set the destination again to the real one so they move towards it 
+            _agent.SetDestination(Destiny);
+            //Debug.Log("Corrected pathCompleted: " + _person.name);
+        }
+
         if (_nextDest != new Vector3() && !_destWasSet && _agent.isOnNavMesh && _agent.enabled)
         {
             _destWasSet = true;
@@ -69,7 +79,7 @@ public class BodyAgent
     {
         if (_person == null) { return; }
 
-        if (UMath.nearEqualByDistance(Destiny, _person.transform.position, 0.2f))
+        if (UMath.nearEqualByDistance(Destiny, _person.transform.position, 0.3f))
         {
             if (_nextDest != new Vector3())
             {
@@ -99,16 +109,9 @@ public class BodyAgent
     {
         _agent.enabled = false;
 
-        ////if was interrupt wont move it to that position.
-        //if (!_wasInterrupt)
-        //{
-            _person.transform.position = moveNowTo;
-        //}
-        //else if (_wasInterrupt && moveNowTo != _person.transform.position && moveNowTo != new Vector3())
-        //{
-        //    //so next time works just fine
-        //    _wasInterrupt = false;
-        //}
+
+        _person.transform.position = moveNowTo;
+
 
 
         _destWasSet = false;

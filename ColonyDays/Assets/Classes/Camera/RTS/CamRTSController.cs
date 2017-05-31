@@ -8,6 +8,8 @@
 using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityStandardAssets.ImageEffects;
+using System;
 
 public class CamRTSController : CamControl
 {
@@ -56,6 +58,10 @@ public class CamRTSController : CamControl
     MiniMapRTS miniMapRTS;
 
     private Rotate _rotateScript;
+
+
+
+
 
     public MiniMapRTS MiniMapRts
     {
@@ -167,6 +173,8 @@ public class CamRTSController : CamControl
 
         _rotateScript = GetComponent<Rotate>();
     }
+
+
 
     #region Audio Reporting
     private bool _isAudioReport;
@@ -488,6 +496,7 @@ public class CamRTSController : CamControl
         set { _desiredSpeed = value; }
     }
 
+
     /// <summary>
     /// Will decompose a Compose Direction (ex: UpRight), into Up and Right so the 
     /// mouse direction will be valid if is in a corner, if is a simpel direction
@@ -696,4 +705,52 @@ public class CamRTSController : CamControl
     }
 
 
+
+
+
+
+
+    //Camera visual effects 
+    SunShafts _sunShaft;
+    Camera _camera;
+
+
+    public void Day()
+    {
+        InitDayNight();
+
+        _sunShaft.enabled = true;
+
+    }
+
+    public void Night()
+    {
+        InitDayNight();
+        _sunShaft.enabled = false;
+
+    }
+
+    void InitDayNight()
+    {
+        if (_sunShaft == null)
+        {
+            _sunShaft = GetComponent<SunShafts>();
+            _camera = GetComponent<Camera>();
+
+
+        }
+    }
+
+    public void AssignBackGroundColor(Color col)
+    {
+        InitDayNight();
+
+        _camera.backgroundColor = col;
+    }
+
+    internal Color GetCameraBackColor()
+    {
+        InitDayNight();
+        return _camera.backgroundColor;
+    }
 }

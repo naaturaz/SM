@@ -12,6 +12,8 @@ public class ColorManager : MonoBehaviour
 
     public Color DayGrass;
 
+    public Color[] BackGroundCam = new Color[2];
+
     void Start()
     {
 
@@ -66,6 +68,15 @@ public class ColorManager : MonoBehaviour
             return Day[_currentStage].EastIntense;
         }
         return Night[0].EastIntense;
+    }
+
+    internal Color GetMeCameraBackGroundColor(H dayOrNight)
+    {
+        if (dayOrNight == H.Day)
+        {
+            return BackGroundCam[0];
+        }
+        return BackGroundCam[1];
     }
 }
 

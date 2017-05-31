@@ -67,11 +67,19 @@ public class Dispatch
         set { _type = value; }
     }
 
+    /// <summary>
+    /// Exp and Imports orderss
+    /// </summary>
     public List<Order> ExpImpOrders
     {
         get { return _expImpOrders; }
         set { _expImpOrders = value; }
     }
+
+    /// <summary>
+    /// Only exports needed so ships know what to get 
+    /// </summary>
+    public List<Order> ExportsOrders { get; private set; }
 
     public Dispatch() { }
 
@@ -835,16 +843,7 @@ public class Dispatch
 
     internal bool HasExportOrders()
     {
-        var list = ReturnCurrentList();
-
-        for (int i = 0; i < list.Count; i++)
-        {
-            if (list[i].DestinyBuild == "Ship")
-            {
-                return true;
-            }
-        }
-        return false;
+        return ExportsOrders != null && ExportsOrders.Count > 0;
     }
 
     /// <summary>
@@ -928,13 +927,13 @@ public class Dispatch
     /// <param name="dock"></param>
     internal bool Export(Building dock)
     {
-        for (int i = 0; i < ExpImpOrders.Count; i++)
+        for (int i = 0; i < ExportsOrders.Count; i++)
         {
-            if (ExpImpOrders[i].DestinyBuild == "Ship")
+            if (ExportsOrders[i].DestinyBuild == "Ship")
             {
-                if (dock.Inventory.IsItemOnInv(ExpImpOrders[i].Product))
+                if (dock.Inventory.IsItemOnInv(ExportsOrders[i].Product))
                 {
-                    HandleThatExport(dock, i);
+                    HandleThatExport(dock, ExportsOrders[i]);
                     return true;
                 }
             }
@@ -947,9 +946,8 @@ public class Dispatch
     /// </summary>
     /// <param name="dock"></param>
     /// <param name="i"></param>
-    void HandleThatExport(Building dock, int i)
+    void HandleThatExport(Building dock, Order ord)
     {
-        var ord = ExpImpOrders[i];
         float initialAmtNeed = ord.Amount;
         ord = dock.Inventory.ManageExportOrder(ord);
         float leftOnOrder = ord.Amount;
@@ -970,6 +968,16 @@ public class Dispatch
     {
         if (ExpImpOrders.Count < maxAmtOfExpImpOrders)
         {
+            if (order.DestinyBuild == "Ship")
+            {
+                if (ExportsOrders == null)
+                {
+                    ExportsOrders = new List<Order>();
+                }
+
+                ExportsOrders.Add(order);
+            }
+
             ExpImpOrders.Add(order);
             return true;
         }
@@ -1093,7 +1101,14 @@ public class Dispatch
             if (ExpImpOrders[i].ID == id)
             {
                 ExpImpOrders.RemoveAt(i);
-                return;
+            }
+        }
+
+        for (int i = 0; i < ExportsOrders.Count; i++)
+        {
+            if (ExportsOrders[i].ID == id)
+            {
+                ExportsOrders.RemoveAt(i);
             }
         }
     }

@@ -308,7 +308,7 @@ public class Languages
        { "NotScaledOnFloor", "The building is either too close to shore or mountain"},
        { "NotEven", "The ground underneath the building is not even"},
        { "Colliding", "Building is colliding with another one"},
-       { "Colliding.BullDozer", "Bulldozer is colliding with a building. Can only be used on terrain (trees, rocks, etc)"},
+       { "Colliding.BullDozer", "Bulldozer is colliding with a building. Can only be used on terrain (trees, rocks)"},
 
        { "BadWaterHeight", "The building is too low or high on the water"},
        { "LockedRegion", "You need to own this region to build here"},

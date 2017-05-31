@@ -40,8 +40,8 @@ public class StageManager : General
     /// 
     /// At night time is the same but divided / 10
     /// </summary>
-    List<float> _times = new List<float>() { 1, 20, 120, 120, 20, 5 };
-    //List<float> _times = new List<float>() { 1, 1, 1, 1, 1, 5 };
+    //List<float> _times = new List<float>() { 1, 20, 120, 120, 20, 5 };
+    List<float> _times = new List<float>() { 1, 1, 1, 1, 1, 5 };
 
     float _startedCycleAt = 0;
 
@@ -80,9 +80,9 @@ public class StageManager : General
             return;
         }
 
-#if UNITY_EDITOR
-        return;
-#endif
+//#if UNITY_EDITOR
+//        return;
+//#endif
 
         CheckIfMoveStages();
 
@@ -166,6 +166,11 @@ public class StageManager : General
             _colorManager.GetMeAmbienceColor(_currentStage, _currentCycle), step);
         
         RenderSettings.ambientLight = newAmbience;
+
+
+        var currentColBack = CamControl.CAMRTS.GetCameraBackColor(); 
+        var newColBack = Color.Lerp(currentColBack, _colorManager.GetMeCameraBackGroundColor(_currentCycle), step);
+        CamControl.CAMRTS.AssignBackGroundColor(newColBack);
 
 
         ReachNewColorForWaveGrass();
@@ -253,10 +258,12 @@ public class StageManager : General
         if (_currentCycle == H.Day)
         {
             _currentCycle = H.Night;
+            CamControl.CAMRTS.Night();
         }
         else
         {
             _currentCycle = H.Day;
+            CamControl.CAMRTS.Day();
 
         }
     }
