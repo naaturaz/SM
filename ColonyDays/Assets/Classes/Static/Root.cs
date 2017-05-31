@@ -705,6 +705,8 @@ public class Root : MonoBehaviour
         //house
         buildsRoot.Add(H.Bohio, "Prefab/Building/House/Bohio");
         buildsRoot.Add(H.Shack, "Prefab/Building/House/Shack");
+        buildsRoot.Add(H.MediumShack, "Prefab/Building/House/MediumShack");
+
         buildsRoot.Add(H.WoodHouseA, "Prefab/Building/House/WoodHouseA");
         buildsRoot.Add(H.WoodHouseB, "Prefab/Building/House/WoodHouseB");
         buildsRoot.Add(H.WoodHouseC, "Prefab/Building/House/WoodHouseC");

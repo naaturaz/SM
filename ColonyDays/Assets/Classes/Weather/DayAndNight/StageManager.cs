@@ -40,8 +40,8 @@ public class StageManager : General
     /// 
     /// At night time is the same but divided / 10
     /// </summary>
-    //List<float> _times = new List<float>() { 1, 20, 120, 120, 20, 5 };
-    List<float> _times = new List<float>() { 1, 1, 1, 1, 1, 5 };
+    List<float> _times = new List<float>() { 1, 20, 120, 120, 20, 5 };
+    //List<float> _times = new List<float>() { 1, 1, 1, 1, 1, 5 };
 
     float _startedCycleAt = 0;
 

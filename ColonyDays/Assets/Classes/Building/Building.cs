@@ -1361,6 +1361,7 @@ public class Building : Hoverable, Iinfo
         {H.Bohio, new Vector3(-37,0,-53)},
 
         {H.Shack, new Vector3(-37,0,-53)},
+        {H.MediumShack, new Vector3(-30,0,-40)},
 
 
         { H.FieldFarmSmall, new Vector3(-19,0,-32)},
@@ -2116,10 +2117,10 @@ public class Building : Hoverable, Iinfo
         }
 
         //can hhave 1 famili with 3 kids
-        if (HType == H.Bohio || HType == H.Shack )
+        if (HType == H.Bohio || HType == H.Shack || HType == H.MediumShack)
         {
             Families = new Family[1];
-            Families[0] = new Family(UMath.GiveRandom(2,4), MyId, 0);
+            Families[0] = new Family(UMath.GiveRandom(2,3), MyId, 0);
         }
         //can hhave 1 famili with 3 kids
         else if (HType == H.WoodHouseA || HType == H.WoodHouseC)

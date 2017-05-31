@@ -33,17 +33,18 @@ public class Languages
 
 
        //House
-	   { "Bohio.Desc", "Bohio house, primitive conditions with unhappy people whom can only have a maximum of 2 to 3 kids" +_houseTail},
+	   { "Bohio.Desc", "Bohio house, primitive conditions with unhappy people whom can only have a maximum of 2 to 3 kids"},
 
-       { "Shack.Desc", "Shack, primitive conditions with unhappy people whom can only have a maximum of 2 to 3 kids" +_houseTail},
+       { "Shack.Desc", "Shack, primitive conditions with unhappy people whom can only have a maximum of 2 to 3 kids"},
+       { "MediumShack.Desc", "The Medium Shack, has above primitive conditions with small happiness, can have a maximum of 2 to 3 kids"},
 
 
-        { "WoodHouseA.Desc", "Small wooden house, a family can have 2-4 kids max" +_houseTail},
-       { "WoodHouseB.Desc", "Medium wooden house, a family can have 4 kids max" +_houseTail },
-       { "WoodHouseC.Desc", "Small and comfortable wooden house, a family can have 2-4 kids max"+_houseTail},
-       { "BrickHouseA.Desc", "Large house, a family can have 4 kids max"+_houseTail},
-       { "BrickHouseB.Desc","Large house, a family can have 4 kids max"+_houseTail},
-       { "BrickHouseC.Desc","Large house, a family can have 4 kids max"+_houseTail},
+        { "WoodHouseA.Desc", "Small wooden house, a family can have 2-4 kids max" },
+       { "WoodHouseB.Desc", "Medium wooden house, a family can have 4 kids max"  },
+       { "WoodHouseC.Desc", "Small and comfortable wooden house, a family can have 2-4 kids max"},
+       { "BrickHouseA.Desc", "Large house, a family can have 4 kids max"},
+       { "BrickHouseB.Desc","Large house, a family can have 4 kids max"},
+       { "BrickHouseC.Desc","Large house, a family can have 4 kids max"},
 
        
        //Farms

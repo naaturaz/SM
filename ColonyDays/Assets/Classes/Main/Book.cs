@@ -76,6 +76,8 @@ public class Book : General
         //houses 
         Build.Add(new BuildStat(H.Bohio, 400, 3, 0, 0, 0, maxPeople: 5, capacity: .3f));
         Build.Add(new BuildStat(H.Shack, 500, 3, 0, 0, 0, maxPeople: 5, capacity: .5f));
+        Build.Add(new BuildStat(H.MediumShack, 600, 3, 0, 0, 0, maxPeople: 5, capacity: .6f));
+
         Build.Add(new BuildStat(H.WoodHouseA, 400, 15, 1, 0, 1, maxPeople: 5, capacity: .4f));
         Build.Add(new BuildStat(H.WoodHouseB, 500, 30, 5, 0, 5, maxPeople: 5, capacity: .5f));
         Build.Add(new BuildStat(H.WoodHouseC, 800, 20, 2, 0, 2, maxPeople: 10, capacity: .6f));
