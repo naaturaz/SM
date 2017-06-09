@@ -980,6 +980,7 @@ public class MouseListener : InputMain
         }
     }
 
+
     void OnDemolish(EventArgs e)
     {
         if (Demolished != null)
@@ -1019,6 +1020,12 @@ public class MouseListener : InputMain
         }
     }
 
+
+
+
+
+    public static bool MouseOnWindowNow { get; set; }
+
     public bool IsAWindowShownNow()
     {
         if (_buildingsMenu == null)
@@ -1040,8 +1047,12 @@ public class MouseListener : InputMain
         }
 
         return _addOrderWindow.IsShownNow() || BulletinWindow.IsShownNow() //|| _notificationWindow.IsShownNow()
-            || QuestWindow.IsShownNow() || _helpWindow.IsShownNow();
+            || QuestWindow.IsShownNow() || _helpWindow.IsShownNow() || MouseOnWindowNow;
     }
+
+
+
+
 
     internal void ClickOnAnInvItem(InvItem _invItem)
     {

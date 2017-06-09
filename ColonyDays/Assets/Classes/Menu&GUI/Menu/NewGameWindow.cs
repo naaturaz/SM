@@ -132,9 +132,15 @@ public class NewGameWindow : GUIElement
         Display();
     }
 
+    /// <summary>
+    /// The call of the Tutorial from the Main Menu
+    /// </summary>
     private void Tutorial()
     {
-        _townName = "Tutorial Sugar";
+        Program.WasTutoPassed = false;
+        PlayerPrefs.SetString("Tuto", "");
+
+        _townName = "Tutorial";
         //save load window set
         DataController.LoadGameTuto();
     }

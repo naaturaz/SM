@@ -439,8 +439,9 @@ public class Languages
        { "FarmHire.Quest", "Quest: Hire two farmers in a FieldFarmSmall. Click on the farm and in the plus sign assign workers. You need to have unemployed"
             +" people to be able to assign them into a new building"},
 
-            { "FarmProduce.Quest", "Quest: Now produce " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " of beans on the FieldFarmSmall. Click on the 'Stat' tab and will show you the production of the last 5 years"},
-       { "Transport.Quest", "Quest: Transport the beans from the farm to the Storage. To do that make sure you have" +
+
+        { "FarmProduce.Quest", "Quest: Now produce " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " of beans on the FieldFarmSmall. Click on the 'Stat' tab and will show you the production of the last 5 years. You can see the quest progress in the quest window. If you build more small farms will be accounted for the quest"},
+        { "Transport.Quest", "Quest: Transport the beans from the farm to the Storage. To do that make sure you have" +
             " workers on the masonry. They act as wheelbarrows when not building"},
 
             { "Export.Quest", "Quest: Now export 300 " + Unit.CurrentWeightUnitsString() + " of beans. On the Dock add an order of export. If you have not dock then build one."+
@@ -805,7 +806,23 @@ public class Languages
 
 
 
+       { "More.Help", "Si necesita mas ayuda siempre es una buena idea pasar el tutorial, or o postear una pregunta en el Forum"},
 
+        //more 
+       { "Products Expiration.Help", "Caducidad de productos: Como en la vida real los productos expiran. En la tabla the productos expirados se puede ver si alguno ha expirado Bulletin/Prod/Expire"},
+       { "Horse Carriages.Help", "Las personas con carretillas tiene limites de carga. Por eso estas carretas con caballos son usadas en el juego, ya que pueden cargar mucho mas. Como resultado la economia se mueve mas de prisa. Una persona carga alrededor de 15KG, un carretillero 60KG, y las carretas chicas hasta 240KG. Construye un HeavyLoad para usarlas"},
+       { "Usage of goods.Help", "Consumo de bienes: Cajas, barriles, carretillas, carretas, herramientas, ropa, ceramicas, muebles y utensillos son todos necesarios para mantener las actividades de la villa. A medida que estos bienes son usados disminuye la cantidad en el almacen, por ej. una persona no cargara nada si no hay cajas"},
+       { "Happiness.Help", "Felicidad: La felicidad de las personas esta influenciada por varios factores. Variedad de comidas, satisfaccion religiosa, esparcimiento, confort de la casa, nivel de educacion, utensillos, ceramica y ropa."},
+       { "Line production.Help", "Linea de produccion: Para hacer un KG de puntillas tienes que encontrar y minar los minerales, en la fundicion derretir el hierro, y finalmente en el herrero hacer las puntillas. O simplemente comprarla en el puerto"},
+       { "Bulletin.Help", "El icono con las paginas en la barra infierior es la ventana de Bulletin/Control. Por favor toma un minuto para explorarla."},
+       { "Trading.Help", "You will need to have at least one Dock to be able to trade. On it, you can add import/export orders and make some cash. If you need help adding an order you might want to complete the Tutorial"},
+
+       { "Combat Mode.Help", "It activates when a Pirate/Bandit is detected by one of your citizens. Once the mode is active you can command units directly to attack. Select them and right click to objective to attack"},
+
+
+
+
+       { "F1.Help", "Presiona [F1] para ayuda"},
 
 
 

@@ -38,7 +38,7 @@ public class RotateRTS : GenericCameraComponent {
                 helpCam360MainY.transform, target, camSensivity);
         }
 
-        RotateCamVert(camSensivity, target, -Input.GetAxis("Mouse ScrollWheel") * 100);
+        RotateCamVert(camSensivity, target, -Input.GetAxis("Mouse ScrollWheel") * 50);//100
 
         CamControl.CAMRTS.centerTarget.transform.rotation = TransformCam.rotation;
         TransformCam.parent = CamControl.CAMRTS.centerTarget.transform;
@@ -47,7 +47,7 @@ public class RotateRTS : GenericCameraComponent {
     Transform _target;
     public void RotateCamVert(float camSensivity, Transform target, float smoothTimePass)
     {
-        var qOrE = Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.E);
+        var qOrE = (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.E)) && !MouseListener.MouseOnWindowNow;
         TransformCam.parent = null;
         float changeValue = smoothTimePass;
         //if (Input.GetAxis("Mouse Y") != 0 && !qOrE)

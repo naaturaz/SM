@@ -142,4 +142,24 @@ public class GUIElement : General {
 
         arrowGO.SetActive(false);
     }
+
+
+
+
+
+
+
+    //called from GUI Event Element. 
+    //so far from NotificationWindow and Feedback Dialog
+    public void CallOnMouseEnter()
+    {
+        MouseListener.MouseOnWindowNow = true;
+        Debug.Log("Mouse Eneter");
+    }
+
+    public void CallOnMouseExit()
+    {
+        MouseListener.MouseOnWindowNow = false;
+        Debug.Log("Mouse Exit");
+    }
 }

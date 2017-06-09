@@ -270,5 +270,9 @@ public class Dialog
     {
         return _dialogGo != null;
     }
+
+
+
+
 }
 

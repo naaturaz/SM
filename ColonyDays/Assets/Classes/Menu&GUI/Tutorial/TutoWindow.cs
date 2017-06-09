@@ -124,7 +124,7 @@ class TutoWindow : GUIElement
         }
         _showAgainTuto.SetActive(false);
 
-        AudioCollector.PlayOneShotFullAudio("ClickMetal2");
+        AudioCollector.PlayOneShotFullAudio("ClickWood1");
         Program.MouseListener.HidePersonBuildOrderNotiWindows();
 
         transform.position = _iniPos;
@@ -168,8 +168,8 @@ class TutoWindow : GUIElement
             
             ManagerReport.AddInput("Tutorial.Done:");
             Program.gameScene.QuestManager.QuestFinished("Tutorial");
-            Program.WasTutoPassed = true;
 
+            Program.WasTutoPassed = true;
             PlayerPrefs.SetString("Tuto", "Done");
 
 
@@ -193,7 +193,7 @@ class TutoWindow : GUIElement
     /// </summary>
     public void SkipTuto()
     {
-        AudioCollector.PlayOneShot("ClickMetal2", 0);
+        AudioCollector.PlayOneShot("ClickWood1", 0);
         //_currentIndex = -1;
         Hide();
 

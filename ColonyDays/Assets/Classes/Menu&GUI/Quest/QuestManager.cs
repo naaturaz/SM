@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Steamworks;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,8 @@ public class QuestManager
     List<int> _currentQuests = new List<int>();
     List<int> _doneQuest = new List<int>();
     bool _wasLoaded;//whe is a loaded game
+
+    float _timeToNextQuest = 90;
 
 
     public List<int> CurrentQuests
@@ -89,7 +92,17 @@ public class QuestManager
         return _doneQuest.Contains(which);
     }
 
-    public QuestManager() { }
+
+
+
+    public QuestManager()
+    {
+        
+        if (76561198245800476 == SteamUser.GetSteamID().m_SteamID)
+        {
+            _timeToNextQuest = 10;
+        }
+    }
 
 
     bool IsAnyActiveQuestMatchThisKey(string key)
@@ -218,8 +231,7 @@ public class QuestManager
         }
 
         //to show  others  and loaded 
-        if (Time.time > _lastCompleted + 90//90
-            )
+        if (Time.time > _lastCompleted + _timeToNextQuest)
         {
             if (Dialog.IsActive())
             {

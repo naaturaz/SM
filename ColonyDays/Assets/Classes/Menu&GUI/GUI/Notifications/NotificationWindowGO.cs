@@ -288,5 +288,8 @@ public class NotificationWindowGO : GUIElement
         _allNotifications.Insert(0, notiKey+"|"+addP);
         Show("");
     }
+
+
+
 }
 

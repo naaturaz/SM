@@ -80,9 +80,9 @@ public class StageManager : General
             return;
         }
 
-//#if UNITY_EDITOR
-//        return;
-//#endif
+#if UNITY_EDITOR
+        return;
+#endif
 
         CheckIfMoveStages();
 

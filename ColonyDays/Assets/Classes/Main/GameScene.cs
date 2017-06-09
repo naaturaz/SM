@@ -855,6 +855,7 @@ public class GameScene : General
     /// </summary>
     void OnApplicationQuit()
     {
+        //SteamRemoteStorage.FileWrite("")
         //Debug.Log("Application ending after " + Time.time + " seconds");
 
 //#if UNITY_EDITOR

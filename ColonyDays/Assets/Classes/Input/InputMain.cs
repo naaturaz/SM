@@ -373,12 +373,6 @@ public class InputMain : InputParent {
 
     void ChangeGameSpeed()
     {
-        if (!Developer.IsDev)
-        {
-            return;
-        }
-
-
         //if there are foresters for example they wil cut trees while the TerrainController is still loading. so
         //its not a good idea . all TerrainContrroller must be loaded before it can be played the game 
         if (!HasGameAllLoaded() || Program.gameScene.GameController1.IsGameOver)
@@ -386,6 +380,21 @@ public class InputMain : InputParent {
             return;
         }
 
+        //not developer 
+        if (!Developer.IsDev)
+        {
+            if (Input.GetKeyUp(KeyCode.PageUp))
+            {
+                Program.MouseClickListenerSt("GUIBtn.MoreSpeed");
+            }
+            if (Input.GetKeyUp(KeyCode.PageDown))
+            {
+                Program.MouseClickListenerSt("GUIBtn.LessSpeed");
+            }
+            return;
+        }
+
+        //for dev only
         //1x
         if (Input.GetKeyUp(KeyCode.PageUp))
         {
