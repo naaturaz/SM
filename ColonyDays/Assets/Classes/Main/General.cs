@@ -244,7 +244,8 @@ public class General : MonoBehaviour
             
         }
         else if (hTypeP == H.Tree || hTypeP == H.Stone || hTypeP == H.Iron || hTypeP == H.Gold
-            || hTypeP == H.Ornament || hTypeP == H.Grass || hTypeP == H.Decoration)
+            || hTypeP == H.Ornament || hTypeP == H.Grass || hTypeP == H.Decoration 
+            || hTypeP == H.Marine || hTypeP == H.Mountain)
         {
             res = Ca.Spawn;
         }

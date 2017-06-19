@@ -224,6 +224,7 @@ public class CreatePlane : Building
 
         Geometry.SetActive(false);
         ScaleSmart();
+
     }
 
     void ScaleSmart()
@@ -295,6 +296,9 @@ public class CreatePlane : Building
             //so updates material    
             DetermineTileImAndAssignSharedMat();
             SaveTile();
+
+
+            //Program.gameScene.BatchAdd(this);
         }
     }
 

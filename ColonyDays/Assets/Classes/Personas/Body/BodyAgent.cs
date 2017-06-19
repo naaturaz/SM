@@ -58,13 +58,16 @@ public class BodyAgent
     public void Update()
     {
         //correcting bug where kids stay in front of storage with path completed
-        if (_destWasSet && _agent.isOnNavMesh && _agent.enabled && !_person.IsMajor 
+        if ((_destWasSet && _agent.isOnNavMesh && _agent.enabled && !_person.IsMajor 
             && _agent.destination != Destiny && 
-            _agent.pathStatus == NavMeshPathStatus.PathComplete)
+            _agent.pathStatus == NavMeshPathStatus.PathComplete) 
+            || 
+            (_agent.pathStatus == NavMeshPathStatus.PathInvalid && _agent.enabled && _agent.isOnNavMesh)
+            )
         {
             //so i set the destination again to the real one so they move towards it 
             _agent.SetDestination(Destiny);
-            //Debug.Log("Corrected pathCompleted: " + _person.name);
+            //Debug.Log("Corrected pathCompleted: " + _person.name + " :pathStatus: " + _agent.pathStatus);
         }
 
         if (_nextDest != new Vector3() && !_destWasSet && _agent.isOnNavMesh && _agent.enabled)

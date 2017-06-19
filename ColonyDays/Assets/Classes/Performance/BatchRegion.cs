@@ -80,7 +80,12 @@ public class BatchRegion
         return go.MyId;
     }
 
-    void RemoveFromAll(General go)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="go"></param>
+    /// <param name="destroyGameObj">If true will destroy the game object is going to be removed</param>
+    void RemoveFromAll(General go, bool destroyGameObj = false)
     {
         var myID = ReturnProperID(go);
         var indexes = _keymap.Where(a => a.Key.Contains(myID)).OrderBy(a => a.Value).ToList();
@@ -102,8 +107,16 @@ public class BatchRegion
             //asign it back to original gamebject
             _all[index].transform.SetParent( go.transform);
             _totalVertices -= ReturnVertices(_all[index], myID + "(not sure if Id Correct)");
+
+            if (destroyGameObj)
+            {
+                GameObject.Destroy (_all[index].gameObject);
+            }
+
             _all[index] = null;
             _keymap.Remove(key);
+
+           
         }
     }
 
@@ -128,16 +141,22 @@ public class BatchRegion
     {
         go.BatchRegionId = _id;
 
-        if (go.Category == Ca.Structure || go.Category == Ca.Shore)
+        if (go.Category == Ca.Structure || go.Category == Ca.Shore || go.Category == Ca.DraggableSquare)
         {
+            //bz they update as user clicks right click ore new roads are added
+            if (_keymap.ContainsKey(go.MyId) && go.Category == Ca.DraggableSquare)
+            {
+                RemoveFromAll(go, true);
+                DecideIfRedoBatch();
+            }
             //bz Strcuture calls twice 
-            if (_keymap.ContainsKey(go.MyId))
+            else if (_keymap.ContainsKey(go.MyId))
             {
                 return;
             }
 
             InspectGameObject(go.Geometry, go);
-            AddToAll(go.Geometry.gameObject, go.MyId);
+            AddToAll(ReturnObjectToMeshUp(go), go.MyId);
             DecideIfRedoBatch();
         }
         else if (go.Category == Ca.Spawn || go.HType == H.Plant)
@@ -152,6 +171,19 @@ public class BatchRegion
             FindAllChildObjectsAndAddThem(go);
         }
     }
+
+    GameObject ReturnObjectToMeshUp(General go)
+    {
+        if (go.Category==Ca.DraggableSquare)
+        {
+            //returning the first son of the first son. bz on smartCreatePlanes is like that 
+            return go.transform.GetChild(1).transform.GetChild(0).gameObject;
+        }
+
+        return go.Geometry.gameObject;
+    }
+
+
 
     private void FindAllChildObjectsAndAddThem(General go)
     {
@@ -183,13 +215,9 @@ public class BatchRegion
     }
 
 
-
-
-
     internal void Remove(General go, bool redo = true)
     {
         RemoveFromAll(go);
-
         if (redo)
         {
             DecideIfRedoBatch();
@@ -198,7 +226,7 @@ public class BatchRegion
 
     internal bool IsClose()
     {
-        if (_totalVertices > 30000 && _id.Contains("Opaque"))
+        if (_totalVertices > 60000)
         {
             return true;
         }
@@ -300,6 +328,10 @@ public class BatchRegion
         if (_id.Contains("Farm"))
         {
             return (Material)Resources.Load(Root.plantAtlas);
+        }
+        if (_id.Contains("Road"))
+        {
+            return (Material)Resources.Load(Root.roadAtlas);
         }
         return (Material)Resources.Load(Root.alphaAtlas);
     }

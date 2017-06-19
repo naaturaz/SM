@@ -818,6 +818,9 @@ public class Building : Hoverable, Iinfo
         while (true)
         {
             yield return new WaitForSeconds(60);
+
+
+
             if (Instruction == H.WillBeDestroy && PeopleDict.Count == 0 && 
                 (Inventory == null || Inventory.IsEmpty()))
             {
@@ -1107,6 +1110,15 @@ public class Building : Hoverable, Iinfo
         if (_dock != null)
         {
             _dock.Update();
+        }
+
+
+        //bz now is waiting for a nw build to be placed to work 
+        //this is here so it prompts the destruction of a building after the evacuation of the
+        //inv has ocurred
+        if (evacAll && Inventory.IsEmpty() && PeopleDict.Count == 0)
+        {
+            PersonPot.Control.RestartController();
         }
     }
 
@@ -3621,12 +3633,14 @@ public class Building : Hoverable, Iinfo
 
 
 
+
     private IEnumerator ThirtySecUpdate()
     {
         while (true)
         {
             yield return new WaitForSeconds(Random.Range(10, 20)); // wait
             CheckIfOrdersAreNeeded();
+
 
         }
     }

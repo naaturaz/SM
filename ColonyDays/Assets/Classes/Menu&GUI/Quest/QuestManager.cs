@@ -97,7 +97,7 @@ public class QuestManager
 
     public QuestManager()
     {
-        
+
         if (76561198245800476 == SteamUser.GetSteamID().m_SteamID)
         {
             _timeToNextQuest = 10;
@@ -215,7 +215,7 @@ public class QuestManager
     {
         _lastCompleted = Time.time;
 
-        
+
     }
 
     public void Update()
@@ -233,7 +233,7 @@ public class QuestManager
         //to show  others  and loaded 
         if (Time.time > _lastCompleted + _timeToNextQuest)
         {
-            if (Dialog.IsActive())
+            if (Dialog.IsActive() || BuildingPot.Control.CurrentSpawnBuild != null)
             {
                 //so goes trhu again in 30s
                 _lastCompleted = Time.time - 60;
@@ -241,9 +241,9 @@ public class QuestManager
             }
 
             if (_currentQuests.Count == 0)
-	        {
+            {
                 AddANewQuest();
-	        }
+            }
             else
             {
                 ShowQuestBtn();
@@ -262,7 +262,7 @@ public class QuestManager
         }
 
         var highest = GetHighestQuestCompletedOrCurrent();
-        if (highest+1 >= _bank.Count)
+        if (highest + 1 >= _bank.Count)
         {
             _lastCompleted = -1;
         }
@@ -295,7 +295,7 @@ public class QuestManager
     public void ResetNewGame()
     {
         _lastCompleted = 0;
-     
+
         _currentQuests.Clear();
         _doneQuest.Clear();
     }

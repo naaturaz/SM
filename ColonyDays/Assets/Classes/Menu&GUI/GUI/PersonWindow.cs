@@ -105,7 +105,8 @@ public class PersonWindow : GUIElement
             _person.UnselectPerson();
         }
 
-        MakeThisTabActive(oldTabActive);
+        //MakeThisTabActive(oldTabActive);
+        MakeThisTabActive(_general);
 
         _person = val;
         //CheckIfIsDiffNewPerson();

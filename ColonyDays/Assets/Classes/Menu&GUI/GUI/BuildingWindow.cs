@@ -212,7 +212,8 @@ public class BuildingWindow : GUIElement
         LoadMenu();
 
         //so if last Window had the Inventory selected can be seen in this new builidng one too
-        MakeThisTabActive(oldTabActive);
+        //MakeThisTabActive(oldTabActive);
+        MakeThisTabActive(_general);
 
         transform.position = iniPos;
         HandleOrdBtn();
@@ -771,7 +772,7 @@ public class BuildingWindow : GUIElement
 
 
 
-    private GameObject oldTabActive;
+    //private GameObject oldTabActive;
     GameObject currentActiveTab;
     /// <summary>
     /// Use to swith Tabs on Window. Will hide all and make the pass one as active

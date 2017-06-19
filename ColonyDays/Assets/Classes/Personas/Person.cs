@@ -74,7 +74,7 @@ public class Person : Hoverable
 
     //Person Own Objects and fields
     private Brain _brain;
-    
+
     MilitarBrain _militarBrain;
     EnemyBrain _enemyBrain;
 
@@ -396,14 +396,8 @@ public class Person : Hoverable
     {
         Person obj = null;
 
-        if (PersonController.GenderLast == H.Male)
-        {
-            obj = (Person)Resources.Load(Root.personaFeMale1, typeof(Person));
-        }
-        else if (PersonController.GenderLast == H.Female)
-        {
-            obj = (Person)Resources.Load(Root.personaMale1, typeof(Person));
-        }
+        obj = (Person)Resources.Load(PersonPrefabRoot(PersonController.GenderLast), typeof(Person));
+
 
         //better like 17/29. since if they are less than 16 and have not parent is not addressed
         int iniAge = General.GiveRandom(17, 29); //5, 29
@@ -425,7 +419,7 @@ public class Person : Hoverable
         obj.HType = H.Person;
         obj.Gender = obj.OtherGender();
         obj.InitObj(iniAge);
-        
+
         //todo change 
         //obj.Geometry.GetComponent<Renderer>().sharedMaterial = ReturnRandoPersonMaterialRoot();
 
@@ -451,14 +445,9 @@ public class Person : Hoverable
     {
         Person obj = null;
 
-        if (pF._gender == H.Male)
-        {
-            obj = (Person)Resources.Load(Root.personaMale1, typeof(Person));
-        }
-        else if (pF._gender == H.Female)
-        {
-            obj = (Person)Resources.Load(Root.personaFeMale1, typeof(Person));
-        }
+
+        obj = (Person)Resources.Load(PersonPrefabRoot(pF._gender), typeof(Person));
+
 
         SMe me = new SMe();
         obj = (Person)Instantiate(obj, me.IniTerr.MathCenter, Quaternion.identity);
@@ -472,9 +461,20 @@ public class Person : Hoverable
     }
 
 
+    static string PersonPrefabRoot(H gender)
+    {
+        if (gender == H.Male)
+        {
+            return "Prefab/Personas/PersonaMale1";
+        }
+        else
+        {
+            return "Prefab/Personas/PersonaFeMale" + UMath.GiveRandom(1, 2);
+        }
+    }
 
     #region Enemy
-    
+
     /// <summary>
     /// Intended to be used For the first load of people spawned
     /// </summary>
@@ -483,7 +483,7 @@ public class Person : Hoverable
         Person obj = null;
         obj = (Person)Resources.Load(Root.personaMale1, typeof(Person));
 
-        int iniAge = General.GiveRandom(19, 32); 
+        int iniAge = General.GiveRandom(19, 32);
         obj = (Person)Instantiate(obj, iniPos, Quaternion.identity);
 
         obj.HType = H.Enemy;
@@ -534,24 +534,18 @@ public class Person : Hoverable
     {
         Person obj = null;
 
-        if (PersonController.GenderLast == H.Male)
-        {
-            obj = (Person)Resources.Load(Root.personaFeMale1, typeof(Person));
-        }
-        else if (PersonController.GenderLast == H.Female)
-        {
-            obj = (Person)Resources.Load(Root.personaMale1, typeof(Person));
-        }
+        obj = (Person)Resources.Load(PersonPrefabRoot(PersonController.GenderLast), typeof(Person));
 
-        obj = (Person)Instantiate(obj, new Vector3( iniPos.x, 0.06f, iniPos.z),
+
+        obj = (Person)Instantiate(obj, new Vector3(iniPos.x, 0.06f, iniPos.z),
             Quaternion.identity);
         obj.Gender = obj.OtherGender();
 
         obj.HType = H.Person;
-        
+
         obj.InitObj(0);//15    5
-        //obj.Geometry.GetComponent<Renderer>().sharedMaterial = ReturnRandoPersonMaterialRoot();
-        
+                       //obj.Geometry.GetComponent<Renderer>().sharedMaterial = ReturnRandoPersonMaterialRoot();
+
 
         //this to when Person dont have where to leave and then they find a place the teletranport effect
         //wont be seeable bz there are spawneed hidden. 
@@ -655,7 +649,7 @@ public class Person : Hoverable
         {
             Brain = new Brain(this);
         }
-        
+
         _body = new Body(this);
 
         InitEvents();
@@ -1043,8 +1037,8 @@ public class Person : Hoverable
             return true;
         }
         return false;
-    }   
-    
+    }
+
     //bool IsMyBD()
     //{
     //    var currYear = Program.gameScene.GameTime1.Year;
@@ -1198,13 +1192,13 @@ public class Person : Hoverable
             var noti = "PersonDie";
             if (Work != null && MyText.Lazy() > 0)
             {
-                noti="DieReplacementFound";
+                noti = "DieReplacementFound";
             }
             else if (Work != null && MyText.Lazy() == 0)
             {
-                noti="DieReplacementNotFound";
+                noti = "DieReplacementNotFound";
             }
-            
+
             Program.gameScene.GameController1.NotificationsManager1.Notify(noti, Name);
             ActionOfDisappear();
         }
@@ -1458,7 +1452,7 @@ public class Person : Hoverable
             if (_showPathToFood != null)
             {
                 _showPathToFood.Update();
-            } 
+            }
             if (_showPathToReligion != null)
             {
                 _showPathToReligion.Update();
@@ -1487,7 +1481,7 @@ public class Person : Hoverable
 #endif
             if (HType == H.Person)
             {
-                _brain.MindState(); 
+                _brain.MindState();
             }
         }
     }
@@ -1523,8 +1517,8 @@ public class Person : Hoverable
         if (_enemyBrain != null)
         {
             _enemyBrain.Update();
-        }  
- 
+        }
+
 
         _body.Update();
         //UpdateInfo();
@@ -1596,12 +1590,12 @@ public class Person : Hoverable
     }
 
 
-    
 
 
 
 
-#region Bank Money
+
+    #region Bank Money
 
     private void GetPaid()
     {
@@ -1634,7 +1628,7 @@ public class Person : Hoverable
     }
 
 
-#endregion
+    #endregion
 
 
 
@@ -1987,7 +1981,7 @@ public class Person : Hoverable
 
         if (!Inventory.ThereIsContainerForThis(product))
         {
-            Debug.Log("Not cont for:"+product);
+            Debug.Log("Not cont for:" + product);
             return;
         }
 
@@ -2368,7 +2362,7 @@ public class Person : Hoverable
     /// <returns></returns>
     private bool AmINutrida()
     {
-        return NutritionLevel == "Normal" ;
+        return NutritionLevel == "Normal";
     }
 
     #endregion
@@ -2780,11 +2774,11 @@ public class Person : Hoverable
         else if (Weight >= LowWeight())
         {
             NutritionLevel = "Low";
-        } 
+        }
         else if (Weight >= StarvingWeight())
         {
             NutritionLevel = "Starve";
-        } 
+        }
         else if (Weight < StarvingWeight())
         {
             NutritionLevel = "Dead";
@@ -2793,7 +2787,7 @@ public class Person : Hoverable
 
     float WeightBase()
     {
-        if (Gender==H.Male)
+        if (Gender == H.Male)
         {
             return 56.2f;
         }
@@ -2815,15 +2809,15 @@ public class Person : Hoverable
     float NormalWeight()
     {
         var heightDiff = _height - 152.4f;
-        var times = heightDiff/2.54f;
+        var times = heightDiff / 2.54f;
 
-        return WeightBase() + (WeightFactor()*times);
+        return WeightBase() + (WeightFactor() * times);
     }
 
     float LowWeight()
     {
         var normal = NormalWeight();
-        var a15 = NormalWeight()*0.15f;
+        var a15 = NormalWeight() * 0.15f;
         return NormalWeight() - a15;
     }
 
@@ -2843,7 +2837,7 @@ public class Person : Hoverable
     /// </summary>
     internal void InitHeightAndWeight()
     {
-        var fact = 170f/0.5f;
+        var fact = 170f / 0.5f;
         Height = transform.localScale.x * fact;
 
         if (Weight == 0)

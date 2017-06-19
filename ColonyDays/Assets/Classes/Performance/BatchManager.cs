@@ -105,15 +105,23 @@ public class BatchManager
         else if (go.Category == Ca.Structure)
         {
             return;
-
             Structure st = (Structure)go;
-            if (st.StartingStage != H.Done && st.CurrentStage != 4 )
+            if (st.StartingStage != H.Done && st.CurrentStage != 4)
             {
                 //only will add fully finished buildings 
                 return;
             }
-
-            HandleCurrentOpaque();
+            HandleCurrentOpenRegion("Opaque");
+            _batchRegions[_openOpaque].AddToRegion(go);
+        }
+        else if (go.Category == Ca.DraggableSquare)
+        {
+            //adding only the blocks that contain the roads 
+            if (!go.MyId.Contains("Create_Plane"))
+            {
+                return;
+            }
+            HandleCurrentOpenRegion("Road");
             _batchRegions[_openOpaque].AddToRegion(go);
         }
     }
@@ -136,25 +144,27 @@ public class BatchManager
 
 
     private int lastNewOpaque;
-    private void HandleCurrentOpaque()
+    private void HandleCurrentOpenRegion(string name)
     {
-        if (string.IsNullOrEmpty(_openOpaque))
+        //first region of its type
+        if (string.IsNullOrEmpty(_openOpaque) || !_openOpaque.Contains(name))
         {
-            _openOpaque = "Opaque." + lastNewOpaque;
-            CreateNewOpaqueRegion();
+            _openOpaque = name + "." + lastNewOpaque;
+            CreateNewOpenRegion();
         }
         else
         {
+            //adding a new region
             if (_batchRegions[_openOpaque].IsClose())
             {
                 lastNewOpaque++;
-                _openOpaque = "Opaque." + lastNewOpaque;
-                CreateNewOpaqueRegion();
+                _openOpaque = name + "." + lastNewOpaque;
+                CreateNewOpenRegion();
             }
         }
     }
 
-    void CreateNewOpaqueRegion()
+    void CreateNewOpenRegion()
     {
         _batchRegions.Add(_openOpaque, new BatchRegion(_openOpaque));
     }
