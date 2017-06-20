@@ -211,9 +211,9 @@ public class PersonalObject
     
     List<string> _heavy = new List<string>()
     {
-        //Root.wagon,
+        Root.wagon,
         Root.cart, 
-        //Root.conestogo
+        Root.conestogo
     };
 
 

@@ -1391,6 +1391,7 @@ public class Building : Hoverable, Iinfo
         { H.Carpentry, new Vector3(-40,0,-40)},
 
         { H.Tailor, new Vector3(-40,0,-25)},
+        { H.Mill, new Vector3(-35,0,-45)},
 
 
         { H.StorageMed, new Vector3(-30,0,-20)},
@@ -1404,7 +1405,7 @@ public class Building : Hoverable, Iinfo
 
 
         { H.Church, new Vector3(-8,0,-20)},
-        { H.Tavern, new Vector3(-35,0,-20)},
+        { H.Tavern, new Vector3(-25,0,-20)},
 
 
     };

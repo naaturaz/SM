@@ -287,7 +287,7 @@ public class Production  {
     private void FieldFarm()
     {
         List<H> listH = new List<H>() { H.FieldFarmSmall, H.FieldFarmMed, 
-            //H.FieldFarmLarge, H.FieldFarmXLarge
+            H.FieldFarmLarge, H.FieldFarmXLarge
         };
 
         InputProdCheckAndAdd(new ProductInfo(P.Bean, null, listH));

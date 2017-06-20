@@ -307,8 +307,7 @@ public class StructureParent : Building {
     protected void ShowWheel(bool show)
     {
         
-        if (HType == H.Mill //|| HType == H.Mine
-            )
+        if (HType == H.Mill && Instruction != H.WillBeDestroy)
         {
             GameObject wheel = GetChildLastWordIs(H.Wheel);
             if (wheel == null) { throw new Exception("Obj doenst have obj attached called |...Wheel|");}

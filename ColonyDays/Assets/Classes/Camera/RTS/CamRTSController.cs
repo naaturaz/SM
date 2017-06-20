@@ -240,6 +240,39 @@ public class CamRTSController : CamControl
 
         RotateScript();
         rotateRTS.Update();
+
+        CameraFOV();
+    }
+
+
+
+    Camera thisCamera;
+    private void CameraFOV()
+    {
+        if (thisCamera == null)
+        {
+            thisCamera = transform.GetComponent<Camera>();
+        }
+
+        var localMultiplier = 0;
+        if (Input.GetKey(KeyCode.KeypadPlus))
+        {
+            localMultiplier = -1;
+        }
+        else if (Input.GetKey(KeyCode.KeypadMinus))
+        {
+            localMultiplier=1;
+        }
+        else
+        {
+            return;
+        }
+
+        float fieldOfView = UMath.changeValSmooth(thisCamera.fieldOfView,
+            localMultiplier , 1,
+            MIN_FIELD_CAM, MAX_FIELD_CAM,
+            camSensivity);
+        thisCamera.fieldOfView = fieldOfView;
     }
 
     private void RotateScript()
@@ -427,12 +460,7 @@ public class CamRTSController : CamControl
         int localMultiplier = 100;
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {
-            //float fieldOfView = UMath.changeValSmooth(transform.GetComponent<Camera>().fieldOfView,
-            //    -Input.GetAxis("Mouse ScrollWheel"), localMultiplier,
-            //    MIN_FIELD_CAM, MAX_FIELD_CAM,
-            //    camSensivity);
-            //transform.GetComponent<Camera>().fieldOfView = fieldOfView;
-            //IsMouseMiddle = true;
+
             RotateDealer();
             rotateRTS.RotateCamVert(camSensivity, target, -Input.GetAxis("Mouse ScrollWheel") * localMultiplier);
         }

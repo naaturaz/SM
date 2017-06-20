@@ -28,6 +28,15 @@ public class InputRTS : GenericCameraComponent
     // Update is called once per frame
     void LateUpdate()
     {
+        CenterCam();
+        FollowPersonCam();
+        if (_isFollowingPersonNow)
+        {
+            CamFollowAction(personToFollow);
+        }
+
+
+
         if (Program.MouseListener.IsAWindowShownNow() || CamControl.IsMainMenuOn())
         {
             return;
@@ -36,13 +45,7 @@ public class InputRTS : GenericCameraComponent
         if (!_isFollowingPersonNow && BuildingPot.InputMode == Mode.None)
         { CheckIfKeyWasPressed(); }
 
-        CenterCam();
-        FollowPersonCam();
-
-        if (_isFollowingPersonNow)
-        {
-            CamFollowAction(personToFollow);
-        }
+  
     }
 
     /// <summary>
@@ -308,7 +311,7 @@ public class InputRTS : GenericCameraComponent
             return;
         }
 
-        if (Input.GetKeyUp(KeyCode.O) && Input.GetKey(KeyCode.LeftControl) && !_isFollowingPersonNow)
+        if (Input.GetKeyUp(KeyCode.O) && Input.GetKey(KeyCode.LeftShift) && !_isFollowingPersonNow)
         {
             CenterCamTo(personToFollow);
             CamControl.CAMRTS.CreateTargetAndUpdate();
@@ -320,7 +323,7 @@ public class InputRTS : GenericCameraComponent
 
             _isFollowingPersonNow = true;
         }
-        else if (Input.GetKeyUp(KeyCode.O) && Input.GetKey(KeyCode.LeftControl) && _isFollowingPersonNow)
+        else if (Input.GetKeyUp(KeyCode.O) && Input.GetKey(KeyCode.LeftShift) && _isFollowingPersonNow)
         {
             CamControl.CAMRTS.CleanUpRotHelp();
             _isFollowingPersonNow = false;

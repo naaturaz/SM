@@ -75,6 +75,8 @@ public class StageManager : General
 
     void Update()
     {
+        return;
+
         if (Program.gameScene.GameSpeed == 0)
         {
             return;

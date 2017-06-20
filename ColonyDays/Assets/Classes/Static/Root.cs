@@ -728,8 +728,8 @@ public class Root : MonoBehaviour
         //field farmin
         buildsRoot.Add(H.FieldFarmSmall, "Prefab/Building/Farming/FieldFarmSmall");
         buildsRoot.Add(H.FieldFarmMed, "Prefab/Building/Farming/FieldFarmMed");
-        //buildsRoot.Add(H.FieldFarmLarge, "Prefab/Building/Farming/FieldFarmLarge");
-        //buildsRoot.Add(H.FieldFarmXLarge, "Prefab/Building/Farming/FieldFarmXLarge");
+        buildsRoot.Add(H.FieldFarmLarge, "Prefab/Building/Farming/FieldFarmLarge");
+        buildsRoot.Add(H.FieldFarmXLarge, "Prefab/Building/Farming/FieldFarmXLarge");
 
         buildsRoot.Add(H.FishingHut, "Prefab/Building/Farming/FishingHut");
 
