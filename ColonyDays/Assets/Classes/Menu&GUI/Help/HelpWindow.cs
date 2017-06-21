@@ -38,7 +38,10 @@ public class HelpWindow : GUIElement
         "Line production.Help",
         "Bulletin.Help",
         "Trading.Help",
-        "Combat Mode.Help",
+        //"Combat Mode.Help",
+
+        "Population.Help",
+
     };
 
 

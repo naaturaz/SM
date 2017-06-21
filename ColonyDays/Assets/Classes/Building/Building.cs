@@ -1367,10 +1367,18 @@ public class Building : Hoverable, Iinfo
     /// </summary>
     Dictionary<H, Vector3> _percetagesReduction = new Dictionary<H, Vector3>()
     {
-        {H.StandLamp, new Vector3(0,0,0)},//wont get carved
 
 
         {H.Bohio, new Vector3(-37,0,-53)},
+        {H.WoodHouseA, new Vector3(-20,0,-20)},
+        {H.WoodHouseB, new Vector3(-20,0,-25)},
+        {H.WoodHouseC, new Vector3(-20,0,-20)},
+
+        { H.BrickHouseA, new Vector3(-25,0,-20)},
+        { H.BrickHouseB, new Vector3(-35,0,-30)},
+        { H.BrickHouseC, new Vector3(-25,0,-30)},
+
+
 
         {H.Shack, new Vector3(-37,0,-53)},
         {H.MediumShack, new Vector3(-30,0,-40)},
@@ -1380,18 +1388,27 @@ public class Building : Hoverable, Iinfo
         { H.FieldFarmMed, new Vector3(-19,0,-20)},
         { H.FishingHut, new Vector3(-40,0,-40)},
 
-        { H.LumberMill, new Vector3(-19,0,-45)},
-
+        {H.StandLamp, new Vector3(0,0,0)},//wont get carved
         { H.HeavyLoad, new Vector3(-8,0,-8)},
         { H.LightHouse, new Vector3(-20,0,-40)},
 
-
+        { H.LumberMill, new Vector3(-19,0,-45)},
+        { H.BlackSmith, new Vector3(-10,0,-16)},
+        { H.Mortar, new Vector3(-16,0,-10)},
         { H.QuickLime, new Vector3(-40,0,-40)},
 
-        { H.Carpentry, new Vector3(-40,0,-40)},
-
+        { H.Carpentry, new Vector3(-30,0,-30)},
+        { H.Cigars, new Vector3(-16,0,-10)},
+        { H.Armory, new Vector3(-10,0,-10)},
         { H.Tailor, new Vector3(-40,0,-25)},
         { H.Mill, new Vector3(-35,0,-45)},
+        { H.Chocolate, new Vector3(-16,0,-10)},
+
+        { H.Ink, new Vector3(-15,0,-12)},
+        { H.GunPowder, new Vector3(-10,0,-16)},
+        { H.PaperMill, new Vector3(-16,0,-12)},
+        { H.CoinStamp, new Vector3(-10,0,-16)},
+        { H.Foundry, new Vector3(-16,0,-12)},
 
 
         { H.StorageMed, new Vector3(-30,0,-20)},
@@ -1401,7 +1418,9 @@ public class Building : Hoverable, Iinfo
         { H.Dock, new Vector3(-5,0,-5)},
 
 
-        { H.School, new Vector3(-10,0,-15)},
+        { H.School, new Vector3(-10,0,-14)},
+        { H.TradesSchool, new Vector3(-16,0,-10)},
+        { H.Library, new Vector3(-17,0,-12)},
 
 
         { H.Church, new Vector3(-8,0,-20)},
