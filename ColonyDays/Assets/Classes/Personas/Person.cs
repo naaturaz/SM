@@ -465,11 +465,11 @@ public class Person : Hoverable
     {
         if (gender == H.Male)
         {
-            return "Prefab/Personas/PersonaMale1";
+            return "Prefab/Personas/PersonaFeMale1";
         }
         else
         {
-            return "Prefab/Personas/PersonaFeMale" + UMath.GiveRandom(1, 2);
+            return "Prefab/Personas/PersonaMale1";
         }
     }
 

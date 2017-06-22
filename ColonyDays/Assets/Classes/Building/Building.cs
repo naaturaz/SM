@@ -1375,10 +1375,8 @@ public class Building : Hoverable, Iinfo
         {H.WoodHouseC, new Vector3(-20,0,-20)},
 
         { H.BrickHouseA, new Vector3(-25,0,-20)},
-        { H.BrickHouseB, new Vector3(-35,0,-30)},
-        { H.BrickHouseC, new Vector3(-25,0,-30)},
-
-
+        { H.BrickHouseB, new Vector3(-25,0,-30)},
+        { H.BrickHouseC, new Vector3(-25,0,-20)},
 
         {H.Shack, new Vector3(-37,0,-53)},
         {H.MediumShack, new Vector3(-30,0,-40)},
@@ -1386,6 +1384,8 @@ public class Building : Hoverable, Iinfo
 
         { H.FieldFarmSmall, new Vector3(-19,0,-32)},
         { H.FieldFarmMed, new Vector3(-19,0,-20)},
+        { H.FieldFarmLarge, new Vector3(-10,0,-20)},
+
         { H.FishingHut, new Vector3(-40,0,-40)},
 
         {H.StandLamp, new Vector3(0,0,0)},//wont get carved
@@ -1550,6 +1550,7 @@ public class Building : Hoverable, Iinfo
             MeshController.CrystalManager1.Delete(this);
 
             DestroyProjector();
+            Program.MouseListener.BuildingWindow1.Hide();
 
             //so saveLoad of buildings is not affected 
             BuildingPot.Control.Registro.RemoveFromAllRegFile(MyId);
