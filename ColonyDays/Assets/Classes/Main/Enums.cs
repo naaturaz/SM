@@ -248,6 +248,8 @@ public enum H
     Bohio, BohioB,
     Shack,
     MediumShack,
+    LargeShack,
+
     WoodHouseA, WoodHouseB, WoodHouseC,
     BrickHouseA,
     BrickHouseB,
@@ -468,7 +470,7 @@ public enum StHous //for structures game structure.cs
 {
     //Housing
     Bohio,
-    Shack, MediumShack,
+    Shack, MediumShack, LargeShack,
     WoodHouseA, WoodHouseB, WoodHouseC,
     BrickHouseA,
     BrickHouseB,

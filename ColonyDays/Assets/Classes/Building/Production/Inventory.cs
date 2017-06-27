@@ -652,7 +652,7 @@ public class Inventory
         //not all of the order was taken
         if (amtTaken < order.Amount)
         {
-            order.Amount -= amtTaken;
+            order.ChangeAmountBy(-amtTaken);
         }
         //the whole order was taken 
         else if (amtTaken == order.Amount)

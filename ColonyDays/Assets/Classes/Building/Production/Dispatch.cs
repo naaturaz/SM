@@ -897,7 +897,7 @@ public class Dispatch
             Program.gameScene.ExportImport1.Buy(ord.Product, maxAmtCanTake);
 
             dock.Inventory.Add(ord.Product, maxAmtCanTake);
-            ord.Amount -= maxAmtCanTake;
+            ord.ChangeAmountBy(- maxAmtCanTake);
         }
     }
 
@@ -1285,5 +1285,14 @@ public class Order
     internal float Left()
     {
         return _amount - FullFilled;
+    }
+
+    public void ChangeAmountBy(float by)
+    {
+        _amount += by;
+        if (_amount < 0)
+        {
+            _amount = 0;
+        }
     }
 }

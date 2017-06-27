@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.UI;
+using System;
 
 public class BuildingWindow : GUIElement
 {
@@ -1145,6 +1146,14 @@ public class BuildingWindow : GUIElement
         }
 
         return Building.AbsMaxPeople;
+    }
+
+    internal void HideIfSameBuilding(Building building)
+    {
+        if (_building !=null && building == _building)
+        {
+            Hide();
+        }
     }
     #endregion
 }

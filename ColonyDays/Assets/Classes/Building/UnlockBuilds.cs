@@ -40,6 +40,7 @@ public class UnlockBuilds
             new BRequires(H.Bohio, H.OnlyForDev),
             new BRequires(H.Shack, true),
             new BRequires(H.MediumShack, 12),
+            new BRequires(H.LargeShack, 15),
 
             new BRequires(H.WoodHouseA, 17),
             new BRequires(H.WoodHouseB, 25),

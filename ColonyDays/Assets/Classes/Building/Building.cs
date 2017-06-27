@@ -1061,6 +1061,8 @@ public class Building : Hoverable, Iinfo
         UVisHelp.CreateHelpers(GetAnchors(), Root.blueCube);
     }
 
+
+    bool wasPersonControlRestarted;
     private bool debugShowAnchors;
     //this need to be called in derived classes 
     protected new void Update()
@@ -1116,8 +1118,9 @@ public class Building : Hoverable, Iinfo
         //bz now is waiting for a nw build to be placed to work 
         //this is here so it prompts the destruction of a building after the evacuation of the
         //inv has ocurred
-        if (evacAll && Inventory.IsEmpty() && PeopleDict.Count == 0)
+        if (!wasPersonControlRestarted && _isOrderToDestroy && evacAll && Inventory.IsEmpty() && PeopleDict.Count == 0)
         {
+            wasPersonControlRestarted = true;
             PersonPot.Control.RestartController();
         }
     }
@@ -1380,7 +1383,7 @@ public class Building : Hoverable, Iinfo
 
         {H.Shack, new Vector3(-37,0,-53)},
         {H.MediumShack, new Vector3(-30,0,-40)},
-
+        {H.LargeShack, new Vector3(-30,0,-40)},
 
         { H.FieldFarmSmall, new Vector3(-19,0,-32)},
         { H.FieldFarmMed, new Vector3(-19,0,-20)},
@@ -1550,7 +1553,7 @@ public class Building : Hoverable, Iinfo
             MeshController.CrystalManager1.Delete(this);
 
             DestroyProjector();
-            Program.MouseListener.BuildingWindow1.Hide();
+            Program.MouseListener.BuildingWindow1.HideIfSameBuilding(this);
 
             //so saveLoad of buildings is not affected 
             BuildingPot.Control.Registro.RemoveFromAllRegFile(MyId);
@@ -2150,11 +2153,23 @@ public class Building : Hoverable, Iinfo
         }
 
         //can hhave 1 famili with 3 kids
-        if (HType == H.Bohio || HType == H.Shack || HType == H.MediumShack)
+        if (HType == H.Bohio || HType == H.Shack )
         {
             Families = new Family[1];
             Families[0] = new Family(UMath.GiveRandom(2,3), MyId, 0);
         }
+        else if(HType == H.MediumShack)
+        {
+            Families = new Family[1];
+            Families[0] = new Family(UMath.GiveRandom(2, 4), MyId, 0);
+        }
+        else if (HType == H.LargeShack)
+        {
+            Families = new Family[1];
+            Families[0] = new Family(UMath.GiveRandom(2, 5), MyId, 0);
+        }
+
+
         //can hhave 1 famili with 3 kids
         else if (HType == H.WoodHouseA || HType == H.WoodHouseC)
         {

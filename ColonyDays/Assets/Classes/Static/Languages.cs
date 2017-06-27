@@ -35,8 +35,9 @@ public class Languages
        //House
 	   { "Bohio.Desc", "Bohio house, primitive conditions with unhappy people whom can only have a maximum of 2 to 3 kids"},
 
-       { "Shack.Desc", "Shack, primitive conditions with unhappy people whom can only have a maximum of 2 to 3 kids"},
+       { "Shack.Desc", "Shack, primitive conditions with unhappy people whom can only have a maximum of 2 kids"},
        { "MediumShack.Desc", "The Medium Shack, has above primitive conditions with small happiness, can have a maximum of 2 to 3 kids"},
+       { "LargeShack.Desc", "A Large Shack, has somewhat good conditions with happiness, can have a maximum of 2 to 4 kids"},
 
 
         { "WoodHouseA.Desc", "Small wooden house, a family can have 2-4 kids max" },
@@ -165,8 +166,8 @@ public class Languages
        { "Dollars.HoverSmall", "Dollars"},
        { "PirateThreat.HoverSmall", "Pirate Threat"},
        { "Date.HoverSmall", "Date (m/y)"},
-       { "MoreSpeed.HoverSmall", "More speed"},
-       { "LessSpeed.HoverSmall", "Less speed"},
+       { "MoreSpeed.HoverSmall", "More speed [PgUp]"},
+       { "LessSpeed.HoverSmall", "Less speed [PgDwn]"},
        { "PauseSpeed.HoverSmall", "Pause game"},
        { "CurrSpeedBack.HoverSmall", "Current speed"},
        { "ShowNoti.HoverSmall", "Notifications"},

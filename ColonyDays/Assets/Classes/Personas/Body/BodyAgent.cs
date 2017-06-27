@@ -59,7 +59,7 @@ public class BodyAgent
     {
         //correcting bug where kids stay in front of storage with path completed
         if ((_destWasSet && _agent.isOnNavMesh && _agent.enabled && !_person.IsMajor 
-            && _agent.destination != Destiny && 
+            && !UMath.nearEqualByDistance(_agent.destination ,Destiny, 0.1f) &&
             _agent.pathStatus == NavMeshPathStatus.PathComplete) 
             || 
             (_agent.pathStatus == NavMeshPathStatus.PathInvalid && _agent.enabled && _agent.isOnNavMesh)

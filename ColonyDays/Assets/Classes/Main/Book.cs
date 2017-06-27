@@ -76,7 +76,8 @@ public class Book : General
         //houses 
         Build.Add(new BuildStat(H.Bohio, 400, 3, 0, 0, 0, maxPeople: 5, capacity: .3f));
         Build.Add(new BuildStat(H.Shack, 500, 3, 0, 0, 0, maxPeople: 5, capacity: .5f));
-        Build.Add(new BuildStat(H.MediumShack, 600, 3, 0, 0, 0, maxPeople: 5, capacity: .6f));
+        Build.Add(new BuildStat(H.MediumShack, 600, 4, 1, 1, 0, maxPeople: 5, capacity: .6f));
+        Build.Add(new BuildStat(H.LargeShack, 700, 5, 2, 1, 1, maxPeople: 6, capacity: .8f));
 
         Build.Add(new BuildStat(H.WoodHouseA, 400, 15, 1, 0, 1, maxPeople: 5, capacity: .4f));
         Build.Add(new BuildStat(H.WoodHouseB, 500, 30, 5, 0, 5, maxPeople: 5, capacity: .5f));
@@ -102,8 +103,8 @@ public class Book : General
         Build.Add(new BuildStat(H.Clay, 1000, 15, 5, 15, 5, maxPeople: 12, capacity: 160));
         Build.Add(new BuildStat(H.Pottery, 1000, 15, 5, 25, 5, maxPeople: 10));
         Build.Add(new BuildStat(H.FishingHut, 1000, 15, 0, 0, 0, maxPeople: 10));
-        Build.Add(new BuildStat(H.MountainMine, 1000, 15, 5, 25, 5, maxPeople: 20));
-        Build.Add(new BuildStat(H.LumberMill, 500, 30, 5, 0, 1, maxPeople: 50));
+        Build.Add(new BuildStat(H.MountainMine, 1000, 15, 5, 25, 5, maxPeople: 10));
+        Build.Add(new BuildStat(H.LumberMill, 500, 30, 5, 0, 1, maxPeople: 20));
         Build.Add(new BuildStat(H.BlackSmith, 1000, 15, 5, 25, 5, maxPeople: 10));
 
         Build.Add(new BuildStat(H.ShoreMine, 400, 15, 5, 25, 5, maxPeople: 20));
@@ -111,7 +112,7 @@ public class Book : General
 
 
         //Prod
-        Build.Add(new BuildStat(H.Brick, 400, 15, 5, 25, 5, maxPeople: 20, capacity: 50));
+        Build.Add(new BuildStat(H.Brick, 400, 15, 5, 25, 5, maxPeople: 20, capacity: 20));
         Build.Add(new BuildStat(H.Carpentry, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.Cigars, 400, 15, 5, 25, 5, maxPeople: 5));
 
