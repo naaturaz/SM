@@ -99,7 +99,7 @@ public class GUIElement : General {
     {
         if (obj.Inventory == null)
         {
-            return "Just bugs";
+            return ">*<";
         }
 
         var percentOcup = obj.Inventory.CurrentVolumeOcuppied()/obj.Inventory.CapacityVol;
@@ -113,9 +113,9 @@ public class GUIElement : General {
         var volOccupied = Unit.VolConverted(obj.Inventory.CurrentVolumeOcuppied());
         var volCap = Unit.VolConverted(obj.Inventory.CapacityVol);
 
-        var res = "Occupied:" + volOccupied.ToString("F1") + " " + Unit.VolumeUnit() +
-            "/ Inv Cap:" + volCap + " " + Unit.VolumeUnit() +" \n" +
-            "Fill: "+percentOcup.ToString("F1") + "% \n";
+        var res = Languages.ReturnString("Occupied:") + volOccupied.ToString("F0") + " " + Unit.VolumeUnit() +
+            " || Capacity:" + volCap.ToString("F0") + " " + Unit.VolumeUnit() +
+            " || "+percentOcup.ToString("F0") + "%";
 
         return res;
     }

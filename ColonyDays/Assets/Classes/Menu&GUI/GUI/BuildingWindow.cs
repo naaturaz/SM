@@ -519,7 +519,7 @@ public class BuildingWindow : GUIElement
             //if is Storage
             if (Building.HType.ToString().Contains("Storage"))
             {
-                res += "\nUsers:" + Building.PeopleDict.Count + "\n";
+                res += Languages.ReturnString("Users:") + Building.PeopleDict.Count + "\n";
             }
             //others
             else
@@ -536,7 +536,7 @@ public class BuildingWindow : GUIElement
 
             if (Building.HType == H.Masonry)
             {
-                res += "\n Buildings ready to be built:";
+                res += Languages.ReturnString("Buildings.Ready"); 
 
                 for (int i = 0; i < Building.BuildersManager1.GreenLight.Count; i++)
                 {
@@ -553,7 +553,7 @@ public class BuildingWindow : GUIElement
                 amt += Building.Families[i].MembersOfAFamily();
             }
 
-            res += " People living in this house:" + amt + "";
+            res += Languages.ReturnString("People.Living") + amt + ""; 
             TilesOfPeopleInAHouse();
         }
 

@@ -41,7 +41,8 @@ public class HelpWindow : GUIElement
         //"Combat Mode.Help",
 
         "Population.Help",
-
+        "Inputs.Help",
+        "WheelBarrows.Help",
     };
 
 

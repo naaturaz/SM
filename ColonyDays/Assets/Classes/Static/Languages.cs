@@ -199,8 +199,6 @@ public class Languages
        { "WhereIsTown.HoverSmall", "Back to town [P]"},
        { "WhereIsSea.HoverSmall", "Show/hide path to sea"},
        { "Helper.HoverSmall", "Help"},
-
-       //Todo add to ESP
 	   { "Tempeture.HoverSmall", "Temperature"},
 	   
        //building window
@@ -370,6 +368,9 @@ public class Languages
 
        { "F1.Help", "Press [F1] for help"},
 
+       { "Inputs.Help", "If a building can't produce because is missing inputs. Check you have the needed input(s) in the main storage and at least one worker in the masonry"},
+       { "WheelBarrows.Help", "Wheelbarrows are the masonry workers. If they got nothing to build will act as wheelbarrows. If you need inputs to get into a specific building make sure you have enough of them working and also the inputs mentioned in the storage building"},
+
 
        ///word and grammarly below
 
@@ -400,15 +401,14 @@ public class Languages
        { "Dock.Tuto", "Now click on the 'Dock' building, it is the 1st button. When you hover over it, it will"+
            " show its cost and description"},
        { "Dock.Placed.Tuto", "Now the hard, read carefully. Notice that you can use the "+
-           "'R' key to Rotate, and right click to cancel the building. You can cancel the building and spawn a new one at your wish. This building has a part in the ocean and other in the land." +
+           "'R' key to Rotate, and right click to cancel the building. This building has a part in the ocean and other in the land." +
            " The arrow goes to the sea, the storage section goes to land. Once the arrow is colored white, left click."},
        { "2XSpeed.Tuto", "Increase the game's speed, go to the middle top screen simulation speed controller, click the "
             +" 'More Speed' button 1 time until 2x is displayed"},
 
        { "ShowWorkersControl.Tuto", "Click on the 'Control/Bulletin' button, located in the bottom bar. "+
            "When you hover over it, it will popup 'Control/Bulletin'. "},
-       { "AddWorkers.Tuto", "Click the '+' sign to the right of the Masonry building, this is how you add more workers."
-        + " You can also assign workers in the buildings."},
+       { "AddWorkers.Tuto", "Click the '+' sign to the right of the Masonry building, this is how you add more workers."},
        { "HideBulletin.Tuto", "Keep in mind that in this window you are able to control and see different aspects of the game. Click outside the window to close it or 'OK' button."},
        { "FinishDock.Tuto", "Now finish the Dock building. The more workers are in the Masonry the quicker is going to get done too."
        + " Also make sure you have all materials needed to build it"},
@@ -485,29 +485,48 @@ public class Languages
        {"Help.Bulletin/Finance/Budget", "Here is shown your budget. Salary is the amount of money paid to a worker. The more people working the more salary will be paid out."},
        {"Help.Bulletin/Finance/Exports", "A breakdown of the exports"},
 
-        { "Help.Bulletin/Finance/Prices", "...."},
+       { "Help.Bulletin/Finance/Prices", "...."},
 
 
        {"LoadWontFit", "This load won't fit in the storage area"},
 
-
-
-
-
-
-
-
         //and so on
-        {"Missing.Input", "Building can't produce. Missing inputs: \n" }
+       {"Missing.Input", "Building can't produce (Inputs must be in this building inventory). Missing inputs: \n" },
 
 
 
 
 
+        //in game
+        
+        { "Buildings.Ready", "\n Buildings ready to be built:"},
+        { "People.Living", "People living in this house:"},
+        { "Occupied:", "Occupied:"},
+        { "|| Capacity:", "|| Capacity:"},
+        { "Users:", "\nUsers:"},
 
 
 
     };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //ESPANNOL
     private static string _houseTailES = ". A los Azucareros les encanta comerse una buena comida de vez en cuando";
@@ -525,23 +544,30 @@ public class Languages
     {
        //Descriptions
        //Infr
-	   { "Road.Desc","Solo para propositos de decoracion. De todas maneras las personas se sienten mas felices si la via esta pavimentada alrededor de ellos"},
+	   { "Road.Desc","Solo para propositos de decoracion. Las personas se sienten mas felices si la via esta pavimentada alrededor de ellos"},
        { "BridgeTrail.Desc","Por aqui las personas pasan de un lado del mapa a otro"},
        { "BridgeRoad.Desc","Por aqui las personas pasan de un lado del mapa a otro. Los ciudadanos adoran estos puentes. " +
                            "Les da un sentido de prosperidad y felicidad" +_houseTailES},
        { "LightHouse.Desc","Ayuda a que el puedo sea descubierto mas facil. Añade a la Reputacion del Puerto siempre y cuando la llama este encendida"},
        { H.Masonry + ".Desc","Una construccion muy imporatante. Estos trabajadores son los que construyen y cuando no tienen nada que hacer se dedican a transportar bienes"},
        { H.HeavyLoad + ".Desc","Una construccion muy imporatante. Estos trabajadores son los que construyen y cuando no tienen nada que hacer se dedican a transportar bienes"},
+        { H.StandLamp + ".Desc","Alumbra por las noches si hay Aceite de Ballena en la almancen."},
+
 
        //House
 	   { "Bohio.Desc","El Bohio, una casa con condiciones muy rudimentarias, los ciudadanos se abochornan de vivir aqui, una familia puede tener el maximo de 1 niño aqui" +_houseTail},
-       { "HouseA.Desc","Casa pequeña de madera, una familia puede tener el maximo de 2 niños aqui" +_houseTailES},
+
+       { "Shack.Desc", "Casucha: Con condiciones de vida primitiva, las personas no son felicies viviendo aqui y pueden tener un maximo de 2 niños"},
+       { "MediumShack.Desc", "Casucha mediana: Las condiciones son basicas, y las personas sienten muy poca felicidad viviendo aqui y pueden tener un maximo de 2-3 niños"},
+       { "LargeShack.Desc", "Casucha grande: Las condiciones son un poco mejor que basicas, y las personas sienten algo de felicidad viviendo aqui y pueden tener un maximo de 2-4 niños"},
+
+        { "HouseA.Desc","Casa pequeña de madera, una familia puede tener el maximo de 2 niños aqui" +_houseTailES},
        { "HouseB.Desc","Small house, una familia puede tener el maximo de 2 niños aqui" +_houseTailES },
        { "HouseTwoFloor.Desc","Wooden Medium house, una familia puede tener el maximo de 3 niños aqui"+_houseTailES},
        { "HouseMed.Desc","Medium house, una familia puede tener el maximo de 2 a 3 niños aqui"+_houseTailES},
-       { "BrickHouseA.Desc","Large house, una familia puede tener el maximo de 3 a 4 niños aqui"+_houseTailES},
-       { "BrickHouseB.Desc","Large house, una familia puede tener el maximo de 3 a 4 niños aqui"+_houseTailES},
-       { "BrickHouseC.Desc","Large house, una familia puede tener el maximo de 4 niños aqui"+_houseTailES},
+       { "BrickHouseA.Desc","Casa de ladrillos:, una familia puede tener el maximo de 3 a 4 niños aqui"+_houseTailES},
+       { "BrickHouseB.Desc","Casa de ladrillos:, una familia puede tener el maximo de 3 a 4 niños aqui"+_houseTailES},
+       { "BrickHouseC.Desc","Casa de ladrillos:, una familia puede tener el maximo de 4 niños aqui"+_houseTailES},
        
        //Farms
        //Animal
@@ -557,7 +583,6 @@ public class Languages
        { H.FishingHut + ".Desc","Aqui se pescan peces"},
 
        //Raw
-       { "Mortar.Desc","Here a worker will produce Mortar"},
        { "Clay.Desc","Aqui se produce barro, necesaria para construir ladrillos y otros productos mas"},
        { "Pottery.Desc","Aqui se producen productos de ceramica como platos, jarras, etc"},
        { "Mine.Desc","Esta es una mina"},
@@ -565,8 +590,10 @@ public class Languages
        { "Resin.Desc","La Resina de saca de los arboles aqui"},
        {  H.LumberMill +".Desc","Aqui los trabajadores buscan y extraen recursos naturales como madera, piedra y minerales"},
        { "BlackSmith.Desc","Aqui el trabajador produce elementos de la forja "+_asLongHasInputES},
-       { "ShoreMine.Desc","Aqui se produce la sal, arena o cal"},
-       { "QuickLime.Desc","Here a worker will produce QuickLime"},
+       { "ShoreMine.Desc","Aqui se produce la sal, o arena"},
+       { "QuickLime.Desc","Aqui los trabajadores producen cal"},
+       { "Mortar.Desc","Aqui los trabajadores producen mezcla"},
+
 
        //Prod
 	   { "Brick.Desc",_produceES},
@@ -610,12 +637,12 @@ public class Languages
        //other
 	   { "Church.Desc","La iglesia le da felicidad y esperanza a la gente"},
        { "Tavern.Desc","Aqui la gente viene a tomar y a divertirse"},
-       { "Shack.Desc","Shack ESP"},
 
        //Militar
 	   { "PostGuard.Desc",_militarES},
        { "Fort.Desc",_militarES},
-       { "Morro.Desc",_militarES+". Una vez construida esta construccion los piratas se aconsejaran mejor"},
+       { "Morro.Desc",_militarES+". Una vez construida esta construccion los piratas te respetaran infinitamente"},
+       { "WoodPost.Desc", "Ellos ven los pirates y bandidos primero de esta manera te puedes preparar mejor y con mas tiempo"},
 
 
 
@@ -636,6 +663,7 @@ public class Languages
        { "BugReport", "Bug, mandalo, gracias"},
        { "Invitation", "Pon el email de un amigo, quizas sea invitado a la Beta"},
        { "Info", ""},//use for informational Dialogs
+
 
        //more Main GUI
        { "Workers distribution", "Distribucion de los trabajadores"},
@@ -692,9 +720,15 @@ public class Languages
        { "Hide.HoverSmall", "Esconder"},
        { "CleanAll.HoverSmall", "Limpiar"},
        { "Bulletin.HoverSmall", "Control/Boletin"},
+       {"ShowAgainTuto.HoverSmall","Tutorial"},
+       { "Quest_Button.HoverSmall", "Desafios"},
 
-       { "More.HoverSmall", "More"},
-       { "Less.HoverSmall", "Less"},
+       { "More.HoverSmall", "Mas"},
+       { "Less.HoverSmall", "Menos"},
+
+       { "BuyRegion.HoverSmall", "Compra region"},
+       { "BullDozer.HoverSmall", "Bulldozer"},
+
 
        //down bar
 	   { "Infrastructure.HoverSmall", "Infraestructuras"},
@@ -710,15 +744,16 @@ public class Languages
        { "WhereIsTown.HoverSmall", "Centrar el pueblo [P]"},
        { "WhereIsSea.HoverSmall", "Muestre/Esconda al mar"},
        { "Helper.HoverSmall", "Mini ayuda"},
+       { "Tempeture.HoverSmall", "Temperatura"},
 	   
        //building window
        { "Gen_Btn.HoverSmall", "General"},
-       { "Inv_Btn.HoverSmall", "Inventorio"},
+       { "Inv_Btn.HoverSmall", "Inventario"},
        { "Upg_Btn.HoverSmall", "Mejoras"},
        { "Prd_Btn.HoverSmall", "Produccion"},
-       { "Sta_Btn.HoverSmall", "Stadisticas"},
+       { "Sta_Btn.HoverSmall", "Estadisticas"},
        { "Ord_Btn.HoverSmall", "Ordenes"},
-       { "Stop_Production.HoverSmall", "Pare produccion"},
+       { "Stop_Production.HoverSmall", "Parar produccion"},
        { "Demolish_Btn.HoverSmall", "Demoler"},
        { "More Salary.HoverSmall", "Pagar mas"},
        { "Less Salary.HoverSmall", "Pagar menos"},
@@ -767,6 +802,39 @@ public class Languages
        { "ShipPayed.Noti.Desc", "Un barco a pagado por los bienes adquiridos en tu puerto"},
        { "ShipArrived.Noti.Name", "Barco ha llegado"},
        { "ShipArrived.Noti.Desc", "Un barco ha llegado a una de nuestras construcciones maritimas"},
+
+       { "AgeMajor.Noti.Name", "Un Trabajador Nuevo"},
+       { "AgeMajor.Noti.Desc", "{0} esta listo(a) para trabajar"},
+       
+
+       { "PersonDie.Noti.Name", "Una persona ha muerto"},
+       { "PersonDie.Noti.Desc", "{0} ha muerto"},
+
+       { "DieReplacementFound.Noti.Name", "Una persona ha muerto"},
+       { "DieReplacementFound.Noti.Desc", "{0} ha muerto. Ya fue reemplazado en su trabajo"},
+
+       { "DieReplacementNotFound.Noti.Name", "Una persona ha muerto"},
+       { "DieReplacementNotFound.Noti.Desc", "{0} ha muerto. No se encontro reemplazo en su trabajo"},
+
+
+       { "FullStore.Noti.Name", "Una almacen se esta llenando"},
+       { "FullStore.Noti.Desc", "Una almacen esta al {0}% de su capacidad"},
+
+       { "CantProduceBzFullStore.Noti.Name", "El trabajador no puede producir"},
+       { "CantProduceBzFullStore.Noti.Desc", "{0} El trabajador no puede producir porque su almacen esta llena"},
+
+       { "NoInput.Noti.Name", "Al menos un insumo falta en el edificio"},
+       { "NoInput.Noti.Desc", "Un edificio no produce {0} porque le falta aunque sea un insumo"},
+
+       { "Built.Noti.Name", "Una construccion ha sido terminada"},
+       { "Built.Noti.Desc", "{0} a sido construido(a)"},
+
+       { "cannot produce", "No puede producir"},
+
+
+
+
+
 
        //Main notificaion
        //Shows on the middle of the screen
@@ -817,18 +885,112 @@ public class Languages
        { "Happiness.Help", "Felicidad: La felicidad de las personas esta influenciada por varios factores. Variedad de comidas, satisfaccion religiosa, esparcimiento, confort de la casa, nivel de educacion, utensillos, ceramica y ropa."},
        { "Line production.Help", "Linea de produccion: Para hacer un KG de puntillas tienes que encontrar y minar los minerales, en la fundicion derretir el hierro, y finalmente en el herrero hacer las puntillas. O simplemente comprarla en el puerto"},
        { "Bulletin.Help", "El icono con las paginas en la barra infierior es la ventana de Bulletin/Control. Por favor toma un minuto para explorarla."},
-       { "Trading.Help", "You will need to have at least one Dock to be able to trade. On it, you can add import/export orders and make some cash. If you need help adding an order you might want to complete the Tutorial"},
+         { "Trading.Help", "Necesitas al menos un puerto para comerciar. En el puerto puedes agregar ordener de importacion y exportacion. Si necesitas mas ayuda puedes pasar el tutorial."},
 
-       { "Combat Mode.Help", "It activates when a Pirate/Bandit is detected by one of your citizens. Once the mode is active you can command units directly to attack. Select them and right click to objective to attack"},
+       { "Combat Mode.Help", "Se activa cuando un pirata o bandido es visto por uno de tus ciudadanos."},
 
-
-
+       { "Population.Help", "Cuando los jovenes cumplen 16 años se mudan a una casa vacia si existe. Si siempre hay casas vacias el crecimiento de la poblacion esta garantizado."},
 
        { "F1.Help", "Presiona [F1] para ayuda"},
 
+       { "Inputs.Help", "Si un edificio no produce porque le faltan insumos, chequa que los insumos necesarios esten en la almacen y que tengas trabajadores en la Casa De Albañiles"},
 
 
 
+
+        { "WheelBarrows.Help", "Los carretilleros son los trabajadores de la Casa de Albañiles. Si ellos no tienen nada que hacer entonces haran el trabajo de carretilleros. Si necesitas algun insumo en un edificio, asegurate de tener bastantes de estos trabajando y por su puesto los insumos disponibles en la almacen"},
+
+
+
+
+
+
+
+
+
+       { "TutoOver", "Tu premio sera de $10,000 si es la 1era vez que completas el tutorial. Este es el fin del tutorial ahora puedes seguir jugando."},
+
+       //Tuto
+       { "CamMov.Tuto", "El premio por completar el tutorial son $10,000 (solo un premio por juego). Paso 1: Usa [WASD] o las teclas del cursos para mover la camara. Haz esto por al menos 5 segundos"},
+       { "CamMov5x.Tuto", "Usa [WASD] o las teclas del cursos + 'Shift Izq' para mover la camara 5 veces mas rapido. Haz esto por al menos 5 segundos"},
+       { "CamRot.Tuto", "Presiona la rueda del raton y despues mueve el raton para girar la camara. Haz esto por al menos 5 segundos"},
+
+       { "BackToTown.Tuto", "Presiona la tecla [P] para ir al centro del pueblo"},
+
+       { "BuyRegion.Tuto", "Necesitas ser dueño de una region para poder construir en ella. Haz click en el signo de '+' en la barra inferior, despues en la señal de 'For Sale' " +
+            " en una region para comprarla. Estas construcciones pueden ser construidas sin ser dueño de la region:" +
+            " (FishingHut, Dock, MountainMine, ShoreMine, LightHouse, PostGuard)"
+            },
+
+       { "Trade.Tuto", "Eso fue facil ahora viene lo dificil. Haz click en 'Comercio', en la barra inferior. "+
+           "Cuando pases el cursor del raton se vera que dice 'Comercio'"},
+       { "CamHeaven.Tuto", "Gira la rueda del raton hacia detras hasta que alcanzes el limite en el cielo. Esta vista es usada para emplazar grandes construcciones como el 'Puerto'"},
+
+       { "Dock.Tuto", "Haz click en la construccion 'Puerto'. Cuando pases el cursor del raton por encima del icono saldra su costo y descripcion"},
+       { "Dock.Placed.Tuto", "Ahora viene lo mas dificil. Puedes usar la tecla 'R' para rotar la construccion y click derecho para cancelar. "+
+           " Esta construccion tiene una parte que va en tierra y otra en agua." +
+           " La flecha debe ir en el agua, la seccion del almacenaje en tierra. Cuando la flecha se ponga blanca haz click izq para emplazar el edificio."},
+
+        { "2XSpeed.Tuto", "Aumenta la velocidad del juego, en la parte superior de la pantalla en el centro, haz click en "
+            +" 'Mas' hasta que aparezca el '2x'"},
+
+       { "ShowWorkersControl.Tuto", "Haz click en boton de 'Control/Boletin', en la parte inferior de la pantalla. "+
+           "Si le pasas el cursor del raton por encima se vera 'Control/Boletin'"},
+       { "AddWorkers.Tuto", "Haz click en el signo de '+', Asi es como se añaden mas trabajadores."},
+
+
+        { "HideBulletin.Tuto", "En este formulario puedes controlar y ver varios aspectos de la partida. Haz click fuera del formulario o 'OK' para cerrarlo"},
+       { "FinishDock.Tuto", "Ahora termina el Puerto. Mientras mas trabajadores haiga en la Casa de Albañiles mas rapido se terminara."
+       + " Tambien asegurate que tienes todos los materiales necesarios para construirlo."},
+       { "ShowHelp.Tuto", "Haz click en el boton de ayuda, en la barra inferior. "+
+           " Aqui puedes encontrar la ayuda del juego."},
+
+       { "SelectDock.Tuto", "Los barcos escogen bienes al azar del inventario del puerto. Necesitas trabajadores para que muevan los bienes hacia y desde el puerto para las almacenes. Estos trabajadores utilizan cajas y carretllis para mover los bienes. Ahora haz click en el Puerto."},
+       { "OrderTab.Tuto", "Haz click en las Ordenes en el formulario del Puerto"},
+       { "ImportOrder.Tuto", "Haz click en el signo de '+' al lado de 'Orden de Importacion'"},
+
+
+
+       { "AddOrder.Tuto", "Ahora navega hasta el final de la lista y escoge 'Madera', pon la cantidad de 100. Despues haz click en el botton de 'Añadir'"},
+       { "CloseDockWindow.Tuto", "Ya la orden fue añadida. Un barco depositara estos bienes en el puerto. Despues tus trabajadores portuarios lo llevaran para la almacen mas cercana. Ahora cierra este formulario."},
+       { "Rename.Tuto", "Haz click en una persona y despues click en la barra de titulo del formulario. De esta manera le puedes cambiar el nombre a cualquier persona o edificio. Haz click afuera del titulo y los cambios seran guardados"},
+
+       ////////------------------
+
+       { "Budget.Tuto", "Haz click en el boton 'Control/Boletin', despues en 'Finanzas' y despues en 'Presupuesto'"},
+       { "Prod.Tuto", "Haz click en el menu 'Prod' y despues en 'Producido'. Muestra lo producido en los ultimos 5 años"},
+       { "Spec.Tuto", "Haz click en el menu 'Prod' despues en 'Spec'. Aqui se ve exactamente como hacer todos los bienes en el juego. Los isumos necesarios, donde es producido y ademas el precio"},
+       { "Exports.Tuto", "Haz click en el menu 'Finanzas' y despues en 'Exportaciones'. Aqui se ve un sumario de las exportaciones"},
+
+        
+        //Quest
+       { "Tutorial.Quest", "Quest: Finish the tutorial. Reward $10,000. It takes roughly 3 minutes to complete"},
+
+       { "Lamp.Quest", "Quest: Build a StandLamp. Find it on Infrastructure, it shines at night if there is Whale Oil on Storage"},
+
+       { "Shack.Quest", "Quest: Build a Shack. These are cheap houses. When people turn 16 they will move to a free house if found. In this way, population growth will be guaranteed. [F1] Help"},
+       { "SmallFarm.Quest", "Quest: Build a FieldFarmSmall. You need farms to feed your people"},
+       { "FarmHire.Quest", "Quest: Hire two farmers in a FieldFarmSmall. Click on the farm and in the plus sign assign workers. You need to have unemployed"
+            +" people to be able to assign them into a new building"},
+
+
+        { "FarmProduce.Quest", "Quest: Now produce " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " of beans on the FieldFarmSmall. Click on the 'Stat' tab and will show you the production of the last 5 years. You can see the quest progress in the quest window. If you build more small farms will be accounted for the quest"},
+        { "Transport.Quest", "Quest: Transport the beans from the farm to the Storage. To do that make sure you have" +
+            " workers on the masonry. They act as wheelbarrows when not building"},
+
+            { "Export.Quest", "Quest: Now export 300 " + Unit.CurrentWeightUnitsString() + " of beans. On the Dock add an order of export. If you have not dock then build one."+
+           "Find it in Trade. Once built click on the orders tab and add an export order with the '+' sign."+
+           " Select product and enter amount"},
+       { "HireDocker.Quest", "Quest: Hire a docker. Dockers only task is to move the goods into the Dock from the Storage if you are exporting."+
+           " Or vice-versa if importing. They work when there is an order in place and the goods are ready to transport. Otherwise, they stay at home resting." +
+            " If you have more than one docker already fire all of them and then hire one"},
+       { "MakeBucks.Quest", "Quest: Make $100 exporting goods in the Dock. "+
+           "Once a ship arrives will randomly pay product(s) in your Dock's inventory"},
+       { "HeavyLoad.Quest", "Quest: Build a HeavyLoad building. This are haulers that carry more weight. They will come handy when transporting goods around is needed"},
+       { "ImportOil.Quest", "Quest: Import 500 " + Unit.CurrentWeightUnitsString() + " of Whale Oil at the Dock. This is needed to keep your lights on at night."},
+
+       { "Population50.Quest", "Reach a total population of 50 citizens"},
+       {"CompleteQuest", "Your reward is ${0}"},
 
 
 
@@ -930,8 +1092,13 @@ public class Languages
        { "Bucket", "Cubo"},
        { "Cart", "Carreta"},
        { "RoofTile", "Teja"},
+       { "FloorTile", "Azulejo"},
+       { "Mortar", "Mezcla"},
+       { "Furniture", "Muebless"},
+
        { "Utensil", "Utensillo"},
        { "Stop", "Pare"},
+
 
 
 
@@ -939,7 +1106,7 @@ public class Languages
        
        //Main Menu
        { "Resume Game", "Sigue el Juego"},
-       { "Continue Game", "Continua Juego"},
+       { "Continue Game", "Continuar el Juego"},
        { "New Game", "Juego Nuevo"},
        { "Load Game", "Cargar Juego"},
        { "Save Game", "Salvar Juego"},
@@ -953,7 +1120,16 @@ public class Languages
        { "Enter name...", "Escribe el nombre..."},
        { "Terrain Name:", "Nombre del terreno:"},
        { "Difficulty:", "Dificultad:"},
-       { "Click Here", "Haz click aquí"},
+       { "Type of game:", "Tipo de juego:"},
+
+       { "Pirates (if check the town could suffer a Pirate attack)", "Piratas (El pueblo pudiese sufrir el ataque de piratas)"},
+       { "Food Expiration (if check food expires with time)", "Caducidad de la comida (La comida tiene fecha de caducidad)"},
+
+        { "Freewill", "Libertad"},
+        { "Traditional", "Tradicional"},
+
+
+        { "Click Here", "Haz click aquí"},
 
        { "Newbie", "Novato"},
        { "Easy", "Fácil"},
@@ -979,8 +1155,20 @@ public class Languages
        //{ "Loading...", "Cargando..."},
        { "Menu", "Menu"},
 
+       { "Camera Sensitivity:", "Velocidad de la Camara:"},
+
+       //
+       { "Tutorial(Beta)", "Tutorial(Beta)"},
 
 
+
+
+       //in game
+        { "Buildings.Ready", "\n Edificios listos para ser construidos:"},
+        { "People.Living", "Personas en esta casa:"},
+        { "Occupied:", "En uso:"},
+        { "|| Capacity:", "|| Capacidad:"},
+        { "Users:", "\nUsuarios:"},
 
     };
 

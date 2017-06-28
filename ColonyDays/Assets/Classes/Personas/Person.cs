@@ -446,7 +446,7 @@ public class Person : Hoverable
         Person obj = null;
 
 
-        obj = (Person)Resources.Load(PersonPrefabRoot(pF._gender), typeof(Person));
+        obj = (Person)Resources.Load(PersonPrefabRoot(pF._gender, true), typeof(Person));
 
 
         SMe me = new SMe();
@@ -461,8 +461,20 @@ public class Person : Hoverable
     }
 
 
-    static string PersonPrefabRoot(H gender)
+    static string PersonPrefabRoot(H gender, bool load = false)
     {
+        if (load)
+        {
+            if (gender == H.Female)
+            {
+                return "Prefab/Personas/PersonaFeMale1";
+            }
+            else
+            {
+                return "Prefab/Personas/PersonaMale1";
+            }
+        }
+
         if (gender == H.Male)
         {
             return "Prefab/Personas/PersonaFeMale1";

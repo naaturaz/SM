@@ -511,6 +511,12 @@ public class AudioCollector
     private static int infoIndex;
     static void PlayPerson(List<string> list)
     {
+        //if a sound for a lang is not being added yet just return
+        if (list.Count==0)
+        {
+            return;
+        }
+
         //the root is determined by the languages and the type of person
         //English/Man/ is an ex
 
