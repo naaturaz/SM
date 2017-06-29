@@ -150,8 +150,8 @@ public class Router : MonoBehaviour
     {
         for (int i = 0; i < _checkPoints.Count; i++)
         {
-            _person.DebugList.Add(UVisHelp.CreateHelpers(_checkPoints[i].Point, Root.blueCube));
-            _person.DebugList.Add(UVisHelp.CreateText(_checkPoints[i].Point, i.ToString(), 55));
+            //_person.DebugList.Add(UVisHelp.CreateHelpers(_checkPoints[i].Point, Root.blueCube));
+            //_person.DebugList.Add(UVisHelp.CreateText(_checkPoints[i].Point, i.ToString(), 55));
         }
         //DebugDestroy();
     }
@@ -285,7 +285,7 @@ public class Router : MonoBehaviour
         while (IAmInsideABuildNow(t))
         {
             t = Vector3.MoveTowards(t, inside.transform.position, -0.05f);
-            UVisHelp.CreateHelpers(t, Root.blueCube);
+            //UVisHelp.CreateHelpers(t, Root.blueCube);
 
             inside = null;
             return t;

@@ -254,6 +254,11 @@ public class CamRTSController : CamControl
             thisCamera = transform.GetComponent<Camera>();
         }
 
+        if (!Developer.IsDev)
+        {
+            return;
+        }
+
         var localMultiplier = 0;
         if (Input.GetKey(KeyCode.KeypadPlus))
         {

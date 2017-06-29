@@ -67,7 +67,12 @@ public class BodyAgent
         {
             //so i set the destination again to the real one so they move towards it 
             _agent.SetDestination(Destiny);
-            //Debug.Log("Corrected pathCompleted: " + _person.name + " :pathStatus: " + _agent.pathStatus);
+
+#if UNITY_EDITOR
+            Debug.Log("Corrected pathCompleted: " + _person.name + " :pathStatus: " + _agent.pathStatus);
+#endif
+            _agent.radius = 0.08f;
+            //_agent.height = 3;
         }
 
         if (_nextDest != new Vector3() && !_destWasSet && _agent.isOnNavMesh && _agent.enabled)

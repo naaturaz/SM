@@ -226,7 +226,7 @@ public class Languages
        { "TownTitle.HoverSmall", "Town"},
        {"WarMode.HoverSmall", "Combat Mode"},
        {"BullDozer.HoverSmall", "Bulldozer"},
-       {"Rate.HoverSmall", "Rate"},
+       {"Rate.HoverSmall", "Pls Rate Me"},
 
        //addOrder windiw
 	   { "Amt_Tip.HoverSmall", "Amount of prod"},
@@ -447,7 +447,7 @@ public class Languages
             " workers on the masonry. They act as wheelbarrows when not building"},
 
             { "Export.Quest", "Quest: Now export 300 " + Unit.CurrentWeightUnitsString() + " of beans. On the Dock add an order of export. If you have not dock then build one."+
-           "Find it in Trade. Once built click on the orders tab and add an export order with the '+' sign."+
+           " Find it in Trade. Once built click on the orders tab and add an export order with the '+' sign."+
            " Select product and enter amount"},
        { "HireDocker.Quest", "Quest: Hire a docker. Dockers only task is to move the goods into the Dock from the Storage if you are exporting."+
            " Or vice-versa if importing. They work when there is an order in place and the goods are ready to transport. Otherwise, they stay at home resting." +
@@ -501,7 +501,7 @@ public class Languages
         
         { "Buildings.Ready", "\n Buildings ready to be built:"},
         { "People.Living", "People living in this house:"},
-        { "Occupied:", "Occupied:"},
+        { "Occupied:", "Filled:"},
         { "|| Capacity:", "|| Capacity:"},
         { "Users:", "\nUsers:"},
 
@@ -644,6 +644,17 @@ public class Languages
        { "Morro.Desc",_militarES+". Una vez construida esta construccion los piratas te respetaran infinitamente"},
        { "WoodPost.Desc", "Ellos ven los pirates y bandidos primero de esta manera te puedes preparar mejor y con mas tiempo"},
 
+       //Construcciones
+
+       //infr
+	   { "Masonry","Casa de Albañiles"},
+
+       //Casas
+	   { "Shack","Casucha"},
+
+       //Trade
+	   { "StorageBig","AlmacenGrande"},
+
 
 
 
@@ -685,6 +696,13 @@ public class Languages
        { "Food Source", "Almacen"},
        { "Religion", "Religion"},
        { "Chill", "Relajamiento"},
+       { "Thirst", "Sed"},
+       { "Account", "Cuenta"},
+
+       { "Early Access Build", "Acceso Anticipado"},
+
+
+
 
 
 
@@ -699,7 +717,7 @@ public class Languages
 
        //Tooltips 
        //Small Tooltips 
-	   { "Person.HoverSmall", "Personas / Adultos / Niños"},
+	   { "Person.HoverSmall", "Pers./Adul./Niñ."},
        { "Emigrate.HoverSmall", "Emigrados"},
        { "Lazy.HoverSmall", "Desempleados"},
        { "Food.HoverSmall", "Comida"},
@@ -722,6 +740,7 @@ public class Languages
        { "Bulletin.HoverSmall", "Control/Boletin"},
        {"ShowAgainTuto.HoverSmall","Tutorial"},
        { "Quest_Button.HoverSmall", "Desafios"},
+       { "TownTile.HoverSmall", "Nombre del pueblo"},
 
        { "More.HoverSmall", "Mas"},
        { "Less.HoverSmall", "Menos"},
@@ -766,6 +785,8 @@ public class Languages
        { "Close_Btn.HoverSmall", "Cerrar"},
        { "ShowPath.HoverSmall", "Enseñar camino"},
        { "ShowLocation.HoverSmall", "Enseñar lugar"},
+       { "Max_Positions.HoverSmall", "Max de trabajadores"},
+       {"Rate.HoverSmall", "Porfa Evaluame"},
 
        //addOrder windiw
 	   { "Amt_Tip.HoverSmall", "Cantidad de productos"},
@@ -964,33 +985,31 @@ public class Languages
 
         
         //Quest
-       { "Tutorial.Quest", "Quest: Finish the tutorial. Reward $10,000. It takes roughly 3 minutes to complete"},
+       { "Tutorial.Quest", "Desafio: Termina el tutorial. $10,000 en premio. Toma alrededor de 3 minutos para ser completado"},
 
-       { "Lamp.Quest", "Quest: Build a StandLamp. Find it on Infrastructure, it shines at night if there is Whale Oil on Storage"},
+       { "Lamp.Quest", "Desafio: Construye una farola. Esta en Infraestructuras, son encedidas de noche si hay Aceite de Ballena en la Almacen"},
 
-       { "Shack.Quest", "Quest: Build a Shack. These are cheap houses. When people turn 16 they will move to a free house if found. In this way, population growth will be guaranteed. [F1] Help"},
-       { "SmallFarm.Quest", "Quest: Build a FieldFarmSmall. You need farms to feed your people"},
-       { "FarmHire.Quest", "Quest: Hire two farmers in a FieldFarmSmall. Click on the farm and in the plus sign assign workers. You need to have unemployed"
-            +" people to be able to assign them into a new building"},
+       { "Shack.Quest", "Desafio: Construye una casucha. Estas son casas baratas. Cuando las personas cumplen 16 años se mudan a un casa nueva si existe. De esta manera se garantiza el crecimiento de la poblacion. [F1] Ayuda"},
+       { "SmallFarm.Quest", "Desafio: Construye una Finca de Cultivos Chica. Necesitas estas para alimentar a tu pueblo"},
+       { "FarmHire.Quest", "Desafio: Contrata a dos granjeros en la Finca de Cultivos Chica. Haz click en la finca y despues en el signo de mas para asignar trabajadores. Para esto necesitas tener trabajadores desempleados"},
 
 
-        { "FarmProduce.Quest", "Quest: Now produce " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " of beans on the FieldFarmSmall. Click on the 'Stat' tab and will show you the production of the last 5 years. You can see the quest progress in the quest window. If you build more small farms will be accounted for the quest"},
-        { "Transport.Quest", "Quest: Transport the beans from the farm to the Storage. To do that make sure you have" +
-            " workers on the masonry. They act as wheelbarrows when not building"},
+        { "FarmProduce.Quest", "Desafio: Produce " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " de Frijol en la Finca de Cultivos Chica. Haz click en la pestaña 'Stat' y te mostrara la produccion de los ultimos 5 años. Puedes ver el avance en el desafio en el formulario de desafios. Si construyes mas Fincas de Cultivos Chica ayudaran a pasar este desafio"},
+        { "Transport.Quest", "Desafio: Transporta el Frijol de la Finca hacia la Almacen. Para hacer esto asegurate de que hay trabajadores en la Casa de Albañiles. Ellos se convierten en carretilleros cuando no trabajan"},
 
-            { "Export.Quest", "Quest: Now export 300 " + Unit.CurrentWeightUnitsString() + " of beans. On the Dock add an order of export. If you have not dock then build one."+
-           "Find it in Trade. Once built click on the orders tab and add an export order with the '+' sign."+
-           " Select product and enter amount"},
-       { "HireDocker.Quest", "Quest: Hire a docker. Dockers only task is to move the goods into the Dock from the Storage if you are exporting."+
-           " Or vice-versa if importing. They work when there is an order in place and the goods are ready to transport. Otherwise, they stay at home resting." +
-            " If you have more than one docker already fire all of them and then hire one"},
-       { "MakeBucks.Quest", "Quest: Make $100 exporting goods in the Dock. "+
-           "Once a ship arrives will randomly pay product(s) in your Dock's inventory"},
-       { "HeavyLoad.Quest", "Quest: Build a HeavyLoad building. This are haulers that carry more weight. They will come handy when transporting goods around is needed"},
-       { "ImportOil.Quest", "Quest: Import 500 " + Unit.CurrentWeightUnitsString() + " of Whale Oil at the Dock. This is needed to keep your lights on at night."},
+            { "Export.Quest", "Desafio: Exporta 300 " + Unit.CurrentWeightUnitsString() + " de Frijol. Añade una orden de Exportacion en el Puerto. Si no tienes un Puerto entonces construye uno."+
+           "El icono del Puerto esta en Comercio. Cuando este hecho haz click en la pestaña de ordenes, añade una orden de exportacion, y selecciona el producto y la cantidad a exportar."},
 
-       { "Population50.Quest", "Reach a total population of 50 citizens"},
-       {"CompleteQuest", "Your reward is ${0}"},
+       { "HireDocker.Quest", "Desafio: Contrata un portuario. La unica tarea de ellos es mover bienes desde el Almacen hacia el Puerto si estas exportando."+
+           " O vice-versa si estas importando. Ellos trabajan cuando hay ordenes en el puerto y los bienes estan listos para su transporte. Sino se quedan en casa descanzando." +
+            " Si ya tienes trabajadores aqui despidelos a todos y despues contrata a uno de nuevo."},
+       { "MakeBucks.Quest", "Desafio: Haz $100 exportando bienes en el Puerto. "+
+           "Cuando un barco llegue pagara bienes al azar que haiga en las bodegas de tu Puerto"},
+       { "HeavyLoad.Quest", "Desafio: Construye el edificio de Carga Pesada. Estos son transportistas que cargan mas peso. Seran muy utiles cuando mucha carga necesita ser transportada en tu villa"},
+       { "ImportOil.Quest", "Desafio: Importa 500 " + Unit.CurrentWeightUnitsString() + " de Aceite de Ballena en el Puerto. Es necesario para encender las Farolas por las noches."},
+
+       { "Population50.Quest", "Obten 50 personas en total"},
+       {"CompleteQuest", "Tu premio es de ${0}"},
 
 
 

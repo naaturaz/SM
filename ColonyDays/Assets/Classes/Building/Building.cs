@@ -1058,7 +1058,7 @@ public class Building : Hoverable, Iinfo
         }
         debugShowAnchors = true;
 
-        UVisHelp.CreateHelpers(GetAnchors(), Root.blueCube);
+        //UVisHelp.CreateHelpers(GetAnchors(), Root.blueCube);
     }
 
 

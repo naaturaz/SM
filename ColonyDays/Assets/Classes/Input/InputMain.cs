@@ -133,7 +133,7 @@ public class InputMain : InputParent {
 
     public void RightClickRoutine()
     {
-        if (BuildingPot.InputMode == Mode.None)
+        if (BuildingPot.InputMode == Mode.None && Developer.IsDev)
         {
             RightClickDebugShowHelp();
         }

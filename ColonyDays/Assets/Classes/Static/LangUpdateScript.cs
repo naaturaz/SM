@@ -19,4 +19,12 @@ public class LangUpdateScript : MonoBehaviour
 
 	    _text.text = Languages.ReturnString(_key);
 	}
+
+    private void Update()
+    {
+        if (_key == _text.text && _text.text != Languages.ReturnString(_key))
+        {
+            _text.text = Languages.ReturnString(_key);
+        }
+    }
 }

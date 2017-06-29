@@ -114,8 +114,8 @@ public class GUIElement : General {
         var volCap = Unit.VolConverted(obj.Inventory.CapacityVol);
 
         var res = Languages.ReturnString("Occupied:") + volOccupied.ToString("F0") + " " + Unit.VolumeUnit() +
-            " || Capacity:" + volCap.ToString("F0") + " " + Unit.VolumeUnit() +
-            " || "+percentOcup.ToString("F0") + "%";
+            " of " + volCap.ToString("F0") + " " + Unit.VolumeUnit() +
+            " @ "+percentOcup.ToString("F0") + "%";
 
         return res;
     }
