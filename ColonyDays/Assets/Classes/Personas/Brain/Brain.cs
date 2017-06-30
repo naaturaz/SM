@@ -450,10 +450,10 @@ public class Brain
         //if is ready to work and Work is null or is not producing now, then Skip work
         if (ReadyToWork() &&
 
-            (_person.Work == null || !_person.Work.IsProducingNow() || _stageManager.IsSunsetOrLater())
+            (_person.Work == null || !_person.Work.IsProducingNow() //|| _stageManager.IsSunsetOrLater())
             //without FoodSource wont go to work
             //|| _person.FoodSource == null)
-            ) 
+            )) 
         {
             ReadyToGetFood(true);
         }
@@ -468,7 +468,8 @@ public class Brain
         }
 
         if (ReadyToGetFood() &&
-            (_person.FoodSource == null || _person.Age < _jobManager.startSchool || invFull || _stageManager.IsMidNightOrLater()))
+            (_person.FoodSource == null || _person.Age < 16
+            || invFull || _stageManager.IsMidNightOrLater()))
         {
             ReadyToGoToReligion(true);
         }

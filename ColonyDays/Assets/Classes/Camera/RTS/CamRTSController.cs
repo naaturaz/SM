@@ -35,8 +35,8 @@ public class CamRTSController : CamControl
 
     public static bool IsMouseMiddle;
 
-    float MIN_FIELD_CAM = 47f;//41    25    5
-    float MAX_FIELD_CAM = 47f;//41     42   48
+    float MIN_FIELD_CAM = 41f;//41    25    5
+    float MAX_FIELD_CAM = 41f;//41     42   48
 
     //Target
     public Transform target;
@@ -132,15 +132,15 @@ public class CamRTSController : CamControl
 
     void Start()
     {
-        if (Developer.IsDev)
-        {
-            MIN_FIELD_CAM = 5f;// 48  5   21   45
-            MAX_FIELD_CAM = 48f;//50   80  45  60
-        }
-#if UNITY_EDITOR
-        MIN_FIELD_CAM = 5f;// 48  5   21   45
-        MAX_FIELD_CAM = 48f;//50   80  45  60
-#endif
+//        if (Developer.IsDev)
+//        {
+//            MIN_FIELD_CAM = 5f;// 48  5   21   45
+//            MAX_FIELD_CAM = 48f;//50   80  45  60
+//        }
+//#if UNITY_EDITOR
+//        MIN_FIELD_CAM = 5f;// 48  5   21   45
+//        MAX_FIELD_CAM = 48f;//50   80  45  60
+//#endif
 
     }
 
@@ -241,37 +241,40 @@ public class CamRTSController : CamControl
         RotateScript();
         rotateRTS.Update();
 
-        CameraFOV();
+        //CameraFOV();
     }
 
 
 
     Camera thisCamera;
-    private void CameraFOV()
+    public void CameraFOV(float localMultiplier)
     {
+        return;
+
         if (thisCamera == null)
         {
             thisCamera = transform.GetComponent<Camera>();
         }
 
-        if (!Developer.IsDev)
-        {
-            return;
-        }
+        //if (!Developer.IsDev)
+        //{
+        //    return;
+        //}
 
-        var localMultiplier = 0;
-        if (Input.GetKey(KeyCode.KeypadPlus))
-        {
-            localMultiplier = -1;
-        }
-        else if (Input.GetKey(KeyCode.KeypadMinus))
-        {
-            localMultiplier=1;
-        }
-        else
-        {
-            return;
-        }
+        //if (Input.GetAxis("Mouse ScrollWheel") > 0 // Input.GetKey(KeyCode.KeypadPlus)
+        //    )
+        //{
+        //    localMultiplier = -2;
+        //}
+        //else if (Input.GetAxis("Mouse ScrollWheel") < 0 //Input.GetKey(KeyCode.KeypadMinus)
+        //    )
+        //{
+        //    localMultiplier=2;
+        //}
+        //else
+        //{
+        //    return;
+        //}
 
         float fieldOfView = UMath.changeValSmooth(thisCamera.fieldOfView,
             localMultiplier , 1,

@@ -78,6 +78,8 @@ public class ProductInfo
         var dens = Program.gameScene.ExportImport1.ReturnDensityKGM3(_product);
         var prodF = Program.gameScene.ExportImport1.ReturnProduceFactor(_product);
         var price = Program.gameScene.ExportImport1.ReturnPriceTown(_product);
+        var expiration = Program.gameScene.ExportImport1.ReturnExpirationInDays(_product);
+
 
         _details = "Product " + _product + " details: \n";
 
@@ -92,7 +94,12 @@ public class ProductInfo
        
         _details = _details + "Density: " +dens + "\n";
         _details = _details + "Produce Factor: " + prodF + "\n";
-        _details = _details + "Base Price: " + price + "\n";
+        _details = _details + "Base Price: " + price.ToString("C2") + "\n";
+
+        if (expiration>0 && Program.IsFood)
+        {
+            _details += "Expires in: " + expiration + " days\n";
+        }
 
         if (_product == P.Stop)
         {

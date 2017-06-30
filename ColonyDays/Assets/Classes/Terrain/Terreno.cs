@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿//using UnityEditor;
+using UnityEngine;
 
 public class Terreno : General
 {
@@ -34,6 +35,9 @@ public class Terreno : General
     {
         base.Start();
         _navArea = new NavigationArea(gameObject);
+
+        //seting an area cost 
+        //GameObjectUtility.SetNavMeshArea(gameObject, 0);
     }
 
     void Update()

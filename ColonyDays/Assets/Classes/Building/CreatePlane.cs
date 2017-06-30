@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+//using UnityEditor;
 
 /*In this class we create and update a obj that usually is a block*/
 
@@ -225,6 +226,10 @@ public class CreatePlane : Building
         Geometry.SetActive(false);
         ScaleSmart();
 
+        //seting an area cost 
+        //var child = _geometrySmart.transform.GetChild(0);
+        //child.gameObject.AddComponent<NavMeshSourceTag>();
+        //GameObjectUtility.SetNavMeshArea(child.gameObject, 3);
     }
 
     void ScaleSmart()

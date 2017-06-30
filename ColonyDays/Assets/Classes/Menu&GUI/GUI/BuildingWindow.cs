@@ -1072,6 +1072,9 @@ public class BuildingWindow : GUIElement
         _titleInputFieldGO.SetActive(false);
         _title.text = Building.NameBuilding();
         Program.UnLockInputSt();
+
+        Program.gameScene.TutoStepCompleted("RenameBuild.Tuto");
+
     }
 
 

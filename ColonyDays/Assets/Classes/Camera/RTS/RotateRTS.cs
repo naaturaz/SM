@@ -13,17 +13,22 @@ public class RotateRTS : GenericCameraComponent {
     {
         Vector3 temp = current.position;
         temp.y += change;
+        var fovChange = -5*change;
         if (temp.y > max)
         {
             Program.gameScene.TutoStepCompleted("CamHeaven.Tuto");
             temp.y = max;
             ResetLeftChangeVal();
+            fovChange = 0;
         }
         else if (temp.y < min)
         {
             temp.y = min;
             ResetLeftChangeVal();
+            fovChange = 0;
         }
+        CamControl.CAMRTS.CameraFOV(fovChange);
+
         return temp;
     }
 
@@ -45,20 +50,11 @@ public class RotateRTS : GenericCameraComponent {
     }
 
     Transform _target;
-    public void RotateCamVert(float camSensivity, Transform target, float smoothTimePass)
+    public void RotateCamVert(float camSensivity, Transform target, float changeValue)
     {
         var qOrE = (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.E)) && !MouseListener.MouseOnWindowNow;
         TransformCam.parent = null;
-        float changeValue = smoothTimePass;
-        //if (Input.GetAxis("Mouse Y") != 0 && !qOrE)
-        //{
-        //    changeValue = Input.GetAxis("Mouse Y") * camSensivity;
-        //}
-        //if (Input.GetAxis("Vertical") != 0 && !qOrE)
-        //{
-        //    changeValue = Input.GetAxis("Vertical") * camSensivity;
-        //}
-
+ 
         _target = target;
         if (changeValue != 0 && !qOrE)
         {
@@ -71,16 +67,14 @@ public class RotateRTS : GenericCameraComponent {
             {
                 leftChangeVal = 0;
             }
-            leftChangeVal += changeValue;//-=
+            leftChangeVal += changeValue;
 
-            //ChangeLeftChangeVal(changeValue, -1);
-
-            //TransformCam.position = MoveThruY(TransformCam, MIN_Y, MAX_Y, changeValue);
-            //TransformCam.LookAt(target);
-
-            //Program.gameScene.TutoStepCompleted("CamRot.Tuto");
         }
     }
+
+
+
+
 
     public void RotateCamHor(Transform helpCam360GrabPosY, Transform helpCam360MainY,
         Transform target, float camSensivity)
@@ -132,7 +126,9 @@ public class RotateRTS : GenericCameraComponent {
     {
         if (leftChangeVal != 0)
         {
-            TransformCam.position = MoveThruY(TransformCam, MIN_Y, MAX_Y, ChangeValHand());
+            var changeVal = ChangeValHand();
+
+            TransformCam.position = MoveThruY(TransformCam, MIN_Y, MAX_Y, changeVal);
             TransformCam.LookAt(_target);
         }
     }

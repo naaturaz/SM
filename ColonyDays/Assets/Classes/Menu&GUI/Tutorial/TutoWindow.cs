@@ -40,6 +40,10 @@ class TutoWindow : GUIElement
         "AddOrder.Tuto",
         "CloseDockWindow.Tuto",
         "Rename.Tuto",
+        "RenameBuild.Tuto",
+
+        "BullDozer.Tuto",
+
 
         "Budget.Tuto",
         "Prod.Tuto",

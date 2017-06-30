@@ -294,6 +294,7 @@ public class PersonalObject
         //bz all PersonalObjects were scaled initialiy for adults
         if (_person.Age > 20)
         {
+            _current.ReloadOriginalObjectDim();
             return;
         }
         if (oldAge != _person.Age)
@@ -302,7 +303,7 @@ public class PersonalObject
             var dif = 20 - _person.Age;
             _current.ReloadOriginalObjectDim();
 
-            ScaleGameObject(dif * -0.021f);//-0.015f
+            ScaleGameObject(dif * -0.1f);//-0.021f
         }
     }
 

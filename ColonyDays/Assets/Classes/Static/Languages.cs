@@ -123,6 +123,99 @@ public class Languages
        { "Morro.Desc",_militar+". Once you build this, Pirates should know better"},
 
 
+       //Buildings name
+       //Infr
+        { "Road","Road"},
+        { "BridgeTrail","Trail Bridge"},
+        { "BridgeRoad","Road Bridge"},
+        { "LightHouse","Light House"},
+        { "Masonry","Masonry"},
+        {   "StandLamp","Stand Lamp"},
+        { "HeavyLoad","Heavy Load"},
+
+
+       //House
+       { "Shack", "Shack"},
+       { "MediumShack", "Medium Shack"},
+       { "LargeShack", "Large Shack"},
+
+       { "WoodHouseA", "Medium Wood House" },
+       { "WoodHouseB", "Luxury Wood House"  },
+       { "WoodHouseC", "Big Wood House"},
+       { "BrickHouseA", "Medium Brick House"},
+       { "BrickHouseB","Large Brick House"},
+       { "BrickHouseC","Luxury Brick House"},
+
+       
+       //Farms
+       //Animal
+	   { "AnimalFarmSmall","Small Animal Farm"},
+       { "AnimalFarmMed","Medium Animal Farm"},
+       { "AnimalFarmLarge","Large Animal Farm"},
+       { "AnimalFarmXLarge","Extra Large Animal Farm"},
+       //Fields
+	   { "FieldFarmSmall","Small Field Farm"},
+       { "FieldFarmMed","Medium Field Farm"},
+       { "FieldFarmLarge","Large Field Farm"},
+       { "FieldFarmXLarge","Extra Large Field Farm"},
+       { "FishingHut","Fishing Hut"},
+
+       //Raw
+	   { "Mortar","Mortar"},
+       { "Clay","Clay"},
+       { "Pottery","Pottery"},
+       { "MountainMine","Mountain Mine"},
+       {  "LumberMill" ,"Lumber Mill"},
+       { "BlackSmith","Black Smith"},
+       { "ShoreMine","Shore Mine"},
+       { "QuickLime","QuickLime"},
+
+       //Prod
+	   { "Brick","Brick"},
+       { "Carpentry","Carpentry"},
+       { "Cigars","Cigars"},
+       { "Mill","Mill"},
+       { "Tailor","Tailor"},
+       { "Tilery","Tilery"},
+       { "Armory","Armory"},
+       { "Distillery","Distillery"},
+       { "Chocolate","Chocolate"},
+       { "Ink","Ink"},
+
+       //Ind
+	   { "Cloth","Cloth"},
+       { "GunPowder","Gunpowder"},
+       { "PaperMill","Papermill"},
+       { "Printer","Printer"},
+       { "CoinStamp","Coin Stamp"},
+       { "SugarMill","SugarMill"},
+       { "Foundry","Foundry"},
+       { "SteelFoundry","Steel Foundry"},
+
+       //trade
+	   { "Dock","Dock"},
+       { "Shipyard","Shipyard"},
+       { "Supplier","Supplier"},
+       { "StorageSmall","Small Storage"},
+       { "StorageMed","Medium Storage"},
+       { "StorageBig","Big Storage"},
+
+       //gov
+	   { "Library","Library"},
+       { "School","School"},
+       { "TradesSchool","Trades School"},
+       { "TownHouse","Townhouse"},
+
+       //other
+	   { "Church","Church"},
+       { "Tavern","Tavern"},
+
+       //Militar
+	   { "WoodPost", "Wood Guard Duty"},
+       { "PostGuard","Stone Guard Duty"},
+       { "Fort","Fort"},
+       { "Morro","Morro"},
+
 
 
        //Main GUI
@@ -424,6 +517,10 @@ public class Languages
        { "AddOrder.Tuto", "Now scroll down in the products and select wood and enter 100 as the amount. Then click the 'Add' button."},
        { "CloseDockWindow.Tuto", "Now the order is added. A random ship will drop this item in the dock inventory. And then your dock workers will take it to the closest Storage building. Now click out the window, so it closes."},
        { "Rename.Tuto", "Click on a person and then click on the title bar of the person. Like this, you can change the name of any person or building in the game. Click outside so the change is saved"},
+       { "RenameBuild.Tuto", "Now click on a building and change its name in the same way. Remember to click outside so the change is saved"},
+
+       { "BullDozer.Tuto", "Now click on the Bulldozer icon on the bottom bar. Then remove a tree or a rock from the terrain."},
+
 
        { "Budget.Tuto", "Click on the 'Control/Bulletin' button, then on 'Finance' menu and then on 'Budget'. This is the game budget"},
        { "Prod.Tuto", "Click on 'Prod' menu and then on 'Produce'. Will show the village's production for the last 5 years"},
@@ -975,8 +1072,10 @@ public class Languages
        { "AddOrder.Tuto", "Ahora navega hasta el final de la lista y escoge 'Madera', pon la cantidad de 100. Despues haz click en el botton de 'Añadir'"},
        { "CloseDockWindow.Tuto", "Ya la orden fue añadida. Un barco depositara estos bienes en el puerto. Despues tus trabajadores portuarios lo llevaran para la almacen mas cercana. Ahora cierra este formulario."},
        { "Rename.Tuto", "Haz click en una persona y despues click en la barra de titulo del formulario. De esta manera le puedes cambiar el nombre a cualquier persona o edificio. Haz click afuera del titulo y los cambios seran guardados"},
+       { "RenameBuild.Tuto", "Now click on a building and change its name in the same way. Remember to click outside so the change is saved"},
 
-       ////////------------------
+       { "BullDozer.Tuto", "Now click on the Bulldozer icon on the bottom bar. Then remove a tree or a rock from the terrain."},
+
 
        { "Budget.Tuto", "Haz click en el boton 'Control/Boletin', despues en 'Finanzas' y despues en 'Presupuesto'"},
        { "Prod.Tuto", "Haz click en el menu 'Prod' y despues en 'Producido'. Muestra lo producido en los ultimos 5 años"},
@@ -1188,6 +1287,12 @@ public class Languages
         { "Occupied:", "En uso:"},
         { "|| Capacity:", "|| Capacidad:"},
         { "Users:", "\nUsuarios:"},
+
+        { "Orders in progress:", "Ordenes en progreso::"},
+
+        //ProductStat.cs has a lot of text to put here 
+
+
 
     };
 

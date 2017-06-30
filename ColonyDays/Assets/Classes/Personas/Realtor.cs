@@ -441,7 +441,7 @@ public class Realtor
       float ScoreABuild(Building building, Vector3 comparePoint,Person person)
     {
         var distToNewHome = Vector3.Distance(building.transform.position, comparePoint);
-        var confort = building.Confort * confortWeight;
+        var confort = building.Comfort * confortWeight;
 
         //so the marriage rate increase
         var love = building.WouldFindLoveInThisBuilding(person);

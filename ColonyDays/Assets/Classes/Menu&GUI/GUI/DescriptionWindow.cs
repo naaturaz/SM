@@ -63,7 +63,7 @@ public class DescriptionWindow : GUIElement
 
     private void LoadMenu(H val)
     {
-        _title.GetComponent<Text>().text = val + "";
+        _title.GetComponent<Text>().text = Languages.ReturnString(val + "");
         _cost.GetComponent<Text>().text = BuildCostString(val);
         _description.GetComponent<Text>().text = Languages.ReturnString(val+".Desc") + HouseDescription(val);
 
@@ -105,14 +105,19 @@ public class DescriptionWindow : GUIElement
         _buildBanner.sprite = s;
     }
 
+    /// <summary>
+    /// If house should say the comfort
+    /// </summary>
+    /// <param name="val"></param>
+    /// <returns></returns>
     private string HouseDescription(H val)
     {
-        if (!val.ToString().Contains("House") || val.ToString() == "LightHouse")
+        if ((!val.ToString().Contains("House") && !val.ToString().Contains("Shack")) || val.ToString() == "LightHouse")
         {
             return "";
         }
 
-        return "\nConfort: ";
+        return ". Comfort: " + Building.ReturnHouseConfort(val);
     }
 
     /// <summary>

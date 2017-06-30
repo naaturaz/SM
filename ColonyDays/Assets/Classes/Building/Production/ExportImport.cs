@@ -384,6 +384,18 @@ public class ExportImport
         return prodFound.ProduceFactor;
     }
 
+    public float ReturnExpirationInDays(P prod)
+    {
+        var prodFound = FindProdSpec(prod);
+
+        if (prodFound == null)
+        {
+            //Debug.Log("Prod Factor asked of not found prod:" + prod);
+            return 0;
+        }
+        return prodFound.ExpireDays;
+    }
+
     public int ReturnExpireDays(P prod)
     {
         var prodFound = FindProdSpec(prod);
@@ -424,7 +436,7 @@ public class ExportImport
 
 
     //Town Prices
-    internal object ReturnPriceTown(P prod)
+    internal float ReturnPriceTown(P prod)
     {
         var prodFound = FindTownProdSpec(prod);
 

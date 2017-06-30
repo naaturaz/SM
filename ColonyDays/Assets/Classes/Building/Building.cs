@@ -185,7 +185,7 @@ public class Building : Hoverable, Iinfo
     {
         if (string.IsNullOrEmpty(Name))
         {
-            Name = HType + "";
+            Name = Languages.ReturnString( HType + "");
         }
 
         return Name;
@@ -1301,6 +1301,9 @@ public class Building : Hoverable, Iinfo
             PrivHandleZoningAddCrystals(); ;
         }
 
+
+
+
         if (!HType.ToString().Contains("Unit") && !IsLoadingFromFile && HType != H.BullDozer
             && HType != H.Road)
         {
@@ -1637,6 +1640,11 @@ public class Building : Hoverable, Iinfo
             Program.gameScene.BatchRemove(still);
             //so they disappear, remove Crystals and Routing can work properly
             still.DestroyCool();
+
+            if (HType == H.BullDozer)
+            {
+                Program.gameScene.TutoStepCompleted("BullDozer.Tuto");
+            }
         }
         else
             Debug.Log("key not cointained in AllRandomObjList." + key);
@@ -1946,7 +1954,7 @@ public class Building : Hoverable, Iinfo
     private int _rationsPay = 2;//the pay in rations to the workers of a building 
     private int _dollarsPay = 5;//in dollars 
 
-    private int _confort;//the confort of a house
+    private int _comfort;//the confort of a house
     private BookedHome _bookedHome;//will hold the information if a
 
     public ProductInfo CurrentProd
@@ -1997,10 +2005,10 @@ public class Building : Hoverable, Iinfo
         set { _dollarsPay = value; }
     }
 
-    public int Confort
+    public int Comfort
     {
-        get { return _confort; }
-        set { _confort = value; }
+        get { return _comfort; }
+        set { _comfort = value; }
     }
 
     public BookedHome BookedHome1
@@ -2012,7 +2020,7 @@ public class Building : Hoverable, Iinfo
     void Init()
     {
 
-        SetHouseConfort();
+        Comfort =  ReturnHouseConfort(HType);
 
         InitBasePays();
 
@@ -2365,20 +2373,29 @@ public class Building : Hoverable, Iinfo
         return null;
     }
 
-    void SetHouseConfort()
+    public static int ReturnHouseConfort(H HTypeP)
     {
-        if ( HType == H.Bohio || HType == H.Shack)
+        if ( HTypeP == H.Bohio || HTypeP == H.Shack)
         {
-            _confort = 1;
+            return  1;
         }
-        else if (HType == H.WoodHouseA || HType == H.WoodHouseB || HType == H.WoodHouseC)
+        if (HTypeP == H.MediumShack)
         {
-            _confort = 4;
+            return  2;
         }
-        else if ( HType == H.BrickHouseA || HType == H.BrickHouseB || HType == H.BrickHouseC)
+        if (HTypeP == H.LargeShack)
         {
-            _confort = 5;
+            return  3;
         }
+        else if (HTypeP == H.WoodHouseA || HTypeP == H.WoodHouseB || HTypeP == H.WoodHouseC)
+        {
+            return  4;
+        }
+        else if ( HTypeP == H.BrickHouseA || HTypeP == H.BrickHouseB || HTypeP == H.BrickHouseC)
+        {
+            return  5;
+        }
+        return 1;
     }
 
    
