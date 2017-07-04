@@ -70,10 +70,13 @@ public class ProductInfo
     private void BuildStrings()
     {
         BuildProductLine();
-        BuildDetails();
+        //BuildDetails();
     }
 
-    private void BuildDetails()
+    /// <summary>
+    /// Builds the details and is called everytime is pulled in case the imperial or metric 
+    /// </summary>
+    public void BuildDetails()
     {
         var dens = Program.gameScene.ExportImport1.ReturnDensityKGM3(_product);
         var prodF = Program.gameScene.ExportImport1.ReturnProduceFactor(_product);
@@ -94,7 +97,7 @@ public class ProductInfo
        
         _details = _details + "Density: " +dens + "\n";
         _details = _details + "Produce Factor: " + prodF + "\n";
-        _details = _details + "Base Price: " + price.ToString("C2") + "\n";
+        _details = _details + "Base Price: " + Unit.ProperPricedAndFormat(price) + "\n";
 
         if (expiration>0 && Program.IsFood)
         {

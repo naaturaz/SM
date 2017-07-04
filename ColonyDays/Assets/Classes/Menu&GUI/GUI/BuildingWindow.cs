@@ -540,7 +540,14 @@ public class BuildingWindow : GUIElement
 
                 for (int i = 0; i < Building.BuildersManager1.GreenLight.Count; i++)
                 {
-                    res += "\n" + Building.BuildersManager1.GreenLight[i].Key;
+                    var st = Brain.GetStructureFromKey(Building.BuildersManager1.GreenLight[i].Key);
+
+                    if (st!=null)
+                    {
+                        res += "\n" + st.Name;
+                    }
+
+                    //res += "\n" + Building.BuildersManager1.GreenLight[i].Key;
                 }
             }
         }
@@ -820,6 +827,7 @@ public class BuildingWindow : GUIElement
     //Show Prod on Tab
     private void ShowProductDetail()
     {
+        Building.CurrentProd.BuildDetails();//so they update if needed
         _displayProdInfo.text = Building.CurrentProd.Details;
 
         if (!_building.DoIHaveInput())

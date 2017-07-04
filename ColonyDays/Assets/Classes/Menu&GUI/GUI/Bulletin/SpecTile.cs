@@ -22,6 +22,7 @@ public class SpecTile : GUIElement
 
     List<Text> _inputs = new List<Text>();
 
+
     public SpecData Spec
     {
         get { return _spec; }
@@ -40,6 +41,8 @@ public class SpecTile : GUIElement
             _export = value;
         }
     }
+
+
 
     void Start()
     {
@@ -89,7 +92,7 @@ public class SpecTile : GUIElement
         _input2Lbl.text = Export.Prod;
         _input3Lbl.text = Unit.ConvertFromKGToCurrent(Export.Amt).ToString("N0") + " " 
             + Unit.CurrentWeightUnitsString();
-        _priceLbl.text = Export.Money.ToString("C0");
+        _priceLbl.text = Unit.ProperPricedAndFormat(Export.Money);
     }
 
     private void InitSpec()
@@ -117,8 +120,16 @@ public class SpecTile : GUIElement
 
         }
 
-        _priceLbl.text = _spec.Price;
+        _priceLbl.text = Unit.ProperPricedAndFormat(_spec.Price);  //_spec.Price
+
+        if (_spec.Price == -100)
+        {
+            _priceLbl.text = "Price";
+        }
     }
+
+
+
 
     void Update()
     {

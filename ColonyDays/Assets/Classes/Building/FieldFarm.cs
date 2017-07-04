@@ -63,7 +63,7 @@ public class FieldFarm : Farm
     /// </summary>
     private void DefineSpaceBtnPlants()
     {
-        _spaceBtwPlants = Mathf.Abs(m.SubDivide.XSubStep)/2.5f; //1.5
+        _spaceBtwPlants = Mathf.Abs(m.SubDivide.XSubStep) / 2.5f; //1.5
 
         if (_plantType == P.Banana)
         {
@@ -265,8 +265,16 @@ public class FieldFarm : Farm
 
     public void BatchDestroy()
     {
+        for (int i = 0; i < _plants.Count; i++)
+        {
+            if (_plants[i] != null)
+            {
+                _plants[i].Destroy();
+            }
+        }
+
         _batchManager.BatchDestroy();
     }
 
-#endregion
+    #endregion
 }

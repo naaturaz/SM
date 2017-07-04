@@ -283,9 +283,9 @@ public class SpecData
         get { return _prodInfo; }
         set { _prodInfo = value; }
     }
-    string _price;
+    float _price;
 
-    public string Price
+    public float Price
     {
         get { return _price; }
         set { _price = value; }
@@ -294,12 +294,12 @@ public class SpecData
     public SpecData(ProductInfo pInfo)
     {
         _prodInfo = pInfo;
-        _price = Program.gameScene.ExportImport1.ReturnPrice(_prodInfo.Product).ToString("C2");
+        _price = Program.gameScene.ExportImport1.ReturnPrice(_prodInfo.Product);
 
         //title bar
         if (_prodInfo.Product == P.Product)
         {
-            _price = "Price";
+            _price = -100;
         }
     }
 

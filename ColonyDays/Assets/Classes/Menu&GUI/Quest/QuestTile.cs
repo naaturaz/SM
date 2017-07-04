@@ -31,7 +31,7 @@ public class QuestTile : GUIElement
 
     private void Init()
     {
-        _descText.text = Value.Key;
+        _descText.text = Value.Key+".Title";
         _priceText.text = _window.Status(Value);
     }
 

@@ -1384,9 +1384,9 @@ public class Building : Hoverable, Iinfo
         { H.BrickHouseB, new Vector3(-25,0,-30)},
         { H.BrickHouseC, new Vector3(-25,0,-20)},
 
-        {H.Shack, new Vector3(-37,0,-53)},
+        {H.Shack, new Vector3(-45,0,-50)},
         {H.MediumShack, new Vector3(-30,0,-40)},
-        {H.LargeShack, new Vector3(-30,0,-40)},
+        {H.LargeShack, new Vector3(-28,0,-42)},
 
         { H.FieldFarmSmall, new Vector3(-19,0,-32)},
         { H.FieldFarmMed, new Vector3(-19,0,-20)},
@@ -1565,6 +1565,12 @@ public class Building : Hoverable, Iinfo
             //only usefull for loaded buildings that were Destroy before finish construcion
             //and were loaded 
             PersonPot.Control.BuildersManager1.RemoveConstruction(MyId);//so its removed from the BuilderManager
+
+
+            var dust = General.Create("Prefab/Particles/PlaceBuildDust", MiddlePoint());
+            var remainings = Create("Prefab/Building/Show/Remainings", MiddlePoint(), "Remainings");
+            remainings.transform.Rotate(new Vector3(0, UMath.Random(0, 360), 0));
+            AudioCollector.PlayOneShot("BUILDING_DEMOLISH_1", 0);
 
             Destroy();
         }
@@ -2153,6 +2159,7 @@ public class Building : Hoverable, Iinfo
     }
 
 
+
     protected void InitHouseProp()
     {
         if (IsLoadingFromFile)
@@ -2161,12 +2168,12 @@ public class Building : Hoverable, Iinfo
         }
 
         //can hhave 1 famili with 3 kids
-        if (HType == H.Bohio || HType == H.Shack )
+        if (HType == H.Bohio || HType == H.Shack)
         {
             Families = new Family[1];
-            Families[0] = new Family(UMath.GiveRandom(2,3), MyId, 0);
+            Families[0] = new Family(UMath.GiveRandom(2, 3), MyId, 0);
         }
-        else if(HType == H.MediumShack)
+        else if (HType == H.MediumShack)
         {
             Families = new Family[1];
             Families[0] = new Family(UMath.GiveRandom(2, 4), MyId, 0);
@@ -2188,15 +2195,25 @@ public class Building : Hoverable, Iinfo
         else if (HType == H.WoodHouseB)
         {
             Families = new Family[1];
-            Families[0] = new Family(4, MyId,0);
+            Families[0] = new Family(UMath.GiveRandom(3, 5), MyId, 0);
         }
         //can hhave 1 famili with 5 kids
-        else if (HType == H.BrickHouseA || HType == H.BrickHouseB || HType == H.BrickHouseC)
+        else if (HType == H.BrickHouseA)
+        {
+            Families = new Family[1];
+            Families[0] = new Family(3, MyId, 0);
+        }
+        else if (HType  ==  H.BrickHouseB)
+        {
+            Families = new Family[1];
+            Families[0] = new Family(UMath.GiveRandom(3, 5), MyId, 0);
+        }
+        else if (HType == H.BrickHouseC)
         {
             Families = new Family[1];
             Families[0] = new Family(4, MyId, 0);
         }
-        
+
         //resave familie
         BuildingPot.Control.Registro.ResaveOnRegistro(MyId);
     }
@@ -2373,25 +2390,26 @@ public class Building : Hoverable, Iinfo
         return null;
     }
 
+
     public static int ReturnHouseConfort(H HTypeP)
     {
-        if ( HTypeP == H.Bohio || HTypeP == H.Shack)
+        if ( HTypeP == H.Bohio || HTypeP == H.Shack || HTypeP == H.MediumShack)
         {
             return  1;
         }
-        if (HTypeP == H.MediumShack)
+        if (HTypeP == H.LargeShack || HTypeP == H.WoodHouseA)
         {
             return  2;
         }
-        if (HTypeP == H.LargeShack)
+        else if (HTypeP == H.WoodHouseB)
         {
             return  3;
         }
-        else if (HTypeP == H.WoodHouseA || HTypeP == H.WoodHouseB || HTypeP == H.WoodHouseC)
+        else if (HTypeP == H.WoodHouseC || HTypeP == H.BrickHouseA || HTypeP == H.BrickHouseC)
         {
-            return  4;
+            return 4;
         }
-        else if ( HTypeP == H.BrickHouseA || HTypeP == H.BrickHouseB || HTypeP == H.BrickHouseC)
+        else if ( HTypeP == H.BrickHouseB)
         {
             return  5;
         }
@@ -2542,6 +2560,8 @@ public class Building : Hoverable, Iinfo
         //so people can Reroutes if new build fell in the midle of one
         PersonPot.Control.Queues.AddToDestroyBuildsQueue(Anchors, MyId);
         BuildingPot.Control.Registro.RemoveFromDestroyBuildings(this);
+
+
     }
 
     /// <summary>

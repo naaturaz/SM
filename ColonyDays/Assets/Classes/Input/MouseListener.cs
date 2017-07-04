@@ -648,6 +648,8 @@ public class MouseListener : InputMain
         _buildingWindow.Hide();
         BulletinWindow.Hide();
         _helpWindow.Hide();
+
+        QuestWindow.Hide();
     }
 
     public void HidePersonBuildingOrderBulletin()

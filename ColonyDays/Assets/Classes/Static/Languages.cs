@@ -40,11 +40,11 @@ public class Languages
        { "LargeShack.Desc", "A Large Shack, has somewhat good conditions with happiness, can have a maximum of 2 to 4 kids"},
 
 
-        { "WoodHouseA.Desc", "Small wooden house, a family can have 2-4 kids max" },
-       { "WoodHouseB.Desc", "Medium wooden house, a family can have 4 kids max"  },
-       { "WoodHouseC.Desc", "Small and comfortable wooden house, a family can have 2-4 kids max"},
-       { "BrickHouseA.Desc", "Large house, a family can have 4 kids max"},
-       { "BrickHouseB.Desc","Large house, a family can have 4 kids max"},
+       { "WoodHouseA.Desc", "Medium wooden house, a family can have 2-3 kids max" },
+       { "WoodHouseB.Desc", "Medium wooden house, a family can have 3-4 kids max"  },
+       { "WoodHouseC.Desc", "Medium wooden house, a family can have 2-3 kids max"},
+       { "BrickHouseA.Desc", "Medium house, a family can have 3 kids max"},
+       { "BrickHouseB.Desc","Large house, a family can have 3-4 kids max"},
        { "BrickHouseC.Desc","Large house, a family can have 4 kids max"},
 
        
@@ -140,11 +140,11 @@ public class Languages
        { "LargeShack", "Large Shack"},
 
        { "WoodHouseA", "Medium Wood House" },
-       { "WoodHouseB", "Luxury Wood House"  },
-       { "WoodHouseC", "Big Wood House"},
+       { "WoodHouseB", "Large Wood House"  },
+       { "WoodHouseC", "Luxury Wood House"},
        { "BrickHouseA", "Medium Brick House"},
-       { "BrickHouseB","Large Brick House"},
-       { "BrickHouseC","Luxury Brick House"},
+       { "BrickHouseB","Luxury Brick House"},
+       { "BrickHouseC","Large Brick House"},
 
        
        //Farms
@@ -292,7 +292,7 @@ public class Languages
        { "WhereIsTown.HoverSmall", "Back to town [P]"},
        { "WhereIsSea.HoverSmall", "Show/hide path to sea"},
        { "Helper.HoverSmall", "Help"},
-	   { "Tempeture.HoverSmall", "Temperature"},
+       { "Tempeture.HoverSmall", "Temperature"},
 	   
        //building window
        { "Gen_Btn.HoverSmall", "General Tab"},
@@ -551,11 +551,31 @@ public class Languages
             " If you have more than one docker already fire all of them and then hire one"},
        { "MakeBucks.Quest", "Quest: Make $100 exporting goods in the Dock. "+
            "Once a ship arrives will randomly pay product(s) in your Dock's inventory"},
-       { "HeavyLoad.Quest", "Quest: Build a HeavyLoad building. This are haulers that carry more weight. They will come handy when transporting goods around is needed"},
+       { "HeavyLoad.Quest", "Quest: Build a HeavyLoad building. This are haulers that carry more weight. They will come handy when transporting goods around is needed." }, //Carts must be available on towns storages for them to work"},
        { "ImportOil.Quest", "Quest: Import 500 " + Unit.CurrentWeightUnitsString() + " of Whale Oil at the Dock. This is needed to keep your lights on at night."},
 
        { "Population50.Quest", "Reach a total population of 50 citizens"},
        {"CompleteQuest", "Your reward is ${0}"},
+
+
+       //Quest Titles
+       { "Tutorial.Quest.Title", "Tutorial"},
+       { "Lamp.Quest.Title", "Stand Lamp"},
+
+       { "Shack.Quest.Title", "Build a Shack"},
+       { "SmallFarm.Quest.Title", "Build a Farm Field"},
+       { "FarmHire.Quest.Title", "Hire a Farmer"},
+
+
+       { "FarmProduce.Quest.Title", "Farm Producer"},
+
+       { "Export.Quest.Title", "Exports"},
+       { "HireDocker.Quest.Title", "Hire Docker"},
+       { "MakeBucks.Quest.Title", "Make Money"},
+       { "HeavyLoad.Quest.Title", "Heavy Load"},
+       { "ImportOil.Quest.Title", "Whale Oil"},
+
+       { "Population50.Quest.Title", "50 Citizens"},
 
 
         //
@@ -605,6 +625,21 @@ public class Languages
 
 
     };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1111,7 +1146,24 @@ public class Languages
        {"CompleteQuest", "Tu premio es de ${0}"},
 
 
+              //Quest Titles
+       { "Tutorial.Quest.Title", "Tutorial"},
+       { "Lamp.Quest.Title", "Stand Lamp"},
 
+       { "Shack.Quest.Title", "Build a Shack"},
+       { "SmallFarm.Quest.Title", "Build a Farm Field"},
+       { "FarmHire.Quest.Title", "Hire a Farmer"},
+
+
+       { "FarmProduce.Quest.Title", "Farm Producer"},
+
+       { "Export.Quest.Title", "Exports"},
+       { "HireDocker.Quest.Title", "Hire Docker"},
+       { "MakeBucks.Quest.Title", "Make Money"},
+       { "HeavyLoad.Quest.Title", "Heavy Load"},
+       { "ImportOil.Quest.Title", "Whale Oil"},
+
+       { "Population50.Quest.Title", "50 Citizens"},
 
 
 
@@ -1292,7 +1344,9 @@ public class Languages
 
         //ProductStat.cs has a lot of text to put here 
 
+        //SpecTile.cs has
 
+        //ShowAPersonBuildingDetails has
 
     };
 

@@ -61,7 +61,7 @@ public class QuestManager
         new Quest("HireDocker.Quest", 800, 5.5f),
         new Quest("ImportOil.Quest", 950, 5.5f, 500),
         new Quest("MakeBucks.Quest", 850, 5.5f, 100),
-        //new Quest("HeavyLoad.Quest", 900, 5.5f),
+        new Quest("HeavyLoad.Quest", 900, 5.5f),
 
         new Quest("Population50.Quest", 900, 5.5f),
 

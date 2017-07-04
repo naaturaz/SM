@@ -58,7 +58,7 @@ public class ShowAPersonBuildingDetails
         AddToItems("Work", Work());
         AddToItems("Food Source", Food());
         AddToItems("Religion", Religion());
-        AddToItems("Chill", Chill());
+        AddToItems("Relax", Chill());
     }
 
     void AddToItems(string key, string val)
@@ -105,7 +105,7 @@ public class ShowAPersonBuildingDetails
     {
         if (_person.Home != null)
         {
-            return _person.Home.HType+"";
+            return _person.Home.Name;
         }
         return "None";
     }  
@@ -114,7 +114,7 @@ public class ShowAPersonBuildingDetails
     {
         if (_person.Work != null)
         {
-            return _person.Work.HType+"";
+            return _person.Work.Name;
         }
         return "None";
     }   
@@ -123,7 +123,7 @@ public class ShowAPersonBuildingDetails
     {
         if (_person.FoodSource != null)
         {
-            return _person.FoodSource.HType+"";
+            return _person.FoodSource.Name;
         }
         return "None";
     }   
@@ -132,7 +132,7 @@ public class ShowAPersonBuildingDetails
     {
         if (_person.Religion != null)
         {
-            return _person.Religion.HType + "";
+            return _person.Religion.Name;
         }
         return "None";
     }  
@@ -141,7 +141,7 @@ public class ShowAPersonBuildingDetails
     {
         if (_person.Chill != null)
         {
-            return _person.Chill.HType + "";
+            return _person.Chill.Name;
         }
         return "None";
     }

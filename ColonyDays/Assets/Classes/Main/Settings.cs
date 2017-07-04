@@ -466,4 +466,32 @@ public class Unit
         }
         return "Lbs";
     }
+
+
+    /// <summary>
+    /// If is in Metric the price is fine but if is in imperial the price
+    /// has to be devided by 2.20462, bz that will be the cost of a pound
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns></returns>
+    public static float ProperPrice(float input)
+    {
+        if (_units == 'm')
+        {
+            return input;
+        }
+
+        return input/ 2.20462f;
+    }
+
+    /// <summary>
+    /// The same as above but also formated
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns></returns>
+    public static string ProperPricedAndFormat(float input)
+    {
+        return ProperPrice(input).ToString("C2");
+    }
+
 }
