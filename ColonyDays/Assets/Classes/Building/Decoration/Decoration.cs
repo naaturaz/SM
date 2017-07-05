@@ -76,7 +76,7 @@ public class Decoration  {
 
         if (_building.HType.ToString().Contains("WoodHouse") ||
             _building.HType.ToString().Contains("BrickHouse") ||
-        _building.HType.ToString().Contains("Bohio"))
+        _building.HType.ToString().Contains("Shack"))
         {
             _randomUV = new RandomUV(_building.Geometry.gameObject, _building.HType);
         }

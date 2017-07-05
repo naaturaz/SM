@@ -71,7 +71,7 @@ public class RandomUV
         }
 
         //assign
-        if (IsA5Stripes())
+        if (IsA5Stripes() || IsA4Stripes())
         {
             _main.GetComponent<MeshFilter>().mesh.uv = uvs;
         }
@@ -109,7 +109,7 @@ public class RandomUV
 
     bool IsA4Stripes()
     {
-        return HType.ToString().Contains("WoodHouse");
+        return HType.ToString().Contains("WoodHouse") || HType.ToString().Contains("Shack");
     }
 }
 
