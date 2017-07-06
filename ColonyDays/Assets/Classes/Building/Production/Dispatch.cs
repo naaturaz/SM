@@ -229,11 +229,11 @@ public class Dispatch
     /// <param name="evacOrder"></param>
     public void AddEvacuationOrderToWheelBarrow(Order evacOrder)
     {
-        if (!ListContains(Orders, evacOrder) && !ListContains(_dormantOrders, evacOrder))
+        if (!ListContainsCheckID(Orders, evacOrder) && !ListContainsCheckID(_dormantOrders, evacOrder))
         {
             Orders.Add(evacOrder);
             //OrderByPlacedTime(Orders);
-            //Debug.Log("evac order added:"+evacOrder.Product+" orig:"+evacOrder.SourceBuild);
+            Debug.Log("evac order added:"+evacOrder.Product+" orig:"+evacOrder.SourceBuild);
         }
     }
 

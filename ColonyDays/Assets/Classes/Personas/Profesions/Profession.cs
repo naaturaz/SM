@@ -1088,7 +1088,8 @@ public class Profession
             //this is recreateing the initial point 
             var t = Vector3.MoveTowards(_finRoutePoint, lookAtWork, -_moveTowOrigin);
 
-            if (_person.Work!=null && ProfDescription == Job.Builder)
+            if (_person.Work!=null && ProfDescription == Job.Builder
+                && _constructing!=null)
             {
                 _person.transform.LookAt(new Vector3(_constructing.MiddlePoint().x, _person.transform.position.y,
                     _constructing.MiddlePoint().z));

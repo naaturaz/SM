@@ -2070,6 +2070,13 @@ public class Person : Hoverable
             return;
         }
 
+        var b = (Building)to;
+        if (b.Instruction==H.WillBeDestroy)
+        {
+            from.Inventory.Delete();
+            return;
+        }
+
         to.Inventory.AddItems(items);
         from.Inventory.RemoveItems(items);
     }

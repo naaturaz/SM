@@ -522,7 +522,7 @@ public class Languages
        { "BullDozer.Tuto", "Now click on the Bulldozer icon on the bottom bar. Then remove a tree or a rock from the terrain."},
 
 
-       { "Budget.Tuto", "Click on the 'Control/Bulletin' button, then on 'Finance' menu and then on 'Budget'. This is the game budget"},
+       { "Budget.Tuto", "Click on the 'Control/Bulletin' button, then on 'Finance' menu and then on 'Ledger'. This is the game ledger"},
        { "Prod.Tuto", "Click on 'Prod' menu and then on 'Produce'. Will show the village's production for the last 5 years"},
        { "Spec.Tuto", "Click the 'Prod' menu and then on 'Spec'. Here you can see exactly how to make each product on the game. The inputs necessaries and where is produced. Also the price"},
        { "Exports.Tuto", "Click the 'Finance' menu and then on 'Export'. Here you can see a breakdown of your village's exports"},
@@ -534,9 +534,11 @@ public class Languages
        { "Lamp.Quest", "Quest: Build a StandLamp. Find it on Infrastructure, it shines at night if there is Whale Oil on Storage"},
 
        { "Shack.Quest", "Quest: Build a Shack. These are cheap houses. When people turn 16 they will move to a free house if found. In this way, population growth will be guaranteed. [F1] Help"},
-       { "SmallFarm.Quest", "Quest: Build a FieldFarmSmall. You need farms to feed your people"},
-       { "FarmHire.Quest", "Quest: Hire two farmers in a FieldFarmSmall. Click on the farm and in the plus sign assign workers. You need to have unemployed"
+
+        { "SmallFarm.Quest", "Quest: Build a Small Field Farm. You need farms to feed your people"},
+       { "FarmHire.Quest", "Quest: Hire two farmers in the Small Field Farm. Click on the farm and in the plus sign assign workers. You need to have unemployed"
             +" people to be able to assign them into a new building"},
+
 
 
         { "FarmProduce.Quest", "Quest: Now produce " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " of beans on the FieldFarmSmall. Click on the 'Stat' tab and will show you the production of the last 5 years. You can see the quest progress in the quest window. If you build more small farms will be accounted for the quest"},
@@ -599,7 +601,7 @@ public class Languages
               {"Help.Bulletin/General/Workers", "In this window, you can assign workers to work in various buildings. "
        + "For a building allow more people into work, must be less than capacity and must find at least an unemployed person."},
 
-       {"Help.Bulletin/Finance/Budget", "Here is shown your budget. Salary is the amount of money paid to a worker. The more people working the more salary will be paid out."},
+       {"Help.Bulletin/Finance/Ledger", "Here is shown your ledger. Salary is the amount of money paid to a worker. The more people working the more salary will be paid out."},
        {"Help.Bulletin/Finance/Exports", "A breakdown of the exports"},
 
        { "Help.Bulletin/Finance/Prices", "...."},
@@ -1347,7 +1349,7 @@ public class Languages
         //SpecTile.cs has
 
         //ShowAPersonBuildingDetails has
-
+        //BuildingWindow.cs
     };
 
     public static string ReturnString(string key)

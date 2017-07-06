@@ -1122,6 +1122,7 @@ public class Building : Hoverable, Iinfo
         {
             wasPersonControlRestarted = true;
             PersonPot.Control.RestartController();
+            //DestroyOrdered(true);
         }
     }
 

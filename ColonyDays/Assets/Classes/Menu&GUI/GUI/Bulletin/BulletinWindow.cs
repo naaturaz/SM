@@ -257,7 +257,7 @@ public class BulletinWindow : GUIElement
         _finance.ShowBudget();
 
         //Program.gameScene.TutoStepCompleted("Spec.Tuto");
-        _help.text = "Bulletin/Finance/Budget \n" + Languages.ReturnString("Help.Bulletin/Finance/Budget");
+        _help.text = "Bulletin/Finance/Ledger \n" + Languages.ReturnString("Help.Bulletin/Finance/Ledger");
         Program.gameScene.TutoStepCompleted("Budget.Tuto");
 
     }
