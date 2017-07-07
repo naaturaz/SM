@@ -127,8 +127,9 @@ public class InputMouse : InputParent
         }
 
 
-        if (BuildingPot.Control.Registro.SelectBuilding == null ||
-            BuildingPot.Control.Registro.SelectBuilding.Instruction == H.WillBeDestroy)
+        if (BuildingPot.Control.Registro.SelectBuilding == null
+            || BuildingPot.Control.Registro.SelectBuilding.Instruction == H.WillBeDestroy
+            )
         {
             BuildingPot.Control.Registro.SelectBuilding =
                 BuildingPot.Control.Registro.FindFromToDestroyBuildings(keyName);

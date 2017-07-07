@@ -120,6 +120,11 @@ public class MyProjector : General
             Start();
         }
 
+        if (engineProjector==null)
+        {
+            return;
+        }
+
         if (isGood)
         {
             engineProjector.material.color = Color.white;

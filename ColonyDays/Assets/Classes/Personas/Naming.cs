@@ -27,7 +27,7 @@ public class Naming
 
     public string NewName()
     {
-        string name = NamingTechnics(_random.Next(0, 3));
+        string name = NamingTechnics(_random.Next(1, 3));
         name = CaseItRight(name);
         name = Capped(name);
 
@@ -78,7 +78,7 @@ public class Naming
         }
         if (tech == 2)
         {
-            return ReplaceOneCharacter();//0
+            return ReplaceOneCharacter();
         }
         return Add2Names();//0
     }
