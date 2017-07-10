@@ -251,9 +251,21 @@ public class AddOrderWindow : GUIElement {
             }
         }
 
+
         //so orders are updated 
         Program.MouseListener.BuildingWindow1.ShowOrders();
+
+        ClearForm();
+
         return true;
+    }
+
+    void ClearForm()
+    {
+        _amt = 0;
+        _prodSelect = P.None;
+        _errorMsgLbl.text = "";
+        _errorMsg = "";
     }
 
     /// <summary>
@@ -272,12 +284,12 @@ public class AddOrderWindow : GUIElement {
     {
         if (!WasProdSelected())
         {
-            _errorMsg = "Prd not select";
+            _errorMsg = Languages.ReturnString("Prod.Not.Select");
             return false;
         }
         if (_amt == 0)
         {
-            _errorMsg = "amt cant be 0";
+            _errorMsg = Languages.ReturnString("Amt.Cant.Be.0");
             return false;
         }
         if (!ThereIsSpaceRequiredAvail())

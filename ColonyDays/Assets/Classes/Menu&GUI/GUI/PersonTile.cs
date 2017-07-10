@@ -62,9 +62,20 @@ public class PersonTile : GUIElement
     //Called from GUI
     public void SelectThisPerson()
     {
-        Program.MouseListener.SelectPerson(_person);
-        CamControl.CAMRTS.InputRts.CenterCamTo(_person.transform);
+        Transform t;
 
+        //means is a kids
+        //doing this bz they are in -10 in y.... didnt look for cause, I just fixed  
+        if (_person.transform.localPosition.y < 0)
+        {
+            t = _person.Home.transform;
+        }
+        else
+        {
+            t = _person.transform;
+        }
+        Program.MouseListener.SelectPerson(_person);
+        CamControl.CAMRTS.InputRts.CenterCamTo(t);
     }
 
 }

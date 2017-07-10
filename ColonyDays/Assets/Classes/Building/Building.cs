@@ -1567,6 +1567,10 @@ public class Building : Hoverable, Iinfo
             //and were loaded 
             PersonPot.Control.BuildersManager1.RemoveConstruction(MyId);//so its removed from the BuilderManager
 
+            //in case was destroyed directly needs to be removed so the next time user 
+            //wants to demolish works 
+            BuildingPot.Control.Registro.RemoveFromDestroyBuildings(this);
+
 
             var dust = General.Create("Prefab/Particles/PlaceBuildDust", MiddlePoint());
             var remainings = Create("Prefab/Building/Show/Remainings", MiddlePoint(), "Remainings");
@@ -2561,7 +2565,6 @@ public class Building : Hoverable, Iinfo
         //so people can Reroutes if new build fell in the midle of one
         PersonPot.Control.Queues.AddToDestroyBuildsQueue(Anchors, MyId);
         BuildingPot.Control.Registro.RemoveFromDestroyBuildings(this);
-
 
     }
 

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 //mono only use to print. can be remove
 //this class used to be Rectangle.cs
@@ -113,6 +114,12 @@ public class Registro : MonoBehaviour
     #region ToDestroyBuilding
     public void AddToDestroyBuilding(Building build)
     {
+        //was added already
+        if (FindFromToDestroyBuildings(build.MyId) != null)
+        {
+            return;
+        }
+
         _toDestroyBuilding.Add(build);
     }
 
@@ -124,6 +131,11 @@ public class Registro : MonoBehaviour
     public Building FindFromToDestroyBuildings(string myIdP)
     {
         return _toDestroyBuilding.Find(a => a.MyId == myIdP);
+    }
+
+    internal bool AreUDemolishingOneAlready()
+    {
+        return _toDestroyBuilding.Count > 0;
     }
     #endregion
 
@@ -719,6 +731,8 @@ public class Registro : MonoBehaviour
         }
         Debug.Log("Margin error ReSaving: " + error);
     }
+
+
 
     /// <summary>
     /// This is used only when loading a town and needs to redo DimOnMap

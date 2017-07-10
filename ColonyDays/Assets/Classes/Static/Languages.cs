@@ -409,6 +409,7 @@ public class Languages
                      " can hold this family and try again"},
        { "LastFood", "Cannot destroy, this is the only Storage in your village"},
        { "LastMasonry", "Cannot destroy, this is the only Masonry in your village"},
+       { "OnlyOneDemolish", "You are demolishing a building already. Try again after demolition is completed"},
 
 
        //help
@@ -623,6 +624,8 @@ public class Languages
         { "Occupied:", "Filled:"},
         { "|| Capacity:", "|| Capacity:"},
         { "Users:", "\nUsers:"},
+        { "Amt.Cant.Be.0", "Amount can't be 0"},
+        { "Prod.Not.Select", "Please select a product"},
 
 
 
@@ -1344,6 +1347,8 @@ public class Languages
 
         { "Orders in progress:", "Ordenes en progreso::"},
 
+        { "Amt.Cant.Be.0", "Amount can't be 0"},
+        { "Prod.Not.Select", "Please select a product"},
         //ProductStat.cs has a lot of text to put here 
 
         //SpecTile.cs has
