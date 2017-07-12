@@ -85,7 +85,7 @@ public class StageManager : General
         }
 
 #if UNITY_EDITOR
-        //return;
+        return;
 #endif
 
         CheckIfMoveStages();

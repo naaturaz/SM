@@ -69,7 +69,7 @@ public class AcctTile : GUIElement
         else
         {
             _leftText.text = Acct.Name;
-            _rightText.text = Acct.Balance.ToString("c0");
+            _rightText.text = MyText.DollarFormat(Acct.Balance);
         }
 
         Year();

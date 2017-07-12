@@ -1118,10 +1118,12 @@ public class Building : Hoverable, Iinfo
         //bz now is waiting for a nw build to be placed to work 
         //this is here so it prompts the destruction of a building after the evacuation of the
         //inv has ocurred
-        if (!wasPersonControlRestarted && _isOrderToDestroy && evacAll && Inventory.IsEmpty() && PeopleDict.Count == 0)
+        if (!wasPersonControlRestarted && _isOrderToDestroy && evacAll && Inventory.IsEmpty() && PeopleDict.Count == 0
+            //&& PersonPot.Control.IsPeopleCheckFull()
+            )//make sure all are checked so it doesnt interrupt anything 
         {
             wasPersonControlRestarted = true;
-            PersonPot.Control.RestartController();
+            //PersonPot.Control.RestartController();
             //DestroyOrdered(true);
         }
     }

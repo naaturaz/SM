@@ -652,6 +652,17 @@ public class Profession
         //dummy = null;
     }
 
+
+    bool IsAnExistingBuilding(TheRoute theRoute)
+    {
+        return
+            theRoute.DestinyKey.Contains("Dummy") ||
+            theRoute.DestinyKey.Contains("Tree") ||
+            theRoute.DestinyKey.Contains("Rock") ||
+            Brain.GetStructureFromKey(theRoute.DestinyKey) != null;
+
+    }
+
     /// <summary>
     /// If _workingNow = true this method will be called from derived class.
     ///  This is called once upon person is already on JobSite
@@ -661,7 +672,8 @@ public class Profession
         //walking toward the job site for forester walking towards a tree 
         if (_person.Body.Location == HPers.Work && _workerTask == HPers.None)
         {
-            if (_router!=null && _router.TheRoute.OriginKey != _router.TheRoute.DestinyKey)
+            if (_router!=null && _router.TheRoute.OriginKey != _router.TheRoute.DestinyKey
+                && IsAnExistingBuilding(_router.TheRoute))
                 //so doesnt go in and out in the same building
                 //the is not booked to avoid people staying in the same House when grow older in same place 
             {

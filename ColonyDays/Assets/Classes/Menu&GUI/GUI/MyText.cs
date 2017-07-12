@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -95,24 +96,30 @@ public class MyText : MonoBehaviour
 
         else if (name == "Dollars")
         {
-            thisText.text = Program.gameScene.GameController1.Dollars.ToString("C0");
+            thisText.text = DollarFormat(Program.gameScene.GameController1.Dollars);
         }
-      
+
         else if (name == "Temp")
         {
             thisText.text = Tempeture.Current().ToString("n0");
         }
         else if (name == "Town")
         {
-            thisText.text = Program.MyScreen1.TownName; 
+            thisText.text = Program.MyScreen1.TownName;
         }
+    }
+
+
+    public static string DollarFormat(float amt)
+    {
+        return "$ " + String.Format("{0:n}", amt);
     }
 
 
     public static int Lazy()
     {
         return PersonPot.Control.All.Count(a => a.Age >= JobManager.majorityAge)
-            - BuildingPot.Control.Registro.MaxPositions(); 
+            - BuildingPot.Control.Registro.MaxPositions();
     }
 
 
@@ -143,7 +150,7 @@ public class MyText : MonoBehaviour
             Map();
         }
 
-        if (reMapCount %2 != 0)
+        if (reMapCount % 2 != 0)
         {
             return;
         }
