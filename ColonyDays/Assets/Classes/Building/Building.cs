@@ -2816,7 +2816,7 @@ public class Building : Hoverable, Iinfo
         _lastStageTime = Time.time;
         DestroyAllPlacedFX();
 
-        Debug.Log("construction built 100%:"+MyId+"." + Program.gameScene.GameTime1.TodayYMD());
+        //Debug.Log("construction built 100%:"+MyId+"." + Program.gameScene.GameTime1.TodayYMD());
         PersonPot.Control.RoutesCache1.RemoveAllMine(MyId);
         Quest();
 

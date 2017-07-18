@@ -209,7 +209,7 @@ public class RoutesCache
         }
         
         var was = _items.Remove(key);
-        Debug.Log("was remove:"+was+"."+key);
+        //Debug.Log("was remove:"+was+"."+key);
     }
 
     string ReturnKey(TheRoute theRoute)

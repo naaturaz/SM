@@ -864,7 +864,14 @@ public class Brain
         if (nextTask == HPers.IdleInHome)
         {
             _isIdleHomeNow = true;
-            ListOfActionsInHome();
+
+            //bz when a buildilng was destroyed they could stay in the Storage lost 
+            //ppl can get stuck at the Idlespot too 
+            if (_person.ProfessionProp.ProfDescription != Job.WheelBarrow && nextTask != HPers.IdleSpot)
+            {
+                ListOfActionsInHome();
+            }
+
             ExecuteSlowCheckUp();
         }
 

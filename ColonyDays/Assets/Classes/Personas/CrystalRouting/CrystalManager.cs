@@ -82,7 +82,7 @@ public class CrystalManager  {
         for (int i = 0; i < crystals.Count; i++)
         {
             _allObstas.Remove(crystals[i]);
-            Debug.Log("Crystal removed: " + myIdP + ". from _allObsta");
+            //Debug.Log("Crystal removed: " + myIdP + ". from _allObsta");
         }
     }
 

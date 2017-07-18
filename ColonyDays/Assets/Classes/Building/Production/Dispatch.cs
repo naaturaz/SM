@@ -233,7 +233,7 @@ public class Dispatch
         {
             Orders.Add(evacOrder);
             //OrderByPlacedTime(Orders);
-            Debug.Log("evac order added:"+evacOrder.Product+" orig:"+evacOrder.SourceBuild);
+            //Debug.Log("evac order added:"+evacOrder.Product+" orig:"+evacOrder.SourceBuild);
         }
     }
 
