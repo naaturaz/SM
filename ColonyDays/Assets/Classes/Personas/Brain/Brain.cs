@@ -44,6 +44,8 @@ public class Brain
 
     StageManager _stageManager;
 
+    MoveNow _moveNow;
+
     public HPers CurrentTask
     {
         get { return _currentTask; }
@@ -255,6 +257,8 @@ public class Brain
         _routerChill = new CryRouteManager();
 
         _stageManager = GameObject.FindObjectOfType<StageManager>();
+
+        _moveNow = new MoveNow(_person);
     }
 
     private DateTime askWork = new DateTime();
@@ -401,6 +405,8 @@ public class Brain
     /// </summary>
     public void MindState()
     {
+        ResetIfWasMovedNow();
+
         //here its allow to callit only after half a sec. to avoid overFlow exceptions
         if (!goMindState)
         {
@@ -428,6 +434,23 @@ public class Brain
         GoChill();
 
         GoToNewHome();
+    }
+
+    /// <summary>
+    /// If the person was forced out to move from a destroyed building should
+    /// reset this class.
+    /// </summary>
+    private void ResetIfWasMovedNow()
+    {
+        if (_person.Body.Location == HPers.NowToNewHome && _person.Body.GoingTo == HPers.NowToNewHome)
+        {
+            //reset brain to start in new home
+            //CurrentTask = HPers.MovingToNewHome;
+            //_person.Body.Location = HPers.MovingToNewHome;
+            //_person.Body.GoingTo = HPers.MovingToNewHome;
+            Debug.Log("Rest Brain:" + _person.name);
+            _person.ResetBrainAndBody();
+        }
     }
 
     /*Promts are created with the purpose of allow to be able to move arond only with 2 builds
@@ -865,12 +888,15 @@ public class Brain
         {
             _isIdleHomeNow = true;
 
-            //bz when a buildilng was destroyed they could stay in the Storage lost 
-            //ppl can get stuck at the Idlespot too 
-            if (_person.ProfessionProp.ProfDescription != Job.WheelBarrow && nextTask != HPers.IdleSpot)
-            {
+
+            //var homeWheelBarrow = _person.ProfessionProp.ProfDescription == Job.WheelBarrow
+            //    && //_person.Body.Location == HPers.Home
+            //    ReadyToGetFood();
+            ////bz when a buildilng was destroyed they could stay in the Storage lost 
+            //if (homeWheelBarrow || _person.ProfessionProp.ProfDescription != Job.WheelBarrow)
+            //{
                 ListOfActionsInHome();
-            }
+            //}
 
             ExecuteSlowCheckUp();
         }
@@ -978,6 +1004,8 @@ public class Brain
 
         //if (goMindState)
         //{ MindState(); }
+
+        _moveNow.Update();
     }
 
 

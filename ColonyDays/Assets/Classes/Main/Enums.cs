@@ -36,6 +36,9 @@ public enum HPers //to be use for the person class
     Homing, Working, GettingFood, Idlying, IdleSpot, Walking, Praying, Chilling,
     NewHome,
     MovingToNewHome,
+    NowToNewHome,
+
+
     Restarting,
     IdleInHome,
     CheckingStuff,

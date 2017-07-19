@@ -638,6 +638,15 @@ public class Person : Hoverable
         IsLoading = false;
     }
 
+    internal void ResetBrainAndBody()
+    {
+        _brain = null;
+        _brain = new Brain(this);
+
+        _body = null;
+        _body = new Body(this);
+    }
+
     private void RecreateProfession(PersonFile pF)
     {
         if (string.IsNullOrEmpty(pF._work))

@@ -140,16 +140,7 @@ public class Homer : Profession
         _routingStarted = Program.gameScene.GameTime1.CurrentDate();
         _routingStartPos = _person.transform.position;
 
-        //if (AnFarmer())
-        //{
-        //    _takeABreakNow = true;
-        //}
     }
-
-    //bool AnFarmer()
-    //{
-    //    return _person.Work != null && _person.Work.HType.ToString().Contains("Farm");
-    //}
 
     public override void Update()
     {
@@ -160,11 +151,6 @@ public class Homer : Profession
         }
 
         base.Update();
-
-        //if (_person == null)
-        //{
-        //    return;
-        //}
 
         WorkAction(HPers.None);
         Execute();
