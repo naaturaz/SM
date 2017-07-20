@@ -43,29 +43,31 @@ public class MoveNow
         else if(_router == null && 
             _destroyedAt != null && Program.gameScene.GameTime1.ElapsedDateInDaysToDate(_destroyedAt) > 90)
         {
-            if (UMath.nearEqualByDistance(_person.transform.position, _fiveSecAfterDestroyedPos, .1f))
-            {
-                CreateRoute();
-            }
-            else
-            {
-                ResetThis();
-            }
+            //_person.Brain.Partido = true;
+            //return;
+            //if (UMath.nearEqualByDistance(_person.transform.position, _fiveSecAfterDestroyedPos, .1f))
+            //{
+            //    CreateRoute();
+            //}
+            //else
+            //{
+            //    ResetThis();
+            //}
         }
-        else if(_router != null && !_router.IsRouteReady)
-        {
-            _router.Update();
-        }
-        else if(_router != null && _router.IsRouteReady && _person.Body.GoingTo != HPers.NowToNewHome)
-        {
-            //reached the house 
-            if (_person.Body.GoingTo == HPers.MovingToNewHome)
-            {
-                ResetThis();
-                return;
-            }
-            MoveNowToNewHouse();
-        }
+        //else if(_router != null && !_router.IsRouteReady)
+        //{
+        //    _router.Update();
+        //}
+        //else if(_router != null && _router.IsRouteReady && _person.Body.GoingTo != HPers.NowToNewHome)
+        //{
+        //    //reached the house 
+        //    if (_person.Body.GoingTo == HPers.MovingToNewHome)
+        //    {
+        //        ResetThis();
+        //        return;
+        //    }
+        //    MoveNowToNewHouse();
+        //}
     }
 
     private void ResetThis()

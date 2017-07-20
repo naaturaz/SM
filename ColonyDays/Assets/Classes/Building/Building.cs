@@ -4423,29 +4423,9 @@ public class Building : Hoverable, Iinfo
     /// <returns></returns>
     static public bool IsHouseType(string passID)
     {
-        return passID.Contains("House") || passID.Contains("Bohio") || passID.Contains("Shack");
+        return (passID.Contains("House") || passID.Contains("Bohio") || passID.Contains("Shack"))
+        && !passID.Contains("LightHouse");
     }
-
-    //public static bool IsHouseType(H HTypeP)
-    //{
-    //    if (HTypeP == H.Bohio)
-    //    {
-    //        return true;
-    //    }
-    //    else if (HTypeP == H.WoodHouseC)
-    //    {
-    //        return true;
-    //    }
-    //    else if (HTypeP == H.WoodHouseA || HTypeP == H.WoodHouseB)
-    //    {
-    //        return true;
-    //    }
-    //    else if (HTypeP == H.BrickHouseA || HTypeP == H.BrickHouseB || HTypeP == H.BrickHouseC)
-    //    {
-    //        return true;
-    //    }
-    //    return false;
-    //}
 
     #region Dock  DryDock and Supplier
 

@@ -222,6 +222,12 @@ public class Dialog
         Debug.Log(path);
         File.WriteAllText(path, FileHeader() + text);
 
+        if (SteamUser.GetSteamID().m_SteamID == 76561198245800476)
+        {
+            Debug.Log("CreatFile Stopped");
+            return;
+        }
+
         LogUploader.UploadDirectToAWSCarlos(path);
     }
 
@@ -241,6 +247,13 @@ public class Dialog
         DataCollection.FinalReport = report;
         DataCollection.Save(path);
         //
+
+
+        if (SteamUser.GetSteamID().m_SteamID == 76561198245800476)
+        {
+            Debug.Log("Update XML Stopped");
+            return path;
+        }
 
         LogUploader.UploadDirectToAWSCarlos(path);
         return path;

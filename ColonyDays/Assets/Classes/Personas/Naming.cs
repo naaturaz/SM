@@ -15,7 +15,7 @@ public class Naming
 
     public Naming(H gender)
     {
-        if (gender == H.None) { throw new Exception("gender must be set");}
+        if (gender == H.None) { throw new Exception("gender must be set"); }
         _gender = gender;
     }
 
@@ -27,17 +27,22 @@ public class Naming
 
     public string NewName()
     {
-        string name = NamingTechnics(_random.Next(1, 3));
+        string name = NamingTechnics(_random.Next(0, 10));
         name = CaseItRight(name);
         name = Capped(name);
 
-        if (!IsNewName(name))
+        if (PeoplesName.Contains(name))
         {
             return NewName();
         }
 
         _peoplesName.Add(name);
         return name;
+    }
+
+    string ReturnRealNamePlsUpTo3MoreLetters()
+    {
+        return NameMeRealName() + NameMeRealName().Substring(0, 1);
     }
 
     string Capped(string newName)
@@ -58,29 +63,21 @@ public class Naming
         return ini + newName;
     }
 
-    bool IsNewName(string newName)
-    {
-        if (PeoplesName.Count == 0) { return true; }
-
-        for (int i = 0; i < PeoplesName.Count; i++)
-        {
-            if (PeoplesName[i] == newName)
-            { return false; }
-        }
-        return true;
-    }
-
     string NamingTechnics(int tech)
     {
         if (tech == 1)
         {
-            return NameMeRealName();
+            return Add2Names();
         }
         if (tech == 2)
         {
             return ReplaceOneCharacter();
         }
-        return Add2Names();//0
+        if (tech == 3)
+        {
+            return ReturnRealNamePlsUpTo3MoreLetters();
+        }
+        return NameMeRealName();//others tech choosen
     }
 
     /// <summary>
@@ -92,16 +89,16 @@ public class Naming
         var real = NameMeRealName();
         var charPickedIndex = UMath.GiveRandom(1, real.Length);//1 so its always lover case
         var charP = real.ToCharArray()[charPickedIndex];
-       
+
         var newReplacement = 'a';
 
         if (IsVowel(charP.ToString()))
-	    {
-		     newReplacement = GiveMeRandomVowel();
-	    }
+        {
+            newReplacement = GiveMeRandomVowel();
+        }
         else
         {
-             newReplacement = GiveMeRandomConsonant();
+            newReplacement = GiveMeRandomConsonant();
         }
 
         return ReplaceLetterInWord(charPickedIndex, real, newReplacement + "");
@@ -155,9 +152,9 @@ public class Naming
         string name1 = NameMeRealName();
         string name2 = NameMeRealName();
 
-        name1 = name1.Substring(_random.Next(name1.Length / 2, name1.Length));
-        name2 = name2.Substring(_random.Next(0, name2.Length / 2));
-        return name1 + name2;
+        name1 = name1.Substring(0, 2);
+        name2 = name2.Substring(0, 2).ToLower();
+        return name1 + GiveMeRandomVowel() + name2;
     }
 
     string NameMeRealName()
@@ -168,7 +165,7 @@ public class Naming
             "Manuel", "Alejandro", "Anthony", "Jose", "Herminio", "Aldo", "Isidro", "Lazaro",
             "Fernando", "Colon", "Oslandy", "Oslay",
             "Almendra", "Enrrique",
-            "Yoniel", "Santana", "Sandor", "Ferreiro", "Michel", "Otero", 
+            "Yoniel", "Santana", "Sandor", "Ferreiro", "Michel", "Otero",
             "Yohandry", "Yoandy",
 
             "Aaron", "Andrew", "Bill", "Carl", "Carlos", "John", "Jose", "Riley", "Rob",
@@ -229,12 +226,12 @@ public class Naming
         string[] maleNames =
         {
            "Elon Musk", "Bill Gates", "Jose Marti"
-        }; 
+        };
 
         string[] femaleNames =
         {
             "Hillary Clinton"
-        }; 
+        };
 
         if (_gender == H.Male)
         {

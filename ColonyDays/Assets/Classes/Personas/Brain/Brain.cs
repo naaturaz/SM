@@ -887,29 +887,20 @@ public class Brain
         if (nextTask == HPers.IdleInHome)
         {
             _isIdleHomeNow = true;
-
-
-            //var homeWheelBarrow = _person.ProfessionProp.ProfDescription == Job.WheelBarrow
-            //    && //_person.Body.Location == HPers.Home
-            //    ReadyToGetFood();
-            ////bz when a buildilng was destroyed they could stay in the Storage lost 
-            //if (homeWheelBarrow || _person.ProfessionProp.ProfDescription != Job.WheelBarrow)
-            //{
-                ListOfActionsInHome();
-            //}
-
+            ListOfActionsInHome();
             ExecuteSlowCheckUp();
         }
-
         AddIdleTimeIfHasOldKeys();
         if (Time.time > startIdleTime + _idleTime && !_routesWereStarted)
         {
             //if is booked and still doesnt have the route to new home pls dont release iddle 
-            if (!string.IsNullOrEmpty(_person.IsBooked) && MoveToNewHome.RouteToNewHome.CheckPoints.Count == 0)
+            if (!string.IsNullOrEmpty(_person.IsBooked) && MoveToNewHome.RouteToNewHome.CheckPoints.Count == 0
+                && nextTask != HPers.Homing)//bz is needed to be release because after that one come Idle in Home in where
+                                            //brain will call for actions in home ListOfActionsInHome(); 
             {
+                Debug.Log("Idle Broken: next would be:" + nextTask + " ." + _person.name);
                 return;
             }
-
             RealeaseIdle(nextTask);
         }
     }
@@ -969,11 +960,9 @@ public class Brain
     public void Update()
     {
         //DefineIfIsAllSet();
-        DefineIfWaiting();
+        //DefineIfWaiting();
 
         UpdateRouters();
-
-
 
         //used to be below mindState
         //StartRoutes();
@@ -986,15 +975,12 @@ public class Brain
         //}
         //Die();
 
-
-
-
         //if wating for rerouting must wait at home
-        if (_waiting)
-        {
-            ReRoutesDealer();
-            return;
-        }
+        //if (_waiting)
+        //{
+        ReRoutesDealer();
+        //    return;
+        //}
 
         //if (startIdleTime > 0)
         //{
@@ -1099,14 +1085,14 @@ public class Brain
         if (IJustSpawn() || IAmHomeNow() || IsInLimbo() || LocatedAtHomeNow())
         {
             //there is room for me to check now on System
-            if (PersonPot.Control.OnSystemNow(_person.MyId) && _waiting)
-            {
+            //if (PersonPot.Control.OnSystemNow(_person.MyId) && _waiting)
+            //{
                 //NewBornStuff();
 
                 //redo routes to see if some change 
                 ReRoutes();
                 ReRouteCallsCounter();
-            }
+            //}
         }
     }
 

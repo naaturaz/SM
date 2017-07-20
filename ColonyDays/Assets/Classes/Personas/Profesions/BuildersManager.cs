@@ -337,7 +337,8 @@ public class BuildersManager
         if (st == null || st.StartingStage != H.Done)
         {
             //_greenLight.Add(construction);
-            var closest = BuildingController.FindTheClosestOfThisType(H.Masonry, construction.Position, Brain.Maxdistance);
+            var closest = BuildingController.FindTheClosestOfThisType(H.Masonry, construction.Position, 
+                Brain.Maxdistance, true);
 
             if (closest == null)
             {

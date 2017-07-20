@@ -204,11 +204,16 @@ public class Body //: MonoBehaviour //: General
 
     public void Init(Person person)
     {
+
+
         _person = person;
         _person.StartLOD();
 
         myAnimator = _person.gameObject.GetComponent<Animator>();
         myAnimator.speed = Program.gameScene.GameSpeed;
+
+        DeactivateAniAtStart();
+
         SetCurrentAni("isIdle", "isIdle");
         dummyRouter = new Router();
         oldGameSpeed = Program.gameScene.GameSpeed;
@@ -219,6 +224,17 @@ public class Body //: MonoBehaviour //: General
 
         BodyAgent = new BodyAgent(_person);
 
+
+
+    }
+
+    /// <summary>
+    /// Bz in one instnce a Person was loaded with both active
+    /// </summary>
+    private void DeactivateAniAtStart()
+    {
+        myAnimator.SetBool("isWalk", false);
+        myAnimator.SetBool("isWheelBarrow", false);
     }
 
     //the yearly grow for each Gender. For this be effective the GameObj scale must
@@ -316,6 +332,11 @@ public class Body //: MonoBehaviour //: General
     /// <param name="oldAnimation"></param>
     public void SetCurrentAni(string animationPass, string oldAnimation)
     {
+        if (_person.name.Contains("Colof"))
+        {
+            var a = 1;
+        }
+
         if (!myAnimator.enabled)
         {
             savedAnimation = animationPass;

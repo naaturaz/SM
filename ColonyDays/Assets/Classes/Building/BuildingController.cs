@@ -512,7 +512,8 @@ public class BuildingController : BuildingPot
     /// <param name="hType"></param>
     /// <param name="fromPos"></param>
     /// <returns></returns>
-    static public Structure FindTheClosestOfThisType(H hType, Vector3 fromPos, float maxDistance)
+    static public Structure FindTheClosestOfThisType(H hType, Vector3 fromPos, float maxDistance
+        , bool mustBeFullyBuilt = false)
     {
         List<VectorM> distances = new List<VectorM>();
 
@@ -520,7 +521,9 @@ public class BuildingController : BuildingPot
         {
             var build = BuildingPot.Control.Registro.AllBuilding.ElementAt(i).Value;
 
-            if (build.HType == hType)
+            var builtCondition = (mustBeFullyBuilt && build.IsFullyBuilt()) || !mustBeFullyBuilt;
+
+            if (build.HType == hType && builtCondition)
             {
                 distances.Add(new VectorM(build.transform.position, fromPos, build.MyId));
             }

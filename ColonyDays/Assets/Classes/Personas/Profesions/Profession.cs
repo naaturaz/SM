@@ -455,11 +455,11 @@ public class Profession
             return;
         }
 
-        if (PersonPot.Control.WorkersRoutingQueue.OnSystemNow(_person.MyId))
-        {
-            PersonPot.Control.WorkersRoutingQueue.RemoveMeFromSystem(_person.MyId);
-            //Debug.Log("remove form system prof:" + _person.MyId);
-        }
+        //if (PersonPot.Control.WorkersRoutingQueue.OnSystemNow(_person.MyId))
+        //{
+        //    PersonPot.Control.WorkersRoutingQueue.RemoveMeFromSystem(_person.MyId);
+        //    //Debug.Log("remove form system prof:" + _person.MyId);
+        //}
     }
 
     void RouterDealear()
@@ -468,14 +468,14 @@ public class Profession
         {
             AddMeToWaitListOnSystem();
 
-            if (PersonPot.Control.WorkersRoutingQueue.OnSystemNow(_person.MyId))
-            {
+            //if (PersonPot.Control.WorkersRoutingQueue.OnSystemNow(_person.MyId))
+            //{
                 if (_isRouterBackUsed)
                 {
                     BackRouterUpdate();
                 }
                 else SingleRouterUpdate();
-            }
+            //}
         }
     }
 
@@ -655,11 +655,14 @@ public class Profession
 
     bool IsAnExistingBuilding(TheRoute theRoute)
     {
+        var a = theRoute.DestinyKey.Substring(theRoute.DestinyKey.Length - 2);
+
         return
             theRoute.DestinyKey.Contains("Dummy") ||
             theRoute.DestinyKey.Contains("Tree") ||
             theRoute.DestinyKey.Contains("Rock") ||
-            Brain.GetStructureFromKey(theRoute.DestinyKey) != null;
+            Brain.GetStructureFromKey(theRoute.DestinyKey) != null ||
+            theRoute.DestinyKey.Substring(theRoute.DestinyKey.Length-2) == ".D";//in Work Route (farmer, fisheerman)
 
     }
 

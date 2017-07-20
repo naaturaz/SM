@@ -92,7 +92,7 @@ public class Structure : StructureParent
             GameScene.ScreenPrint("could be the sea Struct.cs");
         }
 
-        if (HType == H.BullDozer)
+        if (HType == H.BullDozer && !IsColliding)
         {
             DestroyCool();
 
@@ -475,7 +475,8 @@ public class Structure : StructureParent
         ReturnWhatThisCost();
         AudioCollector.PlayOneShot("BUILDING_DEMOLISH_1", 0);
 
-
+        //the water doesnt need to be evacuated
+        Inventory.RemoveByWeight(P.Water, 10000);
     }
 
     /// <summary>

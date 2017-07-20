@@ -322,7 +322,8 @@ public class MoveToNewHome
     {
         //if the oldHomeKey was cleared and homeOldKeysList has more than one means that we have
         //olds key to address 
-        if (_oldHomeKey == "" && _homeOldKeysList.Count > 0 && _routeToNewHome.CheckPoints.Count == 0 && _brain.IAmHomeNow())
+        if (_oldHomeKey == "" && _homeOldKeysList.Count > 0 && _routeToNewHome.CheckPoints.Count == 0 //&& _brain.IAmHomeNow()
+            )
         {
             InitValForNewHome();
         }

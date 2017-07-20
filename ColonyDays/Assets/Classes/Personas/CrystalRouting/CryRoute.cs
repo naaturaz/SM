@@ -267,7 +267,7 @@ public class CryRoute
 
     internal void Update()
     {
-        if (loop && Time.time > _timeStamp + 3)
+        if (loop && Time.time > _timeStamp + 0f)//3
         {
             NavMesh();
         }
