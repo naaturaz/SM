@@ -8,8 +8,7 @@ using System.Linq;
 
 public class Realtor
 {
-    //its not well implemented so Im dropping confomrt to people get better home 
-    private   int confortWeight = 0;//100
+    private   int confortWeight = 3;
 
     private   string familyID="";
 

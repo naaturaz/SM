@@ -43,6 +43,7 @@ public class HelpWindow : GUIElement
         "Population.Help",
         "Inputs.Help",
         "WheelBarrows.Help",
+        "What are Ft3 and M3?.Help",
     };
 
 

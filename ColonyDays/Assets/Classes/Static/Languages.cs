@@ -442,6 +442,9 @@ public class Languages
        { "Weight.Help", "Weight: All the weights in the game are in Kg or Lbs depending on which Unit system is selected." +
                         " You can change it in 'Options' in the 'Main Menu'"},
 
+       { "What are Ft3 and M3?.Help", "Ft3 is a cubic foot. M3 is a cubic meter. Volume units. en.wikipedia.org/wiki/Cubic_foot"},
+
+
 
        { "More.Help", "If you need more help might be a good idea completing the tutorial, or simply posting a question on SugarMill's Forums"},
 
@@ -510,8 +513,9 @@ public class Languages
            "When you hover over it, it will popup 'Help'. There you can find some tips."},
 
 
+       { "SelectDock.Tuto", "Ships drop and pick goods at random from the dock's inventory. Workers are needed to move dock goods in and out. They need wheelbarrows and crates. If are no items in the dock storage they won't work. Now click on the Dock."},
 
-       { "SelectDock.Tuto", "Ships drop and pick goods at random from the dock's inventory. Workers are needed to move dock goods. These workers use wheelbarrows and crates. If are not items in the dock storage they won't work. Now click on the Dock."},
+
        { "OrderTab.Tuto", "Go to the Orders tab on the Dock's Window."},
        { "ImportOrder.Tuto", "Click on the '+' sign beside Add Import Order."},
 
@@ -963,7 +967,7 @@ public class Languages
 
        { "AgeMajor.Noti.Name", "Un Trabajador Nuevo"},
        { "AgeMajor.Noti.Desc", "{0} esta listo(a) para trabajar"},
-       
+
 
        { "PersonDie.Noti.Name", "Una persona ha muerto"},
        { "PersonDie.Noti.Desc", "{0} ha muerto"},

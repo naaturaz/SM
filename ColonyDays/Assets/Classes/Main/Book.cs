@@ -67,7 +67,7 @@ public class Book : General
         Build.Add(new BuildStat(H.BridgeRoad, 1000, 8, 10, 0, 8, maxPeople: 0));
 
         Build.Add(new BuildStat(H.CoachMan, 800, 80, 20, 0, 5, maxPeople: 8));
-        Build.Add(new BuildStat(H.Masonry, 800, 10, 50, 0, 5, maxPeople: 12));
+        Build.Add(new BuildStat(H.Masonry, 800, 10, 50, 0, 5, maxPeople: 15));
         Build.Add(new BuildStat(H.StandLamp, 100, 0, 0, 0, 5, maxPeople: 0, capacity: 0f));
 
         Build.Add(new BuildStat(H.HeavyLoad, 1800, 10, 0, 0, 5, maxPeople: 3));
@@ -98,21 +98,21 @@ public class Book : General
         Build.Add(new BuildStat(H.FieldFarmXLarge, 1000, 5, 0, 0,  maxPeople: 9, capacity: 3));
 
         //Raw
-        Build.Add(new BuildStat(H.Mortar, 1000, 15, 5, 15, 5, maxPeople: 5, capacity: 160));
+        Build.Add(new BuildStat(H.Mortar, 1000, 15, 5, 15, 5, maxPeople: 5, capacity: 20));
 
-        Build.Add(new BuildStat(H.Clay, 1000, 15, 5, 15, 5, maxPeople: 12, capacity: 160));
-        Build.Add(new BuildStat(H.Pottery, 1000, 15, 5, 25, 5, maxPeople: 10));
-        Build.Add(new BuildStat(H.FishingHut, 1000, 15, 0, 0, 0, maxPeople: 10));
-        Build.Add(new BuildStat(H.MountainMine, 1000, 15, 5, 25, 5, maxPeople: 10));
-        Build.Add(new BuildStat(H.LumberMill, 500, 30, 5, 0, 1, maxPeople: 20));
-        Build.Add(new BuildStat(H.BlackSmith, 1000, 15, 5, 25, 5, maxPeople: 10));
+        Build.Add(new BuildStat(H.Clay, 1000, 15, 5, 15, 5, maxPeople: 5, capacity: 30));
+        Build.Add(new BuildStat(H.Pottery, 1000, 15, 5, 25, 5, maxPeople: 5));
+        Build.Add(new BuildStat(H.FishingHut, 1000, 15, 0, 0, 0, maxPeople: 5));
+        Build.Add(new BuildStat(H.MountainMine, 1000, 15, 5, 25, 5, maxPeople: 5));
+        Build.Add(new BuildStat(H.LumberMill, 500, 30, 5, 0, 1, maxPeople: 10));
+        Build.Add(new BuildStat(H.BlackSmith, 1000, 15, 5, 25, 5, maxPeople: 5));
 
-        Build.Add(new BuildStat(H.ShoreMine, 400, 15, 5, 25, 5, maxPeople: 20));
-        Build.Add(new BuildStat(H.QuickLime, 1000, 15, 5, 15, 5, maxPeople: 5, capacity: 160));
+        Build.Add(new BuildStat(H.ShoreMine, 400, 15, 5, 25, 5, maxPeople: 5));
+        Build.Add(new BuildStat(H.QuickLime, 1000, 15, 5, 15, 5, maxPeople: 5, capacity: 30));
 
 
         //Prod
-        Build.Add(new BuildStat(H.Brick, 400, 15, 5, 25, 5, maxPeople: 20, capacity: 20));
+        Build.Add(new BuildStat(H.Brick, 400, 15, 5, 25, 5, maxPeople: 5, capacity: 20));
         Build.Add(new BuildStat(H.Carpentry, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.Cigars, 400, 15, 5, 25, 5, maxPeople: 5));
 

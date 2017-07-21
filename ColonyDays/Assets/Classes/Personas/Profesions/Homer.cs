@@ -71,8 +71,15 @@ public class Homer : Profession
             return _person.Work;
         }
 
+        //they just need to go there and then their houuse
+        if (_person.PrevJob == Job.Docker)
+        {
+            return _person.FoodSource;
+        }
 
-        return _person.FoodSource;
+        //so now they will take it to the closest storage from the production point
+        return _person.Work.PreferedStorage;
+        //return _person.FoodSource;
     }
 
     bool IsWorkNaval()

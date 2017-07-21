@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Docker : Profession
 {
-
+    Structure _source;
 
     public Docker(Person person, PersonFile pF)
     {
@@ -100,11 +100,34 @@ public class Docker : Profession
 
     void InitRoute()
     {
-        RouterActive = true;
-        Router1 = new CryRouteManager(_person.Work, _person.FoodSource, _person, HPers.InWork);
+        _source = GiveMeSourceForThisProd();
 
-        //IsRouterBackUsed = true;
-        //RouterBack = new CryRouteManager(_sourceBuild, _person.Work, _person, HPers.InWorkBack);
+        RouterActive = true;
+        Router1 = new CryRouteManager(_person.Work, _source, _person, HPers.InWork);
+    }
+
+    Structure GiveMeSourceForThisProd()
+    {
+        if (_order == null)
+        {
+            return _person.FoodSource;
+        }
+
+        //looking for a Source that has the product
+        var sourceSt = Dispatch.FindFoodSrcWithProd(_person, _order.Product);
+        if (string.IsNullOrEmpty(sourceSt))
+        {
+            return _person.FoodSource;
+        }
+
+        var source = Brain.GetStructureFromKey(sourceSt);
+        //if not will default for the person FoodSource 
+        if (source == null)
+        {
+            source = _person.FoodSource;
+        }
+
+        return source;
     }
 
     public override void Update()
@@ -156,9 +179,14 @@ public class Docker : Profession
         else if (_person.Body.Location == HPers.DockerBackToDock && _person.Body.GoingTo != HPers.FoodSource)
         {
             DropAllMyGoods(_person.Work);//so drops exports if any 
-            _person.Body.WalkRoutine(Router1.TheRoute, HPers.FoodSource);
+            //_person.Body.WalkRoutine(Router1.TheRoute, HPers.FoodSource);
 
-            _person.Body.UpdatePersonalForWheelBa();
+            //_person.Body.UpdatePersonalForWheelBa();
+
+            //so homer works
+            _person.Body.Location = HPers.Work;
+            _workerTask = HPers.None;
+            _person.CreateProfession(Job.Homer);
         }
     }
 
@@ -201,7 +229,10 @@ public class Docker : Profession
         if (_sourceBuild.HasEnoughToCoverOrder(Order1))
         {
             var amt = Order1.ApproveThisAmt(_person.HowMuchICanCarry(Order1.Amount));
-            Order1.AddToFullFilled(amt);
+
+            //Order1.AddToFullFilled(amt);
+            //
+            _person.Work.Dispatch1.AddToOrderAmtProcessed(Order1, amt);
 
             Debug.Log(_person.MyId + " Docker got from:" + Order1.SourceBuild + " : " + Order1.Product + ".amt:" + amt);
 
@@ -228,7 +259,7 @@ public class Docker : Profession
 
 
     private bool _takeABreakNow;
-    private float _breakDuration = 1f;
+    private float _breakDuration = 10f;
     private float startIdleTime;
     /// <summary>
     /// Used so a person is asking for bridges anchors takes a break and let brdige anchors complete then can 
@@ -253,7 +284,7 @@ public class Docker : Profession
     {
         if (_export)
         {
-            return (Structure)_person.FoodSource;
+            return _source;
         }
         if (_import)
         {

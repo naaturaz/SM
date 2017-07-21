@@ -1326,6 +1326,9 @@ public class Person : Hoverable
         cam = Camera.main;
         base.Start();
 
+        StartCoroutine("SixtySecUpdate");
+
+
         StartCoroutine("FiveSecUpdate");
         StartCoroutine("OneSecUpdate");
 
@@ -1375,21 +1378,18 @@ public class Person : Hoverable
         }
     }
 
-    //private float quickTime2;
-    ///// <summary>
-    ///// For Person dont walk on top of each other 
-    ///// </summary>
-    ///// <returns></returns>
-    //private IEnumerator QuickUpdate2()
-    //{
-    //    while (true)
-    //    {
-    //        yield return new WaitForSeconds(quickTime2); // wait 
-    //        UpdateCollBools();
-    //        CheckPersonColl();
-    //        quickTime2 = RestartTimes(4f, 5f);
-    //    }
-    //}
+    private IEnumerator SixtySecUpdate()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(60); // wait
+            if (IsMajor && string.IsNullOrEmpty(Spouse) && PersonPot.Control.IsPeopleCheckFull())
+            {
+                //in a attempt to see if there is a house out there with a single person 
+                PersonPot.Control.RestartControllerForPerson(MyId);
+            }
+        }
+    }
 
     private IEnumerator FiveSecUpdate()
     {

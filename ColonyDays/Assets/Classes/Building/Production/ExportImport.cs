@@ -156,8 +156,8 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Water, 1, 1000, 100));
         _prodSpecs.Add(new ProdSpec(P.Honey, 50, 1000, 100));
         _prodSpecs.Add(new ProdSpec(P.Beer, 150, 1000, 100));
-        _prodSpecs.Add(new ProdSpec(P.Rum, 200, 1000, 100));
-        _prodSpecs.Add(new ProdSpec(P.Wine, 200, 990, 100));
+        _prodSpecs.Add(new ProdSpec(P.Rum, 500, 1000, 100));
+        _prodSpecs.Add(new ProdSpec(P.Wine, 450, 990, 100));
         _prodSpecs.Add(new ProdSpec(P.Ink, 100, 990, 100));
         _prodSpecs.Add(new ProdSpec(P.WhaleOil, 200, 1090, 100));
 

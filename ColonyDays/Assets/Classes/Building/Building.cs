@@ -1422,7 +1422,7 @@ public class Building : Hoverable, Iinfo
 
         { H.StorageMed, new Vector3(-30,0,-20)},
         { H.StorageSmall, new Vector3(-30,0,-20)},
-        { H.StorageBig, new Vector3(-15,0,-16)},
+        { H.StorageBig, new Vector3(-70,0,-35)},
 
         { H.Dock, new Vector3(-5,0,-5)},
 
@@ -3479,15 +3479,8 @@ public class Building : Hoverable, Iinfo
         //as wheelBarrowers always go back to mansory makes sense to use their closer Storage
         else
         {
-            var clstMasonry = BuildingController.FindTheClosestOfThisTypeFullyBuilt(H.Masonry, transform.position);
-            if (clstMasonry == null)
-            {
-                _preferedStorage =
-                BuildingController.FindTheClosestOfContainTypeFullyBuilt("Storage", transform.position, false);
-                oldFoodSrcs.AddRange(BuildingPot.Control.FoodSources);
-                return;
-            }
-            _preferedStorage = clstMasonry.PreferedStorage;
+            _preferedStorage =
+            BuildingController.FindTheClosestOfContainTypeFullyBuilt("Storage", transform.position, false);
         }
         oldFoodSrcs.AddRange(BuildingPot.Control.FoodSources);
     }

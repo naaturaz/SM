@@ -519,7 +519,7 @@ public class BuildingWindow : GUIElement
             //if is Storage
             if (Building.HType.ToString().Contains("Storage"))
             {
-                res += Languages.ReturnString("Users:") + Building.PeopleDict.Count + "\n";
+                //res += Languages.ReturnString("Users:") + Building.PeopleDict.Count + "\n";
             }
             //others
             else

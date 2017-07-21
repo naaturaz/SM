@@ -551,6 +551,25 @@ public class Dispatch
         return null;        
     }   
     
+    public void AddToOrderAmtProcessed(Order ord, float amt)
+    {
+        var orderInd = _orders.FindIndex(a => a.ID == ord.ID);
+        if (orderInd != -1)
+        {
+            _orders[orderInd].AddToFullFilled(amt);
+        }
+        else
+        {
+            var ind = _recycledOrders.FindIndex(a => a.ID == ord.ID);
+            if (ind == -1)
+            {
+                Debug.Log("Docker order not found on report: " + ord.ID);
+                return;
+            }
+            _recycledOrders[ind].AddToFullFilled(amt);
+        }
+    }
+
     Order RegularOrderDocker(Person person, Order order)
     {
         var foodSrc = FindFoodSrcWithProd(person, order.Product);
@@ -563,7 +582,7 @@ public class Dispatch
             OrderFound(order);
 
             temp.Amount = order.ApproveThisAmt(person.HowMuchICanCarry());
-            order.AddToFullFilled(temp.Amount);
+            //order.AddToFullFilled(temp.Amount);
             temp.SourceBuild = foodSrc;
             return temp;
         }
@@ -627,7 +646,7 @@ public class Dispatch
     /// 
     /// Will return a string value if one found with the prod other wise returs ""
     /// </summary>
-    string FindFoodSrcWithProd(Person person , P prod)
+    public static string FindFoodSrcWithProd(Person person , P prod)
     {
         var foodSrcs = ScoreAllFoodSources(person);
 
@@ -659,7 +678,7 @@ public class Dispatch
         return "";
     }
 
-    List<BuildRank> ScoreAllFoodSources(Person person)
+    static List<BuildRank> ScoreAllFoodSources(Person person)
     {
         List<BuildRank> rank = new List<BuildRank>();
         for (int i = 0; i < BuildingPot.Control.FoodSources.Count; i++)
@@ -686,7 +705,7 @@ public class Dispatch
     /// <param name="person"></param>
     /// <param name="toScore"></param>
     /// <returns></returns>
-    float ScoreABuild(Person person, Building toScore)
+    static float ScoreABuild(Person person, Building toScore)
     {
         if (person.Work == null)
         {
@@ -1147,8 +1166,9 @@ public class Order
 {
     public H TypeOrder = H.None;//the type of order is 
     public P Product;
-    public string DestinyBuild;
     public string SourceBuild;
+
+    string _destinyBuild;
 
     //the amount dispatched in an order
     float _amount;
@@ -1185,6 +1205,19 @@ public class Order
         set
         {
             _isCompleted = value;
+        }
+    }
+
+    public string DestinyBuild
+    {
+        get
+        {
+            return _destinyBuild;
+        }
+
+        set
+        {
+            _destinyBuild = value;
         }
     }
 
