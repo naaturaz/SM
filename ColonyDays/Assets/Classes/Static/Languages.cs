@@ -310,6 +310,7 @@ public class Languages
        { "Current_Positions.HoverSmall", "Current positions"},
        { "Max_Positions.HoverSmall", "Max positions"},
 
+
        { "Add_Import_Btn.HoverSmall", "Add an import"},
        { "Add_Export_Btn.HoverSmall", "Add an export"},
        { "Upg_Cap_Btn.HoverSmall", "Upgrades capacity"},
@@ -441,10 +442,7 @@ public class Languages
 
        { "Weight.Help", "Weight: All the weights in the game are in Kg or Lbs depending on which Unit system is selected." +
                         " You can change it in 'Options' in the 'Main Menu'"},
-
-       { "What are Ft3 and M3?.Help", "Ft3 is a cubic foot. M3 is a cubic meter. Volume units. en.wikipedia.org/wiki/Cubic_foot"},
-
-
+       { "What are Ft3 and M3?.Help", "The storage capacity is determined by the volume of the building. Ft3 is a cubic foot. M3 is a cubic meter" },//. Keep in mind that less dense products will fill up your storage quickly. To see products density Bulletin/Prod/Spec"},
 
        { "More.Help", "If you need more help might be a good idea completing the tutorial, or simply posting a question on SugarMill's Forums"},
 

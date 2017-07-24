@@ -125,7 +125,7 @@ public class BuyRegionManager
 
     public string Cost()
     {
-        return "Money: " + MoneyNeeded();
+        return MyText.DollarFormat(MoneyNeeded());
     }
 
     float MoneyNeeded()

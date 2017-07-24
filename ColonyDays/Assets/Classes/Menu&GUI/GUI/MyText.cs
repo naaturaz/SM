@@ -112,7 +112,16 @@ public class MyText : MonoBehaviour
 
     public static string DollarFormat(float amt)
     {
-        return "$ " + String.Format("{0:n}", amt);
+        return Sign(amt) + "$" + String.Format("{0:n}", Math.Abs(amt));
+    }
+
+    static string Sign(float amt)
+    {
+        if (amt < 0)
+        {
+            return "-";
+        }
+        return "";
     }
 
 

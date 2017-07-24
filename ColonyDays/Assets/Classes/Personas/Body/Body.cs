@@ -204,15 +204,11 @@ public class Body //: MonoBehaviour //: General
 
     public void Init(Person person)
     {
-
-
         _person = person;
         _person.StartLOD();
 
         myAnimator = _person.gameObject.GetComponent<Animator>();
         myAnimator.speed = Program.gameScene.GameSpeed;
-
-        DeactivateAniAtStart();
 
         SetCurrentAni("isIdle", "isIdle");
         dummyRouter = new Router();
@@ -223,18 +219,6 @@ public class Body //: MonoBehaviour //: General
         renderer = _person.Geometry.GetComponent<Renderer>();
 
         BodyAgent = new BodyAgent(_person);
-
-
-
-    }
-
-    /// <summary>
-    /// Bz in one instnce a Person was loaded with both active
-    /// </summary>
-    private void DeactivateAniAtStart()
-    {
-        myAnimator.SetBool("isWalk", false);
-        myAnimator.SetBool("isWheelBarrow", false);
     }
 
     //the yearly grow for each Gender. For this be effective the GameObj scale must
@@ -332,11 +316,6 @@ public class Body //: MonoBehaviour //: General
     /// <param name="oldAnimation"></param>
     public void SetCurrentAni(string animationPass, string oldAnimation)
     {
-        if (_person.name.Contains("Colof"))
-        {
-            var a = 1;
-        }
-
         if (!myAnimator.enabled)
         {
             savedAnimation = animationPass;
@@ -832,7 +811,8 @@ public class Body //: MonoBehaviour //: General
     }
 
 
-    public void WalkRoutine(TheRoute route, HPers goingTo, bool inverse = false, HPers whichRouteP = HPers.None)
+    public void WalkRoutine(TheRoute route, HPers goingTo, bool inverse = false, HPers whichRouteP = HPers.None, 
+        bool loadingCall = false)
     {
         var destRoute = route.DestinyKey.Substring(route.DestinyKey.Length - 2);
         var oriRoute = route.OriginKey.Substring(route.OriginKey.Length - 2);
@@ -856,8 +836,11 @@ public class Body //: MonoBehaviour //: General
             BodyAgent.Walk(dest, doorPt, moveToAtStartWalk, goingTo);
         }
 
-
-        InitWalk(route, inverse);
+        //if calls again here will make the person flick bz will activate Walk on top of WheelBarrow ani
+        if (!loadingCall)
+        {
+            InitWalk(route, inverse);
+        }
         WalkRoutineTail(goingTo, whichRouteP);
 
         AskForAnimalIfNeeded();
@@ -875,7 +858,7 @@ public class Body //: MonoBehaviour //: General
         bool inverse, HPers whichRouteP)
     {
         InitWalk(route, inverse, loadInitCurrentPoint);
-        WalkRoutine(route, goingTo, inverse, whichRouteP);
+        WalkRoutine(route, goingTo, inverse, whichRouteP, loadingCall: true);
         LoadPosition();
 
         //WalkRoutineTail(goingTo, whichRouteP);

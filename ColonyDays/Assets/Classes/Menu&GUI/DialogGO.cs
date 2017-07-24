@@ -151,7 +151,7 @@ class DialogGO : GUIElement
         {
             _textHere.text = String.Format(Languages.ReturnString(Type1 + ".WithMoney"), Str1);
         }
-        _textHere.text += " Cost:" + MeshController.BuyRegionManager1.Cost();
+        _textHere.text += " Cost: " + MeshController.BuyRegionManager1.Cost();
     }
 
 

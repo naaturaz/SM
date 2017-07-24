@@ -383,6 +383,7 @@ public class Dispatch
 
     public Order GiveMeOrderDocker(Person person)
     {
+        LoadOrdersIfNeeded();
         var currOrders = ReturnCurrentListAndDefinePrimary();
 
         for (int i = 0; i < currOrders.Count; i++)
@@ -408,6 +409,14 @@ public class Dispatch
             }
         }
         return null;
+    }
+
+    /// <summary>
+    /// Orders of type None (Export) need to be added to Recycled
+    /// </summary>
+    private void LoadOrdersIfNeeded()
+    {
+        
     }
 
     /// <summary>

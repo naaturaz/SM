@@ -156,9 +156,23 @@ public class HelpWindow : GUIElement
         _contentText.text = Languages.ReturnString(Key);
     }
 
+    /// <summary>
+    /// Called from GUI
+    /// </summary>
+    /// <param name="Key"></param>
     public void ShowSpecificItem(string Key)
     {
         Program.MouseListener.HidePersonBuildOrderNotiBulletinHelpWin();
+        Show("");
+        HelpSelected(Key);
+    }
+
+    /// <summary>
+    /// Called from GUI
+    /// </summary>
+    /// <param name="Key"></param>
+    public void ShowSpecificItemDontHideWindows(string Key)
+    {
         Show("");
         HelpSelected(Key);
     }
