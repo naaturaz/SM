@@ -221,6 +221,11 @@ public class Body //: MonoBehaviour //: General
         BodyAgent = new BodyAgent(_person);
     }
 
+    internal void CartRideRadius()
+    {
+        throw new NotImplementedException();
+    }
+
     //the yearly grow for each Gender. For this be effective the GameObj scale must
     // be initiated at 0.26f in all axis
     private float maleGrow = 0.01333f;

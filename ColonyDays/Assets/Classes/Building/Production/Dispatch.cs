@@ -37,6 +37,11 @@ public class Dispatch
     private int maxAmtOfExpImpOrders = 10;
 
 
+    /// <summary>
+    /// orders tht are being added on this session. Were not loaded
+    /// </summary>
+    List<Order> _fresh = new List<Order>();
+
     public bool IsUsingPrimary
     {
         get { return _isUsingPrimary; }
@@ -577,6 +582,31 @@ public class Dispatch
             }
             _recycledOrders[ind].AddToFullFilled(amt);
         }
+
+        UpdateExportsAndImport(ord, amt);
+    }
+
+
+
+    /// <summary>
+    /// So if is a loaded game will show progress, bz orders are loaded and saved
+    /// after loaded will get updated only if done mannually 
+    /// </summary>
+    /// <param name="ord"></param>
+    private void UpdateExportsAndImport(Order ord, float amt)
+    {
+        var f = _fresh.FindIndex(a => a.ID == ord.ID);
+        if (f!=-1)
+        {
+            //is a freesh order therefore is referenced and doesnt need to be updated
+            return;
+        }
+
+        var indImpEx = ExpImpOrders.FindIndex(a => a.ID == ord.ID);
+        if (indImpEx != -1)
+        {
+            ExpImpOrders[indImpEx].AddToFullFilled(amt);
+        }
     }
 
     Order RegularOrderDocker(Person person, Order order)
@@ -1007,6 +1037,7 @@ public class Dispatch
             }
 
             ExpImpOrders.Add(order);
+            _fresh.Add(order);
             return true;
         }
         else
@@ -1111,7 +1142,6 @@ public class Dispatch
             if (Orders[i].ID == id)
             {
                 Orders.RemoveAt(i);
-                break;
             }
         }
 
@@ -1120,7 +1150,6 @@ public class Dispatch
             if (RecycledOrders[i].ID == id)
             {
                 RecycledOrders.RemoveAt(i);
-                break;
             }
         }
 
@@ -1326,7 +1355,12 @@ public class Order
 
     internal float Left()
     {
-        return _amount - FullFilled;
+        var res = _amount - FullFilled;
+        if (res < 0)
+        {
+            return 0;
+        }
+        return res;
     }
 
     public void ChangeAmountBy(float by)

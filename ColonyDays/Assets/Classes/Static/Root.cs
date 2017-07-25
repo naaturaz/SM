@@ -398,6 +398,9 @@ public class Root : MonoBehaviour
     public static string vara = "Prefab/Personas/PersonalObject/Vara";
     public static string wheelBarrow = "Prefab/Personas/PersonalObject/WheelBarrow";
     public static string wheelBarrowWithBoxes = "Prefab/Personas/PersonalObject/WheelBarrowWithBoxes";
+    public static string wheelBarrowWithBarrels = "Prefab/Personas/PersonalObject/WheelBarrowWithBarrels";
+
+
     public static string wood = "Prefab/Personas/PersonalObject/Wood";
 
     public static string cart = "Prefab/Personas/PersonalObject/Cart";

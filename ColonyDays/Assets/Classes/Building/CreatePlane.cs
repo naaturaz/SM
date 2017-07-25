@@ -259,7 +259,7 @@ public class CreatePlane : Building
         }
 
         //path that are only one square wide 
-        return "Prefab/Mats/SmartTile/Road3D/" +"InPre" + UMath.GiveRandom(0, 7);
+        return "Prefab/Mats/SmartTile/Road3D/" +"InPre" + UMath.GiveRandom(0, 7);//7
     }
 
 

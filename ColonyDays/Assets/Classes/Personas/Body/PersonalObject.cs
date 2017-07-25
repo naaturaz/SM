@@ -202,13 +202,17 @@ public class PersonalObject
 
     string DefineCurrentWheelBarrowRoot()
     {
-        if (_person.Inventory.IsEmpty())
+        if (!_person.Inventory.IsEmpty())
         {
-            return Root.wheelBarrow;
+            if (_person.Inventory.IsCarryingLiquid())
+            {
+                return Root.wheelBarrowWithBarrels;
+            }
+            return Root.wheelBarrowWithBoxes;
         }
-        return Root.wheelBarrowWithBoxes;
-    }   
-    
+        return Root.wheelBarrow;
+    }
+
     List<string> _heavy = new List<string>()
     {
         Root.wagon,

@@ -17,8 +17,7 @@ public class BodyAgent
 
     Vector3 _nextDest;
 
-    ////if a route was interrupt
-    //private bool _wasInterrupt;
+    float _initRadius;
 
 
 
@@ -44,6 +43,8 @@ public class BodyAgent
         NewSpeed();
 
         _agent.enabled = false;
+
+        //_agent.SetAreaCost(3, 1);
     }
 
 
@@ -81,6 +82,8 @@ public class BodyAgent
             _agent.SetDestination(Destiny);
         }
         CheckIfGoingIntoBuild();
+        RadiusForHeavyLoaders();
+
     }
 
     private void CheckIfGoingIntoBuild()
@@ -116,11 +119,7 @@ public class BodyAgent
     internal void Walk(Vector3 point, Vector3 afterDest, Vector3 moveNowTo, HPers goingTo)
     {
         _agent.enabled = false;
-
-
         _person.transform.position = moveNowTo;
-
-
 
         _destWasSet = false;
         Destiny = point;
@@ -144,7 +143,36 @@ public class BodyAgent
         {
             _agent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
         }
+
     }
+
+    void RadiusForHeavyLoaders()
+    {
+        if (_person == null || _person.Body == null)
+        {
+            return;
+        }
+
+        if (_person.Body.CurrentAni.Contains("Cart") && _initRadius==0)
+        {
+            CartRideRadius();
+        }
+        //rezising the radius down to original size 
+        else if (_initRadius > 0 && !_person.Body.CurrentAni.Contains("Cart"))
+        {
+            _agent.radius = _initRadius;
+            _initRadius = 0;
+        }
+    }
+
+    void CartRideRadius()
+    {
+        _initRadius = _agent.radius;
+        _agent.radius *= 2;
+    }
+
+
+
 
     internal void NewSpeed()
     {
@@ -178,12 +206,5 @@ public class BodyAgent
         _person.transform.position = _afterDestiny;
     }
 
-    ///// <summary>
-    ///// Used when a person is building a building and was completly done before he got there . Needs to go back 
-    ///// </summary>
-    //internal void ReachDestiny()
-    //{
-    //    Destiny = _person.transform.position;
-    //    _wasInterrupt = true;
-    //}
+
 }

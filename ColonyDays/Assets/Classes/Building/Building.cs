@@ -1291,6 +1291,10 @@ public class Building : Hoverable, Iinfo
         LayerRoutine("done");
         PositionFixed = true;
 
+        //UnityEngine.AI.NavMeshBuilder.BuildNavMesh();
+        //UnityEngine.AI.NavMeshBuilder.BuildNavMesh();
+
+
         DestroyDoubleBoundHelp();
 
         //Preview of the Base to help aling

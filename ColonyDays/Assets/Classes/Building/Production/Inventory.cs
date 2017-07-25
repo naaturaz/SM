@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 /*
@@ -224,6 +225,11 @@ public class Inventory
         return Program.gameScene.GameTime1.ReturnCurrentDatePlsAdded(days);
     }
 
+    internal bool IsLiquid()
+    {
+        throw new NotImplementedException();
+    }
+
     private void SetAmtExpiration(InvItem item, float amt, MDate expiration)
     {
         if (expiration == null || item == null)
@@ -351,6 +357,9 @@ public class Inventory
         {
             return kg;
         }
+
+        //docker having negative amount of item on inventory 
+        RemoveWithKey(key);
         return 0;
     }
 
@@ -505,7 +514,7 @@ public class Inventory
         {
             return P.None;
         }
-        return _foodItems[Random.Range(0, _foodItems.Count)];
+        return _foodItems[UnityEngine.Random.Range(0, _foodItems.Count)];
     }
 
 
@@ -722,9 +731,9 @@ public class Inventory
     InvItem GiveMeRandomItem(float maxVol)
     {
         //random index of Item
-        var ind = Random.Range(0, InventItems.Count);
+        var ind = UnityEngine.Random.Range(0, InventItems.Count);
         //random amt
-        var vol = Random.Range(0, InventItems[ind].Volume);
+        var vol = UnityEngine.Random.Range(0, InventItems[ind].Volume);
 
         //capping amt
         if (vol > maxVol)
@@ -827,7 +836,7 @@ public class Inventory
         return ReturnAmountOnCategory(cat) > 0;
     }
 
-    internal bool CarryLiquid()
+    internal bool IsCarryingLiquid()
     {
         if (_inventItems.Count == 0)
         {
