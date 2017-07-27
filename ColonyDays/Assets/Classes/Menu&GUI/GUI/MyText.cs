@@ -61,7 +61,7 @@ public class MyText : MonoBehaviour
             adult = PersonPot.Control.All.Count(a => a.Age >= JobManager.majorityAge);
             var all = PersonPot.Control.All.Count;
 
-            thisText.text = all + " / " + adult + " / " + (all - adult);
+            thisText.text = all + "/" + adult + "/" + (all - adult);
         }
         else if (name == "Emigrate")
         {
@@ -142,7 +142,7 @@ public class MyText : MonoBehaviour
     {
         reMapCount++;
 
-        if (reMapCount > 180)//60
+        if (reMapCount > 60)//180
         {
             reMapCount = 0;
             Map();

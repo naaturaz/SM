@@ -979,6 +979,7 @@ public class Dispatch
         }
     }
 
+
     /// <summary>
     /// The action of export from dock inventory to Ship. Ship object is the one calling this
     /// </summary>
@@ -992,11 +993,30 @@ public class Dispatch
                 if (dock.Inventory.IsItemOnInv(ExportsOrders[i].Product))
                 {
                     HandleThatExport(dock, ExportsOrders[i]);
+
+                    ShowExportsAsHelp();
+
                     return true;
                 }
             }
         }
         return false;
+    }
+
+
+    static bool _exportsShown;
+    /// <summary>
+    /// The first time a game exports any goods will show the exports window 
+    /// </summary>
+    private void ShowExportsAsHelp()
+    {
+        if (_exportsShown)
+        {
+            return;
+        }
+        _exportsShown = true;
+        var bulletin = GameObject.FindObjectOfType<BulletinWindow>();
+        bulletin.ShowWindowAndThenExports();
     }
 
     /// <summary>

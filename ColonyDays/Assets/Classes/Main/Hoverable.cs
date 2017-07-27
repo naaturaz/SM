@@ -73,12 +73,17 @@ public class Hoverable : General
         {
             hoverWindow.ShowExplicitThis(pos, Name);
         }
+        //Construction Sign
         //bz if more than 6 he know how to build already 
-        else if (transform.name == "Construction" && BuildingPot.Control.Registro.AllBuilding.Count < 8)
+        else if (transform.name == "Construction" && BuildingPot.Control.Registro.AllBuilding.Count < 10)
         {
             hoverWindowMed.Show(pos, transform.name);
         }
-     
+        //Demolition Sign
+        else if (transform.name == "Demolition")
+        {
+            hoverWindowMed.Show(pos, transform.name);
+        }
     }
 
     /// <summary>
@@ -128,5 +133,15 @@ public class Hoverable : General
         hoverWindowMed.Hide();
     }
 
+
+    private void OnDestroy()
+    {
+        if (hoverWindowMed == null)
+        {
+            return;
+        }
+
+        hoverWindowMed.Hide();
+    }
 }
 

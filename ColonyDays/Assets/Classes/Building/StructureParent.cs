@@ -428,7 +428,10 @@ public class StructureParent : Building {
         //if its not done pay fee for using next stage 
         if (name != H.Done)
         {
-            NextStageFee();
+            //no fees will be payed for now. Removed bz on Stage1 a fee is payed and throws Ledger off
+            //this fees are intended as a pay now to get a building finish
+
+            //NextStageFee(); 
         }
 
 

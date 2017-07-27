@@ -27,7 +27,7 @@ public class RotateRTS : GenericCameraComponent {
             ResetLeftChangeVal();
             fovChange = 0;
         }
-        CamControl.CAMRTS.CameraFOV(fovChange);
+        //CamControl.CAMRTS.CameraFOV(fovChange);
 
         return temp;
     }

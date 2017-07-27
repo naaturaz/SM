@@ -2490,10 +2490,17 @@ public class Person : Hoverable
         return _light != null;
     }
 
+
+    float _oldFOV;
     internal void SelectPerson()
     {
         CreateProjector();
         AudioCollector.PlayPersonVoice(this);
+
+        //follow citizen and camera FOV
+        //InputRTS.IsFollowingPersonNow = true;
+        //_oldFOV = CamControl.CAMRTS.GetComponent<Camera>().fieldOfView;
+        //CamControl.CAMRTS.GetComponent<Camera>().fieldOfView = 30f;
     }
 
     /// <summary>
@@ -2503,6 +2510,10 @@ public class Person : Hoverable
     {
         DestroyProjector();
         HidePaths();
+
+        //InputRTS.IsFollowingPersonNow = false;
+        //CamControl.CAMRTS.GetComponent<Camera>().fieldOfView = _oldFOV;
+
 
         //for militar brain
         if (Brain == null)
@@ -2551,7 +2562,7 @@ public class Person : Hoverable
 
             _light = Create(Root.lightCilPerson, transform.position, container: transform);
 
-            _reachArea = Create(Root.reachArea, transform.position, container: transform);
+            _reachArea = Create(Root.reachAreaFilled, transform.position, container: transform);
             // *2 bz is from where the person is at so 'Brain.Maxdistance' is a  Radius
             _reachArea.transform.localScale = new Vector3(2, 0.1f, 2);
 

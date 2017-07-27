@@ -321,6 +321,13 @@ public class BulletinWindow : GUIElement
         _help.text = "Bulletin/Finance/Exports \n" + Languages.ReturnString("Help.Bulletin/Finance/Exports");
     }
 
+    public void ShowWindowAndThenExports()
+    {
+        Program.MouseListener.HidePersonBuildOrderNotiBulletinHelpWin();
+        base.Show();
+        ShowExports();
+    }
+
 
     #endregion
 }

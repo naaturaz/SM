@@ -36,6 +36,16 @@ public class Notification
 
         if (!String.IsNullOrEmpty(Param1))
         {
+            if (NotificationKey == "ShipPayed")
+            {
+                Param1 = MyText.DollarFormat(float.Parse(Param1));
+            }
+            else if(NotificationKey == "NoInput")
+            {
+                Param1 = Languages.ReturnString(Param1);
+            }
+
+
             Description = string.Format(Description, Param1);
         }
 

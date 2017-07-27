@@ -470,7 +470,7 @@ public class Structure : StructureParent
             HideAll();   
         }
         BuildingPot.Control.Registro.RemoveItem(Category, MyId);
-        _construcionSign = General.Create(Root.DemolishSign, MiddlePoint(), "Construction", transform);
+        _construcionSign = General.Create(Root.DemolishSign, MiddlePoint(), "Demolition", transform);
 
         ReturnWhatThisCost();
         AudioCollector.PlayOneShot("BUILDING_DEMOLISH_1", 0);

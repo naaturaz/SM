@@ -221,6 +221,7 @@ public class PersonalObject
     };
 
 
+
     int _myCart = -1;
     string DefineCurrentCartRoot()
     {
@@ -234,9 +235,18 @@ public class PersonalObject
 
         if (!_person.Inventory.IsEmpty())
         {
-            res += "WithBoxes";
+            res += WithBoxesOrBarrels();
         }
         return res;
+    }
+
+    string WithBoxesOrBarrels()
+    {
+        if (_person.Inventory.IsCarryingLiquid())
+        {
+            return "WithBarrels";
+        }
+        return "WithBoxes";
     }
 
     /// <summary>

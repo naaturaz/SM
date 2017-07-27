@@ -168,7 +168,7 @@ public class BodyAgent
     void CartRideRadius()
     {
         _initRadius = _agent.radius;
-        _agent.radius *= 2;
+        _agent.radius *= 4;//2
     }
 
 

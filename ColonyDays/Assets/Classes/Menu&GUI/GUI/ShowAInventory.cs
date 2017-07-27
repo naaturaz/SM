@@ -243,5 +243,35 @@ public class ShowAInventory
     {
         _allItems.Remove(showInvetoryItem);
         showInvetoryItem.Destroy();
+
+        //if a tile is destroyed needs to update 
+        UpdateToThisInv(Inv);
+    }
+
+    internal void UpdateToThisInv(Inventory inventory)
+    {
+        Inv = inventory;
+
+        var iForSpwItem = 0;//so ReturnIniPos works nicely
+        for (int i = 0; i < _inv.InventItems.Count; i++)
+        {
+            //> 0 for main so only show items tht have some 
+            if (_inv.InventItems[i] != null && _inv.InventItems[i].Amount > 0)
+            {
+                //is a brand new item
+                if (_allItems.Count <= i)
+                {
+                    _allItems.Add(ShowInvetoryItem.Create(_containr.transform, _inv.InventItems[i], ReturnIniPos(iForSpwItem),
+                        this, _invType));
+                }
+                else if (_allItems[i].InvItem1.Key != _inv.InventItems[i].Key)
+                {
+                    //updates the item
+                    _allItems[i].UpdateToThis(_inv.InventItems[i], ReturnIniPos(iForSpwItem));
+                }
+
+                iForSpwItem++;
+            }
+        }
     }
 }

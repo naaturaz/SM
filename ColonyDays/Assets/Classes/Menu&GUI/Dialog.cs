@@ -37,6 +37,11 @@ public class Dialog
 
     public static void OKDialog(H type, string str1 = "")
     {
+        if (type == H.CompleteQuest)
+        {
+            str1 = MyText.DollarFormat(float.Parse(str1));
+        }
+
         RoutineSetUp();
 
         _type = type;

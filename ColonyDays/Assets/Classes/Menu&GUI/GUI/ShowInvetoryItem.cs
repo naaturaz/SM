@@ -71,16 +71,25 @@ public class ShowInvetoryItem : GUIElement
 
         if (_textCol1 != null && InvItem1!=null)
 	    {
-            //so hover gets it
-            _textCol1.transform.name = InvItem1.Key + "";
-            LoadIcon();
-
+            Init();
 	    }
 
         //Debug.Log("loc:" + transform.localScale + " lossy"+transform.localScale);
 	}
 
-    private void LoadIcon()
+    void Init()
+    {
+        if (_textCol1 == null)
+        {
+            Start();
+        }
+
+        //so hover gets it
+        _textCol1.transform.name = InvItem1.Key + "";
+        LoadIcon();
+    }
+
+    public void LoadIcon()
     {
         var root = Program.gameScene.ExportImport1.ReturnIconRoot(_invItem.Key);
         Sprite sp = Resources.Load<Sprite>(root);
@@ -291,5 +300,15 @@ public class ShowInvetoryItem : GUIElement
     {
         Program.MouseListener.ClickOnAnInvItem(_invItem);
 
+    }
+
+
+
+    internal void UpdateToThis(InvItem invItem, Vector3 iniPos)
+    {
+        InvItem1 = invItem;
+        transform.localPosition = iniPos;
+        Init();
+        Set3Text();
     }
 }

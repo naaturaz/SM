@@ -366,7 +366,7 @@ public class BuildingWindow : GUIElement
     //    }
     //}
 
- 
+
 
     private ShowAInventory _showAInventory;
     private int oldItemsCount;
@@ -418,18 +418,23 @@ public class BuildingWindow : GUIElement
         {
             _showAInventory = new ShowAInventory(Building.Inventory, _gaveta.gameObject, _invIniPos.transform.localPosition);
             ShowProductionReport();
-
         }
-        else if (_showAInventory != null && (
-            oldItemsCount != Building.Inventory.InventItems.Count ||
-            oldBuildID != Building.MyId ||
-            Building.IsToReloadInv()))
+        else if (oldBuildID != Building.MyId)
         {
+            oldBuildID = Building.MyId;
             oldItemsCount = Building.Inventory.InventItems.Count;
 
-            oldBuildID = Building.MyId;
             _showAInventory.DestroyAll();
             _showAInventory = new ShowAInventory(Building.Inventory, _gaveta.gameObject, _invIniPos.transform.localPosition);
+        }
+        else if (_showAInventory != null && (oldItemsCount != Building.Inventory.InventItems.Count
+            || Building.IsToReloadInv()))
+        {
+            oldItemsCount = Building.Inventory.InventItems.Count;
+            //_showAInventory.DestroyAll();
+            //_showAInventory = new ShowAInventory(Building.Inventory, _gaveta.gameObject, _invIniPos.transform.localPosition);
+
+            _showAInventory.UpdateToThisInv(Building.Inventory);
             ShowProductionReport();
         }
 
@@ -536,13 +541,13 @@ public class BuildingWindow : GUIElement
 
             if (Building.HType == H.Masonry)
             {
-                res += Languages.ReturnString("Buildings.Ready"); 
+                res += Languages.ReturnString("Buildings.Ready");
 
                 for (int i = 0; i < Building.BuildersManager1.GreenLight.Count; i++)
                 {
                     var st = Brain.GetStructureFromKey(Building.BuildersManager1.GreenLight[i].Key);
 
-                    if (st!=null)
+                    if (st != null)
                     {
                         res += "\n" + st.Name;
                     }
@@ -560,7 +565,7 @@ public class BuildingWindow : GUIElement
                 amt += Building.Families[i].MembersOfAFamily();
             }
 
-            res += Languages.ReturnString("People.Living") + amt + ""; 
+            res += Languages.ReturnString("People.Living") + amt + "";
             TilesOfPeopleInAHouse();
         }
 
@@ -586,7 +591,7 @@ public class BuildingWindow : GUIElement
 
     void CleanPeopleTile()
     {
-        var oldBuild =_oldBuilding != null && _oldBuilding == _building;
+        var oldBuild = _oldBuilding != null && _oldBuilding == _building;
         var sameTiles = Building.Families != null && Building.Families[0].MembersOfAFamily() == _tiles.Count;
 
         if (oldBuild && sameTiles)
@@ -1102,7 +1107,7 @@ public class BuildingWindow : GUIElement
     GameObject _plusBtn;
     GameObject _lessBtn;
 
- 
+
 
     private void CheckIfPlusIsActive()
     {
@@ -1161,7 +1166,7 @@ public class BuildingWindow : GUIElement
 
     internal void HideIfSameBuilding(Building building)
     {
-        if (_building !=null && building == _building)
+        if (_building != null && building == _building)
         {
             Hide();
         }

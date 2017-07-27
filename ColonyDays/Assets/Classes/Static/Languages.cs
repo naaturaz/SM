@@ -417,7 +417,7 @@ public class Languages
 
        { "Construction.HoverMed", "For the construction of any building you need to have workers in the Masonry. "+
             " Click the Masonry, then the '+' sign in the general tab. Make sure you have enough resources"},
-
+       { "Demolition.HoverMed", "Once the inventory is clear will be demolished. Wheelbarrows will move the inventory"},
 
        { "Construction.Help", "For the construction of any building you need to have workers in the Masonry. "+
             " Click the Masonry, then the '+' sign in the general tab. Make sure you have enough resources"},
@@ -473,7 +473,7 @@ public class Languages
 
 
        //to  add on spanish         //to correct  
-       { "TutoOver", "Your reward is $10,000 if is the first time you complete it. The tutorial is over now you can keep playing this game or start a new one."},
+       { "TutoOver", "Your reward is $10,000.00 if is the first time you complete it. The tutorial is over now you can keep playing this game or start a new one."},
 
        //Tuto
        { "CamMov.Tuto", "Tutorial completion reward is $10,000 (one time reward per game). Step1: Use [WASD] or arrow keys to move the Camera. Do this for at least 5 seconds"},
@@ -560,7 +560,7 @@ public class Languages
        { "ImportOil.Quest", "Quest: Import 500 " + Unit.CurrentWeightUnitsString() + " of Whale Oil at the Dock. This is needed to keep your lights on at night."},
 
        { "Population50.Quest", "Reach a total population of 50 citizens"},
-       {"CompleteQuest", "Your reward is ${0}"},
+       {"CompleteQuest", "Your reward is {0}"},
 
 
        //Quest Titles
@@ -588,6 +588,15 @@ public class Languages
        {"Quest.Arrow", "This is the quest button. You can access the quest window by clicking on it"},
        {"New.Quest.Avail", "At least one quest is available"},
        {"Quest_Button.HoverSmall", "Quest"},
+
+
+
+       //Products
+       //Notification.Init()
+       {"RandomFoundryOutput", "Melted Ore"},
+
+       //OrderShow.ShowToSetCurrentProduct()
+       { "RandomFoundryOutput (Ore, Wood)", "Melted Ore (Ore, Wood)"},
 
 
 

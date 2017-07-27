@@ -225,10 +225,6 @@ public class Inventory
         return Program.gameScene.GameTime1.ReturnCurrentDatePlsAdded(days);
     }
 
-    internal bool IsLiquid()
-    {
-        throw new NotImplementedException();
-    }
 
     private void SetAmtExpiration(InvItem item, float amt, MDate expiration)
     {
@@ -854,7 +850,7 @@ public class Inventory
 
     static bool IsLiquid(P prod)
     {
-        return prod == P.Water || prod == P.Beer || prod == P.Rum || prod == P.Ink;
+        return prod == P.Water || prod == P.Beer || prod == P.Rum || prod == P.Ink || prod == P.Clay;
     }
 
     public static bool ThereIsContainerForThis(P prod)

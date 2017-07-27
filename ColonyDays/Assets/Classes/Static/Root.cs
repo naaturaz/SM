@@ -243,6 +243,9 @@ public class Root : MonoBehaviour
     public static string lightCil = "Prefab/GUI/Civ5/LightCil";
     public static string lightCilWithProjScript = "Prefab/GUI/Civ5/LightCilWithProjScript";
     public static string reachArea = "Prefab/GUI/ReachArea";
+    public static string reachAreaFilled = "Prefab/GUI/ReachAreaFilled";
+
+
     public static string lightCilPerson = "Prefab/GUI/Civ5/LightCilPerson";
 
     public static string lockedBuilding = "Prefab/GUI/Locked_Building";
