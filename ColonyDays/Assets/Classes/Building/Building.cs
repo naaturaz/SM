@@ -3568,7 +3568,7 @@ public class Building : Hoverable, Iinfo
         {
             P prod = rawsOnNeed[i].Element;
             //so for nails for example for a Furnitrue will only order 0.2 x 30 = 6kg
-            var amtNeeded = (int) rawsOnNeed[i].Units * 10;
+            var amtNeeded = rawsOnNeed[i].Units * 10;
 
             if (!HaveThisProdOnInv(prod) || !doIHaveInput)
             {
@@ -3577,7 +3577,22 @@ public class Building : Hoverable, Iinfo
 
                 //BuildingPot.Control.Dispatch1.AddToOrders(prodNeed);
                 AddToClosestWheelBarrowAsOrder(prodNeed, H.None);
+
+                AddOrderToOurWorkers(prodNeed);
             }
+        }
+    }
+
+    /// <summary>
+    /// Now all workers will bring input if its needed 
+    /// </summary>
+    /// <param name="prodNeed"></param>
+    private void AddOrderToOurWorkers(Order prodNeed)
+    {
+        for (int i = 0; i < PeopleDict.Count; i++)
+        {
+            var pers = Family.FindPerson(PeopleDict[i]);
+            pers.AddWorkInputOrder(prodNeed);
         }
     }
 
@@ -3856,7 +3871,10 @@ public class Building : Hoverable, Iinfo
             {
                 var index = i;
                 var person = Family.FindPerson(PeopleDict[index]);
-                person.WasFired = false; 
+                person.WasFired = false;
+                //in case had a Input Work Order
+                person.Inventory.Delete();
+
                 PersonPot.Control.RestartControllerForPerson(person.MyId);
             }
         }

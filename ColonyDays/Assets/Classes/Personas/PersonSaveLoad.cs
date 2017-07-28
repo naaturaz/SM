@@ -26,6 +26,15 @@ public class PersonSaveLoad : PersonPot {
         XMLSerie.WriteXMLPerson(p);
     }
 
+    /// <summary>
+    /// Needed for When GUI is reloaded 
+    /// </summary>
+    /// <returns></returns>
+    public PersonData TempSave()
+    {
+        return new PersonData(GetAllPerson(), GetAllFromPersonController());
+    }
+
     List<PersonFile> GetAllPerson()
     {
         List<PersonFile> res = new List<PersonFile>();

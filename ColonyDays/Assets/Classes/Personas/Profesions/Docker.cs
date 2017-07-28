@@ -228,10 +228,10 @@ public class Docker : Profession
 
         if (_sourceBuild.HasEnoughToCoverOrder(Order1))
         {
-            var amt = Order1.ApproveThisAmt(_person.HowMuchICanCarry(Order1.Amount));
+            //need to pull left from Dispatch bz Order1 is passed by Value not Ref 
+            var left = _person.Work.Dispatch1.LeftOnThisOrder(Order1);
+            var amt = Order1.ApproveThisAmt(left);
 
-            //Order1.AddToFullFilled(amt);
-            //
             _person.Work.Dispatch1.AddToOrderAmtProcessed(Order1, amt);
 
             Debug.Log(_person.MyId + " Docker got from:" + Order1.SourceBuild + " : " + Order1.Product + ".amt:" + amt);

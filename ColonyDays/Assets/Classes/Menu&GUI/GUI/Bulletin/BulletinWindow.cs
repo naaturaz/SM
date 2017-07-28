@@ -19,7 +19,17 @@ public class BulletinWindow : GUIElement
     private static SubBulletinProduction _production;
     private static SubBulletinFinance _finance;
 
+    public static SubBulletinProduction SubBulletinProduction1
+    {
+        get { return _production; }
+        set { _production = value; }
+    }
 
+    public static SubBulletinFinance SubBulletinFinance1
+    {
+        get { return _finance; }
+        set { _finance = value; }
+    }
 
     Text _help;//help in this window
 
@@ -39,18 +49,6 @@ public class BulletinWindow : GUIElement
     {
         get { return _scroll_Ini_PosGO; }
         set { _scroll_Ini_PosGO = value; }
-    }
-
-    public static SubBulletinProduction SubBulletinProduction1
-    {
-        get { return _production; }
-        set { _production = value; }
-    }
-
-    public static SubBulletinFinance SubBulletinFinance1
-    {
-        get { return _finance; }
-        set { _finance = value; }
     }
 
     void Start()
@@ -78,6 +76,12 @@ public class BulletinWindow : GUIElement
         //bz GUI Loades like 4 times 
         PersonData pData = XMLSerie.ReadXMLPerson();
 
+        var tempData = Program.gameScene.ProvideMeWithTempData();
+        //means is reloading from a change in GUI a
+        if (tempData!=null)
+        {
+            pData = tempData;
+        }
 
         //loading 
         if (pData != null)

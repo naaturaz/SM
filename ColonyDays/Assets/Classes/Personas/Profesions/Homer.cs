@@ -182,18 +182,41 @@ public class Homer : Profession
             ExecuteNow = false;
             DropAllMyGoods(BuildToGoBackTo);
 
+            CheckOnWorkInputOrders();
 
-            if (ExDockerIsGettingFood())
+            //if is not empty means got something for inputs...
+            if (_person.Inventory.IsEmpty())
             {
-                _person.GetFood(BuildToGoBackTo);
-            }
-            else if (_person.PrevJob != Job.Docker)
-            {
-                _person.GetFood(BuildToGoBackTo);
+                if (ExDockerIsGettingFood())
+                {
+                    _person.GetFood(BuildToGoBackTo);
+                }
+                else if (_person.PrevJob != Job.Docker)
+                {
+                    _person.GetFood(BuildToGoBackTo);
+                }
             }
 
             _person.Body.ResetPersonalObject();
             ComingBackToOffice();
+        }
+    }
+
+
+    /// <summary>
+    /// Once on Storage will attempt to pick Inputs for work 
+    /// </summary>
+    private void CheckOnWorkInputOrders()
+    {
+        if (_person.DoesHasInputOrders())
+        {
+            var ord = _person.ReturnFirstOrder();
+            if (ord != null)
+            {
+                //getting the input item 
+                var amt = _person.HowMuchICanCarry() * 2;
+                _person.ExchangeInvetoryItem(BuildToGoBackTo, _person, ord.Product, amt);
+            }
         }
     }
 
@@ -216,6 +239,8 @@ public class Homer : Profession
         if (_person.Body.Location == HPers.Home && _person.Body.GoingTo == HPers.Home)
         {
             _person.HomeActivities();
+
+
             //UVisHelp.CreateText(_person.transform.position, "Home Now");
 
 //         //Debug.Log(_person.MyId + " not homer anymore now will be a: " + _person.PrevJob);
@@ -231,6 +256,11 @@ public class Homer : Profession
             }
         }
     }
+
+
+
+
+
 
     void ConvertToWheelBarrOrBuilder()
     {

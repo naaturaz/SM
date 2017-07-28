@@ -92,7 +92,7 @@ public class SpecTile : GUIElement
         _input2Lbl.text = Export.Prod;
         _input3Lbl.text = Unit.ConvertFromKGToCurrent(Export.Amt).ToString("N0") + " " 
             + Unit.CurrentWeightUnitsString();
-        _priceLbl.text = Unit.ProperPricedAndFormat(Export.Money);
+        _priceLbl.text = MyText.DollarFormat(Export.Money);
     }
 
     private void InitSpec()

@@ -2,6 +2,7 @@
 *
 */
 
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PersonFile  {
@@ -78,6 +79,8 @@ public class PersonFile  {
 
     public string StartingBuild;
 
+    public List<Order> WorkInputOrders;
+
     public PersonFile(Person pers)
     {
         _age = pers.Age;
@@ -149,6 +152,8 @@ public class PersonFile  {
         Nutrition1 = pers.Nutrition1;
         WasFired = pers.WasFired;
         PersonBank = pers.PersonBank1;
+
+        WorkInputOrders = pers.WorkInputOrders;
     }
 
     void SavePersonStructs(Person pers)

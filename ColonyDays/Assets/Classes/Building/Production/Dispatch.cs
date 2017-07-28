@@ -109,7 +109,7 @@ public class Dispatch
     /// <summary>
     /// Will define _isUsingPrimary
     /// </summary>
-    bool DefineUsingPrimary(List<Order> list )
+    bool DefineUsingPrimary(List<Order> list)
     {
         if (list == Orders)
         {
@@ -142,7 +142,7 @@ public class Dispatch
     {
         if (!ListContainsCheckID(Orders, prod))
         {
-           //Debug.Log("Order Added:" + prod.Product + ".placed by:" + prod.DestinyBuild);
+            //Debug.Log("Order Added:" + prod.Product + ".placed by:" + prod.DestinyBuild);
 
             Orders.Add(prod);
             //OrderByPlacedTime(Orders);
@@ -168,7 +168,7 @@ public class Dispatch
     }
 
 
-#region Heavy Load
+    #region Heavy Load
     /// <summary>
     /// Bz they dont need to check ID if building place a order of a material should wait until is completed 
     /// </summary>
@@ -198,7 +198,7 @@ public class Dispatch
             Debug.Log("evac order added:" + evacOrder.Product + " orig:" + evacOrder.SourceBuild);
         }
     }
-#endregion
+    #endregion
 
 
 
@@ -251,11 +251,11 @@ public class Dispatch
         for (int i = 0; i < list.Count; i++)
         {
             //regular orders
-            if (list[i].Product == prod.Product && list[i].DestinyBuild == prod.DestinyBuild 
+            if (list[i].Product == prod.Product && list[i].DestinyBuild == prod.DestinyBuild
                 && list[i].TypeOrder == H.None && list[i].ID == prod.ID
 
                 //evacutaion orders
-                || (list[i].Product == prod.Product && list[i].SourceBuild == prod.SourceBuild 
+                || (list[i].Product == prod.Product && list[i].SourceBuild == prod.SourceBuild
                 && list[i].TypeOrder == H.Evacuation && list[i].ID == prod.ID))
             {
                 return true;
@@ -326,7 +326,7 @@ public class Dispatch
                 return;
             }
 
-            _recycledOrders.Insert(0,prod);    
+            _recycledOrders.Insert(0, prod);
         }
     }
 
@@ -361,9 +361,9 @@ public class Dispatch
                 || currOrders[i].IsCompleted)
             {
                 //todo Notify
-                Debug.Log("Inv full to DestBuild:"+currOrders[i].DestinyBuild+"|for prod:"+currOrders[i].Product+"" 
-                    +"|order removed. Or  had >500KG on Destiny of the prod. or was completed");
-                
+                Debug.Log("Inv full to DestBuild:" + currOrders[i].DestinyBuild + "|for prod:" + currOrders[i].Product + ""
+                    + "|order removed. Or  had >500KG on Destiny of the prod. or was completed");
+
                 bool wasRemoved = RemoveOrderByIDExIm(currOrders[i].ID);
 
                 //othwerwise is infinite loop
@@ -383,7 +383,7 @@ public class Dispatch
                 return EvacuationOrder(person, currOrders[i]);
             }
         }
-        return null;      
+        return null;
     }
 
     public Order GiveMeOrderDocker(Person person)
@@ -397,7 +397,7 @@ public class Dispatch
             if (IsDestinyBuildInvFullForThisProd(currOrders[i]) || currOrders[i].IsCompleted)
             {
                 //todo Notify
-                Debug.Log("Docker order removed:"+currOrders[i].DestinyBuild+"|for prod:"+currOrders[i].Product+"" +"");
+                Debug.Log("Docker order removed:" + currOrders[i].DestinyBuild + "|for prod:" + currOrders[i].Product + "" + "");
 
                 RemoveOrderByIDExIm(currOrders[i].ID);
                 i--;
@@ -421,7 +421,7 @@ public class Dispatch
     /// </summary>
     private void LoadOrdersIfNeeded()
     {
-        
+
     }
 
     /// <summary>
@@ -463,8 +463,8 @@ public class Dispatch
             return true;
         }
         return false;
-    }  
-    
+    }
+
     bool IsDestinyBuildInvFull(Order order)
     {
         var destBuild = Brain.GetBuildingFromKey(order.DestinyBuild);
@@ -549,7 +549,7 @@ public class Dispatch
         if (foodSrc != "")
         {
             Order temp = new Order();
-            temp = Order.Copy( order);
+            temp = Order.Copy(order);
             //OrderFound(order);
 
             temp.Amount = order.ApproveThisAmt(person.HowMuchICanCarry());
@@ -561,10 +561,10 @@ public class Dispatch
         //if not found a FoodSrc with the Product need to seend it to the back of the queue
         //or send it to Recycled Orders
         OrderFound(order);
-        
-        return null;        
-    }   
-    
+
+        return null;
+    }
+
     public void AddToOrderAmtProcessed(Order ord, float amt)
     {
         var orderInd = _orders.FindIndex(a => a.ID == ord.ID);
@@ -586,6 +586,31 @@ public class Dispatch
         UpdateExportsAndImport(ord, amt);
     }
 
+    /// <summary>
+    /// Matching ID of order will look into _orders and _recycledOrders 
+    /// 
+    /// If not found 0 is return 
+    /// </summary>
+    /// <param name="ord"></param>
+    /// <returns></returns>
+    public float LeftOnThisOrder(Order ord)
+    {
+        var orderInd = _orders.FindIndex(a => a.ID == ord.ID);
+        if (orderInd != -1)
+        {
+            return _orders[orderInd].Left();
+        }
+        else
+        {
+            var ind = _recycledOrders.FindIndex(a => a.ID == ord.ID);
+            if (ind != -1)
+            {
+                return _recycledOrders[ind].Left();
+            }
+        }
+        return 0;
+    }
+
 
 
     /// <summary>
@@ -596,7 +621,7 @@ public class Dispatch
     private void UpdateExportsAndImport(Order ord, float amt)
     {
         var f = _fresh.FindIndex(a => a.ID == ord.ID);
-        if (f!=-1)
+        if (f != -1)
         {
             //is a freesh order therefore is referenced and doesnt need to be updated
             return;
@@ -617,7 +642,7 @@ public class Dispatch
             )
         {
             Order temp = new Order();
-            temp = Order.Copy( order);
+            temp = Order.Copy(order);
             OrderFound(order);
 
             temp.Amount = order.ApproveThisAmt(person.HowMuchICanCarry());
@@ -637,8 +662,8 @@ public class Dispatch
         //if not found a FoodSrc with the Product need to seend it to the back of the queue
         //or send it to Recycled Orders
         OrderFound(order);
-        
-        return null;        
+
+        return null;
     }
 
     internal bool ThereIsWorkAtDock()
@@ -685,7 +710,7 @@ public class Dispatch
     /// 
     /// Will return a string value if one found with the prod other wise returs ""
     /// </summary>
-    public static string FindFoodSrcWithProd(Person person , P prod)
+    public static string FindFoodSrcWithProd(Person person, P prod)
     {
         var foodSrcs = ScoreAllFoodSources(person);
 
@@ -728,7 +753,7 @@ public class Dispatch
             var score = ScoreABuild(person, foodSrc);//tht in this case is just Distance
             if (score < Brain.Maxdistance && foodSrc.Instruction == H.None)
             {
-                rank.Add(new BuildRank(key, score, score));     
+                rank.Add(new BuildRank(key, score, score));
             }
         }
         return rank.OrderBy(a => a.Score).ToList();
@@ -748,12 +773,12 @@ public class Dispatch
     {
         if (person.Work == null)
         {
-            return Vector3.Distance(person.transform.position, toScore.transform.position);    
+            return Vector3.Distance(person.transform.position, toScore.transform.position);
         }
         return Vector3.Distance(person.Work.transform.position, toScore.transform.position);
     }
 
-#region Evacuation Order
+    #region Evacuation Order
 
     /// <summary>
     /// Will pass all orders in dormant to Orders
@@ -803,10 +828,10 @@ public class Dispatch
         {
             return;
         }
-        
+
         list.RemoveAt(index);
 
-       //Debug.Log("Removed from list:"+order.Product+".type:"+order.TypeOrder);
+        //Debug.Log("Removed from list:"+order.Product+".type:"+order.TypeOrder);
     }
 
     /// <summary>
@@ -824,7 +849,7 @@ public class Dispatch
             !building.Inventory.IsHasEnoughToCoverThisIngredient(ing))
         {
             RemoveEvacuationOrder(order.ID);
-           //Debug.Log("Removed evac order:" + order.Product+".date"+Program.gameScene.GameTime1.TodayYMD());
+            //Debug.Log("Removed evac order:" + order.Product+".date"+Program.gameScene.GameTime1.TodayYMD());
 
             //so people pass check in with Queues and this building finnaly gets removed 
             if (building.Inventory.IsEmpty())
@@ -834,7 +859,7 @@ public class Dispatch
         }
     }
 
-#endregion
+    #endregion
 
     public bool DoIHaveAnyOrderOnDispatch(Building build)
     {
@@ -941,7 +966,7 @@ public class Dispatch
         //will added to invent and will remove it from ExpImpOrders
         if (maxAmtCanTake > ord.Amount)
         {
-           Debug.Log("Imported:" + ord.Product + " . " + ord.Amount+" Done" );
+            Debug.Log("Imported:" + ord.Product + " . " + ord.Amount + " Done");
             Program.gameScene.ExportImport1.Buy(ord.Product, ord.Amount);
 
             dock.Inventory.Add(ord.Product, ord.Amount);
@@ -951,11 +976,11 @@ public class Dispatch
         //so its handled later
         else
         {
-           Debug.Log("Imported:" + ord.Product + " . " + maxAmtCanTake);
+            Debug.Log("Imported:" + ord.Product + " . " + maxAmtCanTake);
             Program.gameScene.ExportImport1.Buy(ord.Product, maxAmtCanTake);
 
             dock.Inventory.Add(ord.Product, maxAmtCanTake);
-            ord.ChangeAmountBy(- maxAmtCanTake);
+            ord.ChangeAmountBy(-maxAmtCanTake);
         }
     }
 
@@ -971,11 +996,11 @@ public class Dispatch
             return;
         }
 
-        if(!dock.Inventory.IsItemOnInv(ord.Product) && !ExpImpOrders.Contains(ord))
+        if (!dock.Inventory.IsItemOnInv(ord.Product) && !ExpImpOrders.Contains(ord))
         {
-           Debug.Log("Docker removed the evac order:"+ord.Product);
+            Debug.Log("Docker removed the evac order:" + ord.Product);
             RemoveEvacuationOrder(ord.ID);
-            
+
         }
     }
 
@@ -1064,7 +1089,7 @@ public class Dispatch
         {
             //todo notify
             Debug.Log("Will not handle over 10 Export Import orders at the same time . 10 is the max");
-            Dialog.OKDialog(H.Info , "Ten orders is the limit on this building");
+            Dialog.OKDialog(H.Info, "Ten orders is the limit on this building");
             return false;
         }
     }
@@ -1075,7 +1100,7 @@ public class Dispatch
         return true;
     }
 
-#endregion
+    #endregion
 
     /// <summary>
     /// Only on _orders list 
@@ -1198,7 +1223,7 @@ public class Dispatch
     /// </summary>
     void CheckIfExportAndStillOnDockStorage()
     {
-        
+
     }
 
     /// <summary>
@@ -1207,7 +1232,7 @@ public class Dispatch
     /// <returns></returns>
     public List<Order> ReturnRegularOrdersOnProcess()
     {
-        return _expImpOrders.Where(a=>a.TypeOrder==H.None).ToList();
+        return _expImpOrders.Where(a => a.TypeOrder == H.None).ToList();
     }
 
     /// <summary>
@@ -1310,7 +1335,7 @@ public class Order
 
     public Order() { }
 
-    public Order(P prod, string destiny, int amt)
+    public Order(P prod, string destiny, float amt)
     {
         Product = prod;
         DestinyBuild = destiny;
@@ -1353,7 +1378,7 @@ public class Order
 
         if (FullFilled >= _amount)
         {
-            IsCompleted=true;
+            IsCompleted = true;
         }
     }
 

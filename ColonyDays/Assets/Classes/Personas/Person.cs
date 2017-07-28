@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -485,6 +486,8 @@ public class Person : Hoverable
         }
     }
 
+
+
     #region Enemy
 
     /// <summary>
@@ -633,6 +636,8 @@ public class Person : Hoverable
         InitGeneralStuff();
 
         RecreateProfession(pF);
+
+        WorkInputOrders = pF.WorkInputOrders;
 
         //bz loading ends here 
         IsLoading = false;
@@ -1836,10 +1841,14 @@ public class Person : Hoverable
             )
         { return; }
 
-
+        //needs to go back to work to drop it there 
+        if (IsCarryingWorkInputOrder() && !WasFired)//if was fired need to deal with that 
+        {
+            Brain.ReadyToWork(true);
+            return;
+        }
 
         Home.HomeSmokePlay();
-
 
         DropFoodAtHome();
 
@@ -2899,6 +2908,7 @@ public class Person : Hoverable
 
 
 
+
     #region Hover All Objects. All objects that have a collider will be hoverable
 
     protected void OnMouseEnter()
@@ -2968,6 +2978,114 @@ public class Person : Hoverable
     public void WarHandler(object sender, EventArgs e)
     {
         Debug.Log(Name + " war");
+    }
+
+
+
+    #endregion
+
+
+
+    #region Work Input Orders
+
+    List<Order> _workInputOrders;
+    public List<Order> WorkInputOrders
+    {
+        get
+        {
+            return _workInputOrders;
+        }
+
+        set
+        {
+            _workInputOrders = value;
+        }
+    }
+
+    /// <summary>
+    /// This orders are input for the work place
+    /// 
+    /// Once they are back in Storage from work will pick item and store it at home
+    /// then once going back to work will take it back 
+    /// </summary>
+    /// <param name="prodNeed"></param>
+    internal void AddWorkInputOrder(Order prodNeed)
+    {
+        if (_workInputOrders==null)
+        {
+            _workInputOrders = new List<Order>();
+        }
+
+        if (DoIContainThatInputOrderAlready(prodNeed))
+        {
+            return;
+        }
+        _workInputOrders.Add(prodNeed);
+    }
+
+    /// <summary>
+    /// If an order from the same place and same prod was placed before dont need to place it again 
+    /// </summary>
+    /// <param name="ord"></param>
+    /// <returns></returns>
+    bool DoIContainThatInputOrderAlready(Order ord)
+    {
+        var found = _workInputOrders.FindIndex(a => a.DestinyBuild == ord.DestinyBuild && a.Product == ord.Product);
+        return found != -1;
+    }
+
+    public bool DoesHasInputOrders()
+    {
+        return _workInputOrders != null && _workInputOrders.Count > 0;
+    }
+
+    public Order ReturnFirstOrder()
+    {
+        if (Work == null || _workInputOrders == null)
+        {
+            return null;
+        }
+
+        if (DoesHasInputOrders())
+        {
+            if (_workInputOrders[0].DestinyBuild == Work.MyId)
+            {
+                return _workInputOrders[0];
+            }
+            else
+            {
+                _workInputOrders.RemoveAt(0);
+            }
+        }
+        return null;
+    }
+
+    public void AddToOrdersCompleted(float amt)
+    {
+        var ord = ReturnFirstOrder();
+        if (ord == null)
+        {
+            return;
+        }
+
+        ord.AddToFullFilled(amt);
+        if (ord.IsCompleted)
+        {
+            _workInputOrders.RemoveAt(0);
+        }
+    }
+
+    internal bool IsCarryingWorkInputOrder()
+    {
+        if (!Inventory.IsEmpty() && DoesHasInputOrders())
+        {
+            var ord = ReturnFirstOrder();
+            if (ord!=null)
+            {
+                return Inventory.IsItemOnInv(ord.Product);
+            }
+        }
+        return false;
     }
 
     #endregion

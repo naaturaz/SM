@@ -686,6 +686,7 @@ public class GameScene : General
             Terreno.Destroy();
             controllerMain.Destroy();
 
+            DeleteTempData();
         }
 
         base.Destroy();
@@ -950,4 +951,31 @@ public class GameScene : General
     {
         return Time.time > _gameLoadedTime + 10 && _gameLoadedTime != 0;
     }
+
+
+
+
+
+    #region Used for when GUI reloads dont lose Reports
+    PersonData _personData;
+    public void DoATempSave()
+    {
+        //bz is called at every change Resolution event
+        if (!GameWasFullyLoadedAnd10SecAgo())
+        {
+            return;
+        }
+        _personData = PersonPot.SaveLoad.TempSave();
+    }
+
+    public PersonData ProvideMeWithTempData()
+    {
+        return _personData;
+    }
+
+    public void DeleteTempData()
+    {
+        _personData = null;
+    }
+    #endregion
 }

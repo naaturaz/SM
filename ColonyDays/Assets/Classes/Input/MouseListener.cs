@@ -142,6 +142,8 @@ public class MouseListener : InputMain
 
         HidePersonBuildOrderNotiWindows();
 
+        Program.gameScene.DoATempSave();
+
         main.Destroy();
         main = null;
         LoadMainGUI();

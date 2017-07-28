@@ -134,6 +134,18 @@ public class SubBulletinFinance
         }
         _reportsBudget.Clear();
         //_financeLogger.Clean();
+
+        //exports
+        for (int i = 0; i < _reportsExports.Count; i++)
+        {
+            //means this GUI was reloaded
+            if (_reportsExports[i] == null || _reportsExports[i].gameObject == null)
+            {
+                break;
+            }
+            _reportsExports[i].Destroy();
+        }
+        _reportsExports.Clear();
     }
 
 
@@ -235,22 +247,25 @@ public class SubBulletinFinance
 
     internal void ShowExports()
     {
-        if (_exports.Count == 0)
+        ExportData[] arr = new ExportData[_exports.Count + 1];
+        arr[0] = AddTitleBarExports();
+
+        for (int i = 0; i < _exports.Count; i++)
         {
-            _exports.Add(AddTitleBarExports());
+            arr[i + 1] = _exports[i];
         }
 
-        ShowExports(_exports);
+        ShowExports(arr);
     }
 
 
     List<SpecTile> _reportsExports = new List<SpecTile>();
-    private void ShowExports(List<ExportData> list)
+    private void ShowExports(ExportData[] list)
     {
         Hide();
         _bulletinWindow.ShowScrool();
 
-        for (int i = 0; i < list.Count; i++)
+        for (int i = 0; i < list.Length; i++)
         {
             var iniPosHere = _bulletinWindow.ScrollIniPosGo.transform.localPosition +
                              new Vector3(0, -3.5f * i, 0);

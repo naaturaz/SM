@@ -380,6 +380,7 @@ public class Profession
         //if cant take anything out of work should it go
         var forester = ProfDescription == Job.Forester && _readyToWork && _person.Work.CanTakeItOut(_person);
 
+        CheckIfHasWorkInputOrder();
 
         if (others || forester)
         {
@@ -389,6 +390,22 @@ public class Profession
         else
         {
             _person.Brain.CurrentTask = p;
+        }
+    }
+
+
+    private void CheckIfHasWorkInputOrder()
+    {
+        if (_person.Body.Location != HPers.Work)
+        {
+            return;
+        }
+        if (_person.IsCarryingWorkInputOrder())
+        {
+            var ord = _person.ReturnFirstOrder();
+
+            _person.AddToOrdersCompleted(_person.Inventory.InventItems[0].Amount);
+            _person.ExchangeInvetoryItem(_person, _person.Work, ord.Product, _person.Inventory.InventItems[0].Amount);
         }
     }
 

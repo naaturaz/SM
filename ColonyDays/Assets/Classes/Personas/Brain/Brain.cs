@@ -541,7 +541,7 @@ public class Brain
     }
 
 
-    bool ReadyToWork(bool makeItTrue = false)
+    public bool ReadyToWork(bool makeItTrue = false)
     {
         //this is when the prev state is calling this so it the state can get prompted to this new state 
         if (makeItTrue)
@@ -2215,6 +2215,8 @@ public class Brain
             if (_person.WasFired)
             {
                 _person.WasFired = false;
+                //in case had a Input Work Order
+                _person.Inventory.Delete();
             }
 
             var newWork = _jobManager.GiveWork(_person);

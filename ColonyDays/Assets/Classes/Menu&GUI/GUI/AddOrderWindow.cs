@@ -227,7 +227,7 @@ public class AddOrderWindow : GUIElement {
 
         if (_orderType == "Export")
         {
-            dockBuild.Dock1.Export(new Order(_prodSelect, "Ship", (int)_amt));
+            dockBuild.Dock1.Export(new Order(_prodSelect, "Ship", _amt));
 
 
             if (_prodSelect == P.Bean && locAmt == 300)
