@@ -170,7 +170,7 @@ class DialogGO : GUIElement
         }
     }
 
-    bool IsValidEmail(string emailaddress)
+    public static bool IsValidEmail(string emailaddress)
     {
         Regex regPass = new Regex(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
 
@@ -196,7 +196,7 @@ class DialogGO : GUIElement
         }
         catch (Exception ex)
         {
-            Dialog.OKDialog(H.Info, "Invitation was incorrect");
+            Dialog.OKDialog(H.Info, "Something was incorrect");
             print(ex.ToString());
         }
     }

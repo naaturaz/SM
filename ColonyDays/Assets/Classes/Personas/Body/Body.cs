@@ -335,6 +335,11 @@ public class Body //: MonoBehaviour //: General
         _currentAni = animationPass;
         myAnimator.SetBool(animationPass, true);
 
+        if (animationPass == "isCarry")
+        {
+            var a = 1;
+        }
+
         //otherwise will stop the one intended to be playing now 
         if (_currentAni != oldAnimation)
         {
@@ -484,7 +489,7 @@ public class Body //: MonoBehaviour //: General
     /// <returns></returns>
     string ReturnWheelBarrowIfPosible()
     {
-        if (GameController.AreThereWheelBarrowsOnStorage && _person.IsMajor)
+        if (GameController.AreThereWheelBarrowsOnStorage)
         {
             return "isWheelBarrow";
         }

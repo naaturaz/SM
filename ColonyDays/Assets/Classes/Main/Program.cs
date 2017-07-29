@@ -248,6 +248,11 @@ public class Program : MonoBehaviour {
 
 
     public static bool WasTutoPassed { get; set; }
+
+    /// <summary>
+    /// Means in this session reached the WeekDraw
+    /// </summary>
+    public static bool WeekDraw { get; internal set; }
 }
 
 

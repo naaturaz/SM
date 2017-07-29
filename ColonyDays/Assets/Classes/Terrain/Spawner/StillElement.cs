@@ -304,7 +304,44 @@ public class StillElement : TerrainRamdonSpawner
         CouldGrowPlantNow();
 
         MakeInactiveWhenNeeded();
+
     }
+
+
+    bool _checked;
+    /// <summary>
+    /// IF still element too close to center of town will get destroy
+    /// </summary>
+    private void CheckIfTooCloseToMiddleOfTown()
+    {
+        if (_checked)
+        {
+            return;
+        }
+
+        //is a loaded game 
+        if (TownLoader.InitialPosition == new Vector3() && Program.gameScene.GameWasFullyLoadedAnd10SecAgo())
+        {
+            _checked = true;
+        }
+
+        if (TownLoader.InitialPosition != new Vector3() && 
+            Vector3.Distance(transform.position, TownLoader.InitialPosition) < 9f && !_checked)
+        {
+            //UVisHelp.CreateText(transform.position,
+            //     Vector3.Distance(transform.position, TownLoader.InitialPosition) + "");
+
+            Debug.Log("Too close to town: "+MyId);
+            _checked = true;
+            DestroyCool();
+        }
+    }
+
+    protected void UpdateTreeEvery5Sec()
+    {
+        CheckIfTooCloseToMiddleOfTown();
+    }
+
 
     /// <summary>
     /// Will make it inactive if is not being used for Performance 
@@ -323,10 +360,7 @@ public class StillElement : TerrainRamdonSpawner
         }
     }
 
-    protected void UpdateTree()
-    {
 
-    }
 
     private void CheckIfWasDestroyAndPlayedFullAnimation()
     {

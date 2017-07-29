@@ -17,6 +17,7 @@ class TownLoader
     static bool _townLoaded;
     static string _dataPath;
     static int _initRegion;
+    static Vector3 _initialPosition;
 
     public static int InitRegion
     {
@@ -83,6 +84,20 @@ class TownLoader
         get { return _isTemplate; }
         set { _isTemplate = value; }
     }
+
+    public static Vector3 InitialPosition
+    {
+        get
+        {
+            return _initialPosition;
+        }
+
+        set
+        {
+            _initialPosition = value;
+        }
+    }
+
     /// <summary>
     /// Gets random Town*.xml file
     /// </summary>
@@ -131,6 +146,7 @@ class TownLoader
     static BuildingData ShiftToRandBuildsPos(BuildingData bData)
     {
         var randIniPos = GetRandomMapPos();
+        InitialPosition = randIniPos;
 
         _initRegion = MeshController.CrystalManager1.ReturnMyRegion(randIniPos);
 

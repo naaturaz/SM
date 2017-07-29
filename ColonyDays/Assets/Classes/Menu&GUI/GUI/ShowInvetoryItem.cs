@@ -85,7 +85,12 @@ public class ShowInvetoryItem : GUIElement
         }
 
         //so hover gets it
-        _textCol1.transform.name = InvItem1.Key + "";
+        if (_textCol3 == null)
+        {
+            //this is needed only for the main Inventory
+            _textCol1.transform.name = InvItem1.Key + "";
+        }
+
         LoadIcon();
     }
 
@@ -310,5 +315,10 @@ public class ShowInvetoryItem : GUIElement
         transform.localPosition = iniPos;
         Init();
         Set3Text();
+    }
+
+    internal void UpdateToThis(Vector3 iniPos)
+    {
+        transform.localPosition = iniPos;
     }
 }

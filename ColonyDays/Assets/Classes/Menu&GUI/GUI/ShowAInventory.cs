@@ -191,7 +191,7 @@ public class ShowAInventory
         {
             loaded = true;
             //DestroyAll();
-            ShowAllItems();
+            //ShowAllItems();
             countMU = 0;
         }
     }
@@ -259,7 +259,7 @@ public class ShowAInventory
             if (_inv.InventItems[i] != null && _inv.InventItems[i].Amount > 0)
             {
                 //is a brand new item
-                if (_allItems.Count <= i)
+                if (_allItems.Count <= i && !DoWeHaveThatKeyAlready(_inv.InventItems[i].Key))
                 {
                     _allItems.Add(ShowInvetoryItem.Create(_containr.transform, _inv.InventItems[i], ReturnIniPos(iForSpwItem),
                         this, _invType));
@@ -273,5 +273,25 @@ public class ShowAInventory
                 iForSpwItem++;
             }
         }
+        FinalReposition();
     }
+
+    bool DoWeHaveThatKeyAlready(P prod)
+    {
+        var index = _allItems.FindIndex(a => a.InvItem1.Key == prod);
+        return index != -1;
+    }
+
+    /// <summary>
+    /// Final position all Tiles
+    /// Bz sometimes overlaps tiles
+    /// </summary>
+    private void FinalReposition()
+    {
+        for (int i = 0; i < _allItems.Count; i++)
+        {
+            _allItems[i].UpdateToThis(ReturnIniPos(i));
+        }
+    }
+
 }
