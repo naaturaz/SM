@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,16 +19,25 @@ public class RewardsWindow : GUIElement
     public InputField EmailConfirm;
     public Text Display;
 
-    float _targetTime = 30;//60*60*2
+    float _targetTime = 15;//60*60*2
     float _playedPreviously;
 
     DateTime _today = new DateTime();
+    private int _week;
 
-    DayOfWeek _week = new DayOfWeek();
 
     // Use this for initialization
     void Start()
     {
+        _week = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear
+    (DateTime.Now, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+
+        if (PlayerPrefs.GetInt("Week") == _week)
+        {
+            Hide();
+            return;
+        }
+
         iniPos = transform.position;
         _today = DateTime.Today;
 
@@ -48,19 +58,9 @@ public class RewardsWindow : GUIElement
             PlayerPrefs.SetInt("Reward", 1);
         }
 
-        StartClean();
     }
 
-    /// <summary>
-    /// If user has played and
-    /// If is a Friday or Past friday we need to start clean
-    /// due to that if user reached Target Goal will be offered to submit the email 
-    /// right away
-    /// </summary>
-    private void StartClean()
-    {
-        //
-    }
+
 
     // Update is called once per frame
     void Update()
@@ -139,6 +139,12 @@ public class RewardsWindow : GUIElement
 
         ResetPlayer();
         Program.WeekDraw = true;
+
+
+        PlayerPrefs.SetInt("Week", _week);
+        Debug.Log("Week " + _week);
+
+        Qualified.SetActive(false);
     }
 
     void ResetPlayer()

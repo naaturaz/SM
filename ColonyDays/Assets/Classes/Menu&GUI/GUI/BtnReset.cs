@@ -19,6 +19,8 @@ public class BtnReset : MonoBehaviour {
         PlayerPrefs.SetString("Tuto", "");
         PlayerPrefs.SetInt("Rate", 0);
         PlayerPrefs.SetInt("Reward", 0);
+        PlayerPrefs.SetInt("Week", -1);
+
 
         PlayerPrefs.SetString("F1", "");
         PlayerPrefs.SetString("QuestArrow", "");
