@@ -11,16 +11,17 @@ public class GUIElement : General {
     protected GameObject _titleInputFieldGO;
     private Scrollbar _verticScrollbar;
 
-	// Use this for initialization
-	protected void Start () {
+    RectTransform _scrollContent;
+
+    // Use this for initialization
+    protected void Start()
+    {
 
         _titleInputFieldGO = GetGrandChildCalled("TitleInputField");
         _titleInputField = _titleInputFieldGO.GetComponent<InputField>();
         _titleInputFieldGO.SetActive(false);
 
-	}
-
-
+    }
 
 
 
@@ -130,6 +131,17 @@ public class GUIElement : General {
 
         _verticScrollbar.value = 1;
     }
+
+    public void AdjustContentHeight(float size)
+    {
+        if (_scrollContent == null)
+        {
+            _scrollContent = FindGameObjectInHierarchy("Content", gameObject).GetComponent<RectTransform>();
+        }
+
+        _scrollContent.sizeDelta = new Vector2(_scrollContent.sizeDelta.x, size);
+    }
+
 
     internal void HideArrow()
     {

@@ -43,6 +43,8 @@ public class SubBulletinFinance
     internal void ShowBudget()
     {
         ShowBudgetAccts(_financeLogger.ResumenCurrentBudget(Program.gameScene.GameTime1.Year));
+        _bulletinWindow.AdjustContentHeight(_reportsBudget.Count * 4.7f);
+
     }
 
 
@@ -77,6 +79,8 @@ public class SubBulletinFinance
     internal void ShowPrices()
     {
         ShowPrices(GetAllInInventories());
+        _bulletinWindow.AdjustContentHeight(_reports.Count * 3.2f);
+
     }
 
     List<ProdSpec> GetAllInInventories()
@@ -155,6 +159,7 @@ public class SubBulletinFinance
     internal void ShowSpecs()
     {
         ShowSpecs(GetAllSpecs());
+        _bulletinWindow.AdjustContentHeight(_reportsSpec.Count * 3.5f);
     }
 
     List<ProductInfo> GetAllSpecs()
@@ -256,6 +261,8 @@ public class SubBulletinFinance
         }
 
         ShowExports(arr);
+        _bulletinWindow.AdjustContentHeight(arr.Length * 3.75f);
+
     }
 
 

@@ -37,6 +37,8 @@ namespace Assets.Classes.Menu_GUI.GUI.Bulletin
 
             list.Insert(0, "Unemployed");
             ShowWorkers(list);
+
+            _bulletinWindow.AdjustContentHeight(list.Count * 5.2f);
         }
 
         List<WorkerTile> _reports = new List<WorkerTile>();

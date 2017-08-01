@@ -1521,6 +1521,11 @@ public class Building : Hoverable, Iinfo
     /// <returns>True if collides</returns>
     public virtual bool CheckIfColliding()
     {
+        if (HType == H.BullDozer)
+        {
+            return false;
+        }
+
         var tBounds = _bounds.ToArray();
         tBounds = UPoly.ScalePoly(tBounds, 0.05f);
 

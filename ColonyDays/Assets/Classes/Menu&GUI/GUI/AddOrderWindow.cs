@@ -45,6 +45,8 @@ public class AddOrderWindow : GUIElement {
     private GameObject _content;
     private GameObject _scroll_Ini_PosGO;
 
+    ScrollViewShowInventory _ourInventories;
+
     // Use this for initialization
     private void Start()
     {
@@ -85,6 +87,8 @@ public class AddOrderWindow : GUIElement {
         _content = GetGrandChildCalledFromThis("Content", _scroll);
         //_contentRectTransform = _content.GetComponent<RectTransform>();
         _scroll_Ini_PosGO = GetChildCalledOnThis("Scroll_Ini_Pos", _content);
+
+        _ourInventories = FindGameObjectInHierarchy("Scroll_View_Inv_Resume", gameObject).GetComponent<ScrollViewShowInventory>();
     }
 
     public void Show(string val)
@@ -99,6 +103,8 @@ public class AddOrderWindow : GUIElement {
         ResetScroolPos();
 
         Display();
+
+        _ourInventories.Show();
     }
 
     private void LoadMenu()

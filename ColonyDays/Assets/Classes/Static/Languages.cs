@@ -1367,6 +1367,7 @@ public class Languages
         //ShowAPersonBuildingDetails has
         //BuildingWindow.cs
         //Dispatch.cs
+        //ButtonTile.cs
     };
 
     public static string ReturnString(string key)

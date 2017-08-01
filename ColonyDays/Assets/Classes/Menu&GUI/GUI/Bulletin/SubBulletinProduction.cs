@@ -66,6 +66,24 @@ public class SubBulletinProduction
         _expirationReport.AddProductionThisYear(p, amt);
     }
 
+
+
+    /// <summary>
+    /// Created to find how many items are in each report 
+    /// needed to ajust the Scrool View Content height 
+    /// </summary>
+    /// <param name="list"></param>
+    /// <returns></returns>
+    int ItemsOnReport(List<Inventory> list)
+    {
+        var res = 0;
+        for (int i = 0; i < list.Count; i++)
+        {
+            res += list[i].InventItems.Count;
+        }
+        return res;
+    }
+
     public void ShowProdReport()
     {
         if (_productionReport == null)
@@ -75,8 +93,10 @@ public class SubBulletinProduction
         }
 
         ShowProductionReport(_productionReport.ProduceReport);
-    }  
-    
+        _bulletinWindow.AdjustContentHeight( ItemsOnReport(_productionReport.ProduceReport) * 1.5f);
+
+    }
+
     public void ShowConsumeReport()
     {
         if (_productionReport == null)
@@ -86,8 +106,10 @@ public class SubBulletinProduction
         }
 
         ShowProductionReport(_productionReport.ConsumeReport);
-    }   
-    
+        _bulletinWindow.AdjustContentHeight(ItemsOnReport(_productionReport.ConsumeReport) * 1.5f);
+
+    }
+
     public void ShowExpirationReport()
     {
         if (_expirationReport == null)
@@ -97,6 +119,8 @@ public class SubBulletinProduction
         }
 
         ShowProductionReport(_expirationReport.ProduceReport);
+        _bulletinWindow.AdjustContentHeight(ItemsOnReport(_expirationReport.ProduceReport) * 1.5f);
+
     }
 
 
