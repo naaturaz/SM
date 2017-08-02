@@ -1629,14 +1629,16 @@ public class Person : Hoverable
         {
             return;
         }
+        //only dev can go past 10x,,, this and creates problems with money
+        if (Program.gameScene.GameSpeed > 10)
+        {
+            return;
+        }
 
         var sal = Work.DollarsPay;
-
         _personBank.Add(sal);
-
         Program.gameScene.GameController1.Dollars -= sal;
         BulletinWindow.SubBulletinFinance1.FinanceLogger.AddToAcct("Salary", sal);
-
     }
 
 

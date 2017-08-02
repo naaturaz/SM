@@ -902,7 +902,10 @@ public class Building : Hoverable, Iinfo
        //Debug.Log("now Prod curr: "+CurrentProd.Product +" on:"+MyId);
 
         AddressNewProductOnBuilding();
+        ReloadInventory();
     }
+
+
 
     /// <summary>
     /// So far used by: FieldFarm, and AnimalFarm
@@ -3088,7 +3091,9 @@ public class Building : Hoverable, Iinfo
             return;
         }
 
-        _isToReloadInv = true;
+        var a = MyId;
+
+        SomethingWasProduce();
 
         var doIHaveInput = DoBuildHaveRawResources();
         var hasStorageRoom = DoesStorageHaveCapacity();
@@ -3233,20 +3238,55 @@ public class Building : Hoverable, Iinfo
 
 
 
-#endregion
+    #endregion
+
+
+    #region Reload Inventory
+
+    int oldYear = -1;
+
+    /// <summary>
+    /// Called every time something is produced
+    /// </summary>
+    void SomethingWasProduce()
+    {
+        if (oldYear != Program.gameScene.GameTime1.Year)
+        {
+            oldYear = Program.gameScene.GameTime1.Year;
+            _isToReloadInv = true;
+        }
+    }
+
+    /// <summary>
+    /// Called when a new Product is selected to be produced in the building
+    /// </summary>
+    private void ReloadInventory()
+    {
+        oldYear = -1;
+        _isToReloadInv = true;
+    }
 
     internal bool IsToReloadInv()
     {
         if (_isToReloadInv)
         {
-            _isToReloadInv = false;
             return true;
         }
         return false;
     }
 
-#region Production Reporting (for report purposes)
-    
+    /// <summary>
+    /// Once is used to reload the inv ,, _isToReloadInv be set to False 
+    /// </summary>
+    public void InvWasReloaded()
+    {
+        _isToReloadInv = false;
+    }
+
+    #endregion
+
+    #region Production Reporting (for report purposes)
+
     ProductionReport _productionReport;
     public ProductionReport ProductionReport
     {

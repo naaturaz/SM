@@ -41,8 +41,13 @@ public class ShowInvetoryItem : GUIElement
         set { _parent = value; }
     }
 
+    private void Awake()
+    {
+        Start();
+    }
+
     // Use this for initialization
-	void Start ()
+    void Start ()
 	{
 	    _icon = FindGameObjectInHierarchy("Icon", gameObject);
 	    _back = FindGameObjectInHierarchy("Back", gameObject);

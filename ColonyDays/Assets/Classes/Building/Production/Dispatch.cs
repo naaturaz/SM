@@ -484,7 +484,7 @@ public class Dispatch
 
     private Order EvacuationOrderDocker(Person person, Order order)
     {
-        var destinFoodSrc = FindClosestFoodSrcNotFull(person, order.Product);
+        var destinFoodSrc = FindClosestFoodSrcNotFull(person, order);
 
         if (destinFoodSrc != "")
         {
@@ -511,7 +511,7 @@ public class Dispatch
 
     private Order EvacuationOrder(Person person, Order order)
     {
-        var destinFoodSrc = FindClosestFoodSrcNotFull(person, order.Product);
+        var destinFoodSrc = FindClosestFoodSrcNotFull(person, order);
 
         if (destinFoodSrc != "")
         {
@@ -726,9 +726,9 @@ public class Dispatch
         return "";
     }
 
-    string FindClosestFoodSrcNotFull(Person person, P prod)
+    string FindClosestFoodSrcNotFull(Person person, Order ord)
     {
-        var foodSrcs = ScoreAllFoodSources(person);
+        var foodSrcs = ScoreAllFoodSources(person, ord);
 
         for (int j = 0; j < foodSrcs.Count; j++)
         {
@@ -742,7 +742,7 @@ public class Dispatch
         return "";
     }
 
-    static List<BuildRank> ScoreAllFoodSources(Person person)
+    static List<BuildRank> ScoreAllFoodSources(Person person, Order ord = null)
     {
         List<BuildRank> rank = new List<BuildRank>();
         for (int i = 0; i < BuildingPot.Control.FoodSources.Count; i++)
@@ -750,7 +750,7 @@ public class Dispatch
             var key = BuildingPot.Control.FoodSources[i];
             var foodSrc = Brain.GetStructureFromKey(key);
 
-            var score = ScoreABuild(person, foodSrc);//tht in this case is just Distance
+            var score = ScoreABuild(person, foodSrc, ord);//tht in this case is just Distance
             if (score < Brain.Maxdistance && foodSrc.Instruction == H.None)
             {
                 rank.Add(new BuildRank(key, score, score));
@@ -769,12 +769,24 @@ public class Dispatch
     /// <param name="person"></param>
     /// <param name="toScore"></param>
     /// <returns></returns>
-    static float ScoreABuild(Person person, Building toScore)
+    static float ScoreABuild(Person person, Building toScore, Order ord)
     {
         if (person.Work == null)
         {
             return Vector3.Distance(person.transform.position, toScore.transform.position);
         }
+
+        //when is an evacuation order will be passed here 
+        if (ord != null)
+        {
+            //so if is a Evacuation order will score based in proximity to the Origin building. 
+            var origen = Brain.GetStructureFromKey(ord.SourceBuild);
+            if (origen != null)
+            {
+                return Vector3.Distance(origen.transform.position, toScore.transform.position);
+            }
+        }
+
         return Vector3.Distance(person.Work.transform.position, toScore.transform.position);
     }
 

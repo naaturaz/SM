@@ -426,20 +426,45 @@ public class BuildingWindow : GUIElement
 
             _showAInventory.DestroyAll();
             _showAInventory = new ShowAInventory(Building.Inventory, _gaveta.gameObject, _invIniPos.transform.localPosition);
+
+            //so when a new building is clicked changes
+            ShowProductionReport();
         }
         else if (_showAInventory != null && (oldItemsCount != Building.Inventory.InventItems.Count
             || Building.IsToReloadInv()))
         {
-            oldItemsCount = Building.Inventory.InventItems.Count;
-            //_showAInventory.DestroyAll();
-            //_showAInventory = new ShowAInventory(Building.Inventory, _gaveta.gameObject, _invIniPos.transform.localPosition);
-
+            //if new items got in the inv needs to redo Stats in case is a new production 
+            if (oldItemsCount != Building.Inventory.InventItems.Count)
+            {
+                ReloadStatsWhenNeeded(true);
+                oldItemsCount = Building.Inventory.InventItems.Count;
+            }
             _showAInventory.UpdateToThisInv(Building.Inventory);
-            ShowProductionReport();
         }
+
+        ReloadStatsWhenNeeded();
 
         _showAInventory.ManualUpdate();
         _inv.text = BuildStringInv(Building);
+    }
+
+    /// <summary>
+    /// Will redo Stats
+    /// </summary>
+    void ReloadStatsWhenNeeded(bool now = false)
+    {
+        if (now)
+        {
+            ShowProductionReport();
+            return;
+        }
+
+        //only updated when a production happened Building.IsToReloadInv()
+        if (Building.IsToReloadInv())
+        {
+            ShowProductionReport();
+            Building.InvWasReloaded();
+        }
     }
 
 
