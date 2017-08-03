@@ -692,6 +692,11 @@ public class Brain
         else if (CurrentTask == HPers.Walking && _person.Body.Location == HPers.FoodSource && _person.Body.GoingTo == HPers.FoodSource
             && _foodRoute.CheckPoints.Count > 0)
         {
+            if (_person.MyId.Contains("Leano"))
+            {
+                var a = 1;
+            }
+
             _person.ProfessionProp.DropGoods();
             _person.GetFood(_person.FoodSource);
             _person.Body.WalkRoutine(_foodRoute, HPers.Home, true);
@@ -2183,6 +2188,21 @@ public class Brain
             return;
         }
         orderedFoodSources.Clear();
+
+        var a = _person.MyId;
+
+        //is work is missing an input will deviate priority. The priority will be now to find a source with that Product
+        if (IsWorkMissingInput())
+        {
+            var newSource = FindFoodSourceThatHasProd(WhatInputProdIsMissingWork());
+            //means found one with that input needed
+            if (!string.IsNullOrEmpty(newSource))
+            {
+                orderedFoodSources.Add(newSource);
+                return;
+            }
+        }
+
         int size = BuildingPot.Control.FoodSources.Count;
         List<VectorM> loc = new List<VectorM>();
 
@@ -2687,7 +2707,11 @@ public class Brain
     /// </summary>
     void CheckOnFoodSourceAvail()
     {
-        if (orderedFoodSources.Count == 0 || !IAmHomeNow()) { return; }
+        if (//orderedFoodSources.Count == 0 || 
+            !IAmHomeNow())
+        {
+            return;
+        }
         //means that a Food Src was destroyed. Then have to update 'orderedFoodSources 
         UpdateOrderedFoodSources();
 
@@ -2697,7 +2721,7 @@ public class Brain
             Structure s = GetStructureFromKey(orderedFoodSources[i]);
             //will assign the first one is not empty... 
             //now if we assign a diff one from the current then the Brain will trace route to new FoodSrc
-            if (s.Inventory.FoodCatItems.Count > 0)
+            if (s.Inventory.FoodCatItems.Count > 0 || IsWorkMissingInput())
             {
                 //so the buildings PeopleDict gets updated
                 AddToNewBuildRemoveFromOld(_person.FoodSource, s.MyId);
@@ -2709,6 +2733,39 @@ public class Brain
             AreTheyAllEmpty(emptyCount);
         }
     }
+
+    #region If Work is missing input: 2017, Aug 2nd 
+
+    bool IsWorkMissingInput()
+    {
+        if (_person.Work == null)
+        {
+            return false;
+        }
+        return !_person.Work.DoIHaveInput();
+    }
+
+    /// <summary>
+    /// When called make sure, you asked before if were Inputs missing on this building 
+    /// </summary>
+    /// <returns></returns>
+    P WhatInputProdIsMissingWork()
+    {
+        return _person.Work.MissingInput();
+    }
+
+    string FindFoodSourceThatHasProd(P prod)
+    {
+        var source = Dispatch.FindFoodSrcWithProd(_person, prod);
+        if (source!=null)
+        {
+            return source;
+        }
+        return "";
+    }
+
+    #endregion
+
 
     /// <summary>
     /// If all food sources are empty the closest is the one assign to it 

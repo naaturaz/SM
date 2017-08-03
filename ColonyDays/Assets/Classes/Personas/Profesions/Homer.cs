@@ -77,9 +77,13 @@ public class Homer : Profession
             return _person.FoodSource;
         }
 
+        if (!_person.Work.DoIHaveInput())
+        {
+            return _person.FoodSource;
+        }
+
         //so now they will take it to the closest storage from the production point
         return _person.Work.PreferedStorage;
-        //return _person.FoodSource;
     }
 
     bool IsWorkNaval()

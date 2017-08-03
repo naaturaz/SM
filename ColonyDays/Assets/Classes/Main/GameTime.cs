@@ -248,7 +248,7 @@ public class GameTime
     /// <param name="mon"></param>
     /// <param name="day"></param>
     /// <returns></returns>
-    MDate FromDaysToMDate(float daysToConvert)
+    public MDate FromDaysToMDate(float daysToConvert)
     {
         float left = 0;
         var yearFull = 0;

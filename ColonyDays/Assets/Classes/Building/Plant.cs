@@ -1,4 +1,5 @@
 ﻿//life cycle corn 4 month
+using System;
 using UnityEngine;
 
 public class Plant : General
@@ -62,6 +63,8 @@ public class Plant : General
         set { _currentGrowStep = value; }
     }
 
+
+
     public float AmtToGrow
     {
         get { return _amtToGrow; }
@@ -100,7 +103,7 @@ public class Plant : General
         obj = (Plant)Resources.Load(root, typeof(Plant));
         obj = (Plant)Instantiate(obj, origen, Quaternion.identity);
 
-        obj.transform.SetParent( container.transform);
+        obj.transform.SetParent(container.transform);
         obj.ObjInit(container, fieldFarm, type);
         return obj;
     }
@@ -115,14 +118,14 @@ public class Plant : General
         DefineRottingDays();
         //CreateBasePlane();
 
-        transform.Rotate(new Vector3(0, Random.Range(0, 360), 0));
+        transform.Rotate(new Vector3(0, UnityEngine.Random.Range(0, 360), 0));
 
         //define
         DefineLifeDuration();
 
         transform.name = "";//so it renames 
         DefineNameAndMyID();
-        
+
         //re add
         _fieldFarm.BatchAdd(this);
     }
@@ -169,15 +172,15 @@ public class Plant : General
         else if (_type == P.CoffeeBean)//dies with 60-80 years
         {
             _lifeDuration = 6 * 30;
-        } 
+        }
         else if (_type == P.Cacao)//dies with 60-80 years
         {
             _lifeDuration = 7 * 30;
-        } 
+        }
         else if (_type == P.Potato)//dies with 60-80 years
         {
             _lifeDuration = 3 * 30;
-        } 
+        }
         else if (_type == P.SugarCane)//dies with 60-80 years
         {
             _lifeDuration = 7 * 30;
@@ -185,15 +188,15 @@ public class Plant : General
         else if (_type == P.TobaccoLeaf)//dies with 60-80 years
         {
             _lifeDuration = 8 * 30;
-        }  
+        }
         else if (_type == P.Corn)//dies with 60-80 years
         {
             _lifeDuration = 3 * 30;
-        } 
+        }
         else if (_type == P.Henequen)//dies with 60-80 years
         {
             _lifeDuration = 3 * 30;
-        } 
+        }
         else if (_type == P.Cotton)//dies with 60-80 years
         {
             _lifeDuration = 3 * 30;
@@ -202,7 +205,7 @@ public class Plant : General
 
     void Start()
     {
-        _growGen = Random.Range(.1f, .9f);
+        _growGen = UnityEngine.Random.Range(.1f, .9f);
         DetermineSeedDate();
 
         //sets the Production factor of this plant 
@@ -231,6 +234,24 @@ public class Plant : General
         }
     }
 
+    internal string PercentageDone()
+    {
+        var timeInSoil = Program.gameScene.GameTime1.ElapsedDateInDaysToDate(_seedDate);
+        float advance = (float)timeInSoil / (float)_lifeDuration;
+
+        if (_isRotten)
+        {
+            return "Rotten";
+        }
+
+        if (advance > 1)
+        {
+            return "Ready";
+        }
+
+        return (advance * 100).ToString("n0") + "%";
+    }
+
     private void MarkToHarvest()
     {
         if (_isReadyToHarvest)
@@ -254,7 +275,7 @@ public class Plant : General
 
         _currentGrowStep += 0.1f;
         _amtToGrow = Program.gameScene.GameTime1.TimeFactorInclSpeed()
-            *(GROWFACTOR + (_growGen / 1000) + addWorkedAmt/500) ; //100      50
+            * (GROWFACTOR + (_growGen / 1000) + addWorkedAmt / 500); //100      50
 
         //Debug.Log("amt to grow: "+_amtToGrow);
         if (float.IsInfinity(_amtToGrow))
@@ -282,7 +303,7 @@ public class Plant : General
         }
 
         CouldGrowPlantNow();
-        
+
     }
 
     /// <summary>
@@ -410,6 +431,12 @@ public class Plant : General
 
         gameObject.transform.localScale = plant.LocalScale;
     }
+
+    public MDate HarvestDate()
+    {
+        var seed = Program.gameScene.GameTime1.FromMDateToDays(_seedDate);
+        return Program.gameScene.GameTime1.FromDaysToMDate(seed + _lifeDuration);
+    }
 }
 
 public class PlantSave
@@ -510,27 +537,27 @@ public class PlantSave
 
     public void SavePlant(Plant plant)
     {
-          _type = plant.Type;//type of plant. ex : Bean
+        _type = plant.Type;//type of plant. ex : Bean
 
-    _growGen= plant.GrowGen; //btw 90-100 will indicate how farr will go a plant just by genes
+        _growGen = plant.GrowGen; //btw 90-100 will indicate how farr will go a plant just by genes
 
-    //the duration of a plant in days
-    _lifeDuration = plant.LifeDuration;//120 is for corn 
+        //the duration of a plant in days
+        _lifeDuration = plant.LifeDuration;//120 is for corn 
 
-    //when was seeded
-    _seedDate= plant.SeedDate;
+        //when was seeded
+        _seedDate = plant.SeedDate;
 
-    //at wht step of growing is,  0.1-1
-    _currentGrowStep= plant.CurrentGrowStep;
+        //at wht step of growing is,  0.1-1
+        _currentGrowStep = plant.CurrentGrowStep;
 
-    //the amout will grow the gameObj created so it happens nie and smotth the grow 
-    _amtToGrow= plant.AmtToGrow;
+        //the amout will grow the gameObj created so it happens nie and smotth the grow 
+        _amtToGrow = plant.AmtToGrow;
 
-    _isReadyToHarvest= plant.IsReadyToHarvest;
+        _isReadyToHarvest = plant.IsReadyToHarvest;
 
-    _readyToHarvestDate= plant.ReadyToHarvestDate;
-     _daysToRotten= plant.DaysToRotten;
-     _isRotten= plant.IsRotten;
+        _readyToHarvestDate = plant.ReadyToHarvestDate;
+        _daysToRotten = plant.DaysToRotten;
+        _isRotten = plant.IsRotten;
 
         _localScale = plant.gameObject.transform.localScale;
     }

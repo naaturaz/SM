@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 /*
@@ -45,6 +46,24 @@ public class FieldFarm : Farm
         _building = building;
         _plantType = plant.Type;
         Init();
+    }
+
+    public MDate HarvestDate()
+    {
+        if (_plants.Count > 0)
+        {
+            return _plants[0].HarvestDate();
+        }
+        return null;
+    }
+
+    internal string PercentageDone()
+    {
+        if (_plants.Count > 0)
+        {
+            return _plants[0].PercentageDone();
+        }
+        return null;
     }
 
     public float SpaceBtwPlants
@@ -275,6 +294,8 @@ public class FieldFarm : Farm
 
         _batchManager.BatchDestroy();
     }
+
+
 
     #endregion
 }

@@ -785,7 +785,10 @@ public class Building : Hoverable, Iinfo
     }
 
 
-
+    /// <summary>
+    /// Return true if has all inputs 
+    /// </summary>
+    /// <returns></returns>
     internal bool DoIHaveInput()
     {
         var doIHaveInput = DoBuildHaveRawResources();
@@ -798,6 +801,32 @@ public class Building : Hoverable, Iinfo
             BuildingPot.Control.ProductionProp.ReturnInputsINeed(this);
     }
 
+
+    /// <summary>
+    /// Will return the current missing inputs. May be more than one but will give
+    /// you one that at least is missign in this moment
+    /// 
+    /// If is missing none then will return P.None
+    /// </summary>
+    /// <returns></returns>
+    internal P MissingInput()
+    {
+        var ingre = BuildingPot.Control.ProductionProp.ReturnIngredients(CurrentProd.Product);
+
+        if (ingre == null)
+        {
+            return P.None;
+        }
+
+        for (int i = 0; i < ingre.Count; i++)
+        {
+            if (!Inventory.Contains(ingre[i].Element))
+            {
+                return ingre[i].Element;
+            }
+        }
+        return P.None;
+    }
 
 
     /// <summary>
@@ -1428,7 +1457,7 @@ public class Building : Hoverable, Iinfo
 
 
         { H.StorageMed, new Vector3(-30,0,-20)},
-        { H.StorageSmall, new Vector3(-30,0,-20)},
+        { H.StorageSmall, new Vector3(-35,0,-25)},
         { H.StorageBig, new Vector3(-55,0,-35)},
 
         { H.Dock, new Vector3(-5,0,-5)},

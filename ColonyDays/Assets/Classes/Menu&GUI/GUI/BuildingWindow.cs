@@ -81,6 +81,22 @@ public class BuildingWindow : GUIElement
         Hide();
 
         StartCoroutine("ThreeSecUpdate");
+        StartCoroutine("FiveSecUpdate");
+
+    }
+
+    private IEnumerator FiveSecUpdate()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(5f); // wait
+
+            if(Building != null && _products.activeSelf)
+            {
+                //in case is a Field Farm updates the progress 
+                ShowProductDetail();
+            }
+        }
     }
 
     private IEnumerator ThreeSecUpdate()
@@ -862,9 +878,22 @@ public class BuildingWindow : GUIElement
 
         if (!_building.DoIHaveInput())
         {
-            _displayProdInfo.text = _building.MissingInputs();
+            _displayProdInfo.text = "Product selected: " + Building.CurrentProd.Product + "\n"
+                + _building.MissingInputs();
         }
 
+        //Showing additional info for FieldFarms
+        if (Building.HType.ToString().Contains("FieldFarm"))
+        {
+            var st = (Structure)Building;
+            //add string with current crop status and past crop 
+
+            if (st.FieldFarm1() != null && st.FieldFarm1().HarvestDate() != null)
+            {
+                _displayProdInfo.text += "\nHarvest date: " + st.FieldFarm1().HarvestDate().ToStringFormat();
+                _displayProdInfo.text += "\nProgress: " + st.FieldFarm1().PercentageDone();
+            }
+        }
     }
 
     private void ShowProducts()

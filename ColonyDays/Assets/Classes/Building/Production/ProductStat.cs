@@ -6,14 +6,14 @@ public class ProductInfo
     private int _id;//the id of the product 
     private P _product;
     List<InputElement> _ingredients = new List<InputElement>();
-    private List <H> _hType = new List<H>();
+    private List<H> _hType = new List<H>();
 
     //the line name of the product will be shown on Building window
     private string _productLine;
     //the details of a prduct
     private string _details;
 
-    List<ElementWeight> _randomWeightsOutput = new List<ElementWeight>(); 
+    List<ElementWeight> _randomWeightsOutput = new List<ElementWeight>();
 
     public ProductInfo(P product, List<InputElement> ingredients, H buildHType)
     {
@@ -59,12 +59,12 @@ public class ProductInfo
     float GetAmount(float weight, float loadKG)
     {
         //decrease 5%
-        var five = loadKG*0.05f;
+        var five = loadKG * 0.05f;
         loadKG -= five;
 
         var ttlWeight = RandomWeightsOutput.Sum(a => a.Weight);
-        var divLoadByTtlWg = loadKG/ttlWeight;
-        return weight*divLoadByTtlWg;
+        var divLoadByTtlWg = loadKG / ttlWeight;
+        return weight * divLoadByTtlWg;
     }
 
     private void BuildStrings()
@@ -84,7 +84,7 @@ public class ProductInfo
         var expiration = Program.gameScene.ExportImport1.ReturnExpirationInDays(_product);
 
 
-        _details = "Product " + _product + " details: \n";
+        _details = "Selected product: " + _product + "\n";
 
         if (Ingredients != null)
         {
@@ -94,15 +94,17 @@ public class ProductInfo
                     Ingredients[i].Units + " " + Unit.WeightUnit() + " \n";
             }
         }
-       
-        _details = _details + "Density: " +dens + "\n";
-        _details = _details + "Produce Factor: " + prodF + "\n";
-        _details = _details + "Base Price: " + Unit.ProperPricedAndFormat(price) + "\n";
 
-        if (expiration>0 && Program.IsFood)
-        {
-            _details += "Expires in: " + expiration + " days\n";
-        }
+        //_details = _details + "Density: " +dens + "\n";
+        //_details = _details + "Produce Factor: " + prodF + "\n";
+        _details = _details + "Price: " +
+            Unit.ProperPricedAndFormat(price) +
+            " per " + Unit.CurrentWeightUnitsString() + "\n";
+
+        //if (expiration > 0 && Program.IsFood)
+        //{
+        //    _details += "Expires in: " + expiration + " days\n";
+        //}
 
         if (_product == P.Stop)
         {

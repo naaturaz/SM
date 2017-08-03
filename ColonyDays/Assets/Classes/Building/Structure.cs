@@ -351,6 +351,16 @@ public class Structure : StructureParent
 
     #region FieldFarm 
 
+    public Farm Farm1()
+    {
+        return _farm;
+    }
+
+    public FieldFarm FieldFarm1()
+    {
+        return (FieldFarm) _farm;
+    }
+
     void UpdateFarm()
     {
         if (_farm != null)

@@ -466,6 +466,8 @@ public class Languages
        { "Inputs.Help", "If a building can't produce because is missing inputs. Check you have the needed input(s) in the main storage and at least one worker in the masonry"},
        { "WheelBarrows.Help", "Wheelbarrows are the masonry workers. If they got nothing to build will act as wheelbarrows. If you need inputs to get into a specific building make sure you have enough of them working and also the inputs mentioned in the storage building"},
 
+       { "Production Tab.Help", "If the building is a farm field make sure you have workers on the farm. The crop will be lost if sits there a month after harvest day"},
+       { "Our Inventories.Help", "The section 'Our inventories' in the 'Add Order Window' is a resume of what we got in our Storages buildings inventories"},
 
        ///word and grammarly below
 
@@ -1368,6 +1370,7 @@ public class Languages
         //BuildingWindow.cs
         //Dispatch.cs
         //ButtonTile.cs
+        //Plant.cs
     };
 
     public static string ReturnString(string key)
