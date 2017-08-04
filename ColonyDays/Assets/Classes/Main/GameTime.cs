@@ -339,8 +339,23 @@ public class MDate
         _year = year;
     }
 
-    internal string ToStringFormat()
+    internal string ToStringFormatMonDayYear()
     {
+        if (Month1 == 0)
+        {
+            return "None";
+        }
+
         return GameTime.FromIntToMonth(Month1) + " " + Day + ", " + Year;
+    }
+
+    internal string ToStringFormatMonYear()
+    {
+        if (Month1 == 0)
+        {
+            return "None";
+        }
+
+        return GameTime.FromIntToMonth(Month1) + " " + Year;
     }
 }

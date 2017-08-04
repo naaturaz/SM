@@ -118,6 +118,11 @@ public class SubBulletinFinance
     {
         for (int i = 0; i < _reports.Count; i++)
         {
+            //means this GUI was reloaded
+            if (_reports[i] == null || _reports[i].gameObject == null)
+            {
+                break;
+            }
             _reports[i].Destroy();
         }
         _reports.Clear();
@@ -126,6 +131,11 @@ public class SubBulletinFinance
         //specs
         for (int i = 0; i < _reportsSpec.Count; i++)
         {
+            //means this GUI was reloaded
+            if (_reportsSpec[i] == null || _reportsSpec[i].gameObject == null)
+            {
+                break;
+            }
             _reportsSpec[i].Destroy();
         }
         _reportsSpec.Clear();
@@ -134,10 +144,14 @@ public class SubBulletinFinance
         //budget
         for (int i = 0; i < _reportsBudget.Count; i++)
         {
+            //means this GUI was reloaded
+            if (_reportsBudget[i] == null || _reportsBudget[i].gameObject == null)
+            {
+                break;
+            }
             _reportsBudget[i].Destroy();
         }
         _reportsBudget.Clear();
-        //_financeLogger.Clean();
 
         //exports
         for (int i = 0; i < _reportsExports.Count; i++)

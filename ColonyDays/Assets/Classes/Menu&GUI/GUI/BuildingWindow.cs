@@ -890,7 +890,7 @@ public class BuildingWindow : GUIElement
 
             if (st.FieldFarm1() != null && st.FieldFarm1().HarvestDate() != null)
             {
-                _displayProdInfo.text += "\nHarvest date: " + st.FieldFarm1().HarvestDate().ToStringFormat();
+                _displayProdInfo.text += "\nHarvest date: " + st.FieldFarm1().HarvestDate().ToStringFormatMonYear();
                 _displayProdInfo.text += "\nProgress: " + st.FieldFarm1().PercentageDone();
             }
         }

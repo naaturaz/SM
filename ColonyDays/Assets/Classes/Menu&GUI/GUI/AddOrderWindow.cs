@@ -238,7 +238,11 @@ public class AddOrderWindow : GUIElement {
 
             if (_prodSelect == P.Bean && locAmt == 300)
             {
-                Program.gameScene.QuestManager.QuestFinished("Export"); //.ImportOil
+                Program.gameScene.QuestManager.QuestFinished("Export");
+            }
+            else if (_prodSelect == P.Weapon && locAmt == 100)
+            {
+                Program.gameScene.QuestManager.QuestFinished("ExportWeapons");
             }
         }
         else if (_orderType == "Import")

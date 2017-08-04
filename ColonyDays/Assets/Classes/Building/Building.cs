@@ -932,6 +932,8 @@ public class Building : Hoverable, Iinfo
 
         AddressNewProductOnBuilding();
         ReloadInventory();
+
+        Quest(0, CurrentProd.Product);
     }
 
 
@@ -3120,7 +3122,7 @@ public class Building : Hoverable, Iinfo
             return;
         }
 
-        var a = MyId;
+        Quest(amt, prodHere);
 
         SomethingWasProduce();
 
@@ -3374,11 +3376,16 @@ public class Building : Hoverable, Iinfo
         }
     }
 
-    private void Quest(float amt = 0)
+    private void Quest(float amt = 0, P newProduct = P.None)
     {
         if (CurrentProd.Product == P.Bean && HType == H.FieldFarmSmall)
         {
             Program.gameScene.QuestManager.AddToQuest("FarmProduce", amt);
+        }
+
+        if (CurrentProd.Product == P.Weapon && HType == H.BlackSmith && amt > 0)
+        {
+            Program.gameScene.QuestManager.AddToQuest("WeaponsProduce", amt);
         }
 
         if (HType == H.FieldFarmSmall && _maxPeople == 2)
@@ -3389,6 +3396,15 @@ public class Building : Hoverable, Iinfo
         if (HType == H.Dock && _maxPeople == 1)
         {
             Program.gameScene.QuestManager.QuestFinished("HireDocker");
+        }
+        if (HType == H.BlackSmith && _maxPeople == 2)
+        {
+            Program.gameScene.QuestManager.QuestFinished("BlackSmithHire");
+        }
+
+        if (newProduct == P.Weapon && HType == H.BlackSmith)
+        {
+            Program.gameScene.QuestManager.QuestFinished("ChangeProductToWeapon");
         }
 
         //called from Handle Last stage quest, tuto
@@ -3414,6 +3430,10 @@ public class Building : Hoverable, Iinfo
             else if (HType == H.StandLamp)
             {
                 Program.gameScene.QuestManager.QuestFinished("Lamp");
+            }
+            else if (HType == H.BlackSmith)
+            {
+                Program.gameScene.QuestManager.QuestFinished("Production");
             }
         }
     }

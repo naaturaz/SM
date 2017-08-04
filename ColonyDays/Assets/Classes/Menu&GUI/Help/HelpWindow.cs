@@ -103,8 +103,13 @@ public class HelpWindow : GUIElement
 
     private void PopulateScrollView()
     {
+        ResetScroolPos();
+        AdjustContentHeight(_helps.Count * 4.9f);
+
         ClearBtns();
         ShowButtons(_helps);
+
+
     }
 
     private void ClearBtns()

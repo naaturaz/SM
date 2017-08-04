@@ -1306,7 +1306,10 @@ public class Profession
     }
 
     /// <summary>
-    /// Will drop goods produced in its respective Work into a Storage 
+    /// Will drop all goods is carrying into FoodSource
+    /// 
+    /// Change bz I need workers that were fired drop input items when they go back to 
+    /// Storage after being fired
     /// </summary>
     public void DropGoods()
     {
@@ -1314,8 +1317,9 @@ public class Profession
         {
             return;
         }
- 
-        _person.ExchangeInvetoryItem(_person, _person.FoodSource, prodCarrying, amtCarrying);
+
+        DropAllMyGoods(_person.FoodSource);
+        //_person.ExchangeInvetoryItem(_person, _person.FoodSource, prodCarrying, amtCarrying);
     }
 
     public void DropAllMyGoods(Structure st)

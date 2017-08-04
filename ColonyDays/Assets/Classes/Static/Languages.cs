@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class Languages
 {
@@ -17,6 +18,7 @@ public class Languages
     private static string _militar = "This building helps to decrease the Pirate Threat on your port, to be effective it must have workers. The more workers the better";
 
     private static string _notRegionNeeded = " Can be built without owning the region.";
+
 
     static Dictionary<string, string> _english = new Dictionary<string, string>()
     {
@@ -165,10 +167,10 @@ public class Languages
        { "Clay","Clay"},
        { "Pottery","Pottery"},
        { "MountainMine","Mountain Mine"},
-       {  "LumberMill" ,"Lumber Mill"},
-       { "BlackSmith","Black Smith"},
+       {  "LumberMill" ,"Lumbermill"},
+       { "BlackSmith","Blacksmith"},
        { "ShoreMine","Shore Mine"},
-       { "QuickLime","QuickLime"},
+       { "QuickLime","Quicklime"},
 
        //Prod
 	   { "Brick","Brick"},
@@ -188,7 +190,7 @@ public class Languages
        { "PaperMill","Papermill"},
        { "Printer","Printer"},
        { "CoinStamp","Coin Stamp"},
-       { "SugarMill","SugarMill"},
+       { "SugarMill","Sugarmill"},
        { "Foundry","Foundry"},
        { "SteelFoundry","Steel Foundry"},
 
@@ -529,7 +531,7 @@ public class Languages
 
        { "Budget.Tuto", "Click on the 'Control/Bulletin' button, then on 'Finance' menu and then on 'Ledger'. This is the game ledger"},
        { "Prod.Tuto", "Click on 'Prod' menu and then on 'Produce'. Will show the village's production for the last 5 years"},
-       { "Spec.Tuto", "Click the 'Prod' menu and then on 'Spec'. Here you can see exactly how to make each product on the game. The inputs necessaries and where is produced. Also the price"},
+       { "Spec.Tuto", "Click the 'Prod' menu and then on 'Spec'. Here you can see exactly how to make each product on the game. The inputs necessaries and where is produced. Also, the import and export prices"},
        { "Exports.Tuto", "Click the 'Finance' menu and then on 'Export'. Here you can see a breakdown of your village's exports"},
 
 
@@ -546,7 +548,7 @@ public class Languages
 
 
 
-        { "FarmProduce.Quest", "Quest: Now produce " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " of beans on the FieldFarmSmall. Click on the 'Stat' tab and will show you the production of the last 5 years. You can see the quest progress in the quest window. If you build more small farms will be accounted for the quest"},
+        { "FarmProduce.Quest", "Quest: Now produce " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " of beans on the Small Field Farm. Click on the 'Stat' tab and will show you the production of the last 5 years. You can see the quest progress in the quest window. If you build more small farms will be accounted for the quest"},
         { "Transport.Quest", "Quest: Transport the beans from the farm to the Storage. To do that make sure you have" +
             " workers on the masonry. They act as wheelbarrows when not building"},
 
@@ -562,6 +564,15 @@ public class Languages
        { "ImportOil.Quest", "Quest: Import 500 " + Unit.CurrentWeightUnitsString() + " of Whale Oil at the Dock. This is needed to keep your lights on at night."},
 
        { "Population50.Quest", "Reach a total population of 50 citizens"},
+
+
+       { "Production.Quest", "Let's produce Weapons now and sell them later. First of all, build a Blacksmith. Find it in the 'Raw' buildings menu"},
+       { "ChangeProductToWeapon.Quest", "In the Blacksmith's 'Products Tab' change the production to Weapons. Workers will bring the raw materials needed to forge weapons if found"},
+       { "BlackSmithHire.Quest", "Hire two blacksmiths"},
+       { "WeaponsProduce.Quest", "Now produce " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " of Weapons in the Blacksmith. Click on the 'Stat' tab and will show you the production of the last 5 years. You can see the quest progress in the quest window."},
+       { "ExportWeapons.Quest", "Now export 100 " + Unit.CurrentWeightUnitsString() + " of Weapons. On the Dock add an order of export. Notice that Weapons are a profitable business"},
+
+
        {"CompleteQuest", "Your reward is {0}"},
 
 
@@ -571,7 +582,7 @@ public class Languages
 
        { "Shack.Quest.Title", "Build a Shack"},
        { "SmallFarm.Quest.Title", "Build a Farm Field"},
-       { "FarmHire.Quest.Title", "Hire a Farmer"},
+       { "FarmHire.Quest.Title", "Hire Two Farmers"},
 
 
        { "FarmProduce.Quest.Title", "Farm Producer"},
@@ -583,6 +594,15 @@ public class Languages
        { "ImportOil.Quest.Title", "Whale Oil"},
 
        { "Population50.Quest.Title", "50 Citizens"},
+
+
+       { "Production.Quest.Title", "Produce Weapons"},
+       { "ChangeProductToWeapon.Quest.Title", "Change Product"},
+       { "BlackSmithHire.Quest.Title", "Hire Two Blacksmiths"},
+       { "WeaponsProduce.Quest.Title", "Forge Weapons"},
+       { "ExportWeapons.Quest.Title", "Make Profit" },
+
+
 
 
         //
@@ -1371,6 +1391,7 @@ public class Languages
         //Dispatch.cs
         //ButtonTile.cs
         //Plant.cs
+        //GameTime.cs
     };
 
     public static string ReturnString(string key)

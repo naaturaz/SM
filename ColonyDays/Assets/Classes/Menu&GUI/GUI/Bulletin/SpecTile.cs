@@ -87,7 +87,7 @@ public class SpecTile : GUIElement
             return;
         }
 
-        _prodLbl.text = Export.MDate.ToStringFormat();
+        _prodLbl.text = Export.MDate.ToStringFormatMonDayYear();
         _input1Lbl.text = Export.Building;
         _input2Lbl.text = Export.Prod;
         _input3Lbl.text = Unit.ConvertFromKGToCurrent(Export.Amt).ToString("N0") + " " 
