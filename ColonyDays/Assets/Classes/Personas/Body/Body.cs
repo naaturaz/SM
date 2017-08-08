@@ -840,6 +840,10 @@ public class Body //: MonoBehaviour //: General
             {
                 moveToAtStartWalk = Brain.GetStructureFromKey(route.OriginKey).SpawnPoint.transform.position;
             }
+            if (inverse && Brain.GetStructureFromKey(route.DestinyKey) != null)
+            {
+                moveToAtStartWalk = Brain.GetStructureFromKey(route.DestinyKey).SpawnPoint.transform.position;
+            }
 
             Vector3 doorPt;
             var dest = RetDestiny(route, goingTo, out doorPt, inverse, whichRouteP);

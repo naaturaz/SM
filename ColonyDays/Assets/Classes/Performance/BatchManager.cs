@@ -196,6 +196,17 @@ public class BatchManager
         }
     }
 
+    /// <summary>
+    /// Will scale all Regions Batched GO
+    /// </summary>
+    public void ScaleAllRegionsBatchedGO(Vector3 addScale)
+    {
+        foreach (var item in _batchRegions)
+        {
+            item.Value.ScaleBatchedGO(addScale);
+        }
+    }
+
  
 }
 

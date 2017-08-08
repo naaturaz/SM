@@ -89,7 +89,7 @@ public class BuildingWindow : GUIElement
     {
         while (true)
         {
-            yield return new WaitForSeconds(5f); // wait
+            yield return new WaitForSeconds(1f); // wait
 
             if(Building != null && _products.activeSelf)
             {
@@ -870,7 +870,9 @@ public class BuildingWindow : GUIElement
 
 
 
-    //Show Prod on Tab
+    /// <summary>
+    /// Show Prod on Tab
+    /// </summary>
     private void ShowProductDetail()
     {
         Building.CurrentProd.BuildDetails();//so they update if needed

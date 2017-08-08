@@ -87,6 +87,7 @@ class SaveLoadGameWindow : GUIElement
         }
         PopulateScrollView();
         Show();
+        ResetScroolPos();
     }
 
 

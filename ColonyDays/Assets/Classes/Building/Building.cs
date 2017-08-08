@@ -3122,7 +3122,7 @@ public class Building : Hoverable, Iinfo
             return;
         }
 
-        Quest(amt, prodHere);
+        DecideIfReloadInventoryWithThisProduction(prodHere);
 
         SomethingWasProduce();
 
@@ -3143,6 +3143,7 @@ public class Building : Hoverable, Iinfo
             }
             else if (hasThisBuildRoom && addToBuildInv && !MyId.Contains("Farm"))
             {
+
                 Inventory.Add(prodHere, amt);
                 AddProductionThisYear(prodHere, amt);
             }
@@ -3289,9 +3290,21 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
+    /// For be use at least the first time a product is produced 
+    /// </summary>
+    /// <param name="prod"></param>
+    void DecideIfReloadInventoryWithThisProduction(P prod)
+    {
+        if (!Inventory.Contains(prod))
+        {
+            ReloadInventory();
+        }
+    }
+
+    /// <summary>
     /// Called when a new Product is selected to be produced in the building
     /// </summary>
-    private void ReloadInventory()
+    protected void ReloadInventory()
     {
         oldYear = -1;
         _isToReloadInv = true;
@@ -3332,6 +3345,9 @@ public class Building : Hoverable, Iinfo
             _productionReport = new ProductionReport();
         }
 
+        Quest(amt, p);
+
+
         _productionReport.AddProductionThisYear(p, amt);
         BulletinWindow.AddProduction(p, amt, "Prod");
     }  
@@ -3355,7 +3371,6 @@ public class Building : Hoverable, Iinfo
     /// <param name="amt"></param>
     internal void Produce(float amt)
     {
-        Quest(amt);
         var doIHaveInput = DoBuildHaveRawResources();
         var hasThisBuildRoom = DoWeHaveCapacityInThisBuilding();
 
@@ -3363,6 +3378,7 @@ public class Building : Hoverable, Iinfo
         {
             Inventory.Add(CurrentProd.Product, amt);
             AddProductionThisYear(CurrentProd.Product, amt);
+            DecideIfReloadInventoryWithThisProduction(CurrentProd.Product);
         }
         else if (!hasThisBuildRoom)
         {

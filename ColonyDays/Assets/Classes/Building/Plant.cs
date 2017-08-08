@@ -264,13 +264,13 @@ public class Plant : General
         _readyToHarvestDate = Program.gameScene.GameTime1.CurrentDate();
     }
 
-    const float GROWFACTOR = 0.001f;//0.01
+    const float GROWFACTOR = 0.01f;//0.01
     //Will grow in 10 percent increments
     private void Grow()
     {
         //divide by current step so its always not more and more
         //pls GROWFACTOR so we dont divide a zero 
-        var addWorkedAmt = (_fieldFarm.GiveMeMyWorkedAmt() + GROWFACTOR) / _currentGrowStep / 1;
+        var addWorkedAmt = ((_fieldFarm.GiveMeMyWorkedAmt() + GROWFACTOR) / _currentGrowStep / 1) + 0.02f;
         _fieldFarm.PlantGrew();
 
         _currentGrowStep += 0.1f;
@@ -278,9 +278,9 @@ public class Plant : General
             * (GROWFACTOR + (_growGen / 1000) + addWorkedAmt / 500); //100      50
 
         //Debug.Log("amt to grow: "+_amtToGrow);
-        if (float.IsInfinity(_amtToGrow))
+        if (float.IsInfinity(_amtToGrow) || _amtToGrow < 0.05f)
         {
-            _amtToGrow = 0f;
+            _amtToGrow = 0.01f;
         }
     }
 
@@ -333,7 +333,9 @@ public class Plant : General
         if (_amtToGrow > 0)
         {
             _amtToGrow -= 0.01f;
-            ScaleGameObject(0.01f);
+
+            //ScaleGameObject(0.01f);
+            ScaleBatchedPlantsGO(0.01f);
 
             SavePlant();
         }
@@ -349,6 +351,10 @@ public class Plant : General
         _building.PlantSave1.SavePlant(this);
     }
 
+    /// <summary>
+    /// Will scale this plant
+    /// </summary>
+    /// <param name="toAdd"></param>
     void ScaleGameObject(float toAdd)
     {
         var localScale = gameObject.transform.localScale;
@@ -356,13 +362,20 @@ public class Plant : General
         //var singleY = localScale.y + toAdd;
         //var singleZ = localScale.z + toAdd;
 
-
-
-        var addScale = localScale * toAdd;
-        var final = localScale + addScale;
+        var final = localScale + new Vector3(toAdd, toAdd, toAdd);
 
         // var newScale = new Vector3(singleX, singleY, singleZ);
         gameObject.transform.localScale = final;
+    }
+
+    /// <summary>
+    /// Will scale the batched farm,,, containing all the plants 
+    /// </summary>
+    /// <param name="toAdd"></param>
+    void ScaleBatchedPlantsGO(float toAdd)
+    {
+        //will affect only Y so the Batch doestn scale completely
+        _fieldFarm.ScaleBatchedGO(new Vector3(0, toAdd/150, 0));
     }
 
     internal void Harvest()

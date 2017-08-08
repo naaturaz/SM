@@ -318,7 +318,7 @@ public class Dispatch
     void RemoveFromOrdersAddToRecycled(Order prod)
     {
         RemoveOrderFromTheList(Orders, prod);
-        if (!ListContains(_recycledOrders, prod))
+        if (!ListContainsCheckID(_recycledOrders, prod))
         {
             if (_recycledOrders.Count == 0)
             {
@@ -339,7 +339,7 @@ public class Dispatch
         var indx = _recycledOrders.IndexOf(prod);
         Order temp = _recycledOrders[indx];
         _recycledOrders.RemoveAt(indx);
-        if (!ListContains(_recycledOrders, prod))
+        if (!ListContainsCheckID(_recycledOrders, prod))
         {
             _recycledOrders.Add(prod);
         }
@@ -384,6 +384,20 @@ public class Dispatch
             }
         }
         return null;
+    }
+
+    List<Order> ReturnCurrentListForDocker()
+    {
+        if (ExpImpOrders.Count > 0)
+        {
+            return ExpImpOrders;
+        }
+        if (Orders.Count > 0)
+        {
+            return Orders;
+        }
+        return _recycledOrders;
+
     }
 
     public Order GiveMeOrderDocker(Person person)
@@ -670,25 +684,6 @@ public class Dispatch
     {
         return _expImpOrders.Count > 0 || _orders.Count > 0;
     }
-
-    ///// <summary>
-    ///// Will return the Dispatch amount based on the type of person carrying 
-    ///// 
-    ///// Will carry so many KG of that prod bz the person can do it 
-    ///// </summary>
-    ///// <returns></returns>
-    //public static float DispatchAmount(Person pers)
-    //{
-    //    var isWheel = pers.PrevJob == Job.WheelBarrow || pers.ProfessionProp.ProfDescription == Job.WheelBarrow;
-    //    var isDocker = pers.PrevJob == Job.Docker || pers.ProfessionProp.ProfDescription == Job.Docker;
-
-    //    var mul = 1;
-    //    if (pers.ProfessionProp != null && (isWheel || isDocker))
-    //    {
-    //        mul = 3;
-    //    }
-    //    return pers.HowMuchICanCarry() * mul;
-    //}
 
     /// <summary>
     /// Wil do the actions needed once an order is found 

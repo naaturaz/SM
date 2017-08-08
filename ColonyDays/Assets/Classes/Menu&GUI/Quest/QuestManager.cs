@@ -48,12 +48,6 @@ public class QuestManager
     { 
         //need to mention reward still 
 
-        new Quest("Production.Quest", 500, 5.5f),
-        new Quest("ChangeProductToWeapon.Quest", 500, 5.5f),
-        new Quest("BlackSmithHire.Quest", 500, 5.5f),
-        new Quest("WeaponsProduce.Quest", 500, 5.5f, 100),
-        new Quest("ExportWeapons.Quest", 500, 5.5f),
-
 
         new Quest("Shack.Quest", 500, 5.5f),
 
@@ -69,6 +63,14 @@ public class QuestManager
         new Quest("ImportOil.Quest", 950, 5.5f, 500),
         new Quest("MakeBucks.Quest", 850, 5.5f, 100),
         new Quest("HeavyLoad.Quest", 900, 5.5f),
+
+        new Quest("Production.Quest", 500, 5.5f),
+        new Quest("ChangeProductToWeapon.Quest", 500, 5.5f),
+        new Quest("BlackSmithHire.Quest", 500, 5.5f),
+        new Quest("WeaponsProduce.Quest", 500, 5.5f, 100),
+        new Quest("ExportWeapons.Quest", 500, 5.5f),
+
+
 
         new Quest("Population50.Quest", 900, 5.5f),
 

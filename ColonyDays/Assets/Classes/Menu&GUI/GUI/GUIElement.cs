@@ -2,7 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class GUIElement : General {
+public class GUIElement : General
+{
 
     //inipos is used for Hide and show 
     protected Vector3 iniPos;
@@ -26,12 +27,12 @@ public class GUIElement : General {
 
 
 
-	// Update is called once per frame
-	protected void Update ()
+    // Update is called once per frame
+    protected void Update()
     {
-	
 
-	}
+
+    }
 
     public void Show()
     {
@@ -76,7 +77,7 @@ public class GUIElement : General {
     /// </summary>
     public virtual void Hide()
     {
-        if(name.Contains("Bulletin"))
+        if (name.Contains("Bulletin"))
         {
             Program.gameScene.TutoStepCompleted("HideBulletin.Tuto");
         }
@@ -103,20 +104,24 @@ public class GUIElement : General {
             return ">*<";
         }
 
-        var percentOcup = obj.Inventory.CurrentVolumeOcuppied()/obj.Inventory.CapacityVol;
-        percentOcup = percentOcup*100;
+        var percentOcup = obj.Inventory.CurrentVolumeOcuppied() / obj.Inventory.CapacityVol;
+        percentOcup = percentOcup * 100;
 
         if (percentOcup > 100)
         {
-            percentOcup = 100;  
+            percentOcup = 100;
         }
 
         var volOccupied = Unit.VolConverted(obj.Inventory.CurrentVolumeOcuppied());
         var volCap = Unit.VolConverted(obj.Inventory.CapacityVol);
 
+        if (volOccupied > volCap)
+        {
+            volOccupied = volCap;
+        }
         var res = Languages.ReturnString("Occupied:") + volOccupied.ToString("F0") + " " + Unit.VolumeUnit() +
             " of " + volCap.ToString("F0") + " " + Unit.VolumeUnit() +
-            " @ "+percentOcup.ToString("F0") + "%";
+            " @ " + percentOcup.ToString("F0") + "%";
 
         return res;
     }

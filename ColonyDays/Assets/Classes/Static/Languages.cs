@@ -385,7 +385,7 @@ public class Languages
        { "FullStore.Noti.Desc", "A storage is at {0}% capacity"},
 
        { "CantProduceBzFullStore.Noti.Name", "A worker cannot produce"},
-       { "CantProduceBzFullStore.Noti.Desc", "{0} because his destination storage is full"},
+       { "CantProduceBzFullStore.Noti.Desc", "{0} because his/her destination storage is full"},
 
        { "NoInput.Noti.Name", "At least an input is missing in building"},
        { "NoInput.Noti.Desc", "A building cannot produce {0} because is missing at least one input"},
@@ -567,7 +567,7 @@ public class Languages
 
 
        { "Production.Quest", "Let's produce Weapons now and sell them later. First of all, build a Blacksmith. Find it in the 'Raw' buildings menu"},
-       { "ChangeProductToWeapon.Quest", "In the Blacksmith's 'Products Tab' change the production to Weapons. Workers will bring the raw materials needed to forge weapons if found"},
+       { "ChangeProductToWeapon.Quest", "In the Blacksmith's 'Products Tab' change the production to Weapon. Workers will bring the raw materials needed to forge weapons if found"},
        { "BlackSmithHire.Quest", "Hire two blacksmiths"},
        { "WeaponsProduce.Quest", "Now produce " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " of Weapons in the Blacksmith. Click on the 'Stat' tab and will show you the production of the last 5 years. You can see the quest progress in the quest window."},
        { "ExportWeapons.Quest", "Now export 100 " + Unit.CurrentWeightUnitsString() + " of Weapons. On the Dock add an order of export. Notice that Weapons are a profitable business"},
@@ -1392,6 +1392,7 @@ public class Languages
         //ButtonTile.cs
         //Plant.cs
         //GameTime.cs
+        //GUIElement.cs
     };
 
     public static string ReturnString(string key)

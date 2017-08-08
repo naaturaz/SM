@@ -17,7 +17,7 @@ public class BatchRegion
 {
     private string _id;
     private General _batchMaster;
-    GameObject [] _all = new GameObject[1500];
+    GameObject[] _all = new GameObject[1500];
 
     //the object ID and the INT in the array
     Dictionary<string, int> _keymap = new Dictionary<string, int>();
@@ -61,7 +61,7 @@ public class BatchRegion
 
         if (_totalVertices > 63500)
         {
-            Debug.Log("vert cnt over 63.5K "+_id);
+            Debug.Log("vert cnt over 63.5K " + _id);
             return;
         }
 
@@ -91,7 +91,7 @@ public class BatchRegion
         var indexes = _keymap.Where(a => a.Key.Contains(myID)).OrderBy(a => a.Value).ToList();
 
         //setting the lowest int value to be the emptySpot
-        if (indexes.Count>0)
+        if (indexes.Count > 0)
         {
             _emptySpot = indexes[0].Value;
         }
@@ -105,18 +105,18 @@ public class BatchRegion
             _all[index].SetActive(true);
             ActivateAllChildsObj(_all[index]);
             //asign it back to original gamebject
-            _all[index].transform.SetParent( go.transform);
+            _all[index].transform.SetParent(go.transform);
             _totalVertices -= ReturnVertices(_all[index], myID + "(not sure if Id Correct)");
 
             if (destroyGameObj)
             {
-                GameObject.Destroy (_all[index].gameObject);
+                GameObject.Destroy(_all[index].gameObject);
             }
 
             _all[index] = null;
             _keymap.Remove(key);
 
-           
+
         }
     }
 
@@ -174,7 +174,7 @@ public class BatchRegion
 
     GameObject ReturnObjectToMeshUp(General go)
     {
-        if (go.Category==Ca.DraggableSquare)
+        if (go.Category == Ca.DraggableSquare)
         {
             //returning the first son of the first son. bz on smartCreatePlanes is like that 
             return go.transform.GetChild(1).transform.GetChild(0).gameObject;
@@ -191,7 +191,7 @@ public class BatchRegion
 
         for (int i = 0; i < subs.Length; i++)
         {
-            AddToAll(subs[i], go.MyId+"+"+i);
+            AddToAll(subs[i], go.MyId + "+" + i);
         }
     }
 
@@ -209,7 +209,7 @@ public class BatchRegion
             //if is a roof will take it back 
             if (subs[i].name.Contains("Guano"))
             {
-                subs[i].transform.SetParent( mainGen.transform);
+                subs[i].transform.SetParent(mainGen.transform);
             }
         }
     }
@@ -243,7 +243,7 @@ public class BatchRegion
             return;
         }
 
-        if (_batchMaster!=null)
+        if (_batchMaster != null)
         {
             var child = General.FindAllChildsGameObjectInHierarchy(_batchMaster.gameObject);
             for (int i = 0; i < child.Length; i++)
@@ -252,7 +252,7 @@ public class BatchRegion
                 if (child[i].transform.parent == _batchMaster.transform)
                 {
                     //so doesnt get wiped when destoryed 
-                    child[i].transform.SetParent( null); 
+                    child[i].transform.SetParent(null);
                 }
             }
 
@@ -279,7 +279,7 @@ public class BatchRegion
         if (newVal > highestInd)
         {
             highestInd = newVal;
-            Debug.Log("Highes array:"+highestInd);
+            Debug.Log("Highes array:" + highestInd);
         }
         if (_totalVertices > highestVert)
         {
@@ -296,13 +296,13 @@ public class BatchRegion
                 _id, Program.MeshBatchContainer.transform);
         }
 
-        int nullCt=0;
+        int nullCt = 0;
         for (int i = 0; i < _all.Length; i++)
         {
             if (_all[i] == null && nullCt > 99)
             {
                 //at 10 cts in a round of null means the last of the Array was reached 
-                StatKeeper(i-100);
+                StatKeeper(i - 100);
                 break;
             }
             if (_all[i] == null)
@@ -314,7 +314,7 @@ public class BatchRegion
             nullCt = 0;
             _all[i].SetActive(true);//in case this is now redoing a Region
             ActivateAllChildsObj(_all[i]);
-            _all[i].transform.SetParent( _batchMaster.transform);
+            _all[i].transform.SetParent(_batchMaster.transform);
         }
         CombineMeshes(_batchMaster.gameObject, ReturnProperMaterial());
     }
@@ -389,12 +389,62 @@ public class BatchRegion
     {
         _batchMaster.Destroy();
         _batchMaster = null;
-        //_all = null;
+
+        _batchPivotContainer.Destroy();
+        _batchPivotContainer = null;
     }
 
     internal bool IsAlive()
     {
         return _batchMaster != null;
     }
+
+
+
+
+
+    #region Scale _batchMaster
+
+    float _scaleYCap = 2f;
+    General _batchPivotContainer;//created so the pivot point is in the middle of this
+    /// <summary>
+    /// Will scale the Combined Mesh GameObj
+    /// </summary>
+    /// <param name="newScale"></param>
+    public void ScaleBatchedGO(Vector3 newScale)
+    {
+        if (_batchMaster == null)
+        {
+            return;
+        }
+        if (_batchPivotContainer == null)
+        {
+            CreateBatchPivot();
+            //now nest the _batchMaster inside the pivot GO
+            _batchMaster.transform.SetParent(_batchPivotContainer.transform);
+        }
+        if (_batchPivotContainer.gameObject.transform.localScale.y > _scaleYCap)
+        {
+            return;
+        }
+
+        //now I scale the Pivot GO that contains the _batchMaster inside 
+        var parent = _batchPivotContainer.gameObject.transform.parent;
+        _batchPivotContainer.gameObject.transform.SetParent(null);
+
+        var localScale = _batchPivotContainer.gameObject.transform.localScale;
+        var final = localScale + newScale;
+        _batchPivotContainer.gameObject.transform.localScale = final;
+
+        _batchPivotContainer.gameObject.transform.SetParent(parent);
+    }
+
+    private void CreateBatchPivot()
+    {
+        _batchPivotContainer = General.Create(Root.classesContainer, _all[0].transform.position,
+            _batchMaster.name + ".Pivot",
+            _batchMaster.transform.parent.transform);
+    }
+    #endregion
 }
 

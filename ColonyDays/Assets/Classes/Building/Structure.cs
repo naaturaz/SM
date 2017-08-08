@@ -402,6 +402,10 @@ public class Structure : StructureParent
         }
 
         _farm = null;
+
+        //just in case was harvested, lets reload all
+        //this is for Stats so its reloads
+        ReloadInventory();
     }
 
     /// <summary>

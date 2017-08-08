@@ -266,7 +266,7 @@ public class FieldFarm : Farm
     {
         if (_batchManager == null)
         {
-            _batchManager = new BatchManager(_building.HType + "." + _building.Id);
+            _batchManager = new BatchManager(_building.MyId + ".Batch");
         }
 
         _batchManager.AddGen(gen);
@@ -295,6 +295,14 @@ public class FieldFarm : Farm
         _batchManager.BatchDestroy();
     }
 
+    /// <summary>
+    /// Will scale all Batched GO
+    /// </summary>
+    /// <param name="add"></param>
+    public void ScaleBatchedGO(Vector3 add)
+    {
+        _batchManager.ScaleAllRegionsBatchedGO(add);
+    }
 
 
     #endregion
