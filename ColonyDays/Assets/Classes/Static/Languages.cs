@@ -239,7 +239,7 @@ public class Languages
        { "BugReport", "Caught a bug? uhmm yummy.... Send it this way!! Thanks"},
        { "Invitation", "Your friend's email for a chance to join the Private Beta"},
        { "Info", ""},//use for informational Dialogs
-       { "Negative", "The Crown extended a line of credit for you. If you own more than 100 000 is game over"},  
+       { "Negative", "The Crown extended a line of credit for you. If you own more than $100,000.00 is game over"},  
 
 
        //MainMenu
@@ -459,8 +459,7 @@ public class Languages
 
        { "Combat Mode.Help", "It activates when a Pirate/Bandit is detected by one of your citizens. Once the mode is active you can command units directly to attack. Select them and right click to objective to attack"},
 
-       { "Population.Help", "Once they turn 16 will move to a free house if found. If there is always a free house to move to the population growth will be guaranteed."},
-
+       { "Population.Help", "Once they turn 16 will move to a free house if found. If there is always a free house to move to the population growth will be guaranteed. If they get into the new houses at 16 years old, you are maximizing population growth"},
 
 
        { "F1.Help", "Press [F1] for help"},
@@ -1392,6 +1391,7 @@ public class Languages
         //ButtonTile.cs
         //Plant.cs
         //GameTime.cs
+        //Profession.cs
         //GUIElement.cs
     };
 

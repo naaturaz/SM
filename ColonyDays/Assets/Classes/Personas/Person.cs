@@ -103,6 +103,9 @@ public class Person : Hoverable
 
     private Structure _myDummy;
     private Structure _myDummyProf;
+
+
+
     /// <summary>
     /// eahc person has a dummy use to routing. here for GC 
     /// </summary>
@@ -111,6 +114,29 @@ public class Person : Hoverable
         get { return _myDummy; }
         set { _myDummy = value; }
     }
+
+
+
+    #region Reload Inventory
+
+    bool _reloadInv = true;
+    internal bool IsToReloadInventory()
+    {
+        return _reloadInv;
+    }
+
+    internal void InventoryReloaded()
+    {
+        _reloadInv = false;
+    }
+
+    void ShouldReloadInventory()
+    {
+        _reloadInv = true;
+    }
+
+    #endregion
+
     /// <summary>
     /// For profesions routing 
     /// </summary>
@@ -969,6 +995,8 @@ public class Person : Hoverable
         GetPaid();
         AgeAction();
 
+        ChangeHappinesBy(Home.Comfort);
+
         CheckHappiness();
         DidIDie();
         CheckIfEmmigrate();
@@ -1726,7 +1754,7 @@ public class Person : Hoverable
     {
         if (jType == Job.None)
         {
-            return ReturnJobType();
+            return ReturnJobType(Work);
         }
         return jType;
     }
@@ -1796,29 +1824,34 @@ public class Person : Hoverable
     /// <summary>
     /// Based on the current Work Htype will tell u wihc is the person Job Type
     /// </summary>
-    private Job ReturnJobType()
+    public static Job ReturnJobType(Structure work)
     {
-        if (Work.HType == H.LumberMill)
+        if (work == null)
+        {
+            return Job.None;
+        }
+
+        if (work.HType == H.LumberMill)
         {
             return Job.Forester;
         }
-        else if (Work.HType == H.Dock || Work.HType == H.Shipyard || Work.HType == H.Supplier)
+        else if (work.HType == H.Dock || work.HType == H.Shipyard || work.HType == H.Supplier)
         {
             return Job.Docker;
         }
-        else if (Work.HType == H.Masonry || Work.HType == H.HeavyLoad)
+        else if (work.HType == H.Masonry || work.HType == H.HeavyLoad)
         {
             return Job.Builder;
         }
-        else if (Work.HType == H.FishingHut)
+        else if (work.HType == H.FishingHut)
         {
             return Job.FisherMan;
         }
-        else if (Work.HType.ToString().Contains(H.Farm.ToString()))
+        else if (work.HType.ToString().Contains(H.Farm.ToString()))
         {
             return Job.Farmer;
         }
-        else if (Work.HType.ToString().Contains(H.ShoreMine.ToString()))
+        else if (work.HType.ToString().Contains(H.ShoreMine.ToString()))
         {
             return Job.SaltMiner;
         }
@@ -1938,6 +1971,7 @@ public class Person : Hoverable
         }
 
         TransferInvetoryCat(this, Home, PCat.Food);
+        ShouldReloadInventory();
     }
 
     /// <summary>
@@ -2020,6 +2054,7 @@ public class Person : Hoverable
         float amtTook = takenFrom.Inventory.RemoveByWeight(product, amt);
         givenTo.Inventory.Add(product, amtTook);
         Inventory.RemoveContainerUsed(product);
+        ShouldReloadInventory();
     }
 
 
@@ -2046,6 +2081,7 @@ public class Person : Hoverable
                 throw new Exception("over 100 iterations Droping all goods");
             }
         }
+        ShouldReloadInventory();
     }
 
     void OneWayInvExchange(General takenFrom, General givenTo, P product, float amt)
@@ -2058,6 +2094,7 @@ public class Person : Hoverable
 
         float amtTook = takenFrom.Inventory.RemoveByWeight(product, amt);
         givenTo.Inventory.Add(product, amtTook);
+        ShouldReloadInventory();
     }
 
     /// <summary>

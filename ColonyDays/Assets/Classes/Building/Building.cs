@@ -3644,6 +3644,11 @@ public class Building : Hoverable, Iinfo
     /// </summary>
     public bool HaveThisProdOnInv(P prod)
     {
+        if (Inventory.DoWeHaveWater())
+        {
+            return true;
+        }
+
         for (int i = 0; i < Inventory.InventItems.Count; i++)
         {
             if (Inventory.InventItems[i].Key == prod)

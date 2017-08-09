@@ -326,7 +326,7 @@ public class BuildingController : BuildingPot
            current = ReligiousBuilds;
            return HPers.Religion;
         }
-        else if(hTypeP == H.Tavern)
+        else if(hTypeP == H.Tavern || hTypeP == H.Library)
         {
             current = ChillBuilds;
             return HPers.Chill;
@@ -354,7 +354,7 @@ public class BuildingController : BuildingPot
         {
             return HPers.Religion;
         }
-        else if (hTypeP == H.Tavern)
+        else if (hTypeP == H.Tavern || hTypeP == H.Library)
         {
             return HPers.Chill;
         }

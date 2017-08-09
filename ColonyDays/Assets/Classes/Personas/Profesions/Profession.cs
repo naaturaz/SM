@@ -30,7 +30,7 @@ public class Profession
     protected string _myAnimation;//for a foresrte will be chop wood animation 
 
     protected List<VectorM> _orderedSites = new List<VectorM>();
-    
+
     //if is routing will not allow the save to happen. So its not need to same the dummy
     //since everytime a Profession is saved all its Routes are saved already
     //protected Structure dummy;
@@ -73,8 +73,6 @@ public class Profession
         get { return _profDescription; }
         set { _profDescription = value; }
     }
-
-
 
     public bool ReadyToWork
     {
@@ -278,7 +276,23 @@ public class Profession
         return res;
     }
 
- 
+    /// <summary>
+    /// Will show profesion. IWll address if homer or insider
+    /// </summary>
+    /// <returns></returns>
+    internal string ProfessionDescriptionToShow()
+    {
+        Job res = ProfDescription;
+        if (ProfDescription == Job.Homer)
+        {
+            res = Person.ReturnJobType(_person.Work);
+        }
+        if (res == Job.Insider)
+        {
+            return _person.Work.HType + " worker";
+        }
+        return Naming.CaseItRight(res+"");
+    }
 
     /// <summary>
     /// Used to create a Dummy profession instance to save all attrb to file 

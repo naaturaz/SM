@@ -118,7 +118,7 @@ public class UnlockBuilds
             new BRequires(H.Morro, H.Coming_Soon),
 
             //helper
-            new BRequires(H.BullDozer, 50, 500, 900, 0, 95),
+            new BRequires(H.BullDozer, true),
 
         };
     }

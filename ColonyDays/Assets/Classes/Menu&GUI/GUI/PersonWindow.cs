@@ -139,16 +139,16 @@ public class PersonWindow : GUIElement
         {
             _showAInventory = new ShowAInventory(_person.Inventory, _gaveta, _invIniPos.transform.localPosition);
         }
-            //diff  person
-        else if (_showAInventory != null && _showAInventory.Inv != _person.Inventory)
+        //diff  person
+        else if (_showAInventory != null && _person.IsToReloadInventory())
         {
             _showAInventory.DestroyAll();
             _showAInventory = new ShowAInventory(_person.Inventory, _gaveta, _invIniPos.transform.localPosition);
-
-            if (_aPersonBuildingDetails != null)
-            {
-                _aPersonBuildingDetails.ManualUpdate(_person, true);
-            }
+            _person.InventoryReloaded();
+            //if (_aPersonBuildingDetails != null)
+            //{
+            //    _aPersonBuildingDetails.ManualUpdate(_person, true);
+            //}
         
         }
         _showAInventory.ManualUpdate();

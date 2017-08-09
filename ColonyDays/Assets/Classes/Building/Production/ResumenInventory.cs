@@ -9,7 +9,8 @@ using System.Linq;
  * 
  */
 
-public class ResumenInventory {
+public class ResumenInventory
+{
 
     Inventory _gameInventory = new Inventory("GameInventory", H.None);
 
@@ -225,7 +226,7 @@ public class Coverage
 
     //so its not recalculated everytime is asked if is really frequent
     //for CPU reasons
-    private static float _cool = 60f;
+    private static float _cool = 30f;//60
 
     public static float Edu(bool force = false)
     {
@@ -241,36 +242,36 @@ public class Coverage
     public static float TradesEdu(bool force = false)
     {
 
-            if ((force) ||(_lastTradeEdu == 0 || float.IsNaN(_tradesEdu) || Time.time > _lastTradeEdu + _cool))
-            {
-                _lastTradeEdu = Time.time;
-                _tradesEdu = CalculateCoverage(H.TradesSchool);
-            }
-            return _tradesEdu;
-        
+        if ((force) || (_lastTradeEdu == 0 || float.IsNaN(_tradesEdu) || Time.time > _lastTradeEdu + _cool))
+        {
+            _lastTradeEdu = Time.time;
+            _tradesEdu = CalculateCoverage(H.TradesSchool);
+        }
+        return _tradesEdu;
+
     }
 
     public static float Rel(bool force = false)
     {
 
-            if((force) || (_lastRel == 0 || float.IsNaN(_rel) || Time.time > _lastRel + _cool))
-            {
-                _lastRel = Time.time;
-                _rel = CalculateCoverage(H.Church);
-            }
-            return _rel;
+        if ((force) || (_lastRel == 0 || float.IsNaN(_rel) || Time.time > _lastRel + _cool))
+        {
+            _lastRel = Time.time;
+            _rel = CalculateCoverage(H.Church);
+        }
+        return _rel;
     }
 
-    public static float Chill(bool force = false)
+    public static float Chill(H hTypePass)
     {
-   
-            if ((force) ||(_lastChill == 0 || float.IsNaN(_chill) || Time.time > _lastChill + _cool))
-            {
-                _lastChill = Time.time;
-                _chill = CalculateCoverage(H.Tavern);
-            }
-            return _chill;
-        
+
+        if ((_lastChill == 0 || float.IsNaN(_chill) || Time.time > _lastChill + _cool))
+        {
+            _lastChill = Time.time;
+            _chill = CalculateCoverage(hTypePass);
+        }
+        return _chill;
+
     }
 
 
@@ -286,7 +287,7 @@ public class Coverage
     /// <returns></returns>
     static float CalculateCoverage(H type)
     {
-        if (_build.Count==0)
+        if (_build.Count == 0)
         {
             LoadBuildStats();
         }
@@ -304,13 +305,13 @@ public class Coverage
         }
         //the people can cover this tyoes of buildings shcools for ex. with 2 schools working at full will cover
         //40 people bz the factor is 2 
-        var peopleCanCover = acumPercent*factor;
+        var peopleCanCover = acumPercent * factor;
         //amt of people that need the coverage 
         var amtPplTtl = PersonPot.Control.All.Count(a => a.Age > ageMin && a.Age < ageMax);
         //final coverage if can cover 20 people and 30 needed then the cover is gonna be .66
-        var fin = peopleCanCover/amtPplTtl;
+        var fin = peopleCanCover / amtPplTtl;
 
-        if (fin>1)
+        if (fin > 1)
         {
             return 1;
         }
@@ -339,21 +340,21 @@ public class Coverage
         }
         else _cool = 60;
 
-        if (HType==H.School)
+        if (HType == H.School)
         {
             return PercentFormat(Edu());
-        }      
-        if ( HType == H.TradesSchool)
+        }
+        if (HType == H.TradesSchool)
         {
             return PercentFormat(TradesEdu());
-        }   
-        if (HType==H.Church)
+        }
+        if (HType == H.Church)
         {
             return PercentFormat(Rel());
-        }     
-        if (HType==H.Tavern)
+        }
+        if (HType == H.Tavern)
         {
-            return PercentFormat(Chill());
+            return PercentFormat(Chill(HType));
         }
 
         return "-1";
@@ -368,25 +369,32 @@ public class Coverage
     static string PercentFormat(float val)
     {
         return (val * 100).ToString("n1") + "%";
-    }  
-    
+    }
+
     static string WholeNumbFormat(float val, int factor)
     {
         return ((int)(val * factor)) + "";
     }
 
 
-    static List<BuildStat> _build = new List<BuildStat>(); 
+    static List<BuildStat> _build = new List<BuildStat>();
     static private void LoadBuildStats()
     {
         _build.Add(new BuildStat(H.School, 10, 4, 11));
         _build.Add(new BuildStat(H.TradesSchool, 5, 10, 16));
-        _build.Add(new BuildStat(H.Church, 50, 0, 100));
+        _build.Add(new BuildStat(H.Church, 50, 3, 100));
         _build.Add(new BuildStat(H.Tavern, 10, 20, 80));
+        _build.Add(new BuildStat(H.Library, 30, 3, 100));
+
     }
 
     static BuildStat GiveMeStat(H hTypeP)
     {
+        if (_build.Count == 0)
+        {
+            LoadBuildStats();
+        }
+
         BuildStat res = new BuildStat();
         for (int i = 0; i < _build.Count; i++)
         {
@@ -396,6 +404,17 @@ public class Coverage
             }
         }
         return res;
+    }
+
+    public static bool CanIUseThisBuilding(H typeP, Person p)
+    {
+        if (p.Age>20)
+        {
+            var a = 1;
+        }
+
+        var cover = GiveMeStat(typeP);
+        return p.Age >= cover.MinAge && p.Age <= cover.MaxAge;
     }
 
 }

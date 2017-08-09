@@ -890,7 +890,16 @@ public class Inventory
         return true;
     }
 
-#endregion
+    /// <summary>
+    /// Created so 'Storages' appear to have water
+    /// </summary>
+    /// <returns></returns>
+    internal bool DoWeHaveWater()
+    {
+        return LocMyId.Contains("Storage") || Contains(P.Water);
+    }
+
+    #endregion
 
 }
 

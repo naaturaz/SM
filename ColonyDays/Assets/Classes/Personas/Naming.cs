@@ -54,7 +54,14 @@ public class Naming
         return newName;
     }
 
-    string CaseItRight(string newName)
+    /// <summary>
+    /// RobertYale -> Robertyale
+    /// 
+    /// WheelBarrow -> Wheelbarrow
+    /// </summary>
+    /// <param name="newName"></param>
+    /// <returns></returns>
+    public static string CaseItRight(string newName)
     {
         newName = newName.ToLower();
         string ini = newName.Substring(0, 1);

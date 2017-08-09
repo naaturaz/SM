@@ -47,16 +47,18 @@ public class ShowAPersonBuildingDetails
         AddToItems("Thirst", _person.Thirst);//thirst quenched
         AddToItems("Calories", _person.Nutrition1.CalNeededNowUpdate().ToString("N0") + "");
         AddToItems("Nutrition", _person.NutritionLevel + "");
-        AddToItems("Profession", _person.ProfessionProp.ProfDescription + "");
+        AddToItems("Profession", _person.ProfessionProp.ProfessionDescriptionToShow());
         AddToItems("Spouse", Family.GetPersonName(_person.Spouse));
         AddToItems("Happinness", _person.Happinnes.ToString("n1") + "");
-        AddToItems("Years Of School", _person.YearsOfSchool + "");
+        AddToItems("Years of school", _person.YearsOfSchool + "");
+        AddToItems("House comfort", _person.Home.Comfort + "");
+
         //AddToItems("Age majority reach", _person.IsMajor + "");
         //AddToItems("Account", MyText.DollarFormat(_person.PersonBank1.CheckingAcct));
 
         AddToItems("Home", Home());
         AddToItems("Work", Work());
-        AddToItems("Food Source", Food());
+        AddToItems("Food source", Food());
         AddToItems("Religion", Religion());
         AddToItems("Relax", Chill());
     }

@@ -273,7 +273,9 @@ public class BuildingWindow : GUIElement
         if (Building.IsHouseType(Building.MyId) || Building.MyId.Contains("Storage") || Building.Category == Ca.Way ||
             Building.HType == H.Masonry || Building.HType == H.HeavyLoad
             || Building.HType == H.LightHouse
-            || Building.IsNaval())
+            || Building.IsNaval()
+            || Building.HType == H.Church || Building.HType == H.Tavern || Building.HType == H.TownHouse 
+            || Building.HType == H.Library)
         {
             _salary.SetActive(false);
             _staBtn.SetActive(false);
@@ -287,7 +289,9 @@ public class BuildingWindow : GUIElement
         }
 
         if (Building.HType == H.Masonry || Building.HType == H.HeavyLoad || Building.HType == H.LightHouse
-            || Building.IsNaval())
+            || Building.IsNaval()
+            || Building.HType == H.Church || Building.HType == H.Tavern || Building.HType == H.TownHouse
+            || Building.HType == H.Library)
         {
             _salary.SetActive(true);
         }

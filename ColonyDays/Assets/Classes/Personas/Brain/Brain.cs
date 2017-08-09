@@ -512,7 +512,8 @@ public class Brain
     private void SkipChill()
     {
         if (ReadyToGoChill() &&
-            (_person.Chill == null || !UPerson.IsMajor(_person.Age) || _stageManager.IsMidNightOrLater()))
+            (_person.Chill == null || !UPerson.IsMajor(_person.Age) 
+            || _stageManager.IsMidNightOrLater()))
         {
             ReadyToIdleInHome(true);
         }
@@ -1962,14 +1963,11 @@ public class Brain
     /// </summary>
     private void CheckClosestBuildRoutine(HPers which)
     {
-        //SetCurrents(which);
-
         DefineIfIsAllSet();
         //isallset is here so will check if closest building exist
         if (!ItHasOneAlready(which) || _isAllSet || ReturnCurrStructure(which).Instruction == H.WillBeDestroy)
         {
             DefineClosestBuild(which);
-            //UpdateCurrent(which);
         }
         UnivCounter(which);
     }
