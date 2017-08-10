@@ -97,7 +97,7 @@ public class OrderShow : GUIElement
     /// </summary>
     /// <param name="i"></param>
     /// <param name="type"></param>
-    internal void Reset(int i, H type, Vector3 orderPos, Vector3 onProcessOrderPos)
+    internal void Reset(int i, H type)
     {
         var rectT = GetComponent<RectTransform>();
         rectT.position = new Vector3();
@@ -110,7 +110,7 @@ public class OrderShow : GUIElement
         }
 
         //bz if is on process goes down
-        var yPls = AddYSpaceIfIsOnProcess(orderPos, onProcessOrderPos);
+        var yPls = AddYSpaceIfIsOnProcess();
 
         rectT.localPosition = new Vector3(x, (-4 * i) - yPls, 0);
 
@@ -138,7 +138,7 @@ public class OrderShow : GUIElement
     }
 
 
-    float AddYSpaceIfIsOnProcess(Vector3 orderPos, Vector3 onProcessOrderPos)
+    float AddYSpaceIfIsOnProcess()
     {
         //order that is not on process yet
         if (_closeBtn!=null)
@@ -148,7 +148,7 @@ public class OrderShow : GUIElement
 
         //on Process order 
         //var yDiff = Mathf.Abs(orderPos.y - onProcessOrderPos.y);
-        return 62f;
+        return 45;//62
     }
 
     /// <summary>

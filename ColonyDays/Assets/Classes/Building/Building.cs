@@ -1460,7 +1460,7 @@ public class Building : Hoverable, Iinfo
 
         { H.StorageMed, new Vector3(-30,0,-20)},
         { H.StorageSmall, new Vector3(-35,0,-25)},
-        { H.StorageBig, new Vector3(-55,0,-35)},
+        { H.StorageBig, Vector3.forward },//will remove NavMesh Obj component
 
         { H.Dock, new Vector3(-5,0,-5)},
 
@@ -1522,6 +1522,11 @@ public class Building : Hoverable, Iinfo
         }
         if (perc == new Vector3())
         {
+            return;
+        }
+        if (perc == Vector3.forward)
+        {
+            Destroy(Geometry.GetComponent<NavMeshObstacle>());
             return;
         }
 

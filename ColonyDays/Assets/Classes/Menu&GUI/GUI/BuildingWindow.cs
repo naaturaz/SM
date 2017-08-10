@@ -1004,14 +1004,11 @@ public class BuildingWindow : GUIElement
     /// </summary>
     /// <param name="i"></param>
     /// <param name="order"></param>
-    /// <param name="iniPosP"></param>
     void Display1Order(int i, Order order, Vector3 iniPosP, string root)
     {
         var orderShow = OrderShow.Create(root, _orders.transform);
         orderShow.Show(order);
-
-        orderShow.Reset(i, order.TypeOrder, _importIniPos, _importIniPosOnProcess);
-
+        orderShow.Reset(i, order.TypeOrder);
         _showOrders.Add(orderShow);
     }
 

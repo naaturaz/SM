@@ -93,8 +93,6 @@ public class SubBulletinProduction
         }
 
         ShowProductionReport(_productionReport.ProduceReport);
-        _bulletinWindow.AdjustContentHeight( ItemsOnReport(_productionReport.ProduceReport) * 1.5f);
-
     }
 
     public void ShowConsumeReport()
@@ -106,8 +104,6 @@ public class SubBulletinProduction
         }
 
         ShowProductionReport(_productionReport.ConsumeReport);
-        _bulletinWindow.AdjustContentHeight(ItemsOnReport(_productionReport.ConsumeReport) * 1.5f);
-
     }
 
     public void ShowExpirationReport()
@@ -119,12 +115,7 @@ public class SubBulletinProduction
         }
 
         ShowProductionReport(_expirationReport.ProduceReport);
-        _bulletinWindow.AdjustContentHeight(ItemsOnReport(_expirationReport.ProduceReport) * 1.5f);
-
     }
-
-
-
 
 
     List<ShowAInventory> _reports = new List<ShowAInventory>();
@@ -133,15 +124,16 @@ public class SubBulletinProduction
         Hide();
         _bulletinWindow.ShowScrool();
 
-        var pastItems = 0;
+        var itemsOnReport = 0;
         for (int i = 0; i < ShowLastYears(list); i++)
         {
             var a = new ShowAInventory(list[i], _bulletinWindow.Content.gameObject,
-                _bulletinWindow.ScrollIniPosGo.transform.localPosition + new Vector3(0, pastItems * -3.5f * i, 0));
+                _bulletinWindow.ScrollIniPosGo.transform.localPosition + new Vector3(0, itemsOnReport * -3.7f, 0));
             
             _reports.Add(a);
-            pastItems = list[i].InventItems.Count;
+            itemsOnReport += list[i].InventItems.Count;
         }
+        _bulletinWindow.AdjustContentHeight(ItemsOnReport(_productionReport.ConsumeReport) * 1.5f);
     }
 
     int ShowLastYears(List<Inventory> list)

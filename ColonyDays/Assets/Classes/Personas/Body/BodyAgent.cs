@@ -34,8 +34,12 @@ public class BodyAgent
         }
     }
 
+    public float ReachRadius { get; internal set; }
+
     public BodyAgent(Person person)
     {
+        ReachRadius = .5f;
+
         _person = person;
         _agent = _person.GetComponent<NavMeshAgent>();
         _speedInitial = _agent.speed;
@@ -90,7 +94,7 @@ public class BodyAgent
     {
         if (_person == null) { return; }
 
-        if (UMath.nearEqualByDistance(Destiny, _person.transform.position, 0.3f))
+        if (UMath.nearEqualByDistance(Destiny, _person.transform.position, ReachRadius))
         {
             if (_nextDest != new Vector3())
             {

@@ -19,7 +19,7 @@ public class RewardsWindow : GUIElement
     public InputField EmailConfirm;
     public Text Display;
 
-    float _targetTime = 15;//60*60*2
+    float _targetTime = 120;//60*60*2
     float _playedPreviously;
 
     DateTime _today = new DateTime();

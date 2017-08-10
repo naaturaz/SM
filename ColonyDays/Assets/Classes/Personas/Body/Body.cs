@@ -1100,7 +1100,7 @@ public class Body //: MonoBehaviour //: General
 
 
 
-        if (UMath.nearEqualByDistance(_person.transform.position, BodyAgent.Destiny, 0.3f))// 
+        if (UMath.nearEqualByDistance(_person.transform.position, BodyAgent.Destiny, BodyAgent.ReachRadius))// 
         {
             BodyAgent.CleanDestiny();
             //CheckRotation();

@@ -44,7 +44,10 @@ public class Notification
             {
                 Param1 = Languages.ReturnString(Param1);
             }
-
+            else if (NotificationKey == "Built")//so StorageBig is Big Storage 
+            {
+                Param1 = Languages.ReturnString(Param1);
+            }
 
             Description = string.Format(Description, Param1);
         }

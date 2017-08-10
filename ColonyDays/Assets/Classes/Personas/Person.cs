@@ -2977,7 +2977,12 @@ public class Person : Hoverable
             {
                 _rEmoTime = UMath.GiveRandom(0, 4f);
                 _toShowEmoticon = false;
-                EmoticonManager.Show(_instructionEmoticon, transform.position);
+
+                //so they show less icons now only 25% will do so 
+                if (UMath.GiveRandom(0, 4) == 0)
+                {
+                    EmoticonManager.Show(_instructionEmoticon, transform.position);
+                }
             }
         }
     }
@@ -2985,16 +2990,12 @@ public class Person : Hoverable
 
     internal void BuildPlacedHandler(object sender, EventArgs e)
     {
-        //EmoticonManager.Show("Built", transform.position);
         _toShowEmoticon = true;
         _instructionEmoticon = "Built";
     }
 
     internal void BuildWasDemolished(object sender, EventArgs e)
     {
-        //EmoticonManager.Show("Demolish", transform.position);
-        //Debug.Log("Detected de" + Name);
-
         _toShowEmoticon = true;
         _instructionEmoticon = "Demolish";
     }
