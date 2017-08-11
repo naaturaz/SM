@@ -91,7 +91,7 @@ public class BuildingWindow : GUIElement
         {
             yield return new WaitForSeconds(1f); // wait
 
-            if(Building != null && _products.activeSelf)
+            if(Building != null && Building.CurrentProd !=null && _products.activeSelf)
             {
                 //in case is a Field Farm updates the progress 
                 ShowProductDetail();

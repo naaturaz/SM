@@ -408,11 +408,15 @@ public class Inventory
     void NotifyIfFilling(float currentOccupied)
     {
         var perc = currentOccupied / _capacityVol;
-
         if (perc > 0.74f && (lastNoti + NotificationsManager.NotiFrec < Time.time || lastNoti == 0) && IsAStorage)
         {
             lastNoti = Time.time;
             var realPerc = perc * 100;
+            if (realPerc > 100)
+            {
+                //so it doesnt show Storage is at 115%
+                realPerc = 100;
+            }
             Program.gameScene.GameController1.NotificationsManager1.Notify("FullStore", realPerc.ToString("N0"));
         }
     }

@@ -150,7 +150,7 @@ public class ShowAPersonBuildingDetails
 
     private int count;
     /// <summary>
-    /// //its been called every 6 frames
+    /// it is updated every 20 calls 
     /// </summary>
     /// <param name="_person"></param>
     internal void ManualUpdate(Person person, bool forced = false)

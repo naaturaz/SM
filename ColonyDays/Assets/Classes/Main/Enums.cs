@@ -255,8 +255,9 @@ public enum H
 
     WoodHouseA, WoodHouseB, WoodHouseC,
     BrickHouseA,
-    BrickHouseB,
     BrickHouseC,
+    BrickHouseB,
+
 
     //farming F3
     //Farm, this farm removed is the draggable farm 

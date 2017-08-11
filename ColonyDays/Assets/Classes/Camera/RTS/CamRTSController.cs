@@ -191,6 +191,11 @@ public class CamRTSController : CamControl
 
     void AudioAmbientPlay()
     {
+        if (!Program.gameScene.GameFullyLoaded())
+        {
+            return;
+        }
+
         var playThis = MeshController.CrystalManager1.WhatAudioIPlay(transform.position);
         var pos = MeshController.CrystalManager1.CurrentRegionPos(transform.position);
         //if game tht has not started

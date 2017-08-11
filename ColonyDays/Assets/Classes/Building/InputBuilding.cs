@@ -550,7 +550,16 @@ public class InputBuilding : BuildingPot {
         {
             return;
         }
-       
+
+        //if is a road would leave previews behind if a new building was clicked 
+        if (Control.CurrentSpawnBuild.Category == Ca.DraggableSquare)
+        {
+            var drag = (DragSquare)Control.CurrentSpawnBuild;
+            drag.DestroyPreviews();
+            CreateOrKillCursor();
+            _isDraggingWay = false;
+        }
+
         Control.CurrentSpawnBuild.Destroy();
     }
 

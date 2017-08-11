@@ -413,8 +413,7 @@ public class AddOrderWindow : GUIElement {
         if (IsTextAValidInt(_inputAmt.text))
         {
             var loc = int.Parse(_inputAmt.text);
-
-            _amt = Unit.ConvertFromKGToCurrent((float)loc);
+            _amt = Unit.ConvertWeightFromCurrentToKG((float)loc);
         }
         else _inputAmt.text = "";
     }

@@ -91,14 +91,14 @@ public class PersonBuildingDetailTile : GUIElement
 
     bool DoesKeyShowPath()
     {
-        return _key == "Home" || _key == "Work" || _key == "Food Source" || _key == "Religion" ||
-            _key == "Chill";
+        return _key == "Home" || _key == "Work" || _key == "Food source" || _key == "Religion" ||
+            _key == "Relax";
     }  
     
     bool DoesKeyShowLoc()
     {
-        return _key == "Home" || _key == "Work" || _key == "Food Source" || _key == "Religion" ||
-            _key == "Chill";
+        return _key == "Home" || _key == "Work" || _key == "Food source" || _key == "Religion" ||
+            _key == "Relax";
     }
 
     void SetVal()

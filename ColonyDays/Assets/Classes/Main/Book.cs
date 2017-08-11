@@ -83,7 +83,7 @@ public class Book : General
         Build.Add(new BuildStat(H.WoodHouseB, 500, 30, 5, 0, 5, maxPeople: 5, capacity: .5f));
         Build.Add(new BuildStat(H.WoodHouseC, 800, 20, 2, 0, 2, maxPeople: 10, capacity: .6f));
         Build.Add(new BuildStat(H.BrickHouseA, 900, 10, 5, 50, 7, maxPeople: 7, capacity: 1));
-        Build.Add(new BuildStat(H.BrickHouseB, 1000, 10, 5, 100, 10, maxPeople: 7, capacity: 1));
+        Build.Add(new BuildStat(H.BrickHouseB, 1200, 12, 7, 150, 10, maxPeople: 7, capacity: 1.2f));//deluxe 
         Build.Add(new BuildStat(H.BrickHouseC, 1100, 10, 5, 100, 10, maxPeople: 7, capacity: 1));
 
         //farming

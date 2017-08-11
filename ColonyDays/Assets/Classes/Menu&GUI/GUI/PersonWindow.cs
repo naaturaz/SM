@@ -6,7 +6,7 @@ public class PersonWindow : GUIElement
 {
 
     private Text _title;
-    
+
 
 
 
@@ -46,7 +46,7 @@ public class PersonWindow : GUIElement
         base.Start();
 
         InitObj();
-        Hide();  
+        Hide();
 
         StartCoroutine("OneSecUpdate");
 
@@ -64,7 +64,7 @@ public class PersonWindow : GUIElement
             {
                 wasStarted = true;
 
-               
+
             }
         }
     }
@@ -95,14 +95,22 @@ public class PersonWindow : GUIElement
         _invBtnRect = GetRectFromBoxCollider2D(invBtn);
     }
 
+
+    string _oldPersonMyId;
     public void Show(Person val)
     {
         Program.MouseListener.HideBuildingsMenu();
 
-
         if (_person != null)
         {
             _person.UnselectPerson();
+
+            if (_oldPersonMyId != _person.MyId)
+            {
+                //so if its a diff person will redo _aPersonBuildingDetails 
+                _aPersonBuildingDetails = null;
+                _oldPersonMyId = _person.MyId;
+            }
         }
 
         //MakeThisTabActive(oldTabActive);
@@ -110,7 +118,6 @@ public class PersonWindow : GUIElement
 
         _person = val;
         //CheckIfIsDiffNewPerson();
-
 
         UpdateInputTitle();
 
@@ -120,7 +127,6 @@ public class PersonWindow : GUIElement
         transform.position = iniPos;
         _person.SelectPerson();
     }
-
 
 
     private void LoadMenu()
@@ -149,7 +155,6 @@ public class PersonWindow : GUIElement
             //{
             //    _aPersonBuildingDetails.ManualUpdate(_person, true);
             //}
-        
         }
         _showAInventory.ManualUpdate();
         _inv.text = BuildStringInv(_person);
@@ -163,7 +168,6 @@ public class PersonWindow : GUIElement
             //manual update
             _aPersonBuildingDetails.ManualUpdate(_person);
         }
-
     }
 
 

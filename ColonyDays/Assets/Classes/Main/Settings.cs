@@ -399,6 +399,21 @@ public class Unit
     }
 
     /// <summary>
+    /// Converts weights from Current to KG
+    /// </summary>
+    /// <param name="p"></param>
+    /// <returns></returns>
+    public static float ConvertWeightFromCurrentToKG(float p)
+    {
+        if (_units == 'm')
+        {
+            return p;
+        }
+        return WeightFromImpToMetric(p);
+    }
+
+
+    /// <summary>
     /// used to The input amt in order Converted if needed
     /// </summary>
     /// <param name="p"></param>
