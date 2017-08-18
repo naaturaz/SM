@@ -164,6 +164,18 @@ public class SubBulletinFinance
             _reportsExports[i].Destroy();
         }
         _reportsExports.Clear();
+
+        //imports
+        for (int i = 0; i < _reportsImports.Count; i++)
+        {
+            //means this GUI was reloaded
+            if (_reportsImports[i] == null || _reportsImports[i].gameObject == null)
+            {
+                break;
+            }
+            _reportsImports[i].Destroy();
+        }
+        _reportsImports.Clear();
     }
 
 
@@ -238,50 +250,64 @@ public class SubBulletinFinance
 
 
 
+    #endregion
 
 
-    //Exports
+    #region Exports and Imports
 
     List<ExportData> _exports = new List<ExportData>();
-    public List<ExportData> Exports
-    {
-        get
-        {
-            return _exports;
-        }
+    List<ExportData> _imports = new List<ExportData>();
 
-        set
-        {
-            _exports = value;
-        }
+    List<SpecTile> _reportsExports = new List<SpecTile>();
+    List<SpecTile> _reportsImports = new List<SpecTile>();
+
+
+    ExportData AddTitleBarExportsOrImport()
+    {
+        return new ExportData(null, "Building", "Product", 0, 0);
     }
 
-    public void AddNewExport(string building, P prod, float amt, float money)
+    public void AddNewExportOrImport(string building, P prod, float amt, float money, string type)
     {
         var data = new ExportData(Program.gameScene.GameTime1.CurrentDate(),
             building, prod + "", amt, money);
 
-        _exports.Insert(0, data);//1
+        if (type == "Export")
+        {
+            _exports.Insert(0, data);//1
+        }
+        else
+        {
+            _imports.Insert(0, data);//1
+        }
     }
 
     internal void ShowExports()
     {
         ExportData[] arr = new ExportData[_exports.Count + 1];
-        arr[0] = AddTitleBarExports();
+        PrepareToShowExpImp(arr, _reportsExports);
+    }
+
+    internal void ShowImports()
+    {
+        ExportData[] arr = new ExportData[_imports.Count + 1];
+        PrepareToShowExpImp(arr, _reportsImports);
+    }
+
+    void PrepareToShowExpImp(ExportData[] arr, List<SpecTile> report)
+    {
+        arr[0] = AddTitleBarExportsOrImport();
 
         for (int i = 0; i < _exports.Count; i++)
         {
             arr[i + 1] = _exports[i];
         }
 
-        ShowExports(arr);
+        ShowExportsOrImport(arr, report);
         _bulletinWindow.AdjustContentHeight(arr.Length * 3.75f);
-
     }
 
-
-    List<SpecTile> _reportsExports = new List<SpecTile>();
-    private void ShowExports(ExportData[] list)
+    private void ShowExportsOrImport(ExportData[] list, List<SpecTile> report)
     {
         Hide();
         _bulletinWindow.ShowScrool();
@@ -294,13 +320,8 @@ public class SubBulletinFinance
             var a = SpecTile.CreateTile(_bulletinWindow.Content.gameObject.transform, list[i],
                 iniPosHere);
 
-            _reportsExports.Add(a);
+            report.Add(a);
         }
-    }
-
-    ExportData AddTitleBarExports()
-    {
-        return new ExportData(null, "Building", "Product", 0, 0);
     }
 
     #endregion

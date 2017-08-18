@@ -2729,7 +2729,7 @@ public class Person : Hoverable
         {
             _showPathToWork.Toggle(which);
         }
-        if (_showPathToFood != null && which == "Food Source")
+        if (_showPathToFood != null && which == "Food source")
         {
             _showPathToFood.Toggle(which);
         }
@@ -2737,7 +2737,7 @@ public class Person : Hoverable
         {
             _showPathToReligion.Toggle(which);
         }
-        if (_showPathToChill != null && which == "Chill")
+        if (_showPathToChill != null && which == "Relax")
         {
             _showPathToChill.Toggle(which);
         }
@@ -2753,17 +2753,17 @@ public class Person : Hoverable
         {
             _showPathToWork = new ShowPathTo(this, "Work");
         }
-        if (_showPathToFood == null && which == "Food Source" && FoodSource != null)
+        if (_showPathToFood == null && which == "Food source" && FoodSource != null)
         {
-            _showPathToFood = new ShowPathTo(this, "Food Source");
+            _showPathToFood = new ShowPathTo(this, "Food source");
         }
         if (_showPathToReligion == null && which == "Religion" && Religion != null)
         {
             _showPathToReligion = new ShowPathTo(this, "Religion");
         }
-        if (_showPathToChill == null && which == "Chill" && Chill != null)
+        if (_showPathToChill == null && which == "Relax" && Chill != null)
         {
-            _showPathToChill = new ShowPathTo(this, "Chill");
+            _showPathToChill = new ShowPathTo(this, "Relax");
         }
     }
 
@@ -2827,7 +2827,7 @@ public class Person : Hoverable
         {
             CamControl.CAMRTS.InputRts.CenterCamTo(Work.transform);
         }
-        if (_key == "Food Source" && FoodSource != null)
+        if (_key == "Food source" && FoodSource != null)
         {
             CamControl.CAMRTS.InputRts.CenterCamTo(FoodSource.transform);
         }
@@ -2835,7 +2835,7 @@ public class Person : Hoverable
         {
             CamControl.CAMRTS.InputRts.CenterCamTo(Religion.transform);
         }
-        if (_key == "Chill" && Chill != null)
+        if (_key == "Relax" && Chill != null)
         {
             CamControl.CAMRTS.InputRts.CenterCamTo(Chill.transform);
         }

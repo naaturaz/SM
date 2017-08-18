@@ -1607,7 +1607,12 @@ public class Building : Hoverable, Iinfo
             MeshController.CrystalManager1.Delete(this);
 
             DestroyProjector();
-            Program.MouseListener.BuildingWindow1.HideIfSameBuilding(this);
+
+            //when loading breaks
+            if (Program.MouseListener !=null && Program.MouseListener.BuildingWindow1 != null)
+            {
+                Program.MouseListener.BuildingWindow1.HideIfSameBuilding(this);
+            }
 
             //so saveLoad of buildings is not affected 
             BuildingPot.Control.Registro.RemoveFromAllRegFile(MyId);
@@ -3418,6 +3423,10 @@ public class Building : Hoverable, Iinfo
         {
             Program.gameScene.QuestManager.QuestFinished("HireDocker");
         }
+        if (HType == H.HeavyLoad && _maxPeople == 1)
+        {
+            Program.gameScene.QuestManager.QuestFinished("HireHeavy");
+        }
         if (HType == H.BlackSmith && _maxPeople == 2)
         {
             Program.gameScene.QuestManager.QuestFinished("BlackSmithHire");
@@ -3712,6 +3721,13 @@ public class Building : Hoverable, Iinfo
         for (int i = 0; i < PeopleDict.Count; i++)
         {
             var pers = Family.FindPerson(PeopleDict[i]);
+
+            //when loading breaks
+            if (pers == null)
+            {
+                return;
+            }
+
             pers.AddWorkInputOrder(prodNeed);
         }
     }

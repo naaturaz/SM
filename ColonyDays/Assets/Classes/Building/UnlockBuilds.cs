@@ -34,7 +34,7 @@ public class UnlockBuilds
             new BRequires(H.Masonry, true),
             new BRequires(H.StandLamp, true),
 
-            new BRequires(H.HeavyLoad, 50),
+            new BRequires(H.HeavyLoad, 20),
 
             //houses
             new BRequires(H.Bohio, H.OnlyForDev),

@@ -63,10 +63,10 @@ public class BodyAgent
     public void Update()
     {
         //correcting bug where kids stay in front of storage with path completed
-        if ((_destWasSet && _agent.isOnNavMesh && _agent.enabled && !_person.IsMajor 
-            && !UMath.nearEqualByDistance(_agent.destination ,Destiny, 0.1f) &&
-            _agent.pathStatus == NavMeshPathStatus.PathComplete) 
-            || 
+        if ((_destWasSet && _agent.isOnNavMesh && _agent.enabled && !_person.IsMajor
+            && !UMath.nearEqualByDistance(_agent.destination, Destiny, 0.1f) &&
+            _agent.pathStatus == NavMeshPathStatus.PathComplete)
+            ||
             (_agent.pathStatus == NavMeshPathStatus.PathInvalid && _agent.enabled && _agent.isOnNavMesh)
             )
         {
@@ -157,7 +157,7 @@ public class BodyAgent
             return;
         }
 
-        if (_person.Body.CurrentAni.Contains("Cart") && _initRadius==0)
+        if (_person.Body.CurrentAni.Contains("Cart") && _initRadius == 0)
         {
             CartRideRadius();
         }
@@ -180,7 +180,18 @@ public class BodyAgent
 
     internal void NewSpeed()
     {
-        _agent.speed = _speedInitial * Program.gameScene.GameSpeed;
+        _agent.speed = _speedInitial * AgeSpeedCorrection() * Program.gameScene.GameSpeed;
+    }
+
+    float AgeSpeedCorrection()
+    {
+        var factor = (_person.Age / 21) + .5f;
+
+        if (_person.Age > 21 || factor <= 0 || factor > 1)
+        {
+            return 1;
+        }
+        return factor;
     }
 
     internal void PutOnNavMeshIfNeeded(Vector3 vector3)

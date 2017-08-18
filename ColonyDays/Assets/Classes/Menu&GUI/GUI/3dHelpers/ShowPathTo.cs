@@ -72,7 +72,7 @@ public class ShowPathTo
             _finPos = _person.Work.transform.position;
             _finalGO = _person.Work.SpawnPoint;
         } 
-        else if (_type == "Food Source")
+        else if (_type == "Food source")
         {
             _finPos = _person.FoodSource.transform.position;
             _finalGO = _person.FoodSource.SpawnPoint;
@@ -82,7 +82,7 @@ public class ShowPathTo
             _finPos = _person.Religion.transform.position;
             _finalGO = _person.Religion.SpawnPoint;
         }
-        else if (_type == "Chill")
+        else if (_type == "Relax")
         {
             _finPos = _person.Chill.transform.position;
             _finalGO = _person.Chill.SpawnPoint;
@@ -99,9 +99,9 @@ public class ShowPathTo
     {
         return (_type == "Work" && _person.Work == null) ||
                (_type == "Home" && _person.Home == null) ||
-               (_type == "Food Source" && _person.FoodSource == null) ||
+               (_type == "Food source" && _person.FoodSource == null) ||
                (_type == "Religion" && _person.Religion == null) ||
-               (_type == "Chill" && _person.Chill == null);
+               (_type == "Relax" && _person.Chill == null);
     }
 
     private void Init()

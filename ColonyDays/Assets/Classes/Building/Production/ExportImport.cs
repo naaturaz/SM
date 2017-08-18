@@ -313,7 +313,7 @@ public class ExportImport
         }
 
         BulletinWindow.SubBulletinFinance1.FinanceLogger.AddToAcct("Exports", trans);
-        BulletinWindow.SubBulletinFinance1.AddNewExport(building, prod, amt, trans);
+        BulletinWindow.SubBulletinFinance1.AddNewExportOrImport(building, prod, amt, trans, "Export");
         Quest(prod, amt);
     }
 
@@ -331,7 +331,7 @@ public class ExportImport
     /// </summary>
     /// <param name="prod"></param>
     /// <param name="amt"></param>
-    public void Buy(P prod, float amt)
+    public void Buy(P prod, float amt, string building)
     {
         var trans = CalculateTransaction(prod, amt);
         Program.gameScene.GameController1.Dollars -= trans;
@@ -339,6 +339,7 @@ public class ExportImport
         //Program.gameScene.GameController1.NotificationsManager1.Notify("ShipPayed", trans.ToString("N0"));
 
         BulletinWindow.SubBulletinFinance1.FinanceLogger.AddToAcct("Imports", trans);
+        BulletinWindow.SubBulletinFinance1.AddNewExportOrImport(building, prod, amt, trans, "Import");
     }
 
     public float CalculateTransaction(P prod, float amt)

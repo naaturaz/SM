@@ -559,8 +559,11 @@ public class Languages
             " If you have more than one docker already fire all of them and then hire one"},
        { "MakeBucks.Quest", "Quest: Make $100 exporting goods in the Dock. "+
            "Once a ship arrives will randomly pay product(s) in your Dock's inventory"},
-       { "HeavyLoad.Quest", "Quest: Build a HeavyLoad building. This are haulers that carry more weight. They will come handy when transporting goods around is needed." }, //Carts must be available on towns storages for them to work"},
-       { "ImportOil.Quest", "Quest: Import 500 " + Unit.CurrentWeightUnitsString() + " of Whale Oil at the Dock. This is needed to keep your lights on at night."},
+       { "HeavyLoad.Quest", "Quest: Build a Heavyload building. This are haulers that carry more weight. They will come handy when transporting goods around is needed." }, //Carts must be available on towns storages for them to work"},
+       { "HireHeavy.Quest", "Quest: In the Heavyload building hire a Heavy Hauler."},
+
+
+        { "ImportOil.Quest", "Quest: Import 500 " + Unit.CurrentWeightUnitsString() + " of Whale Oil at the Dock. This is needed to keep your lights on at night."},
 
        { "Population50.Quest", "Reach a total population of 50 citizens"},
 
@@ -573,6 +576,9 @@ public class Languages
 
 
        {"CompleteQuest", "Your reward is {0}"},
+
+
+
 
 
        //Quest Titles
@@ -590,6 +596,8 @@ public class Languages
        { "HireDocker.Quest.Title", "Hire Docker"},
        { "MakeBucks.Quest.Title", "Make Money"},
        { "HeavyLoad.Quest.Title", "Heavy Load"},
+       { "HireHeavy.Quest.Title", "Hire a Heavy Hauler"},
+
        { "ImportOil.Quest.Title", "Whale Oil"},
 
        { "Population50.Quest.Title", "50 Citizens"},
@@ -636,6 +644,8 @@ public class Languages
 
        {"Help.Bulletin/Finance/Ledger", "Here is shown your ledger. Salary is the amount of money paid to a worker. The more people working the more salary will be paid out."},
        {"Help.Bulletin/Finance/Exports", "A breakdown of the exports"},
+       {"Help.Bulletin/Finance/Imports", "A breakdown of the imports"},
+
 
        { "Help.Bulletin/Finance/Prices", "...."},
 
@@ -1176,8 +1186,11 @@ public class Languages
             " Si ya tienes trabajadores aqui despidelos a todos y despues contrata a uno de nuevo."},
        { "MakeBucks.Quest", "Desafio: Haz $100 exportando bienes en el Puerto. "+
            "Cuando un barco llegue pagara bienes al azar que haiga en las bodegas de tu Puerto"},
-       { "HeavyLoad.Quest", "Desafio: Construye el edificio de Carga Pesada. Estos son transportistas que cargan mas peso. Seran muy utiles cuando mucha carga necesita ser transportada en tu villa"},
-       { "ImportOil.Quest", "Desafio: Importa 500 " + Unit.CurrentWeightUnitsString() + " de Aceite de Ballena en el Puerto. Es necesario para encender las Farolas por las noches."},
+
+        { "HeavyLoad.Quest", "Desafio: Construye el edificio de Carga Pesada. Estos son transportistas que cargan mas peso. Seran muy utiles cuando mucha carga necesita ser transportada en tu villa"},
+
+
+        { "ImportOil.Quest", "Desafio: Importa 500 " + Unit.CurrentWeightUnitsString() + " de Aceite de Ballena en el Puerto. Es necesario para encender las Farolas por las noches."},
 
        { "Population50.Quest", "Obten 50 personas en total"},
        {"CompleteQuest", "Tu premio es de ${0}"},
@@ -1197,7 +1210,9 @@ public class Languages
        { "Export.Quest.Title", "Exports"},
        { "HireDocker.Quest.Title", "Hire Docker"},
        { "MakeBucks.Quest.Title", "Make Money"},
-       { "HeavyLoad.Quest.Title", "Heavy Load"},
+       { "HeavyLoad.Quest.Title", "Build Heavy Load"},
+
+
        { "ImportOil.Quest.Title", "Whale Oil"},
 
        { "Population50.Quest.Title", "50 Citizens"},

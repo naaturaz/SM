@@ -477,8 +477,8 @@ public enum StHous //for structures game structure.cs
     Shack, MediumShack, LargeShack,
     WoodHouseA, WoodHouseB, WoodHouseC,
     BrickHouseA,
-    BrickHouseB,
     BrickHouseC,
+    BrickHouseB,
 }
 
 public enum StFarm

@@ -77,11 +77,11 @@ public class PersonBuildingDetailTile : GUIElement
         var goBtnPath = FindGameObjectInHierarchy("ShowPath", gameObject);
         var goBtnLoc = FindGameObjectInHierarchy("ShowLocation", gameObject);
         //if doesnt use the button then the button is hidden
-        if (!DoesKeyShowPath())
+        if (!DoesKeyShowPath() || _val == "None")
         {
             goBtnPath.gameObject.SetActive(false);
         } 
-        if (!DoesKeyShowLoc())
+        if (!DoesKeyShowLoc() || _val == "None")
         {
             goBtnLoc.gameObject.SetActive(false);
         }

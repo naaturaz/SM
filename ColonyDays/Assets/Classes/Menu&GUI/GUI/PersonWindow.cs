@@ -121,7 +121,10 @@ public class PersonWindow : GUIElement
 
         UpdateInputTitle();
 
+        //for GC reason was moved here. Was allocating ~100KB per frame
+        MakeThisTabActive(oldTabActive);
         LoadMenu();
+
         MakeAlphaColorZero(_inv);
 
         transform.position = iniPos;
@@ -135,8 +138,6 @@ public class PersonWindow : GUIElement
         {
             return;
         }
-        MakeThisTabActive(oldTabActive);
-
 
         _title.text = _person.Name + "";
         _info.text = BuildPersonInfo();

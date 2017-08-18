@@ -974,7 +974,7 @@ public class Dispatch
         if (maxAmtCanTake > ord.Amount)
         {
             Debug.Log("Imported:" + ord.Product + " . " + ord.Amount + " Done");
-            Program.gameScene.ExportImport1.Buy(ord.Product, ord.Amount);
+            Program.gameScene.ExportImport1.Buy(ord.Product, ord.Amount, dock.Name);
 
             dock.Inventory.Add(ord.Product, ord.Amount);
             ExpImpOrders.Remove(ord);
@@ -984,7 +984,7 @@ public class Dispatch
         else
         {
             Debug.Log("Imported:" + ord.Product + " . " + maxAmtCanTake);
-            Program.gameScene.ExportImport1.Buy(ord.Product, maxAmtCanTake);
+            Program.gameScene.ExportImport1.Buy(ord.Product, maxAmtCanTake, dock.Name);
 
             dock.Inventory.Add(ord.Product, maxAmtCanTake);
             ord.ChangeAmountBy(-maxAmtCanTake);

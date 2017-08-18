@@ -325,6 +325,16 @@ public class BulletinWindow : GUIElement
         _help.text = "Bulletin/Finance/Exports \n" + Languages.ReturnString("Help.Bulletin/Finance/Exports");
     }
 
+    /// <summary>
+    /// Called from GUI
+    /// </summary>
+    public void ShowImports()
+    {
+        ClickAndHideAll();
+        _finance.ShowImports();
+        _help.text = "Bulletin/Finance/Imports \n" + Languages.ReturnString("Help.Bulletin/Finance/Imports");
+    }
+
     public void ShowWindowAndThenExports()
     {
         Program.MouseListener.HidePersonBuildOrderNotiBulletinHelpWin();
