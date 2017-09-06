@@ -138,7 +138,9 @@ public class Homer : Profession
             building = Brain.GetStructureFromKey(_person.PrevOrder.DestinyBuild);
         }
 
-        if (building == null)
+        //bz docker coming back after import has the same building == BuildToGoBackTo
+        var dockerComingBack = _person.PrevJob == Job.Docker && building == BuildToGoBackTo;
+        if (building == null || dockerComingBack)
         {
             //exporting will finish at destiny build is null(not sure)
             building = _person.Work;

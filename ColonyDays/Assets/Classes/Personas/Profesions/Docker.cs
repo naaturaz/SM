@@ -229,10 +229,13 @@ public class Docker : Profession
         if (_sourceBuild.HasEnoughToCoverOrder(Order1))
         {
             //need to pull left from Dispatch bz Order1 is passed by Value not Ref 
-            var left = _person.Work.Dispatch1.LeftOnThisOrder(Order1);
+            var left = WhatIsLeft();
             var amt = Order1.ApproveThisAmt(left);
 
-            _person.Work.Dispatch1.AddToOrderAmtProcessed(Order1, amt);
+            if (_export)//if import tht amt was added already to processed amounts 
+            {
+                _person.Work.Dispatch1.AddToOrderAmtProcessed(Order1, amt);
+            }
 
             Debug.Log(_person.MyId + " Docker got from:" + Order1.SourceBuild + " : " + Order1.Product + ".amt:" + amt);
 
@@ -240,6 +243,17 @@ public class Docker : Profession
             _sourceBuild.CheckIfCanBeDestroyNow(Order1.Product);
             _person.Body.UpdatePersonalForWheelBa();
         }
+    }
+
+
+    float WhatIsLeft()
+    {
+        if (_import)
+        {
+            //bz is gets completed b4 hits this and was checked already for the amt
+            return Order1.Amount;
+        }
+        return _person.Work.Dispatch1.LeftOnThisOrder(Order1);
     }
 
 

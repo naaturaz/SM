@@ -827,6 +827,8 @@ public class Body //: MonoBehaviour //: General
         var destRoute = route.DestinyKey.Substring(route.DestinyKey.Length - 2);
         var oriRoute = route.OriginKey.Substring(route.OriginKey.Length - 2);
 
+        var a = _person;
+
         //inside a building route 
         if (destRoute == ".D" && oriRoute == ".O")
         {
