@@ -645,7 +645,7 @@ public class Structure : StructureParent
         {
             //var order = Dispatch1.GiveMeOrderDocker(pers);
             //return order != null;
-            return Dispatch1.ThereIsWorkAtDock();
+            return Dispatch1.ThereIsWorkAtDock(Inventory);
         }
 
         return true;

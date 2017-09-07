@@ -145,9 +145,8 @@ public class BodyAgent
         }
         else
         {
-            _agent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
+            _agent.obstacleAvoidanceType = ObstacleAvoidanceType.MedQualityObstacleAvoidance;
         }
-
     }
 
     void RadiusForHeavyLoaders()
@@ -185,7 +184,7 @@ public class BodyAgent
 
     float AgeSpeedCorrection()
     {
-        var factor = (_person.Age / 21) + .5f;
+        var factor = (_person.Age / 10) + .6f;
 
         if (_person.Age > 21 || factor <= 0 || factor > 1)
         {

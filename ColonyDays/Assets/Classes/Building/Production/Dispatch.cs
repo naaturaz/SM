@@ -506,7 +506,7 @@ public class Dispatch
             temp = Order.Copy(order);
 
             temp.Amount = order.ApproveThisAmt(person.HowMuchICanCarry());
-            order.AddToFullFilled(temp.Amount);
+            //order.AddToFullFilled(temp.Amount);
 
             temp.DestinyBuild = destinFoodSrc;
             return temp;
@@ -680,9 +680,11 @@ public class Dispatch
         return null;
     }
 
-    internal bool ThereIsWorkAtDock()
+    internal bool ThereIsWorkAtDock(Inventory structureInv)
     {
-        return _expImpOrders.Count > 0 || _orders.Count > 0;
+        return _expImpOrders.Count > 0 || _orders.Count > 0 || !structureInv.IsEmpty();
+        //if the inv is not empty there is work too
+        //due to dockers removing the Order onces is completed but item is still on dock inv
     }
 
     /// <summary>
@@ -1058,10 +1060,9 @@ public class Dispatch
     /// <param name="i"></param>
     void HandleThatExport(Building dock, Order ord)
     {
-        float initialAmtNeed = ord.Amount;
-        ord = dock.Inventory.ManageExportOrder(ord);
-        float leftOnOrder = ord.Amount;
-        float amtExpThisTime = (initialAmtNeed - leftOnOrder);
+        //ord = dock.Inventory.ManageExportOrder(ord);
+        float leftOnOrder = ord.Left();
+        float amtExpThisTime = ord.AmtExportThisTimeVoid(dock.Inventory);
 
         Program.gameScene.ExportImport1.Sale(ord.Product, amtExpThisTime, dock.Name);
         if (ord.Amount == 0)
@@ -1266,6 +1267,9 @@ public class Order
     float _fullFilled;
     bool _isCompleted;
 
+    float _amtExportThisTime;
+    float _totalAmtExported;
+
     public float Amount
     {
         get { return _amount; }
@@ -1308,6 +1312,32 @@ public class Order
         set
         {
             _destinyBuild = value;
+        }
+    }
+
+    public float AmtExportThisTime
+    {
+        get
+        {
+            return _amtExportThisTime;
+        }
+
+        set
+        {
+            _amtExportThisTime = value;
+        }
+    }
+
+    public float TotalAmtExported
+    {
+        get
+        {
+            return _totalAmtExported;
+        }
+
+        set
+        {
+            _totalAmtExported = value;
         }
     }
 
@@ -1422,5 +1452,29 @@ public class Order
         {
             _amount = 0;
         }
+    }
+
+    /// <summary>
+    /// Will return what a ship will export this time
+    /// Will also remove the amt from the Dock Inv 
+    /// </summary>
+    /// <returns></returns>
+    internal float AmtExportThisTimeVoid(Inventory dockInv)
+    {
+        AmtExportThisTime = FullFilled - TotalAmtExported;
+
+        //if the amt to export this time is bigger than what it is on Invetory...  
+        if (AmtExportThisTime > dockInv.ReturnAmtOfItemOnInv(Product))
+        {
+            //then will export then all tht is in the inventory of that product 
+            AmtExportThisTime = dockInv.ReturnAmtOfItemOnInv(Product);
+        }
+        //addiing what was exported this time to TotalAmtExported 
+        TotalAmtExported += AmtExportThisTime;
+
+        //removingn the amt from the Dock Inv
+        dockInv.RemoveByWeight(Product, AmtExportThisTime);
+
+        return AmtExportThisTime;
     }
 }

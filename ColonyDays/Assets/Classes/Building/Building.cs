@@ -3718,6 +3718,11 @@ public class Building : Hoverable, Iinfo
     /// <param name="prodNeed"></param>
     private void AddOrderToOurWorkers(Order prodNeed)
     {
+        if (!Program.gameScene.GameFullyLoaded())
+        {
+            return;
+        }
+
         for (int i = 0; i < PeopleDict.Count; i++)
         {
             var pers = Family.FindPerson(PeopleDict[i]);

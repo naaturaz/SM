@@ -180,6 +180,7 @@ public class MouseListener : InputMain
             _addOrderWindow.Hide();
             _buildingWindow.Hide();
             BulletinWindow.Hide();
+            HelpWindow.Hide();
 
             //try to select person first
             if (!SelectPerson())

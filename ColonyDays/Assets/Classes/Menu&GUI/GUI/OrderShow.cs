@@ -64,7 +64,15 @@ public class OrderShow : GUIElement
 
         Start();
 
-        _title.text = _prod + " : " + (Unit.WeightConverted(_amt)).ToString("#");
+        if (_amt == 0)
+        {
+            _title.text = "Almost done";
+        }
+        else
+        {
+            _title.text = _prod + " : " + (Unit.WeightConverted(_amt)).ToString("#");
+        }
+
         transform.name = _title.text + " | " + Id;
 
         if (_closeBtn == null)

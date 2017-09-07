@@ -232,10 +232,10 @@ public class Docker : Profession
             var left = WhatIsLeft();
             var amt = Order1.ApproveThisAmt(left);
 
-            if (_export)//if import tht amt was added already to processed amounts 
-            {
+            //if (_export)//if import tht amt was added already to processed amounts 
+            //{
                 _person.Work.Dispatch1.AddToOrderAmtProcessed(Order1, amt);
-            }
+            //}
 
             Debug.Log(_person.MyId + " Docker got from:" + Order1.SourceBuild + " : " + Order1.Product + ".amt:" + amt);
 

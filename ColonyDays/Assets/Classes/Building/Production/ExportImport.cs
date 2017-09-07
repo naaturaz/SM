@@ -234,6 +234,8 @@ public class ExportImport
 
         _prodSpecs.Add(new ProdSpec(P.Fabric, 300, 400, 20));
         _prodSpecs.Add(new ProdSpec(P.Cloth, 120, 380, 20));
+        _prodSpecs.Add(new ProdSpec(P.Wool, 100, 300, 20));
+
         _prodSpecs.Add(new ProdSpec(P.Sail, 350, 200, 15));
         _prodSpecs.Add(new ProdSpec(P.String, 200, 321, 15));
         _prodSpecs.Add(new ProdSpec(P.Shoe, 220, 100, 10));
