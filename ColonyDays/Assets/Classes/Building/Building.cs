@@ -1414,7 +1414,10 @@ public class Building : Hoverable, Iinfo
     /// </summary>
     Dictionary<H, Vector3> _percetagesReduction = new Dictionary<H, Vector3>()
     {
-
+        {H.StandLamp, new Vector3(0,0,0)},//wont get carved
+        { H.HeavyLoad, new Vector3(-8,0,-8)},
+        { H.LightHouse, new Vector3(-20,0,-40)},
+        { H.Masonry, new Vector3(-17,0,-25)},
 
         {H.Bohio, new Vector3(-37,0,-53)},
         {H.WoodHouseA, new Vector3(-20,0,-20)},
@@ -1429,15 +1432,13 @@ public class Building : Hoverable, Iinfo
         {H.MediumShack, new Vector3(-30,0,-40)},
         {H.LargeShack, new Vector3(-28,0,-42)},
 
-        { H.FieldFarmSmall, new Vector3(-19,0,-32)},
-        { H.FieldFarmMed, new Vector3(-19,0,-20)},
-        { H.FieldFarmLarge, new Vector3(-10,0,-20)},
+        { H.FieldFarmSmall, new Vector3(-19,0,-42)},
+        { H.FieldFarmMed, new Vector3(-19,0,-25)},
+        { H.FieldFarmLarge, new Vector3(-10,0,-25)},
 
         { H.FishingHut, new Vector3(-40,0,-40)},
 
-        {H.StandLamp, new Vector3(0,0,0)},//wont get carved
-        { H.HeavyLoad, new Vector3(-8,0,-8)},
-        { H.LightHouse, new Vector3(-20,0,-40)},
+
 
         { H.LumberMill, new Vector3(-19,0,-45)},
         { H.BlackSmith, new Vector3(-10,0,-16)},

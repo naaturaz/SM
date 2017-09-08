@@ -82,8 +82,8 @@ public class Builder : Profession
     {
         if (_constructing.HType.ToString().Contains("Bridge"))
         {
-            _person.Work.BuildersManager1.RemoveConstruction(_constructing.MyId);       
-            PersonPot.Control.BuildersManager1.RemoveConstruction(_constructing.MyId);       
+            _person.Work.BuildersManager1.RemoveConstruction(_constructing.MyId);
+            PersonPot.Control.BuildersManager1.RemoveConstruction(_constructing.MyId);
         }
     }
 
@@ -103,7 +103,7 @@ public class Builder : Profession
             _nothingToBuildCounter = 0;
             //Convert to wheel Barrow worker
             _wheelBarrowNow = true;
-            
+
             //Debug.Log("Now wheelbarrow ");
             _person.CreateProfession(Job.WheelBarrow);
         }
@@ -168,7 +168,7 @@ public class Builder : Profession
         {
             if (_constructing.Anchors.Count > 0)
             {
-            //    dummySpawnerId = _person.Work.MyId;
+                //    dummySpawnerId = _person.Work.MyId;
                 return Brain.ReturnClosestVector3(_person.Work.transform.position, _constructing.Anchors);
             }
         }
@@ -178,7 +178,7 @@ public class Builder : Profession
             {
                 //return the closest anchor to SpawnPoint . must be the SpawnPoint so it always selects
                 //the one on the shore
-                var sp = (StructureParent) _constructing;
+                var sp = (StructureParent)_constructing;
 
                 //return _constructing.Anchors[UMath.GiveRandom(0, 4)];
                 var closest = Brain.ReturnClosestVector3(sp.SpawnPoint.transform.position, _constructing.Anchors);
@@ -188,11 +188,10 @@ public class Builder : Profession
 
         //so will take a break
         if (_constructing.Anchors.Count == 0)
-        { return new Vector3();}
+        { return new Vector3(); }
 
         //for all other cases 
         //forcing geting the anchors was giving anchors really far appart sometimes 
-        //dummySpawnerId = _constructing.MyId;
         return _constructing.GetAnchors(true)[UMath.GiveRandom(0, 4)];
     }
 
@@ -200,7 +199,7 @@ public class Builder : Profession
     {
         if ((constP.HType.ToString().Contains("Dock") || constP.HType.ToString().Contains("DryDock")
             || constP.HType.ToString().Contains("Fish") || constP.HType.ToString().Contains("SaltMine")
-            || constP.HType.ToString().Contains("Supplier")))
+            || constP.HType.ToString().Contains("Supplier") || constP.HType.ToString().Contains("PostGuard")))
         {
             return true;
         }
@@ -231,7 +230,7 @@ public class Builder : Profession
         _person.MyDummyProf.HandleLandZoning(_constructing, FinRoutePoint);
 
         _person.MyDummyProf.DummyIdSpawner = _constructing.MyId;
-        Router1 = new CryRouteManager(_person.Work, _person.MyDummyProf, _person, HPers.InWork, finDoor: false );
+        Router1 = new CryRouteManager(_person.Work, _person.MyDummyProf, _person, HPers.InWork, finDoor: false);
     }
 
 
@@ -239,7 +238,7 @@ public class Builder : Profession
     Building FindBestToBuild()
     {
         //first time wheel barrow chekcs 
-        if (_person == null || _person.Work == null || _person.Work.BuildersManager1==null)
+        if (_person == null || _person.Work == null || _person.Work.BuildersManager1 == null)
         {
             return null;
         }
@@ -318,7 +317,7 @@ public class Builder : Profession
     {
         if (_person == null)
         {
-             return;
+            return;
         }
 
         //when is just on site to play animation of building 
@@ -349,7 +348,7 @@ public class Builder : Profession
 
     public override void AnyChange()
     {
-        if (_person == null || _person.Brain == null || !_person.Brain.IAmHomeNow() )
+        if (_person == null || _person.Brain == null || !_person.Brain.IAmHomeNow())
         {
             return;
         }
@@ -357,7 +356,7 @@ public class Builder : Profession
         base.AnyChange();
         //means we finisished 
 
-        if ( _constructing == null || ReturnCurrentStage() == 4)
+        if (_constructing == null || ReturnCurrentStage() == 4)
         {
             SearchANewWorkPlace();
         }
@@ -408,9 +407,9 @@ public class Builder : Profession
     void WheelBarrowCheck()
     {
         if (!_wheelBarrowNow)
-        {return;}
+        { return; }
 
-        var constTry  = FindBestToBuild();
+        var constTry = FindBestToBuild();
 
         if (constTry != null)
         {
@@ -434,7 +433,7 @@ public class Builder : Profession
         {
             _takeABreakNow = false;
             startIdleTime = 0;
-            
+
             //so it restarted 
             Init();
         }
