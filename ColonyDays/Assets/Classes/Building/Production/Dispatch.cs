@@ -1020,6 +1020,8 @@ public class Dispatch
     /// <param name="dock"></param>
     internal bool Export(Building dock)
     {
+        bool res = false;
+
         for (int i = 0; i < ExportsOrders.Count; i++)
         {
             if (ExportsOrders[i].DestinyBuild == "Ship")
@@ -1027,14 +1029,23 @@ public class Dispatch
                 if (dock.Inventory.IsItemOnInv(ExportsOrders[i].Product))
                 {
                     HandleThatExport(dock, ExportsOrders[i]);
-
                     ShowExportsAsHelp();
+                    res = true;
 
-                    return true;
+                    if (ExportsOrders[i].ExportOrderIsComplete())
+                    {
+                        Debug.Log("Exported of:" + ExportsOrders[i].Product + " done");
+                        //Removig from all. Could be in orders or in   RecycledOrders and always in   ExpImpOrders
+                        var wasRemoved = RemoveOrderFromAllListByID(ExportsOrders[i].ID);
+                        if (wasRemoved)
+                        {
+                            i--;
+                        }
+                    }
                 }
             }
         }
-        return false;
+        return res;
     }
 
 
@@ -1065,13 +1076,7 @@ public class Dispatch
         float amtExpThisTime = ord.AmtExportThisTimeVoid(dock.Inventory);
 
         Program.gameScene.ExportImport1.Sale(ord.Product, amtExpThisTime, dock.Name);
-        if (ord.Amount == 0)
-        {
-            Debug.Log("Exported of:" + ord.Product + " done");
-            //Removig from all. Could be in orders or in   RecycledOrders and always in   ExpImpOrders
-            RemoveOrderFromAllListByID(ord.ID);
-            return;
-        }
+
         Debug.Log("Exported:" + ord.Product + " . " + amtExpThisTime + ".Still left:" + leftOnOrder);
     }
 
@@ -1188,13 +1193,15 @@ public class Dispatch
         return res;
     }
 
-    void RemoveOrderFromAllListByID(string id)
+    bool RemoveOrderFromAllListByID(string id)
     {
+        var res = false;
         for (int i = 0; i < Orders.Count; i++)
         {
             if (Orders[i].ID == id)
             {
                 Orders.RemoveAt(i);
+                res = true;
             }
         }
 
@@ -1203,6 +1210,7 @@ public class Dispatch
             if (RecycledOrders[i].ID == id)
             {
                 RecycledOrders.RemoveAt(i);
+                res = true;
             }
         }
 
@@ -1211,6 +1219,7 @@ public class Dispatch
             if (ExpImpOrders[i].ID == id)
             {
                 ExpImpOrders.RemoveAt(i);
+                res = true;
             }
         }
 
@@ -1219,8 +1228,10 @@ public class Dispatch
             if (ExportsOrders[i].ID == id)
             {
                 ExportsOrders.RemoveAt(i);
+                res = true;
             }
         }
+        return res;
     }
 
     /// <summary>
@@ -1476,5 +1487,10 @@ public class Order
         dockInv.RemoveByWeight(Product, AmtExportThisTime);
 
         return AmtExportThisTime;
+    }
+
+    internal bool ExportOrderIsComplete()
+    {
+        return TotalAmtExported != 0 && TotalAmtExported >= Amount;
     }
 }
