@@ -83,9 +83,9 @@ public class ShipManager
     {
         var unit = 6000;
 
-#if UNITY_EDITOR
-        unit = 60;
-#endif
+//#if UNITY_EDITOR
+//        unit = 60;
+//#endif
         //+1 in case is too low or zero
         //so if is 10 the PortRep 3600 / 10 is 1 year
         //so if is 100 the PortRep 3600 / 100 is 36 days

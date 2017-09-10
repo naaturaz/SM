@@ -70,7 +70,7 @@ public class Book : General
         Build.Add(new BuildStat(H.Masonry, 800, 10, 50, 0, 5, maxPeople: 15));
         Build.Add(new BuildStat(H.StandLamp, 100, 0, 0, 0, 5, maxPeople: 0, capacity: 0f));
 
-        Build.Add(new BuildStat(H.HeavyLoad, 1800, 10, 0, 0, 5, maxPeople: 3));
+        Build.Add(new BuildStat(H.HeavyLoad, 1800, 10, 0, 0, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.LightHouse, 800, 80, 20, 0, 5, maxPeople: 3));
 
         //houses 

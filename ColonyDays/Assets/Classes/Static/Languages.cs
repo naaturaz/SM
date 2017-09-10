@@ -390,8 +390,8 @@ public class Languages
        { "NoInput.Noti.Name", "At least an input is missing in building"},
        { "NoInput.Noti.Desc", "A building cannot produce {0} because is missing at least one input"},
 
-       { "Built.Noti.Name", "A building has being built"},
-       { "Built.Noti.Desc", "{0} has being fully built"},
+       { "Built.Noti.Name", "A building has been built"},
+       { "Built.Noti.Desc", "{0} has been fully built"},
 
        { "cannot produce", "cannot produce"},
 

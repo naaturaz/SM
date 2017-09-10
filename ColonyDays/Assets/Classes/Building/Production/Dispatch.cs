@@ -646,6 +646,12 @@ public class Dispatch
         {
             ExpImpOrders[indImpEx].AddToFullFilled(amt);
         }
+
+        var indEx = ExportsOrders.FindIndex(a => a.ID == ord.ID);
+        if (indEx != -1)
+        {
+            ExportsOrders[indEx].AddToFullFilled(amt);
+        }
     }
 
     Order RegularOrderDocker(Person person, Order order)

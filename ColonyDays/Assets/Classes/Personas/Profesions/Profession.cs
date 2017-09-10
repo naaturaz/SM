@@ -289,6 +289,14 @@ public class Profession
         }
         if (res == Job.Insider)
         {
+            if (_person.Work!=null)
+            {
+                if (_person.Work.HType.ToString().Contains("School"))
+                {
+                    return "Teacher";
+                }
+            }
+
             return _person.Work.HType + " worker";
         }
         return Naming.CaseItRight(res+"");
