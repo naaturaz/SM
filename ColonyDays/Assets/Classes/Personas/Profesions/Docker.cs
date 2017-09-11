@@ -220,29 +220,27 @@ public class Docker : Profession
     void HandleInventoriesAndOrder()
     {
         _sourceBuild = GetStructureSrcAndDestinyExpImp();
-
         if (_sourceBuild == null)
         {
             return;
         }
+        
+        //need to pull left from Dispatch bz Order1 is passed by Value not Ref 
+        var left = WhatIsLeft();
+        var amt = Order1.ApproveThisAmt(left);
 
-        if (_sourceBuild.HasEnoughToCoverOrder(Order1))
+        _person.ExchangeInvetoryItem(_sourceBuild, _person, Order1.Product, amt);
+        //will add to processed order only if actually took something...
+        if (_person.Inventory.ReturnAmtOfItemOnInv(Order1.Product) > 0)
         {
-            //need to pull left from Dispatch bz Order1 is passed by Value not Ref 
-            var left = WhatIsLeft();
-            var amt = Order1.ApproveThisAmt(left);
-
-            //if (_export)//if import tht amt was added already to processed amounts 
-            //{
-                _person.Work.Dispatch1.AddToOrderAmtProcessed(Order1, amt);
-            //}
-
+            var amtTaken = _person.Inventory.ReturnAmtOfItemOnInv(Order1.Product);
+            //and will report actually only was he physically took from it
+            _person.Work.Dispatch1.AddToOrderAmtProcessed(Order1, amtTaken);
             Debug.Log(_person.MyId + " Docker got from:" + Order1.SourceBuild + " : " + Order1.Product + ".amt:" + amt);
-
-            _person.ExchangeInvetoryItem(_sourceBuild, _person, Order1.Product, amt);
-            _sourceBuild.CheckIfCanBeDestroyNow(Order1.Product);
-            _person.Body.UpdatePersonalForWheelBa();
         }
+
+        _sourceBuild.CheckIfCanBeDestroyNow(Order1.Product);
+        _person.Body.UpdatePersonalForWheelBa();
     }
 
 

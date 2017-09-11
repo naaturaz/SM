@@ -37,7 +37,7 @@ public class WheelBarrow : Profession
             )
         {
             _takeABreakNow = true;
-            return; 
+            return;
         }
 
         _destinyBuild = Brain.GetStructureFromKey(Order1.DestinyBuild);
@@ -65,11 +65,11 @@ public class WheelBarrow : Profession
         //Debug.Log(_person.MyId+" Init WheelB");
 
         HandleNewProfDescrpSavedAndPrevJob(Job.WheelBarrow);
-        
+
         MyAnimation = "isWheelBarrow";
 
-        if (_person.Work != null && 
-            (_person.Work.HType == H.HeavyLoad )  )
+        if (_person.Work != null &&
+            (_person.Work.HType == H.HeavyLoad))
         {
             MyAnimation = "isCartRide";
         }
@@ -145,17 +145,17 @@ public class WheelBarrow : Profession
         //if still null after this 
         if (_sourceBuild == null)
         {
-           //Debug.Log("srcBuild null whelbarr:" + _person.MyId + ".orderSrcBld:" + Order1.SourceBuild);
+            //Debug.Log("srcBuild null whelbarr:" + _person.MyId + ".orderSrcBld:" + Order1.SourceBuild);
             _takeABreakNow = true;
             return;
         }
 
         RouterActive = true;
         Router1 = new CryRouteManager(_person.Work, _sourceBuild, _person, HPers.InWork);
-       // Router1 = new RouterManager(_person.Work, _sourceBuild, _person, HPers.InWork);
+        // Router1 = new RouterManager(_person.Work, _sourceBuild, _person, HPers.InWork);
 
         IsRouterBackUsed = true;
-        RouterBack = new CryRouteManager(_sourceBuild, _destinyBuild, _person,  HPers.InWorkBack);
+        RouterBack = new CryRouteManager(_sourceBuild, _destinyBuild, _person, HPers.InWorkBack);
     }
 
     public override void Update()
@@ -177,18 +177,14 @@ public class WheelBarrow : Profession
         if (ExecuteNow)
         {
             ExecuteNow = false;
-     
-            if (_sourceBuild.HasEnoughToCoverOrder(Order1))
-            {
-               //Debug.Log(_person.MyId+ " Wheel Barr got from:"+Order1.SourceBuild + 
-                    //" : " +Order1.Product+".amt:"+Order1.Amount);
 
-                Order1.Amount = _person.HowMuchICanCarry();
+            //Debug.Log(_person.MyId+ " Wheel Barr got from:"+Order1.SourceBuild + 
+            //" : " +Order1.Product+".amt:"+Order1.Amount);
 
-                _person.ExchangeInvetoryItem(_sourceBuild, _person, Order1.Product, Order1.Amount);
-                _sourceBuild.CheckIfCanBeDestroyNow(Order1.Product);
-                _person.Body.UpdatePersonalForWheelBa();
-            }
+            Order1.Amount = _person.HowMuchICanCarry();
+            _person.ExchangeInvetoryItem(_sourceBuild, _person, Order1.Product, Order1.Amount);
+            _sourceBuild.CheckIfCanBeDestroyNow(Order1.Product);
+            _person.Body.UpdatePersonalForWheelBa();
         }
     }
 
@@ -209,13 +205,13 @@ public class WheelBarrow : Profession
             _takeABreakNow = false;
             startIdleTime = 0;
 
-            DecideOnNextIteration();    
+            DecideOnNextIteration();
         }
     }
 
     void DecideOnNextIteration()
     {
-        if (_person==null)
+        if (_person == null)
         {
             _takeABreakNow = true;
             return;

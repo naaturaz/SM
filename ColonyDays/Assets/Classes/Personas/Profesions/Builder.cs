@@ -172,7 +172,7 @@ public class Builder : Profession
                 return Brain.ReturnClosestVector3(_person.Work.transform.position, _constructing.Anchors);
             }
         }
-        else if (IsAShoreBuilding(_constructing))
+        else if (IsAShoreOrTerraBuilding(_constructing))
         {
             if (_constructing.Anchors.Count > 0)
             {
@@ -195,11 +195,13 @@ public class Builder : Profession
         return _constructing.GetAnchors(true)[UMath.GiveRandom(0, 4)];
     }
 
-    public static bool IsAShoreBuilding(Building constP)
+    public static bool IsAShoreOrTerraBuilding(Building constP)
     {
         if ((constP.HType.ToString().Contains("Dock") || constP.HType.ToString().Contains("DryDock")
             || constP.HType.ToString().Contains("Fish") || constP.HType.ToString().Contains("SaltMine")
-            || constP.HType.ToString().Contains("Supplier") || constP.HType.ToString().Contains("PostGuard")))
+            || constP.HType.ToString().Contains("Supplier") || constP.HType.ToString().Contains("PostGuard")
+            || constP.HType.ToString().Contains("Mine")
+            ))
         {
             return true;
         }

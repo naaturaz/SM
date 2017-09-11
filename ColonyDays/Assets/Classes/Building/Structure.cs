@@ -549,10 +549,9 @@ public class Structure : StructureParent
         //r.enabled = false;
     }
 
-    //todo implement
-    internal bool HasEnoughToCoverOrder(Order _order)
+    internal bool HasEnoughToCoverOrder(Order order)
     {
-        return true;
+        return Inventory.ReturnAmtOfItemOnInv(order.Product) >= order.Amount;
     }
 
 

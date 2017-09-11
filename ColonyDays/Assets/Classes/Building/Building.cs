@@ -3035,7 +3035,7 @@ public class Building : Hoverable, Iinfo
     Vector3 MoveSpawnPointAwayFromBuildingIfShoreBuild(StructureParent sp)
     {
         //if is nota shore building will return spawn point 
-        if (!Builder.IsAShoreBuilding(sp))
+        if (!Builder.IsAShoreOrTerraBuilding(sp))
         {
             return sp.SpawnPoint.transform.position;
         }
@@ -3659,7 +3659,7 @@ public class Building : Hoverable, Iinfo
     /// </summary>
     public bool HaveThisProdOnInv(P prod)
     {
-        if (Inventory.DoWeHaveWater())
+        if (Inventory.DoWeHaveWater() && prod == P.Water)
         {
             return true;
         }

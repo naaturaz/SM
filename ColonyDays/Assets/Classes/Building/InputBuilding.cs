@@ -7,7 +7,8 @@ using UnityEngine;
 /// Contains majority of input actions for the buildings
 /// </summary>
 
-public class InputBuilding : BuildingPot {
+public class InputBuilding : BuildingPot
+{
 
     Vector2 oldMousePos;
     private float timeStart;
@@ -42,14 +43,14 @@ public class InputBuilding : BuildingPot {
 
     private HoverWindowMed _hoverWindowMed;
 
-    void Start ()
-	{
-	    oldMousePos = Input.mousePosition;
-	    timeStart = Time.time;
+    void Start()
+    {
+        oldMousePos = Input.mousePosition;
+        timeStart = Time.time;
 
         InputKeyMapping();
         _hoverWindowMed = FindObjectOfType<HoverWindowMed>();
-	}
+    }
 
     void InputKeyMapping()
     {
@@ -61,7 +62,7 @@ public class InputBuilding : BuildingPot {
 
         List<KeyCode> fKeys = new List<KeyCode>()
         {
-            KeyCode.F1, KeyCode.F2, KeyCode.F3, KeyCode.F4, KeyCode.F5, KeyCode.F6, KeyCode.F7, 
+            KeyCode.F1, KeyCode.F2, KeyCode.F3, KeyCode.F4, KeyCode.F5, KeyCode.F6, KeyCode.F7,
             KeyCode.F8, KeyCode.F9, KeyCode.F10
         };
 
@@ -92,25 +93,25 @@ public class InputBuilding : BuildingPot {
             _inputListDict.Add(_inputKeys);
         }
     }
-	
-	void Update () 
+
+    void Update()
     {
-	    BuildingSwitch();
+        BuildingSwitch();
         if (Time.time > timeStart + 0.01)
         {
             oldMousePos = Input.mousePosition;
             timeStart = Time.time;
         }
 
-	    AdressIfBuildingMode();
-	    ShowHideHelpLoopOnUpdate();
+        AdressIfBuildingMode();
+        ShowHideHelpLoopOnUpdate();
     }
 
-#region LineUpTool
+    #region LineUpTool
     private Mode oldInputMode = Mode.None;
     private bool helpLoop;
     private bool showHelp;
-    List<Building> _orgStructuresFromMouseHitPoint = new List<Building>(); 
+    List<Building> _orgStructuresFromMouseHitPoint = new List<Building>();
 
     private void AdressIfBuildingMode()
     {
@@ -182,7 +183,7 @@ public class InputBuilding : BuildingPot {
         }
     }
 
-#endregion
+    #endregion
 
     /// <summary>
     /// Depending on the current InputMode will direct the code to  BuildingMode(); or
@@ -199,7 +200,7 @@ public class InputBuilding : BuildingPot {
                 BuildingMode();
             }
             //with GUI buttons
-            else 
+            else
             {
                 BuildNowNew(val);
             }
@@ -248,7 +249,7 @@ public class InputBuilding : BuildingPot {
             {
                 ManagerReport.AddInput("RotateBuilding");
                 Control.CurrentSpawnBuild.RotationAction();
-                AudioCollector.PlayOneShot("ClickMetal1",0);
+                AudioCollector.PlayOneShot("ClickMetal1", 0);
             }
             else if (Input.GetMouseButtonUp(0) && !_isDraggingWay && (DefineCategory(DoingNow) == Ca.Structure || (DefineCategory(DoingNow) == Ca.Shore)))
             {
@@ -263,7 +264,7 @@ public class InputBuilding : BuildingPot {
     void UpdateWayFarmCursor()
     {
         //updating current vertex which is used in Way.cs
-        if (Control.BuildWayCursor != null) 
+        if (Control.BuildWayCursor != null)
         {
             Control.BuildWayCursor.UpdateCursor();
         }
@@ -277,16 +278,16 @@ public class InputBuilding : BuildingPot {
         DragSquare farm = Control.CurrentSpawnBuild as DragSquare;
 
 
-        if (Control.CurrentSpawnBuild!=null &&  Input.GetMouseButtonUp(0) && !_isDraggingWay)
+        if (Control.CurrentSpawnBuild != null && Input.GetMouseButtonUp(0) && !_isDraggingWay)
         {
             _isDraggingWay = true;
         }
-        
+
         if (_isDraggingWay)
         {
-            farm.Drag(); 
+            farm.Drag();
         }
-        
+
         if (_isDraggingWay && Input.GetMouseButtonUp(0) && farm.IsBuildOk && farm.IsFarmOk)
         {
             //print("DragFarm() MouseUp() farm");
@@ -307,7 +308,7 @@ public class InputBuilding : BuildingPot {
     void DrawWay()
     {
         Trail way = Control.CurrentSpawnBuild as Trail;
-        
+
         if (Input.GetMouseButtonUp(0) && !_isDraggingWay)
         {
             _isDraggingWay = true;
@@ -353,8 +354,8 @@ public class InputBuilding : BuildingPot {
             {
                 OnBuildPlaced(EventArgs.Empty);
             }
-            
-            
+
+
             if (h.PositionFixed)
             {
                 BuildNowNew(DoingNow);
@@ -423,9 +424,9 @@ public class InputBuilding : BuildingPot {
     }
 
 
-   /// <summary>
-   /// This is where the selection of a new building to be built happen
-   /// </summary>
+    /// <summary>
+    /// This is where the selection of a new building to be built happen
+    /// </summary>
     void BuildingMode()
     {
         foreach (var item in _fInputKeys)
@@ -455,7 +456,7 @@ public class InputBuilding : BuildingPot {
                     }
                 }
             }
-            
+
             if (indexSelection != -1)
             {
                 //then in that list whaterever key is pressed will be pass for buildNow()
@@ -497,7 +498,7 @@ public class InputBuilding : BuildingPot {
 
         if (DefineCategory(buildWhat) == Ca.Structure || DefineCategory(buildWhat) == Ca.Shore)
         {
-            BuildStructure( buildWhat,  iniPos);
+            BuildStructure(buildWhat, iniPos);
 
             if (buildWhat == H.Dock)
             {
@@ -516,7 +517,7 @@ public class InputBuilding : BuildingPot {
         }
 
         DoingNow = buildWhat;
-        
+
 
         AudioCollector.PlayOneShot("ClickWood7", 0);
 
@@ -530,13 +531,30 @@ public class InputBuilding : BuildingPot {
         {
             _hoverWindowMed.ShowSemiTut("Road");
         }
-        else if(Control.Registro.AllBuilding.Count < 10)
+        else if (Control.Registro.AllBuilding.Count < 10)
         {
             _hoverWindowMed.ShowSemiTut("Build");
         }
-        
+
         GameScene.ScreenPrint("Ready to build a " + buildWhat);
         InputMode = Mode.Placing;
+    }
+
+    bool IsRoadOk(H buildWhat)
+    {
+        //in this case is when a road is being clicked on top of a spawned one
+        var roadSkip = buildWhat.ToString().Contains("Road") && Control.CurrentSpawnBuild != null
+            && Control.CurrentSpawnBuild.HType.ToString().Contains("Road");
+
+        if (roadSkip)
+        {
+            var d = (DragSquare)Control.CurrentSpawnBuild;
+            if (d.IsFarmOk)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     /// <summary>
@@ -545,8 +563,10 @@ public class InputBuilding : BuildingPot {
     /// </summary>
     void CleanCurrentSpawnBuildIfNewBuildIsADiffType(H buildWhat)
     {
-        if(Control.CurrentSpawnBuild == null || Control.CurrentSpawnBuild.PositionFixed 
-            || buildWhat.ToString().Contains("Road"))
+        var isRoad = buildWhat.ToString().Contains("Road");
+
+        if (Control.CurrentSpawnBuild == null || Control.CurrentSpawnBuild.PositionFixed
+            || (isRoad && IsRoadOk(buildWhat)) )
         {
             return;
         }
@@ -640,7 +660,7 @@ public class InputBuilding : BuildingPot {
     public void CreateOrKillCursor()
     {
         KillCursor();
-      
+
         Control.BuildWayCursor = (BigBoxPrev)CreatePlane.CreatePlan(Root.bigBoxPrev, Root.matGreenSel2);
         Control.BuildWayCursor.transform.name = "Cursor for:" + Control.CurrentSpawnBuild.MyId;
     }
