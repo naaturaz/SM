@@ -97,6 +97,9 @@ public class Body //: MonoBehaviour //: General
         set { _routePoins = value; }
     }
 
+    /// <summary>
+
+
     public bool Inverse
     {
         get { return _inverse; }
@@ -1190,6 +1193,21 @@ public class Body //: MonoBehaviour //: General
 
     #endregion
 
+    /// Will return tru if nearBy the initial strucutre that is on the route  
+    /// </summary>
+    /// <returns></returns>
+    internal bool IsNearBySpawnPointOfInitStructure()
+    {
+        var st = Brain.GetStructureFromKey(_currTheRoute.OriginKey);
+
+        if (st == null)
+        {
+            return false;
+        }
+
+        return UMath.nearEqualByDistance(st.SpawnPoint.transform.position, _person.transform.position, 0.2f);
+    }
+
 
 
 
@@ -1700,7 +1718,7 @@ public class Body //: MonoBehaviour //: General
         DefineSpeed();
     }
 
-    private bool IAmShown()
+    public bool IAmShown()
     {
         return renderer.enabled;
     }
@@ -1892,4 +1910,6 @@ public class Body //: MonoBehaviour //: General
     }
 
     #endregion
+
+
 }

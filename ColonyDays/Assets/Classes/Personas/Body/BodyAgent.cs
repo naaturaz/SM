@@ -73,10 +73,10 @@ public class BodyAgent
             //so i set the destination again to the real one so they move towards it 
             _agent.SetDestination(Destiny);
 
-#if UNITY_EDITOR
-            Debug.Log("Corrected pathCompleted: " + _person.name + " :pathStatus: " + _agent.pathStatus);
-#endif
-            _agent.radius = 0.08f;
+            //#if UNITY_EDITOR
+            //            Debug.Log("Corrected pathCompleted: " + _person.name + " :pathStatus: " + _agent.pathStatus);
+            //#endif
+            //            _agent.radius = 0.08f;
             //_agent.height = 3;
         }
 
@@ -88,6 +88,37 @@ public class BodyAgent
         CheckIfGoingIntoBuild();
         RadiusForHeavyLoaders();
 
+        CheckVelocity();
+    }
+
+
+    string savedAni = "";
+    /// <summary>
+    /// In version Unity 2017.1 and above it seems they have an internal queue so at 10x speed
+    /// with over 160 agents they take a while to start walking 
+    /// </summary>
+    private void CheckVelocity()
+    {
+        var notWalkingYet = _agent.enabled && _nextDest != new Vector3() && _agent.velocity == new Vector3();
+
+        if ((notWalkingYet || _person.Body.IsNearBySpawnPointOfInitStructure())
+            && savedAni == "" && _person.Body.IAmShown() && _person.Body.MovingNow)
+        {
+            savedAni = _person.Body.CurrentAni;
+            _person.Body.TurnCurrentAniAndStartNew("isIdle");
+
+            //if is not idling will be hidden 
+            if (!_person.Brain.CurrentTask.ToString().Contains("Idle"))
+            {
+                _person.Body.HideNoQuestion();
+            }
+        }
+        else if (savedAni != "" && !notWalkingYet && !_person.Body.IsNearBySpawnPointOfInitStructure())//is walking already
+        {
+            _person.Body.Show();
+            _person.Body.TurnCurrentAniAndStartNew(savedAni);
+            savedAni = "";
+        }
     }
 
     private void CheckIfGoingIntoBuild()
@@ -145,7 +176,7 @@ public class BodyAgent
         }
         else
         {
-            _agent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
+            _agent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
         }
     }
 
@@ -220,5 +251,13 @@ public class BodyAgent
         _person.transform.position = _afterDestiny;
     }
 
+    internal string DebugInfo()
+    {
+        return "isOnNavMesh: " + _agent.isOnNavMesh +
+            "\npathStatus: " + _agent.pathStatus +
+        "\nEnabled: " + _agent.enabled +
+        "\nNextDest: " + _nextDest +
+        "\nVelocity: " + _agent.velocity;
 
+    }
 }
