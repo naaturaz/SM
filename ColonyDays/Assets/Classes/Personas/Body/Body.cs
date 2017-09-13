@@ -1205,7 +1205,7 @@ public class Body //: MonoBehaviour //: General
             return false;
         }
 
-        return UMath.nearEqualByDistance(st.SpawnPoint.transform.position, _person.transform.position, 0.2f);
+        return UMath.nearEqualByDistance(st.SpawnPoint.transform.position, _person.transform.position, 0.5f);
     }
 
 

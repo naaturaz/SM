@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Random = UnityEngine.Random;
 using System;
+using UnityEngine.AI;
 
 public class StillElement : TerrainRamdonSpawner
 {
@@ -219,6 +220,9 @@ public class StillElement : TerrainRamdonSpawner
             Destroy(rig);
             //gameObject.GetComponent<Rigidbody>().detectCollisions = false;
         }
+
+        var nav = gameObject.GetComponent<NavMeshObstacle>();
+        nav.enabled = false;
 
         AudioCollector.PlayOneShot("FallingTree", transform.position);
 

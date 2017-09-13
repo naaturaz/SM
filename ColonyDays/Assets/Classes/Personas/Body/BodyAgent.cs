@@ -38,7 +38,7 @@ public class BodyAgent
 
     public BodyAgent(Person person)
     {
-        ReachRadius = .5f;
+        ReachRadius = .75f;
 
         _person = person;
         _agent = _person.GetComponent<NavMeshAgent>();
@@ -93,30 +93,44 @@ public class BodyAgent
 
 
     string savedAni = "";
+    bool hidden;
     /// <summary>
     /// In version Unity 2017.1 and above it seems they have an internal queue so at 10x speed
     /// with over 160 agents they take a while to start walking 
     /// </summary>
     private void CheckVelocity()
     {
-        var notWalkingYet = _agent.enabled && _nextDest != new Vector3() && _agent.velocity == new Vector3();
-
-        if ((notWalkingYet || _person.Body.IsNearBySpawnPointOfInitStructure())
-            && savedAni == "" && _person.Body.IAmShown() && _person.Body.MovingNow)
+        if (Program.gameScene.GameSpeed == 0)
         {
-            savedAni = _person.Body.CurrentAni;
-            _person.Body.TurnCurrentAniAndStartNew("isIdle");
-
-            //if is not idling will be hidden 
-            if (!_person.Brain.CurrentTask.ToString().Contains("Idle"))
-            {
-                _person.Body.HideNoQuestion();
-            }
+            return;
         }
-        else if (savedAni != "" && !notWalkingYet && !_person.Body.IsNearBySpawnPointOfInitStructure())//is walking already
+
+        var onIdleSpot = (_person.Brain.CurrentTask == HPers.IdleSpot || _person.Brain.CurrentTask == HPers.Praying) &&
+                _person.Body.Location == HPers.IdleSpot &&
+                (_person.Body.GoingTo == HPers.IdleSpot || _person.Body.GoingTo == HPers.Home);
+
+        if (_person.Body.IsNearBySpawnPointOfInitStructure() || onIdleSpot)
         {
+            //right where stops for idle 
+            if (onIdleSpot)
+            {
+                savedAni = _person.Body.CurrentAni;
+                _person.Body.Show();
+                _person.Body.TurnCurrentAniAndStartNew("isIdle");
+                return;
+            }
+            hidden = true;
+            _person.Body.HideNoQuestion();
+        }
+        else if (hidden && !_person.Body.IsNearBySpawnPointOfInitStructure())//is walking already
+        {
+            hidden = false;
             _person.Body.Show();
-            _person.Body.TurnCurrentAniAndStartNew(savedAni);
+        }
+        //will restart 'isWalk' as soon it moves 
+        if (savedAni != "" && _agent.velocity != new Vector3())
+        {
+            _person.Body.TurnCurrentAniAndStartNew("isWalk");
             savedAni = "";
         }
     }
@@ -257,7 +271,10 @@ public class BodyAgent
             "\npathStatus: " + _agent.pathStatus +
         "\nEnabled: " + _agent.enabled +
         "\nNextDest: " + _nextDest +
-        "\nVelocity: " + _agent.velocity;
+        "\nVelocity: " + _agent.velocity +
+                "\nCurr Task: " + _person.Brain.CurrentTask +
+        "\nGoingTo: " + _person.Body.GoingTo +
+        "\nLoc: " + _person.Body.Location;
 
     }
 }
