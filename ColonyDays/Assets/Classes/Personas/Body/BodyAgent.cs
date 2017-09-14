@@ -51,14 +51,6 @@ public class BodyAgent
         //_agent.SetAreaCost(3, 1);
     }
 
-
-
-
-
-
-
-
-
     // Update is called once per frame
     public void Update()
     {
@@ -72,12 +64,6 @@ public class BodyAgent
         {
             //so i set the destination again to the real one so they move towards it 
             _agent.SetDestination(Destiny);
-
-            //#if UNITY_EDITOR
-            //            Debug.Log("Corrected pathCompleted: " + _person.name + " :pathStatus: " + _agent.pathStatus);
-            //#endif
-            //            _agent.radius = 0.08f;
-            //_agent.height = 3;
         }
 
         if (_nextDest != new Vector3() && !_destWasSet && _agent.isOnNavMesh && _agent.enabled)
@@ -89,6 +75,7 @@ public class BodyAgent
         RadiusForHeavyLoaders();
 
         CheckVelocity();
+        CheckIfTempSpeed();
     }
 
 
@@ -221,10 +208,45 @@ public class BodyAgent
 
 
 
+    #region Speed
 
+    //bz wheelbarrows spin at 10x
+    float _tempSpeedSetAt;
     internal void NewSpeed()
     {
         _agent.speed = _speedInitial * AgeSpeedCorrection() * Program.gameScene.GameSpeed;
+
+        CheckOnAnimation();
+    }
+
+    /// <summary>
+    /// Everytime a new animation is set should call this. So if is WheelBarrow will slow down 
+    /// 
+    /// </summary>
+    public void CheckOnAnimation()
+    {
+        if (Program.gameScene.GameSpeed >= 5 && _person.Body != null && _person.Body.CurrentAni == "isWheelBarrow")
+        {
+            //so they dont spin 
+            _agent.speed = _speedInitial * AgeSpeedCorrection() * Program.gameScene.GameSpeed / 5;
+            _tempSpeedSetAt = Time.time;
+            _person.Body.SetAnimatorSpeed(Program.gameScene.GameSpeed / 5);
+        }
+    }
+
+    void CheckIfTempSpeed()
+    {
+        if (_tempSpeedSetAt == 0)
+        {
+            return;
+        }
+
+        if (Time.time > _tempSpeedSetAt + 5f)
+        {
+            _tempSpeedSetAt = 0;
+            _agent.speed = _speedInitial * AgeSpeedCorrection() * Program.gameScene.GameSpeed;
+            _person.Body.SetAnimatorSpeed(Program.gameScene.GameSpeed);
+        }
     }
 
     float AgeSpeedCorrection()
@@ -237,6 +259,8 @@ public class BodyAgent
         }
         return factor;
     }
+
+    #endregion
 
     internal void PutOnNavMeshIfNeeded(Vector3 vector3)
     {
@@ -274,7 +298,11 @@ public class BodyAgent
         "\nVelocity: " + _agent.velocity +
                 "\nCurr Task: " + _person.Brain.CurrentTask +
         "\nGoingTo: " + _person.Body.GoingTo +
-        "\nLoc: " + _person.Body.Location;
+        "\nLoc: " + _person.Body.Location+
+        "\nIsNearBySpawnPointOfInitStructure: " + _person.Body.IsNearBySpawnPointOfInitStructure();
+
+
+
 
     }
 }

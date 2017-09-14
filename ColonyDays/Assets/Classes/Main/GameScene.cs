@@ -952,7 +952,10 @@ public class GameScene : General
         return Time.time > _gameLoadedTime + 10 && _gameLoadedTime != 0;
     }
 
-
+    internal bool GameWasFullyLoadedAnd2SecAgo()
+    {
+        return Time.time > _gameLoadedTime + 2 && _gameLoadedTime != 0;
+    }
 
 
 

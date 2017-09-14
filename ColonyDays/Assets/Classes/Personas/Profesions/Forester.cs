@@ -74,13 +74,12 @@ public class Forester : Profession
             return;
         }
         HandleStillElement();
-
-        //var closerAnchorToUs = _stillElement.FindCloserAnchorTo(_person.Work);
-        //FinRoutePoint = Vector3.MoveTowards(closerAnchorToUs, _person.Work.transform.position, MoveTowOrigin);//.05
-        //FinRoutePoint = closerAnchorToUs;
        
         //moving the route point a bit towards the origin so when chopping tree its not inside the tree 
         FinRoutePoint = Vector3.MoveTowards(_stillElement.transform.position, _person.Work.transform.position, 0.4f);
+
+        //correcting y
+        FinRoutePoint = new Vector3(FinRoutePoint.x, _person.transform.position.y, FinRoutePoint.z);
 
         //Debug.Log("routerBackWasInit set false");
         routerBackWasInit = false;

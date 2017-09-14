@@ -3938,7 +3938,8 @@ public class Building : Hoverable, Iinfo
 
 
     private int _maxPeople;//max people this builging can hold. workers this one can change
-    private int _absMaxPeople;//this one doesnt change 
+    private int _absMaxPeople;//this one doesnt change
+    int _peopleToBeFired; 
 
     public int AbsMaxPeople
     {
@@ -3958,7 +3959,7 @@ public class Building : Hoverable, Iinfo
         {
             _maxPeople--;
             ManagerReport.AddInput("Less workers on: " + transform.name + ". now:" + _maxPeople);
-
+            _peopleToBeFired = PeopleDict.Count - _maxPeople;
         }
         else if (action == "More" && MyText.Lazy() > 0)
         {
@@ -3981,7 +3982,6 @@ public class Building : Hoverable, Iinfo
     }
 
 
-
     void UpdateWorkersRoutine()
     {
         //fire people
@@ -3989,25 +3989,32 @@ public class Building : Hoverable, Iinfo
 
         CheckIfNoOpenPosLeftThenRemoveFromList();
         CheckIfNeedsToBeAddedToList();
-
-        
     }
 
     private void FirePeopleIfNeeded()
     {
-        var peopleToBeFired = PeopleDict.Count - _maxPeople;
+        if (_peopleToBeFired == 0)
+        {
+            Debug.Log("no one to be fired: " + MyId);
+            return;
+        }
 
-        for (int i = 0; i < peopleToBeFired; i++)
+        int firedPpl = 0;
+
+        for (int i = 0; i < _peopleToBeFired; i++)
         {
             var index = PeopleDict.Count - (1 + i);//starting from the last towards the first
             var person = Family.FindPerson(PeopleDict[index]);
             person.WasFired = true;
             person.ShowEmotion("Fired");
             PersonPot.Control.RestartControllerForPerson(person.MyId);
+            firedPpl++;
         }
 
+        _peopleToBeFired -= firedPpl;
+
         //if not people was to fired then make sure all are hired that are less than MaxPeople and PeopleDict.Count
-        if (peopleToBeFired == 0 && Program.gameScene.GameFullyLoaded())
+        if (_peopleToBeFired == 0 && Program.gameScene.GameFullyLoaded())
         {
             for (int i = 0; i < MaxPeople && i < PeopleDict.Count; i++)
             {
@@ -4026,9 +4033,10 @@ public class Building : Hoverable, Iinfo
     private void InitJobRelated()
     {
         AbsMaxPeople = Book.GiveMeStat(HType).MaxPeople;
-        MaxPeople = PeopleDict.Count;
 
-        UpdateWorkersRoutine();
+        //if is loading is better to keep what it has. This is so people get fired in were fired in the saved file, and then
+        //were loaded again 
+        MaxPeople = PeopleDict.Count;
     }
 
     /// <summary>

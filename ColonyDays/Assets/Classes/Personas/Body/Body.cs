@@ -54,7 +54,7 @@ public class Body //: MonoBehaviour //: General
         get { return _location; }
         set
         {
-            if (_location == HPers.WheelBarrow )
+            if (_location == HPers.WheelBarrow)
             {
                 var a = _person.Name;
             }
@@ -262,6 +262,7 @@ public class Body //: MonoBehaviour //: General
     }
 
 
+
     private Transform savedParenTransform;
     void UnparentPerson()
     {
@@ -338,9 +339,9 @@ public class Body //: MonoBehaviour //: General
         _currentAni = animationPass;
         myAnimator.SetBool(animationPass, true);
 
-        if (animationPass == "isCarry")
+        if (Program.gameScene.GameFullyLoaded() && _bodyAgent != null)
         {
-            var a = 1;
+            _bodyAgent.CheckOnAnimation();
         }
 
         //otherwise will stop the one intended to be playing now 
@@ -385,11 +386,11 @@ public class Body //: MonoBehaviour //: General
         }
         else if (aniToEval == "isWheelBarrow")
         {
-            _speed = UMath.GiveRandom(0.55f, 0.56f);
+            _speed = UMath.GiveRandom(0.42f, 0.46f);
         }
         else if (aniToEval == "isCartRide")
         {
-            _speed = UMath.GiveRandom(0.67f, 0.68f);//7f, 0.72f
+            _speed = UMath.GiveRandom(0.6f, 0.61f);//7f, 0.72f
         }
         else
         {
@@ -824,7 +825,7 @@ public class Body //: MonoBehaviour //: General
     }
 
 
-    public void WalkRoutine(TheRoute route, HPers goingTo, bool inverse = false, HPers whichRouteP = HPers.None, 
+    public void WalkRoutine(TheRoute route, HPers goingTo, bool inverse = false, HPers whichRouteP = HPers.None,
         bool loadingCall = false)
     {
         var destRoute = route.DestinyKey.Substring(route.DestinyKey.Length - 2);
@@ -1198,14 +1199,22 @@ public class Body //: MonoBehaviour //: General
     /// <returns></returns>
     internal bool IsNearBySpawnPointOfInitStructure()
     {
-        var st = Brain.GetStructureFromKey(_currTheRoute.OriginKey);
+        var stOri = Brain.GetStructureFromKey(_currTheRoute.OriginKey);
+        var stDes = Brain.GetStructureFromKey(_currTheRoute.DestinyKey);
 
-        if (st == null)
+        var isArdOri = false;
+        var isArdDes = false;
+
+        if (stOri != null)
         {
-            return false;
+            isArdOri = UMath.nearEqualByDistance(stOri.SpawnPoint.transform.position, _person.transform.position, 0.4f);
+        }
+        if (stDes != null)
+        {
+            isArdDes = UMath.nearEqualByDistance(stDes.SpawnPoint.transform.position, _person.transform.position, 0.4f);
         }
 
-        return UMath.nearEqualByDistance(st.SpawnPoint.transform.position, _person.transform.position, 0.5f);
+        return isArdOri || isArdDes;
     }
 
 
@@ -1631,6 +1640,11 @@ public class Body //: MonoBehaviour //: General
             oldGameSpeed = Program.gameScene.GameSpeed;
             BodyAgent.NewSpeed();
         }
+    }
+
+    internal void SetAnimatorSpeed(int v)
+    {
+        myAnimator.speed = v;
     }
 
     internal void UpdatePersonalForWheelBa()

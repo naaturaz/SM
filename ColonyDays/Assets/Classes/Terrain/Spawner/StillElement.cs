@@ -222,7 +222,7 @@ public class StillElement : TerrainRamdonSpawner
         }
 
         var nav = gameObject.GetComponent<NavMeshObstacle>();
-        nav.enabled = false;
+        Destroy(nav);
 
         AudioCollector.PlayOneShot("FallingTree", transform.position);
 
