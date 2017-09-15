@@ -216,7 +216,7 @@ public class BuildingSaveLoad : BuildingPot
         s.Anchors = regFile.Anchors.ToList();
 
         s.ProductionReport = regFile.ProductionReport;
-        //s.MaxPeople = regFile.MaxPeople;
+        s.MaxPeople = regFile.MaxPeople;
         s.Decoration1 = regFile.Decoration;
         s.Name = regFile.Name;
 

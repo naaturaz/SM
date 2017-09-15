@@ -541,7 +541,7 @@ public class Languages
 
        { "Shack.Quest", "Quest: Build a Shack. These are cheap houses. When people turn 16 they will move to a free house if found. In this way, population growth will be guaranteed. [F1] Help"},
 
-        { "SmallFarm.Quest", "Quest: Build a Small Field Farm. You need farms to feed your people"},
+       { "SmallFarm.Quest", "Quest: Build a Small Field Farm. You need farms to feed your people"},
        { "FarmHire.Quest", "Quest: Hire two farmers in the Small Field Farm. Click on the farm and in the plus sign assign workers. You need to have unemployed"
             +" people to be able to assign them into a new building"},
 
@@ -563,11 +563,11 @@ public class Languages
        { "HireHeavy.Quest", "Quest: In the Heavyload building hire a Heavy Hauler."},
 
 
-        { "ImportOil.Quest", "Quest: Import 500 " + Unit.CurrentWeightUnitsString() + " of Whale Oil at the Dock. This is needed to keep your lights on at night."},
+       { "ImportOil.Quest", "Quest: Import 500 " + Unit.CurrentWeightUnitsString() + " of Whale Oil at the Dock. This is needed to keep your lights on at night."},
 
        { "Population50.Quest", "Reach a total population of 50 citizens"},
 
-
+       //added Aug 11 2017, result: sep 9(30% off biggest sale ever)
        { "Production.Quest", "Let's produce Weapons now and sell them later. First of all, build a Blacksmith. Find it in the 'Raw' buildings menu"},
        { "ChangeProductToWeapon.Quest", "In the Blacksmith's 'Products Tab' change the production to Weapon. Workers will bring the raw materials needed to forge weapons if found"},
        { "BlackSmithHire.Quest", "Hire two blacksmiths"},
@@ -578,6 +578,32 @@ public class Languages
        {"CompleteQuest", "Your reward is {0}"},
 
 
+   //added Sep 14 2017
+     { "BuildFishingHut.Quest", "Build a Fishing hut. In this way citizens have different foods to eat, which translates into happiness"},
+       { "HireFisher.Quest", "Hire a fisher"},
+
+       { "BuildLumber.Quest", "Build a Lumbermill. Find it in the 'Raw' buildings menu"},
+       { "HireLumberJack.Quest", "Hire a Lumberjack"},
+
+       { "BuildGunPowder.Quest", "Build a Gunpowder. Find it in the 'Industry' buildings menu"},
+       { "ImportSulfur.Quest", "In the dock import 1000 " + Unit.CurrentWeightUnitsString() + " of Sulfur"},
+       { "GunPowderHire.Quest", "Hire one worker in the Gunpowder building"},
+
+       { "ImportPotassium.Quest", "In the dock import 1000 " + Unit.CurrentWeightUnitsString() + " of Potassium"},
+       { "ImportCoal.Quest", "In the dock import 1000 " + Unit.CurrentWeightUnitsString() + " of Coal"},
+
+       { "ProduceGunPowder.Quest", "Lets produce now " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " of Gunpowder. Notice that you will need Sulfur, Potassium and Coal to produce Gunpowder"},
+       { "ExportGunPowder.Quest", "In the dock export 100 " + Unit.CurrentWeightUnitsString() + " of Gunpowder"},
+
+       { "BuildLargeShack.Quest", "Build a Largeshack in this bigger houses population will grow faster"},
+
+       { "BuildA2ndDock.Quest", "Build a second Dock. This dock could be used only for imports in that way you can import raw materials here and export them at another dock"},
+       { "Rename2ndDock.Quest", "Rename the Docks now, so you can remember which be used only for imports and exports"},
+
+       { "Import2000Wood.Quest", "In the Imports dock import 2000 " + Unit.CurrentWeightUnitsString() + " of Wood. This raw material is needed for everything because is used as fuel"},
+       { "Import2000Coal.Quest", "In the Imports dock import 2000 " + Unit.CurrentWeightUnitsString() + " of Coal. Coal also, is needed for everything because is used as fuel"},
+
+       //
 
 
 
@@ -601,14 +627,31 @@ public class Languages
        { "ImportOil.Quest.Title", "Whale Oil"},
 
        { "Population50.Quest.Title", "50 Citizens"},
-
-
+       
+       //
        { "Production.Quest.Title", "Produce Weapons"},
        { "ChangeProductToWeapon.Quest.Title", "Change Product"},
        { "BlackSmithHire.Quest.Title", "Hire Two Blacksmiths"},
        { "WeaponsProduce.Quest.Title", "Forge Weapons"},
        { "ExportWeapons.Quest.Title", "Make Profit" },
-
+       
+       //
+       { "BuildFishingHut.Quest.Title", "Build a Fishing Hut"},
+       { "HireFisher.Quest.Title", "Hire a Fisher"},
+       { "BuildLumber.Quest.Title", "Build a Lumber"},
+       { "HireLumberJack.Quest.Title", "Hire a Lumberjack"},
+       { "BuildGunPowder.Quest.Title", "Build a Gunpowder"},
+       { "ImportSulfur.Quest.Title", "Import Sulfur"},
+       { "GunPowderHire.Quest.Title", "Hire a Gunpowder worker"},
+       { "ImportPotassium.Quest.Title", "Import Potassium"},
+       { "ImportCoal.Quest.Title", "Import Coal"},
+       { "ProduceGunPowder.Quest.Title", "Produce Gunpowder"},
+       { "ExportGunPowder.Quest.Title", "Export Gunpowder"},
+       { "BuildLargeShack.Quest.Title", "Build a Largeshack"},
+       { "BuildA2ndDock.Quest.Title", "Build a Second Dock"},
+       { "Rename2ndDock.Quest.Title", "Rename the Second Dock"},
+       { "Import2000Wood.Quest.Title", "Import some Wood"},
+       { "Import2000Coal.Quest.Title", "Import some Coal"},
 
 
 

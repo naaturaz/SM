@@ -3409,10 +3409,15 @@ public class Building : Hoverable, Iinfo
         {
             Program.gameScene.QuestManager.AddToQuest("FarmProduce", amt);
         }
-
+        //
         if (CurrentProd.Product == P.Weapon && HType == H.BlackSmith && amt > 0)
         {
             Program.gameScene.QuestManager.AddToQuest("WeaponsProduce", amt);
+        }
+        //
+        if (CurrentProd.Product == P.GunPowder && HType == H.GunPowder && amt > 0)
+        {
+            Program.gameScene.QuestManager.AddToQuest("ProduceGunPowder", amt);
         }
 
         if (HType == H.FieldFarmSmall && _maxPeople == 2)
@@ -3432,11 +3437,25 @@ public class Building : Hoverable, Iinfo
         {
             Program.gameScene.QuestManager.QuestFinished("BlackSmithHire");
         }
-
+        //
         if (newProduct == P.Weapon && HType == H.BlackSmith)
         {
             Program.gameScene.QuestManager.QuestFinished("ChangeProductToWeapon");
         }
+        //
+        if (HType == H.FishingHut && _maxPeople == 1)
+        {
+            Program.gameScene.QuestManager.QuestFinished("HireFisher");
+        }
+        if (HType == H.GunPowder && _maxPeople == 1)
+        {
+            Program.gameScene.QuestManager.QuestFinished("GunPowderHire");
+        }
+        if (HType == H.LumberMill && _maxPeople == 1)
+        {
+            Program.gameScene.QuestManager.QuestFinished("HireLumberJack");
+        }
+
 
         //called from Handle Last stage quest, tuto
         //bz when demolishes adds 10,000
@@ -3445,6 +3464,11 @@ public class Building : Hoverable, Iinfo
             if (HType == H.Dock)
             {
                 Program.gameScene.TutoStepCompleted("FinishDock.Tuto");
+
+                if (BuildingController.HowManyOfThisTypeAre(H.Dock) > 0)
+                {
+                    Program.gameScene.QuestManager.QuestFinished("BuildA2ndDock");
+                }
             }
             else if (HType == H.FieldFarmSmall)
             {
@@ -3465,6 +3489,23 @@ public class Building : Hoverable, Iinfo
             else if (HType == H.BlackSmith)
             {
                 Program.gameScene.QuestManager.QuestFinished("Production");
+            }
+            //
+            else if (HType == H.FishingHut)
+            {
+                Program.gameScene.QuestManager.QuestFinished("BuildFishingHut");
+            }
+            else if (HType == H.LumberMill)
+            {
+                Program.gameScene.QuestManager.QuestFinished("BuildLumber");
+            }
+            else if (HType == H.GunPowder)
+            {
+                Program.gameScene.QuestManager.QuestFinished("BuildGunPowder");
+            }
+            else if (HType == H.LargeShack)
+            {
+                Program.gameScene.QuestManager.QuestFinished("BuildLargeShack");
             }
         }
     }
@@ -4034,9 +4075,14 @@ public class Building : Hoverable, Iinfo
     {
         AbsMaxPeople = Book.GiveMeStat(HType).MaxPeople;
 
-        //if is loading is better to keep what it has. This is so people get fired in were fired in the saved file, and then
+        //if is loading is better to keep what it has. This is so people get fired or hired 
+        //in were fired in the saved file, and then
         //were loaded again 
-        MaxPeople = PeopleDict.Count;
+
+        if (!IsLoadingFromFile)
+        {
+            MaxPeople = PeopleDict.Count;
+        }
     }
 
     /// <summary>

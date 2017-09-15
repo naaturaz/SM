@@ -241,7 +241,8 @@ public class BodyAgent
             return;
         }
 
-        if (Time.time > _tempSpeedSetAt + 5f)
+        //will restablish normal speed
+        if (Time.time > _tempSpeedSetAt + 4f)
         {
             _tempSpeedSetAt = 0;
             _agent.speed = _speedInitial * AgeSpeedCorrection() * Program.gameScene.GameSpeed;

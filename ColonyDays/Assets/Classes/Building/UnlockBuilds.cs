@@ -83,7 +83,7 @@ public class UnlockBuilds
 
             //ind
             new BRequires(H.Cloth, 50, 500, 900),
-            new BRequires(H.GunPowder, 50, 500, 900),
+            new BRequires(H.GunPowder, true),
             new BRequires(H.PaperMill, 50, 500, 900),
             new BRequires(H.Printer, 50, 500, 900),
             new BRequires(H.CoinStamp, H.OnlyForDev),

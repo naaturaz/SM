@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Net;
+using System;
 
 /*This class manage wich buildings need to be built next and which has already
  * the resources assigned and ready to built
@@ -55,7 +56,7 @@ public class BuildersManager
             {
                 var build = Brain.GetBuildingFromKey(_greenLight[i].Key);
 
-                if (build!=null)
+                if (build != null)
                 {
                     return _greenLight[i].Key;
                 }
@@ -74,19 +75,19 @@ public class BuildersManager
     public void AddNewConstruction(string key, H hTypeP, int priority, Vector3 pos)
     {
         if (hTypeP == H.Road)
-        {return;}
+        { return; }
 
         //Brain.GetStructureFromKey(key) == null is a way and is not a brdige 
         if (Brain.GetStructureFromKey(key) == null && !key.Contains("Bridge"))
         {
             return;
         }
-        if (Brain.GetStructureFromKey(key)!=null && Brain.GetStructureFromKey(key).StartingStage == H.Done)
+        if (Brain.GetStructureFromKey(key) != null && Brain.GetStructureFromKey(key).StartingStage == H.Done)
         {
             return;
         }
 
-//        Debug.Log("construction aded :"+key+"."+Program.gameScene.GameTime1.TodayYMD());
+        //        Debug.Log("construction aded :"+key+"."+Program.gameScene.GameTime1.TodayYMD());
         Construction t = new Construction();
         t.Key = key;
         t.HType = hTypeP;
@@ -196,7 +197,7 @@ public class BuildersManager
     /// </summary>
     /// <param name="indexA"></param>
     /// <param name="indexB"></param>
-    List<Construction> SwapItems(int indexA, int indexB, List<Construction>list)
+    List<Construction> SwapItems(int indexA, int indexB, List<Construction> list)
     {
         var t = list[indexA];
         list[indexA] = list[indexB];
@@ -205,16 +206,23 @@ public class BuildersManager
         return list;
     }
 
+    public static bool CanGreenLight(H hType)
+    {
+        var c = new Construction();
+        c.HType = hType;
+        return CanGreenLight(c, null);
+    }
+
     /// <summary>
     /// Will commu8nicate with GameCOntrooler to see if have enought material to authorizr a building contruction
     /// 
     /// 
     /// </summary>
     /// <returns></returns>
-    bool CanGreenLight(Construction cons)
+    public static bool CanGreenLight(Construction cons, List<string> passedQueue)
     {
         var stat = Book.GiveMeStat(cons.HType);
-        
+
         bool wood = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Wood) >= stat.Wood || stat.Wood == 0;//if is zero
         //the needed amt will pass reagardless the amt we have on storage
         bool stone = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Stone) >= stat.Stone || stat.Stone == 0;
@@ -223,15 +231,11 @@ public class BuildersManager
         bool gold = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Gold) >= stat.Gold || stat.Gold == 0;
         bool dollar = Program.gameScene.GameController1.Dollars >= stat.Dollar || stat.Dollar == 0;
 
-        //passed the queue so all people check in with a new or updated route 
-        //bool passedQue = _passedQueue.Contains(cons.Key);
-
-       
         bool nail = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Nail) >= stat.Nail || stat.Nail == 0;
         bool furniture = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Furniture) >= stat.Furniture
             || stat.Furniture == 0;
         bool mortar = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Mortar) >= stat.Mortar || stat.Mortar == 0;
-        bool floor = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.FloorTile) >= stat.FloorTile 
+        bool floor = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.FloorTile) >= stat.FloorTile
             || stat.FloorTile == 0;
         bool roof = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.RoofTile) >= stat.RoofTile
           || stat.RoofTile == 0;
@@ -243,13 +247,16 @@ public class BuildersManager
         if (wood && stone && brick && iron && gold && dollar //&& passedQue
             && nail && furniture && mortar && floor && roof && machine)
         {
-            var build = Brain.GetBuildingFromKey(cons.Key);
-            build.WasGreenlit = true;
-
-            _passedQueue.Remove(cons.Key);
+            //if is null is just a question for a building if can be greenlit
+            //if not null means is this class trying to pass a Construction 
+            if (passedQueue != null)
+            {
+                var build = Brain.GetBuildingFromKey(cons.Key);
+                build.WasGreenlit = true;
+                passedQueue.Remove(cons.Key);
+            }
             return true;
         }
-
         return false;
     }
 
@@ -287,7 +294,7 @@ public class BuildersManager
 
         var st = Brain.GetStructureFromKey(Constructions[0].Key);
 
-        if (st==null || st.StartingStage==H.Done)
+        if (st == null || st.StartingStage == H.Done)
         {
             PassedQueue.Remove(_constructions[0].Key);
             Constructions.RemoveAt(0);
@@ -302,7 +309,7 @@ public class BuildersManager
         if (_constructions.Count == 0)
         { return; }
 
-        var isGreen = CanGreenLight(_constructions[0]);
+        var isGreen = CanGreenLight(_constructions[0], _passedQueue);
 
         if (isGreen)
         {
@@ -321,7 +328,7 @@ public class BuildersManager
         Structure st = Brain.GetStructureFromKey(construction.Key);
 
         //is the main BuildersManager
-        if (_building==null)
+        if (_building == null)
         {
             AddBuildingToClosestBuildingOffice(st, construction);
         }
@@ -337,7 +344,7 @@ public class BuildersManager
         if (st == null || st.StartingStage != H.Done)
         {
             //_greenLight.Add(construction);
-            var closest = BuildingController.FindTheClosestOfThisType(H.Masonry, construction.Position, 
+            var closest = BuildingController.FindTheClosestOfThisType(H.Masonry, construction.Position,
                 Brain.Maxdistance, true);
 
             if (closest == null)
@@ -408,7 +415,57 @@ public class BuildersManager
     }
 
 
-#region User Changing Order of Buildings to be Greenlight and Greenlit
+
+
+    static List<string> _resources = new List<string>()
+    {
+        "wood", "stone", "brick" , "iron" ,"gold" , "money",
+            "nail", "furniture", "mortar" , "floor" , "roof"  ,"machinery"
+    };
+    internal static string MissingResources(H hType)
+    {
+        var stat = Book.GiveMeStat(hType);
+
+        bool wood = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Wood) >= stat.Wood || stat.Wood == 0;//if is zero
+        //the needed amt will pass reagardless the amt we have on storage
+        bool stone = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Stone) >= stat.Stone || stat.Stone == 0;
+        bool brick = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Brick) >= stat.Brick || stat.Brick == 0;
+        bool iron = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Iron) >= stat.Iron || stat.Iron == 0;
+        bool gold = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Gold) >= stat.Gold || stat.Gold == 0;
+        bool dollar = Program.gameScene.GameController1.Dollars >= stat.Dollar || stat.Dollar == 0;
+
+        bool nail = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Nail) >= stat.Nail || stat.Nail == 0;
+        bool furniture = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Furniture) >= stat.Furniture
+            || stat.Furniture == 0;
+        bool mortar = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Mortar) >= stat.Mortar || stat.Mortar == 0;
+        bool floor = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.FloorTile) >= stat.FloorTile
+            || stat.FloorTile == 0;
+        bool roof = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.RoofTile) >= stat.RoofTile
+          || stat.RoofTile == 0;
+        bool machine = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Machinery) >= stat.Machinery
+          || stat.Machinery == 0;
+
+        List<bool> passed = new List<bool>()
+        {
+            wood, stone, brick , iron ,gold , dollar,
+                nail, furniture, mortar , floor , roof, machine
+        };
+
+        string res = "";
+        for (int i = 0; i < passed.Count; i++)
+        {
+            if (!passed[i])
+            {
+                res += Naming.CaseItRight(_resources[i]) + ", ";
+            }
+        }
+
+        res = res.Substring(0, res.Length - 2);
+        return res;
+    }
+
+
+    #region User Changing Order of Buildings to be Greenlight and Greenlit
 
 
 
@@ -418,7 +475,7 @@ public class BuildersManager
 
 
 
-#endregion 
+    #endregion
 }
 
 public class Construction

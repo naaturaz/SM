@@ -240,9 +240,15 @@ public class AddOrderWindow : GUIElement {
             {
                 Program.gameScene.QuestManager.QuestFinished("Export");
             }
+            //
             else if (_prodSelect == P.Weapon && locAmt == 100)
             {
                 Program.gameScene.QuestManager.QuestFinished("ExportWeapons");
+            }
+            //
+            else if (_prodSelect == P.GunPowder && locAmt == 100)
+            {
+                Program.gameScene.QuestManager.QuestFinished("ExportGunPowder");
             }
         }
         else if (_orderType == "Import")
@@ -258,6 +264,27 @@ public class AddOrderWindow : GUIElement {
             if (_prodSelect == P.WhaleOil && locAmt == 500)
             {
                 Program.gameScene.QuestManager.QuestFinished("ImportOil");
+            }
+            //
+            if (_prodSelect == P.Sulfur && locAmt == 1000)
+            {
+                Program.gameScene.QuestManager.QuestFinished("ImportSulfur");
+            }
+            if (_prodSelect == P.Potassium && locAmt == 1000)
+            {
+                Program.gameScene.QuestManager.QuestFinished("ImportPotassium");
+            }
+            if (_prodSelect == P.Coal && locAmt == 1000)
+            {
+                Program.gameScene.QuestManager.QuestFinished("ImportCoal");
+            }
+            if (_prodSelect == P.Wood && locAmt == 2000)
+            {
+                Program.gameScene.QuestManager.QuestFinished("Import2000Wood");
+            }
+            if (_prodSelect == P.Coal && locAmt == 2000)
+            {
+                Program.gameScene.QuestManager.QuestFinished("Import2000Coal");
             }
         }
 

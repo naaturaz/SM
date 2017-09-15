@@ -58,6 +58,7 @@ public class Naming
     /// RobertYale -> Robertyale
     /// 
     /// WheelBarrow -> Wheelbarrow
+    /// yole -> Yole
     /// </summary>
     /// <param name="newName"></param>
     /// <returns></returns>

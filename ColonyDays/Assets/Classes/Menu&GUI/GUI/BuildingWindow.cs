@@ -91,7 +91,7 @@ public class BuildingWindow : GUIElement
         {
             yield return new WaitForSeconds(1f); // wait
 
-            if(Building != null && Building.CurrentProd !=null && _products.activeSelf)
+            if (Building != null && Building.CurrentProd != null && _products.activeSelf)
             {
                 //in case is a Field Farm updates the progress 
                 ShowProductDetail();
@@ -274,7 +274,7 @@ public class BuildingWindow : GUIElement
             Building.HType == H.Masonry || Building.HType == H.HeavyLoad
             || Building.HType == H.LightHouse
             || Building.IsNaval()
-            || Building.HType == H.Church || Building.HType == H.Tavern || Building.HType == H.TownHouse 
+            || Building.HType == H.Church || Building.HType == H.Tavern || Building.HType == H.TownHouse
             || Building.HType == H.Library)
         {
             _salary.SetActive(false);
@@ -720,7 +720,23 @@ public class BuildingWindow : GUIElement
         {
             var percentage = sP.PercentageBuiltCured();
             return "Construction progress at: " + percentage + "%\n" +
-                MaterialsGathered() + "\n\n";
+                MaterialsGathered() + "\n" + MaterialsIsMissing();
+        }
+        return "";
+    }
+
+    /// <summary>
+    /// If a building is missing some materials/resources to get built will be shown here 
+    /// </summary>
+    /// <returns></returns>
+    private string MaterialsIsMissing()
+    {
+        var pass = BuildersManager.CanGreenLight(Building.HType);
+
+        if (!pass && !Building.WasGreenlit)
+        {
+            return "Warning: This building cannot be built now. Missing resources:\n" +
+                BuildersManager.MissingResources(Building.HType);
         }
         return "";
     }
@@ -1145,6 +1161,10 @@ public class BuildingWindow : GUIElement
 
         Program.gameScene.TutoStepCompleted("RenameBuild.Tuto");
 
+        if (Building.HType == H.Dock && BuildingController.HowManyOfThisTypeAre(H.Dock) > 1)
+        {
+            Program.gameScene.QuestManager.QuestFinished("Rename2ndDock");
+        }
     }
 
 

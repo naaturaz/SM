@@ -45,8 +45,10 @@ public class QuestManager
     }
 
     List<Quest> _bank = new List<Quest>()
-    { 
-        //need to mention reward still 
+    {
+
+
+
 
 
         new Quest("Shack.Quest", 500, 5.5f),
@@ -74,7 +76,31 @@ public class QuestManager
 
 
 
-        new Quest("Population50.Quest", 900, 5.5f),
+
+        new Quest( "BuildLargeShack.Quest",  400, 5.0f),//
+
+        //new Quest("Population50.Quest", 900, 5.5f),
+
+        //new Quest( "BuildFishingHut.Quest",  400, 5.0f),//
+        //new Quest( "HireFisher.Quest",  400, 5.0f),//
+
+        new Quest( "BuildLumber.Quest",  400, 5.0f),//
+        new Quest( "HireLumberJack.Quest",  400, 5.0f),//
+
+
+       new Quest( "BuildGunPowder.Quest",  400, 5.0f),//
+       new Quest( "ImportSulfur.Quest",  400, 5.0f, 1000),//
+       new Quest( "GunPowderHire.Quest",  400, 5.0f),//
+       new Quest( "ImportPotassium.Quest",  400, 5.0f, 1000),//
+       new Quest( "ImportCoal.Quest",  400, 5.0f),//
+       new Quest( "ProduceGunPowder.Quest",  400, 5.0f, 100),//
+       new Quest( "ExportGunPowder.Quest",  400, 5.0f, 100),//
+
+       new Quest( "BuildA2ndDock.Quest",  400, 5.0f),//
+       new Quest( "Rename2ndDock.Quest", 400, 5.0f),//
+       new Quest( "Import2000Wood.Quest",  400, 5.0f, 2000),//
+       new Quest( "Import2000Coal.Quest",  400, 5.0f, 2000),//
+
 
     };
 
@@ -108,10 +134,9 @@ public class QuestManager
 
     public QuestManager()
     {
-
         if (76561198245800476 == SteamUser.GetSteamID().m_SteamID)
         {
-            _timeToNextQuest = 10;
+            _timeToNextQuest = .01f;
         }
     }
 

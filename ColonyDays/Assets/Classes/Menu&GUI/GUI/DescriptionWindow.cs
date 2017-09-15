@@ -173,7 +173,7 @@ public class DescriptionWindow : GUIElement
         var stat = Book.GiveMeStat(type);
         int appends = 0;
 
-        var res = "Cost: \n";
+        var res = "Resources: \n";
 
         if (stat.Dollar != 0)
         {

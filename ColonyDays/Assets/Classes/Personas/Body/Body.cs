@@ -1207,11 +1207,11 @@ public class Body //: MonoBehaviour //: General
 
         if (stOri != null)
         {
-            isArdOri = UMath.nearEqualByDistance(stOri.SpawnPoint.transform.position, _person.transform.position, 0.4f);
+            isArdOri = UMath.nearEqualByDistance(stOri.SpawnPoint.transform.position, _person.transform.position, 0.5f);
         }
         if (stDes != null)
         {
-            isArdDes = UMath.nearEqualByDistance(stDes.SpawnPoint.transform.position, _person.transform.position, 0.4f);
+            isArdDes = UMath.nearEqualByDistance(stDes.SpawnPoint.transform.position, _person.transform.position, 0.5f);
         }
 
         return isArdOri || isArdDes;
