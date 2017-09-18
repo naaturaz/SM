@@ -735,7 +735,7 @@ public class BuildingWindow : GUIElement
 
         if (!pass && !Building.WasGreenlit)
         {
-            return "Warning: This building cannot be built now. Missing resources:\n" +
+            return "Warning: This building cannot be built now. Missing resource(s):\n" +
                 BuildersManager.MissingResources(Building.HType);
         }
         return "";

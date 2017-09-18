@@ -267,7 +267,7 @@ public class Languages
        { "CurrSpeedBack.HoverSmall", "Current speed"},
        { "ShowNoti.HoverSmall", "Notifications"},
        { "Menu.HoverSmall", "Main Menu"},
-       { "QuickSave.HoverSmall", "Quick Save [F]"},
+       { "QuickSave.HoverSmall", "Quick Save[Ctrl+S][F]"},
        { "Bug Report.HoverSmall", "Report a bug"},
        { "Feedback.HoverSmall", "Feedback"},
        { "Hide.HoverSmall", "Hide"},
@@ -539,7 +539,7 @@ public class Languages
 
        { "Lamp.Quest", "Quest: Build a StandLamp. Find it on Infrastructure, it shines at night if there is Whale Oil on Storage"},
 
-       { "Shack.Quest", "Quest: Build a Shack. These are cheap houses. When people turn 16 they will move to a free house if found. In this way, population growth will be guaranteed. [F1] Help"},
+       { "Shack.Quest", "Quest: Build a Shack. These are cheap houses. When people turn 16 they will move to a free house if found. In this way, population growth will be guaranteed. [F1] Help. If you see smoke in a house's chimney means there are people living in it"},
 
        { "SmallFarm.Quest", "Quest: Build a Small Field Farm. You need farms to feed your people"},
        { "FarmHire.Quest", "Quest: Hire two farmers in the Small Field Farm. Click on the farm and in the plus sign assign workers. You need to have unemployed"
@@ -563,7 +563,7 @@ public class Languages
        { "HireHeavy.Quest", "Quest: In the Heavyload building hire a Heavy Hauler."},
 
 
-       { "ImportOil.Quest", "Quest: Import 500 " + Unit.CurrentWeightUnitsString() + " of Whale Oil at the Dock. This is needed to keep your lights on at night."},
+       { "ImportOil.Quest", "Quest: Import 500 " + Unit.CurrentWeightUnitsString() + " of Whale Oil at the Dock. This is needed to keep your lights on at night. Ships will randomly drop imports in your Dock's inventory"},
 
        { "Population50.Quest", "Reach a total population of 50 citizens"},
 
@@ -601,7 +601,10 @@ public class Languages
        { "Rename2ndDock.Quest", "Rename the Docks now, so you can remember which be used only for imports and exports"},
 
        { "Import2000Wood.Quest", "In the Imports dock import 2000 " + Unit.CurrentWeightUnitsString() + " of Wood. This raw material is needed for everything because is used as fuel"},
-       { "Import2000Coal.Quest", "In the Imports dock import 2000 " + Unit.CurrentWeightUnitsString() + " of Coal. Coal also, is needed for everything because is used as fuel"},
+
+       //IT HAS FINAL MESSAGE 
+       //last quest it has a final message to the player. if new quest added please put the final message in the last quest
+       { "Import2000Coal.Quest", "In the Imports dock import 2000 " + Unit.CurrentWeightUnitsString() + " of Coal. Coal also, is needed for everything because is used as fuel. Hope you enjoy the experience so far. Keep expanding your colony, and wealth. Also, please help to improve the game. Participate in the online forums your voice and opinions are important! Have fun Sugarmiller!"},
 
        //
 

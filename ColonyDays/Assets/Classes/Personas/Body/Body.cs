@@ -878,7 +878,9 @@ public class Body //: MonoBehaviour //: General
         bool inverse, HPers whichRouteP)
     {
         InitWalk(route, inverse, loadInitCurrentPoint);
+       
         WalkRoutine(route, goingTo, inverse, whichRouteP, loadingCall: true);
+
         LoadPosition();
 
         //WalkRoutineTail(goingTo, whichRouteP);
@@ -1207,11 +1209,11 @@ public class Body //: MonoBehaviour //: General
 
         if (stOri != null)
         {
-            isArdOri = UMath.nearEqualByDistance(stOri.SpawnPoint.transform.position, _person.transform.position, 0.5f);
+            isArdOri = UMath.nearEqualByDistance(stOri.SpawnPoint.transform.position, _person.transform.position, 0.6f);
         }
         if (stDes != null)
         {
-            isArdDes = UMath.nearEqualByDistance(stDes.SpawnPoint.transform.position, _person.transform.position, 0.5f);
+            isArdDes = UMath.nearEqualByDistance(stDes.SpawnPoint.transform.position, _person.transform.position, 0.6f);
         }
 
         return isArdOri || isArdDes;

@@ -38,7 +38,7 @@ public class BodyAgent
 
     public BodyAgent(Person person)
     {
-        ReachRadius = .75f;
+        ReachRadius = .5f;
 
         _person = person;
         _agent = _person.GetComponent<NavMeshAgent>();

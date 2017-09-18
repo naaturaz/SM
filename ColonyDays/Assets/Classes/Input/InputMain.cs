@@ -149,6 +149,8 @@ public class InputMain : InputParent {
 
     void GeneralSwitch()
     {
+        var ctrlS = Input.GetKeyUp(KeyCode.F) && (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl));
+
         if (Input.GetKeyUp(KeyCode.Escape))
         {
             ManagerReport.AddInput(KeyCode.Escape + "");
@@ -162,7 +164,9 @@ public class InputMain : InputParent {
         {
             Program.gameScene.controllerMain.MeshController.ForcedTerraScanning();
         }
-        else if (!Dialog.IsActive() && Input.GetKeyUp(KeyCode.F) && !Program.IsInputLocked)
+        else if (!Dialog.IsActive() && 
+            (Input.GetKeyUp(KeyCode.F) || ctrlS)
+            && !Program.IsInputLocked)
         {
             ManagerReport.AddInput("QuickSaveNow()");
             QuickSaveNow();

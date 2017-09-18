@@ -56,7 +56,7 @@ public class UnlockBuilds
             new BRequires(H.AnimalFarmXLarge, H.OnlyForDev),  
             new BRequires(H.FieldFarmSmall, true),
             new BRequires(H.FieldFarmMed, 35),
-            new BRequires(H.FieldFarmLarge, 100),
+            new BRequires(H.FieldFarmLarge, H.OnlyForDev),
             new BRequires(H.FieldFarmXLarge, H.OnlyForDev),
 
             //raw
