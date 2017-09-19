@@ -2189,10 +2189,11 @@ public class Person : Hoverable
 
         var age = AgeFactor();
         var genre = ReturnGenreVal();
+        var schooling = (float)YearsOfSchool / 2;
 
         var mul = 0.5f;
 
-        var res = (age + genre) * mul * ProfessionMultiplierCarryWeight();
+        var res = (age + genre) * (mul * ProfessionMultiplierCarryWeight()) + schooling;
 
         if (maxNeeded < res)
         {

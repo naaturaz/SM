@@ -60,8 +60,11 @@ public class QuestManager
         new Quest("FarmHire.Quest", 600, 5.1f),
         new Quest("FarmProduce.Quest", 650, 5.1f, 100),
         //new Quest("Transport.Quest", 700, 5.5f),
-        new Quest("Export.Quest", 750, 5.5f),
-        new Quest("HireDocker.Quest", 800, 5.5f),
+
+        new Quest("Export.Quest", 700, 5.5f),
+
+        new Quest("HireDocker.Quest", 700, 5.5f),
+
         new Quest("ImportOil.Quest", 950, 5.5f, 500),
         new Quest("MakeBucks.Quest", 850, 5.5f, 100),
 

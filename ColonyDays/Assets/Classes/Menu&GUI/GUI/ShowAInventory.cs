@@ -221,6 +221,9 @@ public class ShowAInventory
     public void UpdateEvery2Sec()
     {
         ManualUpdateOfAllInvItems();
+
+
+        UpdateToThisInv(Inv);
     }
 
     public void UpdateEveryMinute()

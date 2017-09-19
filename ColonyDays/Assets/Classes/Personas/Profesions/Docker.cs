@@ -231,12 +231,17 @@ public class Docker : Profession
 
         _person.ExchangeInvetoryItem(_sourceBuild, _person, Order1.Product, amt);
         //will add to processed order only if actually took something...
-        if (_person.Inventory.ReturnAmtOfItemOnInv(Order1.Product) > 0)
+
+        if (_person.Inventory.ReturnAmtOfItemOnInv(Order1.Product) > 0 && _export)
         {
             var amtTaken = _person.Inventory.ReturnAmtOfItemOnInv(Order1.Product);
             //and will report actually only was he physically took from it
             _person.Work.Dispatch1.AddToOrderAmtProcessed(Order1, amtTaken);
-            Debug.Log(_person.MyId + " Docker got from:" + Order1.SourceBuild + " : " + Order1.Product + ".amt:" + amt);
+            //Debug.Log(_person.MyId + " Docker got from:" + Order1.SourceBuild + " : " + Order1.Product + ".amt:" + amt);
+        }
+        else if(_import)
+        {
+            _person.Work.Dispatch1.AddToOrderAmtProcessed(Order1, amt);
         }
 
         _sourceBuild.CheckIfCanBeDestroyNow(Order1.Product);
