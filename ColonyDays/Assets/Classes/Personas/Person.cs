@@ -106,6 +106,9 @@ public class Person : Hoverable
 
 
 
+
+
+
     /// <summary>
     /// eahc person has a dummy use to routing. here for GC 
     /// </summary>
@@ -994,6 +997,12 @@ public class Person : Hoverable
 
         GetPaid();
         AgeAction();
+
+        //Dev while debug spawned a person 
+        if (Home == null)
+        {
+            return;
+        }
 
         ChangeHappinesBy(Home.Comfort);
 
@@ -2946,7 +2955,15 @@ public class Person : Hoverable
 
 
 
+    internal bool IsAroundHouseSpawnPoint()
+    {
+        if (Home == null)
+        {
+            return false;
+        }
 
+        return UMath.nearEqualByDistance(transform.position, Home.SpawnPoint.transform.position, 1);
+    }
 
 
     #region Hover All Objects. All objects that have a collider will be hoverable

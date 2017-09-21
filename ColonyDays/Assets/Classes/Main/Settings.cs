@@ -320,11 +320,7 @@ public class Unit
 
     public static string WeightUnit()
     {
-        if (Units == 'm')
-        {
-            return "kg";
-        }
-        return "lb";
+        return CurrentWeightUnitsString();
     }
 
     public static string VolumeUnit()

@@ -9,7 +9,7 @@ using System.Text;
 class Developer
 {
     //if is dev true will be able to select terrain 
-    private static bool _isDev ;
+    private static bool _isDev = true;
 
     public static bool IsDev
     {

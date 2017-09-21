@@ -3391,16 +3391,13 @@ public class Building : Hoverable, Iinfo
             AddProductionThisYear(CurrentProd.Product, amt);
             DecideIfReloadInventoryWithThisProduction(CurrentProd.Product);
         }
-        else if (!hasThisBuildRoom)
-        {
-            AddEvacuationOrderOfProdThatAreNotInput();
-            //           //Debug.Log("Both full" + person.FoodSource.MyId + ".and." + MyId);
-        }
         else if (!doIHaveInput)
         {
             //todo show 3d icon
             //Debug.Log(MyId + " doesnt have input");
         }
+        AddEvacuationOrderOfProdThatAreNotInput();
+
     }
 
     private void Quest(float amt = 0, P newProduct = P.None)

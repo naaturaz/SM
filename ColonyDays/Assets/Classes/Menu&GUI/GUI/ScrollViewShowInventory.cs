@@ -23,12 +23,20 @@ public class ScrollViewShowInventory : GUIElement
         _content = FindGameObjectInHierarchy("Content", gameObject);
         _scroll_Ini_PosGO = GetChildCalledOnThis("Scroll_Ini_Pos", _content);
 
+        RedoInvIfIfWhichIsEmpty();
+
+        Show();
+    }
+
+    /// <summary>
+    /// So far used for ourInventories in the add import export order 
+    /// </summary>
+    void RedoInvIfIfWhichIsEmpty()
+    {
         if (string.IsNullOrEmpty(Which))
         {
             _inv = GameController.ResumenInventory1.GameInventory;
         }
-
-        Show();
     }
 
     // Update is called once per frame
@@ -42,10 +50,10 @@ public class ScrollViewShowInventory : GUIElement
         if (_showAInv!=null)
         {
             _showAInv.DestroyAll();
+            RedoInvIfIfWhichIsEmpty();
         }
 
         _showAInv = new ShowAInventory(_inv, _content, _scroll_Ini_PosGO.transform.localPosition);
-
         ResetScroolPos();
         AdjustContentHeight(_inv.InventItems.Count * 3.5f);
     }

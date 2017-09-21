@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class ForSaleRegionGO : Hoverable
 {
+    bool _isUpNow;
+
     private int _index;
     private Rect _region;
 
@@ -62,8 +64,7 @@ public class ForSaleRegionGO : Hoverable
         Name = "Buy region";
         HType = H.BuyRegion;
 
-        transform.position += new Vector3(0, -1000, 0);
-        
+        transform.position += new Vector3(0, 1000, 0);
     }
 
 
@@ -87,30 +88,24 @@ public class ForSaleRegionGO : Hoverable
     }
 
 
-
     private void AddressHide()
     {
-        if (IsUpNow() && !_isShown)
+        if (_isUpNow && !_isShown)
         {
-            transform.position += new Vector3(0, -1000, 0);
+            transform.position += new Vector3(0, 1000, 0);
+            _isUpNow = false;
         }
     }
-
-
-    
 
     private void AddressShow()
     {
-        if (!IsUpNow() && _isShown)
+        if (!_isUpNow && _isShown)
         {
-            transform.position += new Vector3(0, 1000, 0);
+            transform.position += new Vector3(0, -1000, 0);
+            _isUpNow = true;
         }
     }
 
-    bool IsUpNow()
-    {
-        return transform.position.y > 0;
-    }
 
     /// <summary>
     /// On mouse click

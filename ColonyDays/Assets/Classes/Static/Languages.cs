@@ -322,7 +322,7 @@ public class Languages
        { "TownTitle.HoverSmall", "Town"},
        {"WarMode.HoverSmall", "Combat Mode"},
        {"BullDozer.HoverSmall", "Bulldozer"},
-       {"Rate.HoverSmall", "Pls Rate Me"},
+       {"Rate.HoverSmall", "Rate Me"},
 
        //addOrder windiw
 	   { "Amt_Tip.HoverSmall", "Amount of prod"},
@@ -551,13 +551,20 @@ public class Languages
         { "Transport.Quest", "Quest: Transport the beans from the farm to the Storage. To do that make sure you have" +
             " workers on the masonry. They act as wheelbarrows when not building"},
 
-            { "Export.Quest", "Quest: Now export 300 " + Unit.CurrentWeightUnitsString() + " of beans. On the Dock add an order of export. If you have not dock then build one."+
-           " Find it in Trade. Once built click on the orders tab and add an export order with the '+' sign."+
-           " Select product and enter amount"},
-       { "HireDocker.Quest", "Quest: Hire a docker. Dockers only task is to move the goods into the Dock from the Storage if you are exporting."+
+
+        { "HireDocker.Quest", "Quest: Hire a docker. Dockers only task is to move the goods into the Dock from the Storage if you are exporting."+
            " Or vice-versa if importing. They work when there is an order in place and the goods are ready to transport. Otherwise, they stay at home resting." +
-            " If you have more than one docker already fire all of them and then hire one"},
-       { "MakeBucks.Quest", "Quest: Make $100 exporting goods in the Dock. "+
+             " If you haven't built a Dock then build one."+
+           " Find it in Trade." },
+
+
+        { "Export.Quest", "Quest: Now export 300 " + Unit.CurrentWeightUnitsString() + " of beans. On the Dock add an order of export. "+
+            " Once built click on the 'Orders' tab and add an export order with the '+' sign."+
+           " Select product and enter amount"},
+
+
+
+        { "MakeBucks.Quest", "Quest: Make $100 exporting goods in the Dock. "+
            "Once a ship arrives will randomly pay product(s) in your Dock's inventory"},
        { "HeavyLoad.Quest", "Quest: Build a Heavyload building. This are haulers that carry more weight. They will come handy when transporting goods around is needed." }, //Carts must be available on towns storages for them to work"},
        { "HireHeavy.Quest", "Quest: In the Heavyload building hire a Heavy Hauler."},

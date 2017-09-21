@@ -99,25 +99,27 @@ public class BodyAgent
         if (_person.Body.IsNearBySpawnPointOfInitStructure() || onIdleSpot)
         {
             //right where stops for idle 
-            if (onIdleSpot)
+            if (onIdleSpot && savedAni == "" && !_person.Body.MovingNow)
             {
                 savedAni = _person.Body.CurrentAni;
                 _person.Body.Show();
                 _person.Body.TurnCurrentAniAndStartNew("isIdle");
                 return;
             }
-            hidden = true;
-            _person.Body.HideNoQuestion();
+            else if (!onIdleSpot && !_person.IsAroundHouseSpawnPoint())
+            {
+                hidden = true;
+                _person.Body.HideNoQuestion();
+            }
         }
-        else if (hidden && !_person.Body.IsNearBySpawnPointOfInitStructure())//is walking already
+        else if (hidden && !_person.Body.IsNearBySpawnPointOfInitStructure() && _person.Body.MovingNow)//is walking already
         {
             hidden = false;
             _person.Body.Show();
         }
         //will restart 'isWalk' as soon it moves 
-        if (savedAni != "" && _agent.velocity != new Vector3())
+        if (savedAni != "" && (_agent.velocity != new Vector3() || _person.Body.MovingNow))
         {
-            _person.Body.TurnCurrentAniAndStartNew("isWalk");
             savedAni = "";
         }
     }

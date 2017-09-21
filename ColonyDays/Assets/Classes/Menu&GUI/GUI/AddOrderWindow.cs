@@ -9,7 +9,8 @@ using UnityEngine.UI;
  * 
  */
 
-public class AddOrderWindow : GUIElement {
+public class AddOrderWindow : GUIElement
+{
 
     private Text _title;
 
@@ -67,7 +68,7 @@ public class AddOrderWindow : GUIElement {
         _priceLbl = GetGrandChildCalled(H.Output_Lbl_Price).GetComponent<Text>();
 
         _errorMsgLbl = GetChildCalled(H.Output_Error_Msg).GetComponent<Text>();
-        
+
         CleanDisplay();
 
 
@@ -117,11 +118,11 @@ public class AddOrderWindow : GUIElement {
     }
 
 
-#region Scroll
+    #region Scroll
 
     private void PopulateScrollView()
     {
-        if (_btns.Count>0)
+        if (_btns.Count > 0)
         {
             return;
         }
@@ -147,7 +148,7 @@ public class AddOrderWindow : GUIElement {
     }
 
 
-#endregion
+    #endregion
 
     void HandlePriceGroup()
     {
@@ -155,12 +156,12 @@ public class AddOrderWindow : GUIElement {
         {
             Program.gameScene.TutoStepCompleted("ImportOrder.Tuto");
 
-            _priceGroup.SetActive(false);
+            //_priceGroup.SetActive(false);
         }
         else if (_orderType == "Export")
         {
             //_priceGroup.SetActive(true);
-            _priceGroup.SetActive(false);
+            //_priceGroup.SetActive(false);
 
         }
     }
@@ -182,12 +183,12 @@ public class AddOrderWindow : GUIElement {
         //if click gen
         if (_addBtnRect.Contains(Input.mousePosition) && Input.GetMouseButtonUp(0))
         {
-           
+
         }
         //ig click inv
         else if (_cancelBtnRect.Contains(Input.mousePosition) && Input.GetMouseButtonUp(0))
         {
-           
+
         }
     }
 
@@ -198,7 +199,7 @@ public class AddOrderWindow : GUIElement {
             Hide();
             CleanDisplay();
         }
-        
+
     }
 
     public void CancelOrderClick()
@@ -210,6 +211,7 @@ public class AddOrderWindow : GUIElement {
     void CleanDisplay()
     {
         _errorMsgLbl.text = "";
+        _priceLbl.text = "";
     }
 
     /// <summary>
@@ -229,7 +231,7 @@ public class AddOrderWindow : GUIElement {
         int locAmt = -1;
         if (int.TryParse(_inputAmt.text, out locAmt))
         {
-        } 
+        }
 
         if (_orderType == "Export")
         {
@@ -311,8 +313,8 @@ public class AddOrderWindow : GUIElement {
     private void OrderNotComplete()
     {
         //todo notify
-        //Debug.Log(_errorMsg);
         _errorMsgLbl.text = _errorMsg;
+        _priceLbl.text = "";
     }
 
     private string _errorMsg;
@@ -331,7 +333,7 @@ public class AddOrderWindow : GUIElement {
         }
         if (!ThereIsSpaceRequiredAvail())
         {
-            _errorMsg = Languages.ReturnString("LoadWontFit"); 
+            _errorMsg = Languages.ReturnString("LoadWontFit");
             return false;
         }
         _errorMsg = "";
@@ -459,12 +461,28 @@ public class AddOrderWindow : GUIElement {
     /// </summary>
     void Display()
     {
-        _prodSelLbl.text = _prodSelect.ToString();
-        _amtEnterLbl.text = _inputAmt.text;
-
-        if (_orderType == "Export")
+        if (_prodSelect != P.None)
         {
-            _priceLbl.text = _price + "";
+            _prodSelLbl.text = _prodSelect.ToString();
+        }
+        else
+        {
+            _prodSelLbl.text = "-";
+        }
+
+        if (_inputAmt.text != "")
+        {
+            _amtEnterLbl.text = _inputAmt.text + " " + Unit.CurrentWeightUnitsString();
+        }
+        else
+        {
+            _amtEnterLbl.text = "-"; ;
+        }
+
+        if (_prodSelect != P.None && _inputAmt.text != "")
+        {
+            var trans = Program.gameScene.ExportImport1.CalculateTransaction(_prodSelect, _amt);
+            _priceLbl.text = MyText.DollarFormat(trans);
         }
     }
 

@@ -86,20 +86,24 @@ public class ProductInfo
 
         _details = "Selected product: " + _product + "\n";
 
-        if (Ingredients != null)
-        {
-            for (int i = 0; i < Ingredients.Count; i++)
-            {
-                _details = _details + "Input: " + Ingredients[i].Element + " Units: " +
-                    Ingredients[i].Units + " " + Unit.WeightUnit() + " \n";
-            }
-        }
+
 
         //_details = _details + "Density: " +dens + "\n";
         //_details = _details + "Produce Factor: " + prodF + "\n";
         _details = _details + "Price: " +
             Unit.ProperPricedAndFormat(price) +
-            " per " + Unit.CurrentWeightUnitsString() + "\n";
+            " per " + Unit.CurrentWeightUnitsString() + "\n\n";
+
+        if (Ingredients != null)
+        {
+            _details = _details + "Inputs needed for per " + Unit.CurrentWeightUnitsString() + "\n";
+
+            for (int i = 0; i < Ingredients.Count; i++)
+            {
+                _details = _details + "" + (i+1) + ": "+ Ingredients[i].Element + ": " +
+                    Ingredients[i].Units + " " + Unit.CurrentWeightUnitsString() + " \n";
+            }
+        }
 
         //if (expiration > 0 && Program.IsFood)
         //{
