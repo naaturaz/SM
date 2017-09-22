@@ -726,6 +726,7 @@ public class Building : Hoverable, Iinfo
 
 
 
+
         var smokes = FindAllChildsGameObjectInHierarchyContain(gameObject, "Smoke");
         if (smokes != null)
         {
@@ -1482,6 +1483,8 @@ public class Building : Hoverable, Iinfo
     /// </summary>
     void AddNavMeshObst()
     {
+        Debug.Log("Nav Mesh Obst added to: " + MyId);
+
         Geometry.AddComponent<NavMeshObstacle>();
         _nav = Geometry.GetComponent<NavMeshObstacle>();
         _navInitSize = _nav.size;
@@ -1497,7 +1500,7 @@ public class Building : Hoverable, Iinfo
 
     void CheckOnSetNavMeshObst()
     {
-        if (!_wasNavSet && Time.time > _lastStageTime + 0.01f && _lastStageTime > 0)
+        if (!_wasNavSet && _lastStageTime > 0 && Time.time > _lastStageTime + .01f)//.01
         {
             _wasNavSet = true;
             if (_nav!=null)
@@ -4635,7 +4638,7 @@ public class Building : Hoverable, Iinfo
         && !passID.Contains("LightHouse");
     }
 
-    #region Dock  DryDock and Supplier
+    #region Dock DryDock and Supplier
 
     Dock _dock;
     private Dispatch _dispatch;//dock will have a Dispatch

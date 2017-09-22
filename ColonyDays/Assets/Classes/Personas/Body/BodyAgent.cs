@@ -76,6 +76,7 @@ public class BodyAgent
 
         CheckVelocity();
         CheckIfTempSpeed();
+        CheckIfPathPending();
     }
 
 
@@ -106,7 +107,9 @@ public class BodyAgent
                 _person.Body.TurnCurrentAniAndStartNew("isIdle");
                 return;
             }
-            else if (!onIdleSpot && !_person.IsAroundHouseSpawnPoint())
+            //add the other places cant be hidden 
+            else if (!onIdleSpot && (!_person.IsAroundHouseSpawnPoint() || !_person.Body.MovingNow ||
+                _agent.pathPending))
             {
                 hidden = true;
                 _person.Body.HideNoQuestion();
@@ -121,6 +124,27 @@ public class BodyAgent
         if (savedAni != "" && (_agent.velocity != new Vector3() || _person.Body.MovingNow))
         {
             savedAni = "";
+        }
+    }
+
+
+    string _savedAniPathPending = "";
+    /// <summary>
+    /// When at 10x, and over 100ppl may take a while for the agent get the requested path
+    /// </summary>
+    void CheckIfPathPending()
+    {
+        //if is waiting for a path and suppose to be movung already, then will be promt to Iddle
+        if (_savedAniPathPending == "" && _agent.pathPending && _person.Body.IAmShown())
+        {
+            _savedAniPathPending = _person.Body.CurrentAni;
+            _person.Body.TurnCurrentAniAndStartNew("isIdle");
+        }
+        //once is ready will retake its ani 
+        else if(_savedAniPathPending != "" && !_agent.pathPending)
+        {
+            _person.Body.TurnCurrentAniAndStartNew(_savedAniPathPending);
+            _savedAniPathPending = "";
         }
     }
 
@@ -296,6 +320,11 @@ public class BodyAgent
     {
         return "isOnNavMesh: " + _agent.isOnNavMesh +
             "\npathStatus: " + _agent.pathStatus +
+
+            "\npathPending: " + _agent.pathPending +
+            "\nhasPath: " + _agent.hasPath+
+
+
         "\nEnabled: " + _agent.enabled +
         "\nNextDest: " + _nextDest +
         "\nVelocity: " + _agent.velocity +

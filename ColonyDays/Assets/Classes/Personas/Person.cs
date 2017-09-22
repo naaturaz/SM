@@ -1262,11 +1262,20 @@ public class Person : Hoverable
                 noti = "DieReplacementNotFound";
             }
 
-            Program.gameScene.GameController1.NotificationsManager1.Notify(noti, Name);
+            Program.gameScene.GameController1.NotificationsManager1.Notify(noti, WhatToAddInTheNoti(noti));
             ActionOfDisappear();
         }
     }
 
+    string WhatToAddInTheNoti(string notiType)
+    {
+        if (notiType.Contains("DieReplacement"))
+        {
+            return Name + " " + Languages.ReturnString("The." + Gender).ToLower() 
+                + " " + ProfessionProp.ProfessionDescriptionToShow();
+        }
+        return Name;
+    }
 
 
 

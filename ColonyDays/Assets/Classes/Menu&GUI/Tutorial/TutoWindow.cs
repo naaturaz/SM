@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 class TutoWindow : GUIElement
 {
+    //to be accessible in the Editor and if not null will be shown when the step is present 
+    public GameObject[] Helpers;
 
     /// <summary>
     /// To add tutorial 
@@ -33,7 +35,7 @@ class TutoWindow : GUIElement
         "HideBulletin.Tuto",
         "FinishDock.Tuto",
         "ShowHelp.Tuto",
-        
+
         "SelectDock.Tuto",
         "OrderTab.Tuto",
         "ImportOrder.Tuto",
@@ -76,8 +78,20 @@ class TutoWindow : GUIElement
         {
             SkipTuto();
         }
+
+        HideAllHelpers();
     }
 
+    void HideAllHelpers()
+    {
+        for (int i = 0; i < Helpers.Length; i++)
+        {
+            if (Helpers[i] != null)
+            {
+                Helpers[i].SetActive(false);
+            }
+        }
+    }
 
     bool wasShown;
     void Update()
@@ -135,6 +149,11 @@ class TutoWindow : GUIElement
 
         var which = _steps[_currentIndex];
         _text.text = Languages.ReturnString(which);
+
+        if (Helpers[_currentIndex] != null)
+        {
+            Helpers[_currentIndex].SetActive(true);
+        }
     }
 
 
@@ -151,6 +170,7 @@ class TutoWindow : GUIElement
             return;
         }
 
+        HideAllHelpers();
         HideArrow();
         ManagerReport.AddInput("Tuto.Step.Achieved:" + _steps[_currentIndex]);
         _currentIndex++;
@@ -159,7 +179,7 @@ class TutoWindow : GUIElement
         {
             _currentIndex = -1;
             Hide();
-            
+
             //temporal
             Dialog.OKDialog(H.TutoOver);
 
@@ -169,7 +189,7 @@ class TutoWindow : GUIElement
                 AudioCollector.PlayOneShot("BoughtLand", 0);
                 BulletinWindow.SubBulletinFinance1.FinanceLogger.AddToAcct("Quests Completion", 10000);
             }
-            
+
             ManagerReport.AddInput("Tutorial.Done:");
             Program.gameScene.QuestManager.QuestFinished("Tutorial");
 

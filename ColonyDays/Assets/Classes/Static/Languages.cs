@@ -27,9 +27,9 @@ public class Languages
         { "Road.Desc","Used for decoration purposes. People are happier if there are roads around them"},
         { "BridgeTrail.Desc","Allows people to pass from one side of the terrain to the other"},
         { "BridgeRoad.Desc","Allows people to pass from one side of the terrain to the other. People love these bridges. It gives a sense of prosperity and happiness" +_houseTail},
-        { "LightHouse.Desc","Helps to increase Port visibility. Adds to Port Reputation as long as the flame is glowing"},
+        { "LightHouse.Desc","Helps to increase Port visibility. Adds to Port Reputation as long it has workers in it"},
         { H.Masonry + ".Desc","Important building, workers construct new buildings and work as wheelbarrows once they have nothing to do"},
-        { H.StandLamp + ".Desc","Illuminates at night if Whale Oil is available on the town's storage."},
+        { H.StandLamp + ".Desc","Illuminates at night if Whale Oil is available on the town's storage"},
 
         { H.HeavyLoad + ".Desc","These workers use horse wagons to move goods around"},
 
@@ -723,6 +723,9 @@ public class Languages
         { "Prod.Not.Select", "Please select a product"},
 
 
+        //articles
+        { "The.Male", "The"},
+        { "The.FeMale", "The"},
 
     };
 
