@@ -725,7 +725,7 @@ public class Languages
 
         //articles
         { "The.Male", "The"},
-        { "The.FeMale", "The"},
+        { "The.Female", "The"},
 
     };
 
