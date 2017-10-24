@@ -18,10 +18,10 @@ public class BtnRate : MonoBehaviour
         //Debug.Log("id1 inner:" + SteamUser.GetSteamID().m_SteamID);
 
 
-        //if (!_isGoodPlayer)
-        //{
+        if (!_isGoodPlayer)
+        {
             gameObject.SetActive(false);
-        //}
+        }
     }
 
     // Update is called once per frame
