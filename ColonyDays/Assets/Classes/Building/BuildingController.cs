@@ -607,7 +607,7 @@ public class BuildingController : BuildingPot
                     distances.Add(new VectorM(build.transform.position, fromPos, build.MyId));
                 }
                 //will added anyways 
-                else
+                else if(!includeOnlyIfInvHasRoom)
                 {
                     distances.Add(new VectorM(build.transform.position, fromPos, build.MyId));
                 }

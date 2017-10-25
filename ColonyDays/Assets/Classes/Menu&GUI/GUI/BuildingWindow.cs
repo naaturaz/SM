@@ -720,7 +720,7 @@ public class BuildingWindow : GUIElement
         {
             var percentage = sP.PercentageBuiltCured();
             return "Construction progress at: " + percentage + "%\n" +
-                MaterialsGathered() + "\n" + MaterialsIsMissing();
+                MaterialsGathered() + "\n" + MaterialsIsMissing() + "\n\n";
         }
         return "";
     }

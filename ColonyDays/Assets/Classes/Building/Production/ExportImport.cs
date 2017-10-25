@@ -144,6 +144,10 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Sugar, 800, 900, 70));
         _prodSpecs.Add(new ProdSpec(P.SugarCane, 50, 200.2f, 100, 30 * 12));
 
+        //procesed foods
+        _prodSpecs.Add(new ProdSpec(P.Candy, 2000, 200, 60));
+
+
         //frutas
         //_prodSpecs.Add(new ProdSpec(P.Mango, 100, 550, 100));
         //_prodSpecs.Add(new ProdSpec(P.Avocado, 100, 550, 100));

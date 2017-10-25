@@ -96,7 +96,7 @@ public class ProductInfo
 
         if (Ingredients != null)
         {
-            _details = _details + "Inputs needed for per " + Unit.CurrentWeightUnitsString() + "\n";
+            _details = _details + "Inputs needed per " + Unit.CurrentWeightUnitsString() + "\n";
 
             for (int i = 0; i < Ingredients.Count; i++)
             {

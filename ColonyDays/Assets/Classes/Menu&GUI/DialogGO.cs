@@ -216,7 +216,7 @@ class DialogGO : GUIElement
 
         if (isGood)
         {
-            //_rateBtnGO.SetActive(true);
+            _rateBtnGO.SetActive(true);
             _inputText.text += "Thanks for the support.Dev Team\n";
             PlayerPrefs.SetInt("Rate", 1);
         }

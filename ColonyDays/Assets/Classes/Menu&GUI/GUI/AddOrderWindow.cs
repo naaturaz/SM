@@ -443,6 +443,7 @@ public class AddOrderWindow : GUIElement
         {
             var loc = int.Parse(_inputAmt.text);
             _amt = Unit.ConvertWeightFromCurrentToKG((float)loc);
+            _errorMsgLbl.text = "";
         }
         else _inputAmt.text = "";
     }
@@ -454,6 +455,7 @@ public class AddOrderWindow : GUIElement
         P MyStatus = (P)Enum.Parse(typeof(P), prod, true);
         _prodSelect = MyStatus;
         Display();
+        _errorMsgLbl.text = "";
     }
 
     /// <summary>

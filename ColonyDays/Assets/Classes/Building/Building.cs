@@ -1415,7 +1415,7 @@ public class Building : Hoverable, Iinfo
     /// </summary>
     Dictionary<H, Vector3> _percetagesReduction = new Dictionary<H, Vector3>()
     {
-        {H.StandLamp, new Vector3(0,0,0)},//wont get carved
+        { H.StandLamp, new Vector3(0,0,0)},//wont get carved
         { H.HeavyLoad, new Vector3(-8,0,-8)},
         { H.LightHouse, new Vector3(-20,0,-40)},
         { H.Masonry, new Vector3(-17,0,-25)},
@@ -1445,6 +1445,7 @@ public class Building : Hoverable, Iinfo
         { H.BlackSmith, new Vector3(-10,0,-16)},
         { H.Mortar, new Vector3(-16,0,-10)},
         { H.QuickLime, new Vector3(-40,0,-40)},
+
 
         { H.Carpentry, new Vector3(-30,0,-30)},
         { H.Cigars, new Vector3(-16,0,-10)},
@@ -3141,7 +3142,7 @@ public class Building : Hoverable, Iinfo
         SomethingWasProduce();
 
         var doIHaveInput = DoBuildHaveRawResources();
-        var hasStorageRoom = DoesStorageHaveCapacity();
+        var hasStorageRoom = DoesPreferedStorageHaveCapacity();
         var hasThisBuildRoom = DoWeHaveCapacityInThisBuilding();
 
         if (doIHaveInput && (hasStorageRoom || hasThisBuildRoom))
@@ -3542,7 +3543,7 @@ public class Building : Hoverable, Iinfo
     /// <returns></returns>
     public bool CanTakeItOut(Person person)
     {
-        var res = (person.FoodSource != null && DoesStorageHaveCapacity());
+        var res = (_preferedStorage != null && DoesPreferedStorageHaveCapacity());
 
         if (!res && (lastNoti == 0 || Time.time > lastNoti + NotificationsManager.NotiFrec)
             && DoBuildHaveRawResources())
@@ -3581,7 +3582,7 @@ public class Building : Hoverable, Iinfo
     /// Will tell u if a Storage has enoguh capacity to hold this new amt of goods
     /// </summary>
     /// <returns></returns>
-    bool DoesStorageHaveCapacity()
+    bool DoesPreferedStorageHaveCapacity()
     {
         DefinePreferedStorage();
 
@@ -3650,7 +3651,7 @@ public class Building : Hoverable, Iinfo
         else
         {
             _preferedStorage =
-            BuildingController.FindTheClosestOfContainTypeFullyBuilt("Storage", transform.position, false);
+            BuildingController.FindTheClosestOfContainTypeFullyBuilt("Storage", transform.position, true);
         }
         oldFoodSrcs.AddRange(BuildingPot.Control.FoodSources);
     }

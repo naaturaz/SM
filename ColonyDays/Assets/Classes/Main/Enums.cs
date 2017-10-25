@@ -197,8 +197,7 @@ public enum P
     Input2,
     Input3,
     WhaleOil,
-
-
+    Candy,
 }
 
 /// <summary>

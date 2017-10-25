@@ -295,6 +295,10 @@ public class Profession
                 {
                     return "Teacher";
                 }
+                else if(_person.Work.HType == H.BlackSmith)
+                {
+                    return "BlackSmith";
+                }
             }
 
             return _person.Work.HType + " worker";
@@ -1417,6 +1421,18 @@ public class Profession
         }
         return false;
     }
+
+    /// <summary>
+    /// Called every birthday of this person
+    /// </summary>
+    internal void Birthday()
+    {
+        if (_person.Work.HType == H.LightHouse)
+        {
+            BuildingPot.Control.DockManager1.PortReputation += 0.025f;
+        }
+    }
+
     /// <summary>
     /// Used so a person is asking for bridges anchors takes a break and let brdige anchors complete then can 
     /// work on it

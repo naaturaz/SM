@@ -552,7 +552,7 @@ public class Inventory
             || prod == P.Cucumber || prod == P.Cabbage || prod == P.Lettuce || prod == P.SweetPotato
             || prod == P.Cassava || prod == P.Pineapple
             //|| prod == P.Mango || prod == P.Avocado || prod == P.Guava || prod == P.Orange 
-            || prod == P.Papaya || prod == P.Chocolate)
+            || prod == P.Papaya || prod == P.Chocolate || prod == P.Candy)
         {
             return PCat.Food;
         }

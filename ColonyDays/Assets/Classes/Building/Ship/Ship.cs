@@ -234,13 +234,7 @@ public class Ship
     /// <returns></returns>
     float Survey()
     {
-        float impo = -0.1f;
         float expo = -0.1f;
-
-        if (_didDockImport)
-        {
-            impo *= -1;
-        }
         if (_didDockExport)
         {
             expo *= -1;
@@ -252,7 +246,22 @@ public class Ship
         }
         if (Building().HType == H.Dock)
         {
-            return expo + impo;
+            if(_didDockExport && _didDockImport)
+            {
+                return 0.2f;
+            }
+            else if (_didDockExport)
+            {
+                return 0.1f;
+            }
+            else if(_didDockImport)
+            {
+                return 0.1f;
+            }
+            else
+            {
+                return -.1f;
+            }
         }
         return 0f;
     }

@@ -1685,6 +1685,8 @@ public class Person : Hoverable
         _personBank.Add(sal);
         Program.gameScene.GameController1.Dollars -= sal;
         BulletinWindow.SubBulletinFinance1.FinanceLogger.AddToAcct("Salary", sal);
+
+        ProfessionProp.Birthday();
     }
 
 
