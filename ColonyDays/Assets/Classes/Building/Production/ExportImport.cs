@@ -145,7 +145,7 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.SugarCane, 50, 200.2f, 100, 30 * 12));
 
         //procesed foods
-        _prodSpecs.Add(new ProdSpec(P.Candy, 2000, 200, 60));
+        _prodSpecs.Add(new ProdSpec(P.Candy, 1600, 200, 60));
 
 
         //frutas
@@ -248,6 +248,8 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Paper, 150, 192, 30));
         _prodSpecs.Add(new ProdSpec(P.Map, 300, 292, 50));
         _prodSpecs.Add(new ProdSpec(P.Book, 500, 502, 5));
+        _prodSpecs.Add(new ProdSpec(P.Rubber, 500, 502, 50));
+
         // _prodSpecs.Add(new ProdSpec(P.Silk, 150, 1300, 5));
 
 

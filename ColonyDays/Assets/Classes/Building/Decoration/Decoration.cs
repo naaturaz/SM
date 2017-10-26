@@ -61,7 +61,19 @@ public class Decoration  {
         {
             _roots.Add("Prefab/Terrain/Spawner/Orna/Orna" + i);
         }
+
+        //Hallow
+        //AddHalloweenToRoot();
+
         Init();
+    }
+
+    void AddHalloweenToRoot()
+    {
+        for (int i = 1; i < 10; i++)
+        {
+            _roots.Add("Prefab/Terrain/Spawner/Orna/Halloween/H" + i);
+        }
     }
 
     private void Init()

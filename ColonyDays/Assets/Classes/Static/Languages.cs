@@ -96,7 +96,10 @@ public class Languages
        { "Silk.Desc",_produce},
        { "SugarMill.Desc",_produce},
        { "Foundry.Desc",_produce},
-       { "SteelFoundry.Desc",_produce},
+       { "SugarShop.Desc", "Produces sugar subproducts!!!. " + _produce},
+
+
+        { "SteelFoundry.Desc",_produce},
 
        //trade
 	   { "Dock.Desc","Here you can add import or export orders (must be placed by the ocean)." + _notRegionNeeded},
@@ -193,6 +196,8 @@ public class Languages
        { "SugarMill","Sugarmill"},
        { "Foundry","Foundry"},
        { "SteelFoundry","Steel Foundry"},
+       { "SugarShop","Sugarshop"},
+
 
        //trade
 	   { "Dock","Dock"},
@@ -852,6 +857,7 @@ public class Languages
        { "SugarMill.Desc",_produceES},
        { "Foundry.Desc",_produceES},
        { "SteelFoundry.Desc",_produceES},
+       { "SugarShop.Desc", "Produce derivados de la azucar. " + _produceES},
 
        //trade
 	   { "Dock.Desc","Aqui se pueden importar y exportar bienes"},

@@ -1441,13 +1441,13 @@ public class Building : Hoverable, Iinfo
 
 
 
-        { H.LumberMill, new Vector3(-19,0,-45)},
-        { H.BlackSmith, new Vector3(-10,0,-16)},
+        { H.LumberMill, new Vector3(-45,0,-45)},
+        { H.BlackSmith, new Vector3(-45,0,-45)},
         { H.Mortar, new Vector3(-16,0,-10)},
         { H.QuickLime, new Vector3(-40,0,-40)},
 
 
-        { H.Carpentry, new Vector3(-30,0,-30)},
+        { H.Carpentry, new Vector3(-45,0,-45)},
         { H.Cigars, new Vector3(-16,0,-10)},
         { H.Armory, new Vector3(-10,0,-10)},
         { H.Tailor, new Vector3(-40,0,-25)},
@@ -3543,6 +3543,9 @@ public class Building : Hoverable, Iinfo
     /// <returns></returns>
     public bool CanTakeItOut(Person person)
     {
+        //will update it if null or full        
+        DefinePreferedStorage();
+        
         var res = (_preferedStorage != null && DoesPreferedStorageHaveCapacity());
 
         if (!res && (lastNoti == 0 || Time.time > lastNoti + NotificationsManager.NotiFrec)

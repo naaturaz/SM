@@ -131,6 +131,7 @@ public class Production  {
         Chocolate();
         Ink();
         Foundry();
+        SugarShop();
 
         //Meats();
 
@@ -206,6 +207,17 @@ public class Production  {
     {
         List<InputElement> prodFormu1 = new List<InputElement>() { _eleCoalComb};
         InputProdCheckAndAdd(new ProductInfo(P.Ink, prodFormu1, H.Ink));
+    }
+
+    private void SugarShop()
+    {
+        InputElement elementS = new InputElement(P.Sugar, 1);
+
+        List<InputElement> prodFormu1 = new List<InputElement>() { elementS, _eleWoodComb };
+        List<InputElement> prodFormu2 = new List<InputElement>() { elementS, _eleCoalComb };
+
+        InputProdCheckAndAdd(new ProductInfo(P.Candy, prodFormu1, H.SugarShop));
+        InputProdCheckAndAdd(new ProductInfo(P.Candy, prodFormu2, H.SugarShop));
     }
 
     private void Foundry()

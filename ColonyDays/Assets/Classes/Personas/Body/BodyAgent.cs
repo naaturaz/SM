@@ -19,6 +19,7 @@ public class BodyAgent
 
     float _initRadius;
 
+    MDate _startDate;
 
 
     public Vector3 Destiny
@@ -70,6 +71,7 @@ public class BodyAgent
         {
             _destWasSet = true;
             _agent.SetDestination(Destiny);
+            _startDate = Program.gameScene.GameTime1.CurrentDate();
         }
         CheckIfGoingIntoBuild();
         RadiusForHeavyLoaders();
@@ -77,8 +79,21 @@ public class BodyAgent
         CheckVelocity();
         CheckIfTempSpeed();
         CheckIfPathPending();
+
+        CheckIfStuck();
     }
 
+
+    private void CheckIfStuck()
+    {
+        if (_startDate!=null && Program.gameScene.GameTime1.ElapsedDateInDaysToDate(_startDate) > 30)
+        {
+            //so restarts the routing
+            Debug.Log(_person.Name + " - stuck. restarts the routing");
+            _destWasSet = false;
+            _startDate = null;
+        }
+    }
 
     string savedAni = "";
     bool hidden;
@@ -139,12 +154,15 @@ public class BodyAgent
         {
             _savedAniPathPending = _person.Body.CurrentAni;
             _person.Body.TurnCurrentAniAndStartNew("isIdle");
+            _startDate = null;
         }
         //once is ready will retake its ani 
         else if(_savedAniPathPending != "" && !_agent.pathPending)
         {
             _person.Body.TurnCurrentAniAndStartNew(_savedAniPathPending);
             _savedAniPathPending = "";
+            _startDate = Program.gameScene.GameTime1.CurrentDate();
+
         }
     }
 
@@ -331,7 +349,8 @@ public class BodyAgent
                 "\nCurr Task: " + _person.Brain.CurrentTask +
         "\nGoingTo: " + _person.Body.GoingTo +
         "\nLoc: " + _person.Body.Location+
-        "\nIsNearBySpawnPointOfInitStructure: " + _person.Body.IsNearBySpawnPointOfInitStructure();
+        "\nIsNearBySpawnPointOfInitStructure: " + _person.Body.IsNearBySpawnPointOfInitStructure()+
+        "\nProf: " + _person.ProfessionProp.ProfDescription;
 
 
 

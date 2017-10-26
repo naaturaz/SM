@@ -198,6 +198,7 @@ public enum P
     Input3,
     WhaleOil,
     Candy,
+    Rubber,
 }
 
 /// <summary>
@@ -231,6 +232,7 @@ public enum H
     /// and add Desc on Languages.cs
     /// add on UnlockBuilds.cs
     /// and underneath the proper region in this file
+    /// and if produces anything u want to added in Production.cs
     ///  thts all 
     /// 
     /// add the type of Product produces on Production.cs
@@ -273,7 +275,7 @@ public enum H
     Brick, Carpentry, Cigars, Mill, Tailor,
     Armory, Distillery, Chocolate, Ink,
     //industry F6
-    Cloth, GunPowder, PaperMill, Printer, CoinStamp, SugarMill, Foundry,
+    Cloth, GunPowder, PaperMill, Printer, CoinStamp, SugarMill, Foundry, SugarShop,
     //Trade F7
     Dock, Shipyard, Supplier, StorageSmall, StorageMed, StorageBig, StorageBigTwoDoors, StorageExtraBig,
     //gov F8
@@ -507,7 +509,7 @@ public enum StProd //for structures game structure.cs
 
 //Ind
 public enum StInd
-{ Cloth, GunPowder, PaperMill, Printer, CoinStamp, SugarMill, Foundry,}
+{ Cloth, GunPowder, PaperMill, Printer, CoinStamp, SugarMill, Foundry, SugarShop}
 
 public enum StTrade //for structures game structure.cs 
 {

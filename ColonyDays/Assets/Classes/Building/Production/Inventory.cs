@@ -546,13 +546,16 @@ public class Inventory
 
             prod == P.Bean || prod == P.Potato || prod == P.SugarCane || prod == P.Corn
             || prod == P.Chicken || prod == P.Egg || prod == P.Pork || prod == P.Beef
-            || prod == P.Fish || prod == P.Sugar || prod == P.Coconut || prod == P.Banana ||
+            || prod == P.Fish //||prod == P.Sugar 
+            || prod == P.Coconut || prod == P.Banana 
 
-            prod == P.CornFlower || prod == P.Bread || prod == P.Carrot || prod == P.Tomato
+            //prod == P.CornFlower
+            || prod == P.Bread || prod == P.Carrot || prod == P.Tomato
             || prod == P.Cucumber || prod == P.Cabbage || prod == P.Lettuce || prod == P.SweetPotato
             || prod == P.Cassava || prod == P.Pineapple
             //|| prod == P.Mango || prod == P.Avocado || prod == P.Guava || prod == P.Orange 
-            || prod == P.Papaya || prod == P.Chocolate || prod == P.Candy)
+            || prod == P.Papaya || prod == P.Chocolate //|| prod == P.Candy
+            )
         {
             return PCat.Food;
         }
