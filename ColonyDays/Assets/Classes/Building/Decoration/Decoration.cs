@@ -63,14 +63,14 @@ public class Decoration  {
         }
 
         //Hallow
-        //AddHalloweenToRoot();
+        AddHalloweenToRoot();
 
         Init();
     }
 
     void AddHalloweenToRoot()
     {
-        for (int i = 1; i < 10; i++)
+        for (int i = 1; i < 13; i++)
         {
             _roots.Add("Prefab/Terrain/Spawner/Orna/Halloween/H" + i);
         }
@@ -84,7 +84,9 @@ public class Decoration  {
         FindPositionToSpwnDecor();
         
         SpawnDecorObj();
-        AddToBatchMesh();
+        //AddToBatchMesh();
+
+        //SpawnHalloween();
 
         if (_building.HType.ToString().Contains("WoodHouse") ||
             _building.HType.ToString().Contains("BrickHouse") ||
