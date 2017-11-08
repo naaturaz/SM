@@ -8,6 +8,7 @@ public class Settings
 
     static bool _isSoundOn = true;
     static bool _isMusicOn = true;
+    static bool _isHalloweenTheme = true;
 
     //this is the music variable use for the whole game 
     public static Music music = null;
@@ -32,10 +33,23 @@ public class Settings
         set { _isMusicOn = value; }
     }
 
-#region Save Load Settings
+    public static bool IsHalloweenTheme
+    {
+        get
+        {
+            return _isHalloweenTheme;
+        }
+
+        set
+        {
+            _isHalloweenTheme = value;
+        }
+    }
+
+    #region Save Load Settings
 
 
-    
+
 
     static void LoadAndApplyResolution()
     {
@@ -199,6 +213,8 @@ public class Settings
         ISSoundOn =  PlayerPrefs.GetString("Sound") == "True";
         ISMusicOn = PlayerPrefs.GetString("Music") == "True";
 
+        IsHalloweenTheme = PlayerPrefs.GetString("Hallo") == "True";
+
         AudioCollector.SoundLevel = PlayerPrefs.GetFloat("SoundLevel");
         AudioCollector.MusicLevel = PlayerPrefs.GetFloat("MusicLevel");
 
@@ -244,6 +260,7 @@ public class Settings
 
         //it was saved b4,,, if not will use default stuff
         PlayerPrefs.SetString("P1Once", "Yes");
+
 
     }
 
@@ -303,7 +320,13 @@ public class Settings
         //So all LangUpdateScripts gets Started again
         Program.MouseListener.ApplyChangeScreenResolution();
     }
-#endregion
+
+    internal static void ToggleHalloween()
+    {
+        IsHalloweenTheme = !IsHalloweenTheme;
+        PlayerPrefs.SetString("Hallo", IsHalloweenTheme + "");
+    }
+    #endregion
 }
 
 public class Unit

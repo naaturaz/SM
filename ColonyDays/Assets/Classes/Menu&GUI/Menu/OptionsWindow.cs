@@ -11,6 +11,7 @@ public class OptionsWindow : GUIElement
     private Toggle _fullToggle;
     private Toggle _musicToggle;
     private Toggle _soundToggle;
+    private Toggle _halloToggle;
 
 
     private GameObject _autoSaveBtn;
@@ -39,8 +40,9 @@ public class OptionsWindow : GUIElement
         _fullToggle = GetGrandChildCalled("FullScreen_Toggle").GetComponent<Toggle>();
         _musicToggle = GetGrandChildCalled("Music_Toggle").GetComponent<Toggle>();
         _soundToggle = GetGrandChildCalled("Sound_Toggle").GetComponent<Toggle>();
-        
-        
+        _halloToggle = GetGrandChildCalled("Halloween_Toggle").GetComponent<Toggle>();
+
+
         _musicSlider = GetGrandChildCalled("Music_Slider").GetComponent<Slider>();
         _soundSlider = GetGrandChildCalled("Sound_Slider").GetComponent<Slider>();
         _cameraSlider = GetGrandChildCalled("Camera_Slider").GetComponent<Slider>();
@@ -96,11 +98,15 @@ public class OptionsWindow : GUIElement
         _musicToggle.isOn = Settings.ISMusicOn;
         _soundToggle.isOn = Settings.ISSoundOn;
 
+        _halloToggle.isOn = Settings.IsHalloweenTheme;
+
 
         //so they dont trigger event 
         _fullToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Full"));
         _musicToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Music"));
         _soundToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Sound"));
+        _halloToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Hallo"));
+
     }
 
     public void RefreshAllDropDowns()
@@ -193,6 +199,10 @@ public class OptionsWindow : GUIElement
         else if (sub == "Music" || sub == "Sound")
         {
             ChangeAudioSettings(sub);
+        }
+        else if (sub == "Hallo")
+        {
+            Settings.ToggleHalloween();
         }
         //screen
         else if (sub == "Full")
@@ -441,5 +451,7 @@ public class OptionsWindow : GUIElement
     }
 
 #endregion
+
+
 }
 

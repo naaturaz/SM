@@ -70,6 +70,11 @@ public class Decoration  {
 
     void AddHalloweenToRoot()
     {
+        if (!Settings.IsHalloweenTheme)
+        {
+            return;
+        }
+
         for (int i = 1; i < 13; i++)
         {
             _roots.Add("Prefab/Terrain/Spawner/Orna/Halloween/H" + i);

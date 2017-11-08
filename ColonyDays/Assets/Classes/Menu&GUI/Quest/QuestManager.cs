@@ -15,7 +15,7 @@ public class QuestManager
     List<int> _doneQuest = new List<int>();
     bool _wasLoaded;//whe is a loaded game
 
-    float _timeToNextQuest = 90;
+    float _timeToNextQuest = 5;//90
 
 
     public List<int> CurrentQuests
@@ -139,7 +139,7 @@ public class QuestManager
     {
         if (76561198245800476 == SteamUser.GetSteamID().m_SteamID)
         {
-            _timeToNextQuest = .01f;
+            //_timeToNextQuest = .01f;
         }
     }
 

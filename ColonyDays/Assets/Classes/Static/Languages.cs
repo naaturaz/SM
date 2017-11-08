@@ -563,8 +563,8 @@ public class Languages
            " Find it in Trade." },
 
 
-        { "Export.Quest", "Quest: Now export 300 " + Unit.CurrentWeightUnitsString() + " of beans. On the Dock add an order of export. "+
-            " Once built click on the 'Orders' tab and add an export order with the '+' sign."+
+        { "Export.Quest", "Quest: At the Dock create an order and export exactly 300 " + Unit.CurrentWeightUnitsString() + " of beans."+
+            " In the Dock click on the 'Orders' tab and add an export order with the '+' sign."+
            " Select product and enter amount"},
 
 
