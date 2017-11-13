@@ -9,6 +9,8 @@ public class Settings
     static bool _isSoundOn = true;
     static bool _isMusicOn = true;
     static bool _isHalloweenTheme = true;
+    static bool _isXmas = true;
+
 
     //this is the music variable use for the whole game 
     public static Music music = null;
@@ -43,6 +45,19 @@ public class Settings
         set
         {
             _isHalloweenTheme = value;
+        }
+    }
+
+    public static bool IsXmas
+    {
+        get
+        {
+            return _isXmas;
+        }
+
+        set
+        {
+            _isXmas = value;
         }
     }
 
@@ -214,6 +229,8 @@ public class Settings
         ISMusicOn = PlayerPrefs.GetString("Music") == "True";
 
         IsHalloweenTheme = PlayerPrefs.GetString("Hallo") == "True";
+        IsXmas = PlayerPrefs.GetString("Xmas") == "True";
+
 
         AudioCollector.SoundLevel = PlayerPrefs.GetFloat("SoundLevel");
         AudioCollector.MusicLevel = PlayerPrefs.GetFloat("MusicLevel");
@@ -325,6 +342,12 @@ public class Settings
     {
         IsHalloweenTheme = !IsHalloweenTheme;
         PlayerPrefs.SetString("Hallo", IsHalloweenTheme + "");
+    }
+
+    internal static void ToggleXmas()
+    {
+        IsXmas = !IsXmas;
+        PlayerPrefs.SetString("Xmas", IsXmas + "");
     }
     #endregion
 }

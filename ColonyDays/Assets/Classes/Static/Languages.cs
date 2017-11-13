@@ -1229,42 +1229,81 @@ public class Languages
         
         //Quest
        { "Tutorial.Quest", "Desafio: Termina el tutorial. $10,000 en premio. Toma alrededor de 3 minutos para ser completado"},
-
        { "Lamp.Quest", "Desafio: Construye una farola. Esta en Infraestructuras, son encedidas de noche si hay Aceite de Ballena en la Almacen"},
-
        { "Shack.Quest", "Desafio: Construye una casucha. Estas son casas baratas. Cuando las personas cumplen 16 años se mudan a un casa nueva si existe. De esta manera se garantiza el crecimiento de la poblacion. [F1] Ayuda"},
        { "SmallFarm.Quest", "Desafio: Construye una Finca de Cultivos Chica. Necesitas estas para alimentar a tu pueblo"},
        { "FarmHire.Quest", "Desafio: Contrata a dos granjeros en la Finca de Cultivos Chica. Haz click en la finca y despues en el signo de mas para asignar trabajadores. Para esto necesitas tener trabajadores desempleados"},
-
-
         { "FarmProduce.Quest", "Desafio: Produce " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " de Frijol en la Finca de Cultivos Chica. Haz click en la pestaña 'Stat' y te mostrara la produccion de los ultimos 5 años. Puedes ver el avance en el desafio en el formulario de desafios. Si construyes mas Fincas de Cultivos Chica ayudaran a pasar este desafio"},
         { "Transport.Quest", "Desafio: Transporta el Frijol de la Finca hacia la Almacen. Para hacer esto asegurate de que hay trabajadores en la Casa de Albañiles. Ellos se convierten en carretilleros cuando no trabajan"},
-
             { "Export.Quest", "Desafio: Exporta 300 " + Unit.CurrentWeightUnitsString() + " de Frijol. Añade una orden de Exportacion en el Puerto. Si no tienes un Puerto entonces construye uno."+
            "El icono del Puerto esta en Comercio. Cuando este hecho haz click en la pestaña de ordenes, añade una orden de exportacion, y selecciona el producto y la cantidad a exportar."},
-
        { "HireDocker.Quest", "Desafio: Contrata un portuario. La unica tarea de ellos es mover bienes desde el Almacen hacia el Puerto si estas exportando."+
            " O vice-versa si estas importando. Ellos trabajan cuando hay ordenes en el puerto y los bienes estan listos para su transporte. Sino se quedan en casa descanzando." +
             " Si ya tienes trabajadores aqui despidelos a todos y despues contrata a uno de nuevo."},
        { "MakeBucks.Quest", "Desafio: Haz $100 exportando bienes en el Puerto. "+
            "Cuando un barco llegue pagara bienes al azar que haiga en las bodegas de tu Puerto"},
-
         { "HeavyLoad.Quest", "Desafio: Construye el edificio de Carga Pesada. Estos son transportistas que cargan mas peso. Seran muy utiles cuando mucha carga necesita ser transportada en tu villa"},
-
-
         { "ImportOil.Quest", "Desafio: Importa 500 " + Unit.CurrentWeightUnitsString() + " de Aceite de Ballena en el Puerto. Es necesario para encender las Farolas por las noches."},
-
        { "Population50.Quest", "Obten 50 personas en total"},
-       {"CompleteQuest", "Tu premio es de ${0}"},
+
+
+        //added Aug 11 2017, result: sep 9(30% off biggest sale ever)
+       { "Production.Quest", "Ahora vamos a producir armas que despues venderemos. Primero construye un Herrero. Encuentralo en el menu 'Basico'"},
+
+
+
+
+       { "ChangeProductToWeapon.Quest", "In the Blacksmith's 'Products Tab' change the production to Weapon. Workers will bring the raw materials needed to forge weapons if found"},
+       { "BlackSmithHire.Quest", "Hire two blacksmiths"},
+       { "WeaponsProduce.Quest", "Now produce " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " of Weapons in the Blacksmith. Click on the 'Stat' tab and will show you the production of the last 5 years. You can see the quest progress in the quest window."},
+       { "ExportWeapons.Quest", "Now export 100 " + Unit.CurrentWeightUnitsString() + " of Weapons. On the Dock add an order of export. Notice that Weapons are a profitable business"},
+
+   //added Sep 14 2017
+     { "BuildFishingHut.Quest", "Build a Fishing hut. In this way citizens have different foods to eat, which translates into happiness"},
+       { "HireFisher.Quest", "Hire a fisher"},
+
+       { "BuildLumber.Quest", "Build a Lumbermill. Find it in the 'Raw' buildings menu"},
+       { "HireLumberJack.Quest", "Hire a Lumberjack"},
+
+       { "BuildGunPowder.Quest", "Build a Gunpowder. Find it in the 'Industry' buildings menu"},
+       { "ImportSulfur.Quest", "In the dock import 1000 " + Unit.CurrentWeightUnitsString() + " of Sulfur"},
+       { "GunPowderHire.Quest", "Hire one worker in the Gunpowder building"},
+
+       { "ImportPotassium.Quest", "In the dock import 1000 " + Unit.CurrentWeightUnitsString() + " of Potassium"},
+       { "ImportCoal.Quest", "In the dock import 1000 " + Unit.CurrentWeightUnitsString() + " of Coal"},
+
+       { "ProduceGunPowder.Quest", "Lets produce now " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " of Gunpowder. Notice that you will need Sulfur, Potassium and Coal to produce Gunpowder"},
+       { "ExportGunPowder.Quest", "In the dock export 100 " + Unit.CurrentWeightUnitsString() + " of Gunpowder"},
+
+       { "BuildLargeShack.Quest", "Build a Largeshack in this bigger houses population will grow faster"},
+
+       { "BuildA2ndDock.Quest", "Build a second Dock. This dock could be used only for imports in that way you can import raw materials here and export them at another dock"},
+       { "Rename2ndDock.Quest", "Rename the Docks now, so you can remember which be used only for imports and exports"},
+
+       { "Import2000Wood.Quest", "In the Imports dock import 2000 " + Unit.CurrentWeightUnitsString() + " of Wood. This raw material is needed for everything because is used as fuel"},
+
+       //IT HAS FINAL MESSAGE 
+       //last quest it has a final message to the player. if new quest added please put the final message in the last quest
+       { "Import2000Coal.Quest", "In the Imports dock import 2000 " + Unit.CurrentWeightUnitsString() + " of Coal. Coal also, is needed for everything because is used as fuel. Hope you enjoy the experience so far. Keep expanding your colony, and wealth. Also, please help to improve the game. Participate in the online forums your voice and opinions are important! Have fun Sugarmiller!"},
+       //
+
+        { "CompleteQuest", "Tu premio es de ${0}"},
+
+
+
+
+
+
+
 
 
               //Quest Titles
-       { "Tutorial.Quest.Title", "Tutorial"},
+  { "Tutorial.Quest.Title", "Tutorial"},
        { "Lamp.Quest.Title", "Stand Lamp"},
 
        { "Shack.Quest.Title", "Build a Shack"},
        { "SmallFarm.Quest.Title", "Build a Farm Field"},
-       { "FarmHire.Quest.Title", "Hire a Farmer"},
+       { "FarmHire.Quest.Title", "Hire Two Farmers"},
 
 
        { "FarmProduce.Quest.Title", "Farm Producer"},
@@ -1272,12 +1311,37 @@ public class Languages
        { "Export.Quest.Title", "Exports"},
        { "HireDocker.Quest.Title", "Hire Docker"},
        { "MakeBucks.Quest.Title", "Make Money"},
-       { "HeavyLoad.Quest.Title", "Build Heavy Load"},
-
+       { "HeavyLoad.Quest.Title", "Heavy Load"},
+       { "HireHeavy.Quest.Title", "Hire a Heavy Hauler"},
 
        { "ImportOil.Quest.Title", "Whale Oil"},
 
        { "Population50.Quest.Title", "50 Citizens"},
+       
+       //
+       { "Production.Quest.Title", "Produce Weapons"},
+       { "ChangeProductToWeapon.Quest.Title", "Change Product"},
+       { "BlackSmithHire.Quest.Title", "Hire Two Blacksmiths"},
+       { "WeaponsProduce.Quest.Title", "Forge Weapons"},
+       { "ExportWeapons.Quest.Title", "Make Profit" },
+       
+       //
+       { "BuildFishingHut.Quest.Title", "Build a Fishing Hut"},
+       { "HireFisher.Quest.Title", "Hire a Fisher"},
+       { "BuildLumber.Quest.Title", "Build a Lumber"},
+       { "HireLumberJack.Quest.Title", "Hire a Lumberjack"},
+       { "BuildGunPowder.Quest.Title", "Build a Gunpowder"},
+       { "ImportSulfur.Quest.Title", "Import Sulfur"},
+       { "GunPowderHire.Quest.Title", "Hire a Gunpowder worker"},
+       { "ImportPotassium.Quest.Title", "Import Potassium"},
+       { "ImportCoal.Quest.Title", "Import Coal"},
+       { "ProduceGunPowder.Quest.Title", "Produce Gunpowder"},
+       { "ExportGunPowder.Quest.Title", "Export Gunpowder"},
+       { "BuildLargeShack.Quest.Title", "Build a Largeshack"},
+       { "BuildA2ndDock.Quest.Title", "Build a Second Dock"},
+       { "Rename2ndDock.Quest.Title", "Rename the Second Dock"},
+       { "Import2000Wood.Quest.Title", "Import some Wood"},
+       { "Import2000Coal.Quest.Title", "Import some Coal"},
 
 
 

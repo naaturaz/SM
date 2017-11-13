@@ -64,6 +64,8 @@ public class Decoration  {
 
         //Hallow
         AddHalloweenToRoot();
+        //Xmas
+        AddXMasToRoot();
 
         Init();
     }
@@ -78,6 +80,19 @@ public class Decoration  {
         for (int i = 1; i < 13; i++)
         {
             _roots.Add("Prefab/Terrain/Spawner/Orna/Halloween/H" + i);
+        }
+    }
+
+    void AddXMasToRoot()
+    {
+        if (!Settings.IsXmas)
+        {
+            return;
+        }
+
+        for (int i = 1; i < 2; i++)
+        {
+            _roots.Add("Prefab/Terrain/Spawner/Orna/Xmas/" + i);
         }
     }
 

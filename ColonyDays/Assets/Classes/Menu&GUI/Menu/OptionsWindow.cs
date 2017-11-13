@@ -12,6 +12,7 @@ public class OptionsWindow : GUIElement
     private Toggle _musicToggle;
     private Toggle _soundToggle;
     private Toggle _halloToggle;
+    private Toggle _xmasToggle;
 
 
     private GameObject _autoSaveBtn;
@@ -41,6 +42,7 @@ public class OptionsWindow : GUIElement
         _musicToggle = GetGrandChildCalled("Music_Toggle").GetComponent<Toggle>();
         _soundToggle = GetGrandChildCalled("Sound_Toggle").GetComponent<Toggle>();
         _halloToggle = GetGrandChildCalled("Halloween_Toggle").GetComponent<Toggle>();
+        _xmasToggle = GetGrandChildCalled("Xmas_Toggle").GetComponent<Toggle>();
 
 
         _musicSlider = GetGrandChildCalled("Music_Slider").GetComponent<Slider>();
@@ -99,6 +101,7 @@ public class OptionsWindow : GUIElement
         _soundToggle.isOn = Settings.ISSoundOn;
 
         _halloToggle.isOn = Settings.IsHalloweenTheme;
+        _xmasToggle.isOn = Settings.IsXmas;
 
 
         //so they dont trigger event 
@@ -106,6 +109,7 @@ public class OptionsWindow : GUIElement
         _musicToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Music"));
         _soundToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Sound"));
         _halloToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Hallo"));
+        _xmasToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Xmas"));
 
     }
 
@@ -203,6 +207,10 @@ public class OptionsWindow : GUIElement
         else if (sub == "Hallo")
         {
             Settings.ToggleHalloween();
+        }
+        else if (sub == "Xmas")
+        {
+            Settings.ToggleXmas();
         }
         //screen
         else if (sub == "Full")

@@ -888,7 +888,8 @@ public class Building : Hoverable, Iinfo
         {
             return;
         }
-        if (MyId.Contains("Bridge") || MyId.Contains("Farm") || doubleBounds.Contains(HType))
+        if (MyId.Contains("Bridge") || MyId.Contains("Farm") || doubleBounds.Contains(HType) ||
+            HType == H.StandLamp)
         {
             isDecorated = true;
             return;
