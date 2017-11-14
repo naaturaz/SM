@@ -1350,8 +1350,14 @@ public class Brain
     /// </summary>
     void AddToPeopleDict(string keyP)
     {
-        if (keyP == "")
-        { return; }
+        if (keyP == "" || Partido)
+        {
+            if (Partido)
+            {
+                Debug.Log(_person.name + " While Partido trying to add to Dict: " + keyP);
+            }
+            return;
+        }
 
         //dont need to add to PeopleDict. In school will bring problems 
         var buildCurrWork = GetBuildingFromKey(keyP);

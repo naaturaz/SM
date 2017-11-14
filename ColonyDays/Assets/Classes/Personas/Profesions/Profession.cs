@@ -234,6 +234,11 @@ public class Profession
         //              (10 + 10     + 30        + ) * 0.008         = 0.4KG of Weapons per shift
         ProdXShift = (_person.HowMuchICanCarry() + yearSchool) * ToolsFactor() * produceFac/10;//1000
 
+        if (ProfDescription == Job.Forester)
+        {
+            ProdXShift *= 1.2f;
+        }
+
         //if is zero then will do this//is zero becasue one factor was zero. most likely the produceFac
         //for builders there is not produceFac
         if (ProdXShift == 0)

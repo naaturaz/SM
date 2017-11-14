@@ -4049,12 +4049,20 @@ public class Building : Hoverable, Iinfo
 
         for (int i = 0; i < _peopleToBeFired; i++)
         {
-            var index = PeopleDict.Count - (1 + i);//starting from the last towards the first
-            var person = Family.FindPerson(PeopleDict[index]);
-            person.WasFired = true;
-            person.ShowEmotion("Fired");
-            PersonPot.Control.RestartControllerForPerson(person.MyId);
-            firedPpl++;
+            if (i < PeopleDict.Count)
+            {
+                //var index = PeopleDict.Count - (1 + i);//starting from the last towards the first
+                var person = Family.FindPerson(PeopleDict[i]);
+                person.WasFired = true;
+                person.ShowEmotion("Fired");
+                PersonPot.Control.RestartControllerForPerson(person.MyId);
+                firedPpl++;
+            }
+            else
+            {
+                _peopleToBeFired = 0;
+                firedPpl = 0;
+            }
         }
 
         _peopleToBeFired -= firedPpl;
@@ -4064,8 +4072,15 @@ public class Building : Hoverable, Iinfo
         {
             for (int i = 0; i < MaxPeople && i < PeopleDict.Count; i++)
             {
-                var index = i;
-                var person = Family.FindPerson(PeopleDict[index]);
+                var person = Family.FindPerson(PeopleDict[i]);
+
+                //addressing legacy code in where people where not hire/fire correctly 
+                if (person == null)
+                {
+                    PeopleDict.Remove(PeopleDict[i]);
+                    continue;
+                }
+
                 person.WasFired = false;
                 //in case had a Input Work Order
                 person.Inventory.Delete();
@@ -4121,10 +4136,14 @@ public class Building : Hoverable, Iinfo
             return;
         }
 
-        if (removeMaxAmtWorkers && MyText.Lazy() == 0)//bz if there are lazy people then we need to hire
+        //bz if there are lazy people then we need to hire
+        //however if there are not openPositions will need to go 
+        if (removeMaxAmtWorkers && (MyText.Lazy() == 0 || !HasOpenPositions())
+            )
         {
             ChangeMaxAmoutOfWorkers("Less");
         }
+        //if !HasOpenPositions() will exit below method 
         CheckIfNeedsToBeAddedToList();
     }
 

@@ -387,8 +387,15 @@ public class BatchRegion
 
     internal void Destroy()
     {
+
         _batchMaster.Destroy();
         _batchMaster = null;
+
+        if (_batchPivotContainer == null)
+        {
+            var a = _id;
+            return;
+        }
 
         _batchPivotContainer.Destroy();
         _batchPivotContainer = null;

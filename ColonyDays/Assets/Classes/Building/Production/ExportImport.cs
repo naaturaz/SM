@@ -209,7 +209,7 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.PalmLeaf, 10, 30));
 
 
-        _prodSpecs.Add(new ProdSpec(P.Wood, 10, 800, 90));
+        _prodSpecs.Add(new ProdSpec(P.Wood, 5, 800, 100));
         _prodSpecs.Add(new ProdSpec(P.Tool, 500, 3000, 15));
         _prodSpecs.Add(new ProdSpec(P.Utensil, 200, 3000, 15));
 

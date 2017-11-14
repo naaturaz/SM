@@ -1248,7 +1248,8 @@ public class Person : Hoverable
     /// </summary>
     private void DidIDie()
     {
-        if (Age > _lifeLimit && !IsPregnant)
+        if (Age > _lifeLimit //&& !IsPregnant
+            )
         {
             //print(MyId + " gone , se partio.To old" + " home:" + Home.MyId);
 
