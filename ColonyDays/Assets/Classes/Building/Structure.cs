@@ -191,6 +191,10 @@ public class Structure : StructureParent
             {
                 _construcionSign = General.Create(Root.ConstructionSign, MiddlePoint(), "Construction", transform);
             }
+            else if (IsLoadingFromFile && StartingStage != H.Done)
+            {
+                _construcionSign = General.Create(Root.ConstructionSign, MiddlePoint(), "Construction", transform);
+            }
 
             //if (MyId.Contains("Med") || HType == H.BlackSmith)
             //{

@@ -446,6 +446,7 @@ public enum H
     War,
     BullDozer,
     Defender,
+    PathToSeaExplain,
 }
 
 //if new categorY IS ADDED PLS ADD ON BOOK.CS

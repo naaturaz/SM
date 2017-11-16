@@ -13,7 +13,7 @@ public class ScrollViewShowInventory : GUIElement
     private GameObject _scroll_Ini_PosGO;
     Inventory _inv;
 
-    public string Which;//which inv needs to show 
+    public string Which;//which inv needs to show and wht type of tile 
 
     ShowAInventory _showAInv;
 
@@ -37,6 +37,10 @@ public class ScrollViewShowInventory : GUIElement
         {
             _inv = GameController.ResumenInventory1.GameInventory;
         }
+        if (Which == "Main")
+        {
+            _inv = GameController.ResumenInventory1.GameInventory;
+        }
     }
 
     // Update is called once per frame
@@ -53,8 +57,39 @@ public class ScrollViewShowInventory : GUIElement
             RedoInvIfIfWhichIsEmpty();
         }
 
-        _showAInv = new ShowAInventory(_inv, _content, _scroll_Ini_PosGO.transform.localPosition);
+        _showAInv = new ShowAInventory(_inv, _content, _scroll_Ini_PosGO.transform.localPosition, Which);
         ResetScroolPos();
         AdjustContentHeight(_inv.InventItems.Count * 3.5f);
     }
+
+
+    static bool _isMouseOnMe;
+
+    static public bool IsMouseOnMe
+    {
+        get
+        {
+            return _isMouseOnMe;
+        }
+
+        set
+        {
+            _isMouseOnMe = value;
+        }
+    }
+
+    //Called from GUI
+    //if mouse is on me will not scroll. 
+    //however this obj need to be set on Inspector with a trigger events  poinitng here 
+    public void CallMeWhenMouseEnter()
+    {
+        _isMouseOnMe = true;
+    }
+
+    public void CallMeWhenMouseExit()
+    {
+        _isMouseOnMe = false;
+
+    }
+
 }

@@ -282,11 +282,19 @@ public class NotificationWindowGO : GUIElement
 
     public void Notify(string notiKey, string addP)
     {
-        //plays the sound of the notification
-        AudioCollector.PlayOneShot(notiKey, 15);
+        
 
         _allNotifications.Insert(0, notiKey+"|"+addP);
         Show("");
+
+        //means the sound of the noti is set off
+        if (PlayerPrefs.GetInt(notiKey) == -1)
+        {
+            return;
+        }
+
+        //plays the sound of the notification
+        AudioCollector.PlayOneShot(notiKey, 15);
     }
 
 

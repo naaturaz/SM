@@ -4055,39 +4055,41 @@ public class Building : Hoverable, Iinfo
                 var person = Family.FindPerson(PeopleDict[i]);
                 person.WasFired = true;
                 person.ShowEmotion("Fired");
-                PersonPot.Control.RestartControllerForPerson(person.MyId);
-                firedPpl++;
-            }
-            else
-            {
-                _peopleToBeFired = 0;
-                firedPpl = 0;
-            }
-        }
-
-        _peopleToBeFired -= firedPpl;
-
-        //if not people was to fired then make sure all are hired that are less than MaxPeople and PeopleDict.Count
-        if (_peopleToBeFired == 0 && Program.gameScene.GameFullyLoaded())
-        {
-            for (int i = 0; i < MaxPeople && i < PeopleDict.Count; i++)
-            {
-                var person = Family.FindPerson(PeopleDict[i]);
-
-                //addressing legacy code in where people where not hire/fire correctly 
-                if (person == null)
-                {
-                    PeopleDict.Remove(PeopleDict[i]);
-                    continue;
-                }
-
-                person.WasFired = false;
-                //in case had a Input Work Order
                 person.Inventory.Delete();
 
                 PersonPot.Control.RestartControllerForPerson(person.MyId);
+                firedPpl++;
             }
+            //else
+            //{
+            //    _peopleToBeFired = 0;
+            //    firedPpl = 0;
+            //}
         }
+
+        //_peopleToBeFired -= firedPpl;
+
+        ////if not people was to fired then make sure all are hired that are less than MaxPeople and PeopleDict.Count
+        //if (_peopleToBeFired == 0 && Program.gameScene.GameFullyLoaded())
+        //{
+        //    for (int i = 0; i < MaxPeople && i < PeopleDict.Count; i++)
+        //    {
+        //        var person = Family.FindPerson(PeopleDict[i]);
+
+        //        //addressing legacy code in where people where not hire/fire correctly 
+        //        if (person == null)
+        //        {
+        //            PeopleDict.Remove(PeopleDict[i]);
+        //            continue;
+        //        }
+
+        //        person.WasFired = false;
+        //        //in case had a Input Work Order
+        //        person.Inventory.Delete();
+
+        //        PersonPot.Control.RestartControllerForPerson(person.MyId);
+        //    }
+        //}
     }
 
 

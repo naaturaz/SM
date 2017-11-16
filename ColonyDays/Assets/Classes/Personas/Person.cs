@@ -2565,6 +2565,11 @@ public class Person : Hoverable
     internal void SelectPerson()
     {
         CreateProjector();
+
+        if (PlayerPrefs.GetInt("Voice") == -1)
+        {
+            return;
+        }
         AudioCollector.PlayPersonVoice(this);
 
         //follow citizen and camera FOV

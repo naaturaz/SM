@@ -87,7 +87,7 @@ public class MyForm : General
         if (_resources != null)
         {
             _startPosIni = GetChildCalled(H.Start, Resources);
-            LoadMainInventory();
+            //LoadMainInventory();
         }
 
         //is the main gui 
@@ -175,10 +175,10 @@ public class MyForm : General
         while (true)
         {
             yield return new WaitForSeconds(2); // wait
-            if (_showAInventory != null)
-            {
-                _showAInventory.UpdateEvery2Sec();
-            }
+            //if (_showAInventory != null)
+            //{
+            //    _showAInventory.UpdateEvery2Sec();
+            //}
         }
     }
 
@@ -187,20 +187,20 @@ public class MyForm : General
         while (true)
         {
             yield return new WaitForSeconds(67); // wait
-            if (_showAInventory != null)
-            {
-                _showAInventory.UpdateEveryMinute();
-            }
+            //if (_showAInventory != null)
+            //{
+            //    _showAInventory.UpdateEveryMinute();
+            //}
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_showAInventory != null)
-        {
-            _showAInventory.Update();
-        }
+        //if (_showAInventory != null)
+        //{
+        //    _showAInventory.Update();
+        //}
         if (_showPathToSea != null)
         {
             _showPathToSea.Update();
@@ -239,11 +239,11 @@ public class MyForm : General
         return false;
     }
 
-    private ShowAInventory _showAInventory;
-    internal void LoadMainInventory()
-    {
-        _showAInventory = new ShowAInventory("Main", Resources, _startPosIni.transform.localPosition);
-    }
+    //private ShowAInventory _showAInventory;
+    //internal void LoadMainInventory()
+    //{
+    //    _showAInventory = new ShowAInventory("Main", Resources, _startPosIni.transform.localPosition);
+    //}
 
 
 

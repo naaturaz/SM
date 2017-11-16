@@ -6,38 +6,36 @@
  * This GObj it spawns it doesnt move wit mouse 
  */
 
-public class Hover : MonoBehaviour
+public class HoverBtn : MonoBehaviour
 {
-    private Rect myRect;//the rect area of my element. Must have attached a BoxCollider2D
     private HoverWindow hoverWindow;//the window tht will pop up msg
     private Rect screenRect;
 
-	// Use this for initialization
-	void Start ()
-	{
-	    InitObjects();
-	}
+    // Use this for initialization
+    void Start()
+    {
+        InitObjects();
+    }
 
     void InitObjects()
-    {       
+    {
         //for this to work only one gameObj can have the HoverWindow attached
         if (hoverWindow == null)
         {
             hoverWindow = FindObjectOfType<HoverWindow>();
         }
 
-        myRect = GetRectFromBoxCollider2D();
         screenRect = DefineScreenRect();
     }
 
-    
+
 
     Rect DefineScreenRect()
     {
         Rect res = new Rect();
         res.min = new Vector2();
         res.max = new Vector2(Screen.width, Screen.height);
-        
+
         return res;
     }
 
@@ -53,9 +51,9 @@ public class Hover : MonoBehaviour
 
         return res;
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update()
     {
         if (hoverWindow == null)
         {
@@ -66,24 +64,8 @@ public class Hover : MonoBehaviour
             return;
         }
 
-        //will redo Rect. Spawning hover with this so it can Scroll with mouse when on Main Inventories 
-        if (Input.GetAxis("Mouse ScrollWheel") != 0 && ScrollViewShowInventory.IsMouseOnMe)
-        {
-            myRect = GetRectFromBoxCollider2D();
-        }
 
-
-        //if got in my area
-        if (myRect.Contains(Input.mousePosition))
-        {
-            SpawnHelp();
-        }
-        //ig got out 
-        else if (!myRect.Contains(Input.mousePosition) && MyMsg() == hoverWindow.Message())
-        {
-            DestroyHelp();
-        }
-	}
+    }
 
     /// <summary>
     /// </summary>
@@ -103,17 +85,16 @@ public class Hover : MonoBehaviour
         }
 
         oldMsg = MyMsg();
-        hoverWindow.ShowMsg(ReturnHoverPos(), MyMsg());
-    } 
-    
-   
 
-    private Vector3 ReturnHoverPos()
-    {
-        return MoveItTowardsScreenCenter(myRect);
+        //hoverWindow.ShowMsg(ReturnHoverPos(), MyMsg());
+
+        hoverWindow.ShowMsg(MoveItTowardsScreenCenter(transform.position), MyMsg());
     }
 
-    private Vector2 MoveItTowardsScreenCenter(Rect myRectP)
+
+
+
+    private Vector2 MoveItTowardsScreenCenter(Vector3 iniPos)
     {
         var w = Screen.width / 2;
         var h = Screen.height / 2;
@@ -122,7 +103,7 @@ public class Hover : MonoBehaviour
         var howFar = h / 9;
 
         Vector2 center = new Vector2(w, h);
-        var moved = Vector2.MoveTowards(myRectP.center, center, howFar);
+        var moved = Vector2.MoveTowards(iniPos, center, howFar);
         return moved;
     }
 
@@ -131,7 +112,17 @@ public class Hover : MonoBehaviour
         hoverWindow.Hide();
     }
 
-  
+    //Called from GUI
+
+    public void CallMeWhenMouseEnter()
+    {
+        SpawnHelp();
+    }
+
+    public void CallMeWhenMouseExit()
+    {
+        DestroyHelp();
+    }
 
 
 }

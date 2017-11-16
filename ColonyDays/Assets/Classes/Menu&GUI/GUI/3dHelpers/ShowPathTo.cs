@@ -71,7 +71,7 @@ public class ShowPathTo
         {
             _finPos = _person.Work.transform.position;
             _finalGO = _person.Work.SpawnPoint;
-        } 
+        }
         else if (_type == "Food source")
         {
             _finPos = _person.FoodSource.transform.position;
@@ -122,10 +122,10 @@ public class ShowPathTo
         _spawns[0].PrevGO = _person.gameObject;
         _spawns[0].NextGO = _spawns[1].gameObject;
 
-        _spawns[_spawns.Count-1].PrevGO = _spawns[_spawns.Count-2].gameObject;
-        _spawns[_spawns.Count-1].NextGO = _finalGO.gameObject;
+        _spawns[_spawns.Count - 1].PrevGO = _spawns[_spawns.Count - 2].gameObject;
+        _spawns[_spawns.Count - 1].NextGO = _finalGO.gameObject;
 
-        for (int i = 1; i < _spawns.Count-1; i++)
+        for (int i = 1; i < _spawns.Count - 1; i++)
         {
             _spawns[i].PrevGO = _spawns[i - 1].gameObject;
             _spawns[i].NextGO = _spawns[i + 1].gameObject;
@@ -184,6 +184,7 @@ public class ShowPathTo
         }
     }
 
+    bool shown;
     void ShowPath()
     {
         if (_type != "Sea")
@@ -191,6 +192,11 @@ public class ShowPathTo
             //_spawns.Clear();
             //bz they where destroyed when hide it 
             PreInitForPerson();
+        }
+        else if(_type == "Sea" && !shown)
+        {
+            shown = true;
+            Dialog.OKDialog(H.PathToSeaExplain);
         }
 
         _isToShowNow = true;

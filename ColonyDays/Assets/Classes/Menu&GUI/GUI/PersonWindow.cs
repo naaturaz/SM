@@ -160,21 +160,21 @@ public class PersonWindow : GUIElement
         _showAInventory.ManualUpdate();
         _inv.text = BuildStringInv(_person);
 
-        if (_aPersonBuildingDetails == null)
-        {
-            _aPersonBuildingDetails = new ShowAPersonBuildingDetails(_person, _general, _inv_Ini_Pos_Gen.transform.localPosition);
-        }
-        else
-        {
-            //manual update
-            _aPersonBuildingDetails.ManualUpdate(_person);
-        }
+        //if (_aPersonBuildingDetails == null)
+        //{
+        //    _aPersonBuildingDetails = new ShowAPersonBuildingDetails(_person, _general, _inv_Ini_Pos_Gen.transform.localPosition);
+        //}
+        //else
+        //{
+        //    //manual update
+        //    _aPersonBuildingDetails.ManualUpdate(_person);
+        //}
     }
 
 
     string BuildPersonInfo()
     {
-        return "";
+        //return "";
 
         return DebugAgentInfo();
 

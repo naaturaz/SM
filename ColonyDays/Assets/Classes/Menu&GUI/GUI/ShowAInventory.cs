@@ -16,13 +16,16 @@ public class ShowAInventory
     private string _invType;
 
     /// <summary>
-    /// Reuglar inventory
+    /// 
     /// </summary>
     /// <param name="inv"></param>
     /// <param name="container"></param>
     /// <param name="iniPos"></param>
-    public ShowAInventory(Inventory inv, GameObject container, Vector3 iniPos)
+    /// <param name="specialInfo">Will only make a diff if param 'Main' is passed </param>
+    public ShowAInventory(Inventory inv, GameObject container, Vector3 iniPos, string specialInfo = "")
     {
+        _invType = specialInfo;
+
         _iniPos = iniPos;
         _inv = inv;
         _containr = container;
@@ -45,7 +48,7 @@ public class ShowAInventory
         if (specialInfo == "Main")
         {
             _invType = "Main";
-            CreateMainInventory();
+            //CreateMainInventory();
             ShowAllItems();
         }
         //will show the items will be exported, imported in DOck. without amt only name 
@@ -61,25 +64,25 @@ public class ShowAInventory
          //       //foods wont be shown in main inventory
          //       || Inventory.CategorizeProd(allProdSpec[i].Product)==PCat.Food)
 
-    List<P> allowOnMain = new List<P>() 
-    { P.Wood, P.Stone, P.Brick, P.Iron, P.Nail, P.Furniture, P.Mortar, P.RoofTile, P.FloorTile
-    };
+    //List<P> allowOnMain = new List<P>() 
+    //{ P.Wood, P.Stone, P.Brick, P.Iron, P.Nail, P.Furniture, P.Mortar, P.RoofTile, P.FloorTile
+    //};
     /// <summary>
     /// Create a inventory with all the Products annd pull the infor from all Storages in game 
     /// </summary>
-    private void CreateMainInventory()
-    {
-        _inv = new Inventory();
-        var allProdSpec = Program.gameScene.ExportImport1.ProdSpecs;
+    //private void CreateMainInventory()
+    //{
+    //    _inv = new Inventory();
+    //    var allProdSpec = Program.gameScene.ExportImport1.ProdSpecs;
 
-        for (int i = 0; i < allProdSpec.Count; i++)
-        {
-            if (allowOnMain.Contains(allProdSpec[i].Product))
-            {
-                _inv.AddToSpecialInv(allProdSpec[i].Product);
-            }
-        }
-    }
+    //    for (int i = 0; i < allProdSpec.Count; i++)
+    //    {
+    //        if (allowOnMain.Contains(allProdSpec[i].Product))
+    //        {
+    //            _inv.AddToSpecialInv(allProdSpec[i].Product);
+    //        }
+    //    }
+    //}
 
     void ManualUpdateOfAllInvItems()
     {
@@ -129,15 +132,15 @@ public class ShowAInventory
     private int _mainLines = 18;//24
     float ReturnX(int i)
     {
-        if (_invType == "Main")
-        {
-            var columns = i/   _mainLines ;
-            //filled out columns
-            int columsInt = (int) columns;
+        //if (_invType == "Main")
+        //{
+        //    var columns = i/   _mainLines ;
+        //    //filled out columns
+        //    int columsInt = (int) columns;
 
-            return 49*columsInt; //40
-        }
-        //string.IsNullOrEmpty(_invType)
+        //    return 49*columsInt; //40
+        //}
+        ////string.IsNullOrEmpty(_invType)
         return 1;
     }
 
@@ -145,17 +148,20 @@ public class ShowAInventory
     {
         if (_invType=="Main")
         {
-            //so Y is resested when a new Colum is reached 
-            var lineNumber = (float)i / (float)_mainLines;
-            var roundDown = int.Parse(lineNumber.ToString("F0"));
-            var factor = lineNumber - roundDown;
+            ////so Y is resested when a new Colum is reached 
+            //var lineNumber = (float)i / (float)_mainLines;
+            //var roundDown = int.Parse(lineNumber.ToString("F0"));
+            //var factor = lineNumber - roundDown;
 
-            if (i==0)
-            {
-                return 0;
-            }
-            return -(ReturnRelativeYSpace(26, _allItems[0].transform.localScale.y))
-                * _mainLines * factor;//32
+            //if (i==0)
+            //{
+            //    return 0;
+            //}
+            //return -(ReturnRelativeYSpace(26, _allItems[0].transform.localScale.y))
+            //    * _mainLines * factor;//32
+            return -(ReturnRelativeYSpace(28, ReturnTileYScale())) * i;
+
+
         }
 
         //var screenY = Screen.height / 3.5f;

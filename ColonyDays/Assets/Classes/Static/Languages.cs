@@ -240,6 +240,8 @@ public class Languages
        { "Feedback", "Feedback!? Awesome...:) Thanks. 8) "},
        { "OptionalFeedback", "Feedback is crucial. Pls drop a word"},
        { "MandatoryFeedback", "Only the dev team will see this. Your rate is?"},
+       { "PathToSeaExplain", "Displays the shortest way to the sea."},
+
 
        { "BugReport", "Caught a bug? uhmm yummy.... Send it this way!! Thanks"},
        { "Invitation", "Your friend's email for a chance to join the Private Beta"},

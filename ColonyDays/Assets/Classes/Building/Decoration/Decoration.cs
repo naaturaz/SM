@@ -90,7 +90,7 @@ public class Decoration  {
             return;
         }
 
-        for (int i = 1; i < 23; i++)
+        for (int i = 1; i < 25; i++)
         {
             _roots.Add("Prefab/Terrain/Spawner/Orna/Xmas/X" + i);
         }

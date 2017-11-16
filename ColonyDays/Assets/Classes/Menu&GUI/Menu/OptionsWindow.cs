@@ -9,8 +9,15 @@ using UnityEngine.UI;
 public class OptionsWindow : GUIElement
 {
     private Toggle _fullToggle;
+
     private Toggle _musicToggle;
     private Toggle _soundToggle;
+
+    private Toggle _babyBornToggle;
+    private Toggle _buildCompletedToggle;
+    private Toggle _citizensVoiceToggle;
+
+
     private Toggle _halloToggle;
     private Toggle _xmasToggle;
 
@@ -39,8 +46,15 @@ public class OptionsWindow : GUIElement
         iniPos = transform.position;
 
         _fullToggle = GetGrandChildCalled("FullScreen_Toggle").GetComponent<Toggle>();
+
         _musicToggle = GetGrandChildCalled("Music_Toggle").GetComponent<Toggle>();
         _soundToggle = GetGrandChildCalled("Sound_Toggle").GetComponent<Toggle>();
+
+        _babyBornToggle = GetGrandChildCalled("Baby_Born_Toggle").GetComponent<Toggle>();
+        _buildCompletedToggle = GetGrandChildCalled("Building_Completed_Toggle").GetComponent<Toggle>();
+        _citizensVoiceToggle = GetGrandChildCalled("Citizens_Voice_Toggle").GetComponent<Toggle>();
+
+
         _halloToggle = GetGrandChildCalled("Halloween_Toggle").GetComponent<Toggle>();
         _xmasToggle = GetGrandChildCalled("Xmas_Toggle").GetComponent<Toggle>();
 
@@ -100,14 +114,29 @@ public class OptionsWindow : GUIElement
         _musicToggle.isOn = Settings.ISMusicOn;
         _soundToggle.isOn = Settings.ISSoundOn;
 
+        //the very first time will be on, and if not touch will be on
+        _babyBornToggle.isOn = PlayerPrefs.GetInt("BabyBorn") > -1;
+        _buildCompletedToggle.isOn = PlayerPrefs.GetInt("Built") > -1;
+        _citizensVoiceToggle.isOn = PlayerPrefs.GetInt("Voice") > -1;
+
+
         _halloToggle.isOn = Settings.IsHalloweenTheme;
         _xmasToggle.isOn = Settings.IsXmas;
 
 
+
+
         //so they dont trigger event 
         _fullToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Full"));
+
         _musicToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Music"));
         _soundToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Sound"));
+
+        _babyBornToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.BabyBorn"));
+        _buildCompletedToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Built"));
+        _citizensVoiceToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Voice"));
+
+
         _halloToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Hallo"));
         _xmasToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Xmas"));
 
@@ -200,9 +229,23 @@ public class OptionsWindow : GUIElement
         {
             Hide();
         }
+        //audio
         else if (sub == "Music" || sub == "Sound")
         {
             ChangeAudioSettings(sub);
+        }
+        //
+        else if(sub == "BabyBorn")
+        {
+            SetPlayerPrefInt(sub, _babyBornToggle.isOn);
+        }
+        else if (sub == "Built")
+        {
+            SetPlayerPrefInt(sub, _buildCompletedToggle.isOn);
+        }
+        else if (sub == "Voice")
+        {
+            SetPlayerPrefInt(sub, _citizensVoiceToggle.isOn);
         }
         else if (sub == "Hallo")
         {
@@ -220,6 +263,17 @@ public class OptionsWindow : GUIElement
         }
     }
 
+    void SetPlayerPrefInt(string which, bool onOrOff)
+    {
+        if (onOrOff)
+        {
+            PlayerPrefs.SetInt(which, 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt(which, -1);
+        }
+    }
 
 
     public void ReFreshDropsThenShow()
