@@ -17,6 +17,12 @@ public class ScrollViewShowInventory : GUIElement
 
     ShowAInventory _showAInv;
 
+    int _oldItemsAmt;
+
+
+    static bool _isMouseOnMe;
+    private float _tileHeight = 3.48f;//3.5
+
     // Use this for initialization
     void Start()
     {
@@ -26,7 +32,23 @@ public class ScrollViewShowInventory : GUIElement
         RedoInvIfIfWhichIsEmpty();
 
         Show();
+
+        StartCoroutine("ThirtySecUpdate");
     }
+
+    private IEnumerator ThirtySecUpdate()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(30); // wait
+            if (_showAInv.RedoItemsIfOldInvIsDiff())
+            {
+                AdjustContentHeight(_inv.InventItems.Count * _tileHeight);
+
+            }
+        }
+    }
+
 
     /// <summary>
     /// So far used for ourInventories in the add import export order 
@@ -59,12 +81,14 @@ public class ScrollViewShowInventory : GUIElement
 
         _showAInv = new ShowAInventory(_inv, _content, _scroll_Ini_PosGO.transform.localPosition, Which);
         ResetScroolPos();
-        AdjustContentHeight(_inv.InventItems.Count * 3.5f);
+        AdjustContentHeight(_inv.InventItems.Count * _tileHeight);
     }
 
 
-    static bool _isMouseOnMe;
 
+    /// <summary>
+    /// If true the mouse is on me right now
+    /// </summary>
     static public bool IsMouseOnMe
     {
         get

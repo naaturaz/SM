@@ -64,7 +64,7 @@ public class ForSaleRegionGO : Hoverable
         Name = "Buy region";
         HType = H.BuyRegion;
 
-        transform.position += new Vector3(0, 1000, 0);
+        transform.position += new Vector3(0, 10000, 0);
     }
 
 
@@ -92,7 +92,7 @@ public class ForSaleRegionGO : Hoverable
     {
         if (_isUpNow && !_isShown)
         {
-            transform.position += new Vector3(0, 1000, 0);
+            transform.position += new Vector3(0, 10000, 0);
             _isUpNow = false;
         }
     }
@@ -101,7 +101,7 @@ public class ForSaleRegionGO : Hoverable
     {
         if (!_isUpNow && _isShown)
         {
-            transform.position += new Vector3(0, -1000, 0);
+            transform.position += new Vector3(0, -10000, 0);
             _isUpNow = true;
         }
     }

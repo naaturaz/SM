@@ -310,6 +310,7 @@ public class Settings
 
     internal static void SetUnit(string sub)
     {
+        Languages.ResetLanguages();
         if (sub == "Metric")
         {
             Unit.Units = 'm';

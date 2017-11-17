@@ -6,21 +6,32 @@ using System;
 public class Languages
 {
     private static string _currentLang = "English";
+    private static Dictionary<string, string> _spanish = new Dictionary<string, string>();
+    private static Dictionary<string, string> _english = new Dictionary<string, string>();
 
 
-    private static string _houseTail = ". SugarMiller's live here and enjoy having a nice meal at least once in a while";
-    private static string _animalFarmTail = ", you can raise different animals in this building";
-    private static string _fieldFarmTail = ", you can plant different crops and fruits in this building";
-    private static string _asLongHasInput = ", as long as it has the necessary inputs";
-    private static string _produce = "In this building workers will produce the selected product, as long as it has the necessary inputs";
-    private static string _storage =
-    "You can use this building as storage, however, if it gets full people won't work if they don't have room where to store their products";
-    private static string _militar = "This building helps to decrease the Pirate Threat on your port, to be effective it must have workers. The more workers the better";
-
-    private static string _notRegionNeeded = " Can be built without owning the region.";
+    /// <summary>
+    /// Will be called when a System Units is changed 
+    /// </summary>
+    public static void ReloadDict()
+    {
 
 
-    static Dictionary<string, string> _english = new Dictionary<string, string>()
+
+
+        string _houseTail = ". SugarMiller's live here and enjoy having a nice meal at least once in a while";
+        string _animalFarmTail = ", you can raise different animals in this building";
+        string _fieldFarmTail = ", you can plant different crops and fruits in this building";
+        string _asLongHasInput = ", as long as it has the necessary inputs";
+        string _produce = "In this building workers will produce the selected product, as long as it has the necessary inputs";
+        string _storage =
+        "You can use this building as storage, however, if it gets full people won't work if they don't have room where to store their products";
+        string _militar = "This building helps to decrease the Pirate Threat on your port, to be effective it must have workers. The more workers the better";
+
+        string _notRegionNeeded = " Can be built without owning the region.";
+
+
+        _english = new Dictionary<string, string>()
     {
         //Descriptions
         //Infr
@@ -476,6 +487,7 @@ public class Languages
 
        { "Production Tab.Help", "If the building is a farm field make sure you have workers on the farm. The crop will be lost if sits there a month after harvest day"},
        { "Our Inventories.Help", "The section 'Our inventories' in the 'Add Order Window' is a resume of what we got in our Storages buildings inventories"},
+       { "Inventories Explanation.Help", "This a resume of what we got in our Storages inventories. Items in other buildings inventories do not belong to the city"},
 
        ///word and grammarly below
 
@@ -734,7 +746,13 @@ public class Languages
         { "The.Male", "The"},
         { "The.Female", "The"},
 
-    };
+        //
+        { "Build.Destroy.Soon", "This building will be destroyed soon. If inventory is not empty, it needs to be cleared by wheelbarrows"},
+
+
+
+
+};
 
 
 
@@ -770,19 +788,19 @@ public class Languages
 
 
 
-    //ESPANNOL
-    private static string _houseTailES = ". A los Azucareros les encanta comerse una buena comida de vez en cuando";
-    private static string _animalFarmTailES = ", aqui se pueden criar diferentes animales";
-    private static string _fieldFarmTailES = ", aqui se puede cultivar diferentes cultivos";
-    private static string _asLongHasInputES = ", siempre y cuando tenga la materia prima necesaria";
-    private static string _produceES = "Aqui los trabajadores produciran el producto selectionado, siempre y cuando exista la materia prima";
-    private static string _storageES =
-        "Aqui se almacenan todos los productos, si se llena los ciudadanos no tendran donde almacenar sus cosas";
-    private static string _militarES = "Con esta construccion la Amenaza Pirata decrece, " +
-                                       "para ser efectiva necesita trabajadores. Mientras mas, mejor";
+        //ESPANNOL
+        string _houseTailES = ". A los Azucareros les encanta comerse una buena comida de vez en cuando";
+        string _animalFarmTailES = ", aqui se pueden criar diferentes animales";
+        string _fieldFarmTailES = ", aqui se puede cultivar diferentes cultivos";
+        string _asLongHasInputES = ", siempre y cuando tenga la materia prima necesaria";
+        string _produceES = "Aqui los trabajadores produciran el producto selectionado, siempre y cuando exista la materia prima";
+        string _storageES =
+            "Aqui se almacenan todos los productos, si se llena los ciudadanos no tendran donde almacenar sus cosas";
+        string _militarES = "Con esta construccion la Amenaza Pirata decrece, " +
+                                          "para ser efectiva necesita trabajadores. Mientras mas, mejor";
 
 
-    static Dictionary<string, string> _spanish = new Dictionary<string, string>()
+        _spanish = new Dictionary<string, string>()
     {
        //Descriptions
        //Infr
@@ -1539,8 +1557,21 @@ public class Languages
         //OrderShow.cs
     };
 
+
+
+
+    }
+
+
+
+
+
+
+
     public static string ReturnString(string key)
     {
+        ReloadIfNeeded();
+
         if (_currentLang == "English")
         {
             if (_english.ContainsKey(key))
@@ -1560,6 +1591,20 @@ public class Languages
             return key + " not in ES Languages";
         }
         return "not languages selected ";
+    }
+
+    private static void ReloadIfNeeded()
+    {
+        if (_english.Count == 0)
+        {
+            ReloadDict();
+        }
+    }
+
+    public static void ResetLanguages()
+    {
+        _english.Clear();
+        _spanish.Clear();
     }
 
     public static void SetCurrentLang(string lang)

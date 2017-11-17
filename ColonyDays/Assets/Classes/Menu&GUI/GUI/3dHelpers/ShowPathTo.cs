@@ -196,6 +196,8 @@ public class ShowPathTo
         else if(_type == "Sea" && !shown)
         {
             shown = true;
+            //Program.MouseListener.HelpWindow.ShowSpecificItemDontHideWindows("Sea Path.Help");
+
             Dialog.OKDialog(H.PathToSeaExplain);
         }
 

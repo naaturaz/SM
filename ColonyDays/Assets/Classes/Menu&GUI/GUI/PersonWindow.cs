@@ -160,21 +160,21 @@ public class PersonWindow : GUIElement
         _showAInventory.ManualUpdate();
         _inv.text = BuildStringInv(_person);
 
-        //if (_aPersonBuildingDetails == null)
-        //{
-        //    _aPersonBuildingDetails = new ShowAPersonBuildingDetails(_person, _general, _inv_Ini_Pos_Gen.transform.localPosition);
-        //}
-        //else
-        //{
-        //    //manual update
-        //    _aPersonBuildingDetails.ManualUpdate(_person);
-        //}
+        if (_aPersonBuildingDetails == null)
+        {
+            _aPersonBuildingDetails = new ShowAPersonBuildingDetails(_person, _general, _inv_Ini_Pos_Gen.transform.localPosition);
+        }
+        else
+        {
+            //manual update
+            _aPersonBuildingDetails.ManualUpdate(_person);
+        }
     }
 
 
     string BuildPersonInfo()
     {
-        //return "";
+        return "";
 
         return DebugAgentInfo();
 
@@ -281,7 +281,10 @@ public class PersonWindow : GUIElement
             }
         }
 
-
+        if (_showAInventory != null)
+        {
+            _showAInventory.UpdateToThisInv(_person.Inventory);
+        }
 
         //if click gen
         if (_genBtnRect.Contains(Input.mousePosition) && Input.GetMouseButtonUp(0))

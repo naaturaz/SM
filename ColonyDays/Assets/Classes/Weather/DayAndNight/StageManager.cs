@@ -44,8 +44,7 @@ public class StageManager : General
     /// </summary>
     List<float> _times = new List<float>() { 1, 20, 120, 120, 5, 5 };
 
-    //List<float> _times = new List<float>() { 1, 20, 120, 120, 20, 5 };
-    //List<float> _times = new List<float>() { 1, 1, 1, 1, 1, 5 };
+    //List<float> _times = new List<float>() { 1, 5, 5, 5, 1, 5 };
 
     float _startedCycleAt = 0;
 
@@ -84,9 +83,9 @@ public class StageManager : General
             return;
         }
 
-#if UNITY_EDITOR
-        return;
-#endif
+//#if UNITY_EDITOR
+//        return;
+//#endif
 
         CheckIfMoveStages();
 

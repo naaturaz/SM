@@ -3744,9 +3744,10 @@ public class Building : Hoverable, Iinfo
         {
             P prod = rawsOnNeed[i].Element;
             //so for nails for example for a Furnitrue will only order 0.2 x 30 = 6kg
-            var amtNeeded = rawsOnNeed[i].Units * 10;
+            var amtNeeded = rawsOnNeed[i].Units * 20;//10
 
-            if (!HaveThisProdOnInv(prod) || !doIHaveInput)
+            if (!HaveThisProdOnInv(prod)// || !doIHaveInput
+                )
             {
                 //todo use 10000 to put a large number of units needed
                 Order prodNeed = new Order(prod, MyId, amtNeeded);//300
@@ -3851,11 +3852,13 @@ public class Building : Hoverable, Iinfo
 
         for (int i = 0; i < closest.Count; i++)
         {
-            AddEvaToAllInv(closest[i]);
+            //the order needs to be inserted as the 1st one so it gets addressed right away 
+            //and therefore destroyed
+            AddEvaToAllInv(closest[i], true);
         }
     }
 
-    void AddEvaToAllInv(Structure closest)
+    void AddEvaToAllInv(Structure closest, bool isToInsert)
     {
         //only for debug bz a WheelBarrow always should be up
         if (closest == null)
@@ -3870,7 +3873,7 @@ public class Building : Hoverable, Iinfo
 
         for (int i = 0; i < orders.Count; i++)
         {
-            closest.Dispatch1.AddEvacuationOrderToWheelBarrow(orders[i]);
+            closest.Dispatch1.AddEvacuationOrderToWheelBarrow(orders[i], isToInsert);
         }
     }
 

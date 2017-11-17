@@ -230,15 +230,24 @@ public class Dispatch
     }
     /// <summary>
     /// Evac order in a wheelbacrrow will overwrite if they are from the same place and same prod 
+    /// 
+    /// isToInsertOrder to be used by buildings destroyed
     /// </summary>
     /// <param name="evacOrder"></param>
-    public void AddEvacuationOrderToWheelBarrow(Order evacOrder)
+    public void AddEvacuationOrderToWheelBarrow(Order evacOrder, bool isToInsertOrder = false)
     {
         if (!ListContains(Orders, evacOrder) && !ListContains(_dormantOrders, evacOrder))
         {
-            Orders.Add(evacOrder);
-            //OrderByPlacedTime(Orders);
-            //Debug.Log("evac order added:"+evacOrder.Product+" orig:"+evacOrder.SourceBuild);
+            if (!isToInsertOrder)
+            {
+                Orders.Add(evacOrder);
+            }
+        }
+        //it doesnt need to see if is coitained in any list. As this are sent from Buildings that are
+        //being set to be destrioyed 
+        if (isToInsertOrder)
+        {
+            Orders.Insert(0, evacOrder);
         }
     }
 

@@ -100,6 +100,8 @@ public class ShowAInventory
     }
 
     private float _oldVolumeOccupied;
+    int _oldItemsAmt;
+
     private void ShowAllItems( )
     {
         //bridge for ex
@@ -217,34 +219,27 @@ public class ShowAInventory
 
     public void Update()
     {
-        if (Inv.InventItems.Count > 0 && _allItems.Count == 0)
-        {
-            RedoItemsIfOldInvIsDiff();
-        }
+
     }
 
-    //so far only called from myForm.cs
     public void UpdateEvery2Sec()
     {
         ManualUpdateOfAllInvItems();
 
-
         UpdateToThisInv(Inv);
     }
 
-    public void UpdateEveryMinute()
-    {
-        RedoItemsIfOldInvIsDiff();
-    }
 
-    private void RedoItemsIfOldInvIsDiff()
+    public bool RedoItemsIfOldInvIsDiff()
     {
-        if (!UMath.nearlyEqual(_oldVolumeOccupied, Inv.CurrentVolumeOcuppied(), 0.01f))//0.001
+        if (!UMath.nearlyEqual(_oldVolumeOccupied, Inv.CurrentVolumeOcuppied(), 0.01f) || 
+            _oldItemsAmt != Inv.InventItems.Count)//0.001
         {
-            //Debug.Log("Redone InvShow");
-            DestroyAll();
-            ShowAllItems();
+            _oldItemsAmt = Inv.InventItems.Count;
+            UpdateToThisInv(Inv);
+            return true;
         }
+        return false;
     }
 
 

@@ -690,7 +690,7 @@ public class BuildingWindow : GUIElement
     {
         if (Building.Instruction == H.WillBeDestroy)
         {
-            return "This building will be destroyed soon";
+            return Languages.ReturnString("Build.Destroy.Soon");
         }
         return current;
     }

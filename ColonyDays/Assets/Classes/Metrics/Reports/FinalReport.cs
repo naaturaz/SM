@@ -42,6 +42,8 @@ public class FinalReport
     public H TypeOfGame;
     public int Quality;
 
+    public Inventory ResumeInv;
+
     public  void FinishReport(string addName = "")
     {
         GatherReport();
@@ -60,6 +62,7 @@ public class FinalReport
         PirateThr = BuildingPot.Control.DockManager1.PirateThreat;
         Dollar = Program.gameScene.GameController1.Dollars;
         Buildings = BuildingPot.Control.Registro.StringOfAllBuildings();
+        ResumeInv = GameController.ResumenInventory1.GameInventory;
 
         //fps average
         var ttlTemp = 0f;

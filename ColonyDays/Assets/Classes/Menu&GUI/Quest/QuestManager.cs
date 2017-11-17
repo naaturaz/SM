@@ -112,9 +112,10 @@ public class QuestManager
     {
         var res = _currentQuests.ToArray();
 
-        var listRes = res.ToList();
-        listRes.AddRange(_doneQuest);
-        listRes = listRes.Distinct().ToList();
+        var listRes = _doneQuest.ToArray().ToList();
+        listRes.AddRange(res.ToList());
+
+        listRes = listRes.Distinct().OrderByDescending(a=>a).ToList();
 
         List<Quest> fin = new List<Quest>();
         for (int i = 0; i < listRes.Count; i++)
