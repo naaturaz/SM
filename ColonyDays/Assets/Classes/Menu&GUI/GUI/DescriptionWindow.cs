@@ -31,18 +31,18 @@ public class DescriptionWindow : GUIElement
     {
         iniPos = transform.position;
 
-        _title = GetChildThatContains(H.Title);
+        _title = GetChildCalled(H.Title);
         _cost = GetChildThatContains(H.Cost);
         _description = GetChildThatContains(H.Description);
 
-        _buildBanner = GetComponent<Image>();
+        _buildBanner = GetChildCalled("Banner"). GetComponent<Image>();
         _defaultSprite = _buildBanner.sprite;
     }
 
     public void Hide()
     {
         Vector3 newPos = transform.position;
-        newPos.y = -80f;
+        newPos.y = -200f;//80
 
         transform.position = newPos;
         _type = H.None;
