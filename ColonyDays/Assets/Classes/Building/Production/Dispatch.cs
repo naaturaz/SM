@@ -370,7 +370,7 @@ public class Dispatch
                 || currOrders[i].IsCompleted)
             {
                 //todo Notify
-                Debug.Log("Inv full to DestBuild:" + currOrders[i].DestinyBuild + "|for prod:" + currOrders[i].Product + ""
+                Debug.Log("*Inv full to DestBuild:" + currOrders[i].DestinyBuild + "|for prod:" + currOrders[i].Product + ""
                     + "|order removed. Or  had >500KG on Destiny of the prod. or was completed");
 
                 bool wasRemoved = RemoveOrderByIDExIm(currOrders[i].ID);
@@ -464,8 +464,14 @@ public class Dispatch
             return false;
         }
 
+        //if (destBuild.HType.ToString().Contains("Storage"))
+        //{
+        //    return false;
+        //}
+
         if (destBuild.Inventory.ReturnAmtOfItemOnInv(order.Product) > amtMax)
         {
+            Debug.Log("**Inv full to DestBuild: " + order.DestinyBuild + " |for prod:" + order.Product + " >500kg");
             return true;
         }
         return false;
@@ -480,6 +486,7 @@ public class Dispatch
         {
             return false;
         }
+
 
         if (destBuild.Inventory.IsFullForThisProd(order.Product))
         {

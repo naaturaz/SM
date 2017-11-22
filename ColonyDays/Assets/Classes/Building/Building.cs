@@ -3198,7 +3198,7 @@ public class Building : Hoverable, Iinfo
         }
         
         //if has more thn 2000Kg of current prd can add Evac order as weell
-        if (Inventory.ReturnAmtOfItemOnInv(_currentProd.Product) > 2000)
+        if (Inventory.ReturnAmtOfItemOnInv(_currentProd.Product) > 500)//2000
         {
             //todo show 3d icon
             AddEvacuationOrderOfProdThatAreNotInput();
@@ -3746,8 +3746,7 @@ public class Building : Hoverable, Iinfo
             //so for nails for example for a Furnitrue will only order 0.2 x 30 = 6kg
             var amtNeeded = rawsOnNeed[i].Units * 20;//10
 
-            if (!HaveThisProdOnInv(prod)// || !doIHaveInput
-                )
+            if (!HaveThisProdOnInv(prod) || !doIHaveInput)//put back !doIHaveInput bz gives bug later on 
             {
                 //todo use 10000 to put a large number of units needed
                 Order prodNeed = new Order(prod, MyId, amtNeeded);//300

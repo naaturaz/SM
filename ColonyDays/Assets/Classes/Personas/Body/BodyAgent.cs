@@ -89,7 +89,7 @@ public class BodyAgent
         if (_startDate!=null && Program.gameScene.GameTime1.ElapsedDateInDaysToDate(_startDate) > 30)
         {
             //so restarts the routing
-            Debug.Log(_person.Name + " - stuck. restarts the routing");
+            //Debug.Log(_person.Name + " - stuck. restarts the routing");
             _destWasSet = false;
             _startDate = null;
         }
@@ -221,7 +221,7 @@ public class BodyAgent
         }
         else
         {
-            _agent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
+            _agent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;//low
         }
     }
 
