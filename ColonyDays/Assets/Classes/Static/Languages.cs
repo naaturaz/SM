@@ -138,6 +138,12 @@ public class Languages
        { "Fort.Desc",_militar},
        { "Morro.Desc",_militar+". Once you build this, Pirates should know better"},
 
+       //Decoration
+       { "Fountain.Desc", "Beauty your town and adds overall happiness to your citizens"},
+       { "WideFountain.Desc", "Beauty your town and adds overall happiness to your citizens"},
+       { "PalmTree.Desc", "Beauty your town and adds overall happiness to your citizens"},
+
+
 
        //Buildings name
        //Infr
@@ -309,6 +315,8 @@ public class Languages
        { "Gov.HoverSmall", "Government"},
        { "Other.HoverSmall", "Other"},
        { "Militar.HoverSmall", "Military"},
+       { "Decoration.HoverSmall", "Decoration"},
+
        { "WhereIsTown.HoverSmall", "Back to town [P]"},
        { "WhereIsSea.HoverSmall", "Show/hide path to sea"},
        { "Helper.HoverSmall", "Help"},

@@ -47,9 +47,10 @@ public class Decoration  {
     int HowMany()
     {
         //bz it should be small so it doest cover the lamp 
-        if (_building.HType == H.StandLamp)
+        if (_building.HType == H.StandLamp
+             || _building.HType == H.Fountain || _building.HType == H.WideFountain || _building.HType == H.PalmTree)
         {
-            return 6 + 1;
+            return 5 + 1;
         }
         return 9 + 1;
     }

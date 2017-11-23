@@ -804,6 +804,10 @@ public class Root : MonoBehaviour
         buildsRoot.Add(H.Fort, "Prefab/Building/Militar/Fort");
         buildsRoot.Add(H.Morro, "Prefab/Building/Militar/Morro");
 
+        //decoration
+        buildsRoot.Add(H.Fountain, "Prefab/Building/Decoration/Fountain");
+        buildsRoot.Add(H.WideFountain, "Prefab/Building/Decoration/WideFountain");
+        buildsRoot.Add(H.PalmTree, "Prefab/Building/Decoration/PalmTree");
 
 
         //Helper

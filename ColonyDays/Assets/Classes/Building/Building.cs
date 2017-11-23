@@ -888,8 +888,9 @@ public class Building : Hoverable, Iinfo
         {
             return;
         }
-        if (MyId.Contains("Bridge") || MyId.Contains("Farm") || doubleBounds.Contains(HType) ||
-            HType == H.StandLamp)
+        if (MyId.Contains("Bridge") || MyId.Contains("Farm") || doubleBounds.Contains(HType) 
+            //||            HType == H.StandLamp
+            )
         {
             isDecorated = true;
             return;
@@ -1416,6 +1417,12 @@ public class Building : Hoverable, Iinfo
     /// </summary>
     Dictionary<H, Vector3> _percetagesReduction = new Dictionary<H, Vector3>()
     {
+        { H.Fountain, new Vector3(-99,0,-99)},
+        { H.WideFountain, new Vector3(-90,0,-90)},
+        { H.PalmTree, Vector3.forward },//will remove NavMesh Obj component
+
+
+
         { H.StandLamp, new Vector3(0,0,0)},//wont get carved
         { H.HeavyLoad, new Vector3(-8,0,-8)},
         { H.LightHouse, new Vector3(-20,0,-40)},

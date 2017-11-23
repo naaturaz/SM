@@ -119,6 +119,12 @@ public class UnlockBuilds
             new BRequires(H.Fort, H.Coming_Soon),       
             new BRequires(H.Morro, H.Coming_Soon),
 
+            //decoration
+            new BRequires(H.Fountain, true),
+            new BRequires(H.WideFountain, true),
+            new BRequires(H.PalmTree, true),
+
+
             //helper
             new BRequires(H.BullDozer, true),
 

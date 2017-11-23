@@ -765,6 +765,10 @@ public class MouseListener : InputMain
         {
             res = 9;
         }
+        else if (action == "Decoration")
+        {
+            res = 10;
+        }
         return res;
     }
 

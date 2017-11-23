@@ -164,6 +164,10 @@ public class Book : General
         Build.Add(new BuildStat(H.Fort, 2600, 80, 20, 0, 5, maxPeople: 10));
         Build.Add(new BuildStat(H.Morro, 2600, 80, 20, 0, 5, maxPeople: 10));
 
+        //Decoration
+        Build.Add(new BuildStat(H.Fountain, 100, 0, 10, 0, 5, maxPeople: 0, capacity: 0f));
+        Build.Add(new BuildStat(H.WideFountain, 100, 0, 20, 0, 5, maxPeople: 0, capacity: 0f));
+        Build.Add(new BuildStat(H.PalmTree, 100, 0, 5, 0, 0, maxPeople: 0, capacity: 0f, colonyDollar: 20));
 
 
         //Helper
@@ -190,6 +194,8 @@ public class Book : General
         var other = StOther.GetValues(typeof(StOther));
         var mil = StMil.GetValues(typeof(StMil));
         var structCateg = StCat.GetValues(typeof(StCat));
+        var dec = StDec.GetValues(typeof(StDec));
+
 
         MenuGroupsList = UList.ConvertToList(structCateg);
 
@@ -205,6 +211,8 @@ public class Book : General
         listedArrays.Add(UList.ConvertToList(govServ));
         listedArrays.Add(UList.ConvertToList(other));
         listedArrays.Add(UList.ConvertToList(mil));
+        listedArrays.Add(UList.ConvertToList(dec));
+
 
         for (int i = 0; i < MenuGroupsList.Count; i++)
         {

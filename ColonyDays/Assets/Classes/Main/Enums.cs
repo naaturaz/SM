@@ -233,7 +233,7 @@ public enum H
     /// add on UnlockBuilds.cs
     /// and underneath the proper region in this file
     /// and if produces anything u want to added in Production.cs
-    ///  thts all 
+    /// thts all 
     /// 
     /// add the type of Product produces on Production.cs
     /// if Category will be diff than structure set on General.DefineCategory()
@@ -291,7 +291,8 @@ public enum H
     //Militar
     WoodPost, PostGuard, Fort, Morro, 
 
-
+    //Decorations 
+    Fountain, WideFountain, PalmTree,
 
 
     WillBeDestroy,
@@ -447,12 +448,13 @@ public enum H
     BullDozer,
     Defender,
     PathToSeaExplain,
+    
 }
 
 //if new categorY IS ADDED PLS ADD ON BOOK.CS
 public enum StCat //strucutre categories
 {
-    Infrastructure, Housing, Farming, Raw, Production, Industry, Trade, GovServices, Other, Militar
+    Infrastructure, Housing, Farming, Raw, Production, Industry, Trade, GovServices, Other, Militar, Decoration
 }
 
 
@@ -540,6 +542,11 @@ public enum StOther //for structures game structure.cs
 public enum StMil //for structures game structure.cs 
 {
     WoodPost, PostGuard, Fort, Morro,
+}
+
+public enum StDec //for structures game structure.cs 
+{
+    Fountain, WideFountain, PalmTree
 }
 
 
