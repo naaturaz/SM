@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /*
@@ -76,6 +77,14 @@ public class Inventory
         {//bz is called add will stop when the amt is zero //+1 is bz zero doesnt get added
             _inventItems.Add(new InvItem(P.Year, float.Parse(LocMyId) + 1));
         }
+    }
+
+    /// <summary>
+    /// Will order items alphabetically
+    /// </summary>
+    internal void OrderItemsAlpha()
+    {
+        _inventItems = _inventItems.OrderBy(a => a.Key.ToString()).ToList();
     }
 
 

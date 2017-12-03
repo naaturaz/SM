@@ -79,6 +79,7 @@ public class ScrollViewShowInventory : GUIElement
             RedoInvIfIfWhichIsEmpty();
         }
 
+
         _showAInv = new ShowAInventory(_inv, _content, _scroll_Ini_PosGO.transform.localPosition, Which);
         ResetScroolPos();
         AdjustContentHeight(_inv.InventItems.Count * _tileHeight);

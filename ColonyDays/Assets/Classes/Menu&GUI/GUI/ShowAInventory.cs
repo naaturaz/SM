@@ -28,6 +28,7 @@ public class ShowAInventory
 
         _iniPos = iniPos;
         _inv = inv;
+        _inv.OrderItemsAlpha();
         _containr = container;
 
         ShowAllItems();
@@ -255,6 +256,7 @@ public class ShowAInventory
     internal void UpdateToThisInv(Inventory inventory)
     {
         Inv = inventory;
+        Inv.OrderItemsAlpha();
 
         var iForSpwItem = 0;//so ReturnIniPos works nicely
         for (int i = 0; i < _inv.InventItems.Count; i++)

@@ -5,7 +5,8 @@ using System.Collections.Generic;
 /// <summary>
 /// Will decorate the surroundings of a building 
 /// </summary>
-public class Decoration  {
+public class Decoration
+{
 
     List<string> _roots = new List<string>()
     {
@@ -19,14 +20,14 @@ public class Decoration  {
         //"Prefab/Terrain/Spawner/Decora/RusticChair",
     };
 
-    
 
-    
+
+
 
     private Building _building;
-    List<Line> _lines = new List<Line>(); 
+    List<Line> _lines = new List<Line>();
 
-    List<Vector3> _positionsToSpawnDecor=new List<Vector3>();
+    List<Vector3> _positionsToSpawnDecor = new List<Vector3>();
     private General _spwnedObj;
 
     private RandomUV _randomUV;
@@ -44,14 +45,24 @@ public class Decoration  {
     }
 
 
+    bool IsSmallBuilding()
+    {
+        return _building.HType == H.StandLamp
+             || _building.HType == H.Fountain || _building.HType == H.WideFountain || _building.HType == H.PalmTree;
+    }
+
     int HowMany()
     {
         //bz it should be small so it doest cover the lamp 
-        if (_building.HType == H.StandLamp
-             || _building.HType == H.Fountain || _building.HType == H.WideFountain || _building.HType == H.PalmTree)
+        if (IsSmallBuilding())
         {
-            return 5 + 1;
+            return 2 + 1;
         }
+        if (_building.HType.ToString().Contains("House") || _building.HType.ToString().Contains("Shack"))
+        {
+            return 7 + 1;
+        }
+
         return 9 + 1;
     }
 
@@ -63,10 +74,13 @@ public class Decoration  {
             _roots.Add("Prefab/Terrain/Spawner/Orna/Orna" + i);
         }
 
-        //Hallow
-        AddHalloweenToRoot();
-        //Xmas
-        AddXMasToRoot();
+        if (!IsSmallBuilding())
+        {
+            //Hallow
+            AddHalloweenToRoot();
+            //Xmas
+            AddXMasToRoot();
+        }
 
         Init();
     }
@@ -103,7 +117,7 @@ public class Decoration  {
         _lines = U2D.FromPolyToLines(scaledAnchors);
         RemoveSpwnPointLine();
         FindPositionToSpwnDecor();
-        
+
         SpawnDecorObj();
         //AddToBatchMesh();
 
@@ -147,7 +161,7 @@ public class Decoration  {
         GetRidOfUnselected(ones, twos, threes, _pirate, "Pirate");//romeo selection
     }
 
-    private void GetRidOfUnselected(GameObject[] ones,GameObject[] twos, GameObject[] threes, int selection,
+    private void GetRidOfUnselected(GameObject[] ones, GameObject[] twos, GameObject[] threes, int selection,
         string name)
     {
         if (selection == 1)
@@ -190,15 +204,15 @@ public class Decoration  {
 
     private void DefineRamdonSelection()
     {
-        _romeo = UMath.GiveRandom(1,4);
-        _bravo = UMath.GiveRandom(1,4);
-        _pirate = UMath.GiveRandom(1,4);
+        _romeo = UMath.GiveRandom(1, 4);
+        _bravo = UMath.GiveRandom(1, 4);
+        _pirate = UMath.GiveRandom(1, 4);
     }
 
 
 
 
-#endregion
+    #endregion
 
     /// <summary>
     /// The line facing spawnPoint wil be removed
@@ -230,15 +244,15 @@ public class Decoration  {
 
     private void SpawnDecorObj()
     {
-        _spwnedObj = General.Create(Root.classesContainer,_building.transform.position,"",_building.transform,
+        _spwnedObj = General.Create(Root.classesContainer, _building.transform.position, "", _building.transform,
             H.Decoration);
-        
+
         _spwnedObj.Category = _spwnedObj.DefineCategory(H.Decoration);
 
         for (int i = 0; i < _positionsToSpawnDecor.Count; i++)
         {
             var root = _roots[UMath.GiveRandom(0, _roots.Count)];
-            
+
             //moving a bit away from  buildings
             //var iniPos = Vector3.MoveTowards(_positionsToSpawnDecor[i], _building.transform.position, -.2f);
 
@@ -277,10 +291,10 @@ public class Decoration  {
         {
             return;
         }
-        
+
         //ScaleDownTerrainSpawners
         var actScale = spwnObj.transform.localScale;
-        spwnObj.transform.localScale = actScale/2f;//2.5
+        spwnObj.transform.localScale = actScale / 2f;//2.5
     }
 
 

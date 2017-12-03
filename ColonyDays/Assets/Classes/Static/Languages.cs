@@ -25,7 +25,7 @@ public class Languages
         string _asLongHasInput = ", as long as it has the necessary inputs";
         string _produce = "In this building workers will produce the selected product, as long as it has the necessary inputs";
         string _storage =
-        "You can use this building as storage, however, if it gets full people won't work if they don't have room where to store their products";
+        "This is a Storage building. If it gets full people won't work as they won't have where to store their products";
         string _militar = "This building helps to decrease the Pirate Threat on your port, to be effective it must have workers. The more workers the better";
 
         string _notRegionNeeded = " Can be built without owning the region.";
