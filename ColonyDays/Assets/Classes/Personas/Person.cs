@@ -903,6 +903,28 @@ public class Person : Hoverable
         return m.IniTerr.MathCenter;
     }
 
+    bool _redoOrder;
+    internal void OrderRedoWhenGetsHome()
+    {
+        _redoOrder = true;    
+    }
+
+    public void CheckIfRedo()
+    {
+        if(_redoOrder)
+        {
+            _redoOrder = false;
+
+            CreateProfession(Job.None);
+
+            PersonPot.Control.RestartControllerForPerson(MyId);
+
+            Debug.Log("redo:" + name);
+        }
+    }
+
+
+
     /// <summary>
     /// Will say if origin is on terrain 
     /// </summary>

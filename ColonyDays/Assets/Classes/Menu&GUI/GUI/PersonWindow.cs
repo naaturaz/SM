@@ -176,7 +176,7 @@ public class PersonWindow : GUIElement
     {
         return "";
 
-        return DebugAgentInfo();
+        
 
         string res = "Age: " + _person.Age + "\n Gender: " + _person.Gender
                      + "\n Nutrition: " + _person.NutritionLevel
@@ -208,6 +208,8 @@ public class PersonWindow : GUIElement
 
 #if UNITY_EDITOR
         res += DebugInfo();
+
+        res += "\n\n" + DebugAgentInfo();
 #endif
         return res;
     }
@@ -240,7 +242,9 @@ public class PersonWindow : GUIElement
                   + "\n BodyLoc:" + _person.Body.Location
                   + "\n BodyGngTo:" + _person.Body.GoingTo
                   + "\n BornInfo:" + _person.DebugBornInfo
-                  + "\n wrkRouteChks:" + _person.Brain._workRoute.CheckPoints.Count;
+                  + "\n wrkRouteChks:" + _person.Brain._workRoute.CheckPoints.Count
+                  + "\n Body MovingNow:" + _person.Body.MovingNow;
+
 
 
 

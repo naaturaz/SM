@@ -123,6 +123,10 @@ public class UnlockBuilds
             new BRequires(H.Fountain, true),
             new BRequires(H.WideFountain, true),
             new BRequires(H.PalmTree, true),
+            new BRequires(H.FloorFountain, true),
+            new BRequires(H.FlowerPot, true),
+            new BRequires(H.PradoLion, true),
+
 
 
             //helper

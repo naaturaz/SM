@@ -83,6 +83,14 @@ public class BodyAgent
         CheckIfStuck();
     }
 
+    /// <summary>
+    /// For public questions 
+    /// </summary>
+    /// <returns></returns>
+    public bool IsStuck()
+    {
+        return _startDate != null && Program.gameScene.GameTime1.ElapsedDateInDaysToDate(_startDate) > 28;
+    }
 
     private void CheckIfStuck()
     {

@@ -809,6 +809,10 @@ public class Root : MonoBehaviour
         buildsRoot.Add(H.WideFountain, "Prefab/Building/Decoration/WideFountain");
         buildsRoot.Add(H.PalmTree, "Prefab/Building/Decoration/PalmTree");
 
+        buildsRoot.Add(H.FloorFountain, "Prefab/Building/Decoration/FloorFountain");
+        buildsRoot.Add(H.FlowerPot, "Prefab/Building/Decoration/FlowerPot");
+        buildsRoot.Add(H.PradoLion, "Prefab/Building/Decoration/PradoLion");
+
 
         //Helper
         buildsRoot.Add(H.BullDozer, "Prefab/Building/Helper/BullDozer");

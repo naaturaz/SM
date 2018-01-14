@@ -1421,6 +1421,9 @@ public class Building : Hoverable, Iinfo
         { H.WideFountain, new Vector3(-90,0,-90)},
         { H.PalmTree, Vector3.forward },//will remove NavMesh Obj component
 
+        { H.FloorFountain, new Vector3(-99,0,-99)},
+        { H.FlowerPot, new Vector3(-99,0,-99)},
+        { H.PradoLion, new Vector3(-99,0,-99)},
 
 
         { H.StandLamp, new Vector3(0,0,0)},//wont get carved
@@ -1449,7 +1452,7 @@ public class Building : Hoverable, Iinfo
 
 
 
-        { H.LumberMill, new Vector3(-45,0,-45)},
+        { H.LumberMill, Vector3.forward },//will remove NavMesh Obj component
         { H.BlackSmith, new Vector3(-45,0,-45)},
         { H.Mortar, new Vector3(-16,0,-10)},
         { H.QuickLime, new Vector3(-40,0,-40)},
@@ -1473,7 +1476,7 @@ public class Building : Hoverable, Iinfo
         { H.StorageSmall, new Vector3(-35,0,-25)},
         { H.StorageBig, Vector3.forward },//will remove NavMesh Obj component
 
-        { H.Dock, new Vector3(-5,0,-5)},
+        { H.Dock, Vector3.forward},
 
 
         { H.School, new Vector3(-10,0,-14)},
@@ -3727,7 +3730,7 @@ public class Building : Hoverable, Iinfo
         return false;
     }
 
-
+    public static int PROD_AMT_LIMIT = 200;
     /// <summary>
     /// This is the one will add order to the Dispatch if dont have the Raw input
     /// </summary>
@@ -3752,6 +3755,14 @@ public class Building : Hoverable, Iinfo
             P prod = rawsOnNeed[i].Element;
             //so for nails for example for a Furnitrue will only order 0.2 x 30 = 6kg
             var amtNeeded = rawsOnNeed[i].Units * 20;//10
+
+
+            //if this item has more than 500 kg in inventory then we dont need more 
+            if(Inventory.ReturnAmtOfItemOnInv(prod) > PROD_AMT_LIMIT)
+            {
+                return;
+            }
+
 
             if (!HaveThisProdOnInv(prod) || !doIHaveInput)//put back !doIHaveInput bz gives bug later on 
             {

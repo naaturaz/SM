@@ -96,6 +96,11 @@ public class Inventory
     /// <returns></returns>
     public float ReturnAmtOfItemOnInv(P Key)
     {
+        if (Key == P.RandomMineOutput)
+        {
+            return ReturnAllAmountOnInv();
+        }
+
         for (int i = 0; i < _inventItems.Count; i++)
         {
             if (Key == _inventItems[i].Key)

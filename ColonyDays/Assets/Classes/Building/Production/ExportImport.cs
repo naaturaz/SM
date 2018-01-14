@@ -322,7 +322,7 @@ public class ExportImport
 
         BulletinWindow.SubBulletinFinance1.FinanceLogger.AddToAcct("Exports", trans);
         BulletinWindow.SubBulletinFinance1.AddNewExportOrImport(building, prod, amt, trans, "Export");
-        Quest(prod, amt);
+        Quest(prod, trans);
     }
 
     private void Quest(P prod, float amt)

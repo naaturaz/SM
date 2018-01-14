@@ -165,9 +165,13 @@ public class Book : General
         Build.Add(new BuildStat(H.Morro, 2600, 80, 20, 0, 5, maxPeople: 10));
 
         //Decoration
-        Build.Add(new BuildStat(H.Fountain, 100, 0, 10, 0, 5, maxPeople: 0, capacity: 0f));
-        Build.Add(new BuildStat(H.WideFountain, 100, 0, 20, 0, 5, maxPeople: 0, capacity: 0f));
+        Build.Add(new BuildStat(H.Fountain, 100, 0, 10, 0, 5, maxPeople: 0, capacity: 100f));
+        Build.Add(new BuildStat(H.WideFountain, 100, 0, 20, 0, 5, maxPeople: 0, capacity: 150f));
         Build.Add(new BuildStat(H.PalmTree, 100, 0, 5, 0, 0, maxPeople: 0, capacity: 0f, colonyDollar: 20));
+
+        Build.Add(new BuildStat(H.FloorFountain, 100, 0, 5, 0, 0, maxPeople: 0, capacity: 0f, colonyDollar: 200));
+        Build.Add(new BuildStat(H.FlowerPot, 100, 0, 5, 0, 0, maxPeople: 0, capacity: 0f, colonyDollar: 100));
+        Build.Add(new BuildStat(H.PradoLion, 100, 0, 30, 0, 0, maxPeople: 0, capacity: 0f, colonyDollar: 250));
 
 
         //Helper

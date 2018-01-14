@@ -233,7 +233,11 @@ public enum H
     /// add on UnlockBuilds.cs
     /// and underneath the proper region in this file
     /// and if produces anything u want to added in Production.cs
-    /// thts all 
+    /// Adjustment may be needed in the NavMesh, Building.cs 1410
+    /// 
+    /// more below for: Decorations, Production, Category, DoubleBound
+    /// 
+    /// if is a decoration needs to be added as small item in Decorations.cs
     /// 
     /// add the type of Product produces on Production.cs
     /// if Category will be diff than structure set on General.DefineCategory()
@@ -293,6 +297,7 @@ public enum H
 
     //Decorations 
     Fountain, WideFountain, PalmTree,
+    FloorFountain, FlowerPot, PradoLion,
 
 
     WillBeDestroy,
@@ -546,7 +551,9 @@ public enum StMil //for structures game structure.cs
 
 public enum StDec //for structures game structure.cs 
 {
-    Fountain, WideFountain, PalmTree
+    Fountain, WideFountain, PalmTree,
+    FloorFountain, FlowerPot, PradoLion,
+
 }
 
 

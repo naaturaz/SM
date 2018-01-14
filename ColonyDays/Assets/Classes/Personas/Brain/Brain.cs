@@ -1075,6 +1075,7 @@ public class Brain
     {
         if (_person.Body.Location == HPers.Home && _person.Body.GoingTo == HPers.Home)
         {
+            _person.CheckIfRedo();
             return true;
         }
         return false;

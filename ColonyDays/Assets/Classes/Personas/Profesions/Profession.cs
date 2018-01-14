@@ -714,12 +714,48 @@ public class Profession
 
     }
 
+    int foresterStuck = 0;
+    bool stuckedForester;
     /// <summary>
     /// If _workingNow = true this method will be called from derived class.
     ///  This is called once upon person is already on JobSite
     /// </summary>
     protected void WorkNow()
     {
+        stuckedForester = _person.Body.Location == HPers.Work &&
+            ProfDescription == Job.Forester && _person.Body.GoingTo == HPers.InWork
+            && _workerTask == HPers.WalkingToJobSite && _person.Body.BodyAgent.IsStuck()
+            ;
+
+        if (stuckedForester)
+        {
+            foresterStuck++;
+            _person.Body.Location = HPers.Work;
+            _workerTask = HPers.DoneAtWork;
+            _person.Body.GoingTo = HPers.Work;
+            StillElementId = "";
+            _person.OrderRedoWhenGetsHome();
+
+            //_person.Body.Location = HPers.Work;
+            //_workerTask = HPers.None;
+            //_person.Body.GoingTo = HPers.Work; 
+
+            Debug.Log("unstuck forester: " + _person.name);
+
+
+
+
+
+
+            //if(foresterStuck > 1)
+            //{
+            //    _person.Work.ChangeMaxAmoutOfWorkers("Less");
+            //}
+
+            //_person.Body.Location = HPers.Work;
+            //_workerTask = HPers.None;
+        }
+
         //walking toward the job site for forester walking towards a tree 
         if (_person.Body.Location == HPers.Work && _workerTask == HPers.None)
         {
@@ -741,7 +777,9 @@ public class Profession
             }
         }
         //called here so animation of iddle can be fully transitioned to
-        else if (_person.Body.Location == HPers.InWork && _workerTask == HPers.WalkingToJobSite && !_person.Body.MovingNow)
+        else if ((_person.Body.Location == HPers.InWork && _workerTask == HPers.WalkingToJobSite && !_person.Body.MovingNow)
+           // || stuckedForester
+            )
         {
             Idle(HPers.AniFullyTrans, 1f);
         }

@@ -366,7 +366,8 @@ public class Dispatch
         for (int i = 0; i < currOrders.Count; i++)
         {
             //if the Inventory of destiny build is full will skip that order 
-            if (IsDestinyBuildInvFullForThisProd(currOrders[i]) || IsDestinyWithOverSoManyKGOfThisProd(500, currOrders[i])
+            if (//IsDestinyBuildInvFullForThisProd(currOrders[i]) ||
+                IsDestinyWithOverSoManyKGOfThisProd(Building.PROD_AMT_LIMIT, currOrders[i])
                 || currOrders[i].IsCompleted)
             {
                 //todo Notify
@@ -455,7 +456,7 @@ public class Dispatch
     /// <param name="amtMax"></param>
     /// <param name="order"></param>
     /// <returns></returns>
-    private bool IsDestinyWithOverSoManyKGOfThisProd(int amtMax, Order order)
+    public bool IsDestinyWithOverSoManyKGOfThisProd(int amtMax, Order order)
     {
         var destBuild = Brain.GetBuildingFromKey(order.DestinyBuild);
 

@@ -155,7 +155,7 @@ class SaveLoadGameWindow : GUIElement
             DestroyPrevTiles();
             Program.MyScreen1.HideWindowShowMain(this);
         }
-        else if (sub == "Delete")
+        else if (sub == "DeleteBtn")
         {
             if (string.IsNullOrEmpty(_tileNameSelected))
             {

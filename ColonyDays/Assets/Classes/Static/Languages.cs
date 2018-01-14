@@ -142,6 +142,9 @@ public class Languages
        { "Fountain.Desc", "Beauty your town and adds overall happiness to your citizens"},
        { "WideFountain.Desc", "Beauty your town and adds overall happiness to your citizens"},
        { "PalmTree.Desc", "Beauty your town and adds overall happiness to your citizens"},
+       { "FloorFountain.Desc", "Beauty your town and adds overall happiness to your citizens"},
+       { "FlowerPot.Desc", "Beauty your town and adds overall happiness to your citizens"},
+       { "PradoLion.Desc", "Beauty your town and adds overall happiness to your citizens"},
 
 
 

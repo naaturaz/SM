@@ -47,12 +47,31 @@ public class Decoration
 
     bool IsSmallBuilding()
     {
+        var isADecora = Root.RetBuildingRoot(_building.HType).Contains("Decoration");
+
         return _building.HType == H.StandLamp
-             || _building.HType == H.Fountain || _building.HType == H.WideFountain || _building.HType == H.PalmTree;
+             //|| _building.HType == H.Fountain || _building.HType == H.WideFountain || _building.HType == H.PalmTree
+             //|| _building.HType == H.FloorFountain || _building.HType == H.FlowerPot || _building.HType == H.PradoLion 
+             || isADecora
+             ;
+    }
+
+    /// <summary>
+    /// Buildings that dont need any spawns around them like:
+    /// FlowerPot 
+    /// </summary>
+    /// <returns></returns>
+    bool IsATinyBuilding()
+    {
+        return Root.RetBuildingRoot(_building.HType).Contains("Flower");
     }
 
     int HowMany()
     {
+        if (IsATinyBuilding())
+        {
+            return 0;
+        }
         //bz it should be small so it doest cover the lamp 
         if (IsSmallBuilding())
         {
@@ -244,6 +263,11 @@ public class Decoration
 
     private void SpawnDecorObj()
     {
+        if (_roots.Count == 0)
+        {
+            return;
+        }
+
         _spwnedObj = General.Create(Root.classesContainer, _building.transform.position, "", _building.transform,
             H.Decoration);
 
