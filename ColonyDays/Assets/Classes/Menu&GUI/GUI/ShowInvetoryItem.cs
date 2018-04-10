@@ -54,6 +54,7 @@ public class ShowInvetoryItem : GUIElement
             return;
         }
 
+        var container = FindGameObjectInHierarchy("Cont", gameObject);
         _icon = FindGameObjectInHierarchy("Icon", gameObject);
 
         _back = FindGameObjectInHierarchy("Back", gameObject);
@@ -75,7 +76,7 @@ public class ShowInvetoryItem : GUIElement
         else
         {
             //bz we change it names and for when needs to be renamed needs to be get it like this 
-            _textCol2 = gameObject.transform.GetChild(1).GetComponent<Text>();
+            _textCol2 = container.gameObject.transform.GetChild(1).GetComponent<Text>();
 
         }
 
@@ -118,17 +119,26 @@ public class ShowInvetoryItem : GUIElement
         var root = "";
         if (string.IsNullOrEmpty(invType))
         {
-            root = Root.show_Invent_Item_Small_3_Text;
+            root = Root.show_Invent_Item_Small_3_Text + " 2";
         }
         else
         {
             //for main
-            root = Root.show_Invent_Item_Small_Med;
+            root = Root.show_Invent_Item_Small_Med + " 2";
         }
         obj = (ShowInvetoryItem)Resources.Load(root, typeof(ShowInvetoryItem));
         obj = (ShowInvetoryItem)Instantiate(obj, new Vector3(), Quaternion.identity);
 
+
+        //var iniScale = obj.transform.localScale;
+        //obj.transform.SetParent(container);
+        //obj.transform.localPosition = iniPos;
+        //obj.transform.localScale = iniScale;
+
         obj.transform.SetParent(container);
+
+        //CorrectLocalScaleBasedOnScreenSize(obj.transform);
+
         obj.transform.localPosition = iniPos;
 
         obj.Parent = parent;
@@ -138,6 +148,16 @@ public class ShowInvetoryItem : GUIElement
         return obj;
     }
 
+    static void CorrectLocalScaleBasedOnScreenSize(Transform objTransform)
+    {
+        //if (Screen.height != 1280 && Screen.width != 720) return;
+
+        var xCorrect = (float)Screen.width / (float)1920;
+        var yCorrect = (float)Screen.height / (float)900;
+
+        objTransform.localScale = new Vector3(objTransform.localScale.x * xCorrect, objTransform.localScale.y,
+            objTransform.localScale.z);
+    }
 
 
 

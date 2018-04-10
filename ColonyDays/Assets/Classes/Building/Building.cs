@@ -1434,7 +1434,7 @@ public class Building : Hoverable, Iinfo
         {H.Bohio, new Vector3(-37,0,-53)},
         {H.WoodHouseA, new Vector3(-20,0,-20)},
         {H.WoodHouseB, new Vector3(-20,0,-25)},
-        {H.WoodHouseC, new Vector3(-20,0,-20)},
+        {H.WoodHouseC, new Vector3(-42,0,-25)},
 
         { H.BrickHouseA, new Vector3(-25,0,-20)},
         { H.BrickHouseB, new Vector3(-25,0,-30)},
@@ -3736,6 +3736,11 @@ public class Building : Hoverable, Iinfo
     /// </summary>
     void CheckIfOrdersAreNeeded()
     {
+        if(HType == H.BlackSmith)
+        {
+            var a = this;
+        }
+
         //only order inpu twhen is has workers
         if (PeopleDict.Count==0 || Instruction==H.WillBeDestroy)
         {
@@ -3760,7 +3765,7 @@ public class Building : Hoverable, Iinfo
             //if this item has more than 500 kg in inventory then we dont need more 
             if(Inventory.ReturnAmtOfItemOnInv(prod) > PROD_AMT_LIMIT)
             {
-                return;
+                continue;
             }
 
 

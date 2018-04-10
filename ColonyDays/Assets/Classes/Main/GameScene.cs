@@ -220,7 +220,7 @@ public class GameScene : General
             //        "agree on not release, share or send any media about the game, nor talk about it. " +
             //        "You can not share any information about this game. " +
             //        "Thanks for your help. "  +
-                    "Aatlantis Code Copyright 2016-2017."
+                    "Aatlantis Code Copyright"
                     //+"Not for distribution, nor publicity. \n"
                     ;
 

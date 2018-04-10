@@ -162,9 +162,8 @@ public class ShowAInventory
             //}
             //return -(ReturnRelativeYSpace(26, _allItems[0].transform.localScale.y))
             //    * _mainLines * factor;//32
-            return -(ReturnRelativeYSpace(28, ReturnTileYScale())) * i;
-
-
+            //28
+            return -(ReturnRelativeYSpace(22f, ReturnTileYScale())) * i;
         }
 
         //var screenY = Screen.height / 3.5f;
@@ -172,7 +171,8 @@ public class ShowAInventory
 
         //return -3.5f*i;
         //return -(Screen.height / 254.8571f) * i;
-        return -(ReturnRelativeYSpace(33, ReturnTileYScale())) * i;
+        //33
+        return -(ReturnRelativeYSpace(25, ReturnTileYScale())) * i;
     }
 
     float ReturnTileYScale()

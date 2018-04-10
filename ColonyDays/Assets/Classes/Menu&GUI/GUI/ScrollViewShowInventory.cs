@@ -40,7 +40,8 @@ public class ScrollViewShowInventory : GUIElement
     {
         while (true)
         {
-            yield return new WaitForSeconds(30); // wait
+            var sec = Time.time < 30 ? 1 : 30;
+            yield return new WaitForSeconds(sec); // wait
             if (_showAInv.RedoItemsIfOldInvIsDiff())
             {
                 AdjustContentHeight(_inv.InventItems.Count * _tileHeight);

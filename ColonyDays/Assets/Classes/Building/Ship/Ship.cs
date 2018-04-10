@@ -248,19 +248,19 @@ public class Ship
         {
             if(_didDockExport && _didDockImport)
             {
-                return 0.2f;
+                return 0.6f;//0.2
             }
             else if (_didDockExport)
             {
-                return 0.1f;
+                return 0.3f;//0.1
             }
             else if(_didDockImport)
             {
-                return 0.1f;
+                return 0.3f;//0.1
             }
             else
             {
-                return -.1f;
+                return -.05f;//-0.1
             }
         }
         return 0f;
