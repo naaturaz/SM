@@ -300,8 +300,9 @@ public class Languages
        { "Hide.HoverSmall", "Hide"},
        { "CleanAll.HoverSmall", "Clean"},
        { "Bulletin.HoverSmall", "Control/Bulletin"},
-       {"ShowAgainTuto.HoverSmall","Tutorial"},
+       { "ShowAgainTuto.HoverSmall","Tutorial"},
        { "BuyRegion.HoverSmall", "Buy Regions"},
+       { "Help.HoverSmall", "Help"},
 
        { "More.HoverSmall", "More"},
        { "Less.HoverSmall", "Less"},
@@ -358,7 +359,7 @@ public class Languages
 
        //Med Tooltips 
 	   { "Build.HoverMed", "Place building: 'Left click' \n" +
-                           "Rotate building: 'R' key \n " +
+                           "Rotate building: 'R' key \n" +
                            "Cancel: 'Right click'"},
         { "BullDozer.HoverMed", "Clean area: 'Left click' \n" +
           "Cancel: 'Right click' \nCost: $10 per use "},

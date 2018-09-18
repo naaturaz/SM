@@ -74,7 +74,6 @@ public class Book : General
         Build.Add(new BuildStat(H.LightHouse, 800, 80, 20, 0, 5, maxPeople: 3));
 
         //houses 
-        Build.Add(new BuildStat(H.Bohio, 400, 3, 0, 0, 0, maxPeople: 5, capacity: .3f));
         Build.Add(new BuildStat(H.Shack, 500, 3, 0, 0, 0, maxPeople: 5, capacity: .5f));
         Build.Add(new BuildStat(H.MediumShack, 600, 4, 1, 1, 0, maxPeople: 5, capacity: .6f));
         Build.Add(new BuildStat(H.LargeShack, 700, 5, 2, 1, 1, maxPeople: 6, capacity: .8f));
@@ -325,10 +324,6 @@ public class BuildStat
 
     void UniqueBuildings()
     {
-        if (_hType == H.Bohio)
-        {
-            Furniture = 0;
-        }
         if (_hType == H.Road || _hType.ToString().Contains("Bridge"))
         {
             Nail = 0;

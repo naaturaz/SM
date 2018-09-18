@@ -493,11 +493,6 @@ public class Root : MonoBehaviour
             LoadHouseMedAndBohio();
         }
 
-        if (key == H.Bohio)
-        {
-            //return BohioRand();
-        }
-
         return buildsRoot[key];
     }
 
@@ -712,7 +707,6 @@ public class Root : MonoBehaviour
         buildsRoot.Add(H.WheelBarrow, "Prefab/Building/Infrastructure/WheelBarrow");
 
         //house
-        buildsRoot.Add(H.Bohio, "Prefab/Building/House/Bohio");
         buildsRoot.Add(H.Shack, "Prefab/Building/House/Shack");
         buildsRoot.Add(H.MediumShack, "Prefab/Building/House/MediumShack");
         buildsRoot.Add(H.LargeShack, "Prefab/Building/House/LargeShack");

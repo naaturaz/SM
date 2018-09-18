@@ -37,7 +37,6 @@ public class UnlockBuilds
             new BRequires(H.HeavyLoad, 20),
 
             //houses
-            new BRequires(H.Bohio, H.OnlyForDev),
             new BRequires(H.Shack, true),
             new BRequires(H.MediumShack, 12),
             new BRequires(H.LargeShack, 15),

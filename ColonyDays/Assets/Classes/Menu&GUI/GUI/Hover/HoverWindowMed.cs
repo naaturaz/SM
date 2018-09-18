@@ -36,14 +36,13 @@ class HoverWindowMed : MonoBehaviour
             _text = textGO.GetComponent<Text>();
         }
 
-
         _rectTransform = transform.GetComponent<RectTransform>();
         Hide();
     }
 
     public void Hide()
     {
-        _rectTransform.position = new Vector3(500, 500);
+        //_rectTransform.position = new Vector3(500, 500);
         _msg = "";
         _text.text = "";
         _geometry.SetActive(false);
@@ -55,7 +54,7 @@ class HoverWindowMed : MonoBehaviour
 
         _key = key;
         _msg = Languages.ReturnString(key + ".HoverMed");
-        _rectTransform.position = pos;
+        //_rectTransform.position = pos;
 
         _text.text = _msg;
         _geometry.SetActive(true);
@@ -68,7 +67,7 @@ class HoverWindowMed : MonoBehaviour
     {
         AudioCollector.PlayOneShot("ClickWoodSubtle", 0);
 
-        _rectTransform.position = pos;
+        //_rectTransform.position = pos;
 
         _text.text = _msg;
         _geometry.SetActive(true);
@@ -100,7 +99,7 @@ class HoverWindowMed : MonoBehaviour
             return;
         }
 
-        _rectTransform.position = Input.mousePosition + diffToMouse;
+        //_rectTransform.position = Input.mousePosition + diffToMouse;
 
         //after 3 seconds of being show
         if (Time.time > showedAt + 3)
@@ -120,10 +119,11 @@ class HoverWindowMed : MonoBehaviour
 
     void OnGUI()
     {
-        var isAStructure = BuildingPot.Control.CurrentSpawnBuild != null &&
-            BuildingPot.Control.CurrentSpawnBuild.Category == Ca.Structure;
+        var isAStructureAndFixed = BuildingPot.Control.CurrentSpawnBuild != null &&
+            BuildingPot.Control.CurrentSpawnBuild.Category == Ca.Structure &&
+            BuildingPot.Control.CurrentSpawnBuild.PositionFixed;
 
-        if (Event.current.type == EventType.MouseUp && isAStructure)
+        if (Event.current.type == EventType.MouseUp && isAStructureAndFixed)
         {
             Hide();
         }

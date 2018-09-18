@@ -1,4 +1,4 @@
-﻿using Steamworks;
+﻿//using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -138,10 +138,10 @@ public class QuestManager
 
     public QuestManager()
     {
-        if (76561198245800476 == SteamUser.GetSteamID().m_SteamID)
-        {
-            //_timeToNextQuest = .01f;
-        }
+        //if (76561198245800476 == SteamUser.GetSteamID().m_SteamID)
+        //{
+        //    //_timeToNextQuest = .01f;
+        //}
     }
 
 

@@ -751,7 +751,7 @@ public class BuildingWindow : GUIElement
         string res = "\n___________________\n";
 
         //is not a house or bohio 
-        if (!Building.HType.ToString().Contains("House") && Building.HType != H.Bohio)
+        if (!Building.HType.ToString().Contains("House"))
         {
             res += "Type:" + Building.HType
              + "\n ID:" + Building.MyId

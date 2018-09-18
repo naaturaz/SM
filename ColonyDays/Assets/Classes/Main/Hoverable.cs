@@ -136,12 +136,12 @@ public class Hoverable : General
 
     private void OnDestroy()
     {
-        if (hoverWindowMed == null)
-        {
-            return;
-        }
+        //if (hoverWindowMed == null)
+        //{
+        //    return;
+        //}
 
-        hoverWindowMed.Hide();
+        //hoverWindowMed.Hide();
     }
 }
 

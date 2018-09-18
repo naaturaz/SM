@@ -253,7 +253,7 @@ public enum H
     HeavyLoad,
 
     //house F2 ... bugg bz they had numbers on it .. They cant have numbers
-    Bohio, BohioB,
+    //Bohio, BohioB,
     Shack,
     MediumShack,
     LargeShack,
@@ -482,7 +482,7 @@ public enum StInfr //for structures game structure.cs
 public enum StHous //for structures game structure.cs 
 {
     //Housing
-    Bohio,
+    //Bohio,
     Shack, MediumShack, LargeShack,
     WoodHouseA, WoodHouseB, WoodHouseC,
     BrickHouseA,

@@ -1431,7 +1431,6 @@ public class Building : Hoverable, Iinfo
         { H.LightHouse, new Vector3(-20,0,-40)},
         { H.Masonry, new Vector3(-17,0,-25)},
 
-        {H.Bohio, new Vector3(-37,0,-53)},
         {H.WoodHouseA, new Vector3(-20,0,-20)},
         {H.WoodHouseB, new Vector3(-20,0,-25)},
         {H.WoodHouseC, new Vector3(-42,0,-25)},
@@ -2244,7 +2243,7 @@ public class Building : Hoverable, Iinfo
         }
 
         //can hhave 1 famili with 3 kids
-        if (HType == H.Bohio || HType == H.Shack)
+        if (HType == H.Shack)
         {
             Families = new Family[1];
             Families[0] = new Family(UMath.GiveRandom(2, 3), MyId, 0);
@@ -2469,7 +2468,7 @@ public class Building : Hoverable, Iinfo
 
     public static int ReturnHouseConfort(H HTypeP)
     {
-        if ( HTypeP == H.Bohio || HTypeP == H.Shack || HTypeP == H.MediumShack)
+        if (HTypeP == H.Shack || HTypeP == H.MediumShack)
         {
             return  1;
         }

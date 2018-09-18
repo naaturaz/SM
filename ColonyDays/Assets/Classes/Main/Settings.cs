@@ -8,8 +8,8 @@ public class Settings
 
     static bool _isSoundOn = true;
     static bool _isMusicOn = true;
-    static bool _isHalloweenTheme = true;
-    static bool _isXmas = true;
+    static bool _isHalloweenTheme;
+    static bool _isXmas;
 
 
     //this is the music variable use for the whole game 
