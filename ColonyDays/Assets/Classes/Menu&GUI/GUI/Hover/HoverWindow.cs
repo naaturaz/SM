@@ -8,10 +8,6 @@ using UnityEngine.UI;
 public class HoverWindow : MonoBehaviour
 {
     private string _msg;
-    
-    //windows props
-    private Vector3 _min;
-    private Vector3 _max;
 
     private GameObject _geometry;
     private Text _text;
@@ -24,6 +20,8 @@ public class HoverWindow : MonoBehaviour
 
     //the medium hover window
     private HoverWindowMed _hoverWindowMed;
+
+    int hideVal = -90000;
 
     public string Key
     {
@@ -54,10 +52,9 @@ public class HoverWindow : MonoBehaviour
             return;
         }
 
-        _rectTransform.position = new Vector3(500,500);
         _msg = "";
         _text.text = "";
-        _geometry.SetActive(false);
+        _rectTransform.position = new Vector3(-90000, -90000, 0);
     }
 
     public void Show(Vector3 pos, string key)
@@ -65,12 +62,11 @@ public class HoverWindow : MonoBehaviour
         AudioCollector.PlayOneShot("ClickWoodSubtle", 0);
         _key = key;
         _msg = Languages.ReturnString(key + ".HoverSmall");
-        _rectTransform.position = pos;
+
+        _rectTransform.position = Hoverable.MousePositionTowardsScreenCenter();
 
         _text.text = _msg;
-        _geometry.SetActive(true);
 
-        diffToMouse = pos - Input.mousePosition;
         showedAt = Time.time;
     }  
     
@@ -85,18 +81,13 @@ public class HoverWindow : MonoBehaviour
 
         _key = "";
         _msg = Languages.ReturnString(msg);
-        _rectTransform.position = pos;
+
+        _rectTransform.position = Hoverable.MousePositionTowardsScreenCenter();
 
         _text.text = _msg;
-        _geometry.SetActive(true);
 
-        diffToMouse = pos - Input.mousePosition;
         showedAt = Time.time;
     }
-
-    //so mouse never touches this one. so it doesnt trigger a OnMouseExit on the spawer
-    //of this window
-    private Vector3 diffToMouse;
 
     //when was showed
     private float showedAt;
@@ -105,17 +96,16 @@ public class HoverWindow : MonoBehaviour
 	void Update ()
 	{
         //means is hiding.
-        //and wont let any other click happen if is on front of everything 
-        if (string.IsNullOrEmpty(_msg))
-	    {
-	        return;
-	    }
+        if (_rectTransform.position.x < -80000)
+        {
+            return;
+        }
 
-	    _rectTransform.position = Input.mousePosition + diffToMouse;
+        _rectTransform.position = Hoverable.MousePositionTowardsScreenCenter();
 
         //after 3 seconds of being show
         //if key = "" is a simple msg with out key
-	    if (Time.time > showedAt + .7 && !string.IsNullOrEmpty(_key))
+        if (Time.time > showedAt + .7 && !string.IsNullOrEmpty(_key))
 	    {
 	        SpawnMedHover();
 	    }
@@ -138,26 +128,19 @@ public class HoverWindow : MonoBehaviour
         //*3 to make it abit further from mouse pointer
         _hoverWindowMed.ShowSemiTut(_key);
     }
-
-
-
-
-
+    
     internal string Message()
     {
         return _msg;
     }
 
-    public void ShowExplicitThis(Vector3 pos, string key)
+    public void ShowExplicitThis(string key)
     {
         AudioCollector.PlayOneShot("ClickWoodSubtle", 0);
 
-        _rectTransform.position = pos;
+        _rectTransform.position = Hoverable.MousePositionTowardsScreenCenter();
 
         _text.text = key;
-        _geometry.SetActive(true);
-
-        diffToMouse = pos - Input.mousePosition;
         showedAt = Time.time;
     }
 }

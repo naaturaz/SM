@@ -43,7 +43,7 @@ public class Hoverable : General
 
     protected void OnMouseExit()
     {
-        PublicDestroyHelp();
+        HideHelp();
     }
 
     /// <
@@ -64,66 +64,73 @@ public class Hoverable : General
             return;
         }
 
-        var pos = MoveItTowardsScreenCenter(CorrectMouseCenterPos());
-
         if (HType == H.Person ||
             Category == Ca.Structure || Category == Ca.Shore || Category == Ca.Way ||
             //Category == Ca.Spawn ||
             HType == H.BuyRegion)
         {
-            hoverWindow.ShowExplicitThis(pos, Name);
+            hoverWindow.ShowExplicitThis(Name);
         }
         //Construction Sign
         //bz if more than 6 he know how to build already 
         else if (transform.name == "Construction" && BuildingPot.Control.Registro.AllBuilding.Count < 10)
         {
-            hoverWindowMed.Show(pos, transform.name);
+            hoverWindowMed.Show(MousePositionTowardsScreenCenter(), transform.name);
         }
         //Demolition Sign
         else if (transform.name == "Demolition")
         {
-            hoverWindowMed.Show(pos, transform.name);
+            hoverWindowMed.Show(MousePositionTowardsScreenCenter(), transform.name);
         }
     }
-
-    /// <summary>
-    /// If mouse is too close to center on the screen want to add a bit
-    /// on Y so it doesnt keep entering and exiting bz the hover window is
-    /// being spawned on it 
-    /// </summary>
-    /// <returns></returns>
-    Vector3 CorrectMouseCenterPos()
+    
+    public static Vector2 MousePositionTowardsScreenCenter()
     {
-        var half = Screen.height / 2;
-        var difference = Input.mousePosition.y - half;
+        var dir = ReturnScreenQuadrantMousePosition();
 
-        //means is in the middle of the screen
-        if (Math.Abs(difference) < 220)
+        int far = 50;
+        Vector2 add = new Vector2();
+        if(dir == Dir.NW)
         {
-            return Input.mousePosition + new Vector3(0, 100, 0);
+            add = new Vector2(far, -far);
         }
-        return Input.mousePosition;
+        else if (dir == Dir.NE)
+        {
+            add = new Vector2(-far, -far);
+        }
+        else if (dir == Dir.SE)
+        {
+            add = new Vector2(-far, far);
+        }
+        else if (dir == Dir.SW)
+        {
+            add = new Vector2(far, far);
+        }
+
+        var mp = (Vector2)Input.mousePosition;
+        return mp + add;
     }
 
-    private Vector2 MoveItTowardsScreenCenter(Vector3 v3)
+    //x:0 and y:0 are in the bottom left of the screen
+    static Dir ReturnScreenQuadrantMousePosition()
     {
         var w = Screen.width / 2;
         var h = Screen.height / 2;
-
-        //so its depending on the screen size. roughly +45 px
-        var howFar = h / 7;//9
-
-
-
         Vector2 center = new Vector2(w, h);
-        var moved = Vector2.MoveTowards(v3, center, howFar);
-        return moved;
+        Vector2 mp = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+
+        if (mp.x < center.x && mp.y > center.y) return Dir.NW;
+        if (mp.x > center.x && mp.y > center.y) return Dir.NE;
+        if (mp.x > center.x && mp.y < center.y) return Dir.SE;
+        if (mp.x < center.x && mp.y < center.y) return Dir.SW;
+
+        return Dir.None;
     }
 
     /// <summary>
     /// For unity event
     /// </summary>
-    void PublicDestroyHelp()
+    void HideHelp()
     {
         if (hoverWindowMed == null)
         {

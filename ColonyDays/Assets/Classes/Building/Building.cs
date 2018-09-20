@@ -5086,12 +5086,12 @@ public class Building : Hoverable, Iinfo
 
     protected void OnMouseExit()
     {
-        //if (transform.name.Contains("Preview"))
-        //{
-        //    return;
-        //}
+        if (transform.name.Contains("Preview"))
+        {
+            return;
+        }
 
-        //base.OnMouseExit();
+        base.OnMouseExit();
     }
 
     #endregion

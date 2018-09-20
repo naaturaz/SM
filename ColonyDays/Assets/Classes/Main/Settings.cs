@@ -520,9 +520,9 @@ public class Unit
     {
         if (_units == 'm')
         {
-            return "KG";
+            return "kg";
         }
-        return "Lbs";
+        return "lbs";
     }
 
 

@@ -74,6 +74,7 @@ public class InputMouse : InputParent
     /// </summary>
     public void Select(Ca cat, string keyName)
     {
+        //print(Input.mousePosition);
         //print("Select() " + cat + ".keyName:" + keyName);
         if (cat == Ca.Structure || cat == Ca.Shore)
         {
