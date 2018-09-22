@@ -249,7 +249,8 @@ public enum H
 
     //infr F1
     StandLamp,
-    Trail, Road, BridgeTrail, BridgeRoad, CoachMan, LightHouse, WheelBarrow, StockPile, Masonry,
+    Trail, Road, BridgeTrail, BridgeRoad, CoachMan,
+    LightHouse, WheelBarrow, StockPile, Masonry,
     HeavyLoad,
 
     //house F2 ... bugg bz they had numbers on it .. They cant have numbers
@@ -469,7 +470,7 @@ public enum StInfr //for structures game structure.cs
     StandLamp,
     //Trail,
     Road, 
-    BridgeTrail, BridgeRoad,
+    //BridgeTrail, BridgeRoad,
     //CoachMan, 
     LightHouse,
     //WheelBarrow, 
@@ -493,9 +494,9 @@ public enum StHous //for structures game structure.cs
 public enum StFarm
 {
     //Farm,
-    AnimalFarmSmall, AnimalFarmMed, AnimalFarmLarge, AnimalFarmXLarge,
+    //AnimalFarmSmall, AnimalFarmMed, AnimalFarmLarge, AnimalFarmXLarge,
     FieldFarmSmall, FieldFarmMed, 
-    FieldFarmLarge, FieldFarmXLarge,
+    //FieldFarmLarge, FieldFarmXLarge,
     FishingHut, 
 }
 
@@ -511,13 +512,18 @@ public enum StRaw //for structures game structure.cs
 public enum StProd //for structures game structure.cs 
 {
     //Production
-    Brick, Carpentry, Cigars, Mill, Tailor, 
+    Brick, Carpentry, Cigars, 
+    //Mill,
+    Tailor, 
     Armory, Distillery, Chocolate, Ink,
 }
 
 //Ind
 public enum StInd
-{ Cloth, GunPowder, PaperMill, Printer, CoinStamp, SugarMill, Foundry, SugarShop}
+{   Cloth, GunPowder, PaperMill, Printer,
+    //CoinStamp,
+    //SugarMill,
+    Foundry, SugarShop}
 
 public enum StTrade //for structures game structure.cs 
 {
@@ -533,7 +539,9 @@ public enum StGov //for structures game structure.cs
 {
     //Gov Services
     //Clinic,CommerceChamber,Customs,
-    Library,School,TradesSchool,TownHouse,
+    //Library,
+    School,TradesSchool,
+    //TownHouse,
 }
 
 public enum StOther //for structures game structure.cs 
@@ -546,7 +554,9 @@ public enum StOther //for structures game structure.cs
 
 public enum StMil //for structures game structure.cs 
 {
-    WoodPost, PostGuard, Fort, Morro,
+    //WoodPost,
+    PostGuard,
+    //Fort, Morro,
 }
 
 public enum StDec //for structures game structure.cs 
