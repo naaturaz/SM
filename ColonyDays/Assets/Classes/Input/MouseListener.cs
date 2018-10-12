@@ -445,7 +445,8 @@ public class MouseListener : InputMain
         }  
         else if (action == "Feedback")
         {
-            Dialog.InputFormDialog(H.Feedback);
+            //Dialog.InputFormDialog(H.Feedback);
+            Application.OpenURL("https://steamcommunity.com/app/538990/discussions/1/");
         }
         else if (action == "BugReport")
         {
