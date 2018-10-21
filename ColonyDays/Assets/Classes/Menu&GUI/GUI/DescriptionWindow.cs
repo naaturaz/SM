@@ -134,11 +134,11 @@ public class DescriptionWindow : GUIElement
         }
         if (state == H.Coming_Soon)
         {
-            return "This building is coming soon to the game";
+            return Languages.ReturnString("Coming.Soon");// "This building is coming soon to the game";
         }
         if (state == H.Max_Cap_Reach)
         {
-            return "Can't build more houses. Max population reached";
+            return Languages.ReturnString("Max.Population");// "Can't build more houses. Max population reached";
         }
 
         //means Im a creating new Towns to be saved as Initial(Templates) towns
@@ -173,85 +173,85 @@ public class DescriptionWindow : GUIElement
         var stat = Book.GiveMeStat(type);
         int appends = 0;
 
-        var res = "Resources: \n";
+        var res = Languages.ReturnString("Resources") + ": \n";
 
         if (stat.Dollar != 0)
         {
-            res += " Dollars: " + stat.Dollar;
+            res += " " + Languages.ReturnString("Dollars") + ": " + stat.Dollar;
             appends++;
         }
         if (stat.Gold != 0)
         {
-            res += " Gold: " + Unit.WeightConverted(stat.Gold).ToString("n1") + " " + Unit.WeightUnit();
+            res += " " + Languages.ReturnString("Gold") + ": " + Unit.WeightConverted(stat.Gold).ToString("n1") + " " + Unit.WeightUnit();
             appends++;
         }
 
         if (stat.Iron != 0)
         {
-            res += " Iron: " + Unit.WeightConverted(stat.Iron).ToString("n1") + " " + Unit.WeightUnit();
+            res += " " + Languages.ReturnString("Iron") + ": " + Unit.WeightConverted(stat.Iron).ToString("n1") + " " + Unit.WeightUnit();
             appends++;
         }
         res = CheckIfAppend3(ref appends, res, returnEvery);
 
         if (stat.Stone != 0)
         {
-            res += " Stone: " + Unit.WeightConverted(stat.Stone).ToString("n1") + " " + Unit.WeightUnit();
+            res += " " + Languages.ReturnString("Stone") + ": " + Unit.WeightConverted(stat.Stone).ToString("n1") + " " + Unit.WeightUnit();
             appends++;
         }
         res = CheckIfAppend3(ref appends, res, returnEvery);
 
         if (stat.Brick != 0)
         {
-            res += " Brick: " + Unit.WeightConverted(stat.Brick).ToString("n1") + " " + Unit.WeightUnit();
+            res += " " + Languages.ReturnString("Brick") + ": " + Unit.WeightConverted(stat.Brick).ToString("n1") + " " + Unit.WeightUnit();
             appends++;
         }
         res = CheckIfAppend3(ref appends, res, returnEvery);
 
         if (stat.Wood != 0)
         {
-            res += " Wood: " + Unit.WeightConverted(stat.Wood).ToString("n1") + " " + Unit.WeightUnit();
+            res += " " + Languages.ReturnString("Wood") + ": " + Unit.WeightConverted(stat.Wood).ToString("n1") + " " + Unit.WeightUnit();
             appends++;
         }
         res = CheckIfAppend3(ref appends, res, returnEvery);
 
         if (stat.Nail != 0)
         {
-            res += " Nail: " + Unit.WeightConverted(stat.Nail).ToString("n1") + " " + Unit.WeightUnit();
+            res += " " + Languages.ReturnString("Nail") + ": " + Unit.WeightConverted(stat.Nail).ToString("n1") + " " + Unit.WeightUnit();
             appends++;
         }
         res = CheckIfAppend3(ref appends, res, returnEvery);
 
         if (stat.Furniture != 0)
         {
-            res += " Furniture: " + Unit.WeightConverted(stat.Furniture).ToString("n1") + " " + Unit.WeightUnit();
+            res += " " + Languages.ReturnString("Furniture") + ": " + Unit.WeightConverted(stat.Furniture).ToString("n1") + " " + Unit.WeightUnit();
             appends++;
         }
         res = CheckIfAppend3(ref appends, res, returnEvery);
 
         if (stat.Mortar != 0)
         {
-            res += " Mortar: " + Unit.WeightConverted(stat.Mortar).ToString("n1") + " " + Unit.WeightUnit();
+            res += " " + Languages.ReturnString("Mortar") + ": " + Unit.WeightConverted(stat.Mortar).ToString("n1") + " " + Unit.WeightUnit();
             appends++;
         }
         res = CheckIfAppend3(ref appends, res, returnEvery);
 
         if (stat.RoofTile != 0)
         {
-            res += " RoofTile: " + Unit.WeightConverted(stat.RoofTile).ToString("n1") + " " + Unit.WeightUnit();
+            res += " " + Languages.ReturnString("RoofTile") + ": " + Unit.WeightConverted(stat.RoofTile).ToString("n1") + " " + Unit.WeightUnit();
             appends++;
         }
         res = CheckIfAppend3(ref appends, res, returnEvery);
 
         if (stat.FloorTile != 0)
         {
-            res += " FloorTile: " + Unit.WeightConverted(stat.FloorTile).ToString("n1") + " " + Unit.WeightUnit();
+            res += " " + Languages.ReturnString("FloorTile") + ": " + Unit.WeightConverted(stat.FloorTile).ToString("n1") + " " + Unit.WeightUnit();
             appends++;
         }
         res = CheckIfAppend3(ref appends, res, returnEvery);
 
         if (stat.Machinery != 0)
         {
-            res += " Machinery: " + Unit.WeightConverted(stat.Machinery).ToString("n1") + " " + Unit.WeightUnit();
+            res += " " + Languages.ReturnString("Machinery") + ": " + Unit.WeightConverted(stat.Machinery).ToString("n1") + " " + Unit.WeightUnit();
             appends++;
         }
         res = CheckIfAppend3(ref appends, res, returnEvery);

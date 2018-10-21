@@ -963,8 +963,21 @@ public class Languages
             { "Finance", "Finance"},
 
 
+            //After Oct 20th 2019
+            { "Resources", "Resources"},
+            { "Dollars", "Dollars"},
+            { "Coming.Soon", "This building is coming soon to the game"},
+            { "Max.Population", "Can't build more houses. Max population reached"},
 
-        };
+            { "To.Unlock", "To unlock: "},
+            { "People", "People"},
+            { "Of.Food", " of food. "},
+            { "Port.Reputation.Least", "Port reputation at least at "},
+            { "Pirate.Threat.Less", "Pirate threat less than "},
+            { "Skip", "Skip"},
+
+
+    };
 
 
 
@@ -2113,6 +2126,7 @@ public class Languages
         if (_english.Count == 0)
         {
             ReloadDict();
+            French.ReloadDict();
         }
     }
 

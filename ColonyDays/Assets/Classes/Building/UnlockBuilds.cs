@@ -339,33 +339,32 @@ class BRequires
         {
             return;
         }
-        //string res = HType + " build is lock.\nTo Unlock: ";
-        string res = "To unlock: ";
+        string res = Languages.ReturnString("To.Unlock");
         int appends = 0;
 
         if (Persons != 0)
         {
-            res += Persons + " persons. ";
+            res += Persons + " " + Languages.ReturnString("People") + ". ";
             appends++;
         }
         if (Food != 0)
         {
-            res += Unit.WeightConverted(Food) + " " + Unit.WeightUnit() + " of food. ";
+            res += Unit.WeightConverted(Food) + " " + Unit.WeightUnit() +  Languages.ReturnString("Of.Food");
             appends++;
         }
         if (Dollars != 0)
         {
-            res += Dollars + " dollars. ";
+            res += Dollars + " " + Languages.ReturnString("Dollars") + ". ";
             appends++;
         }
         if (PortReputation != 0)
         {
-            res += "Port reputation at least at " + PortReputation + ". ";
+            res += Languages.ReturnString("Port.Reputation.Least") + PortReputation + ". ";
             appends++;
         }
         if (PirateThreat != 0)
         {
-            res += "Pirate threat less than " + PirateThreat + ". ";
+            res += Languages.ReturnString("Pirate.Threat.Less") + PirateThreat + ". ";
             appends++;
         }
 
@@ -383,7 +382,7 @@ class BRequires
         {
             for (int i = 0; i < PriorBuilds.Count; i++)
             {
-                res += ".At least 1: " + PriorBuilds[i] + ". ";
+                res +=  Languages.ReturnString(".At least 1: ") + PriorBuilds[i] + ". ";
                 appends++;
             }
         }
