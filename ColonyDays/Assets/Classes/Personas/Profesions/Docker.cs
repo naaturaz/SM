@@ -91,6 +91,9 @@ public class Docker : Profession
 
     void SetSourceAndDestinyBuild()
     {
+        //if(!_import && !_export)
+        //Execute();
+
         _destinyBuild = GetStructureSrcAndDestinyExpImp();
         _sourceBuild = GetStructureSrcAndDestinyExpImp();
 

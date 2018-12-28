@@ -965,6 +965,8 @@ public class French
             { "Pirate.Threat.Less", "La menace pirate moins que "},//"Pirate threat less than "
             { "Skip", "Sauter"},
 
+            //After Dec 8, 2018
+            { "ReloadMod.HoverSmall", "Recharger des fichiers mod" },
 
     };
 

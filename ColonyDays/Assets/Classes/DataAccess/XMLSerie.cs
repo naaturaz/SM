@@ -289,4 +289,30 @@ public class XMLSerie
         return root;
     }
     #endregion
+
+
+
+
+
+
+
+
+    #region Mod
+    //Mods
+
+    public static PeopleModData ReadXMLPeopleModData()
+    {
+        string path = Application.dataPath + "/Mod/MyMod/People.xml";
+
+        var loaded = DataContainer.Load(path);
+
+
+
+        PeopleModData res = null;
+        if (loaded != null) { res = loaded.PeopleModData; }
+
+        return res;
+    }
+
+    #endregion
 }

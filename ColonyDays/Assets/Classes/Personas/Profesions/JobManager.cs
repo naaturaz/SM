@@ -41,6 +41,9 @@ public class JobManager
     /// <returns></returns>
     string DecideBasedOnAge(Person person)
     {
+        startSchool = ModController.AgeKidStartSchool();
+        startTrade = ModController.AgeKidStartTradeSchool();
+
         if (person.Age >= majorityAge)
         {
             //find work

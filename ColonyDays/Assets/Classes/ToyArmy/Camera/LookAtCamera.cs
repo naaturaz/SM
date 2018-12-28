@@ -17,8 +17,7 @@ public class LookAtCamera : MonoBehaviour {
 
         if (InvertY)
         {
-            transform.Rotate(0, 180, 0);
-
+            transform.Rotate(0, 180, 0);//(0, 180, 0)
         }
     }
 }

@@ -31,6 +31,10 @@ public class DataContainer
     public FinalReport FinalReport;
 
 
+    //Mods
+    [XmlArrayItem("PeopleModData")]
+    public PeopleModData PeopleModData;
+
     public void Save(string path)
     {
         var serializer = new XmlSerializer(typeof(DataContainer));

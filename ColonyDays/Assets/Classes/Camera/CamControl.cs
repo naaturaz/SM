@@ -18,6 +18,8 @@ public class CamControl : MonoBehaviour
 
     private GameObject menuCam;
 
+    public static Camera RTSCamera() { return rtsCamera; }
+
     // Use this for initialization
     void Start()
     {

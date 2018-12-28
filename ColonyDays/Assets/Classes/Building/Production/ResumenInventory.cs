@@ -380,8 +380,8 @@ public class Coverage
     static List<BuildStat> _build = new List<BuildStat>();
     static private void LoadBuildStats()
     {
-        _build.Add(new BuildStat(H.School, 10, 4, 11));
-        _build.Add(new BuildStat(H.TradesSchool, 5, 10, 16));
+        _build.Add(new BuildStat(H.School, 10, ModController.AgeKidStartSchool(), 11));
+        _build.Add(new BuildStat(H.TradesSchool, 5, ModController.AgeKidStartTradeSchool(), 16));
         _build.Add(new BuildStat(H.Church, 50, 3, 100));
         _build.Add(new BuildStat(H.Tavern, 10, 20, 80));
         _build.Add(new BuildStat(H.Library, 30, 3, 100));

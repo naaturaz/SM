@@ -44,15 +44,12 @@ class TutoWindow : GUIElement
         "Rename.Tuto",
         "RenameBuild.Tuto",
 
-        "BullDozer.Tuto",
-
+        "BullDozer.Tuto",               //22
 
         "Budget.Tuto",
         "Prod.Tuto",
         "Spec.Tuto",
         "Exports.Tuto",
-
-
     };
 
     //which is being shown now 

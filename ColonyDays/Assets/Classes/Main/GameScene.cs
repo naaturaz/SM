@@ -225,7 +225,7 @@ public class GameScene : General
                     ;
 
         return discl +
-               " Early Access \n v0.5.0." +
+               " Early Access \n v0.6.0." +
                //"Closed Beta \n v0.0.1." + 
                TimeStamp();
     }

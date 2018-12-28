@@ -697,7 +697,7 @@ public class Person : Hoverable
         Age = iniAge;
         Name = GiveMeMyName();
 
-        _lifeLimit = GiveRandom(75, 85);//        40
+        _lifeLimit = ModController.AgeLimit();
         MyId = Name + "." + Id;
 
         if (HType == H.Person)
@@ -1359,7 +1359,7 @@ public class Person : Hoverable
         if (spouse != "") { return false; }
         if (isWidow) { return false; }
         if (other.Gender == Gender) { return false; }
-        if (Mathf.Abs(other.Age - _age) > 20) { return false; }
+        if (Mathf.Abs(other.Age - _age) > ModController.AllowedAgeGapOnMarry() ) { return false; }
 
         if (Age < 16 || other.Age < 16)
         {

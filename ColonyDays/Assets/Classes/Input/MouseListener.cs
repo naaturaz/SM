@@ -14,6 +14,11 @@ public class MouseListener : InputMain
         set { _currForm = value; }
     }
 
+    public MyForm Main
+    {
+        get { return main; }
+    }
+
     public BuildingWindow BuildingWindow1
     {
         get { return _buildingWindow; }
@@ -63,6 +68,7 @@ public class MouseListener : InputMain
             }
         }
     }
+
 
     /// <summary>
     /// Loading  and Reloading Main Form 

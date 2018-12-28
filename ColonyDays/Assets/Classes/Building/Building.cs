@@ -278,7 +278,7 @@ public class Building : Hoverable, Iinfo
     /// Will notify why current buliding cant be placed here 
     /// </summary>
     /// <param name="isScaledOnFloor"></param>
-    private void NotifyBuildingProblem(bool isScaledOnFloor)
+    private void NotifyBuildingProblem(bool isScaledOnFloor, H instruction = H.None)
     {
         if (!Program.gameScene.GameFullyLoaded() || IsLoadingFromFile || PositionFixed)
         {
@@ -292,14 +292,12 @@ public class Building : Hoverable, Iinfo
         else if (!_isEven && !IsThisADoubleBoundedStructure())
         {
             Program.gameScene.GameController1.NotificationsManager1.MainNotify("NotEven");
-
         }
         else if (_isColliding)
         {
             if (HType == H.BullDozer)
             {
                 Program.gameScene.GameController1.NotificationsManager1.MainNotify("Colliding.BullDozer");
-                
             }
             else
             {
@@ -315,12 +313,13 @@ public class Building : Hoverable, Iinfo
         {
             Program.gameScene.GameController1.NotificationsManager1.MainNotify("LockedRegion");
         }
+        else if(instruction == H.Show)
+        {
+
+        }
             //if none is true then needs to be hidden bz might have being showed already by a quick
             //true of any above. so needs to be hidden
-        else
-        {
-            Program.gameScene.GameController1.NotificationsManager1.HideMainNotify();
-        }
+        else Program.gameScene.GameController1.NotificationsManager1.HideMainNotify();
     }
 
     bool AreAnchorsOnUnlockRegions()
@@ -1188,7 +1187,7 @@ public class Building : Hoverable, Iinfo
             {
                 _isBuildOk = CheckDoubleBoundedStructureIsOkRoutine();
             }
-            NotifyBuildingProblem(true);
+
         }
         else
         {
@@ -1831,9 +1830,7 @@ public class Building : Hoverable, Iinfo
         if (HType == H.MountainMine)
         {
            DefineBoundsGameObj(H.TerraUnderBound);
-           return RoutineToFindIfAnchorsAreGood(_terraBound, _underTerraBound, H.TerraUnderBound) 
-               //&& AreAnchorsOnUnlockRegions()
-               ;
+           return RoutineToFindIfAnchorsAreGood(_terraBound, _underTerraBound, H.TerraUnderBound);
         }
         else
         {
@@ -1845,12 +1842,9 @@ public class Building : Hoverable, Iinfo
             }
 
             DefineBoundsGameObj(H.MaritimeBound);
-            return RoutineToFindIfAnchorsAreGood(_terraBound, _maritimeBound, H.MaritimeBound) && reachRoute
-                //&& AreAnchorsOnUnlockRegions()
-                ;
+            return RoutineToFindIfAnchorsAreGood(_terraBound, _maritimeBound, H.MaritimeBound) && reachRoute;
         }
     }
-
 
     /// <summary>
     /// Update the bounds and anchors of the 2 bounds
@@ -1881,20 +1875,57 @@ public class Building : Hoverable, Iinfo
         UpdateDoubleBounds(prim, sec);
         
         bool res = FindIfListIsAboveThisHeight(Program.gameScene.WaterBody.transform.position.y + 0.1f, _anchorsPrim);
+
+        //notify user of FindIfListIsAboveThisHeight
+        if (!res)
+            NotifyUserOfDoubleBoundRoutineIssue(typeOfDoubleBound, res);
+
         if (res)
         {
+            var arePointsEven = AreAllPointsEven(_anchorsPrim);
+            var isOnTheFloor = IsOnTheFloor(_anchorsPrim);
+            bool isListBelowHeight = true;
             if (typeOfDoubleBound == H.MaritimeBound)
             {
-                res = FindIfListIsBelowThisHeight(Program.gameScene.WaterBody.transform.position.y - 0.1f, _anchorsSec)
-                    && AreAllPointsEven(_anchorsPrim) && IsOnTheFloor(_anchorsPrim);
+                isListBelowHeight = FindIfListIsBelowThisHeight(Program.gameScene.WaterBody.transform.position.y - 0.1f, _anchorsSec);
+                res = isListBelowHeight && arePointsEven && isOnTheFloor;
             }
             else if (typeOfDoubleBound == H.TerraUnderBound)
             {
-                res = FindIfListIsAboveThisHeight(_maxSec.y + 0.1f, _anchorsSec)
-                    && AreAllPointsEven(_anchorsPrim) && IsOnTheFloor(_anchorsPrim);
+                isListBelowHeight = FindIfListIsAboveThisHeight(_maxSec.y + 0.1f, _anchorsSec);
+                res = isListBelowHeight && arePointsEven && isOnTheFloor;
             }
+
+            //notify user 
+            NotifyUserOfDoubleBoundRoutineIssue(typeOfDoubleBound, true, arePointsEven, isOnTheFloor, isListBelowHeight);
         }
+
         return res;
+    }
+
+    void NotifyUserOfDoubleBoundRoutineIssue(H typeOfDoubleBound, bool isAboveHeight = true,
+        bool arePointsEven = true, bool isOnTheFloor = true, bool isBelowHeight = true
+        )
+    {
+
+        if(!isAboveHeight || !arePointsEven || !isOnTheFloor || !isBelowHeight)
+        NotifyBuildingProblem(true, H.Show);
+        else
+        NotifyBuildingProblem(true);
+
+
+        if (typeOfDoubleBound == H.MaritimeBound)
+        {
+            if(!isAboveHeight)
+                Program.gameScene.GameController1.NotificationsManager1.MainNotify("isAboveHeight."+typeOfDoubleBound);
+            else if(!arePointsEven)
+                Program.gameScene.GameController1.NotificationsManager1.MainNotify("arePointsEven."+typeOfDoubleBound);
+            else if(!isOnTheFloor)
+                Program.gameScene.GameController1.NotificationsManager1.MainNotify("isOnTheFloor."+typeOfDoubleBound);
+            else if(!isBelowHeight)
+                Program.gameScene.GameController1.NotificationsManager1.MainNotify("isBelowHeight."+typeOfDoubleBound);
+        }
+
     }
 
     /// <summary>
@@ -4069,8 +4100,6 @@ public class Building : Hoverable, Iinfo
             return;
         }
 
-        int firedPpl = 0;
-
         for (int i = 0; i < _peopleToBeFired; i++)
         {
             if (i < PeopleDict.Count)
@@ -4082,38 +4111,10 @@ public class Building : Hoverable, Iinfo
                 person.Inventory.Delete();
 
                 PersonPot.Control.RestartControllerForPerson(person.MyId);
-                firedPpl++;
+
             }
-            //else
-            //{
-            //    _peopleToBeFired = 0;
-            //    firedPpl = 0;
-            //}
         }
-
-        //_peopleToBeFired -= firedPpl;
-
-        ////if not people was to fired then make sure all are hired that are less than MaxPeople and PeopleDict.Count
-        //if (_peopleToBeFired == 0 && Program.gameScene.GameFullyLoaded())
-        //{
-        //    for (int i = 0; i < MaxPeople && i < PeopleDict.Count; i++)
-        //    {
-        //        var person = Family.FindPerson(PeopleDict[i]);
-
-        //        //addressing legacy code in where people where not hire/fire correctly 
-        //        if (person == null)
-        //        {
-        //            PeopleDict.Remove(PeopleDict[i]);
-        //            continue;
-        //        }
-
-        //        person.WasFired = false;
-        //        //in case had a Input Work Order
-        //        person.Inventory.Delete();
-
-        //        PersonPot.Control.RestartControllerForPerson(person.MyId);
-        //    }
-        //}
+        _peopleToBeFired = 0;
     }
 
 
@@ -4124,7 +4125,6 @@ public class Building : Hoverable, Iinfo
         //if is loading is better to keep what it has. This is so people get fired or hired 
         //in were fired in the saved file, and then
         //were loaded again 
-
         if (!IsLoadingFromFile)
         {
             MaxPeople = PeopleDict.Count;
