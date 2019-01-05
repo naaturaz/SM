@@ -427,6 +427,11 @@ public class BuildingWindow : GUIElement
 
     }
 
+    public void ResetShownInventory()
+    {
+        oldBuildID = "";
+    }
+
     void Inventory()
     {
         if (Building.Inventory == null)
@@ -936,6 +941,7 @@ public class BuildingWindow : GUIElement
         }
     }
 
+    List<OrderShow> _showProducts = new List<OrderShow>();
     void Display1String(int i, ProductInfo pInfo, string root)
     {
         var orderShow = OrderShow.Create(root, _products.transform);
@@ -943,7 +949,7 @@ public class BuildingWindow : GUIElement
 
         orderShow.Reset(i);
 
-        _showOrders.Add(orderShow);
+        _showProducts.Add(orderShow);
     }
 
 
@@ -958,16 +964,16 @@ public class BuildingWindow : GUIElement
     /// </summary>
     public void ShowOrders()
     {
-        DestroyAndCleanShownOrders();
-
+        //DestroyAndCleanShownOrders();
+        DestroyAllProducts();
+        DestroyOrdersIfDone();
+    
         ShowImportOrders();
         ShowImportOrdersOnProcess();
 
         ShowExportOrders();
         ShowExportOrdersOnProcess();
     }
-
-
 
     private void ShowExportOrders()
     {
@@ -977,8 +983,8 @@ public class BuildingWindow : GUIElement
 
     void ShowExportOrdersOnProcess()
     {
-        var expOrd = Building.Dispatch1.ReturnRegularOrdersOnProcess();
-        DisplayOrders(expOrd, _exportIniPosOnProcess, Root.orderShow);
+        var expOrd = Building.Dispatch1.ReturnExportOrdersOnProcess();
+        DisplayOrders(expOrd, _exportIniPosOnProcess, Root.orderShow, true);
     }
 
     /// <summary>
@@ -986,9 +992,7 @@ public class BuildingWindow : GUIElement
     /// </summary>
     void ShowImportOrders()
     {
-        //todo not show orders to cancel when on Dock Inventory
-        //var impOrd = _building.Dispatch1.ReturnEvacuaOrders();
-        var impOrd = Building.Dispatch1.ReturnEvacOrdersOnProcess();
+        var impOrd = Building.Dispatch1.ReturnImportOrdersOnProcess();
         DisplayOrders(impOrd, _importIniPos, Root.orderShowClose);
     }
 
@@ -996,7 +1000,7 @@ public class BuildingWindow : GUIElement
     {
         //var impOrd = _building.Dispatch1.ReturnEvacOrdersOnProcess();
         var impOrd = Building.Dispatch1.ReturnEvacuaOrders();
-        DisplayOrders(impOrd, _importIniPosOnProcess, Root.orderShow);
+        DisplayOrders(impOrd, _importIniPosOnProcess, Root.orderShow, true);
     }
 
     /// <summary>
@@ -1004,28 +1008,49 @@ public class BuildingWindow : GUIElement
     /// </summary>
     /// <param name="list"></param>
     /// <param name="iniPosP"></param>
-    void DisplayOrders(List<Order> list, Vector3 iniPosP, string root)
+    void DisplayOrders(List<Order> list, Vector3 iniPosP, string root, bool isOnProcess = false)
     {
         for (int i = 0; i < list.Count; i++)
         {
-            Display1Order(i, list[i], iniPosP, root);
+            Display1Order(i, list[i], iniPosP, root, isOnProcess);
         }
     }
 
 
-    List<OrderShow> _showOrders = new List<OrderShow>();
+    List<ShowOrderTileWithIcons> _showOrders = new List<ShowOrderTileWithIcons>();
     /// <summary>
     /// Will display the order is pass as param. Bz 'i' will keep looping and puttin the towards the botton of the 
     /// _orders tab. Will make the orders Childs of _order tab
     /// </summary>
     /// <param name="i"></param>
     /// <param name="order"></param>
-    void Display1Order(int i, Order order, Vector3 iniPosP, string root)
+    void Display1Order(int i, Order order, Vector3 iniPosP, string root, bool isOnProcess = false)
     {
-        var orderShow = OrderShow.Create(root, _orders.transform);
-        orderShow.Show(order);
-        orderShow.Reset(i, order.TypeOrder);
-        _showOrders.Add(orderShow);
+        var isOrderOnList = _showOrders.Find(a => a.OrderId == order.ID);
+
+        //brand new tile 
+        if (isOrderOnList == null)
+        {
+            var orderShow = ShowOrderTileWithIcons.Create(root, _orders.transform);
+            orderShow.Show(order);
+            orderShow.Reset(i, order.TypeOrder, isOnProcess);
+            _showOrders.Add(orderShow);
+        } 
+        //update existing
+        else
+        {
+            isOrderOnList.Show(order);
+            isOrderOnList.Reset(i, order.TypeOrder, isOnProcess);
+        }
+    }
+
+    void DestroyAllProducts()
+    {
+        for (int i = 0; i < _showProducts.Count; i++)
+        {
+            _showProducts[i].Destroy();
+        }
+        _showProducts.Clear();
     }
 
     /// <summary>
@@ -1035,12 +1060,27 @@ public class BuildingWindow : GUIElement
     {
         for (int i = 0; i < _showOrders.Count; i++)
         {
-            _showOrders[i].Destroy();
+             _showOrders[i].Destroy();
         }
         _showOrders.Clear();
     }
 
+    void DestroyOrdersIfDone()
+    {
+        for (int i = 0; i < _showOrders.Count; i++)
+        {
+            var impOrd = Building.Dispatch1.ReturnEvacuaOrders();
 
+            var tile = _showOrders[i];
+            var isStillOnDispatch = Building.Dispatch1.DoYouHaveThisOrder(tile.Order);
+
+            if (tile.IsDone() || !isStillOnDispatch)
+            {
+                _showOrders[i].Destroy();
+                _showOrders.RemoveAt(i);
+            }
+        }
+    }
 
 
     /// <summary>

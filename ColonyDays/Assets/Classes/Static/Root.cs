@@ -272,10 +272,13 @@ public class Root : MonoBehaviour
     //generic btn 
     //so far used for products selection
     public static string orderShowGenBtn = "Prefab/GUI/Forms/Order_Show_Generic_Btn";
+    public static string show_Order_Tile_With_Icons = "Prefab/GUI/Forms/Order/Show_Order_Tile_With_Icons";
+
     public static string showGenBtnLarge = "Prefab/GUI/Forms/Show_Generic_Btn_Large";
     public static string show_Invent_Item = "Prefab/GUI/Forms/Show_Invent_Item";
     public static string show_Invent_Item_Med = "Prefab/GUI/Forms/Show_Invent_Item_Med";
     public static string show_Invent_Item_Small_Med = "Prefab/GUI/Forms/Show_Invent_Item_Small_Med";
+
     public static string show_Invent_Item_Small_Med_NoBack = "Prefab/GUI/Forms/Show_Invent_Item_Small_Med_NoBack";
     public static string show_Invent_Item_Small_3_Text = "Prefab/GUI/Forms/Show_Invent_Item_Small_Med_3_Text";
     public static string show_Person_Place_Location = "Prefab/GUI/Forms/Show_Person_Place_Location";

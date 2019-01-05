@@ -69,6 +69,20 @@ public class DispatchManager {
         }
     }
 
+    internal Dispatch ReturnDispatchThatHostOrder(Order order)
+    {
+        var all = FindAllWheelBarrAndDockBuilds();
+
+        for (int i = 0; i < all.Count; i++)
+        {
+            if (all[i].Dispatch1.DoYouHaveThisOrder(order))
+            {
+                return all[i].Dispatch1;
+            }
+        }
+        return null;
+    }
+
     List<Structure> FindAllWheelBarrAndDockBuilds()
     {
         List<Structure> all = BuildingController.FindAllStructOfThisType(H.Masonry);

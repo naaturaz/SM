@@ -22,5 +22,4 @@ class FlashingGUI: MonoBehaviour
         _lerpedColor = Color.Lerp(InitialColor, FlashToColor, Mathf.PingPong(Time.time, _interval));
         _graphic.color = _lerpedColor;
     }
-
 }

@@ -8,6 +8,8 @@ using UnityEngine.EventSystems;
 
 class HoverByTrigger : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
 {
+    public bool IsAProductHover;
+
     private HoverWindow hoverWindow;//the window tht will pop up msg
 
     void Start()
@@ -44,7 +46,15 @@ class HoverByTrigger : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
     void PublicSpawnHelp()
     {
         var pos = Hoverable.MousePositionTowardsScreenCenter();
-        hoverWindow.Show(pos, MyMsg());
+
+        if(IsAProductHover)
+        {
+            hoverWindow.ShowMsg(pos, MyMsg());
+        }
+        else
+        {
+            hoverWindow.Show(pos, MyMsg());
+        }
     }
     
     /// <summary>

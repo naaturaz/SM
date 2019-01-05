@@ -1103,6 +1103,8 @@ public class Building : Hoverable, Iinfo
     //this need to be called in derived classes 
     protected new void Update()
     {
+        CheckIfStaleInventoryOnDock();
+
         //DebugShowAnchors();
         SetLineUpVertexs();
         ShowPreviewBoxForBuilding();
@@ -4719,6 +4721,13 @@ public class Building : Hoverable, Iinfo
             _dock = new Dock(this);
             _dispatch = new Dispatch();
         }
+    }
+
+    void CheckIfStaleInventoryOnDock()
+    {
+        if (HType != H.Dock) return;
+
+        Inventory.CheckIfStaleInvetory(Dispatch1);
     }
 
     public Dispatch Dispatch1

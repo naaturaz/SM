@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ShowInvetoryItem : GUIElement
 {
-    private GameObject _icon;
+    protected GameObject _icon;
     private GameObject _back;
     private GameObject _back2;
     private GameObject _back3;
@@ -17,7 +17,7 @@ public class ShowInvetoryItem : GUIElement
     private Text _textCol2;
     private Text _textCol3;
 
-    private Image _iconImg;
+    protected Image _iconImg;
 
     private string _invType;
 
@@ -43,6 +43,8 @@ public class ShowInvetoryItem : GUIElement
 
     private void Awake()
     {
+        if (info == "For Dock") return;
+
         Start();
     }
 
@@ -97,9 +99,11 @@ public class ShowInvetoryItem : GUIElement
 
 
 
-    public void LoadIcon()
+    protected void LoadIcon(P key = P.None)
     {
-        var root = Program.gameScene.ExportImport1.ReturnIconRoot(_invItem.Key);
+        if (key == P.None) key = _invItem.Key;
+
+        var root = Program.gameScene.ExportImport1.ReturnIconRoot(key);
         Sprite sp = Resources.Load<Sprite>(root);
 
         //debug only bz all should have a root
@@ -209,7 +213,6 @@ public class ShowInvetoryItem : GUIElement
         //so hover gets it
         _back.name = InvItem1.Key + "";
         LoadIcon();
-
     }
 
     private void Set3TextForReport()
@@ -269,7 +272,7 @@ public class ShowInvetoryItem : GUIElement
     }
 
 
-    string Formatter()
+    protected string Formatter()
     {
         if (InvItem1.Amount <= 0)
         {

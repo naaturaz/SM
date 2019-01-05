@@ -920,8 +920,24 @@ public class Inventory
         return LocMyId.Contains("Storage") || Contains(P.Water);
     }
 
+
     #endregion
 
+    /// <summary>
+    /// Check if a this inventory has Stale product
+    /// Stale is a product that is not in any order and is still in inventory
+    /// </summary>
+    /// <param name="dispatch1"></param>
+    internal void CheckIfStaleInvetory(Dispatch dispatch1)
+    {
+        for (int i = 0; i < _inventItems.Count; i++)
+        {
+            if (!dispatch1.DoYouHaveAtLeastAnOrderWithMyProduct(_inventItems[i].Key))
+            {
+                RemoveItem(_inventItems[i].Key);
+            }
+        }
+    }
 }
 
 public class InvItem

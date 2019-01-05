@@ -48,11 +48,118 @@ public class Dispatch
         set { _isUsingPrimary = value; }
     }
 
+    internal void IncreaseOrderPriority(Order order)
+    {
+        //before on process 
+        var myIndex = _expImpOrders.FindIndex(a=>a.ID == order.ID);
+        if(myIndex > 0)
+        {
+            for (int i = myIndex; i > -1; i--)
+            {
+                //TypeOrder Evacuation is: Import, TypeOrder None is: Export
+                if (_expImpOrders[i].TypeOrder == order.TypeOrder && _expImpOrders[i].ID != order.ID)
+                {
+                    //switch
+                    var tempOrder = _expImpOrders[i];
+                    _expImpOrders[i] = _expImpOrders[myIndex];
+                    _expImpOrders[myIndex] = tempOrder;
+                    break;
+                }
+            }
+        }
+
+        //on process 
+        myIndex = _orders.FindIndex(a => a.ID == order.ID);
+        if (myIndex > 0)
+        {
+            for (int i = myIndex; i > -1; i--)
+            {
+                //TypeOrder Evacuation is: Import, TypeOrder None is: Export
+                if (_orders[i].TypeOrder == order.TypeOrder && _orders[i].ID != order.ID)
+                {
+                    //switch
+                    var tempOrder = _orders[i];
+                    _orders[i] = _orders[myIndex];
+                    _orders[myIndex] = tempOrder;
+                    break;
+                }
+            }
+        }
+    }
+
+    internal void DecreaseOrderPriority(Order order)
+    {
+        //before on process 
+        var myIndex = _expImpOrders.FindIndex(a => a.ID == order.ID);
+        if (myIndex < _expImpOrders.Count && myIndex >= 0)
+        {
+            for (int i = myIndex; i < _expImpOrders.Count; i++)
+            {
+                //TypeOrder Evacuation is: Import, TypeOrder None is: Export
+                if (_expImpOrders[i].TypeOrder == order.TypeOrder && _expImpOrders[i].ID != order.ID)
+                {
+                    //switch
+                    var tempOrder = _expImpOrders[i];
+                    _expImpOrders[i] = _expImpOrders[myIndex];
+                    _expImpOrders[myIndex] = tempOrder;
+                    break;
+                }
+            }
+        }
+
+        //on process 
+        myIndex = _orders.FindIndex(a => a.ID == order.ID);
+        if (myIndex < _orders.Count && myIndex >= 0)
+        {
+            for (int i = myIndex; i < _orders.Count; i++)
+            {
+                //TypeOrder Evacuation is: Import, TypeOrder None is: Export
+                if (_orders[i].TypeOrder == order.TypeOrder && _orders[i].ID != order.ID)
+                {
+                    //switch
+                    var tempOrder = _orders[i];
+                    _orders[i] = _orders[myIndex];
+                    _orders[myIndex] = tempOrder;
+                    break;
+                }
+            }
+        }
+    }
+
+    internal void DeleteOrder(Order order)
+    {
+        RemoveOrderFromAllListByID(order.ID);
+        //need to remove money gain and 
+        //set check on food so when is on Dock and not Order contains 
+        //its product the product will get delete it from Dock
+    }
+
+    internal bool DoYouHaveThisOrder(Order order)
+    {
+        var orderFound = _expImpOrders.Find(a => a.ID == order.ID);
+        if (orderFound != null) return true;
+
+        orderFound = _orders.Find(a => a.ID == order.ID);
+        if (orderFound != null) return true;
+
+        orderFound = _dormantOrders.Find(a => a.ID == order.ID);
+        if (orderFound != null) return true;
+
+        orderFound = _recycledOrders.Find(a => a.ID == order.ID);
+        if (orderFound != null) return true;
+
+        orderFound = _fresh.Find(a => a.ID == order.ID);
+        if (orderFound != null) return true;
+
+        return false;
+    }
+
     public List<Order> Orders
     {
         get { return _orders; }
         set { _orders = value; }
     }
+
 
     public List<Order> RecycledOrders
     {
@@ -703,6 +810,52 @@ public class Dispatch
         return null;
     }
 
+    internal bool DoYouHaveAtLeastAnOrderWithMyProduct(P key)
+    {
+        var res = false;
+        for (int i = 0; i < Orders.Count; i++)
+        {
+            if (Orders[i].Product == key)
+            {
+                res = true;
+            }
+        }
+
+        for (int i = 0; i < RecycledOrders.Count; i++)
+        {
+            if (RecycledOrders[i].Product == key)
+            {
+                res = true;
+            }
+        }
+
+        for (int i = 0; i < ExpImpOrders.Count; i++)
+        {
+            if (ExpImpOrders[i].Product == key)
+            {
+                res = true;
+            }
+        }
+
+        if(ExportsOrders != null)
+        for (int i = 0; i < ExportsOrders.Count; i++)
+        {
+            if (ExportsOrders[i].Product == key)
+            {
+                res = true;
+            }
+        }
+
+        for (int i = 0; i < _fresh.Count; i++)
+        {
+            if (_fresh[i].Product == key)
+            {
+                res = true;
+            }
+        }
+        return res;
+    }
+
     internal bool ThereIsWorkAtDock(Inventory structureInv)
     {
         return _expImpOrders.Count > 0 || _orders.Count > 0 || !structureInv.IsEmpty();
@@ -1125,7 +1278,7 @@ public class Dispatch
         {
             //todo notify
             Debug.Log("Will not handle over 10 Export Import orders at the same time . 10 is the max");
-            Dialog.OKDialog(H.Info, "Ten orders is the limit on this building");
+            Dialog.OKDialog(H.Info, Languages.ReturnString("Ten Orders Limit"));
             return false;
         }
     }
@@ -1246,11 +1399,21 @@ public class Dispatch
             }
         }
 
+        if (ExportsOrders != null)
         for (int i = 0; i < ExportsOrders.Count; i++)
         {
             if (ExportsOrders[i].ID == id)
             {
                 ExportsOrders.RemoveAt(i);
+                res = true;
+            }
+        }
+
+        for (int i = 0; i < _fresh.Count; i++)
+        {
+            if (_fresh[i].ID == id)
+            {
+                _fresh.RemoveAt(i);
                 res = true;
             }
         }
@@ -1272,7 +1435,7 @@ public class Dispatch
     /// Regular is Export
     /// </summary>
     /// <returns></returns>
-    public List<Order> ReturnRegularOrdersOnProcess()
+    public List<Order> ReturnExportOrdersOnProcess()
     {
         return _expImpOrders.Where(a => a.TypeOrder == H.None).ToList();
     }
@@ -1281,7 +1444,7 @@ public class Dispatch
     /// Evacuation is Import
     /// </summary>
     /// <returns></returns>
-    public List<Order> ReturnEvacOrdersOnProcess()
+    public List<Order> ReturnImportOrdersOnProcess()
     {
         return _expImpOrders.Where(a => a.TypeOrder == H.Evacuation).ToList();
     }
@@ -1374,6 +1537,8 @@ public class Order
             _totalAmtExported = value;
         }
     }
+
+    public Dispatch Dispatch { get; private set; }
 
     public DateTime PlacedTime;
 
