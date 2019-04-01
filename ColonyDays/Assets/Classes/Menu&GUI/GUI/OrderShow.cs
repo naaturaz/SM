@@ -66,7 +66,7 @@ public class OrderShow : GUIElement
 
         if (_amt == 0)
         {
-            _title.text = "Almost done";
+            _title.text = Languages.ReturnString("Counting...");
         }
         else
         {

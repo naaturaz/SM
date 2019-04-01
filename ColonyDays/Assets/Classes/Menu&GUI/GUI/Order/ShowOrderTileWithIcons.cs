@@ -188,7 +188,7 @@ class ShowOrderTileWithIcons : ShowInvetoryItem
 
         if (_amt == 0)
         {
-            _title.text = Languages.ReturnString("Almost done");
+            _title.text = Languages.ReturnString("Counting...");
             _isDone = true;
 
             _upBtn.SetActive(false);

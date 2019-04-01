@@ -988,8 +988,8 @@ public class Languages
         _en.Add("Down.HoverSmall", "Decrease Priority");
         _en.Add("Up.HoverSmall", "Increase Priority");
         _en.Add("Trash.HoverSmall", "Delete Order");
-        _en.Add("Almost done", "Almost done");
-        _en.Add("Ten Orders Limit", "Ten orders is the limit on this building");
+        _en.Add("Counting...", "Counting...");
+        _en.Add("Ten Orders Limit", "Ten orders is the limit");
 
 
 

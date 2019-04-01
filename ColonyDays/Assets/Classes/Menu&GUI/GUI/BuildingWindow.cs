@@ -1072,7 +1072,7 @@ public class BuildingWindow : GUIElement
             var impOrd = Building.Dispatch1.ReturnEvacuaOrders();
 
             var tile = _showOrders[i];
-            var isStillOnDispatch = Building.Dispatch1.DoYouHaveThisOrder(tile.Order);
+            var isStillOnDispatch = Building.Dispatch1.DoYouHaveThisOrderInCurrentLists(tile.Order);
 
             if (tile.IsDone() || !isStillOnDispatch)
             {
