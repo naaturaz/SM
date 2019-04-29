@@ -45,7 +45,7 @@ public class MyText : MonoBehaviour
             mappedOnce = true;
         }
 
-        if (!Program.InputMain.IsGameFullyLoaded() || !Program.gameScene.GameFullyLoaded())
+        if (!Program.InputMain.IsGameFullyLoaded() || !Program.GameFullyLoaded())
         {
             return;
         }

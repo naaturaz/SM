@@ -299,6 +299,7 @@ public class MeshController : ControllerParent
     /// <param name="polyZ">real polys in Z will cover in each scan pass</param>
     void LoadMeshFromFile(int inPolyDiv, int polyX, int polyZ)
     {
+        Debug.Log("LoadMesh:" + Time.time);
         iniTerr.InitializeLotStepVal(ref nextStart, subDivide, wholeMalla, Vertices, ref lotStepX, ref lotStepZ,
             inPolyDiv, polyX, polyZ);
 
@@ -312,18 +313,17 @@ public class MeshController : ControllerParent
             return;
         }
         //print(subMesh.amountOfSubVertices + " subMesh.amountOfSubVertices");
-        float dist = 0.001f;
+        Debug.Log("LoadMesh:" + Time.time);
 
         Malla.Lots = subMesh.AllSubMeshedLots;
 
         for (int i = 0; i < Malla.Lots.Count; i++)
         {
-            for (int j = 0; j < Malla.Lots[i].LotVertices.Count; j++)
-            {
-                AllVertexs.Add(Malla.Lots[i].LotVertices[j]);
-            }
+            AllVertexs.AddRange(Malla.Lots[i].LotVertices);
         }
         //print(AllVertexs.Count + ".AllVertexs.count. in mshContrl");
+        Debug.Log("LoadMesh:" + Time.time);
+
     }
 
     /// <summary>

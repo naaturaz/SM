@@ -139,11 +139,11 @@ public class Trail : Way
     {
         for (int i = 0; i < _planesListVertic.Count; i++)
         {
-            _planesListVertic[i].Geometry.GetComponent<Renderer>().sharedMaterial = newMat;
+            _planesListVertic[i].PlaneGeometry.GetComponent<Renderer>().sharedMaterial = newMat;
         }
         for (int i = 0; i < _planesListHor.Count; i++)
         {
-            _planesListHor[i].Geometry.GetComponent<Renderer>().sharedMaterial = newMat;
+            _planesListHor[i].PlaneGeometry.GetComponent<Renderer>().sharedMaterial = newMat;
         }
     }
 

@@ -561,40 +561,6 @@ public class Production  {
         InputProdCheckAndAdd(new ProductInfo(P.Sugar, prodFormu2, H.SugarMill));
     }
 
-
-
-
-    ///Functions
-
-    ///// <summary>
-    ///// Will tell u wich product take from an Inventoryy to take to ur current factory/work
-    ///// </summary>
-    ///// <param name="inventory"></param>
-    ///// <param name="itemProducing"></param>
-    ///// <returns></returns>
-    //public P WhichProdIShouldTake(Person person)
-    //{
-    //    var invList = person.FoodSource.Inventory.InventItems;
-    //    var inputsNeeded = person.Work.OrderedListOfInputNeeded();
-
-    //    //Will loop first one by one thru the inputs needed to see if I can find the most needed
-    //    //in the inventory and from there will keep looping to the least needed
-    //    for (int i = 0; i < inputsNeeded.Count; i++)
-    //    {
-    //        //will loop thru all the invList looking for the inputsNeeded
-    //        for (int j = 0; j < invList.Count; j++)
-    //        {
-    //            if (inputsNeeded[i] == invList[i].Key)
-    //            {
-    //                return inputsNeeded[i];
-    //            }
-    //        }
-    //    }
-   
-    //    //if none is found then nothing should be taken from this FoodSrc to Work
-    //    return P.None;
-    //}
-
     /// <summary>
     /// Will tell u how many ingredients this building will take maximun
     /// needs to split the storage area of an Building so storage is not fillOut

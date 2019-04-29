@@ -5,18 +5,6 @@ using System.Linq;
 
 public class TerrainSpawnerController : ControllerParent
 {
-    //will load a bunch of regions first and then the rest slowly based on 
-    //distance from the initial town 
-    //
-    //if spawning brand new terrain this must be off
-    //
-    //is not being used the time bz in the StandAlone version slows down the FPS
-    //until finish off all... also if a customer happens to save a game will lose
-    //the spawners have not spawned yet... so 
-    //at the moment this is not completed yet
-    //private bool _asyncLoad;
-
-
     int loadingIndex;
     private SpawnedData spawnedData;
 
@@ -39,7 +27,6 @@ public class TerrainSpawnerController : ControllerParent
     int howManyMountainBoundsToSpawn = 0;//
 
     private SpawnPool _spawnPool;
-
 
     //will be use when spawing new obj to know if that position was used alread by another one
     bool[] usedVertexPos;
@@ -391,12 +378,7 @@ public class TerrainSpawnerController : ControllerParent
         if (!p.MeshController.IsLoading && IsToLoadFromFile && frameCount > everyFrames)
         {
             frameCount = 0;
-
-            //if (_asyncLoad)
-            //{
-                OrganizeSavedData();
-            //}
-
+            OrganizeSavedData();
 
             for (int i = 0; i < loopSize; i++)//100
             {
@@ -422,8 +404,6 @@ public class TerrainSpawnerController : ControllerParent
             }
         }
     }
-
-
 
     /// <summary>
     /// Spawn all objects routine, trys to spawn current obj list.
@@ -756,7 +736,6 @@ public class TerrainSpawnerController : ControllerParent
         SaveData();
     }
 
-
     SpawnedData CreateApropData(TerrainRamdonSpawner ele)
     {
         SpawnedData sData = null;
@@ -880,8 +859,6 @@ public class TerrainSpawnerController : ControllerParent
         p.TerraSpawnController.IsToLoadFromFile = true;
     }
 
-
-
     #region Regions 
 
     bool wasDataOrganized;
@@ -942,8 +919,6 @@ public class TerrainSpawnerController : ControllerParent
         }
     }
 
-
-
     int lastRegion = -1;
     List<int> regionsLoaded = new List<int>();
     /// <summary>
@@ -980,8 +955,6 @@ public class TerrainSpawnerController : ControllerParent
         }
     }
 
-
-
 #endregion
 
     void LoadFromFile()
@@ -1000,11 +973,6 @@ public class TerrainSpawnerController : ControllerParent
         usedVertexPos = new bool[spawnedData.TerraMshCntrlAllVertexIndexCount];
         usedVertexPos[AllSpawnedDataList[loadingIndex].AllVertexIndex] = true;
 
-        //if (_asyncLoad)
-        //{
-        //    HandleLoadingRegions();
-        //}
-
         loadingIndex++;
 
         //when index is the same as couunt that it
@@ -1014,14 +982,9 @@ public class TerrainSpawnerController : ControllerParent
             print(treeList.Count + " treeList.Count IsToLoadFromFile-false");
             Program.gameScene.BatchInitial();
 
-            ////will release here if is not an asyncLoad
-            //if (!_asyncLoad)
-            //{
-                ReleaseLoadingScreen = true;
-            //}
+            ReleaseLoadingScreen = true;
         }
     }
-
 
     private int ttlToSpawn = 0;
     public string PercentageLoaded()
@@ -1049,18 +1012,6 @@ public class TerrainSpawnerController : ControllerParent
         AllSpawnedDataList.Clear();
         SaveData();
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
     private static int secCount;
     private static Vector3 originalPoint;
@@ -1126,7 +1077,6 @@ public class TerrainSpawnerController : ControllerParent
         return !isOnTheStartZone && !regionContainTerraCry && isHasMinHeight && isLowerThanMaxHeight;
     }
 
-
     private static Vector3 ReturnIniPos()
     {
         SPr pp = new SPr();
@@ -1166,12 +1116,10 @@ public class TerrainSpawnerController : ControllerParent
         return false;
     }
 
-
     public bool HasLoadedOrLoadedTreesAndRocks()
     {
         return !IsToLoadFromFile || IsOrnamenting();//means is spwaning ornaments 
     }
-
 
     private bool isOrnamentingNow;
     /// <summary>
@@ -1190,7 +1138,6 @@ public class TerrainSpawnerController : ControllerParent
 
         return isOrnamentingNow;
     }
-
 
 }
 

@@ -189,8 +189,8 @@ public class InputMain : InputParent {
     public void EscapeKey()
     {
         //means is playing
-        //&& Program.gameScene.GameFullyLoaded() is to not allow touch ESC while is loadig
-        if (!CamControl.IsMainMenuOn() && Program.gameScene.GameFullyLoaded())
+        //&& Program.GameFullyLoaded() is to not allow touch ESC while is loadig
+        if (!CamControl.IsMainMenuOn() && Program.GameFullyLoaded())
         {
             if (Program.MouseListener.IsAWindowShownNow())
             {
@@ -209,7 +209,7 @@ public class InputMain : InputParent {
 
         }
         //is on main Menu
-        else if (CamControl.IsMainMenuOn() && Program.gameScene.GameFullyLoaded())
+        else if (CamControl.IsMainMenuOn() && Program.GameFullyLoaded())
         {
             CamControl.ChangeTo("Game");
 

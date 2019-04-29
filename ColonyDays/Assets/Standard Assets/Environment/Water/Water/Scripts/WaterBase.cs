@@ -10,7 +10,7 @@ namespace UnityStandardAssets.Water
         Low = 0,
     }
 
-    [ExecuteInEditMode]
+    //[ExecuteInEditMode]
     public class WaterBase : MonoBehaviour
     {
         public Material sharedMaterial;

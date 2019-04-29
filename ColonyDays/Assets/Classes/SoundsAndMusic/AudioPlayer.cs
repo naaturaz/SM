@@ -12,9 +12,6 @@ public class AudioPlayer  {
     /// </summary>
     static Dictionary<string, Sound> _soundsLib = new Dictionary<string, Sound>();
 
-
-
-
     static Dictionary<string, Sound> _sounds = new Dictionary<string, Sound>();
     static Dictionary<string, Music> _musics = new Dictionary<string, Music>();
 
@@ -43,13 +40,21 @@ public class AudioPlayer  {
             return;
         }
 
-        soundsCointaner = General.Create(Root.classesContainer, Camera.main.transform.position,
-            "SoundContainer", Camera.main.transform);
+        //soundsCointaner = General.Create(Root.classesContainer, Camera.main.transform.position,
+        //    "SoundContainer", Camera.main.transform);
+
+        soundsCointaner = General.Create(Root.classesContainer, CamControl.CurrentCamera().transform.position,
+            "SoundContainer", CamControl.CurrentCamera().transform);
 
         //starts the music 
         MusicManager.Start();
     }
 
+    public static void CameraWasChanged()
+    {
+        soundsCointaner.gameObject.transform.SetParent(CamControl.CurrentCamera().transform);
+        soundsCointaner.gameObject.transform.position = CamControl.CurrentCamera().transform.position;
+    }
 
     public static void InitSoundsLib()
     {
@@ -58,7 +63,7 @@ public class AudioPlayer  {
             return;
         }
 
-        var root = "F:/GitHub/SM/ColonyDays/Assets/Resources/Prefab/Audio/Sound/";
+        var root = "C:/GitHub/SM/ColonyDays/Assets/Resources/Prefab/Audio/Sound/";
         var waves = new List<string>();
 
 #if UNITY_EDITOR
@@ -96,9 +101,7 @@ public class AudioPlayer  {
         var waves = Directory.GetFiles(root, "*.wav").ToList();
         return waves;
     }
-
-
-
+       
     /// <summary>
     /// This is needed so later when a building is looking for its key will be easy to find a string.contain
     /// </summary>
@@ -210,11 +213,6 @@ public class AudioPlayer  {
         return false;
     }
     
-
-       
-
-
-
     static Audio Spawn(string soundToPlayRoot, H musicOrSound)
     {
         Audio temp = null;
@@ -228,9 +226,7 @@ public class AudioPlayer  {
         }
         return temp;
     }
-
-
-
+       
     public static Audio PlayAudio(string soundToPlayRoot, H musicOrSound, Vector3 iniPos = new Vector3(), bool playOneTime = false)
     {
         Audio temp = null;
@@ -251,7 +247,6 @@ public class AudioPlayer  {
         }
         return temp;
     }
-
     public static Sound PlaySoundOneTime(string soundToPlayRoot, H musicOrSound, Vector3 iniPos = new Vector3(), bool reset = false)
     {
         Sound temp = null;
@@ -300,8 +295,5 @@ public class AudioPlayer  {
 
         return temp;
     }
-
-  
-
-
+ 
 }

@@ -704,7 +704,7 @@ public class Languages
 
 
         //
-        _en.Add("Tutorial.Arrow", "This is the tutorial. Once finished you will win $10,000");
+        _en.Add("Tutorial.Arrow", "This is the tutorial. Once finished you will be rewarded $10,000");
         _en.Add("Quest.Arrow", "This is the quest button. You can access the quest window by clicking on it");
         _en.Add("New.Quest.Avail", "At least one quest is available");
         _en.Add("Quest_Button.HoverSmall", "Quest");
@@ -900,7 +900,7 @@ public class Languages
         //Main Menu
         _en.Add("Resume Game", "Resume Game");
         _en.Add("Continue Game", "Continue Game");
-        _en.Add("Tutorial(Beta)", "Tutorial(Beta)");
+        _en.Add("Tutorial", "Tutorial");
         _en.Add("New Game", "New Game");
         _en.Add("Load Game", "Load Game");
         _en.Add("Save Game", "Save Game");
@@ -988,8 +988,8 @@ public class Languages
         _en.Add("Down.HoverSmall", "Decrease Priority");
         _en.Add("Up.HoverSmall", "Increase Priority");
         _en.Add("Trash.HoverSmall", "Delete Order");
-        _en.Add("Almost done", "Almost done");
-        _en.Add("Ten Orders Limit", "Ten orders is the limit on this building");
+        _en.Add("Counting...", "Counting...");
+        _en.Add("Ten Orders Limit", "Ten orders is the limit");
 
 
 
@@ -1727,7 +1727,7 @@ public class Languages
         // _sp.Add(  "Camera Sensitivity:", "Velocidad de la Camara:"  );
 
         //    //
-        // _sp.Add(  "Tutorial(Beta)", "Tutorial(Beta)"  );
+        // _sp.Add(  "Tutorial", "Tutorial"  );
 
 
 

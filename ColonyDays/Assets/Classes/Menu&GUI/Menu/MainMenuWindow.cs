@@ -28,16 +28,16 @@ public class MainMenuWindow : GUIElement
 
     void MakeButtonsInactiveIfNeeded()
     {
-        if (!Program.gameScene.GameFullyLoaded() || Program.gameScene.GameController1.IsGameOver)
-        {
-            _resumeBtn.interactable = false;
-            _saveBtn.interactable = false;
-        }
+        //if (!Program.GameFullyLoaded() || Program.gameScene.GameController1.IsGameOver)
+        //{
+        //    _resumeBtn.interactable = false;
+        //    _saveBtn.interactable = false;
+        //}
         if (!DataController.ThereIsAtLeastAGameToLoad())
         {
             _loadBtn.interactable = false;
         }
-        if (!DataController.ThereIsALastSavedFile() || Program.gameScene.GameFullyLoaded())
+        if (!DataController.ThereIsALastSavedFile() || (Program.gameScene && Program.GameFullyLoaded()))
         {
             //if there is not lastSaved File or game is fully loaded. then not posible to conitnue a game 
             _continueBtn.interactable = false;
@@ -50,5 +50,9 @@ public class MainMenuWindow : GUIElement
 
 	}
 
+    public bool IsContinueBtnInteractable()
+    {
+        return _continueBtn.interactable;
+    }
 
 }

@@ -280,12 +280,12 @@ public class DragSquare : Trail
         if (IsBuildOk && condition && IsUnitBuildCostCovered()
             )
         {
-            farmPrev.Geometry.GetComponent<Renderer>().material.color = farmPrev.InitialColor;
+            farmPrev.PlaneGeometry.GetComponent<Renderer>().material.color = farmPrev.InitialColor;
             IsFarmOk = true;
         }
         else if (!IsBuildOk || !condition || !IsUnitBuildCostCovered())
         {
-            farmPrev.Geometry.GetComponent<Renderer>().material.color = Color.red;
+            farmPrev.PlaneGeometry.GetComponent<Renderer>().material.color = Color.red;
             IsFarmOk = false;
         }
     }
@@ -459,7 +459,7 @@ public class DragSquare : Trail
     {
         for (int i = 0; i < _planesSoil.Count; i++)
         {
-            _planesSoil[i].Geometry.GetComponent<Renderer>().sharedMaterial = newMat;
+            _planesSoil[i].PlaneGeometry.GetComponent<Renderer>().sharedMaterial = newMat;
         }
     }
 

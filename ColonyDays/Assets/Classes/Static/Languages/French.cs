@@ -889,7 +889,7 @@ public class French
             //Main Menu
             { "Resume Game", "Reprendre la partie"},
             { "Continue Game", "Continuer la partie"},
-            { "Tutorial(Beta)", "Didacticiel (Beta)"},
+            { "Tutorial(Beta)", "Didacticiel"},
             { "New Game", "Nouvelle partie"},
             { "Load Game", "Charger une partie"},
             { "Save Game", "Sauvegarder la partie"},

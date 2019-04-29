@@ -62,8 +62,8 @@ public class AchieveTile : GUIElement
          Sprite sp = Resources.Load<Sprite>(root);
 
          //debug only. if is new will use the standard one
-         if (sp == new Sprite())
-         {
+         if (sp == null)//new Sprite()
+        {
              root = "Prefab/Menu/Achieve_Icons/STANDARD_" + IsDollOrWon();
              sp = Resources.Load<Sprite>(root);
          }

@@ -8,8 +8,6 @@
 using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
-using UnityStandardAssets.ImageEffects;
-using System;
 
 public class CamRTSController : CamControl
 {
@@ -191,7 +189,7 @@ public class CamRTSController : CamControl
 
     void AudioAmbientPlay()
     {
-        if (!Program.gameScene.GameFullyLoaded())
+        if (!Program.GameFullyLoaded())
         {
             return;
         }
@@ -753,34 +751,25 @@ public class CamRTSController : CamControl
 
 
     //Camera visual effects 
-    SunShafts _sunShaft;
     Camera _camera;
 
 
     public void Day()
     {
         InitDayNight();
-
-        _sunShaft.enabled = true;
+        _camera = gameObject.GetComponent<Camera>();
 
     }
 
     public void Night()
     {
         InitDayNight();
-        _sunShaft.enabled = false;
 
     }
 
     void InitDayNight()
     {
-        if (_sunShaft == null)
-        {
-            _sunShaft = GetComponent<SunShafts>();
-            _camera = GetComponent<Camera>();
 
-
-        }
     }
 
     public void AssignBackGroundColor(Color col)
@@ -793,6 +782,10 @@ public class CamRTSController : CamControl
     internal Color GetCameraBackColor()
     {
         InitDayNight();
+
+        if(_camera == null)
+            _camera = gameObject.GetComponent<Camera>();
+
         return _camera.backgroundColor;
     }
 }

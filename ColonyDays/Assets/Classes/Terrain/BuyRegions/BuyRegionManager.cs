@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
-
 
 public class BuyRegionManager
 {
@@ -17,7 +14,6 @@ public class BuyRegionManager
 
     //the region we might be able to unlock now
     private int _currentRegion;
-
 
     public BuyRegionManager()
     {
@@ -73,12 +69,6 @@ public class BuyRegionManager
             _forSaleRegionGoes.Add(ForSaleRegionGO.CreateForSaleRegionGO(Root.forSaleRegion, index,
                 reg, container: Program.gameScene.Terreno.transform));
         }
-
-        ////removes the unlock regions from the _forSaleRegions
-        //for (int i = 0; i < _unlockRegions.Count; i++)
-        //{
-        //    _forSaleRegions.Remove(_unlockRegions[i]);
-        //}
     }
 
     /// <summary>
@@ -91,7 +81,6 @@ public class BuyRegionManager
             return;
         }
 
-        //var firstBuild = BuildingPot.Control.Registro.AllBuilding.ElementAt(0).Value.transform.position;
         var middleOfTown = BuildingPot.Control.Registro.AverageOfAllBuildingsNow();
         var first1x1Regions = MeshController.CrystalManager1.ReturnMySurroundRegions(U2D.FromV3ToV2(middleOfTown), 1);
 
@@ -141,10 +130,7 @@ public class BuyRegionManager
     private void RemoveCost()
     {
         Program.gameScene.GameController1.Dollars -= MoneyNeeded();
-
-
     }
-
 
     internal void SetCurrentRegion(int indexP)
     {
@@ -178,8 +164,6 @@ public class BuyRegionManager
         gO.Destroy();
     }
 
-
-
     internal bool AreAnchorsOnUnlockRegions(List<UnityEngine.Vector3> anchors)
     {
         var anchorRegions = new List<int>();
@@ -199,8 +183,6 @@ public class BuyRegionManager
         }
         return true;
     }
-
-
 
     #region Showing Regions
 
@@ -246,7 +228,6 @@ public class BuyRegionManager
 
     #endregion
 
-
     public void Update()
     {
         //so while a dialog is up dont disapear, that dialog could be a BuyRegion dialog 
@@ -260,9 +241,6 @@ public class BuyRegionManager
             _isToShowNow = false;
         }
     }
-
-
-
 
     /// <summary>
     /// Will find a locked region that is at least 1 region in the middle far so

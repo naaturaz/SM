@@ -166,6 +166,14 @@ public class Docker : Profession
             CheckIfCanPickUoNewOrder();
 
             ImportIfPossible();
+
+            if (PersonPot.Control.RoutesCache1.ContainANewerOrSameRoute(_person.Work.MyId, _person.FoodSource.MyId,
+           new DateTime()) || Router1.TheRoute.CheckPoints.Count == 0)
+            {
+                Router1.TheRoute = PersonPot.Control.RoutesCache1.GiveMeTheNewerRoute();
+                Router1.IsRouteReady = true;
+            }
+
             _person.Body.WalkRoutine(Router1.TheRoute, HPers.DockerSupply);
         }
         //at food source at first

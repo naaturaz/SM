@@ -45,7 +45,7 @@ public class BigBoxPrev : CreatePlane {
         if (corretMinimuScaleOnBigBox)
         {
             corretMinimuScaleOnBigBox = false;
-            Geometry.transform.localScale *= 1.04f;
+            PlaneGeometry.transform.localScale *= 1.04f;
         }
     }
 
@@ -56,13 +56,13 @@ public class BigBoxPrev : CreatePlane {
     /// <param name="condition">condition true = initial_color, condition false = red</param>
     public void CheckAndSwitchColor(bool condition)
     {
-        if (Geometry.GetComponent<Renderer>().material.color == InitialColor && !condition)
+        if (PlaneGeometry.GetComponent<Renderer>().material.color == InitialColor && !condition)
         {
-            Geometry.GetComponent<Renderer>().material.color = Color.red;
+            PlaneGeometry.GetComponent<Renderer>().material.color = Color.red;
         }
-        else if (Geometry.GetComponent<Renderer>().material.color == Color.red && condition)
+        else if (PlaneGeometry.GetComponent<Renderer>().material.color == Color.red && condition)
         {
-            Geometry.GetComponent<Renderer>().material.color = InitialColor;
+            PlaneGeometry.GetComponent<Renderer>().material.color = InitialColor;
         }
 
         if (BuildingPot.Control == null) { return; }

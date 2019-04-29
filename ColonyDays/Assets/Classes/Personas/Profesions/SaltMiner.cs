@@ -20,7 +20,7 @@ public class SaltMiner : Profession
         person.PrevOrder = null;
 
         IsRouterBackUsed = false;
-        MyAnimation = "isIdle";
+        MyAnimation = "isHoe";
         _person = person;
         HandleNewProfDescrpSavedAndPrevJob(Job.SaltMiner);
 

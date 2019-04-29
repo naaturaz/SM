@@ -19,8 +19,7 @@ public class Structure : StructureParent
         get { return _usedAt; }
         set { _usedAt = value; }
     }
-
-
+    
     /// <summary>
     /// This is the method that moves the building around in the terrain 
     /// when is newly built
@@ -38,9 +37,12 @@ public class Structure : StructureParent
             isStageObjHidden = true;
         }
 
-        base.UpdateClosestVertexAndOld();
-        gameObject.transform.position = ClosestSubMeshVert;
 
+        base.UpdateClosestVertexAndOld();
+
+        //gameObject.transform.position = ClosestSubMeshVert;//snap
+
+        gameObject.transform.position = m.HitMouseOnTerrain.point;//free
 
         if (_arrow != null)
         {

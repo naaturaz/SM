@@ -154,7 +154,7 @@ public class PersonController : PersonPot
     private bool init;
     public void Initialize()
     {
-        if (!MeshController.CrystalManager1.IsFullyLoaded() || !Program.gameScene.GameFullyLoaded())//making sure all build are fullt loaded
+        if (!MeshController.CrystalManager1.IsFullyLoaded() || !Program.GameFullyLoaded())//making sure all build are fullt loaded
         {
             return;
         }

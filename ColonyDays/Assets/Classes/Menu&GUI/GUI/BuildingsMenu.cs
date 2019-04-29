@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class BuildingsMenu : GUIElement
 {
-    private Vector3 iniPos;
+    private Vector3 iniPosition;
 
     private GameObject slot1;
     private GameObject slot2;
@@ -37,7 +37,7 @@ public class BuildingsMenu : GUIElement
 
     private void InitObj()
     {
-        iniPos = transform.position;
+        iniPosition = transform.position;
 
         slot1 = GetChildThatContains(H.Slot1);
         slot2 = GetChildThatContains(H.Slot2);
@@ -79,7 +79,7 @@ public class BuildingsMenu : GUIElement
 
         BuildingPot.UnlockBuilds1.UpdateBuildsStatuses();
         LoadMenu(vals);
-        transform.position = iniPos;
+        transform.position = iniPosition;
     }
 
 
@@ -108,7 +108,7 @@ public class BuildingsMenu : GUIElement
                     var s = (Sprite) Resources.Load(iconRoot, typeof (Sprite));
 
                     //didnt found an Icon
-                    if (s==new Sprite())
+                    if (s == null)//new Sprite()
                     {
                         s = (Sprite)Resources.Load("Prefab/Building/gameIcon", typeof(Sprite));
                     }

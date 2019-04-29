@@ -24,6 +24,15 @@ public class CamControl : MonoBehaviour
     void Start()
     {
         mainMenuCamera = GameObject.Find("MainMenuCamera").GetComponent<Camera>();
+
+    }
+
+    public static Camera CurrentCamera()
+    {
+        if (rtsCamera && rtsCamera.enabled) return rtsCamera;
+        if (firstPersonCamera && firstPersonCamera.enabled) return firstPersonCamera;
+
+        return mainMenuCamera;
     }
 
     public static CamControl Create(string root, Vector3 origen = new Vector3())
@@ -46,7 +55,8 @@ public class CamControl : MonoBehaviour
         {
             CAMRTS = (CamRTSController)Create(Root.cameraRTS, Vector3.zero);
             rtsCamera = CAMRTS.GetComponent<Camera>();
-            
+            rtsCamera.enabled = true;
+            CAMRTS.CamSensivity = 6;
             //mainMenuCamera.enabled = false;
         }
     }
@@ -68,30 +78,23 @@ public class CamControl : MonoBehaviour
             return;
         }
 
-        //so if is FPS active the cam wont go anywhere 
+        DisableAllCams();
 
         if (newVal == "Main")
         {
             mainMenuCamera.enabled = true;
-            if (rtsCamera != null)
-            {
-                rtsCamera.enabled = false;
-            }
+            mainMenuCamera.GetComponent<AudioListener>().enabled = true;
         }
         else if(newVal == "Game")
         {
-            CAMRTS.CamSensivity = 6;
+            if (CAMRTS) CAMRTS.CamSensivity = 6;
 
             Cursor.visible = true;
 
-            mainMenuCamera.enabled = false;
             if (rtsCamera != null)
             {
                 rtsCamera.enabled = true;
-            }
-            if (firstPersonCamera != null)
-            {
-                firstPersonCamera.enabled = false;
+                rtsCamera.GetComponent<AudioListener>().enabled = true;
             }
         } 
         else if(newVal == "First")
@@ -99,13 +102,33 @@ public class CamControl : MonoBehaviour
             CAMRTS.CamSensivity = 0;
 
             firstPersonCamera = GameObject.Find("FirstPersonCharacter").GetComponent<Camera>();
-            mainMenuCamera.enabled = false;
-            rtsCamera.enabled = false;
 
             if (firstPersonCamera != null)
             {
                 firstPersonCamera.enabled = true;
+                firstPersonCamera.GetComponent<AudioListener>().enabled = true;
+
             }
+        }
+        AudioPlayer.CameraWasChanged();
+    }
+
+    static void DisableAllCams()
+    {
+        if (mainMenuCamera != null)
+        {
+            mainMenuCamera.enabled = false;
+            mainMenuCamera.GetComponent<AudioListener>().enabled = false;
+        }
+        if (rtsCamera != null)
+        {
+            rtsCamera.enabled = false;
+            rtsCamera.GetComponent<AudioListener>().enabled = false;
+        }
+        if (firstPersonCamera != null)
+        {
+            firstPersonCamera.enabled = false;
+            firstPersonCamera.GetComponent<AudioListener>().enabled = false;
         }
     }
 }

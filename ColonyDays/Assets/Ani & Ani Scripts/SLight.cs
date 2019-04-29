@@ -53,6 +53,8 @@ class SLight : General
         {
             _light.intensity = 0f;
             TurnThisOneOn(_dayGlass);
+
+            if(Program.gameScene && Program.GameFullyLoaded())
             GameController.ResumenInventory1.Remove(P.WhaleOil, 1f);
         }
     }

@@ -339,7 +339,7 @@ public class Body //: MonoBehaviour //: General
         _currentAni = animationPass;
         myAnimator.SetBool(animationPass, true);
 
-        if (Program.gameScene.GameFullyLoaded() && _bodyAgent != null)
+        if (Program.GameFullyLoaded() && _bodyAgent != null)
         {
             _bodyAgent.CheckOnAnimation();
         }
@@ -406,7 +406,7 @@ public class Body //: MonoBehaviour //: General
 
     private float CorrectSpeedByWeight(string aniToEval)
     {
-        if (!Program.gameScene.GameFullyLoaded() || _person == null || _person.Body == null)
+        if (!Program.GameFullyLoaded() || _person == null || _person.Body == null)
         {
             return _speed;
         }
@@ -831,12 +831,21 @@ public class Body //: MonoBehaviour //: General
         var destRoute = route.DestinyKey.Substring(route.DestinyKey.Length - 2);
         var oriRoute = route.OriginKey.Substring(route.OriginKey.Length - 2);
 
-        var a = _person;
+        
+
+
 
         //inside a building route 
         if (destRoute == ".D" && oriRoute == ".O")
         {
             _bodyCall = true;
+
+            var a = _person;
+            if (a.ProfessionProp.ProfDescription == Job.Farmer)
+            {
+                var bb = 1;
+            }
+
         }
 
         if (!_bodyCall)
@@ -1122,6 +1131,12 @@ public class Body //: MonoBehaviour //: General
     /// </summary>
     void MoveActionMethod()
     {
+        var a = _person;
+        if (a.ProfessionProp.ProfDescription == Job.Farmer)
+        {
+            var bb = 1;
+        }
+
         if (oldCurrent != _currentRoutePoint)
         {
             InitRotaVars();
@@ -1178,11 +1193,11 @@ public class Body //: MonoBehaviour //: General
     {
         _currentPosition = newPos;
 
-        if (_person.LevelOfDetail1.OutOfScreen1.OnScreenRenderNow)
-        {
+        //if (_person.LevelOfDetail1.OutOfScreen1.OnScreenRenderNow)
+        //{
             //will onl;y assign if on screen now 
             _person.transform.position = newPos;
-        }
+        //}
     }
 
     public void A64msUpdate()

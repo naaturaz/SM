@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 
 /// <summary>
@@ -109,7 +107,6 @@ class TownLoader
         //-make _isTemplate = true
         //-make isDev = true
 
-
         //old instruccions:
         //-uncomment 2 line below  
         //-Also make sure in PErsonController the amt of people spawned will be zero
@@ -173,7 +170,7 @@ class TownLoader
             var newPos = bData.All[i].IniPos + difference;
             //its is important to get the newPOs in the closest vertex so is aling with new buildings to
             //spawn by user 
-            newPos = m.Vertex.FindClosestVertex(newPos, m.AllVertexs.ToArray());
+            //newPos = m.Vertex.FindClosestVertex(newPos, m.AllVertexs.ToArray());
             bData.All[i].IniPos = newPos;
         }
     }
@@ -190,74 +187,4 @@ class TownLoader
         return Registro.FromALotOfVertexToPoly(allAnchors);
     }
 
-
-
-
-
-
-
-
-
-
-
-    //old
-
-
-    ///// <summary>
-    ///// It moves 'list' to the spot
-    ///// </summary>
-    ///// <param name="spot"></param>
-    ///// <param name="list"></param>
-    ///// <returns></returns>
-    //private static List<Vector3> MoveTownToSpot(Vector3 spot, List<Vector3> list)
-    //{
-    //    //difference = spot - UPoly.MiddlePoint(list);
-    //    //difference = spot - list[2];
-    //    List<Vector3> movedTown = new List<Vector3>();
-
-    //    for (int i = 0; i < list.Count; i++)
-    //    {
-    //        movedTown.Add(list[i] + difference);
-    //    }
-    //    return movedTown;
-    //}
-
-    ///// <summary>
-    ///// Will say if each corner of the town falls in ground. otherwise ret false
-    ///// Will also make sure all points are in the terrain limit
-    ///// and also they all are in the same region
-    ///// </summary>
-    ///// <param name="spot"></param>
-    ///// <param name="townDim"></param>
-    ///// <returns></returns>
-    //static bool DoesSpotFitTown(Vector3 spot, List<Vector3> townDim)
-    //{
-    //    var movedTown = MoveTownToSpot(spot, townDim);
-    //    //UVisHelp.CreateHelpers(movedTown, Root.yellowCube);
-    //    var region = MeshController.CrystalManager1.ReturnMyRegion(movedTown[0]);
-
-    //    for (int i = 0; i < movedTown.Count; i++)
-    //    {
-    //        //throws ray to check where is in real ground
-    //        var inRealGroundVal = m.Vertex.BuildVertexWithXandZ(movedTown[i].x, movedTown[i].z);
-    //        var inFloor = Building.IsVector3OnTheFloor(inRealGroundVal, m.IniTerr.MathCenter.y);
-
-    //        //will check if the point is on terrain. Also manipulates '-50' the size of terrain and 
-    //        //makes it a bit smaller so they town loaded is not right no the edge of terrain
-    //        var inTerrain = UTerra.IsOnTerrainManipulateTerrainSize(movedTown[i], -1.2f);//-1
-
-    //        //so all fall into the same region 
-    //        var regionThisIndex = MeshController.CrystalManager1.ReturnMyRegion(movedTown[i]);
-    //        var isSameRegion = region == regionThisIndex;
-
-    //        //if one is not in floor then is false 
-    //        if (!inFloor || !inTerrain || !isSameRegion)
-    //        {
-    //            return false;
-    //        }
-    //    }
-    //    return true;
-    //}
-
 }
-

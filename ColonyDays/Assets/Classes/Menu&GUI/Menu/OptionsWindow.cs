@@ -87,9 +87,6 @@ public class OptionsWindow : GUIElement
         _qualityBtn = GetChildCalledOnThis("Quality_Btn", qualityPanel);
         _qualityBtnTxt = GetChildCalledOnThis("Text", _qualityBtn).GetComponent<Text>();
 
-
-
-
         SetAllControls();
         RefreshAllDropDowns();
 
@@ -102,8 +99,7 @@ public class OptionsWindow : GUIElement
             Show();
         }
 
-        LoadSlidersValues();
-
+        //LoadSlidersValues();
     }
 
     private void SetAllControls()
@@ -274,7 +270,6 @@ public class OptionsWindow : GUIElement
             PlayerPrefs.SetInt(which, -1);
         }
     }
-
 
     public void ReFreshDropsThenShow()
     {
@@ -481,19 +476,29 @@ public class OptionsWindow : GUIElement
         };
     }
 
-#endregion
+    #endregion
 
 
+    void OnEnable()
+    {
+        Debug.Log("PrintOnEnable: OptionsWindow was enabled");
+        LoadSlidersValues();
+    }
 
 
-
-#region Sliders Sound and Music , Camera
+    #region Sliders Sound and Music , Camera
 
     void LoadSlidersValues()
     {
+        if (!_soundSlider) return;
+
         _soundSlider.value = AudioCollector.SoundLevel;
         _musicSlider.value = AudioCollector.MusicLevel;
-        _cameraSlider.value = CamControl.CAMRTS.CamSensivity/factorSens;
+
+        if(!CamControl.CAMRTS)
+            _cameraSlider.value = 0.5f;
+        else
+            _cameraSlider.value = CamControl.CAMRTS.CamSensivity/factorSens;
     }
 
     public void NewSoundLevel()

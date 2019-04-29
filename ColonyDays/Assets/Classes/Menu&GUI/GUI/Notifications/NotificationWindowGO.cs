@@ -12,7 +12,7 @@ public class NotificationWindowGO : GUIElement
     private List<NotificationTile> _tilesSpawn = new List<NotificationTile>();
     private Vector3 _scrollIniPos;
 
-    private Scrollbar _verticScrollbar;
+    private Scrollbar _verticalScrollbar;
 
     private bool _hideSlideToLeft;
 
@@ -72,9 +72,9 @@ public class NotificationWindowGO : GUIElement
 
     void ClearForm()
     {
-        if (_verticScrollbar != null)
+        if (_verticalScrollbar != null)
         {
-            _verticScrollbar.value = 1;
+            _verticalScrollbar.value = 1;
         }
     }
 
@@ -87,11 +87,11 @@ public class NotificationWindowGO : GUIElement
         var vert = GetGrandChildCalled("Scrollbar Vertical");
         if (vert != null)
         {
-            _verticScrollbar = vert.GetComponent<Scrollbar>();
+            _verticalScrollbar = vert.GetComponent<Scrollbar>();
         }
         else
         {
-            _verticScrollbar = null;
+            _verticalScrollbar = null;
         }
     }
 

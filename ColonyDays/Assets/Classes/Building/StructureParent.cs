@@ -306,8 +306,7 @@ public class StructureParent : Building {
     //Hide the wheel of the mill and the mine
     protected void ShowWheel(bool show)
     {
-        
-        if (HType == H.Mill && Instruction != H.WillBeDestroy)
+        if ((HType == H.Mill || HType == H.SugarMill) && Instruction != H.WillBeDestroy)
         {
             GameObject wheel = GetChildLastWordIs(H.Wheel);
             if (wheel == null) { throw new Exception("Obj doenst have obj attached called |...Wheel|");}

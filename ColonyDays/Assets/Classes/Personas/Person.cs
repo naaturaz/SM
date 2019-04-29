@@ -1585,7 +1585,7 @@ public class Person : Hoverable
     // Update is called once per frame
     void Update()
     {
-        _levelOfDetail.A45msUpdate();
+        //_levelOfDetail.A45msUpdate();
 
         //was on update so new PeopleFind their new home 
         if (_home == null && !PersonPot.Control.Locked && HType == H.Person)
@@ -1859,7 +1859,10 @@ public class Person : Hoverable
         {
             _profession = new SaltMiner(this, pF);
         }
-
+        else if (jType == Job.Sugarmiller)
+        {
+            _profession = new Sugarmiller(this, pF);
+        }
 
         PersonPot.Control.RestartControllerForPerson(MyId);
     }
@@ -1898,6 +1901,11 @@ public class Person : Hoverable
         {
             return Job.SaltMiner;
         }
+        else if (work.HType == H.SugarMill)
+        {
+            return Job.Sugarmiller;
+        }
+
         return Job.Insider;
     }
 

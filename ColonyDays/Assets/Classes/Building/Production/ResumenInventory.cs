@@ -32,7 +32,7 @@ public class ResumenInventory
     /// <returns></returns>
     public float ReturnAmountOnCategory(PCat pCat)
     {
-        if (Program.gameScene.GameFullyLoaded() && GameInventory.InventItems.Count == 0)
+        if (Program.GameFullyLoaded() && GameInventory.InventItems.Count == 0)
         {
             SetInitialGameInventory();
         }

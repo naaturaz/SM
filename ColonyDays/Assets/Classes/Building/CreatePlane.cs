@@ -13,7 +13,7 @@ public class CreatePlane : Building
     private Vector3 _scale = new Vector3();//implemented for when the planes are loaded 
     private bool _isAnInVisiblePlane;
 
-    private GameObject _geometry;
+    private GameObject _planeGeometry;
 
     private Tile _tile = Tile.None;//the tile is like NE corner
     private string _spawnerID;//the building spwaned this.  used for tiles
@@ -32,10 +32,10 @@ public class CreatePlane : Building
     /// <summary>
     /// This is the gameObj that is rendered 
     /// </summary>
-    public new GameObject Geometry
+    public new GameObject PlaneGeometry
     {
-        get { return _geometry; }
-        set { _geometry = value; }
+        get { return _planeGeometry; }
+        set { _planeGeometry = value; }
     }
 
     public string SpawnerId
@@ -146,12 +146,12 @@ public class CreatePlane : Building
     void Awake()
     {
         GameObject loc = Resources.Load<GameObject>(ReturnGeometryRoot());
-        _geometry = (GameObject) Instantiate(loc);
-        _geometry.name = H.Geometry.ToString();
+        _planeGeometry = (GameObject) Instantiate(loc);
+        _planeGeometry.name = H.Geometry.ToString();
 
-        _geometry.transform.SetParent(gameObject.transform);
-        _geometry.GetComponent<Renderer>().enabled = false;//doing this bz was flashing when was created close to the cam in some place
-        _geometry.GetComponent<Renderer>().castShadows = false;
+        _planeGeometry.transform.SetParent(gameObject.transform);
+        _planeGeometry.GetComponent<Renderer>().enabled = false;//doing this bz was flashing when was created close to the cam in some place
+        _planeGeometry.GetComponent<Renderer>().castShadows = false;
     }
 
 
@@ -173,21 +173,21 @@ public class CreatePlane : Building
         }
 
         base.Start();
-        Geometry.GetComponent<Renderer>().sharedMaterial = _material;
+        PlaneGeometry.GetComponent<Renderer>().sharedMaterial = _material;
 
         //This is when the Plane is called from the loading fuction
         if (_scale != new Vector3() && _scale != null)
         {
-            _geometry.transform.SetParent(null);
-            _geometry.transform.position = transform.position;
-            _geometry.transform.localScale = _scale; //it will work it if is initiated with a scale 
+            _planeGeometry.transform.SetParent(null);
+            _planeGeometry.transform.position = transform.position;
+            _planeGeometry.transform.localScale = _scale; //it will work it if is initiated with a scale 
 
             if (!_isAnInVisiblePlane)
             {
-                _geometry.GetComponent<Renderer>().enabled = true;
+                _planeGeometry.GetComponent<Renderer>().enabled = true;
             }
 
-            _geometry.transform.SetParent(transform);
+            _planeGeometry.transform.SetParent(transform);
             InitializeMatColors();
         }
 
@@ -223,7 +223,7 @@ public class CreatePlane : Building
         _geometrySmart.transform.SetParent(gameObject.transform);
         _geometrySmart.transform.localPosition = new Vector3();
 
-        Geometry.SetActive(false);
+        PlaneGeometry.SetActive(false);
         ScaleSmart();
 
         //seting an area cost 
@@ -234,7 +234,7 @@ public class CreatePlane : Building
 
     void ScaleSmart()
     {
-        Vector3 scale = _geometry.transform.localScale;
+        Vector3 scale = _planeGeometry.transform.localScale;
         scale.y = _geometrySmart.transform.localScale.y;
         _geometrySmart.transform.localScale = scale;
     }
@@ -509,23 +509,23 @@ public class CreatePlane : Building
 
         if (blockthickNess == 0){blockthickNess = Program.gameScene.SubDivideBlockYVal;}
 
-        _geometry.transform.SetParent(null);
+        _planeGeometry.transform.SetParent(null);
         //updattinf pos of gameObj : To the middle btw NW and SE points
         gameObject.transform.position = (newVert[0] + newVert[2]) / 2;
-        _geometry.transform.position = (newVert[0] + newVert[2]) / 2;
+        _planeGeometry.transform.position = (newVert[0] + newVert[2]) / 2;
 
         newVert = RectifyScaleRoutine(newVert);
 
         UpdateGeometryScale(newVert, blockthickNess);
-        _geometry.transform.SetParent(gameObject.transform);
-        if (!_geometry.GetComponent<Renderer>().enabled && !_isAnInVisiblePlane)
+        _planeGeometry.transform.SetParent(gameObject.transform);
+        if (!_planeGeometry.GetComponent<Renderer>().enabled && !_isAnInVisiblePlane)
         {
-            _geometry.GetComponent<Renderer>().enabled = true;
+            _planeGeometry.GetComponent<Renderer>().enabled = true;
         }
 
         if (makeThisInvisible)
         {
-            _geometry.GetComponent<Renderer>().enabled = false;
+            _planeGeometry.GetComponent<Renderer>().enabled = false;
             _isAnInVisiblePlane = true;
         }
     }
@@ -592,11 +592,11 @@ public class CreatePlane : Building
         float zDim = newVert[0].z - newVert[3].z;
 
         //Scaling
-        Vector3 scale = _geometry.transform.localScale;
+        Vector3 scale = _planeGeometry.transform.localScale;
         scale.x = xDim;
         scale.y = blockthickNess;
         scale.z = zDim;
-        _geometry.transform.localScale = scale;
+        _planeGeometry.transform.localScale = scale;
 
         SaveScale(scale);
     }

@@ -93,7 +93,7 @@ class TutoWindow : GUIElement
     bool wasShown;
     void Update()
     {
-        if (Program.gameScene.GameFullyLoaded() && !wasShown && string.IsNullOrEmpty(PlayerPrefs.GetString("Tuto")))
+        if (Program.GameFullyLoaded() && !wasShown && string.IsNullOrEmpty(PlayerPrefs.GetString("Tuto")))
         {
             wasShown = true;
             Show();

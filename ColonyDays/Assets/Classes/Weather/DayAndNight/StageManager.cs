@@ -78,6 +78,7 @@ public class StageManager : General
 
     void Update()
     {
+        if (!Program.gameScene) return;
         if (Program.gameScene.GameSpeed == 0)
         {
             return;
@@ -151,9 +152,6 @@ public class StageManager : General
         _east.intensity = newE;
     }
 
-
-
-
     private void ReachNextColors()
     {
         float step = ReturnSpeed() * Time.deltaTime;//bz color doest finish blending
@@ -163,18 +161,19 @@ public class StageManager : General
             _colorManager.GetMeMainColor(_currentStage, _currentCycle), step);
         _main.color = newMain;
 
-
         var mainAmbience = RenderSettings.ambientLight;
         var newAmbience = Color.Lerp(mainAmbience,
             _colorManager.GetMeAmbienceColor(_currentStage, _currentCycle), step);
         
         RenderSettings.ambientLight = newAmbience;
 
+        if(CamControl.CAMRTS != null)
+        {
+            var currentColBack = CamControl.CAMRTS.GetCameraBackColor();
 
-        var currentColBack = CamControl.CAMRTS.GetCameraBackColor(); 
-        var newColBack = Color.Lerp(currentColBack, _colorManager.GetMeCameraBackGroundColor(_currentCycle), step);
-        CamControl.CAMRTS.AssignBackGroundColor(newColBack);
-
+            var newColBack = Color.Lerp(currentColBack, _colorManager.GetMeCameraBackGroundColor(_currentCycle), step);
+            CamControl.CAMRTS.AssignBackGroundColor(newColBack);
+        }
 
         ReachNewColorForWaveGrass();
     }

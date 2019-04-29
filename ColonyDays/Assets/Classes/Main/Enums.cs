@@ -14,7 +14,8 @@ public enum Job
     WheelBarrow,
     Homer,
     Farmer,
-    SaltMiner
+    SaltMiner,
+    Sugarmiller
 }
 
 public enum TaskE //to be use for the person class
@@ -119,7 +120,7 @@ public enum P
     Map, Book,
     //Silk, 
     //Silk, //decide if include or not in the game 
-    //SugarMill,
+    SugarMill,
     Sugar,
     None,
 
@@ -469,7 +470,7 @@ public enum StInfr //for structures game structure.cs
     //Infrastructure
     StandLamp,
     //Trail,
-    Road, 
+    //Road, 
     //BridgeTrail, BridgeRoad,
     //CoachMan, 
     LightHouse,
@@ -522,7 +523,7 @@ public enum StProd //for structures game structure.cs
 public enum StInd
 {   Cloth, GunPowder, PaperMill, Printer,
     //CoinStamp,
-    //SugarMill,
+    SugarMill,
     Foundry, SugarShop}
 
 public enum StTrade //for structures game structure.cs 

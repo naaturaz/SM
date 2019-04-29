@@ -42,7 +42,7 @@ public class NotificationsManager
 
     private void Init()
     {
-        if (BuildingPot.Control.DockManager1 == null || !Program.gameScene.GameFullyLoaded())
+        if (BuildingPot.Control.DockManager1 == null || !Program.GameFullyLoaded())
         {
             _stillNeedInit = true;
             return;

@@ -107,7 +107,7 @@ public class ShowInvetoryItem : GUIElement
         Sprite sp = Resources.Load<Sprite>(root);
 
         //debug only bz all should have a root
-        if (sp == new Sprite())
+        if (sp == null)//new Sprite()
         {
             root = "Prefab/GUI/Inventory_Icons/Brick";
             sp = Resources.Load<Sprite>(root);

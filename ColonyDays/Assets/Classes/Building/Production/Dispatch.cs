@@ -153,6 +153,23 @@ public class Dispatch
 
         return false;
     }
+    
+    internal bool DoYouHaveThisOrderInCurrentLists(Order order)
+    {
+        var orderFound = _expImpOrders.Find(a => a.ID == order.ID);
+        if (orderFound != null) return true;
+
+        orderFound = _orders.Find(a => a.ID == order.ID);
+        if (orderFound != null) return true;
+
+        orderFound = _dormantOrders.Find(a => a.ID == order.ID);
+        if (orderFound != null) return true;
+
+        orderFound = _recycledOrders.Find(a => a.ID == order.ID);
+        if (orderFound != null) return true;
+
+        return false;
+    }
 
     public List<Order> Orders
     {
@@ -529,7 +546,6 @@ public class Dispatch
             {
                 //todo Notify
                 Debug.Log("Docker order removed:" + currOrders[i].DestinyBuild + "|for prod:" + currOrders[i].Product + "" + "");
-
                 RemoveOrderByIDExIm(currOrders[i].ID);
                 i--;
                 continue;
@@ -598,6 +614,9 @@ public class Dispatch
 
         if (destBuild.Inventory.IsFullForThisProd(order.Product))
         {
+
+
+            Debug.Log(String.Format("Building {0} can't accept more {1} therefore order is removed", order.DestinyBuild, order.Product ));
             return true;
         }
         return false;

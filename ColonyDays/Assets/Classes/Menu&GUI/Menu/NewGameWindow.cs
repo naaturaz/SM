@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Button = UnityEngine.UI.Button;
+using UnityEngine.EventSystems;
 
 public class NewGameWindow : GUIElement
 {
@@ -59,11 +60,13 @@ public class NewGameWindow : GUIElement
         _pirateToggle = GetChildCalled("Pirate_Toggle").GetComponent<Toggle>();
         _foodToggle = GetChildCalled("Food_Toggle").GetComponent<Toggle>();
 
-
-
         LoadDefaultForNewGame();
 	    AddressDevVer();
-	}
+    }
+
+
+
+    
 
     private void AddressDevVer()
     {

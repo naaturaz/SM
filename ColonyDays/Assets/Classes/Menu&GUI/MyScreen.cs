@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System;
 
 /*
  * All Actions related to the the Screen. Including loading screen
@@ -14,22 +15,16 @@ public class MyScreen : General
     private MainMenuWindow _mainMenuWindow;//the window of the main menu. so can be hidden and shw back
     private NewGameWindow _newGameWindow;
     private SaveLoadGameWindow _saveLoadGameWindow;
-
-
+    
     private OptionsWindow _optionsWindow;
     private AchieveWindow _achieveWindow;
     private MyForm current;
     private MyForm mainMenuForm = new MyForm();
 
-
-
-
     private string _terraRoot;//the terrain root
     private string _diff;//the game difficulty
-    //private int _difficulty;//in 0-4
 
     private string _townName;//the town name 
-
 
     internal SaveLoadGameWindow SaveLoadGameWindow
     {
@@ -61,15 +56,6 @@ public class MyScreen : General
         set { _optionsWindow = value; }
     }
 
-    ///// <summary>
-    ///// THe dificulty of the game selected by user 
-    ///// </summary>
-    //public int Difficulty
-    //{
-    //    get { return _difficulty; }
-    //    set { _difficulty = value; }
-    //}
-
     public MainMenuWindow MainMenuWindow1
     {
         get { return _mainMenuWindow; }
@@ -81,15 +67,12 @@ public class MyScreen : General
     public void Start()
     {
         Settings.LoadFromFile();
-
-
+        
         //so is used only 1st time 
         if (current != null)
         {
             return;    
         }
-
-
 
         LoadMainMenu();
 
@@ -134,9 +117,7 @@ public class MyScreen : General
 
         //_mainMenuWindow.MakeResumeActive();
     }
-
-
-
+       
     /// <summary>
     /// Load the main menu
     /// </summary>
@@ -153,8 +134,7 @@ public class MyScreen : General
     {
         return current != null && current.name.Contains("Menu");
     }
-
-
+    
     bool wasOptionalFeedbackShown;
     /// <summary>
     /// Depending on the btn was clicked will do action 
@@ -233,16 +213,36 @@ public class MyScreen : General
             //Debug.Log("Achive");
         }
     }
-
-
+    
     public void Update()
     {
         if (isNewGameCreated)
         {
             FirstPartOfNewGameCreated();
         }
+
+        InputKeys();
     }
 
+    private void InputKeys()
+    {
+        if (!IsMainMenuOn()) return;
+
+        if(Input.GetKey(KeyCode.C))
+        {
+            if(_mainMenuWindow == null)
+            _mainMenuWindow = FindObjectOfType<MainMenuWindow>();
+
+            if(!_mainMenuWindow.IsContinueBtnInteractable())return;
+
+            ContinueGameBtn();
+        }
+        else if (Input.GetKey(KeyCode.N))
+        {
+            RedifineWindows();
+            HideMainMakeWindActive(_newGameWindow);
+        }
+    }
 
     private bool isNewGameCreated;
     private float timeClicked;
@@ -266,7 +266,6 @@ public class MyScreen : General
             _terraRoot = terraRoot;
         }
 
-
         if (string.IsNullOrEmpty(diff))
         {
             diff = "Easy";
@@ -277,11 +276,6 @@ public class MyScreen : General
 
         _townName = townName;
     }
-
-
-
-
-
 
     int _holdDifficulty = -1;
     public int HoldDifficulty
@@ -318,10 +312,6 @@ public class MyScreen : General
     {
         return HoldDifficulty + 1;
     }
-
-
-
-
 
     #region Random Terra Root
     //IMPORTANT : To add a new Terrain
@@ -421,10 +411,7 @@ public class MyScreen : General
         return pathToClean.Substring(len + 1);//bz the: \\
     }
 
-
 #endregion
-
-
 
     /// <summary>
     /// bzloading screen appers after the terrain is loaded . so im goona wait until loading is loaded so will fire this 
@@ -510,7 +497,6 @@ public class MyScreen : General
         _mainMenuWindow.Show();
     }
 
-
     void HideMainMakeWindActive(GUIElement window)
     {
         RedifineWindows();
@@ -518,8 +504,6 @@ public class MyScreen : General
         _mainMenuWindow.Hide();
         window.Show();
     }
-
-
 
     public void DeleteSavedGameCallBack()
     {

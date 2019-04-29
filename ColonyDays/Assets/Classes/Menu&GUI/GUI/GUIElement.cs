@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System;
+using UnityEngine.EventSystems;
 
 public class GUIElement : General
 {
-
     //inipos is used for Hide and show 
     protected Vector3 iniPos;
 
@@ -17,80 +18,26 @@ public class GUIElement : General
     // Use this for initialization
     protected void Start()
     {
-
         _titleInputFieldGO = GetGrandChildCalled("TitleInputField");
         _titleInputField = _titleInputFieldGO.GetComponent<InputField>();
         _titleInputFieldGO.SetActive(false);
-
     }
-
-
-
 
     // Update is called once per frame
     protected void Update()
     {
 
-
     }
 
-    public void Show()
+    public void AdjustContentHeight(float size)
     {
-        transform.position = iniPos;
-    }
-
-    public bool IsShownNow()
-    {
-        return transform.position.y > 0;
-        //return UMath.nearEqualByDistance(transform.position, iniPos, 0.3f);
-    }
-
-    protected void MakeAlphaColorZero(Text g)
-    {
-        Color bl = Color.white;
-        bl.a = 0f;
-        g.color = bl;
-    }
-
-    protected void MakeAlphaColorMax(Text g)
-    {
-        Color bl = Color.white;
-        bl.a = 255f;
-        g.color = bl;
-    }
-
-    protected Rect GetRectFromBoxCollider2D(Transform t)
-    {
-        var res = new Rect();
-        var min = t.GetComponent<BoxCollider2D>().bounds.min;
-        var max = t.GetComponent<BoxCollider2D>().bounds.max;
-
-        res = new Rect();
-        res.min = min;
-        res.max = max;
-
-        return res;
-    }
-
-    /// <summary>
-    /// Hides the element 
-    /// </summary>
-    public virtual void Hide()
-    {
-        if (name.Contains("Bulletin"))
+        if (_scrollContent == null)
         {
-            Program.gameScene.TutoStepCompleted("HideBulletin.Tuto");
-        }
-        if (name.Contains("Building"))
-        {
-            Program.gameScene.TutoStepCompleted("CloseDockWindow.Tuto");
+            _scrollContent = FindGameObjectInHierarchy("Content", gameObject).GetComponent<RectTransform>();
         }
 
-        Vector3 newPos = transform.position;
-        newPos.y = -800f;
-        transform.position = newPos;
+        _scrollContent.sizeDelta = new Vector2(_scrollContent.sizeDelta.x, size);
     }
-
 
     /// <summary>
     /// Will build the string to show cost 
@@ -126,46 +73,6 @@ public class GUIElement : General
         return res;
     }
 
-    internal void ResetScroolPos()
-    {
-
-        if (_verticScrollbar == null)
-        {
-            _verticScrollbar = FindGameObjectInHierarchy("Scrollbar Vertical", gameObject).GetComponent<Scrollbar>();
-        }
-
-        _verticScrollbar.value = 1;
-    }
-
-    public void AdjustContentHeight(float size)
-    {
-        if (_scrollContent == null)
-        {
-            _scrollContent = FindGameObjectInHierarchy("Content", gameObject).GetComponent<RectTransform>();
-        }
-
-        _scrollContent.sizeDelta = new Vector2(_scrollContent.sizeDelta.x, size);
-    }
-
-
-    internal void HideArrow()
-    {
-        var arrowGO = GetChildCalled("Arrow");
-
-        if (arrowGO == null)
-        {
-            return;
-        }
-
-        arrowGO.SetActive(false);
-    }
-
-
-
-
-
-
-
     //called from GUI Event Element. 
     //so far from NotificationWindow and Feedback Dialog
     public void CallOnMouseEnter()
@@ -180,9 +87,93 @@ public class GUIElement : General
         Debug.Log("Mouse Exit");
     }
 
+    protected Rect GetRectFromBoxCollider2D(Transform t)
+    {
+        var res = new Rect();
+        var min = t.GetComponent<BoxCollider2D>().bounds.min;
+        var max = t.GetComponent<BoxCollider2D>().bounds.max;
 
+        res = new Rect();
+        res.min = min;
+        res.max = max;
 
+        return res;
+    }
 
+    /// <summary>
+    /// Hides the element 
+    /// </summary>
+    public virtual void Hide()
+    {
+        if (name.Contains("Bulletin"))
+        {
+            Program.gameScene.TutoStepCompleted("HideBulletin.Tuto");
+        }
+        if (name.Contains("Building"))
+        {
+            Program.gameScene.TutoStepCompleted("CloseDockWindow.Tuto");
+        }
 
+        Vector3 newPos = transform.position;
+        newPos.y = -800f;
+        transform.position = newPos;
+    }
+
+    internal void HideArrow()
+    {
+        var arrowGO = GetChildCalled("Arrow");
+
+        if (arrowGO == null)
+        {
+            return;
+        }
+
+        arrowGO.SetActive(false);
+    }
+
+    public bool IsShownNow()
+    {
+        return transform.position.y > 0;
+        //return UMath.nearEqualByDistance(transform.position, iniPos, 0.3f);
+    }
+
+    protected void MakeAlphaColorZero(Text g)
+    {
+        Color bl = Color.white;
+        bl.a = 0f;
+        g.color = bl;
+    }
+
+    protected void MakeAlphaColorMax(Text g)
+    {
+        Color bl = Color.white;
+        bl.a = 255f;
+        g.color = bl;
+    }
+
+    internal void ResetScroolPos()
+    {
+
+        if (_verticScrollbar == null)
+        {
+            _verticScrollbar = FindGameObjectInHierarchy("Scrollbar Vertical", gameObject).GetComponent<Scrollbar>();
+        }
+
+        _verticScrollbar.value = 1;
+    }
+
+    public void Show()
+    {
+        transform.position = iniPos;
+        SelectOkBtn();
+    }
+
+    void SelectOkBtn()
+    {
+        var okBtn = GetChildCalled("Ok_Btn");
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(okBtn, null);
+    }
 
 }

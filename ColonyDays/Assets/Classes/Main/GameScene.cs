@@ -52,7 +52,6 @@ public class GameScene : General
     private StaticBatch _staticBatch;
     private MeshBatch _meshBatch;
 
-    private AudioPlayer _audioPlayer;
 
     QuestManager _questManager;
     EnemyManager _enemyManager;
@@ -169,16 +168,10 @@ public class GameScene : General
             _unitsManager = value;
         }
     }
-
-
+    
     //from Toy Army
 
     UnitsManager _unitsManager;
-
-
-
-
-
 
     private void ProgramDataInit()
     {
@@ -187,8 +180,7 @@ public class GameScene : General
         XMLSerie.WriteXMLProgram(CreateProgramDataObjOrUpdate());
 #endif
     }
-
-
+    
     ProgramData CreateProgramDataObjOrUpdate()
     {
         //reads the Program.xls
@@ -230,7 +222,6 @@ public class GameScene : General
                TimeStamp();
     }
 
-
     public static string TimeStamp()
     {
         return
@@ -251,15 +242,12 @@ public class GameScene : General
         return v+"";
     }
 
-
-
-
 #endregion
-
 
     // Use this for initialization
     private void Start()
     {
+        Debug.Log("GameScene Start():" + Time.time);
         FB.Init();
 
         Book.Start();
@@ -294,9 +282,10 @@ public class GameScene : General
 
         _unitsManager = FindObjectOfType<UnitsManager>();
         _enemyManager = FindObjectOfType<EnemyManager>();
+        Debug.Log("GameScene Start():" + Time.time);
     }
 
-   
+
 
 
     #region BatchManager
@@ -454,7 +443,6 @@ public class GameScene : General
         _subDivideBlockScale.z = Mathf.Abs(m.SubDivide.ZSubStep) + cP.RectifyOnZ * 2;
     }
 
-    private bool audioWas;
 	// Update is called once per frame
     void Update()
     {
@@ -496,12 +484,7 @@ public class GameScene : General
             _fustrum = new Fustrum();
         }
 
-        if (Camera.main != null && _audioPlayer == null && !audioWas)
-        {
-            audioWas = true;
-            //bz camera needs to be initiated already
-            _audioPlayer = new AudioPlayer();
-        }
+
 
         if (_fustrum!=null)
         {
@@ -692,16 +675,13 @@ public class GameScene : General
         base.Destroy();
     }
 
-        
-
-
-
     /// <summary>
     /// Load terrain and water 
     /// </summary>
     /// <param name="terrainRoot"></param>
     public void LoadTerrain()
     {
+        Debug.Log("LoadTerrain:" + Time.time);
         //bz music 
         CamControl.CreateCam(H.CamRTS);
 
@@ -723,8 +703,8 @@ public class GameScene : General
             _waterBody = General.Create(Root.waterSmall, new Vector3(0, 8, 0));
         }
         controllerMain = Create(Root.controllerMain, container: Program.ClassContainer.transform) as ControllerMain;
+        Debug.Log("LoadTerrain:" + Time.time);
     }
-
 
     #region Dummy Pool
 
@@ -781,10 +761,6 @@ public class GameScene : General
 
     #endregion
 
-
-
-
-
     internal bool GameFullyLoaded()
     {
         if (controllerMain == null || p.TerraSpawnController == null)
@@ -802,10 +778,7 @@ public class GameScene : General
 
         return res;
     }
-
-
-
-
+         
     public EventHandler<EventArgs> ChangeSpeed;
     void OnChangeSpeed(EventArgs e)
     {
@@ -835,8 +808,6 @@ public class GameScene : General
         OnChangeSpeed(EventArgs.Empty);
     }
 
-
-
     internal static string VersionLoaded()
     {
         var read = XMLSerie.ProgramData1;
@@ -850,26 +821,7 @@ public class GameScene : General
             return "Wait Loading";
         }
     }
-
-    /// <summary>
-    /// So the PlayerPref is saved. 
-    /// </summary>
-    void OnApplicationQuit()
-    {
-        //SteamRemoteStorage.FileWrite("")
-        //Debug.Log("Application ending after " + Time.time + " seconds");
-
-//#if UNITY_EDITOR
-//        return;
-//#endif
-
-//        if (IsCurrentUserOnLogUploadList())
-//        {
-//            OpenLogHandler();
-//        }
-    }
-
-
+         
     #region LogUploader
     
     //Logs will be uploaded only from people listed here 
@@ -909,19 +861,13 @@ public class GameScene : General
         }
     }
 
-
-
-#endregion
-
-
-    
+    #endregion
+        
     internal bool IsDefaultTerreno()
     {
         return Terreno.Default;
     }
-
-
-
+       
     /// <summary>
     /// Once data is loaded the Book has to be redo
     /// </summary>
@@ -945,8 +891,7 @@ public class GameScene : General
         Program.WasTutoPassed = pData.PersonControllerSaveLoad.WasTutoPassed;
 
     }
-
-
+    
     internal bool GameWasFullyLoadedAnd10SecAgo()
     {
         return Time.time > _gameLoadedTime + 10 && _gameLoadedTime != 0;
@@ -956,9 +901,7 @@ public class GameScene : General
     {
         return Time.time > _gameLoadedTime + 2 && _gameLoadedTime != 0;
     }
-
-
-
+       
     #region Used for when GUI reloads dont lose Reports
     PersonData _personData;
     public void DoATempSave()

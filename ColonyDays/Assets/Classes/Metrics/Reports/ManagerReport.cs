@@ -42,7 +42,7 @@ public class ManagerReport
     public static void FinishAllReports()
     {
         //avoiding if was closed game even before loaded a map 
-        if (!Program.gameScene.GameFullyLoaded())
+        if (!Program.GameFullyLoaded())
         {
             return;
         }
@@ -54,10 +54,9 @@ public class ManagerReport
     internal static void FinishAllReports(string p)
     {
         //avoiding be sent in the first time 
-        if (!Program.gameScene.GameFullyLoaded())
+        if (!Program.GameFullyLoaded())
         {
-            return;
-        }
+            return;        }
 
         _finalReport.FinishReport(p);
     }

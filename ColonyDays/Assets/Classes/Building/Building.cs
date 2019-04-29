@@ -191,7 +191,6 @@ public class Building : Hoverable, Iinfo
         return Name;
     }
 
-
     //create method
     static public Building CreateBuild(string root, Vector3 origen, H hType, string name = "", Transform container = null,
         bool isLoadingFromFile = false, string materialKey = "")
@@ -217,9 +216,7 @@ public class Building : Hoverable, Iinfo
 
         return obj;
     }
-
-
-
+       
     /// <summary>
     /// Checks if Terrain below the build _isEven or _isColliding, and is tall enough
     /// </summary>
@@ -252,35 +249,16 @@ public class Building : Hoverable, Iinfo
         
         return _isEven && !_isColliding && _isGoodWaterHeight && isScaledOnFloor 
             && AreAnchorsOnUnlockRegions() //&& IfIsLampIsFarEnough()
-
             ;
     }
-
-
-   
-
-    ///// <summary>
-    ///// If building is a Lamp must be far enough from other lamps 
-    ///// </summary>
-    ///// <returns></returns>
-    //private bool IfIsLampIsFarEnough()
-    //{
-    //    if (HType != H.StandLamp)
-    //    {
-    //        return true;
-    //    }
-
-    //    //return BuildingPot.Control.Registro.IsFarEnoughFromLights();
-
-    //}
-
+ 
     /// <summary>
     /// Will notify why current buliding cant be placed here 
     /// </summary>
     /// <param name="isScaledOnFloor"></param>
     private void NotifyBuildingProblem(bool isScaledOnFloor, H instruction = H.None)
     {
-        if (!Program.gameScene.GameFullyLoaded() || IsLoadingFromFile || PositionFixed)
+        if (!Program.GameFullyLoaded() || IsLoadingFromFile || PositionFixed)
         {
             return;
         }
@@ -1490,6 +1468,13 @@ public class Building : Hoverable, Iinfo
 
     };
 
+    //If here will assign size directly not percentage scaling
+    Dictionary<H, Vector3> _navmeshSize = new Dictionary<H, Vector3>()
+    {
+        { H.SugarMill, new Vector3(3.12f, 1, 4.56f)},
+
+    };
+
     /// <summary>
     /// called on Start
     /// </summary>
@@ -1528,6 +1513,12 @@ public class Building : Hoverable, Iinfo
     /// </summary>
     private void SetNavMeshObstacle()
     {
+        if(_navmeshSize.ContainsKey(HType))
+        {
+            SpawnNavMeshAndSetSize();
+            return;
+        }
+
         //restores initial size 
         _nav.size = _navInitSize;
 
@@ -1555,6 +1546,17 @@ public class Building : Hoverable, Iinfo
         _nav.carvingMoveThreshold = 0;
     }
 
+    private void SpawnNavMeshAndSetSize()
+    {
+        var size = _navmeshSize[HType];
+
+        _nav.size = new Vector3(
+            (size.x),
+            (size.y),
+            (size.z));
+        _nav.carving = true;
+        _nav.carvingMoveThreshold = 0;
+    }
 
     private IEnumerator OneSecUpdate()
     {
@@ -3660,7 +3662,7 @@ public class Building : Hoverable, Iinfo
     /// </summary>
     private void DefinePreferedStorage()
     {
-        if (BuildingPot.Control.FoodSources.Count == 0 || !Program.gameScene.GameFullyLoaded())
+        if (BuildingPot.Control.FoodSources.Count == 0 || !Program.GameFullyLoaded())
         {
             return;
         }
@@ -3820,7 +3822,7 @@ public class Building : Hoverable, Iinfo
     /// <param name="prodNeed"></param>
     private void AddOrderToOurWorkers(Order prodNeed)
     {
-        if (!Program.gameScene.GameFullyLoaded())
+        if (!Program.GameFullyLoaded())
         {
             return;
         }

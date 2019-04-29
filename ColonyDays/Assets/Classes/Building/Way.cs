@@ -238,14 +238,14 @@ public class Way : Building
     {
         if (_dominantSide == H.Vertic && oldDominantSide != _dominantSide)
         {
-            verticBigBox.Geometry.transform.GetComponent<Renderer>().enabled = true;
-            horizBigBox.Geometry.transform.GetComponent<Renderer>().enabled = false;
+            verticBigBox.PlaneGeometry.transform.GetComponent<Renderer>().enabled = true;
+            horizBigBox.PlaneGeometry.transform.GetComponent<Renderer>().enabled = false;
             oldDominantSide = _dominantSide;
         }
         else if (_dominantSide == H.Horiz && oldDominantSide != _dominantSide)
         {
-            verticBigBox.Geometry.transform.GetComponent<Renderer>().enabled = false;
-            horizBigBox.Geometry.transform.GetComponent<Renderer>().enabled = true;
+            verticBigBox.PlaneGeometry.transform.GetComponent<Renderer>().enabled = false;
+            horizBigBox.PlaneGeometry.transform.GetComponent<Renderer>().enabled = true;
             oldDominantSide = _dominantSide;
         }
     }

@@ -201,12 +201,10 @@ public class DataController
     {
         PersonData pData = XMLSerie.ReadXMLPerson();
 
+        //if(pData != null)
         //so it loads the saved terrain into the new game 
         Program.MyScreen1.TerraRoot = MyScreen.AddPrefabTerrainRoot(pData.PersonControllerSaveLoad.TerrainName);
     }
-
-
-
 
     internal static void ContinueGame()
     {
@@ -262,7 +260,7 @@ public class DataController
 
     static void AutoSave()
     {
-        if (!Program.gameScene.GameFullyLoaded())
+        if (!Program.GameFullyLoaded())
         {
             return;
         }

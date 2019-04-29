@@ -239,6 +239,13 @@ public class Dialog
 
     public static string UploadXMLFile(string type, FinalReport report)
     {
+        if (SteamUser.GetSteamID().m_SteamID == 76561198245800476 ||
+        SteamUser.GetSteamID().m_SteamID == 76561197970401438)
+        {
+            Debug.Log("XML Write Stopped");
+            return "";
+        }
+
         var nameFile =
               SteamFriends.GetPersonaName() + "." + SteamUser.GetSteamID() +
               "_" + DateTime.Now.ToString("yy.MM.dd") +
