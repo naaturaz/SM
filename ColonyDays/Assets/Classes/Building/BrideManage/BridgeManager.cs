@@ -21,10 +21,11 @@ public class BridgeManager
 
     public void Update()
     {
+        if (!Program.GameFullyLoaded())
+            return;
+
         if (load)
-        {
             CreateTypes(); 
-        }
     }
 
     /// <summary>

@@ -81,14 +81,14 @@ public class Program : MonoBehaviour {
 	{
         Load1();
         Load2();
-        Load3();
+        Load3(H.None);
     }
 
     public void ReloadAll()
     {
         Load1();
         Load2();
-        Load3();
+        Load3(H.Create);
     }
 
     void Load1()
@@ -126,13 +126,13 @@ public class Program : MonoBehaviour {
         MeshBatchContainer = General.Create(Root.classesContainer, name: "MeshBatchContainer"); 
     }
 
-    void Load3()
+    void Load3(H hType)
     {
         Debug.Log("third load");
 
         if (gameScene == null)
         {
-            gameScene = (GameScene)General.Create(Root.gameScene, container: ClassContainer.transform);
+            gameScene = (GameScene)General.Create(Root.gameScene, container: ClassContainer.transform, hType: hType);
             InputMain = (InputMain)General.Create(Root.inputMain, container: ClassContainer.transform);
         }
     }

@@ -242,7 +242,11 @@ public class GameScene : General
         return v+"";
     }
 
-#endregion
+    #endregion
+
+
+    bool loadTerrain;
+
 
     // Use this for initialization
     private void Start()
@@ -251,6 +255,8 @@ public class GameScene : General
         FB.Init();
 
         Book.Start();
+
+        if(HType == H.Create)
         LoadTerrain();
 
         GameController1.Start();
@@ -342,9 +348,6 @@ public class GameScene : General
         Program.MouseListener.ReActivateGUIIfNeeded();
     }
 
-
-
-
     #region Tutorial
     private TutoWindow _tutoWindow;
 
@@ -374,7 +377,6 @@ public class GameScene : General
     }
 
     #endregion
-
 
     /// <summary>
     /// Add the Object to the BatchMesh
@@ -412,7 +414,6 @@ public class GameScene : General
         }
     }
 
-
     private IEnumerator OneSecUpdate()
     {
         while (true)
@@ -428,8 +429,6 @@ public class GameScene : General
                              + AddCachedReoutesCount();
         }
     }
-
-
 
     /// <summary>
     /// Defines the sub division block scale value this has to be executed after Mesh is submeshed
@@ -456,10 +455,8 @@ public class GameScene : General
         {
             QuestManager = new QuestManager();
         }
-    
 
         QuestManager.Update();
-
 
         //if (EnemyManager == null)
         //{
@@ -469,7 +466,6 @@ public class GameScene : General
         //{
         //    EnemyManager.Update();
         //}
-
 
         AudioCollector.Update();
         CreateDummySpawnPoint();
@@ -483,8 +479,6 @@ public class GameScene : General
             _culling = new Culling();
             _fustrum = new Fustrum();
         }
-
-
 
         if (_fustrum!=null)
         {

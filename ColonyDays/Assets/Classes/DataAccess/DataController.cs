@@ -178,7 +178,11 @@ public class DataController
         //PlayerPrefs.SetString("Last_Saved", "");
         //PlayerPrefs.Save();
 
-        XMLSerie.LoadGame(Application.dataPath + @"\" + "Tutorial");
+        var a = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData) + @"\SugarMill";
+
+        var dPath = Application.dataPath.ToString().Replace('/', '\\');
+
+        XMLSerie.LoadGame(dPath + @"\" + "Tutorial");
         Load2ndStep();
     }
 

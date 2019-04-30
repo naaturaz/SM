@@ -10,7 +10,7 @@ public class MeshController : ControllerParent
     public  RaycastHit HitMouseOnTerrain;
 
     //Mesh classes helpers, these all inherit from General: Monobehaviuor
-    public  Malla Malla;
+    public Malla Malla;
     public  UPoly Poly;
     public  SubDivider subDivide;
     public  Vertexer Vertex;
@@ -57,12 +57,8 @@ public class MeshController : ControllerParent
     public bool IsLoading;
     public List<Vector3> AllVertexs = new List<Vector3>();
 
-    Grid grid = new Grid();
-
     WaterBound _waterBound = new WaterBound();
     LandZoneManager _landZoneManager = new LandZoneManager();
-
-
 
     private static CrystalManager _crystalManager = new CrystalManager();
     private static BuyRegionManager _buyRegionManager;
@@ -149,6 +145,7 @@ public class MeshController : ControllerParent
             _buyRegionManager.Update();
         }
 
+        //return;
 
         if (isTerraScanning && IsLoading)
         {
@@ -173,41 +170,22 @@ public class MeshController : ControllerParent
 
         if (Developer.IsDev && Input.GetKeyUp(KeyCode.F12))
         {
-            // grid.LoadGridRoutine();
             _waterBound.Create();
 
             //PersonController.CrystalManager1.ShowLines();
             //_landZoneManager.Create();
 
             //PersonController.CrystalManager1.DefineRegionLandZone();
-
-            //MakeBridgeReqDebug();
         }
-        grid.Update();
-
         _waterBound.Update();
         _landZoneManager.Update();
         CrystalManager1.Update();
     }
 
-    /// <summary>
-    /// the 2 first building must be in diff lands and most be at least 1 brdige 
-    /// </summary>
-    private void MakeBridgeReqDebug()
-    {
-        var builA = BuildingPot.Control.Registro.AllBuilding.ElementAt(0).Value;
-        var builB = BuildingPot.Control.Registro.AllBuilding.ElementAt(1).Value;
-
-        var a = BuildingPot.Control.BridgeManager1.ReturnBestPath
-            (builA.LandZone1[0], builB.LandZone1[0]);
-
-        var aa = a;
-
-        //CryRouteManager c = new CryRouteManager(builA, builB);
-    }
-
     public bool IsFullyLoaded()
     {
+        //return true;
+
         if (subMesh == null || Malla == null)
         {
             return false;
@@ -269,8 +247,6 @@ public class MeshController : ControllerParent
             WriteXML();
             //print(subMesh.amountOfSubVertices + " subMesh.amountOfSubVertices ");
             isToSetRealVerticesOnLots = false;
-
-            //subMesh.grid.LoadGridRoutine();//will load the grid routine
         }
     }
 
@@ -339,7 +315,6 @@ public class MeshController : ControllerParent
         List<Vector3> newLotVertex = new List<Vector3>();
         newLotVertex = ScanTerraRetLotVertex(inPolyDiv, polyX, polyZ);
         Lots.Add(new Lot(newLotVertex, Lots.Count, lotStart, lotEnd));
-        //grid.SortThemOut(newLotVertex);
         //print("LotsScanned:" + Lots.Count);
         AllVertexs = UList.AddOneListToList(AllVertexs, newLotVertex);
     }

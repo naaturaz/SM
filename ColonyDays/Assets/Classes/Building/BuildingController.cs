@@ -42,7 +42,8 @@ public class BuildingController : BuildingPot
 	
 	void Update ()
 	{
-	    CheckHover();
+        CheckHover();
+
         BridgeManager1.Update();
         ShipManager1.Update();
         DockManager1.Update();

@@ -84,13 +84,6 @@ public class XMLSerie
         DataCollection.Save(Path.Combine(Application.dataPath, "program.xml"));
     }
 
-
-
-
-
-
-
-
     public static void WriteXMLMesh(SubMeshData subMesh)
     {
         DataContainer DataCollection = new DataContainer();
