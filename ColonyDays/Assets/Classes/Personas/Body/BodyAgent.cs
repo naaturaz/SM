@@ -266,14 +266,17 @@ public class BodyAgent
     float _tempSpeedSetAt;
     internal void NewSpeed()
     {
-        _agent.speed = _speedInitial * AgeSpeedCorrection() * Program.gameScene.GameSpeed;
-
+        _agent.speed = NewSpeedValue();
         CheckOnAnimation();
+    }
+
+    float NewSpeedValue()
+    {
+        return _speedInitial * AgeSpeedCorrection() * Program.gameScene.GameSpeed;
     }
 
     /// <summary>
     /// Everytime a new animation is set should call this. So if is WheelBarrow will slow down 
-    /// 
     /// </summary>
     public void CheckOnAnimation()
     {
@@ -284,6 +287,27 @@ public class BodyAgent
             _tempSpeedSetAt = Time.time;
             _person.Body.SetAnimatorSpeed(Program.gameScene.GameSpeed / 5);
         }
+        if (_person != null && _person.Body != null && _person.Body.CurrentAni == "isCarry")
+        {
+            _agent.speed /= IsCarryAgeSpeedCorrection();
+        }
+    }
+
+    //2.2f perfect for >21 yr ...  //1.8f is perfect for 6 years old 
+    float IsCarryAgeSpeedCorrection()
+    {
+        var result = 4.2f;
+
+        var yearDiff = 21 - 6;
+        var speedDiff = 2.2f - 1.8f;
+        var eachYearWorth = speedDiff / yearDiff;
+
+        var yearsTo21 = _person.Age >= 21 ? 0 : 21 - _person.Age;
+        var toRemoveFrom21YearSpeed = eachYearWorth * yearsTo21;
+
+        result -= toRemoveFrom21YearSpeed;
+
+        return result;
     }
 
     void CheckIfTempSpeed()
@@ -359,9 +383,10 @@ public class BodyAgent
         "\nLoc: " + _person.Body.Location+
         "\nIsNearBySpawnPointOfInitStructure: " + _person.Body.IsNearBySpawnPointOfInitStructure()+
         "\nProf: " + _person.ProfessionProp.ProfDescription;
+    }
 
-
-
+    internal void OneSecondUpdate()
+    {
 
     }
 }

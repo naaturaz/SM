@@ -277,7 +277,23 @@ public class Inventory
     public void AddToSpecialInv(P key)
     {
         InventItems.Add(new InvItem(key, 0));
+    }
 
+    public void AddToSpecialInv(string key)
+    {
+        InventItems.Add(new InvItem(key));
+    }
+
+    internal void RemoveFromSpecialInv(string buildMyId)
+    {
+        for (int i = 0; i < InventItems.Count; i++)
+        {
+            if(InventItems[i].Info == buildMyId)
+            {
+                InventItems.RemoveAt(i);
+                return;
+            }
+        }
     }
 
     public void SetToSpecialInv(P key, float amt)
@@ -649,6 +665,9 @@ public class Inventory
         return res;
     }
 
+
+
+
     /// <summary>
     /// Will tell u if the inventory has enought capacity to store this Load
     /// </summary>
@@ -938,6 +957,7 @@ public class Inventory
             }
         }
     }
+
 }
 
 public class InvItem
@@ -990,6 +1010,10 @@ public class InvItem
         Key = KeyP;
         Amount = amtP;
         Volume = Program.gameScene.ExportImport1.CalculateVolume(Key, amtP);
+    }
+
+    public InvItem(string info) {
+        _info = info;
     }
 
     public InvItem() { }

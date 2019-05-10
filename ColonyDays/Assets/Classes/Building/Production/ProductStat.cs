@@ -83,10 +83,7 @@ public class ProductInfo
         var price = Program.gameScene.ExportImport1.ReturnPriceTown(_product);
         var expiration = Program.gameScene.ExportImport1.ReturnExpirationInDays(_product);
 
-
         _details = "Selected product: " + _product + "\n";
-
-
 
         //_details = _details + "Density: " +dens + "\n";
         //_details = _details + "Produce Factor: " + prodF + "\n";
@@ -94,13 +91,13 @@ public class ProductInfo
             Unit.ProperPricedAndFormat(price) +
             " per " + Unit.CurrentWeightUnitsString() + "\n\n";
 
-        if (Ingredients != null)
+        if (Ingredients != null && Ingredients.Count > 0)
         {
             _details = _details + "Inputs needed per " + Unit.CurrentWeightUnitsString() + "\n";
 
             for (int i = 0; i < Ingredients.Count; i++)
             {
-                _details = _details + "" + (i+1) + ": "+ Ingredients[i].Element + ": " +
+                _details = _details + "" + (i+1) + ": "+ Languages.ReturnString(Ingredients[i].Element + "") + ": " +
                     Ingredients[i].Units + " " + Unit.CurrentWeightUnitsString() + " \n";
             }
         }

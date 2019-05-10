@@ -1405,6 +1405,7 @@ public class Person : Hoverable
 
         StartCoroutine("FiveSecUpdate");
         StartCoroutine("OneSecUpdate");
+        StartCoroutine("OneSecUpdate2");
 
         StartCoroutine("EmoticonUpdate");
 
@@ -1507,27 +1508,14 @@ public class Person : Hoverable
         }
     }
 
-
-
-
-    //private IEnumerator A45msUpdate()
-    //{
-    //    while (true)
-    //    {
-    //        yield return new WaitForSeconds(.045f); // wait
-    //    }
-    //}
-
-
-    //for body
-    //private IEnumerator A32msUpdate()
-    //{
-    //    while (true)
-    //    {
-    //        yield return new WaitForSeconds(.032f); // wait
-    //        _body.A32msUpdate();
-    //    }
-    //}
+    private IEnumerator OneSecUpdate2()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1); // wait
+            Body.OneSecUpdate();
+        }
+    }
 
     private IEnumerator A64msUpdate()
     {
@@ -1643,7 +1631,7 @@ public class Person : Hoverable
         }
 
         //so when loads not notify a lot of people that are older
-        if (!wasNotiAge && (IsMajor || Work != null || Age > JobManager.majorityAge + 1))
+        if (!wasNotiAge && (IsMajor || Work != null || Age > ModController.AgeMajorityReached() + 1))
         {
             wasNotiAge = true;
             return;
@@ -1859,10 +1847,6 @@ public class Person : Hoverable
         {
             _profession = new SaltMiner(this, pF);
         }
-        else if (jType == Job.Sugarmiller)
-        {
-            _profession = new Sugarmiller(this, pF);
-        }
 
         PersonPot.Control.RestartControllerForPerson(MyId);
     }
@@ -1900,10 +1884,6 @@ public class Person : Hoverable
         else if (work.HType.ToString().Contains(H.ShoreMine.ToString()))
         {
             return Job.SaltMiner;
-        }
-        else if (work.HType == H.SugarMill)
-        {
-            return Job.Sugarmiller;
         }
 
         return Job.Insider;
@@ -2246,6 +2226,9 @@ public class Person : Hoverable
 
         var res = (age + genre) * (mul * ProfessionMultiplierCarryWeight()) + schooling;
 
+        if (Age <= 10)
+            return 1;
+
         if (maxNeeded < res)
         {
             return maxNeeded;
@@ -2295,7 +2278,7 @@ public class Person : Hoverable
         {
             return 8;
         }
-        return 2;
+        return 1;
     }
 
     ///// <summary>
@@ -2646,7 +2629,6 @@ public class Person : Hoverable
     private General _projector;
     private General _light;
     private General _reachArea;
-
     /// <summary>
     /// this is the projector that hover when creating a nw building, or the current selected building
     /// </summary>
@@ -2656,14 +2638,13 @@ public class Person : Hoverable
         set { _projector = value; }
     }
 
-
     public void CreateProjector()
     {
         if (_light == null)
         {
             Vector3 projNewP = new Vector3(0, 6, 0) + transform.position;
-            Projector = Create(Root.projectorPerson, projNewP, container: transform);
-            Projector.transform.Rotate(new Vector3(90, 0, 0));
+            //Projector = Create(Root.projectorPerson, projNewP, container: transform);
+            //Projector.transform.Rotate(new Vector3(90, 0, 0));
 
             _light = Create(Root.lightCilPerson, transform.position, container: transform);
 
@@ -2678,8 +2659,8 @@ public class Person : Hoverable
     {
         if (_light != null)
         {
-            _projector.Destroy();
-            _projector = null;
+            //_projector.Destroy();
+            //_projector = null;
 
             _light.Destroy();
             _light = null;

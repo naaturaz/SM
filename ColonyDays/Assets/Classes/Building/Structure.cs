@@ -198,26 +198,6 @@ public class Structure : StructureParent
                 _construcionSign = General.Create(Root.ConstructionSign, MiddlePoint(), "Construction", transform);
             }
 
-            //if (MyId.Contains("Med") || HType == H.BlackSmith)
-            //{
-            //    howBigTheCollidingSphere = 8;
-            //}
-            //else if (MyId.Contains("Large") 
-            //    || HType == H.Clay || HType == H.Brick || HType == H.LumberMill
-            //    || HType == H.ShoreMine)
-            //{
-            //    howBigTheCollidingSphere = 10;
-            //}
-            //else if (MyId.Contains("XLarge"))
-            //{
-            //    howBigTheCollidingSphere = 12;
-            //}
-            //else if(Developer.IsDev && Input.GetKeyDown(KeyCode.LeftControl))
-            //{
-            //    howBigTheCollidingSphere = 50;
-            //}
-
-
             MarkTerraSpawnRoutine(howBigTheCollidingSphere, from: transform.position);
         }
 
@@ -474,11 +454,6 @@ public class Structure : StructureParent
         return true;
     }
 
-
-
-
-
-
     void StartDemolishProcess()
     {
         //if is not fully build will do this b4
@@ -504,40 +479,41 @@ public class Structure : StructureParent
     /// </summary>
     private void ReturnWhatThisCost()
     {
-        //only greenlit will return materials
-        if (!WasGreenlit)
+        bool wasGreen = PersonPot.Control.BuildersManager1.WasIGreenLight(MyId);
+        PersonPot.Control.BuildersManager1.RemoveConstruction(MyId);//so its removed from the BuilderManager
+
+        //only greenlit will return materials or fully built 
+        if (wasGreen || CurrentStage == 4 || StartingStage == H.Done)
         {
-            return;
+            ReturnMaterialsCostNoQuestion();
         }
+    }
 
+    public void ReturnMaterialsCostNoQuestion()
+    {
         var stats = Book.GiveMeStat(HType);
-
         foreach (PropertyInfo prop in typeof(BuildStat).GetProperties())
         {
             //Debug.Log(string.Format( "{0} === {1}", prop.Name, prop.GetValue(stats, null)));
-
             if (prop.Name == "MaxPeople" || prop.Name == "Capacity")
             {
-                return;
+                continue;
             }
 
             P prod = Enums.ParseEnum<P>(prop.Name);
-
             if (prod == P.None)
             {
                 //Debug.Log(string.Format("{0} = None = {1}", prop.Name, prop.GetValue(stats, null)));
             }
             else
             {
-                GameController.ResumenInventory1.GameInventory.Add(prod, 
-                    float.Parse(prop.GetValue(stats, null).ToString()));
+                //GameController.ResumenInventory1.GameInventory.Add(prod,
+                //    float.Parse(prop.GetValue(stats, null).ToString()));
+
+                GameController.ResumenInventory1.Add(prod, float.Parse(prop.GetValue(stats, null).ToString()), transform.position);
             }
         }
     }
-
-
-
-
 
     private void HideAll()
     {
@@ -546,7 +522,6 @@ public class Structure : StructureParent
         Hide(Stage3);
         Hide(Geometry);
     }
-
 
     void Hide(GameObject gP)
     {
@@ -560,8 +535,6 @@ public class Structure : StructureParent
         return Inventory.ReturnAmtOfItemOnInv(order.Product) >= order.Amount;
     }
 
-
-
     /// <summary>
     /// the Farm zone of a farm
     /// </summary>
@@ -570,11 +543,6 @@ public class Structure : StructureParent
     {
         return GetChildCalled("FarmZone");
     }
-
-
-
-
-
 
     /// <summary>
     /// If a school has the maximun of workers: 2 , then is covering the max: 1.. that is 100%
@@ -604,9 +572,6 @@ public class Structure : StructureParent
                "Overall people needing this service:" + Coverage.HowManyPeopleNeedThisService(HType);
     }
 
-
-
-
     /// <summary>
     /// It is producing if current Product is not Stop 
     /// </summary>
@@ -615,7 +580,6 @@ public class Structure : StructureParent
     {
         return CurrentProd.Product != P.Stop;
     }
-
 
     //cached farm points
     List<Vector3> _cachedWorkPoints = new List<Vector3>();
@@ -632,10 +596,6 @@ public class Structure : StructureParent
     {
         _cachedWorkPoints.Add(newPoint);
     }
-
-
-
-
 
     /// <summary>
     /// Will tell u if in this building there is work to do
@@ -655,6 +615,5 @@ public class Structure : StructureParent
 
         return true;
     }
-
 
 }

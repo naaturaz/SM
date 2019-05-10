@@ -1052,11 +1052,11 @@ public class StartingCondition
         iniWood = iniWoodP * 2;
         iniFood = iniFoodP;
         iniStone = iniStoneP;
-        iniBrick = iniBrickP * 3;
+        iniBrick = iniBrickP * 2;
         iniIron = iniIronP;
         iniGold = iniGoldP / 2;
         iniDollar = iniDollarP;
-        iniWheelBarrow = iniWheelBarrowP;
+        iniWheelBarrow = 0;//iniWheelBarrowP
         iniTool = iniWheelBarrowP/2;
         iniCrate = iniWheelBarrowP/2;
         iniCart = iniWheelBarrowP/4;

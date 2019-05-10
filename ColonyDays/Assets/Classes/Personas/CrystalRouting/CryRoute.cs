@@ -159,6 +159,9 @@ public class CryRoute
         var iniH = (Structure)_ini;
         var finH = (Structure)_fin;
 
+        if (iniH == null) return;
+        if (finH == null) return;
+
         //bz navmesh now this is all I needed 
         List<CheckPoint> pts = new List<CheckPoint>()
         {

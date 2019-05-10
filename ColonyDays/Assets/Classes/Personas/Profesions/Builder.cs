@@ -37,8 +37,6 @@ public class Builder : Profession
         MyAnimation = "isHammer";
         _person = person;
         HandleNewProfDescrpSavedAndPrevJob(Job.Builder);
-
-        //DefineConstructingRoutine();
     }
 
     /// <summary>
@@ -111,14 +109,6 @@ public class Builder : Profession
 
     private void Init()
     {
-        //AddMeToWaitListOnSystem();
-        //if (!PersonPot.Control.OnSystemNow(_person.MyId))
-        //{
-        //    _takeABreakNow = true;
-        //    return;
-        //}
-
-
         //was destroy 
         if (_constructing == null)
         {
@@ -210,16 +200,12 @@ public class Builder : Profession
 
     void InitRoute()
     {
-
         Router1 = null;
         RouterBack = null;
 
         RouterActive = true;
         IsRouterBackUsed = true;
         routerBackWasInit = false;
-        //Debug.Log("routerBackWasInit = false");
-
-
 
         //that ID will remove dummy so can be cache and will add the FinRoutePoint so if another builder
         //will go to that corner can use the cached one 
@@ -235,8 +221,6 @@ public class Builder : Profession
         Router1 = new CryRouteManager(_person.Work, _person.MyDummyProf, _person, HPers.InWork, finDoor: false);
     }
 
-
-
     Building FindBestToBuild()
     {
         //first time wheel barrow chekcs 
@@ -245,7 +229,6 @@ public class Builder : Profession
             return null;
         }
 
-        //ConstructingKey = PersonPot.Control.BuildersManager1.GiveMeBestConstruction();
         ConstructingKey = _person.Work.BuildersManager1.GiveMeBestConstruction(_person);
 
         //todo should ask for 2nd better building 
@@ -257,8 +240,6 @@ public class Builder : Profession
 
         return Brain.GetBuildingFromKey(ConstructingKey);
     }
-
-
 
     public override void Update()
     {
@@ -299,7 +280,6 @@ public class Builder : Profession
         }
     }
 
-
     private bool routerBackWasInit;
     /// <summary>
     /// So it doesnt blackList nothing in the second Route if he is blackListug a tree in the Router1
@@ -313,7 +293,6 @@ public class Builder : Profession
             RouterBack = new CryRouteManager(_person.MyDummyProf, _person.FoodSource, _person, HPers.InWorkBack, false, true);
         }
     }
-
 
     private void CheckIfConstructingWasDestroy()
     {
@@ -345,6 +324,8 @@ public class Builder : Profession
 
             //do stuff
             _constructing.AddToConstruction(100f * ToolsFactor(), _person);
+            //so find new construction everytime before goes out to work 
+            _constructing = null;
         }
     }
 
@@ -400,7 +381,6 @@ public class Builder : Profession
             DefineConstructingRoutine();
         }
     }
-
 
     #region WheelBarrow Work
     /// <summary>

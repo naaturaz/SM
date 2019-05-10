@@ -50,7 +50,6 @@ public class BuildingWindow : GUIElement
 
     private Vector3 _importIniPosOnProcess;
     private Vector3 _exportIniPosOnProcess;
-
     private GameObject _salary;
     private GameObject _positions;
     //private GameObject _productionSelector;
@@ -71,6 +70,13 @@ public class BuildingWindow : GUIElement
 
     Image _imageIcon;
 
+    //Scrool 
+    GameObject _scrollViewCont;
+    ScrollViewShowInventory _ourInventories;
+
+    //Priority Rank
+    GameObject _priorityControls;
+    private Text _currRankTxt;
 
     // Use this for initialization
     void Start()
@@ -82,7 +88,6 @@ public class BuildingWindow : GUIElement
 
         StartCoroutine("ThreeSecUpdate");
         StartCoroutine("FiveSecUpdate");
-
     }
 
     private IEnumerator FiveSecUpdate()
@@ -133,6 +138,16 @@ public class BuildingWindow : GUIElement
         _upgrades = GetChildCalled(H.Upgrades);
         _stats = GetChildCalled("Stats");
 
+        _scrollViewCont = GetChildCalled("ScrollViewCont");
+        _ourInventories = FindGameObjectInHierarchy("Scroll_View_Inv_Resume", gameObject).GetComponent<ScrollViewShowInventory>();
+
+
+
+        _priorityControls = FindGameObjectInHierarchy("PriorityControl", _general);
+        var currRank = FindGameObjectInHierarchy("Current_Rank", _priorityControls);
+        _currRankTxt = currRank.GetComponent<Text>();
+
+
         _salary = General.FindGameObjectInHierarchy("Salary", _general);
         _positions = General.FindGameObjectInHierarchy("Positions", _general);
 
@@ -145,9 +160,6 @@ public class BuildingWindow : GUIElement
 
         var maxPos = FindGameObjectInHierarchy("Max_Positions", _positions);
         _maxPositionsTxt = maxPos.GetComponent<Text>();
-
-
-        //_productionSelector = FindGameObjectInHierarchy("Production_Selector", gameObject);
 
         _title = GetChildCalled(H.Title).GetComponent<Text>();
 
@@ -202,9 +214,6 @@ public class BuildingWindow : GUIElement
 
 
         _salary.SetActive(false);
-
-
-
     }
 
     /// <summary>
@@ -225,7 +234,6 @@ public class BuildingWindow : GUIElement
             Program.gameScene.TutoStepCompleted("SelectDock.Tuto");
         }
 
-
         LoadMenu();
 
         //so if last Window had the Inventory selected can be seen in this new builidng one too
@@ -238,15 +246,10 @@ public class BuildingWindow : GUIElement
 
         //in case were inactive 
 
-
-        //_upg_Mat_Btn.SetActive(true);
-        //_upg_Cap_Btn.SetActive(true);
-
         CheckIfMatMaxOut();
         CheckIfCapMaxOut();
 
         HideStuff();
-
     }
 
     private void DemolishBtn()
@@ -266,8 +269,6 @@ public class BuildingWindow : GUIElement
         }
     }
 
-
-
     private void HideStuff()
     {
         if (Building.IsHouseType(Building.MyId) || Building.MyId.Contains("Storage") || Building.Category == Ca.Way ||
@@ -275,7 +276,8 @@ public class BuildingWindow : GUIElement
             || Building.HType == H.LightHouse
             || Building.IsNaval()
             || Building.HType == H.Church || Building.HType == H.Tavern || Building.HType == H.TownHouse
-            || Building.HType == H.Library)
+            || Building.HType == H.Library 
+            || Building.HType == H.School || Building.HType == H.TradesSchool)
         {
             _salary.SetActive(false);
             _staBtn.SetActive(false);
@@ -304,7 +306,6 @@ public class BuildingWindow : GUIElement
         }
 
         _salary.SetActive(false);
-
     }
 
     /// <summary>
@@ -353,12 +354,9 @@ public class BuildingWindow : GUIElement
     {
         bool fullyBuilt = Building.IsFullyBuilt();
         bool isAWorkPlace = isAWorkBuild(Building);
-        //bool allowedTab = currentActiveTab != null && currentActiveTab != _gaveta;
 
-        if (fullyBuilt && isAWorkPlace && Building.Instruction != H.WillBeDestroy //&& allowedTab
-            )
+        if (fullyBuilt && isAWorkPlace && Building.Instruction != H.WillBeDestroy)
         {
-            //_salary.SetActive(true);
             _positions.SetActive(true);
         }
         else
@@ -368,34 +366,17 @@ public class BuildingWindow : GUIElement
         }
     }
 
-    //void HideShowProductionSelector()
-    //{
-    //    bool fullyBuilt = Building.IsFullyBuilt();
-    //    bool isAWorkPlace = isAWorkBuild(Building);
-    //    bool isAProdPlace = BuildingPot.Control.ProductionProp.IsAProductionPlace(Building.HType);
-    //    //bool allowedTab = currentActiveTab != null && currentActiveTab != _gaveta;
-
-    //    if (fullyBuilt && isAWorkPlace && isAProdPlace && Building.Instruction != H.WillBeDestroy //&& allowedTab
-    //        )
-    //    {
-    //        _productionSelector.SetActive(true);
-    //    }
-    //    else
-    //    {
-    //        _productionSelector.SetActive(false);
-    //    }
-    //}
-
-
-
     private ShowAInventory _showAInventory;
     private int oldItemsCount;
     private string oldBuildID;
     private void LoadMenu()
     {
+        HidePriorityControls();
+
         HideShowSalAndPositions();
-        //HideShowProductionSelector();
         LoadImageIcon();
+
+        HideShow();
 
         _title.text = Building.NameBuilding();
         _info.text = BuildInfo() + BuildCover();
@@ -412,10 +393,20 @@ public class BuildingWindow : GUIElement
         _currPositionsTxt.text = BuildingPot.Control.Registro.SelectBuilding.MaxPeople + "";
         _maxPositionsTxt.text = Book.GiveMeStat(Building.HType).MaxPeople + "";
 
-        //_currSalaryTxt.text = _building.DollarsPay+"";
-        //_currPositionsTxt.text = _building.MaxPeople + "";
+        _currRankTxt.text = PersonPot.Control.BuildersManager1.CurrentPriorityRank(Building.MyId);
 
         DemolishBtn();
+    }
+
+    private void HideShow()
+    {
+        //if (Building.HType == H.Masonry)
+        //    _scrollViewCont.SetActive(true);
+        //else
+            _scrollViewCont.SetActive(false);
+
+        _priorityControls.SetActive(false);
+
     }
 
     private void LoadImageIcon()
@@ -424,7 +415,6 @@ public class BuildingWindow : GUIElement
         var s = (Sprite)Resources.Load(iconRoot, typeof(Sprite));
 
         _imageIcon.sprite = s;
-
     }
 
     public void ResetShownInventory()
@@ -547,7 +537,6 @@ public class BuildingWindow : GUIElement
         return st.CoverageInfo();
     }
 
-
     public static bool isAWorkBuild(Building build)
     {
         var isAHouse = build.IsThisAHouseType();
@@ -556,8 +545,6 @@ public class BuildingWindow : GUIElement
 
         return !isAHouse && !isStorage && build.HType != H.StandLamp && !isRoadorBridge;
     }
-
-
 
     string BuildInfo()
     {
@@ -571,24 +558,6 @@ public class BuildingWindow : GUIElement
         //is not a house or bohio 
         if (!isAHouse || Building.HType == H.LightHouse)//must say lightHouse here bz actualkly contains House
         {
-            //if is Storage
-            if (Building.HType.ToString().Contains("Storage"))
-            {
-                //res += Languages.ReturnString("Users:") + Building.PeopleDict.Count + "\n";
-            }
-            //others
-            else
-            {
-                //Workers list 
-                //res += "\n  " + ReturnAvailablePositions() + "\n";
-
-                //res += "Workers:" + Building.PeopleDict.Count + "\n";
-                //for (int i = 0; i < Building.PeopleDict.Count; i++)
-                //{
-                //    res += "\n " + Family.GetPersonName(Building.PeopleDict[i]);
-                //}
-            }
-
             if (Building.HType == H.Masonry)
             {
                 res += Languages.ReturnString("Buildings.Ready");
@@ -599,6 +568,7 @@ public class BuildingWindow : GUIElement
 
                     if (st != null)
                     {
+                        //res += "\n" + st.MyId;
                         res += "\n" + st.Name;
                     }
 
@@ -627,9 +597,6 @@ public class BuildingWindow : GUIElement
 #endif
             ;
     }
-
-
-
 
     #region PeopleTile
 
@@ -688,9 +655,6 @@ public class BuildingWindow : GUIElement
     }
     #endregion
 
-
-
-
     string DestroyingBuilding(string current)
     {
         if (Building.Instruction == H.WillBeDestroy)
@@ -712,7 +676,6 @@ public class BuildingWindow : GUIElement
         return res + " " + availPos;
     }
 
-
     /// <summary>
     /// If is in construction will add percentage of completion 
     /// </summary>
@@ -723,10 +686,14 @@ public class BuildingWindow : GUIElement
 
         if (sP.CurrentStage != 4)
         {
+            ShowPriorityControls();
+
             var percentage = sP.PercentageBuiltCured();
-            return "Construction progress at: " + percentage + "%\n" +
+            return Languages.ReturnString("Construction.Progress") + percentage + "%\n" +
                 MaterialsGathered() + "\n" + MaterialsIsMissing() + "\n\n";
         }
+        HidePriorityControls();
+
         return "";
     }
 
@@ -737,13 +704,40 @@ public class BuildingWindow : GUIElement
     private string MaterialsIsMissing()
     {
         var pass = BuildersManager.CanGreenLight(Building.HType);
+        bool wasGreen = PersonPot.Control.BuildersManager1.WasIGreenLight(Building.MyId);
 
-        if (!pass && !Building.WasGreenlit)
+        if (!pass && !wasGreen)
         {
-            return "Warning: This building cannot be built now. Missing resource(s):\n" +
-                BuildersManager.MissingResources(Building.HType);
+            return Languages.ReturnString("Warning.This.Building") +
+                BuildersManager.MissingResources(Building.HType) +
+                PersonPot.Control.BuildersManager1.PriorityInfo(Building.MyId);
         }
+
         return "";
+    }
+
+    private void ShowPriorityControls()
+    {
+        _priorityControls.SetActive(true);
+    }
+
+    private void HidePriorityControls()
+    {
+        _priorityControls.SetActive(false);
+    }
+
+    public void ClickOnGoUpOnRankPriority()
+    {
+        Debug.Log("up");
+        PersonPot.Control.BuildersManager1.ChangePriority(Building.MyId, 1);
+        LoadMenu();
+    }
+
+    public void ClickOnGoDownOnRankPriority()
+    {
+        Debug.Log("down");
+        PersonPot.Control.BuildersManager1.ChangePriority(Building.MyId, -1);
+        LoadMenu();
     }
 
     string MaterialsGathered()
@@ -847,10 +841,6 @@ public class BuildingWindow : GUIElement
         CheckIfPlusIsActive();
     }
 
-
-
-
-
     //private GameObject oldTabActive;
     GameObject currentActiveTab;
     /// <summary>
@@ -890,10 +880,7 @@ public class BuildingWindow : GUIElement
         {
             ShowProducts();
         }
-
     }
-
-
 
     /// <summary>
     /// Show Prod on Tab
@@ -905,7 +892,7 @@ public class BuildingWindow : GUIElement
 
         if (!_building.DoIHaveInput())
         {
-            _displayProdInfo.text = "Product selected: " + Building.CurrentProd.Product + "\n"
+            _displayProdInfo.text = Languages.ReturnString("Product.Selected") + Building.CurrentProd.Product + "\n"
                 + _building.MissingInputs();
         }
 
@@ -917,8 +904,8 @@ public class BuildingWindow : GUIElement
 
             if (st.FieldFarm1() != null && st.FieldFarm1().HarvestDate() != null)
             {
-                _displayProdInfo.text += "\nHarvest date: " + st.FieldFarm1().HarvestDate().ToStringFormatMonYear();
-                _displayProdInfo.text += "\nProgress: " + st.FieldFarm1().PercentageDone();
+                _displayProdInfo.text += Languages.ReturnString("Harvest.Date") + st.FieldFarm1().HarvestDate().ToStringFormatMonYear();
+                _displayProdInfo.text += Languages.ReturnString("Progress") + st.FieldFarm1().PercentageDone();
             }
         }
     }
@@ -951,11 +938,6 @@ public class BuildingWindow : GUIElement
 
         _showProducts.Add(orderShow);
     }
-
-
-
-
-
 
     ///Show  Orders on tab
 
@@ -1176,10 +1158,6 @@ public class BuildingWindow : GUIElement
         Show(Building);
     }
 
-
-
-
-
     /// <summary>
     /// called from gui
     /// </summary>
@@ -1207,24 +1185,10 @@ public class BuildingWindow : GUIElement
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
     #region plus and less sign on workers max
 
     GameObject _plusBtn;
     GameObject _lessBtn;
-
-
 
     private void CheckIfPlusIsActive()
     {
@@ -1259,7 +1223,6 @@ public class BuildingWindow : GUIElement
     {
         btn.SetActive(true);
     }
-
 
     int MaxPeople()
     {

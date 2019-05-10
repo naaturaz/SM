@@ -9,9 +9,8 @@ using System.Linq;
 
 public class JobManager
 {
-    public   int startSchool = 5;
-    public   int startTrade = 11;
-    public static  int majorityAge = 16;
+    public int startSchool = ModController.AgeKidStartSchool();
+    public int startTrade = ModController.AgeKidStartTradeSchool();
 
     #region Give Initial Work
 
@@ -44,12 +43,12 @@ public class JobManager
         startSchool = ModController.AgeKidStartSchool();
         startTrade = ModController.AgeKidStartTradeSchool();
 
-        if (person.Age >= majorityAge)
+        if (person.Age >= ModController.AgeMajorityReached())
         {
             //find work
             return DefineClosestBuild(person);
         }
-        else if (person.Age < majorityAge && person.Age >= startTrade)
+        else if (person.Age < ModController.AgeMajorityReached() && person.Age >= startTrade)
         {
             //try find trade
             var res = FindBestSchool(H.TradesSchool, person);

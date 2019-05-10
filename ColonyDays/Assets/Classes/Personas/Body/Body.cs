@@ -6,13 +6,12 @@ using System.Xml.Serialization;
 
 public class Body //: MonoBehaviour //: General
 {
+    int _minAgeToWheelbarrow = 16;
+
     NavMeshAgent _agent;
     Vector3 _destiny;
 
     private BodyAgent _bodyAgent;
-
-
-
 
     private bool _movingNow;//says if body is moving 
     private int _currentRoutePoint;
@@ -98,8 +97,6 @@ public class Body //: MonoBehaviour //: General
     }
 
     /// <summary>
-
-
     public bool Inverse
     {
         get { return _inverse; }
@@ -202,7 +199,6 @@ public class Body //: MonoBehaviour //: General
         {
             WalkRoutineLoad(pF._body.CurrTheRoute, GoingTo, pF._body.CurrentRoutePoint, _inverse, _whichRoute);
         }
-
     }
 
     public void Init(Person person)
@@ -222,11 +218,6 @@ public class Body //: MonoBehaviour //: General
         renderer = _person.Geometry.GetComponent<Renderer>();
 
         BodyAgent = new BodyAgent(_person);
-    }
-
-    internal void CartRideRadius()
-    {
-        throw new NotImplementedException();
     }
 
     //the yearly grow for each Gender. For this be effective the GameObj scale must
@@ -260,8 +251,6 @@ public class Body //: MonoBehaviour //: General
 
         _person.InitHeightAndWeight();
     }
-
-
 
     private Transform savedParenTransform;
     void UnparentPerson()
@@ -341,7 +330,7 @@ public class Body //: MonoBehaviour //: General
 
         if (Program.GameFullyLoaded() && _bodyAgent != null)
         {
-            _bodyAgent.CheckOnAnimation();
+            _bodyAgent.NewSpeed();
         }
 
         //otherwise will stop the one intended to be playing now 
@@ -358,13 +347,6 @@ public class Body //: MonoBehaviour //: General
         _personalObject.AddressNewAni(animationPass, ShouldHidePersonalObject());
         AddressNewAniSound();
     }
-
-
-
-
-
-
-
 
     public void TurnCurrentAniAndStartNew(string animationPass)
     {
@@ -397,10 +379,6 @@ public class Body //: MonoBehaviour //: General
             _speed = UMath.GiveRandom(0.45f, 0.46f);//.45f, 0.55
         }
 
-        //_speed = _speed*CorrectSpeedPeopleAge();
-
-        //_speed = CorrectSpeedByWeight(aniToEval);
-        //bz the speed changes and then looks bad 
         ReCalculateWalkStep();
     }
 
@@ -428,8 +406,6 @@ public class Body //: MonoBehaviour //: General
         }
         return _speed;
     }
-
-
 
     /// <summary>
     /// Will correct speed based on age
@@ -476,10 +452,6 @@ public class Body //: MonoBehaviour //: General
             return;
         }
 
-        //if (!_person.Inventory.IsEmpty() && _person.Inventory.CarryLiquid() && _loadedAni != "isBucket")
-        //{
-        //    _loadedAni = "isBucket";
-        //}
         if (!_person.Inventory.IsEmpty() && _loadedAni != "isCarry")
         {
             //defines _loadedAni so will be taken care of in InitWalk
@@ -493,14 +465,16 @@ public class Body //: MonoBehaviour //: General
     /// <returns></returns>
     string ReturnWheelBarrowIfPosible()
     {
+        if(_person.Age <= _minAgeToWheelbarrow)
+        {
+            return "isCarry";
+        }
         if (GameController.AreThereWheelBarrowsOnStorage)
         {
             return "isWheelBarrow";
         }
         return "isCarry";
     }
-
-
 
     /// <summary>
     /// Init the Variables to walk
@@ -516,8 +490,6 @@ public class Body //: MonoBehaviour //: General
         FindIfAAniIsSaved();
 
         DefineSpeed();
-
-
 
         _inverse = inverse;
         _currTheRoute = route;
@@ -545,8 +517,6 @@ public class Body //: MonoBehaviour //: General
         }
         SetNextPoint();
     }
-
-
 
     /// <summary>
     /// If is a person using a Cart will need to ask for an animal at work
@@ -614,7 +584,6 @@ public class Body //: MonoBehaviour //: General
         //for male 
         return "isWalk";
     }
-
 
     /// <summary>
     /// Is gonnabe ethier 0 or currentROute.count -1 
@@ -761,9 +730,6 @@ public class Body //: MonoBehaviour //: General
         }
     }
 
-
-
-
     List<General> deb = new List<General>();
     void DebugRoutePoints(TheRoute route)
     {
@@ -824,16 +790,11 @@ public class Body //: MonoBehaviour //: General
         return route.CheckPoints[indexH].Point;
     }
 
-
     public void WalkRoutine(TheRoute route, HPers goingTo, bool inverse = false, HPers whichRouteP = HPers.None,
         bool loadingCall = false)
     {
         var destRoute = route.DestinyKey.Substring(route.DestinyKey.Length - 2);
         var oriRoute = route.OriginKey.Substring(route.OriginKey.Length - 2);
-
-        
-
-
 
         //inside a building route 
         if (destRoute == ".D" && oriRoute == ".O")
@@ -881,8 +842,6 @@ public class Body //: MonoBehaviour //: General
         }
     }
 
-
-
     void WalkRoutineLoad(TheRoute route, HPers goingTo, int loadInitCurrentPoint,
         bool inverse, HPers whichRouteP)
     {
@@ -891,11 +850,6 @@ public class Body //: MonoBehaviour //: General
         WalkRoutine(route, goingTo, inverse, whichRouteP, loadingCall: true);
 
         LoadPosition();
-
-        //WalkRoutineTail(goingTo, whichRouteP);
-
-        //AskForAnimalIfNeeded();
-        //ReturnAnimalIfNeeded();
     }
 
     void WalkRoutineTail(HPers goingTo, HPers whichRouteP = HPers.None)
@@ -906,8 +860,6 @@ public class Body //: MonoBehaviour //: General
 
         AddressWheelBarrowingAni();
     }
-
-
 
     private void AddressWheelBarrowingAni()
     {
@@ -925,6 +877,11 @@ public class Body //: MonoBehaviour //: General
 
     public bool CanSpawnCart()
     {
+        if (_person.Age <= _minAgeToWheelbarrow)
+        {
+            return false;
+        }
+
         if (_person.ProfessionProp == null || _person.Brain == null || _person.Work == null)
         {
             return false;
@@ -966,6 +923,11 @@ public class Body //: MonoBehaviour //: General
 
     public bool CanSpawnWheelBarrow()
     {
+        if(_person.Age <= _minAgeToWheelbarrow)
+        {
+            return false;
+        }
+
         if (!GameController.AreThereWheelBarrowsOnStorage)
         {
             return false;
@@ -980,8 +942,6 @@ public class Body //: MonoBehaviour //: General
         {
             return false;
         }
-
-
 
         var isNavalWorker = _person.Work.IsNaval();
 
@@ -1168,7 +1128,6 @@ public class Body //: MonoBehaviour //: General
         }
     }
 
-
     /// <summary>
     /// The action of moving the GameObj 
     /// </summary>
@@ -1176,9 +1135,7 @@ public class Body //: MonoBehaviour //: General
     {
         //LoadPosition();
 
-        var newPos = Vector3.MoveTowards(_currentPosition, _routePoins[_currentRoutePoint].Point,
-            _walkStep);
-
+        var newPos = Vector3.MoveTowards(_currentPosition, _routePoins[_currentRoutePoint].Point, _walkStep);
         AssignNewPosition(newPos);
     }
 
@@ -1192,22 +1149,13 @@ public class Body //: MonoBehaviour //: General
     void AssignNewPosition(Vector3 newPos)
     {
         _currentPosition = newPos;
-
-        //if (_person.LevelOfDetail1.OutOfScreen1.OnScreenRenderNow)
-        //{
-            //will onl;y assign if on screen now 
-            _person.transform.position = newPos;
-        //}
+        _person.transform.position = newPos;
     }
 
     public void A64msUpdate()
     {
 
-
     }
-
-
-
 
     #endregion
 
@@ -1234,9 +1182,6 @@ public class Body //: MonoBehaviour //: General
         return isArdOri || isArdDes;
     }
 
-
-
-
     /// <summary>
     /// Created for Loading instances 
     /// </summary>
@@ -1247,7 +1192,6 @@ public class Body //: MonoBehaviour //: General
         _person.transform.position = newPos;
     }
 
-
     private float _walkStep;
     /// <summary>
     /// for CPU ussage . so this calculation is only done if a param in there changed
@@ -1255,18 +1199,14 @@ public class Body //: MonoBehaviour //: General
     void ReCalculateWalkStep()
     {
         CheckOnGameSpeed();
-        _walkStep = _speed * Program.gameScene.GameSpeed * 0.02f * FPSCorrection()
-            ;
+        _walkStep = _speed * Program.gameScene.GameSpeed * 0.02f * FPSCorrection();
 
         //cap on walkStep
         if (_walkStep > 0.3f)
         {
             _walkStep = 0.3f;
         }
-
-        //Debug.Log("Step: " + _walkStep.ToString("n1"));
     }
-
 
     int times = 10;//the first 10 times wont FPS Correct. just bz whn starts right when loads people could go
     //really fast
@@ -1299,8 +1239,6 @@ public class Body //: MonoBehaviour //: General
         return 1 / w60;
     }
 
-
-
     public void ChangedSpeedHandler(object sender, EventArgs e)
     {
         //bz somehow will call the dead people already
@@ -1319,8 +1257,6 @@ public class Body //: MonoBehaviour //: General
         //if _loadedPosition has a value means that we are loading from file so will move the person to there 
         if (_loadedPosition != new Vector3())
         {
-            //GameScene.print(_loadedPosition + "._loadedPosition");
-
             AssignNewPositionNoQuesition(_loadedPosition);
             //_person.transform.position = _loadedPosition;
             _person.transform.rotation = _loadedRotation;
@@ -1328,11 +1264,15 @@ public class Body //: MonoBehaviour //: General
         }
     }
 
-
-
     //if dist btw Person and neext point is less than 'param':distToChangeRot we fire ChangeRot()
     private float distToChangeRot = 0.275f;//.299 is the max can be 
     private int smoothDivider = 4;//use to make smooth transition on route points the higher the smoother
+
+    internal void OneSecUpdate()
+    {
+        BodyAgent.OneSecondUpdate();
+    }
+
     void CheckRotation()
     {
         //correction needed when loading the _idle route inverse.. to avoid out of range excp
@@ -1346,7 +1286,6 @@ public class Body //: MonoBehaviour //: General
         {
             ChangeRotation(currDist);
         }
-
     }
 
     /// <summary>
@@ -1379,7 +1318,6 @@ public class Body //: MonoBehaviour //: General
         else
         {
             _person.transform.rotation = Quaternion.RotateTowards(_person.transform.rotation,
-            // currRoute[currentRoutePoint].QuaterniRotation, (finRot  / smoothDivider)* Program.gameScene.GameSpeed);
             _routePoins[_currentRoutePoint].QuaterniRotation, finRot);
         }
     }
@@ -1401,7 +1339,6 @@ public class Body //: MonoBehaviour //: General
     {
         _personalObject.DestroyAllGameObjs();
     }
-
 
     #region Hide Show
     public void Show()
@@ -1553,8 +1490,6 @@ public class Body //: MonoBehaviour //: General
         CheckSound();
     }
 
-
-
     /// <summary>
     /// If is inside a building will hide or show Geometry
     /// </summary>
@@ -1642,9 +1577,6 @@ public class Body //: MonoBehaviour //: General
         if (currDist < 0.01f) { Show(); }
     }
 
-
-
-
     private int oldGameSpeed;//same speed the game is always started at
     /// <summary>
     /// Will change the speed of the animator 
@@ -1681,7 +1613,6 @@ public class Body //: MonoBehaviour //: General
     {
         DefineIfCarryAni();
     }
-
 
     private void DefineIfCarryAni()
     {
@@ -1726,11 +1657,6 @@ public class Body //: MonoBehaviour //: General
         }
     }
 
-
-
-
-
-
     /// <summary>
     /// Created so onces is enable activate the current Ani. Since the Animator might be running another animation
     /// bz was disabled until now 
@@ -1752,36 +1678,6 @@ public class Body //: MonoBehaviour //: General
     public bool IAmShown()
     {
         return renderer.enabled;
-    }
-
-
-
-
-    /// <summary>
-    /// Syays if is in first or last of a route 
-    /// </summary>
-    /// <returns></returns>
-    bool AmIOnTheStartOrEnd()
-    {
-        return _currentRoutePoint == iniRoutePoint || _currentRoutePoint == lastRoutePoint;
-    }
-
-
-
-
-
-
-
-    void CheckIfNeedsToActivateAniCheck(string pass, string old)
-    {
-        var currentBaseState = myAnimator.GetCurrentAnimatorStateInfo(0);
-
-        //if saved animation has a value 
-        if (!string.IsNullOrEmpty(pass) && !currentBaseState.IsName(pass) && pass != old)
-        {
-            isSaveAniCheck = true;
-            saveAniToCheck = pass;
-        }
     }
 
     private string saveAniToCheck = "";
@@ -1809,28 +1705,6 @@ public class Body //: MonoBehaviour //: General
         }
     }
 
-    /// <summary>
-    /// bz needs to be clean in case a new ani was passed 
-    /// </summary>
-    /// <param name="newPass"></param>
-    void CleanIfNewAni(string newPass)
-    {
-        if (isSaveAniCheck && newPass != saveAniToCheck)
-        {
-            isSaveAniCheck = false;
-            saveAniToCheck = "";
-        }
-    }
-
-
-
-
-
-
-
-
-
-
     public void DisAbleAnimator()
     {
         //if animator is disabled they need to be turn off
@@ -1839,8 +1713,6 @@ public class Body //: MonoBehaviour //: General
 
         myAnimator.enabled = false;
     }
-
-
 
     #region Sounds
 
@@ -1941,6 +1813,5 @@ public class Body //: MonoBehaviour //: General
     }
 
     #endregion
-
 
 }

@@ -10,79 +10,79 @@ public class German
     /// </summary>
     public static void ReloadDict()
     {
-        string _houseTail = ". SugarMiller's live here and enjoy having a nice meal at least once in a while";
-        string _animalFarmTail = ", you can raise different animals in this building";
-        string _fieldFarmTail = ", you can plant different crops and fruits in this building";
-        string _asLongHasInput = ", as long as it has the necessary inputs";
-        string _produce = "In this building workers will produce the selected product, as long as it has the necessary inputs";
+        string _houseTail = ". Hiel lebt er nun der SugarMiller und genießt wenigstens ab und zu eine gute Mahlzeit";
+        string _animalFarmTail = ", In diesem Gebäude können verschiedene Arten Tiere gezüchtet werden";
+        string _fieldFarmTail = ", In diesem Gebäude können verschiedene Pflanzen und Früchte angebaut werden";
+        string _asLongHasInput = ", solange die notwendigen Komponenten verfügbar sind";
+        string _produce = "In diesem Gebäude wird von den Arbeitern das ausgewählte Produkt hergestellt, sofern die erforderlichen Materialien verfügbar sind";
         string _storage =
-        "This is a Storage building. If it gets full people won't work as they won't have where to store their products";
-        string _militar = "This building helps to decrease the Pirate Threat on your port, to be effective it must have workers. The more workers the better";
-        string _notRegionNeeded = " Can be built without owning the region.";
+        "Dies ist ein Lagergebäude. Wenn es voll wird, arbeiten die Leute nicht mehr, da sie nichts haben, wo sie ihre Produkte lagern können";
+        string _militar = "Dieses Gebäude trägt dazu bei, die Piratenbedrohung in Ihrem Hafen zu verringern. Um effektiv zu sein, müssen Arbeiter darin sein. Je mehr Arbeiter desto besser";
+        string _notRegionNeeded = " Kann gebaut werden, ohne die Region zu besitzen.";
 
         _german = new Dictionary<string, string>()
         {
             //Descriptions
             //Infr
-            { "Road.Desc","Used for decoration purposes. People are happier if there are roads around them"},
-            { "BridgeTrail.Desc","Allows people to pass from one side of the terrain to the other"},
-            { "BridgeRoad.Desc","Allows people to pass from one side of the terrain to the other. People love these bridges. It gives a sense of prosperity and happiness" +_houseTail},
-            { "LightHouse.Desc","Helps to increase Port visibility. Adds to Port Reputation as long it has workers in it"},
-            { H.Masonry + ".Desc","Important building, workers construct new buildings and work as wheelbarrows once they have nothing to do"},
-            { H.StandLamp + ".Desc","Illuminates at night if Whale Oil is available on the town's storage"},
+            { "Road.Desc","Wird zu Dekorationszwecken verwendet. Die Menschen sind zufriedener, wenn sie Straßen vorfinden"},
+            { "BridgeTrail.Desc","Erlaubt es den Leuten, von einer Seite des Geländes zur anderen zu gelangen"},
+            { "BridgeRoad.Desc","Erlaubt es den Leuten, von einer Seite des Geländes zur anderen zu gelangen. Die Menschen lieben diese Brücken. Sie geben ihnen ein Gefühl von Wohlstand und Glück" +_houseTail},
+            { "LightHouse.Desc","Hilft, die Sichtbarkeit des Hafens zu erhöhen. Fügt dem Hafen einen Ruf hinzu, solange Arbeiter in ihm tätig sind"},
+            { H.Masonry + ".Desc","Wichtiges Gebäude, Arbeiter bauen neue Gebäude und arbeiten als Transporteure, wenn sie nichts zu tun haben"},
+            { H.StandLamp + ".Desc","Leuchtet nachts, wenn Walöl im Lager der Stadt verfügbar ist"},
 
-            { H.HeavyLoad + ".Desc","These workers use horse wagons to move goods around"},
+            { H.HeavyLoad + ".Desc","Diese Arbeiter benutzen Pferdefuhrwerke, um Waren zu transportieren"},
 
 
             //House
-            { "Bohio.Desc", "Bohio house, primitive conditions with unhappy people whom can only have a maximum of 2 to 3 kids"},
+            { "Bohio.Desc", "Bohiohaus, primitive Bedingungen mit unzufiedenen Menschen, die maximal 2 bis 3 Kinder haben können"},
 
-            { "Shack.Desc", "Shack, primitive conditions with unhappy people whom can only have a maximum of 2 kids"},
-            { "MediumShack.Desc", "The Medium Shack, has above primitive conditions with small happiness, can have a maximum of 2 to 3 kids"},
-            { "LargeShack.Desc", "A Large Shack, has somewhat good conditions with happiness, can have a maximum of 2 to 4 kids"},
+            { "Shack.Desc", "Hütte, primitive Verhältnisse mit unzufriedenen Menschen, die maximal 2 Kinder haben können"},
+            { "MediumShack.Desc", "Die mittelgroße Hütte, mit primitiven Bedingungen für ein wenig mehr Zufriedenheit, kann maximal 2 bis 3 Kinder haben"},
+            { "LargeShack.Desc", "Die große Hütte, hat etwas bessere Bedingungen, die Menschen sind zufriedener und können maximal 2 bis 4 Kinder haben"},
 
 
-            { "WoodHouseA.Desc", "Medium wooden house, a family can have 2-3 kids max" },
-            { "WoodHouseB.Desc", "Medium wooden house, a family can have 3-4 kids max"  },
-            { "WoodHouseC.Desc", "Medium wooden house, a family can have 2-3 kids max"},
-            { "BrickHouseA.Desc", "Medium house, a family can have 3 kids max"},
-            { "BrickHouseB.Desc","Large house, a family can have 3-4 kids max"},
-            { "BrickHouseC.Desc","Large house, a family can have 4 kids max"},
+            { "WoodHouseA.Desc", "Mittelgroßes Holzhaus, eine Familie kann maximal 2-3 Kinder haben" },
+            { "WoodHouseB.Desc", "Mittelgroßes Holzhaus, eine Familie kann maximal 3-4 Kinder haben"  },
+            { "WoodHouseC.Desc", "Mittelgroßes Holzhaus, eine Familie kann maximal 2-3 Kinder haben"},
+            { "BrickHouseA.Desc", "Mittleres Haus, eine Familie kann maximal 3 Kinder haben"},
+            { "BrickHouseB.Desc","Großes Haus, eine Familie kann maximal 3-4 Kinder haben"},
+            { "BrickHouseC.Desc","Großes Haus, eine Familie kann maximal 4 Kinder haben"},
 
             
             //Farms
             //Animal
-            { "AnimalFarmSmall.Desc","Small animal farm"+_animalFarmTail},
-            { "AnimalFarmMed.Desc","Medium animal farm"+_animalFarmTail},
-            { "AnimalFarmLarge.Desc","Large animal farm"+_animalFarmTail},
-            { "AnimalFarmXLarge.Desc","Extra large animal farm"+_animalFarmTail},
+            { "AnimalFarmSmall.Desc","Kleine Tierfarm"+_animalFarmTail},
+            { "AnimalFarmMed.Desc","Mittelgroße Tierfarm"+_animalFarmTail},
+            { "AnimalFarmLarge.Desc","Große Tierfarm"+_animalFarmTail},
+            { "AnimalFarmXLarge.Desc","Extragroße Tierfarm"+_animalFarmTail},
             //Fields
-            { "FieldFarmSmall.Desc","Small field farm"+_fieldFarmTail},
-            { "FieldFarmMed.Desc","Medium field farm"+_fieldFarmTail},
-            { "FieldFarmLarge.Desc","Large field farm"+_fieldFarmTail},
-            { "FieldFarmXLarge.Desc","Extra large field farm"+_fieldFarmTail},
-            { H.FishingHut + ".Desc","Here a worker can catch fish in a river (must be place by the river)." + _notRegionNeeded},
+            { "FieldFarmSmall.Desc","Kleine Feldfarm"+_fieldFarmTail},
+            { "FieldFarmMed.Desc","Mittelgroße Feldfarm"+_fieldFarmTail},
+            { "FieldFarmLarge.Desc","Große Feldfarm"+_fieldFarmTail},
+            { "FieldFarmXLarge.Desc","Extragroße Feldfarm"+_fieldFarmTail},
+            { H.FishingHut + ".Desc","Hier kann ein Arbeiter in einem Fluss Fische fangen (muss an einem Fluss plaziert werden)." + _notRegionNeeded},
 
             //Raw
-            { "Mortar.Desc","Here a worker will produce Mortar"},
-            { "Clay.Desc","Here a worker will produce Clay, raw material is needed for bricks and more"},
-            { "Pottery.Desc","Here a worker will produce crockery products, such as dishes, jars, etc"},
-            { "Mine.Desc","Here a worker can fish in a river"},
-            { "MountainMine.Desc","Here a worker will work the mine by extracting ore"},
-            { "Resin.Desc","Here a worker will work the mine by extracting minerals and metals randomly"},
-            {  H.LumberMill +".Desc","Here workers will find resources such as wood, stone, and ore"},
-            { "BlackSmith.Desc","Here workers will produce the product selected"+_asLongHasInput},
-            { "ShoreMine.Desc","Here workers will produce salt and sand"},
-            { "QuickLime.Desc","Here workers will produce quicklime"},
+            { "Mortar.Desc","Hier wird ein Arbeiter Mörtel produzieren"},
+            { "Clay.Desc","Hier wird ein Arbeiter Ton produzieren, das Rohmaterial für Ziegel und mehr"},
+            { "Pottery.Desc","Hier produziert ein Arbeiter Keramikprodukte wie Geschirr, Gläser usw."},
+            { "Mine.Desc","Hier kann ein Arbeiter in einem Fluss fischen"},
+            { "MountainMine.Desc","Hier wird ein Arbeiter in der Mine Erz fördern"},
+            { "Resin.Desc","Hier wird ein Arbeiter in der Mine arbeiten, und zufällige Mineralien und Metalle gewinnen."},
+            {  H.LumberMill +".Desc","Hier finden Arbeiter Ressourcen wie Holz, Stein und Erz"},
+            { "BlackSmith.Desc","Hier erstellen die Arbeiter das ausgewählte Produkt"+_asLongHasInput},
+            { "ShoreMine.Desc","Hier produzieren die Arbeiter Salz und Sand"},
+            { "QuickLime.Desc","Hier werden die Arbeiter ungelöschten Kalk produzieren"},
 
             //Prod
-            { "Brick.Desc","Here a worker will produce clay made products, such as bricks, etc"},
-            { "Carpentry.Desc","Here a worker will produce wood made products, such as crates, barrels, etc"},
-            { "Cigars.Desc","Here workers will produce cigars"+_asLongHasInput},
-            { "Mill.Desc","Here workers will ground some grains"+_asLongHasInput},
-            { H.Tailor+".Desc","Here workers will produce clothes"+_asLongHasInput},
-            { "Tilery.Desc","Here workers will produce roof tiles"+_asLongHasInput},
-            { "Armory.Desc","Here workers will produce weapons"+_asLongHasInput},
+            { "Brick.Desc","Hier wird ein Arbeiter Lehmprodukte wie Ziegelsteine usw. herstellen"},
+            { "Carpentry.Desc","Hier produziert ein Arbeiter Holzprodukte wie Kisten, Fässer usw."},
+            { "Cigars.Desc","Hier werden Arbeiter Zigarren produzieren"+_asLongHasInput},
+            { "Mill.Desc","Hier werden die Arbeiter Korn mahlen"+_asLongHasInput},
+            { H.Tailor+".Desc","Hier werden Arbeiter Kleidung herstellen"+_asLongHasInput},
+            { "Tilery.Desc","Hier werden Arbeiter Dachziegel herstellen"+_asLongHasInput},
+            { "Armory.Desc","Hier werden Arbeiter Waffen produzieren"+_asLongHasInput},
             { H.Distillery+".Desc",_produce},
             { "Chocolate.Desc",_produce},
             { "Ink.Desc",_produce},
@@ -96,15 +96,15 @@ public class German
             { "Silk.Desc",_produce},
             { "SugarMill.Desc",_produce},
             { "Foundry.Desc",_produce},
-            { "SugarShop.Desc", "Produces sugar subproducts!!!. " + _produce},
+            { "SugarShop.Desc", "Stellt Produkte aus Zucker her!!!. " + _produce},
 
 
                 { "SteelFoundry.Desc",_produce},
 
             //trade
-            { "Dock.Desc","Here you can add import or export orders (must be placed by the ocean)." + _notRegionNeeded},
-            { H.Shipyard + ".Desc","You can repairs your ships here, but you must have ship repair materials in inventory"},
-            { "Supplier.Desc","You can supply ships with goods here, but you must have items in inventory that a ship can use for their long trip"},
+            { "Dock.Desc","Hier kannst du Import- oder Exportaufträge hinzufügen (muss am Ozean platziert werden)." + _notRegionNeeded},
+            { H.Shipyard + ".Desc","Hier können Schiffe repariert werden, aber es müssen die nötigen Reparaturmaterialien im Bestand sein"},
+            { "Supplier.Desc","Hier werden Schiffe mit Waren be- und entladen, aber es müssen Artikel im Inventar haben, die ein Schiff für die lange Fahrt verwenden kann"},
             { "StorageSmall.Desc",_storage},
             { "StorageMed.Desc",_storage},
             { "StorageBig.Desc",_storage},
@@ -112,319 +112,319 @@ public class German
             { "StorageExtraBig.Desc",_storage},
 
             //gov
-            { "Library.Desc","People come to this building to read and borrow books for their knowledge. The more inventory in the libraries the better"},
-            { "School.Desc","Here people will get an education. Here more is better"},
-            { "TradesSchool.Desc","Here people will get specialized education on trades. The more the better"},
-            { "TownHouse.Desc","The townhouse increases happiness and prosperity to your people"},
+            { "Library.Desc","Die Leute kommen in dieses Gebäude, um Bücher zu lesen oder sie zu leihen um ihr Wissen zu erweitern. Je mehr Inventar in den Bibliotheken, desto besser"},
+            { "School.Desc","Hier erhalten die Leute eine Ausbildung. Hier gilt mehr ist besser"},
+            { "TradesSchool.Desc","Hier erhalten die Menschen eine spezialisierte Ausbildung im Handwerk. Gut ein paar Spezialisten zu haben"},
+            { "TownHouse.Desc","Das Stadthaus erhöht die Zufriedenheit und den Wohlstand Ihres Volkes"},
 
             //other
-            { "Church.Desc","The church gives happiness and hope to your people"},
-            { "Tavern.Desc","The tavern gives some relaxation and entertainment to your people"},
+            { "Church.Desc","Die Kirche gibt deinem Volk Glück und Hoffnung"},
+            { "Tavern.Desc","Die Taverne bietet deinen Leuten Entspannung und Unterhaltung"},
 
             //Militar
-            { "WoodPost.Desc", "They spot bandits and pirates quicker so you can prepare in advance"},
+            { "WoodPost.Desc", "Entdeckt Banditen und Piraten schneller, so dass du dich im Voraus darauf vorbereiten können"},
             { "PostGuard.Desc",_militar},
             { "Fort.Desc",_militar},
-            { "Morro.Desc",_militar+". Once you build this, Pirates should know better"},
+            { "Morro.Desc",_militar+". Sobald Sie dies gebaut haben, sollten Piraten es besser wissen"},
 
             //Decoration
-            { "Fountain.Desc", "Beauty your town and adds overall happiness to your citizens"},
-            { "WideFountain.Desc", "Beauty your town and adds overall happiness to your citizens"},
-            { "PalmTree.Desc", "Beauty your town and adds overall happiness to your citizens"},
-            { "FloorFountain.Desc", "Beauty your town and adds overall happiness to your citizens"},
-            { "FlowerPot.Desc", "Beauty your town and adds overall happiness to your citizens"},
-            { "PradoLion.Desc", "Beauty your town and adds overall happiness to your citizens"},
+            { "Fountain.Desc", "Verschönert deine Stadt und erhöht bei deinen Bürgern die allgemeine Zufriedenheit"},
+            { "WideFountain.Desc", "Verschönert deine Stadt und erhöht bei deinen Bürgern die allgemeine Zufriedenheit"},
+            { "PalmTree.Desc", "Verschönert deine Stadt und erhöht bei deinen Bürgern die allgemeine Zufriedenheit"},
+            { "FloorFountain.Desc", "Verschönert deine Stadt und erhöht bei deinen Bürgern die allgemeine Zufriedenheit"},
+            { "FlowerPot.Desc", "Verschönert deine Stadt und erhöht bei deinen Bürgern die allgemeine Zufriedenheit"},
+            { "PradoLion.Desc", "Verschönert deine Stadt und erhöht bei deinen Bürgern die allgemeine Zufriedenheit"},
 
 
 
             //Buildings name
             //Infr
-            { "Road","Road"},
-            { "BridgeTrail","Trail Bridge"},
-            { "BridgeRoad","Road Bridge"},
-            { "LightHouse","Light House"},
-            { "Masonry","Masonry"},
-            {   "StandLamp","Stand Lamp"},
-            { "HeavyLoad","Heavy Load"},
+            { "Road","Straße"},
+            { "BridgeTrail","Fußgängerbrücke"},
+            { "BridgeRoad","Straßenbrücke"},
+            { "LightHouse","Leuchtturm"},
+            { "Masonry","Maurerbetrieb"},
+            {   "StandLamp","Straßenlaterne"},
+            { "HeavyLoad","Schwerlastbetrieb"},
 
 
             //House
-            { "Shack", "Shack"},
-            { "MediumShack", "Medium Shack"},
-            { "LargeShack", "Large Shack"},
+            { "Shack", "Hütte"},
+            { "MediumShack", "Mittelgroße Hütte"},
+            { "LargeShack", "Große Hütte"},
 
-            { "WoodHouseA", "Medium Wood House" },
-            { "WoodHouseB", "Large Wood House"  },
-            { "WoodHouseC", "Luxury Wood House"},
-            { "BrickHouseA", "Medium Brick House"},
-            { "BrickHouseB","Luxury Brick House"},
-            { "BrickHouseC","Large Brick House"},
+            { "WoodHouseA", "Mittelgroßes Holzhaus" },
+            { "WoodHouseB", "Großes Holzhaus"  },
+            { "WoodHouseC", "Luxuriöses Holzhaus"},
+            { "BrickHouseA", "Mittelgroßes Ziegelhaus"},
+            { "BrickHouseB","Luxuriöses Ziegelhaus"},
+            { "BrickHouseC","Großes Ziegelhaus"},
 
             
             //Farms
             //Animal
-            { "AnimalFarmSmall","Small Animal Farm"},
-            { "AnimalFarmMed","Medium Animal Farm"},
-            { "AnimalFarmLarge","Large Animal Farm"},
-            { "AnimalFarmXLarge","Extra Large Animal Farm"},
+            { "AnimalFarmSmall","Kleine Tierfarm"},
+            { "AnimalFarmMed","Mittelgroße Tierfarm"},
+            { "AnimalFarmLarge","Große Tierfarm"},
+            { "AnimalFarmXLarge","Extragroße Tierfarm"},
             //Fields
-            { "FieldFarmSmall","Small Field Farm"},
-            { "FieldFarmMed","Medium Field Farm"},
-            { "FieldFarmLarge","Large Field Farm"},
-            { "FieldFarmXLarge","Extra Large Field Farm"},
-            { "FishingHut","Fishing Hut"},
+            { "FieldFarmSmall","Kleine Feldfarm"},
+            { "FieldFarmMed","Mittelgroße Feldfarm"},
+            { "FieldFarmLarge","Große Feldfarm"},
+            { "FieldFarmXLarge","Extragroße Feldfarm"},
+            { "FishingHut","Fischerhütte"},
 
             //Raw
-            { "Mortar","Mortar"},
-            { "Clay","Clay"},
-            { "Pottery","Pottery"},
-            { "MountainMine","Mountain Mine"},
-            {  "LumberMill" ,"Lumbermill"},
-            { "BlackSmith","Blacksmith"},
-            { "ShoreMine","Shore Mine"},
-            { "QuickLime","Quicklime"},
+            { "Mortar","Mörtel"},
+            { "Clay","Lehm"},
+            { "Pottery","Keramik"},
+            { "MountainMine","Bergarbeitermine"},
+            {  "LumberMill" ,"Sägewerk"},
+            { "BlackSmith","Schmiede"},
+            { "ShoreMine","Ufermine"},
+            { "QuickLime","Üngelöschter Kalk"},
 
             //Prod
-            { "Brick","Brick"},
-            { "Carpentry","Carpentry"},
-            { "Cigars","Cigars"},
-            { "Mill","Mill"},
-            { "Tailor","Tailor"},
-            { "Tilery","Tilery"},
-            { "Armory","Armory"},
-            { "Distillery","Distillery"},
-            { "Chocolate","Chocolate"},
-            { "Ink","Ink"},
+            { "Brick","Ziegel"},
+            { "Carpentry","Zimmerei"},
+            { "Cigars","Zigarren"},
+            { "Mill","Mühle"},
+            { "Tailor","Schneider"},
+            { "Tilery","Fliesenleger"},
+            { "Armory","Waffenkammer"},
+            { "Distillery","Destillerie"},
+            { "Chocolate","Schokolade"},
+            { "Ink","Tinte"},
 
             //Ind
-            { "Cloth","Cloth"},
-            { "GunPowder","Gunpowder"},
-            { "PaperMill","Papermill"},
-            { "Printer","Printer"},
-            { "CoinStamp","Coin Stamp"},
-            { "SugarMill","Sugarmill"},
-            { "Foundry","Foundry"},
-            { "SteelFoundry","Steel Foundry"},
-            { "SugarShop","Sugarshop"},
+            { "Cloth","Kleidung"},
+            { "GunPowder","Schießpulver"},
+            { "PaperMill","Papiermühle"},
+            { "Printer","Druckerei"},
+            { "CoinStamp","Münzprägerei"},
+            { "SugarMill","Zuckermühle"},
+            { "Foundry","Gießerei"},
+            { "SteelFoundry","Stahlgießerei"},
+            { "SugarShop","Süßigkeitengeschäft"},
 
 
             //trade
             { "Dock","Dock"},
-            { "Shipyard","Shipyard"},
-            { "Supplier","Supplier"},
-            { "StorageSmall","Small Storage"},
-            { "StorageMed","Medium Storage"},
-            { "StorageBig","Big Storage"},
+            { "Shipyard","Werft"},
+            { "Supplier","Lieferant"},
+            { "StorageSmall","Kleines Lager"},
+            { "StorageMed","Mittelgroßes Lager"},
+            { "StorageBig","Großes Lager"},
 
             //gov
-            { "Library","Library"},
-            { "School","School"},
-            { "TradesSchool","Trades School"},
-            { "TownHouse","Townhouse"},
+            { "Library","Bücherei"},
+            { "School","Schule"},
+            { "TradesSchool","Handelsschule"},
+            { "TownHouse","Stadthaus"},
 
             //other
-            { "Church","Church"},
-            { "Tavern","Tavern"},
+            { "Church","Kirche"},
+            { "Tavern","Taverne"},
 
             //Militar
-            { "WoodPost", "Wood Guard Duty"},
-            { "PostGuard","Stone Guard Duty"},
+            { "WoodPost", "Holzwachturm"},
+            { "PostGuard","Steinwachturm"},
             { "Fort","Fort"},
-            { "Morro","Morro"},
+            { "Morro", "Spanische Festung"},
 
             //Decorations
-            { "Fountain", "Fountain"},
-            { "WideFountain", "Wide Fountain"},
-            { "PalmTree", "Palm Tree"},
-            { "FloorFountain", "Floor Fountain"},
-            { "FlowerPot", "Flower Pot"},
-            { "PradoLion", "Prado Lion"},
+            { "Fountain", "Springrunnen"},
+            { "WideFountain", "Großer Springbrunnen"},
+            { "PalmTree", "Palme"},
+            { "FloorFountain", "Brunnen"},
+            { "FlowerPot", "Blumenkübel"},
+            { "PradoLion", "Prado Löwe"},
 
             //Main GUI
-            { "SaveGame.Dialog", "Save your game progress"},
-            { "LoadGame.Dialog", "Load a game"},
-            { "NameToSave", "Save your game as:"},
-            { "NameToLoad", "Game to load selected:"},
-            { "OverWrite", "There is already a saved game with the same name. Do you want to overwrite the file?"},
-            { "DeleteDialog", "Are you sure you want to delete the saved game?"},
-            { "NotHDDSpace", "Not enough space on {0} drive to save the game"},
-            { "GameOverPirate", "Sorry, you lost the game! Pirates attacked your town and killed everyone."},
-            { "GameOverMoney", "Sorry, you lost the game! The crown won't support your Caribbean island anymore."},
-            { "BuyRegion.WithMoney", "Are you sure want to buy this region."},
-            { "BuyRegion.WithOutMoney", "Sorry, you can't afford this now."},
-            { "Feedback", "Feedback!? Awesome...:) Thanks. 8) "},
-            { "OptionalFeedback", "Feedback is crucial. Pls drop a word"},
-            { "MandatoryFeedback", "Only the dev team will see this. Your rate is?"},
-            { "PathToSeaExplain", "Displays the shortest way to the sea."},
+            { "SaveGame.Dialog", "Speichere deinen Spielfortschritt"},
+            { "LoadGame.Dialog", "Spiel laden"},
+            { "NameToSave", "Speichere dein Spiel unter:"},
+            { "NameToLoad", "Spiel zum Laden ausgewählt:"},
+            { "OverWrite", "Es gibt bereits ein Spiel mit diesem Namen. Möchtest du die Datei überschreiben?"},
+            { "DeleteDialog", "Möchtest du das gespeicherte Spiel wirklich löschen??"},
+            { "NotHDDSpace", "Auf dem Laufwerk {0} ist nicht genügend Speicherplatz vorhanden, um das Spiel zu speichern"},
+            { "GameOverPirate", "Das war´s leider, du hast das Spiel verloren! Piraten haben deine Stadt angegriffen und alle getötet."},
+            { "GameOverMoney", "Tja aber sorry, du hast das Spiel verloren! Die Krone wird deine karibische Insel nicht mehr unterstützen."},
+            { "BuyRegion.WithMoney", "Möchtest du diese Region wirklich kaufen?."},
+            { "BuyRegion.WithOutMoney", "Sorry, das kannst du dir jetzt nicht leisten."},
+            { "Feedback", "Feedback!? Super ... :) Danke. 8) "},
+            { "OptionalFeedback", "Feedback ist mir sehr wichtig. Bitte lass ein paar Worte da."},
+            { "MandatoryFeedback", "Das sieht nur das Entwicklerteam. Deine Bewertung ist?"},
+            { "PathToSeaExplain", "Zeigt den kürzesten Weg zum Meer."},
 
 
-            { "BugReport", "Caught a bug? uhmm yummy.... Send it this way!! Thanks"},
-            { "Invitation", "Your friend's email for a chance to join the Private Beta"},
+            { "BugReport", "Einen Fehler gefunden? ähm, hoppla... schick es auf diesem Weg !! Vielen Dank"},
+            { "Invitation", "Die E-Mail-Adresse deines Freundes, um an der Private Beta teilzunehmen"},
             { "Info", ""},//use for informational Dialogs
-            { "Negative", "The Crown extended a line of credit for you. If you own more than $100,000.00 is game over"},  
+            { "Negative", "Die Krone hat dir einen Kreditrahmen gewährt. Wenn du mehr als $ 100.000,00 besitzt, ist das Spiel vorbei"},  
 
 
             //MainMenu
-                { "Types_Explain", "Traditional: \nIt's a game where in the beginning some buildings are locked and you have to unlock them. " +
-                    "The good thing is that this provides you with guidance." +
-                    "\n\nFreewill: \nAll available buildings are unlocked right away. " +
-                    "The bad thing is this way you can fail very easily." +
-                    "\n\nThe 'Hard' difficulty is the closest to reality"},
+                { "Types_Explain", "Traditional: \nDas ist eine Spielvariante, bei dem am Anfang einige Gebäude gesperrt sind und man sie freischalten muss. " +
+                    "Das Gute daran ist, dass du hier eine Anleitung bekommst." +
+                    "\n\nFreewill: \nAlle verfügbaren Gebäude werden sofort freigeschaltet. " +
+                    "Das Schlimme daran ist, dass du so leicht versagen kannst." +
+                    "\n\nDie Stufe 'Schwer' ist verflucht nah der Realität"},
 
 
             //Tooltips
             //Small Tooltips
-            { "Person.HoverSmall", "Total/Adults/Kids"},
-            { "Emigrate.HoverSmall", "Emigrated"},
-            { "CurrSpeed.HoverSmall", "Game Speed"},
-            { "Town.HoverSmall", "Town Name"},
-            { "Lazy.HoverSmall", "Unemployed People"},
-            { "Food.HoverSmall", "Food"},
-            { "Happy.HoverSmall", "Happiness"},
-            { "PortReputation.HoverSmall", "Reputation of Port"},
-            { "Dollars.HoverSmall", "Dollars"},
-            { "PirateThreat.HoverSmall", "Pirate Threat"},
-            { "Date.HoverSmall", "Date (m/y)"},
-            { "MoreSpeed.HoverSmall", "More Speed [PgUp]"},
-            { "LessSpeed.HoverSmall", "Less Speed [PgDwn]"},
-            { "PauseSpeed.HoverSmall", "Pause Game"},
-            { "CurrSpeedBack.HoverSmall", "Current Speed"},
-            { "ShowNoti.HoverSmall", "Notifications"},
-            { "Menu.HoverSmall", "Main Menu"},
-            { "QuickSave.HoverSmall", "Quick Save[Ctrl+S][F]"},
-            { "Bug Report.HoverSmall", "Report a Bug"},
+            { "Person.HoverSmall", "Gesamt/Erwachsene/Kinder"},
+            { "Emigrate.HoverSmall", "Auswanderer"},
+            { "CurrSpeed.HoverSmall", "Spieltempo"},
+            { "Town.HoverSmall", "Stadtname"},
+            { "Lazy.HoverSmall", "Arbeitslose Leute"},
+            { "Food.HoverSmall", "Nahrung"},
+            { "Happy.HoverSmall", "Zufriedenheit"},
+            { "PortReputation.HoverSmall", "Ruf des Hafens"},
+            { "Dollars.HoverSmall", "Dollar"},
+            { "PirateThreat.HoverSmall", "Piratenbedrohung"},
+            { "Date.HoverSmall", "Datum (M/J)"},
+            { "MoreSpeed.HoverSmall", "Schneller [BildHoch]"},
+            { "LessSpeed.HoverSmall", "Langsamer [BildRunter]"},
+            { "PauseSpeed.HoverSmall", "Spiel pausieren"},
+            { "CurrSpeedBack.HoverSmall", "Aktuelle Geschwindigkeit"},
+            { "ShowNoti.HoverSmall", "Benachrichtigungen"},
+            { "Menu.HoverSmall", "Hauptmenü"},
+            { "QuickSave.HoverSmall", "Schnellspeichern[Strg+S][F]"},
+            { "Bug Report.HoverSmall", "Melde einen Fehler"},
             { "Feedback.HoverSmall", "Feedback"},
-            { "Hide.HoverSmall", "Hide"},
-            { "CleanAll.HoverSmall", "Clean"},
-            { "Bulletin.HoverSmall", "Control/Bulletin"},
+            { "Hide.HoverSmall", "Verbergen"},
+            { "CleanAll.HoverSmall", "Sauber"},
+            { "Bulletin.HoverSmall", "Kontrolle/Bulletin"},
             { "ShowAgainTuto.HoverSmall","Tutorial"},
-            { "BuyRegion.HoverSmall", "Buy Regions"},
-            { "Help.HoverSmall", "Help"},
+            { "BuyRegion.HoverSmall", "Kaufe Regionen"},
+            { "Help.HoverSmall", "Hilfe"},
 
-            { "More.HoverSmall", "More"},
-            { "Less.HoverSmall", "Less"},
-            { "Prev.HoverSmall", "Previous"},
+            { "More.HoverSmall", "Mehr"},
+            { "Less.HoverSmall", "Weniger"},
+            { "Prev.HoverSmall", "Vorheriges"},
 
-            { "More Positions.HoverSmall", "More"},
-            { "Less Positions.HoverSmall", "Less"},
+            { "More Positions.HoverSmall", "Mehr"},
+            { "Less Positions.HoverSmall", "Weniger"},
 
 
             //down bar
-            { "Infrastructure.HoverSmall", "Infrastructure"},
-            { "House.HoverSmall", "Housing"},
-            { "Farming.HoverSmall", "Farming"},
-            { "Raw.HoverSmall", "Raw"},
-            { "Prod.HoverSmall", "Production"},
-            { "Ind.HoverSmall", "Industry"},
-            { "Trade.HoverSmall", "Trade"},
-            { "Gov.HoverSmall", "Government"},
-            { "Other.HoverSmall", "Other"},
-            { "Militar.HoverSmall", "Military"},
-            { "Decoration.HoverSmall", "Decoration"},
+            { "Infrastructure.HoverSmall", "Infrastruktur"},
+            { "House.HoverSmall", "Häuser"},
+            { "Farming.HoverSmall", "Landwirtschaft"},
+            { "Raw.HoverSmall", "Güter"},
+            { "Prod.HoverSmall", "Produktion"},
+            { "Ind.HoverSmall", "Industrie"},
+            { "Trade.HoverSmall", "Handel"},
+            { "Gov.HoverSmall", "Regierung"},
+            { "Other.HoverSmall", "Andere"},
+            { "Militar.HoverSmall", "Militär"},
+            { "Decoration.HoverSmall", "Dekoration"},
 
-            { "WhereIsTown.HoverSmall", "Back to Town [P]"},
-            { "WhereIsSea.HoverSmall", "Show Ocean Path"},
-            { "Helper.HoverSmall", "Help"},
-            { "Tempeture.HoverSmall", "Temperature"},
+            { "WhereIsTown.HoverSmall", "Zurück zur Stadt [P]"},
+            { "WhereIsSea.HoverSmall", "Ozeanpfad anzeigen"},
+            { "Helper.HoverSmall", "Hilfe"},
+            { "Tempeture.HoverSmall", "Temperatur"},
             
             //building window
-            { "Gen_Btn.HoverSmall", "General Tab"},
-            { "Inv_Btn.HoverSmall", "Inventory Tab"},
-            { "Upg_Btn.HoverSmall", "Upgrades Tab"},
-            { "Prd_Btn.HoverSmall", "Production Tab"},
-            { "Sta_Btn.HoverSmall", "Stats Tab"},
-            { "Ord_Btn.HoverSmall", "Orders Tab"},
-            { "Stop_Production.HoverSmall", "Stop Production"},
-            { "Demolish_Btn.HoverSmall", "Demolish"},
-            { "More Salary.HoverSmall", "Pay More"},
-            { "Less Salary.HoverSmall", "Pay Less"},
-            { "Next_Stage_Btn.HoverSmall", "Buy Next Stage"},
-            { "Current_Salary.HoverSmall", "Current Salary"},
-            { "Current_Positions.HoverSmall", "Current Positions"},
-            { "Max_Positions.HoverSmall", "Max Positions"},
+            { "Gen_Btn.HoverSmall", "Allgemeiner Tab"},
+            { "Inv_Btn.HoverSmall", "Inventar Tab"},
+            { "Upg_Btn.HoverSmall", "Verbesserungen Tab"},
+            { "Prd_Btn.HoverSmall", "Produktion Tab"},
+            { "Sta_Btn.HoverSmall", "Statistiken Tab"},
+            { "Ord_Btn.HoverSmall", "Befehle Tab"},
+            { "Stop_Production.HoverSmall", "Produktion stoppen"},
+            { "Demolish_Btn.HoverSmall", "Abreißen"},
+            { "More Salary.HoverSmall", "Zahle mehr"},
+            { "Less Salary.HoverSmall", "Zahle weniger"},
+            { "Next_Stage_Btn.HoverSmall", "Nächste Stufe kaufen"},
+            { "Current_Salary.HoverSmall", "Aktuelles Gehalt"},
+            { "Current_Positions.HoverSmall", "Aktuelle Positionen"},
+            { "Max_Positions.HoverSmall", "Maximale Positionen"},
 
 
-            { "Add_Import_Btn.HoverSmall", "Add an Import"},
-            { "Add_Export_Btn.HoverSmall", "Add an Export"},
-            { "Upg_Cap_Btn.HoverSmall", "Upgrades Capacity"},
-            { "Close_Btn.HoverSmall", "Close"},
-            { "ShowPath.HoverSmall", "Show Path"},
-            { "ShowLocation.HoverSmall", "Show Location"},//TownTitle
-            { "TownTitle.HoverSmall", "Town"},
-            {"WarMode.HoverSmall", "Combat Mode"},
+            { "Add_Import_Btn.HoverSmall", "Import hinzufügen"},
+            { "Add_Export_Btn.HoverSmall", "Export hinzufügen"},
+            { "Upg_Cap_Btn.HoverSmall", "Verbesserungskapazität"},
+            { "Close_Btn.HoverSmall", "Schließen"},
+            { "ShowPath.HoverSmall", "Zeige Pfad"},
+            { "ShowLocation.HoverSmall", "Standort anzeigen"},//TownTitle
+            { "TownTitle.HoverSmall", "Stadt"},
+            {"WarMode.HoverSmall", "Kampfmodus"},
             {"BullDozer.HoverSmall", "Bulldozer"},
-            {"Rate.HoverSmall", "Rate Me"},
+            {"Rate.HoverSmall", "Bewerten"},
 
             //addOrder windiw
-            { "Amt_Tip.HoverSmall", "Product Amount"},
+            { "Amt_Tip.HoverSmall", "Produktmenge"},
 
             //Med Tooltips 
-            { "Build.HoverMed", "Place building: 'Left click' \n" +
-                                "Rotate building: 'R' key \n" +
-                                "Cancel: 'Right click'"},
-                { "BullDozer.HoverMed", "Clean area: 'Left click' \n" +
-                "Cancel: 'Right click' \nCost: $10 per use "},
+            { "Build.HoverMed", "Gebäude platzieren: 'Linksklick' \n" +
+                                "Gebäude drehen: 'R' Taste \n" +
+                                "Abbrechen: 'Rechtsklick'"},
+                { "BullDozer.HoverMed", "Gebiet bereinigen: 'Linksklick' \n" +
+                "Abbruch: 'Rechtsklick' \nKosten: $10 pro Nutzung "},
 
-                { "Road.HoverMed", "Start: 'Left click' \n" +
-                    "Expand: 'Move mouse' \n" +
-                    "Set: 'Left click again' \n" +
-                "Cancel: 'Right click'"},
+                { "Road.HoverMed", "Start: 'Linksklick' \n" +
+                    "Erweitern: 'Maus bewegen' \n" +
+                    "Setzen: 'Nochmal Linksklick' \n" +
+                "Abbruch: 'Rechtsklick'"},
 
-            { "Current_Salary.HoverMed", "Workers will go to work, where the highest salary is paid." +
-                                            " If 2 places pay the same salary, then the closest to home will be chosen."},
+            { "Current_Salary.HoverMed", "Die Arbeitnehmer gehen dort arbeiten wo das meiste Gehalt wartet." +
+                                            " Wenn 2 Arbeitgeber das gleiche Gehalt zahlen nehmen sie den Job der ihrer Wohnung am nächsten ist."},
 
 
 
             //Notifications
-            { "BabyBorn.Noti.Name", "New Born"},
-            { "BabyBorn.Noti.Desc", "{0} was born"},
-            { "PirateUp.Noti.Name", "Pirates Closer"},
-            { "PirateUp.Noti.Desc", "Pirates close to shore"},
-            { "PirateDown.Noti.Name", "Pirates Respect You"},
-            { "PirateDown.Noti.Desc", "Pirates respect you a bit more today"},
+            { "BabyBorn.Noti.Name", "Neugeborenes"},
+            { "BabyBorn.Noti.Desc", "{0} ist geboren"},
+            { "PirateUp.Noti.Name", "Piraten nähern sich"},
+            { "PirateUp.Noti.Desc", "Piraten sind nahe dem Ufer"},
+            { "PirateDown.Noti.Name", "Piraten respektieren dich"},
+            { "PirateDown.Noti.Desc", "Piraten respektieren dich für heute ein wenig mehr"},
 
-            { "Emigrate.Noti.Name", "A citizen has emigrated"},
-            { "Emigrate.Noti.Desc", "People emigrate when they are not happy with your government"},
-            { "PortUp.Noti.Name", "Port is known"},
-            { "PortUp.Noti.Desc", "Your port reputation is ramping up with neighboring ports and routes"},
-            { "PortDown.Noti.Name", "Port is less known"},
-            { "PortDown.Noti.Desc", "Your port reputation went down"},
+            { "Emigrate.Noti.Name", "Ein Bürger ist ausgewandert"},
+            { "Emigrate.Noti.Desc", "Menschen wandern aus, wenn sie mit deiner Regierung nicht zufrieden sind"},
+            { "PortUp.Noti.Name", "Hafen ist bekannt"},
+            { "PortUp.Noti.Desc", "Der Ruf deines Hafens steigt mit den benachbarten Häfen und Routen"},
+            { "PortDown.Noti.Name", "Hafen ist weniger bekannt"},
+            { "PortDown.Noti.Desc", "Der Ruf deines Hafens ist gesunken"},
 
-            { "BoughtLand.Noti.Name", "New Land Purchased"},
-            { "BoughtLand.Noti.Desc", "A new land region was purchased"},
+            { "BoughtLand.Noti.Name", "Neues Land gekauft"},
+            { "BoughtLand.Noti.Desc", "Eine neue Landregion wurde gekauft"},
 
-            { "ShipPayed.Noti.Name", "Ship paid out"},
-            { "ShipPayed.Noti.Desc", "A ship has paid out {0} for goods or service"},
-            { "ShipArrived.Noti.Name", "A ship has arrived"},
-            { "ShipArrived.Noti.Desc", "A new ship has arrived to one of our maritime buildings"},
+            { "ShipPayed.Noti.Name", "Schiff bezahlt"},
+            { "ShipPayed.Noti.Desc", "Ein Schiff hat {0} für Waren oder Dienstleistungen bezahlt"},
+            { "ShipArrived.Noti.Name", "Ein Schiff ist angekommen"},
+            { "ShipArrived.Noti.Desc", "Ein neues Schiff ist in einem unserer Hafengebäude eingetroffen"},
 
-            { "AgeMajor.Noti.Name", "New worker"},
-            { "AgeMajor.Noti.Desc", "{0} is ready to work"},
-
-
-            { "PersonDie.Noti.Name", "A person has died"},
-            { "PersonDie.Noti.Desc", "{0} has died"},
-
-            { "DieReplacementFound.Noti.Name", "A person has died"},
-            { "DieReplacementFound.Noti.Desc", "{0} has died. A job replacement was found."},
-
-            { "DieReplacementNotFound.Noti.Name", "A person has died"},
-            { "DieReplacementNotFound.Noti.Desc", "{0} has died. No job replacement was found"},
+            { "AgeMajor.Noti.Name", "Neuer Arbeiter"},
+            { "AgeMajor.Noti.Desc", "{0} ist bereit für die Arbeit"},
 
 
-            { "FullStore.Noti.Name", "A storage is getting full"},
-            { "FullStore.Noti.Desc", "A storage is at {0}% capacity"},
+            { "PersonDie.Noti.Name", "Jemand ist verstorben"},
+            { "PersonDie.Noti.Desc", "{0} ist verstorben"},
 
-            { "CantProduceBzFullStore.Noti.Name", "A worker cannot produce"},
-            { "CantProduceBzFullStore.Noti.Desc", "{0} because his/her destination storage is full"},
+            { "DieReplacementFound.Noti.Name", "Jemand ist verstorben"},
+            { "DieReplacementFound.Noti.Desc", "{0} ist verstorben. Es wurde ein Ersatz für den Job gefunden."},
 
-            { "NoInput.Noti.Name", "At least an input is missing in building"},
-            { "NoInput.Noti.Desc", "A building cannot produce {0} because is missing at least one input"},
+            { "DieReplacementNotFound.Noti.Name", "Jemand ist verstorben"},
+            { "DieReplacementNotFound.Noti.Desc", "{0} ist verstorben. Es wurde kein Ersatz für den Job gefunden"},
 
-            { "Built.Noti.Name", "A building has been built"},
-            { "Built.Noti.Desc", "{0} has been fully built"},
 
-            { "cannot produce", "cannot produce"},
+            { "FullStore.Noti.Name", "Ein Lager wird voll"},
+            { "FullStore.Noti.Desc", "Ein Lager ist bei einer Kapazität von {0}%"},
+
+            { "CantProduceBzFullStore.Noti.Name", "Ein Arbeiter kann nichts herstellen"},
+            { "CantProduceBzFullStore.Noti.Desc", "{0} weil sein/ihr Ziellager voll ist"},
+
+            { "NoInput.Noti.Name", "Zumindest fehlt eine Zufuhr zum Gebäude"},
+            { "NoInput.Noti.Desc", "Ein Gebäude kann keine {0} erzeugen, da mindestens ein Rohstoff fehlt"},
+
+            { "Built.Noti.Name", "Ein Gebäude wurde fertiggestellt"},
+            { "Built.Noti.Desc", "{0} wurde fertiggestellt"},
+
+            { "cannot produce", "kann nicht herstellen"},
 
             
 
@@ -432,75 +432,75 @@ public class German
 
             //Main notificaion
             //Shows on the middle of the screen
-            { "NotScaledOnFloor", "The building is either too close to shore or mountain"},
-            { "NotEven", "The ground underneath the building is not even"},
-            { "Colliding", "Building is colliding with another one"},
-            { "Colliding.BullDozer", "Bulldozer is colliding with a building. Can only be used on terrain (trees, rocks)"},
+            { "NotScaledOnFloor", "Das Gebäude liegt entweder zu nahe am Ufer oder zu nah am Berg"},
+            { "NotEven", "Der Boden unter dem Gebäude ist nicht eben"},
+            { "Colliding", "Gebäude kollidiert mit einem anderen"},
+            { "Colliding.BullDozer", "Bulldozer kollidiert mit einem Gebäude. Kann nur im Gelände (Bäume, Felsen) verwendet werden"},
 
-            { "BadWaterHeight", "The building is too low or high on the water"},
-            { "LockedRegion", "You need to own this region to build here"},
-            { "HomeLess", "People in this house have nowhere to go. Please build a new house that" +
-                            " can hold this family and try again"},
-            { "LastFood", "Cannot destroy, this is the only Storage in your village"},
-            { "LastMasonry", "Cannot destroy, this is the only Masonry in your village"},
-            { "OnlyOneDemolish", "You are demolishing a building already. Try again after demolition is completed"},
+            { "BadWaterHeight", "Das Gebäude ist zu tief oder zu hoch auf dem Wasser"},
+            { "LockedRegion", "Du musst diese Region besitzen, um hier bauen zu können"},
+            { "HomeLess", "Die Leute in diesem Haus können nirgendwo hin gehen. Bitte baue ein neues Haus" +
+                            " um diese Familie zu halten und es erneut versuchen"},
+            { "LastFood", "Kann nicht zerstört werden, dies ist das einzige Lager in deinem Dorf"},
+            { "LastMasonry", "Kann nicht zerstört werden, dies ist der einzige Maurer in deinem Dorf"},
+            { "OnlyOneDemolish", "Du zerstörst bereits ein Gebäude. Versuche es erneut, nachdem der Abbruch abgeschlossen ist"},
 
 
             //help
 
-            { "Construction.HoverMed", "For the construction of any building you need to have workers in the Masonry. "+
-                    " Click the Masonry, then the '+' sign in the general tab. Make sure you have enough resources"},
-            { "Demolition.HoverMed", "Once the inventory is clear will be demolished. Wheelbarrows will move the inventory"},
+            { "Construction.HoverMed", "Für den Bau eines Gebäudes benötigst du Arbeiter im Maurerbetrieb. "+
+                    " Klicke auf den Maurer und dann auf das Symbol "+" auf der Registerkarte 'Allgemein'. Stelle sicher, dass du über ausreichende Ressourcen verfügst"},
+            { "Demolition.HoverMed", "Sobald die Vorräte frei sind, wird es abgerissen. Schubkarren transportieren die Reste ab"},
 
-            { "Construction.Help", "For the construction of any building you need to have workers in the Masonry. "+
-                    " Click the Masonry, then the '+' sign in the general tab. Make sure you have enough resources"},
-            { "Camera.Help", "Camera: Use [WASD] or cursor to move. " +
-                        "Press the scroll wheel on your mouse, keep it pressed to rotate, or [Q] and [E]"},
-            { "Sea Path.Help", "Click on the left bottom corner 'Show/hide sea path' " +
-                            "button to show the closest path to the sea"},
+            { "Construction.Help", "Für den Bau eines Gebäudes benötigen Sie Arbeiter im Maurerbetrieb. "+
+                    " Klicke auf den Maurer und dann auf das Symbol "+" auf der Registerkarte 'Allgemein'. Stelle sicher, dass du über ausreichende Ressourcen verfügst"},
+            { "Camera.Help", "Kamera: Benutze [WASD] oder den Cursor zum bewegen. " +
+                        "Drücke das Scrollrad deiner Maus und halte es gedrückt, um zu drehen, oder nutze [Q] und [E]"},
+            { "Sea Path.Help", "Klicke auf die linke untere Ecke 'Seepfad ein- / ausblenden' " +
+                            "Schaltfläche, um den nächstgelegenen Weg zum Meer anzuzeigen"},
 
-            { "People Range.Help", "The huge blue circle around each building marks the range of it"},
+            { "People Range.Help", "Der große blaue Kreis um jedes Gebäude markiert die Reichweite"},
 
-            { "Pirate Threat.Help", "Pirate Threat: This is how aware are the pirates of your port. This increases as" +
-                                        " you have more money. If this reaches over 90 you will lose the game. You can counter the threat by constructing military buildings"},
+            { "Pirate Threat.Help", "Piratenbedrohung: So bewusst sind sich die Piraten der Existenz deines Hafens. Diese erhöht sich," +
+                                        " wenn du mehr Geld besitzt. Wenn dieser Wert über 90 erreicht wird, verlierst du das Spiel. Du kannst der Bedrohung durch den Bau militärischer Gebäude begegnen"},
 
-            { "Port Reputation.Help", "Port Reputation: The more people know your port, the more they will visit." +
-                                            " If you want to increase this make sure you always have some orders" +
-                                            " in the Dock"},
-            { "Emigrate.Help", "Emigrates: When people are unhappy for a few years they leave. The bad" +
-                                    " part of this is they won't come back, they won't produce or have children." +
-                                    " The only good thing is that they increase the 'Port Reputation'"},
-            { "Food.Help", "Food: The higher the variety of food available in a household, the happier they" +
-                                " will be."},
+            { "Port Reputation.Help", "Ruf des Hafens: Je mehr Leute deinen Hafen kennen, desto mehr besuchen ihn." +
+                                            " Wenn du dies verbessern möchtest, stelle sicher, dass du immer einige Aufträge" +
+                                            " im Dock hast"},
+            { "Emigrate.Help", "Auswanderer: Wenn die Menschen einige Jahre unglücklich sind, gehen sie. Das Schlechte" +
+                                    " daran ist, dass sie nicht wiederkommen, keine Kinder bekommen oder Kinder haben werden." +
+                                    " Das einzig Gute ist, dass sie den 'Ruf des Hafens' erhöhen."},
+            { "Food.Help", "Lebensmittel: Je höher die Vielfalt an Lebensmitteln, die in einem Haushalt verfügbar sind, desto zufriedener "+
+                                 " werden sie sein."},
 
-            { "Weight.Help", "Weight: All the weights in the game are in Kg or Lbs depending on which Unit system is selected." +
-                                " You can change it in 'Options' in the 'Main Menu'"},
-            { "What are Ft3 and M3?.Help", "The storage capacity is determined by the volume of the building. Ft3 is a cubic foot. M3 is a cubic meter" },//. Keep in mind that less dense products will fill up your storage quickly. To see products density Bulletin/Prod/Spec"},
+            { "Weight.Help", "Gewicht: Alle Gewichtsangaben im Spiel sind in kg oder Pfund, abhängig davon, welches Einheitensystem ausgewählt ist." +
+                                " Du kannst dies unter 'Optionen' im 'Hauptmenü' ändern."},
+            { "What is Ft3 and M3?.Help", "Die Speicherkapazität wird durch das Volumen des Gebäudes bestimmt. Ft3 ist ein Kubikfuß. M3 ist ein Kubikmeter" },//. Denke daran, dass weniger kompakte Produkte dein Lager schnell füllen. Die Produktmenge findest du unter  Bulletin/Prod/Spezi"},
 
-            { "More.Help", "If you need more help might be a good idea completing the tutorial, or simply posting a question on SugarMill's Forums"},
+            { "More.Help", "Wenn du weitere Hilfe benötigst, empfiehlt es sich, das Tutorial abzuschließen oder einfach deine Frage in den SugarMill-Foren zu posten"},
 
                 //more 
-            { "Products Expiration.Help", "Products expiration: Just like in real life, in this game every product expires. Some food items expire sooner than others. You can see how many products had expired on Bulletin/Prod/Expire"},
-            { "Horse Carriages.Help", "As the game has real measurements people can carry only so much. That's when horse-drawn carriages come into place. They carry a lot more, as a result, your economy gets boosted. A person in their best years might carry around 15KG, a wheelbarrow closer to 60KG, but the smaller cart can carry 240KG. To use them build a HeavyLoad"},
-            { "Usage of goods.Help", "Usage of goods: Crates, barrels, wheelbarrows, carts, tools, cloth, crockery, furniture and utensils are all needed to do the traditional activities of a town. As these goods get used, they diminish, as a result, a person won't carry anything if there are no crates. Keep an eye on that ;)"},
-            { "Happiness.Help", "Happiness: People's happiness is influenced by various factors. How much money they have, food variety, religion satisfaction, access to leisure, house comfort and education level. Also if a person has access to utensils, crockery and cloth will influence their happiness."},
-            { "Line production.Help", "Line production: To make a simple nail you need to mine ore, in the foundry melt the iron, and finally in the blacksmith make the nail. If you got enough money, you can always buy the nail directly on a ship, or any other product."},
-            { "Bulletin.Help", "The pages icon on the bottom bar is the Bulletin/Control Window. Please get a minute to explore it."},
-            { "Trading.Help", "You will need to have at least one Dock to be able to trade. On it, you can add import/export orders and make some cash. If you need help adding an order you might want to complete the Tutorial"},
+            { "Products Expiration.Help", "Produktverfall: Wie in der Realität verfällt jedes Produkt. Einige Lebensmittel verfallen früher als andere. Du kannst unter Bulletin/Prod/Verfall sehen welche Produkte abgelaufen sind"},
+            { "Horse Carriages.Help", "Da das Spiel echte Maße hat, können die Menschen nur begrenzt viel tragen. Danach kommen Pferdefuhrwerk zum Einsatz. Sie transportieren viel mehr, wodurch deine Wirtschaft gestärkt wird. Eine Person in ihren besten Jahren könnte etwa 15 kg, eine Schubkarre ca. 60 kg und der kleinere Wagen kann 240 kg tragen. Um diese zu benutzen, baue eine Schwertransportstation"},
+            { "Usage of goods.Help", "Verwendung von Gütern: Kisten, Fässer, Schubkarren, Karren, Werkzeuge, Kleidung, Geschirr, Möbel und Utensilien sind erforderlich, um die traditionellen Aktivitäten einer Stadt zu erledigen. Wenn diese Waren verwendet werden, verringert sich ihre Anzahl, so dass eine Person nichts trägt, wenn keine Kisten vorhanden sind. Behalte das im Auge ;)"},
+            { "Happiness.Help", "Zufriedenheit: Die Zufriedenheit der Menschen wird von verschiedenen Faktoren beeinflusst. Wie viel Geld sie haben, der Lebensmittelvielfalt, Religionszufriedenheit, Zugang zu Freizeit, Hauskomfort und Bildungsniveau. Auch wenn eine Person Zugang zu Utensilien hat, beeinflussen eher Geschirr und Kleidung ihre Zufriedenheit."},
+            { "Line production.Help", "Serienfertigung: Um einen einfachen Nagel herzustellen, muss man Erz abbauen, in der Gießerei das Eisen schmelzen und schließlich muss die Schmiede den Nagel herstellen. Wenn du genug Geld hast, kannst du den Nagel immer direkt auf einem Schiff kaufen wie auch jedes andere Produkt."},
+            { "Bulletin.Help", "Das Seitensymbol in der unteren Leiste ist das Bulletin / Kontrollfenster. Bitte nimm dir etwas Zeit, um es zu erkunden."},
+            { "Trading.Help", "Du benötigst mindestens ein Dock, um handeln zu können. Dort kannst du Import- / Exportaufträge hinzufügen und Bargeld verdienen. Wenn du beim Hinzufügen eines Auftrages Hilfe benötigst, kannst du das Tutorial abschließen"},
 
-            { "Combat Mode.Help", "It activates when a Pirate/Bandit is detected by one of your citizens. Once the mode is active you can command units directly to attack. Select them and right click to objective to attack"},
+            { "Combat Mode.Help", "Wird aktiviert, wenn ein Pirat/ Bandit von einem deiner Bürger entdeckt wird. Sobald der Modus aktiv ist, kannst du Einheiten direkt den Angriff zuweisen. Wähle sie aus und klicke mit der rechten Maustaste, um das Ziel anzugreifen"},
 
-            { "Population.Help", "Once they turn 16 will move to a free house if found. If there is always a free house to move to the population growth will be guaranteed. If they get into the new houses at 16 years old, you are maximizing population growth"},
+            { "Population.Help", "Sobald sie 16 Jahre alt sind, ziehen sie in ein freies Haus, wenn eines zur Verfügung steht. Immer wenn ein freies Haus zur Verfügung steht, wird das Bevölkerungswachstum garantiert. Wenn sie mit 16 Jahren in die neuen Häuser kommen, maximieren Sie das Bevölkerungswachstum"},
 
 
-            { "F1.Help", "Press [F1] for help"},
+            { "F1.Help", "Drücke [F1] für die Hilfe"},
 
-            { "Inputs.Help", "If a building can't produce because is missing inputs. Check you have the needed input(s) in the main storage and at least one worker in the masonry"},
-            { "WheelBarrows.Help", "Wheelbarrows are the masonry workers. If they got nothing to build will act as wheelbarrows. If you need inputs to get into a specific building make sure you have enough of them working and also the inputs mentioned in the storage building"},
+            { "Inputs.Help", "Wenn ein Gebäude nichts produzieren kann, weil die Waren fehlen, prüfe bitte ob die erforderlichen Güter im Hauptlager vorhanden sind und mindestens eine Arbeiter im Maurerbetrieb ist"},
+            { "WheelBarrows.Help", "Schubkarren sind die 'Arbeitstiere' der Maurer. Wenn sie nichts zu bauen haben, fungieren sie als Schubkarren. Wenn du Materialien benötigst, die in ein bestimmtes Gebäude gelangen müssen, stelle sicher, dass du über genügend Einheiten verfügst und auch die im Lagergebäude genannten Materialien"},
 
-            { "Production Tab.Help", "If the building is a farm field make sure you have workers on the farm. The crop will be lost if sits there a month after harvest day"},
-            { "Our Inventories.Help", "The section 'Our inventories' in the 'Add Order Window' is a resume of what we got in our Storages buildings inventories"},
-            { "Inventories Explanation.Help", "This a resume of what we got in our Storages inventories. Items in other buildings inventories do not belong to the city"},
+            { "Production Tab.Help", "Wenn es sich bei dem Gebäude um ein landwirtschaftliches Feld handelt, stelle sicher, dass sich auf dem Hof Arbeiter befinden. Die Ernte geht verloren, wenn sie einen Monat nach dem Erntetag noch immer dort lagert"},
+            { "Our Inventories.Help", "TDer Abschnitt 'Unsere Lagerbestände' im Fenster 'Auftrag hinzufügen' ist eine Zusammenfassung dessen, was wir aus den Lagerbeständen unserer Lagergebäude erhalten haben"},
+            { "Inventories Explanation.Help", "Dies ist eine Zusammenfassung dessen, was wir in unseren Lagerbeständen haben. Gegenstände in anderen Gebäudebeständen gehören nicht zur Stadt"},
 
             ///word and grammarly below
 
@@ -508,142 +508,142 @@ public class German
 
 
             //to  add on spanish         //to correct  
-            { "TutoOver", "Your reward is $10,000.00 if is the first time you complete it. The tutorial is over now you can keep playing this game or start a new one."},
+            { "TutoOver", "Deine Belohnung beträgt $ 10.000,00, wenn du es zum ersten Mal abschließt. Das Tutorial ist nun beendet. Jetzt kannst dieses Spiel entweder weiterspielen oder ein neues Spiel beginnen."},
 
             //Tuto
-            { "CamMov.Tuto", "Tutorial completion reward is $10,000 (one time reward per game). Step1: Use [WASD] or arrow keys to move the Camera. Do this for at least 5 seconds"},
-            { "CamMov5x.Tuto", "Use [WASD] or arrow keys and keep press the 'Left Shift' key to move the Camera 5 times quicker. Do this for at least 5 seconds"},
-            { "CamRot.Tuto", "Now press the scroll wheel down on your mouse and move your mouse to rotate the Camera. Do this for at least 5 seconds"},
+            { "CamMov.Tuto", "Die Belohnung für den Abschluss des Tutorials beträgt $10.000, - (einmalige Belohnung pro Spiel). Schritt 1: Bewege die Kamera mit den Tasten [WASD] oder den Pfeiltasten. Tue dies mindestens 5 Sekunden lang"},
+            { "CamMov5x.Tuto", "Verwende die [WASD] oder die Pfeiltasten und halte die linke Umschalttaste gedrückt, um die Kamera fünfmal schneller zu bewegen. Tue dies mindestens 5 Sekunden lang"},
+            { "CamRot.Tuto", "Drücke nun das Mausrad nach unten und bewege die Maus, um die Kamera zu drehen. Tue dies mindestens 5 Sekunden lang"},
 
 
-            { "BackToTown.Tuto", "Press the key [P] on the keyboard to go to the initial position of the camera"},
+            { "BackToTown.Tuto", "PDrücke die Taste [P] auf der Tastatur, um zur Ausgangsposition der Kamera zu gelangen"},
 
-            { "BuyRegion.Tuto", "Regions, you need to own a region to be able to build in it. Click on '+' sign on the bottom bar, then on the 'For Sale' sign in the" +
-                    " middle of a region to buy it. Some buildings are exempt, they can be built without owning the region" +
-                    " (FishingHut, Dock, MountainMine, ShoreMine, LightHouse, PostGuard)"
+            { "BuyRegion.Tuto", "Regionen musst du besitzen, um bauen zu können. Klicke auf das "+" - Zeichen in der unteren Leiste und dann auf das 'Zum Verkauf' -Symbol in der" +
+                    " Mitte einer Region, um es zu kaufen. Einige Gebäude sind ausgenommen, sie können gebaut werden, ohne die Region zu besitzen" +
+                    " (Fischerhütte, Dock, Bergwerk, Uferbergwerk, Leuchtturm, Wachposten)"
                     },
 
-            { "Trade.Tuto", "That was easy, the hard part is coming. Click on the 'Trade' buildings button, located in the right bottom bar. "+
-                "When you hover over it, it will popup 'Trade'"},
-            { "CamHeaven.Tuto", "Scroll back with your mouse middle button until the camera reaches"
-                    + " the sky. This view is useful to place bigger buildings such as the Port"},
+            { "Trade.Tuto", "Das war echt einfach, aber der schwierige Teil kommt jetzt. Klicke auf die Schaltfläche 'Handelsgebäude' in der rechten unteren Leiste. "+
+                "Wenn du den Mauszeiger darüber bewegst, erscheint ein Popup-Fenster namens 'Handel'."},
+            { "CamHeaven.Tuto", "Scrolle mit der mittleren Maustaste zurück, bis die Kamera den"
+                    + " Himmel erreicht. Diese Ansicht ist nützlich, um größere Gebäude wie den Hafen zu platzieren"},
 
-            { "Dock.Tuto", "Now click on the 'Dock' building, it is the 1st button. When you hover over it, it will"+
-                " show its cost and description"},
-            { "Dock.Placed.Tuto", "Now the hard, read carefully. Notice that you can use the "+
-                "'R' key to Rotate, and right click to cancel the building. This building has a part in the ocean and other in the land." +
-                " The arrow goes to the sea, the storage section goes to land. Once the arrow is colored white, left click."},
-            { "2XSpeed.Tuto", "Increase the game's speed, go to the middle top screen simulation speed controller, click the "
-                    +" 'More Speed' button 1 time until 2x is displayed"},
+            { "Dock.Tuto", "Klicke nun auf das 'Dock'-Gebäude, es ist der 1. Button. Wenn du darüber schwebbleibst, zeigt es"+
+                "die Kosten und die Beschreibung"},
+            { "Dock.Placed.Tuto", "Nun zum schweren Teil, daher sorgfältig lesen. Beachte, dass du die "+
+                "'R' Taste zum rotieren nutzen kannst und den Rechtklick zum Bauabbruch. Dieses Gebäude hat einen Teil im Ozean und einen anderen an Land." +
+                " Der Pfeil zeigt zum Meer, der Lagerbereich ist an Land. Wenn der Pfeil weiß ist, klicke mit der linken Maustaste."},
+            { "2XSpeed.Tuto", "Erhöhe die Geschwindigkeit des Spiels, gehe zum mittleren Geschwindigkeitsregler für die Simulation auf dem oberen Bildschirm und klicke auf die"
+                    +" 'Schneller' Schaltfläche 1 Mal bis 2x angezeigt wird"},
 
-            { "ShowWorkersControl.Tuto", "Click on the 'Control/Bulletin' button, located in the bottom bar. "+
-                "When you hover over it, it will popup 'Control/Bulletin'. "},
-            { "AddWorkers.Tuto", "Click the '+' sign to the right of the Masonry building, this is how you add more workers."},
-            { "HideBulletin.Tuto", "Keep in mind that in this window you are able to control and see different aspects of the game. Click outside the window to close it or 'OK' button."},
-            { "FinishDock.Tuto", "Now finish the Dock building. The more workers are in the Masonry the quicker is going to get done too."
-            + " Also make sure you have all materials needed to build it"},
-            { "ShowHelp.Tuto", "Click on the 'Help' button, located in the bottom bar. "+
-                "When you hover over it, it will popup 'Help'. There you can find some tips."},
-
-
-            { "SelectDock.Tuto", "Ships drop and pick goods at random from the dock's inventory. Workers are needed to move dock goods in and out. They need wheelbarrows and crates. If are no items in the dock storage they won't work. Now click on the Dock."},
+            { "ShowWorkersControl.Tuto", "Klicke auf die Schaltfläche 'Steuerung/ Bulletin' in der unteren Leiste. "+
+                "Wenn du den Mauszeiger darüber bewegst, wird 'Steuerung / Bulletin' angezeigt.. "},
+            { "AddWorkers.Tuto", "Klicke auf das "+" - Zeichen rechts neben dem Maurerbetrieb. So fügst du weitere Arbeiter hinzu."},
+            { "HideBulletin.Tuto", "Denke bitte daran, dass du in diesem Fenster verschiedene Aspekte des Spiels steuern und sehen kannst. Klicke außerhalb des Fensters, um es zu schließen, oder auf die Schaltfläche 'OK'."},
+            { "FinishDock.Tuto", "Beende nun den Dockbau. Je mehr Arbeiter im Maurerbetrieb sind, desto schneller wird die Arbeit auch erledigt."
+            + " Vergewissere dich auch, dass du über alle Materialien verfügst, die für den Bau erforderlich sind"},
+            { "ShowHelp.Tuto", "Klicke auf die Schaltfläche 'Hilfe' in der unteren Leiste. "+
+                "Wenn du den Mauszeiger darüber bewegst, wird die Hilfe angezeigt. Dort findest du einige hilfreiche Tipps."},
 
 
-            { "OrderTab.Tuto", "Go to the Orders tab on the Dock's Window."},
-            { "ImportOrder.Tuto", "Click on the '+' sign beside Add Import Order."},
-
-            { "AddOrder.Tuto", "Now scroll down in the products and select wood and enter 100 as the amount. Then click the 'Add' button."},
-            { "CloseDockWindow.Tuto", "Now the order is added. A random ship will drop this item in the dock inventory. And then your dock workers will take it to the closest Storage building. Now click out the window, so it closes."},
-            { "Rename.Tuto", "Click on a person and then click on the title bar of the person. Like this, you can change the name of any person or building in the game. Click outside so the change is saved"},
-            { "RenameBuild.Tuto", "Now click on a building and change its name in the same way. Remember to click outside so the change is saved"},
-
-            { "BullDozer.Tuto", "Now click on the Bulldozer icon on the bottom bar. Then remove a tree or a rock from the terrain."},
+            { "SelectDock.Tuto", "Schiffe legen Waren nach dem Zufallsprinzip aus dem Inventar des Docks ab. Arbeiter werden benötigt, um Güter auf dem Dock ein- und auszulagern. Sie benötigen Schubkarren und Kisten. Wenn sich keine dieser Materialien im Docklager befinden, arbeiten sie nicht. Klicke nun auf das Dock."},
 
 
-            { "Budget.Tuto", "Click on the 'Control/Bulletin' button, then on 'Finance' menu and then on 'Ledger'. This is the game ledger"},
-            { "Prod.Tuto", "Click on 'Prod' menu and then on 'Produce'. Will show the village's production for the last 5 years"},
-            { "Spec.Tuto", "Click the 'Prod' menu and then on 'Spec'. Here you can see exactly how to make each product on the game. The inputs necessaries and where is produced. Also, the import and export prices"},
-            { "Exports.Tuto", "Click the 'Finance' menu and then on 'Export'. Here you can see a breakdown of your village's exports"},
+            { "OrderTab.Tuto", "Wechsele zur Registerkarte 'Bestellungen' im Dockfenster."},
+            { "ImportOrder.Tuto", "Klicke auf das '+' neben Importauftrag hinzufügen."},
+
+            { "AddOrder.Tuto", "Scrolle nun in den Produkten nach unten und wähle Holz aus, und gib als Menge 100 ein. Klicke dann auf die Schaltfläche 'Hinzufügen'."},
+            { "CloseDockWindow.Tuto", "Nun wird die Bestellung hinzugefügt. Ein zufälliges Schiff legt diese Gegenstand in das Dockinventar. Ihre Dockarbeiter werden es dann zum nächstgelegenen Lagergebäude bringen. Klicke jetzt außerhalb des Fensters, damit es geschlossen wird."},
+            { "Rename.Tuto", "Klicke auf eine Person und dann auf die Titelleiste der Person. So kannst du den Namen einer beliebigen Person oder eines Gebäudes im Spiel ändern. Klicke außerhalb, um die Änderung zu speichern"},
+            { "RenameBuild.Tuto", "Klicke nun auf ein Gebäude und ändere seinen Namen auf dieselbe Weise. Denke daran, außerhalb zu klicken, damit die Änderung gespeichert wird"},
+
+            { "BullDozer.Tuto", "Klicke nun auf das Bulldozer-Symbol in der unteren Leiste. Dann entferne einen Baum oder einen Stein vom Gelände."},
+
+
+            { "Budget.Tuto", "Klicke auf die Schaltfläche 'Steuerung / Bulletin', dann auf das Menü 'Finanzen' und dann auf 'Hauptbuch'. Dies ist das Spielkonto"},
+            { "Prod.Tuto", "Klicke auf 'Prod' und dann auf 'Produziert'. Dies zeigt die Produktion des Dorfes der letzten 5 Jahre"},
+            { "Spec.Tuto", "Klicke auf das Menü 'Prod' und dann auf 'Spez'. Hier kannst du genau sehen, wie du jedes Produkt im Spiel herstellst. Die notwendigen Eingänge und wo wird produziert. Auch die Import- und Exportpreise"},
+            { "Exports.Tuto", "Klicke auf das Menü 'Finanzen' und dann auf 'Exportieren'. Hier siehst eine Aufschlüsselung der Exporte deines Dorfes"},
 
 
                 //Quest
-            { "Tutorial.Quest", "Quest: Finish the tutorial. Reward $10,000. It takes roughly 3 minutes to complete"},
+            { "Tutorial.Quest", "Quest: Beende das Tutorial. Belohnung 10.000 $. Dies dauert ungefähr 3 Minuten"},
 
-            { "Lamp.Quest", "Quest: Build a StandLamp. Find it on Infrastructure, it shines at night if there is Whale Oil on Storage"},
+            { "Lamp.Quest", "Quest: Baue eine Straßenlaterne. Du findest sie in der Infrastruktur. Sie leuchtet nachts, wenn Walöl im Lager ist"},
 
-            { "Shack.Quest", "Quest: Build a Shack. These are cheap houses. When people turn 16 they will move to a free house if found. In this way, population growth will be guaranteed. [F1] Help. If you see smoke in a house's chimney means there are people living in it"},
+            { "Shack.Quest", "Quest: Baue eine Hütte. Das sind die billigsten Häuser. Wenn Menschen 16 Jahre alt werden, ziehen sie in ein freies Haus, wenn sie eines finden. Auf diese Weise wird das Bevölkerungswachstum garantiert. [F1] Hilfe. Wenn du Rauch im Schornstein siehst, bedeutet das, dass Menschen darin leben"},
 
-            { "SmallFarm.Quest", "Quest: Build a Small Field Farm. You need farms to feed your people"},
-            { "FarmHire.Quest", "Quest: Hire two farmers in the Small Field Farm. Click on the farm and in the plus sign assign workers. You need to have unemployed"
-                    +" people to be able to assign them into a new building"},
-
-
-
-            { "FarmProduce.Quest", "Quest: Now produce " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " of beans on the Small Field Farm. Click on the 'Stat' tab and will show you the production of the last 5 years. You can see the quest progress in the quest window. If you build more small farms will be accounted for the quest"},
-            { "Transport.Quest", "Quest: Transport the beans from the farm to the Storage. To do that make sure you have" +
-                " workers on the masonry. They act as wheelbarrows when not building"},
-
-
-            { "HireDocker.Quest", "Quest: Hire a docker. Dockers only task is to move the goods into the Dock from the Storage if you are exporting."+
-            " Or vice-versa if importing. They work when there is an order in place and the goods are ready to transport. Otherwise, they stay at home resting." +
-                " If you haven't built a Dock then build one."+
-            " Find it in Trade." },
-
-
-            { "Export.Quest", "Quest: At the Dock create an order and export exactly 300 " + Unit.CurrentWeightUnitsString() + " of beans."+
-                " In the Dock click on the 'Orders' tab and add an export order with the '+' sign."+
-            " Select product and enter amount"},
+            { "SmallFarm.Quest", "Quest: Baue eine kleine Feldfarm. Du benötigst Farmen, um deine Leute zu ernähren"},
+            { "FarmHire.Quest", "Quest: Stellen Sie zwei Bauern auf der kleinen Feldfarm ein. Klicke auf die Farm und klicke das Pluszeichen um Arbeiter einzustellen. Arbeitlos sollten sie aber schon sein"
+                    +" um sie einem Gebäude zuweisen zu können"},
 
 
 
-            { "MakeBucks.Quest", "Quest: Make $100 exporting goods in the Dock. "+
-            "Once a ship arrives will randomly pay product(s) in your Dock's inventory"},
-            { "HeavyLoad.Quest", "Quest: Build a Heavyload building. This are haulers that carry more weight. They will come handy when transporting goods around is needed." }, //Carts must be available on towns storages for them to work"},
-            { "HireHeavy.Quest", "Quest: In the Heavyload building hire a Heavy Hauler."},
+            { "FarmProduce.Quest", "Quest: Produziere " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " Bohnen auf einer kleinen Feldfarm. Klicke auf die Registerkarte 'Stat' und zeige die Produktion der letzten 5 Jahre an. Du kannst den Questfortschritt im Questfenster sehen. Wenn du weitere kleine Farmen baust, werden diese für die Quest berücksichtigt"},
+            { "Transport.Quest", "Quest: Transportiere nun die Bohnen vom Feld zum Lager. Um dies tun zu können" +
+                " solltest du genügend Arbeiter frei haben. Sie fungieren als Transporteure, wenn sie nichts bauen"},
 
 
-            { "ImportOil.Quest", "Quest: Import 500 " + Unit.CurrentWeightUnitsString() + " of Whale Oil at the Dock. This is needed to keep your lights on at night. Ships will randomly drop imports in your Dock's inventory"},
+            { "HireDocker.Quest", "Quest: Einen Hafenarbeiter anstellen. Die Aufgabe von Hafenarbeitern besteht nur darin, die Waren aus dem Lager in das Dock zu verschieben, wenn sie exportiert werden sollen."+
+            " Natürlich auch umgekehrt beim Import. Sie arbeiten, wenn eine Bestellung vorliegt und die Ware transportbereit ist. Ansonsten bleiben sie zu Hause und ruhen sich aus." +
+                " Wie du hast noch kein Dock gebaut? Dann wird´s aber Zeit ein zu bauen."+
+            " Du findest es unter Handel." },
 
-            { "Population50.Quest", "Reach a total population of 50 citizens"},
+
+            { "Export.Quest", "Quest: Erstelle im Dock einen Auftrag und exportiere genau 300 " + Unit.CurrentWeightUnitsString() + " Bohnen."+
+                " Klicke im Dock auf die Registerkarte 'Bestellungen' und füge einen Exportauftrag mit dem "+" - Zeichen hinzu."+
+            " Produkt auswählen und Betrag eingeben"},
+
+
+
+            { "MakeBucks.Quest", "Quest: Verdiene $ 100 beim Export von Waren im Dock. "+
+            "Sobald ein Schiff ankommt, werden die Produkte nach dem Zufallsprinzip im Inventar Ihres Docks bezahlt"},
+            { "HeavyLoad.Quest", "Quest: Baue ein Schwerlastgebäude. Dies sind Spediteure, die mehr Gewicht tragen können. Sie werden nützlich sein, wenn der Transport von Gütern erforderlich ist." }, //In den Lagern der Städte müssen Karren vorhanden sein, damit sie arbeiten können"},
+            { "HireHeavy.Quest", "Quest: Im Schwerlastgebäude einen Schwerlasttransporteur einstellen."},
+
+
+            { "ImportOil.Quest", "Quest: Importiere 500 " + Unit.CurrentWeightUnitsString() + " Walöl über das Dock. Dies ist erforderlich, um Lichter nachts eingeschaltet zu lassen. Schiffe werden Importe zufällig im Inventar Ihres Dock ablegen"},
+
+            { "Population50.Quest", "Erreiche eine Gesamtbevölkerung von 50 Einwohnern"},
 
             //added Aug 11 2017, result: sep 9(30% off biggest sale ever)
-            { "Production.Quest", "Let's produce Weapons now and sell them later. First of all, build a Blacksmith. Find it in the 'Raw' buildings menu"},
-            { "ChangeProductToWeapon.Quest", "In the Blacksmith's 'Products Tab' change the production to Weapon. Workers will bring the raw materials needed to forge weapons if found"},
-            { "BlackSmithHire.Quest", "Hire two blacksmiths"},
-            { "WeaponsProduce.Quest", "Now produce " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " of Weapons in the Blacksmith. Click on the 'Stat' tab and will show you the production of the last 5 years. You can see the quest progress in the quest window."},
-            { "ExportWeapons.Quest", "Now export 100 " + Unit.CurrentWeightUnitsString() + " of Weapons. On the Dock add an order of export. Notice that Weapons are a profitable business"},
+            { "Production.Quest", "Lass uns jetzt ein paar Waffen herstellen und später verkaufen. Baue zuerst einen Schmied. Diesen findest du im 'Güter' Gebäudemenü"},
+            { "ChangeProductToWeapon.Quest", "Im 'Produkte Tab' des Schmieds änderst du die Produktion in Waffen. Die Arbeiter bringen das Rohmaterial mit, wenn es vorrätig ist, um Waffen zu schmieden"},
+            { "BlackSmithHire.Quest", "Stelle zwei Schmiedegesellen ein"},
+            { "WeaponsProduce.Quest", "Nun produziere " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " Waffen in der Schmiede. Klicke auf die Registerkarte 'Stat' und zeige die Produktion der letzten 5 Jahre an. Du kannst den Questfortschritt im Questfenster verfolgen."},
+            { "ExportWeapons.Quest", "Nun exportiere 100 " + Unit.CurrentWeightUnitsString() + " Waffen. Füge im Dock eine Bestellung für den Export hinzu. Denke stets daran dass Waffen ein sehr profitables Geschäft sind"},
 
 
-            {"CompleteQuest", "Your reward is {0}"},
+            {"CompleteQuest", "Deine Belohnung ist {0}"},
 
 
             //added Sep 14 2017
-            { "BuildFishingHut.Quest", "Build a Fishing hut. In this way citizens have different foods to eat, which translates into happiness"},
-            { "HireFisher.Quest", "Hire a fisher"},
+            { "BuildFishingHut.Quest", "Baue eine Fischerhütte. Auf diese Weise haben die Bürger verschiedene Nahrungsmittel zur Verfügung, was sich in Zufriedenheit niederschlägt"},
+            { "HireFisher.Quest", "Stelle einen Fischer ein"},
 
-            { "BuildLumber.Quest", "Build a Lumbermill. Find it in the 'Raw' buildings menu"},
-            { "HireLumberJack.Quest", "Hire a Lumberjack"},
+            { "BuildLumber.Quest", "Baue eine Holzfällermühle. Du findest sie im Gebäude-Menü unter 'Güter'"},
+            { "HireLumberJack.Quest", "Stelle einen Holzfäller ein"},
 
-            { "BuildGunPowder.Quest", "Build a Gunpowder. Find it in the 'Industry' buildings menu"},
-            { "ImportSulfur.Quest", "In the dock import 1000 " + Unit.CurrentWeightUnitsString() + " of Sulfur"},
-            { "GunPowderHire.Quest", "Hire one worker in the Gunpowder building"},
+            { "BuildGunPowder.Quest", "Baue eine Schießpulverfabrik. Du findest sie im Gebäude-Menü unter 'Industrie'"},
+            { "ImportSulfur.Quest", "Importiere bei den Docks 1000 " + Unit.CurrentWeightUnitsString() + " Schwefel"},
+            { "GunPowderHire.Quest", "Stelle einen Arbeiter für die Schießpulverfabrik ein"},
 
-            { "ImportPotassium.Quest", "In the dock import 1000 " + Unit.CurrentWeightUnitsString() + " of Potassium"},
-            { "ImportCoal.Quest", "In the dock import 1000 " + Unit.CurrentWeightUnitsString() + " of Coal"},
+            { "ImportPotassium.Quest", "Importiere bei den Docks 1000 " + Unit.CurrentWeightUnitsString() + " Kalium"},
+            { "ImportCoal.Quest", "Importiere bei den Docks 1000 " + Unit.CurrentWeightUnitsString() + " K"},
 
-            { "ProduceGunPowder.Quest", "Lets produce now " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " of Gunpowder. Notice that you will need Sulfur, Potassium and Coal to produce Gunpowder"},
-            { "ExportGunPowder.Quest", "In the dock export 100 " + Unit.CurrentWeightUnitsString() + " of Gunpowder"},
+            { "ProduceGunPowder.Quest", "Produziere nun " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " Schießpulver. Beachte, dass du Schwefel, Kalium und Kohle benötigst, um Schießpulver herzustellen"},
+            { "ExportGunPowder.Quest", "Exportiere bei den Docks 100 " + Unit.CurrentWeightUnitsString() + " Schießpulver"},
 
-            { "BuildLargeShack.Quest", "Build a Largeshack in this bigger houses population will grow faster"},
+            { "BuildLargeShack.Quest", "Baue eine große Hütte. In diesen größeren Häusern  wird die Bevölkerung schneller wachsen"},
 
-            { "BuildA2ndDock.Quest", "Build a second Dock. This dock could be used only for imports in that way you can import raw materials here and export them at another dock"},
-            { "Rename2ndDock.Quest", "Rename the Docks now, so you can remember which be used only for imports and exports"},
+            { "BuildA2ndDock.Quest", "Baue ein zweites Dock. Dieses Dock kann nur für Importe verwendet werden. Auf diese Weise kannst du Rohstoffe hier importieren und an einem anderen Dock exportieren"},
+            { "Rename2ndDock.Quest", "Benenne die Docks jetzt um, so dass du leichter erkennst, welche nur für Importe und welche für Exporte verwendet werden"},
 
-            { "Import2000Wood.Quest", "In the Imports dock import 2000 " + Unit.CurrentWeightUnitsString() + " of Wood. This raw material is needed for everything because is used as fuel"},
+            { "Import2000Wood.Quest", "Imporitier nun auf dem Importdock 2000 " + Unit.CurrentWeightUnitsString() + " Holz. Dieses Rohmaterial wird für alles benötigt, allerdings auch als Brennstoff"},
 
             //IT HAS FINAL MESSAGE 
             //last quest it has a final message to the player. if new quest added please put the final message in the last quest
-            { "Import2000Coal.Quest", "In the Imports dock import 2000 " + Unit.CurrentWeightUnitsString() + " of Coal. Coal also, is needed for everything because is used as fuel. Hope you enjoy the experience so far. Keep expanding your colony, and wealth. Also, please help to improve the game. Participate in the online forums your voice and opinions are important! Have fun Sugarmiller!"},
+            { "Import2000Coal.Quest", "Imortiere nun im Importdock 2000 " + Unit.CurrentWeightUnitsString() + " Kohle. Kohle wird auch für alles benötigt, weil sie als Brennstoff verwendet wird. Ich hoffe, du genießt die bisherige Spielerfahrung. Erweitere deine Kolonie und deinen Wohlstand. Bitte hilf auch mit das Spiel zu verbessern. Beteilige dich an unserem Online-Forum, denn deine Stimme und deine Meinung sind wichtig! Viel Spaß Sugarmiller!"},
 
             //
 
@@ -651,93 +651,93 @@ public class German
 
             //Quest Titles
             { "Tutorial.Quest.Title", "Tutorial"},
-            { "Lamp.Quest.Title", "Stand Lamp"},
+            { "Lamp.Quest.Title", "Straßenlaterne"},
 
-            { "Shack.Quest.Title", "Build a Shack"},
-            { "SmallFarm.Quest.Title", "Build a Farm Field"},
-            { "FarmHire.Quest.Title", "Hire Two Farmers"},
+            { "Shack.Quest.Title", "Baue eine Hütte"},
+            { "SmallFarm.Quest.Title", "Baue ein Farmfeld"},
+            { "FarmHire.Quest.Title", "Stelle zwei Farmer ein"},
 
 
-            { "FarmProduce.Quest.Title", "Farm Producer"},
+            { "FarmProduce.Quest.Title", "Landwirtschaftlicher Produzent"},
 
-            { "Export.Quest.Title", "Exports"},
-            { "HireDocker.Quest.Title", "Hire Docker"},
-            { "MakeBucks.Quest.Title", "Make Money"},
-            { "HeavyLoad.Quest.Title", "Heavy Load"},
-            { "HireHeavy.Quest.Title", "Hire a Heavy Hauler"},
+            { "Export.Quest.Title", "Exporte"},
+            { "HireDocker.Quest.Title", "Stelle einen Dockarbeiter ein"},
+            { "MakeBucks.Quest.Title", "Verdiene Geld"},
+            { "HeavyLoad.Quest.Title", "Schwerlasttransport"},
+            { "HireHeavy.Quest.Title", "Stelle einen Schwerlasttransporteur ein"},
 
-            { "ImportOil.Quest.Title", "Whale Oil"},
+            { "ImportOil.Quest.Title", "Walöl"},
 
-            { "Population50.Quest.Title", "50 Citizens"},
+            { "Population50.Quest.Title", "50 Einwohner"},
             
             //
-            { "Production.Quest.Title", "Produce Weapons"},
-            { "ChangeProductToWeapon.Quest.Title", "Change Product"},
-            { "BlackSmithHire.Quest.Title", "Hire Two Blacksmiths"},
-            { "WeaponsProduce.Quest.Title", "Forge Weapons"},
-            { "ExportWeapons.Quest.Title", "Make Profit" },
+            { "Production.Quest.Title", "Stelle Waffen her"},
+            { "ChangeProductToWeapon.Quest.Title", "Ändere ein Produkt"},
+            { "BlackSmithHire.Quest.Title", "Stelle zwei Schmiedegesellen ein"},
+            { "WeaponsProduce.Quest.Title", "Schmiede Waffen"},
+            { "ExportWeapons.Quest.Title", "Mach ordentlich Profit" },
             
             //
-            { "BuildFishingHut.Quest.Title", "Build a Fishing Hut"},
-            { "HireFisher.Quest.Title", "Hire a Fisher"},
-            { "BuildLumber.Quest.Title", "Build a Lumber"},
-            { "HireLumberJack.Quest.Title", "Hire a Lumberjack"},
-            { "BuildGunPowder.Quest.Title", "Build a Gunpowder"},
-            { "ImportSulfur.Quest.Title", "Import Sulfur"},
-            { "GunPowderHire.Quest.Title", "Hire a Gunpowder worker"},
-            { "ImportPotassium.Quest.Title", "Import Potassium"},
-            { "ImportCoal.Quest.Title", "Import Coal"},
-            { "ProduceGunPowder.Quest.Title", "Produce Gunpowder"},
-            { "ExportGunPowder.Quest.Title", "Export Gunpowder"},
-            { "BuildLargeShack.Quest.Title", "Build a Largeshack"},
-            { "BuildA2ndDock.Quest.Title", "Build a Second Dock"},
-            { "Rename2ndDock.Quest.Title", "Rename the Second Dock"},
-            { "Import2000Wood.Quest.Title", "Import some Wood"},
-            { "Import2000Coal.Quest.Title", "Import some Coal"},
+            { "BuildFishingHut.Quest.Title", "Baue eine Fischerhütte"},
+            { "HireFisher.Quest.Title", "Stelle einen Fischer ein"},
+            { "BuildLumber.Quest.Title", "Baue eine Sägemühle"},
+            { "HireLumberJack.Quest.Title", "Stelle einen Holzfäller ein"},
+            { "BuildGunPowder.Quest.Title", "Baue eine Schießpulverfabrik"},
+            { "ImportSulfur.Quest.Title", "Imortiere Schwefel"},
+            { "GunPowderHire.Quest.Title", "Stelle einen Schießpulverfabrikarbeiter ein"},
+            { "ImportPotassium.Quest.Title", "Importiere Kalium"},
+            { "ImportCoal.Quest.Title", "Importiere Kohle"},
+            { "ProduceGunPowder.Quest.Title", "Stelle Schießpulver her"},
+            { "ExportGunPowder.Quest.Title", "Exortiere Schießpulver"},
+            { "BuildLargeShack.Quest.Title", "Baue eine große Hütte"},
+            { "BuildA2ndDock.Quest.Title", "Baue ein zweites Dock"},
+            { "Rename2ndDock.Quest.Title", "Benenne das zweite Dock um"},
+            { "Import2000Wood.Quest.Title", "Importiere etwas Holz"},
+            { "Import2000Coal.Quest.Title", "Importiere etwas Kohle"},
 
 
 
 
-            {"Tutorial.Arrow", "This is the tutorial. Once finished you will win $10,000"},
-            {"Quest.Arrow", "This is the quest button. You can access the quest window by clicking on it"},
-            {"New.Quest.Avail", "At least one quest is available"},
+            {"Tutorial.Arrow", "Dies ist das Tutorial. Sobald du es abgeschlossen hast, kannst du 10.000 $ einsacken"},
+            {"Quest.Arrow", "Dies ist der Quest-Button. Du kannst hier auf das Questfenster zugreifen, indem du darauf klickst"},
+            {"New.Quest.Avail", "Mindestens eine Quest ist verfügbar"},
             {"Quest_Button.HoverSmall", "Quest"},
 
 
 
             //Products
             //Notification.Init()
-            {"RandomFoundryOutput", "Melted Ore"},
+            {"RandomFoundryOutput", "Geschmolzenes Erz"},
 
             //OrderShow.ShowToSetCurrentProduct()
-            { "RandomFoundryOutput (Ore, Wood)", "Melted Ore (Ore, Wood)"},
+            { "RandomFoundryOutput (Ore, Wood)", "Geschmolzenes Erz (Erz, Holz)"},
 
 
 
             //Bulleting helps
-            {"Help.Bulletin/Prod/Produce", "Here is shown what is being produced in the village."},
-            {"Help.Bulletin/Prod/Expire", "Here is shown what has expired on the village."},
-            {"Help.Bulletin/Prod/Consume", "Here is shown what is being consumed by your people."},
+            {"Help.Bulletin/Prod/Produce", "Hier wird angezeigt, was im Dorf produziert wird."},
+            {"Help.Bulletin/Prod/Expire", "Hier wird angezeigt, was im Dorf an Waren verfallen ist."},
+            {"Help.Bulletin/Prod/Consume", "Hier wird angezeigt, was von deinen Leuten verbraucht wird."},
 
-            {"Help.Bulletin/Prod/Spec", "In this window, you can see the inputs needed for each product, where is built and the price. "
-            + "Scroll to the top to see the headers. Notice that one simple product may have more than a formula to produce."},
+            {"Help.Bulletin/Prod/Spec", "In diesem Fenster kannst du die für jedes Produkt erforderlichen Materialien sehen, wo es hergestellt wird und den Preis. "
+            + "Scrolle nach oben, um die Kopfzeilen anzuzeigen. Beachte dass ein einfaches Produkt mehr als nur ein Grundprodukt sein kann."},
 
-            {"Help.Bulletin/General/Buildings", "This is a resume of how many buildings are of each type."},
+            {"Help.Bulletin/General/Buildings", "Dies ist eine Zusammenfassung wie viele Gebäude von jedem Typ es gibt."},
 
-            {"Help.Bulletin/General/Workers", "In this window, you can assign workers to work in various buildings. "
-            + "For a building allow more people into work, must be less than capacity and must find at least an unemployed person."},
+            {"Help.Bulletin/General/Workers", "In diesem Fenster können Arbeiter für verschiedene Gebäude zugewiesen werden. "
+            + "Damit ein Gebäude mehr Menschen Arbeit bieten kann, muss es unter der Kapazität liegen und muss mindestens einen Arbeitslosen finden."},
 
             {"Help.Bulletin/Finance/Ledger", "Here is shown your ledger. Salary is the amount of money paid to a worker. The more people working the more salary will be paid out."},
-            {"Help.Bulletin/Finance/Exports", "A breakdown of the exports"},
-            {"Help.Bulletin/Finance/Imports", "A breakdown of the imports"},
+            {"Help.Bulletin/Finance/Exports", "Ein Zusammenbruch der Exporte"},
+            {"Help.Bulletin/Finance/Imports", "Ein Zusammenbruch der Importe"},
 
 
             { "Help.Bulletin/Finance/Prices", "...."},
 
 
-            {"LoadWontFit", "This load won't fit in the storage area"},
+            {"LoadWontFit", "Diese Ladung passt nicht in den Lagerbereich"},
 
-            {"Missing.Input", "Building can't produce (Inputs must be in this building inventory). Missing inputs: \n" },
+            {"Missing.Input", "Gebäude kann nicht produzieren (Materialien müssen sich im Gebäudeinventar befinden). Fehlende Materialien: \n" },
 
 
 
@@ -745,210 +745,249 @@ public class German
 
             //in game
             
-            { "Buildings.Ready", "\n Buildings ready to be built:"},
-            { "People.Living", "People living in this house:"},
-            { "Occupied:", "Filled:"},
-            { "|| Capacity:", "|| Capacity:"},
+            { "Buildings.Ready", "\n Gebäude fertig zum Bauen:"},
+            { "People.Living", "Menschen, die in diesem Haus leben:"},
+            { "Occupied:", "Gefüllt:"},
+            { "|| Capacity:", "|| Kapazität:"},
             { "Users:", "\nUsers:"},
-            { "Amt.Cant.Be.0", "Amount can't be 0"},
-            { "Prod.Not.Select", "Please select a product"},
+            { "Amt.Cant.Be.0", "Menge kann nicht 0 sein "},
+            { "Prod.Not.Select", "Bitte wähle ein Produkt"},
 
 
             //articles
-            { "The.Male", "The"},
-            { "The.Female", "The"},
+            { "The.Male", "Der"},
+            { "The.Female", "Die"},
 
             //
-            { "Build.Destroy.Soon", "This building will be destroyed soon. If inventory is not empty, it needs to be cleared by wheelbarrows"},
+            { "Build.Destroy.Soon", "Dieses Gebäude wird bald zerstört. Wenn das Inventar nicht leer ist, muss es mit Schubkarren abtransportiert werden"},
 
 
 
 
             //words
             //Field Farms
-            { "Bean", "Bean"},
-            { "Potato", "Potato"},
-            { "SugarCane", "Sugarcane"},
-            { "Corn", "Corn"},
-            { "Cotton", "Cotton"},
-            { "Banana", "Banana"},
-            { "Coconut", "Coconut"},
+            { "Bean", "Bohnen"},
+            { "Potato", "Kartoffeln"},
+            { "SugarCane", "Zuckerrohr"},
+            { "Corn", "Getreide"},
+            { "Cotton", "Baumwolle"},
+            { "Banana", "Bananen"},
+            { "Coconut", "Kokosnüsse"},
             //Animal Farm
-            { "Chicken", "Chicken"},
-            { "Egg", "Egg"},
-            { "Pork", "Pork"},
-            { "Beef", "Beef"},
-            { "Leather", "Leather"},
-            { "Fish", "Fish"},
+            { "Chicken", "Hühner"},
+            { "Egg", "Eier"},
+            { "Pork", "Schweine"},
+            { "Beef", "Rindfleisch"},
+            { "Leather", "Leder"},
+            { "Fish", "Fisch"},
             //mines
             { "Gold", "Gold"},
-            { "Stone", "Stone"},
-            { "Iron", "Iron"},
+            { "Stone", "Stein"},
+            { "Iron", "Eisen"},
 
-            // { "Clay", "Clay"},
-            { "Ceramic", "Ceramic"},
-            { "Wood", "Wood"},
+            // { "Clay", "Lehm"},
+            { "Ceramic", "Keramik"},
+            { "Wood", "Holz"},
 
             //Prod
-            { "Tool", "Tool"},
-            { "Tonel", "Tonel"},
-            { "Cigar", "Cigar"},
-            { "Tile", "Tile"},
-            { "Fabric", "Fabric"},
-            { "Paper", "Paper"},
-            { "Map", "Map"},
-            { "Book", "Book"},
-            { "Sugar", "Sugar"},
-            { "None", "None"},
+            { "Tool", "Werkzeuge"},
+            { "Tonel", "Ton"},
+            { "Cigar", "Zigarren"},
+            { "Tile", "Ziegel"},
+            { "Fabric", "Fabrik"},
+            { "Paper", "Papier"},
+            { "Map", "Karte"},
+            { "Book", "Buch"},
+            { "Sugar", "Zucker"},
+            { "None", "Nichts"},
             //
             { "Person", "Person"},
-            { "Food", "Food"},
+            { "Food", "Nahrung"},
             { "Dollar", "Dollar"},
-            { "Salt", "Salt"},
-            { "Coal", "Coal"},
-            { "Sulfur", "Sulfur"},
-            { "Potassium", "Potassium"},
-            { "Silver", "Silver"},
-            { "Henequen", "Henequen"},
+            { "Salt", "Salz"},
+            { "Coal", "Kohle"},
+            { "Sulfur", "Schwefel"},
+            { "Potassium", "Kalium"},
+            { "Silver", "Silber"},
+            { "Henequen", "Agave"},
             //
-            { "Sail", "Sail"},
-            { "String", "String"},
-            { "Nail", "Nail"},
-            { "CannonBall", "Cannonball"},
-            { "TobaccoLeaf", "Tobaccoleaf"},
-            { "CoffeeBean", "Coffeebean"},
-            { "Cacao", "Cacao"},
-            { "Weapon", "Weapon"},
-            { "WheelBarrow", "Wheelbarrow"},
-            { "WhaleOil", "Whaleoil"},
+            { "Sail", "Segel"},
+            { "String", "Seil"},
+            { "Nail", "Nägel"},
+            { "CannonBall", "Kanonenkugel"},
+            { "TobaccoLeaf", "Tabakblatt"},
+            { "CoffeeBean", "Kaffebohne"},
+            { "Cacao", "Kakao"},
+            { "Weapon", "Waffe"},
+            { "WheelBarrow", "Schubkarre"},
+            { "WhaleOil", "Walöl"},
             //
-            { "Diamond", "Diamond"},
-            { "Jewel", "Jewel"},
+            { "Diamond", "Diamanten"},
+            { "Jewel", "Juwelen"},
             { "Rum", "Rum"},
-            { "Wine", "Wine"},
-            { "Ore", "Ore"},
-            { "Crate", "Crate"},
-            { "Coin", "Coin"},
-            { "CannonPart", "Cannon Part"},
-            { "Steel", "Steel"},
+            { "Wine", "Wein"},
+            { "Ore", "Erz"},
+            { "Crate", "Kiste"},
+            { "Coin", "Münzen"},
+            { "CannonPart", "Kanonenteil"},
+            { "Steel", "Stahl"},
             //
-            { "CornFlower", "Cornflower"},
-            { "Bread", "Bread"},
-            { "Carrot", "Carrot"},
-            { "Tomato", "Tomato"},
-            { "Cucumber", "Cucumber"},
-            { "Cabbage", "Cabbage"},
-            { "Lettuce", "Lettuce"},
-            { "SweetPotato", "Sweetpotato"},
+            { "CornFlower", "Sonnenblume"},
+            { "Bread", "Brot"},
+            { "Carrot", "Karotte"},
+            { "Tomato", "Tomate"},
+            { "Cucumber", "Gurke"},
+            { "Cabbage", "Kohl"},
+            { "Lettuce", "Grüner Salat"},
+            { "SweetPotato", "Süßkartoffel"},
             { "Yucca", "Yucca"},
-            { "Pineapple", "Pineapple"},
+            { "Pineapple", "Ananas"},
             //
             { "Papaya", "Papaya"},
-            { "Wool", "Wool"},
-            { "Shoe", "Shoe"},
-            { "CigarBox", "Cigarbox"},
-            { "Water", "Water"},
-            { "Beer", "Beer"},
-            { "Honey", "Honey"},
-            { "Bucket", "Bucket"},
-            { "Cart", "Cart"},
-            { "RoofTile", "Rooftile"},
-            { "FloorTile", "Floortile"},
-            { "Furniture", "Furniture"},
-            { "Crockery", "Crockery"},
+            { "Wool", "Wolle"},
+            { "Shoe", "Schuh"},
+            { "CigarBox", "Zigarrenkiste"},
+            { "Water", "Wasser"},
+            { "Beer", "Bier"},
+            { "Honey", "Honig"},
+            { "Bucket", "Eimer"},
+            { "Cart", "Wagen"},
+            { "RoofTile", "Dachteil"},
+            { "FloorTile", "Bodenteil"},
+            { "Furniture", "Möbel"},
+            { "Crockery", "Geschirr"},
 
-            { "Utensil", "Utensil"},
+            { "Utensil", "Utensilien"},
             { "Stop", "Stop"},
 
 
             //more Main GUI
-            { "Workers distribution", "Workers distribution"},
-            { "Buildings", "Buildings"},
+            { "Workers distribution", "Arbeiterverteilung"},
+            { "Buildings", "Gebäude"},
 
-            { "Age", "Age"},
-            { "Gender", "Gender"},
-            { "Height", "Height"},
-            { "Weight", "Weight"},
-            { "Calories", "Calories"},
-            { "Nutrition", "Nutrition"},
-            { "Profession", "Profession"},
-            { "Spouse", "Spouse"},
-            { "Happinness", "Happinnes"},
-            { "Years Of School", "Years of School"},
-            { "Age majority reach", "Age majority reach"},
-            { "Home", "Home"},
-            { "Work", "Work"},
-            { "Food Source", "Food Source"},
+            { "Age", "Alter"},
+            { "Gender", "Geschlecht"},
+            { "Height", "Größe"},
+            { "Weight", "Gewicht"},
+            { "Calories", "Kalorien"},
+            { "Nutrition", "Ernährung"},
+            { "Profession", "Beruf"},
+            { "Spouse", "Ehepartner"},
+            { "Happinness", "Zufriedenheit"},
+            { "Years Of School", "Schuljahre"},
+            { "Age majority reach", "Alter mehrheitlich erreicht"},
+            { "Home", "Zuhause"},
+            { "Work", "Arbeit"},
+            { "Food Source", "Nahrungsquellen"},
             { "Religion", "Religion"},
-            { "Chill", "Chilll"},
-            { "Thirst", "Thirst"},
-            { "Account", "Account"},
+            { "Chill", "Ausgeruhtheit"},
+            { "Thirst", "Durst"},
+            { "Account", "Konto"},
 
-            { "Early Access Build", "Early Access Build"},
+            { "Early Access Build", "Early Access Version"},
 
             //Main Menu
-            { "Resume Game", "Resume Game"},
-            { "Continue Game", "Continue Game"},
+            { "Resume Game", "Spiel fortsetzen"},
+            { "Continue Game", "Spiel fortsetzen"},
             { "Tutorial(Beta)", "Tutorial(Beta)"},
-            { "New Game", "New Game"},
-            { "Load Game", "Load Game"},
-            { "Save Game", "Save Game"},
-            { "Achievements", "Achievements"},
-            { "Options", "Options"},
-            { "Exit", "Exit"},
+            { "New Game", "Neues Spiel"},
+            { "Load Game", "Spiel laden"},
+            { "Save Game", "Spiel speichern"},
+            { "Achievements", "Errungenschaften"},
+            { "Options", "Optionen"},
+            { "Exit", "Beenden"},
             //Screens
             //New Game
-            { "Town Name:", "Town Name:"},
-            { "Difficulty:", "Difficulty:"},
-            { "Easy", "Easy"},
-            { "Moderate", "Moderate"},
-            { "Hard", "Hard"},
-            { "Type of game:", "Type of game:"},
-            { "Freewill", "Freewill"},
-            { "Traditional", "Traditional"},
-            { "New.Game.Pirates", "Pirates (if checked the town could suffer a pirate attack"},
-            { "New.Game.Expires", "Food Expiration (if checked food expires with time)"},
+            { "Town Name:", "Stadtname:"},
+            { "Difficulty:", "Schwierigkeitsgrad:"},
+            { "Easy", "Leicht"},
+            { "Moderate", "Moderat"},
+            { "Hard", "Schwer"},
+            { "Type of game:", "Art des Spiels:"},
+            { "Freewill", "Freier Wille"},
+            { "Traditional", "Traditionell"},
+            { "New.Game.Pirates", "Piraten (wenn geprüft, könnte die Stadt einen Piratenangriff erleiden)"},
+            { "New.Game.Expires", "Lebensmittelverfall (wenn geprüfte Lebensmittel mit der Zeit ablaufen)"},
             { "OK", "OK"},
-            { "Cancel", "Cancel"},
-            { "Delete", "Delete"},
-            { "Enter name...", "Enter name..."},
+            { "Cancel", "Abbruch"},
+            { "Delete", "Löschen"},
+            { "Enter name...", "Namen eingeben..."},
             //Options
-            { "General", "General"},
-            { "Unit System:", "Unit System:"},
-            { "Metric", "Metric"},
+            { "General", "Allgemein"},
+            { "Unit System:", "Einheitensystem:"},
+            { "Metric", "Metrisch"},
             { "Imperial", "Imperial"},
-            { "AutoSave Frec:", "Autosave:"},
+            { "AutoSave Frec:", "Automatisch speichern:"},
             { "20 min", "20 min"},
             { "15 min", "15 min"},
             { "10 min", "10 min"},
             { "5 min", "5 min"},
-            { "Language:", "Language:"},
-            { "English", "English"},
-            { "Camera Sensitivity:", "Camera Sensitivity:"},
-            { "Themes", "Themes"},
+            { "Language:", "Sprache:"},
+            { "English", "Englisch"},
+            { "Camera Sensitivity:", "Kamerasensivität:"},
+            { "Themes", "Themen"},
             { "Halloween:", "Halloween:"},
-            { "Christmas:", "Christmas:"},
-            { "Options.Change.Theme", "When changed please reload the game"},
+            { "Christmas:", "Weihnachten:"},
+            { "Options.Change.Theme", "Wenn geändert, lade bitte das Spiel einmal neu"},
 
-            { "Screen", "Screen"},
-            { "Quality:", "Quality:"},
-            { "Beautiful", "Beautiful"},
-            { "Fantastic", "Fantastic"},
-            { "Simple", "Simple"},
-            { "Good", "Good"},
-            { "Resolution:", "Resolution:"},
-            { "FullScreen:", "Fullscreen:"},
+            { "Screen", "Bildschirm"},
+            { "Quality:", "Qualität:"},
+            { "Beautiful", "Schön"},
+            { "Fantastic", "Fantastisch"},
+            { "Simple", "Einfach"},
+            { "Good", "Gut"},
+            { "Resolution:", "Auflösung:"},
+            { "FullScreen:", "Vollbild:"},
 
             { "Audio", "Audio"},
-            { "Music:", "Music:"},
-            { "Sound:", "Sound:"},
-            { "Newborn", "Newborn"},
-            { "Build Completed", "Build Completed"},
-            { "People's Voice", "People's Voice"},
+            { "Music:", "Musik:"},
+            { "Sound:", "Klang:"},
+            { "Newborn", "Neugeborenes"},
+            { "Build Completed", "Bau abgeschlossen"},
+            { "People's Voice", "Volksstimme"},
             
             //in game gui
             { "Prod", "Prod"},
             { "Finance", "Finance"},
+
+
+            
+            //After Oct 20th 2018
+            { "Resources", "Resources"},
+            { "Dollars", "Dollars"},
+            { "Coming.Soon", "This building is coming soon to the game"},
+            { "Max.Population", "Can't build more houses. Max population reached"},
+
+            { "To.Unlock", "To unlock: "},
+            { "People", "People"},
+            { "Of.Food", " of food. "},
+            { "Port.Reputation.Least", "Port reputation at least at "},
+            { "Pirate.Threat.Less", "Pirate threat less than "},
+            { "Skip", "Skip"},
+
+            //After Dec 8, 2018
+            { "ReloadMod.HoverSmall", "Reload Mod Files"},
+            { "isAboveHeight.MaritimeBound", "Building's land portion is below allowed height"},
+            { "arePointsEven.MaritimeBound", "Building's land portion is not in an even terrain"},
+            { "isOnTheFloor.MaritimeBound", "Building's land portion is not at the common height"},
+            { "isBelowHeight.MaritimeBound", "Building's maritime portion must be in the water"},
+
+            { "InLand.Helper", "On Land"},
+            { "InWater.Helper", "On Water"},
+
+            //After Dec 28, 2018
+            { "Down.HoverSmall", "Decrease Priority"},
+            { "Up.HoverSmall", "Increase Priority"},
+            { "Trash.HoverSmall", "Delete Order"},
+            { "Counting...", "Counting..."},
+            { "Ten Orders Limit", "Ten orders is the limit"},
+
+            //After May 1, 2019
+            { "Our inventories:", "Our inventories:"},
+            { "Select Product:", "Select Product:"},
+            { "Current_Rank.HoverSmall", "Number in Queue"},
+
+            { "Deutsch(Beta)", "Deutsch(Beta)"},
 
 
 

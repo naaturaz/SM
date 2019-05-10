@@ -298,8 +298,6 @@ public class PersonalObject
         }
     }
 
-    private int oldAge;
-
     /// <summary>
     /// bz youger guys carry boxes too
     /// </summary>
@@ -311,22 +309,26 @@ public class PersonalObject
             _current.ReloadOriginalObjectDim();
             return;
         }
-        if (oldAge != _person.Age)
-        {
-            oldAge = _person.Age;
-            var dif = 20 - _person.Age;
-            _current.ReloadOriginalObjectDim();
 
-            ScaleGameObject(dif * -0.1f);//-0.021f
-        }
+        var dif = 20 - _person.Age;
+        _current.ReloadOriginalObjectDim();
+        ScaleGameObject(dif * -0.07f);
+    }
+
+    float ReturnScalerMultiplierBasedOnAni()
+    {
+        //if (_currentRoot == Root.crate || _currentRoot == Root.tonel)
+        //    return -0.10001f;
+
+        return -0.1f;
     }
 
     void ScaleGameObject(float toAdd)
     {
         var localScale = _current.gameObject.transform.localScale;
 
-        var addScale = localScale * toAdd;
-        var final = localScale + addScale;
+        //var addScale = localScale * toAdd;
+        var final = localScale + new Vector3(toAdd, toAdd, toAdd);
 
         _current.gameObject.transform.localScale = final;
     }

@@ -475,7 +475,7 @@ public class French
 
             { "Weight.Help", "Poids: Tous les poids dans le jeu sont en kg ou lbs selon le système d'unité qui est sélectionné." +
                                 " Vous pouvez le changer dans les options dans le menu principal'"},
-            { "What are Ft3 and M3?.Help", "La capacité de stockage est déterminée par le volume du bâtiment. Ft3 c'est un cubic foot. M3 c'est un mètre cube" },//. Keep in mind that less dense products will fill up your storage quickly. To see products density Bulletin/Prod/Spec"},
+            { "What is Ft3 and M3?.Help", "La capacité de stockage est déterminée par le volume du bâtiment. Ft3 c'est un cubic foot. M3 c'est un mètre cube" },//. Keep in mind that less dense products will fill up your storage quickly. To see products density Bulletin/Prod/Spec"},
 
             { "More.Help", "Si vous avez besoin d'aides supplémentaires, il serait peut être utile de terminer le didacticiel, ou tout simplement poster une question sur les forums de SugarMill's"},
 
@@ -889,7 +889,7 @@ public class French
             //Main Menu
             { "Resume Game", "Reprendre la partie"},
             { "Continue Game", "Continuer la partie"},
-            { "Tutorial(Beta)", "Didacticiel"},
+            { "Tutorial", "Didacticiel"},
             { "New Game", "Nouvelle partie"},
             { "Load Game", "Charger une partie"},
             { "Save Game", "Sauvegarder la partie"},

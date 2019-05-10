@@ -5,7 +5,7 @@ public class UPerson
 {
     static public bool IsMajor(int currAge)
     {
-        if (currAge >= JobManager.majorityAge)
+        if (currAge >= ModController.AgeMajorityReached())
         {
             return true;
         }

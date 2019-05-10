@@ -15,7 +15,6 @@ public enum Job
     Homer,
     Farmer,
     SaltMiner,
-    Sugarmiller
 }
 
 public enum TaskE //to be use for the person class

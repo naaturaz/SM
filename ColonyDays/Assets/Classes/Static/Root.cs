@@ -238,7 +238,7 @@ public class Root : MonoBehaviour
     ///GUI 3d Helpers
     public static string arrow = "Prefab/GUI/Arrow";
     public static string projector = "Prefab/GUI/Projector";
-    public static string projectorPerson = "Prefab/GUI/ProjectorPerson";
+    //public static string projectorPerson = "Prefab/GUI/ProjectorPerson";
 
     public static string lightCil = "Prefab/GUI/Civ5/LightCil";
     public static string lightCilWithProjScript = "Prefab/GUI/Civ5/LightCilWithProjScript";

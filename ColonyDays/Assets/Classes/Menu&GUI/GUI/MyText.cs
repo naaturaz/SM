@@ -58,7 +58,7 @@ public class MyText : MonoBehaviour
         }
         else if (name == "Person")
         {
-            adult = PersonPot.Control.All.Count(a => a.Age >= JobManager.majorityAge);
+            adult = PersonPot.Control.All.Count(a => a.Age >= ModController.AgeMajorityReached());
             var all = PersonPot.Control.All.Count;
 
             thisText.text = all + "/" + adult + "/" + (all - adult);
@@ -127,7 +127,7 @@ public class MyText : MonoBehaviour
 
     public static int Lazy()
     {
-        return PersonPot.Control.All.Count(a => a.Age >= JobManager.majorityAge)
+        return PersonPot.Control.All.Count(a => a.Age >= ModController.AgeMajorityReached())
             - BuildingPot.Control.Registro.MaxPositions();
     }
 

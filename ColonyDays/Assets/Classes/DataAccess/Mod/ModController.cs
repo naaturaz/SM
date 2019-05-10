@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 //Attached to Mod GameObject
@@ -21,13 +17,33 @@ public class ModController: MonoBehaviour
         PeopleModData = XMLSerie.ReadXMLPeopleModData();
         if (PeopleModData != null)
         {
-            Text.text = "xml ok";
+            Text.text = "mod ok";
         }
         else
         {
-            Text.text = "xml error";
+            Text.text = "mod error";
         }
         _shown = Time.time;
+    }
+
+    static void ReloadModStatic()
+    {
+        if (PeopleModData == null)
+        {
+            var modController = FindObjectOfType<ModController>();
+            PeopleModData = XMLSerie.ReadXMLPeopleModData();
+
+            if (PeopleModData != null)
+            {
+                if(modController != null)
+                    modController.Text.text = "mod loaded";
+            }
+            else
+            {
+                if (modController != null)
+                    modController.Text.text = "no mod";
+            }
+        }
     }
 
     private void Update()
@@ -54,6 +70,7 @@ public class ModController: MonoBehaviour
 
     public static int AgeKidStartSchool()
     {
+        ReloadModStatic();
         int age = 0;
         if (PeopleModData != null)
         {
@@ -68,6 +85,7 @@ public class ModController: MonoBehaviour
 
     public static int AgeKidStartTradeSchool()
     {
+        ReloadModStatic();
         int age = 0;
         if (PeopleModData != null)
         {
@@ -94,5 +112,19 @@ public class ModController: MonoBehaviour
             return age2;
 
         return age;
+    }
+    public static int AgeMajorityReached()
+    {
+        ReloadModStatic();
+        int age = 0;
+        if (PeopleModData != null)
+        {
+            int.TryParse(PeopleModData.AgeMajorityReached + "", out age);
+        }
+
+        if (age > 0)
+            return age;
+
+        return 1;
     }
 }

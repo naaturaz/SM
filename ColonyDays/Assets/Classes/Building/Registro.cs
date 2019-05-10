@@ -154,7 +154,7 @@ public class Registro : MonoBehaviour
         AddToDestroyBuilding(Brain.GetBuildingFromKey(myId));
 
         //Debug.Log("Registro RemoveItem");
-        PersonPot.Control.BuildersManager1.RemoveConstruction(myId);//so its removed from the BuilderManager
+        //PersonPot.Control.BuildersManager1.RemoveConstruction(myId);//so its removed from the BuilderManager
 
         BuildingPot.Control.DockManager1.RemoveFromDockStructure(myId, build.HType);
 

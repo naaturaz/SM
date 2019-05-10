@@ -481,7 +481,7 @@ public class Languages
 
         _en.Add("Weight.Help", "Weight: All the weights in the game are in Kg or Lbs depending on which Unit system is selected." +
                                 " You can change it in 'Options' in the 'Main Menu'");
-        _en.Add("What are Ft3 and M3?.Help", "The storage capacity is determined by the volume of the building. Ft3 is a cubic foot. M3 is a cubic meter");//. Keep in mind that less dense products will fill up your storage quickly. To see products density Bulletin/Prod/Spec" );
+        _en.Add("What is Ft3 and M3?.Help", "The storage capacity is determined by the volume of the building. Ft3 is a cubic foot. M3 is a cubic meter");//. Keep in mind that less dense products will fill up your storage quickly. To see products density Bulletin/Prod/Spec" );
 
         _en.Add("More.Help", "If you need more help might be a good idea completing the tutorial, or simply posting a question on SugarMill's Forums");
 
@@ -991,6 +991,16 @@ public class Languages
         _en.Add("Counting...", "Counting...");
         _en.Add("Ten Orders Limit", "Ten orders is the limit");
 
+        //After May 1, 2019
+        _en.Add("Our inventories:", "Our inventories:");
+        _en.Add("Select Product:", "Select Product:");
+        _en.Add("Current_Rank.HoverSmall", "Number in Queue");
+
+        _en.Add("Construction.Progress", "Construction progress at: ");
+        _en.Add("Warning.This.Building", "Warning: This building cannot be built now. Missing resource(s):\n");
+        _en.Add("Product.Selected", "Product selected: ");
+        _en.Add("Harvest.Date", "\nHarvest date: ");
+        _en.Add("Progress", "\nProgress: ");
 
 
 
@@ -998,10 +1008,16 @@ public class Languages
 
 
 
-
-
-
-
+        //ProductStat.cs has a lot of text to put here 
+        //SpecTile.cs has
+        //ShowAPersonBuildingDetails has
+        //Dispatch.cs
+        //ButtonTile.cs
+        //Plant.cs
+        //GameTime.cs
+        //Profession.cs
+        //GUIElement.cs
+        //OrderShow.cs
 
 
 
@@ -1894,19 +1910,7 @@ public class Languages
 
 
 
-        //ProductStat.cs has a lot of text to put here 
 
-        //SpecTile.cs has
-
-        //ShowAPersonBuildingDetails has
-        //BuildingWindow.cs
-        //Dispatch.cs
-        //ButtonTile.cs
-        //Plant.cs
-        //GameTime.cs
-        //Profession.cs
-        //GUIElement.cs
-        //OrderShow.cs
 
 
 
@@ -2119,6 +2123,15 @@ public class Languages
             }
             return "fr:" + key;
         }
+        else if (_currentLang == "Deutsch(Beta)")
+        {
+            if (German.ContainsKey(key))
+            {
+                return German.Dictionary()[key];
+            }
+            return "de:" + key;
+        }
+
         return "not languages selected ";
     }
 
@@ -2128,6 +2141,7 @@ public class Languages
         {
             ReloadDict();
             French.ReloadDict();
+            German.ReloadDict();
         }
     }
 
@@ -2137,6 +2151,7 @@ public class Languages
         _sp.Clear();
         _portuguese.Clear();
         French.Clear();
+        German.Clear();
     }
 
     public static void SetCurrentLang(string lang)
@@ -2170,6 +2185,7 @@ public class Languages
         }
         if (_currentLang == "Português(Beta)") return _portuguese;
         if (_currentLang == "Français(Beta)") return French.Dictionary();
+        if (_currentLang == "Deutsch(Beta)") return German.Dictionary();
 
         return _en.Dictionary;
 

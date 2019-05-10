@@ -13,22 +13,10 @@ public class Building : Hoverable, Iinfo
 
     ConstructionProgress _constructionProgress;
 
-    bool _wasGreenlit;
-    /// <summary>
-    /// if I was greenlit on the BuildersManager
-    /// </summary>
-    public bool WasGreenlit
-    {
-        get { return _wasGreenlit; }
-        set { _wasGreenlit = value; }
-    }
-
     /// <summary>
     /// The root of a building 
     /// </summary>
     public string RootBuilding { get; set; }
-
-
 
     //Rotate Building /// 0 is up, 1 is right, 2 is down, 3 is left
     private int _rotationFacerIndex;
@@ -762,7 +750,6 @@ public class Building : Hoverable, Iinfo
         }
     }
 
-
     /// <summary>
     /// Return true if has all inputs 
     /// </summary>
@@ -778,7 +765,6 @@ public class Building : Hoverable, Iinfo
         return Languages.ReturnString("Missing.Input")+
             BuildingPot.Control.ProductionProp.ReturnInputsINeed(this);
     }
-
 
     /// <summary>
     /// Will return the current missing inputs. May be more than one but will give
@@ -806,14 +792,13 @@ public class Building : Hoverable, Iinfo
         return P.None;
     }
 
-
     /// <summary>
     /// When rotates needs to redo the whole thing 
     /// </summary>
     void DestroyPreviewBaseBuilding()
     {
-        buildingPrev.Destroy();
-        buildingPrev = null;
+        //buildingPrev.Destroy();
+        //buildingPrev = null;
         _polyOnGrid.Clear();
     }
 
@@ -1082,11 +1067,9 @@ public class Building : Hoverable, Iinfo
     protected new void Update()
     {
         CheckIfStaleInventoryOnDock();
-
         //DebugShowAnchors();
         SetLineUpVertexs();
-        ShowPreviewBoxForBuilding();
-        //NeutralizeDummy();
+        //ShowPreviewBoxForBuilding();
 
         InitFarm();
         InitDecoration();
@@ -1408,7 +1391,7 @@ public class Building : Hoverable, Iinfo
         { H.StandLamp, new Vector3(0,0,0)},//wont get carved
         { H.HeavyLoad, new Vector3(-8,0,-8)},
         { H.LightHouse, new Vector3(-20,0,-40)},
-        { H.Masonry, new Vector3(-17,0,-25)},
+        //{ H.Masonry, new Vector3(-17,0,-25)},
 
         {H.WoodHouseA, new Vector3(-20,0,-20)},
         {H.WoodHouseB, new Vector3(-20,0,-25)},
@@ -1462,7 +1445,7 @@ public class Building : Hoverable, Iinfo
         { H.Library, new Vector3(-17,0,-12)},
 
 
-        { H.Church, new Vector3(-8,0,-20)},
+        //{ H.Church, new Vector3(-8,0,-20)},
         { H.Tavern, new Vector3(-25,0,-20)},
 
 
@@ -1471,7 +1454,9 @@ public class Building : Hoverable, Iinfo
     //If here will assign size directly not percentage scaling
     Dictionary<H, Vector3> _navmeshSize = new Dictionary<H, Vector3>()
     {
-        { H.SugarMill, new Vector3(3.12f, 1, 4.56f)},
+        { H.SugarMill, new Vector3(1.45f, 1, 3.82f)},
+        { H.Church, new Vector3(3.16f, 4.53f, 5.43f)},
+        { H.Masonry, new Vector3(0.24f, 1, 0.1875f)},
 
     };
 
@@ -1638,7 +1623,7 @@ public class Building : Hoverable, Iinfo
 
             //only usefull for loaded buildings that were Destroy before finish construcion
             //and were loaded 
-            PersonPot.Control.BuildersManager1.RemoveConstruction(MyId);//so its removed from the BuilderManager
+            //PersonPot.Control.BuildersManager1.RemoveConstruction(MyId);//so its removed from the BuilderManager
 
             //in case was destroyed directly needs to be removed so the next time user 
             //wants to demolish works 

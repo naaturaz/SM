@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System;
+using System.Linq;
 
 /*This class manage wich buildings need to be built next and which has already
  * the resources assigned and ready to built
@@ -70,8 +71,6 @@ public class BuildersManager
         return "None";
     }
 
-
-
     public void AddNewConstruction(string key, H hTypeP, int priority, Vector3 pos)
     {
         if (hTypeP == H.Road)
@@ -127,16 +126,16 @@ public class BuildersManager
     {
         if (ContainKey(_constructions, key))
         {
-            ChangePriorityList(key, priority, _constructions);
+            _constructions = ChangePriorityList(key, priority, _constructions);
         }
         else if (ContainKey(_greenLight, key))
         {
-            ChangePriorityList(key, priority, _greenLight);
+            _greenLight = ChangePriorityList(key, priority, _greenLight);
         }
     }
 
     /// <summary>
-    /// Trrue if'Key' is contained on the list 
+    /// Reordered list 
     /// </summary>
     /// <param name="key"></param>
     /// <param name="priority"></param>
@@ -148,12 +147,71 @@ public class BuildersManager
         {
             if (list[i].Key == key)
             {
-                list[i].Priority = priority;
-                ReorderItemOnList(i, list);
+                //send one step close ahead in the queue
+                if(priority == 1)
+                {
+                    if(i > 0)
+                    {
+                        var current = list[i];
+                        var prev = list[i - 1];
+
+                        list[i - 1] = current;
+                        list[i] = prev;
+
+                        ReturnMaterials(prev);
+                        UpdateClosestMasonry(prev);
+                    }
+                }
+                //send one step behind in the queue
+                else
+                {
+                    if(i + 1 < list.Count)
+                    {
+                        var current = list[i];
+                        var next = list[i + 1];
+
+                        list[i + 1] = current;
+                        list[i] = next;
+
+                        ReturnMaterials(current);
+                        UpdateClosestMasonry(current);
+                    }
+                }
                 break;
             }
         }
         return list;
+    }
+
+    private void UpdateClosestMasonry(Construction construction)
+    {
+        var closest = BuildingController.FindTheClosestOfThisType(H.Masonry, construction.Position,
+            Brain.Maxdistance, true);
+
+        if (closest == null)
+        {
+            Debug.Log("Not Masonry close enought to " + construction.Key + " found");
+            return;
+        }
+
+        if (construction.WasGreenlit)
+        {
+            var build = Brain.GetBuildingFromKey(construction.Key);
+            construction.WasGreenlit = false;
+
+            if (_passedQueue != null)
+                _passedQueue.Add(construction.Key);
+        }
+
+        closest.BuildersManager1.GreenLight.Remove(construction);
+    }
+
+    private void ReturnMaterials(Construction current)
+    {
+        if (!current.WasGreenlit) return;
+
+        var st = Brain.GetStructureFromKey(current.Key);
+        st.ReturnMaterialsCostNoQuestion();
     }
 
     bool ContainKey(List<Construction> list, string key)
@@ -219,7 +277,7 @@ public class BuildersManager
     /// 
     /// </summary>
     /// <returns></returns>
-    public static bool CanGreenLight(Construction cons, List<string> passedQueue)
+    static bool CanGreenLight(Construction cons, List<string> passedQueue)
     {
         var stat = Book.GiveMeStat(cons.HType);
 
@@ -252,7 +310,6 @@ public class BuildersManager
             if (passedQueue != null)
             {
                 var build = Brain.GetBuildingFromKey(cons.Key);
-                build.WasGreenlit = true;
                 passedQueue.Remove(cons.Key);
             }
             return true;
@@ -306,14 +363,18 @@ public class BuildersManager
     /// </summary>
     void CheckIfAnyToGreenLight()
     {
-        if (_constructions.Count == 0)
-        { return; }
+        if (_constructions.Count == 0) return;
+        if (_constructions[0].WasGreenlit) return;
 
         var isGreen = CanGreenLight(_constructions[0], _passedQueue);
 
-        if (isGreen)
+        var st = Brain.GetStructureFromKey(_constructions[0].Key);
+        var standingStructure = st != null && st.Instruction != H.WillBeDestroy;
+
+        if (isGreen && standingStructure)
         {
-            RemoveFromGameController(_constructions[0].HType);
+            Debug.Log("Will Remove:" + _constructions[0].Key);
+            RemoveFromGameControllerInventory(_constructions[0].HType);
             HandleList(_constructions[0]);
         }
     }
@@ -324,7 +385,7 @@ public class BuildersManager
     /// <param name="construction"></param>
     void HandleList(Construction construction)
     {
-        _constructions.Remove(construction);
+        construction.WasGreenlit = true;
         Structure st = Brain.GetStructureFromKey(construction.Key);
 
         //is the main BuildersManager
@@ -357,7 +418,7 @@ public class BuildersManager
         }
     }
 
-    void RemoveFromGameController(H hTypeP)
+    void RemoveFromGameControllerInventory(H hTypeP)
     {
         var stat = Book.GiveMeStat(hTypeP);
 
@@ -374,7 +435,19 @@ public class BuildersManager
         GameController.ResumenInventory1.Remove(P.FloorTile, stat.FloorTile);
         GameController.ResumenInventory1.Remove(P.RoofTile, stat.RoofTile);
         GameController.ResumenInventory1.Remove(P.Machinery, stat.Machinery);
+    }
 
+    internal bool WasIGreenLight(string myId)
+    {
+        for (int i = 0; i < _constructions.Count; i++)
+        {
+            if (_constructions[i].Key == myId)
+            {
+                return _constructions[i].WasGreenlit;
+            }
+        }
+        //if is not found means was greenlit a while ago 
+        return false;
     }
 
     public bool IsAtLeastOneBuildUp()
@@ -464,18 +537,26 @@ public class BuildersManager
         return res;
     }
 
+    internal string PriorityInfo(String myId)
+    {
+        for (int i = 0; i < _constructions.Count; i++)
+        {
+            if (_constructions[i].Key == myId)
+                return String.Format("\n\nConstruction Queue Rank: {0}, the shorter the number the better", (i + 1));
+        }
+        return "";
+    }
+    
+    internal string CurrentPriorityRank(string myId)
+    {
+        for (int i = 0; i < _constructions.Count; i++)
+        {
+            if (_constructions[i].Key == myId)
+                return "" + (i + 1);
+        }
+        return "";
+    }
 
-    #region User Changing Order of Buildings to be Greenlight and Greenlit
-
-
-
-
-
-
-
-
-
-    #endregion
 }
 
 public class Construction
@@ -486,4 +567,6 @@ public class Construction
     public Vector3 Position;
 
     public Construction() { }
+
+    public bool WasGreenlit { get; internal set; }
 }

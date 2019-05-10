@@ -13,15 +13,14 @@ public class ScrollViewShowInventory : GUIElement
     private GameObject _scroll_Ini_PosGO;
     Inventory _inv;
 
-    public string Which;//which inv needs to show and wht type of tile 
+    public string Which;//which inv needs to show and wht type of tile , need to be set in inspector
 
     ShowAInventory _showAInv;
 
     int _oldItemsAmt;
 
-
     static bool _isMouseOnMe;
-    private float _tileHeight = 3.48f;//3.5
+    private float _tileHeight = 3.5f;//3.48
 
     // Use this for initialization
     void Start()
@@ -45,11 +44,9 @@ public class ScrollViewShowInventory : GUIElement
             if (_showAInv.RedoItemsIfOldInvIsDiff())
             {
                 AdjustContentHeight(_inv.InventItems.Count * _tileHeight);
-
             }
         }
     }
-
 
     /// <summary>
     /// So far used for ourInventories in the add import export order 
@@ -80,13 +77,10 @@ public class ScrollViewShowInventory : GUIElement
             RedoInvIfIfWhichIsEmpty();
         }
 
-
         _showAInv = new ShowAInventory(_inv, _content, _scroll_Ini_PosGO.transform.localPosition, Which);
         ResetScroolPos();
         AdjustContentHeight(_inv.InventItems.Count * _tileHeight);
     }
-
-
 
     /// <summary>
     /// If true the mouse is on me right now

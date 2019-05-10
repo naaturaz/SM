@@ -86,7 +86,7 @@ public class UnlockBuilds
             new BRequires(H.PaperMill, 50, 500, 900),
             new BRequires(H.Printer, 50, 500, 900),
             new BRequires(H.CoinStamp, H.OnlyForDev),
-            new BRequires(H.SugarMill, H.OnlyForDev),
+            new BRequires(H.SugarMill, 50, 500, 900),
             new BRequires(H.Foundry, 50, 500, 900),
             new BRequires(H.SugarShop, true),
 

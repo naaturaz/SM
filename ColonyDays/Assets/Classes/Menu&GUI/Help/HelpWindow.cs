@@ -43,7 +43,7 @@ public class HelpWindow : GUIElement
         "Population.Help",
         "Inputs.Help",
         "WheelBarrows.Help",
-        "What are Ft3 and M3?.Help",
+        "What is Ft3 and M3?.Help",
         "Production Tab.Help",
         "Our Inventories.Help",
         "Inventories Explanation.Help",

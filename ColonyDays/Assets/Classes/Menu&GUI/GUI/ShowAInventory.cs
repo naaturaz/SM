@@ -59,32 +59,6 @@ public class ShowAInventory
         }
     }
 
-
-
-         //if (allProdSpec[i].Product.ToString().Contains("Random") || allProdSpec[i].Product.ToString().Contains("Coin")
-         //       //foods wont be shown in main inventory
-         //       || Inventory.CategorizeProd(allProdSpec[i].Product)==PCat.Food)
-
-    //List<P> allowOnMain = new List<P>() 
-    //{ P.Wood, P.Stone, P.Brick, P.Iron, P.Nail, P.Furniture, P.Mortar, P.RoofTile, P.FloorTile
-    //};
-    /// <summary>
-    /// Create a inventory with all the Products annd pull the infor from all Storages in game 
-    /// </summary>
-    //private void CreateMainInventory()
-    //{
-    //    _inv = new Inventory();
-    //    var allProdSpec = Program.gameScene.ExportImport1.ProdSpecs;
-
-    //    for (int i = 0; i < allProdSpec.Count; i++)
-    //    {
-    //        if (allowOnMain.Contains(allProdSpec[i].Product))
-    //        {
-    //            _inv.AddToSpecialInv(allProdSpec[i].Product);
-    //        }
-    //    }
-    //}
-
     void ManualUpdateOfAllInvItems()
     {
         for (int i = 0; i < _inv.InventItems.Count; i++)
@@ -189,20 +163,29 @@ public class ShowAInventory
         return relative * ySpaceOfTile;
     }
 
-
-
-    private int countMU;
-    private bool loaded;
     public void ManualUpdate()
     {
-        //countMU++;
-        if (!loaded || (_allItems.Count==0 && _inv.InventItems.Count>0))
+        if (!IsInvItemsSameThatShown())
         {
-            loaded = true;
-            //DestroyAll();
-            //ShowAllItems();
-            countMU = 0;
+            ManualUpdateOfAllInvItems();
+            UpdateToThisInv(Inv);
         }
+    }
+
+    private bool IsInvItemsSameThatShown()
+    {
+        if (_allItems.Count != _inv.InventItems.Count)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < _allItems.Count; i++)
+        {
+            if (_allItems[i].InvItem1.Key != _inv.InventItems[i].Key)
+                return false;
+        }
+
+        return true;
     }
 
     public void DestroyAll()
@@ -218,19 +201,6 @@ public class ShowAInventory
         }
     }
 
-    public void Update()
-    {
-
-    }
-
-    public void UpdateEvery2Sec()
-    {
-        ManualUpdateOfAllInvItems();
-
-        UpdateToThisInv(Inv);
-    }
-
-
     public bool RedoItemsIfOldInvIsDiff()
     {
         if (!UMath.nearlyEqual(_oldVolumeOccupied, Inv.CurrentVolumeOcuppied(), 0.01f) || 
@@ -242,7 +212,6 @@ public class ShowAInventory
         }
         return false;
     }
-
 
     internal void Destroy(ShowInvetoryItem showInvetoryItem)
     {

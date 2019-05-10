@@ -145,9 +145,17 @@ public class ResumenInventory
         return amt;
     }
 
-
-
-
+    /// <summary>
+    /// So it gets added back to the closest Storage 
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="amt"></param>
+    /// <param name="position"></param>
+    public void Add(P item, float amt, Vector3 position)
+    {
+        var closest = BuildingController.FindTheClosestOfContainTypeFullyBuilt("Storage", position, true);
+        closest.Inventory.Add(item, amt);
+    }
 
     /// <summary>
     /// Will remove the item and the amount from the inventories.
@@ -318,13 +326,11 @@ public class Coverage
         return fin;
     }
 
-
     internal static string PeopleICanServe(float amtOfPpl, H hType)
     {
         var stat = GiveMeStat(hType).Factor;
         return WholeNumbFormat(amtOfPpl, stat);
     }
-
 
     /// <summary>
     /// If is 
@@ -385,7 +391,6 @@ public class Coverage
         _build.Add(new BuildStat(H.Church, 50, 3, 100));
         _build.Add(new BuildStat(H.Tavern, 10, 20, 80));
         _build.Add(new BuildStat(H.Library, 30, 3, 100));
-
     }
 
     static BuildStat GiveMeStat(H hTypeP)

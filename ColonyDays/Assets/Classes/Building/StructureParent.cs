@@ -319,8 +319,7 @@ public class StructureParent : Building {
 
     protected void ToggleWheelRotate()
     {
-        if (HType == H.Mill// || HType == H.Mine
-            )
+        if (HType == H.Mill || HType == H.SugarMill)
         {
             rotateWheel = !rotateWheel;
         }
@@ -328,16 +327,18 @@ public class StructureParent : Building {
 
     protected void RotateWheel()
     {
-        float speed = 0.5f;
+        float speed = 0.1f * Program.gameScene.GameSpeed;
         if (wheel == null){wheel = GetChildLastWordIs(H.Wheel);}
         if (wheel != null)
         {
+            if(HType == H.SugarMill)
+            {
+                wheel.transform.Rotate(new Vector3(speed, 0, 0));
+            }
+            else
             wheel.transform.Rotate(new Vector3(0, 0, speed));
         }
     }
-
-
-
 
     int ReturnCurrentStageInt(H stage)
     {
