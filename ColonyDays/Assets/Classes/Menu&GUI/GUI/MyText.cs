@@ -39,18 +39,18 @@ public class MyText : MonoBehaviour
             return;
         }
 
-        if (name == "Version")
-        {
-            thisText.text = GameScene.VersionLoaded();
-            mappedOnce = true;
-        }
-
         if (!Program.InputMain.IsGameFullyLoaded() || !Program.GameFullyLoaded())
         {
             return;
         }
 
         mappedOnce = true;
+
+        if (name == "Version")
+        {
+            thisText.text = GameScene.VersionLoaded();
+            //mappedOnce = true;
+        }
 
         if (name == "CurrSpeed")
         {
@@ -108,7 +108,6 @@ public class MyText : MonoBehaviour
             thisText.text = Program.MyScreen1.TownName;
         }
     }
-
 
     public static string DollarFormat(float amt)
     {

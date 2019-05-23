@@ -2,19 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 using Assets.Classes.SoundsAndMusic;
 using Random = UnityEngine.Random;
 
-
 public class AudioCollector
 {
-
     //determined by user on Interface. Saved and loaded too
     private static float _soundLevel = 1;
     private static float _musicLevel = 1;
-
 
     static Dictionary<string, string> _languages = new Dictionary<string, string>();
 
@@ -28,7 +24,6 @@ public class AudioCollector
 
     };
 
-
     //TO ADD A SOUND in person added below pls the other steps ====>
     //Keep in mind that Animations sounds must be played from Body.cs
     static Dictionary<string, string> _personRoots = new Dictionary<string, string>()
@@ -39,8 +34,6 @@ public class AudioCollector
         {"isWheelBarrow", ""},
         {"isAxe", ""},
         {"isHammer", ""},
-
-
     };
 
     //this roots sounds get spawned anywas. Like BabyBorn sound
@@ -50,8 +43,6 @@ public class AudioCollector
         {"BabyBorn", ""},
         {"Emigrate", ""},
         {"FallingTree", ""},
-
-
 
         {"PirateUp", ""},
         {"PirateDown", ""},
@@ -74,9 +65,7 @@ public class AudioCollector
         {"NEW_QUEST_1", ""},
 
         {"ConstructionPlaced", ""},
-
     };
-
 
     //this roots sounds get spawned anywas. Like BabyBorn sound
     private static Dictionary<string, string> _ambience = new Dictionary<string, string>()
@@ -90,11 +79,6 @@ public class AudioCollector
         {"OutOfTerrain", ""},
         {"Mountain", ""},
     };
-
-
-
-
-
 
     static Dictionary<string, AudioContainer> _audioContainers = new Dictionary<string, AudioContainer>();
 
@@ -179,39 +163,6 @@ public class AudioCollector
             _roots.Add(amb.Key, amb.Value);
         }
     }
-
-    //public static void SpawnSounds()
-    //{
-
-    //    for (int i = 0; i < _roots.Count; i++)
-    //    {
-    //        var root = DefineRoot(_roots.ElementAt(i).Key);
-
-
-    //        var audCont = AudioContainer.Create(_roots.ElementAt(i).Key, root, 0,
-    //            container: AudioPlayer.SoundsCointaner.transform);
-
-    //        LevelChanged += audCont.LevelChanged;
-
-
-    //        _audioContainers.Add(_roots.ElementAt(i).Key, audCont);
-    //    }
-    //}
-
-
-
-
-
-    /// <summary>
-    /// Reporting how far an GameObj is 
-    /// </summary>
-    /// <param name="key"></param>
-    /// <param name="dist"></param>
-    internal static void Reporting(string key, Vector3 v3)
-    {
-        Reporting(key, Vector3.Distance(v3, Camera.main.transform.position));
-    }
-
 
     /// <summary>
     /// Reporting how far an GameObj is 
@@ -322,11 +273,6 @@ public class AudioCollector
         }
     }
 
-    public static void RedoGame()
-    {
-        _peopleVoiceStarted = false;
-    }
-
     public static void SpawnASound(KeyValuePair<string, string> item)
     {
         var root = DefineRoot(item.Key);
@@ -402,8 +348,6 @@ public class AudioCollector
         _audioContainers[key].PlayAmbience(dist);
     }
 
-
-
     private static void StopCurrAmbienceThatIsNotNewSound(string playThis)
     {
         for (int i = 0; i < _ambience.Count; i++)
@@ -430,9 +374,6 @@ public class AudioCollector
         MusicManager.OnLevelChanged(EventArgs.Empty);
     }
 
-
-
-
     static public EventHandler<EventArgs> LevelChanged;
 
     static void OnLevelChanged(EventArgs e)
@@ -442,7 +383,6 @@ public class AudioCollector
             LevelChanged("", e);
         }
     }
-
 
     public static void SoundTurnedOff()
     {
@@ -461,9 +401,6 @@ public class AudioCollector
             SoundTurnedOff();
         }
     }
-
-
-
 
     #region Person Voice
 
@@ -635,6 +572,5 @@ public class AudioCollector
     }
 
     #endregion
-
 
 }

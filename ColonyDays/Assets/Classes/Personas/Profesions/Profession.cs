@@ -304,6 +304,10 @@ public class Profession
                 {
                     return "BlackSmith";
                 }
+                else if(_person.Work.HType == H.SugarMill)
+                {
+                    return "SugarMiller";
+                }
             }
 
             return _person.Work.HType + " worker";

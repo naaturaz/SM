@@ -150,7 +150,6 @@ public class BodyAgent
         }
     }
 
-
     string _savedAniPathPending = "";
     /// <summary>
     /// When at 10x, and over 100ppl may take a while for the agent get the requested path
@@ -170,7 +169,6 @@ public class BodyAgent
             _person.Body.TurnCurrentAniAndStartNew(_savedAniPathPending);
             _savedAniPathPending = "";
             _startDate = Program.gameScene.GameTime1.CurrentDate();
-
         }
     }
 
@@ -189,9 +187,7 @@ public class BodyAgent
         }
     }
 
-
     General deb;
-
     void Debugg(Vector3 point)
     {
         if (deb != null)
@@ -202,7 +198,6 @@ public class BodyAgent
         deb = UVisHelp.CreateHelpers(point, Root.yellowCube);
         deb.name = "Yellow > " + _person.MyId;
     }
-
 
     internal void Walk(Vector3 point, Vector3 afterDest, Vector3 moveNowTo, HPers goingTo)
     {
@@ -258,14 +253,17 @@ public class BodyAgent
         _agent.radius *= 4;//2
     }
 
-
-
     #region Speed
 
     //bz wheelbarrows spin at 10x
     float _tempSpeedSetAt;
     internal void NewSpeed()
     {
+        if (_person.Name == "Barry")
+        {
+            var a = 1;
+        }
+
         _agent.speed = NewSpeedValue();
         CheckOnAnimation();
     }
@@ -374,7 +372,6 @@ public class BodyAgent
             "\npathPending: " + _agent.pathPending +
             "\nhasPath: " + _agent.hasPath+
 
-
         "\nEnabled: " + _agent.enabled +
         "\nNextDest: " + _nextDest +
         "\nVelocity: " + _agent.velocity +
@@ -388,5 +385,10 @@ public class BodyAgent
     internal void OneSecondUpdate()
     {
 
+    }
+
+    internal bool IsMoving()
+    {
+        return _agent.speed > 0;
     }
 }

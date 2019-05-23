@@ -1387,11 +1387,9 @@ public class Building : Hoverable, Iinfo
         { H.FlowerPot, new Vector3(-99,0,-99)},
         { H.PradoLion, new Vector3(-99,0,-99)},
 
-
         { H.StandLamp, new Vector3(0,0,0)},//wont get carved
         { H.HeavyLoad, new Vector3(-8,0,-8)},
         { H.LightHouse, new Vector3(-20,0,-40)},
-        //{ H.Masonry, new Vector3(-17,0,-25)},
 
         {H.WoodHouseA, new Vector3(-20,0,-20)},
         {H.WoodHouseB, new Vector3(-20,0,-25)},
@@ -1411,15 +1409,12 @@ public class Building : Hoverable, Iinfo
 
         { H.FishingHut, new Vector3(-40,0,-40)},
 
-
-
         { H.LumberMill, Vector3.forward },//will remove NavMesh Obj component
         { H.BlackSmith, new Vector3(-45,0,-45)},
         { H.Mortar, new Vector3(-16,0,-10)},
         { H.QuickLime, new Vector3(-40,0,-40)},
 
-
-        { H.Carpentry, new Vector3(-45,0,-45)},
+        { H.Carpentry, Vector3.forward},
         { H.Cigars, new Vector3(-16,0,-10)},
         { H.Armory, new Vector3(-10,0,-10)},
         { H.Tailor, new Vector3(-40,0,-25)},
@@ -1432,23 +1427,17 @@ public class Building : Hoverable, Iinfo
         { H.CoinStamp, new Vector3(-10,0,-16)},
         { H.Foundry, new Vector3(-16,0,-12)},
 
-
         { H.StorageMed, new Vector3(-30,0,-20)},
         { H.StorageSmall, new Vector3(-35,0,-25)},
         { H.StorageBig, Vector3.forward },//will remove NavMesh Obj component
 
         { H.Dock, Vector3.forward},
 
-
         { H.School, new Vector3(-10,0,-14)},
         { H.TradesSchool, new Vector3(-16,0,-10)},
         { H.Library, new Vector3(-17,0,-12)},
 
-
-        //{ H.Church, new Vector3(-8,0,-20)},
         { H.Tavern, new Vector3(-25,0,-20)},
-
-
     };
 
     //If here will assign size directly not percentage scaling

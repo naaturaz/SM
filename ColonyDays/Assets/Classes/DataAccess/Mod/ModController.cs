@@ -12,16 +12,19 @@ public class ModController: MonoBehaviour
 
     public static PeopleModData PeopleModData;
 
+    /// <summary>
+    /// Called from GUI
+    /// </summary>
     public void ReloadMods()
     {
         PeopleModData = XMLSerie.ReadXMLPeopleModData();
         if (PeopleModData != null)
         {
-            Text.text = "mod ok";
+            Text.text = "MOD ok";
         }
         else
         {
-            Text.text = "mod error";
+            Text.text = "MOD error";
         }
         _shown = Time.time;
     }
@@ -36,19 +39,19 @@ public class ModController: MonoBehaviour
             if (PeopleModData != null)
             {
                 if(modController != null)
-                    modController.Text.text = "mod loaded";
+                    modController.Text.text = "MOD loaded";
             }
             else
             {
                 if (modController != null)
-                    modController.Text.text = "no mod";
+                    modController.Text.text = "no MOD";
             }
         }
     }
 
     private void Update()
     {
-        if(Text.text.Length>0 && Time.time > _shown + 5)
+        if(Text.text.Length>0 && Time.time > _shown + 10)
         {
             Text.text = "";
         }
@@ -70,7 +73,6 @@ public class ModController: MonoBehaviour
 
     public static int AgeKidStartSchool()
     {
-        ReloadModStatic();
         int age = 0;
         if (PeopleModData != null)
         {
@@ -85,7 +87,6 @@ public class ModController: MonoBehaviour
 
     public static int AgeKidStartTradeSchool()
     {
-        ReloadModStatic();
         int age = 0;
         if (PeopleModData != null)
         {
@@ -113,17 +114,14 @@ public class ModController: MonoBehaviour
 
         return age;
     }
+
     public static int AgeMajorityReached()
     {
-        ReloadModStatic();
         int age = 0;
         if (PeopleModData != null)
-        {
             int.TryParse(PeopleModData.AgeMajorityReached + "", out age);
-        }
 
-        if (age > 0)
-            return age;
+        if (age > 0) return age;
 
         return 1;
     }

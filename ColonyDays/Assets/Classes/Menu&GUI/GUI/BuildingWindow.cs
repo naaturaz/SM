@@ -7,6 +7,7 @@ using System;
 
 public class BuildingWindow : GUIElement
 {
+    private Color _initialTabColor;
 
     private Text _title;
     private Text _info;
@@ -30,9 +31,11 @@ public class BuildingWindow : GUIElement
     private Rect _upgBtnRect;
     private Rect _staBtnRect;
 
-    private GameObject _ordBtn;//the btn for orders
-    private GameObject _prdBtn;//the btn for 
-    private GameObject _staBtn;//the btn for 
+    private GameObject _genBtn;//the btn 
+    private GameObject _invBtn;//the btn 
+    private GameObject _ordBtn;//the btn 
+    private GameObject _prdBtn;//the btn  
+    private GameObject _staBtn;//the btn  
 
     //tabs
     private GameObject _general;
@@ -52,8 +55,6 @@ public class BuildingWindow : GUIElement
     private Vector3 _exportIniPosOnProcess;
     private GameObject _salary;
     private GameObject _positions;
-    //private GameObject _productionSelector;
-
 
     //upg btns
     private GameObject _upg_Mat_Btn;
@@ -61,7 +62,6 @@ public class BuildingWindow : GUIElement
 
     private GameObject _demolish_Btn; //Upg_Mat_Btn
     private GameObject _cancelDemolish_Btn; //Upg_Mat_Btn
-
 
     //Texts
     private Text _currSalaryTxt;
@@ -141,8 +141,6 @@ public class BuildingWindow : GUIElement
         _scrollViewCont = GetChildCalled("ScrollViewCont");
         _ourInventories = FindGameObjectInHierarchy("Scroll_View_Inv_Resume", gameObject).GetComponent<ScrollViewShowInventory>();
 
-
-
         _priorityControls = FindGameObjectInHierarchy("PriorityControl", _general);
         var currRank = FindGameObjectInHierarchy("Current_Rank", _priorityControls);
         _currRankTxt = currRank.GetComponent<Text>();
@@ -174,9 +172,8 @@ public class BuildingWindow : GUIElement
 
         _imageIcon = GetChildCalled("Image_Icon").GetComponent<Image>();
 
-
-        var genBtn = GetChildThatContains(H.Gen_Btn).transform;
-        var invBtn = GetChildThatContains(H.Inv_Btn).transform;
+        _genBtn = GetChildThatContains(H.Gen_Btn);
+        _invBtn = GetChildThatContains(H.Inv_Btn);
         _ordBtn = GetChildThatContains(H.Ord_Btn);
 
         var upgBtn = GetChildCalled(H.Upg_Btn).transform;
@@ -186,9 +183,8 @@ public class BuildingWindow : GUIElement
         _staBtn = GetChildCalled("Sta_Btn");
         var staBtn = GetChildCalled("Sta_Btn").transform;
 
-
-        _genBtnRect = GetRectFromBoxCollider2D(genBtn);
-        _invBtnRect = GetRectFromBoxCollider2D(invBtn);
+        _genBtnRect = GetRectFromBoxCollider2D(_genBtn.transform);
+        _invBtnRect = GetRectFromBoxCollider2D(_invBtn.transform);
         _ordBtnRect = GetRectFromBoxCollider2D(_ordBtn.transform);
         _upgBtnRect = GetRectFromBoxCollider2D(upgBtn.transform);
         _prdBtnRect = GetRectFromBoxCollider2D(prdBtn.transform);
@@ -201,10 +197,8 @@ public class BuildingWindow : GUIElement
         _importIniPosOnProcess = GetGrandChildCalled(H.IniPos_Import_OnProcess).transform.position;
         _exportIniPosOnProcess = GetGrandChildCalled(H.IniPos_Export_OnProcess).transform.position;
 
-
         _upg_Mat_Btn = GetGrandChildCalled(H.Upg_Mat_Btn);
         _upg_Cap_Btn = GetGrandChildCalled(H.Upg_Cap_Btn);
-
 
         _demolish_Btn = GetGrandChildCalled(H.Demolish_Btn);//Cancel_Demolish_Btn
         _cancelDemolish_Btn = GetGrandChildCalled(H.Cancel_Demolish_Btn);//Cancel_Demolish_Btn
@@ -212,8 +206,10 @@ public class BuildingWindow : GUIElement
         _plusBtn = FindGameObjectInHierarchy("More Positions", gameObject);
         _lessBtn = FindGameObjectInHierarchy("Less Positions", gameObject);
 
-
         _salary.SetActive(false);
+
+        var img = _genBtn.GetComponent<Image>();
+        _initialTabColor = img.color;
     }
 
     /// <summary>
@@ -236,9 +232,7 @@ public class BuildingWindow : GUIElement
 
         LoadMenu();
 
-        //so if last Window had the Inventory selected can be seen in this new builidng one too
-        //MakeThisTabActive(oldTabActive);
-        MakeThisTabActive(_general);
+        LoadInitialTabDependingOnBuilding();
 
         transform.position = iniPos;
         HandleOrdBtn();
@@ -250,6 +244,15 @@ public class BuildingWindow : GUIElement
         CheckIfCapMaxOut();
 
         HideStuff();
+    }
+
+    void LoadInitialTabDependingOnBuilding()
+    {
+        if(Building.HType.ToString().Contains("Storage"))
+        {
+            MakeThisTabActive(_gaveta);
+        }
+        else MakeThisTabActive(_general);
     }
 
     private void DemolishBtn()
@@ -481,7 +484,6 @@ public class BuildingWindow : GUIElement
             Building.InvWasReloaded();
         }
     }
-
 
     List<ShowAInventory> _reports = new List<ShowAInventory>();
     private void ShowProductionReport()
@@ -775,11 +777,7 @@ public class BuildingWindow : GUIElement
         return res;
     }
 
-
     #region Salary
-
-
-
 
     /// <summary>
     /// When the use clicks to change the salary on a building 
@@ -796,10 +794,6 @@ public class BuildingWindow : GUIElement
     {
         _currPositionsTxt.text = BuildingPot.Control.Registro.SelectBuilding.ChangeMaxAmoutOfWorkers(action);
     }
-
-
-
-
 
     #endregion
 
@@ -841,7 +835,6 @@ public class BuildingWindow : GUIElement
         CheckIfPlusIsActive();
     }
 
-    //private GameObject oldTabActive;
     GameObject currentActiveTab;
     /// <summary>
     /// Use to swith Tabs on Window. Will hide all and make the pass one as active
@@ -860,26 +853,54 @@ public class BuildingWindow : GUIElement
             g = _general;
         }
 
+        ResetPanelsAndTabs();
+
+        g.SetActive(true);
+        currentActiveTab = g;
+
+        //then orders need to be Pull from dispatch and shown on Tab
+        if (g == _orders)
+        {
+            ColorTab(_ordBtn, Color.green);
+            ShowOrders();
+        }
+        else if (g == _products)
+        {
+            ColorTab(_prdBtn, Color.green);
+            ShowProducts();
+        }
+        else if (g == _gaveta)
+        {
+            ColorTab(_invBtn, Color.green);
+        }
+        else if (g == _stats)
+        {
+            ColorTab(_staBtn, Color.green);
+        }
+        else
+            ColorTab(_genBtn, Color.green);
+    }
+
+    void ResetPanelsAndTabs()
+    {
         _general.SetActive(false);
         _gaveta.SetActive(false);
         _orders.SetActive(false);
         _upgrades.SetActive(false);
         _products.SetActive(false);
         _stats.SetActive(false);
-        g.SetActive(true);
-        currentActiveTab = g;
-        //so the old tab is active from building to building
-        //oldTabActive = g;
 
-        //then orders need to be Pull from dispatch and shown on Tab
-        if (g == _orders)
-        {
-            ShowOrders();
-        }
-        if (g == _products)
-        {
-            ShowProducts();
-        }
+        ColorTab(_genBtn, _initialTabColor);
+        ColorTab(_invBtn, _initialTabColor);
+        ColorTab(_ordBtn, _initialTabColor);
+        ColorTab(_prdBtn, _initialTabColor);
+        ColorTab(_staBtn, _initialTabColor);
+    }
+
+    void ColorTab(GameObject go, Color color)
+    {
+        var img = go.GetComponent<Image>();
+        img.color = color;
     }
 
     /// <summary>
@@ -998,7 +1019,6 @@ public class BuildingWindow : GUIElement
         }
     }
 
-
     List<ShowOrderTileWithIcons> _showOrders = new List<ShowOrderTileWithIcons>();
     /// <summary>
     /// Will display the order is pass as param. Bz 'i' will keep looping and puttin the towards the botton of the 
@@ -1064,7 +1084,6 @@ public class BuildingWindow : GUIElement
         }
     }
 
-
     /// <summary>
     /// bz when a building is max out in material then the bttuon will hide 
     /// </summary>
@@ -1081,7 +1100,6 @@ public class BuildingWindow : GUIElement
         //_upg_Cap_Btn.SetActive(false);
     }
 
-
     /// <summary>
     /// Once the Upgrate mat bottuon is clicked .
     /// </summary>
@@ -1090,7 +1108,6 @@ public class BuildingWindow : GUIElement
         Building.UpgradeMatToNext();
         CheckIfMatMaxOut();
     }
-
 
     /// <summary>
     /// Upgradint capacity
@@ -1149,7 +1166,6 @@ public class BuildingWindow : GUIElement
     void SetCurrentProduct(string product)
     {
         Building.SetProductToProduce(product);
-
         ShowProductDetail();
     }
 
@@ -1189,6 +1205,7 @@ public class BuildingWindow : GUIElement
 
     GameObject _plusBtn;
     GameObject _lessBtn;
+
 
     private void CheckIfPlusIsActive()
     {

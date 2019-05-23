@@ -625,8 +625,6 @@ public class Brain
     /// </summary>
     //////////////////////////////
 
-
-
     private void GoIdleInHome()
     {
         if (ReadyToIdleInHome())
@@ -634,7 +632,6 @@ public class Brain
             Idle(HPers.IdleInHome);
         }
     }
-
 
     void GoWork()
     {

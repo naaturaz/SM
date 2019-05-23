@@ -163,7 +163,7 @@ public class InputMeshSpawn : InputParent {
 
     void OnGUI()
     {
-        Rect mapDimRectDraw = U2D.ReturnDrawRectYInverted(selectionDimRect);
-        GUI.DrawTexture(mapDimRectDraw, tex);
+        //Rect mapDimRectDraw = U2D.ReturnDrawRectYInverted(selectionDimRect);
+        //GUI.DrawTexture(mapDimRectDraw, tex);
     }
 }

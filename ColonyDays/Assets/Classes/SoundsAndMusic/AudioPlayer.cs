@@ -35,13 +35,12 @@ public class AudioPlayer  {
 
     static private void LoadAllAudios()
     {
-        if (_soundsLib.Count > 0)
-        {
-            return;
-        }
+        //if (soundsCointaner != null) return;
 
-        //soundsCointaner = General.Create(Root.classesContainer, Camera.main.transform.position,
-        //    "SoundContainer", Camera.main.transform);
+        //if (CamControl.CurrentCamera() == null) return;
+
+        if (//_soundsLib == null || 
+            _soundsLib.Count > 0) return;
 
         soundsCointaner = General.Create(Root.classesContainer, CamControl.CurrentCamera().transform.position,
             "SoundContainer", CamControl.CurrentCamera().transform);
@@ -62,6 +61,8 @@ public class AudioPlayer  {
         {
             return;
         }
+
+        //LoadAllAudios();
 
         var root = "C:/GitHub/SM/ColonyDays/Assets/Resources/Prefab/Audio/Sound/";
         var waves = new List<string>();
@@ -93,7 +94,6 @@ public class AudioPlayer  {
         var pData = XMLSerie.ReadXMLProgram();
         return pData.Waves;
     }
-
 
     static List<string> GetFilesInEditor(string root)
     {
@@ -212,20 +212,6 @@ public class AudioPlayer  {
         }
         return false;
     }
-    
-    static Audio Spawn(string soundToPlayRoot, H musicOrSound)
-    {
-        Audio temp = null;
-        if (musicOrSound == H.Sound)
-        {
-            temp = (Sound)General.Create(soundToPlayRoot, Camera.main.transform.position, container: Camera.main.transform);
-        }
-        else if (musicOrSound == H.Music)
-        {
-            temp = (Music)General.Create(soundToPlayRoot, Camera.main.transform.position, container: Camera.main.transform);
-        }
-        return temp;
-    }
        
     public static Audio PlayAudio(string soundToPlayRoot, H musicOrSound, Vector3 iniPos = new Vector3(), bool playOneTime = false)
     {
@@ -245,54 +231,6 @@ public class AudioPlayer  {
             return null;
             temp = (Music)General.Create(soundToPlayRoot, iniPos);
         }
-        return temp;
-    }
-    public static Sound PlaySoundOneTime(string soundToPlayRoot, H musicOrSound, Vector3 iniPos = new Vector3(), bool reset = false)
-    {
-        Sound temp = null;
-        if (Settings.ISSoundOn && musicOrSound == H.Sound)
-        {
-            if (!reset)
-            {
-                if (iniPos == Vector3.zero)
-                {
-                    iniPos = Camera.main.transform.position;
-                }
-                if (!isToPlayOneTimePlayed)
-                {
-                    temp = (Sound)General.Create(soundToPlayRoot, iniPos);
-                    isToPlayOneTimePlayed = true;
-                }
-            }
-            else if (reset && isToPlayOneTimePlayed)
-            {
-                isToPlayOneTimePlayed = false;
-            }
-        }
-        return temp;
-    }
-
-    public static Sound PlaySoundOneTime(string soundToPlayRoot, Vector3 iniPos = new Vector3(), Transform container = null)
-    {
-        return null;
-
-        CamControl mainCam = USearch.FindCurrentCamera();
-        Sound temp = null;
-        if (Settings.ISSoundOn)
-        {
-            if (iniPos == Vector3.zero)
-            {
-                iniPos = mainCam.transform.GetComponent<Camera>().transform.position;
-            }
-            temp = (Sound)General.Create(soundToPlayRoot, iniPos);
-        }
-
-        if (container == null)
-        {
-            temp.transform.SetParent( mainCam.transform.GetComponent<Camera>().transform);
-        }
-        else temp.transform.SetParent( container);
-
         return temp;
     }
  

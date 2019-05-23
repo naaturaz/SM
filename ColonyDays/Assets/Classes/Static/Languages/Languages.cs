@@ -1002,6 +1002,26 @@ public class Languages
         _en.Add("Harvest.Date", "\nHarvest date: ");
         _en.Add("Progress", "\nProgress: ");
 
+        //AddOrderWindow.cs
+        _en.Add("Add.New", "Add New ");
+        _en.Add("Order", " Order");
+        _en.Add("Import", "Import");
+        _en.Add("Export", "Export");
+        //AddOrderWindow GUI
+        _en.Add("Enter Amount:", "Enter Amount:");
+        _en.Add("Enter amount...", "Enter amount...");
+        _en.Add("New Order:", "New Order:");
+        _en.Add("Product:", "Product:");
+        _en.Add("Amount:", "Amount:");
+        _en.Add("Order total price:", "Order total price:");
+        _en.Add("Add", "Add");
+        
+        //BuildingWindow GUI
+        _en.Add("Product Description:", "Product Description:");
+        _en.Add("Production report by years:", "Production report by years:");
+        _en.Add("Import Orders", "Import Orders");
+        _en.Add("Export Orders", "Export Orders");
+        _en.Add("Orders in progress:", "Orders in progress:");
 
 
 

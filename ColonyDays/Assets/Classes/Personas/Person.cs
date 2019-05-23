@@ -7,19 +7,11 @@ using Random = UnityEngine.Random;
 
 public class Person : Hoverable
 {
-
-
-
-
-
     public void MouseClickHandler(object sender, EventArgs e)
     {
         //Person v = (Person)sender;
         CheckMouseClicked();
     }
-
-
-
 
     //Debug
     private List<General> _debugList = new List<General>();
@@ -48,11 +40,8 @@ public class Person : Hoverable
     private int _dueMonth;
     private int _dueYear;
 
-
     private string _nutritionLevel = "Normal";
     private string _thirst = "Quenched";
-
-
 
     ///Variables to allow the class be independet 
     //how often will check if obj has eaten
@@ -99,15 +88,8 @@ public class Person : Hoverable
     private PersonBank _personBank;
     private RandomUV _randomUV;
 
-
-
     private Structure _myDummy;
     private Structure _myDummyProf;
-
-
-
-
-
 
     /// <summary>
     /// eahc person has a dummy use to routing. here for GC 
@@ -117,8 +99,6 @@ public class Person : Hoverable
         get { return _myDummy; }
         set { _myDummy = value; }
     }
-
-
 
     #region Reload Inventory
 
@@ -1052,8 +1032,6 @@ public class Person : Hoverable
         GameController.ResumenInventory1.Remove(P.Furniture, .01f);
     }
 
-
-
     public override void DestroyCool()
     {
         MyDummy.Destroy();
@@ -1123,18 +1101,6 @@ public class Person : Hoverable
         }
         return false;
     }
-
-    //bool IsMyBD()
-    //{
-    //    var currYear = Program.gameScene.GameTime1.Year;
-
-    //    if (_lastBDYear != currYear && _birthMonth == Program.gameScene.GameTime1.Month1)
-    //    {
-    //        _lastBDYear = currYear;
-    //        return true;
-    //    }
-    //    return false;
-    //}
 
     public PersonReport PersonReport = new PersonReport();
     /// <summary>
@@ -1300,9 +1266,6 @@ public class Person : Hoverable
         return Name;
     }
 
-
-
-
     /// <summary>
     /// Will order to the brain to disapper 
     /// </summary>
@@ -1402,22 +1365,14 @@ public class Person : Hoverable
 
         StartCoroutine("SixtySecUpdate");
 
-
         StartCoroutine("FiveSecUpdate");
         StartCoroutine("OneSecUpdate");
         StartCoroutine("OneSecUpdate2");
 
         StartCoroutine("EmoticonUpdate");
 
-
-        //StartCoroutine("A45msUpdate");
-
-        //for body
-        //StartCoroutine("A32msUpdate");
         StartCoroutine("A64msUpdate");
-
         StartCoroutine("RandomUpdate1020");
-        //StartCoroutine("QuickUpdate");
 
         CreateTheTwoDummies();
 
@@ -1443,7 +1398,6 @@ public class Person : Hoverable
     }
 
     float RestartTimes(float a, float b) { return Random.Range(a, b); }
-
 
     void CheckQuest()
     {
@@ -1482,7 +1436,6 @@ public class Person : Hoverable
         }
     }
 
-
     private bool _wasPersonParented;
     /// <summary>
     /// bz if done before its all weird 
@@ -1497,7 +1450,6 @@ public class Person : Hoverable
         _wasPersonParented = true;
         transform.SetParent(Home.transform);
     }
-
 
     private IEnumerator OneSecUpdate()
     {
@@ -1547,10 +1499,6 @@ public class Person : Hoverable
         }
     }
 
-
-
-
-
     private float random1020Time;
     private IEnumerator RandomUpdate1020()
     {
@@ -1568,7 +1516,6 @@ public class Person : Hoverable
             }
         }
     }
-
 
     // Update is called once per frame
     void Update()
@@ -1641,7 +1588,6 @@ public class Person : Hoverable
         wasNotiAge = true;
     }
 
-
     public void UpdateInfo(string add = "")
     {
         string homeId = "none";
@@ -1671,12 +1617,6 @@ public class Person : Hoverable
                "GoingTo:" + Body.GoingTo + "\n"
                ;
     }
-
-
-
-
-
-
 
     #region Bank Money
 
@@ -1716,8 +1656,6 @@ public class Person : Hoverable
 
 
     #endregion
-
-
 
     #region Profession
 
@@ -1770,9 +1708,6 @@ public class Person : Hoverable
         get { return _prevOrder; }
         set { _prevOrder = value; }
     }
-
-
-
 
     /// <summary>
     /// Will find the type of job based on type of building we are currently working on only if jType=None
@@ -1977,9 +1912,6 @@ public class Person : Hoverable
         return Math.Abs((_nutrition.HowManyKGINeedOfThisToSupplyMyNeed(prod)));
     }
 
-
-
-
     void ChangeHappinesBy(double by)
     {
         Happinnes += by;
@@ -2043,7 +1975,6 @@ public class Person : Hoverable
         ExchangeInvetoryItem(FoodSource, this, item, amt);
     }
 
-
     P ItemToGetAtFoodSource(Structure theFoodSrc)
     {
         if (_thirst == "Quenched")
@@ -2061,8 +1992,6 @@ public class Person : Hoverable
         }
         return Home.Inventory.GiveRandomFood();
     }
-
-
 
     public void ExchangeInvetoryItem(General takenFrom, General givenTo, P product, float amt)
     {
@@ -2087,10 +2016,6 @@ public class Person : Hoverable
         Inventory.RemoveContainerUsed(product);
         ShouldReloadInventory();
     }
-
-
-
-
 
     public void DropAllInvetoryItems(General takenFrom, General givenTo)
     {
@@ -2250,7 +2175,6 @@ public class Person : Hoverable
         return mul;
     }
 
-
     int ReturnGenreVal()
     {
         if (Gender == H.Male)
@@ -2280,19 +2204,6 @@ public class Person : Hoverable
         }
         return 1;
     }
-
-    ///// <summary>
-    ///// Will tell u how much u will need of a tpye of food to be fed to 100 %
-    ///// </summary>
-    ///// <param name="item">the type of food</param>
-    ///// <returns></returns>
-    //private float HowMuchINeedToBe100PointsFeed(P item)
-    //{
-    //    var nutriValue = BuildingPot.Control.ProductionProp.Food1.FindNutritionValue(item).NutritionVal;
-    //    var nutriNeed = 100 - _nutritionLevel;
-
-    //    return nutriNeed / nutriValue + 1;//+1 is to round up
-    //}
 
     #region Reproduction Having Kids & Stuff
 
@@ -2420,9 +2331,6 @@ public class Person : Hoverable
 
         newBorn.IsBooked = "";
 
-        //will be addressed on Body.Update 
-        //newBorn.transform.SetParent( Home.transform;
-
         newBorn.Home = Home;
         newBorn.Brain.SetNewHouseFound();
     }
@@ -2529,14 +2437,6 @@ public class Person : Hoverable
         }
     }
 
-
-
-
-
-
-
-
-
     #region OutOfScreen
 
 
@@ -2545,6 +2445,7 @@ public class Person : Hoverable
 
 
     #endregion
+
     #region LOD
 
     private LevelOfDetail _levelOfDetail;
@@ -2560,11 +2461,6 @@ public class Person : Hoverable
 
 
     #endregion
-
-
-
-
-
 
     #region Bad Ass
 
@@ -2671,7 +2567,6 @@ public class Person : Hoverable
     }
     #endregion
 
-
     #region Events
 
     private Camera cam;
@@ -2742,7 +2637,6 @@ public class Person : Hoverable
 
         RedoBrain(Brain.BlackList);
     }
-
 
     #region Showing Path
 
@@ -2881,8 +2775,6 @@ public class Person : Hoverable
 
     #endregion
 
-
-
     internal void NewWeight(float kgChanged)
     {
         Weight += kgChanged;
@@ -2953,10 +2845,6 @@ public class Person : Hoverable
         return NormalWeight() - a40;
     }
 
-
-
-
-
     /// <summary>
     /// in game 0.5f is grown male, so that is 170cm in real life 
     /// </summary>
@@ -2973,16 +2861,6 @@ public class Person : Hoverable
 
     //todo saveload
     public bool WasFired { get; set; }
-
-
-
-
-
-
-
-
-
-
     internal bool IsAroundHouseSpawnPoint()
     {
         if (Home == null)
@@ -2992,7 +2870,6 @@ public class Person : Hoverable
 
         return UMath.nearEqualByDistance(transform.position, Home.SpawnPoint.transform.position, 1);
     }
-
 
     #region Hover All Objects. All objects that have a collider will be hoverable
 
@@ -3033,7 +2910,6 @@ public class Person : Hoverable
         }
     }
 
-
     internal void BuildPlacedHandler(object sender, EventArgs e)
     {
         _toShowEmoticon = true;
@@ -3051,9 +2927,7 @@ public class Person : Hoverable
         EmoticonManager.Show(p, transform.position);
     }
 
-
     #endregion
-
 
     #region Militar
     internal bool IsMilitarNow()
@@ -3069,8 +2943,6 @@ public class Person : Hoverable
 
 
     #endregion
-
-
 
     #region Work Input Orders
 

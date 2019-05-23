@@ -11,7 +11,6 @@ using UnityEngine.UI;
 
 public class AddOrderWindow : GUIElement
 {
-
     private Text _title;
 
     private Text _prodSelLbl;
@@ -41,8 +40,6 @@ public class AddOrderWindow : GUIElement
 
     private GameObject _priceGroup;
 
-
-
     private GameObject _content;
     private GameObject _scroll_Ini_PosGO;
 
@@ -55,7 +52,6 @@ public class AddOrderWindow : GUIElement
 
         Hide();
     }
-
 
     void InitObj()
     {
@@ -86,7 +82,6 @@ public class AddOrderWindow : GUIElement
 
         var _scroll = GetChildCalled("Scroll_View");
         _content = GetGrandChildCalledFromThis("Content", _scroll);
-        //_contentRectTransform = _content.GetComponent<RectTransform>();
         _scroll_Ini_PosGO = GetChildCalledOnThis("Scroll_Ini_Pos", _content);
 
         _ourInventories = FindGameObjectInHierarchy("Scroll_View_Inv_Resume", gameObject).GetComponent<ScrollViewShowInventory>();
@@ -112,11 +107,11 @@ public class AddOrderWindow : GUIElement
     {
         HandlePriceGroup();
 
-        _title.text = "Add new " + _orderType + " order";
+        //_title.text = "Add New " + _orderType + " Order";
+        _title.text = Languages.ReturnString("Add.New") + Languages.ReturnString(_orderType) + Languages.ReturnString("Order");
 
         PopulateScrollView();
     }
-
 
     #region Scroll
 
@@ -129,8 +124,6 @@ public class AddOrderWindow : GUIElement
 
         ShowButtons(Program.gameScene.ExportImport1.ProdSpecsCured());
     }
-
-
 
     List<ButtonTile> _btns = new List<ButtonTile>();
     private void ShowButtons(List<ProdSpec> list)
@@ -147,7 +140,6 @@ public class AddOrderWindow : GUIElement
         }
     }
 
-
     #endregion
 
     void HandlePriceGroup()
@@ -155,13 +147,9 @@ public class AddOrderWindow : GUIElement
         if (_orderType == "Import")
         {
             Program.gameScene.TutoStepCompleted("ImportOrder.Tuto");
-
-            //_priceGroup.SetActive(false);
         }
         else if (_orderType == "Export")
         {
-            //_priceGroup.SetActive(true);
-            //_priceGroup.SetActive(false);
 
         }
     }
@@ -199,7 +187,6 @@ public class AddOrderWindow : GUIElement
             Hide();
             CleanDisplay();
         }
-
     }
 
     public void CancelOrderClick()
@@ -290,7 +277,6 @@ public class AddOrderWindow : GUIElement
             }
         }
 
-
         //so orders are updated 
         Program.MouseListener.BuildingWindow1.ShowOrders();
 
@@ -376,10 +362,6 @@ public class AddOrderWindow : GUIElement
         //remove the 'AddOrder.'
         var sub = feed.Substring(9);
 
-        //if (sub.Contains("Prod."))
-        //{
-        //    ProdSelected(sub);
-        //}
         if (sub.Contains("Amt"))
         {
             AmtSelected();
@@ -388,10 +370,6 @@ public class AddOrderWindow : GUIElement
         {
             PriceSelected();
         }
-        //else if (sub.Contains("Frec."))
-        //{
-        //    FrecSelected(sub);
-        //}
         else if (sub.Contains("Remove."))
         {
             RemoveOrderFromDispatch(sub);
@@ -416,15 +394,6 @@ public class AddOrderWindow : GUIElement
         Program.MouseListener.BuildingWindow1.ShowOrders();
     }
 
-    //private void FrecSelected(string feed)
-    //{
-    //    var sub = feed.Substring(5);
-
-    //    H MyStatus = (H)Enum.Parse(typeof(H), sub, true);
-
-    //    _frecuency = MyStatus;
-    //}
-
     private void PriceSelected()
     {
         if (IsTextAValidInt(_inputPrice.text))
@@ -447,8 +416,6 @@ public class AddOrderWindow : GUIElement
         }
         else _inputAmt.text = "";
     }
-
-
 
     public void ProdSelected(string prod)
     {

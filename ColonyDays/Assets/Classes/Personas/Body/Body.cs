@@ -135,10 +135,6 @@ public class Body //: MonoBehaviour //: General
     {
         get
         {
-            //if (_currentPosition == new Vector3())
-            //{
-            //    _currentPosition = _person.gameObject.transform.position;
-            //}
             return _currentPosition;
         }
         set { _currentPosition = value; }
@@ -151,7 +147,6 @@ public class Body //: MonoBehaviour //: General
         {
             return _bodyAgent;
         }
-
         set
         {
             _bodyAgent = value;
@@ -163,7 +158,6 @@ public class Body //: MonoBehaviour //: General
     public Body(Person person)
     {
         Init(person);
-
     }
 
     private PersonFile _pFile;
@@ -187,12 +181,10 @@ public class Body //: MonoBehaviour //: General
         _loadedPosition = pF.Position;
         _loadedRotation = pF.Rotation;
 
-        //_person.transform.position = _loadedPosition;
         AssignNewPositionNoQuesition(_loadedPosition);
         _person.transform.rotation = _loadedRotation;
 
         _loadedAni = pF._body.CurrentAni;
-
 
         //if is zero is that is idling in a house 
         if (pF._body.CurrTheRoute.CheckPoints.Count > 0)
@@ -301,7 +293,6 @@ public class Body //: MonoBehaviour //: General
         var singleS = localScale.x + toAdd;
         var newScale = new Vector3(singleS, singleS, singleS);
         _person.transform.localScale = newScale;
-        //print(singleS + ".singleS");
     }
 
     private Animator myAnimator;
@@ -328,6 +319,11 @@ public class Body //: MonoBehaviour //: General
         _currentAni = animationPass;
         myAnimator.SetBool(animationPass, true);
 
+        if(_person.Name == "Barry")
+        {
+            var a = 1;
+        }
+
         if (Program.GameFullyLoaded() && _bodyAgent != null)
         {
             _bodyAgent.NewSpeed();
@@ -350,7 +346,7 @@ public class Body //: MonoBehaviour //: General
 
     public void TurnCurrentAniAndStartNew(string animationPass)
     {
-        ////Debug.Log("TurnCurrent nw:" + animationPass + ".old:" + _currentAni);
+        //Debug.Log("TurnCurrent nw:" + animationPass + ".old:" + _currentAni);
         SetCurrentAni(animationPass, _currentAni);
     }
 
@@ -561,17 +557,25 @@ public class Body //: MonoBehaviour //: General
         //_loadedAni == "isIdle" for people that were saved idling.
         //for debug puporses or people that was in the dock waiting to get into 
         //the city as new immigrant 
-        if (string.IsNullOrEmpty(_loadedAni)
-            //|| _loadedAni == "isIdle"
-            )
+        if (string.IsNullOrEmpty(_loadedAni))
         {
             SetCurrentAni(RetWalkAni(), "isIdle");
         }
         else
         {
             TurnCurrentAniAndStartNew(_loadedAni);
-            //   SetCurrentAni(_loadedAni, "isIdle");
             _loadedAni = "";//so its used only once 
+        }
+
+        //to fix:
+        //people getting in 'idle' animation from house
+        //easy to reproduce:
+        //Kids going to school at 5 and in Mod File change to 1,
+        //all kids of 1 to 5 will get out of the house on 'idle' ani
+        if (CurrentAni == "isIdle" && _bodyAgent.IsMoving())
+        {
+            TurnCurrentAniAndStartNew(RetWalkAni());
+            _loadedAni = "";
         }
     }
 
@@ -581,7 +585,6 @@ public class Body //: MonoBehaviour //: General
         {
             return "isFemaleWalk";
         }
-        //for male 
         return "isWalk";
     }
 
