@@ -69,8 +69,4 @@ public class QuestTile : GUIElement
         return obj;
     }
 
-
-
-
 }
-

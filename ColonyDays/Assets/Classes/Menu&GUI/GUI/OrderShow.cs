@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using Button = UnityEngine.UI.Button;
 
@@ -18,8 +19,23 @@ public class OrderShow : GUIElement
     private UnityEngine.UI.Button _closeBtn;//
     private UnityEngine.UI.Button _thisBtn;//
 
-	// Use this for initialization
-	void Start ()
+    public P Prod
+    {
+        get
+        {
+            return _prod;
+        }
+
+        set
+        {
+            _prod = value;
+        }
+    }
+
+    public ProductInfo ProductInfo { get; private set; }
+
+    // Use this for initialization
+    void Start ()
     {
         _title = GetChildCalled(H.Title).GetComponent<Text>();
 
@@ -37,7 +53,6 @@ public class OrderShow : GUIElement
         {
             _thisBtn = rawBtn.GetComponent<UnityEngine.UI.Button>();
         }
-        
     }
 	
 	// Update is called once per frame
@@ -45,21 +60,20 @@ public class OrderShow : GUIElement
 	
 	}
 
-    static public OrderShow Create(string root,  Transform container)
+    static public OrderShow Create(string root, Transform container, ProductInfo prod)
     {
         OrderShow obj = null;
         obj = (OrderShow)Resources.Load(root, typeof(OrderShow));
         obj = (OrderShow)Instantiate(obj, new Vector3(), Quaternion.identity);
         
-
-        obj.transform.SetParent( container); 
-
+        obj.transform.SetParent( container);
+        obj.ProductInfo = prod;
         return obj;
     }
 
     public void Show(Order order)
     {
-        _prod = order.Product;
+        Prod = order.Product;
         _amt = order.Left();
 
         Start();
@@ -70,7 +84,7 @@ public class OrderShow : GUIElement
         }
         else
         {
-            _title.text = _prod + " : " + (Unit.WeightConverted(_amt)).ToString("#");
+            _title.text = Prod + " : " + (Unit.WeightConverted(_amt)).ToString("#");
         }
 
         transform.name = _title.text + " | " + Id;
@@ -125,9 +139,6 @@ public class OrderShow : GUIElement
         transform.localScale = new Vector3(1,1,1);
     }
 
-
-    
-
     /// <summary>
     /// Resets the position of the element 
     /// </summary>
@@ -168,5 +179,22 @@ public class OrderShow : GUIElement
     int ReturnPixelsToTheRight()
     {
         return 233;
+    }
+
+    internal int ProductId()
+    {
+        return ProductInfo.Id;
+    }
+
+    public void MarkAsSelected()
+    {
+        var titleBar = FindGameObjectInHierarchy("Title_Bar", gameObject);
+        titleBar.GetComponent<Image>().color = Color.green;
+    }
+
+    public void MarkAsUnSelected()
+    {
+        var titleBar = FindGameObjectInHierarchy("Title_Bar", gameObject);
+        titleBar.GetComponent<Image>().color = Color.black;
     }
 }

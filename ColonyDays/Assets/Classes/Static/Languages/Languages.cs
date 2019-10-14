@@ -290,7 +290,7 @@ public class Languages
         _en.Add("PortReputation.HoverSmall", "Reputation of Port");
         _en.Add("Dollars.HoverSmall", "Dollars");
         _en.Add("PirateThreat.HoverSmall", "Pirate Threat");
-        _en.Add("Date.HoverSmall", "Date (m/y)");
+        _en.Add("Date.HoverSmall", "Date (Mmm/Y)");
         _en.Add("MoreSpeed.HoverSmall", "More Speed [PgUp]");
         _en.Add("LessSpeed.HoverSmall", "Less Speed [PgDwn]");
         _en.Add("PauseSpeed.HoverSmall", "Pause Game");
@@ -575,7 +575,7 @@ public class Languages
         //Quest
         _en.Add("Tutorial.Quest", "Quest: Finish the tutorial. Reward $10,000. It takes roughly 3 minutes to complete");
 
-        _en.Add("Lamp.Quest", "Quest: Build a StandLamp. Find it on Infrastructure, it shines at night if there is Whale Oil on Storage");
+        _en.Add("Lamp.Quest", "Quest: Build a Stand Lamp. Find it on Infrastructure, it shines at night if there is Whale Oil on Storage");
 
         _en.Add("Shack.Quest", "Quest: Build a Shack. These are cheap houses. When people turn 16 they will move to a free house if found. In this way, population growth will be guaranteed. [F1] Help. If you see smoke in a house's chimney means there are people living in it");
 
@@ -1023,6 +1023,11 @@ public class Languages
         _en.Add("Export Orders", "Export Orders");
         _en.Add("Orders in progress:", "Orders in progress:");
 
+        //Jun 12, 2019
+        _en.Add("ShowQuest.HoverSmall", "Current Quest");
+        _en.Add("Have Fun", "Have Fun");
+        _en.Add("Current Quest:", "Current Quest:");
+        _en.Add("Reward: ", "Reward: ");
 
 
 
@@ -1320,7 +1325,7 @@ public class Languages
         // _sp.Add(  "PortReputation.HoverSmall", "Reputacion Portuaria"  );
         // _sp.Add(  "Dollars.HoverSmall", "Dinero"  );
         // _sp.Add(  "PirateThreat.HoverSmall", "Amenaza Pirata"  );
-        // _sp.Add(  "Date.HoverSmall", "Fecha (m/a)"  );
+        // _sp.Add(  "Date.HoverSmall", "Fecha (Mmm/A)"  );
         // _sp.Add(  "MoreSpeed.HoverSmall", "Mas velocidad"  );
         // _sp.Add(  "LessSpeed.HoverSmall", "Menos velocidad"  );
         // _sp.Add(  "PauseSpeed.HoverSmall", "Pausa"  );

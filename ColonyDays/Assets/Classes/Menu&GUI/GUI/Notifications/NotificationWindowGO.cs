@@ -14,8 +14,6 @@ public class NotificationWindowGO : GUIElement
 
     private Scrollbar _verticalScrollbar;
 
-    private bool _hideSlideToLeft;
-
     //todo saveload
     List<string> _allNotifications = new List<string>(){}; 
 
@@ -28,25 +26,6 @@ public class NotificationWindowGO : GUIElement
     /// 
     /// Also if want to have a sound place the sound in Prefab/Audio/Sound/Other with the
     /// same name of the Notification as called in Languages.cs
-    /// </summary>
-    //Dictionary<string, Notification> _bank = new Dictionary<string, Notification>()
-    //{
-    //    {"BabyBorn", new Notification("BabyBorn")},
-    //    {"PirateUp", new Notification("PirateUp")},            
-    //    {"PirateDown", new Notification("PirateDown")},
-        
-    //    {"Emigrate", new Notification("Emigrate")},
-    //    {"PortUp", new Notification("PortUp")},
-    //    {"PortDown", new Notification("PortDown")},
-    //    {"BoughtLand", new Notification("BoughtLand")},
-    //    {"ShipPayed", new Notification("ShipPayed")},
-    //    {"ShipArrived", new Notification("ShipArrived")},
-
-    //    {"AgeMajor", new Notification("AgeMajor")},
-    //    {"PersonDie", new Notification("PersonDie")},
-
-
-    //}; 
 
     void Start()
     {
@@ -95,25 +74,12 @@ public class NotificationWindowGO : GUIElement
         }
     }
 
-    private float speed = .05f;
     void Update()
     {
+        base.Update();
         if (transform.position == iniPos && Input.GetKeyUp(KeyCode.Return))
         {
             MouseListen("Achieve.OKBtn");
-        }
-
-        if (_hideSlideToLeft)
-        {
-            Vector2 newPos = new Vector2(transform.position.x - speed, transform.position.y);
-            transform.position = newPos;
-            speed *= 2.2f;
-
-            if (transform.position.x <= iniPos.x - 400f)
-            {
-                _hideSlideToLeft = false;
-                speed = .02f;
-            }
         }
 
         HideIfIsBeingOutTooLong();
@@ -140,7 +106,6 @@ public class NotificationWindowGO : GUIElement
             DestroyPrevTiles();
             Program.MyScreen1.HideWindowShowMain(this);
         }
-
     }
 
     void DestroyPrevTiles()
@@ -155,7 +120,6 @@ public class NotificationWindowGO : GUIElement
     void PopulateScrollView()
     {
         SetTileIniPos();
-
         DestroyPrevTiles();
 
         SetHeightOfContentRect(_allNotifications.Count);
@@ -213,26 +177,20 @@ public class NotificationWindowGO : GUIElement
     /// </summary>
     void SetTileIniPos()
     {
-        //var ySpace = Screen.height / 59.46667f;    //15 on editor
-
         _scrollIniPos = _scroll_Ini_PosGO.transform.position;
-        //_scrollIniPos = new Vector3(_scrollIniPos.x, _scrollIniPos.y - ySpace, _scrollIniPos.z);
     }
 
     private void SetHeightOfContentRect(int tiles)
     {
         //892
         var tileYSpace = 5.57f * 2.8f;
-        //var tileYSpace = Screen.height / 160.1436f;//5.57f on editor
 
-        //5.57f the space btw two of them 
         var size = (tileYSpace * tiles) + tileYSpace;
         _contentRectTransform.sizeDelta = new Vector2(0, size);
     }
 
     Vector3 ReturnIniPos(int i)
     {
-        //var xAddVal = Screen.width / 5.87407f;
         return new Vector3(_scrollIniPos.x, ReturnY(i) + _scrollIniPos.y, _scrollIniPos.z);
     }
 
@@ -245,12 +203,6 @@ public class NotificationWindowGO : GUIElement
         //30
         var y = (Screen.height * 52) / 892;
         return -y * i;
-    }
-
-    //called from GUI 
-    public void HideWindow()
-    {
-        _hideSlideToLeft = true;
     }
 
     //called from GUI 
@@ -282,8 +234,6 @@ public class NotificationWindowGO : GUIElement
 
     public void Notify(string notiKey, string addP)
     {
-        
-
         _allNotifications.Insert(0, notiKey+"|"+addP);
         Show("");
 
@@ -296,8 +246,4 @@ public class NotificationWindowGO : GUIElement
         //plays the sound of the notification
         AudioCollector.PlayOneShot(notiKey, 15);
     }
-
-
-
 }
-

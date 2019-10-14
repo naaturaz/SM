@@ -1,12 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System.Net;
 using System;
-using System.Linq;
 
 /*This class manage wich buildings need to be built next and which has already
- * the resources assigned and ready to built
- * 
+ * the resources assigned and ready to be built
  */
 
 public class BuildersManager
@@ -346,15 +343,25 @@ public class BuildersManager
     /// </summary>
     private void RemoveFullyBuiltOrRemoved()
     {
-        if (_constructions.Count == 0 || _constructions[0].Key.Contains("Bridge"))//bz brdige will be null on below if 
+        if (_constructions.Count == 0)return;
+
+        for (int i = 0; i < _constructions.Count; i++)
+        {
+            RemoveAConstructionIfFullyBuilt(_constructions[i].Key, i);
+        }
+    }
+
+    void RemoveAConstructionIfFullyBuilt(string Key, int index)
+    {
+        if (Key.Contains("Bridge"))//bz brdige will be null on below if 
         { return; }
 
-        var st = Brain.GetStructureFromKey(Constructions[0].Key);
+        var st = Brain.GetStructureFromKey(Key);
 
-        if (st == null || st.StartingStage == H.Done)
+        if (st == null || st.StartingStage == H.Done || st.CurrentStage == 4)
         {
-            PassedQueue.Remove(_constructions[0].Key);
-            Constructions.RemoveAt(0);
+            PassedQueue.Remove(Key);
+            Constructions.RemoveAt(index);
         }
     }
 
@@ -486,9 +493,6 @@ public class BuildersManager
         _passedQueue.Add(qEle.Key);
         qEle.WasUsedToGreenLightOrDestroy = true;
     }
-
-
-
 
     static List<string> _resources = new List<string>()
     {

@@ -43,10 +43,7 @@ public class DataContainer
             serializer.Serialize(stream, this);
         }
     }
-
-
-
-
+    
     public static DataContainer Load(string path)
     {
         var serializer = new XmlSerializer(typeof(DataContainer));

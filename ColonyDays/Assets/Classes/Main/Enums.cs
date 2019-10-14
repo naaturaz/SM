@@ -497,7 +497,7 @@ public enum StFarm
     //AnimalFarmSmall, AnimalFarmMed, AnimalFarmLarge, AnimalFarmXLarge,
     FieldFarmSmall, FieldFarmMed, 
     //FieldFarmLarge, FieldFarmXLarge,
-    FishingHut, 
+    //FishingHut, 
 }
 
 

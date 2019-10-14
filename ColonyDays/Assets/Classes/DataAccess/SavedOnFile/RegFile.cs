@@ -178,6 +178,7 @@ public class RegFile  {
     public ProductionReport ProductionReport;
     public int MaxPeople;
 
+    public BuildersManager BuildersManager;
 
     public RegFile(Building build, Rect dimOnMap, Ca category, Vector3 iniPosition, 
         Inventory InventoryP, 
@@ -191,7 +192,8 @@ public class RegFile  {
         Vector3 max = new Vector3(), H instructionP = H.None , BookedHome bookedHome = null, 
         Dispatch dispatch = null, Family[] familes = null ,
         int dollarsPay = 0,
-        List<Vector3> anchors = null, Dock dock = null, string root = ""
+        List<Vector3> anchors = null, Dock dock = null, string root = "",
+        BuildersManager buildersManager = null
         )
     {
         MyId = build.MyId;
@@ -234,6 +236,8 @@ public class RegFile  {
         MaxPeople = build.MaxPeople;
         Decoration = build.Decoration1;
         Name = build.NameBuilding();
+
+        BuildersManager = buildersManager;
     }
 
     public RegFile() { }

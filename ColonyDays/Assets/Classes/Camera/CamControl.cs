@@ -1,7 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Globalization;
-using UnityStandardAssets.Characters.FirstPerson;
 
 //THIS IS A STATIC FUNCTION CLASS
 public class CamControl : MonoBehaviour
@@ -24,15 +21,19 @@ public class CamControl : MonoBehaviour
     void Start()
     {
         mainMenuCamera = GameObject.Find("MainMenuCamera").GetComponent<Camera>();
-
     }
 
     public static Camera CurrentCamera()
     {
+        if(!mainMenuCamera)
+        mainMenuCamera = GameObject.Find("MainMenuCamera").GetComponent<Camera>();
+
         if (rtsCamera && rtsCamera.enabled) return rtsCamera;
         if (firstPersonCamera && firstPersonCamera.enabled) return firstPersonCamera;
 
-        return mainMenuCamera;
+        if(mainMenuCamera) return mainMenuCamera;
+
+        return Camera.main;
     }
 
     public static CamControl Create(string root, Vector3 origen = new Vector3())

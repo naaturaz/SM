@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
-using UnityEngine.UI;
-
+﻿using UnityEngine;
 
 public class QuestButton : GUIElement
 {
@@ -45,7 +38,6 @@ public class QuestButton : GUIElement
         //_text.SetActive(active);
     }
 
-
     void Update()
     {
         if (Program.gameScene.QuestManager.CurrentQuests.Count == 0 && _redCircle.activeSelf)
@@ -63,11 +55,6 @@ public class QuestButton : GUIElement
         gameObjectP.SetActive(true);
         var button = gameObjectP.GetComponent<UnityEngine.UI.Button>();
     }
-
-
-
-
-
 
     private void HideButton(GameObject gameO)
     {
@@ -102,4 +89,3 @@ public class QuestButton : GUIElement
     }
 
 }
-

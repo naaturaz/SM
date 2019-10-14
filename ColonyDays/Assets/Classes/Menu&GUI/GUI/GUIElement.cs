@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
-using System;
 using UnityEngine.EventSystems;
 
 public class GUIElement : General
@@ -15,18 +13,47 @@ public class GUIElement : General
 
     RectTransform _scrollContent;
 
+    protected Text _text;
+
+    private float speed = .05f;
+    protected bool _hideSlideToLeft;
+
     // Use this for initialization
     protected void Start()
     {
+        iniPos = transform.position;
+
+        var textGo = FindGameObjectInHierarchy("Text", gameObject);
+        if(textGo != null)
+        _text = textGo.GetComponent<Text>();
+
         _titleInputFieldGO = GetGrandChildCalled("TitleInputField");
+        if (!_titleInputFieldGO) return;
         _titleInputField = _titleInputFieldGO.GetComponent<InputField>();
         _titleInputFieldGO.SetActive(false);
+    }
+
+    //called from GUI 
+    public void HideWindowToTheLeft()
+    {
+        _hideSlideToLeft = true;
     }
 
     // Update is called once per frame
     protected void Update()
     {
+        if (_hideSlideToLeft)
+        {
+            Vector2 newPos = new Vector2(transform.position.x - speed, transform.position.y);
+            transform.position = newPos;
+            speed *= 2.2f;
 
+            if (transform.position.x <= iniPos.x - 400f)
+            {
+                _hideSlideToLeft = false;
+                speed = .02f;
+            }
+        }
     }
 
     public void AdjustContentHeight(float size)

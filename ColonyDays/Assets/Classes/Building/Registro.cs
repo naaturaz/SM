@@ -348,7 +348,8 @@ public class Registro : MonoBehaviour
         Vector3 max = new Vector3(), H instructionP = H.None, BookedHome BookedHome1 = null,
         Dispatch dispatch = null, Family[] Families = null,
         int dollarsPay = 0,
-        List<Vector3> anchors = null, Dock dock = null, string root = ""
+        List<Vector3> anchors = null, Dock dock = null, string root = "", 
+        BuildersManager buildersManager = null
         )
     {
         // 12 hours to find this OMG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -377,7 +378,8 @@ public class Registro : MonoBehaviour
             materialKey: materialKey, planesOnSoilPos: planesOnSoilPos, partsOnSoil: partsOnSoil, min: min, max: max,
             instructionP: instructionP, bookedHome: BookedHome1, dispatch: dispatch, familes: Families,
             dollarsPay: dollarsPay,
-            anchors: anchors, dock: dock, root: root);
+            anchors: anchors, dock: dock, root: root,
+            buildersManager: buildersManager);
 
         //UVisHelp.CreateHelpers(anchors, Root.blueCube);
         AddToAll(regFile);
@@ -512,8 +514,6 @@ public class Registro : MonoBehaviour
 
         //UVisHelp.CreateHelpers(build.Anchors, Root.yellowCube);
 
-
-
         AllRegFile[index].DollarsPay = build.DollarsPay;
         AllRegFile[index].Dock1 = build.Dock1;
         AllRegFile[index].Dispatch1 = build.Dispatch1;
@@ -555,8 +555,6 @@ public class Registro : MonoBehaviour
             regFile.Anchors = build.Anchors.ToArray();
         }
 
-
-
         regFile.DollarsPay = build.DollarsPay;
         regFile.Dock1 = build.Dock1;
         regFile.Dispatch1 = build.Dispatch1;
@@ -568,7 +566,6 @@ public class Registro : MonoBehaviour
         regFile.ProductionReport = build.ProductionReport;
         regFile.MaxPeople = build.MaxPeople;
         regFile.Name = build.NameBuilding();
-
     }
 
     /// <summary>
@@ -576,12 +573,6 @@ public class Registro : MonoBehaviour
     /// </summary>
     General CheckIfOnDict<T>(Dictionary<string, T> onDictionary, General checkP)
     {
-        //is a CancelDemolish
-        //if (checkP==null)
-        //{
-        //    checkP = SelectBuilding;
-        //}
-
         if (onDictionary.ContainsKey(checkP.MyId))
         {
             checkP.AddZeroToMyID();
@@ -732,8 +723,6 @@ public class Registro : MonoBehaviour
         Debug.Log("Margin error ReSaving: " + error);
     }
 
-
-
     /// <summary>
     /// This is used only when loading a town and needs to redo DimOnMap
     /// </summary>
@@ -840,7 +829,6 @@ public class Registro : MonoBehaviour
             }
         }
     }
-
 
     /// <summary>
     /// todo... 

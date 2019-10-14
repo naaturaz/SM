@@ -1,10 +1,6 @@
-﻿//using Steamworks;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
-
 
 public class QuestManager
 {
@@ -17,7 +13,6 @@ public class QuestManager
 
     float _timeToNextQuest = 5;//90
 
-
     public List<int> CurrentQuests
     {
         get { return _currentQuests; }
@@ -29,7 +24,6 @@ public class QuestManager
         get { return _doneQuest; }
         set { _doneQuest = value; }
     }
-
 
     internal QuestButton QuestBtn
     {
@@ -46,15 +40,9 @@ public class QuestManager
 
     List<Quest> _bank = new List<Quest>()
     {
-
-
-
-
-
         new Quest("Shack.Quest", 500, 5.5f),
 
         new Quest("Lamp.Quest", 500, 5.5f),
-
 
         new Quest("SmallFarm.Quest", 550, 5.5f),
         new Quest("FarmHire.Quest", 600, 5.1f),
@@ -103,8 +91,6 @@ public class QuestManager
        new Quest( "Rename2ndDock.Quest", 400, 5.0f),//
        new Quest( "Import2000Wood.Quest",  400, 5.0f, 2000),//
        new Quest( "Import2000Coal.Quest",  400, 5.0f, 2000),//
-
-
     };
 
 
@@ -126,15 +112,19 @@ public class QuestManager
         return fin;
     }
 
+    public Quest CurrentQuest()
+    {
+        if(Program.gameScene.QuestManager.CurrentPlsDone().Count > 0)
+            return Program.gameScene.QuestManager.CurrentPlsDone()[0];
+
+        return null;
+    }
+
     public bool IsDone(Quest q)
     {
         var which = _bank.FindIndex(a => a.Key == q.Key);
-
         return _doneQuest.Contains(which);
     }
-
-
-
 
     public QuestManager()
     {
@@ -143,7 +133,6 @@ public class QuestManager
         //    //_timeToNextQuest = .01f;
         //}
     }
-
 
     bool IsAnyActiveQuestMatchThisKey(string key)
     {
@@ -168,9 +157,6 @@ public class QuestManager
         return _bank.FindIndex(a => a.Key == q.Key);
     }
 
-
-
-
     internal void HideQuestBtn()
     {
         if (_questBtn == null)
@@ -178,7 +164,6 @@ public class QuestManager
             _questBtn = MonoBehaviour.FindObjectOfType<QuestButton>();
         }
         _questBtn.gameObject.SetActive(false);
-
     }
 
     private void ShowQuestBtn()
@@ -254,8 +239,6 @@ public class QuestManager
     public void QuestCompletedAcknowled()
     {
         _lastCompleted = Time.time;
-
-
     }
 
     public void Update()
@@ -340,7 +323,6 @@ public class QuestManager
         _doneQuest.Clear();
     }
 
-
     /// <summary>
     /// Called right after loaded meant to show current 
     /// </summary>
@@ -349,23 +331,12 @@ public class QuestManager
         _wasLoaded = true;
     }
 
-
     public void TutoCallWhenDone()
     {
         _lastCompleted = Time.time;
     }
 
-
-
-
-
-
 }
-
-
-
-
-
 
 public class Quest
 {
@@ -390,7 +361,6 @@ public class Quest
         get { return _secWait; }
         set { _secWait = value; }
     }
-
 
     float _progress;
     /// <summary>

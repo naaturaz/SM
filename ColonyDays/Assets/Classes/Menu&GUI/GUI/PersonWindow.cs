@@ -1,21 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PersonWindow : GUIElement
+public class PersonWindow : Window
 {
-
     private Text _title;
-
-
-
 
     private Text _info;
     private Text _inv;
 
     private Person _person;
-
-    private Vector3 iniPos;
 
     private Rect _genBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
     private Rect _invBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
@@ -25,20 +20,19 @@ public class PersonWindow : GUIElement
 
     private ShowAInventory _showAInventory;
 
-
     private ShowAPersonBuildingDetails _aPersonBuildingDetails;
 
     private GameObject _general;
     private GameObject _gaveta;
 
+    private GameObject _genBtn;//the btn 
+    private GameObject _invBtn;//the btn 
 
     public Person Person1
     {
         get { return _person; }
         set { _person = value; }
     }
-
-
 
     // Use this for initialization
     void Start()
@@ -49,9 +43,7 @@ public class PersonWindow : GUIElement
         Hide();
 
         StartCoroutine("OneSecUpdate");
-
     }
-
 
     bool wasStarted;
     private IEnumerator OneSecUpdate()
@@ -71,30 +63,26 @@ public class PersonWindow : GUIElement
 
     void InitObj()
     {
-
-
         _general = GetChildThatContains(H.General);
         _gaveta = GetChildThatContains(H.Gaveta);
 
         _invIniPos = GetGrandChildCalled(H.Inv_Ini_Pos);
         _inv_Ini_Pos_Gen = GetGrandChildCalled("Inv_Ini_Pos_Gen");
 
-        iniPos = transform.position;
-
         _title = GetChildThatContains(H.Title).GetComponent<Text>();
-
-
 
         _info = GetChildThatContains(H.Info).GetComponent<Text>();
         _inv = FindGameObjectInHierarchy("Bolsa", _gaveta).GetComponent<Text>();
 
-        var genBtn = GetChildThatContains(H.Gen_Btn).transform;
-        var invBtn = GetChildThatContains(H.Inv_Btn).transform;
+        _genBtn = GetChildThatContains(H.Gen_Btn);
+        _invBtn = GetChildThatContains(H.Inv_Btn);
 
-        _genBtnRect = GetRectFromBoxCollider2D(genBtn);
-        _invBtnRect = GetRectFromBoxCollider2D(invBtn);
+        _genBtnRect = GetRectFromBoxCollider2D(_genBtn.transform);
+        _invBtnRect = GetRectFromBoxCollider2D(_invBtn.transform);
+
+        var img = _genBtn.GetComponent<Image>();
+        _initialTabColor = img.color;
     }
-
 
     string _oldPersonMyId;
     public void Show(Person val)
@@ -113,11 +101,9 @@ public class PersonWindow : GUIElement
             }
         }
 
-        //MakeThisTabActive(oldTabActive);
         MakeThisTabActive(_general);
 
         _person = val;
-        //CheckIfIsDiffNewPerson();
 
         UpdateInputTitle();
 
@@ -152,10 +138,6 @@ public class PersonWindow : GUIElement
             _showAInventory.DestroyAll();
             _showAInventory = new ShowAInventory(_person.Inventory, _gaveta, _invIniPos.transform.localPosition);
             _person.InventoryReloaded();
-            //if (_aPersonBuildingDetails != null)
-            //{
-            //    _aPersonBuildingDetails.ManualUpdate(_person, true);
-            //}
         }
         _showAInventory.ManualUpdate();
         _inv.text = BuildStringInv(_person);
@@ -171,12 +153,9 @@ public class PersonWindow : GUIElement
         }
     }
 
-
     string BuildPersonInfo()
     {
         return "";
-
-        
 
         string res = "Age: " + _person.Age + "\n Gender: " + _person.Gender
                      + "\n Nutrition: " + _person.NutritionLevel
@@ -229,9 +208,6 @@ public class PersonWindow : GUIElement
             + "\n FamID:" + _person.FamilyId
             + "\n UnHappyYears:" + _person.UnHappyYears;
 
-
-
-
         res += "___________________\n GoMindState:" + _person.Brain.GoMindState +
                   "\n fdRouteChks:" + _person.Brain._foodRoute.CheckPoints.Count +
                   "\n idleRouteChks:" + _person.Brain._idleRoute.CheckPoints.Count
@@ -245,9 +221,6 @@ public class PersonWindow : GUIElement
                   + "\n wrkRouteChks:" + _person.Brain._workRoute.CheckPoints.Count
                   + "\n Body MovingNow:" + _person.Body.MovingNow;
 
-
-
-
         if (_person.ProfessionProp != null)
         {
             res += "\n Profession ReadyToWork:" + _person.ProfessionProp.ReadyToWork;
@@ -258,8 +231,6 @@ public class PersonWindow : GUIElement
         {
             res += "\n ProfessionReady: prof is null";
         }
-
-
 
         res += "\n Waiting:" + _person.Brain.Waiting
                   + "\n TimesCall:" + _person.Brain.TimesCall
@@ -286,26 +257,18 @@ public class PersonWindow : GUIElement
         }
 
         if (_showAInventory != null)
-        {
             _showAInventory.UpdateToThisInv(_person.Inventory);
-        }
 
         //if click gen
         if (_genBtnRect.Contains(Input.mousePosition) && Input.GetMouseButtonUp(0))
-        {
             MakeThisTabActive(_general);
-        }
         //ig click inv
         else if (_invBtnRect.Contains(Input.mousePosition) && Input.GetMouseButtonUp(0))
-        {
             MakeThisTabActive(_gaveta);
-        }
 
         //then update inv info all the time 
         if (_person != null && _inv != null && !string.IsNullOrEmpty(_inv.text))
-        {
             _inv.text = BuildStringInv(_person);
-        }
     }
 
     private GameObject oldTabActive;
@@ -315,32 +278,33 @@ public class PersonWindow : GUIElement
     /// <param name="g"></param>
     void MakeThisTabActive(GameObject g)
     {
-        if (_person == null)
-        {
-            return;
-        }
+        if (_person == null) return;
 
         //first time loaded ever in game 
-        if (g == null)
-        {
-            g = _general;
-        }
+        if (g == null) g = _general;
 
         _general.SetActive(false);
         _gaveta.SetActive(false);
+        ColorTabInactive(_genBtn);
+        ColorTabInactive(_invBtn);
 
         g.SetActive(true);
+
+        if(g == _general)
+            ColorTabActive(_genBtn);
+        else
+            ColorTabActive(_invBtn);
+
         oldTabActive = g;
     }
+
 
     public override void Hide()
     {
         base.Hide();
 
         if (_person != null)
-        {
             _person.UnselectPerson();
-        }
     }
 
     /// <summary>
@@ -354,10 +318,6 @@ public class PersonWindow : GUIElement
         _person.ToggleShowPath(which);
     }
 
-
-
-
-
     protected void UpdateInputTitle()
     {
         _titleInputFieldGO.SetActive(true);
@@ -367,7 +327,6 @@ public class PersonWindow : GUIElement
 
     }
 
-
     public void NewAlias()
     {
         _person.Name = _titleInputField.text;
@@ -376,7 +335,6 @@ public class PersonWindow : GUIElement
         Program.UnLockInputSt();
 
         Program.gameScene.TutoStepCompleted("Rename.Tuto");
-
     }
 
     public void LockInput()

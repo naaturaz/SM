@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
-
 
 public class OptionsWindow : GUIElement
 {
@@ -62,8 +60,6 @@ public class OptionsWindow : GUIElement
         _musicSlider = GetGrandChildCalled("Music_Slider").GetComponent<Slider>();
         _soundSlider = GetGrandChildCalled("Sound_Slider").GetComponent<Slider>();
         _cameraSlider = GetGrandChildCalled("Camera_Slider").GetComponent<Slider>();
-
-
 
 
         var autoSavePanel = GetGrandChildCalled("Panel_AutoSave");
@@ -341,13 +337,12 @@ public class OptionsWindow : GUIElement
         }
     }
 
-
     public void ClickLanguagesDropDown()
     {
         SetButtonsList(_langBtn);
         List<string> names = new List<string>()
         {
-            "English", "Français(Beta)",//"Deutsch(Beta)",//"Español(Beta)",//"Português(Beta)"
+            "English", "Français(Beta)", "Deutsch(Beta)",//"Español(Beta)",//"Português(Beta)"
         };
 
         for (int i = 0; i < _buttonsName.Count; i++)
@@ -363,7 +358,6 @@ public class OptionsWindow : GUIElement
             }
         }
     }
-
 
     public void ClickAutoSaveDropDown()
     {
@@ -485,7 +479,6 @@ public class OptionsWindow : GUIElement
         LoadSlidersValues();
     }
 
-
     #region Sliders Sound and Music , Camera
 
     void LoadSlidersValues()
@@ -515,12 +508,13 @@ public class OptionsWindow : GUIElement
     private float factorDesi = 2f;//bz .5 in the slider is 1 
     public void NewCamSensitivity()
     {
-        CamControl.CAMRTS.CamSensivity = _cameraSlider.value*factorSens;
-        CamControl.CAMRTS.DesiredSpeed = _cameraSlider.value * factorDesi;
+        if(CamControl.CAMRTS != null)
+        {
+            CamControl.CAMRTS.CamSensivity = _cameraSlider.value * factorSens;
+            CamControl.CAMRTS.DesiredSpeed = _cameraSlider.value * factorDesi;
+        }
+
     }
 
 #endregion
-
-
 }
-

@@ -4724,43 +4724,12 @@ public class Building : Hoverable, Iinfo
         set { _buildersManager = value; }
     }
 
-
-
-    /// <summary>
-    /// Will return a family that is empty and has not ID set yet 
-    /// </summary>
-    /// <returns></returns>
-//internal Family FindVirginFamily()
-//{
-//    if (Families == null)
-//    {
-
-//        return null;
-//    }
-
-//    for (int i = 0; i < Families.Length; i++)
-//    {
-//        if (Families[i].IsFamilyEmpty() && string.IsNullOrEmpty(Families[i].FamilyId))
-//        {
-//            return Families[i];
-//        }
-//    }
-//    return null;
-//}
-
     #endregion
 
     #region AnimalFarm
 
 
     #endregion
-
-
-
-
-
-
-
 
     /// <summary>
     /// Will say if one empty family spot is marked already with param 'p'

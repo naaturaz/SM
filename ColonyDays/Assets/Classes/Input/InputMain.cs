@@ -5,6 +5,7 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class InputMain : InputParent {
 
+    int _oldSpeed = -1;
 
     public EventHandler<EventArgs> ChangeSpeed;
     /// <summary>
@@ -18,9 +19,9 @@ public class InputMain : InputParent {
             ChangeSpeed(this, e);
             Rotate.SpeedChanged();
             AudioContainer.SpeedChanged();
+            MyText.UpdateNow();
         }
     }
-
 
     public static InputMeshSpawn InputMeshSpawnObj;
     public BuildingPot BuilderPot;
@@ -68,13 +69,37 @@ public class InputMain : InputParent {
 
         FirstPersonCam();
 
+        SpacePausesTheGame();
+
         //AddressPointerOutOfScreen();
+    }
+
+    private void SpacePausesTheGame()
+    {
+        if(Input.GetKeyUp(KeyCode.Space))
+        {
+            if(Program.gameScene.GameSpeed > 0)
+            {
+                _oldSpeed = Program.gameScene.GameSpeed;
+                Program.gameScene.GameSpeed = 0;
+                OnChangeSpeed(EventArgs.Empty);
+
+            }
+            else if(Program.gameScene.GameSpeed == 0 && _oldSpeed != -1)
+            {
+                Program.gameScene.GameSpeed = _oldSpeed;
+                OnChangeSpeed(EventArgs.Empty);
+                _oldSpeed = -1;
+            }
+        }
     }
 
     private FirstPersonController firstPersonController;
     private bool isFirstCamOn;
     void FirstPersonCam()
     {
+        if (!Developer.IsDev) return;
+
         if (Input.GetKeyUp(KeyCode.F10) && !isFirstCamOn)
         {
             var ini = CamControl.CAMRTS.centerTarget.transform.position;
@@ -146,7 +171,6 @@ public class InputMain : InputParent {
         }
     }
 
-
     void GeneralSwitch()
     {
         var ctrlS = Input.GetKeyUp(KeyCode.F) && (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl));
@@ -184,8 +208,6 @@ public class InputMain : InputParent {
                DateTime.Now.Hour + "h" + DateTime.Now.Minute + "m" + DateTime.Now.Second + "s";
     }
 
-
-
     public void EscapeKey()
     {
         //means is playing
@@ -222,12 +244,6 @@ public class InputMain : InputParent {
         }
     }
 
-
-
-
-
- 
-
     /// <summary>
     /// Says if game is unlock and can be saved now 
     /// </summary>
@@ -235,7 +251,6 @@ public class InputMain : InputParent {
     bool IsGameUnLock()
     {
         var personLock = PersonPot.Control.Locked;
-
         return !personLock;
     }
 
@@ -430,9 +445,6 @@ public class InputMain : InputParent {
 
     }
 
-
-
-
     public void ChangeGameSpeedBy(int val)
     {
         if (Program.gameScene.GameController1.IsGameOver)
@@ -461,7 +473,6 @@ public class InputMain : InputParent {
         OnChangeSpeed(EventArgs.Empty);
         ManagerReport.AddInput("Speed changed by:"+val + ". CurrSpeed: "+Program.gameScene.GameSpeed);
         ManagerReport.AddNewSpeed(Program.gameScene.GameSpeed);
-        MyText.UpdateNow();
     }
 
     int _currIndex = 1;//bz games starts at 1x speed

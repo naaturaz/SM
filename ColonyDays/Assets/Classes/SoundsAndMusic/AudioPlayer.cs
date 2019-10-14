@@ -35,12 +35,7 @@ public class AudioPlayer  {
 
     static private void LoadAllAudios()
     {
-        //if (soundsCointaner != null) return;
-
-        //if (CamControl.CurrentCamera() == null) return;
-
-        if (//_soundsLib == null || 
-            _soundsLib.Count > 0) return;
+        if (_soundsLib.Count > 0) return;
 
         soundsCointaner = General.Create(Root.classesContainer, CamControl.CurrentCamera().transform.position,
             "SoundContainer", CamControl.CurrentCamera().transform);
@@ -74,6 +69,8 @@ public class AudioPlayer  {
 #if UNITY_STANDALONE
         waves = GetFilesInStandAlone();
 #endif
+
+        Debug.Log("waves.count :" + waves.Count);
 
         foreach (var item in waves)
         {
@@ -151,6 +148,8 @@ public class AudioPlayer  {
 
     public static void PlayThisSound1Time(string hTypeP, string currProd)
     {
+        InitSoundsLib();
+
         if (!Settings.ISSoundOn)
         {
             return;

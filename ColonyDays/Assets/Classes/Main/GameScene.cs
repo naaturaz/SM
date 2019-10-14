@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using Facebook.Unity;
+//using Facebook.Unity;
 using Steamworks;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
@@ -252,7 +252,7 @@ public class GameScene : General
     private void Start()
     {
         Debug.Log("GameScene Start():" + Time.time);
-        FB.Init();
+        //FB.Init();
 
         Book.Start();
 

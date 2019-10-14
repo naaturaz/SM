@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 
 public class QuestWindow : GUIElement
 {
@@ -28,12 +24,10 @@ public class QuestWindow : GUIElement
         Hide();
     }
 
-
     public void Show(string val)
     {
         if (Program.gameScene.QuestManager.CurrentPlsDone().Count == 0)
         {
-
             return;
         }
 
@@ -47,7 +41,6 @@ public class QuestWindow : GUIElement
 
         Program.gameScene.QuestManager.QuestBtn.HideArrow();
     }
-
 
     #region Scroll
 

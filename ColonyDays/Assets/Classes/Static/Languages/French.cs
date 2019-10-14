@@ -284,7 +284,7 @@ public class French
             { "PortReputation.HoverSmall", "Notoriété du port"},
             { "Dollars.HoverSmall", "Dollars"},
             { "PirateThreat.HoverSmall", "Menace pirate"},
-            { "Date.HoverSmall", "Date (m/a)"},
+            { "Date.HoverSmall", "Date (Mmm/A)"},
             { "MoreSpeed.HoverSmall", "Augmenter [PgUp]"},
             { "LessSpeed.HoverSmall", "Diminuer [PgDwn]"},
             { "PauseSpeed.HoverSmall", "Mettre en pause"},

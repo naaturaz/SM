@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
-using Facebook.Unity;
+//using Facebook.Unity;
 
 public class MouseListener : InputMain
 {
@@ -134,10 +134,11 @@ public class MouseListener : InputMain
         }
     }
 
-
     public void ApplyChangeScreenResolution(bool promtToGame = false)
     {
+        if(Program.gameScene.Fustrum1 != null)
         Program.gameScene.Fustrum1.RedoRect();
+
         Program.MyScreen1.ReLoadMainMenuIfActive();
         
         //being called before a game is loaded 
@@ -153,19 +154,9 @@ public class MouseListener : InputMain
         main.Destroy();
         main = null;
         LoadMainGUI();
-     
 
         //in case PersonWindow was not null. So main menu is last 
         Program.MyScreen1.ReLoadMainMenuIfActive();
-
-        ////bz gui was on top of main menu when changed resolution 
-        //if (promtToGame)
-        //{
-        //    //shows game
-        //    EscapeKey();
-        //    //show mainMenu
-        //    EscapeKey();
-        //}
     }
 
     /// <summary>
@@ -240,7 +231,6 @@ public class MouseListener : InputMain
         UnselectingBuild();
         _buildingWindow.Hide();
     }
-
 
     /// <summary>
     /// Will select clicked building and ret true if one was seelected 

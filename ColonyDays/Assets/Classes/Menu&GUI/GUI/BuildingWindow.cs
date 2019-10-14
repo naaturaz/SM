@@ -3,11 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.UI;
-using System;
 
-public class BuildingWindow : GUIElement
+public class BuildingWindow : Window
 {
-    private Color _initialTabColor;
 
     private Text _title;
     private Text _info;
@@ -785,7 +783,6 @@ public class BuildingWindow : GUIElement
     /// <param name="action"></param>
     public void ClickedOnChangeSalaryCheckBox(string action)
     {
-
         //change salary
         _currSalaryTxt.text = BuildingPot.Control.Registro.SelectBuilding.ChangeSalary(action);
     }
@@ -842,6 +839,8 @@ public class BuildingWindow : GUIElement
     /// <param name="g"></param>
     void MakeThisTabActive(GameObject g)
     {
+        DestroyAllProducts();
+
         if (Building == null || _orders == null || _products == null)
         {
             return;
@@ -861,24 +860,24 @@ public class BuildingWindow : GUIElement
         //then orders need to be Pull from dispatch and shown on Tab
         if (g == _orders)
         {
-            ColorTab(_ordBtn, Color.green);
+            ColorTabActive(_ordBtn);
             ShowOrders();
         }
         else if (g == _products)
         {
-            ColorTab(_prdBtn, Color.green);
+            ColorTabActive(_prdBtn);
             ShowProducts();
         }
         else if (g == _gaveta)
         {
-            ColorTab(_invBtn, Color.green);
+            ColorTabActive(_invBtn);
         }
         else if (g == _stats)
         {
-            ColorTab(_staBtn, Color.green);
+            ColorTabActive(_staBtn);
         }
         else
-            ColorTab(_genBtn, Color.green);
+            ColorTabActive(_genBtn);
     }
 
     void ResetPanelsAndTabs()
@@ -890,17 +889,11 @@ public class BuildingWindow : GUIElement
         _products.SetActive(false);
         _stats.SetActive(false);
 
-        ColorTab(_genBtn, _initialTabColor);
-        ColorTab(_invBtn, _initialTabColor);
-        ColorTab(_ordBtn, _initialTabColor);
-        ColorTab(_prdBtn, _initialTabColor);
-        ColorTab(_staBtn, _initialTabColor);
-    }
-
-    void ColorTab(GameObject go, Color color)
-    {
-        var img = go.GetComponent<Image>();
-        img.color = color;
+        ColorTabInactive(_genBtn);
+        ColorTabInactive(_invBtn);
+        ColorTabInactive(_ordBtn);
+        ColorTabInactive(_prdBtn);
+        ColorTabInactive(_staBtn);
     }
 
     /// <summary>
@@ -908,6 +901,8 @@ public class BuildingWindow : GUIElement
     /// </summary>
     private void ShowProductDetail()
     {
+        MarkProductAsSelected(Building.CurrentProd.Id);
+
         Building.CurrentProd.BuildDetails();//so they update if needed
         _displayProdInfo.text = Building.CurrentProd.Details;
 
@@ -952,7 +947,7 @@ public class BuildingWindow : GUIElement
     List<OrderShow> _showProducts = new List<OrderShow>();
     void Display1String(int i, ProductInfo pInfo, string root)
     {
-        var orderShow = OrderShow.Create(root, _products.transform);
+        var orderShow = OrderShow.Create(root, _products.transform, pInfo);
         orderShow.ShowToSetCurrentProduct(pInfo);
 
         orderShow.Reset(i);
@@ -961,13 +956,11 @@ public class BuildingWindow : GUIElement
     }
 
     ///Show  Orders on tab
-
     /// <summary>
     /// Show orders routine
     /// </summary>
     public void ShowOrders()
     {
-        //DestroyAndCleanShownOrders();
         DestroyAllProducts();
         DestroyOrdersIfDone();
     
@@ -1167,6 +1160,20 @@ public class BuildingWindow : GUIElement
     {
         Building.SetProductToProduce(product);
         ShowProductDetail();
+
+        MarkProductAsSelected(int.Parse( product.Split('.')[1] ) );
+    }
+
+    void MarkProductAsSelected(int productId)
+    {
+        foreach (var shown in _showProducts)
+        {
+            if (shown.ProductId() == productId)
+            {
+                shown.MarkAsSelected();
+            }
+            else shown.MarkAsUnSelected();
+        }
     }
 
     internal void Reload()

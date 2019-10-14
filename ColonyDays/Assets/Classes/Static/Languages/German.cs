@@ -284,7 +284,7 @@ public class German
             { "PortReputation.HoverSmall", "Ruf des Hafens"},
             { "Dollars.HoverSmall", "Dollar"},
             { "PirateThreat.HoverSmall", "Piratenbedrohung"},
-            { "Date.HoverSmall", "Datum (M/J)"},
+            { "Date.HoverSmall", "Datum (Mmm/J)"},
             { "MoreSpeed.HoverSmall", "Schneller [BildHoch]"},
             { "LessSpeed.HoverSmall", "Langsamer [BildRunter]"},
             { "PauseSpeed.HoverSmall", "Spiel pausieren"},
