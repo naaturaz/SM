@@ -1031,8 +1031,6 @@ public class Languages
 
 
 
-
-
         //ProductStat.cs has a lot of text to put here 
         //SpecTile.cs has
         //ShowAPersonBuildingDetails has
