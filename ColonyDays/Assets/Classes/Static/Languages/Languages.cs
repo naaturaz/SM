@@ -1199,9 +1199,9 @@ public class Languages
         }
         else if (_currentLang == "Español(Beta)")
         {
-            if (_sp.ContainsKey(key))
+            if (Spanish.ContainsKey(key))
             {
-                return _sp.ReturnValueWithKey(key);
+                return Spanish.ReturnValueWithKey(key);
             }
             return "es:" + key;
         }
@@ -1240,6 +1240,7 @@ public class Languages
             ReloadDict();
             French.ReloadDict();
             German.ReloadDict();
+            Spanish.ReloadDict();
         }
     }
 

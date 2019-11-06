@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-public class Languages
+public class Spanish
 {
     private static LangDict _sp = new LangDict();
 
@@ -37,15 +37,15 @@ public class Languages
         _sp.Add(H.StandLamp + ".Desc","Alumbra por las noches si hay Aceite de Ballena en la almacén.");
 
         //House
-        _sp.Add("Bohio.Desc", "El Bohío, una casa con condiciones muy rudimentarias, los ciudadanos se abochornan de vivir aquí, una familia puede tener el máximo de 1 niño aquí" + _houseTail);
+        _sp.Add("Bohio.Desc", "El Bohío, una casa con condiciones muy rudimentarias, los ciudadanos se abochornan de vivir aquí, una familia puede tener el máximo de 1 niño aquí" + _houseTailES);
 
         _sp.Add("Shack.Desc", "Casucha: Con condiciones de vida primitiva, las personas no son felices viviendo aquí y pueden tener un máximo de 2 niños");
         _sp.Add("MediumShack.Desc", "Casucha mediana: Las condiciones son básicas, y las personas sienten muy poca felicidad viviendo aquí y pueden tener un máximo de 2-3 niños");
         _sp.Add("LargeShack.Desc", "Casucha grande: Las condiciones son un poco mejor que básicas, y las personas sienten algo de felicidad viviendo aquí y pueden tener un máximo de 2-4 niños");
 
-        _en.Add("WoodHouseA.Desc", "Casa de madera mediana, una familia puede tener un máximo de 2-3 niños");
-        _en.Add("WoodHouseB.Desc", "Casa de madera grande, una familia puede tener un máximo de 3-4 niños");
-        _en.Add("WoodHouseC.Desc", "Casa de madera de lujo, una familia puede tener un máximo de 2-3 niños");
+        _sp.Add("WoodHouseA.Desc", "Casa de madera mediana, una familia puede tener un máximo de 2-3 niños");
+        _sp.Add("WoodHouseB.Desc", "Casa de madera grande, una familia puede tener un máximo de 3-4 niños");
+        _sp.Add("WoodHouseC.Desc", "Casa de madera de lujo, una familia puede tener un máximo de 2-3 niños");
 
         _sp.Add("BrickHouseA.Desc","Casa de ladrillos mediana:, una familia puede tener el máximo de 3 a 4 niños aquí"+_houseTailES);
         _sp.Add("BrickHouseB.Desc","Casa de ladrillos de lujo:, una familia puede tener el máximo de 3 a 4 niños aquí"+_houseTailES);
@@ -885,137 +885,158 @@ public class Languages
         _sp.Add("Early Access Build", "Acceso Anticipado");
 
  		//Main Menu
-        _en.Add("Resume Game", "Resumir Juego");
-        _en.Add("Continue Game", "Continuar Juego");
-        _en.Add("Tutorial", "Tutorial");
-        _en.Add("New Game", "Juego Nuevo");
-        _en.Add("Load Game", "Cargar Juego");
-        _en.Add("Save Game", "Salvar Juego");
-        _en.Add("Achievements", "Logros");
-        _en.Add("Options", "Opciones");
-        _en.Add("Exit", "Salir");
+        _sp.Add("Resume Game", "Resumir Juego");
+        _sp.Add("Continue Game", "Continuar Juego");
+        _sp.Add("Tutorial", "Tutorial");
+        _sp.Add("New Game", "Juego Nuevo");
+        _sp.Add("Load Game", "Cargar Juego");
+        _sp.Add("Save Game", "Salvar Juego");
+        _sp.Add("Achievements", "Logros");
+        _sp.Add("Options", "Opciones");
+        _sp.Add("Exit", "Salir");
         //Screens
         //New Game
-        _en.Add("Town Name:", "Pueblo:");
-        _en.Add("Difficulty:", "Dificultad:");
-        _en.Add("Easy", "Fácil");
-        _en.Add("Moderate", "Medio");
-        _en.Add("Hard", "Difícil");
-        _en.Add("Type of game:", "Tipo de juego:");
-        _en.Add("Freewill", "Libre");
-        _en.Add("Traditional", "Tradicional");
-        _en.Add("New.Game.Pirates", "Piratas (si es marcado, pudieses sufrir el ataque de los piratas)");
-        _en.Add("New.Game.Expires", "Caducidad (si lo marcas, la comida tiene fecha de expiración)");
-        _en.Add("OK", "OK");
-        _en.Add("Cancel", "Cancelar");
-        _en.Add("Delete", "Borrar");
-        _en.Add("Enter name...", "Escribe el nombre...");
+        _sp.Add("Town Name:", "Pueblo:");
+        _sp.Add("Difficulty:", "Dificultad:");
+        _sp.Add("Easy", "Fácil");
+        _sp.Add("Moderate", "Medio");
+        _sp.Add("Hard", "Difícil");
+        _sp.Add("Type of game:", "Tipo de juego:");
+        _sp.Add("Freewill", "Libre");
+        _sp.Add("Traditional", "Tradicional");
+        _sp.Add("New.Game.Pirates", "Piratas (si es marcado, pudieses sufrir el ataque de los piratas)");
+        _sp.Add("New.Game.Expires", "Caducidad (si lo marcas, la comida tiene fecha de expiración)");
+        _sp.Add("OK", "OK");
+        _sp.Add("Cancel", "Cancelar");
+        _sp.Add("Delete", "Borrar");
+        _sp.Add("Enter name...", "Escribe el nombre...");
         //Options
-        _en.Add("General", "General");
-        _en.Add("Unit System:", "Sistema de unidades:");
-        _en.Add("Metric", "Métrico");
-        _en.Add("Imperial", "Imperial");
-        _en.Add("AutoSave Frec:", "Auto salva:");
-        _en.Add("20 min", "20 min");
-        _en.Add("15 min", "15 min");
-        _en.Add("10 min", "10 min");
-        _en.Add("5 min", "5 min");
-        _en.Add("Language:", "Lenguaje:");
-        _en.Add("English", "English");
-        _en.Add("Camera Sensitivity:", "Sensibilidad de la Cámara:");
-        _en.Add("Themes", "Temas");
-        _en.Add("Halloween:", "Halloween:");
-        _en.Add("Christmas:", "Noche Buena:");
-        _en.Add("Options.Change.Theme", "Una vez cambiado por favor reinicia el juego");
+        _sp.Add("General", "General");
+        _sp.Add("Unit System:", "Sistema de unidades:");
+        _sp.Add("Metric", "Métrico");
+        _sp.Add("Imperial", "Imperial");
+        _sp.Add("AutoSave Frec:", "Auto salva:");
+        _sp.Add("20 min", "20 min");
+        _sp.Add("15 min", "15 min");
+        _sp.Add("10 min", "10 min");
+        _sp.Add("5 min", "5 min");
+        _sp.Add("Language:", "Lenguaje:");
+        _sp.Add("English", "English");
+        _sp.Add("Camera Sensitivity:", "Sensibilidad de la Cámara:");
+        _sp.Add("Themes", "Temas");
+        _sp.Add("Halloween:", "Halloween:");
+        _sp.Add("Christmas:", "Noche Buena:");
+        _sp.Add("Options.Change.Theme", "Una vez cambiado por favor reinicia el juego");
 
-        _en.Add("Screen", "Pantalla");
-        _en.Add("Quality:", "Calidad:");
-        _en.Add("Beautiful", "Magnifico");
-        _en.Add("Fantastic", "Fantástico");
-        _en.Add("Simple", "Simple");
-        _en.Add("Good", "Buena");
-        _en.Add("Resolution:", "Resolución:");
-        _en.Add("FullScreen:", "Pantalla completa:");
+        _sp.Add("Screen", "Pantalla");
+        _sp.Add("Quality:", "Calidad:");
+        _sp.Add("Beautiful", "Magnifico");
+        _sp.Add("Fantastic", "Fantástico");
+        _sp.Add("Simple", "Simple");
+        _sp.Add("Good", "Buena");
+        _sp.Add("Resolution:", "Resolución:");
+        _sp.Add("FullScreen:", "Pantalla completa:");
 
-        _en.Add("Audio", "Audio");
-        _en.Add("Music:", "Música:");
-        _en.Add("Sound:", "Sonido:");
-        _en.Add("Newborn", "Bebé");
-        _en.Add("Build Completed", "Construction terminada");
-        _en.Add("People's Voice", "Voz de las personas");
+        _sp.Add("Audio", "Audio");
+        _sp.Add("Music:", "Música:");
+        _sp.Add("Sound:", "Sonido:");
+        _sp.Add("Newborn", "Bebé");
+        _sp.Add("Build Completed", "Construction terminada");
+        _sp.Add("People's Voice", "Voz de las personas");
 
         //in game gui
-        _en.Add("Prod", "Prod");
-        _en.Add("Finance", "Finanzas");
+        _sp.Add("Prod", "Prod");
+        _sp.Add("Finance", "Finanzas");
 
         //After Oct 20th 2018
-        _en.Add("Resources", "Materiales");
-        _en.Add("Dollars", "Pesetas");
-        _en.Add("Coming.Soon", "Esta construcción ya viene para el juego");
-        _en.Add("Max.Population", "No se pueden construir mas casas. Alcanzaste el limite de personas");
+        _sp.Add("Resources", "Materiales");
+        _sp.Add("Dollars", "Pesetas");
+        _sp.Add("Coming.Soon", "Esta construcción ya viene para el juego");
+        _sp.Add("Max.Population", "No se pueden construir mas casas. Alcanzaste el limite de personas");
 
-        _en.Add("To.Unlock", "Desbloquea: ");
-        _en.Add("People", "Personas");
-        _en.Add("Of.Food", " de comida. ");
-        _en.Add("Port.Reputation.Least", "Tu Reputación Portuaria al menos a ");
-        _en.Add("Pirate.Threat.Less", "Amenaza Pirata a menos que ");
-        _en.Add("Skip", "Skip");
+        _sp.Add("To.Unlock", "Desbloquea: ");
+        _sp.Add("People", "Personas");
+        _sp.Add("Of.Food", " de comida. ");
+        _sp.Add("Port.Reputation.Least", "Tu Reputación Portuaria al menos a ");
+        _sp.Add("Pirate.Threat.Less", "Amenaza Pirata a menos que ");
+        _sp.Add("Skip", "Skip");
 
         //After Dec 8, 2018
-        _en.Add("ReloadMod.HoverSmall", "Recarga archivos Mod");
-        _en.Add("isAboveHeight.MaritimeBound", "La sección seca de la construcción esta debajo de la altura mínima");
-        _en.Add("arePointsEven.MaritimeBound", "La sección seca de la construcción no esta en un terreno llano");
-        _en.Add("isOnTheFloor.MaritimeBound", "La sección seca de la construcción no esta en la altura común");
-        _en.Add("isBelowHeight.MaritimeBound", "La sección seca de la construcción no esta en el agua");
+        _sp.Add("ReloadMod.HoverSmall", "Recarga archivos Mod");
+        _sp.Add("isAboveHeight.MaritimeBound", "La sección seca de la construcción esta debajo de la altura mínima");
+        _sp.Add("arePointsEven.MaritimeBound", "La sección seca de la construcción no esta en un terreno llano");
+        _sp.Add("isOnTheFloor.MaritimeBound", "La sección seca de la construcción no esta en la altura común");
+        _sp.Add("isBelowHeight.MaritimeBound", "La sección seca de la construcción no esta en el agua");
 
-        _en.Add("InLand.Helper", "En Tierra");
-        _en.Add("InWater.Helper", "En Agua");
+        _sp.Add("InLand.Helper", "En Tierra");
+        _sp.Add("InWater.Helper", "En Agua");
 
         //After Dec 28, 2018
-        _en.Add("Down.HoverSmall", "Prioridad Disminuida");
-        _en.Add("Up.HoverSmall", "Prioridad Aumentada");
-        _en.Add("Trash.HoverSmall", "Borrar Orden");
-        _en.Add("Counting...", "Contando...");
-        _en.Add("Ten Orders Limit", "Diez ordenes es el limite");
+        _sp.Add("Down.HoverSmall", "Prioridad Disminuida");
+        _sp.Add("Up.HoverSmall", "Prioridad Aumentada");
+        _sp.Add("Trash.HoverSmall", "Borrar Orden");
+        _sp.Add("Counting...", "Contando...");
+        _sp.Add("Ten Orders Limit", "Diez ordenes es el limite");
 
         //After May 1, 2019
-        _en.Add("Our inventories:", "Nuestros inventarios:");
-        _en.Add("Select Product:", "Selecciona un producto:");
-        _en.Add("Current_Rank.HoverSmall", "Numero en la cola");
+        _sp.Add("Our inventories:", "Nuestros inventarios:");
+        _sp.Add("Select Product:", "Selecciona un producto:");
+        _sp.Add("Current_Rank.HoverSmall", "Numero en la cola");
 
-        _en.Add("Construction.Progress", "Progreso de la construcción en: ");
-        _en.Add("Warning.This.Building", "Atención: Esta construcción no puede ser construida ahora. Falta material(es):\n");
-        _en.Add("Product.Selected", "Producto seleccionado: ");
-        _en.Add("Harvest.Date", "\nDia de la recogida: ");
-        _en.Add("Progress", "\nProgreso: ");
+        _sp.Add("Construction.Progress", "Progreso de la construcción en: ");
+        _sp.Add("Warning.This.Building", "Atención: Esta construcción no puede ser construida ahora. Falta material(es):\n");
+        _sp.Add("Product.Selected", "Producto seleccionado: ");
+        _sp.Add("Harvest.Date", "\nDia de la recogida: ");
+        _sp.Add("Progress", "\nProgreso: ");
 
         //AddOrderWindow.cs
-        _en.Add("Add.New", "Añade Nueva ");
-        _en.Add("Order", " Orden");
-        _en.Add("Import", "Importa");
-        _en.Add("Export", "Exporta");
+        _sp.Add("Add.New", "Añade Nueva ");
+        _sp.Add("Order", " Orden");
+        _sp.Add("Import", "Importa");
+        _sp.Add("Export", "Exporta");
         //AddOrderWindow GUI
-        _en.Add("Enter Amount:", "Entra cantidad:");
-        _en.Add("Enter amount...", "Entra cantidad...");
-        _en.Add("New Order:", "Orden Nueva:");
-        _en.Add("Product:", "Producto:");
-        _en.Add("Amount:", "Cantidad:");
-        _en.Add("Order total price:", "Precio total de la orden:");
-        _en.Add("Add", "Add");
+        _sp.Add("Enter Amount:", "Entra cantidad:");
+        _sp.Add("Enter amount...", "Entra cantidad...");
+        _sp.Add("New Order:", "Orden Nueva:");
+        _sp.Add("Product:", "Producto:");
+        _sp.Add("Amount:", "Cantidad:");
+        _sp.Add("Order total price:", "Precio total de la orden:");
+        _sp.Add("Add", "Add");
         
         //BuildingWindow GUI
-        _en.Add("Product Description:", "Descripción del producto:");
-        _en.Add("Production report by years:", "Reporte anual productivo:");
-        _en.Add("Import Orders", "Importación");
-        _en.Add("Export Orders", "Exportación");
-        _en.Add("Orders in progress:", "Ordenes actuales:");
+        _sp.Add("Product Description:", "Descripción del producto:");
+        _sp.Add("Production report by years:", "Reporte anual productivo:");
+        _sp.Add("Import Orders", "Importación");
+        _sp.Add("Export Orders", "Exportación");
+        _sp.Add("Orders in progress:", "Ordenes actuales:");
 
         //Jun 12, 2019
-        _en.Add("ShowQuest.HoverSmall", "Tarea actual");
-        _en.Add("Have Fun", "Diviértete");
-        _en.Add("Current Quest:", "Tarea actual:");
-        _en.Add("Reward: ", "Premio: ");
+        _sp.Add("ShowQuest.HoverSmall", "Tarea actual");
+        _sp.Add("Have Fun", "Diviértete");
+        _sp.Add("Current Quest:", "Tarea actual:");
+        _sp.Add("Reward: ", "Premio: ");
 
+        //Nov 5, 2019
+        _sp.Add("More", "Mas");
+        _sp.Add("Less", "Menos");
+        _sp.Add("Reward:", "Premio:");
+        _sp.Add("Current Quest:", "Tarea Actual:");
+
+    }
+
+    internal static void Clear()
+    {
+        _sp.Clear();
+    }
+
+    public static string ReturnValueWithKey(string key)
+    {
+        return _sp.ReturnValueWithKey(key);
+    }
+
+    public static bool ContainsKey(string key)
+    {
+        return _sp.ContainsKey(key);
     }
 
 }

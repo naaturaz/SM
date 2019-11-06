@@ -114,8 +114,6 @@ public class MyScreen : General
     {
         LoadMainMenu();
         Start();
-
-        //_mainMenuWindow.MakeResumeActive();
     }
        
     /// <summary>
@@ -535,8 +533,11 @@ public class MyScreen : General
                 _optionsWindow.Destroy();
                 _optionsWindow = null;
 
-                _achieveWindow.Destroy();
-                _achieveWindow = null;
+                if (_achieveWindow)
+                {
+                    _achieveWindow.Destroy();
+                    _achieveWindow = null;
+                }
 
                 DestroyCurrentMenu();
                 LoadMainMenu();
@@ -547,16 +548,4 @@ public class MyScreen : General
         }
     }
 
-
-    ///// <summary>
-    ///// loads data from PersonController loading
-    ///// </summary>
-    ///// <param name="pData"></param>
-    //internal void LoadData(PersonData pData)
-    //{
-    //    HoldDifficulty = pData.PersonControllerSaveLoad.Difficulty;
-
-
-    //    Program.gameScene.RedoStuffWithLoadedData();
-    //}
 }
