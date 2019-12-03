@@ -217,7 +217,7 @@ public class GameScene : General
                     ;
 
         return discl +
-               " Early Access \n v0.7.0." +
+               " Early Access \n v0.9.0." +
                //"Closed Beta \n v0.0.1." + 
                TimeStamp();
     }
@@ -244,9 +244,7 @@ public class GameScene : General
 
     #endregion
 
-
     bool loadTerrain;
-
 
     // Use this for initialization
     private void Start()

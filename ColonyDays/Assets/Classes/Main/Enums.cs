@@ -38,7 +38,6 @@ public enum HPers //to be use for the person class
     MovingToNewHome,
     NowToNewHome,
 
-
     Restarting,
     IdleInHome,
     CheckingStuff,
@@ -520,10 +519,12 @@ public enum StProd //for structures game structure.cs
 
 //Ind
 public enum StInd
-{   Cloth, GunPowder, PaperMill, Printer,
+{
+    Cloth, GunPowder, PaperMill, Printer,
     //CoinStamp,
     SugarMill,
-    Foundry, SugarShop}
+    Foundry, SugarShop
+}
 
 public enum StTrade //for structures game structure.cs 
 {
@@ -565,9 +566,6 @@ public enum StDec //for structures game structure.cs
     FloorFountain, FlowerPot, PradoLion,
 
 }
-
-
-
 
 public enum Ma //for materials
 {
@@ -614,9 +612,6 @@ public enum S
     Up_Side_Elevator
 }
 
-
-
-
 public enum BtnsE
 {
     Select_Cube_Btn_Raw_3dMenu,
@@ -638,7 +633,6 @@ public enum Month
     Jul, Aug, Sep, Oct, Nov, Dec,
     None
 }
-
 
 public enum Tile//for roads
 {
@@ -677,7 +671,6 @@ public enum Ron2
     
 }
 
-
 public enum Ron3
 {
     PaperMill,
@@ -686,7 +679,6 @@ public enum Ron3
     QuickLime,
     WoodPost,
     StorageSmall2,
-
 }
 
 public enum RonWoodHouse
@@ -706,8 +698,6 @@ public enum RonBohioHouse
 
 public static class Enums 
 {
-
-
     /// <summary>
     /// All Enums pass here need to have a None defined as an element 
     /// </summary>
@@ -727,5 +717,4 @@ public static class Enums
             //throw;
         }
     }
-
 }
