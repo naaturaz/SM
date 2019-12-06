@@ -30,8 +30,6 @@ public class Hover : MonoBehaviour
         screenRect = DefineScreenRect();
     }
 
-    
-
     Rect DefineScreenRect()
     {
         Rect res = new Rect();
@@ -72,7 +70,6 @@ public class Hover : MonoBehaviour
             myRect = GetRectFromBoxCollider2D();
         }
 
-
         //if got in my area
         if (myRect.Contains(Input.mousePosition))
         {
@@ -93,7 +90,6 @@ public class Hover : MonoBehaviour
         return transform.name;
     }
 
-
     static string oldMsg = "";
     void SpawnHelp()
     {
@@ -105,8 +101,6 @@ public class Hover : MonoBehaviour
         oldMsg = MyMsg();
         hoverWindow.ShowMsg(ReturnHoverPos(), MyMsg());
     } 
-    
-   
 
     private Vector3 ReturnHoverPos()
     {
@@ -130,8 +124,5 @@ public class Hover : MonoBehaviour
     {
         hoverWindow.Hide();
     }
-
-  
-
 
 }

@@ -1229,8 +1229,7 @@ public class Languages
             }
             return "de:" + key;
         }
-
-        return "not languages selected ";
+        return "not languages selected";
     }
 
     private static void ReloadIfNeeded()
@@ -1272,7 +1271,6 @@ public class Languages
     internal static bool DoIHaveHoverMed(string key)
     {
         var currentLang = ReturnCurrentDict();
-
         return currentLang.ContainsKey(key + ".HoverMed");
     }
 

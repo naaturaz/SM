@@ -23,6 +23,9 @@ public class HoverWindow : MonoBehaviour
 
     int hideVal = -90000;
 
+    //when was showed
+    private float showedAt;
+
     public string Key
     {
         get { return _key; }
@@ -48,9 +51,7 @@ public class HoverWindow : MonoBehaviour
     public void Hide()
     {
         if (_rectTransform == null)
-        {
             return;
-        }
 
         _msg = "";
         _text.text = "";
@@ -66,7 +67,6 @@ public class HoverWindow : MonoBehaviour
         _rectTransform.position = Hoverable.MousePositionTowardsScreenCenter();
 
         _text.text = _msg;
-
         showedAt = Time.time;
     }  
     
@@ -85,30 +85,22 @@ public class HoverWindow : MonoBehaviour
         _rectTransform.position = Hoverable.MousePositionTowardsScreenCenter();
 
         _text.text = _msg;
-
         showedAt = Time.time;
     }
-
-    //when was showed
-    private float showedAt;
 
 	// Update is called once per frame
 	void Update ()
 	{
         //means is hiding.
         if (_rectTransform.position.x < -80000)
-        {
             return;
-        }
 
         _rectTransform.position = Hoverable.MousePositionTowardsScreenCenter();
 
         //after 3 seconds of being show
         //if key = "" is a simple msg with out key
         if (Time.time > showedAt + .7 && !string.IsNullOrEmpty(_key))
-	    {
 	        SpawnMedHover();
-	    }
 	}
 
     //Hover Med

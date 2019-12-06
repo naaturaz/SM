@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -98,10 +99,7 @@ public class MyForm : General
         }
 
         InitIconsAndNotis();
-
     }
-
-
 
     #region GUI Hides Shows
     static GameObject _autoSaveIcon;
@@ -113,7 +111,6 @@ public class MyForm : General
         {
             _autoSaveIcon = General.FindGameObjectInHierarchy("AutoSave_Icon", gameObject);
             _warModeNoti = General.FindGameObjectInHierarchy("WarMode", gameObject);
-
         }
 
         if (_autoSaveIcon != null)
@@ -122,7 +119,6 @@ public class MyForm : General
             _warModeNoti.SetActive(false);
         }
     }
-
 
     public void ShowAutoSave()
     {
@@ -144,7 +140,6 @@ public class MyForm : General
         _autoSaveIcon.SetActive(false);
     }
 
-
     public void ShowWarMode()
     {
         if (_warModeNoti == null)
@@ -165,10 +160,6 @@ public class MyForm : General
         _warModeNoti.SetActive(false);
     }
     #endregion
-
-
-
-
 
     private IEnumerator UpdateEvery2Sec()
     {
@@ -194,6 +185,7 @@ public class MyForm : General
         }
     }
 
+    bool isShownNow = true;
     // Update is called once per frame
     void Update()
     {
@@ -211,6 +203,28 @@ public class MyForm : General
             ManagerReport.AddInput("KeyCode.F1");
             Program.MouseListener.HelpWindow.Show("");
         }
+
+
+        if (Input.GetKeyUp(KeyCode.F9))
+        {
+            if (isShownNow)
+                HideCanvas();
+            else
+                ShowCanvas();
+
+           isShownNow = !isShownNow;
+        }
+
+    }
+
+    private void ShowCanvas()
+    {
+        _canvas.SetActive(true);
+    }
+
+    private void HideCanvas()
+    {
+        _canvas.SetActive(false);
     }
 
     protected GameObject GetChildCalled(H childName, GameObject parent)
@@ -239,14 +253,6 @@ public class MyForm : General
         return false;
     }
 
-    //private ShowAInventory _showAInventory;
-    //internal void LoadMainInventory()
-    //{
-    //    _showAInventory = new ShowAInventory("Main", Resources, _startPosIni.transform.localPosition);
-    //}
-
-
-
     /// <summary>
     /// Hides the element 
     /// </summary>
@@ -256,7 +262,6 @@ public class MyForm : General
         newPos.y = -1400f;
 
         transform.position = newPos;
-
     }
 
     internal void Show()
@@ -284,7 +289,6 @@ public class MyForm : General
     public void ShowRegions()
     {
         MeshController.BuyRegionManager1.ShowRegionsToggle();
-
     }
 
     /// <summary>
@@ -293,8 +297,6 @@ public class MyForm : General
     public void CenterCamToTown()
     {
         CamControl.CAMRTS.InputRts.CenterCam(true);
-   
-    
     }
 
     /// <summary>
@@ -305,6 +307,7 @@ public class MyForm : General
         _miniHelper.Show();
     }
 
-
     #endregion
 }
+
+

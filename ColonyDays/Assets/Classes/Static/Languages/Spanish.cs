@@ -148,7 +148,7 @@ public class Spanish
         _sp.Add("BridgeRoad", "Puente Mediano");
         _sp.Add("CoachMan", "CoachMan");
         _sp.Add("LightHouse", "Faro");
-        _sp.Add("WheelBarrow", "Carretilleros");
+        //_sp.Add("WheelBarrow", "Carretilleros");
         _sp.Add("StockPile", "Explanada");
         _sp.Add("Masonry", "Casa de Albañiles");
         _sp.Add("HeavyLoad", "Cocheros");
@@ -179,7 +179,7 @@ public class Spanish
         _sp.Add("FishingHut", "Pescadores");
 
 		//Raw
-        _sp.Add("Mortar","Mortero");
+        _sp.Add("c","Mortero");
         _sp.Add("Pottery","Taller de Porcelana");
         _sp.Add("MountainMine","Mina");
         _sp.Add( "LumberMill" ,"Casa de Leñadores");
@@ -196,21 +196,21 @@ public class Spanish
         _sp.Add("Tilery","Azulejos");
         _sp.Add("Armory","Fabrica de Armas");
         _sp.Add("Distillery","Destileria");
-        _sp.Add("Chocolate","Casa del Chocolate");
-        _sp.Add("Ink","Tinta");
+        //_sp.Add("Chocolate","Casa del Chocolate");
+        //_sp.Add("Ink","Tinta");
 		//Ind
 
-        _sp.Add("Cloth","Telar");
+        //_sp.Add("Cloth","Telar");
 		//_sp.Add("GunPowder","Fabrica de Polvora");
         _sp.Add("PaperMill","Fábrica de Papel");
         _sp.Add("Printer","Imprenta");
         _sp.Add("CoinStamp","Casa de la Moneda");
         _sp.Add("SugarMill","Central Azucarero");
         _sp.Add("Foundry","Fundición");
-        _sp.Add("SteelFoundry","Fundición de Aceros");
-        _sp.Add("SugarShop","Casa del Azucar");
+        _sp.Add("SteelFoundry","Fundición de Acero");
+        _sp.Add("SugarShop", "Casa del Azúcar");
 
-		//trade
+        //trade
         _sp.Add("Dock","Puerto");
         _sp.Add("Shipyard","Astillero");
         _sp.Add("Supplier","Suministrador");
@@ -263,7 +263,7 @@ public class Spanish
         _sp.Add("Types_Explain", "Tradicional: \nEn este juego algunas construcciones están  " +
                            "Bloqueadas al principio y tienes que desbloquearlas. " +
                "Lo bueno es que así tienes alguna manera de guiarte." +
-               "\n\nFreewill: \nTodas las construcciones están disponibles. " +
+               "\n\nLibre: \nTodas las construcciones están disponibles. " +
                "Lo malo es que puedes perder el juego más fácilmente.");
 
 		//Tooltips 
@@ -299,7 +299,6 @@ public class Spanish
         _sp.Add("BuyRegion.HoverSmall", "Compra región");
         _sp.Add("BullDozer.HoverSmall", "Bulldozer");
         _sp.Add("Help.HoverSmall", "Ayuda");
-
 
 		//down bar
         _sp.Add("Infrastructure.HoverSmall", "Infraestructuras");
@@ -350,8 +349,6 @@ public class Spanish
         _sp.Add("Current_Salary.HoverMed", "Los trabajadores prefieren trabajar donde se pague mas dinero." +
                                            " Si dos lugares pagan igual entonces escogerán el que este mas cerca a" +
                                            " casa.");
-
-
 
 		//Notifications
         _sp.Add("BabyBorn.Noti.Name", "Recién nacido");
@@ -497,7 +494,7 @@ public class Spanish
 
         _sp.Add("Trade.Tuto", "Eso fue fácil ahora viene lo difícil. Haz click en 'Comercio', en la barra inferior. "+
                "Cuando pases el cursor del ratón se vera que dice 'Comercio'");
-        _sp.Add("CamHeaven.Tuto", "Gira la rueda del ratón hacia detrás hasta que alcances el limite en el cielo. Esta vista es usada para emplazar grandes construcciones como el 'Puerto'");
+        _sp.Add("CamHeaven.Tuto", "Gira la rueda del ratón hacia detrás hasta que alcances el límite en el cielo. Esta vista es usada para emplazar grandes construcciones como el 'Puerto'");
 
         _sp.Add("Dock.Tuto", "Haz click en la construcción 'Puerto'. Cuando pases el cursor del ratón por encima del icono saldrá su costo y descripción");
         _sp.Add("Dock.Placed.Tuto", "Ahora viene lo mas difícil. Puedes usar la tecla 'R' para rotar la construcción y click derecho para cancelar. "+
@@ -665,70 +662,6 @@ public class Spanish
 
 
 
-
-
-
-
-
-		//Main Menu
-        _sp.Add("Resume Game", "Sigue el Juego");
-        _sp.Add("Continue Game", "Continuar el Juego");
-        _sp.Add("New Game", "Juego Nuevo");
-        _sp.Add("Load Game", "Cargar Juego");
-        _sp.Add("Save Game", "Salvar Juego");
-        _sp.Add("Options", "Opciones");
-        _sp.Add("Credits", "Créditos");
-        _sp.Add("Exit", "Salir del Juego");
-        _sp.Add("Achievements", "Logros");
-        _sp.Add("Town Name:", "Nombre del Pueblo:");
-        _sp.Add("OK", "OK");
-        _sp.Add("Cancel", "Cancelar");
-        _sp.Add("Enter name...", "Escribe el nombre...");
-        _sp.Add("Terrain Name:", "Nombre del terreno:");
-        _sp.Add("Difficulty:", "Dificultad:");
-        _sp.Add("Type of game:", "Tipo de juego:");
-
-        _sp.Add("Pirates (if check the town could suffer a Pirate attack)", "Piratas (El pueblo pudiese sufrir el ataque de piratas)");
-        _sp.Add("Food Expiration (if check food expires with time)", "Caducidad de la comida (La comida tiene fecha de caducidad)");
-
-        _sp.Add("Freewill", "Libertad");
-        _sp.Add("Traditional", "Tradicional");
-
-
-        _sp.Add("Click Here", "Haz click aquí");
-
-        _sp.Add("Newbie", "Novato");
-        _sp.Add("Easy", "Fácil");
-        _sp.Add("Moderate", "Mas o menos");
-        _sp.Add("Hard", "Duro");
-        _sp.Add("Insane", "Locura");
-
-        _sp.Add("Save Name:", "Nombre de la Salva:");
-        _sp.Add("Delete", "Borra");
-        _sp.Add("FullScreen:", "Pantalla completa:");
-        _sp.Add("Quality:", "Calidad:");
-        _sp.Add("Resolution:", "Resolución:");
-        _sp.Add("Screen", "Pantalla");
-
-        _sp.Add("Music:", "Música:");
-        _sp.Add("Audio", "Audio");
-        _sp.Add("Sound:", "Sonido:");
-        _sp.Add("General", "General");
-        _sp.Add("Unit System:", "Sistema de unidades:");
-
-        _sp.Add("AutoSave Frec:", "Frecuencia de auto salva:");
-        _sp.Add("Language:", "Lenguaje:");
-		//{ "Loading...", "Cargando...");
-        _sp.Add("Menu", "Menu");
-
-        _sp.Add("Camera Sensitivity:", "Velocidad de la Cámara:");
-
-		//
-        _sp.Add("Tutorial", "Tutorial");
-
-
-
-
 		//in game
         _sp.Add("Buildings.Ready", "\n Edificios listos para ser construidos:");
         _sp.Add("People.Living", "Personas en esta casa:");
@@ -738,21 +671,12 @@ public class Spanish
         _sp.Add("Amt.Cant.Be.0", "La cantidad no puede ser cero.");
         _sp.Add("Prod.Not.Select", "Por favor seleccione un producto");
 
-        _sp.Add("Orders in progress:", "Ordenes en progreso:");
-
 		//articles
         _sp.Add("The.Male", "El");
         _sp.Add("The.Female", "La");
 
 		//
         _sp.Add("Build.Destroy.Soon", "Esta construcción sera destruida. Si el inventario no esta vació los carretilleros deberán hacerlo.");
-
-
-
-
-
-
-
 
 
 
@@ -799,7 +723,7 @@ public class Spanish
 		//
         _sp.Add("Person", "Persona");
         _sp.Add("Food", "Comida");
-        _sp.Add("Dollar", "Dollar");
+        _sp.Add("Dollar", "Peseta");
         _sp.Add("Salt", "Sal");
         _sp.Add("Coal", "Carbón");
         _sp.Add("Sulfur", "Sulfuro");
@@ -884,7 +808,9 @@ public class Spanish
 
         _sp.Add("Early Access Build", "Acceso Anticipado");
 
- 		//Main Menu
+
+        //Screens
+        //Main Menu
         _sp.Add("Resume Game", "Resumir Juego");
         _sp.Add("Continue Game", "Continuar Juego");
         _sp.Add("Tutorial", "Tutorial");
@@ -894,7 +820,6 @@ public class Spanish
         _sp.Add("Achievements", "Logros");
         _sp.Add("Options", "Opciones");
         _sp.Add("Exit", "Salir");
-        //Screens
         //New Game
         _sp.Add("Town Name:", "Pueblo:");
         _sp.Add("Difficulty:", "Dificultad:");
@@ -943,6 +868,16 @@ public class Spanish
         _sp.Add("Newborn", "Bebé");
         _sp.Add("Build Completed", "Construction terminada");
         _sp.Add("People's Voice", "Voz de las personas");
+        _sp.Add("Credits", "Créditos");
+
+        //Main Menu Legacy
+        _sp.Add("Terrain Name:", "Nombre del terreno:");
+        _sp.Add("Click Here", "Haz click aquí");
+        _sp.Add("Save Name:", "Nombre de la Salva:");
+		//{ "Loading...", "Cargando...");
+        _sp.Add("Menu", "Menu");
+		//
+
 
         //in game gui
         _sp.Add("Prod", "Prod");
@@ -952,7 +887,7 @@ public class Spanish
         _sp.Add("Resources", "Materiales");
         _sp.Add("Dollars", "Pesetas");
         _sp.Add("Coming.Soon", "Esta construcción ya viene para el juego");
-        _sp.Add("Max.Population", "No se pueden construir mas casas. Alcanzaste el limite de personas");
+        _sp.Add("Max.Population", "No se pueden construir mas casas. Alcanzaste el límite de personas");
 
         _sp.Add("To.Unlock", "Desbloquea: ");
         _sp.Add("People", "Personas");
@@ -976,7 +911,7 @@ public class Spanish
         _sp.Add("Up.HoverSmall", "Prioridad Aumentada");
         _sp.Add("Trash.HoverSmall", "Borrar Orden");
         _sp.Add("Counting...", "Contando...");
-        _sp.Add("Ten Orders Limit", "Diez ordenes es el limite");
+        _sp.Add("Ten Orders Limit", "Diez ordenes es el límite");
 
         //After May 1, 2019
         _sp.Add("Our inventories:", "Nuestros inventarios:");
@@ -1020,7 +955,9 @@ public class Spanish
         _sp.Add("More", "Mas");
         _sp.Add("Less", "Menos");
         _sp.Add("Reward:", "Premio:");
-        _sp.Add("Current Quest:", "Tarea Actual:");
+
+        //Dec 5, 2019
+        _sp.Add("Town", "Pueblo");
 
     }
 

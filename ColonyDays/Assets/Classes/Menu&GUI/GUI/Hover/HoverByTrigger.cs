@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
-
 
 class HoverByTrigger : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
 {
@@ -48,13 +43,9 @@ class HoverByTrigger : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
         var pos = Hoverable.MousePositionTowardsScreenCenter();
 
         if(IsAProductHover)
-        {
             hoverWindow.ShowMsg(pos, MyMsg());
-        }
         else
-        {
             hoverWindow.Show(pos, MyMsg());
-        }
     }
     
     /// <summary>
