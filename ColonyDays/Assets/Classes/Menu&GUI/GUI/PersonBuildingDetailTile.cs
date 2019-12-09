@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 
 public class PersonBuildingDetailTile : GUIElement
 {
@@ -36,14 +32,11 @@ public class PersonBuildingDetailTile : GUIElement
         set { _person = value; }
     }
 
-
     internal static PersonBuildingDetailTile Create(Transform container,
         KeyValuePair<string, string> keyValuePair, Vector3 iniPos,
         ShowAPersonBuildingDetails showAPersonBuildingDetails, Person person)
     {
         PersonBuildingDetailTile obj = null;
-
-        var root = "";
 
         obj = (PersonBuildingDetailTile)Resources.Load(Root.show_Person_Place_Location, typeof(PersonBuildingDetailTile));
         obj = (PersonBuildingDetailTile)Instantiate(obj, new Vector3(), Quaternion.identity);
@@ -72,7 +65,6 @@ public class PersonBuildingDetailTile : GUIElement
         //set values on the Tile
         _descText = FindGameObjectInHierarchy("Item_Desc", gameObject).GetComponent<Text>();
         _valText = FindGameObjectInHierarchy("Item_Value", gameObject).GetComponent<Text>();
-
 
         var goBtnPath = FindGameObjectInHierarchy("ShowPath", gameObject);
         var goBtnLoc = FindGameObjectInHierarchy("ShowLocation", gameObject);
@@ -104,15 +96,13 @@ public class PersonBuildingDetailTile : GUIElement
     void SetVal()
     {
         _descText.text = _key;
-        _valText.text = _val;
+
+        string newVal = _val;
+        if (Languages.Contains(newVal))
+            newVal = Languages.ReturnString(newVal);
+
+        _valText.text = newVal;
     }
-
-
-    void Update()
-    {
-
-    }
-
 
     internal void ManualUpdate(Person person, KeyValuePair<string, string> keyValuePair)
     {

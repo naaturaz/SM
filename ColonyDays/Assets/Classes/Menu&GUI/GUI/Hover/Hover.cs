@@ -99,7 +99,7 @@ public class Hover : MonoBehaviour
         }
 
         oldMsg = MyMsg();
-        hoverWindow.ShowMsg(ReturnHoverPos(), MyMsg());
+        hoverWindow.ShowMsg(MyMsg());
     } 
 
     private Vector3 ReturnHoverPos()

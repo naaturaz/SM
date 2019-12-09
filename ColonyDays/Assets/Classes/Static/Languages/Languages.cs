@@ -1181,6 +1181,29 @@ public class Languages
         //};
     }
 
+    internal static bool Contains(string key)
+    {
+        ReloadIfNeeded();
+
+        if (_currentLang == "English")
+        {
+            return _en.ContainsKey(key);
+        }
+        else if (_currentLang == "Español(Beta)")
+        {
+            return Spanish.ContainsKey(key);
+        }
+        else if (_currentLang == "Français(Beta)")
+        {
+            return French.ContainsKey(key);
+        }
+        else if (_currentLang == "Deutsch(Beta)")
+        {
+            return German.ContainsKey(key);
+        }
+        return false;
+    }
+
     public static string ReturnString(string key)
     {
         ReloadIfNeeded();

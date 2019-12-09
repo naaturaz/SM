@@ -60,14 +60,15 @@ public class Hoverable : General
         }
 
         if (hoverWindowMed == null)
-        {
             return;
-        }
 
-        if (HType == H.Person ||
-            Category == Ca.Structure || Category == Ca.Shore || Category == Ca.Way ||
+        if(Category == Ca.Structure || Category == Ca.Shore || Category == Ca.Way ||
             //Category == Ca.Spawn ||
             HType == H.BuyRegion)
+        {
+            hoverWindow.ShowMsg(HType.ToString());
+        }
+        else if (HType == H.Person)
         {
             hoverWindow.ShowExplicitThis(Name);
         }

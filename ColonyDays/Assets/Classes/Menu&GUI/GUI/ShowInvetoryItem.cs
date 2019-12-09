@@ -3,7 +3,6 @@ using System.Runtime.Serialization;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class ShowInvetoryItem : GUIElement
 {
     protected GameObject _icon;
@@ -18,10 +17,13 @@ public class ShowInvetoryItem : GUIElement
     private Text _textCol3;
 
     protected Image _iconImg;
-
     private string _invType;
-
     private ShowAInventory _parent;
+
+    ProdSpec _pSpec;
+
+    private float oldAmt = -100;//the value so it gets started
+                                // Update is called once per frame
 
     public InvItem InvItem1
     {
@@ -52,9 +54,7 @@ public class ShowInvetoryItem : GUIElement
     void Start()
     {
         if (_icon != null)
-        {
             return;
-        }
 
         var container = FindGameObjectInHierarchy("Cont", gameObject);
         _icon = FindGameObjectInHierarchy("Icon", gameObject);
@@ -163,10 +163,6 @@ public class ShowInvetoryItem : GUIElement
             objTransform.localScale.z);
     }
 
-
-
-    private float oldAmt = -100;//the value so it gets started
-                                // Update is called once per frame
     void Update()
     {
         if (InvItem1 == null || (InvItem1.Amount <= 0 && string.IsNullOrEmpty(InvType)))
@@ -188,8 +184,6 @@ public class ShowInvetoryItem : GUIElement
             {
                 Set3Text();
             }
-
-
         }
     }
 
@@ -201,14 +195,13 @@ public class ShowInvetoryItem : GUIElement
             return;
         }
 
-        _textCol1.text = InvItem1.Key + "";
+        _textCol1.text = Languages.ReturnString(InvItem1.Key + "");
         _textCol2.text = ReturnAmt();
 
         if (_textCol3 != null)
         {
             _textCol3.text = ReturnVol();
         }
-
 
         //so hover gets it
         _back.name = InvItem1.Key + "";
@@ -218,7 +211,7 @@ public class ShowInvetoryItem : GUIElement
     private void Set3TextForReport()
     {
         //-1 bz +1 is added when Year is added on invv
-        _textCol1.text = InvItem1.Key + ": " + (InvItem1.Amount - 1);
+        _textCol1.text = Languages.ReturnString(InvItem1.Key.ToString()) + ": " + (InvItem1.Amount - 1);
         _textCol2.text = "";
         _textCol3.text = "";
 
@@ -228,27 +221,19 @@ public class ShowInvetoryItem : GUIElement
     }
 
 
-
-
-
-    ProdSpec _pSpec;
     string ReturnAmt()
     {
         if (_pSpec == null)
-        {
             _pSpec = Program.gameScene.ExportImport1.FindProdSpec(InvItem1.Key);
-        }
 
         if (InvItem1.Amount <= 0)
-        {
             return "-";
-        }
+
         var amt = Unit.WeightConverted(InvItem1.Amount);
 
         if (InvType == "Main")
-        {
             return (int)amt + " ";
-        }
+
         return (int)amt + " " + Unit.WeightUnit();
     }
 
@@ -256,10 +241,6 @@ public class ShowInvetoryItem : GUIElement
     {
         return (InvItem1.Amount / _pSpec.WeightPerUnit).ToString("n0") + " u";
     }
-
-
-
-
 
     string ReturnVol()
     {
@@ -271,13 +252,10 @@ public class ShowInvetoryItem : GUIElement
         return vol.ToString("F0") + " " + Unit.VolumeUnit();
     }
 
-
     protected string Formatter()
     {
         if (InvItem1.Amount <= 0)
-        {
             return "-";
-        }
 
         var amt = Unit.WeightConverted(InvItem1.Amount);
         var vol = Unit.VolConverted(InvItem1.Volume);
@@ -295,11 +273,6 @@ public class ShowInvetoryItem : GUIElement
         //return InvItem1.Key + " " + (int)amt + BuildStringUnits() + vol.ToString("F1");
     }
 
-
-
-
-
-
     string BuildStringUnits()
     {
         return " " + Unit.WeightUnit() + ". v(" + Unit.VolumeUnit() + "):";
@@ -308,31 +281,21 @@ public class ShowInvetoryItem : GUIElement
     private string StandardFormat()
     {
         if (InvItem1.Amount < 10)
-        {
             return (InvItem1.Amount.ToString("n1"));
-        }
         return ((int)InvItem1.Amount) + "";
     }
 
     private string ShortFormat(float amt)
     {
         if (amt < 10)
-        {
             return (amt.ToString("n1"));
-        }
-
         if (amt > 1000000)
-        {
             return (int)(amt / 1000000) + "M";
-        }
         if (InvItem1.Amount > 1000)
-        {
             return (int)(amt / 1000) + "K";
-        }
 
         return (int)amt + "";
     }
-
 
     /// <summary>
     /// Called from GUI
@@ -340,7 +303,6 @@ public class ShowInvetoryItem : GUIElement
     public void ClickOnIt()
     {
         Program.MouseListener.ClickOnAnInvItem(_invItem);
-
     }
 
     internal void UpdateToThis(InvItem invItem, Vector3 iniPos)

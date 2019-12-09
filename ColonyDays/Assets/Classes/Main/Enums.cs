@@ -574,7 +574,8 @@ public enum Ma //for materials
 }
 public enum Ca //category
 {
-    None, Way, Structure, DraggableSquare, Spawn, Shore
+    None, Way, Structure, DraggableSquare, Spawn, Shore,
+    Person
 }
 
 public enum Mode //for building

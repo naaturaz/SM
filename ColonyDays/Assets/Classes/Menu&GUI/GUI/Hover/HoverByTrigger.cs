@@ -10,9 +10,7 @@ class HoverByTrigger : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
     void Start()
     {
         if (hoverWindow == null)
-        {
             hoverWindow = FindObjectOfType<HoverWindow>();
-        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -43,9 +41,9 @@ class HoverByTrigger : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
         var pos = Hoverable.MousePositionTowardsScreenCenter();
 
         if(IsAProductHover)
-            hoverWindow.ShowMsg(pos, MyMsg());
+            hoverWindow.ShowMsg(MyMsg());
         else
-            hoverWindow.Show(pos, MyMsg());
+            hoverWindow.Show(MyMsg());
     }
     
     /// <summary>

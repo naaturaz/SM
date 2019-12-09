@@ -80,19 +80,13 @@ public class HoverBtn : MonoBehaviour
     void SpawnHelp()
     {
         if (oldMsg == MyMsg())
-        {
             return;
-        }
 
         oldMsg = MyMsg();
 
         //hoverWindow.ShowMsg(ReturnHoverPos(), MyMsg());
-
-        hoverWindow.ShowMsg(MoveItTowardsScreenCenter(transform.position), MyMsg());
+        hoverWindow.ShowMsg(MyMsg());
     }
-
-
-
 
     private Vector2 MoveItTowardsScreenCenter(Vector3 iniPos)
     {
@@ -123,6 +117,5 @@ public class HoverBtn : MonoBehaviour
     {
         DestroyHelp();
     }
-
 
 }

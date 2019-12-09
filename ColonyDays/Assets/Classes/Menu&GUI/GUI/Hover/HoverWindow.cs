@@ -58,7 +58,7 @@ public class HoverWindow : MonoBehaviour
         _rectTransform.position = new Vector3(-90000, -90000, 0);
     }
 
-    public void Show(Vector3 pos, string key)
+    public void Show(string key)
     {
         AudioCollector.PlayOneShot("ClickWoodSubtle", 0);
         _key = key;
@@ -75,7 +75,7 @@ public class HoverWindow : MonoBehaviour
     /// </summary>
     /// <param name="pos"></param>
     /// <param name="msg"></param>
-    public void ShowMsg(Vector3 pos, string msg)
+    public void ShowMsg(string msg)
     {
         AudioCollector.PlayOneShot("ClickWoodSubtle", 0);
 
@@ -88,8 +88,18 @@ public class HoverWindow : MonoBehaviour
         showedAt = Time.time;
     }
 
-	// Update is called once per frame
-	void Update ()
+    public void ShowExplicitThis(string key)
+    {
+        AudioCollector.PlayOneShot("ClickWoodSubtle", 0);
+
+        _rectTransform.position = Hoverable.MousePositionTowardsScreenCenter();
+
+        _text.text = key;
+        showedAt = Time.time;
+    }
+
+    // Update is called once per frame
+    void Update ()
 	{
         //means is hiding.
         if (_rectTransform.position.x < -80000)
@@ -126,13 +136,4 @@ public class HoverWindow : MonoBehaviour
         return _msg;
     }
 
-    public void ShowExplicitThis(string key)
-    {
-        AudioCollector.PlayOneShot("ClickWoodSubtle", 0);
-
-        _rectTransform.position = Hoverable.MousePositionTowardsScreenCenter();
-
-        _text.text = key;
-        showedAt = Time.time;
-    }
 }

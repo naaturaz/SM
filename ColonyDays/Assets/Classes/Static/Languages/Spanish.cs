@@ -788,7 +788,7 @@ public class Spanish
         _sp.Add("Buildings", "Construcciones");
 
         _sp.Add("Age", "Edad");
-        _sp.Add("Gender", "Genero");
+        _sp.Add("Gender", "Género");
         _sp.Add("Height", "Altura");
         _sp.Add("Weight", "Peso");
         _sp.Add("Calories", "Calorías");
@@ -807,7 +807,6 @@ public class Spanish
         _sp.Add("Account", "Cuenta");
 
         _sp.Add("Early Access Build", "Acceso Anticipado");
-
 
         //Screens
         //Main Menu
@@ -958,6 +957,20 @@ public class Spanish
 
         //Dec 5, 2019
         _sp.Add("Town", "Pueblo");
+
+        //Dec 9, 2019
+        _sp.Add("Barrel", "Barril");
+        _sp.Add("Crockery", "Cerámica");
+        _sp.Add("WhaleOil", "Aceite");
+        _sp.Add("Years of school", "Escolaridad");
+        _sp.Add("House comfort", "Calidad de Vivienda");
+        _sp.Add("Food source", "Bodega");
+        _sp.Add("Relax", "Relajamiento");
+        _sp.Add(" of ", " de ");
+        _sp.Add("Male", "Masculino");
+        _sp.Add("Female", "Femenino");
+        _sp.Add("Quenched", "Saciada");
+
 
     }
 

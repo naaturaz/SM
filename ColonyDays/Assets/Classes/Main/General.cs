@@ -233,7 +233,7 @@ public class General : MonoBehaviour
             res = Ca.DraggableSquare;
         }
         else if (hTypeP == H.Dock || hTypeP == H.Shipyard || hTypeP == H.Supplier
-            || hTypeP == H.FishingHut 
+            || hTypeP == H.FishingHut
             || hTypeP == H.ShoreMine)
         {
             res = Ca.Shore;
@@ -241,15 +241,16 @@ public class General : MonoBehaviour
         else if (hTypeP == H.None || hTypeP == H.BridgeRoadUnit || hTypeP == H.BridgeTrailUnit)
         {
             res = Ca.None;
-            
         }
         else if (hTypeP == H.Tree || hTypeP == H.Stone || hTypeP == H.Iron || hTypeP == H.Gold
-            || hTypeP == H.Ornament || hTypeP == H.Grass || hTypeP == H.Decoration 
+            || hTypeP == H.Ornament || hTypeP == H.Grass || hTypeP == H.Decoration
             || hTypeP == H.Marine || hTypeP == H.Mountain)
         {
             res = Ca.Spawn;
         }
+        else if (hTypeP == H.Person) res = Ca.Person;
         else res = Ca.Structure;
+
         return res;
     }
 
