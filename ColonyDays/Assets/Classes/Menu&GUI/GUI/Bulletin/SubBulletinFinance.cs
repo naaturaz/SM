@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Xml.Serialization;
 using UnityEngine;
 
 public class SubBulletinFinance
 {
     private BulletinWindow _bulletinWindow;
+    FinanceLogger _financeLogger;
 
     [XmlIgnore]
     public BulletinWindow BulletinWindow1
@@ -16,15 +15,11 @@ public class SubBulletinFinance
         set { _bulletinWindow = value; }
     }
 
-
-    FinanceLogger _financeLogger;
     public FinanceLogger FinanceLogger
     {
         get { return _financeLogger; }
         set { _financeLogger = value; }
     }
-
-
 
     public SubBulletinFinance() { }
 
@@ -33,11 +28,8 @@ public class SubBulletinFinance
         _bulletinWindow = bulletinWindow;
 
         if (_financeLogger == null)
-        {
             _financeLogger = new FinanceLogger(true);
-        }
     }
-
 
     #region Budget
     internal void ShowBudget()
@@ -68,12 +60,6 @@ public class SubBulletinFinance
     }
 
     #endregion
-
-
-
-
-
-
 
     #region Prices
     internal void ShowPrices()
@@ -112,8 +98,6 @@ public class SubBulletinFinance
     }
     #endregion
 
-
-
     internal void Hide()
     {
         for (int i = 0; i < _reports.Count; i++)
@@ -127,7 +111,6 @@ public class SubBulletinFinance
         }
         _reports.Clear();
 
-
         //specs
         for (int i = 0; i < _reportsSpec.Count; i++)
         {
@@ -139,7 +122,6 @@ public class SubBulletinFinance
             _reportsSpec[i].Destroy();
         }
         _reportsSpec.Clear();
-
 
         //budget
         for (int i = 0; i < _reportsBudget.Count; i++)
@@ -177,8 +159,6 @@ public class SubBulletinFinance
         }
         _reportsImports.Clear();
     }
-
-
 
     #region Specs
 
@@ -251,7 +231,6 @@ public class SubBulletinFinance
 
 
     #endregion
-
 
     #region Exports and Imports
 
@@ -327,20 +306,19 @@ public class SubBulletinFinance
     #endregion
 }
 
-
 /// <summary>
 /// For modularity
 /// </summary>
 public class SpecData
 {
     ProductInfo _prodInfo;
+    float _price;
 
     public ProductInfo ProdInfo
     {
         get { return _prodInfo; }
         set { _prodInfo = value; }
     }
-    float _price;
 
     public float Price
     {
@@ -355,11 +333,8 @@ public class SpecData
 
         //title bar
         if (_prodInfo.Product == P.Product)
-        {
             _price = -100;
-        }
     }
-
 }
 
 public class ExportData

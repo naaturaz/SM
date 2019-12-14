@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace Assets.Classes.Menu_GUI.GUI.Bulletin
@@ -19,7 +17,6 @@ namespace Assets.Classes.Menu_GUI.GUI.Bulletin
         {
             _bulletinWindow = win;
         }
-
 
         #region Control Workers
         bool reDoneSalaries;//for users  that changed salaries already
@@ -59,8 +56,6 @@ namespace Assets.Classes.Menu_GUI.GUI.Bulletin
             }
         }
 
-
-
         float ReturnTileYScale()
         {
             if (_reports.Count > 0)
@@ -75,7 +70,6 @@ namespace Assets.Classes.Menu_GUI.GUI.Bulletin
             return relative * ySpaceOfTile;
         }
 
-
         internal void Hide()
         {
             for (int i = 0; i < _reports.Count; i++)
@@ -85,13 +79,7 @@ namespace Assets.Classes.Menu_GUI.GUI.Bulletin
             _reports.Clear();
         }
 
-
         #endregion
-
-
-
-
-
 
         string Pad(string pad, int current, int max, int padCount)
         {
@@ -105,8 +93,6 @@ namespace Assets.Classes.Menu_GUI.GUI.Bulletin
             }
             return res;
         }
-
-
 
         void CreateDict(List<Person> workers)
         {
@@ -158,11 +144,7 @@ namespace Assets.Classes.Menu_GUI.GUI.Bulletin
             }
         }
 
-
-
-
-
-#region Buildings
+        #region Buildings
 
         public void ShowBuildings()
         {
@@ -175,11 +157,9 @@ namespace Assets.Classes.Menu_GUI.GUI.Bulletin
         private string Buildings()
         {
             var hTypes = BuildingPot.Control.Registro.StringOfAllBuildingsHType();
-
             CreateDict(hTypes);
 
             string res = Languages.ReturnString("Buildings") + ":\n ";
-
 
             for (int i = 0; i < _finReport.Count; i++)
             {
@@ -190,16 +170,7 @@ namespace Assets.Classes.Menu_GUI.GUI.Bulletin
             return res;
         }
 
-
-
 #endregion
-
-
-    
-
-
-
-
 
     }
 

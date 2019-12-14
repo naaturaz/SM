@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-
 
 public class PriceTile : GUIElement
 {
@@ -34,7 +29,6 @@ public class PriceTile : GUIElement
 
     void Update()
     {
-
     }
 
     /// <summary>
@@ -74,8 +68,6 @@ public class PriceTile : GUIElement
         Init();
     }
 
-
-
     internal static PriceTile CreateTile(Transform container,
         ProdSpec spec, Vector3 iniPos)
     {
@@ -95,9 +87,5 @@ public class PriceTile : GUIElement
 
         return obj;
     }
-
-
-
-
 
 }

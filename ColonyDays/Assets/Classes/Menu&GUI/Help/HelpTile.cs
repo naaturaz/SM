@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-
 
 public class HelpTile : GUIElement
 {
     private Text _descText;
     private Text _priceText;
-
     private HelpWindow _window;
-
     string _key;
 
     public string Key
@@ -31,19 +24,19 @@ public class HelpTile : GUIElement
     {
         _descText = FindGameObjectInHierarchy("Item_Desc", gameObject).GetComponent<Text>();
         _priceText = FindGameObjectInHierarchy("Price_Desc", gameObject).GetComponent<Text>();
-
         Init();
     }
 
     private void Init()
     {
-        _descText.text = UString.RemoveLastPart( Key);
+        var key = UString.RemoveLastPart(Key);
+        _descText.text = Languages.ReturnString(key);
+
         _priceText.text = "";
     }
 
     void Update()
     {
-
     }
 
     /// <summary>
@@ -59,8 +52,6 @@ public class HelpTile : GUIElement
     {
         HelpTile obj = null;
 
-        var root = "";
-
         obj = (HelpTile)Resources.Load(Root.help_Tile, typeof(HelpTile));
         obj = (HelpTile)Instantiate(obj, new Vector3(), Quaternion.identity);
 
@@ -75,8 +66,4 @@ public class HelpTile : GUIElement
         return obj;
     }
 
-
-
-
 }
-

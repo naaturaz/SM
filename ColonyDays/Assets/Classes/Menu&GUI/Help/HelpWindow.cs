@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
-
 
 public class HelpWindow : GUIElement
 {
@@ -47,15 +43,10 @@ public class HelpWindow : GUIElement
         "Production Tab.Help",
         "Our Inventories.Help",
         "Inventories Explanation.Help",
-
     };
-
-
 
     void Start()
     {
-       
-
         iniPos = transform.position;
 
         _contentText = GetChildCalled("Content_Text").GetComponent<Text>();
@@ -71,7 +62,6 @@ public class HelpWindow : GUIElement
         _searchInput = GetChildCalled("SearchInputField").GetComponent<InputField>();
     }
 
-
     public void Show(string val)
     {
         HelpSelected("Construction.Help");
@@ -83,7 +73,6 @@ public class HelpWindow : GUIElement
         PopulateScrollView();
 
         Program.MouseListener.HidePersonBuildOrderNotiWindows();
-
 
         if (_f1forHelp == null)
         {
@@ -97,7 +86,6 @@ public class HelpWindow : GUIElement
             PlayerPrefs.SetString("F1", "Used");
         }
     }
-
 
     #region Scroll
 
@@ -143,9 +131,7 @@ public class HelpWindow : GUIElement
 
     void Update()
     {
-
     }
-
 
     public string Status(Quest q)
     {
@@ -197,7 +183,6 @@ public class HelpWindow : GUIElement
         Application.OpenURL("http://sugarmill.wikia.com/wiki/SugarMill_Wiki");
     }
 
-
     public void Search()
     {
         var arr = _helps.Where
@@ -207,7 +192,4 @@ public class HelpWindow : GUIElement
         ShowButtons(arr.ToList());
     }
 
-
-
 }
-

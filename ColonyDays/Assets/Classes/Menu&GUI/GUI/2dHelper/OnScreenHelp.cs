@@ -8,8 +8,6 @@ class OnScreenHelp : MonoBehaviour
     public Transform KeepTransform;
     public Structure MyBuilding;
 
-
-
     private string _msg;
     private GameObject _geometry;
     private Text _text;

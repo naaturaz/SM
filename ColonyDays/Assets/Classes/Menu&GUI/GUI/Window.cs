@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class Window : GUIElement
@@ -23,5 +19,4 @@ public class Window : GUIElement
         var img = go.GetComponent<Image>();
         img.color = _initialTabColor;
     }
-
 }

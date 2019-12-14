@@ -428,47 +428,47 @@ public class Spanish
                        "Presione en la señal 'Se vende' para comprar una");
         _sp.Add("PeopleRange", "Rango: El circulo azul gigante es el rango de cada construcción");
 
-        _sp.Add("PirateThreat.Help", "Amenaza Pirata: Esto es cuan al dia están los piratas con tu puerto. " +
-                                   "Se incrementa a medida que acumules mas dinero y riquezas. " +
-                                   "Si pasa 90 entonces pierdes el juego.");
+        // _sp.Add("PirateThreat.Help", "Amenaza Pirata: Esto es cuan al dia están los piratas con tu puerto. " +
+        //                            "Se incrementa a medida que acumules mas dinero y riquezas. " +
+        //                            "Si pasa 90 entonces pierdes el juego.");
 
-        _sp.Add("PortReputation.Help", "Reputación Portuaria: Mientras mas comerciantes y marineros conozcan tu puerto mas lo visitaran." +
-                                           "Si quieres aumentar esto asegurate de que siempre tenga ordenes en tus construcciones marítimas" +
-                                       " (Puerto, Astillero, Abastecedor)");
-        _sp.Add("Emigrate.Help", "Emigrados: Cuando la gente esta infeliz por algunos años se van de tus tierras. " +
-                               "Lo malo es que no viraran, producirán bienes o tendrán niños jamas." +
-                                   "Lo bueno es que aumentan 'La Reputación Portuaria'");
-        _sp.Add("Food.Help", "Comida: Mientras mas variedad de comidas las personas tengan mas felices serán.");
+        // _sp.Add("PortReputation.Help", "Reputación Portuaria: Mientras mas comerciantes y marineros conozcan tu puerto mas lo visitaran." +
+        //                                    "Si quieres aumentar esto asegurate de que siempre tenga ordenes en tus construcciones marítimas" +
+        //                                " (Puerto, Astillero, Abastecedor)");
+        // _sp.Add("Emigrate.Help", "Emigrados: Cuando la gente esta infeliz por algunos años se van de tus tierras. " +
+        //                        "Lo malo es que no viraran, producirán bienes o tendrán niños jamas." +
+        //                            "Lo bueno es que aumentan 'La Reputación Portuaria'");
+        // _sp.Add("Food.Help", "Comida: Mientras mas variedad de comidas las personas tengan mas felices serán.");
 
-        _sp.Add("Weight.Help", "Peso: Todos los pesos en el juego están en Kg o Lbs" +
-                               " dependiendo en el sistema de unidad seleccionado." +
-                               " Se puede cambiar en 'Opciones' en el 'Menu Principal'");
-
-
-
-        _sp.Add("More.Help", "Si necesita mas ayuda siempre es una buena idea pasar el tutorial, or o postear una pregunta en el Forum");
-
-		//more 
-        _sp.Add("Products Expiration.Help", "Caducidad de productos: Como en la vida real los productos expiran. En la tabla the productos expirados se puede ver si alguno ha expirado Bulletin/Prod/Expire");
-        _sp.Add("Horse Carriages.Help", "Las personas con carretillas tiene limites de carga. Por eso estas carretas con caballos son usadas en el juego, ya que pueden cargar mucho mas. Como resultado la economía se mueve mas de prisa. Una persona carga alrededor de 15KG, un carretillero 60KG, y las carretas chicas hasta 240KG. Construye un HeavyLoad para usarlas");
-        _sp.Add("Usage of goods.Help", "Consumo de bienes: Cajas, barriles, carretillas, carretas, herramientas, ropa, cerámicas, muebles y utensilios son todos necesarios para mantener las actividades de la villa. A medida que estos bienes son usados disminuye la cantidad en el almacén, por ej. una persona no cargara nada si no hay cajas");
-        _sp.Add("Happiness.Help", "Felicidad: La felicidad de las personas esta influenciada por varios factores. Variedad de comidas, satisfacción religiosa, esparcimiento, confort de la casa, nivel de educación, utensilios, cerámica y ropa.");
-        _sp.Add("Line production.Help", "Linea de producción: Para hacer un KG de puntillas tienes que encontrar y minar los minerales, en la fundición derretir el hierro, y finalmente en el herrero hacer las puntillas. O simplemente comprarla en el puerto");
-        _sp.Add("Bulletin.Help", "El icono con las paginas en la barra inferior es la ventana de Boletín/Control. Por favor toma un minuto para explorarla.");
-        _sp.Add("Trading.Help", "Necesitas al menos un puerto para comerciar. En el puerto puedes agregar ordenes de importación y exportación. Si necesitas mas ayuda puedes pasar el tutorial.");
-
-        _sp.Add("Combat Mode.Help", "Se activa cuando un pirata o bandido es visto por uno de tus ciudadanos.");
-
-        _sp.Add("Population.Help", "Cuando los jóvenes cumplen 16 años se mudan a una casa vaciá si existe. Si siempre hay casas vaciás el crecimiento de la población esta garantizado.");
-
-        _sp.Add("F1.Help", "Presiona [F1] para ayuda");
-
-        _sp.Add("Inputs.Help", "Si un edificio no produce porque le faltan insumos, chequea que los insumos necesarios estén en la almacén y que tengas trabajadores en la Casa De Albañiles");
+        // _sp.Add("Weight.Help", "Peso: Todos los pesos en el juego están en Kg o Lbs" +
+        //                        " dependiendo en el sistema de unidad seleccionado." +
+        //                        " Se puede cambiar en 'Opciones' en el 'Menu Principal'");
 
 
 
+        // _sp.Add("More.Help", "Si necesita mas ayuda siempre es una buena idea pasar el tutorial, or o postear una pregunta en el Forum");
 
-        _sp.Add("WheelBarrows.Help", "Los carretilleros son los trabajadores de la Casa de Albañiles. Si ellos no tienen nada que hacer entonces harán el trabajo de carretilleros. Si necesitas algún insumo en un edificio, asegurate de tener bastantes de estos trabajando y por su puesto los insumos disponibles en la almacén");
+		// //more 
+        // _sp.Add("Products Expiration.Help", "Caducidad de productos: Como en la vida real los productos expiran. En la tabla the productos expirados se puede ver si alguno ha expirado Bulletin/Prod/Expire");
+        // _sp.Add("Horse Carriages.Help", "Las personas con carretillas tiene limites de carga. Por eso estas carretas con caballos son usadas en el juego, ya que pueden cargar mucho mas. Como resultado la economía se mueve mas de prisa. Una persona carga alrededor de 15KG, un carretillero 60KG, y las carretas chicas hasta 240KG. Construye un HeavyLoad para usarlas");
+        // _sp.Add("Usage of goods.Help", "Consumo de bienes: Cajas, barriles, carretillas, carretas, herramientas, ropa, cerámicas, muebles y utensilios son todos necesarios para mantener las actividades de la villa. A medida que estos bienes son usados disminuye la cantidad en el almacén, por ej. una persona no cargara nada si no hay cajas");
+        // _sp.Add("Happiness.Help", "Felicidad: La felicidad de las personas esta influenciada por varios factores. Variedad de comidas, satisfacción religiosa, esparcimiento, confort de la casa, nivel de educación, utensilios, cerámica y ropa.");
+        // _sp.Add("Line production.Help", "Linea de producción: Para hacer un KG de puntillas tienes que encontrar y minar los minerales, en la fundición derretir el hierro, y finalmente en el herrero hacer las puntillas. O simplemente comprarla en el puerto");
+        // _sp.Add("Bulletin.Help", "El icono con las paginas en la barra inferior es la ventana de Boletín/Control. Por favor toma un minuto para explorarla.");
+        // _sp.Add("Trading.Help", "Necesitas al menos un puerto para comerciar. En el puerto puedes agregar ordenes de importación y exportación. Si necesitas mas ayuda puedes pasar el tutorial.");
+
+        // _sp.Add("Combat Mode.Help", "Se activa cuando un pirata o bandido es visto por uno de tus ciudadanos.");
+
+        // _sp.Add("Population.Help", "Cuando los jóvenes cumplen 16 años se mudan a una casa vaciá si existe. Si siempre hay casas vaciás el crecimiento de la población esta garantizado.");
+
+        // _sp.Add("F1.Help", "Presiona [F1] para ayuda");
+
+        // _sp.Add("Inputs.Help", "Si un edificio no produce porque le faltan insumos, chequea que los insumos necesarios estén en la almacén y que tengas trabajadores en la Casa De Albañiles");
+
+
+
+
+        // _sp.Add("WheelBarrows.Help", "Los carretilleros son los trabajadores de la Casa de Albañiles. Si ellos no tienen nada que hacer entonces harán el trabajo de carretilleros. Si necesitas algún insumo en un edificio, asegurate de tener bastantes de estos trabajando y por su puesto los insumos disponibles en la almacén");
 
 
 
@@ -878,9 +878,6 @@ public class Spanish
 		//
 
 
-        //in game gui
-        _sp.Add("Prod", "Prod");
-        _sp.Add("Finance", "Finanzas");
 
         //After Oct 20th 2018
         _sp.Add("Resources", "Materiales");
@@ -972,6 +969,112 @@ public class Spanish
         _sp.Add("Quenched", "Saciada");
 
 
+
+        //Dec 14
+
+        //in game gui
+
+        _sp.Add("Help", "Ayuda");
+        _sp.Add("Quest", "Desafió");
+        _sp.Add("Add Order", "Pedidos");
+        _sp.Add("Suggest Change", "Sugerencias");
+
+        _sp.Add("Panel Control / Bulletin", "Panel de Control");
+        _sp.Add("Finance", "Finanzas");
+        _sp.Add("Exports", "Exporta");
+        _sp.Add("Ledger", "Cuentas");
+
+        _sp.Add("Prod", "Producto");
+        _sp.Add("Consume", "Consumido");
+        _sp.Add("Produce", "Producido");
+        _sp.Add("Expire", "Caducado");
+
+        _sp.Add("Spec", "Específico");
+        _sp.Add("Input1", "Insumo1");
+        _sp.Add("Input2", "Insumo2");
+        _sp.Add("Input3", "Insumo3");
+        _sp.Add("Building", "Edificio");
+        _sp.Add("Price", "Precio");
+
+        _sp.Add("Date", "Fecha");
+        _sp.Add("Product", "Producto");
+        _sp.Add("Amount", "Cantidad");
+        _sp.Add("Transaction", "Transaccion");
+
+        _sp.Add("Workers", "Trabajos");
+
+        //Help
+        _sp.Add("Bulletin", "Boletín");
+        _sp.Add("Construction", "Construcción");
+        _sp.Add("Emigrate", "Emigracion");
+        _sp.Add("Happiness", "Felicidad");
+        _sp.Add("Horse Carriages", "Coches de Caballos");
+        _sp.Add("Inputs", "Entradas");
+        _sp.Add("Line production", "Linea de producción");
+        _sp.Add("Our Inventories", "Inventorios");
+        _sp.Add("Inventories", "Inventorios");
+        _sp.Add("People Range", "Rango Personal");
+        _sp.Add("Pirate Threat", "Amenaza Pirata");
+        _sp.Add("Population", "Poblacion");
+        _sp.Add("Port Reputation", "Reputación Portuaria");
+        _sp.Add("Production Tab", "Producción Pestaña");
+        _sp.Add("Products Expiration", "Caducidad de productos");
+        _sp.Add("Sea Path", "Camino al Mar");
+        _sp.Add("Trading", "Comercio");
+        _sp.Add("Usage of goods", "Uso de bienes");
+        _sp.Add("What is Ft3 and M3?", "Que es Ft3 y M3?");
+        _sp.Add("WheelBarrows", "Carretilleros");
+
+
+        //help
+        _sp.Add("Construction.Help", "Para la construcción de cualquier edificio necesita tener trabajadores en la Casa de Albañiles. "+
+                    "Haga clic en la Casa de Albañiles, luego en el signo '+' en la pestaña general. Asegúrese de tener suficientes recursos");
+        _sp.Add("Camera.Help", "Cámara: use [WASD] o el cursor para moverse. "+
+                        "Presione la rueda de desplazamiento del mouse, manténgala presionada para girar, o [Q] y [E]");
+        _sp.Add("Sea Path.Help", "Haga clic en la esquina inferior izquierda 'Mostrar / ocultar ruta marítima' "+
+                            "para mostrar el camino más cercano al mar");
+
+        _sp.Add("People Range.Help", "El enorme círculo azul alrededor de cada edificio marca el alcance del mismo.");
+
+        _sp.Add("Pirate Threat.Help", "Amenaza pirata: conocimiento pirata de tu puerto. Esto aumenta cuando "+
+                                        "tienes más dinero. Si esto llega a más de 90, perderás el juego. Puedes contrarrestar la amenaza construyendo edificios militares");
+
+        _sp.Add("Port Reputation.Help", "Reputación de puertos: mientras más personas conozcan su puerto, más visitarán. " +
+                                            "Si desea aumentar esto, asegúrese de tener siempre algunos pedidos" +
+                                            " en el muelle");
+        _sp.Add("Emigrate.Help", "Emigrates: When people are unhappy for a few years they leave. The bad" +
+                                    " part of this is they won't come back, they won't produce or have children." +
+                                    " The only good thing is that they increase the 'Port Reputation'");
+        _sp.Add("Food.Help", "Alimentos: cuanto mayor sea la variedad de alimentos disponibles en un hogar, más felices serán todos");
+
+        _sp.Add("Weight.Help", "Peso: todos los pesos en el juego están en Kg o Lbs, dependiendo del sistema de Unidad seleccionado. " +
+                                "Puede cambiarlo en 'Opciones' en el 'Menú principal'");
+        _sp.Add("What is Ft3 and M3?.Help", "La capacidad de almacenamiento está determinada por el volumen del edificio. Ft3 es un pie cúbico. M3 es un metro cúbico");//. Keep in mind that less dense products will fill up your storage quickly. To see products density Bulletin/Prod/Spec" );
+
+        _sp.Add("More.Help", "Si necesita más ayuda, puede ser una buena idea completar el tutorial o simplemente publicar una pregunta en los foros de SugarMill");
+
+        //more 
+        _sp.Add("Products Expiration.Help", "Vencimiento de productos: al igual que en la vida real, en este juego todos los productos caducan. Algunos alimentos caducan antes que otros. Puede ver cuántos productos han caducado en Boletín / Producto / Caducar");
+        _sp.Add("Horse Carriages.Help", "Como el juego tiene medidas reales, las personas solo pueden llevar una cantidad considerable. Entonces es cuando entran en juego los carruajes tirados por caballos. Llevan mucho más, como resultado, su economía se ve impulsada. Una persona en sus mejores años puede transportar alrededor de 15 kg, con una carretilla unos 60 kg, pero el carrito más pequeño de caballos puede transportar 240 kg. Para usarlos, construya 'Cocheros'");
+        _sp.Add("Usage of goods.Help", "Uso de bienes: cajas, barriles, carretillas, carros, herramientas, telas, vajillas, muebles y utensilios son necesarios para realizar las actividades tradicionales de una ciudad. A medida que estos productos se utilizan, disminuyen, como resultado, una persona no llevará nada si no hay cajas. Vigila eso;)");
+        _sp.Add("Happiness.Help", "Felicidad: la felicidad de las personas está influenciada por varios factores. La cantidad de dinero que tienen, la variedad de alimentos, la satisfacción de la religión, el acceso al ocio, la comodidad de la casa y el nivel educativo. También si una persona tiene acceso a utensilios, vajilla y ropa influirá en su felicidad.");
+        _sp.Add("Line production.Help", "Producción en línea: para hacer un clavo simple, necesita extraer mineral, en la fundición derretir el hierro, y finalmente en el herrero hacer el clavo. Si tienes suficiente dinero, siempre puedes comprar el clavo directamente en un barco o cualquier otro producto.");
+        _sp.Add("Bulletin.Help", "El icono de páginas en la barra inferior es la Ventana de Boletín. Por favor, tómate un minuto para explorarlo.");
+        _sp.Add("Trading.Help", "Necesitarás tener al menos un Puerto para poder comerciar. En él, puede agregar pedidos de importación / exportación y ganar algo de dinero. Si necesita ayuda para agregar un pedido, puede completar el Tutorial");
+
+        _sp.Add("Combat Mode.Help", "It activates when a Pirate/Bandit is detected by one of your citizens. Once the mode is active you can command units directly to attack. Select them and right click to objective to attack");
+
+        _sp.Add("Population.Help", "Una vez que cumplan 16 se mudarán a una casa si la encuentran. Si siempre hay una casa vacia para mudarse, se garantizará el crecimiento de la población. Si se mudan a las nuevas casas a los 16 años, estás maximizando el crecimiento de la población.");
+
+
+        _sp.Add("F1.Help", "[F1] Ayuda");
+
+        _sp.Add("Inputs.Help", "Si un edificio no se puede construir porque faltan insumos. Verifique que tenga los insumos necesarios en el almacenamiento principal y al menos un trabajador en la Casa de Albañiles");
+        _sp.Add("WheelBarrows.Help", "Las carretillas son los trabajadores de albañilería. Si no tienen nada que construir, actuarán como carretilleros. Si necesita insumos para llevar a un edificio específico, asegúrese de tener suficientes de ellas funcionando y también las insumos mencionadas en el edificio de almacenamiento");
+
+        _sp.Add("Production Tab.Help", "Si el edificio es un campo agrícola, asegúrese de tener trabajadores en la granja. La cosecha se perderá si se sienta allí un mes después del día de la recogida.");
+        _sp.Add("Our Inventories.Help", "La sección 'Nuestros inventarios' en la 'Ventana Agregar pedido' es un resumen de lo que obtuvimos en nuestros inventarios de edificios de almacenamiento");
+        _sp.Add("Inventories Explanation.Help", "Este es un resumen de lo que obtuvimos en nuestros inventarios de almacenamiento. Los artículos en los inventarios de otros edificios no pertenecen a la ciudad.");
     }
 
     internal static void Clear()

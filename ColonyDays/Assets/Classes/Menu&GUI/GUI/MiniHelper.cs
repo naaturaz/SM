@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
-
 
 class MiniHelper : GUIElement
 {
@@ -67,14 +64,10 @@ class MiniHelper : GUIElement
 
         _rectTransform.position = new Vector3(2500, 2500);
         _text.text = "";
-
-        //Program.gameScene.TutoStepCompleted("CloseHelp.Tuto");
     }
 
     internal void Show()
     {
-
-
         AudioCollector.PlayOneShotFullAudio("ClickMetal2");
         Program.MouseListener.HidePersonBuildOrderNotiWindows();
 
@@ -86,7 +79,6 @@ class MiniHelper : GUIElement
         Program.MouseListener.TutoWindow1.HideArrow();
         Program.MouseListener.BulletinWindow.Hide();
     }
-
 
     /// <summary>
     /// Called from GUI

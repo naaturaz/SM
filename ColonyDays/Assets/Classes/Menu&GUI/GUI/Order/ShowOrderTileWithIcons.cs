@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,6 +17,7 @@ class ShowOrderTileWithIcons : ShowInvetoryItem
     DispatchManager _dispatchManager = new DispatchManager();
     BuildingWindow _buildingWindow;
 
+    float oldAmt = -1000;
 
     public string OrderId
     {
@@ -46,16 +44,13 @@ class ShowOrderTileWithIcons : ShowInvetoryItem
     private new void Start()
     {
         if (_icon != null)
-        {
             return;
-        }
 
         var container = FindGameObjectInHierarchy("Cont", gameObject);
 
         _upBtn = FindGameObjectInHierarchy("Up", gameObject);
         _downBtn = FindGameObjectInHierarchy("Down", gameObject);
         _trashBtn = FindGameObjectInHierarchy("Trash", gameObject);
-
 
         _icon = FindGameObjectInHierarchy("Icon", gameObject);
 
@@ -67,12 +62,10 @@ class ShowOrderTileWithIcons : ShowInvetoryItem
         _icon.transform.name = _prod + "";
 
         _buildingWindow = FindObjectOfType<BuildingWindow>();
-
     }
 
     private new void Update()
     {
-
     }
 
     public void GoUp()
@@ -139,7 +132,6 @@ class ShowOrderTileWithIcons : ShowInvetoryItem
         var x = 0;
 
         rectT.localPosition = new Vector3(x, (-4 * i), 0);
-
         transform.localScale = new Vector3(1, 1, 1);
     }
 
@@ -154,11 +146,8 @@ class ShowOrderTileWithIcons : ShowInvetoryItem
         rectT.position = new Vector3();
 
         var x = 0;
-
         if (type == H.None)
-        {
             x = ReturnPixelsToTheRight();
-        }
 
         float yPls = 0;
         //bz if is on process goes down
@@ -169,9 +158,6 @@ class ShowOrderTileWithIcons : ShowInvetoryItem
         transform.localScale = new Vector3(1, 1, 1);
     }
 
-    float oldAmt = -1000;
-
-
     public void Show(Order order)
     {
         _amt = order.Left();
@@ -181,7 +167,6 @@ class ShowOrderTileWithIcons : ShowInvetoryItem
         oldAmt = _amt;
 
         _order = order;
-
         _prod = order.Product;
 
         Start();

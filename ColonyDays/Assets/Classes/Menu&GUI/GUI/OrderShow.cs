@@ -1,7 +1,5 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using Button = UnityEngine.UI.Button;
 
 /*
  * Script added to order to be shown in the Orders tab in the dock.

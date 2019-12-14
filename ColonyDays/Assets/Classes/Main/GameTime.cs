@@ -1,6 +1,4 @@
 ﻿
-using System;
-
 public class GameTime
 {
     //0.0007f = 1Year at 10x 687.84sec; 
@@ -70,7 +68,6 @@ public class GameTime
     public float TimeFactorInclSpeed()
     {
         var multi = 1;
-
         return Program.gameScene.GameSpeed*_timeFactor * multi;
         //like this now at 10x 1 years takes 4 min with  _timeFactor = 0.001f * Program.gameScene.GameSpeed;
     }
@@ -112,11 +109,8 @@ public class GameTime
     private void NewYear()
     {
         _year++;
-
         if (BulletinWindow.SubBulletinFinance1 == null)
-        {
             return;
-        }
 
         BulletinWindow.SubBulletinFinance1.FinanceLogger.AddYearBudget();
     }
@@ -129,9 +123,7 @@ public class GameTime
     bool CheckIfNew(int oldDate, int newDate)
     {
         if (newDate < oldDate)
-        {
             return true;
-        }
         return false;
     }
 
@@ -167,8 +159,6 @@ public class GameTime
         {
             return Month.Jun;
         }
-
-
         if (val == 7)
         {
             return Month.Jul;
@@ -194,7 +184,6 @@ public class GameTime
         {
             return Month.Dec;
         }
-
         return Month.None;
     }
 
@@ -282,8 +271,6 @@ public class GameTime
         return Year + "-" + Month1 + "-" + Day;
     }
 
-
-
     public MDate ReturnCurrentDatePlsAdded(float daysP)
     {
         var currDaysSoFar = FromMDateToDays(CurrentDate());
@@ -342,9 +329,7 @@ public class MDate
     internal string ToStringFormatMonDayYear()
     {
         if (Month1 == 0)
-        {
-            return "None";
-        }
+            return Languages.ReturnString("None");
 
         return GameTime.FromIntToMonth(Month1) + " " + Day + ", " + Year;
     }
@@ -352,9 +337,7 @@ public class MDate
     internal string ToStringFormatMonYear()
     {
         if (Month1 == 0)
-        {
-            return "None";
-        }
+            return Languages.ReturnString("None");
 
         return GameTime.FromIntToMonth(Month1) + " " + Year;
     }

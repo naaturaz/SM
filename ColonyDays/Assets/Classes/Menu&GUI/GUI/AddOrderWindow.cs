@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
@@ -20,8 +19,6 @@ public class AddOrderWindow : GUIElement
 
     private string _orderType;//will say if import or export
 
-
-
     private Rect _addBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
     private Rect _cancelBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
 
@@ -33,10 +30,8 @@ public class AddOrderWindow : GUIElement
     private H _frecuency = H.Once;
     private int _price;
 
-
     private InputField _inputAmt;
     private InputField _inputPrice;
-
 
     private GameObject _priceGroup;
 
@@ -106,10 +101,7 @@ public class AddOrderWindow : GUIElement
     private void LoadMenu()
     {
         HandlePriceGroup();
-
-        //_title.text = "Add New " + _orderType + " Order";
         _title.text = Languages.ReturnString("Add.New") + Languages.ReturnString(_orderType) + Languages.ReturnString("Order");
-
         PopulateScrollView();
     }
 
@@ -118,9 +110,7 @@ public class AddOrderWindow : GUIElement
     private void PopulateScrollView()
     {
         if (_btns.Count > 0)
-        {
             return;
-        }
 
         ShowButtons(Program.gameScene.ExportImport1.ProdSpecsCured());
     }
@@ -281,7 +271,6 @@ public class AddOrderWindow : GUIElement
         Program.MouseListener.BuildingWindow1.ShowOrders();
 
         ClearForm();
-
         return true;
     }
 
@@ -344,7 +333,6 @@ public class AddOrderWindow : GUIElement
         }
 
         var dock = BuildingPot.Control.Registro.SelectBuilding;
-
         return dock.Inventory.HasEnoughtCapacityToStoreThis(_prodSelect, _amt);
     }
 
@@ -385,11 +373,9 @@ public class AddOrderWindow : GUIElement
     private void RemoveOrderFromDispatch(string feed)
     {
         var id = feed.Substring(7);
-
         var dock = BuildingPot.Control.Registro.SelectBuilding;
 
         dock.Dispatch1.RemoveOrderByIDExIm(id);
-
         //so orders are updated 
         Program.MouseListener.BuildingWindow1.ShowOrders();
     }
@@ -432,7 +418,8 @@ public class AddOrderWindow : GUIElement
     {
         if (_prodSelect != P.None)
         {
-            _prodSelLbl.text = _prodSelect.ToString();
+            var key = _prodSelect.ToString();
+            _prodSelLbl.text = Languages.ReturnString(key);
         }
         else
         {
@@ -440,13 +427,9 @@ public class AddOrderWindow : GUIElement
         }
 
         if (_inputAmt.text != "")
-        {
             _amtEnterLbl.text = _inputAmt.text + " " + Unit.CurrentWeightUnitsString();
-        }
         else
-        {
             _amtEnterLbl.text = "-"; ;
-        }
 
         if (_prodSelect != P.None && _inputAmt.text != "")
         {
@@ -460,9 +443,7 @@ public class AddOrderWindow : GUIElement
     {
         int temp = 0;
         if (int.TryParse(text, out temp))
-        {
             return true;
-        }
 
         return false;
     }

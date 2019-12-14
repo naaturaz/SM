@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
-
 
 public class SpecTile : GUIElement
 {
@@ -21,7 +17,6 @@ public class SpecTile : GUIElement
     private Text _priceLbl;
 
     List<Text> _inputs = new List<Text>();
-
 
     public SpecData Spec
     {
@@ -42,13 +37,10 @@ public class SpecTile : GUIElement
         }
     }
 
-
-
     void Start()
     {
         _prodLbl = GetChildCalled("Prod_Lbl").GetComponent<Text>();
         _prodLbl.text = "-";
-
 
         _input1Lbl = GetChildCalled("Input1_Lbl").GetComponent<Text>();
         _input1Lbl.text = "-";
@@ -65,13 +57,9 @@ public class SpecTile : GUIElement
         _priceLbl.text = "-";
 
         if (Spec != null)
-        {
             InitSpec();
-        }
         if (Export != null)
-        {
             InitExport();
-        }
     }
 
     private void InitExport()
@@ -79,17 +67,17 @@ public class SpecTile : GUIElement
         //HandleTitleBar
         if (Export.MDate == null)
         {
-            _prodLbl.text = "Date";
-            _input1Lbl.text = "Building";
-            _input2Lbl.text = "Product";
-            _input3Lbl.text = "Amount";
-            _priceLbl.text = "Transaction";
+            _prodLbl.text = Languages.ReturnString("Date");
+            _input1Lbl.text = Languages.ReturnString("Building");
+            _input2Lbl.text = Languages.ReturnString("Product");
+            _input3Lbl.text = Languages.ReturnString("Amount");
+            _priceLbl.text = Languages.ReturnString("Transaction");
             return;
         }
 
         _prodLbl.text = Export.MDate.ToStringFormatMonDayYear();
-        _input1Lbl.text = Export.Building;
-        _input2Lbl.text = Export.Prod;
+        _input1Lbl.text = Languages.ReturnString(Export.Building);
+        _input2Lbl.text = Languages.ReturnString(Export.Prod);
         _input3Lbl.text = Unit.ConvertFromKGToCurrent(Export.Amt).ToString("N0") + " " 
             + Unit.CurrentWeightUnitsString();
         _priceLbl.text = MyText.DollarFormat(Export.Money);
@@ -107,37 +95,26 @@ public class SpecTile : GUIElement
         {
             for (int i = 0; i < _spec.ProdInfo.Ingredients.Count; i++)
             {
-                _inputs[i].text = _spec.ProdInfo.Ingredients[i].Element + "";
+                _inputs[i].text = Languages.ReturnString(_spec.ProdInfo.Ingredients[i].Element + "");
             }
-
         }
 
         _buildingLbl.text = "-";
 
         if (_spec.ProdInfo.HType.Count > 0)
-        {
-            _buildingLbl.text = _spec.ProdInfo.HType[0].ToString();
-
-        }
+            _buildingLbl.text = Languages.ReturnString(_spec.ProdInfo.HType[0].ToString());
 
         _priceLbl.text = Unit.ProperPricedAndFormat(_spec.Price);  //_spec.Price
 
         if (_spec.Price == -100)
-        {
-            _priceLbl.text = "Price";
-        }
+            _priceLbl.text = Languages.ReturnString("Price");
     }
-
-
-
 
     void Update()
     {
-
     }
 
-    internal static SpecTile CreateTile(Transform container,
-        SpecData spec, Vector3 iniPos)
+    internal static SpecTile CreateTile(Transform container, SpecData spec, Vector3 iniPos)
     {
         SpecTile obj = null;
 
@@ -153,7 +130,6 @@ public class SpecTile : GUIElement
 
         return obj;
     }
-
 
     internal static SpecTile CreateTile(Transform container,
     ExportData export, Vector3 iniPos)
