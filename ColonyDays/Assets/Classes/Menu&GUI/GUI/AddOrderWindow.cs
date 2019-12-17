@@ -74,7 +74,6 @@ public class AddOrderWindow : GUIElement
 
         _priceGroup = GetChildThatContains(H.PriceGroup);
 
-
         var _scroll = GetChildCalled("Scroll_View");
         _content = GetGrandChildCalledFromThis("Content", _scroll);
         _scroll_Ini_PosGO = GetChildCalledOnThis("Scroll_Ini_Pos", _content);

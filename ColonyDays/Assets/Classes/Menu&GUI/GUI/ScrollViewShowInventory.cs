@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -16,10 +15,7 @@ public class ScrollViewShowInventory : GUIElement
     public string Which;//which inv needs to show and wht type of tile , need to be set in inspector
 
     ShowAInventory _showAInv;
-
     int _oldItemsAmt;
-
-    static bool _isMouseOnMe;
     private float _tileHeight = 3.5f;//3.48
 
     // Use this for initialization
@@ -66,7 +62,6 @@ public class ScrollViewShowInventory : GUIElement
     // Update is called once per frame
     void Update()
     {
-
     }
 
     public void Show()
@@ -85,31 +80,19 @@ public class ScrollViewShowInventory : GUIElement
     /// <summary>
     /// If true the mouse is on me right now
     /// </summary>
-    static public bool IsMouseOnMe
-    {
-        get
-        {
-            return _isMouseOnMe;
-        }
-
-        set
-        {
-            _isMouseOnMe = value;
-        }
-    }
+    static public bool IsMouseOnMe { get; set; }
 
     //Called from GUI
     //if mouse is on me will not scroll. 
     //however this obj need to be set on Inspector with a trigger events  poinitng here 
     public void CallMeWhenMouseEnter()
     {
-        _isMouseOnMe = true;
+        IsMouseOnMe = true;
     }
 
     public void CallMeWhenMouseExit()
     {
-        _isMouseOnMe = false;
-
+        IsMouseOnMe = false;
     }
 
 }

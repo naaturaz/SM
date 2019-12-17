@@ -248,7 +248,7 @@ public class Spanish
         _sp.Add("NameToSave", "Salva tu partida como:");
         _sp.Add("NameToLoad", "La partida selecciona es:");
         _sp.Add("OverWrite", "Ya existe un archivo con este nombre. Quieres sobre escribirlo?" );
-        _sp.Add("DeleteDialog", "?Estas seguro que quieres borrar esta partida?");
+        _sp.Add("DeleteDialog", "Estas seguro que quieres borrar esta partida?");
         _sp.Add("NotHDDSpace", "No hay espacio suficiente en torre {0} para salvar la partida");
         _sp.Add("GameOverPirate", "Lo siento, perdiste el juego! Los piratas te atacaron y mataron a todos.");
         _sp.Add("GameOverMoney", "Lo siento, perdiste el juego! La corona no te ayudara más con tu sueño Caribeño.");
@@ -410,13 +410,13 @@ public class Spanish
 		//Shows on the middle of the screen
         _sp.Add("NotScaledOnFloor", "La construcción esta muy cerca al mar o una montaña");
         _sp.Add("NotEven", "El piso no esta parejo en la base de la construcción");
-        _sp.Add("Colliding", "La construcción choca con otra");
-        _sp.Add("BadWaterHeight", "La construcción esta muy alta o muy baja en el agua");
+        _sp.Add("Colliding", "Aquí la construcción esta obstruida por otra");
+        _sp.Add("BadWaterHeight", "La construcción esta muy alta o muy baja en el mar");
         _sp.Add("LockedRegion", "Necesitas ser dueño de esta tierra para construir aquí");
         _sp.Add("HomeLess", "La gente en esta casa no tiene a donde ir. Por favor construye una" +
                            " nueva casa que pueda albergar a esta familia");
-        _sp.Add("LastFood", "No puedes destruir la única almacén en la villa");
-        _sp.Add("LastMasonry", "No puedes destruir la única casa de albañiles en la villa");
+        _sp.Add("LastFood", "No puedes destruir la única Almacén en la villa");
+        _sp.Add("LastMasonry", "No puedes destruir la única Casa de Albañiles en la villa");
 
 
 		//Mini help
@@ -542,11 +542,11 @@ public class Spanish
 
 		//Quest
         _sp.Add("Tutorial.Quest", "Desafió: Termina el tutorial. $10,000 en premio. Toma alrededor de 3 minutos para ser completado");
-        _sp.Add("Lamp.Quest", "Desafió: Construye una farola. Esta en Infraestructuras, son encendidas de noche si hay Aceite de Ballena en la Almacén");
+        _sp.Add("Lamp.Quest", "Desafió: Construye una Lampara de Calle. Esta en Infraestructuras, son encendidas de noche si hay Aceite de Ballena en la Almacén");
         _sp.Add("Shack.Quest", "Desafió: Construye una casucha. Estas son casas baratas. Cuando las personas cumplen 16 años se mudan a un casa nueva si existe. De esta manera se garantiza el crecimiento de la población. [F1] Ayuda");
-        _sp.Add("SmallFarm.Quest", "Desafió: Construye una Finca de Cultivos Chica. Necesitas estas para alimentar a tu pueblo");
+        _sp.Add("SmallFarm.Quest", "Desafió: Construye una Finca de Cultivos Chica. La necesitas para alimentar a tu gente");
         _sp.Add("FarmHire.Quest", "Desafió: Contrata a dos granjeros en la Finca de Cultivos Chica. Haz click en la finca y después en el signo de mas para asignar trabajadores. Para esto necesitas tener trabajadores desempleados");
-        _sp.Add("FarmProduce.Quest", "Desafió: Produce " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " de Frijol en la Finca de Cultivos Chica. Haz click en la pestaña 'Stat' y te mostrara la producción de los últimos 5 años. Puedes ver el avance en el desafió en el formulario de desafíos. Si construyes mas Fincas de Cultivos Chica ayudaran a pasar este desafio");
+        _sp.Add("FarmProduce.Quest", "Desafió: Produce " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " de Frijol en la Finca de Cultivos Chica. Haz click en la pestaña 'Estadísticas' y te mostrara la producción de los últimos 5 años. Puedes ver el avance en el desafió en el formulario de desafíos. Si construyes mas Fincas de Cultivos Chica ayudaran a pasar este desafio");
         _sp.Add("Transport.Quest", "Desafió: Transporta el Frijol de la Finca hacia la Almacén. Para hacer esto asegurate de que hay trabajadores en la Casa de Albañiles. Ellos se convierten en carretilleros cuando no trabajan");
         _sp.Add("Export.Quest", "Desafió: Exporta 300 " + Unit.CurrentWeightUnitsString() + " de Frijol. Añade una orden de Exportación en el Puerto. Si no tienes un Puerto entonces construye uno."+
                "El icono del Puerto esta en Comercio. Cuando este hecho haz click en la pestaña de ordenes, añade una orden de exportación, y selecciona el producto y la cantidad a exportar.");
@@ -600,7 +600,7 @@ public class Spanish
         _sp.Add("Import2000Coal.Quest", "En el Puerto de Importaciones importa 2000 " + Unit.CurrentWeightUnitsString() + " de Carbón. El Carbón también se puede usar como combustible. Espero estés disfrutando el juego hasta ahora. Sigue expandiendo tu colonia y riquezas. Por favor también ayuda a mejorar el juego. Participa en el forum de Steam y deja tus sugerencias y cualquier ideas que tengas para mejorar el juego. Diviértete!");
 		//
 
-        _sp.Add("CompleteQuest", "Tu premio es de ${0}");
+        _sp.Add("CompleteQuest", "Tu premio es de {0}");
 
 
 
@@ -926,8 +926,8 @@ public class Spanish
         _sp.Add("Import", "Importa");
         _sp.Add("Export", "Exporta");
         //AddOrderWindow GUI
-        _sp.Add("Enter Amount:", "Entra cantidad:");
-        _sp.Add("Enter amount...", "Entra cantidad...");
+        _sp.Add("Enter Amount:", "Escribe cantidad:");
+        _sp.Add("Enter amount...", "Escribe cantidad...");
         _sp.Add("New Order:", "Orden Nueva:");
         _sp.Add("Product:", "Producto:");
         _sp.Add("Amount:", "Cantidad:");
@@ -936,7 +936,7 @@ public class Spanish
         
         //BuildingWindow GUI
         _sp.Add("Product Description:", "Descripción del producto:");
-        _sp.Add("Production report by years:", "Reporte anual productivo:");
+        _sp.Add("Production report by years:", "Reporte productivo:");
         _sp.Add("Import Orders", "Importación");
         _sp.Add("Export Orders", "Exportación");
         _sp.Add("Orders in progress:", "Ordenes actuales:");
@@ -958,7 +958,7 @@ public class Spanish
         //Dec 9, 2019
         _sp.Add("Barrel", "Barril");
         _sp.Add("Crockery", "Cerámica");
-        _sp.Add("WhaleOil", "Aceite");
+        _sp.Add("WhaleOil", "Aceite de Ballena");
         _sp.Add("Years of school", "Escolaridad");
         _sp.Add("House comfort", "Calidad de Vivienda");
         _sp.Add("Food source", "Bodega");
@@ -1087,7 +1087,7 @@ public class Spanish
         _sp.Add("Help.Bulletin/Prod/Expire", "Aquí se muestra lo que ha expirado en el pueblo.");
         _sp.Add("Help.Bulletin/Prod/Consume", "Aquí se muestra lo que está consumiendo su gente.");
 
-        _sp.Add("Help.Bulletin/Prod/Spec", "En esta ventana, puede ver las entradas necesarias para cada producto, dónde se construye y el precio."
+        _sp.Add("Help.Bulletin/Prod/Spec", "En esta ventana, puede ver los insumos necesarios para cada producto, dónde se construye y el precio. "
             + "Desplácese hacia arriba para ver los encabezados. Observe que un producto puede tener más que una fórmula para producir.");
 
         _sp.Add("Help.Bulletin/General/Buildings", "Este es un resumen de cuántos edificios hay de cada tipo.");
@@ -1112,6 +1112,14 @@ public class Spanish
         //All Lang Needed for sure
         
         _sp.Add("Unemployed", "Desempleados");
+        _sp.Add("Notifications", "Notificaciones");
+
+        //Quest window
+        _sp.Add("Status", "Estado");
+        _sp.Add("Reward", "Premio");
+        _sp.Add("Active", "Activa");
+        _sp.Add("Done", "Terminada");
+
 
         //Budget
         _sp.Add("Budget Resumen", "Cuentas");
@@ -1135,6 +1143,11 @@ public class Spanish
 
         _sp.Add("Quest.Arrow", "Desafíos");
         _sp.Add("Prev.HoverSmall", "Anterior");
+        
+        _sp.Add("More Positions.HoverSmall", "Contrata");
+        _sp.Add("Less Positions.HoverSmall", "Despide");
+
+        
 
     }
 

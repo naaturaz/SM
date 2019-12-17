@@ -462,13 +462,12 @@ public enum StCat //strucutre categories
     Infrastructure, Housing, Farming, Raw, Production, Industry, Trade, GovServices, Other, Militar, Decoration
 }
 
-
 public enum StInfr //for structures game structure.cs 
 {
     //Infrastructure
     StandLamp,
     //Trail,
-    //Road, 
+    Road,
     //BridgeTrail, BridgeRoad,
     //CoachMan, 
     LightHouse,
@@ -476,7 +475,6 @@ public enum StInfr //for structures game structure.cs
     //b4StockPile, 
     Masonry,
     HeavyLoad,
-    
 }
 
 public enum StHous //for structures game structure.cs 
@@ -498,7 +496,6 @@ public enum StFarm
     //FieldFarmLarge, FieldFarmXLarge,
     //FishingHut, 
 }
-
 
 public enum StRaw //for structures game structure.cs 
 {

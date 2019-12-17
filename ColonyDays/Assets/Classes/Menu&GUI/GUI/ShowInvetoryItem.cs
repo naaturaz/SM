@@ -1,6 +1,4 @@
-﻿using System;
-using System.Runtime.Serialization;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class ShowInvetoryItem : GUIElement
@@ -88,16 +86,8 @@ public class ShowInvetoryItem : GUIElement
             _textCol3 = col3.GetComponent<Text>();
         }
 
-
-
-
         _iconImg = _icon.GetComponent<Image>();
-
-
-
     }
-
-
 
     protected void LoadIcon(P key = P.None)
     {
@@ -132,16 +122,7 @@ public class ShowInvetoryItem : GUIElement
         }
         obj = (ShowInvetoryItem)Resources.Load(root, typeof(ShowInvetoryItem));
         obj = (ShowInvetoryItem)Instantiate(obj, new Vector3(), Quaternion.identity);
-
-
-        //var iniScale = obj.transform.localScale;
-        //obj.transform.SetParent(container);
-        //obj.transform.localPosition = iniPos;
-        //obj.transform.localScale = iniScale;
-
         obj.transform.SetParent(container);
-
-        //CorrectLocalScaleBasedOnScreenSize(obj.transform);
 
         obj.transform.localPosition = iniPos;
 
@@ -191,17 +172,15 @@ public class ShowInvetoryItem : GUIElement
     {
         if (InvItem1.Key == P.Year)
         {
+            LoadIcon();
             Set3TextForReport();
             return;
         }
 
         _textCol1.text = Languages.ReturnString(InvItem1.Key + "");
         _textCol2.text = ReturnAmt();
-
         if (_textCol3 != null)
-        {
             _textCol3.text = ReturnVol();
-        }
 
         //so hover gets it
         _back.name = InvItem1.Key + "";
@@ -219,7 +198,6 @@ public class ShowInvetoryItem : GUIElement
         _back2.SetActive(false);
         _back3.SetActive(false);
     }
-
 
     string ReturnAmt()
     {

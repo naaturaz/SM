@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
 
@@ -10,6 +7,7 @@ public class SubBulletinProduction
     private ProductionReport _productionReport;
     private ProductionReport _expirationReport;
     private BulletinWindow _bulletinWindow;
+    List<ShowAInventory> _reports = new List<ShowAInventory>();
 
     [XmlIgnore]
     public BulletinWindow BulletinWindow1
@@ -36,7 +34,6 @@ public class SubBulletinProduction
         get { return _expirationReport; }
         set { _expirationReport = value; }
     }
-
 
     internal void AddProductionThisYear(P p, float amt)
     {
@@ -88,7 +85,6 @@ public class SubBulletinProduction
             _bulletinWindow.ShowInBody("");
             return;
         }
-
         ShowProductionReport(_productionReport.ProduceReport);
     }
 
@@ -99,7 +95,6 @@ public class SubBulletinProduction
             _bulletinWindow.ShowInBody("");
             return;
         }
-
         ShowProductionReport(_productionReport.ConsumeReport);
     }
 
@@ -110,40 +105,41 @@ public class SubBulletinProduction
             _bulletinWindow.ShowInBody("");
             return;
         }
-
         ShowProductionReport(_expirationReport.ProduceReport);
     }
 
-
-    List<ShowAInventory> _reports = new List<ShowAInventory>();
     private void ShowProductionReport(List<Inventory> list)
     {
         Hide();
+        var height = ItemsOnReport(list) * 3.75f + (list.Count - 1) * 4f;
+        _bulletinWindow.AdjustContentHeight(height);
         _bulletinWindow.ShowScrool();
 
-        var itemsOnReport = 0;
-        for (int i = 0; i < ShowLastYears(list); i++)
+        var lastPos = _bulletinWindow.ScrollIniPosGo.transform.localPosition;
+        var pastItems = 0;
+        for (int i = 0; i < list.Count; i++)
         {
+            var margin = i > 0 ? -4f : 0f;
+            var yPos = (pastItems * -3.75f) + margin;
+
             var a = new ShowAInventory(list[i], _bulletinWindow.Content.gameObject,
-                _bulletinWindow.ScrollIniPosGo.transform.localPosition + new Vector3(0, itemsOnReport * -3.7f, 0));
-            
+                 lastPos + new Vector3(0, yPos, 0));
+
+            lastPos = lastPos + new Vector3(0, yPos, 0);
+
             _reports.Add(a);
-            itemsOnReport += list[i].InventItems.Count;
+            pastItems = list[i].InventItems.Count;
         }
-        _bulletinWindow.AdjustContentHeight(ItemsOnReport(_productionReport.ConsumeReport) * 1.5f);
     }
 
     int ShowLastYears(List<Inventory> list)
     {
         if (list == null)
-        {
             return 0;
-        }
 
         if (list.Count < 6)
-        {
             return list.Count;
-        }
+
         return 5;
     }
 
@@ -156,6 +152,3 @@ public class SubBulletinProduction
         _reports.Clear();
     }
 }
-
-
-

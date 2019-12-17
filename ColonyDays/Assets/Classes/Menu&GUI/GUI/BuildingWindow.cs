@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class BuildingWindow : Window
 {
-
     private Text _title;
     private Text _info;
     private Text _inv;
@@ -153,12 +152,10 @@ public class BuildingWindow : Window
         var currPos = FindGameObjectInHierarchy("Current_Positions", _positions);
         _currPositionsTxt = currPos.GetComponent<Text>();
 
-
         var maxPos = FindGameObjectInHierarchy("Max_Positions", _positions);
         _maxPositionsTxt = maxPos.GetComponent<Text>();
 
         _title = GetChildCalled(H.Title).GetComponent<Text>();
-
 
         _info = GetGrandChildCalled(H.Info).GetComponent<Text>();
         _inv = GetGrandChildCalled(H.Bolsa).GetComponent<Text>();//bolsa bz tht algorith has a bugg tht names cannot be the same or start with the same
@@ -187,7 +184,6 @@ public class BuildingWindow : Window
         _upgBtnRect = GetRectFromBoxCollider2D(upgBtn.transform);
         _prdBtnRect = GetRectFromBoxCollider2D(prdBtn.transform);
         _staBtnRect = GetRectFromBoxCollider2D(staBtn.transform);
-
 
         _importIniPos = GetGrandChildCalled(H.IniPos_Import).transform.position;
         _exportIniPos = GetGrandChildCalled(H.IniPos_Export).transform.position;
@@ -401,13 +397,8 @@ public class BuildingWindow : Window
 
     private void HideShow()
     {
-        //if (Building.HType == H.Masonry)
-        //    _scrollViewCont.SetActive(true);
-        //else
-            _scrollViewCont.SetActive(false);
-
+        _scrollViewCont.SetActive(false);
         _priorityControls.SetActive(false);
-
     }
 
     private void LoadImageIcon()
@@ -426,9 +417,7 @@ public class BuildingWindow : Window
     void Inventory()
     {
         if (Building.Inventory == null)
-        {
             return;
-        }
 
         if (_showAInventory == null)
         {
@@ -493,11 +482,15 @@ public class BuildingWindow : Window
         _reports.Clear();
 
         var pastItems = 0;
-
+        var lastPos = _invIniPosSta.transform.localPosition;
         for (int i = 0; i < ShowLastYears(); i++)
         {
+            var margin = i > 0 ? -4f : -1f;
+            var yPos = (pastItems * -3.75f) + margin;
             var a = new ShowAInventory(Building.ProductionReport.ProduceReport[i], _stats.gameObject,
-                _invIniPosSta.transform.localPosition + new Vector3(0, pastItems * -3.5f * i, 0));
+                lastPos + new Vector3(0, yPos, 0));
+
+            lastPos = lastPos + new Vector3(0, yPos, 0);
 
             _reports.Add(a);
             pastItems = Building.ProductionReport.ProduceReport[i].InventItems.Count;
@@ -543,7 +536,15 @@ public class BuildingWindow : Window
         var isStorage = build.HType.ToString().Contains("Storage");
         var isRoadorBridge = build.HType.ToString().Contains("Road") || build.HType.ToString().Contains("Bridge");
 
-        return !isAHouse && !isStorage && build.HType != H.StandLamp && !isRoadorBridge;
+        var isDecoration = 
+            build.HType == H.Fountain || 
+            build.HType == H.WideFountain || 
+            build.HType == H.PalmTree ||
+            build.HType == H.FloorFountain ||
+            build.HType == H.FlowerPot || 
+            build.HType == H.PradoLion;
+
+        return !isAHouse && !isStorage && build.HType != H.StandLamp && !isDecoration && !isRoadorBridge;
     }
 
     string BuildInfo()
@@ -585,7 +586,7 @@ public class BuildingWindow : Window
                 amt += Building.Families[i].MembersOfAFamily();
             }
 
-            res += Languages.ReturnString("People.Living") + amt + "";
+            res += Languages.ReturnString("People.Living") + " " + amt;
             TilesOfPeopleInAHouse();
         }
 

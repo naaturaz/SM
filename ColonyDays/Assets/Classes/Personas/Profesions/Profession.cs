@@ -1441,8 +1441,6 @@ public class Profession
 
     }
 
-
-
     #region Break Init 
 
     protected bool _breakInitNow;
@@ -1474,7 +1472,7 @@ public class Profession
     /// </summary>
     internal void Birthday()
     {
-        if (_person.Work.HType == H.LightHouse)
+        if (_person.Work != null && _person.Work.HType == H.LightHouse)
         {
             BuildingPot.Control.DockManager1.PortReputation += 0.025f;
         }
@@ -1496,10 +1494,6 @@ public class Profession
     }
 
     #endregion
-
-
-
-
 
     internal void OnBuildDoneHandler(object sender, EventArgs e)
     {

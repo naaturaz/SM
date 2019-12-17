@@ -32,7 +32,7 @@ namespace Assets.Classes.Menu_GUI.GUI.Bulletin
 
             var list = BuildingPot.Control.Registro.StringOfAllBuildingsThatAreAWork().Distinct().ToList();
 
-            list.Insert(0, "Unemployed");
+            //list.Insert(0, "Unemployed");
             ShowWorkers(list);
 
             _bulletinWindow.AdjustContentHeight(list.Count * 5.2f);
@@ -41,13 +41,17 @@ namespace Assets.Classes.Menu_GUI.GUI.Bulletin
         List<WorkerTile> _reports = new List<WorkerTile>();
         private void ShowWorkers(List<string> list)
         {
+            var tileHeight = -4.35f;
+            var height = list.Count * tileHeight;
+
             Hide();
             _bulletinWindow.ShowScrool();
+            _bulletinWindow.AdjustContentHeight(height);
 
             for (int i = 0; i < list.Count; i++)
             {
                 var iniPosHere = _bulletinWindow.ScrollIniPosGo.transform.localPosition +
-                                 new Vector3(0, -(ReturnRelativeYSpace(4.75f, ReturnTileYScale())) * i, 0);
+                                 new Vector3(0, tileHeight * i, 0);
 
                 var a = WorkerTile.CreateTile(_bulletinWindow.Content.gameObject.transform, list[i],
                     iniPosHere);

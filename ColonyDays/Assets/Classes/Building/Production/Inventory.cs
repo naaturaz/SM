@@ -75,7 +75,8 @@ public class Inventory
 
         if (hTypeP == H.YearReport)
         {//bz is called add will stop when the amt is zero //+1 is bz zero doesnt get added
-            _inventItems.Add(new InvItem(P.Year, float.Parse(LocMyId) + 1));
+            _inventItems.Insert(0, new InvItem(P.Year, float.Parse(LocMyId) + 1));
+            //_inventItems.Add(new InvItem(P.Year, float.Parse(LocMyId) + 1));
         }
     }
 
@@ -86,8 +87,6 @@ public class Inventory
     {
         _inventItems = _inventItems.OrderBy(a => a.Key.ToString()).ToList();
     }
-
-
 
     /// <summary>
     /// Will tell u wht amt of a specific type is on inventory 
@@ -259,18 +258,17 @@ public class Inventory
     void AddressGameInventory(P key, float amt, bool add)
     {
         if (!IsAStorage)
-        {
             return;
+
+        if (key == P.Wood)
+        {
+            int aa = 1;
         }
 
         if (add)
-        {
             GameController.ResumenInventory1.GameInventory.Add(key, amt);
-        }
         else
-        {
             GameController.ResumenInventory1.GameInventory.RemoveByWeight(key, amt);
-        }
     }
 
     #region Main Inventory

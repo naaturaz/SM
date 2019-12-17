@@ -303,7 +303,7 @@ public class French
 
             { "More.HoverSmall", "Plus"},
             { "Less.HoverSmall", "Moins"},
-            { "Prev.HoverSmall", "Précédent"},
+            { "", "Précédent"},
 
             { "More Positions.HoverSmall", "Plus"},
             { "Less Positions.HoverSmall", "Moins"},
@@ -448,7 +448,7 @@ public class French
 
             //help
 
-            { "Construction.HoverMed", "Pour la construction d'un bâtiment, vous devez avoir des ouvriers dans la maçonnerie. "+
+            { "CMed", "Pour la construction d'un bâtiment, vous devez avoir des ouvriers dans la maçonnerie. "+
                     " Cliquez sur la maçonnerie puis sur le signe '+' dans l'onglet général. Assurez-vous d'avoir suffisamment de ressources"},
             { "Demolition.HoverMed", "Once the inventory is clear will be demolished. Les brouettes déplaceront le stock"},
 
@@ -967,6 +967,88 @@ public class French
 
             //After Dec 8, 2018
             { "ReloadMod.HoverSmall", "Recharger des fichiers mod" },
+
+
+
+
+            //
+            // 
+            // Below It needs to be double checked by Cedric. Dec 17, 2019
+
+            //Dec 14
+
+            //in game gui
+
+        //     { "Help", "Aide" },
+        //     { "Quest", "Contesté" },
+        //     { "Add Order", "Ordre" },
+        //     { "Suggest Change", "Suggestions" },
+
+        //     { "Panel Control / Bulletin", "Panneau de commande" },
+        //     { "Finance", "Finances" },
+        //     { "Exports", "Exportations" },
+        //     { "Ledger", "Comptes" },
+
+        //     { "Consume", "Consommée" },
+        //     { "Produce", "Produit" },
+        //     { "Expire", "Devenue caduque" },
+
+        //     { "Spec", "Spécifique" },
+        //     { "Input1", "Apport1" },
+        //     { "Input2", "Apport2" },
+        //     { "Input3", "Apport3" },
+        //     { "Building", "Bâtiment" },
+        //     { "Price", "Prix" },
+
+        //     { "Date", "Date" },
+        //     { "Product", "Produit" },
+        //     { "Amount", "Quantité" },
+        //     { "Transaction", "Transaction" },
+
+        //     { "Workers", "Emplois" },
+
+        // //Help
+        //     { "Bulletin", "Bulletin" },
+        //     { "Construction", "Construction" },
+        //     { "Happiness", "Félicité" },
+        //     { "Horse Carriages", "Carriages" },
+        //     { "Inputs", "Billets" },
+        //     { "Line production", "La ligne de production" },
+        //     { "Our Inventories", "Inventorios" },
+        //     { "Inventories Explanation", "Inventorios information" },
+        //     { "People Range", "Gamme personnelle" },
+        //     { "Pirate Threat", "Menace Pirate" },
+        //     { "Population", "Ville" },
+        //     { "Port Reputation", "Réputation Port" },
+        //     { "Production Tab", "Production Tab" },
+        //     { "Products Expiration", "Expiration du produit" },
+        //     { "Sea Path", "Route de la mer" },
+        //     { "Trading", "Commerce" },
+        //     { "Usage of goods", "L'utilisation de produits" },
+        //     { "What is Ft3 and M3?", "M3 est ft3?" },
+        //     { "WheelBarrows", "Carretilleros" },
+
+        //   //All Lang Needed for sure
+        
+        //     { "Unemployed", "Sans emploi" },
+
+        // //Budget
+        //     { "Budget Resumen", "Comptes" },
+        //     { "Initial Balance", "Solde initial" },
+        //     { "Income", "Revenu" },
+        //     { "Quests Completion", "Résiliés défis" },
+        //     { "Income Subtotal", "Sous-total du revenu" },
+
+        //     { "Expenses", "Frais" },
+        //     { "New bought lands", "De nouvelles terres achetées" },
+        //     { "Salary", "Salaires" },
+        //     { "Expenses Subtotal", "Frais Sous-total" },
+
+        //     { "Year", "Année" },
+        //     { "Imports", "Année" },
+        //     { "Balance", "Équilibre" },
+        //     { "Year Balance", "Bilan annuel" },
+        //     { "Ending Balance", "Solde final" },
 
     };
 

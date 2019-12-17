@@ -123,6 +123,6 @@ public class ModController: MonoBehaviour
 
         if (age > 0) return age;
 
-        return 1;
+        return 16;
     }
 }

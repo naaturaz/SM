@@ -59,8 +59,6 @@ public class QuestWindow : GUIElement
         _btns.Clear();
     }
 
-
-
     List<QuestTile> _btns = new List<QuestTile>();
     private void ShowButtons(List<Quest> list)
     {
@@ -76,17 +74,15 @@ public class QuestWindow : GUIElement
         }
     }
 
-
     #endregion
 
     void Update()
     {
-
     }
 
     internal void QuestSelected(Quest q)
     {
-        _rewardText.text = "Reward: " + q.Prize.ToString("C1") + "\nStatus: " + Status(q);
+        _rewardText.text = Languages.ReturnString("Reward: ") + q.Prize.ToString("C1") + "\n " + Languages.ReturnString("Status: ") + Status(q);
         _contentText.text = Languages.ReturnString(q.Key);
     }
 
@@ -94,13 +90,12 @@ public class QuestWindow : GUIElement
     {
         if (Program.gameScene.QuestManager.IsDone(q))
         {
-            return "Done";    
+            return Languages.ReturnString("Done");    
         }
         else if (q.IsAPercetangeOne())
         {
             return q.PercetageDone().ToString("0%");
         }
-        return "Active";
+        return Languages.ReturnString("Active");
     }
 }
-

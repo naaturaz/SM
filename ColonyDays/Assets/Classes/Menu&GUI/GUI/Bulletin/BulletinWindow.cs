@@ -128,7 +128,6 @@ public class BulletinWindow : GUIElement
     {
         _scroll.SetActive(true);
         //all the way up 
-
         base.ResetScroolPos();
     }
 

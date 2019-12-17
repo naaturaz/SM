@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 
 /*
@@ -88,19 +87,34 @@ public class ShowAInventory
         _oldVolumeOccupied = Inv.CurrentVolumeOcuppied();
         var iForSpwItem = 0;//so ReturnIniPos works nicely
 
-        for (int i = 0; i < _inv.InventItems.Count; i++)
+        if(_inv.HType == H.YearReport)
         {
-            //> 0 for main so only show items tht have some 
-            if (_inv.InventItems[i]!=null && _inv.InventItems[i].Amount>0)
+            for (int i = _inv.InventItems.Count - 1; i > -1; i--)
             {
-                _allItems.Add(ShowInvetoryItem.Create(_containr.transform, _inv.InventItems[i], ReturnIniPos(iForSpwItem),
-                    this,_invType));
+                //> 0 for main so only show items tht have some 
+                if (_inv.InventItems[i] != null && _inv.InventItems[i].Amount > 0)
+                {
+                    _allItems.Add(ShowInvetoryItem.Create(_containr.transform, _inv.InventItems[i], ReturnIniPos(iForSpwItem),
+                        this, _invType));
 
-                iForSpwItem++;
+                    iForSpwItem++;
+                }
             }
         }
-    }
+        else
+            for (int i = 0; i < _inv.InventItems.Count; i++)
+            {
+                //> 0 for main so only show items tht have some 
+                if (_inv.InventItems[i]!=null && _inv.InventItems[i].Amount>0)
+                {
+                    _allItems.Add(ShowInvetoryItem.Create(_containr.transform, _inv.InventItems[i], ReturnIniPos(iForSpwItem),
+                        this,_invType));
 
+                    iForSpwItem++;
+                }
+            }
+    }
+       
     Vector3 ReturnIniPos(int i)
     {
         return new Vector3(ReturnX(i) + _iniPos.x, ReturnY(i) + _iniPos.y, _iniPos.z);
@@ -268,5 +282,4 @@ public class ShowAInventory
             _allItems[i].UpdateToThis(ReturnIniPos(i));
         }
     }
-
 }
