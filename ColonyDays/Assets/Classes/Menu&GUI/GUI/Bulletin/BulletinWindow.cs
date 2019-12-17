@@ -19,6 +19,8 @@ public class BulletinWindow : GUIElement
     private static SubBulletinProduction _production;
     private static SubBulletinFinance _finance;
 
+    Text _help;//help in this window
+
     public static SubBulletinProduction SubBulletinProduction1
     {
         get { return _production; }
@@ -30,8 +32,6 @@ public class BulletinWindow : GUIElement
         get { return _finance; }
         set { _finance = value; }
     }
-
-    Text _help;//help in this window
 
     public Text Body1
     {
@@ -62,7 +62,6 @@ public class BulletinWindow : GUIElement
         _production = new SubBulletinProduction(this);
         _finance = new SubBulletinFinance(this);
         
-        //
         _scroll = GetChildCalled("Scroll_View");
         _content = GetGrandChildCalledFromThis("Content", _scroll);
         _contentRectTransform = _content.GetComponent<RectTransform>();
@@ -72,16 +71,13 @@ public class BulletinWindow : GUIElement
         _help = h.GetComponent<Text>();
         _help.text = "";
 
-
         //bz GUI Loades like 4 times 
         PersonData pData = XMLSerie.ReadXMLPerson();
 
         var tempData = Program.gameScene.ProvideMeWithTempData();
         //means is reloading from a change in GUI a
         if (tempData!=null)
-        {
             pData = tempData;
-        }
 
         //loading 
         if (pData != null)
@@ -96,20 +92,13 @@ public class BulletinWindow : GUIElement
             }
         }
 
-
-
         //means is brand new game 
         if (_finance.FinanceLogger.Budgets.Count == 0)
-        {
             _finance.FinanceLogger.AddYearBudget();
-        }
     }
-
-
 
     void Update()
     {
-
     }
 
     /// <summary>
@@ -141,11 +130,7 @@ public class BulletinWindow : GUIElement
         //all the way up 
 
         base.ResetScroolPos();
-
-
     }
-
-
 
     public void ShowInBody(string text)
     {
@@ -158,11 +143,9 @@ public class BulletinWindow : GUIElement
     public void ShowWorkers()
     {
         ClickAndHideAll();
-
         _workers.ShowWorkers();
 
-        _help.text = "Bulletin/General/Workers \n" + Languages.ReturnString("Help.Bulletin/General/Workers");
-
+        _help.text = Languages.ReturnString("Help.Bulletin/General/Workers");
     }  
     
     /// <summary>
@@ -171,12 +154,9 @@ public class BulletinWindow : GUIElement
     public void ShowBuildings()
     {
         ClickAndHideAll();
-
         _workers.ShowBuildings();
 
-        //""
-        _help.text = "Bulletin/General/Buildings \n" + Languages.ReturnString("Help.Bulletin/General/Buildings");
-
+        _help.text = Languages.ReturnString("Help.Bulletin/General/Buildings");
     }
 
     /// <summary>
@@ -187,7 +167,7 @@ public class BulletinWindow : GUIElement
         ClickAndHideAll();
 
         _production.ShowProdReport();
-        _help.text = "Bulletin/Prod/Produce \n" + Languages.ReturnString("Help.Bulletin/Prod/Produce");
+        _help.text = Languages.ReturnString("Help.Bulletin/Prod/Produce");
 
         Program.gameScene.TutoStepCompleted("Prod.Tuto");
     }
@@ -200,8 +180,7 @@ public class BulletinWindow : GUIElement
         ClickAndHideAll();
 
         _production.ShowConsumeReport();
-        _help.text = "Bulletin/Prod/Consume \n" + Languages.ReturnString("Help.Bulletin/Prod/Consume");
-
+        _help.text = Languages.ReturnString("Help.Bulletin/Prod/Consume");
     } 
     
     /// <summary>
@@ -211,8 +190,7 @@ public class BulletinWindow : GUIElement
     {
         ClickAndHideAll();
         _production.ShowExpirationReport();
-        _help.text = "Bulletin/Prod/Expire \n" + Languages.ReturnString("Help.Bulletin/Prod/Expire");
-
+        _help.text = Languages.ReturnString("Help.Bulletin/Prod/Expire");
     }
 
     /// <summary>
@@ -225,10 +203,8 @@ public class BulletinWindow : GUIElement
         ClickAndHideAll();
         _finance.ShowSpecs();
         Program.gameScene.TutoStepCompleted("Spec.Tuto");
-        _help.text = "Bulletin/Prod/Spec \n" + Languages.ReturnString("Help.Bulletin/Prod/Spec");
+        _help.text = Languages.ReturnString("Help.Bulletin/Prod/Spec");
     }
-
-
 
     public static void AddProduction(P p, float amt, string type)
     {
@@ -252,18 +228,15 @@ public class BulletinWindow : GUIElement
         HideAll();
     }
 
-#region Finance
-
+    #region Finance
 
     public void ShowFinanceBudget()
     {
         ClickAndHideAll();
         _finance.ShowBudget();
 
-        //Program.gameScene.TutoStepCompleted("Spec.Tuto");
-        _help.text = "Bulletin/Finance/Ledger \n" + Languages.ReturnString("Help.Bulletin/Finance/Ledger");
+        _help.text = Languages.ReturnString("Help.Bulletin/Finance/Ledger");
         Program.gameScene.TutoStepCompleted("Budget.Tuto");
-
     }
 
     /// <summary>
@@ -271,11 +244,9 @@ public class BulletinWindow : GUIElement
     /// </summary>
     public void ShowFinanceBudgetGUI()
     {
-
         Program.MouseListener.HidePersonBuildOrderNotiBulletinHelpWin();
         base.Show();
         ShowFinanceBudget();
-
     }
 
     /// <summary>
@@ -298,8 +269,6 @@ public class BulletinWindow : GUIElement
         ShowFinanceBudget();
     }
 
-
-
     public void ShowFinancePrices()
     {
         ClickAndHideAll();
@@ -307,12 +276,8 @@ public class BulletinWindow : GUIElement
         //_finance.ShowPrices();
 
         //Program.gameScene.TutoStepCompleted("Spec.Tuto");
-        _help.text = "Bulletin/Finance/Prices \n" + Languages.ReturnString("Help.Bulletin/Finance/Prices");
+        _help.text = Languages.ReturnString("Help.Bulletin/Finance/Prices");
     }
-
-
-
-
 
     /// <summary>
     /// Called from GUI
@@ -322,7 +287,7 @@ public class BulletinWindow : GUIElement
         ClickAndHideAll();
         _finance.ShowExports();
         Program.gameScene.TutoStepCompleted("Exports.Tuto");
-        _help.text = "Bulletin/Finance/Exports \n" + Languages.ReturnString("Help.Bulletin/Finance/Exports");
+        _help.text = Languages.ReturnString("Help.Bulletin/Finance/Exports");
     }
 
     /// <summary>
@@ -332,7 +297,7 @@ public class BulletinWindow : GUIElement
     {
         ClickAndHideAll();
         _finance.ShowImports();
-        _help.text = "Bulletin/Finance/Imports \n" + Languages.ReturnString("Help.Bulletin/Finance/Imports");
+        _help.text = Languages.ReturnString("Help.Bulletin/Finance/Imports");
     }
 
     public void ShowWindowAndThenExports()
@@ -342,7 +307,5 @@ public class BulletinWindow : GUIElement
         ShowExports();
     }
 
-
     #endregion
 }
-

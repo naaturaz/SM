@@ -452,7 +452,7 @@ public class Languages
 
         //help
 
-        _en.Add("Construction.HoverMed", "For the construction of any building you need to have workers in the Masonry. " +
+        _en.Add("Construction.HoverMed", "For the construction of any building you need to have workers in the Masonry." +
                     " Click the Masonry, then the '+' sign in the general tab. Make sure you have enough resources");
         _en.Add("Demolition.HoverMed", "Once the inventory is clear will be demolished. Wheelbarrows will move the inventory");
 
@@ -1029,13 +1029,17 @@ public class Languages
 
 
 
+        //Dec 16
+        _en.Add("New bought lands", "New Bought Lands");
 
 
 
 
-        //ProductStat.cs has a lot of text to put here 
-        //SpecTile.cs has
-        //ShowAPersonBuildingDetails has
+
+
+
+        //has a lot of text to put here 
+        //ProductStat.cs 
         //Dispatch.cs
         //ButtonTile.cs
         //Plant.cs
@@ -1189,15 +1193,15 @@ public class Languages
         {
             return _en.ContainsKey(key);
         }
-        else if (_currentLang == "Español(Beta)")
+        else if (_currentLang == "Español")
         {
             return Spanish.ContainsKey(key);
         }
-        else if (_currentLang == "Français(Beta)")
+        else if (_currentLang == "Français")
         {
             return French.ContainsKey(key);
         }
-        else if (_currentLang == "Deutsch(Beta)")
+        else if (_currentLang == "Deutsch")
         {
             return German.ContainsKey(key);
         }
@@ -1220,7 +1224,7 @@ public class Languages
             // return "en:" + key;
             return key;
         }
-        else if (_currentLang == "Español(Beta)")
+        else if (_currentLang == "Español")
         {
             if (Spanish.ContainsKey(key))
             {
@@ -1228,7 +1232,7 @@ public class Languages
             }
             return "es:" + key;
         }
-        else if (_currentLang == "Português(Beta)")
+        else if (_currentLang == "Português")
         {
             if (_portuguese.ContainsKey(key))
             {
@@ -1236,7 +1240,7 @@ public class Languages
             }
             return "pt:" + key;
         }
-        else if (_currentLang == "Français(Beta)")
+        else if (_currentLang == "Français")
         {
             if (French.ContainsKey(key))
             {
@@ -1244,7 +1248,7 @@ public class Languages
             }
             return "fr:" + key;
         }
-        else if (_currentLang == "Deutsch(Beta)")
+        else if (_currentLang == "Deutsch")
         {
             if (German.ContainsKey(key))
             {
@@ -1303,9 +1307,9 @@ public class Languages
         {
             return _sp.Dictionary;
         }
-        if (_currentLang == "Português(Beta)") return _portuguese;
-        if (_currentLang == "Français(Beta)") return French.Dictionary();
-        if (_currentLang == "Deutsch(Beta)") return German.Dictionary();
+        if (_currentLang == "Português") return _portuguese;
+        if (_currentLang == "Français") return French.Dictionary();
+        if (_currentLang == "Deutsch") return German.Dictionary();
 
         return _en.Dictionary;
     }

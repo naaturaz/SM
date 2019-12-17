@@ -161,10 +161,12 @@ namespace Assets.Classes.Menu_GUI.GUI.Bulletin
 
             string res = Languages.ReturnString("Buildings") + ":\n ";
 
-            for (int i = 0; i < _finReport.Count; i++)
+            var count = _finReport.Count > 15 ? 15 : _finReport.Count;
+
+            for (int i = 0; i < count; i++)
             {
-                var pad = Pad(" ", (_finReport[i].Key + ": ").Length, 15, 0);
-                res += _finReport[i].Key + ": " + pad + _finReport[i].Value + "\n ";
+                //var pad = Pad(" ", (_finReport[i].Key + ": ").Length, 15, 0);
+                res += Languages.ReturnString(_finReport[i].Key) + ": " + _finReport[i].Value + "\n ";
             }
 
             return res;

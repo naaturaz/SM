@@ -89,7 +89,7 @@ public class SpecTile : GUIElement
         _inputs.Add(_input2Lbl);
         _inputs.Add(_input3Lbl);
 
-        _prodLbl.text = _spec.ProdInfo.Product + "";
+        _prodLbl.text = Languages.ReturnString(_spec.ProdInfo.Product + "");
 
         if (_spec.ProdInfo.Ingredients != null)
         {

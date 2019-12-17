@@ -988,6 +988,7 @@ public class German
             { "Current_Rank.HoverSmall", "Number in Queue"},
 
             { "Deutsch(Beta)", "Deutsch(Beta)"},
+            { "Deutsch", "Deutsch"},
 
 
 

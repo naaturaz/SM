@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 
 public class WorkerTile : GUIElement
 {
@@ -60,7 +56,7 @@ public class WorkerTile : GUIElement
         _plusBtn = GetChildCalled("More");
         _lessBtn = GetChildCalled("Less");
 
-        _descText.text = _workType;
+        _descText.text = Languages.ReturnString(_workType);
 
         if (WorkType == "Unemployed")
         {
@@ -171,10 +167,7 @@ public class WorkerTile : GUIElement
     public void ClickPlusSign()
     {
         if (WorkType == "Masonry")
-        {
             Program.gameScene.TutoStepCompleted("AddWorkers.Tuto");
-        }
-
 
 
         _employ++;

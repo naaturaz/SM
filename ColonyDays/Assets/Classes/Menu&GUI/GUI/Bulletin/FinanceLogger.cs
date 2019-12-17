@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using UnityEngine;
-
 
 public class FinanceLogger
 {
     List<Budget> _budgets = new List<Budget>();
+    int yearModified;
 
     public List<Budget> Budgets
     {
@@ -43,9 +40,6 @@ public class FinanceLogger
         yearModified = 0;
     }
 
-
-
-
     /// <summary>
     /// Will create the resume of the current budget 
     /// </summary>
@@ -67,8 +61,6 @@ public class FinanceLogger
         return CreateDisplayAccts(curr);
     }
 
-
-    int yearModified;
     public void SetResumenToPrevYear()
     {
         yearModified -= 1;
@@ -78,15 +70,10 @@ public class FinanceLogger
         yearModified += 1;
     }
 
-
     private List<DisplayAccount> CreateDisplayAccts(Budget curr)
     {
         return curr.CreateDisplayAccts();
     }
-
-
-
-
 
     public bool ThereIsANextYear(int askingYear)
     {
@@ -122,14 +109,17 @@ public class Budget
     //if change update negative or positve acct right below 
     List<string> _acctNames = new List<string>()
     {
-        "Exports", "Overseas Trade", "Crown Trade", "Quests Completion",
+        "Exports", 
+        // "Overseas Trade", "Crown Trade", 
+        "Quests Completion",
         "Imports", "New bought lands", "Salary", "Construction"
     };
 
-
     List<string> _posAcctNames = new List<string>()
     {
-         "Exports", "Overseas Trade", "Crown Trade", "Quests Completion",
+         "Exports", 
+        //  "Overseas Trade", "Crown Trade", 
+         "Quests Completion",
     };
     List<string> _negativeAcctNames = new List<string>()
     {
@@ -179,7 +169,6 @@ public class Budget
         return res;
     }
 
-
     internal List<DisplayAccount> CreateDisplayAccts()
     {
         List<DisplayAccount> res = new List<DisplayAccount>();
@@ -189,41 +178,34 @@ public class Budget
 
         //initial
         //space
-        //res.Add(new DisplayAccount(Color.white, 0, "", 0, false, 0));
         res.Add(new DisplayAccount(Color.black, 0, "Initial Balance", InitBalAcct, false, 1));
-
 
         //income
         //space
-        //res.Add(new DisplayAccount(Color.white, 0, "", 0, false, 0));
         res.Add(new DisplayAccount(Color.black, 0, "Income", -1, true, 1));
         for (int i = 0; i < _posAcctNames.Count; i++)
         {
             var name =_posAcctNames[i];
             res.Add(new DisplayAccount(Color.green, 3, name, ValOfAnAcct(name), false, 0));
         }
-        res.Add(new DisplayAccount(Color.yellow, 1, "Income SubTotal", SubTotal(_posAcctNames), false, 0));
+        res.Add(new DisplayAccount(Color.yellow, 1, "Income Subtotal", SubTotal(_posAcctNames), false, 0));
 
         //expenses
         //space
-        //res.Add(new DisplayAccount(Color.white, 0, "", 0, false, 0));
         res.Add(new DisplayAccount(Color.black, 0, "Expenses", -1, true, 1));
         for (int i = 0; i < _negativeAcctNames.Count; i++)
         {
             var name = _negativeAcctNames[i];
             res.Add(new DisplayAccount(Color.red, 3, name, ValOfAnAcct(name), false, 0));
         }
-        res.Add(new DisplayAccount(Color.yellow, 1, "Expenses SubTotal", SubTotal(_negativeAcctNames), false, 0));
-
+        res.Add(new DisplayAccount(Color.yellow, 1, "Expenses Subtotal", SubTotal(_negativeAcctNames), false, 0));
 
         //space
         res.Add(new DisplayAccount(Color.white, 0, "Balance", -1, false, 0));
         var yearBal =  SubTotal(_posAcctNames) - SubTotal(_negativeAcctNames);
-        res.Add(new DisplayAccount(Color.yellow, 1, "Year balance"
+        res.Add(new DisplayAccount(Color.yellow, 1, "Year Balance"
             , yearBal, false, 0));
         res.Add(new DisplayAccount(Color.black, 0, "Ending Balance", InitBalAcct + yearBal, true, 2));
-
-
 
         return res;
     }
@@ -254,14 +236,11 @@ public class Account
         _balance = bal;
     }
 
-
-
     internal void Add(float bal)
     {
         _balance += bal;
     }
 }
-
 
 /// <summary>
 /// For displaying on the bulletin
@@ -316,7 +295,7 @@ public class DisplayAccount
     {
         _color = color;
         _blankSpaces = blankSpaces;
-        _name = name;
+        _name = Languages.ReturnString(name);
         _balance = balance;
         _boldFont = boldFont;
         _addSizeFont = addSizeFont;

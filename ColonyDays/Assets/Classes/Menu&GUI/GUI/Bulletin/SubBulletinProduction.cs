@@ -5,7 +5,6 @@ using System.Text;
 using System.Xml.Serialization;
 using UnityEngine;
 
-
 public class SubBulletinProduction
 {
     private ProductionReport _productionReport;
@@ -66,8 +65,6 @@ public class SubBulletinProduction
         _expirationReport.AddProductionThisYear(p, amt);
     }
 
-
-
     /// <summary>
     /// Created to find how many items are in each report 
     /// needed to ajust the Scrool View Content height 
@@ -88,7 +85,7 @@ public class SubBulletinProduction
     {
         if (_productionReport == null)
         {
-            _bulletinWindow.ShowInBody("Nothing");
+            _bulletinWindow.ShowInBody("");
             return;
         }
 
@@ -99,7 +96,7 @@ public class SubBulletinProduction
     {
         if (_productionReport == null)
         {
-            _bulletinWindow.ShowInBody("Nothing");
+            _bulletinWindow.ShowInBody("");
             return;
         }
 
@@ -110,7 +107,7 @@ public class SubBulletinProduction
     {
         if (_expirationReport == null)
         {
-            _bulletinWindow.ShowInBody("Nothing");
+            _bulletinWindow.ShowInBody("");
             return;
         }
 

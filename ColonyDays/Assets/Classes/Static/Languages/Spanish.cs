@@ -890,7 +890,7 @@ public class Spanish
         _sp.Add("Of.Food", " de comida. ");
         _sp.Add("Port.Reputation.Least", "Tu Reputación Portuaria al menos a ");
         _sp.Add("Pirate.Threat.Less", "Amenaza Pirata a menos que ");
-        _sp.Add("Skip", "Skip");
+        _sp.Add("Skip", "Saltar");
 
         //After Dec 8, 2018
         _sp.Add("ReloadMod.HoverSmall", "Recarga archivos Mod");
@@ -981,6 +981,7 @@ public class Spanish
 
         _sp.Add("Panel Control / Bulletin", "Panel de Control");
         _sp.Add("Finance", "Finanzas");
+        _sp.Add("Finanzas", "Finanzas");
         _sp.Add("Exports", "Exporta");
         _sp.Add("Ledger", "Cuentas");
 
@@ -999,7 +1000,7 @@ public class Spanish
         _sp.Add("Date", "Fecha");
         _sp.Add("Product", "Producto");
         _sp.Add("Amount", "Cantidad");
-        _sp.Add("Transaction", "Transaccion");
+        _sp.Add("Transaction", "Transacción");
 
         _sp.Add("Workers", "Trabajos");
 
@@ -1012,7 +1013,7 @@ public class Spanish
         _sp.Add("Inputs", "Entradas");
         _sp.Add("Line production", "Linea de producción");
         _sp.Add("Our Inventories", "Inventorios");
-        _sp.Add("Inventories", "Inventorios");
+        _sp.Add("Inventories Explanation", "Inventorios Información");
         _sp.Add("People Range", "Rango Personal");
         _sp.Add("Pirate Threat", "Amenaza Pirata");
         _sp.Add("Population", "Poblacion");
@@ -1025,9 +1026,8 @@ public class Spanish
         _sp.Add("What is Ft3 and M3?", "Que es Ft3 y M3?");
         _sp.Add("WheelBarrows", "Carretilleros");
 
-
         //help
-        _sp.Add("Construction.Help", "Para la construcción de cualquier edificio necesita tener trabajadores en la Casa de Albañiles. "+
+        _sp.Add("Construction.Help", "Para la construcción de cualquier edificio necesita tener trabajadores en la Casa de Albañiles."+
                     "Haga clic en la Casa de Albañiles, luego en el signo '+' en la pestaña general. Asegúrese de tener suficientes recursos");
         _sp.Add("Camera.Help", "Cámara: use [WASD] o el cursor para moverse. "+
                         "Presione la rueda de desplazamiento del mouse, manténgala presionada para girar, o [Q] y [E]");
@@ -1075,6 +1075,67 @@ public class Spanish
         _sp.Add("Production Tab.Help", "Si el edificio es un campo agrícola, asegúrese de tener trabajadores en la granja. La cosecha se perderá si se sienta allí un mes después del día de la recogida.");
         _sp.Add("Our Inventories.Help", "La sección 'Nuestros inventarios' en la 'Ventana Agregar pedido' es un resumen de lo que obtuvimos en nuestros inventarios de edificios de almacenamiento");
         _sp.Add("Inventories Explanation.Help", "Este es un resumen de lo que obtuvimos en nuestros inventarios de almacenamiento. Los artículos en los inventarios de otros edificios no pertenecen a la ciudad.");
+
+
+        //Dec 16 
+        _sp.Add("Town.HoverSmall", "Pueblo");
+
+
+        //Already in En, Fr, De
+        //Bulleting helps
+        _sp.Add("Help.Bulletin/Prod/Produce", "Aquí se muestra lo que se produce en el pueblo.");
+        _sp.Add("Help.Bulletin/Prod/Expire", "Aquí se muestra lo que ha expirado en el pueblo.");
+        _sp.Add("Help.Bulletin/Prod/Consume", "Aquí se muestra lo que está consumiendo su gente.");
+
+        _sp.Add("Help.Bulletin/Prod/Spec", "En esta ventana, puede ver las entradas necesarias para cada producto, dónde se construye y el precio."
+            + "Desplácese hacia arriba para ver los encabezados. Observe que un producto puede tener más que una fórmula para producir.");
+
+        _sp.Add("Help.Bulletin/General/Buildings", "Este es un resumen de cuántos edificios hay de cada tipo.");
+
+        _sp.Add("Help.Bulletin/General/Workers", "En esta ventana, puede asignar trabajadores para trabajar en varios edificios."
+    + "Para que un edificio permita que más personas trabajen, debe ser inferior a la capacidad y debe encontrar al menos una persona desempleada.");
+
+        _sp.Add("Help.Bulletin/Finance/Ledger", "Aquí se muestra su libro mayor. El salario es la cantidad de dinero pagada a un trabajador. Cuanta más gente trabaje, más salario se pagará.");
+        _sp.Add("Help.Bulletin/Finance/Exports", "Detalles de sus exportaciones");
+        _sp.Add("Help.Bulletin/Finance/Imports", "Detalles de sus importaciones");
+
+        _sp.Add("Help.Bulletin/Finance/Prices", "....");
+
+        _sp.Add("Decoration.HoverSmall", "Decoraciones");
+
+        _sp.Add("Sand", "Arena");
+        _sp.Add("Machinery", "Maquinaria");
+        _sp.Add("GunPowder", "Polvora");
+        _sp.Add("Cassava", "Yuca");
+        _sp.Add("Candy", "Caramelo");
+
+        //All Lang Needed for sure
+        
+        _sp.Add("Unemployed", "Desempleados");
+
+        //Budget
+        _sp.Add("Budget Resumen", "Cuentas");
+        _sp.Add("Initial Balance", "Balance Inicial");
+        _sp.Add("Income", "Ingresos");
+        _sp.Add("Quests Completion", "Desafíos Terminados");
+        _sp.Add("Income Subtotal", "Subtotal de Ingresos");
+
+        _sp.Add("Expenses", "Gastos");
+        _sp.Add("New bought lands", "Nuevas Tierras Compradas");
+        _sp.Add("Salary", "Salarios");
+        _sp.Add("Expenses Subtotal", "Subtotal de Gastos");
+
+        _sp.Add("Year", "Año");
+        _sp.Add("Imports", "Año");
+        _sp.Add("Balance", "Balance");
+        _sp.Add("Year Balance", "Balance Anual");
+        _sp.Add("Ending Balance", "Balance Final");
+
+        _sp.Add("Construction.HoverMed", "Para construir un edificio necesitas: trabajadores en la Casa de Albañiles y los recursos necesarios");
+
+        _sp.Add("Quest.Arrow", "Desafíos");
+        _sp.Add("Prev.HoverSmall", "Anterior");
+
     }
 
     internal static void Clear()
