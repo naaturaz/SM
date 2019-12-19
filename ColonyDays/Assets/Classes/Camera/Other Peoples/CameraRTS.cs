@@ -34,10 +34,8 @@ public class CameraRTS : MonoBehaviour
             return;
         }
 
-
         //Vector3 zoom variable.
         Vector3 zoom = transform.position;
-       
        
         if(zoom.y < minZoom){
             zoom.y = minZoom;
@@ -47,7 +45,6 @@ public class CameraRTS : MonoBehaviour
             zoom.y = maxZoom;
             transform.position = zoom;
         }
-       
        
         //Moves camera when on edge of screen.
         if(Input.mousePosition.x > Screen.width - pixelEdge || Input.GetKey(KeyCode.D)){

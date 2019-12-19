@@ -20,8 +20,8 @@ public class ButtonTile : GUIElement
 
     private void Init()
     {
-        _descText.text = Value.Product+"";
-        _priceText.text = Unit.ProperPricedAndFormat(Value.Price) + " per " + Unit.CurrentWeightUnitsString();
+        _descText.text = Languages.ReturnString(Value.Product+"");
+        _priceText.text = Unit.ProperPricedAndFormat(Value.Price) + Languages.ReturnString(" per ") + Unit.CurrentWeightUnitsString();
     }
 
     void Update()

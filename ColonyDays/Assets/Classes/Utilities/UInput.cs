@@ -1,9 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class UInput : MonoBehaviour {
-
-
     private static SMe m = new SMe();
 
     private static Vector3 _transformedMPos;

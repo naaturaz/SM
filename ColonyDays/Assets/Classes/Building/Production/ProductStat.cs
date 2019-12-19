@@ -83,17 +83,17 @@ public class ProductInfo
         var price = Program.gameScene.ExportImport1.ReturnPriceTown(_product);
         var expiration = Program.gameScene.ExportImport1.ReturnExpirationInDays(_product);
 
-        _details = "Selected product: " + _product + "\n";
+        _details = Languages.ReturnString("Selected product: ") + Languages.ReturnString(_product+"") + "\n";
 
-        //_details = _details + "Density: " +dens + "\n";
-        //_details = _details + "Produce Factor: " + prodF + "\n";
-        _details = _details + "Price: " +
+        // _details = _details + Languages.ReturnString("Density: ") +dens + "\n";
+        // _details = _details + Languages.ReturnString("Produce factor: ") + prodF + "\n";
+        _details = _details + Languages.ReturnString("Price: ") +
             Unit.ProperPricedAndFormat(price) +
-            " per " + Unit.CurrentWeightUnitsString() + "\n\n";
+            Languages.ReturnString(" per ") + Unit.CurrentWeightUnitsString() + "\n\n";
 
         if (Ingredients != null && Ingredients.Count > 0)
         {
-            _details = _details + "Inputs needed per " + Unit.CurrentWeightUnitsString() + "\n";
+            _details = _details + Languages.ReturnString("Inputs needed per ") + Unit.CurrentWeightUnitsString() + "\n";
 
             for (int i = 0; i < Ingredients.Count; i++)
             {
@@ -102,15 +102,14 @@ public class ProductInfo
             }
         }
 
-        //if (expiration > 0 && Program.IsFood)
-        //{
-        //    _details += "Expires in: " + expiration + " days\n";
-        //}
+        // if (expiration > 0 && Program.IsFood)
+        // {
+        //    _details += Languages.ReturnString("Expires in: ") + expiration + Languages.ReturnString(" days") +"\n";
+        // }
 
         if (_product == P.Stop)
         {
-            _details = "Attention: Production was stopped." +
-                       " To resume production in this Building select a product";
+            _details = Languages.ReturnString("Attention.Production");
         }
     }
 

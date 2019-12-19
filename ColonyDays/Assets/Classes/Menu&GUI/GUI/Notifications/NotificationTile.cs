@@ -19,7 +19,6 @@ public class NotificationTile : GUIElement
         set { _notification = value; }
     }
 
-
     void Start()
     {
         var backO = GetChildCalled("BackOwn");
@@ -39,10 +38,7 @@ public class NotificationTile : GUIElement
 
     void Set()
     {
-
         _icon.sprite = LoadIcons();
-
-
         _title.text = _notification.Name;
         _description.text = _notification.Description;
     }

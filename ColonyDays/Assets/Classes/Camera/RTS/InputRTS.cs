@@ -269,13 +269,10 @@ public class InputRTS : GenericCameraComponent
     //Center cam command
     public void CenterCam(bool fakedPressKeyP = false)
     {
-        if (Dialog.IsActive())
-        {
+        if (Dialog.IsActive() || Program.IsInputLocked)
             return;
-        }
 
         var yes = Input.GetKeyUp(KeyCode.P) || fakedPressKeyP;
-
         if (yes && !_isFollowingPersonNow)
         {
             ManagerReport.AddInput("CenterCam to 1st Building");

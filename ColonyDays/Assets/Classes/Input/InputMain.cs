@@ -76,6 +76,8 @@ public class InputMain : InputParent {
 
     private void SpacePausesTheGame()
     {
+        if (Program.IsInputLocked) return;
+
         if(Input.GetKeyUp(KeyCode.Space))
         {
             if(Program.gameScene.GameSpeed > 0)
@@ -83,7 +85,6 @@ public class InputMain : InputParent {
                 _oldSpeed = Program.gameScene.GameSpeed;
                 Program.gameScene.GameSpeed = 0;
                 OnChangeSpeed(EventArgs.Empty);
-
             }
             else if(Program.gameScene.GameSpeed == 0 && _oldSpeed != -1)
             {

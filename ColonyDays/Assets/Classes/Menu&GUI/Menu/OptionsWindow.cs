@@ -342,7 +342,8 @@ public class OptionsWindow : GUIElement
         SetButtonsList(_langBtn);
         List<string> names = new List<string>()
         {
-            "English", "Français", "Deutsch", "Español",//"Português(Beta)"
+            "English", "Español(Beta)",
+            // "Français(Beta)", "Deutsch(Beta)",//"Português(Beta)"
         };
 
         for (int i = 0; i < _buttonsName.Count; i++)
@@ -373,8 +374,6 @@ public class OptionsWindow : GUIElement
             }
         }
     }    
-    
-
     
     public void ClickUnitDropDown()
     {

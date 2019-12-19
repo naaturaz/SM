@@ -199,12 +199,14 @@ public class PersonWindow : Window
 
     public void NewAlias()
     {
+        var oldName = Person1.Name;
         Person1.Name = _titleInputField.text;
         _titleInputFieldGO.SetActive(false);
         _title.text = Person1.Name;
         Program.UnLockInputSt();
 
-        Program.gameScene.TutoStepCompleted("Rename.Tuto");
+        if(oldName != Person1.Name)
+            Program.gameScene.TutoStepCompleted("Rename.Tuto");
     }
 
     public void LockInput()

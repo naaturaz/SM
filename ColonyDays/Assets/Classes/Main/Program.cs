@@ -248,8 +248,6 @@ public class Program : MonoBehaviour {
         return TypeOfGame == H.Unlock;
     }
 
-
-
     //input locking
     static bool _isInputLocked;
 
@@ -288,11 +286,6 @@ public class Program : MonoBehaviour {
         IsInputLocked = false;
     }
 
-
-
-
-
-
     /// <summary>
     /// It has pirate threat
     /// </summary>
@@ -302,9 +295,6 @@ public class Program : MonoBehaviour {
     /// Does food expires 
     /// </summary>
     public static bool IsFood { get; set; }
-
-
-
 
     public static bool WasTutoPassed { get; set; }
 

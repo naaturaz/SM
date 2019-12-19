@@ -266,6 +266,8 @@ public class BuildingWindow : Window
 
     private void HideStuff()
     {
+        _invBtn.SetActive(true);
+
         if (Building.IsHouseType(Building.MyId) || Building.MyId.Contains("Storage") || Building.Category == Ca.Way ||
             Building.HType == H.Masonry || Building.HType == H.HeavyLoad
             || Building.HType == H.LightHouse
@@ -298,6 +300,14 @@ public class BuildingWindow : Window
             _salary.SetActive(false);
             _staBtn.SetActive(false);
             _prdBtn.SetActive(false);
+        }
+
+        if (isADecorationBuilding(_building))
+        {
+            _salary.SetActive(false);
+            _staBtn.SetActive(false);
+            _prdBtn.SetActive(false);
+            _invBtn.SetActive(false);
         }
 
         _salary.SetActive(false);
@@ -542,19 +552,26 @@ public class BuildingWindow : Window
         return st.CoverageInfo();
     }
 
+    public static bool isADecorationBuilding(Building build)
+    {
+        var isDecoration =
+            build.HType == H.Fountain ||
+            build.HType == H.WideFountain ||
+            build.HType == H.PalmTree ||
+            build.HType == H.FloorFountain ||
+            build.HType == H.FlowerPot ||
+            build.HType == H.PradoLion;
+
+        return isDecoration;
+    }
+
     public static bool isAWorkBuild(Building build)
     {
         var isAHouse = build.IsThisAHouseType();
         var isStorage = build.HType.ToString().Contains("Storage");
         var isRoadorBridge = build.HType.ToString().Contains("Road") || build.HType.ToString().Contains("Bridge");
 
-        var isDecoration = 
-            build.HType == H.Fountain || 
-            build.HType == H.WideFountain || 
-            build.HType == H.PalmTree ||
-            build.HType == H.FloorFountain ||
-            build.HType == H.FlowerPot || 
-            build.HType == H.PradoLion;
+        var isDecoration = isADecorationBuilding(build);
 
         return !isAHouse && !isStorage && build.HType != H.StandLamp && !isDecoration && !isRoadorBridge;
     }
@@ -1207,12 +1224,14 @@ public class BuildingWindow : Window
     /// </summary>
     public void NewAlias()
     {
+        var oldName = Building.Name;
         Building.Name = _titleInputField.text;
         _titleInputFieldGO.SetActive(false);
         _title.text = Building.NameBuilding();
         Program.UnLockInputSt();
 
-        Program.gameScene.TutoStepCompleted("RenameBuild.Tuto");
+        if(oldName != Building.Name)
+            Program.gameScene.TutoStepCompleted("RenameBuild.Tuto");
 
         if (Building.HType == H.Dock && BuildingController.HowManyOfThisTypeAre(H.Dock) > 1)
         {

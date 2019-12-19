@@ -559,8 +559,8 @@ public class Languages
 
         _en.Add("AddOrder.Tuto", "Now scroll down in the products and select wood and enter 100 as the amount. Then click the 'Add' button.");
         _en.Add("CloseDockWindow.Tuto", "Now the order is added. A random ship will drop this item in the dock inventory. And then your dock workers will take it to the closest Storage building. Now click out the window, so it closes.");
-        _en.Add("Rename.Tuto", "Click on a person and then click on the title bar of the person. Like this, you can change the name of any person or building in the game. Click outside so the change is saved");
-        _en.Add("RenameBuild.Tuto", "Now click on a building and change its name in the same way. Remember to click outside so the change is saved");
+        _en.Add("Rename.Tuto", "Click on a person and then click on the title bar of the person. Like this, you can change the name of any person or building in the game. Move outside of the input box so the change is saved");
+        _en.Add("RenameBuild.Tuto", "Now click on a building and change its name in the same way. Remember to move outside of the input box so the change is saved");
 
         _en.Add("BullDozer.Tuto", "Now click on the Bulldozer icon on the bottom bar. Then remove a tree or a rock from the terrain.");
 
@@ -580,9 +580,9 @@ public class Languages
 
         _en.Add("SmallFarm.Quest", "Quest: Build a Small Field Farm. You need farms to feed your people");
         _en.Add("FarmHire.Quest", "Quest: Hire two farmers in the Small Field Farm. Click on the farm and assign workers. You need to have unemployed"
-                    + " people to be able to assign them into a new building. Tip: if you did it already, fire them and rehire them");
+                    + " people to be able to assign them into a new building. Tip: if you did it already, fire them and rehire them.");
 
-        _en.Add("FarmProduce.Quest", "Quest: Now produce " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " of beans on the Small Field Farm. Click on the 'Stat' tab and will show you the production of the last 5 years. You can see the quest progress in the quest window. If you build more small farms will be accounted for the quest");
+        _en.Add("FarmProduce.Quest", "Quest: Now produce " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " of beans on the Small Field Farm. Click on the 'Stat' tab and will show you the production of the last 5 years. You can see the quest progress in the quest window. If you build more small farms will be accounted for the quest.");
         _en.Add("Transport.Quest", "Quest: Transport the beans from the farm to the Storage. To do that make sure you have" +
                 " workers on the masonry. They act as wheelbarrows when not building");
 
@@ -617,7 +617,7 @@ public class Languages
         _en.Add("ExportWeapons.Quest", "Now export 100 " + Unit.CurrentWeightUnitsString() + " of Weapons. On the Dock add an order of export. Notice that Weapons are a profitable business");
 
 
-        _en.Add("CompleteQuest", "Your reward is {0}");
+        _en.Add("CompleteQuest", "Nice :) Well done! Your reward is {0}");
 
 
         //added Sep 14 2017
@@ -1034,12 +1034,15 @@ public class Languages
 
         //Dec 18
         //Main Menu
-        _sp.Add("Command Keys", "Teclas");
-        _sp.Add("Command Keys.Text", "[F1] Help\n[F9] Hide/Show GUI\n[P] Centers Camera to Town");
+        _en.Add("Command Keys", "Command Keys");
+        _en.Add("Command Keys.Text", "[F1] Help\n[F9] Hide/Show GUI\n[P] Centers Camera to Town");
 
-        _sp.Add("Credits", "Creditos");
-        _sp.Add("Credits.Text", "Traduccion:\nCédric Gauché (fr)\nKarsten Eidner (de)");
+        _en.Add("Credits", "Credits");
+        _en.Add("Credits.Text", "Traduccion:\nCédric Gauché (fr)\nKarsten Eidner (de)");
 
+
+        //All Lang Needed for sure
+		_en.Add("Attention.Production", "Attention: Production was stopped. To resume production in this Building select a product");
 
 
 
@@ -1229,7 +1232,7 @@ public class Languages
             // return "en:" + key;
             return key;
         }
-        else if (_currentLang == "Español")
+        else if (_currentLang == "Español(Beta)")
         {
             if (Spanish.ContainsKey(key))
             {
@@ -1237,7 +1240,7 @@ public class Languages
             }
             return "es:" + key;
         }
-        else if (_currentLang == "Português")
+        else if (_currentLang == "Português(Beta)")
         {
             if (_portuguese.ContainsKey(key))
             {
@@ -1245,7 +1248,7 @@ public class Languages
             }
             return "pt:" + key;
         }
-        else if (_currentLang == "Français")
+        else if (_currentLang == "Français(Beta)")
         {
             if (French.ContainsKey(key))
             {
@@ -1253,7 +1256,7 @@ public class Languages
             }
             return "fr:" + key;
         }
-        else if (_currentLang == "Deutsch")
+        else if (_currentLang == "Deutsch(Beta)")
         {
             if (German.ContainsKey(key))
             {
@@ -1261,7 +1264,16 @@ public class Languages
             }
             return "de:" + key;
         }
-        return "not languages selected";
+        //return "not languages selected";
+        else
+        {
+            //English as Default
+            if (_en.ContainsKey(key))
+            {
+                return _en.ReturnValueWithKey(key);
+            }
+            return key;
+        }
     }
 
     private static void ReloadIfNeeded()
@@ -1308,13 +1320,13 @@ public class Languages
 
     static Dictionary<string, string> ReturnCurrentDict()
     {
-        if (_currentLang == "Español")
+        if (_currentLang == "Español(Beta)")
         {
             return _sp.Dictionary;
         }
-        if (_currentLang == "Português") return _portuguese;
-        if (_currentLang == "Français") return French.Dictionary();
-        if (_currentLang == "Deutsch") return German.Dictionary();
+        if (_currentLang == "Português(Beta)") return _portuguese;
+        if (_currentLang == "Français(Beta)") return French.Dictionary();
+        if (_currentLang == "Deutsch(Beta)") return German.Dictionary();
 
         return _en.Dictionary;
     }

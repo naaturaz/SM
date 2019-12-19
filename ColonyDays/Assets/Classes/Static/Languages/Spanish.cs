@@ -1121,6 +1121,18 @@ public class Spanish
         _sp.Add("Notifications", "Notificaciones");
 		_sp.Add("Loading...", "Cargando...");
 
+		_sp.Add("Attention.Production", "Atención: la producción se detuvo. Para reanudar la producción en este edificio, seleccione un producto");
+		_sp.Add("Selected product: ", "Producto seleccionado: ");
+		_sp.Add("Price: ", "Precio: ");
+		_sp.Add(" per ", " por ");
+		_sp.Add("Inputs needed per ", "Insumos necesarios por ");
+		_sp.Add("Density: ", "Densidad: ");
+		_sp.Add("Produce factor: ", "Factor productivo: ");
+		_sp.Add("Expires in: ", "Caduca en: ");
+		_sp.Add(" days", " dias");
+		_sp.Add("Inventory:", "Inventorio:");
+
+
 
         //Quest window
         _sp.Add("Status: ", "Estado: ");
@@ -1160,14 +1172,15 @@ public class Spanish
         //Main Menu
         _sp.Add("Command Keys", "Teclas");
         _sp.Add("Command Keys.Text", "[F1] Ayuda\n[F9] Esconder/Mostrar GUI\n[P] Centra la cámara al Pueblo");
-        _sp.Add("Credits.Text", "Traducción:\nCédric Gauché (fr)\nKarsten Eidner (de)");
+        _sp.Add("Credits.Text", "Translation:\nCédric Gauché (fr)\nKarsten Eidner (de)");
 
         _sp.Add("BuyRegion", "Comprar Tierras");
         _sp.Add("BullDozer.HoverMed", "Limpiar area: 'Click Izq' \n" +
             "Cancelar: 'Click derecho' \nCosto: $10 por cada uso");
 
         _sp.Add("Español","Español");
-
+        _sp.Add("Español(Beta)","Español(Beta)");
+        
     }
 
     internal static void Clear()

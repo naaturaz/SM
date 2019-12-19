@@ -323,14 +323,12 @@ public class NewGameWindow : GUIElement
         SetDiffButton(moderate, "Moderate");
         SetDiffButton(hard, "Hard");
         //SetDiffButton(insane, "Insane");
-
     }
 
     private void SetDiffButton(GameObject b, string diff)
     {
         var button = b.GetComponent<UnityEngine.UI.Button>();
         button.onClick.AddListener(() => Program.MyScreen1.NewGameWindow1.ClickDifficultySelection(diff));
-
 
         var child = GetChildCalledOnThis("Text", b);
         child.GetComponent<Text>().text = diff;

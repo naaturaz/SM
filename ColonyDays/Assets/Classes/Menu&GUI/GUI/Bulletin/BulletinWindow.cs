@@ -305,6 +305,24 @@ public class BulletinWindow : GUIElement
         base.Show();
         ShowExports();
     }
+    
+    /// <summary>
+    /// called from GUI  Dollars
+    /// </summary>
+    public void ShowProducedReportGUI()
+    {
+        Program.MouseListener.HidePersonBuildOrderNotiBulletinHelpWin();
+        base.Show();
+        ShowProducedReport();
+    }
 
+    void ShowProducedReport()
+    {
+        ClickAndHideAll();
+        _production.ShowProdReport();
+
+        _help.text = Languages.ReturnString("Help.Bulletin/Prod/Produce");
+    }
+    
     #endregion
 }

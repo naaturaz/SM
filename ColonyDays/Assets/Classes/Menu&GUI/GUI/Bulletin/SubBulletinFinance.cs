@@ -240,7 +240,6 @@ public class SubBulletinFinance
     List<SpecTile> _reportsExports = new List<SpecTile>();
     List<SpecTile> _reportsImports = new List<SpecTile>();
 
-
     ExportData AddTitleBarExportsOrImport()
     {
         return new ExportData(null, "Building", "Product", 0, 0);

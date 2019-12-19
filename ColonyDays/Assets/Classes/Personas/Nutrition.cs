@@ -31,7 +31,9 @@ public class Nutrition
     float CalculateCalNeedNow()
     {
         //http://www.globalrph.com/resting_metabolic_rate.cgi
-        return ((9.99f * _person.Weight) + (6.25f * _person.Height) - (4.92f * _person.Age) + GenderAdd()) * ActivityFactor();
+        //was like that from Late 2016 till Dec 2019
+        //return ((9.99f * _person.Weight) + (6.25f * _person.Height) - (4.92f * _person.Age) + GenderAdd()) * ActivityFactor();
+        return ((12f * _person.Weight) + (6.25f * _person.Height) - (4.92f * _person.Age) + GenderAdd()) * ActivityFactor();
     }
 
     private float ActivityFactor()
