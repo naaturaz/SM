@@ -11,6 +11,7 @@ public class ScrollViewShowInventory : GUIElement
     private GameObject _content;
     private GameObject _scroll_Ini_PosGO;
     Inventory _inv;
+    float _pad = 0;
 
     public string Which;//which inv needs to show and wht type of tile , need to be set in inspector
 
@@ -24,10 +25,8 @@ public class ScrollViewShowInventory : GUIElement
         _content = FindGameObjectInHierarchy("Content", gameObject);
         _scroll_Ini_PosGO = GetChildCalledOnThis("Scroll_Ini_Pos", _content);
 
-        RedoInvIfIfWhichIsEmpty();
-
+        RedoInvIfWhichIsEmpty();
         Show();
-
         StartCoroutine("ThirtySecUpdate");
     }
 
@@ -37,17 +36,22 @@ public class ScrollViewShowInventory : GUIElement
         {
             var sec = Time.time < 30 ? 1 : 30;
             yield return new WaitForSeconds(sec); // wait
-            if (_showAInv.RedoItemsIfOldInvIsDiff())
-            {
-                AdjustContentHeight(_inv.InventItems.Count * _tileHeight);
-            }
+            ReAdjustIfDiff();
+        }
+    }
+
+    void ReAdjustIfDiff()
+    {
+        if (_showAInv != null && _showAInv.RedoItemsIfOldInvIsDiff())
+        {
+            AdjustContentHeight((_inv.InventItems.Count * _tileHeight) + _pad);
         }
     }
 
     /// <summary>
     /// So far used for ourInventories in the add import export order 
     /// </summary>
-    void RedoInvIfIfWhichIsEmpty()
+    void RedoInvIfWhichIsEmpty()
     {
         if (string.IsNullOrEmpty(Which))
         {
@@ -64,17 +68,20 @@ public class ScrollViewShowInventory : GUIElement
     {
     }
 
-    public void Show()
+    public void Show(float pad = 0)
     {
+        if (_inv == null) return;
+
+        _pad = _pad == 0 ? pad : _pad;
         if (_showAInv!=null)
         {
             _showAInv.DestroyAll();
-            RedoInvIfIfWhichIsEmpty();
+            RedoInvIfWhichIsEmpty();
         }
 
         _showAInv = new ShowAInventory(_inv, _content, _scroll_Ini_PosGO.transform.localPosition, Which);
         ResetScroolPos();
-        AdjustContentHeight(_inv.InventItems.Count * _tileHeight);
+        AdjustContentHeight((_inv.InventItems.Count * _tileHeight) + _pad);
     }
 
     /// <summary>
@@ -93,6 +100,13 @@ public class ScrollViewShowInventory : GUIElement
     public void CallMeWhenMouseExit()
     {
         IsMouseOnMe = false;
+    }
+
+    public void ReloadNewInvetory(Inventory inv)
+    {
+        _inv = inv;
+        AdjustContentHeight((_inv.InventItems.Count * _tileHeight) + _pad);
+        Show();
     }
 
 }

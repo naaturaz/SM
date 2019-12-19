@@ -67,7 +67,6 @@ public class ShowInvetoryItem : GUIElement
             _textCol1 = text1Go.GetComponent<Text>();
         }
 
-
         var col2 = FindGameObjectInHierarchy("Weight of product", gameObject);
         if (col2 != null)
         {
@@ -77,7 +76,6 @@ public class ShowInvetoryItem : GUIElement
         {
             //bz we change it names and for when needs to be renamed needs to be get it like this 
             _textCol2 = container.gameObject.transform.GetChild(1).GetComponent<Text>();
-
         }
 
         var col3 = FindGameObjectInHierarchy("Volume occupied", gameObject);
@@ -99,7 +97,7 @@ public class ShowInvetoryItem : GUIElement
         //debug only bz all should have a root
         if (sp == null)//new Sprite()
         {
-            root = "Prefab/GUI/Inventory_Icons/Brick";
+            root = "Prefab/GUI/Inventory_Icons/EmptyPNG";
             sp = Resources.Load<Sprite>(root);
         }
 
@@ -114,6 +112,14 @@ public class ShowInvetoryItem : GUIElement
         if (string.IsNullOrEmpty(invType))
         {
             root = Root.show_Invent_Item_Small_3_Text + " 2";
+        }
+        else if (invType == "Building")
+        {
+            root = Root.show_Invent_Item_Small_Med + " 3";
+        }
+        else if (invType == "Bulletin.Prod.Report")
+        {
+            root = Root.show_Invent_Item_Small_3_Text + " 3";
         }
         else
         {

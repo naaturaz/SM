@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 
 /// <summary>
@@ -17,6 +15,19 @@ public class ShowAPersonBuildingDetails
     private Person _person;
     List<PersonBuildingDetailTile> _tiles = new List<PersonBuildingDetailTile>();
 
+    public List<PersonBuildingDetailTile> Tiles
+    {
+        get
+        {
+            return _tiles;
+        }
+
+        set
+        {
+            _tiles = value;
+        }
+    }
+
     public ShowAPersonBuildingDetails(Person per, GameObject container, Vector3 iniPos)
     {
         _iniPos = iniPos;
@@ -29,9 +40,7 @@ public class ShowAPersonBuildingDetails
     private void InitItems()
     {
         if (_person != null)
-        {
             InitPerson();
-        }
     }
 
     void CreateItemsPerson()
@@ -71,8 +80,12 @@ public class ShowAPersonBuildingDetails
     private void InitPerson()
     {
         CreateItemsPerson();
-
         ShowAllItems();
+    }
+
+    public void DestroyTiles()
+    {
+
     }
 
     private void ShowAllItems()
@@ -149,6 +162,9 @@ public class ShowAPersonBuildingDetails
     }
 
     private int count;
+
+
+
     /// <summary>
     /// it is updated every 20 calls 
     /// </summary>

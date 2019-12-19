@@ -4,7 +4,6 @@ using System.Linq;
 
 /*The bulidings new RegFiles are created on Registro.AddBuildToAll()
  */
-
 public class BuildingSaveLoad : BuildingPot
 {
     private int counter;//the counter of buildigns being recreated

@@ -126,6 +126,13 @@ public class Spanish
         _sp.Add("Morro.Desc",_militarES+". Una vez construida esta construcción los piratas te respetaran infinitamente");
         _sp.Add("WoodPost.Desc", "Ellos ven los pirates y bandidos primero de esta manera te puedes preparar mejor y con mas tiempo");
 
+        //Decoration
+        _sp.Add("Fountain.Desc", "Embellece tu ciudad y agrega felicidad a tus ciudadanos.");
+        _sp.Add("WideFountain.Desc", "Embellece tu ciudad y agrega felicidad a tus ciudadanos.");
+        _sp.Add("PalmTree.Desc", "Embesllece tu ciudad y agrega felicidad a tus ciudadanos.");
+        _sp.Add("FloorFountain.Desc", "Embellece tu ciudad y agrega felicidad a tus ciudadanos.");
+        _sp.Add("FlowerPot.Desc", "Embellece tu ciudad y agrega felicidad a tus ciudadanos.");
+        _sp.Add("PradoLion.Desc", "Embellece tu ciudad y agrega felicidad a tus ciudadanos.");
 
 		//Structures Categores
         _sp.Add("Infrastructure", "Infrastructura");
@@ -188,7 +195,7 @@ public class Spanish
         _sp.Add("QuickLime","Cal");
 
         //Prod
-        _sp.Add("Brick","Horno de Ladrillos");
+        _sp.Add("Brick","Ladrillos");
         _sp.Add("Carpentry","Carpinteria");
         _sp.Add("Cigars","Tabaqueria");
         _sp.Add("Mill","Molino");
@@ -529,10 +536,10 @@ public class Spanish
         _sp.Add("BullDozer.Tuto", "Selecciona el botón con el Bulldozer. Después elimina un árbol o roca del terreno.");
 
 
-        _sp.Add("Budget.Tuto", "Haz click en el botón 'Control/Boletín', después en 'Finanzas' y después en 'Presupuesto'");
+        _sp.Add("Budget.Tuto", "Haz click en el botón 'Control/Boletín', después en 'Finanzas' y después en 'Cuentas'");
         _sp.Add("Prod.Tuto", "Haz click en el menu 'Prod' y después en 'Producido'. Muestra lo producido en los últimos 5 años");
-        _sp.Add("Spec.Tuto", "Haz click en el menu 'Prod' después en 'Spec'. Aquí se ve exactamente como hacer todos los bienes en el juego. Los insumos necesarios, donde es producido y ademas el precio");
-        _sp.Add("Exports.Tuto", "Haz click en el menu 'Finanzas' y después en 'Exportaciones'. Aquí se ve un sumario de las exportaciones");
+        _sp.Add("Spec.Tuto", "Haz click en el menu 'Prod' después en 'Específico'. Aquí se ve exactamente como hacer todos los bienes en el juego. Los insumos necesarios, donde es producido y ademas el precio");
+        _sp.Add("Exports.Tuto", "Haz click en el menu 'Finanzas' y después en 'Exporta'. Aquí se ve un sumario de las exportaciones");
 
 
 
@@ -545,10 +552,10 @@ public class Spanish
         _sp.Add("Lamp.Quest", "Desafió: Construye una Lampara de Calle. Esta en Infraestructuras, son encendidas de noche si hay Aceite de Ballena en la Almacén");
         _sp.Add("Shack.Quest", "Desafió: Construye una casucha. Estas son casas baratas. Cuando las personas cumplen 16 años se mudan a un casa nueva si existe. De esta manera se garantiza el crecimiento de la población. [F1] Ayuda");
         _sp.Add("SmallFarm.Quest", "Desafió: Construye una Finca de Cultivos Chica. La necesitas para alimentar a tu gente");
-        _sp.Add("FarmHire.Quest", "Desafió: Contrata a dos granjeros en la Finca de Cultivos Chica. Haz click en la finca y después en el signo de mas para asignar trabajadores. Para esto necesitas tener trabajadores desempleados");
+        _sp.Add("FarmHire.Quest", "Desafió: Contrata a dos granjeros en la Finca de Cultivos Chica. Haz click en la finca y después en el signo para asignar trabajadores. Para esto necesitas tener trabajadores desempleados. Consejo: Si ya tienes dos trabajadores, despídelos y contratalos de nuevo.");
         _sp.Add("FarmProduce.Quest", "Desafió: Produce " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " de Frijol en la Finca de Cultivos Chica. Haz click en la pestaña 'Estadísticas' y te mostrara la producción de los últimos 5 años. Puedes ver el avance en el desafió en el formulario de desafíos. Si construyes mas Fincas de Cultivos Chica ayudaran a pasar este desafio");
         _sp.Add("Transport.Quest", "Desafió: Transporta el Frijol de la Finca hacia la Almacén. Para hacer esto asegurate de que hay trabajadores en la Casa de Albañiles. Ellos se convierten en carretilleros cuando no trabajan");
-        _sp.Add("Export.Quest", "Desafió: Exporta 300 " + Unit.CurrentWeightUnitsString() + " de Frijol. Añade una orden de Exportación en el Puerto. Si no tienes un Puerto entonces construye uno."+
+        _sp.Add("Export.Quest", "Desafió: Exporta 300 " + Unit.CurrentWeightUnitsString() + " de Frijol. Añade una orden de Exportación en el Puerto. Si no tienes un Puerto entonces construye uno. "+
                "El icono del Puerto esta en Comercio. Cuando este hecho haz click en la pestaña de ordenes, añade una orden de exportación, y selecciona el producto y la cantidad a exportar.");
         _sp.Add("HireDocker.Quest", "Desafió: Contrata un portuario. La única tarea de ellos es mover bienes desde el Almacén hacia el Puerto si estas exportando."+
                " O vice-versa si estas importando. Ellos trabajan cuando hay ordenes en el puerto y los bienes están listos para su transporte. Sino se quedan en casa descanzando." +
@@ -556,7 +563,7 @@ public class Spanish
         _sp.Add("MakeBucks.Quest", "Desafió: Haz $100 exportando bienes en el Puerto. "+
                "Cuando un barco llegue pagara bienes al azar que tenga en las bodegas de tu Puerto");
         _sp.Add("HeavyLoad.Quest", "Desafió: Construye el edificio de Carga Pesada. Estos son transportistas que cargan mas peso. Serán muy útiles cuando mucha carga necesita ser transportada en tu villa");
-        _sp.Add("ImportOil.Quest", "Desafió: Importa 500 " + Unit.CurrentWeightUnitsString() + " de Aceite de Ballena en el Puerto. Es necesario para encender las Farolas por las noches.");
+        _sp.Add("ImportOil.Quest", "Desafió: Importa 500 " + Unit.CurrentWeightUnitsString() + " de Aceite de Ballena en el Puerto. Es necesario para encender las Lampara de Calle por las noches.");
         _sp.Add("Population50.Quest", "Obtén 50 personas en total");
 
 
@@ -873,7 +880,6 @@ public class Spanish
         _sp.Add("Terrain Name:", "Nombre del terreno:");
         _sp.Add("Click Here", "Haz click aquí");
         _sp.Add("Save Name:", "Nombre de la Salva:");
-		//{ "Loading...", "Cargando...");
         _sp.Add("Menu", "Menu");
 		//
 
@@ -1018,7 +1024,7 @@ public class Spanish
         _sp.Add("Pirate Threat", "Amenaza Pirata");
         _sp.Add("Population", "Poblacion");
         _sp.Add("Port Reputation", "Reputación Portuaria");
-        _sp.Add("Production Tab", "Producción Pestaña");
+        _sp.Add("Production Tab", "Pestaña de Producción");
         _sp.Add("Products Expiration", "Caducidad de productos");
         _sp.Add("Sea Path", "Camino al Mar");
         _sp.Add("Trading", "Comercio");
@@ -1113,13 +1119,14 @@ public class Spanish
         
         _sp.Add("Unemployed", "Desempleados");
         _sp.Add("Notifications", "Notificaciones");
+		_sp.Add("Loading...", "Cargando...");
+
 
         //Quest window
+        _sp.Add("Status: ", "Estado: ");
         _sp.Add("Status", "Estado");
-        _sp.Add("Reward", "Premio");
         _sp.Add("Active", "Activa");
         _sp.Add("Done", "Terminada");
-
 
         //Budget
         _sp.Add("Budget Resumen", "Cuentas");
@@ -1147,7 +1154,19 @@ public class Spanish
         _sp.Add("More Positions.HoverSmall", "Contrata");
         _sp.Add("Less Positions.HoverSmall", "Despide");
 
-        
+        //Dec 18
+        _sp.Add("CurrSpeed.HoverSmall", "Velocidad");
+
+        //Main Menu
+        _sp.Add("Command Keys", "Teclas");
+        _sp.Add("Command Keys.Text", "[F1] Ayuda\n[F9] Esconder/Mostrar GUI\n[P] Centra la cámara al Pueblo");
+        _sp.Add("Credits.Text", "Traducción:\nCédric Gauché (fr)\nKarsten Eidner (de)");
+
+        _sp.Add("BuyRegion", "Comprar Tierras");
+        _sp.Add("BullDozer.HoverMed", "Limpiar area: 'Click Izq' \n" +
+            "Cancelar: 'Click derecho' \nCosto: $10 por cada uso");
+
+        _sp.Add("Español","Español");
 
     }
 

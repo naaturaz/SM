@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 
 /*
- * 
  * Given an inventory will display all inventory Items 
  */ 
-
 public class ShowAInventory  
 {
     List<ShowInvetoryItem> _allItems = new List<ShowInvetoryItem>();
-    private GameObject _containr;
+    private GameObject _container;
     private Vector3 _iniPos;
-    private Inventory _inv;
     private string _invType;
+
+    private float _oldVolumeOccupied;
+    int _oldItemsAmt;
+
+    public Inventory Inv { get; set; }
 
     /// <summary>
     /// 
@@ -26,75 +28,39 @@ public class ShowAInventory
         _invType = specialInfo;
 
         _iniPos = iniPos;
-        _inv = inv;
-        _inv.OrderItemsAlpha();
-        _containr = container;
+        Inv = inv;
+        Inv.OrderItemsAlpha();
+        _container = container;
 
         ShowAllItems();
     }
 
-    /// <summary>
-    /// Reuglar inventory
-    /// </summary>
-    /// <param name="inv"></param>
-    /// <param name="container"></param>
-    /// <param name="iniPos"></param>
-    public ShowAInventory(string specialInfo, GameObject container, Vector3 iniPos)
-    {
-        _containr = container;
-        _iniPos = iniPos;
-
-        //will show all items in all Storages this is for GUI
-        if (specialInfo == "Main")
-        {
-            _invType = "Main";
-            //CreateMainInventory();
-            ShowAllItems();
-        }
-        //will show the items will be exported, imported in DOck. without amt only name 
-        else if (specialInfo == "Dock")
-        {
-            _invType = "Dock";
-        }
-    }
-
     void ManualUpdateOfAllInvItems()
     {
-        for (int i = 0; i < _inv.InventItems.Count; i++)
+        for (int i = 0; i < Inv.InventItems.Count; i++)
         {
-            var amt = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(_inv.InventItems[i].Key);
-            _inv.SetToSpecialInv(_inv.InventItems[i].Key, amt);
+            var amt = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(Inv.InventItems[i].Key);
+            Inv.SetToSpecialInv(Inv.InventItems[i].Key, amt);
         }
     }
-
-    public Inventory Inv
-    {
-        get { return _inv; }
-        set { _inv = value; }
-    }
-
-    private float _oldVolumeOccupied;
-    int _oldItemsAmt;
 
     private void ShowAllItems( )
     {
         //bridge for ex
         if (Inv == null)
-        {
             return;
-        }
 
         _oldVolumeOccupied = Inv.CurrentVolumeOcuppied();
         var iForSpwItem = 0;//so ReturnIniPos works nicely
 
-        if(_inv.HType == H.YearReport)
+        if(Inv.HType == H.YearReport)
         {
-            for (int i = _inv.InventItems.Count - 1; i > -1; i--)
+            for (int i = Inv.InventItems.Count - 1; i > -1; i--)
             {
                 //> 0 for main so only show items tht have some 
-                if (_inv.InventItems[i] != null && _inv.InventItems[i].Amount > 0)
+                if (Inv.InventItems[i] != null && Inv.InventItems[i].Amount > 0)
                 {
-                    _allItems.Add(ShowInvetoryItem.Create(_containr.transform, _inv.InventItems[i], ReturnIniPos(iForSpwItem),
+                    _allItems.Add(ShowInvetoryItem.Create(_container.transform, Inv.InventItems[i], ReturnIniPos(iForSpwItem),
                         this, _invType));
 
                     iForSpwItem++;
@@ -102,12 +68,12 @@ public class ShowAInventory
             }
         }
         else
-            for (int i = 0; i < _inv.InventItems.Count; i++)
+            for (int i = 0; i < Inv.InventItems.Count; i++)
             {
                 //> 0 for main so only show items tht have some 
-                if (_inv.InventItems[i]!=null && _inv.InventItems[i].Amount>0)
+                if (Inv.InventItems[i]!=null && Inv.InventItems[i].Amount>0)
                 {
-                    _allItems.Add(ShowInvetoryItem.Create(_containr.transform, _inv.InventItems[i], ReturnIniPos(iForSpwItem),
+                    _allItems.Add(ShowInvetoryItem.Create(_container.transform, Inv.InventItems[i], ReturnIniPos(iForSpwItem),
                         this,_invType));
 
                     iForSpwItem++;
@@ -188,14 +154,14 @@ public class ShowAInventory
 
     private bool IsInvItemsSameThatShown()
     {
-        if (_allItems.Count != _inv.InventItems.Count)
+        if (_allItems.Count != Inv.InventItems.Count)
         {
             return false;
         }
 
         for (int i = 0; i < _allItems.Count; i++)
         {
-            if (_allItems[i].InvItem1.Key != _inv.InventItems[i].Key)
+            if (_allItems[i].InvItem1.Key != Inv.InventItems[i].Key)
                 return false;
         }
 
@@ -242,21 +208,21 @@ public class ShowAInventory
         Inv.OrderItemsAlpha();
 
         var iForSpwItem = 0;//so ReturnIniPos works nicely
-        for (int i = 0; i < _inv.InventItems.Count; i++)
+        for (int i = 0; i < Inv.InventItems.Count; i++)
         {
             //> 0 for main so only show items tht have some 
-            if (_inv.InventItems[i] != null && _inv.InventItems[i].Amount > 0)
+            if (Inv.InventItems[i] != null && Inv.InventItems[i].Amount > 0)
             {
                 //is a brand new item
-                if (_allItems.Count <= i && !DoWeHaveThatKeyAlready(_inv.InventItems[i].Key))
+                if (_allItems.Count <= i && !DoWeHaveThatKeyAlready(Inv.InventItems[i].Key))
                 {
-                    _allItems.Add(ShowInvetoryItem.Create(_containr.transform, _inv.InventItems[i], ReturnIniPos(iForSpwItem),
+                    _allItems.Add(ShowInvetoryItem.Create(_container.transform, Inv.InventItems[i], ReturnIniPos(iForSpwItem),
                         this, _invType));
                 }
-                else if (_allItems[i].InvItem1.Key != _inv.InventItems[i].Key)
+                else if (_allItems[i].InvItem1.Key != Inv.InventItems[i].Key)
                 {
                     //updates the item
-                    _allItems[i].UpdateToThis(_inv.InventItems[i], ReturnIniPos(iForSpwItem));
+                    _allItems[i].UpdateToThis(Inv.InventItems[i], ReturnIniPos(iForSpwItem));
                 }
 
                 iForSpwItem++;

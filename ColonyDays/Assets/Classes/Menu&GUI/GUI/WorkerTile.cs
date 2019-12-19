@@ -13,8 +13,7 @@ public class WorkerTile : GUIElement
     } 
     private Text _descText;
     private Text _totalText;
-
-    private InputField _input;
+    private Text _currentText;
 
     List<Structure> _buildings;
     int _employ = -1;//total employ by this types of works
@@ -47,8 +46,7 @@ public class WorkerTile : GUIElement
     {
         _descText = FindGameObjectInHierarchy("Item_Desc", gameObject).GetComponent<Text>();
         _totalText = FindGameObjectInHierarchy("Total", gameObject).GetComponent<Text>();
-
-        _input = FindGameObjectInHierarchy("Input", gameObject).GetComponent<InputField>();
+        _currentText = FindGameObjectInHierarchy("Current_Amount", gameObject).GetComponent<Text>();
 
         var goP = GetChildCalled("More");
         var goL = GetChildCalled("Less");
@@ -57,16 +55,6 @@ public class WorkerTile : GUIElement
         _lessBtn = GetChildCalled("Less");
 
         _descText.text = Languages.ReturnString(_workType);
-
-        if (WorkType == "Unemployed")
-        {
-            _input.text = MyText.Lazy()+"";
-            _totalText.text = "";
-
-            MakeInactiveButton(_plusBtn);
-            MakeInactiveButton(_lessBtn);
-            return;
-        }
 
         Init();
     }
@@ -90,7 +78,7 @@ public class WorkerTile : GUIElement
         }
         _oldEmploy = _employ;
 
-        _input.text = _employ + "";
+        _currentText.text = _employ + "";
         _totalText.text = "" + AbsMaxPeople()+"";
     }
 
@@ -169,34 +157,9 @@ public class WorkerTile : GUIElement
         if (WorkType == "Masonry")
             Program.gameScene.TutoStepCompleted("AddWorkers.Tuto");
 
-
         _employ++;
         Init();
     }
-
-    /// <summary>
-    /// When leave Input fiield this is called from GUI
-    /// </summary>
-    public void SetNewPrice()
-    {
-        if (AddOrderWindow.IsTextAValidInt(_input.text))
-        {
-            _employ = int.Parse(_input.text);
-        }
-
-        if (WorkType == "Unemployed")
-        {
-            Update();
-            return;
-        }
-
-        //else wont do anything just will reload last price 
-        Init();
-    }
-
-
-
-
 
     private void CheckIfPlusIsActive()
     {
@@ -232,22 +195,8 @@ public class WorkerTile : GUIElement
         btn.SetActive( true);
     }
 
-
-
-
-
-
-    int count;
-    //lazy
     void Update()
     {
-        count++;
-        if (WorkType == "Unemployed" && count == 10)
-        {
-            count = 0;
-            _input.text = MyText.Lazy()+"";
-        }
-
         if (_buildings==null)
         {
             return;

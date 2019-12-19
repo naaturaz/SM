@@ -7,7 +7,6 @@ using UnityEngine.UI;
  * Script atteched to the AddOrderWindow
  * 
  */
-
 public class AddOrderWindow : GUIElement
 {
     private Text _title;
@@ -44,7 +43,6 @@ public class AddOrderWindow : GUIElement
     private void Start()
     {
         InitObj();
-
         Hide();
     }
 
@@ -61,7 +59,6 @@ public class AddOrderWindow : GUIElement
         _errorMsgLbl = GetChildCalled(H.Output_Error_Msg).GetComponent<Text>();
 
         CleanDisplay();
-
 
         var addBtn = GetChildThatContains(H.Add_Btn).transform;
         var cancelBtn = GetChildThatContains(H.Cancel_Btn).transform;
@@ -87,14 +84,12 @@ public class AddOrderWindow : GUIElement
         _inputAmt.text = "";
 
         LoadMenu();
-
         transform.position = iniPos;
 
         ResetScroolPos();
-
         Display();
 
-        _ourInventories.Show();
+        _ourInventories.Show(5f);
     }
 
     private void LoadMenu()
@@ -119,11 +114,8 @@ public class AddOrderWindow : GUIElement
     {
         for (int i = 0; i < list.Count; i++)
         {
-            var iniPosHere = _scroll_Ini_PosGO.transform.localPosition +
-                             new Vector3(0, -3.5f * i, 0);
-
-            var a = ButtonTile.CreateTile(_content.gameObject.transform, list[i],
-                iniPosHere, this);
+            var iniPosHere = _scroll_Ini_PosGO.transform.localPosition + new Vector3(0, -3.5f * i, 0);
+            var a = ButtonTile.CreateTile(_content.gameObject.transform, list[i], iniPosHere, this);
 
             _btns.Add(a);
         }

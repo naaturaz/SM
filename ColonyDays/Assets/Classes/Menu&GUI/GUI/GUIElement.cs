@@ -74,9 +74,7 @@ public class GUIElement : General
     protected string BuildStringInv(General obj)
     {
         if (obj.Inventory == null)
-        {
             return ">*<";
-        }
 
         var percentOcup = obj.Inventory.CurrentVolumeOcuppied() / obj.Inventory.CapacityVol;
         percentOcup = percentOcup * 100;

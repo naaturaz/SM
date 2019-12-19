@@ -479,7 +479,8 @@ public class Languages
 
         _en.Add("Weight.Help", "Weight: All the weights in the game are in Kg or Lbs depending on which Unit system is selected." +
                                 " You can change it in 'Options' in the 'Main Menu'");
-        _en.Add("What is Ft3 and M3?.Help", "The storage capacity is determined by the volume of the building. Ft3 is a cubic foot. M3 is a cubic meter");//. Keep in mind that less dense products will fill up your storage quickly. To see products density Bulletin/Prod/Spec" );
+        _en.Add("What is Ft3 and M3?.Help", "The storage capacity is determined by the volume of the building. Ft3 is a cubic foot. M3 is a cubic meter. Keep in mind that less dense products will fill up your storage quickly."); 
+        // To see products density Bulletin/Prod/Spec" );
 
         _en.Add("More.Help", "If you need more help might be a good idea completing the tutorial, or simply posting a question on SugarMill's Forums");
 
@@ -578,10 +579,8 @@ public class Languages
         _en.Add("Shack.Quest", "Quest: Build a Shack. These are cheap houses. When people turn 16 they will move to a free house if found. In this way, population growth will be guaranteed. [F1] Help. If you see smoke in a house's chimney means there are people living in it");
 
         _en.Add("SmallFarm.Quest", "Quest: Build a Small Field Farm. You need farms to feed your people");
-        _en.Add("FarmHire.Quest", "Quest: Hire two farmers in the Small Field Farm. Click on the farm and in the plus sign assign workers. You need to have unemployed"
-                    + " people to be able to assign them into a new building");
-
-
+        _en.Add("FarmHire.Quest", "Quest: Hire two farmers in the Small Field Farm. Click on the farm and assign workers. You need to have unemployed"
+                    + " people to be able to assign them into a new building. Tip: if you did it already, fire them and rehire them");
 
         _en.Add("FarmProduce.Quest", "Quest: Now produce " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " of beans on the Small Field Farm. Click on the 'Stat' tab and will show you the production of the last 5 years. You can see the quest progress in the quest window. If you build more small farms will be accounted for the quest");
         _en.Add("Transport.Quest", "Quest: Transport the beans from the farm to the Storage. To do that make sure you have" +
@@ -1033,7 +1032,13 @@ public class Languages
         _en.Add("New bought lands", "New Bought Lands");
 
 
+        //Dec 18
+        //Main Menu
+        _sp.Add("Command Keys", "Teclas");
+        _sp.Add("Command Keys.Text", "[F1] Help\n[F9] Hide/Show GUI\n[P] Centers Camera to Town");
 
+        _sp.Add("Credits", "Creditos");
+        _sp.Add("Credits.Text", "Traduccion:\nCédric Gauché (fr)\nKarsten Eidner (de)");
 
 
 

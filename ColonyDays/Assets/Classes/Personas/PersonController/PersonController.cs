@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -11,11 +10,6 @@ using Random = UnityEngine.Random;
 //This class holds and controlls all persons
 public class PersonController : PersonPot
 {
-
-
-
-
-
 	//initiating a game difficulty
     //0 insane, 4 newbie 
     private int _difficulty = 0;
@@ -132,8 +126,10 @@ public class PersonController : PersonPot
 
     void Map()
     {
+        //being both a 100 since late 2016 till Dec 18, 2019
         int multiplier = 100;
-        int factor = 100;
+        int factor = 50;
+
         int ini = multiplier*factor;
 
         int templateFactor = 1;
@@ -143,10 +139,10 @@ public class PersonController : PersonPot
         }
 
         StartingCondition insane = new StartingCondition(4 * templateFactor, 600, 600, 600, 600, 600, 600, 10000, 1 * factor, 1);
-        StartingCondition hard = new StartingCondition(6 * templateFactor, ini, ini, ini, ini, ini, ini, 11000, 5 * factor, 2);
-        StartingCondition med = new StartingCondition(7 * templateFactor, ini, ini, ini, ini, ini, ini, 12000, 5 * factor, 3);
-        StartingCondition easy = new StartingCondition(8 * templateFactor, ini, ini, ini, ini, ini, ini, 25000, 5 * factor, 4);
-        StartingCondition newbie = new StartingCondition(9 * templateFactor, ini, ini, ini, ini, ini, ini, 0000, 5 * factor, 5);
+        StartingCondition hard = new StartingCondition(5 * templateFactor, ini, ini, ini, ini, ini, ini, 11000, 5 * factor, 2);
+        StartingCondition med = new StartingCondition(6 * templateFactor, ini, ini, ini, ini, ini, ini, 12000, 5 * factor, 3);
+        StartingCondition easy = new StartingCondition(7 * templateFactor, ini, ini, ini, ini, ini, ini, 25000, 5 * factor, 4);
+        StartingCondition newbie = new StartingCondition(8 * templateFactor, ini, ini, ini, ini, ini, ini, 0000, 5 * factor, 5);
 
         Conditions = new StartingCondition[] { insane, hard, med, easy, newbie, };
     }
@@ -1044,7 +1040,6 @@ public class StartingCondition
     private int _thisDifficultyLevel;//    //0 insane, 4 newbie 
     public float iniWhaleOil;
 
-
     public StartingCondition(int iniPersonP, int iniWoodP, int iniFoodP, int iniStoneP, int iniBrickP, int iniIronP,
         int iniGoldP, int iniDollarP, int iniWheelBarrowP, int thisDifficultyLevel)
     {
@@ -1100,8 +1095,6 @@ public class PersonControllerSaveLoad
     public RoutesCache RoutesCache = new RoutesCache();
 
     public List<string> Waiting = new List<string>();
-    //public List<CheckedIn> OnSystemNow1 = new List<CheckedIn>();
-
 
     public EmigrateController EmigrateController1 = new EmigrateController();
 
@@ -1111,9 +1104,7 @@ public class PersonControllerSaveLoad
 
     public string TerrainName = "";
 
-
     public List<int> UnlockRegions = new List<int>();
-
 
     public string TownName { get; set; }
 
@@ -1126,8 +1117,6 @@ public class PersonControllerSaveLoad
     public bool IsFood { get; set; }
 
     public bool WasTutoPassed { get; set; }
-
-
 
     public QuestManager QuestManager { get; set; }
 

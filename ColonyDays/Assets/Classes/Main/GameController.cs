@@ -13,9 +13,7 @@ using UnityEngine;
 
 public class GameController  {
 
-
-
-
+    public bool IsGameOver { get; set; }
 
     private static bool _areThereWheelBarrowsOnStorage;
     /// <summary>
@@ -26,7 +24,6 @@ public class GameController  {
         get { return _areThereWheelBarrowsOnStorage; }
         set { _areThereWheelBarrowsOnStorage = value; }
     }
-
 
 
     private static bool _areThereCratesOnStorage;
@@ -82,8 +79,6 @@ public class GameController  {
     private int _lastYearWorkersSalaryWasPaid;
 
     private NotificationsManager _notificationsManager;
-
-
 
     private static int _capMaxPerson = 1100;
     /// <summary>
@@ -214,12 +209,6 @@ public class GameController  {
         LoadIntoInv(inv);
     }
 
-
-
-
-
-
-
     public void ReCheckWhatsOnStorage()
     {
         AreThereWheelBarrowsOnStorage = ThereIsAtLeastOneOfThisOnStorage(P.WheelBarrow);
@@ -228,8 +217,6 @@ public class GameController  {
         AreThereTonelsOnStorage = ThereIsAtLeastOneOfThisOnStorage(P.Barrel);
         AreThereWhaleOil = ThereIsAtLeastOneOfThisOnStorage(P.WhaleOil);
     }
-
-
 
     public void Start()
     {
@@ -245,7 +232,6 @@ public class GameController  {
             _notificationsManager.UpdateOneSecond();
             
         }
-
     }
 
     private void CheckIfGameOverCondition()
@@ -261,29 +247,16 @@ public class GameController  {
         }
     }
 
-
-
-
-    private bool _isGameOver;
-
-    public bool IsGameOver
-    {
-        get { return _isGameOver; }
-        set { _isGameOver = value; }
-    }
-
-
-
     private void GameOver(char type)//p pirate ... m money
     {
-        if (_isGameOver)
+        if (IsGameOver)
         {
             return;
         }
 
         Program.gameScene.GameSpeed = 0;
         Debug.Log("Game over");
-        _isGameOver = true;
+        IsGameOver = true;
 
         if (type == 'p')
         {
@@ -295,8 +268,6 @@ public class GameController  {
         }
     }
 
-
-
     private void CheckIfSalariesNeedToBePaid()
     {
         if (LastYearWorkersSalaryWasPaid < Program.gameScene.GameTime1.Year
@@ -306,9 +277,6 @@ public class GameController  {
             PirateThreat();
         }
     }
-
-
-
 
     private void PirateThreat()
     {
@@ -330,8 +298,11 @@ public class GameController  {
             pts += ResumenInventory1.ReturnAmtOfItemOnInv(P.Diamond) / 100;
         }
 
+        //from late 2016 to Dec 18, 2019 was:
         //to make game easier 
-        pts /= 100;
+        //pts /= 100;
+
+        pts /= 10;
 
         //add gold,silver,etc
         BuildingPot.Control.DockManager1.AddToPirateThreat(pts);
@@ -354,10 +325,7 @@ public class GameController  {
     internal void NotificationsManagerInit()
     {
         _notificationsManager = new NotificationsManager();
-
     }
-
-
 
     #region GameMode Could be Normal( Peace) or War
 

@@ -41,7 +41,6 @@ public class BuildingWindow : Window
     private GameObject _products;
     private GameObject _orders;
     private GameObject _stats;
-
     private GameObject _invIniPos;
     private GameObject _invIniPosSta;
 
@@ -68,8 +67,8 @@ public class BuildingWindow : Window
     Image _imageIcon;
 
     //Scrool 
-    GameObject _scrollViewCont;
-    ScrollViewShowInventory _ourInventories;
+    ScrollViewShowInventory _scrollInventory;
+    private GameObject _scrollParent;
 
     //Priority Rank
     GameObject _priorityControls;
@@ -135,13 +134,12 @@ public class BuildingWindow : Window
         _upgrades = GetChildCalled(H.Upgrades);
         _stats = GetChildCalled("Stats");
 
-        _scrollViewCont = GetChildCalled("ScrollViewCont");
-        _ourInventories = FindGameObjectInHierarchy("Scroll_View_Inv_Resume", gameObject).GetComponent<ScrollViewShowInventory>();
+        _scrollParent = FindGameObjectInHierarchy("Inventory_Scroll", gameObject);
+        _scrollInventory = FindGameObjectInHierarchy("Scroll_View", gameObject).GetComponent<ScrollViewShowInventory>();
 
         _priorityControls = FindGameObjectInHierarchy("PriorityControl", _general);
         var currRank = FindGameObjectInHierarchy("Current_Rank", _priorityControls);
         _currRankTxt = currRank.GetComponent<Text>();
-
 
         _salary = General.FindGameObjectInHierarchy("Salary", _general);
         _positions = General.FindGameObjectInHierarchy("Positions", _general);
@@ -397,7 +395,6 @@ public class BuildingWindow : Window
 
     private void HideShow()
     {
-        _scrollViewCont.SetActive(false);
         _priorityControls.SetActive(false);
     }
 
@@ -415,6 +412,21 @@ public class BuildingWindow : Window
     }
 
     void Inventory()
+    {
+        if (Building.Inventory == null) return;
+
+        if (oldBuildID != Building.MyId)
+        {
+            ShowProductionReport();
+            oldBuildID = Building.MyId;
+            _scrollInventory.ReloadNewInvetory(Building.Inventory);
+        }
+
+        ReloadStatsWhenNeeded();
+        _inv.text = BuildStringInv(Building);
+    }
+
+    void Inventory2()
     {
         if (Building.Inventory == null)
             return;
@@ -952,7 +964,6 @@ public class BuildingWindow : Window
         orderShow.ShowToSetCurrentProduct(pInfo);
 
         orderShow.Reset(i);
-
         _showProducts.Add(orderShow);
     }
 

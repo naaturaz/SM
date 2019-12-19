@@ -286,7 +286,6 @@ public class Root : MonoBehaviour
     public static string acct_Tile = "Prefab/GUI/Forms/Acct_Tile";
     public static string person_Tile = "Prefab/GUI/Forms/Person_Tile";
 
-
     public static string spec_Tile = "Prefab/GUI/Forms/Spec_Tile";
 
     public static string worker_Tile = "Prefab/GUI/Forms/Worker_Tile";
@@ -310,8 +309,6 @@ public class Root : MonoBehaviour
     public static string inputFormDialogInvitation = "Prefab/Menu/InputFormDialogInvitation";
 
     public static string mandatoryFeedBack = "Prefab/Menu/MandatoryFeedBack";
-
-
 
     //Images for GUI
     public static string iconBrick = "";
@@ -363,7 +360,6 @@ public class Root : MonoBehaviour
     public static string matHouse2 = "Prefab/Mats/Building/house2";
 
     public static string blue_Semi_T = "Prefab/Mats/Blue_Semi_T";
-
 
     //Atlas
     public static string alphaAtlas = "Prefab/Mats/Atlas/AlphaAtlas";

@@ -122,8 +122,7 @@ public class SubBulletinProduction
             var margin = i > 0 ? -4f : 0f;
             var yPos = (pastItems * -3.75f) + margin;
 
-            var a = new ShowAInventory(list[i], _bulletinWindow.Content.gameObject,
-                 lastPos + new Vector3(0, yPos, 0));
+            var a = new ShowAInventory(list[i], _bulletinWindow.Content.gameObject, lastPos + new Vector3(0, yPos, 0), "Bulletin.Prod.Report");
 
             lastPos = lastPos + new Vector3(0, yPos, 0);
 

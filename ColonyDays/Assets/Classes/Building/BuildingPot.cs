@@ -6,7 +6,6 @@ using UnityEngine;
 using System.Collections;
 
 //This class is instantiatedon InputMain and has a real obj on scene so the start and update works
-
 public class BuildingPot : Pot 
 {
     private static InputBuilding _input;

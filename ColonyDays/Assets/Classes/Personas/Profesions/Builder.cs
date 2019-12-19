@@ -323,7 +323,8 @@ public class Builder : Profession
             }
 
             //do stuff
-            _constructing.AddToConstruction(100f * ToolsFactor(), _person);
+            //was 100f from Late 2016 till Dec 18 2019
+            _constructing.AddToConstruction(10f * ToolsFactor(), _person);
             //so find new construction everytime before goes out to work 
             _constructing = null;
         }

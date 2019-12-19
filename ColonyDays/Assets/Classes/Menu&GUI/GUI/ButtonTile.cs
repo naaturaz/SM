@@ -1,25 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-
 
 public class ButtonTile : GUIElement
 {
     private Text _descText;
     private Text _priceText;
 
-    private AddOrderWindow _addOrderWindow;
-
     public ProdSpec Value { get; set; }
 
-    public AddOrderWindow OrderWindow
-    {
-        get { return _addOrderWindow; }
-        set { _addOrderWindow = value; }
-    }
+    public AddOrderWindow OrderWindow { get; set; }
 
     void Start()
     {
@@ -37,7 +26,6 @@ public class ButtonTile : GUIElement
 
     void Update()
     {
-
     }
 
     /// <summary>
@@ -45,15 +33,13 @@ public class ButtonTile : GUIElement
     /// </summary>
     public void ButtonClick()
     {
-        _addOrderWindow.ProdSelected(_descText.text);
+        OrderWindow.ProdSelected(_descText.text);
     }
 
     internal static ButtonTile CreateTile(Transform container,
         ProdSpec val, Vector3 iniPos, AddOrderWindow win)
     {
         ButtonTile obj = null;
-
-        var root = "";
 
         obj = (ButtonTile)Resources.Load(Root.button_Tile, typeof(ButtonTile));
         obj = (ButtonTile)Instantiate(obj, new Vector3(), Quaternion.identity);
@@ -69,8 +55,4 @@ public class ButtonTile : GUIElement
         return obj;
     }
 
-
-
-
 }
-

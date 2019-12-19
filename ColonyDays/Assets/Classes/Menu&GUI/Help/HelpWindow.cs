@@ -96,8 +96,6 @@ public class HelpWindow : GUIElement
 
         ClearBtns();
         ShowButtons(_helps);
-
-
     }
 
     private void ClearBtns()
@@ -108,8 +106,6 @@ public class HelpWindow : GUIElement
         }
         _btns.Clear();
     }
-
-
 
     List<HelpTile> _btns = new List<HelpTile>();
     private void ShowButtons(List<string> list)
@@ -125,7 +121,6 @@ public class HelpWindow : GUIElement
             _btns.Add(a);
         }
     }
-
 
     #endregion
 
@@ -175,7 +170,6 @@ public class HelpWindow : GUIElement
     public void SuggestChange()
     {
         Dialog.InputFormDialog(H.Feedback);
-
     }
 
     public void OpenWiki()

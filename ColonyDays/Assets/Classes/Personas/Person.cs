@@ -903,8 +903,6 @@ public class Person : Hoverable
         }
     }
 
-
-
     /// <summary>
     /// Will say if origin is on terrain 
     /// </summary>
@@ -921,7 +919,6 @@ public class Person : Hoverable
         {
             return true;
         }
-
         return false;
     }
 
@@ -943,8 +940,6 @@ public class Person : Hoverable
             _thirst = "Low";
         }
     }
-
-
 
     /// <summary>
     /// Of _nutrition level is so low will kill person
@@ -1889,7 +1884,8 @@ public class Person : Hoverable
         if (item == P.Water)
         {
             _thirst = "Quenched";
-            kgNeeded = 2;
+            //was 2 from late 2016 till Dec 18 2019
+            kgNeeded = 4;
             _lastWater = Program.gameScene.GameTime1.CurrentDate();
         }
 

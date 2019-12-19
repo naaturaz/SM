@@ -434,8 +434,6 @@ public class StructureParent : Building {
             //NextStageFee(); 
         }
 
-
-
         _startingStage = name;
         Geometry.gameObject.SetActive(false);
         if (Stage2 != null) Stage2.gameObject.SetActive(false);
@@ -444,7 +442,8 @@ public class StructureParent : Building {
         //so UnderTerra mines show something onces there are built
         if (name == H.Stage1 && IsThisADoubleBoundedStructure())
         {
-            if (Stage2 != null)
+            //false: bz was showing dock
+            if (false && Stage2 != null)
             {
                 Stage2.gameObject.SetActive(true);
                 AssignMaterialToStage(Stage2);
@@ -491,11 +490,12 @@ public class StructureParent : Building {
         return 500;
     }
 
-
     //assign the material Stage to all Stage 2 or 3 passed but a few ex
     //this is here to address the exepctions
     void AssignMaterialToStage(GameObject passP)
     {
+        return;
+
         if (!HType.ToString().Contains(H.Bridge.ToString()) && HType != H.Dock && HType != H.Shipyard
             && HType != H.FishingHut// && HType != H.FishRegular
             )
