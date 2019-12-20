@@ -1259,7 +1259,7 @@ public class Languages
         {
             if (German.ContainsKey(key))
             {
-                return German.Dictionary()[key];
+                return German.ReturnValueWithKey(key);
             }
             return "de:" + key;
         }

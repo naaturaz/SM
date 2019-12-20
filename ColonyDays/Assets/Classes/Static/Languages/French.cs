@@ -266,9 +266,9 @@ public class French
 
 
             //MainMenu
-            _fr.Add("Types_Explain", "Traditional: \nC'est un jeu où, au début, certains bâtiments sont verrouillés et vous devez les déverrouiller. " +
+            _fr.Add("Types_Explain", "Traditionnel: \nC'est un jeu où, au début, certains bâtiments sont verrouillés et vous devez les déverrouiller. " +
                     "La bonne nouvelle c'est que vous aurez des conseils." +
-                    "\n\nFreewill: \nTous les bâtiments disponibles sont déverouillés tout de suite. " +
+                    "\n\nLibre arbitre: \nTous les bâtiments disponibles sont déverouillés tout de suite. " +
                     "La mauvaise nouvelle c'est que de cette façon vous pouvez échouer très facilement." +
                     "\n\nLa difficulté 'Difficile' est la plus proche de la réalité");
 
@@ -1138,6 +1138,10 @@ public class French
         _fr.Add("Trash.HoverSmall", "Borrar Orden");
         _fr.Add("Counting...", "Contando...");
         _fr.Add("Ten Orders Limit", "Diez ordenes es el límite");
+
+
+        _fr.Add("Français", "Français");
+        _fr.Add("Français(Beta)", "Français(Beta)");
 
     }
 

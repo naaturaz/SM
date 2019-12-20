@@ -265,9 +265,9 @@ public class German
 
 
             //MainMenu
-            _de.Add("Types_Explain", "Traditional: \nDas ist eine Spielvariante, bei dem am Anfang einige Gebäude gesperrt sind und man sie freischalten muss. " +
+            _de.Add("Types_Explain", "Traditionell: \nDas ist eine Spielvariante, bei dem am Anfang einige Gebäude gesperrt sind und man sie freischalten muss. " +
                     "Das Gute daran ist, dass du hier eine Anleitung bekommst." +
-                    "\n\nFreewill: \nAlle verfügbaren Gebäude werden sofort freigeschaltet. " +
+                    "\n\nFreier Wille: \nAlle verfügbaren Gebäude werden sofort freigeschaltet. " +
                     "Das Schlimme daran ist, dass du so leicht versagen kannst." +
                     "\n\nDie Stufe 'Schwer' ist verflucht nah der Realität");
 
@@ -1093,10 +1093,6 @@ public class German
         _de.Add(" of ", " de ");
 
         //After May 1, 2019
-        _de.Add("Our inventories:", "Nuestros inventarios:");
-        _de.Add("Select Product:", "Selecciona un producto:");
-        _de.Add("Current_Rank.HoverSmall", "Numero en la cola");
-
         _de.Add("Construction.Progress", "Progreso de la construcción en: ");
         _de.Add("Warning.This.Building", "Atención: Esta construcción no puede ser construida ahora. Falta material(es):\n");
         _de.Add("Product.Selected", "Producto seleccionado: ");
@@ -1152,13 +1148,7 @@ public class German
         _de.Add("Cassava", "Yuca");
         _de.Add("Candy", "Caramelo");
 
-        //After Dec 28, 2018
-        _de.Add("Down.HoverSmall", "Increase Priority");
-        _de.Add("Up.HoverSmall", "Decrease Priority");
-        _de.Add("Trash.HoverSmall", "Borrar Orden");
-        _de.Add("Counting...", "Contando...");
-        _de.Add("Ten Orders Limit", "Diez ordenes es el límite");
-
+        _de.Add("Tutorial", "Tutorial");
 
     }
 
