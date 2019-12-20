@@ -3,28 +3,33 @@ using UnityEngine.UI;
 
 public class LangUpdateScript : MonoBehaviour
 {
-    //Must be added in a Obt that has a Text elemente attached to it 
-
-    //the initial value of this that always will be the key
-    //to pull info from langagues.cs
-    private string _key;
-
     private Text _text;
 
-	// Use this for initialization
-	void Start ()
+    public string Key { get; set; }
+
+    // Use this for initialization
+    void Start ()
 	{
 	    _text = GetComponent<Text>();
-	    _key = _text.text;
 
-	    _text.text = Languages.ReturnString(_key);
+        if (Key == null)
+	        Key = _text.text;
+
+	    _text.text = Languages.ReturnString(Key);
 	}
 
     private void Update()
     {
-        if (_key == _text.text && _text.text != Languages.ReturnString(_key))
+        if (Key == _text.text && _text.text != Languages.ReturnString(Key))
         {
-            _text.text = Languages.ReturnString(_key);
+            _text.text = Languages.ReturnString(Key);
         }
+    }
+
+    internal void SetKey(string newKey)
+    {
+        Key = newKey;
+        if (_text == null) return;
+        _text.text = Languages.ReturnString(Key);
     }
 }

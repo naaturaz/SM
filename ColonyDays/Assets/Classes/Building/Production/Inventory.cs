@@ -85,7 +85,21 @@ public class Inventory
     /// </summary>
     internal void OrderItemsAlpha()
     {
-        _inventItems = _inventItems.OrderBy(a => a.Key.ToString()).ToList();
+        //_inventItems = _inventItems.OrderBy(a => a.Key.ToString()).ToList();
+        OrderItemsAlphaLang();
+    }
+
+    /// <summary>
+    /// Will order items alphabetically
+    /// </summary>
+    void OrderItemsAlphaLang()
+    {
+        for (int i = 0; i < _inventItems.Count; i++)
+        {
+            _inventItems[i].SetValueCurrentLang();
+        }
+
+        _inventItems = _inventItems.OrderBy(a => a.KeyLang.ToString()).ToList();
     }
 
     /// <summary>
@@ -1003,6 +1017,8 @@ public class InvItem
         set { _expiresAmts = value; }
     }
 
+    public string KeyLang { get; internal set; }
+
     public InvItem(P KeyP, float amtP)
     {
         Key = KeyP;
@@ -1064,6 +1080,11 @@ public class InvItem
             _expiresAmts.RemoveAt(0);
             CheckIfAnyHasExpired(inv);
         }
+    }
+
+    internal void SetValueCurrentLang()
+    {
+        KeyLang = Languages.ReturnString(Key + "");
     }
 }
 

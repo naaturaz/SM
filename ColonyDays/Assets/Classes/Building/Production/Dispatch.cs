@@ -1272,7 +1272,7 @@ public class Dispatch
 
         Program.gameScene.ExportImport1.Sale(ord.Product, amtExpThisTime, dock.Name);
 
-        Debug.Log("Exported:" + ord.Product + " . " + amtExpThisTime + ".Still left:" + leftOnOrder);
+        //Debug.Log("Exported:" + ord.Product + " . " + amtExpThisTime + ".Still left:" + leftOnOrder);
     }
 
     public bool AddToExpImpOrders(Order order)
@@ -1301,7 +1301,6 @@ public class Dispatch
             return false;
         }
     }
-
 
     bool ThereAreEnoughShipsOnBay()
     {

@@ -1018,8 +1018,8 @@ public class Spanish
         _sp.Add("Horse Carriages", "Coches de Caballos");
         _sp.Add("Inputs", "Entradas");
         _sp.Add("Line production", "Linea de producción");
-        _sp.Add("Our Inventories", "Inventorios");
-        _sp.Add("Inventories Explanation", "Inventorios Información");
+        _sp.Add("Our Inventories", "Inventarios");
+        _sp.Add("Inventories Explanation", "Inventarios Información");
         _sp.Add("People Range", "Rango Personal");
         _sp.Add("Pirate Threat", "Amenaza Pirata");
         _sp.Add("Population", "Poblacion");
@@ -1126,11 +1126,12 @@ public class Spanish
 		_sp.Add("Price: ", "Precio: ");
 		_sp.Add(" per ", " por ");
 		_sp.Add("Inputs needed per ", "Insumos necesarios por ");
-		_sp.Add("Density: ", "Densidad: ");
-		_sp.Add("Produce factor: ", "Factor productivo: ");
-		_sp.Add("Expires in: ", "Caduca en: ");
-		_sp.Add(" days", " dias");
-		_sp.Add("Inventory:", "Inventorio:");
+		_sp.Add("Inventory:", "Inventario:");
+
+		_sp.Add("CornMeal", "Harina de maíz");
+		_sp.Add("PalmLeaf", "Hojas de Palma");
+		_sp.Add("Rubber", "Caucho");
+
 
 
 
@@ -1180,7 +1181,10 @@ public class Spanish
 
         _sp.Add("Español","Español");
         _sp.Add("Español(Beta)","Español(Beta)");
-        
+
+		_sp.Add("LoadWontFit", "Demasiado para este puerto");
+
+
     }
 
     internal static void Clear()

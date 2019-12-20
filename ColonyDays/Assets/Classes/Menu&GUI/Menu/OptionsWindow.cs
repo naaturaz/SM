@@ -23,17 +23,16 @@ public class OptionsWindow : GUIElement
     private GameObject _autoSaveBtn;
     private GameObject _unitBtn;
     private GameObject _langBtn;
-
-
+    
     private GameObject _resBtn;
     private GameObject _qualityBtn;  
     
     private Text _autoSaveBtnTxt;
-    private Text _unitBtnTxt;
+    private LangUpdateScript _unitBtnLang;
     private Text _langBtnTxt;
 
     private Text _resBtnTxt;
-    private Text _qualityBtnTxt;
+    private LangUpdateScript _qualityBtnLang;
 
     private Slider _musicSlider;
     private Slider _soundSlider;
@@ -72,7 +71,7 @@ public class OptionsWindow : GUIElement
         
         var unitPanel = GetGrandChildCalled("Panel_Unit");
         _unitBtn = GetChildCalledOnThis("Unit_Btn", unitPanel);
-        _unitBtnTxt = GetChildCalledOnThis("Text", _unitBtn).GetComponent<Text>();
+        _unitBtnLang = GetChildCalledOnThis("Text", _unitBtn).GetComponent<LangUpdateScript>();
         
 
         var resPanel = GetGrandChildCalled("Panel_Res");
@@ -81,7 +80,7 @@ public class OptionsWindow : GUIElement
         
         var qualityPanel = GetGrandChildCalled("Panel_Quality");
         _qualityBtn = GetChildCalledOnThis("Quality_Btn", qualityPanel);
-        _qualityBtnTxt = GetChildCalledOnThis("Text", _qualityBtn).GetComponent<Text>();
+        _qualityBtnLang = GetChildCalledOnThis("Text", _qualityBtn).GetComponent<LangUpdateScript>();
 
         SetAllControls();
         RefreshAllDropDowns();
@@ -137,10 +136,10 @@ public class OptionsWindow : GUIElement
     public void RefreshAllDropDowns()
     {
         _autoSaveBtnTxt.text = (Settings.AutoSaveFrec / 60) + " min";
-        _unitBtnTxt.text = "Imperial";
+        _unitBtnLang.SetKey("Imperial");
         if (Unit.Units == 'm')
         {
-            _unitBtnTxt.text = "Metric";
+            _unitBtnLang.SetKey("Metric");
         }
         _resBtnTxt.text = CurrentResolution();
         _langBtnTxt.text = Languages.CurrentLang();
@@ -151,7 +150,7 @@ public class OptionsWindow : GUIElement
         {
             if (i == curr)
             {
-                _qualityBtnTxt.text = names[i];
+                _qualityBtnLang.SetKey(names[i]);
             }
         }   
     }
@@ -343,7 +342,8 @@ public class OptionsWindow : GUIElement
         List<string> names = new List<string>()
         {
             "English", "Español(Beta)",
-            // "Français(Beta)", "Deutsch(Beta)",//"Português(Beta)"
+            "Français(Beta)", "Deutsch(Beta)",
+            //"Português(Beta)"
         };
 
         for (int i = 0; i < _buttonsName.Count; i++)

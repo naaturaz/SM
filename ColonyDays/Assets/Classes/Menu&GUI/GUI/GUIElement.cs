@@ -91,7 +91,7 @@ public class GUIElement : General
         {
             volOccupied = volCap;
         }
-        var res = Languages.ReturnString("Occupied:") + volOccupied.ToString("F0") + " " + Unit.VolumeUnit() +
+        var res = Languages.ReturnString("Occupied:") + " " + volOccupied.ToString("F0") + " " + Unit.VolumeUnit() +
             Languages.ReturnString(" of ") + volCap.ToString("F0") + " " + Unit.VolumeUnit() +
             " @ " + percentOcup.ToString("F0") + "%";
 

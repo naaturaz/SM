@@ -18,6 +18,8 @@ public class SpecTile : GUIElement
 
     List<Text> _inputs = new List<Text>();
 
+    public string SpecialInfo = "";
+
     public SpecData Spec
     {
         get { return _spec; }
@@ -76,7 +78,7 @@ public class SpecTile : GUIElement
         }
 
         _prodLbl.text = Export.MDate.ToStringFormatMonDayYear();
-        _input1Lbl.text = Languages.ReturnString(Export.Building);
+        _input1Lbl.text = Export.Building;
         _input2Lbl.text = Languages.ReturnString(Export.Prod);
         _input3Lbl.text = Unit.ConvertFromKGToCurrent(Export.Amt).ToString("N0") + " " 
             + Unit.CurrentWeightUnitsString();
@@ -102,7 +104,9 @@ public class SpecTile : GUIElement
         _buildingLbl.text = "-";
 
         if (_spec.ProdInfo.HType.Count > 0)
+        {
             _buildingLbl.text = Languages.ReturnString(_spec.ProdInfo.HType[0].ToString());
+        }
 
         _priceLbl.text = Unit.ProperPricedAndFormat(_spec.Price);  //_spec.Price
 
@@ -114,7 +118,7 @@ public class SpecTile : GUIElement
     {
     }
 
-    internal static SpecTile CreateTile(Transform container, SpecData spec, Vector3 iniPos)
+    internal static SpecTile CreateTile(Transform container, SpecData spec, Vector3 iniPos, string specialInfo = "")
     {
         SpecTile obj = null;
 
@@ -127,6 +131,7 @@ public class SpecTile : GUIElement
         obj.transform.localScale = iniScale;
 
         obj.Spec = spec;
+        obj.SpecialInfo = specialInfo;
 
         return obj;
     }

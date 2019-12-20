@@ -176,7 +176,6 @@ public class Program : MonoBehaviour {
     }
     #endregion
 
-
     public void MouseClickListener(string type)
     {
         _mouseListener.DetectMouseClick(type);

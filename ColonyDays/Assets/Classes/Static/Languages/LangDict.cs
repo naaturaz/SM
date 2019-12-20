@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 class LangDict
 {
@@ -12,7 +12,8 @@ class LangDict
     {
         if(_dict.ContainsKey(key))
         {
-            throw new Exception(key + " is already is dict");
+            Debug.Log("'" + key + "' is already is dict. Not added");
+            return;
         }
 
         _dict.Add(key, value);

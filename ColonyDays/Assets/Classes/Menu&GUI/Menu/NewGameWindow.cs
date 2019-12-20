@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Button = UnityEngine.UI.Button;
-using UnityEngine.EventSystems;
 
 public class NewGameWindow : GUIElement
 {
@@ -14,10 +12,9 @@ public class NewGameWindow : GUIElement
 
     //private Text _sizeTxt;//the btn tht contains the size 
     private Text _terraNameTxt;//the btn tht contains the size 
-    private Text _diffTxt;//the btn tht contains the size 
-    private Text _typeTxt; 
+    private LangUpdateScript _diffLang;//the btn tht contains the size 
+    private LangUpdateScript _typeLang; 
     private InputField _inputTownName;
-
 
     private List<string> _terraNames = new List<string>();//the names will be displayed on the terra name drop down  
 
@@ -28,9 +25,6 @@ public class NewGameWindow : GUIElement
     private GameObject Diff_Btn;
     private Toggle _pirateToggle;
     private Toggle _foodToggle;
-
-
-
 
 	// Use this for initialization
 	void Start ()
@@ -44,16 +38,12 @@ public class NewGameWindow : GUIElement
         Terra_Name_Btn = GetGrandChildCalled("Terra_Name_Btn");
         _terraNameTxt = Terra_Name_Btn.GetComponentInChildren<Text>();
 
-
-
         Diff_Btn = GetGrandChildCalled("Diff_Btn");
-        _diffTxt = Diff_Btn.GetComponentInChildren<Text>();
-   
+        _diffLang = Diff_Btn.GetComponentInChildren<LangUpdateScript>();
         
         var t_Btn = GetGrandChildCalled("Type_Btn");
-        _typeTxt = t_Btn.GetComponentInChildren<Text>();
-        _typeTxt.text = "Freewill";
-
+        _typeLang = t_Btn.GetComponentInChildren<LangUpdateScript>();
+        _typeLang.SetKey("Freewill");
 
         _inputTownName = GetChildCalled("Input_Name").GetComponent<InputField>();
 
@@ -64,10 +54,6 @@ public class NewGameWindow : GUIElement
 	    AddressDevVer();
     }
 
-
-
-    
-
     private void AddressDevVer()
     {
         if (!Developer.IsDev)
@@ -77,12 +63,24 @@ public class NewGameWindow : GUIElement
         }
     }
 
+    string[] array = new string[] {
+        "Matanzas", "Havana", "Baracoa", "Varadero", "Santiago de Cuba", "Pinar del Rio", "Versalles", "Colon", "Las Villas",
+        "Topes de Collante", "La Cumbre", "Cumbre Alta", "Santa Cristina", "Aranguren", "Ancon", "Vinales", "Havana Libre",
+        "San Severino",
+        "Sacti Spiritus", "Trinidad",
+        "Sevilla", 
+        "San Hipolito", "Paseo Marti",
+        "La Pinta", "La Nina", "La Santa Maria",
+        "Sedano", "Hialeah", "Key West", "Orlando", "San Agustine",
+        "Boca Raton", "Florida", "Palm Beach", "Calusa",
+    };
     /// <summary>
     /// Load default conditions for a game
     /// </summary>
     void LoadDefaultForNewGame()
     {
-        _townName = "Havana";
+
+        _townName = array[UMath.GiveRandom(0, array.Length)];
 #if UNITY_EDITOR
         _townName = "Editor";
 #endif
@@ -94,7 +92,6 @@ public class NewGameWindow : GUIElement
 	
 	// Update is called once per frame
 	void Update () {
-	
 	}
 
     public void MouseListen(string action)
@@ -109,17 +106,15 @@ public class NewGameWindow : GUIElement
             Program.IsFood = _foodToggle.isOn;
             Program.MyScreen1.NewGameCreated(_terraRoot, _difficulty, _townName);
 
-
             //Defines type of game here only when OK is cliked
-            if (_typeTxt.text == "Traditional")
+            if (_typeLang.Key == "Traditional")
             {
                 Program.TypeOfGame = H.Lock;
             }
-            else if (_typeTxt.text == "Freewill")
+            else if (_typeLang.Key == "Freewill")
             {
                 Program.TypeOfGame = H.Unlock;
             }
-
         }
         //Reloadd main menu
         else if (sub == "CancelBtn")
@@ -173,17 +168,13 @@ public class NewGameWindow : GUIElement
         }
     }
 
-
-
-
-
     private void Display()
     {
         _inputTownName.text = _townName;
 
         //_sizeTxt.text = _size;
         _terraNameTxt.text = _terraName;
-        _diffTxt.text = _difficulty;
+        _diffLang.SetKey(_difficulty);
     }
 
     /// <summary>
@@ -194,10 +185,8 @@ public class NewGameWindow : GUIElement
         _townName = _inputTownName.text;
         
         //so that gets define 
-        ClickOnTypeOfGame(_typeTxt.text);
+        ClickOnTypeOfGame(_typeLang.Key);
     }
-
-
 
     /// <summary>
     /// The last part of the name of the terrain which is wht is added on the Button when they are loaded
@@ -215,16 +204,8 @@ public class NewGameWindow : GUIElement
                 return roots[i];
             }
         }
-
         return "";
     }
-
-
-
-
-
-
-
 
     /// <summary>
     /// Is called when the terraName drop down Btn is clicked 
@@ -249,14 +230,9 @@ public class NewGameWindow : GUIElement
         var button = b.GetComponent<UnityEngine.UI.Button>();
         button.onClick.AddListener(() => Program.MyScreen1.NewGameWindow1.ClickTerraNameSelection(terraName));
 
-
         var child = GetChildCalledOnThis("Text", b);
         child.GetComponent<Text>().text = terraName;
     }
-
-
-
-
 
     /// <summary>
     /// bz the buttons are inactive this must be set when is cliced
@@ -297,12 +273,6 @@ public class NewGameWindow : GUIElement
         //}
         Display();
     }
-
-
-
-
-
-
 
     //Dificulty
 
@@ -348,19 +318,18 @@ public class NewGameWindow : GUIElement
     {
         if (pass == "Traditional")
         {
-            _typeTxt.text = "Traditional";
+            _typeLang.SetKey("Traditional");
         }
         else if (pass == "Freewill")
         {
-            _typeTxt.text = "Freewill";
+            _typeLang.SetKey("Freewill");
         }
         if (TownLoader.IsTemplate)
         {
             Program.TypeOfGame = H.None;
-            _typeTxt.text = "None";
+            _typeLang.SetKey("None");
         }
     }
-
 
     /// <summary>
     /// Called from GUI
@@ -380,8 +349,6 @@ public class NewGameWindow : GUIElement
 
     public void PirateChange()
     {
-
-
     }
 
     public void FoodChange()

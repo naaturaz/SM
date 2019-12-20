@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 /*
@@ -75,7 +76,7 @@ public class ExportImport
         {
             _prodSpecsCured.AddRange(_townProdSpecs);
 
-            _prodSpecsCured = _prodSpecsCured.OrderBy(a => a.Product.ToString()).ToList();
+            _prodSpecsCured = _prodSpecsCured.OrderBy(a => a.ProductLang()).ToList();
         }
         return _prodSpecsCured;
     }
@@ -561,5 +562,10 @@ public class ProdSpec
         _iconRoot = "Prefab/GUI/Inventory_Icons/" + prod;
         _expireDays = expireDays;
         _weightPerUnit = weightPerUnit;
+    }
+
+    internal object ProductLang()
+    {
+        return Languages.ReturnString(Product + "");
     }
 }

@@ -33,7 +33,7 @@ public class ButtonTile : GUIElement
     /// </summary>
     public void ButtonClick()
     {
-        OrderWindow.ProdSelected(_descText.text);
+        OrderWindow.ProdSelected(Value.Product+"");
     }
 
     internal static ButtonTile CreateTile(Transform container,
@@ -54,5 +54,4 @@ public class ButtonTile : GUIElement
 
         return obj;
     }
-
 }

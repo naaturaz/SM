@@ -144,6 +144,11 @@ public class ProductInfo
         set { _product = value; }
     }
 
+    public string ProductLang()
+    {
+        return Languages.ReturnString(_product+"");
+    }
+
     public List<InputElement> Ingredients
     {
         get { return _ingredients; }

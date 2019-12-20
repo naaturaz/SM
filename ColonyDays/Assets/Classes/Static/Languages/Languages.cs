@@ -1,12 +1,10 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System;
+﻿using System.Collections.Generic;
 
 public class Languages
 {
     private static string _currentLang = "English";
     private static LangDict _sp = new LangDict();
+    private static LangDict _fr = new LangDict();
     private static LangDict _en = new LangDict();
     private static Dictionary<string, string> _portuguese = new Dictionary<string, string>();
 
@@ -1232,7 +1230,7 @@ public class Languages
             // return "en:" + key;
             return key;
         }
-        else if (_currentLang == "Español(Beta)")
+        else if (_currentLang == "Español")
         {
             if (Spanish.ContainsKey(key))
             {
@@ -1252,7 +1250,7 @@ public class Languages
         {
             if (French.ContainsKey(key))
             {
-                return French.Dictionary()[key];
+                return French.ReturnValueWithKey(key);
             }
             return "fr:" + key;
         }
@@ -1264,7 +1262,6 @@ public class Languages
             }
             return "de:" + key;
         }
-        //return "not languages selected";
         else
         {
             //English as Default
@@ -1291,6 +1288,7 @@ public class Languages
     {
         _en.Clear();
         _sp.Clear();
+        _fr.Clear();
         _portuguese.Clear();
         French.Clear();
         German.Clear();
@@ -1325,7 +1323,7 @@ public class Languages
             return _sp.Dictionary;
         }
         if (_currentLang == "Português(Beta)") return _portuguese;
-        if (_currentLang == "Français(Beta)") return French.Dictionary();
+        if (_currentLang == "Français(Beta)") return _fr.Dictionary;
         if (_currentLang == "Deutsch(Beta)") return German.Dictionary();
 
         return _en.Dictionary;

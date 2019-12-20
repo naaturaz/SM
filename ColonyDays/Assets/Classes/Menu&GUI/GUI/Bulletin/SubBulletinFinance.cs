@@ -171,7 +171,8 @@ public class SubBulletinFinance
     List<ProductInfo> GetAllSpecs()
     {
         var res = BuildingPot.Control.ProductionProp.InputProducts();
-        res = res.OrderBy(a => a.Product.ToString()).ToList();
+
+        res = res.OrderBy(a => a.ProductLang()).ToList();
 
         res = AddTitleBar(res);
 
@@ -295,8 +296,7 @@ public class SubBulletinFinance
             var iniPosHere = _bulletinWindow.ScrollIniPosGo.transform.localPosition +
                              new Vector3(0, -3.5f * i, 0);
 
-            var a = SpecTile.CreateTile(_bulletinWindow.Content.gameObject.transform, list[i],
-                iniPosHere);
+            var a = SpecTile.CreateTile(_bulletinWindow.Content.gameObject.transform, list[i], iniPosHere);
 
             report.Add(a);
         }
