@@ -25,6 +25,8 @@ class DialogGO : GUIElement
 
     GameObject _rateBtnGO;
 
+    GameObject _completeQuest;
+
     public H Type1
     {
         get { return _type; }
@@ -64,6 +66,13 @@ class DialogGO : GUIElement
 
     void Start()
     {
+        _completeQuest = GetChildCalled("CompleteQuest");
+        _completeQuest.SetActive(false);
+
+        if(Type1 == H.CompleteQuest)
+            _completeQuest.SetActive(true);
+
+
         var t = GetChildCalled("TextHere");
         _textHere = t.GetComponentInChildren<Text>();
 

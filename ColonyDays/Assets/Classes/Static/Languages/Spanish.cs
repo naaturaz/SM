@@ -1185,6 +1185,11 @@ public class Spanish
 		_sp.Add("LoadWontFit", "Demasiado para este puerto");
 
 
+
+        //Dec 20 2019 for all Langs
+        _sp.Add("I.Can.Service","\n\n I can service ");
+
+
     }
 
     internal static void Clear()

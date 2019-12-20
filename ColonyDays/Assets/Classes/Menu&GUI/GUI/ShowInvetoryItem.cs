@@ -141,8 +141,6 @@ public class ShowInvetoryItem : GUIElement
 
     static void CorrectLocalScaleBasedOnScreenSize(Transform objTransform)
     {
-        //if (Screen.height != 1280 && Screen.width != 720) return;
-
         var xCorrect = (float)Screen.width / (float)1920;
         var yCorrect = (float)Screen.height / (float)900;
 

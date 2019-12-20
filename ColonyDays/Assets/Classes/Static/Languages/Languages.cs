@@ -1044,6 +1044,10 @@ public class Languages
 		_en.Add("Attention.Production", "Attention: Production was stopped. To resume production in this Building select a product");
 
 
+        //Dec 20 2019 for all Langs
+        _sp.Add("I.Can.Service","\n\n I can service ");
+
+
 
         //has a lot of text to put here 
         //ProductStat.cs 
@@ -1231,7 +1235,7 @@ public class Languages
             // return "en:" + key;
             return key;
         }
-        else if (_currentLang == "Español")
+        else if (_currentLang == "Español(Beta)")
         {
             if (Spanish.ContainsKey(key))
             {

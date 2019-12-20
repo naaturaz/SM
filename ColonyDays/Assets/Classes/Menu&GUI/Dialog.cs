@@ -13,14 +13,13 @@ public class Dialog
     private static H _type;
     private static DialogGO _dialogGo;
     private static Transform _canvas;
+    private static Vector3 _middleOfScreen;
 
     public static Transform Canvas
     {
         get { return Dialog._canvas; }
         set { Dialog._canvas = value; }
     }
-    
-    private static Vector3 _middleOfScreen;
 
     public static void Start()
     {
@@ -136,7 +135,6 @@ public class Dialog
 
     }
 
-
     static void DestroyCurrDialog()
     {
         //when calling a BuyRegion it will try to delete current dialog.
@@ -146,10 +144,6 @@ public class Dialog
             _dialogGo.Destroy();
         }
     }
-
-
-
-
 
     private static void RoutineSetUp()
     {

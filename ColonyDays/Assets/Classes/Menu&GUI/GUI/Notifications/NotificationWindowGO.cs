@@ -183,7 +183,8 @@ public class NotificationWindowGO : GUIElement
     private void SetHeightOfContentRect(int tiles)
     {
         //892
-        var tileYSpace = 5.57f * 2.8f;
+        //var tileYSpace = 5.57f * 2.8f;
+        var tileYSpace = 5.57f * 2f;
 
         var size = (tileYSpace * tiles) + tileYSpace;
         _contentRectTransform.sizeDelta = new Vector2(0, size);

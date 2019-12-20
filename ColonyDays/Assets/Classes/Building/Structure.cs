@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
@@ -566,7 +564,7 @@ public class Structure : StructureParent
             return "";
         }
 
-        return "\n\n I can service " + Coverage.PeopleICanServe(CurrentCoverage(), HType) + " people in this buiding \n" +
+        return Languages.ReturnString("I.Can.Service") + Coverage.PeopleICanServe(CurrentCoverage(), HType) + " people in this buiding \n" +
                HType + " overall service:" + Coverage.OverallMyType(HType, true) + "\n" +
                "Overall people needing this service:" + Coverage.HowManyPeopleNeedThisService(HType);
     }

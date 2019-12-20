@@ -719,7 +719,7 @@ public class BuildingWindow : Window
             ShowPriorityControls();
 
             var percentage = sP.PercentageBuiltCured();
-            return Languages.ReturnString("Construction.Progress") + percentage + "%\n" +
+            return "\n\n" + Languages.ReturnString("Construction.Progress") + percentage + "%\n" +
                 MaterialsGathered() + "\n" + MaterialsIsMissing() + "\n\n";
         }
         HidePriorityControls();
