@@ -76,12 +76,10 @@ public class ExportImport
         {
             _prodSpecsCured.AddRange(_townProdSpecs);
 
-            _prodSpecsCured = _prodSpecsCured.OrderBy(a => a.ProductLang()).ToList();
+            _prodSpecsCured = _prodSpecsCured.OrderBy(a => a.ProductPriority()).ThenBy(a => a.ProductLang()).ToList();
         }
         return _prodSpecsCured;
     }
-
-
 
     //Densities
     //http://www.engineeringtoolbox.com/foods-materials-bulk-density-d_1819.html
@@ -567,5 +565,10 @@ public class ProdSpec
     internal object ProductLang()
     {
         return Languages.ReturnString(Product + "");
+    }
+
+    internal object ProductPriority()
+    {
+        return Product == P.Year ? 0 : 1;
     }
 }

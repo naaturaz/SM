@@ -5,6 +5,7 @@ public class Languages
     private static string _currentLang = "English";
     private static LangDict _sp = new LangDict();
     private static LangDict _fr = new LangDict();
+    private static LangDict _de = new LangDict();
     private static LangDict _en = new LangDict();
     private static Dictionary<string, string> _portuguese = new Dictionary<string, string>();
 
@@ -1289,6 +1290,7 @@ public class Languages
         _en.Clear();
         _sp.Clear();
         _fr.Clear();
+        _de.Clear();
         _portuguese.Clear();
         French.Clear();
         German.Clear();
@@ -1324,7 +1326,7 @@ public class Languages
         }
         if (_currentLang == "Português(Beta)") return _portuguese;
         if (_currentLang == "Français(Beta)") return _fr.Dictionary;
-        if (_currentLang == "Deutsch(Beta)") return German.Dictionary();
+        if (_currentLang == "Deutsch(Beta)") return _de.Dictionary;
 
         return _en.Dictionary;
     }

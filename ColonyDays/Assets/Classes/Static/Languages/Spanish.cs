@@ -909,8 +909,8 @@ public class Spanish
         _sp.Add("InWater.Helper", "En Agua");
 
         //After Dec 28, 2018
-        _sp.Add("Down.HoverSmall", "Prioridad Disminuida");
-        _sp.Add("Up.HoverSmall", "Prioridad Aumentada");
+        _sp.Add("Down.HoverSmall", "Menos Prioridad");
+        _sp.Add("Up.HoverSmall", "Mas Prioridad");
         _sp.Add("Trash.HoverSmall", "Borrar Orden");
         _sp.Add("Counting...", "Contando...");
         _sp.Add("Ten Orders Limit", "Diez ordenes es el límite");

@@ -85,7 +85,6 @@ public class Inventory
     /// </summary>
     internal void OrderItemsAlpha()
     {
-        //_inventItems = _inventItems.OrderBy(a => a.Key.ToString()).ToList();
         OrderItemsAlphaLang();
     }
 
@@ -94,12 +93,22 @@ public class Inventory
     /// </summary>
     void OrderItemsAlphaLang()
     {
+        InvItem year = null;
         for (int i = 0; i < _inventItems.Count; i++)
         {
             _inventItems[i].SetValueCurrentLang();
+            if (_inventItems[i].Key == P.Year)
+            {
+                year = _inventItems[i];
+                _inventItems.RemoveAt(i);
+                i--;
+            }
         }
 
         _inventItems = _inventItems.OrderBy(a => a.KeyLang.ToString()).ToList();
+
+        if(year != null)
+            _inventItems.Insert(0, year);
     }
 
     /// <summary>

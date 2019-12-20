@@ -971,6 +971,7 @@ public class French
 
 
 
+
         //
         // 
         // Below It needs to be double checked by Cedric. Dec 17, 2019
@@ -1049,6 +1050,7 @@ public class French
         _fr.Add("Year Balance", "Bilan annuel" );
         _fr.Add("Ending Balance", "Solde final" );
 
+
         _fr.Add("Command Keys", "Teclas");
         _fr.Add("Command Keys.Text", "[F1] Ayuda\n[F9] Esconder/Mostrar GUI\n[P] Centra la cámara al Pueblo");
         _fr.Add("Credits", "Créditos");
@@ -1125,15 +1127,14 @@ public class French
         _fr.Add("Female", "Femenino");
         _fr.Add("Quenched", "Saciada");
 
-
         _fr.Add("Sand", "Arena");
         _fr.Add("Machinery", "Maquinaria");
         _fr.Add("Cassava", "Yuca");
         _fr.Add("Candy", "Caramelo");
 
         //After Dec 28, 2018
-        _fr.Add("Down.HoverSmall", "Prioridad Disminuida");
-        _fr.Add("Up.HoverSmall", "Prioridad Aumentada");
+        _fr.Add("Down.HoverSmall", "Increase Priority");
+        _fr.Add("Up.HoverSmall", "Decrease Priority");
         _fr.Add("Trash.HoverSmall", "Borrar Orden");
         _fr.Add("Counting...", "Contando...");
         _fr.Add("Ten Orders Limit", "Diez ordenes es el límite");

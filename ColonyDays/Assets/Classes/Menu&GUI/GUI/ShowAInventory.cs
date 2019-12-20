@@ -53,21 +53,21 @@ public class ShowAInventory
         _oldVolumeOccupied = Inv.CurrentVolumeOcuppied();
         var iForSpwItem = 0;//so ReturnIniPos works nicely
 
-        if(Inv.HType == H.YearReport)
-        {
-            for (int i = Inv.InventItems.Count - 1; i > -1; i--)
-            {
-                //> 0 for main so only show items tht have some 
-                if (Inv.InventItems[i] != null && Inv.InventItems[i].Amount > 0)
-                {
-                    _allItems.Add(ShowInvetoryItem.Create(_container.transform, Inv.InventItems[i], ReturnIniPos(iForSpwItem),
-                        this, _invType));
+        //if(Inv.HType == H.YearReport)
+        //{
+        //    for (int i = Inv.InventItems.Count - 1; i > -1; i--)
+        //    {
+        //        //> 0 for main so only show items tht have some 
+        //        if (Inv.InventItems[i] != null && Inv.InventItems[i].Amount > 0)
+        //        {
+        //            _allItems.Add(ShowInvetoryItem.Create(_container.transform, Inv.InventItems[i], ReturnIniPos(iForSpwItem),
+        //                this, _invType));
 
-                    iForSpwItem++;
-                }
-            }
-        }
-        else
+        //            iForSpwItem++;
+        //        }
+        //    }
+        //}
+        //else
             for (int i = 0; i < Inv.InventItems.Count; i++)
             {
                 //> 0 for main so only show items tht have some 

@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 public class German
 {
     private static Dictionary<string, string> _german = new Dictionary<string, string>();
+    private static LangDict _de = new LangDict();
+
 
     /// </summary>
     public static void ReloadDict()
@@ -20,411 +19,412 @@ public class German
         string _militar = "Dieses Gebäude trägt dazu bei, die Piratenbedrohung in Ihrem Hafen zu verringern. Um effektiv zu sein, müssen Arbeiter darin sein. Je mehr Arbeiter desto besser";
         string _notRegionNeeded = " Kann gebaut werden, ohne die Region zu besitzen.";
 
-        _german = new Dictionary<string, string>()
-        {
+        _de = new LangDict();
+
+
             //Descriptions
             //Infr
-            { "Road.Desc","Wird zu Dekorationszwecken verwendet. Die Menschen sind zufriedener, wenn sie Straßen vorfinden"},
-            { "BridgeTrail.Desc","Erlaubt es den Leuten, von einer Seite des Geländes zur anderen zu gelangen"},
-            { "BridgeRoad.Desc","Erlaubt es den Leuten, von einer Seite des Geländes zur anderen zu gelangen. Die Menschen lieben diese Brücken. Sie geben ihnen ein Gefühl von Wohlstand und Glück" +_houseTail},
-            { "LightHouse.Desc","Hilft, die Sichtbarkeit des Hafens zu erhöhen. Fügt dem Hafen einen Ruf hinzu, solange Arbeiter in ihm tätig sind"},
-            { H.Masonry + ".Desc","Wichtiges Gebäude, Arbeiter bauen neue Gebäude und arbeiten als Transporteure, wenn sie nichts zu tun haben"},
-            { H.StandLamp + ".Desc","Leuchtet nachts, wenn Walöl im Lager der Stadt verfügbar ist"},
+        _de.Add("Road.Desc","Wird zu Dekorationszwecken verwendet. Die Menschen sind zufriedener, wenn sie Straßen vorfinden");
+        _de.Add("BridgeTrail.Desc","Erlaubt es den Leuten, von einer Seite des Geländes zur anderen zu gelangen");
+        _de.Add("BridgeRoad.Desc","Erlaubt es den Leuten, von einer Seite des Geländes zur anderen zu gelangen. Die Menschen lieben diese Brücken. Sie geben ihnen ein Gefühl von Wohlstand und Glück" +_houseTail);
+        _de.Add("LightHouse.Desc","Hilft, die Sichtbarkeit des Hafens zu erhöhen. Fügt dem Hafen einen Ruf hinzu, solange Arbeiter in ihm tätig sind");
+        _de.Add(H.Masonry + ".Desc","Wichtiges Gebäude, Arbeiter bauen neue Gebäude und arbeiten als Transporteure, wenn sie nichts zu tun haben");
+        _de.Add(H.StandLamp + ".Desc","Leuchtet nachts, wenn Walöl im Lager der Stadt verfügbar ist");
 
-            { H.HeavyLoad + ".Desc","Diese Arbeiter benutzen Pferdefuhrwerke, um Waren zu transportieren"},
+        _de.Add(H.HeavyLoad + ".Desc","Diese Arbeiter benutzen Pferdefuhrwerke, um Waren zu transportieren");
 
 
             //House
-            { "Bohio.Desc", "Bohiohaus, primitive Bedingungen mit unzufiedenen Menschen, die maximal 2 bis 3 Kinder haben können"},
+        _de.Add("Bohio.Desc", "Bohiohaus, primitive Bedingungen mit unzufiedenen Menschen, die maximal 2 bis 3 Kinder haben können");
 
-            { "Shack.Desc", "Hütte, primitive Verhältnisse mit unzufriedenen Menschen, die maximal 2 Kinder haben können"},
-            { "MediumShack.Desc", "Die mittelgroße Hütte, mit primitiven Bedingungen für ein wenig mehr Zufriedenheit, kann maximal 2 bis 3 Kinder haben"},
-            { "LargeShack.Desc", "Die große Hütte, hat etwas bessere Bedingungen, die Menschen sind zufriedener und können maximal 2 bis 4 Kinder haben"},
+        _de.Add("Shack.Desc", "Hütte, primitive Verhältnisse mit unzufriedenen Menschen, die maximal 2 Kinder haben können");
+        _de.Add("MediumShack.Desc", "Die mittelgroße Hütte, mit primitiven Bedingungen für ein wenig mehr Zufriedenheit, kann maximal 2 bis 3 Kinder haben");
+        _de.Add("LargeShack.Desc", "Die große Hütte, hat etwas bessere Bedingungen, die Menschen sind zufriedener und können maximal 2 bis 4 Kinder haben");
 
 
-            { "WoodHouseA.Desc", "Mittelgroßes Holzhaus, eine Familie kann maximal 2-3 Kinder haben" },
-            { "WoodHouseB.Desc", "Mittelgroßes Holzhaus, eine Familie kann maximal 3-4 Kinder haben"  },
-            { "WoodHouseC.Desc", "Mittelgroßes Holzhaus, eine Familie kann maximal 2-3 Kinder haben"},
-            { "BrickHouseA.Desc", "Mittleres Haus, eine Familie kann maximal 3 Kinder haben"},
-            { "BrickHouseB.Desc","Großes Haus, eine Familie kann maximal 3-4 Kinder haben"},
-            { "BrickHouseC.Desc","Großes Haus, eine Familie kann maximal 4 Kinder haben"},
+        _de.Add("WoodHouseA.Desc", "Mittelgroßes Holzhaus, eine Familie kann maximal 2-3 Kinder haben" );
+        _de.Add("WoodHouseB.Desc", "Mittelgroßes Holzhaus, eine Familie kann maximal 3-4 Kinder haben"  );
+        _de.Add("WoodHouseC.Desc", "Mittelgroßes Holzhaus, eine Familie kann maximal 2-3 Kinder haben");
+        _de.Add("BrickHouseA.Desc", "Mittleres Haus, eine Familie kann maximal 3 Kinder haben");
+        _de.Add("BrickHouseB.Desc","Großes Haus, eine Familie kann maximal 3-4 Kinder haben");
+        _de.Add("BrickHouseC.Desc","Großes Haus, eine Familie kann maximal 4 Kinder haben");
 
             
             //Farms
             //Animal
-            { "AnimalFarmSmall.Desc","Kleine Tierfarm"+_animalFarmTail},
-            { "AnimalFarmMed.Desc","Mittelgroße Tierfarm"+_animalFarmTail},
-            { "AnimalFarmLarge.Desc","Große Tierfarm"+_animalFarmTail},
-            { "AnimalFarmXLarge.Desc","Extragroße Tierfarm"+_animalFarmTail},
+        _de.Add("AnimalFarmSmall.Desc","Kleine Tierfarm"+_animalFarmTail);
+        _de.Add("AnimalFarmMed.Desc","Mittelgroße Tierfarm"+_animalFarmTail);
+        _de.Add("AnimalFarmLarge.Desc","Große Tierfarm"+_animalFarmTail);
+        _de.Add("AnimalFarmXLarge.Desc","Extragroße Tierfarm"+_animalFarmTail);
             //Fields
-            { "FieldFarmSmall.Desc","Kleine Feldfarm"+_fieldFarmTail},
-            { "FieldFarmMed.Desc","Mittelgroße Feldfarm"+_fieldFarmTail},
-            { "FieldFarmLarge.Desc","Große Feldfarm"+_fieldFarmTail},
-            { "FieldFarmXLarge.Desc","Extragroße Feldfarm"+_fieldFarmTail},
-            { H.FishingHut + ".Desc","Hier kann ein Arbeiter in einem Fluss Fische fangen (muss an einem Fluss plaziert werden)." + _notRegionNeeded},
+        _de.Add("FieldFarmSmall.Desc","Kleine Feldfarm"+_fieldFarmTail);
+        _de.Add("FieldFarmMed.Desc","Mittelgroße Feldfarm"+_fieldFarmTail);
+        _de.Add("FieldFarmLarge.Desc","Große Feldfarm"+_fieldFarmTail);
+        _de.Add("FieldFarmXLarge.Desc","Extragroße Feldfarm"+_fieldFarmTail);
+        _de.Add(H.FishingHut + ".Desc","Hier kann ein Arbeiter in einem Fluss Fische fangen (muss an einem Fluss plaziert werden)." + _notRegionNeeded);
 
             //Raw
-            { "Mortar.Desc","Hier wird ein Arbeiter Mörtel produzieren"},
-            { "Clay.Desc","Hier wird ein Arbeiter Ton produzieren, das Rohmaterial für Ziegel und mehr"},
-            { "Pottery.Desc","Hier produziert ein Arbeiter Keramikprodukte wie Geschirr, Gläser usw."},
-            { "Mine.Desc","Hier kann ein Arbeiter in einem Fluss fischen"},
-            { "MountainMine.Desc","Hier wird ein Arbeiter in der Mine Erz fördern"},
-            { "Resin.Desc","Hier wird ein Arbeiter in der Mine arbeiten, und zufällige Mineralien und Metalle gewinnen."},
-            {  H.LumberMill +".Desc","Hier finden Arbeiter Ressourcen wie Holz, Stein und Erz"},
-            { "BlackSmith.Desc","Hier erstellen die Arbeiter das ausgewählte Produkt"+_asLongHasInput},
-            { "ShoreMine.Desc","Hier produzieren die Arbeiter Salz und Sand"},
-            { "QuickLime.Desc","Hier werden die Arbeiter ungelöschten Kalk produzieren"},
+        _de.Add("Mortar.Desc","Hier wird ein Arbeiter Mörtel produzieren");
+        _de.Add("Clay.Desc","Hier wird ein Arbeiter Ton produzieren, das Rohmaterial für Ziegel und mehr");
+        _de.Add("Pottery.Desc","Hier produziert ein Arbeiter Keramikprodukte wie Geschirr, Gläser usw.");
+        _de.Add("Mine.Desc","Hier kann ein Arbeiter in einem Fluss fischen");
+        _de.Add("MountainMine.Desc","Hier wird ein Arbeiter in der Mine Erz fördern");
+        _de.Add("Resin.Desc","Hier wird ein Arbeiter in der Mine arbeiten, und zufällige Mineralien und Metalle gewinnen.");
+        _de.Add( H.LumberMill +".Desc","Hier finden Arbeiter Ressourcen wie Holz, Stein und Erz");
+        _de.Add("BlackSmith.Desc","Hier erstellen die Arbeiter das ausgewählte Produkt"+_asLongHasInput);
+        _de.Add("ShoreMine.Desc","Hier produzieren die Arbeiter Salz und Sand");
+        _de.Add("QuickLime.Desc","Hier werden die Arbeiter ungelöschten Kalk produzieren");
 
             //Prod
-            { "Brick.Desc","Hier wird ein Arbeiter Lehmprodukte wie Ziegelsteine usw. herstellen"},
-            { "Carpentry.Desc","Hier produziert ein Arbeiter Holzprodukte wie Kisten, Fässer usw."},
-            { "Cigars.Desc","Hier werden Arbeiter Zigarren produzieren"+_asLongHasInput},
-            { "Mill.Desc","Hier werden die Arbeiter Korn mahlen"+_asLongHasInput},
-            { H.Tailor+".Desc","Hier werden Arbeiter Kleidung herstellen"+_asLongHasInput},
-            { "Tilery.Desc","Hier werden Arbeiter Dachziegel herstellen"+_asLongHasInput},
-            { "Armory.Desc","Hier werden Arbeiter Waffen produzieren"+_asLongHasInput},
-            { H.Distillery+".Desc",_produce},
-            { "Chocolate.Desc",_produce},
-            { "Ink.Desc",_produce},
+        _de.Add("Brick.Desc","Hier wird ein Arbeiter Lehmprodukte wie Ziegelsteine usw. herstellen");
+        _de.Add("Carpentry.Desc","Hier produziert ein Arbeiter Holzprodukte wie Kisten, Fässer usw.");
+        _de.Add("Cigars.Desc","Hier werden Arbeiter Zigarren produzieren"+_asLongHasInput);
+        _de.Add("Mill.Desc","Hier werden die Arbeiter Korn mahlen"+_asLongHasInput);
+        _de.Add(H.Tailor+".Desc","Hier werden Arbeiter Kleidung herstellen"+_asLongHasInput);
+        _de.Add("Tilery.Desc","Hier werden Arbeiter Dachziegel herstellen"+_asLongHasInput);
+        _de.Add("Armory.Desc","Hier werden Arbeiter Waffen produzieren"+_asLongHasInput);
+        _de.Add(H.Distillery+".Desc",_produce);
+        _de.Add("Chocolate.Desc",_produce);
+        _de.Add("Ink.Desc",_produce);
 
             //Ind
-            { "Cloth.Desc",_produce},
-            { "GunPowder.Desc",_produce},
-            { "PaperMill.Desc",_produce},
-            { "Printer.Desc",_produce},
-            { "CoinStamp.Desc",_produce},
-            { "Silk.Desc",_produce},
-            { "SugarMill.Desc",_produce},
-            { "Foundry.Desc",_produce},
-            { "SugarShop.Desc", "Stellt Produkte aus Zucker her!!!. " + _produce},
+        _de.Add("Cloth.Desc",_produce);
+        _de.Add("GunPowder.Desc",_produce);
+        _de.Add("PaperMill.Desc",_produce);
+        _de.Add("Printer.Desc",_produce);
+        _de.Add("CoinStamp.Desc",_produce);
+        _de.Add("Silk.Desc",_produce);
+        _de.Add("SugarMill.Desc",_produce);
+        _de.Add("Foundry.Desc",_produce);
+        _de.Add("SugarShop.Desc", "Stellt Produkte aus Zucker her!!!. " + _produce);
 
 
-                { "SteelFoundry.Desc",_produce},
+            _de.Add("SteelFoundry.Desc",_produce);
 
             //trade
-            { "Dock.Desc","Hier kannst du Import- oder Exportaufträge hinzufügen (muss am Ozean platziert werden)." + _notRegionNeeded},
-            { H.Shipyard + ".Desc","Hier können Schiffe repariert werden, aber es müssen die nötigen Reparaturmaterialien im Bestand sein"},
-            { "Supplier.Desc","Hier werden Schiffe mit Waren be- und entladen, aber es müssen Artikel im Inventar haben, die ein Schiff für die lange Fahrt verwenden kann"},
-            { "StorageSmall.Desc",_storage},
-            { "StorageMed.Desc",_storage},
-            { "StorageBig.Desc",_storage},
-            { "StorageBigTwoDoors.Desc",_storage},
-            { "StorageExtraBig.Desc",_storage},
+        _de.Add("Dock.Desc","Hier kannst du Import- oder Exportaufträge hinzufügen (muss am Ozean platziert werden)." + _notRegionNeeded);
+        _de.Add(H.Shipyard + ".Desc","Hier können Schiffe repariert werden, aber es müssen die nötigen Reparaturmaterialien im Bestand sein");
+        _de.Add("Supplier.Desc","Hier werden Schiffe mit Waren be- und entladen, aber es müssen Artikel im Inventar haben, die ein Schiff für die lange Fahrt verwenden kann");
+        _de.Add("StorageSmall.Desc",_storage);
+        _de.Add("StorageMed.Desc",_storage);
+        _de.Add("StorageBig.Desc",_storage);
+        _de.Add("StorageBigTwoDoors.Desc",_storage);
+        _de.Add("StorageExtraBig.Desc",_storage);
 
             //gov
-            { "Library.Desc","Die Leute kommen in dieses Gebäude, um Bücher zu lesen oder sie zu leihen um ihr Wissen zu erweitern. Je mehr Inventar in den Bibliotheken, desto besser"},
-            { "School.Desc","Hier erhalten die Leute eine Ausbildung. Hier gilt mehr ist besser"},
-            { "TradesSchool.Desc","Hier erhalten die Menschen eine spezialisierte Ausbildung im Handwerk. Gut ein paar Spezialisten zu haben"},
-            { "TownHouse.Desc","Das Stadthaus erhöht die Zufriedenheit und den Wohlstand Ihres Volkes"},
+        _de.Add("Library.Desc","Die Leute kommen in dieses Gebäude, um Bücher zu lesen oder sie zu leihen um ihr Wissen zu erweitern. Je mehr Inventar in den Bibliotheken, desto besser");
+        _de.Add("School.Desc","Hier erhalten die Leute eine Ausbildung. Hier gilt mehr ist besser");
+        _de.Add("TradesSchool.Desc","Hier erhalten die Menschen eine spezialisierte Ausbildung im Handwerk. Gut ein paar Spezialisten zu haben");
+        _de.Add("TownHouse.Desc","Das Stadthaus erhöht die Zufriedenheit und den Wohlstand Ihres Volkes");
 
             //other
-            { "Church.Desc","Die Kirche gibt deinem Volk Glück und Hoffnung"},
-            { "Tavern.Desc","Die Taverne bietet deinen Leuten Entspannung und Unterhaltung"},
+        _de.Add("Church.Desc","Die Kirche gibt deinem Volk Glück und Hoffnung");
+        _de.Add("Tavern.Desc","Die Taverne bietet deinen Leuten Entspannung und Unterhaltung");
 
             //Militar
-            { "WoodPost.Desc", "Entdeckt Banditen und Piraten schneller, so dass du dich im Voraus darauf vorbereiten können"},
-            { "PostGuard.Desc",_militar},
-            { "Fort.Desc",_militar},
-            { "Morro.Desc",_militar+". Sobald Sie dies gebaut haben, sollten Piraten es besser wissen"},
+        _de.Add("WoodPost.Desc", "Entdeckt Banditen und Piraten schneller, so dass du dich im Voraus darauf vorbereiten können");
+        _de.Add("PostGuard.Desc",_militar);
+        _de.Add("Fort.Desc",_militar);
+        _de.Add("Morro.Desc",_militar+". Sobald Sie dies gebaut haben, sollten Piraten es besser wissen");
 
             //Decoration
-            { "Fountain.Desc", "Verschönert deine Stadt und erhöht bei deinen Bürgern die allgemeine Zufriedenheit"},
-            { "WideFountain.Desc", "Verschönert deine Stadt und erhöht bei deinen Bürgern die allgemeine Zufriedenheit"},
-            { "PalmTree.Desc", "Verschönert deine Stadt und erhöht bei deinen Bürgern die allgemeine Zufriedenheit"},
-            { "FloorFountain.Desc", "Verschönert deine Stadt und erhöht bei deinen Bürgern die allgemeine Zufriedenheit"},
-            { "FlowerPot.Desc", "Verschönert deine Stadt und erhöht bei deinen Bürgern die allgemeine Zufriedenheit"},
-            { "PradoLion.Desc", "Verschönert deine Stadt und erhöht bei deinen Bürgern die allgemeine Zufriedenheit"},
+        _de.Add("Fountain.Desc", "Verschönert deine Stadt und erhöht bei deinen Bürgern die allgemeine Zufriedenheit");
+        _de.Add("WideFountain.Desc", "Verschönert deine Stadt und erhöht bei deinen Bürgern die allgemeine Zufriedenheit");
+        _de.Add("PalmTree.Desc", "Verschönert deine Stadt und erhöht bei deinen Bürgern die allgemeine Zufriedenheit");
+        _de.Add("FloorFountain.Desc", "Verschönert deine Stadt und erhöht bei deinen Bürgern die allgemeine Zufriedenheit");
+        _de.Add("FlowerPot.Desc", "Verschönert deine Stadt und erhöht bei deinen Bürgern die allgemeine Zufriedenheit");
+        _de.Add("PradoLion.Desc", "Verschönert deine Stadt und erhöht bei deinen Bürgern die allgemeine Zufriedenheit");
 
 
 
             //Buildings name
             //Infr
-            { "Road","Straße"},
-            { "BridgeTrail","Fußgängerbrücke"},
-            { "BridgeRoad","Straßenbrücke"},
-            { "LightHouse","Leuchtturm"},
-            { "Masonry","Maurerbetrieb"},
-            {   "StandLamp","Straßenlaterne"},
-            { "HeavyLoad","Schwerlastbetrieb"},
+        _de.Add("Road","Straße");
+        _de.Add("BridgeTrail","Fußgängerbrücke");
+        _de.Add("BridgeRoad","Straßenbrücke");
+        _de.Add("LightHouse","Leuchtturm");
+        _de.Add("Masonry","Maurerbetrieb");
+        _de.Add("StandLamp","Straßenlaterne");
+        _de.Add("HeavyLoad","Schwerlastbetrieb");
 
 
             //House
-            { "Shack", "Hütte"},
-            { "MediumShack", "Mittelgroße Hütte"},
-            { "LargeShack", "Große Hütte"},
+        _de.Add("Shack", "Hütte");
+        _de.Add("MediumShack", "Mittelgroße Hütte");
+        _de.Add("LargeShack", "Große Hütte");
 
-            { "WoodHouseA", "Mittelgroßes Holzhaus" },
-            { "WoodHouseB", "Großes Holzhaus"  },
-            { "WoodHouseC", "Luxuriöses Holzhaus"},
-            { "BrickHouseA", "Mittelgroßes Ziegelhaus"},
-            { "BrickHouseB","Luxuriöses Ziegelhaus"},
-            { "BrickHouseC","Großes Ziegelhaus"},
+        _de.Add("WoodHouseA", "Mittelgroßes Holzhaus" );
+        _de.Add("WoodHouseB", "Großes Holzhaus"  );
+        _de.Add("WoodHouseC", "Luxuriöses Holzhaus");
+        _de.Add("BrickHouseA", "Mittelgroßes Ziegelhaus");
+        _de.Add("BrickHouseB","Luxuriöses Ziegelhaus");
+        _de.Add("BrickHouseC","Großes Ziegelhaus");
 
             
             //Farms
             //Animal
-            { "AnimalFarmSmall","Kleine Tierfarm"},
-            { "AnimalFarmMed","Mittelgroße Tierfarm"},
-            { "AnimalFarmLarge","Große Tierfarm"},
-            { "AnimalFarmXLarge","Extragroße Tierfarm"},
+        _de.Add("AnimalFarmSmall","Kleine Tierfarm");
+        _de.Add("AnimalFarmMed","Mittelgroße Tierfarm");
+        _de.Add("AnimalFarmLarge","Große Tierfarm");
+        _de.Add("AnimalFarmXLarge","Extragroße Tierfarm");
             //Fields
-            { "FieldFarmSmall","Kleine Feldfarm"},
-            { "FieldFarmMed","Mittelgroße Feldfarm"},
-            { "FieldFarmLarge","Große Feldfarm"},
-            { "FieldFarmXLarge","Extragroße Feldfarm"},
-            { "FishingHut","Fischerhütte"},
+        _de.Add("FieldFarmSmall","Kleine Feldfarm");
+        _de.Add("FieldFarmMed","Mittelgroße Feldfarm");
+        _de.Add("FieldFarmLarge","Große Feldfarm");
+        _de.Add("FieldFarmXLarge","Extragroße Feldfarm");
+        _de.Add("FishingHut","Fischerhütte");
 
             //Raw
-            { "Mortar","Mörtel"},
-            { "Clay","Lehm"},
-            { "Pottery","Keramik"},
-            { "MountainMine","Bergarbeitermine"},
-            {  "LumberMill" ,"Sägewerk"},
-            { "BlackSmith","Schmiede"},
-            { "ShoreMine","Ufermine"},
-            { "QuickLime","Üngelöschter Kalk"},
+        _de.Add("Mortar","Mörtel");
+        _de.Add("Clay","Lehm");
+        _de.Add("Pottery","Keramik");
+        _de.Add("MountainMine","Bergarbeitermine");
+        _de.Add("LumberMill" ,"Sägewerk");
+        _de.Add("BlackSmith","Schmiede");
+        _de.Add("ShoreMine","Ufermine");
+        _de.Add("QuickLime","Üngelöschter Kalk");
 
             //Prod
-            { "Brick","Ziegel"},
-            { "Carpentry","Zimmerei"},
-            { "Cigars","Zigarren"},
-            { "Mill","Mühle"},
-            { "Tailor","Schneider"},
-            { "Tilery","Fliesenleger"},
-            { "Armory","Waffenkammer"},
-            { "Distillery","Destillerie"},
-            { "Chocolate","Schokolade"},
-            { "Ink","Tinte"},
+        _de.Add("Brick","Ziegel");
+        _de.Add("Carpentry","Zimmerei");
+        _de.Add("Cigars","Zigarren");
+        _de.Add("Mill","Mühle");
+        _de.Add("Tailor","Schneider");
+        _de.Add("Tilery","Fliesenleger");
+        _de.Add("Armory","Waffenkammer");
+        _de.Add("Distillery","Destillerie");
+        _de.Add("Chocolate","Schokolade");
+        _de.Add("Ink","Tinte");
 
             //Ind
-            { "Cloth","Kleidung"},
-            { "GunPowder","Schießpulver"},
-            { "PaperMill","Papiermühle"},
-            { "Printer","Druckerei"},
-            { "CoinStamp","Münzprägerei"},
-            { "SugarMill","Zuckermühle"},
-            { "Foundry","Gießerei"},
-            { "SteelFoundry","Stahlgießerei"},
-            { "SugarShop","Süßigkeitengeschäft"},
+        _de.Add("Cloth","Kleidung");
+        _de.Add("GunPowder","Schießpulver");
+        _de.Add("PaperMill","Papiermühle");
+        _de.Add("Printer","Druckerei");
+        _de.Add("CoinStamp","Münzprägerei");
+        _de.Add("SugarMill","Zuckermühle");
+        _de.Add("Foundry","Gießerei");
+        _de.Add("SteelFoundry","Stahlgießerei");
+        _de.Add("SugarShop","Süßigkeitengeschäft");
 
 
             //trade
-            { "Dock","Dock"},
-            { "Shipyard","Werft"},
-            { "Supplier","Lieferant"},
-            { "StorageSmall","Kleines Lager"},
-            { "StorageMed","Mittelgroßes Lager"},
-            { "StorageBig","Großes Lager"},
+        _de.Add("Dock","Dock");
+        _de.Add("Shipyard","Werft");
+        _de.Add("Supplier","Lieferant");
+        _de.Add("StorageSmall","Kleines Lager");
+        _de.Add("StorageMed","Mittelgroßes Lager");
+        _de.Add("StorageBig","Großes Lager");
 
             //gov
-            { "Library","Bücherei"},
-            { "School","Schule"},
-            { "TradesSchool","Handelsschule"},
-            { "TownHouse","Stadthaus"},
+        _de.Add("Library","Bücherei");
+        _de.Add("School","Schule");
+        _de.Add("TradesSchool","Handelsschule");
+        _de.Add("TownHouse","Stadthaus");
 
             //other
-            { "Church","Kirche"},
-            { "Tavern","Taverne"},
+        _de.Add("Church","Kirche");
+        _de.Add("Tavern","Taverne");
 
             //Militar
-            { "WoodPost", "Holzwachturm"},
-            { "PostGuard","Steinwachturm"},
-            { "Fort","Fort"},
-            { "Morro", "Spanische Festung"},
+        _de.Add("WoodPost", "Holzwachturm");
+        _de.Add("PostGuard","Steinwachturm");
+        _de.Add("Fort","Fort");
+        _de.Add("Morro", "Spanische Festung");
 
             //Decorations
-            { "Fountain", "Springrunnen"},
-            { "WideFountain", "Großer Springbrunnen"},
-            { "PalmTree", "Palme"},
-            { "FloorFountain", "Brunnen"},
-            { "FlowerPot", "Blumenkübel"},
-            { "PradoLion", "Prado Löwe"},
+        _de.Add("Fountain", "Springrunnen");
+        _de.Add("WideFountain", "Großer Springbrunnen");
+        _de.Add("PalmTree", "Palme");
+        _de.Add("FloorFountain", "Brunnen");
+        _de.Add("FlowerPot", "Blumenkübel");
+        _de.Add("PradoLion", "Prado Löwe");
 
             //Main GUI
-            { "SaveGame.Dialog", "Speichere deinen Spielfortschritt"},
-            { "LoadGame.Dialog", "Spiel laden"},
-            { "NameToSave", "Speichere dein Spiel unter:"},
-            { "NameToLoad", "Spiel zum Laden ausgewählt:"},
-            { "OverWrite", "Es gibt bereits ein Spiel mit diesem Namen. Möchtest du die Datei überschreiben?"},
-            { "DeleteDialog", "Möchtest du das gespeicherte Spiel wirklich löschen??"},
-            { "NotHDDSpace", "Auf dem Laufwerk {0} ist nicht genügend Speicherplatz vorhanden, um das Spiel zu speichern"},
-            { "GameOverPirate", "Das war´s leider, du hast das Spiel verloren! Piraten haben deine Stadt angegriffen und alle getötet."},
-            { "GameOverMoney", "Tja aber sorry, du hast das Spiel verloren! Die Krone wird deine karibische Insel nicht mehr unterstützen."},
-            { "BuyRegion.WithMoney", "Möchtest du diese Region wirklich kaufen?."},
-            { "BuyRegion.WithOutMoney", "Sorry, das kannst du dir jetzt nicht leisten."},
-            { "Feedback", "Feedback!? Super ... :) Danke. 8) "},
-            { "OptionalFeedback", "Feedback ist mir sehr wichtig. Bitte lass ein paar Worte da."},
-            { "MandatoryFeedback", "Das sieht nur das Entwicklerteam. Deine Bewertung ist?"},
-            { "PathToSeaExplain", "Zeigt den kürzesten Weg zum Meer."},
+        _de.Add("SaveGame.Dialog", "Speichere deinen Spielfortschritt");
+        _de.Add("LoadGame.Dialog", "Spiel laden");
+        _de.Add("NameToSave", "Speichere dein Spiel unter:");
+        _de.Add("NameToLoad", "Spiel zum Laden ausgewählt:");
+        _de.Add("OverWrite", "Es gibt bereits ein Spiel mit diesem Namen. Möchtest du die Datei überschreiben?");
+        _de.Add("DeleteDialog", "Möchtest du das gespeicherte Spiel wirklich löschen??");
+        _de.Add("NotHDDSpace", "Auf dem Laufwerk {0} ist nicht genügend Speicherplatz vorhanden, um das Spiel zu speichern");
+        _de.Add("GameOverPirate", "Das war´s leider, du hast das Spiel verloren! Piraten haben deine Stadt angegriffen und alle getötet.");
+        _de.Add("GameOverMoney", "Tja aber sorry, du hast das Spiel verloren! Die Krone wird deine karibische Insel nicht mehr unterstützen.");
+        _de.Add("BuyRegion.WithMoney", "Möchtest du diese Region wirklich kaufen?.");
+        _de.Add("BuyRegion.WithOutMoney", "Sorry, das kannst du dir jetzt nicht leisten.");
+        _de.Add("Feedback", "Feedback!? Super ... :) Danke. 8) ");
+        _de.Add("OptionalFeedback", "Feedback ist mir sehr wichtig. Bitte lass ein paar Worte da.");
+        _de.Add("MandatoryFeedback", "Das sieht nur das Entwicklerteam. Deine Bewertung ist?");
+        _de.Add("PathToSeaExplain", "Zeigt den kürzesten Weg zum Meer.");
 
 
-            { "BugReport", "Einen Fehler gefunden? ähm, hoppla... schick es auf diesem Weg !! Vielen Dank"},
-            { "Invitation", "Die E-Mail-Adresse deines Freundes, um an der Private Beta teilzunehmen"},
-            { "Info", ""},//use for informational Dialogs
-            { "Negative", "Die Krone hat dir einen Kreditrahmen gewährt. Wenn du mehr als $ 100.000,00 besitzt, ist das Spiel vorbei"},  
+        _de.Add("BugReport", "Einen Fehler gefunden? ähm, hoppla... schick es auf diesem Weg !! Vielen Dank");
+        _de.Add("Invitation", "Die E-Mail-Adresse deines Freundes, um an der Private Beta teilzunehmen");
+        _de.Add("Info", "");//use for informational Dialogs
+        _de.Add("Negative", "Die Krone hat dir einen Kreditrahmen gewährt. Wenn du mehr als $ 100.000,00 besitzt, ist das Spiel vorbei");  
 
 
             //MainMenu
-                { "Types_Explain", "Traditional: \nDas ist eine Spielvariante, bei dem am Anfang einige Gebäude gesperrt sind und man sie freischalten muss. " +
+            _de.Add("Types_Explain", "Traditional: \nDas ist eine Spielvariante, bei dem am Anfang einige Gebäude gesperrt sind und man sie freischalten muss. " +
                     "Das Gute daran ist, dass du hier eine Anleitung bekommst." +
                     "\n\nFreewill: \nAlle verfügbaren Gebäude werden sofort freigeschaltet. " +
                     "Das Schlimme daran ist, dass du so leicht versagen kannst." +
-                    "\n\nDie Stufe 'Schwer' ist verflucht nah der Realität"},
+                    "\n\nDie Stufe 'Schwer' ist verflucht nah der Realität");
 
 
             //Tooltips
             //Small Tooltips
-            { "Person.HoverSmall", "Gesamt/Erwachsene/Kinder"},
-            { "Emigrate.HoverSmall", "Auswanderer"},
-            { "CurrSpeed.HoverSmall", "Spieltempo"},
-            { "Town.HoverSmall", "Stadtname"},
-            { "Lazy.HoverSmall", "Arbeitslose Leute"},
-            { "Food.HoverSmall", "Nahrung"},
-            { "Happy.HoverSmall", "Zufriedenheit"},
-            { "PortReputation.HoverSmall", "Ruf des Hafens"},
-            { "Dollars.HoverSmall", "Dollar"},
-            { "PirateThreat.HoverSmall", "Piratenbedrohung"},
-            { "Date.HoverSmall", "Datum (Mmm/J)"},
-            { "MoreSpeed.HoverSmall", "Schneller [BildHoch]"},
-            { "LessSpeed.HoverSmall", "Langsamer [BildRunter]"},
-            { "PauseSpeed.HoverSmall", "Spiel pausieren"},
-            { "CurrSpeedBack.HoverSmall", "Aktuelle Geschwindigkeit"},
-            { "ShowNoti.HoverSmall", "Benachrichtigungen"},
-            { "Menu.HoverSmall", "Hauptmenü"},
-            { "QuickSave.HoverSmall", "Schnellspeichern[Strg+S][F]"},
-            { "Bug Report.HoverSmall", "Melde einen Fehler"},
-            { "Feedback.HoverSmall", "Feedback"},
-            { "Hide.HoverSmall", "Verbergen"},
-            { "CleanAll.HoverSmall", "Sauber"},
-            { "Bulletin.HoverSmall", "Kontrolle/Bulletin"},
-            { "ShowAgainTuto.HoverSmall","Tutorial"},
-            { "BuyRegion.HoverSmall", "Kaufe Regionen"},
-            { "Help.HoverSmall", "Hilfe"},
+        _de.Add("Person.HoverSmall", "Gesamt/Erwachsene/Kinder");
+        _de.Add("Emigrate.HoverSmall", "Auswanderer");
+        _de.Add("CurrSpeed.HoverSmall", "Spieltempo");
+        _de.Add("Town.HoverSmall", "Stadtname");
+        _de.Add("Lazy.HoverSmall", "Arbeitslose Leute");
+        _de.Add("Food.HoverSmall", "Nahrung");
+        _de.Add("Happy.HoverSmall", "Zufriedenheit");
+        _de.Add("PortReputation.HoverSmall", "Ruf des Hafens");
+        _de.Add("Dollars.HoverSmall", "Dollar");
+        _de.Add("PirateThreat.HoverSmall", "Piratenbedrohung");
+        _de.Add("Date.HoverSmall", "Datum (Mmm/J)");
+        _de.Add("MoreSpeed.HoverSmall", "Schneller [BildHoch]");
+        _de.Add("LessSpeed.HoverSmall", "Langsamer [BildRunter]");
+        _de.Add("PauseSpeed.HoverSmall", "Spiel pausieren");
+        _de.Add("CurrSpeedBack.HoverSmall", "Aktuelle Geschwindigkeit");
+        _de.Add("ShowNoti.HoverSmall", "Benachrichtigungen");
+        _de.Add("Menu.HoverSmall", "Hauptmenü");
+        _de.Add("QuickSave.HoverSmall", "Schnellspeichern[Strg+S][F]");
+        _de.Add("Bug Report.HoverSmall", "Melde einen Fehler");
+        _de.Add("Feedback.HoverSmall", "Feedback");
+        _de.Add("Hide.HoverSmall", "Verbergen");
+        _de.Add("CleanAll.HoverSmall", "Sauber");
+        _de.Add("Bulletin.HoverSmall", "Kontrolle/Bulletin");
+        _de.Add("ShowAgainTuto.HoverSmall","Tutorial");
+        _de.Add("BuyRegion.HoverSmall", "Kaufe Regionen");
+        _de.Add("Help.HoverSmall", "Hilfe");
 
-            { "More.HoverSmall", "Mehr"},
-            { "Less.HoverSmall", "Weniger"},
-            { "Prev.HoverSmall", "Vorheriges"},
+        _de.Add("More.HoverSmall", "Mehr");
+        _de.Add("Less.HoverSmall", "Weniger");
+        _de.Add("Prev.HoverSmall", "Vorheriges");
 
-            { "More Positions.HoverSmall", "Mehr"},
-            { "Less Positions.HoverSmall", "Weniger"},
+        _de.Add("More Positions.HoverSmall", "Mehr");
+        _de.Add("Less Positions.HoverSmall", "Weniger");
 
 
             //down bar
-            { "Infrastructure.HoverSmall", "Infrastruktur"},
-            { "House.HoverSmall", "Häuser"},
-            { "Farming.HoverSmall", "Landwirtschaft"},
-            { "Raw.HoverSmall", "Güter"},
-            { "Prod.HoverSmall", "Produktion"},
-            { "Ind.HoverSmall", "Industrie"},
-            { "Trade.HoverSmall", "Handel"},
-            { "Gov.HoverSmall", "Regierung"},
-            { "Other.HoverSmall", "Andere"},
-            { "Militar.HoverSmall", "Militär"},
-            { "Decoration.HoverSmall", "Dekoration"},
+        _de.Add("Infrastructure.HoverSmall", "Infrastruktur");
+        _de.Add("House.HoverSmall", "Häuser");
+        _de.Add("Farming.HoverSmall", "Landwirtschaft");
+        _de.Add("Raw.HoverSmall", "Güter");
+        _de.Add("Prod.HoverSmall", "Produktion");
+        _de.Add("Ind.HoverSmall", "Industrie");
+        _de.Add("Trade.HoverSmall", "Handel");
+        _de.Add("Gov.HoverSmall", "Regierung");
+        _de.Add("Other.HoverSmall", "Andere");
+        _de.Add("Militar.HoverSmall", "Militär");
+        _de.Add("Decoration.HoverSmall", "Dekoration");
 
-            { "WhereIsTown.HoverSmall", "Zurück zur Stadt [P]"},
-            { "WhereIsSea.HoverSmall", "Ozeanpfad anzeigen"},
-            { "Helper.HoverSmall", "Hilfe"},
-            { "Tempeture.HoverSmall", "Temperatur"},
+        _de.Add("WhereIsTown.HoverSmall", "Zurück zur Stadt [P]");
+        _de.Add("WhereIsSea.HoverSmall", "Ozeanpfad anzeigen");
+        _de.Add("Helper.HoverSmall", "Hilfe");
+        _de.Add("Tempeture.HoverSmall", "Temperatur");
             
             //building window
-            { "Gen_Btn.HoverSmall", "Allgemeiner Tab"},
-            { "Inv_Btn.HoverSmall", "Inventar Tab"},
-            { "Upg_Btn.HoverSmall", "Verbesserungen Tab"},
-            { "Prd_Btn.HoverSmall", "Produktion Tab"},
-            { "Sta_Btn.HoverSmall", "Statistiken Tab"},
-            { "Ord_Btn.HoverSmall", "Befehle Tab"},
-            { "Stop_Production.HoverSmall", "Produktion stoppen"},
-            { "Demolish_Btn.HoverSmall", "Abreißen"},
-            { "More Salary.HoverSmall", "Zahle mehr"},
-            { "Less Salary.HoverSmall", "Zahle weniger"},
-            { "Next_Stage_Btn.HoverSmall", "Nächste Stufe kaufen"},
-            { "Current_Salary.HoverSmall", "Aktuelles Gehalt"},
-            { "Current_Positions.HoverSmall", "Aktuelle Positionen"},
-            { "Max_Positions.HoverSmall", "Maximale Positionen"},
+        _de.Add("Gen_Btn.HoverSmall", "Allgemeiner Tab");
+        _de.Add("Inv_Btn.HoverSmall", "Inventar Tab");
+        _de.Add("Upg_Btn.HoverSmall", "Verbesserungen Tab");
+        _de.Add("Prd_Btn.HoverSmall", "Produktion Tab");
+        _de.Add("Sta_Btn.HoverSmall", "Statistiken Tab");
+        _de.Add("Ord_Btn.HoverSmall", "Befehle Tab");
+        _de.Add("Stop_Production.HoverSmall", "Produktion stoppen");
+        _de.Add("Demolish_Btn.HoverSmall", "Abreißen");
+        _de.Add("More Salary.HoverSmall", "Zahle mehr");
+        _de.Add("Less Salary.HoverSmall", "Zahle weniger");
+        _de.Add("Next_Stage_Btn.HoverSmall", "Nächste Stufe kaufen");
+        _de.Add("Current_Salary.HoverSmall", "Aktuelles Gehalt");
+        _de.Add("Current_Positions.HoverSmall", "Aktuelle Positionen");
+        _de.Add("Max_Positions.HoverSmall", "Maximale Positionen");
 
 
-            { "Add_Import_Btn.HoverSmall", "Import hinzufügen"},
-            { "Add_Export_Btn.HoverSmall", "Export hinzufügen"},
-            { "Upg_Cap_Btn.HoverSmall", "Verbesserungskapazität"},
-            { "Close_Btn.HoverSmall", "Schließen"},
-            { "ShowPath.HoverSmall", "Zeige Pfad"},
-            { "ShowLocation.HoverSmall", "Standort anzeigen"},//TownTitle
-            { "TownTitle.HoverSmall", "Stadt"},
-            {"WarMode.HoverSmall", "Kampfmodus"},
-            {"BullDozer.HoverSmall", "Bulldozer"},
-            {"Rate.HoverSmall", "Bewerten"},
+        _de.Add("Add_Import_Btn.HoverSmall", "Import hinzufügen");
+        _de.Add("Add_Export_Btn.HoverSmall", "Export hinzufügen");
+        _de.Add("Upg_Cap_Btn.HoverSmall", "Verbesserungskapazität");
+        _de.Add("Close_Btn.HoverSmall", "Schließen");
+        _de.Add("ShowPath.HoverSmall", "Zeige Pfad");
+        _de.Add("ShowLocation.HoverSmall", "Standort anzeigen");//TownTitle
+        _de.Add("TownTitle.HoverSmall", "Stadt");
+        _de.Add("WarMode.HoverSmall", "Kampfmodus");
+        _de.Add("BullDozer.HoverSmall", "Bulldozer");
+        _de.Add("Rate.HoverSmall", "Bewerten");
 
             //addOrder windiw
-            { "Amt_Tip.HoverSmall", "Produktmenge"},
+        _de.Add("Amt_Tip.HoverSmall", "Produktmenge");
 
             //Med Tooltips 
-            { "Build.HoverMed", "Gebäude platzieren: 'Linksklick' \n" +
+        _de.Add("Build.HoverMed", "Gebäude platzieren: 'Linksklick' \n" +
                                 "Gebäude drehen: 'R' Taste \n" +
-                                "Abbrechen: 'Rechtsklick'"},
-                { "BullDozer.HoverMed", "Gebiet bereinigen: 'Linksklick' \n" +
-                "Abbruch: 'Rechtsklick' \nKosten: $10 pro Nutzung "},
+                                "Abbrechen: 'Rechtsklick'");
+            _de.Add("BullDozer.HoverMed", "Gebiet bereinigen: 'Linksklick' \n" +
+                "Abbruch: 'Rechtsklick' \nKosten: $10 pro Nutzung ");
 
-                { "Road.HoverMed", "Start: 'Linksklick' \n" +
+            _de.Add("Road.HoverMed", "Start: 'Linksklick' \n" +
                     "Erweitern: 'Maus bewegen' \n" +
                     "Setzen: 'Nochmal Linksklick' \n" +
-                "Abbruch: 'Rechtsklick'"},
+                "Abbruch: 'Rechtsklick'");
 
-            { "Current_Salary.HoverMed", "Die Arbeitnehmer gehen dort arbeiten wo das meiste Gehalt wartet." +
-                                            " Wenn 2 Arbeitgeber das gleiche Gehalt zahlen nehmen sie den Job der ihrer Wohnung am nächsten ist."},
+        _de.Add("Current_Salary.HoverMed", "Die Arbeitnehmer gehen dort arbeiten wo das meiste Gehalt wartet." +
+                                            " Wenn 2 Arbeitgeber das gleiche Gehalt zahlen nehmen sie den Job der ihrer Wohnung am nächsten ist.");
 
 
 
             //Notifications
-            { "BabyBorn.Noti.Name", "Neugeborenes"},
-            { "BabyBorn.Noti.Desc", "{0} ist geboren"},
-            { "PirateUp.Noti.Name", "Piraten nähern sich"},
-            { "PirateUp.Noti.Desc", "Piraten sind nahe dem Ufer"},
-            { "PirateDown.Noti.Name", "Piraten respektieren dich"},
-            { "PirateDown.Noti.Desc", "Piraten respektieren dich für heute ein wenig mehr"},
+        _de.Add("BabyBorn.Noti.Name", "Neugeborenes");
+        _de.Add("BabyBorn.Noti.Desc", "{0} ist geboren");
+        _de.Add("PirateUp.Noti.Name", "Piraten nähern sich");
+        _de.Add("PirateUp.Noti.Desc", "Piraten sind nahe dem Ufer");
+        _de.Add("PirateDown.Noti.Name", "Piraten respektieren dich");
+        _de.Add("PirateDown.Noti.Desc", "Piraten respektieren dich für heute ein wenig mehr");
 
-            { "Emigrate.Noti.Name", "Ein Bürger ist ausgewandert"},
-            { "Emigrate.Noti.Desc", "Menschen wandern aus, wenn sie mit deiner Regierung nicht zufrieden sind"},
-            { "PortUp.Noti.Name", "Hafen ist bekannt"},
-            { "PortUp.Noti.Desc", "Der Ruf deines Hafens steigt mit den benachbarten Häfen und Routen"},
-            { "PortDown.Noti.Name", "Hafen ist weniger bekannt"},
-            { "PortDown.Noti.Desc", "Der Ruf deines Hafens ist gesunken"},
+        _de.Add("Emigrate.Noti.Name", "Ein Bürger ist ausgewandert");
+        _de.Add("Emigrate.Noti.Desc", "Menschen wandern aus, wenn sie mit deiner Regierung nicht zufrieden sind");
+        _de.Add("PortUp.Noti.Name", "Hafen ist bekannt");
+        _de.Add("PortUp.Noti.Desc", "Der Ruf deines Hafens steigt mit den benachbarten Häfen und Routen");
+        _de.Add("PortDown.Noti.Name", "Hafen ist weniger bekannt");
+        _de.Add("PortDown.Noti.Desc", "Der Ruf deines Hafens ist gesunken");
 
-            { "BoughtLand.Noti.Name", "Neues Land gekauft"},
-            { "BoughtLand.Noti.Desc", "Eine neue Landregion wurde gekauft"},
+        _de.Add("BoughtLand.Noti.Name", "Neues Land gekauft");
+        _de.Add("BoughtLand.Noti.Desc", "Eine neue Landregion wurde gekauft");
 
-            { "ShipPayed.Noti.Name", "Schiff bezahlt"},
-            { "ShipPayed.Noti.Desc", "Ein Schiff hat {0} für Waren oder Dienstleistungen bezahlt"},
-            { "ShipArrived.Noti.Name", "Ein Schiff ist angekommen"},
-            { "ShipArrived.Noti.Desc", "Ein neues Schiff ist in einem unserer Hafengebäude eingetroffen"},
+        _de.Add("ShipPayed.Noti.Name", "Schiff bezahlt");
+        _de.Add("ShipPayed.Noti.Desc", "Ein Schiff hat {0} für Waren oder Dienstleistungen bezahlt");
+        _de.Add("ShipArrived.Noti.Name", "Ein Schiff ist angekommen");
+        _de.Add("ShipArrived.Noti.Desc", "Ein neues Schiff ist in einem unserer Hafengebäude eingetroffen");
 
-            { "AgeMajor.Noti.Name", "Neuer Arbeiter"},
-            { "AgeMajor.Noti.Desc", "{0} ist bereit für die Arbeit"},
-
-
-            { "PersonDie.Noti.Name", "Jemand ist verstorben"},
-            { "PersonDie.Noti.Desc", "{0} ist verstorben"},
-
-            { "DieReplacementFound.Noti.Name", "Jemand ist verstorben"},
-            { "DieReplacementFound.Noti.Desc", "{0} ist verstorben. Es wurde ein Ersatz für den Job gefunden."},
-
-            { "DieReplacementNotFound.Noti.Name", "Jemand ist verstorben"},
-            { "DieReplacementNotFound.Noti.Desc", "{0} ist verstorben. Es wurde kein Ersatz für den Job gefunden"},
+        _de.Add("AgeMajor.Noti.Name", "Neuer Arbeiter");
+        _de.Add("AgeMajor.Noti.Desc", "{0} ist bereit für die Arbeit");
 
 
-            { "FullStore.Noti.Name", "Ein Lager wird voll"},
-            { "FullStore.Noti.Desc", "Ein Lager ist bei einer Kapazität von {0}%"},
+        _de.Add("PersonDie.Noti.Name", "Jemand ist verstorben");
+        _de.Add("PersonDie.Noti.Desc", "{0} ist verstorben");
 
-            { "CantProduceBzFullStore.Noti.Name", "Ein Arbeiter kann nichts herstellen"},
-            { "CantProduceBzFullStore.Noti.Desc", "{0} weil sein/ihr Ziellager voll ist"},
+        _de.Add("DieReplacementFound.Noti.Name", "Jemand ist verstorben");
+        _de.Add("DieReplacementFound.Noti.Desc", "{0} ist verstorben. Es wurde ein Ersatz für den Job gefunden.");
 
-            { "NoInput.Noti.Name", "Zumindest fehlt eine Zufuhr zum Gebäude"},
-            { "NoInput.Noti.Desc", "Ein Gebäude kann keine {0} erzeugen, da mindestens ein Rohstoff fehlt"},
+        _de.Add("DieReplacementNotFound.Noti.Name", "Jemand ist verstorben");
+        _de.Add("DieReplacementNotFound.Noti.Desc", "{0} ist verstorben. Es wurde kein Ersatz für den Job gefunden");
 
-            { "Built.Noti.Name", "Ein Gebäude wurde fertiggestellt"},
-            { "Built.Noti.Desc", "{0} wurde fertiggestellt"},
 
-            { "cannot produce", "kann nicht herstellen"},
+        _de.Add("FullStore.Noti.Name", "Ein Lager wird voll");
+        _de.Add("FullStore.Noti.Desc", "Ein Lager ist bei einer Kapazität von {0}%");
+
+        _de.Add("CantProduceBzFullStore.Noti.Name", "Ein Arbeiter kann nichts herstellen");
+        _de.Add("CantProduceBzFullStore.Noti.Desc", "{0} weil sein/ihr Ziellager voll ist");
+
+        _de.Add("NoInput.Noti.Name", "Zumindest fehlt eine Zufuhr zum Gebäude");
+        _de.Add("NoInput.Noti.Desc", "Ein Gebäude kann keine {0} erzeugen, da mindestens ein Rohstoff fehlt");
+
+        _de.Add("Built.Noti.Name", "Ein Gebäude wurde fertiggestellt");
+        _de.Add("Built.Noti.Desc", "{0} wurde fertiggestellt");
+
+        _de.Add("cannot produce", "kann nicht herstellen");
 
             
 
@@ -432,75 +432,75 @@ public class German
 
             //Main notificaion
             //Shows on the middle of the screen
-            { "NotScaledOnFloor", "Das Gebäude liegt entweder zu nahe am Ufer oder zu nah am Berg"},
-            { "NotEven", "Der Boden unter dem Gebäude ist nicht eben"},
-            { "Colliding", "Gebäude kollidiert mit einem anderen"},
-            { "Colliding.BullDozer", "Bulldozer kollidiert mit einem Gebäude. Kann nur im Gelände (Bäume, Felsen) verwendet werden"},
+        _de.Add("NotScaledOnFloor", "Das Gebäude liegt entweder zu nahe am Ufer oder zu nah am Berg");
+        _de.Add("NotEven", "Der Boden unter dem Gebäude ist nicht eben");
+        _de.Add("Colliding", "Gebäude kollidiert mit einem anderen");
+        _de.Add("Colliding.BullDozer", "Bulldozer kollidiert mit einem Gebäude. Kann nur im Gelände (Bäume, Felsen) verwendet werden");
 
-            { "BadWaterHeight", "Das Gebäude ist zu tief oder zu hoch auf dem Wasser"},
-            { "LockedRegion", "Du musst diese Region besitzen, um hier bauen zu können"},
-            { "HomeLess", "Die Leute in diesem Haus können nirgendwo hin gehen. Bitte baue ein neues Haus" +
-                            " um diese Familie zu halten und es erneut versuchen"},
-            { "LastFood", "Kann nicht zerstört werden, dies ist das einzige Lager in deinem Dorf"},
-            { "LastMasonry", "Kann nicht zerstört werden, dies ist der einzige Maurer in deinem Dorf"},
-            { "OnlyOneDemolish", "Du zerstörst bereits ein Gebäude. Versuche es erneut, nachdem der Abbruch abgeschlossen ist"},
+        _de.Add("BadWaterHeight", "Das Gebäude ist zu tief oder zu hoch auf dem Wasser");
+        _de.Add("LockedRegion", "Du musst diese Region besitzen, um hier bauen zu können");
+        _de.Add("HomeLess", "Die Leute in diesem Haus können nirgendwo hin gehen. Bitte baue ein neues Haus" +
+                            " um diese Familie zu halten und es erneut versuchen");
+        _de.Add("LastFood", "Kann nicht zerstört werden, dies ist das einzige Lager in deinem Dorf");
+        _de.Add("LastMasonry", "Kann nicht zerstört werden, dies ist der einzige Maurer in deinem Dorf");
+        _de.Add("OnlyOneDemolish", "Du zerstörst bereits ein Gebäude. Versuche es erneut, nachdem der Abbruch abgeschlossen ist");
 
 
             //help
 
-            { "Construction.HoverMed", "Für den Bau eines Gebäudes benötigst du Arbeiter im Maurerbetrieb. "+
-                    " Klicke auf den Maurer und dann auf das Symbol "+" auf der Registerkarte 'Allgemein'. Stelle sicher, dass du über ausreichende Ressourcen verfügst"},
-            { "Demolition.HoverMed", "Sobald die Vorräte frei sind, wird es abgerissen. Schubkarren transportieren die Reste ab"},
+        _de.Add("Construction.HoverMed", "Für den Bau eines Gebäudes benötigst du Arbeiter im Maurerbetrieb. "+
+                    " Klicke auf den Maurer und dann auf das Symbol "+" auf der Registerkarte 'Allgemein'. Stelle sicher, dass du über ausreichende Ressourcen verfügst");
+        _de.Add("Demolition.HoverMed", "Sobald die Vorräte frei sind, wird es abgerissen. Schubkarren transportieren die Reste ab");
 
-            { "Construction.Help", "Für den Bau eines Gebäudes benötigen Sie Arbeiter im Maurerbetrieb. "+
-                    " Klicke auf den Maurer und dann auf das Symbol "+" auf der Registerkarte 'Allgemein'. Stelle sicher, dass du über ausreichende Ressourcen verfügst"},
-            { "Camera.Help", "Kamera: Benutze [WASD] oder den Cursor zum bewegen. " +
-                        "Drücke das Scrollrad deiner Maus und halte es gedrückt, um zu drehen, oder nutze [Q] und [E]"},
-            { "Sea Path.Help", "Klicke auf die linke untere Ecke 'Seepfad ein- / ausblenden' " +
-                            "Schaltfläche, um den nächstgelegenen Weg zum Meer anzuzeigen"},
+        _de.Add("Construction.Help", "Für den Bau eines Gebäudes benötigen Sie Arbeiter im Maurerbetrieb. "+
+                    " Klicke auf den Maurer und dann auf das Symbol "+" auf der Registerkarte 'Allgemein'. Stelle sicher, dass du über ausreichende Ressourcen verfügst");
+        _de.Add("Camera.Help", "Kamera: Benutze [WASD] oder den Cursor zum bewegen. " +
+                        "Drücke das Scrollrad deiner Maus und halte es gedrückt, um zu drehen, oder nutze [Q] und [E]");
+        _de.Add("Sea Path.Help", "Klicke auf die linke untere Ecke 'Seepfad ein- / ausblenden' " +
+                            "Schaltfläche, um den nächstgelegenen Weg zum Meer anzuzeigen");
 
-            { "People Range.Help", "Der große blaue Kreis um jedes Gebäude markiert die Reichweite"},
+        _de.Add("People Range.Help", "Der große blaue Kreis um jedes Gebäude markiert die Reichweite");
 
-            { "Pirate Threat.Help", "Piratenbedrohung: So bewusst sind sich die Piraten der Existenz deines Hafens. Diese erhöht sich," +
-                                        " wenn du mehr Geld besitzt. Wenn dieser Wert über 90 erreicht wird, verlierst du das Spiel. Du kannst der Bedrohung durch den Bau militärischer Gebäude begegnen"},
+        _de.Add("Pirate Threat.Help", "Piratenbedrohung: So bewusst sind sich die Piraten der Existenz deines Hafens. Diese erhöht sich," +
+                                        " wenn du mehr Geld besitzt. Wenn dieser Wert über 90 erreicht wird, verlierst du das Spiel. Du kannst der Bedrohung durch den Bau militärischer Gebäude begegnen");
 
-            { "Port Reputation.Help", "Ruf des Hafens: Je mehr Leute deinen Hafen kennen, desto mehr besuchen ihn." +
+        _de.Add("Port Reputation.Help", "Ruf des Hafens: Je mehr Leute deinen Hafen kennen, desto mehr besuchen ihn." +
                                             " Wenn du dies verbessern möchtest, stelle sicher, dass du immer einige Aufträge" +
-                                            " im Dock hast"},
-            { "Emigrate.Help", "Auswanderer: Wenn die Menschen einige Jahre unglücklich sind, gehen sie. Das Schlechte" +
+                                            " im Dock hast");
+        _de.Add("Emigrate.Help", "Auswanderer: Wenn die Menschen einige Jahre unglücklich sind, gehen sie. Das Schlechte" +
                                     " daran ist, dass sie nicht wiederkommen, keine Kinder bekommen oder Kinder haben werden." +
-                                    " Das einzig Gute ist, dass sie den 'Ruf des Hafens' erhöhen."},
-            { "Food.Help", "Lebensmittel: Je höher die Vielfalt an Lebensmitteln, die in einem Haushalt verfügbar sind, desto zufriedener "+
-                                 " werden sie sein."},
+                                    " Das einzig Gute ist, dass sie den 'Ruf des Hafens' erhöhen.");
+        _de.Add("Food.Help", "Lebensmittel: Je höher die Vielfalt an Lebensmitteln, die in einem Haushalt verfügbar sind, desto zufriedener "+
+                                 " werden sie sein.");
 
-            { "Weight.Help", "Gewicht: Alle Gewichtsangaben im Spiel sind in kg oder Pfund, abhängig davon, welches Einheitensystem ausgewählt ist." +
-                                " Du kannst dies unter 'Optionen' im 'Hauptmenü' ändern."},
-            { "What is Ft3 and M3?.Help", "Die Speicherkapazität wird durch das Volumen des Gebäudes bestimmt. Ft3 ist ein Kubikfuß. M3 ist ein Kubikmeter" },//. Denke daran, dass weniger kompakte Produkte dein Lager schnell füllen. Die Produktmenge findest du unter  Bulletin/Prod/Spezi"},
+        _de.Add("Weight.Help", "Gewicht: Alle Gewichtsangaben im Spiel sind in kg oder Pfund, abhängig davon, welches Einheitensystem ausgewählt ist." +
+                                " Du kannst dies unter 'Optionen' im 'Hauptmenü' ändern.");
+        _de.Add("What is Ft3 and M3?.Help", "Die Speicherkapazität wird durch das Volumen des Gebäudes bestimmt. Ft3 ist ein Kubikfuß. M3 ist ein Kubikmeter" );//. Denke daran, dass weniger kompakte Produkte dein Lager schnell füllen. Die Produktmenge findest du unter  Bulletin/Prod/Spezi");
 
-            { "More.Help", "Wenn du weitere Hilfe benötigst, empfiehlt es sich, das Tutorial abzuschließen oder einfach deine Frage in den SugarMill-Foren zu posten"},
+        _de.Add("More.Help", "Wenn du weitere Hilfe benötigst, empfiehlt es sich, das Tutorial abzuschließen oder einfach deine Frage in den SugarMill-Foren zu posten");
 
                 //more 
-            { "Products Expiration.Help", "Produktverfall: Wie in der Realität verfällt jedes Produkt. Einige Lebensmittel verfallen früher als andere. Du kannst unter Bulletin/Prod/Verfall sehen welche Produkte abgelaufen sind"},
-            { "Horse Carriages.Help", "Da das Spiel echte Maße hat, können die Menschen nur begrenzt viel tragen. Danach kommen Pferdefuhrwerk zum Einsatz. Sie transportieren viel mehr, wodurch deine Wirtschaft gestärkt wird. Eine Person in ihren besten Jahren könnte etwa 15 kg, eine Schubkarre ca. 60 kg und der kleinere Wagen kann 240 kg tragen. Um diese zu benutzen, baue eine Schwertransportstation"},
-            { "Usage of goods.Help", "Verwendung von Gütern: Kisten, Fässer, Schubkarren, Karren, Werkzeuge, Kleidung, Geschirr, Möbel und Utensilien sind erforderlich, um die traditionellen Aktivitäten einer Stadt zu erledigen. Wenn diese Waren verwendet werden, verringert sich ihre Anzahl, so dass eine Person nichts trägt, wenn keine Kisten vorhanden sind. Behalte das im Auge ;)"},
-            { "Happiness.Help", "Zufriedenheit: Die Zufriedenheit der Menschen wird von verschiedenen Faktoren beeinflusst. Wie viel Geld sie haben, der Lebensmittelvielfalt, Religionszufriedenheit, Zugang zu Freizeit, Hauskomfort und Bildungsniveau. Auch wenn eine Person Zugang zu Utensilien hat, beeinflussen eher Geschirr und Kleidung ihre Zufriedenheit."},
-            { "Line production.Help", "Serienfertigung: Um einen einfachen Nagel herzustellen, muss man Erz abbauen, in der Gießerei das Eisen schmelzen und schließlich muss die Schmiede den Nagel herstellen. Wenn du genug Geld hast, kannst du den Nagel immer direkt auf einem Schiff kaufen wie auch jedes andere Produkt."},
-            { "Bulletin.Help", "Das Seitensymbol in der unteren Leiste ist das Bulletin / Kontrollfenster. Bitte nimm dir etwas Zeit, um es zu erkunden."},
-            { "Trading.Help", "Du benötigst mindestens ein Dock, um handeln zu können. Dort kannst du Import- / Exportaufträge hinzufügen und Bargeld verdienen. Wenn du beim Hinzufügen eines Auftrages Hilfe benötigst, kannst du das Tutorial abschließen"},
+        _de.Add("Products Expiration.Help", "Produktverfall: Wie in der Realität verfällt jedes Produkt. Einige Lebensmittel verfallen früher als andere. Du kannst unter Bulletin/Prod/Verfall sehen welche Produkte abgelaufen sind");
+        _de.Add("Horse Carriages.Help", "Da das Spiel echte Maße hat, können die Menschen nur begrenzt viel tragen. Danach kommen Pferdefuhrwerk zum Einsatz. Sie transportieren viel mehr, wodurch deine Wirtschaft gestärkt wird. Eine Person in ihren besten Jahren könnte etwa 15 kg, eine Schubkarre ca. 60 kg und der kleinere Wagen kann 240 kg tragen. Um diese zu benutzen, baue eine Schwertransportstation");
+        _de.Add("Usage of goods.Help", "Verwendung von Gütern: Kisten, Fässer, Schubkarren, Karren, Werkzeuge, Kleidung, Geschirr, Möbel und Utensilien sind erforderlich, um die traditionellen Aktivitäten einer Stadt zu erledigen. Wenn diese Waren verwendet werden, verringert sich ihre Anzahl, so dass eine Person nichts trägt, wenn keine Kisten vorhanden sind. Behalte das im Auge ;)");
+        _de.Add("Happiness.Help", "Zufriedenheit: Die Zufriedenheit der Menschen wird von verschiedenen Faktoren beeinflusst. Wie viel Geld sie haben, der Lebensmittelvielfalt, Religionszufriedenheit, Zugang zu Freizeit, Hauskomfort und Bildungsniveau. Auch wenn eine Person Zugang zu Utensilien hat, beeinflussen eher Geschirr und Kleidung ihre Zufriedenheit.");
+        _de.Add("Line production.Help", "Serienfertigung: Um einen einfachen Nagel herzustellen, muss man Erz abbauen, in der Gießerei das Eisen schmelzen und schließlich muss die Schmiede den Nagel herstellen. Wenn du genug Geld hast, kannst du den Nagel immer direkt auf einem Schiff kaufen wie auch jedes andere Produkt.");
+        _de.Add("Bulletin.Help", "Das Seitensymbol in der unteren Leiste ist das Bulletin / Kontrollfenster. Bitte nimm dir etwas Zeit, um es zu erkunden.");
+        _de.Add("Trading.Help", "Du benötigst mindestens ein Dock, um handeln zu können. Dort kannst du Import- / Exportaufträge hinzufügen und Bargeld verdienen. Wenn du beim Hinzufügen eines Auftrages Hilfe benötigst, kannst du das Tutorial abschließen");
 
-            { "Combat Mode.Help", "Wird aktiviert, wenn ein Pirat/ Bandit von einem deiner Bürger entdeckt wird. Sobald der Modus aktiv ist, kannst du Einheiten direkt den Angriff zuweisen. Wähle sie aus und klicke mit der rechten Maustaste, um das Ziel anzugreifen"},
+        _de.Add("Combat Mode.Help", "Wird aktiviert, wenn ein Pirat/ Bandit von einem deiner Bürger entdeckt wird. Sobald der Modus aktiv ist, kannst du Einheiten direkt den Angriff zuweisen. Wähle sie aus und klicke mit der rechten Maustaste, um das Ziel anzugreifen");
 
-            { "Population.Help", "Sobald sie 16 Jahre alt sind, ziehen sie in ein freies Haus, wenn eines zur Verfügung steht. Immer wenn ein freies Haus zur Verfügung steht, wird das Bevölkerungswachstum garantiert. Wenn sie mit 16 Jahren in die neuen Häuser kommen, maximieren Sie das Bevölkerungswachstum"},
+        _de.Add("Population.Help", "Sobald sie 16 Jahre alt sind, ziehen sie in ein freies Haus, wenn eines zur Verfügung steht. Immer wenn ein freies Haus zur Verfügung steht, wird das Bevölkerungswachstum garantiert. Wenn sie mit 16 Jahren in die neuen Häuser kommen, maximieren Sie das Bevölkerungswachstum");
 
 
-            { "F1.Help", "Drücke [F1] für die Hilfe"},
+        _de.Add("F1.Help", "Drücke [F1] für die Hilfe");
 
-            { "Inputs.Help", "Wenn ein Gebäude nichts produzieren kann, weil die Waren fehlen, prüfe bitte ob die erforderlichen Güter im Hauptlager vorhanden sind und mindestens eine Arbeiter im Maurerbetrieb ist"},
-            { "WheelBarrows.Help", "Schubkarren sind die 'Arbeitstiere' der Maurer. Wenn sie nichts zu bauen haben, fungieren sie als Schubkarren. Wenn du Materialien benötigst, die in ein bestimmtes Gebäude gelangen müssen, stelle sicher, dass du über genügend Einheiten verfügst und auch die im Lagergebäude genannten Materialien"},
+        _de.Add("Inputs.Help", "Wenn ein Gebäude nichts produzieren kann, weil die Waren fehlen, prüfe bitte ob die erforderlichen Güter im Hauptlager vorhanden sind und mindestens eine Arbeiter im Maurerbetrieb ist");
+        _de.Add("WheelBarrows.Help", "Schubkarren sind die 'Arbeitstiere' der Maurer. Wenn sie nichts zu bauen haben, fungieren sie als Schubkarren. Wenn du Materialien benötigst, die in ein bestimmtes Gebäude gelangen müssen, stelle sicher, dass du über genügend Einheiten verfügst und auch die im Lagergebäude genannten Materialien");
 
-            { "Production Tab.Help", "Wenn es sich bei dem Gebäude um ein landwirtschaftliches Feld handelt, stelle sicher, dass sich auf dem Hof Arbeiter befinden. Die Ernte geht verloren, wenn sie einen Monat nach dem Erntetag noch immer dort lagert"},
-            { "Our Inventories.Help", "TDer Abschnitt 'Unsere Lagerbestände' im Fenster 'Auftrag hinzufügen' ist eine Zusammenfassung dessen, was wir aus den Lagerbeständen unserer Lagergebäude erhalten haben"},
-            { "Inventories Explanation.Help", "Dies ist eine Zusammenfassung dessen, was wir in unseren Lagerbeständen haben. Gegenstände in anderen Gebäudebeständen gehören nicht zur Stadt"},
+        _de.Add("Production Tab.Help", "Wenn es sich bei dem Gebäude um ein landwirtschaftliches Feld handelt, stelle sicher, dass sich auf dem Hof Arbeiter befinden. Die Ernte geht verloren, wenn sie einen Monat nach dem Erntetag noch immer dort lagert");
+        _de.Add("Our Inventories.Help", "TDer Abschnitt 'Unsere Lagerbestände' im Fenster 'Auftrag hinzufügen' ist eine Zusammenfassung dessen, was wir aus den Lagerbeständen unserer Lagergebäude erhalten haben");
+        _de.Add("Inventories Explanation.Help", "Dies ist eine Zusammenfassung dessen, was wir in unseren Lagerbeständen haben. Gegenstände in anderen Gebäudebeständen gehören nicht zur Stadt");
 
             ///word and grammarly below
 
@@ -508,236 +508,236 @@ public class German
 
 
             //to  add on spanish         //to correct  
-            { "TutoOver", "Deine Belohnung beträgt $ 10.000,00, wenn du es zum ersten Mal abschließt. Das Tutorial ist nun beendet. Jetzt kannst dieses Spiel entweder weiterspielen oder ein neues Spiel beginnen."},
+        _de.Add("TutoOver", "Deine Belohnung beträgt $ 10.000,00, wenn du es zum ersten Mal abschließt. Das Tutorial ist nun beendet. Jetzt kannst dieses Spiel entweder weiterspielen oder ein neues Spiel beginnen.");
 
             //Tuto
-            { "CamMov.Tuto", "Die Belohnung für den Abschluss des Tutorials beträgt $10.000, - (einmalige Belohnung pro Spiel). Schritt 1: Bewege die Kamera mit den Tasten [WASD] oder den Pfeiltasten. Tue dies mindestens 5 Sekunden lang"},
-            { "CamMov5x.Tuto", "Verwende die [WASD] oder die Pfeiltasten und halte die linke Umschalttaste gedrückt, um die Kamera fünfmal schneller zu bewegen. Tue dies mindestens 5 Sekunden lang"},
-            { "CamRot.Tuto", "Drücke nun das Mausrad nach unten und bewege die Maus, um die Kamera zu drehen. Tue dies mindestens 5 Sekunden lang"},
+        _de.Add("CamMov.Tuto", "Die Belohnung für den Abschluss des Tutorials beträgt $10.000, - (einmalige Belohnung pro Spiel). Schritt 1: Bewege die Kamera mit den Tasten [WASD] oder den Pfeiltasten. Tue dies mindestens 5 Sekunden lang");
+        _de.Add("CamMov5x.Tuto", "Verwende die [WASD] oder die Pfeiltasten und halte die linke Umschalttaste gedrückt, um die Kamera fünfmal schneller zu bewegen. Tue dies mindestens 5 Sekunden lang");
+        _de.Add("CamRot.Tuto", "Drücke nun das Mausrad nach unten und bewege die Maus, um die Kamera zu drehen. Tue dies mindestens 5 Sekunden lang");
 
 
-            { "BackToTown.Tuto", "PDrücke die Taste [P] auf der Tastatur, um zur Ausgangsposition der Kamera zu gelangen"},
+        _de.Add("BackToTown.Tuto", "PDrücke die Taste [P] auf der Tastatur, um zur Ausgangsposition der Kamera zu gelangen");
 
-            { "BuyRegion.Tuto", "Regionen musst du besitzen, um bauen zu können. Klicke auf das "+" - Zeichen in der unteren Leiste und dann auf das 'Zum Verkauf' -Symbol in der" +
+        _de.Add("BuyRegion.Tuto", "Regionen musst du besitzen, um bauen zu können. Klicke auf das "+" - Zeichen in der unteren Leiste und dann auf das 'Zum Verkauf' -Symbol in der" +
                     " Mitte einer Region, um es zu kaufen. Einige Gebäude sind ausgenommen, sie können gebaut werden, ohne die Region zu besitzen" +
                     " (Fischerhütte, Dock, Bergwerk, Uferbergwerk, Leuchtturm, Wachposten)"
-                    },
+                    );
 
-            { "Trade.Tuto", "Das war echt einfach, aber der schwierige Teil kommt jetzt. Klicke auf die Schaltfläche 'Handelsgebäude' in der rechten unteren Leiste. "+
-                "Wenn du den Mauszeiger darüber bewegst, erscheint ein Popup-Fenster namens 'Handel'."},
-            { "CamHeaven.Tuto", "Scrolle mit der mittleren Maustaste zurück, bis die Kamera den"
-                    + " Himmel erreicht. Diese Ansicht ist nützlich, um größere Gebäude wie den Hafen zu platzieren"},
+        _de.Add("Trade.Tuto", "Das war echt einfach, aber der schwierige Teil kommt jetzt. Klicke auf die Schaltfläche 'Handelsgebäude' in der rechten unteren Leiste. "+
+                "Wenn du den Mauszeiger darüber bewegst, erscheint ein Popup-Fenster namens 'Handel'.");
+        _de.Add("CamHeaven.Tuto", "Scrolle mit der mittleren Maustaste zurück, bis die Kamera den"
+                    + " Himmel erreicht. Diese Ansicht ist nützlich, um größere Gebäude wie den Hafen zu platzieren");
 
-            { "Dock.Tuto", "Klicke nun auf das 'Dock'-Gebäude, es ist der 1. Button. Wenn du darüber schwebbleibst, zeigt es"+
-                "die Kosten und die Beschreibung"},
-            { "Dock.Placed.Tuto", "Nun zum schweren Teil, daher sorgfältig lesen. Beachte, dass du die "+
+        _de.Add("Dock.Tuto", "Klicke nun auf das 'Dock'-Gebäude, es ist der 1. Button. Wenn du darüber schwebbleibst, zeigt es"+
+                "die Kosten und die Beschreibung");
+        _de.Add("Dock.Placed.Tuto", "Nun zum schweren Teil, daher sorgfältig lesen. Beachte, dass du die "+
                 "'R' Taste zum rotieren nutzen kannst und den Rechtklick zum Bauabbruch. Dieses Gebäude hat einen Teil im Ozean und einen anderen an Land." +
-                " Der Pfeil zeigt zum Meer, der Lagerbereich ist an Land. Wenn der Pfeil weiß ist, klicke mit der linken Maustaste."},
-            { "2XSpeed.Tuto", "Erhöhe die Geschwindigkeit des Spiels, gehe zum mittleren Geschwindigkeitsregler für die Simulation auf dem oberen Bildschirm und klicke auf die"
-                    +" 'Schneller' Schaltfläche 1 Mal bis 2x angezeigt wird"},
+                " Der Pfeil zeigt zum Meer, der Lagerbereich ist an Land. Wenn der Pfeil weiß ist, klicke mit der linken Maustaste.");
+        _de.Add("2XSpeed.Tuto", "Erhöhe die Geschwindigkeit des Spiels, gehe zum mittleren Geschwindigkeitsregler für die Simulation auf dem oberen Bildschirm und klicke auf die"
+                    +" 'Schneller' Schaltfläche 1 Mal bis 2x angezeigt wird");
 
-            { "ShowWorkersControl.Tuto", "Klicke auf die Schaltfläche 'Steuerung/ Bulletin' in der unteren Leiste. "+
-                "Wenn du den Mauszeiger darüber bewegst, wird 'Steuerung / Bulletin' angezeigt.. "},
-            { "AddWorkers.Tuto", "Klicke auf das "+" - Zeichen rechts neben dem Maurerbetrieb. So fügst du weitere Arbeiter hinzu."},
-            { "HideBulletin.Tuto", "Denke bitte daran, dass du in diesem Fenster verschiedene Aspekte des Spiels steuern und sehen kannst. Klicke außerhalb des Fensters, um es zu schließen, oder auf die Schaltfläche 'OK'."},
-            { "FinishDock.Tuto", "Beende nun den Dockbau. Je mehr Arbeiter im Maurerbetrieb sind, desto schneller wird die Arbeit auch erledigt."
-            + " Vergewissere dich auch, dass du über alle Materialien verfügst, die für den Bau erforderlich sind"},
-            { "ShowHelp.Tuto", "Klicke auf die Schaltfläche 'Hilfe' in der unteren Leiste. "+
-                "Wenn du den Mauszeiger darüber bewegst, wird die Hilfe angezeigt. Dort findest du einige hilfreiche Tipps."},
-
-
-            { "SelectDock.Tuto", "Schiffe legen Waren nach dem Zufallsprinzip aus dem Inventar des Docks ab. Arbeiter werden benötigt, um Güter auf dem Dock ein- und auszulagern. Sie benötigen Schubkarren und Kisten. Wenn sich keine dieser Materialien im Docklager befinden, arbeiten sie nicht. Klicke nun auf das Dock."},
+        _de.Add("ShowWorkersControl.Tuto", "Klicke auf die Schaltfläche 'Steuerung/ Bulletin' in der unteren Leiste. "+
+                "Wenn du den Mauszeiger darüber bewegst, wird 'Steuerung / Bulletin' angezeigt.. ");
+        _de.Add("AddWorkers.Tuto", "Klicke auf das "+" - Zeichen rechts neben dem Maurerbetrieb. So fügst du weitere Arbeiter hinzu.");
+        _de.Add("HideBulletin.Tuto", "Denke bitte daran, dass du in diesem Fenster verschiedene Aspekte des Spiels steuern und sehen kannst. Klicke außerhalb des Fensters, um es zu schließen, oder auf die Schaltfläche 'OK'.");
+        _de.Add("FinishDock.Tuto", "Beende nun den Dockbau. Je mehr Arbeiter im Maurerbetrieb sind, desto schneller wird die Arbeit auch erledigt."
+            + " Vergewissere dich auch, dass du über alle Materialien verfügst, die für den Bau erforderlich sind");
+        _de.Add("ShowHelp.Tuto", "Klicke auf die Schaltfläche 'Hilfe' in der unteren Leiste. "+
+                "Wenn du den Mauszeiger darüber bewegst, wird die Hilfe angezeigt. Dort findest du einige hilfreiche Tipps.");
 
 
-            { "OrderTab.Tuto", "Wechsele zur Registerkarte 'Bestellungen' im Dockfenster."},
-            { "ImportOrder.Tuto", "Klicke auf das '+' neben Importauftrag hinzufügen."},
-
-            { "AddOrder.Tuto", "Scrolle nun in den Produkten nach unten und wähle Holz aus, und gib als Menge 100 ein. Klicke dann auf die Schaltfläche 'Hinzufügen'."},
-            { "CloseDockWindow.Tuto", "Nun wird die Bestellung hinzugefügt. Ein zufälliges Schiff legt diese Gegenstand in das Dockinventar. Ihre Dockarbeiter werden es dann zum nächstgelegenen Lagergebäude bringen. Klicke jetzt außerhalb des Fensters, damit es geschlossen wird."},
-            { "Rename.Tuto", "Klicke auf eine Person und dann auf die Titelleiste der Person. So kannst du den Namen einer beliebigen Person oder eines Gebäudes im Spiel ändern. Klicke außerhalb, um die Änderung zu speichern"},
-            { "RenameBuild.Tuto", "Klicke nun auf ein Gebäude und ändere seinen Namen auf dieselbe Weise. Denke daran, außerhalb zu klicken, damit die Änderung gespeichert wird"},
-
-            { "BullDozer.Tuto", "Klicke nun auf das Bulldozer-Symbol in der unteren Leiste. Dann entferne einen Baum oder einen Stein vom Gelände."},
+        _de.Add("SelectDock.Tuto", "Schiffe legen Waren nach dem Zufallsprinzip aus dem Inventar des Docks ab. Arbeiter werden benötigt, um Güter auf dem Dock ein- und auszulagern. Sie benötigen Schubkarren und Kisten. Wenn sich keine dieser Materialien im Docklager befinden, arbeiten sie nicht. Klicke nun auf das Dock.");
 
 
-            { "Budget.Tuto", "Klicke auf die Schaltfläche 'Steuerung / Bulletin', dann auf das Menü 'Finanzen' und dann auf 'Hauptbuch'. Dies ist das Spielkonto"},
-            { "Prod.Tuto", "Klicke auf 'Prod' und dann auf 'Produziert'. Dies zeigt die Produktion des Dorfes der letzten 5 Jahre"},
-            { "Spec.Tuto", "Klicke auf das Menü 'Prod' und dann auf 'Spez'. Hier kannst du genau sehen, wie du jedes Produkt im Spiel herstellst. Die notwendigen Eingänge und wo wird produziert. Auch die Import- und Exportpreise"},
-            { "Exports.Tuto", "Klicke auf das Menü 'Finanzen' und dann auf 'Exportieren'. Hier siehst eine Aufschlüsselung der Exporte deines Dorfes"},
+        _de.Add("OrderTab.Tuto", "Wechsele zur Registerkarte 'Bestellungen' im Dockfenster.");
+        _de.Add("ImportOrder.Tuto", "Klicke auf das '+' neben Importauftrag hinzufügen.");
+
+        _de.Add("AddOrder.Tuto", "Scrolle nun in den Produkten nach unten und wähle Holz aus, und gib als Menge 100 ein. Klicke dann auf die Schaltfläche 'Hinzufügen'.");
+        _de.Add("CloseDockWindow.Tuto", "Nun wird die Bestellung hinzugefügt. Ein zufälliges Schiff legt diese Gegenstand in das Dockinventar. Ihre Dockarbeiter werden es dann zum nächstgelegenen Lagergebäude bringen. Klicke jetzt außerhalb des Fensters, damit es geschlossen wird.");
+        _de.Add("Rename.Tuto", "Klicke auf eine Person und dann auf die Titelleiste der Person. So kannst du den Namen einer beliebigen Person oder eines Gebäudes im Spiel ändern. Klicke außerhalb, um die Änderung zu speichern");
+        _de.Add("RenameBuild.Tuto", "Klicke nun auf ein Gebäude und ändere seinen Namen auf dieselbe Weise. Denke daran, außerhalb zu klicken, damit die Änderung gespeichert wird");
+
+        _de.Add("BullDozer.Tuto", "Klicke nun auf das Bulldozer-Symbol in der unteren Leiste. Dann entferne einen Baum oder einen Stein vom Gelände.");
+
+
+        _de.Add("Budget.Tuto", "Klicke auf die Schaltfläche 'Steuerung / Bulletin', dann auf das Menü 'Finanzen' und dann auf 'Hauptbuch'. Dies ist das Spielkonto");
+        _de.Add("Prod.Tuto", "Klicke auf 'Prod' und dann auf 'Produziert'. Dies zeigt die Produktion des Dorfes der letzten 5 Jahre");
+        _de.Add("Spec.Tuto", "Klicke auf das Menü 'Prod' und dann auf 'Spez'. Hier kannst du genau sehen, wie du jedes Produkt im Spiel herstellst. Die notwendigen Eingänge und wo wird produziert. Auch die Import- und Exportpreise");
+        _de.Add("Exports.Tuto", "Klicke auf das Menü 'Finanzen' und dann auf 'Exportieren'. Hier siehst eine Aufschlüsselung der Exporte deines Dorfes");
 
 
                 //Quest
-            { "Tutorial.Quest", "Quest: Beende das Tutorial. Belohnung 10.000 $. Dies dauert ungefähr 3 Minuten"},
+        _de.Add("Tutorial.Quest", "Quest: Beende das Tutorial. Belohnung 10.000 $. Dies dauert ungefähr 3 Minuten");
 
-            { "Lamp.Quest", "Quest: Baue eine Straßenlaterne. Du findest sie in der Infrastruktur. Sie leuchtet nachts, wenn Walöl im Lager ist"},
+        _de.Add("Lamp.Quest", "Quest: Baue eine Straßenlaterne. Du findest sie in der Infrastruktur. Sie leuchtet nachts, wenn Walöl im Lager ist");
 
-            { "Shack.Quest", "Quest: Baue eine Hütte. Das sind die billigsten Häuser. Wenn Menschen 16 Jahre alt werden, ziehen sie in ein freies Haus, wenn sie eines finden. Auf diese Weise wird das Bevölkerungswachstum garantiert. [F1] Hilfe. Wenn du Rauch im Schornstein siehst, bedeutet das, dass Menschen darin leben"},
+        _de.Add("Shack.Quest", "Quest: Baue eine Hütte. Das sind die billigsten Häuser. Wenn Menschen 16 Jahre alt werden, ziehen sie in ein freies Haus, wenn sie eines finden. Auf diese Weise wird das Bevölkerungswachstum garantiert. [F1] Hilfe. Wenn du Rauch im Schornstein siehst, bedeutet das, dass Menschen darin leben");
 
-            { "SmallFarm.Quest", "Quest: Baue eine kleine Feldfarm. Du benötigst Farmen, um deine Leute zu ernähren"},
-            { "FarmHire.Quest", "Quest: Stellen Sie zwei Bauern auf der kleinen Feldfarm ein. Klicke auf die Farm und klicke das Pluszeichen um Arbeiter einzustellen. Arbeitlos sollten sie aber schon sein"
-                    +" um sie einem Gebäude zuweisen zu können"},
-
-
-
-            { "FarmProduce.Quest", "Quest: Produziere " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " Bohnen auf einer kleinen Feldfarm. Klicke auf die Registerkarte 'Stat' und zeige die Produktion der letzten 5 Jahre an. Du kannst den Questfortschritt im Questfenster sehen. Wenn du weitere kleine Farmen baust, werden diese für die Quest berücksichtigt"},
-            { "Transport.Quest", "Quest: Transportiere nun die Bohnen vom Feld zum Lager. Um dies tun zu können" +
-                " solltest du genügend Arbeiter frei haben. Sie fungieren als Transporteure, wenn sie nichts bauen"},
+        _de.Add("SmallFarm.Quest", "Quest: Baue eine kleine Feldfarm. Du benötigst Farmen, um deine Leute zu ernähren");
+        _de.Add("FarmHire.Quest", "Quest: Stellen Sie zwei Bauern auf der kleinen Feldfarm ein. Klicke auf die Farm und klicke das Pluszeichen um Arbeiter einzustellen. Arbeitlos sollten sie aber schon sein"
+                    +" um sie einem Gebäude zuweisen zu können");
 
 
-            { "HireDocker.Quest", "Quest: Einen Hafenarbeiter anstellen. Die Aufgabe von Hafenarbeitern besteht nur darin, die Waren aus dem Lager in das Dock zu verschieben, wenn sie exportiert werden sollen."+
+
+        _de.Add("FarmProduce.Quest", "Quest: Produziere " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " Bohnen auf einer kleinen Feldfarm. Klicke auf die Registerkarte 'Stat' und zeige die Produktion der letzten 5 Jahre an. Du kannst den Questfortschritt im Questfenster sehen. Wenn du weitere kleine Farmen baust, werden diese für die Quest berücksichtigt");
+        _de.Add("Transport.Quest", "Quest: Transportiere nun die Bohnen vom Feld zum Lager. Um dies tun zu können" +
+                " solltest du genügend Arbeiter frei haben. Sie fungieren als Transporteure, wenn sie nichts bauen");
+
+
+        _de.Add("HireDocker.Quest", "Quest: Einen Hafenarbeiter anstellen. Die Aufgabe von Hafenarbeitern besteht nur darin, die Waren aus dem Lager in das Dock zu verschieben, wenn sie exportiert werden sollen."+
             " Natürlich auch umgekehrt beim Import. Sie arbeiten, wenn eine Bestellung vorliegt und die Ware transportbereit ist. Ansonsten bleiben sie zu Hause und ruhen sich aus." +
                 " Wie du hast noch kein Dock gebaut? Dann wird´s aber Zeit ein zu bauen."+
-            " Du findest es unter Handel." },
+            " Du findest es unter Handel." );
 
 
-            { "Export.Quest", "Quest: Erstelle im Dock einen Auftrag und exportiere genau 300 " + Unit.CurrentWeightUnitsString() + " Bohnen."+
+        _de.Add("Export.Quest", "Quest: Erstelle im Dock einen Auftrag und exportiere genau 300 " + Unit.CurrentWeightUnitsString() + " Bohnen."+
                 " Klicke im Dock auf die Registerkarte 'Bestellungen' und füge einen Exportauftrag mit dem "+" - Zeichen hinzu."+
-            " Produkt auswählen und Betrag eingeben"},
+            " Produkt auswählen und Betrag eingeben");
 
 
 
-            { "MakeBucks.Quest", "Quest: Verdiene $ 100 beim Export von Waren im Dock. "+
-            "Sobald ein Schiff ankommt, werden die Produkte nach dem Zufallsprinzip im Inventar Ihres Docks bezahlt"},
-            { "HeavyLoad.Quest", "Quest: Baue ein Schwerlastgebäude. Dies sind Spediteure, die mehr Gewicht tragen können. Sie werden nützlich sein, wenn der Transport von Gütern erforderlich ist." }, //In den Lagern der Städte müssen Karren vorhanden sein, damit sie arbeiten können"},
-            { "HireHeavy.Quest", "Quest: Im Schwerlastgebäude einen Schwerlasttransporteur einstellen."},
+        _de.Add("MakeBucks.Quest", "Quest: Verdiene $ 100 beim Export von Waren im Dock. "+
+            "Sobald ein Schiff ankommt, werden die Produkte nach dem Zufallsprinzip im Inventar Ihres Docks bezahlt");
+        _de.Add("HeavyLoad.Quest", "Quest: Baue ein Schwerlastgebäude. Dies sind Spediteure, die mehr Gewicht tragen können. Sie werden nützlich sein, wenn der Transport von Gütern erforderlich ist." ); //In den Lagern der Städte müssen Karren vorhanden sein, damit sie arbeiten können");
+        _de.Add("HireHeavy.Quest", "Quest: Im Schwerlastgebäude einen Schwerlasttransporteur einstellen.");
 
 
-            { "ImportOil.Quest", "Quest: Importiere 500 " + Unit.CurrentWeightUnitsString() + " Walöl über das Dock. Dies ist erforderlich, um Lichter nachts eingeschaltet zu lassen. Schiffe werden Importe zufällig im Inventar Ihres Dock ablegen"},
+        _de.Add("ImportOil.Quest", "Quest: Importiere 500 " + Unit.CurrentWeightUnitsString() + " Walöl über das Dock. Dies ist erforderlich, um Lichter nachts eingeschaltet zu lassen. Schiffe werden Importe zufällig im Inventar Ihres Dock ablegen");
 
-            { "Population50.Quest", "Erreiche eine Gesamtbevölkerung von 50 Einwohnern"},
+        _de.Add("Population50.Quest", "Erreiche eine Gesamtbevölkerung von 50 Einwohnern");
 
             //added Aug 11 2017, result: sep 9(30% off biggest sale ever)
-            { "Production.Quest", "Lass uns jetzt ein paar Waffen herstellen und später verkaufen. Baue zuerst einen Schmied. Diesen findest du im 'Güter' Gebäudemenü"},
-            { "ChangeProductToWeapon.Quest", "Im 'Produkte Tab' des Schmieds änderst du die Produktion in Waffen. Die Arbeiter bringen das Rohmaterial mit, wenn es vorrätig ist, um Waffen zu schmieden"},
-            { "BlackSmithHire.Quest", "Stelle zwei Schmiedegesellen ein"},
-            { "WeaponsProduce.Quest", "Nun produziere " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " Waffen in der Schmiede. Klicke auf die Registerkarte 'Stat' und zeige die Produktion der letzten 5 Jahre an. Du kannst den Questfortschritt im Questfenster verfolgen."},
-            { "ExportWeapons.Quest", "Nun exportiere 100 " + Unit.CurrentWeightUnitsString() + " Waffen. Füge im Dock eine Bestellung für den Export hinzu. Denke stets daran dass Waffen ein sehr profitables Geschäft sind"},
+        _de.Add("Production.Quest", "Lass uns jetzt ein paar Waffen herstellen und später verkaufen. Baue zuerst einen Schmied. Diesen findest du im 'Güter' Gebäudemenü");
+        _de.Add("ChangeProductToWeapon.Quest", "Im 'Produkte Tab' des Schmieds änderst du die Produktion in Waffen. Die Arbeiter bringen das Rohmaterial mit, wenn es vorrätig ist, um Waffen zu schmieden");
+        _de.Add("BlackSmithHire.Quest", "Stelle zwei Schmiedegesellen ein");
+        _de.Add("WeaponsProduce.Quest", "Nun produziere " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " Waffen in der Schmiede. Klicke auf die Registerkarte 'Stat' und zeige die Produktion der letzten 5 Jahre an. Du kannst den Questfortschritt im Questfenster verfolgen.");
+        _de.Add("ExportWeapons.Quest", "Nun exportiere 100 " + Unit.CurrentWeightUnitsString() + " Waffen. Füge im Dock eine Bestellung für den Export hinzu. Denke stets daran dass Waffen ein sehr profitables Geschäft sind");
 
 
-            {"CompleteQuest", "Deine Belohnung ist {0}"},
+        _de.Add("CompleteQuest", "Deine Belohnung ist {0}");
 
 
             //added Sep 14 2017
-            { "BuildFishingHut.Quest", "Baue eine Fischerhütte. Auf diese Weise haben die Bürger verschiedene Nahrungsmittel zur Verfügung, was sich in Zufriedenheit niederschlägt"},
-            { "HireFisher.Quest", "Stelle einen Fischer ein"},
+        _de.Add("BuildFishingHut.Quest", "Baue eine Fischerhütte. Auf diese Weise haben die Bürger verschiedene Nahrungsmittel zur Verfügung, was sich in Zufriedenheit niederschlägt");
+        _de.Add("HireFisher.Quest", "Stelle einen Fischer ein");
 
-            { "BuildLumber.Quest", "Baue eine Holzfällermühle. Du findest sie im Gebäude-Menü unter 'Güter'"},
-            { "HireLumberJack.Quest", "Stelle einen Holzfäller ein"},
+        _de.Add("BuildLumber.Quest", "Baue eine Holzfällermühle. Du findest sie im Gebäude-Menü unter 'Güter'");
+        _de.Add("HireLumberJack.Quest", "Stelle einen Holzfäller ein");
 
-            { "BuildGunPowder.Quest", "Baue eine Schießpulverfabrik. Du findest sie im Gebäude-Menü unter 'Industrie'"},
-            { "ImportSulfur.Quest", "Importiere bei den Docks 1000 " + Unit.CurrentWeightUnitsString() + " Schwefel"},
-            { "GunPowderHire.Quest", "Stelle einen Arbeiter für die Schießpulverfabrik ein"},
+        _de.Add("BuildGunPowder.Quest", "Baue eine Schießpulverfabrik. Du findest sie im Gebäude-Menü unter 'Industrie'");
+        _de.Add("ImportSulfur.Quest", "Importiere bei den Docks 1000 " + Unit.CurrentWeightUnitsString() + " Schwefel");
+        _de.Add("GunPowderHire.Quest", "Stelle einen Arbeiter für die Schießpulverfabrik ein");
 
-            { "ImportPotassium.Quest", "Importiere bei den Docks 1000 " + Unit.CurrentWeightUnitsString() + " Kalium"},
-            { "ImportCoal.Quest", "Importiere bei den Docks 1000 " + Unit.CurrentWeightUnitsString() + " K"},
+        _de.Add("ImportPotassium.Quest", "Importiere bei den Docks 1000 " + Unit.CurrentWeightUnitsString() + " Kalium");
+        _de.Add("ImportCoal.Quest", "Importiere bei den Docks 1000 " + Unit.CurrentWeightUnitsString() + " K");
 
-            { "ProduceGunPowder.Quest", "Produziere nun " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " Schießpulver. Beachte, dass du Schwefel, Kalium und Kohle benötigst, um Schießpulver herzustellen"},
-            { "ExportGunPowder.Quest", "Exportiere bei den Docks 100 " + Unit.CurrentWeightUnitsString() + " Schießpulver"},
+        _de.Add("ProduceGunPowder.Quest", "Produziere nun " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " Schießpulver. Beachte, dass du Schwefel, Kalium und Kohle benötigst, um Schießpulver herzustellen");
+        _de.Add("ExportGunPowder.Quest", "Exportiere bei den Docks 100 " + Unit.CurrentWeightUnitsString() + " Schießpulver");
 
-            { "BuildLargeShack.Quest", "Baue eine große Hütte. In diesen größeren Häusern  wird die Bevölkerung schneller wachsen"},
+        _de.Add("BuildLargeShack.Quest", "Baue eine große Hütte. In diesen größeren Häusern  wird die Bevölkerung schneller wachsen");
 
-            { "BuildA2ndDock.Quest", "Baue ein zweites Dock. Dieses Dock kann nur für Importe verwendet werden. Auf diese Weise kannst du Rohstoffe hier importieren und an einem anderen Dock exportieren"},
-            { "Rename2ndDock.Quest", "Benenne die Docks jetzt um, so dass du leichter erkennst, welche nur für Importe und welche für Exporte verwendet werden"},
+        _de.Add("BuildA2ndDock.Quest", "Baue ein zweites Dock. Dieses Dock kann nur für Importe verwendet werden. Auf diese Weise kannst du Rohstoffe hier importieren und an einem anderen Dock exportieren");
+        _de.Add("Rename2ndDock.Quest", "Benenne die Docks jetzt um, so dass du leichter erkennst, welche nur für Importe und welche für Exporte verwendet werden");
 
-            { "Import2000Wood.Quest", "Imporitier nun auf dem Importdock 2000 " + Unit.CurrentWeightUnitsString() + " Holz. Dieses Rohmaterial wird für alles benötigt, allerdings auch als Brennstoff"},
+        _de.Add("Import2000Wood.Quest", "Imporitier nun auf dem Importdock 2000 " + Unit.CurrentWeightUnitsString() + " Holz. Dieses Rohmaterial wird für alles benötigt, allerdings auch als Brennstoff");
 
             //IT HAS FINAL MESSAGE 
             //last quest it has a final message to the player. if new quest added please put the final message in the last quest
-            { "Import2000Coal.Quest", "Imortiere nun im Importdock 2000 " + Unit.CurrentWeightUnitsString() + " Kohle. Kohle wird auch für alles benötigt, weil sie als Brennstoff verwendet wird. Ich hoffe, du genießt die bisherige Spielerfahrung. Erweitere deine Kolonie und deinen Wohlstand. Bitte hilf auch mit das Spiel zu verbessern. Beteilige dich an unserem Online-Forum, denn deine Stimme und deine Meinung sind wichtig! Viel Spaß Sugarmiller!"},
+        _de.Add("Import2000Coal.Quest", "Imortiere nun im Importdock 2000 " + Unit.CurrentWeightUnitsString() + " Kohle. Kohle wird auch für alles benötigt, weil sie als Brennstoff verwendet wird. Ich hoffe, du genießt die bisherige Spielerfahrung. Erweitere deine Kolonie und deinen Wohlstand. Bitte hilf auch mit das Spiel zu verbessern. Beteilige dich an unserem Online-Forum, denn deine Stimme und deine Meinung sind wichtig! Viel Spaß Sugarmiller!");
 
             //
 
 
 
             //Quest Titles
-            { "Tutorial.Quest.Title", "Tutorial"},
-            { "Lamp.Quest.Title", "Straßenlaterne"},
+        _de.Add("Tutorial.Quest.Title", "Tutorial");
+        _de.Add("Lamp.Quest.Title", "Straßenlaterne");
 
-            { "Shack.Quest.Title", "Baue eine Hütte"},
-            { "SmallFarm.Quest.Title", "Baue ein Farmfeld"},
-            { "FarmHire.Quest.Title", "Stelle zwei Farmer ein"},
+        _de.Add("Shack.Quest.Title", "Baue eine Hütte");
+        _de.Add("SmallFarm.Quest.Title", "Baue ein Farmfeld");
+        _de.Add("FarmHire.Quest.Title", "Stelle zwei Farmer ein");
 
 
-            { "FarmProduce.Quest.Title", "Landwirtschaftlicher Produzent"},
+        _de.Add("FarmProduce.Quest.Title", "Landwirtschaftlicher Produzent");
 
-            { "Export.Quest.Title", "Exporte"},
-            { "HireDocker.Quest.Title", "Stelle einen Dockarbeiter ein"},
-            { "MakeBucks.Quest.Title", "Verdiene Geld"},
-            { "HeavyLoad.Quest.Title", "Schwerlasttransport"},
-            { "HireHeavy.Quest.Title", "Stelle einen Schwerlasttransporteur ein"},
+        _de.Add("Export.Quest.Title", "Exporte");
+        _de.Add("HireDocker.Quest.Title", "Stelle einen Dockarbeiter ein");
+        _de.Add("MakeBucks.Quest.Title", "Verdiene Geld");
+        _de.Add("HeavyLoad.Quest.Title", "Schwerlasttransport");
+        _de.Add("HireHeavy.Quest.Title", "Stelle einen Schwerlasttransporteur ein");
 
-            { "ImportOil.Quest.Title", "Walöl"},
+        _de.Add("ImportOil.Quest.Title", "Walöl");
 
-            { "Population50.Quest.Title", "50 Einwohner"},
+        _de.Add("Population50.Quest.Title", "50 Einwohner");
             
             //
-            { "Production.Quest.Title", "Stelle Waffen her"},
-            { "ChangeProductToWeapon.Quest.Title", "Ändere ein Produkt"},
-            { "BlackSmithHire.Quest.Title", "Stelle zwei Schmiedegesellen ein"},
-            { "WeaponsProduce.Quest.Title", "Schmiede Waffen"},
-            { "ExportWeapons.Quest.Title", "Mach ordentlich Profit" },
+        _de.Add("Production.Quest.Title", "Stelle Waffen her");
+        _de.Add("ChangeProductToWeapon.Quest.Title", "Ändere ein Produkt");
+        _de.Add("BlackSmithHire.Quest.Title", "Stelle zwei Schmiedegesellen ein");
+        _de.Add("WeaponsProduce.Quest.Title", "Schmiede Waffen");
+        _de.Add("ExportWeapons.Quest.Title", "Mach ordentlich Profit" );
             
             //
-            { "BuildFishingHut.Quest.Title", "Baue eine Fischerhütte"},
-            { "HireFisher.Quest.Title", "Stelle einen Fischer ein"},
-            { "BuildLumber.Quest.Title", "Baue eine Sägemühle"},
-            { "HireLumberJack.Quest.Title", "Stelle einen Holzfäller ein"},
-            { "BuildGunPowder.Quest.Title", "Baue eine Schießpulverfabrik"},
-            { "ImportSulfur.Quest.Title", "Imortiere Schwefel"},
-            { "GunPowderHire.Quest.Title", "Stelle einen Schießpulverfabrikarbeiter ein"},
-            { "ImportPotassium.Quest.Title", "Importiere Kalium"},
-            { "ImportCoal.Quest.Title", "Importiere Kohle"},
-            { "ProduceGunPowder.Quest.Title", "Stelle Schießpulver her"},
-            { "ExportGunPowder.Quest.Title", "Exortiere Schießpulver"},
-            { "BuildLargeShack.Quest.Title", "Baue eine große Hütte"},
-            { "BuildA2ndDock.Quest.Title", "Baue ein zweites Dock"},
-            { "Rename2ndDock.Quest.Title", "Benenne das zweite Dock um"},
-            { "Import2000Wood.Quest.Title", "Importiere etwas Holz"},
-            { "Import2000Coal.Quest.Title", "Importiere etwas Kohle"},
+        _de.Add("BuildFishingHut.Quest.Title", "Baue eine Fischerhütte");
+        _de.Add("HireFisher.Quest.Title", "Stelle einen Fischer ein");
+        _de.Add("BuildLumber.Quest.Title", "Baue eine Sägemühle");
+        _de.Add("HireLumberJack.Quest.Title", "Stelle einen Holzfäller ein");
+        _de.Add("BuildGunPowder.Quest.Title", "Baue eine Schießpulverfabrik");
+        _de.Add("ImportSulfur.Quest.Title", "Imortiere Schwefel");
+        _de.Add("GunPowderHire.Quest.Title", "Stelle einen Schießpulverfabrikarbeiter ein");
+        _de.Add("ImportPotassium.Quest.Title", "Importiere Kalium");
+        _de.Add("ImportCoal.Quest.Title", "Importiere Kohle");
+        _de.Add("ProduceGunPowder.Quest.Title", "Stelle Schießpulver her");
+        _de.Add("ExportGunPowder.Quest.Title", "Exortiere Schießpulver");
+        _de.Add("BuildLargeShack.Quest.Title", "Baue eine große Hütte");
+        _de.Add("BuildA2ndDock.Quest.Title", "Baue ein zweites Dock");
+        _de.Add("Rename2ndDock.Quest.Title", "Benenne das zweite Dock um");
+        _de.Add("Import2000Wood.Quest.Title", "Importiere etwas Holz");
+        _de.Add("Import2000Coal.Quest.Title", "Importiere etwas Kohle");
 
 
 
 
-            {"Tutorial.Arrow", "Dies ist das Tutorial. Sobald du es abgeschlossen hast, kannst du 10.000 $ einsacken"},
-            {"Quest.Arrow", "Dies ist der Quest-Button. Du kannst hier auf das Questfenster zugreifen, indem du darauf klickst"},
-            {"New.Quest.Avail", "Mindestens eine Quest ist verfügbar"},
-            {"Quest_Button.HoverSmall", "Quest"},
+        _de.Add("Tutorial.Arrow", "Dies ist das Tutorial. Sobald du es abgeschlossen hast, kannst du 10.000 $ einsacken");
+        _de.Add("Quest.Arrow", "Dies ist der Quest-Button. Du kannst hier auf das Questfenster zugreifen, indem du darauf klickst");
+        _de.Add("New.Quest.Avail", "Mindestens eine Quest ist verfügbar");
+        _de.Add("Quest_Button.HoverSmall", "Quest");
 
 
 
             //Products
             //Notification.Init()
-            {"RandomFoundryOutput", "Geschmolzenes Erz"},
+        _de.Add("RandomFoundryOutput", "Geschmolzenes Erz");
 
             //OrderShow.ShowToSetCurrentProduct()
-            { "RandomFoundryOutput (Ore, Wood)", "Geschmolzenes Erz (Erz, Holz)"},
+        _de.Add("RandomFoundryOutput (Ore, Wood)", "Geschmolzenes Erz (Erz, Holz)");
 
 
 
             //Bulleting helps
-            {"Help.Bulletin/Prod/Produce", "Hier wird angezeigt, was im Dorf produziert wird."},
-            {"Help.Bulletin/Prod/Expire", "Hier wird angezeigt, was im Dorf an Waren verfallen ist."},
-            {"Help.Bulletin/Prod/Consume", "Hier wird angezeigt, was von deinen Leuten verbraucht wird."},
+        _de.Add("Help.Bulletin/Prod/Produce", "Hier wird angezeigt, was im Dorf produziert wird.");
+        _de.Add("Help.Bulletin/Prod/Expire", "Hier wird angezeigt, was im Dorf an Waren verfallen ist.");
+        _de.Add("Help.Bulletin/Prod/Consume", "Hier wird angezeigt, was von deinen Leuten verbraucht wird.");
 
-            {"Help.Bulletin/Prod/Spec", "In diesem Fenster kannst du die für jedes Produkt erforderlichen Materialien sehen, wo es hergestellt wird und den Preis. "
-            + "Scrolle nach oben, um die Kopfzeilen anzuzeigen. Beachte dass ein einfaches Produkt mehr als nur ein Grundprodukt sein kann."},
+        _de.Add("Help.Bulletin/Prod/Spec", "In diesem Fenster kannst du die für jedes Produkt erforderlichen Materialien sehen, wo es hergestellt wird und den Preis. "
+            + "Scrolle nach oben, um die Kopfzeilen anzuzeigen. Beachte dass ein einfaches Produkt mehr als nur ein Grundprodukt sein kann.");
 
-            {"Help.Bulletin/General/Buildings", "Dies ist eine Zusammenfassung wie viele Gebäude von jedem Typ es gibt."},
+        _de.Add("Help.Bulletin/General/Buildings", "Dies ist eine Zusammenfassung wie viele Gebäude von jedem Typ es gibt.");
 
-            {"Help.Bulletin/General/Workers", "In diesem Fenster können Arbeiter für verschiedene Gebäude zugewiesen werden. "
-            + "Damit ein Gebäude mehr Menschen Arbeit bieten kann, muss es unter der Kapazität liegen und muss mindestens einen Arbeitslosen finden."},
+        _de.Add("Help.Bulletin/General/Workers", "In diesem Fenster können Arbeiter für verschiedene Gebäude zugewiesen werden. "
+            + "Damit ein Gebäude mehr Menschen Arbeit bieten kann, muss es unter der Kapazität liegen und muss mindestens einen Arbeitslosen finden.");
 
-            {"Help.Bulletin/Finance/Ledger", "Here is shown your ledger. Salary is the amount of money paid to a worker. The more people working the more salary will be paid out."},
-            {"Help.Bulletin/Finance/Exports", "Ein Zusammenbruch der Exporte"},
-            {"Help.Bulletin/Finance/Imports", "Ein Zusammenbruch der Importe"},
-
-
-            { "Help.Bulletin/Finance/Prices", "...."},
+        _de.Add("Help.Bulletin/Finance/Ledger", "Here is shown your ledger. Salary is the amount of money paid to a worker. The more people working the more salary will be paid out.");
+        _de.Add("Help.Bulletin/Finance/Exports", "Ein Zusammenbruch der Exporte");
+        _de.Add("Help.Bulletin/Finance/Imports", "Ein Zusammenbruch der Importe");
 
 
-            {"LoadWontFit", "Diese Ladung passt nicht in den Lagerbereich"},
+        _de.Add("Help.Bulletin/Finance/Prices", "....");
 
-            {"Missing.Input", "Gebäude kann nicht produzieren (Materialien müssen sich im Gebäudeinventar befinden). Fehlende Materialien: \n" },
+
+        _de.Add("LoadWontFit", "Diese Ladung passt nicht in den Lagerbereich");
+
+        _de.Add("Missing.Input", "Gebäude kann nicht produzieren (Materialien müssen sich im Gebäudeinventar befinden). Fehlende Materialien: \n" );
 
 
 
@@ -745,270 +745,436 @@ public class German
 
             //in game
             
-            { "Buildings.Ready", "\n Gebäude fertig zum Bauen:"},
-            { "People.Living", "Menschen, die in diesem Haus leben:"},
-            { "Occupied:", "Gefüllt:"},
-            { "|| Capacity:", "|| Kapazität:"},
-            { "Users:", "\nUsers:"},
-            { "Amt.Cant.Be.0", "Menge kann nicht 0 sein "},
-            { "Prod.Not.Select", "Bitte wähle ein Produkt"},
+        _de.Add("Buildings.Ready", "\n Gebäude fertig zum Bauen:");
+        _de.Add("People.Living", "Menschen, die in diesem Haus leben:");
+        _de.Add("Occupied:", "Gefüllt:");
+        _de.Add("|| Capacity:", "|| Kapazität:");
+        _de.Add("Users:", "\nUsers:");
+        _de.Add("Amt.Cant.Be.0", "Menge kann nicht 0 sein ");
+        _de.Add("Prod.Not.Select", "Bitte wähle ein Produkt");
 
 
             //articles
-            { "The.Male", "Der"},
-            { "The.Female", "Die"},
+        _de.Add("The.Male", "Der");
+        _de.Add("The.Female", "Die");
 
             //
-            { "Build.Destroy.Soon", "Dieses Gebäude wird bald zerstört. Wenn das Inventar nicht leer ist, muss es mit Schubkarren abtransportiert werden"},
+        _de.Add("Build.Destroy.Soon", "Dieses Gebäude wird bald zerstört. Wenn das Inventar nicht leer ist, muss es mit Schubkarren abtransportiert werden");
 
 
 
 
             //words
             //Field Farms
-            { "Bean", "Bohnen"},
-            { "Potato", "Kartoffeln"},
-            { "SugarCane", "Zuckerrohr"},
-            { "Corn", "Getreide"},
-            { "Cotton", "Baumwolle"},
-            { "Banana", "Bananen"},
-            { "Coconut", "Kokosnüsse"},
+        _de.Add("Bean", "Bohnen");
+        _de.Add("Potato", "Kartoffeln");
+        _de.Add("SugarCane", "Zuckerrohr");
+        _de.Add("Corn", "Getreide");
+        _de.Add("Cotton", "Baumwolle");
+        _de.Add("Banana", "Bananen");
+        _de.Add("Coconut", "Kokosnüsse");
             //Animal Farm
-            { "Chicken", "Hühner"},
-            { "Egg", "Eier"},
-            { "Pork", "Schweine"},
-            { "Beef", "Rindfleisch"},
-            { "Leather", "Leder"},
-            { "Fish", "Fisch"},
+        _de.Add("Chicken", "Hühner");
+        _de.Add("Egg", "Eier");
+        _de.Add("Pork", "Schweine");
+        _de.Add("Beef", "Rindfleisch");
+        _de.Add("Leather", "Leder");
+        _de.Add("Fish", "Fisch");
             //mines
-            { "Gold", "Gold"},
-            { "Stone", "Stein"},
-            { "Iron", "Eisen"},
+        _de.Add("Gold", "Gold");
+        _de.Add("Stone", "Stein");
+        _de.Add("Iron", "Eisen");
 
-            // { "Clay", "Lehm"},
-            { "Ceramic", "Keramik"},
-            { "Wood", "Holz"},
+            // { "Clay", "Lehm");
+        _de.Add("Ceramic", "Keramik");
+        _de.Add("Wood", "Holz");
 
             //Prod
-            { "Tool", "Werkzeuge"},
-            { "Tonel", "Ton"},
-            { "Cigar", "Zigarren"},
-            { "Tile", "Ziegel"},
-            { "Fabric", "Fabrik"},
-            { "Paper", "Papier"},
-            { "Map", "Karte"},
-            { "Book", "Buch"},
-            { "Sugar", "Zucker"},
-            { "None", "Nichts"},
+        _de.Add("Tool", "Werkzeuge");
+        _de.Add("Tonel", "Ton");
+        _de.Add("Cigar", "Zigarren");
+        _de.Add("Tile", "Ziegel");
+        _de.Add("Fabric", "Fabrik");
+        _de.Add("Paper", "Papier");
+        _de.Add("Map", "Karte");
+        _de.Add("Book", "Buch");
+        _de.Add("Sugar", "Zucker");
+        _de.Add("None", "Nichts");
             //
-            { "Person", "Person"},
-            { "Food", "Nahrung"},
-            { "Dollar", "Dollar"},
-            { "Salt", "Salz"},
-            { "Coal", "Kohle"},
-            { "Sulfur", "Schwefel"},
-            { "Potassium", "Kalium"},
-            { "Silver", "Silber"},
-            { "Henequen", "Agave"},
+        _de.Add("Person", "Person");
+        _de.Add("Food", "Nahrung");
+        _de.Add("Dollar", "Dollar");
+        _de.Add("Salt", "Salz");
+        _de.Add("Coal", "Kohle");
+        _de.Add("Sulfur", "Schwefel");
+        _de.Add("Potassium", "Kalium");
+        _de.Add("Silver", "Silber");
+        _de.Add("Henequen", "Agave");
             //
-            { "Sail", "Segel"},
-            { "String", "Seil"},
-            { "Nail", "Nägel"},
-            { "CannonBall", "Kanonenkugel"},
-            { "TobaccoLeaf", "Tabakblatt"},
-            { "CoffeeBean", "Kaffebohne"},
-            { "Cacao", "Kakao"},
-            { "Weapon", "Waffe"},
-            { "WheelBarrow", "Schubkarre"},
-            { "WhaleOil", "Walöl"},
+        _de.Add("Sail", "Segel");
+        _de.Add("String", "Seil");
+        _de.Add("Nail", "Nägel");
+        _de.Add("CannonBall", "Kanonenkugel");
+        _de.Add("TobaccoLeaf", "Tabakblatt");
+        _de.Add("CoffeeBean", "Kaffebohne");
+        _de.Add("Cacao", "Kakao");
+        _de.Add("Weapon", "Waffe");
+        _de.Add("WheelBarrow", "Schubkarre");
+        _de.Add("WhaleOil", "Walöl");
             //
-            { "Diamond", "Diamanten"},
-            { "Jewel", "Juwelen"},
-            { "Rum", "Rum"},
-            { "Wine", "Wein"},
-            { "Ore", "Erz"},
-            { "Crate", "Kiste"},
-            { "Coin", "Münzen"},
-            { "CannonPart", "Kanonenteil"},
-            { "Steel", "Stahl"},
+        _de.Add("Diamond", "Diamanten");
+        _de.Add("Jewel", "Juwelen");
+        _de.Add("Rum", "Rum");
+        _de.Add("Wine", "Wein");
+        _de.Add("Ore", "Erz");
+        _de.Add("Crate", "Kiste");
+        _de.Add("Coin", "Münzen");
+        _de.Add("CannonPart", "Kanonenteil");
+        _de.Add("Steel", "Stahl");
             //
-            { "CornFlower", "Sonnenblume"},
-            { "Bread", "Brot"},
-            { "Carrot", "Karotte"},
-            { "Tomato", "Tomate"},
-            { "Cucumber", "Gurke"},
-            { "Cabbage", "Kohl"},
-            { "Lettuce", "Grüner Salat"},
-            { "SweetPotato", "Süßkartoffel"},
-            { "Yucca", "Yucca"},
-            { "Pineapple", "Ananas"},
+        _de.Add("CornFlower", "Sonnenblume");
+        _de.Add("Bread", "Brot");
+        _de.Add("Carrot", "Karotte");
+        _de.Add("Tomato", "Tomate");
+        _de.Add("Cucumber", "Gurke");
+        _de.Add("Cabbage", "Kohl");
+        _de.Add("Lettuce", "Grüner Salat");
+        _de.Add("SweetPotato", "Süßkartoffel");
+        _de.Add("Yucca", "Yucca");
+        _de.Add("Pineapple", "Ananas");
             //
-            { "Papaya", "Papaya"},
-            { "Wool", "Wolle"},
-            { "Shoe", "Schuh"},
-            { "CigarBox", "Zigarrenkiste"},
-            { "Water", "Wasser"},
-            { "Beer", "Bier"},
-            { "Honey", "Honig"},
-            { "Bucket", "Eimer"},
-            { "Cart", "Wagen"},
-            { "RoofTile", "Dachteil"},
-            { "FloorTile", "Bodenteil"},
-            { "Furniture", "Möbel"},
-            { "Crockery", "Geschirr"},
+        _de.Add("Papaya", "Papaya");
+        _de.Add("Wool", "Wolle");
+        _de.Add("Shoe", "Schuh");
+        _de.Add("CigarBox", "Zigarrenkiste");
+        _de.Add("Water", "Wasser");
+        _de.Add("Beer", "Bier");
+        _de.Add("Honey", "Honig");
+        _de.Add("Bucket", "Eimer");
+        _de.Add("Cart", "Wagen");
+        _de.Add("RoofTile", "Dachteil");
+        _de.Add("FloorTile", "Bodenteil");
+        _de.Add("Furniture", "Möbel");
+        _de.Add("Crockery", "Geschirr");
 
-            { "Utensil", "Utensilien"},
-            { "Stop", "Stop"},
+        _de.Add("Utensil", "Utensilien");
+        _de.Add("Stop", "Stop");
 
 
             //more Main GUI
-            { "Workers distribution", "Arbeiterverteilung"},
-            { "Buildings", "Gebäude"},
+        _de.Add("Workers distribution", "Arbeiterverteilung");
+        _de.Add("Buildings", "Gebäude");
 
-            { "Age", "Alter"},
-            { "Gender", "Geschlecht"},
-            { "Height", "Größe"},
-            { "Weight", "Gewicht"},
-            { "Calories", "Kalorien"},
-            { "Nutrition", "Ernährung"},
-            { "Profession", "Beruf"},
-            { "Spouse", "Ehepartner"},
-            { "Happinness", "Zufriedenheit"},
-            { "Years Of School", "Schuljahre"},
-            { "Age majority reach", "Alter mehrheitlich erreicht"},
-            { "Home", "Zuhause"},
-            { "Work", "Arbeit"},
-            { "Food Source", "Nahrungsquellen"},
-            { "Religion", "Religion"},
-            { "Chill", "Ausgeruhtheit"},
-            { "Thirst", "Durst"},
-            { "Account", "Konto"},
+        _de.Add("Age", "Alter");
+        _de.Add("Gender", "Geschlecht");
+        _de.Add("Height", "Größe");
+        _de.Add("Weight", "Gewicht");
+        _de.Add("Calories", "Kalorien");
+        _de.Add("Nutrition", "Ernährung");
+        _de.Add("Profession", "Beruf");
+        _de.Add("Spouse", "Ehepartner");
+        _de.Add("Happinness", "Zufriedenheit");
+        _de.Add("Years Of School", "Schuljahre");
+        _de.Add("Age majority reach", "Alter mehrheitlich erreicht");
+        _de.Add("Home", "Zuhause");
+        _de.Add("Work", "Arbeit");
+        _de.Add("Food Source", "Nahrungsquellen");
+        _de.Add("Religion", "Religion");
+        _de.Add("Chill", "Ausgeruhtheit");
+        _de.Add("Thirst", "Durst");
+        _de.Add("Account", "Konto");
 
-            { "Early Access Build", "Early Access Version"},
+        _de.Add("Early Access Build", "Early Access Version");
 
             //Main Menu
-            { "Resume Game", "Spiel fortsetzen"},
-            { "Continue Game", "Spiel fortsetzen"},
-            { "Tutorial(Beta)", "Tutorial(Beta)"},
-            { "New Game", "Neues Spiel"},
-            { "Load Game", "Spiel laden"},
-            { "Save Game", "Spiel speichern"},
-            { "Achievements", "Errungenschaften"},
-            { "Options", "Optionen"},
-            { "Exit", "Beenden"},
+        _de.Add("Resume Game", "Spiel fortsetzen");
+        _de.Add("Continue Game", "Spiel fortsetzen");
+        _de.Add("Tutorial(Beta)", "Tutorial(Beta)");
+        _de.Add("New Game", "Neues Spiel");
+        _de.Add("Load Game", "Spiel laden");
+        _de.Add("Save Game", "Spiel speichern");
+        _de.Add("Achievements", "Errungenschaften");
+        _de.Add("Options", "Optionen");
+        _de.Add("Exit", "Beenden");
             //Screens
             //New Game
-            { "Town Name:", "Stadtname:"},
-            { "Difficulty:", "Schwierigkeitsgrad:"},
-            { "Easy", "Leicht"},
-            { "Moderate", "Moderat"},
-            { "Hard", "Schwer"},
-            { "Type of game:", "Art des Spiels:"},
-            { "Freewill", "Freier Wille"},
-            { "Traditional", "Traditionell"},
-            { "New.Game.Pirates", "Piraten (wenn geprüft, könnte die Stadt einen Piratenangriff erleiden)"},
-            { "New.Game.Expires", "Lebensmittelverfall (wenn geprüfte Lebensmittel mit der Zeit ablaufen)"},
-            { "OK", "OK"},
-            { "Cancel", "Abbruch"},
-            { "Delete", "Löschen"},
-            { "Enter name...", "Namen eingeben..."},
+        _de.Add("Town Name:", "Stadtname:");
+        _de.Add("Difficulty:", "Schwierigkeitsgrad:");
+        _de.Add("Easy", "Leicht");
+        _de.Add("Moderate", "Moderat");
+        _de.Add("Hard", "Schwer");
+        _de.Add("Type of game:", "Art des Spiels:");
+        _de.Add("Freewill", "Freier Wille");
+        _de.Add("Traditional", "Traditionell");
+        _de.Add("New.Game.Pirates", "Piraten (wenn geprüft, könnte die Stadt einen Piratenangriff erleiden)");
+        _de.Add("New.Game.Expires", "Lebensmittelverfall (wenn geprüfte Lebensmittel mit der Zeit ablaufen)");
+        _de.Add("OK", "OK");
+        _de.Add("Cancel", "Abbruch");
+        _de.Add("Delete", "Löschen");
+        _de.Add("Enter name...", "Namen eingeben...");
             //Options
-            { "General", "Allgemein"},
-            { "Unit System:", "Einheitensystem:"},
-            { "Metric", "Metrisch"},
-            { "Imperial", "Imperial"},
-            { "AutoSave Frec:", "Automatisch speichern:"},
-            { "20 min", "20 min"},
-            { "15 min", "15 min"},
-            { "10 min", "10 min"},
-            { "5 min", "5 min"},
-            { "Language:", "Sprache:"},
-            { "English", "Englisch"},
-            { "Camera Sensitivity:", "Kamerasensivität:"},
-            { "Themes", "Themen"},
-            { "Halloween:", "Halloween:"},
-            { "Christmas:", "Weihnachten:"},
-            { "Options.Change.Theme", "Wenn geändert, lade bitte das Spiel einmal neu"},
+        _de.Add("General", "Allgemein");
+        _de.Add("Unit System:", "Einheitensystem:");
+        _de.Add("Metric", "Metrisch");
+        _de.Add("Imperial", "Imperial");
+        _de.Add("AutoSave Frec:", "Automatisch speichern:");
+        _de.Add("20 min", "20 min");
+        _de.Add("15 min", "15 min");
+        _de.Add("10 min", "10 min");
+        _de.Add("5 min", "5 min");
+        _de.Add("Language:", "Sprache:");
+        _de.Add("English", "Englisch");
+        _de.Add("Camera Sensitivity:", "Kamerasensivität:");
+        _de.Add("Themes", "Themen");
+        _de.Add("Halloween:", "Halloween:");
+        _de.Add("Christmas:", "Weihnachten:");
+        _de.Add("Options.Change.Theme", "Wenn geändert, lade bitte das Spiel einmal neu");
 
-            { "Screen", "Bildschirm"},
-            { "Quality:", "Qualität:"},
-            { "Beautiful", "Schön"},
-            { "Fantastic", "Fantastisch"},
-            { "Simple", "Einfach"},
-            { "Good", "Gut"},
-            { "Resolution:", "Auflösung:"},
-            { "FullScreen:", "Vollbild:"},
+        _de.Add("Screen", "Bildschirm");
+        _de.Add("Quality:", "Qualität:");
+        _de.Add("Beautiful", "Schön");
+        _de.Add("Fantastic", "Fantastisch");
+        _de.Add("Simple", "Einfach");
+        _de.Add("Good", "Gut");
+        _de.Add("Resolution:", "Auflösung:");
+        _de.Add("FullScreen:", "Vollbild:");
 
-            { "Audio", "Audio"},
-            { "Music:", "Musik:"},
-            { "Sound:", "Klang:"},
-            { "Newborn", "Neugeborenes"},
-            { "Build Completed", "Bau abgeschlossen"},
-            { "People's Voice", "Volksstimme"},
+        _de.Add("Audio", "Audio");
+        _de.Add("Music:", "Musik:");
+        _de.Add("Sound:", "Klang:");
+        _de.Add("Newborn", "Neugeborenes");
+        _de.Add("Build Completed", "Bau abgeschlossen");
+        _de.Add("People's Voice", "Volksstimme");
             
             //in game gui
-            { "Prod", "Prod"},
-            { "Finance", "Finance"},
+        _de.Add("Prod", "Prod");
+        _de.Add("Finance", "Finance");
 
 
             
             //After Oct 20th 2018
-            { "Resources", "Resources"},
-            { "Dollars", "Dollars"},
-            { "Coming.Soon", "This building is coming soon to the game"},
-            { "Max.Population", "Can't build more houses. Max population reached"},
+        _de.Add("Resources", "Resources");
+        _de.Add("Dollars", "Dollars");
+        _de.Add("Coming.Soon", "This building is coming soon to the game");
+        _de.Add("Max.Population", "Can't build more houses. Max population reached");
 
-            { "To.Unlock", "To unlock: "},
-            { "People", "People"},
-            { "Of.Food", " of food. "},
-            { "Port.Reputation.Least", "Port reputation at least at "},
-            { "Pirate.Threat.Less", "Pirate threat less than "},
-            { "Skip", "Skip"},
+        _de.Add("To.Unlock", "To unlock: ");
+        _de.Add("People", "People");
+        _de.Add("Of.Food", " of food. ");
+        _de.Add("Port.Reputation.Least", "Port reputation at least at ");
+        _de.Add("Pirate.Threat.Less", "Pirate threat less than ");
+        _de.Add("Skip", "Skip");
 
             //After Dec 8, 2018
-            { "ReloadMod.HoverSmall", "Reload Mod Files"},
-            { "isAboveHeight.MaritimeBound", "Building's land portion is below allowed height"},
-            { "arePointsEven.MaritimeBound", "Building's land portion is not in an even terrain"},
-            { "isOnTheFloor.MaritimeBound", "Building's land portion is not at the common height"},
-            { "isBelowHeight.MaritimeBound", "Building's maritime portion must be in the water"},
+        _de.Add("ReloadMod.HoverSmall", "Reload Mod Files");
+        _de.Add("isAboveHeight.MaritimeBound", "Building's land portion is below allowed height");
+        _de.Add("arePointsEven.MaritimeBound", "Building's land portion is not in an even terrain");
+        _de.Add("isOnTheFloor.MaritimeBound", "Building's land portion is not at the common height");
+        _de.Add("isBelowHeight.MaritimeBound", "Building's maritime portion must be in the water");
 
-            { "InLand.Helper", "On Land"},
-            { "InWater.Helper", "On Water"},
+        _de.Add("InLand.Helper", "On Land");
+        _de.Add("InWater.Helper", "On Water");
 
             //After Dec 28, 2018
-            { "Down.HoverSmall", "Decrease Priority"},
-            { "Up.HoverSmall", "Increase Priority"},
-            { "Trash.HoverSmall", "Delete Order"},
-            { "Counting...", "Counting..."},
-            { "Ten Orders Limit", "Ten orders is the limit"},
+        _de.Add("Down.HoverSmall", "Decrease Priority");
+        _de.Add("Up.HoverSmall", "Increase Priority");
+        _de.Add("Trash.HoverSmall", "Delete Order");
+        _de.Add("Counting...", "Counting...");
+        _de.Add("Ten Orders Limit", "Ten orders is the limit");
 
             //After May 1, 2019
-            { "Our inventories:", "Our inventories:"},
-            { "Select Product:", "Select Product:"},
-            { "Current_Rank.HoverSmall", "Number in Queue"},
+        _de.Add("Our inventories:", "Our inventories:");
+        _de.Add("Select Product:", "Select Product:");
+        _de.Add("Current_Rank.HoverSmall", "Number in Queue");
 
-            { "Deutsch(Beta)", "Deutsch(Beta)"},
-            { "Deutsch", "Deutsch"},
+        _de.Add("Deutsch(Beta)", "Deutsch(Beta)");
+        _de.Add("Deutsch", "Deutsch");
 
 
 
-        };
+        //
+        // 
+        // Below It needs to be double checked by Karsten. Dec 20, 2019
+
+        //Dec 14
+
+        //in game gui
+
+        _de.Add("Help", "Aide" );
+        _de.Add("Quest", "Contesté" );
+        _de.Add("Add Order", "Ordre" );
+        _de.Add("Suggest Change", "Suggestions" );
+
+        _de.Add("Panel Control / Bulletin", "Panneau de commande" );
+        _de.Add("Exports", "Exportations" );
+        _de.Add("Ledger", "Comptes" );
+
+        _de.Add("Consume", "Consommée" );
+        _de.Add("Produce", "Produit" );
+        _de.Add("Expire", "Devenue caduque" );
+
+        _de.Add("Spec", "Spécifique" );
+        _de.Add("Input1", "Apport1" );
+        _de.Add("Input2", "Apport2" );
+        _de.Add("Input3", "Apport3" );
+        _de.Add("Building", "Bâtiment" );
+        _de.Add("Price", "Prix" );
+
+        _de.Add("Date", "Date" );
+        _de.Add("Product", "Produit" );
+        _de.Add("Amount", "Quantité" );
+        _de.Add("Transaction", "Transaction" );
+
+        _de.Add("Workers", "Emplois" );
+
+        //Help
+        _de.Add("Bulletin", "Bulletin" );
+        _de.Add("Construction", "Construction" );
+        _de.Add("Happiness", "Félicité" );
+        _de.Add("Horse Carriages", "Carriages" );
+        _de.Add("Inputs", "Billets" );
+        _de.Add("Line production", "La ligne de production" );
+        _de.Add("Our Inventories", "Inventorios" );
+        _de.Add("Inventories Explanation", "Inventorios information" );
+        _de.Add("People Range", "Gamme personnelle" );
+        _de.Add("Pirate Threat", "Menace Pirate" );
+        _de.Add("Population", "Ville" );
+        _de.Add("Port Reputation", "Réputation Port" );
+        _de.Add("Production Tab", "Production Tab" );
+        _de.Add("Products Expiration", "Expiration du produit" );
+        _de.Add("Sea Path", "Route de la mer" );
+        _de.Add("Trading", "Commerce" );
+        _de.Add("Usage of goods", "L'utilisation de produits" );
+        _de.Add("What is Ft3 and M3?", "M3 est ft3?" );
+        _de.Add("WheelBarrows", "Carretilleros" );
+
+          //All Lang Needed for sure
+        
+        _de.Add("Unemployed", "Sans emploi" );
+
+        //Budget
+        _de.Add("Budget Resumen", "Comptes" );
+        _de.Add("Initial Balance", "Solde initial" );
+        _de.Add("Income", "Revenu" );
+        _de.Add("Quests Completion", "Résiliés défis" );
+        _de.Add("Income Subtotal", "Sous-total du revenu" );
+
+        _de.Add("Expenses", "Frais" );
+        _de.Add("New bought lands", "De nouvelles terres achetées" );
+        _de.Add("Salary", "Salaires" );
+        _de.Add("Expenses Subtotal", "Frais Sous-total" );
+
+        _de.Add("Year", "Année" );
+        _de.Add("Imports", "Année" );
+        _de.Add("Balance", "Équilibre" );
+        _de.Add("Year Balance", "Bilan annuel" );
+        _de.Add("Ending Balance", "Solde final" );
+
+
+        _de.Add("Command Keys", "Teclas");
+        _de.Add("Command Keys.Text", "[F1] Ayuda\n[F9] Esconder/Mostrar GUI\n[P] Centra la cámara al Pueblo");
+        _de.Add("Credits", "Créditos");
+        _de.Add("Credits.Text", "Translation:\nCédric Gauché (fr)\nKarsten Eidner (de)");
+        _de.Add("Loading...", "Loading...");
+
+        //Quest window
+
+        _de.Add("ShowQuest.HoverSmall", "Tarea actual");
+        _de.Add("Have Fun", "Diviértete");
+        _de.Add("Current Quest:", "Tarea actual:");
+        _de.Add("Reward: ", "Premio: ");
+        _de.Add("Reward:", "Premio:");
+
+        _de.Add("Status: ", "Estado: ");
+        _de.Add("Status", "Estado");
+        _de.Add("Active", "Activa");
+        _de.Add("Done", "Terminada");
+
+        _de.Add(" of ", " de ");
+
+        //After May 1, 2019
+        _de.Add("Our inventories:", "Nuestros inventarios:");
+        _de.Add("Select Product:", "Selecciona un producto:");
+        _de.Add("Current_Rank.HoverSmall", "Numero en la cola");
+
+        _de.Add("Construction.Progress", "Progreso de la construcción en: ");
+        _de.Add("Warning.This.Building", "Atención: Esta construcción no puede ser construida ahora. Falta material(es):\n");
+        _de.Add("Product.Selected", "Producto seleccionado: ");
+        _de.Add("Harvest.Date", "\nDia de la recogida: ");
+        _de.Add("Progress", "\nProgreso: ");
+
+        //AddOrderWindow.cs
+        _de.Add("Add.New", "Añade Nueva ");
+        _de.Add("Order", " Orden");
+        _de.Add("Import", "Importa");
+        _de.Add("Export", "Exporta");
+        //AddOrderWindow GUI
+        _de.Add("Enter Amount:", "Escribe cantidad:");
+        _de.Add("Enter amount...", "Escribe cantidad...");
+        _de.Add("New Order:", "Orden Nueva:");
+        _de.Add("Product:", "Producto:");
+        _de.Add("Amount:", "Cantidad:");
+        _de.Add("Order total price:", "Precio total de la orden:");
+        _de.Add("Add", "Add");
+
+        //BuildingWindow GUI
+        _de.Add("Product Description:", "Descripción del producto:");
+        _de.Add("Production report by years:", "Reporte productivo:");
+        _de.Add("Import Orders", "Importación");
+        _de.Add("Export Orders", "Exportación");
+        _de.Add("Orders in progress:", "Ordenes actuales:");
+
+        _de.Add("Notifications", "Notificaciones");
+
+		_de.Add("Attention.Production", "Atención: la producción se detuvo. Para reanudar la producción en este edificio, seleccione un producto");
+		_de.Add("Selected product: ", "Producto seleccionado: ");
+		_de.Add("Price: ", "Precio: ");
+		_de.Add(" per ", " por ");
+		_de.Add("Inputs needed per ", "Insumos necesarios por ");
+		_de.Add("Inventory:", "Inventario:");
+
+		_de.Add("CornMeal", "Harina de maíz");
+		_de.Add("PalmLeaf", "Hojas de Palma");
+		_de.Add("Rubber", "Caucho");
+
+        //Dec 9, 2019
+        _de.Add("Barrel", "Barril");
+        _de.Add("Years of school", "Escolaridad");
+        _de.Add("House comfort", "Calidad de Vivienda");
+        _de.Add("Food source", "Bodega");
+        _de.Add("Relax", "Relajamiento");
+        _de.Add("Male", "Masculino");
+        _de.Add("Female", "Femenino");
+        _de.Add("Quenched", "Saciada");
+
+        _de.Add("Sand", "Arena");
+        _de.Add("Machinery", "Maquinaria");
+        _de.Add("Cassava", "Yuca");
+        _de.Add("Candy", "Caramelo");
+
+        //After Dec 28, 2018
+        _de.Add("Down.HoverSmall", "Increase Priority");
+        _de.Add("Up.HoverSmall", "Decrease Priority");
+        _de.Add("Trash.HoverSmall", "Borrar Orden");
+        _de.Add("Counting...", "Contando...");
+        _de.Add("Ten Orders Limit", "Diez ordenes es el límite");
+
 
     }
 
     internal static void Clear()
     {
-        _german.Clear();
+        _de.Clear();
     }
 
-    internal static Dictionary<string, string> Dictionary()
+    public static string ReturnValueWithKey(string key)
     {
-        return _german;
+        return _de.ReturnValueWithKey(key);
     }
-    
+
     public static bool ContainsKey(string key)
     {
-        return _german.ContainsKey(key);
+        return _de.ContainsKey(key);
     }
 
 }
