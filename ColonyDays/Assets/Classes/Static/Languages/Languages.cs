@@ -1259,7 +1259,7 @@ public class Languages
             }
             return "fr:" + key;
         }
-        else if (_currentLang == "Deutsch(Beta)")
+        else if (_currentLang == "Deutsch")
         {
             if (German.ContainsKey(key))
             {
@@ -1330,7 +1330,7 @@ public class Languages
         }
         if (_currentLang == "Português(Beta)") return _portuguese;
         if (_currentLang == "Français(Beta)") return _fr.Dictionary;
-        if (_currentLang == "Deutsch(Beta)") return _de.Dictionary;
+        if (_currentLang == "Deutsch") return _de.Dictionary;
 
         return _en.Dictionary;
     }

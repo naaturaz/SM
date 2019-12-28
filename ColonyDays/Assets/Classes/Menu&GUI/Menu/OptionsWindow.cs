@@ -341,8 +341,10 @@ public class OptionsWindow : GUIElement
         SetButtonsList(_langBtn);
         List<string> names = new List<string>()
         {
-            "English", "Español(Beta)",
-            "Français(Beta)", "Deutsch(Beta)",
+            "English",
+            //"Español(Beta)",
+            //"Français(Beta)",
+            "Deutsch",
             //"Português(Beta)"
         };
 
