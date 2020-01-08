@@ -1037,7 +1037,7 @@ public class Languages
         _en.Add("Command Keys.Text", "[F1] Help\n[F9] Hide/Show GUI\n[P] Centers Camera to Town");
 
         _en.Add("Credits", "Credits");
-        _en.Add("Credits.Text", "Traduccion:\nCédric Gauché (fr)\nKarsten Eidner (de)");
+        _en.Add("Credits.Text", "Translation:\nCédric Gauché (fr)\nKarsten Eidner (de)");
 
 
         //All Lang Needed for sure
