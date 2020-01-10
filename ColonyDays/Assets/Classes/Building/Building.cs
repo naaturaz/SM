@@ -1060,12 +1060,13 @@ public class Building : Hoverable, Iinfo
         //UVisHelp.CreateHelpers(GetAnchors(), Root.blueCube);
     }
 
-
     bool wasPersonControlRestarted;
     private bool debugShowAnchors;
     //this need to be called in derived classes 
     protected new void Update()
     {
+        if (progress != null) progress.Update();
+
         CheckIfStaleInventoryOnDock();
         //DebugShowAnchors();
         SetLineUpVertexs();
@@ -1541,10 +1542,7 @@ public class Building : Hoverable, Iinfo
         }
     }
 
-
     #endregion
-
-
 
     /// <summary>
     /// Checks if is colliding with another building 
@@ -2764,11 +2762,16 @@ public class Building : Hoverable, Iinfo
         return false;
     }
 
+    VisualConstructionProgress progress;
 
     //todo call 
     public void AddToConstruction(float amt, Person person=null)
     {
         DefineAmtNeeded();
+
+        if (progress == null) progress = new VisualConstructionProgress(this, amtNeeded, amt);
+        else progress.AddAmount(amt);
+
         constructionAmt += (int)amt;
         CheckIfNewStageOrDone(person);
 

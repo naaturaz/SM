@@ -35,7 +35,6 @@ public class Structure : StructureParent
             isStageObjHidden = true;
         }
 
-
         base.UpdateClosestVertexAndOld();
 
         //gameObject.transform.position = ClosestSubMeshVert;//snap

@@ -286,7 +286,7 @@ public class StructureParent : Building {
     /// </summary>
     protected void RecreateStage()
     {
-        Geometry.gameObject.SetActive(false);
+        //Geometry.SetActive(false);
         UpdateBuild();
 
         //the bridges parts are called Units... u dont want planes on those...
@@ -435,7 +435,12 @@ public class StructureParent : Building {
         }
 
         _startingStage = name;
-        Geometry.gameObject.SetActive(false);
+
+        //2016
+        //Geometry.SetActive(false);
+        Geometry.SetActive(true);
+        Geometry.GetComponent<MeshRenderer>().enabled = false;
+
         if (Stage2 != null) Stage2.gameObject.SetActive(false);
         if (Stage3 != null) Stage3.gameObject.SetActive(false);
 
@@ -468,7 +473,10 @@ public class StructureParent : Building {
         }
         else if (name == H.Done)
         {
-            Geometry.gameObject.SetActive(true);
+            //2016
+            //Geometry.SetActive(true);
+            Geometry.GetComponent<MeshRenderer>().enabled = true;
+
             ShowWheel(true);
         }
 
