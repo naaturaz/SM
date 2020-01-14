@@ -7,11 +7,18 @@ using UnityEngine;
 public class VisualConstructionProgress
 {
     private Building _building;
+    private Structure _structure;
     float _amtNeeded;
     float _currAmt;
-    List<String> roots = new List<string>() {
+
+    List<String> _roots = new List<string>() {
         "Prefab/Building/VisualProgress/Cube1",
         "Prefab/Building/VisualProgress/Cube2",
+    };
+
+    List<String> _rootsMed = new List<string>() {
+        "Prefab/Building/VisualProgress/Cube1Med",
+        "Prefab/Building/VisualProgress/Cube2Med",
     };
 
     List<General> _cubes = new List<General>();
@@ -37,6 +44,7 @@ public class VisualConstructionProgress
     public VisualConstructionProgress(Building building, float _amtNeeded, float amt)
     {
         this._building = building;
+        _structure = (Structure)building;
         this._amtNeeded = _amtNeeded;
         AddAmount(amt);
         CalcDim();
@@ -44,6 +52,14 @@ public class VisualConstructionProgress
 
     void CalcDim()
     {
+        if (_structure.IsDoubleBound())
+        {
+            _cubeLength = .8f;
+            _cubeHeight = .8f;
+            _cubeWidth = .8f;
+            _roots = _rootsMed;
+        }
+
         _height = _building.Max.y - _building.Min.y;
         _length = _building.Max.z - _building.Min.z;
         _width = _building.Max.x - _building.Min.x;
@@ -59,6 +75,9 @@ public class VisualConstructionProgress
     internal void AddAmount(float amt)
     {
         _currAmt += amt;
+
+        if (_structure.CurrentStage == 4) return;
+
         if (_amtPerCube == 0) _amtPerCube = 1;
 
         if (_currAmt > _cubesShown * _amtPerCube){
@@ -73,9 +92,9 @@ public class VisualConstructionProgress
 
     void ShowCube()
     {
-        if (_cubePos == new Vector3()) _cubePos = _building.Min;
+        if (_cubePos == new Vector3()) _cubePos = GetInitPos();
 
-        var cube = General.Create(roots[UMath.GiveRandom(0, 2)], _cubePos);
+        var cube = General.Create(_roots[UMath.GiveRandom(0, 2)], _cubePos);
         _cubes.Add(cube);
 
         //define next cubePos
@@ -96,9 +115,14 @@ public class VisualConstructionProgress
         }
     }
 
+    Vector3 GetInitPos()
+    {
+        return Vector3.MoveTowards(_building.Min, _building.Max, _cubeHeight);
+    }
+
     public void Update()
     {
-        if (_currAmt >= _amtNeeded)
+        if (_currAmt >= _amtNeeded || _structure.CurrentStage == 4)
         {
             if (_cubes.Count == 0) return;
             _cubes[_cubes.Count - 1].Destroy();

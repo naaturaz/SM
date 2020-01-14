@@ -343,6 +343,14 @@ public class Building : Hoverable, Iinfo
         return 1.25f;
     }
 
+    public bool IsSmallBuilding()
+    {
+        var isADecora = Root.RetBuildingRoot(HType).Contains("Decoration");
+
+        return HType == H.StandLamp
+             || isADecora
+             ;
+    }
 
     /// <summary>
     /// Will return the exact Y of each element on list along wth its X and Z.
@@ -1796,6 +1804,10 @@ public class Building : Hoverable, Iinfo
         return false;
     }
 
+    public bool IsDoubleBound()
+    {
+        return IsThisADoubleBoundedStructure();
+    }
 
     /// <summary>
     /// Check if the double bouded structure is ok
@@ -4293,7 +4305,7 @@ public class Building : Hoverable, Iinfo
     //{
     //    if (Families == null)
     //    {
-            
+
     //        return null;
     //    }
 
@@ -4307,10 +4319,12 @@ public class Building : Hoverable, Iinfo
     //    return null;
     //}
 
-#endregion
+    #endregion
 
-
-
+    public bool IsFarm()
+    {
+        return HType.ToString().Contains("Farm");
+    }
 
     #region AnimalFarm
 
@@ -4631,8 +4645,6 @@ public class Building : Hoverable, Iinfo
 
 #endregion
 
-
-
     #region Militar
 
     private Militar _militar;
@@ -4643,8 +4655,7 @@ public class Building : Hoverable, Iinfo
             _militar=new Militar(this);
         }
     }
-
-    bool IsMilitar()
+    public bool IsMilitar()
     {
         if (HType == H.PostGuard //|| HType == H.Tower 
             || HType == H.Fort || HType == H.Morro)
@@ -4653,7 +4664,6 @@ public class Building : Hoverable, Iinfo
         }
         return false;
     }
-
 
 #endregion
 

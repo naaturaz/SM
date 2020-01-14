@@ -438,8 +438,17 @@ public class StructureParent : Building {
 
         //2016
         //Geometry.SetActive(false);
-        Geometry.SetActive(true);
-        Geometry.GetComponent<MeshRenderer>().enabled = false;
+
+        //if (IsDoubleBound() || IsSmallBuilding() || IsFarm())
+        //{
+            Geometry.SetActive(false);
+        //}
+        //else
+        //{
+        //    Geometry.SetActive(true);
+        //    Geometry.GetComponent<MeshRenderer>().enabled = false;
+        //}
+
 
         if (Stage2 != null) Stage2.gameObject.SetActive(false);
         if (Stage3 != null) Stage3.gameObject.SetActive(false);
@@ -475,7 +484,12 @@ public class StructureParent : Building {
         {
             //2016
             //Geometry.SetActive(true);
-            Geometry.GetComponent<MeshRenderer>().enabled = true;
+            //if (IsDoubleBound() || IsSmallBuilding() || IsFarm())
+            //{
+                Geometry.SetActive(true);
+            //}
+            //else
+            //    Geometry.GetComponent<MeshRenderer>().enabled = true;
 
             ShowWheel(true);
         }

@@ -302,7 +302,7 @@ public class BuildingWindow : Window
             _prdBtn.SetActive(false);
         }
 
-        if (isADecorationBuilding(_building))
+        if (isADecorationBuilding(_building) || _building.IsMilitar())
         {
             _salary.SetActive(false);
             _staBtn.SetActive(false);

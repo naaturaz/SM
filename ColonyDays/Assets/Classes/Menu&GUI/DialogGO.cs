@@ -67,11 +67,11 @@ class DialogGO : GUIElement
     void Start()
     {
         _completeQuest = GetChildCalled("CompleteQuest");
-        _completeQuest.SetActive(false);
+        if(_completeQuest != null)
+            _completeQuest.SetActive(false);
 
         if(Type1 == H.CompleteQuest)
             _completeQuest.SetActive(true);
-
 
         var t = GetChildCalled("TextHere");
         _textHere = t.GetComponentInChildren<Text>();
@@ -91,7 +91,6 @@ class DialogGO : GUIElement
         if (_rateBtnGO != null)
         {
             _rateBtnGO.SetActive(false);
-
         }
 
         var inText = GetChildCalled("Input_Field");
