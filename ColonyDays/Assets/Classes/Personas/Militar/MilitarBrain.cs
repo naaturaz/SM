@@ -11,7 +11,7 @@ using System.Text;
 /// 
 /// Steps:
 /// 1 - Get out of building if in one, and it sets it self in Idle
-/// 2 - If engage on fight by an enenmy or enemy in proximity, will fight back 
+/// 2 - If engage on fight by an enemy or enemy in proximity, will fight back 
 /// 3 - When enemies are all death will go back to house.
 /// 4 - When in house, will reset Brain state
 /// 5 - Will not listen to MilitarBrain anymore

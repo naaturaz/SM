@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// This calss instantiate visible Ships with Geomertry
+/// This class spawns visible Ships with Geometry
 /// 
 /// Ship Game Object
 /// </summary>
