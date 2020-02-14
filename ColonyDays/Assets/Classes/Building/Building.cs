@@ -11,8 +11,6 @@ public class Building : Hoverable, Iinfo
 {
     #region Fields and Prop
 
-    ConstructionProgress _constructionProgress;
-
     /// <summary>
     /// The root of a building 
     /// </summary>
@@ -26,6 +24,11 @@ public class Building : Hoverable, Iinfo
 
     private Vector3 _min;//this is the Min point on the bound
     private Vector3 _max;//this is the Max point on the bound
+
+    //VisualConstructionProgress
+    private Vector3 _minVcp;//this is the Min point on the bound
+    private Vector3 _maxVcp;//this is the Max point on the bound
+
     private List<Vector3> _bounds = new List<Vector3>();
     private List<Vector3> _anchors = new List<Vector3>();
 
@@ -165,7 +168,21 @@ public class Building : Hoverable, Iinfo
         set { _min = value; }
     }
 
+    public Vector3 MaxVcp
+    {
+        get { 
+            SetVisualConstructionProgressMinMax(); 
+            return _maxVcp != new Vector3() ? _maxVcp : _max;
+        }
+    }
 
+    public Vector3 MinVcp
+    {
+        get {
+            SetVisualConstructionProgressMinMax(); 
+            return _minVcp != new Vector3() ? _minVcp : _min;
+        }
+    }
 
     #endregion
 
@@ -644,6 +661,16 @@ public class Building : Hoverable, Iinfo
         //UVisHelp.CreateText(_max, "max", 60);
     }
 
+    void SetVisualConstructionProgressMinMax()
+    {
+        //VisualConstructionProgress
+        var vcp = General.GetChildCalledOnThis("VisualConstructionProgress", gameObject);
+        if (vcp == null) return;
+
+        _minVcp = vcp.transform.GetComponent<Collider>().bounds.min;
+        _maxVcp = vcp.transform.GetComponent<Collider>().bounds.max;
+    }
+
     // Use this for initialization
     protected void Start()
     {
@@ -1090,11 +1117,6 @@ public class Building : Hoverable, Iinfo
             _militar.Update();
         }
 
-        if (_constructionProgress != null)
-        {
-            _constructionProgress.Update();
-        }
-
         //if is way not need to know this.
         //bz we will be going btw buildings 
         if (Category != Ca.Way)
@@ -1115,13 +1137,10 @@ public class Building : Hoverable, Iinfo
             {UpdateBuild();}
         }
 
-
-
         if (_dock != null)
         {
             _dock.Update();
         }
-
 
         //bz now is waiting for a nw build to be placed to work 
         //this is here so it prompts the destruction of a building after the evacuation of the

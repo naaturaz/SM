@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 public class VisualConstructionProgress
@@ -52,17 +50,17 @@ public class VisualConstructionProgress
 
     void CalcDim()
     {
-        if (_structure.IsDoubleBound())
-        {
-            _cubeLength = .8f;
-            _cubeHeight = .8f;
-            _cubeWidth = .8f;
-            _roots = _rootsMed;
-        }
+        // if (_structure.IsDoubleBound())
+        // {
+        //     _cubeLength = .8f;
+        //     _cubeHeight = .8f;
+        //     _cubeWidth = .8f;
+        //     _roots = _rootsMed;
+        // }
 
-        _height = _building.Max.y - _building.Min.y;
-        _length = _building.Max.z - _building.Min.z;
-        _width = _building.Max.x - _building.Min.x;
+        _height = _building.MaxVcp.y - _building.MinVcp.y;
+        _length = _building.MaxVcp.z - _building.MinVcp.z;
+        _width = _building.MaxVcp.x - _building.MinVcp.x;
 
         _long = _length / _cubeLength;
         _tall = _height / _cubeHeight;
@@ -99,25 +97,25 @@ public class VisualConstructionProgress
 
         //define next cubePos
         _cubePos.x += _cubeWidth;
-        if(_cubePos.x > _building.Max.x - _cubeWidth)
+        if(_cubePos.x > _building.MaxVcp.x - _cubeWidth)
         {
             //reset to init
-            _cubePos.x = _building.Min.x;
+            _cubePos.x = _building.MinVcp.x;
             _cubePos.z += _cubeLength;
 
-            if(_cubePos.z > _building.Max.z - _cubeLength)
+            if(_cubePos.z > _building.MaxVcp.z - _cubeLength)
             {
                 _cubePos.y += _cubeHeight;
                 //reset to init
-                _cubePos.x = _building.Min.x;
-                _cubePos.z = _building.Min.z;
+                _cubePos.x = _building.MinVcp.x;
+                _cubePos.z = _building.MinVcp.z;
             }
         }
     }
 
     Vector3 GetInitPos()
     {
-        return Vector3.MoveTowards(_building.Min, _building.Max, _cubeHeight);
+        return Vector3.MoveTowards(_building.MinVcp, _building.MaxVcp, _cubeHeight);
     }
 
     public void Update()
