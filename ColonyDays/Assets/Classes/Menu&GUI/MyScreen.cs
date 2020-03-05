@@ -224,6 +224,7 @@ public class MyScreen : General
 
     private void InputKeys()
     {
+        if (Program.IsInputLocked) return;
         if (!IsMainMenuOn()) return;
 
         if(Input.GetKey(KeyCode.C))

@@ -64,8 +64,16 @@ class DialogGO : GUIElement
         return obj;
     }
 
+    private void OnDestroy()
+    {
+        Program.UnLockInputSt();
+    }
+
     void Start()
     {
+        if(Type1 == H.OptionalFeedback || Type1 == H.BugReport) 
+            Program.LockInputSt();
+
         _completeQuest = GetChildCalled("CompleteQuest");
         if(_completeQuest != null)
             _completeQuest.SetActive(false);

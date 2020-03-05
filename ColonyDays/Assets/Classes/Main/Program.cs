@@ -256,18 +256,18 @@ public class Program : MonoBehaviour {
         set { Program._isInputLocked = value; }
     }
 
-    public void LockInput()
-    {
-        IsInputLocked = true;
-    }
+    //public void LockInput()
+    //{
+    //    IsInputLocked = true;
+    //}
 
-    /// <summary>
-    /// Called  from INputFields when get inActive 
-    /// </summary>
-    public void UnLockInput()
-    {
-        IsInputLocked = false;
-    }
+    ///// <summary>
+    ///// Called  from INputFields when get inActive 
+    ///// </summary>
+    //public void UnLockInput()
+    //{
+    //    IsInputLocked = false;
+    //}
 
     /// <summary>
     /// Called  from INputFields when get active 

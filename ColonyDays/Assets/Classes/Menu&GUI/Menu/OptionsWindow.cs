@@ -469,7 +469,6 @@ public class OptionsWindow : GUIElement
 
     #endregion
 
-
     void OnEnable()
     {
         Debug.Log("PrintOnEnable: OptionsWindow was enabled");
@@ -485,10 +484,17 @@ public class OptionsWindow : GUIElement
         _soundSlider.value = AudioCollector.SoundLevel;
         _musicSlider.value = AudioCollector.MusicLevel;
 
-        if(!CamControl.CAMRTS)
-            _cameraSlider.value = 0.5f;
+        //if(!CamControl.CAMRTS)
+        //    _cameraSlider.value = 0.5f;
+        //else
+        //    _cameraSlider.value = CamControl.CAMRTS.CamSensivity/factorSens;
+
+        if(Settings.CamSliderVal > 0.0f)
+            _cameraSlider.value = Settings.CamSliderVal;
         else
-            _cameraSlider.value = CamControl.CAMRTS.CamSensivity/factorSens;
+            _cameraSlider.value = 0.5f;
+
+        NewCamSensitivity();
     }
 
     public void NewSoundLevel()
@@ -503,6 +509,7 @@ public class OptionsWindow : GUIElement
 
     private float factorSens = 12f;//bz .5 in the slider is 6 for the cam senstivity
     private float factorDesi = 2f;//bz .5 in the slider is 1 
+    //Called from GUI
     public void NewCamSensitivity()
     {
         if(CamControl.CAMRTS != null)
@@ -510,8 +517,8 @@ public class OptionsWindow : GUIElement
             CamControl.CAMRTS.CamSensivity = _cameraSlider.value * factorSens;
             CamControl.CAMRTS.DesiredSpeed = _cameraSlider.value * factorDesi;
         }
-
+        Settings.SetCamSliderVal(_cameraSlider.value);
     }
 
-#endregion
+    #endregion
 }

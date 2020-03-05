@@ -61,6 +61,8 @@ public class Settings
         }
     }
 
+    public static float CamSliderVal { get; private set; }
+
     #region Save Load Settings
 
 
@@ -214,7 +216,6 @@ public class Settings
 
     }
 
-
     private static void LoadFromFilePlayerPref()
     {
         var rr = PlayerPrefs.GetString("P1Once");
@@ -231,6 +232,7 @@ public class Settings
         IsHalloweenTheme = PlayerPrefs.GetString("Hallo") == "True";
         IsXmas = PlayerPrefs.GetString("Xmas") == "True";
 
+        CamSliderVal = PlayerPrefs.GetFloat("CamSliderVal");
 
         AudioCollector.SoundLevel = PlayerPrefs.GetFloat("SoundLevel");
         AudioCollector.MusicLevel = PlayerPrefs.GetFloat("MusicLevel");
@@ -337,6 +339,12 @@ public class Settings
 
         //So all LangUpdateScripts gets Started again
         Program.MouseListener.ApplyChangeScreenResolution();
+    }
+
+    public static void SetCamSliderVal(float val)
+    {
+        PlayerPrefs.SetFloat("CamSliderVal", val);
+        CamSliderVal = PlayerPrefs.GetFloat("CamSliderVal");
     }
 
     internal static void ToggleHalloween()

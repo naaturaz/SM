@@ -130,6 +130,8 @@ public class GUIElement : General
     /// </summary>
     public virtual void Hide()
     {
+        Program.UnLockInputSt();
+
         if (name.Contains("Bulletin"))
         {
             Program.gameScene.TutoStepCompleted("HideBulletin.Tuto");

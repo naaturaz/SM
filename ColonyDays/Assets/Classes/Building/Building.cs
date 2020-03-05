@@ -2893,7 +2893,7 @@ public class Building : Hoverable, Iinfo
     }
 
 
-    private General _debugPercentage;
+    //private General _debugPercentage;
     void SetConstructionPercent(string newVal)
     {
         var sp = this as StructureParent;
@@ -2908,13 +2908,13 @@ public class Building : Hoverable, Iinfo
             return;
         }
 
-        if (_debugPercentage != null)
-        {
-            _debugPercentage.Destroy();
-        }
+        //if (_debugPercentage != null)
+        //{
+        //    _debugPercentage.Destroy();
+        //}
 
-        _debugPercentage = UVisHelp.CreateText(transform.position + new Vector3(0, 1f, 0), newVal);
-        _debugPercentage.transform.SetParent(transform);
+        //_debugPercentage = UVisHelp.CreateText(transform.position + new Vector3(0, 1f, 0), newVal);
+        //_debugPercentage.transform.SetParent(transform);
     }
 
     bool didBuiltNotify;
@@ -2942,10 +2942,10 @@ public class Building : Hoverable, Iinfo
                 Program.gameScene.GameController1.NotificationsManager1.Notify("Built", HType + "");
             } 
         }
-        if (_debugPercentage != null)
-        {
-            _debugPercentage.Destroy();
-        }
+        //if (_debugPercentage != null)
+        //{
+        //    _debugPercentage.Destroy();
+        //}
         if (IsNaval())
         {
             BuildingPot.Control.DockManager1.AddToDockStructure(MyId, HType);

@@ -393,6 +393,8 @@ public class InputMain : InputParent {
 
     void ChangeGameSpeed()
     {
+        if (Program.IsInputLocked) return;
+
         //if there are foresters for example they wil cut trees while the TerrainController is still loading. so
         //its not a good idea . all TerrainContrroller must be loaded before it can be played the game 
         if (!HasGameAllLoaded() || Program.gameScene.GameController1.IsGameOver)
