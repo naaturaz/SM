@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-
 public class ColorManager : MonoBehaviour
 {
     public DayStage[] Day = new DayStage[6];
@@ -16,14 +15,11 @@ public class ColorManager : MonoBehaviour
 
     void Start()
     {
-
     }
 
     void Update()
     {
-
     }
-
 
     internal Color GetMeMainColor(int _currentStage, H dayOrNight)
     {
@@ -89,4 +85,3 @@ public class DayStage
     public float EastIntense;
     public Color Ambience;
 }
-

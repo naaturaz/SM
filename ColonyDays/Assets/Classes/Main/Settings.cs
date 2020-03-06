@@ -62,6 +62,7 @@ public class Settings
     }
 
     public static float CamSliderVal { get; private set; }
+    public static bool ISDay { get; internal set; }
 
     #region Save Load Settings
 
@@ -100,7 +101,6 @@ public class Settings
 #endregion
 
     #region Audio
-    
 
     public static Music Switch(H what, Music current = null)
     {
@@ -116,7 +116,6 @@ public class Settings
         }
         return current;
     }
-
 
     public static bool MecanicSwitcher(bool currentState)
     {
@@ -138,7 +137,6 @@ public class Settings
         else if(Application.loadedLevelName == "Lobby")
             music = (Music)AudioPlayer.PlayAudio(RootSound.musicLobby, H.Music);
     }
-
 
 
     static bool loadedOnce;
@@ -233,6 +231,7 @@ public class Settings
         IsXmas = PlayerPrefs.GetString("Xmas") == "True";
 
         CamSliderVal = PlayerPrefs.GetFloat("CamSliderVal");
+        ISDay = PlayerPrefs.GetInt("Day") == 1 || PlayerPrefs.GetInt("Day") == 0;//0 is for the 1st time loads 
 
         AudioCollector.SoundLevel = PlayerPrefs.GetFloat("SoundLevel");
         AudioCollector.MusicLevel = PlayerPrefs.GetFloat("MusicLevel");

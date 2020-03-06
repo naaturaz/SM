@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using UnityEngine;
-
 
 public class StageManager : General
 {
@@ -12,8 +8,7 @@ public class StageManager : General
     Light _west;
     Light _east;
 
-    int _startStage = 2;
-    int _currentStage = 2;
+    int _currentStage = 2;//_startStage = 2
 
     /// <summary>
     /// This is the shared material for all AlphaAtlasShake instances . here I change the main
@@ -23,15 +18,13 @@ public class StageManager : General
 
     //this speeds both limit how quick they go from point to point. They are a bottle
     //neck if a time is set to 1sec for ex
-    float _daySpeed = .5f;//.5 
-    float _nightSpeed = 1f;//.5    .6
+    float _daySpeed = .5f;
+    float _nightSpeed = 1f;
 
     bool _isOnTransition;
-
     Vector3 _center;
 
     ColorManager _colorManager;
-
     H _currentCycle = H.Day;//day or night
 
     /// <summary>
@@ -43,7 +36,6 @@ public class StageManager : General
     /// At night time is the same but divided / 10
     /// </summary>
     List<float> _times = new List<float>() { 1, 20, 120, 120, 5, 5 };
-
     //List<float> _times = new List<float>() { 1, 5, 5, 5, 1, 5 };
 
     float _startedCycleAt = 0;
@@ -67,9 +59,7 @@ public class StageManager : General
         _east = bLigE.GetComponent<Light>();
 
         _startedCycleAt = Time.time;
-
         _center = GetChildCalled("Center").transform.position;
-
         _colorManager = FindObjectOfType<ColorManager>();
 
         _waveMat = GetChildCalled("WaveMaterial").GetComponent<Renderer>().sharedMaterial;
@@ -78,18 +68,16 @@ public class StageManager : General
 
     void Update()
     {
-        if (!Program.gameScene) return;
-        if (Program.gameScene.GameSpeed == 0)
-        {
-            return;
-        }
+        if (!Program.gameScene || Program.gameScene.GameSpeed == 0) return;
+
+        //will block further progression if was turned off
+        if (_currentStage == 2 && !Settings.ISDay && _currentCycle == H.Day) return;
 
 //#if UNITY_EDITOR
 //        return;
 //#endif
 
         CheckIfMoveStages();
-
         CheckIfInTrans();
     }
 
@@ -99,18 +87,12 @@ public class StageManager : General
     private void CheckIfInTrans()
     {
         if (!_isOnTransition)
-        {
             return;
-        }
 
         if (FindStateOfLight() != _currentStage)
-        {
             BlendIntoNextStage();
-        }
         else
-        {
             _isOnTransition = false;
-        }
     }
 
     /// <summary>
@@ -137,7 +119,6 @@ public class StageManager : General
         var newMain = Mathf.Lerp(mainCurr,
             _colorManager.GetMeMainIntensity(_currentStage, _currentCycle), step);
         _main.intensity = newMain;
-
 
         // 
         var wCurr = _west.intensity;
@@ -182,12 +163,8 @@ public class StageManager : General
 
     void ReachNewColorForWaveGrass()
     {
-       
-
         float step = ReturnSpeed() * Time.deltaTime;//bz color doest finish blending
-
         var newAmbience = Color.Lerp(_waveMat.color, ColorWaveColorTarget(), step);
-        
         _waveMat.color = newAmbience;
     }
 
@@ -210,7 +187,6 @@ public class StageManager : General
         {
             MoveToNextStage();
             _startedCycleAt = Time.time;
-
             //Debug.Log("Moving to:" + _currentStage);
         }
     }
@@ -218,10 +194,8 @@ public class StageManager : General
     float ReturnSpeed()
     {
         if (_currentCycle == H.Day)
-        {
             return _daySpeed;
-        }
-        //night time is a fifth of the day
+        //night time is a quicker
         return _nightSpeed;
     }
 
@@ -233,10 +207,10 @@ public class StageManager : General
     {
         if (_currentCycle == H.Day)
         {
-            return _times[_currentStage]/1;
+            return _times[_currentStage]/50;//1
         }
-        //night time is a fifth of the day
-        return _times[_currentStage]/10;
+        //night time
+        return _times[_currentStage]/50;//10
     }
 
     /// <summary>
@@ -245,29 +219,20 @@ public class StageManager : General
     private void MoveToNextStage()
     {
         _currentStage = UMath.GoAround(1, _currentStage, 0, 5);
-
         if (_currentStage == 0)
         {
             //toggle day , night
             ToggleDayCycle();
         }
-
         _isOnTransition = true;
     }
 
     private void ToggleDayCycle()
     {
         if (_currentCycle == H.Day)
-        {
             _currentCycle = H.Night;
-            CamControl.CAMRTS.Night();
-        }
         else
-        {
             _currentCycle = H.Day;
-            CamControl.CAMRTS.Day();
-
-        }
     }
 
     /// <summary>
@@ -301,5 +266,31 @@ public class StageManager : General
     {
         return _currentCycle == H.Day && _currentStage > 0;
     }
-}
 
+    public void OptionsDayCycleWasToggled()
+    {
+        if(!Settings.ISDay)
+        {
+            _isOnTransition = false;
+            _currentCycle = H.Day;
+            _currentStage = 2;
+            _main.transform.position = _stages[_currentStage].transform.position;
+            _main.transform.LookAt(_center);
+
+            _main.intensity = _colorManager.GetMeMainIntensity(_currentStage, _currentCycle);
+            _west.intensity = _colorManager.GetMeWestIntensity(_currentStage, _currentCycle);
+            _east.intensity = _colorManager.GetMeEastIntensity(_currentStage, _currentCycle);
+
+            _main.color = _colorManager.GetMeMainColor(_currentStage, _currentCycle);
+            RenderSettings.ambientLight = _colorManager.GetMeAmbienceColor(_currentStage, _currentCycle);
+
+            if(CamControl.CAMRTS != null)
+            {
+                var newColBack = _colorManager.GetMeCameraBackGroundColor(_currentCycle);
+                CamControl.CAMRTS.AssignBackGroundColor(newColBack);
+            }
+
+            _waveMat.color = ColorWaveColorTarget();
+        }
+    }
+}

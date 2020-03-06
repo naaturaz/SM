@@ -753,36 +753,21 @@ public class CamRTSController : CamControl
     //Camera visual effects 
     Camera _camera;
 
-
     public void Day()
     {
-        InitDayNight();
         _camera = gameObject.GetComponent<Camera>();
-
-    }
-
-    public void Night()
-    {
-        InitDayNight();
-
-    }
-
-    void InitDayNight()
-    {
-
     }
 
     public void AssignBackGroundColor(Color col)
     {
-        InitDayNight();
+        if (_camera == null)
+            _camera = gameObject.GetComponent<Camera>();
 
         _camera.backgroundColor = col;
     }
 
     internal Color GetCameraBackColor()
     {
-        InitDayNight();
-
         if(_camera == null)
             _camera = gameObject.GetComponent<Camera>();
 

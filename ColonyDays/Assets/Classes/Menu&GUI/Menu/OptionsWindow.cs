@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class OptionsWindow : GUIElement
 {
     private Toggle _fullToggle;
+    private Toggle _dayToggle;
+    StageManager _stageManager;
 
     private Toggle _musicToggle;
     private Toggle _soundToggle;
@@ -43,6 +45,7 @@ public class OptionsWindow : GUIElement
         iniPos = transform.position;
 
         _fullToggle = GetGrandChildCalled("FullScreen_Toggle").GetComponent<Toggle>();
+        _dayToggle = GetGrandChildCalled("DayCycle_Toggle").GetComponent<Toggle>();
 
         _musicToggle = GetGrandChildCalled("Music_Toggle").GetComponent<Toggle>();
         _soundToggle = GetGrandChildCalled("Sound_Toggle").GetComponent<Toggle>();
@@ -100,6 +103,7 @@ public class OptionsWindow : GUIElement
     private void SetAllControls()
     {
         _fullToggle.isOn = Screen.fullScreen;
+        _dayToggle.isOn = Settings.ISDay;
 
 
         _musicToggle.isOn = Settings.ISMusicOn;
@@ -119,6 +123,7 @@ public class OptionsWindow : GUIElement
 
         //so they dont trigger event 
         _fullToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Full"));
+        _dayToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Day"));
 
         _musicToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Music"));
         _soundToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Sound"));
@@ -251,6 +256,17 @@ public class OptionsWindow : GUIElement
         {
             Screen.fullScreen = Settings.MecanicSwitcher(Screen.fullScreen);
             ChangeResNow();
+        }
+        else if (sub == "Day")
+        {
+            SetPlayerPrefInt(sub, _dayToggle.isOn);
+            Settings.ISDay = _dayToggle.isOn;
+
+            if(_stageManager == null)
+                _stageManager = FindObjectOfType<StageManager>();
+            _stageManager.OptionsDayCycleWasToggled();
+
+            Debug.Log("Day");
         }
     }
 

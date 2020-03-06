@@ -1139,9 +1139,12 @@ public class French
         _fr.Add("Counting...", "Contando...");
         _fr.Add("Ten Orders Limit", "Diez ordenes es el límite");
 
-
         _fr.Add("Français", "Français");
         _fr.Add("Français(Beta)", "Français(Beta)");
+
+        //Mar 5th 2020
+        _fr.Add("Day Cycle:", "Nuit:");
+
 
     }
 

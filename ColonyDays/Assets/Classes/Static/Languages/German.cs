@@ -1152,6 +1152,8 @@ public class German
         _de.Add("Camera", "Kamera");
         _de.Add("More", "Mehr");
 
+        //Mar 5th 2020
+        _de.Add("Day Cycle:", "Nacht:");
     }
 
     internal static void Clear()
