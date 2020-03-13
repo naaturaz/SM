@@ -207,10 +207,10 @@ public class StageManager : General
     {
         if (_currentCycle == H.Day)
         {
-            return _times[_currentStage]/50;//1
+            return _times[_currentStage]/1;//1
         }
         //night time
-        return _times[_currentStage]/50;//10
+        return _times[_currentStage]/10;//10
     }
 
     /// <summary>

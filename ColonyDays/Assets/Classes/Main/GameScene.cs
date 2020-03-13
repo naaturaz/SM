@@ -217,7 +217,7 @@ public class GameScene : General
                     ;
 
         return discl +
-               "\nv1.0.0." +
+               "\nv1.1.0." +
             //    " Early Access \n v0.9.0." +
                //"Closed Beta \n v0.0.1." + 
                TimeStamp();
