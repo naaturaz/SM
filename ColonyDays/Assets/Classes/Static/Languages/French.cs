@@ -1142,10 +1142,15 @@ public class French
         _fr.Add("Français", "Français");
         _fr.Add("Français(Beta)", "Français(Beta)");
 
+        //Dec 20 2019 for all Langs
+        _fr.Add("I.Can.Service", "\n\nJe peux entretenir ");
+
         //Mar 5th 2020
         _fr.Add("Day Cycle:", "Nuit:");
 
-
+        //Mar 20 2020
+        _fr.Add("Rotten", "Pourrie");
+        _fr.Add("Ready", "Prête");
     }
 
     internal static void Clear()

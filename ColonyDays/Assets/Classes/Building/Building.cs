@@ -1355,7 +1355,6 @@ public class Building : Hoverable, Iinfo
         BuildingPot.Control.AddToQueuesRestartPersonControl(MyId);
     }
 
-
     #region PlacedFX
 
     List<General> _placedBuildFX = new List<General>();
@@ -1462,7 +1461,7 @@ public class Building : Hoverable, Iinfo
         { H.Dock, Vector3.forward},
 
         { H.School, new Vector3(-10,0,-14)},
-        { H.TradesSchool, new Vector3(-16,0,-10)},
+        //{ H.TradesSchool, new Vector3(-16,0,-10)},
         { H.Library, new Vector3(-17,0,-12)},
 
         { H.Tavern, new Vector3(-25,0,-20)},
@@ -1474,7 +1473,7 @@ public class Building : Hoverable, Iinfo
         { H.SugarMill, new Vector3(1.45f, 1, 3.82f)},
         { H.Church, new Vector3(3.16f, 4.53f, 5.43f)},
         { H.Masonry, new Vector3(0.24f, 1, 0.1875f)},
-
+        { H.TradesSchool, new Vector3(0.225f, 0.206f, 0.14f)},
     };
 
     /// <summary>

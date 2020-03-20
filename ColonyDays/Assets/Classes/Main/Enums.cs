@@ -625,13 +625,6 @@ public enum BtnsE
     Select_Spring_Btn_Element_3dMenu
 }
 
-public enum Month
-{
-    Jan, Feb, Mar, Apr, May, Jun,
-    Jul, Aug, Sep, Oct, Nov, Dec,
-    None
-}
-
 public enum Tile//for roads
 {
     NW, N, NE, E, SE, S, SW, W, In,

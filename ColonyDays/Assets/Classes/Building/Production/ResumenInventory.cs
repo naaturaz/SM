@@ -219,7 +219,6 @@ public class ResumenInventory
     }
 }
 
-
 public class Coverage
 {
     private static float _edu;
@@ -238,7 +237,6 @@ public class Coverage
 
     public static float Edu(bool force = false)
     {
-
         if ((force) || (_lastEdu == 0 || float.IsNaN(_edu) || Time.time > _lastEdu + _cool))
         {
             _lastEdu = Time.time;
@@ -249,19 +247,16 @@ public class Coverage
 
     public static float TradesEdu(bool force = false)
     {
-
         if ((force) || (_lastTradeEdu == 0 || float.IsNaN(_tradesEdu) || Time.time > _lastTradeEdu + _cool))
         {
             _lastTradeEdu = Time.time;
             _tradesEdu = CalculateCoverage(H.TradesSchool);
         }
         return _tradesEdu;
-
     }
 
     public static float Rel(bool force = false)
     {
-
         if ((force) || (_lastRel == 0 || float.IsNaN(_rel) || Time.time > _lastRel + _cool))
         {
             _lastRel = Time.time;
@@ -272,18 +267,13 @@ public class Coverage
 
     public static float Chill(H hTypePass)
     {
-
         if ((_lastChill == 0 || float.IsNaN(_chill) || Time.time > _lastChill + _cool))
         {
             _lastChill = Time.time;
             _chill = CalculateCoverage(hTypePass);
         }
         return _chill;
-
     }
-
-
-
 
     /// <summary>
     /// 
@@ -319,10 +309,8 @@ public class Coverage
         //final coverage if can cover 20 people and 30 needed then the cover is gonna be .66
         var fin = peopleCanCover / amtPplTtl;
 
-        if (fin > 1)
-        {
-            return 1;
-        }
+        if (float.IsNaN(fin)) return 0;
+        if (fin > 1) return 1;
         return fin;
     }
 
@@ -362,7 +350,6 @@ public class Coverage
         {
             return PercentFormat(Chill(HType));
         }
-
         return "-1";
     }
 
@@ -381,7 +368,6 @@ public class Coverage
     {
         return ((int)(val * factor)) + "";
     }
-
 
     static List<BuildStat> _build = new List<BuildStat>();
     static private void LoadBuildStats()
@@ -421,5 +407,4 @@ public class Coverage
         var cover = GiveMeStat(typeP);
         return p.Age >= cover.MinAge && p.Age <= cover.MaxAge;
     }
-
 }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Reflection;
 using UnityEngine;
 
 /*
@@ -35,7 +33,6 @@ public class Dispatch
 
     List<Order> _expImpOrders = new List<Order>();
     private int maxAmtOfExpImpOrders = 10;
-
 
     /// <summary>
     /// orders tht are being added on this session. Were not loaded
@@ -291,7 +288,6 @@ public class Dispatch
         }
     }
 
-
     #region Heavy Load
     /// <summary>
     /// Bz they dont need to check ID if building place a order of a material should wait until is completed 
@@ -324,9 +320,6 @@ public class Dispatch
     }
     #endregion
 
-
-
-
     //ordering them by time placed so first placed is given always first 
     void OrderByPlacedTime(List<Order> list)
     {
@@ -346,10 +339,7 @@ public class Dispatch
         if (!ListContainsCheckID(Orders, evacOrder) && !ListContainsCheckID(_dormantOrders, evacOrder))
         {
             Orders.Add(evacOrder);
-
-
             //OrderByPlacedTime(Orders);
-
         }
     }
     /// <summary>
@@ -531,7 +521,6 @@ public class Dispatch
             return Orders;
         }
         return _recycledOrders;
-
     }
 
     public Order GiveMeOrderDocker(Person person)
@@ -611,11 +600,8 @@ public class Dispatch
             return false;
         }
 
-
         if (destBuild.Inventory.IsFullForThisProd(order.Product))
         {
-
-
             Debug.Log(String.Format("Building {0} can't accept more {1} therefore order is removed", order.DestinyBuild, order.Product ));
             return true;
         }
@@ -637,7 +623,6 @@ public class Dispatch
         }
         return false;
     }
-
 
     private Order EvacuationOrderDocker(Person person, Order order)
     {
@@ -664,7 +649,6 @@ public class Dispatch
         }
         return null;
     }
-
 
     private Order EvacuationOrder(Person person, Order order)
     {
@@ -767,8 +751,6 @@ public class Dispatch
         }
         return 0;
     }
-
-
 
     /// <summary>
     /// So if is a loaded game will show progress, bz orders are loaded and saved
@@ -994,7 +976,6 @@ public class Dispatch
         {
             Orders.Insert(0, _dormantOrders[i]);
         }
-
         _dormantOrders.Clear();
     }
 
@@ -1029,9 +1010,7 @@ public class Dispatch
         var index = ReturnItemIndex(list, order);
 
         if (index == -1)
-        {
             return;
-        }
 
         list.RemoveAt(index);
 
@@ -1080,7 +1059,6 @@ public class Dispatch
         }
         return false;
     }
-
 
     /// <summary>
     /// Will remove all the regular orders that contanint param 'myId' as the DestinBuild
@@ -1204,7 +1182,6 @@ public class Dispatch
         {
             Debug.Log("Docker removed the evac order:" + ord.Product);
             RemoveEvacuationOrder(ord.ID);
-
         }
     }
 
@@ -1242,7 +1219,6 @@ public class Dispatch
         }
         return res;
     }
-
 
     static bool _exportsShown;
     /// <summary>
@@ -1300,11 +1276,6 @@ public class Dispatch
             Dialog.OKDialog(H.Info, Languages.ReturnString("Ten Orders Limit"));
             return false;
         }
-    }
-
-    bool ThereAreEnoughShipsOnBay()
-    {
-        return true;
     }
 
     #endregion

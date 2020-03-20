@@ -63,8 +63,6 @@ public class Plant : General
         set { _currentGrowStep = value; }
     }
 
-
-
     public float AmtToGrow
     {
         get { return _amtToGrow; }
@@ -284,12 +282,8 @@ public class Plant : General
         }
     }
 
-
-
-
     private int checkEverySoManyFrames = 240;
     private int count;
-
     void Update()
     {
         count++;
@@ -303,7 +297,6 @@ public class Plant : General
         }
 
         CouldGrowPlantNow();
-
     }
 
     /// <summary>
@@ -409,7 +402,6 @@ public class Plant : General
         return localScale.y * _productionFactor * .1f; //.5   .75f 
     }
 
-
     private bool wasLoaded;
     public void LoadPlant(PlantSave plant)
     {
@@ -418,7 +410,6 @@ public class Plant : General
             return;
         }
         wasLoaded = true;
-
 
         _type = plant.Type;//type of plant. ex : Bean
 
@@ -544,9 +535,7 @@ public class PlantSave
         set { _localScale = value; }
     }
 
-
     public PlantSave() { }
-
 
     public void SavePlant(Plant plant)
     {
@@ -575,5 +564,3 @@ public class PlantSave
         _localScale = plant.gameObject.transform.localScale;
     }
 }
-
-

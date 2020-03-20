@@ -547,25 +547,19 @@ public class Structure : StructureParent
     internal float CurrentCoverage()
     {
         var mul = 1f;
-
         if (HType == H.Tavern)
-        {
             mul = 1f;
-        }
-
         return PeopleDict.Count * mul;
     }
 
     public string CoverageInfo()
     {
         if (!IsACoverageBuilding())
-        {
             return "";
-        }
 
         return Languages.ReturnString("I.Can.Service") + Coverage.PeopleICanServe(CurrentCoverage(), HType) + " people in this buiding \n" +
-               HType + " overall service:" + Coverage.OverallMyType(HType, true) + "\n" +
-               "Overall people needing this service:" + Coverage.HowManyPeopleNeedThisService(HType);
+               Languages.ReturnString(HType + "") + " overall service: " + Coverage.OverallMyType(HType, true) + "\n" +
+               "Overall people needing this service: " + Coverage.HowManyPeopleNeedThisService(HType);
     }
 
     /// <summary>

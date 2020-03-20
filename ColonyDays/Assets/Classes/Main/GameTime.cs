@@ -1,4 +1,6 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+
 public class GameTime
 {
     //0.0007f = 1Year at 10x 687.84sec; 
@@ -127,66 +129,34 @@ public class GameTime
         return false;
     }
 
-    public Month MonthFormat()
+    public string MonthFormat()
     {
         return FromIntToMonth(_month);
     }
 
-    public static Month FromIntToMonth(int val)
+    static List<string> _enMonths = new List<string>() { "None", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+    static List<string> _spMonths = new List<string>() { "Ninguno", "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" };
+    static List<string> _frMonths = new List<string>() { "Aucun", "Jan", "Fév", "Mar", "Avr", "Mai", "Jui", "Jui", "Aou", "Sep", "Oct", "Nov", "Déc" };
+    static List<string> _deMonths = new List<string>() { "Keiner", "Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez" };
+
+    static Dictionary<string, List<string>> _months = new Dictionary<string, List<string>>() {
+        { "English", _enMonths }, { "Español(Beta)", _spMonths }, { "Français(Beta)", _frMonths }, { "Deutsch", _deMonths }
+    };
+
+    /// <summary>
+    ///         
+    /// </summary>
+    /// <param name="val">1-12</param>
+    /// <returns></returns>
+    public static string FromIntToMonth(int val)
     {
-        if (val == 1)
-        {
-            return Month.Jan;
-        }
-        if (val == 2)
-        {
-            return Month.Feb;
-        }
-        if (val == 3)
-        {
-            return Month.Mar;
-        }
-        
-        if (val == 4)
-        {
-            return Month.Apr;
-        }
-        if (val == 5)
-        {
-            return Month.May;
-        }
-        if (val == 6)
-        {
-            return Month.Jun;
-        }
-        if (val == 7)
-        {
-            return Month.Jul;
-        }
-        if (val == 8)
-        {
-            return Month.Aug;
-        }
-        if (val == 9)
-        {
-            return Month.Sep;
-        }
+        var cur = Languages.CurrentLang();
+        var l = _months.ContainsKey(cur) ? _months[cur] : _months["English"];
 
-        if (val == 10)
-        {
-            return Month.Oct;
-        }
-        if (val == 11)
-        {
-            return Month.Nov;
-        }
-        if (val == 12)
-        {
-            return Month.Dec;
-        }
-        return Month.None;
+        if (val >= 1 && val <= 12) return l[val];
+        //none
+        return l[0];
     }
-
 
     public MDate CurrentDate()
     {
@@ -260,8 +230,7 @@ public class GameTime
         }
         daysToConvert = left * 30;
 
-
-        //willr return the days left tht are less than a year and a month, 
+        //will return the days left tht are less than a year and a month, 
         //plus the calculate amount of Year and month
         return new MDate((int)daysToConvert, monFull, yearFull);
     }

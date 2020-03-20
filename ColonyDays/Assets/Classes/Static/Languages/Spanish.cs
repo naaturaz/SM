@@ -1185,12 +1185,14 @@ public class Spanish
 		_sp.Add("LoadWontFit", "Demasiado para este puerto");
 
         //Dec 20 2019 for all Langs
-        _sp.Add("I.Can.Service","\n\n I can service ");
+        _sp.Add("I.Can.Service", "\n\nPodemos servir a ");
 
         //Mar 5th 2020
         _sp.Add("Day Cycle:", "Noche:");
 
-
+        //Mar 20 2020
+        _sp.Add("Rotten", "Podrido");
+        _sp.Add("Ready", "Listo");
     }
 
     internal static void Clear()

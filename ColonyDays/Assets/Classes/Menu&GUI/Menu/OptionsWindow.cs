@@ -301,15 +301,6 @@ public class OptionsWindow : GUIElement
         }
     }
 
-
-
-
-
-
-
-
-
-
     #region DropDowns
     private List<GameObject> _buttonsName = new List<GameObject>();
 
@@ -358,7 +349,7 @@ public class OptionsWindow : GUIElement
         List<string> names = new List<string>()
         {
             "English",
-            //"Español(Beta)",
+            "Español(Beta)",
             //"Français(Beta)",
             "Deutsch",
             //"Português(Beta)"
@@ -448,7 +439,6 @@ public class OptionsWindow : GUIElement
         {
             button.onClick.AddListener(() => Settings.SetLanguage(name));
         }
-        
     }
 
     /// <summary>

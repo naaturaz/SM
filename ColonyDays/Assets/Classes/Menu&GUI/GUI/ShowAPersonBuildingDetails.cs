@@ -122,7 +122,7 @@ public class ShowAPersonBuildingDetails
         {
             return _person.Home.Name;
         }
-        return "None";
+        return "-";
     }
 
     string Work()
@@ -131,7 +131,7 @@ public class ShowAPersonBuildingDetails
         {
             return _person.Work.Name;
         }
-        return "None";
+        return "-";
     }
 
     string Food()
@@ -140,7 +140,7 @@ public class ShowAPersonBuildingDetails
         {
             return _person.FoodSource.Name;
         }
-        return "None";
+        return "-";
     }
 
     string Religion()
@@ -149,7 +149,7 @@ public class ShowAPersonBuildingDetails
         {
             return _person.Religion.Name;
         }
-        return "None";
+        return "-";
     }
 
     string Chill()
@@ -158,13 +158,10 @@ public class ShowAPersonBuildingDetails
         {
             return _person.Chill.Name;
         }
-        return "None";
+        return "-";
     }
 
     private int count;
-
-
-
     /// <summary>
     /// it is updated every 20 calls 
     /// </summary>

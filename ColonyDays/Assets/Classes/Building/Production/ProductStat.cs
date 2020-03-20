@@ -108,9 +108,7 @@ public class ProductInfo
         // }
 
         if (_product == P.Stop)
-        {
             _details = Languages.ReturnString("Attention.Production");
-        }
     }
 
     void BuildProductLine()
@@ -186,8 +184,6 @@ public class ProductInfo
     }
 }
 
-
-
 public class InputElement
 {
     public P Element;//the element
@@ -214,7 +210,4 @@ public class ElementWeight
     }
 
     public ElementWeight() { }
-
 }
-
-

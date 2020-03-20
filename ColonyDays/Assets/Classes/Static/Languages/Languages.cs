@@ -1045,16 +1045,20 @@ public class Languages
 
 
         //Dec 20 2019 for all Langs
-        _sp.Add("I.Can.Service","\n\n I can service ");
+        _en.Add("I.Can.Service", "\n\nI can service ");
+
+        //Mar 20 2020
+        _en.Add("Rotten", "Rotten");
+        _en.Add("Ready", "Ready");
 
 
 
         //has a lot of text to put here 
-        //ProductStat.cs 
-        //Dispatch.cs
-        //ButtonTile.cs
-        //Plant.cs
-        //GameTime.cs
+        //ProductStat.cs (rev)
+        //Dispatch.cs (rev)
+        //ButtonTile.cs (rev)
+        //Plant.cs (rev)
+        //GameTime.cs (rev)
         //Profession.cs
         //GUIElement.cs
         //OrderShow.cs

@@ -1147,6 +1147,9 @@ public class German
 
         _de.Add("Tutorial", "Tutorial");
 
+        //Dec 20 2019 for all Langs
+        _de.Add("I.Can.Service", "\n\nIch kann warten ");
+
         //Dec 28
         _de.Add("Finanzen", "Finanzen");
         _de.Add("Camera", "Kamera");
@@ -1154,6 +1157,10 @@ public class German
 
         //Mar 5th 2020
         _de.Add("Day Cycle:", "Nacht:");
+
+        //Mar 20 2020
+        _de.Add("Rotten", "Verfault");
+        _de.Add("Ready", "Bereit");
     }
 
     internal static void Clear()
