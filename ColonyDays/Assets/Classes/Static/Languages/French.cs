@@ -1151,6 +1151,13 @@ public class French
         //Mar 20 2020
         _fr.Add("Rotten", "Pourrie");
         _fr.Add("Ready", "Prête");
+        _fr.Add("Teacher", "Professeur"); 
+        _fr.Add("BlackSmith", "Forgeron"); 
+        _fr.Add("SugarMiller", "Ouvrier sucrier"); 
+        _fr.Add("worker", "ouvrier");
+        _fr.Add("Overall.People", "Globalement, les personnes ayant besoin de ce service: ");
+        _fr.Add("overall service", "service global");
+        _fr.Add("people in this building", "les gens dans ce bâtiment");
     }
 
     internal static void Clear()

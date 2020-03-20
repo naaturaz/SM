@@ -12,7 +12,6 @@ public class GUIElement : General
     private Scrollbar _verticScrollbar;
 
     RectTransform _scrollContent;
-
     protected Text _text;
 
     private float speed = .05f;
@@ -59,9 +58,7 @@ public class GUIElement : General
     public void AdjustContentHeight(float size)
     {
         if (_scrollContent == null)
-        {
             _scrollContent = FindGameObjectInHierarchy("Content", gameObject).GetComponent<RectTransform>();
-        }
 
         _scrollContent.sizeDelta = new Vector2(_scrollContent.sizeDelta.x, size);
     }
@@ -103,7 +100,7 @@ public class GUIElement : General
     public void CallOnMouseEnter()
     {
         MouseListener.MouseOnWindowNow = true;
-        Debug.Log("Mouse Eneter");
+        Debug.Log("Mouse Enter");
     }
 
     public void CallOnMouseExit()
@@ -151,9 +148,7 @@ public class GUIElement : General
         var arrowGO = GetChildCalled("Arrow");
 
         if (arrowGO == null)
-        {
             return;
-        }
 
         arrowGO.SetActive(false);
     }
@@ -161,7 +156,6 @@ public class GUIElement : General
     public bool IsShownNow()
     {
         return transform.position.y > 0;
-        //return UMath.nearEqualByDistance(transform.position, iniPos, 0.3f);
     }
 
     protected void MakeAlphaColorZero(Text g)

@@ -55,7 +55,6 @@ public class OrderShow : GUIElement
 	
 	// Update is called once per frame
 	void Update () {
-	
 	}
 
     static public OrderShow Create(string root, Transform container, ProductInfo prod)
@@ -104,9 +103,7 @@ public class OrderShow : GUIElement
         transform.name = _title.text + " | " + pInfo.Id;
 
         if (_thisBtn == null)
-        {
             return;
-        }
 
         _thisBtn.onClick.AddListener(() => Program.MouseClickListenerSt("BuildingForm.Set.Current.Prod." 
             + pInfo.Product +"."+ pInfo.Id));
@@ -153,7 +150,6 @@ public class OrderShow : GUIElement
 
         transform.localScale = new Vector3(1, 1, 1);
     }
-
 
     float AddYSpaceIfIsOnProcess()
     {

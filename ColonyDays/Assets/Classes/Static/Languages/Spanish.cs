@@ -1193,6 +1193,14 @@ public class Spanish
         //Mar 20 2020
         _sp.Add("Rotten", "Podrido");
         _sp.Add("Ready", "Listo");
+        _sp.Add("Teacher", "Maestro(a)"); 
+        _sp.Add("BlackSmith", "Herrero(a)"); 
+        _sp.Add("SugarMiller", "Azucarero(a)"); 
+        _sp.Add("worker", "trabajador(a)");
+        _sp.Add("Overall.People", "Personas que necesitan este servicio: ");
+        _sp.Add("overall service", "servicio general");
+        _sp.Add("people in this building", "personas en este edificio");
+
     }
 
     internal static void Clear()

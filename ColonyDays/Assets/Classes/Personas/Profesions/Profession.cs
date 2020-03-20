@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 /*
- * 
  * on Brain.cs, void GoWork() there is interactin with Docker, WheelBarrow, Homer, Forester 
- * 
- * 
  */
 
 public class Profession
@@ -282,35 +279,26 @@ public class Profession
     }
 
     /// <summary>
-    /// Will show profesion. IWll address if homer or insider
+    /// Will show profesion. Will address if homer, or insider
     /// </summary>
     /// <returns></returns>
     internal string ProfessionDescriptionToShow()
     {
         Job res = ProfDescription;
         if (ProfDescription == Job.Homer)
-        {
             res = Person.ReturnJobType(_person.Work);
-        }
         if (res == Job.Insider)
         {
             if (_person.Work!=null)
             {
                 if (_person.Work.HType.ToString().Contains("School"))
-                {
-                    return "Teacher";
-                }
+                    return Languages.ReturnString("Teacher");
                 else if(_person.Work.HType == H.BlackSmith)
-                {
-                    return "BlackSmith";
-                }
+                    return Languages.ReturnString("BlackSmith");
                 else if(_person.Work.HType == H.SugarMill)
-                {
-                    return "SugarMiller";
-                }
+                    return Languages.ReturnString("SugarMiller");
             }
-
-            return _person.Work.HType + " worker";
+            return Languages.ReturnString(_person.Work.HType + "") + " " + Languages.ReturnString("worker");
         }
         return Naming.CaseItRight(res+"");
     }
@@ -378,8 +366,6 @@ public class Profession
         FigureProdCarryingAndAmt();
     }
 
-
-
     private void CleanOldVars()
     {
         _workerTask = HPers.None;
@@ -396,7 +382,6 @@ public class Profession
         _router = null;
         _routerBack = null;
     }
-
 
     protected void HandleNewProfDescrpSavedAndPrevJob(Job newJo)
     {
@@ -427,7 +412,6 @@ public class Profession
             _person.Brain.CurrentTask = p;
         }
     }
-
 
     private void CheckIfHasWorkInputOrder()
     {
@@ -542,9 +526,7 @@ public class Profession
 
         //needs to finish thet route first. then will create this one 
         if (_person.Brain._workRoute.CheckPoints.Count==0)
-        {
             return;
-        }
 
         PersonPot.Control.WorkersRoutingQueue.AddMeToOnSystemWaitList(_person.MyId);
     }
@@ -613,9 +595,7 @@ public class Profession
     void ReRouteDone()
     {
         var timeOnSys = PersonPot.Control.WorkersRoutingQueue.DoneReRoute(_person.MyId);//so another people can use the Spot
-
 //        Debug.Log("remove from cntrl prof:" + _person.MyId + " :" + ProfDescription + " on Sys:" + timeOnSys);
-
     }
 
     /// <summary>
@@ -686,25 +666,8 @@ public class Profession
 
         _person.MyDummyProf.LandZone1.Clear();
         _person.MyDummyProf.DummyIdSpawner = "";
-
-        //if (dummy == null)
-        //{
-        //    return;
-        //}
-
-        //if (ProfDescription==Job.Forester)
-        //{
-        //    //Debug.Log("Destroy dummy");
-        //    dummy.Destroy();
-        //    return;
-        //}
-
-        ////Debug.Log("Reset dummy:" + _person.MyId);
-        //Program.gameScene.ReturnUsedDummy(dummy);
-        //dummy = null;
     }
-
-
+    
     bool IsAnExistingBuilding(TheRoute theRoute)
     {
         var a = theRoute.DestinyKey.Substring(theRoute.DestinyKey.Length - 2);
@@ -715,10 +678,8 @@ public class Profession
             theRoute.DestinyKey.Contains("Rock") ||
             Brain.GetStructureFromKey(theRoute.DestinyKey) != null ||
             theRoute.DestinyKey.Substring(theRoute.DestinyKey.Length-2) == ".D";//in Work Route (farmer, fisheerman)
-
     }
 
-    int foresterStuck = 0;
     bool stuckedForester;
     /// <summary>
     /// If _workingNow = true this method will be called from derived class.
@@ -733,7 +694,6 @@ public class Profession
 
         if (stuckedForester)
         {
-            foresterStuck++;
             _person.Body.Location = HPers.Work;
             _workerTask = HPers.DoneAtWork;
             _person.Body.GoingTo = HPers.Work;
@@ -745,19 +705,6 @@ public class Profession
             //_person.Body.GoingTo = HPers.Work; 
 
             Debug.Log("unstuck forester: " + _person.name);
-
-
-
-
-
-
-            //if(foresterStuck > 1)
-            //{
-            //    _person.Work.ChangeMaxAmoutOfWorkers("Less");
-            //}
-
-            //_person.Body.Location = HPers.Work;
-            //_workerTask = HPers.None;
         }
 
         //walking toward the job site for forester walking towards a tree 
@@ -872,13 +819,11 @@ public class Profession
         }
     }
 
-
     bool CurrentConstructionIsNullOrDone()
     {
         var constr = Brain.GetBuildingFromKey(ConstructingKey);
         return constr == null || constr.StartingStage == H.Done;
     }
-
 
     #region New Logic that all go back to closer Empty Storage to drop Load
 
@@ -924,13 +869,6 @@ public class Profession
     /// </summary>
     protected void RouteBackForNewProfThatUseHomer()
     {
-        ////it will stay on limbo until redos profession again
-        //if (_person.Brain.IsContainOnBlackList(_person.Work.MyId, _person.Work.PreferedStorage.MyId))
-        //{
-        //    Debug.Log("contained on Blaclist: "+_person.MyId);
-        //    return;
-        //}
-
         _routerActive = true;
         IsRouterBackUsed = true;
         RouterBack = new CryRouteManager(_person.Work, ReturnStorage(), _person, HPers.InWorkBack);
@@ -954,7 +892,6 @@ public class Profession
             return;
         }
         var a = _person.Name;
-
 
         //so work Profession Mini States
         _person.Body.Location = HPers.Work;
@@ -1103,7 +1040,6 @@ public class Profession
         }
     }
 
-
     /// <summary>
     /// The id of an Still Element is not the same when loads again
     /// </summary>
@@ -1114,17 +1050,11 @@ public class Profession
         Program.gameScene.controllerMain.TerraSpawnController.Find(StillElementId);
 
         if (ele == null)
-        {
             return true;
-        }
 
         //if tht is over the amount on distance is not the same 
         return Vector3.Distance(ele.transform.position, FinRoutePoint) > 1f;
     }
-
-
-
-
 
     /// <summary>
     /// If Foresetrr has that Still Element blacklisted needs to Recreate Profession
@@ -1134,9 +1064,7 @@ public class Profession
     private bool ForesterCurrentStillEleIsBlackListed()
     {
         if (ProfDescription != Job.Forester || _person == null)
-        {
             return false;
-        }
 
         return _person.Brain.BlackList.Contains(StillElementId);
     }
@@ -1148,9 +1076,7 @@ public class Profession
     private bool ForesterHasNullEle()
     {
         if (ProfDescription != Job.Forester)
-        {
             return false;
-        }
 
         var ele =
                 Program.gameScene.controllerMain.TerraSpawnController.Find(StillElementId);
@@ -1178,7 +1104,6 @@ public class Profession
         return false;
     }
 
-
     private float startIdleTime;
     /// <summary>
     /// Idle Action that is to perform the animation of work
@@ -1203,13 +1128,11 @@ public class Profession
             {
                 _person.transform.LookAt(t);
             }
-
             startIdleTime = Time.time;
         }
 
         if (IsGameSpeedIsZero())
         {return;}
-
 
         if (Time.time > startIdleTime + idleTime // / Program.gameScene.GameSpeed
             )
@@ -1291,7 +1214,6 @@ public class Profession
             WorkingNow = true;
         }
     }
-
 
     /// <summary>
     /// so I dont have to save load those
@@ -1412,7 +1334,6 @@ public class Profession
     /// </summary>
     public virtual void AnyChange()
     {
-        
     }
 
     /// <summary>
@@ -1424,21 +1345,13 @@ public class Profession
         ResetDummy();
     }
 
-
     /// <summary>
     /// Created to modularize the case in where is ship wht has to be returned is the Dock, _person.Work
     /// </summary>
     /// <returns></returns>
     public static Structure GetStructureSrcAndDestiny(string id, Person person)
     {
-        //if (id == "Ship")
-        //{
-        //    return person.Work;
-        //}
         return Brain.GetStructureFromKey(id);
-
-      
-
     }
 
     #region Break Init 

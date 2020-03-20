@@ -492,9 +492,7 @@ public class Structure : StructureParent
         {
             //Debug.Log(string.Format( "{0} === {1}", prop.Name, prop.GetValue(stats, null)));
             if (prop.Name == "MaxPeople" || prop.Name == "Capacity")
-            {
                 continue;
-            }
 
             P prod = Enums.ParseEnum<P>(prop.Name);
             if (prod == P.None)
@@ -503,9 +501,6 @@ public class Structure : StructureParent
             }
             else
             {
-                //GameController.ResumenInventory1.GameInventory.Add(prod,
-                //    float.Parse(prop.GetValue(stats, null).ToString()));
-
                 GameController.ResumenInventory1.Add(prod, float.Parse(prop.GetValue(stats, null).ToString()), transform.position);
             }
         }
@@ -557,9 +552,12 @@ public class Structure : StructureParent
         if (!IsACoverageBuilding())
             return "";
 
-        return Languages.ReturnString("I.Can.Service") + Coverage.PeopleICanServe(CurrentCoverage(), HType) + " people in this buiding \n" +
-               Languages.ReturnString(HType + "") + " overall service: " + Coverage.OverallMyType(HType, true) + "\n" +
-               "Overall people needing this service: " + Coverage.HowManyPeopleNeedThisService(HType);
+        return 
+            Languages.ReturnString("I.Can.Service") + Coverage.PeopleICanServe(CurrentCoverage(), HType) + " " 
+                + Languages.ReturnString("people in this building") + "\n\n" +
+            Languages.ReturnString(HType + "") + " " + Languages.ReturnString("overall service") + ": " 
+                + Coverage.OverallMyType(HType, true) + "\n\n" +
+            Languages.ReturnString("Overall.People") + Coverage.HowManyPeopleNeedThisService(HType);
     }
 
     /// <summary>
@@ -602,8 +600,6 @@ public class Structure : StructureParent
             //return order != null;
             return Dispatch1.ThereIsWorkAtDock(Inventory);
         }
-
         return true;
     }
-
 }

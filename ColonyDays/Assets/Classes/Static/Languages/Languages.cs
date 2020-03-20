@@ -138,8 +138,6 @@ public class Languages
         _en.Add("FlowerPot.Desc", "Beauty your town and adds overall happiness to your citizens");
         _en.Add("PradoLion.Desc", "Beauty your town and adds overall happiness to your citizens");
 
-
-
         //Buildings name
         //Infr
         _en.Add("Road", "Road");
@@ -149,7 +147,6 @@ public class Languages
         _en.Add("Masonry", "Masonry");
         _en.Add("StandLamp", "Stand Lamp");
         _en.Add("HeavyLoad", "Heavy Load");
-
 
         //House
         _en.Add("Shack", "Shack");
@@ -162,7 +159,6 @@ public class Languages
         _en.Add("BrickHouseA", "Medium Brick House");
         _en.Add("BrickHouseB", "Luxury Brick House");
         _en.Add("BrickHouseC", "Large Brick House");
-
 
         //Farms
         //Animal
@@ -209,7 +205,6 @@ public class Languages
         _en.Add("Foundry", "Foundry");
         _en.Add("SteelFoundry", "Steel Foundry");
         _en.Add("SugarShop", "Sugarshop");
-
 
         //trade
         _en.Add("Dock", "Dock");
@@ -1050,18 +1045,25 @@ public class Languages
         //Mar 20 2020
         _en.Add("Rotten", "Rotten");
         _en.Add("Ready", "Ready");
+        _en.Add("Teacher", "Teacher"); 
+        _en.Add("BlackSmith", "BlackSmith"); 
+        _en.Add("SugarMiller", "SugarMiller"); 
+        _en.Add("worker", "worker");
+        _en.Add("Overall.People", "Overall people needing this service: ");
+        _en.Add("overall service", "overall service");
+        _en.Add("people in this building", "people in this building");
 
 
-
+        //(rev: Mar 20 2020)
         //has a lot of text to put here 
         //ProductStat.cs (rev)
         //Dispatch.cs (rev)
         //ButtonTile.cs (rev)
         //Plant.cs (rev)
         //GameTime.cs (rev)
-        //Profession.cs
-        //GUIElement.cs
-        //OrderShow.cs
+        //Profession.cs (rev)
+        //GUIElement.cs (rev)
+        //OrderShow.cs (rev)
 
 
 

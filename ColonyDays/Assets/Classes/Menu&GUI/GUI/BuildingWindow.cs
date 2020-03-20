@@ -591,18 +591,13 @@ public class BuildingWindow : Window
             if (Building.HType == H.Masonry)
             {
                 res += Languages.ReturnString("Buildings.Ready");
-
                 for (int i = 0; i < Building.BuildersManager1.GreenLight.Count; i++)
                 {
                     var st = Brain.GetStructureFromKey(Building.BuildersManager1.GreenLight[i].Key);
-
                     if (st != null)
                     {
-                        //res += "\n" + st.MyId;
                         res += "\n" + st.Name;
                     }
-
-                    //res += "\n" + Building.BuildersManager1.GreenLight[i].Key;
                 }
             }
         }
