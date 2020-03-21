@@ -1318,10 +1318,6 @@ public class Building : Hoverable, Iinfo
         LayerRoutine("done");
         PositionFixed = true;
 
-        //UnityEngine.AI.NavMeshBuilder.BuildNavMesh();
-        //UnityEngine.AI.NavMeshBuilder.BuildNavMesh();
-
-
         DestroyDoubleBoundHelp();
 
         //Preview of the Base to help aling
@@ -1334,9 +1330,6 @@ public class Building : Hoverable, Iinfo
         {
             PrivHandleZoningAddCrystals(); ;
         }
-
-
-
 
         if (!HType.ToString().Contains("Unit") && !IsLoadingFromFile && HType != H.BullDozer
             && HType != H.Road)
@@ -2799,7 +2792,10 @@ public class Building : Hoverable, Iinfo
     {
         DefineAmtNeeded();
 
-        if (progress == null) progress = new VisualConstructionProgress(this, amtNeeded, amt);
+        if (progress == null)
+        {
+            progress = new VisualConstructionProgress(this, amtNeeded, amt);
+        }
         else progress.AddAmount(amt);
 
         constructionAmt += (int)amt;
@@ -5020,14 +5016,6 @@ public class Building : Hoverable, Iinfo
 
 #endregion
 
-
-
-
-
-
-
-
-
     Vector3 _middlePoint = new Vector3();
     /// <summary>
     /// Must be called only if Anchors were defined already. Otherwise returns transform.position
@@ -5051,17 +5039,6 @@ public class Building : Hoverable, Iinfo
         return _middlePoint;
     }
 
-
-
-
-
-
-
-
-
-
-
-
     #region Hover All Objects. All objects that have a collider will be hoverable
 
     protected void OnMouseEnter()
@@ -5080,9 +5057,6 @@ public class Building : Hoverable, Iinfo
     }
 
     #endregion
-
-
-
 
     StageManager _stageManager;
     List<ParticleSystem> _pSystem;

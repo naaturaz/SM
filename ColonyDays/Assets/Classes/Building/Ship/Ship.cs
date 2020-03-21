@@ -128,6 +128,9 @@ public class Ship
     internal void ReCreateShip()
     {
         _building = Brain.GetBuildingFromKey(BuildKey);
+
+        if (_building == null) return;
+
         _shipGo = ShipGO.Create(_root, new Vector3(), _building, this, _hType, MyId);
         MoveThruPoints1.PassGameObject(_shipGo.gameObject);
 
@@ -135,8 +138,6 @@ public class Ship
             MoveThruPoints1.CurrentRoutePoint,
             MoveThruPoints1.Inverse, MoveThruPoints1.WhichRoute);
     }
-
-
 
     void CheckIfImportOrders()
     {

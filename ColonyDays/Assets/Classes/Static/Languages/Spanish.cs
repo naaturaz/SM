@@ -903,7 +903,7 @@ public class Spanish
         _sp.Add("isAboveHeight.MaritimeBound", "La sección seca de la construcción esta debajo de la altura mínima");
         _sp.Add("arePointsEven.MaritimeBound", "La sección seca de la construcción no esta en un terreno llano");
         _sp.Add("isOnTheFloor.MaritimeBound", "La sección seca de la construcción no esta en la altura común");
-        _sp.Add("isBelowHeight.MaritimeBound", "La sección seca de la construcción no esta en el agua");
+        _sp.Add("isBelowHeight.MaritimeBound", "La sección seca de la construcción no esta en la tierra");
 
         _sp.Add("InLand.Helper", "En Tierra");
         _sp.Add("InWater.Helper", "En Agua");

@@ -249,9 +249,7 @@ public class Profession
         var thereAreTools = GameController.ThereIsAtLeastOneOfThisOnStorage(P.Tool);
 
         if (thereAreTools)
-        {
             return 1;
-        }
         return .5f;
     }
 

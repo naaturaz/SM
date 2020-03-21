@@ -57,7 +57,6 @@ public class Book : General
         return res;
     }
 
-
     void LoadBuildDict()
     {
         //infr
