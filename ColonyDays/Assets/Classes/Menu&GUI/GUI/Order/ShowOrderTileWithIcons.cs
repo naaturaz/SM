@@ -19,6 +19,10 @@ class ShowOrderTileWithIcons : ShowInvetoryItem
 
     float oldAmt = -1000;
 
+    public float xOff = 220;
+    public float yOff = -22;
+    private Vector3 _localPos;
+
     public string OrderId
     {
         get
@@ -66,6 +70,8 @@ class ShowOrderTileWithIcons : ShowInvetoryItem
 
     private new void Update()
     {
+        //var rectT = GetComponent<RectTransform>();
+        //rectT.localPosition = new Vector3(_localPos.x + xOff, _localPos.y + yOff, _localPos.z);
     }
 
     public void GoUp()
@@ -140,7 +146,7 @@ class ShowOrderTileWithIcons : ShowInvetoryItem
     /// </summary>
     /// <param name="i"></param>
     /// <param name="type"></param>
-    internal void Reset(int i, H type, bool isOnProcess = false)
+    internal void Reset(int i, H type, Vector3 iniPosition, bool isOnProcess = false)
     {
         var rectT = GetComponent<RectTransform>();
         rectT.position = new Vector3();
@@ -150,11 +156,15 @@ class ShowOrderTileWithIcons : ShowInvetoryItem
             x = ReturnPixelsToTheRight();
 
         float yPls = 0;
-        //bz if is on process goes down
-        if (isOnProcess)
-        yPls = AddYSpaceIfIsOnProcess();
-   
-        rectT.localPosition = new Vector3(x, (-4 * i) - yPls, 0);
+        ////bz if is on process goes down
+        //if (isOnProcess)
+        //yPls = AddYSpaceIfIsOnProcess();
+
+        //rectT.localPosition = new Vector3(x, (-4 * i) - yPls, 0);
+
+        _localPos = new Vector3(iniPosition.x + xOff, (iniPosition.y - (4 * i)) + yOff, 0);
+        rectT.localPosition = _localPos;
+
         transform.localScale = new Vector3(1, 1, 1);
     }
 

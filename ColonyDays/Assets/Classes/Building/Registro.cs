@@ -112,7 +112,7 @@ public class Registro : MonoBehaviour
 
 
     #region ToDestroyBuilding
-    public void AddToDestroyBuilding(Building build)
+    void AddToDestroyBuilding(Building build)
     {
         //was added already
         if (FindFromToDestroyBuildings(build.MyId) != null)
@@ -139,10 +139,6 @@ public class Registro : MonoBehaviour
     }
     #endregion
 
-
-
-
-
     /// <summary>
     /// Remove item from All, and its spefic list
     /// </summary>
@@ -157,7 +153,6 @@ public class Registro : MonoBehaviour
         //PersonPot.Control.BuildersManager1.RemoveConstruction(myId);//so its removed from the BuilderManager
 
         BuildingPot.Control.DockManager1.RemoveFromDockStructure(myId, build.HType);
-
 
         ////so its save to AllRegFiles
         AllBuilding[myId].Instruction = H.WillBeDestroy;
@@ -201,7 +196,7 @@ public class Registro : MonoBehaviour
         var build = Brain.GetBuildingFromKey(myIdP);
 
         //the building was destroy before was fully built 
-        if (build == null || build.Category == Ca.Way)
+        if (build == null || build.Category == Ca.Way || build.HType == H.Road)
         {
             return;
         }
@@ -793,7 +788,7 @@ public class Registro : MonoBehaviour
         int res = 0;
         for (int i = 0; i < AllBuilding.Count; i++)
         {
-            if (BuildingWindow.isAWorkBuild(AllBuilding.ElementAt(i).Value))
+            if (BuildingWindow.isAWorkBuilding(AllBuilding.ElementAt(i).Value))
             {
                 res += AllBuilding.ElementAt(i).Value.MaxPeople;
             }
@@ -810,7 +805,7 @@ public class Registro : MonoBehaviour
         List<string> res = new List<string>();
         for (int i = 0; i < AllBuilding.Count; i++)
         {
-            if (BuildingWindow.isAWorkBuild(AllBuilding.ElementAt(i).Value))
+            if (BuildingWindow.isAWorkBuilding(AllBuilding.ElementAt(i).Value))
             {
                 res.Add(AllBuilding.ElementAt(i).Value.HType + "");
             }
@@ -823,7 +818,7 @@ public class Registro : MonoBehaviour
         List<string> res = new List<string>();
         for (int i = 0; i < AllBuilding.Count; i++)
         {
-            if (BuildingWindow.isAWorkBuild(AllBuilding.ElementAt(i).Value))
+            if (BuildingWindow.isAWorkBuilding(AllBuilding.ElementAt(i).Value))
             {
                AllBuilding.ElementAt(i).Value.DollarsPay = 5;
             }

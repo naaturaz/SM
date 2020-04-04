@@ -9,7 +9,6 @@ public class InputMouse : InputParent
 	// Use this for initialization
     public void Start()
     {
-        
     }
 	
 	// Update is called once per frame
@@ -36,19 +35,13 @@ public class InputMouse : InputParent
     void DebugFullConstructedBuilding()
     {
         if (!Developer.IsDev)
-        {
             return;
-        }
 
         if (BuildingPot.Control == null)
-        {
             return;
-        }
 
         if (BuildingPot.Control.Registro.SelectBuilding != null && Input.GetKeyUp(KeyCode.Z))
-        {
             BuildingPot.Control.Registro.SelectBuilding.AddToConstruction(10000);
-        }
     }
 
     /// <summary>
@@ -127,7 +120,6 @@ public class InputMouse : InputParent
             }
         }
 
-
         if (BuildingPot.Control.Registro.SelectBuilding == null
             //|| BuildingPot.Control.Registro.SelectBuilding.Instruction == H.WillBeDestroy
             )
@@ -171,7 +163,7 @@ public class InputMouse : InputParent
         { return; }
 
         if (BuildingPot.Control.Registro.SelectBuilding.Category == Ca.Way ||
-            BuildingPot.Control.Registro.SelectBuilding.Category == Ca.DraggableSquare ||
+            //BuildingPot.Control.Registro.SelectBuilding.Category == Ca.DraggableSquare ||
             BuildingPot.Control.Registro.SelectBuilding.Category == Ca.None)
         { return;}
 
@@ -187,7 +179,7 @@ public class InputMouse : InputParent
         { return; }
 
         if (BuildingPot.Control.Registro.SelectBuilding.Category == Ca.Way ||
-            BuildingPot.Control.Registro.SelectBuilding.Category == Ca.DraggableSquare ||
+            //BuildingPot.Control.Registro.SelectBuilding.Category == Ca.DraggableSquare ||
             BuildingPot.Control.Registro.SelectBuilding.Category == Ca.None)
         { return; }
 

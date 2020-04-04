@@ -454,6 +454,7 @@ public enum H
     Defender,
     PathToSeaExplain,
     Show,
+    DontDestroyYet,
 }
 
 //if new categorY IS ADDED PLS ADD ON BOOK.CS

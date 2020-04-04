@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 /*
  * Script atteched to the AddOrderWindow
- * 
  */
 public class AddOrderWindow : GUIElement
 {
@@ -17,9 +16,6 @@ public class AddOrderWindow : GUIElement
     private Text _errorMsgLbl;
 
     private string _orderType;//will say if import or export
-
-    private Rect _addBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
-    private Rect _cancelBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
 
     private GameObject _ordBtn;//the btn for orders
 
@@ -60,12 +56,6 @@ public class AddOrderWindow : GUIElement
 
         CleanDisplay();
 
-        var addBtn = GetChildThatContains(H.Add_Btn).transform;
-        var cancelBtn = GetChildThatContains(H.Cancel_Btn).transform;
-
-        _addBtnRect = GetRectFromBoxCollider2D(addBtn);
-        _cancelBtnRect = GetRectFromBoxCollider2D(cancelBtn);
-
         _inputAmt = GetChildThatContains(H.Input_Amt).GetComponent<InputField>();
         _inputPrice = GetGrandChildCalled(H.Input_Price).GetComponent<InputField>();
 
@@ -89,7 +79,7 @@ public class AddOrderWindow : GUIElement
         ResetScroolPos();
         Display();
 
-        _ourInventories.Show(5f);
+        _ourInventories.Show(8f);//5f
     }
 
     private void LoadMenu()
@@ -131,7 +121,6 @@ public class AddOrderWindow : GUIElement
         }
         else if (_orderType == "Export")
         {
-
         }
     }
 
@@ -148,20 +137,21 @@ public class AddOrderWindow : GUIElement
         {
             return;
         }
-
-        //if click gen
-        if (_addBtnRect.Contains(Input.mousePosition) && Input.GetMouseButtonUp(0))
-        {
-
-        }
-        //ig click inv
-        else if (_cancelBtnRect.Contains(Input.mousePosition) && Input.GetMouseButtonUp(0))
-        {
-
-        }
     }
 
-    public void AddOrderClick()
+    public void AddImportOrderClick()
+    {
+        _orderType = "Import";
+        AddOrderRoutine();
+    }
+
+    public void AddExportOrderClick()
+    {
+        _orderType = "Export";
+        AddOrderRoutine();
+    }
+
+    void AddOrderRoutine()
     {
         if (AddedOrder())
         {

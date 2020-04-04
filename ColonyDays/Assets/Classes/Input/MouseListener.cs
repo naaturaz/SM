@@ -262,7 +262,11 @@ public class MouseListener : InputMain
                 Program.InputMain.InputMouse.Select(cat, names[i]);
                 ManagerReport.AddInput("Selected building: " + names[i]);
 
-                if (BuildingPot.Control.Registro.SelectBuilding != null)
+                //Address the click of a tile of a road
+                //and SelectBuilding.name is contained in names, then return true
+                if (BuildingPot.Control.Registro.SelectBuilding != null
+                    && names.Contains(BuildingPot.Control.Registro.SelectBuilding.name)
+                    )
                 {
                     return true;
                 }
@@ -321,10 +325,6 @@ public class MouseListener : InputMain
 
         return clicked;
     }
-
-
-
-
 
     /// <summary>
     /// Actions to perform from form
@@ -846,9 +846,6 @@ public class MouseListener : InputMain
         return KeyCode.None;
     }
 
-
-
-
     /// <summary>
     /// This is to know which H is the one is clicked on slot
     /// 
@@ -906,8 +903,6 @@ public class MouseListener : InputMain
 
 
 #endregion
-
-
 
     private void CancelDemolishAction()
     {

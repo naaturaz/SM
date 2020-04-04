@@ -183,11 +183,11 @@ public class BuildingWindow : Window
         _prdBtnRect = GetRectFromBoxCollider2D(prdBtn.transform);
         _staBtnRect = GetRectFromBoxCollider2D(staBtn.transform);
 
-        _importIniPos = GetGrandChildCalled(H.IniPos_Import).transform.position;
-        _exportIniPos = GetGrandChildCalled(H.IniPos_Export).transform.position;
+        _importIniPos = GetGrandChildCalled(H.IniPos_Import).transform.localPosition;
+        _exportIniPos = GetGrandChildCalled(H.IniPos_Export).transform.localPosition;
 
-        _importIniPosOnProcess = GetGrandChildCalled(H.IniPos_Import_OnProcess).transform.position;
-        _exportIniPosOnProcess = GetGrandChildCalled(H.IniPos_Export_OnProcess).transform.position;
+        _importIniPosOnProcess = GetGrandChildCalled(H.IniPos_Import_OnProcess).transform.localPosition;
+        _exportIniPosOnProcess = GetGrandChildCalled(H.IniPos_Export_OnProcess).transform.localPosition;
 
         _upg_Mat_Btn = GetGrandChildCalled(H.Upg_Mat_Btn);
         _upg_Cap_Btn = GetGrandChildCalled(H.Upg_Cap_Btn);
@@ -213,10 +213,6 @@ public class BuildingWindow : Window
         Building = val;
         Program.MouseListener.HideBuildingsMenu();
 
-        if (Building.HType == H.Road)
-        {
-            return;
-        }
         if (Building.HType == H.Dock)
         {
             Program.gameScene.TutoStepCompleted("SelectDock.Tuto");
@@ -230,9 +226,7 @@ public class BuildingWindow : Window
         HandleOrdBtn();
         HandlePrdBtn();
 
-        //in case were inactive 
-
-        CheckIfMatMaxOut();
+        //CheckIfMatMaxOut();
         CheckIfCapMaxOut();
 
         HideStuff();
@@ -240,9 +234,19 @@ public class BuildingWindow : Window
 
     void LoadInitialTabDependingOnBuilding()
     {
+        if (Building.StartingStage != H.Done)
+        {
+            MakeThisTabActive(_general);
+            return;
+        }
+
         if(Building.HType.ToString().Contains("Storage"))
         {
             MakeThisTabActive(_gaveta);
+        }
+        else if(Building.HType == H.Dock)
+        {
+            MakeThisTabActive(_orders);
         }
         else MakeThisTabActive(_general);
     }
@@ -302,7 +306,7 @@ public class BuildingWindow : Window
             _prdBtn.SetActive(false);
         }
 
-        if (isADecorationBuilding(_building) || _building.IsMilitar())
+        if (isADecorationBuilding(_building) || _building.IsMilitar() || _building.HType == H.Road)
         {
             _salary.SetActive(false);
             _staBtn.SetActive(false);
@@ -358,7 +362,7 @@ public class BuildingWindow : Window
     void HideShowSalAndPositions()
     {
         bool fullyBuilt = Building.IsFullyBuilt();
-        bool isAWorkPlace = isAWorkBuild(Building);
+        bool isAWorkPlace = isAWorkBuilding(Building);
 
         if (fullyBuilt && isAWorkPlace && Building.Instruction != H.WillBeDestroy)
         {
@@ -543,7 +547,7 @@ public class BuildingWindow : Window
     /// <returns></returns>
     private string BuildCover()
     {
-        if (Building.MyId.Contains("Bridge"))
+        if (Building.HType == H.Road || Building.MyId.Contains("Bridge"))
         {
             return "";
         }
@@ -565,7 +569,7 @@ public class BuildingWindow : Window
         return isDecoration;
     }
 
-    public static bool isAWorkBuild(Building build)
+    public static bool isAWorkBuilding(Building build)
     {
         var isAHouse = build.IsThisAHouseType();
         var isStorage = build.HType.ToString().Contains("Storage");
@@ -707,6 +711,8 @@ public class BuildingWindow : Window
     /// <returns></returns>
     private string IfInConstructionAddPercentageOfCompletion()
     {
+        if (_building.HType == H.Road) return "";
+
         StructureParent sP = Building.ReturnCurrentStructureParent();
 
         if (sP.CurrentStage != 4)
@@ -838,7 +844,6 @@ public class BuildingWindow : Window
         {
             MakeThisTabActive(_orders);
             Program.gameScene.TutoStepCompleted("OrderTab.Tuto");
-
         }
         else if (_upgBtnRect.Contains(Input.mousePosition) && Input.GetMouseButtonUp(0))
         {
@@ -1052,14 +1057,14 @@ public class BuildingWindow : Window
         {
             var orderShow = ShowOrderTileWithIcons.Create(root, _orders.transform);
             orderShow.Show(order);
-            orderShow.Reset(i, order.TypeOrder, isOnProcess);
+            orderShow.Reset(i, order.TypeOrder, iniPosP, isOnProcess);
             _showOrders.Add(orderShow);
         } 
         //update existing
         else
         {
             isOrderOnList.Show(order);
-            isOrderOnList.Reset(i, order.TypeOrder, isOnProcess);
+            isOrderOnList.Reset(i, order.TypeOrder, iniPosP, isOnProcess);
         }
     }
 

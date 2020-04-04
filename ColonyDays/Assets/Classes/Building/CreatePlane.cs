@@ -84,7 +84,6 @@ public class CreatePlane : Building
             obj.Material = (Material)Resources.Load(materialRoot);
         }
         else obj.Material = mat;
-
         
         obj.RaisedFromFloor = raiseFromFloor;
         obj.IsAnInVisiblePlane = isAnInvisiblePlane;
@@ -127,19 +126,11 @@ public class CreatePlane : Building
         return obj;
     }
 
-
-
-
-
-
-
-
     /// <summary>
     /// Initialize Material Color. Define initial color as Geometry.renderer.material.color
     /// </summary>
     void InitializeMatColors()
     {
-        
         //InitialColor = Geometry.GetComponent<Renderer>().material.color;
     }
 
@@ -154,23 +145,15 @@ public class CreatePlane : Building
         _planeGeometry.GetComponent<Renderer>().castShadows = false;
     }
 
-
     string ReturnGeometryRoot()
     {
-
-            return Root.createPlaneUnit;
-        
-        
+        return Root.createPlaneUnit;
     }
-
-
 
     protected void Start()
     {
         if (MyId==null)
-        {
             return;
-        }
 
         base.Start();
         PlaneGeometry.GetComponent<Renderer>().sharedMaterial = _material;
@@ -190,12 +173,8 @@ public class CreatePlane : Building
             _planeGeometry.transform.SetParent(transform);
             InitializeMatColors();
         }
-
-        //UpdatePos(GetAnchors(), transform.localScale.y);
-
-        StartSmart();
+        DetermineTileImAndSmartStart();
     }
-
 
     #region SmartTile
     bool wasScaled;
@@ -206,10 +185,9 @@ public class CreatePlane : Building
 
     private void StartSmart()
     {
+        Debug.Log("Start Smart Tile");
         if (!_isSmartTile)
-        {
             return;
-        }
 
         if (_geometrySmart!=null)
         {
@@ -217,8 +195,11 @@ public class CreatePlane : Building
         }
 
         GameObject loc = Resources.Load<GameObject>(ReturnSmartTileRoot());
+
+        Debug.Log("Smart loc: " + loc);
+
         _geometrySmart = (GameObject)Instantiate(loc);
-        _geometrySmart.name = H.Geometry.ToString()+"Smart";
+        _geometrySmart.name = H.Geometry.ToString() + "Smart " + loc;
 
         _geometrySmart.transform.SetParent(gameObject.transform);
         _geometrySmart.transform.localPosition = new Vector3();
@@ -282,9 +263,6 @@ public class CreatePlane : Building
         CheckIfNewRoadIsBuilt();
     }
 
-
-
-
     #region New Road Checking which Tile is 
 
     private bool beAlert;
@@ -299,19 +277,10 @@ public class CreatePlane : Building
         {
             beAlert=false;
             //so updates material    
-            DetermineTileImAndAssignSharedMat();
-            SaveTile();
-
-
+            DetermineTileImAndSmartStart();
             //Program.gameScene.BatchAdd(this);
         }
     }
-
-    private void SaveTile()
-    {
-        //throw new NotImplementedException();
-    }
-
 
     private void SetCurrentTile()
     {
@@ -336,12 +305,11 @@ public class CreatePlane : Building
     }
 
     private General debugTileType;
-    void DetermineTileImAndAssignSharedMat()
+    void DetermineTileImAndSmartStart()
     {
         DetermineWhichTileIAm();
         //AssignSharedMaterial(ReturnTileMaterialRoot());
         StartSmart();
-
 
         if (debugTileType!=null)
         {
@@ -360,8 +328,6 @@ public class CreatePlane : Building
         List<Tile> survey = new List<Tile>(){N, S, W, E};
         DefineCurrentTile(survey);
     }
-
-
 
     /// <summary>
     /// Will tell if has not tile on that direction 

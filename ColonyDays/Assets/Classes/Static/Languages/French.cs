@@ -1158,6 +1158,13 @@ public class French
         _fr.Add("Overall.People", "Globalement, les personnes ayant besoin de ce service: ");
         _fr.Add("overall service", "service global");
         _fr.Add("people in this building", "les gens dans ce bâtiment");
+    
+        //Apr 4 2020
+        _fr.Add("Import.Precedence", "Les commandes d'importation ont priorité");
+        _fr.Add("Reset.Achievements", "Réinitialiser les réalisations");
+        _fr.Add("Danger.Zone", "Danger Zone");
+        _fr.Add("Show", "Show");
+        _fr.Add("Add_Order_Btn.HoverSmall", "Ajouter");
     }
 
     internal static void Clear()

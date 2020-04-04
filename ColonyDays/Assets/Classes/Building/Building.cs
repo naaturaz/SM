@@ -1593,7 +1593,7 @@ public class Building : Hoverable, Iinfo
     /// Will destroy the current obj and, the _isOrderToDestroy is set in Building.cs
     /// but the call comes from child 
     /// </summary>
-    protected virtual void DestroyOrdered(bool forced = false)
+    protected virtual void DestroyOrdered(bool forced = false, H instruct = H.None)
     {
         if ((_isOrderToDestroy           
             //this is for addres the problem where routing is happening and a Building is destroyed
@@ -1606,14 +1606,14 @@ public class Building : Hoverable, Iinfo
             }
 
             //if was CancelDemolish
-            if (Instruction!=H.WillBeDestroy)
-            {
+            if (Instruction != H.WillBeDestroy)
                 return;
-            }
 
             BuildingPot.Control.Registro.RemoveItem(Category, MyId);
             BuildingPot.Control.Registro.AllBuilding.Remove(MyId);
-            MeshController.CrystalManager1.Delete(this);
+
+            if (HType != H.Road)
+                MeshController.CrystalManager1.Delete(this);
 
             DestroyProjector();
 
@@ -1635,13 +1635,13 @@ public class Building : Hoverable, Iinfo
             //wants to demolish works 
             BuildingPot.Control.Registro.RemoveFromDestroyBuildings(this);
 
-
             var dust = General.Create("Prefab/Particles/PlaceBuildDust", MiddlePoint());
             var remainings = Create("Prefab/Building/Show/Remainings", MiddlePoint(), "Remainings");
             remainings.transform.Rotate(new Vector3(0, UMath.Random(0, 360), 0));
             AudioCollector.PlayOneShot("BUILDING_DEMOLISH_1", 0);
 
-            Destroy();
+            if (instruct == H.None)
+                Destroy();
         }
     }
 
@@ -1653,9 +1653,6 @@ public class Building : Hoverable, Iinfo
         DestroyOrdered(true);   
     }
 
-
-
-
     #region Mark Terra Spawn Obj When Create Building
     
     /// <summary>
@@ -1665,7 +1662,6 @@ public class Building : Hoverable, Iinfo
     {
         MarkTerraSpawnRoutine(20, from: transform.position);
     }
-    
     
     /// <summary>
     /// This is the routine to gather the object we are surroundig and then 
@@ -2665,7 +2661,6 @@ public class Building : Hoverable, Iinfo
         //so people can Reroutes if new build fell in the midle of one
         PersonPot.Control.Queues.AddToDestroyBuildsQueue(Anchors, MyId);
         BuildingPot.Control.Registro.RemoveFromDestroyBuildings(this);
-
     }
 
     /// <summary>
@@ -2676,8 +2671,9 @@ public class Building : Hoverable, Iinfo
         gameObject.layer = 10;//person bloick layer
 
         float xDim = Mathf.Abs(refFile.Min.x - refFile.Max.x) + refFile.TileScale.x;
+        float yDim = Mathf.Abs(refFile.Min.y - refFile.Max.y) + refFile.TileScale.y;
         float zDim = Mathf.Abs(refFile.Min.z - refFile.Max.z) + refFile.TileScale.z;
-        Vector3 newScale = new Vector3(xDim, 5f, zDim);
+        Vector3 newScale = new Vector3(xDim, yDim, zDim);
 
         Vector3 center = (refFile.Min + refFile.Max) / 2;
         gameObject.AddComponent<BoxCollider>();

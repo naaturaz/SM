@@ -1201,6 +1201,12 @@ public class Spanish
         _sp.Add("overall service", "servicio general");
         _sp.Add("people in this building", "personas en este edificio");
 
+        //Apr 4 2020
+        _sp.Add("Import.Precedence", "Las ordenes de importación tienen prioridad");
+        _sp.Add("Reset.Achievements", "Restablecer logros");
+        _sp.Add("Danger.Zone", "Peligro");
+        _sp.Add("Show", "Muestra");
+        _sp.Add("Add_Order_Btn.HoverSmall", "Añadir orden");
     }
 
     internal static void Clear()

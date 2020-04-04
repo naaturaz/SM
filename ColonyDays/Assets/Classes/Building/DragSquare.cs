@@ -313,8 +313,6 @@ public class DragSquare : Trail
         RemoveTotalUnitCost();
     }
 
-
-
     void AfterLoopRoutine()
     {
         PositionFixed = true;
@@ -325,6 +323,7 @@ public class DragSquare : Trail
     /// </summary>
     public void DestroyPreviews()
     {
+        if (farmPrev == null) return;
         farmPrev.DestroyCoolMoveFirst(H.Y, destroyCoolSpeed, destroyCoolTime);
         //needs to be destroy too bz they are spawned on Way.cs
         DestroyBigPrevBoxes();
@@ -509,12 +508,16 @@ public class DragSquare : Trail
     {
         PositionFixed = false;
 
+        //Apr 4, 2020
+        Instruction = H.WillBeDestroy;
+        DestroyOrdered(true, H.DontDestroyYet);
+
         for (int i = 0; i < _planesSoil.Count; i++)
         {
             _planesSoil[i].Destroy();
         }
         
-        BuildingPot.Control.Registro.RemoveItem(Category, MyId);
+        //BuildingPot.Control.Registro.RemoveItem(Category, MyId);
         _isOrderToDestroy = true;
         DestroyOrdered();
     }
@@ -553,5 +556,5 @@ public class DragSquare : Trail
 	    {
 	        CreatePlanesRoutine(soil, transform);
 	    }
-	}
+    }
 }

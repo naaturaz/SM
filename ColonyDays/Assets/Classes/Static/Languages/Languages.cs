@@ -443,7 +443,6 @@ public class Languages
         _en.Add("LastMasonry", "Cannot destroy, this is the only Masonry in your village");
         _en.Add("OnlyOneDemolish", "You are demolishing a building already. Try again after demolition is completed");
 
-
         //help
 
         _en.Add("Construction.HoverMed", "For the construction of any building you need to have workers in the Masonry." +
@@ -501,8 +500,10 @@ public class Languages
         _en.Add("Our Inventories.Help", "The section 'Our inventories' in the 'Add Order Window' is a resume of what we got in our Storages buildings inventories");
         _en.Add("Inventories Explanation.Help", "This a resume of what we got in our Storages inventories. Items in other buildings inventories do not belong to the city");
 
-        ///word and grammarly below
+        _en.Add("Orders.Help", "Import orders have precedence");
 
+
+        ///word and grammarly below
 
 
 
@@ -544,41 +545,37 @@ public class Languages
         _en.Add("ShowHelp.Tuto", "Click on the 'Help' button, located in the bottom bar. " +
                 "When you hover over it, it will popup 'Help'. There you can find some tips.");
 
-
         _en.Add("SelectDock.Tuto", "Ships drop and pick goods at random from the dock's inventory. Workers are needed to move dock goods in and out. They need wheelbarrows and crates. If are no items in the dock storage they won't work. Now click on the Dock.");
 
-
         _en.Add("OrderTab.Tuto", "Go to the Orders tab on the Dock's Window.");
-        _en.Add("ImportOrder.Tuto", "Click on the '+' sign beside Add Import Order.");
+        _en.Add("ImportOrder.Tuto", "On the 'Orders' tab click on the '+' sign.");
 
-        _en.Add("AddOrder.Tuto", "Now scroll down in the products and select wood and enter 100 as the amount. Then click the 'Add' button.");
+        _en.Add("AddOrder.Tuto", "Now scroll down in the products and select Wood and enter 100 as the amount. Then click the 'Import' button. Import orders have precedence.");
         _en.Add("CloseDockWindow.Tuto", "Now the order is added. A random ship will drop this item in the dock inventory. And then your dock workers will take it to the closest Storage building. Now click out the window, so it closes.");
         _en.Add("Rename.Tuto", "Click on a person and then click on the title bar of the person. Like this, you can change the name of any person or building in the game. Move outside of the input box so the change is saved");
-        _en.Add("RenameBuild.Tuto", "Now click on a building and change its name in the same way. Remember to move outside of the input box so the change is saved");
+        _en.Add("RenameBuild.Tuto", "Now click on a building and change its name in the same way. Remember to move outside of the input box so the change is saved.");
 
         _en.Add("BullDozer.Tuto", "Now click on the Bulldozer icon on the bottom bar. Then remove a tree or a rock from the terrain.");
 
-
-        _en.Add("Budget.Tuto", "Click on the 'Control/Bulletin' button, then on 'Finance' menu and then on 'Ledger'. This is the game ledger");
-        _en.Add("Prod.Tuto", "Click on 'Prod' menu and then on 'Produce'. Will show the village's production for the last 5 years");
+        _en.Add("Budget.Tuto", "Click on the 'Control/Bulletin' button, then on 'Finance' menu and then on 'Ledger'. This is the game ledger.");
+        _en.Add("Prod.Tuto", "Click on 'Prod' menu and then on 'Produce'. Will show the village's production for the last 5 years.");
         _en.Add("Spec.Tuto", "Click the 'Prod' menu and then on 'Spec'. Here you can see exactly how to make each product on the game. The inputs necessaries and where is produced. Also, the import and export prices");
-        _en.Add("Exports.Tuto", "Click the 'Finance' menu and then on 'Export'. Here you can see a breakdown of your village's exports");
-
+        _en.Add("Exports.Tuto", "Click the 'Finance' menu and then on 'Export'. Here you can see a breakdown of your village's exports.");
 
         //Quest
-        _en.Add("Tutorial.Quest", "Quest: Finish the tutorial. Reward $10,000. It takes roughly 3 minutes to complete");
+        _en.Add("Tutorial.Quest", "Quest: Finish the tutorial. Reward $10,000. It takes roughly 3 minutes to complete.");
 
-        _en.Add("Lamp.Quest", "Quest: Build a Stand Lamp. Find it on Infrastructure, it shines at night if there is Whale Oil on Storage");
+        _en.Add("Lamp.Quest", "Quest: Build a Stand Lamp. Find it on Infrastructure, it shines at night if there is Whale Oil on Storage.");
 
         _en.Add("Shack.Quest", "Quest: Build a Shack. These are cheap houses. When people turn 16 they will move to a free house if found. In this way, population growth will be guaranteed. [F1] Help. If you see smoke in a house's chimney means there are people living in it");
 
-        _en.Add("SmallFarm.Quest", "Quest: Build a Small Field Farm. You need farms to feed your people");
+        _en.Add("SmallFarm.Quest", "Quest: Build a Small Field Farm. You need farms to feed your people.");
         _en.Add("FarmHire.Quest", "Quest: Hire two farmers in the Small Field Farm. Click on the farm and assign workers. You need to have unemployed"
                     + " people to be able to assign them into a new building. Tip: if you did it already, fire them and rehire them.");
 
         _en.Add("FarmProduce.Quest", "Quest: Now produce " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " of beans on the Small Field Farm. Click on the 'Stat' tab and will show you the production of the last 5 years. You can see the quest progress in the quest window. If you build more small farms will be accounted for the quest.");
         _en.Add("Transport.Quest", "Quest: Transport the beans from the farm to the Storage. To do that make sure you have" +
-                " workers on the masonry. They act as wheelbarrows when not building");
+                " workers on the masonry. They act as wheelbarrows when not building.");
 
 
         _en.Add("HireDocker.Quest", "Quest: Hire a docker. Dockers only task is to move the goods into the Dock from the Storage if you are exporting." +
@@ -586,18 +583,14 @@ public class Languages
                 " If you haven't built a Dock then build one." +
             " Find it in Trade.");
 
-
-        _en.Add("Export.Quest", "Quest: At the Dock create an order and export exactly 300 " + Unit.CurrentWeightUnitsString() + " of beans." +
-                " In the Dock click on the 'Orders' tab and add an export order with the '+' sign." +
-            " Select product and enter amount");
-
-
+        _en.Add("Export.Quest", "Quest: At the Dock create an order and export exactly 300 " + Unit.CurrentWeightUnitsString() + " of Beans." +
+                " In the Dock click on the 'Orders' tab and add with the '+' sign." +
+            " Select product and enter amount, then click on 'Export' button");
 
         _en.Add("MakeBucks.Quest", "Quest: Make $100 exporting goods in the Dock. " +
             "Once a ship arrives will randomly pay product(s) in your Dock's inventory");
         _en.Add("HeavyLoad.Quest", "Quest: Build a Heavyload building. This are haulers that carry more weight. They will come handy when transporting goods around is needed."); //Carts must be available on towns storages for them to work" );
         _en.Add("HireHeavy.Quest", "Quest: In the Heavyload building hire a Heavy Hauler.");
-
 
         _en.Add("ImportOil.Quest", "Quest: Import 500 " + Unit.CurrentWeightUnitsString() + " of Whale Oil at the Dock. This is needed to keep your lights on at night. Ships will randomly drop imports in your Dock's inventory");
 
@@ -610,9 +603,7 @@ public class Languages
         _en.Add("WeaponsProduce.Quest", "Now produce " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " of Weapons in the Blacksmith. Click on the 'Stat' tab and will show you the production of the last 5 years. You can see the quest progress in the quest window.");
         _en.Add("ExportWeapons.Quest", "Now export 100 " + Unit.CurrentWeightUnitsString() + " of Weapons. On the Dock add an order of export. Notice that Weapons are a profitable business");
 
-
         _en.Add("CompleteQuest", "Nice :) Well done! Your reward is {0}");
-
 
         //added Sep 14 2017
         _en.Add("BuildFishingHut.Quest", "Build a Fishing hut. In this way citizens have different foods to eat, which translates into happiness");
@@ -1020,11 +1011,8 @@ public class Languages
         _en.Add("Current Quest:", "Current Quest:");
         _en.Add("Reward: ", "Reward: ");
 
-
-
         //Dec 16
         _en.Add("New bought lands", "New Bought Lands");
-
 
         //Dec 18
         //Main Menu
@@ -1033,7 +1021,6 @@ public class Languages
 
         _en.Add("Credits", "Credits");
         _en.Add("Credits.Text", "Translation:\nCédric Gauché (fr)\nKarsten Eidner (de)");
-
 
         //All Lang Needed for sure
 		_en.Add("Attention.Production", "Attention: Production was stopped. To resume production in this Building select a product");
@@ -1053,6 +1040,12 @@ public class Languages
         _en.Add("overall service", "overall service");
         _en.Add("people in this building", "people in this building");
 
+        //Apr 4 2020
+        _en.Add("Import.Precedence", "Import orders have precedence");
+        _en.Add("Reset.Achievements", "Reset Achievements. Can't undo");
+        _en.Add("Danger.Zone", "Danger Zone");
+        _en.Add("Show", "Show");
+        _en.Add("Add_Order_Btn.HoverSmall", "Add Order");
 
         //(rev: Mar 20 2020)
         //has a lot of text to put here 
@@ -1064,9 +1057,6 @@ public class Languages
         //Profession.cs (rev)
         //GUIElement.cs (rev)
         //OrderShow.cs (rev)
-
-
-
 
 
 

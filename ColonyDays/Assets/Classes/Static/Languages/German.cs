@@ -1169,6 +1169,12 @@ public class German
         _de.Add("overall service", "gesamtservice");
         _de.Add("people in this building", "menschen in diesem gebäude");
 
+        //Apr 4 2020
+        _de.Add("Import.Precedence", "Importaufträge haben Vorrang");
+        _de.Add("Reset.Achievements", "Erfolge zurücksetzen.");
+        _de.Add("Danger.Zone", "Achtung");
+        _de.Add("Show", "Show");
+        _de.Add("Add_Order_Btn.HoverSmall", "Bestellung");
     }
 
     internal static void Clear()

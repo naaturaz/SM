@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,14 +35,14 @@ class TutoWindow : GUIElement
         "ShowHelp.Tuto",
 
         "SelectDock.Tuto",
-        "OrderTab.Tuto",
+        //"OrderTab.Tuto",
         "ImportOrder.Tuto",
         "AddOrder.Tuto",
         "CloseDockWindow.Tuto",
         "Rename.Tuto",
         "RenameBuild.Tuto",
 
-        "BullDozer.Tuto",               //22
+        "BullDozer.Tuto",               //21
 
         "Budget.Tuto",
         "Prod.Tuto",
@@ -153,8 +151,6 @@ class TutoWindow : GUIElement
         }
     }
 
-
-
     public void Next(string step)
     {
         if (_showAgainTuto == null)
@@ -193,7 +189,6 @@ class TutoWindow : GUIElement
             Program.WasTutoPassed = true;
             PlayerPrefs.SetString("Tuto", "Done");
 
-
             return;
         }
         //QuestManager.QuestFinished("Tutorial");
@@ -214,6 +209,7 @@ class TutoWindow : GUIElement
     /// </summary>
     public void SkipTuto()
     {
+        HideAllHelpers();
         AudioCollector.PlayOneShot("ClickWood1", 0);
         //_currentIndex = -1;
         Hide();
@@ -226,9 +222,7 @@ class TutoWindow : GUIElement
 
         Program.gameScene.QuestManager.TutoCallWhenDone();
         PlayerPrefs.SetString("Tuto", "Skip");
-
     }
-
 
     #region Manage delay on tutorials
 
@@ -257,10 +251,3 @@ class TutoWindow : GUIElement
     #endregion
 
 }
-
-
-
-
-
-
-
