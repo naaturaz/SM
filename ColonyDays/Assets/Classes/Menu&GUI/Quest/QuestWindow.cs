@@ -64,8 +64,8 @@ public class QuestWindow : GUIElement
     {
         for (int i = 0; i < list.Count; i++)
         {
-            var iniPosHere = _scroll_Ini_PosGO.transform.localPosition +
-                             new Vector3(0, -4.8f * i, 0);
+            //-4.8f
+            var iniPosHere = _scroll_Ini_PosGO.transform.localPosition + new Vector3(0, -5.3f * i, 0);
 
             var a = QuestTile.CreateTile(_content.gameObject.transform, list[i],
                 iniPosHere, this);

@@ -16,6 +16,9 @@ public class GameTime
     private int _month = 1;
     private int _year;
 
+    //second playing actually the game. Not including paused time that includes Main Menu
+    float _inGameTime;
+
     public float AccumDays
     {
         get { return _accumDays; }
@@ -46,7 +49,22 @@ public class GameTime
         set { _timeFactor = value; }
     }
 
-    public GameTime() { }
+    public float InGameTime
+    {
+        get
+        {
+            return _inGameTime;
+        }
+
+        set
+        {
+            _inGameTime = value;
+        }
+    }
+
+    public GameTime()
+    {
+    }
 
     public GameTime(float timeFactorMulti)
     {
@@ -57,6 +75,16 @@ public class GameTime
     {
         _accumDays += TimeFactorInclSpeed();
         CheckIfNewDay();
+
+        //add ingame time, only if the player is playing, not while in pause: Meaning in pause or in Main Menu
+        //Program.gameScene.GameSpeed
+
+    }
+
+    public void OneSecUpdate()
+    {
+        if (Program.gameScene.GameSpeed == 0) return;
+        _inGameTime++;
     }
 
     /// <summary>

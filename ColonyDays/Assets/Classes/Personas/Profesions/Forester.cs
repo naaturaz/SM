@@ -5,15 +5,9 @@ using UnityEngine;
 
 public class Forester : Profession
 {
-
-
-
     private List<TerrainRamdonSpawner> _spawnersList = new List<TerrainRamdonSpawner>();//save implem
-    
     private Vector3 _treeCenterPos;
-
     private StillElement _stillElement;
-
 
     public Forester(Person person, PersonFile pF)
     {
@@ -63,7 +57,6 @@ public class Forester : Profession
         StillElementId = OrderedSites[0].LocMyId;
 
         _stillElement = Program.gameScene.controllerMain.TerraSpawnController.Find(StillElementId);
-
 
         //asking for grown in case is there but from an old list  
         if (!_stillElement.Grown())
@@ -244,9 +237,6 @@ public class Forester : Profession
         }
     }
 
-
-
-
     private bool routerBackWasInit;
     /// <summary>
     /// So it doesnt blackList nothing in the second Route if he is blackListug a tree in the Router1
@@ -255,8 +245,6 @@ public class Forester : Profession
     {
         if (RouterActive && Router1.IsRouteReady && !routerBackWasInit)
         {
-
-
             routerBackWasInit=true;
             RouterBack = new CryRouteManager(_person.MyDummyProf, _person.FoodSource, _person, HPers.InWorkBack, false, true);
         }

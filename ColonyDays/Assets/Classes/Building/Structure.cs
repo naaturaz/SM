@@ -5,7 +5,6 @@ using UnityEngine;
 public class Structure : StructureParent
 {
     private MDate _usedAt = new MDate();
-
     private bool isStageObjHidden;
     private Farm _farm;//will be use if Structure is a farm , also in HeavyLoad
 
@@ -25,9 +24,7 @@ public class Structure : StructureParent
     public override void UpdateClosestVertexAndOld()
     {
         if (gameObject == null)
-        {
             return;
-        }
 
         if (!isStageObjHidden)
         {
@@ -36,7 +33,6 @@ public class Structure : StructureParent
         }
 
         base.UpdateClosestVertexAndOld();
-
         //gameObject.transform.position = ClosestSubMeshVert;//snap
 
         gameObject.transform.position = m.HitMouseOnTerrain.point;//free

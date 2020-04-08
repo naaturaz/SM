@@ -418,6 +418,7 @@ public class GameScene : General
         while (true)
         {
             yield return new WaitForSeconds(1); // wait
+            GameTime1.OneSecUpdate();
             GameController1.UpdateOneSecond();
             DataController.Update();
 

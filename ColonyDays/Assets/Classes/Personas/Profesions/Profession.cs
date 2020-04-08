@@ -233,7 +233,9 @@ public class Profession
 
         if (ProfDescription == Job.Forester)
         {
-            ProdXShift *= 1.2f;
+            //was *= 1.2f from Late 2016 till Apr 7, 2020
+            //todo mod
+            ProdXShift *= 2f;
         }
 
         //if is zero then will do this//is zero becasue one factor was zero. most likely the produceFac

@@ -5,7 +5,6 @@ public class Builder : Profession
 {
     private bool _nothingToBuild;
     private int _nothingToBuildCounter;
-
     private bool _wheelBarrowNow;
 
     public Builder(Person person, PersonFile pF)
@@ -318,13 +317,13 @@ public class Builder : Profession
 
             //if was destroy
             if (_constructing == null)
-            {
                 return;
-            }
 
             //do stuff
             //was 100f from Late 2016 till Dec 18 2019
-            var amt = Developer.IsDev ? 100f : 8f;
+            //was 8f from Dec 19 2019, till Apr 7, 2020
+            //todo mod
+            var amt = Developer.IsDev ? 100f : 24f;
             _constructing.AddToConstruction(amt * ToolsFactor(), _person);
             //so find new construction everytime before goes out to work 
             _constructing = null;
