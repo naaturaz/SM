@@ -70,6 +70,8 @@ public class VisualConstructionProgress
         }
 
         _currAmt += amt;
+        if (_currAmt >= _amtNeeded)
+            _currAmt = _amtNeeded;
 
         if (_structure.CurrentStage == 4) return;
 

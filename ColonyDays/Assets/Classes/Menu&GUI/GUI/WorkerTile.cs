@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class WorkerTile : GUIElement
 {
     private string _workType;
-
     public string WorkType
     {
         get { return _workType; }
@@ -22,12 +21,14 @@ public class WorkerTile : GUIElement
     GameObject _plusBtn;
     GameObject _lessBtn;
 
+    GameObject _hireAllBtn;
+    GameObject _fireAllBtn;
+    string _hireFireAllAction = "";
+
     internal static WorkerTile CreateTile(Transform container,
     string workType, Vector3 iniPos)
     {
         WorkerTile obj = null;
-
-        var root = "";
 
         obj = (WorkerTile)Resources.Load(Root.worker_Tile, typeof(WorkerTile));
         obj = (WorkerTile)Instantiate(obj, new Vector3(), Quaternion.identity);
@@ -48,11 +49,11 @@ public class WorkerTile : GUIElement
         _totalText = FindGameObjectInHierarchy("Total", gameObject).GetComponent<Text>();
         _currentText = FindGameObjectInHierarchy("Current_Amount", gameObject).GetComponent<Text>();
 
-        var goP = GetChildCalled("More");
-        var goL = GetChildCalled("Less");
-        
         _plusBtn = GetChildCalled("More");
         _lessBtn = GetChildCalled("Less");
+
+        _hireAllBtn = GetChildCalled("Hire All");
+        _fireAllBtn = GetChildCalled("Fire All");
 
         _descText.text = Languages.ReturnString(_workType);
 
@@ -62,14 +63,10 @@ public class WorkerTile : GUIElement
     private void Init()
     {
         if (_buildings == null)
-        {
             _buildings = BuildingController.FindAllStructOfThisTypeAndFullyBuilt(_workType);
-        }
 
         if (_employ == -1)
-        {
             _employ = MaxPeople();
-        }
 
         if (_oldEmploy != _employ && _oldEmploy != -1)
         {
@@ -161,15 +158,33 @@ public class WorkerTile : GUIElement
         Init();
     }
 
+    /// <summary>
+    /// Called from GUI
+    /// </summary>
+    public void ClickFireAllSign()
+    {
+        _hireFireAllAction = "Fire All";
+    }
+
+    /// <summary>
+    /// Called from GUI
+    /// </summary>
+    public void ClickHireAllSign()
+    {
+        _hireFireAllAction = "Hire All";
+    }
+
     private void CheckIfPlusIsActive()
     {
         if (MaxPeople() >= AbsMaxPeople() || MyText.Lazy() == 0)
         {
             MakeInactiveButton(_plusBtn);
+            MakeInactiveButton(_hireAllBtn);
         }
         else
         {
             MakeActiveButton(_plusBtn);
+            MakeActiveButton(_hireAllBtn);
         }
     }
 
@@ -178,10 +193,12 @@ public class WorkerTile : GUIElement
         if (MaxPeople() == 0)
         {
             MakeInactiveButton(_lessBtn);
+            MakeInactiveButton(_fireAllBtn);
         }
         else
         {
             MakeActiveButton(_lessBtn);
+            MakeActiveButton(_fireAllBtn);
         }
     }
 
@@ -203,5 +220,26 @@ public class WorkerTile : GUIElement
         }
         CheckIfLessIsActive();
         CheckIfPlusIsActive();
+        HireFireAll();
+    }
+
+    void HireFireAll()
+    {
+        if (_hireFireAllAction == "Fire All")
+        {
+            if (_lessBtn.activeSelf)
+            {
+                ClickLessSign();
+            }
+            else _hireFireAllAction = "";
+        }
+        else if (_hireFireAllAction == "Hire All")
+        {
+            if (_plusBtn.activeSelf)
+            {
+                ClickPlusSign();
+            }
+            else _hireFireAllAction = "";
+        }
     }
 }

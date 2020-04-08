@@ -64,7 +64,7 @@ public class BuildingWindow : Window
     private Text _currPositionsTxt;
     private Text _maxPositionsTxt;
 
-    Image _imageIcon;
+    //Image _imageIcon;
 
     //Scrool 
     ScrollViewShowInventory _scrollInventory;
@@ -163,7 +163,7 @@ public class BuildingWindow : Window
         _invIniPos = GetGrandChildCalled(H.Inv_Ini_Pos);
         _invIniPosSta = GetGrandChildCalled("Inv_Ini_Pos_Sta");
 
-        _imageIcon = GetChildCalled("Image_Icon").GetComponent<Image>();
+        //_imageIcon = GetChildCalled("Image_Icon").GetComponent<Image>();
 
         _genBtn = GetChildThatContains(H.Gen_Btn);
         _invBtn = GetChildThatContains(H.Inv_Btn);
@@ -197,6 +197,10 @@ public class BuildingWindow : Window
 
         _plusBtn = FindGameObjectInHierarchy("More Positions", gameObject);
         _lessBtn = FindGameObjectInHierarchy("Less Positions", gameObject);
+
+
+        _hireAllBtn = FindGameObjectInHierarchy("Hire All", gameObject);
+        _fireAllBtn = FindGameObjectInHierarchy("Fire All", gameObject);
 
         _salary.SetActive(false);
 
@@ -383,7 +387,7 @@ public class BuildingWindow : Window
         HidePriorityControls();
 
         HideShowSalAndPositions();
-        LoadImageIcon();
+        //LoadImageIcon();
 
         HideShow();
 
@@ -417,7 +421,7 @@ public class BuildingWindow : Window
         var iconRoot = Root.RetBuildingIconRoot(_building.HType);
         var s = (Sprite)Resources.Load(iconRoot, typeof(Sprite));
 
-        _imageIcon.sprite = s;
+        //_imageIcon.sprite = s;
     }
 
     public void ResetShownInventory()
@@ -1243,17 +1247,20 @@ public class BuildingWindow : Window
 
     GameObject _plusBtn;
     GameObject _lessBtn;
-
+    GameObject _hireAllBtn;
+    GameObject _fireAllBtn;
 
     private void CheckIfPlusIsActive()
     {
         if (MaxPeople() >= AbsMaxPeople() || MyText.Lazy() == 0)
         {
             MakeInactiveButton(_plusBtn);
+            MakeInactiveButton(_hireAllBtn);
         }
         else
         {
             MakeActiveButton(_plusBtn);
+            MakeActiveButton(_hireAllBtn);
         }
     }
 
@@ -1262,10 +1269,12 @@ public class BuildingWindow : Window
         if (MaxPeople() == 0)
         {
             MakeInactiveButton(_lessBtn);
+            MakeInactiveButton(_fireAllBtn);
         }
         else
         {
             MakeActiveButton(_lessBtn);
+            MakeActiveButton(_fireAllBtn);
         }
     }
 

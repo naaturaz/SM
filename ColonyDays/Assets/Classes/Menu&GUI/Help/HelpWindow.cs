@@ -89,10 +89,13 @@ public class HelpWindow : GUIElement
 
     #region Scroll
 
+    float _tileHeight = 5.3f;
+    float _pad = 0.9f;
+
     private void PopulateScrollView()
     {
         ResetScroolPos();
-        AdjustContentHeight(_helps.Count * 4.9f);
+        AdjustContentHeight(_pad + (_helps.Count * _tileHeight));
 
         ClearBtns();
         ShowButtons(_helps);
@@ -112,12 +115,9 @@ public class HelpWindow : GUIElement
     {
         for (int i = 0; i < list.Count; i++)
         {
-            var iniPosHere = _scroll_Ini_PosGO.transform.localPosition +
-                             new Vector3(0, -4.8f * i, 0);
-
-            var a = HelpTile.CreateTile(_content.gameObject.transform, list[i],
-                iniPosHere, this);
-
+            //4.8
+            var iniPosHere = _scroll_Ini_PosGO.transform.localPosition + new Vector3(0, -_tileHeight * i, 0);
+            var a = HelpTile.CreateTile(_content.gameObject.transform, list[i], iniPosHere, this);
             _btns.Add(a);
         }
     }
@@ -126,19 +126,6 @@ public class HelpWindow : GUIElement
 
     void Update()
     {
-    }
-
-    public string Status(Quest q)
-    {
-        if (Program.gameScene.QuestManager.IsDone(q))
-        {
-            return "Done";
-        }
-        else if (q.IsAPercetangeOne())
-        {
-            return q.PercetageDone().ToString("0%");
-        }
-        return "Active";
     }
 
     internal void HelpSelected(string Key)

@@ -1047,6 +1047,16 @@ public class Languages
         _en.Add("Show", "Show");
         _en.Add("Add_Order_Btn.HoverSmall", "Add Order");
 
+        //Apr 8 2020
+        _en.Add("BuyRegion", "Buy Region");
+        _en.Add("Fire All.HoverSmall", "Fire All");
+        _en.Add("Hire All.HoverSmall", "Hire All");
+
+
+
+
+
+
         //(rev: Mar 20 2020)
         //has a lot of text to put here 
         //ProductStat.cs (rev)

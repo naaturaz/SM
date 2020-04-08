@@ -44,8 +44,14 @@ public class QuestWindow : GUIElement
 
     #region Scroll
 
+    float _tileHeight = 5.3f;
+    float _pad = 0.9f;
+
     private void PopulateScrollView()
     {
+        ResetScroolPos();
+        AdjustContentHeight(_pad + ((Program.gameScene.QuestManager.DoneQuest.Count + 1) * _tileHeight));
+
         ClearBtns();
         ShowButtons(Program.gameScene.QuestManager.CurrentPlsDone());
     }
@@ -65,11 +71,8 @@ public class QuestWindow : GUIElement
         for (int i = 0; i < list.Count; i++)
         {
             //-4.8f
-            var iniPosHere = _scroll_Ini_PosGO.transform.localPosition + new Vector3(0, -5.3f * i, 0);
-
-            var a = QuestTile.CreateTile(_content.gameObject.transform, list[i],
-                iniPosHere, this);
-
+            var iniPosHere = _scroll_Ini_PosGO.transform.localPosition + new Vector3(0, -_tileHeight * i, 0);
+            var a = QuestTile.CreateTile(_content.gameObject.transform, list[i], iniPosHere, this);
             _btns.Add(a);
         }
     }

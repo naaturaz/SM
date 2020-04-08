@@ -68,20 +68,15 @@ public class Decoration
 
     int HowMany()
     {
+        //return 2;
+
         if (IsATinyBuilding())
-        {
             return 0;
-        }
         //bz it should be small so it doest cover the lamp 
         if (IsSmallBuilding())
-        {
             return 2 + 1;
-        }
         if (_building.HType.ToString().Contains("House") || _building.HType.ToString().Contains("Shack"))
-        {
             return 7 + 1;
-        }
-
         return 9 + 1;
     }
 

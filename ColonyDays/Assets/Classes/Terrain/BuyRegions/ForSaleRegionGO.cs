@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
-
+﻿using UnityEngine;
 
 public class ForSaleRegionGO : Hoverable
 {
@@ -15,7 +10,7 @@ public class ForSaleRegionGO : Hoverable
     BigBoxPrev buildingPrev;
     Animator _animator;
 
-    GameObject _hover;
+    //GameObject _hover;
 
     /// <summary>
     /// The index of the region 
@@ -52,8 +47,8 @@ public class ForSaleRegionGO : Hoverable
     void Start()
     {
         _animator = gameObject.GetComponent<Animator>();
-        _hover = GetChildCalled("Hover");
-        _hover.gameObject.SetActive(false);
+        //_hover = GetChildCalled("Hover");
+        //_hover.gameObject.SetActive(false);
 
         var poly = U2D.FromRectToPoly(Region);
         buildingPrev = (BigBoxPrev)CreatePlane.CreatePlan(Root.bigBoxPrev, Root.dashedLinedSquare, container: transform);
@@ -84,7 +79,7 @@ public class ForSaleRegionGO : Hoverable
 
         AddressShow();
         AddressHide();
-        CheckMouse();
+        //CheckMouse();
     }
 
 
@@ -133,24 +128,24 @@ public class ForSaleRegionGO : Hoverable
         base.OnMouseEnter();
     }
 
-    protected void OnMouseOver()
-    {
-        lastMouseOver = Time.time;
-        _hover.SetActive(true);
-    }
+    //protected void OnMouseOver()
+    //{
+    //    lastMouseOver = Time.time;
+    //    _hover.SetActive(true);
+    //}
 
     protected void OnMouseExit()
     {
         base.OnMouseExit();
     }
 
-    void CheckMouse()
-    {
-        if (Time.time > lastMouseOver + 0.5f)
-        {
-            _hover.SetActive(false);
-        }
-    }
+    //void CheckMouse()
+    //{
+    //    if (Time.time > lastMouseOver + 0.5f)
+    //    {
+    //        _hover.SetActive(false);
+    //    }
+    //}
 
     #endregion
 

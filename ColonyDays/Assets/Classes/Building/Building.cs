@@ -1153,6 +1153,8 @@ public class Building : Hoverable, Iinfo
             //PersonPot.Control.RestartController();
             //DestroyOrdered(true);
         }
+
+        HireFireAll();
     }
 
     /// <summary>
@@ -1899,19 +1901,16 @@ public class Building : Hoverable, Iinfo
     }
 
     void NotifyUserOfDoubleBoundRoutineIssue(H typeOfDoubleBound, bool isAboveHeight = true,
-        bool arePointsEven = true, bool isOnTheFloor = true, bool isBelowHeight = true
-        )
+        bool arePointsEven = true, bool isOnTheFloor = true, bool isBelowHeight = true)
     {
-
         if(!isAboveHeight || !arePointsEven || !isOnTheFloor || !isBelowHeight)
-        NotifyBuildingProblem(true, H.Show);
+            NotifyBuildingProblem(true, H.Show);
         else
-        NotifyBuildingProblem(true);
-
+            NotifyBuildingProblem(true);
 
         if (typeOfDoubleBound == H.MaritimeBound)
         {
-            if(!isAboveHeight)
+            if (!isAboveHeight)
                 Program.gameScene.GameController1.NotificationsManager1.MainNotify("isAboveHeight."+typeOfDoubleBound);
             else if(!arePointsEven)
                 Program.gameScene.GameController1.NotificationsManager1.MainNotify("arePointsEven."+typeOfDoubleBound);
@@ -1920,7 +1919,6 @@ public class Building : Hoverable, Iinfo
             else if(!isBelowHeight)
                 Program.gameScene.GameController1.NotificationsManager1.MainNotify("isBelowHeight."+typeOfDoubleBound);
         }
-
     }
 
     /// <summary>
@@ -4043,7 +4041,8 @@ public class Building : Hoverable, Iinfo
 
     private int _maxPeople;//max people this builging can hold. workers this one can change
     private int _absMaxPeople;//this one doesnt change
-    int _peopleToBeFired; 
+    int _peopleToBeFired;
+    string _hireFireAllAction = "";
 
     public int AbsMaxPeople
     {
@@ -4057,7 +4056,44 @@ public class Building : Hoverable, Iinfo
         set { _maxPeople = value; }
     }
 
+    //called on update
+    void HireFireAll()
+    {
+        if (_hireFireAllAction == "Fire All")
+        {
+            if (_maxPeople > 0)
+            {
+                ChangeMaxAmoutOfWorkersLessOrMore("Less");
+            }
+            else _hireFireAllAction = "";
+        }
+        else if (_hireFireAllAction == "Hire All")
+        {
+            if (MyText.Lazy() > 0 && _maxPeople < AbsMaxPeople)
+            {
+                ChangeMaxAmoutOfWorkersLessOrMore("More");
+            }
+            else _hireFireAllAction = "";
+        }
+    }
+
     internal string ChangeMaxAmoutOfWorkers(string action)
+    {
+        if(action == "Fire All")
+        {
+            _hireFireAllAction = "Fire All";
+        }
+        else if(action == "Hire All")
+        {
+            _hireFireAllAction = "Hire All";
+        }
+        else
+            ChangeMaxAmoutOfWorkersLessOrMore(action);
+
+        return _maxPeople + "";
+    }
+
+    internal string ChangeMaxAmoutOfWorkersLessOrMore(string action)
     {
         if (action == "Less")
         {
@@ -4073,13 +4109,9 @@ public class Building : Hoverable, Iinfo
         }
 
         if (_maxPeople < 0)
-        {
             _maxPeople = 0;
-        }
         if (_maxPeople >= AbsMaxPeople)
-        {
             _maxPeople = AbsMaxPeople;
-        }
 
         UpdateWorkersRoutine();
         return _maxPeople + "";
@@ -4694,7 +4726,6 @@ public class Building : Hoverable, Iinfo
     Dock _dock;
     private Dispatch _dispatch;//dock will have a Dispatch
 
-
     public bool IsNaval()
     {
         if (HType == H.Shipyard || HType == H.Supplier || HType == H.Dock)
@@ -4703,8 +4734,6 @@ public class Building : Hoverable, Iinfo
         }
         return false;
     }
-
-
 
     private void InitDockDryDockAndSupplier()
     {
@@ -5033,6 +5062,22 @@ public class Building : Hoverable, Iinfo
             _middlePoint /= 4;
         }
         return _middlePoint;
+    }
+
+    internal Vector3 MiddlePointOnSurface()
+    {
+        if (_anchors.Count == 0)
+            return transform.position;
+
+        List<float> yS = UList.ReturnAxisList(_anchors, H.Y);
+        float maxY = UMath.ReturnMax(yS);
+        Vector3 res = new Vector3();
+
+        for (int i = 0; i < _anchors.Count; i++)
+        {
+            res += new Vector3(_anchors[i].x, maxY, _anchors[i].z);
+        }
+        return res / 4;
     }
 
     #region Hover All Objects. All objects that have a collider will be hoverable

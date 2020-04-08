@@ -154,7 +154,6 @@ public class Structure : StructureParent
         Geometry.GetComponent<Renderer>().sharedMaterial = newMat;
     }
 
-    
     /// <summary>
     /// The action when user finish placing a building 
     /// </summary>
@@ -167,7 +166,6 @@ public class Structure : StructureParent
         }
 
         DestroyProjector();
-
         base.FinishPlacingMode(action);
         
         //Mark the Spawns below this obj
@@ -180,23 +178,18 @@ public class Structure : StructureParent
 
             float howBigTheCollidingSphere = 20f;
 
+            Vector3 sPoint = IsNaval() ? MiddlePointOnSurface() : MiddlePoint();
             if (!IsLoadingFromFile)
-            {
-                _construcionSign = General.Create(Root.ConstructionSign, MiddlePoint(), "Construction", transform);
-            }
+                _construcionSign = General.Create(Root.ConstructionSign, sPoint, "Construction", transform);
             else if (IsLoadingFromFile && StartingStage != H.Done)
-            {
-                _construcionSign = General.Create(Root.ConstructionSign, MiddlePoint(), "Construction", transform);
-            }
+                _construcionSign = General.Create(Root.ConstructionSign, sPoint, "Construction", transform);
 
             MarkTerraSpawnRoutine(howBigTheCollidingSphere, from: transform.position);
         }
 
         //is here because when loading from file was hidden the wheel
         if (!IsLoadingFromFile)
-        {
             ShowWheel(false);
-        }
     }
 
     // Use this for initialization
@@ -456,7 +449,9 @@ public class Structure : StructureParent
             HideAll();   
         }
         BuildingPot.Control.Registro.RemoveItem(Category, MyId);
-        _construcionSign = General.Create(Root.DemolishSign, MiddlePoint(), "Demolition", transform);
+
+        Vector3 sPoint = IsNaval() ? MiddlePointOnSurface() : MiddlePoint();
+        _construcionSign = General.Create(Root.DemolishSign, sPoint, "Demolition", transform);
 
         ReturnWhatThisCost();
         AudioCollector.PlayOneShot("BUILDING_DEMOLISH_1", 0);
