@@ -1051,7 +1051,7 @@ public class Languages
         _en.Add("BuyRegion", "Buy Region");
         _en.Add("Fire All.HoverSmall", "Fire All");
         _en.Add("Hire All.HoverSmall", "Hire All");
-
+        _en.Add("Hauler", "Hauler");
 
 
 

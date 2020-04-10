@@ -239,26 +239,26 @@ class DialogGO : GUIElement
             PlayerPrefs.SetInt("Rate", 0);
         }
 
-        //if (add == "Game art is not good")
-        //{
-        //    _inputText.text += "What is exactly what bothers you the most? Thanks\n";
-        //}
-        //if (add == "Game is confusing")
-        //{
-        //    _inputText.text += "What is exactly what confuses you the most? Thanks\n";
-        //}
-        //if (add == "Like it a bit")
-        //{
-        //    _inputText.text += "What you like the least and most? Thanks\n";
-        //}
-        //if (add == "Thumbs down")
-        //{
-        //    _inputText.text += "How could we change that to 'Thumbs up'? Thanks\n";
-        //}
-        //if (add == "Is bad")
-        //{
-        //    _inputText.text += "How could we change that to 'Is good!'? Thanks\n";
-        //}
+        if (add == "Game art is not good")
+        {
+            _inputText.text += "What is exactly what bothers you the most? Thanks\n";
+        }
+        if (add == "Game is confusing")
+        {
+            _inputText.text += "What is exactly what confuses you the most? Thanks\n";
+        }
+        if (add == "Like it a bit")
+        {
+            _inputText.text += "What you like the least and most? Thanks\n";
+        }
+        if (add == "Thumbs down")
+        {
+            _inputText.text += "How could we change that to 'Thumbs up'? Thanks\n";
+        }
+        if (add == "Is bad")
+        {
+            _inputText.text += "How could we change that to 'Is good!'? Thanks\n";
+        }
     }
 
     public void Rate()

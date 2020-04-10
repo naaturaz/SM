@@ -4146,12 +4146,10 @@ public class Building : Hoverable, Iinfo
                 person.Inventory.Delete();
 
                 PersonPot.Control.RestartControllerForPerson(person.MyId);
-
             }
         }
         _peopleToBeFired = 0;
     }
-
 
     private void InitJobRelated()
     {

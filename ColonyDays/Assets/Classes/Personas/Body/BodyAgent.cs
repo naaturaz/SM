@@ -89,6 +89,7 @@ public class BodyAgent
     /// <returns></returns>
     public bool IsStuck()
     {
+        //had 28 since I put the Body Agent 
         return _startDate != null && Program.gameScene.GameTime1.ElapsedDateInDaysToDate(_startDate) > 28;
     }
 

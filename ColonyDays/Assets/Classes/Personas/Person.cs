@@ -2918,9 +2918,15 @@ public class Person : Hoverable
         _instructionEmoticon = "Demolish";
     }
 
+    float lastIcon; 
+    //3dIcon ShowEmotion Hire Fire Crown ThumbsUp
     internal void ShowEmotion(string p)
     {
-        EmoticonManager.Show(p, transform.position);
+        if(Time.time > lastIcon + 5)
+        {
+            EmoticonManager.Show(p, transform.position);
+            lastIcon = Time.time;
+        }
     }
 
     #endregion

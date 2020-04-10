@@ -297,6 +297,8 @@ public class Profession
                     return Languages.ReturnString("BlackSmith");
                 else if(_person.Work.HType == H.SugarMill)
                     return Languages.ReturnString("SugarMiller");
+                else if (_person.Work.HType == H.HeavyLoad)
+                    return Languages.ReturnString("Hauler");
             }
             return Languages.ReturnString(_person.Work.HType + "") + " " + Languages.ReturnString("worker");
         }

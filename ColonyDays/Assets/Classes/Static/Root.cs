@@ -11,17 +11,6 @@ using System.Collections.Generic;
 //all VAR ARE STATIC HERE
 public class Root : MonoBehaviour
 {
-
-
-
-
-
-
-
-
-
-
-
     ///Main Objects///
         public static string classesContainer = "Prefab/Main/ClassesContainer";
         ///Game Scene
@@ -47,11 +36,7 @@ public class Root : MonoBehaviour
         public static string terrainIsland = "Prefab/Terrain/Terrain_Island";
         //public static string terrainIsland2x = "Prefab/Terrain/Terrain_Island2x";
         public static string terrainIsland2xRiverAccross = "Prefab/Terrain/Terrain_Island2x_River_Accross";
-       
-
-
-
-
+  
         //Big Terrains
         public static string bayAndMountain = "Prefab/Terrain/Bay_And_Mountain";
         public static string bayAndMountainSoft = "Prefab/Terrain/Bay_And_Mountain_Soft";
@@ -59,7 +44,6 @@ public class Root : MonoBehaviour
         public static string two_Islands_1_River = "Prefab/Terrain/2_Islands_1_River";
         public static string oneLand2Islands = "Prefab/Terrain/1_Land_2_Islands";
         public static string narrowIslandsLand = "Prefab/Terrain/Narrow_Islands_Land";
-
 
         //this terrains are the ones will show on the New Game menu
         public static List<string> BigTerrains = new List<string>()
@@ -85,10 +69,7 @@ public class Root : MonoBehaviour
             "Prefab/Terrain/Curtain_Land",
             //"Prefab/Terrain/Stack_Land",
             "Prefab/Terrain/Fingers_Land",
-
         }; 
-
-
 
         //Water 
         public static string waterTiny = "Prefab/Terrain/Water_Tiny";
@@ -112,7 +93,6 @@ public class Root : MonoBehaviour
         public static string tree24 = "Prefab/Terrain/Spawner/Tree24";
         public static string tree25 = "Prefab/Terrain/Spawner/Tree25";
 
-
         public static string palm1 = "Prefab/Terrain/Spawner/Palm/Palm01";
         public static string palm2 = "Prefab/Terrain/Spawner/Palm/Palm02";
         public static string palm3 = "Prefab/Terrain/Spawner/Palm/Palm03";
@@ -129,10 +109,6 @@ public class Root : MonoBehaviour
         public static string palm22 = "Prefab/Terrain/Spawner/Palm/Palm22";
         public static string palm23 = "Prefab/Terrain/Spawner/Palm/Palm23";
 
-
-
-
-
         public static string stone0 = "Prefab/Terrain/Spawner/Stone/Stone";
         public static string stone1 = "Prefab/Terrain/Spawner/Stone/Stone 1";
         public static string stone2 = "Prefab/Terrain/Spawner/Stone/Stone 2";
@@ -148,14 +124,11 @@ public class Root : MonoBehaviour
         public static string iron3 = "Prefab/Terrain/Spawner/Iron/Iron 3";
         public static string iron4 = "Prefab/Terrain/Spawner/Iron/Iron 4";
 
-
         public static string gold0 = "Prefab/Terrain/Spawner/Gold/Gold";
         public static string gold1 = "Prefab/Terrain/Spawner/Gold/Gold 1";
         public static string gold2 = "Prefab/Terrain/Spawner/Gold/Gold 2";
         public static string gold3 = "Prefab/Terrain/Spawner/Gold/Gold 3";
         public static string gold4 = "Prefab/Terrain/Spawner/Gold/Gold 4";
-
-
 
         //all grass roots and orna are now in TerrainSpawnerController
         public static string orna1 = "Prefab/Terrain/Spawner/Orna1";
