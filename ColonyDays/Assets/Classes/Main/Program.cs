@@ -1,19 +1,19 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 //Main Class
-public class Program : MonoBehaviour {
-
+public class Program : MonoBehaviour
+{
     //Audio
     private AudioPlayer _audioPlayer;
+
     private bool audioWas;
-       
+
     //GUI
-    static MyScreen _myScreen = new MyScreen();
+    private static MyScreen _myScreen = new MyScreen();
 
     //Main objects
-    CamControl mainCamera;
+    private CamControl mainCamera;
+
     public static GameScene gameScene;
     public static InputMain InputMain;
 
@@ -21,30 +21,30 @@ public class Program : MonoBehaviour {
     // a empty gameObj in game hieratchy are under the same obj
     public static General ClassContainer;
 
-    //cointains all the buildings as childs 
+    //cointains all the buildings as childs
     public static General BuildsContainer;
 
-    //cointains all the buildings as childs 
+    //cointains all the buildings as childs
     public static General PersonObjectContainer;
-
 
     public static General MeshBatchContainer;
 
     //statics vars
     public static Vector3 VIEWPOS;//use to grab mouse view position
+
     public static Transform MOUSEOVERTHIS = null;
     public static Player THEPlayer;
     public static Profile THEProfile;
     public static MenuHandler2DBtn twoDMHandler;
-	
+
     //has to be static so the value keeps raising with new objects created
     //otherwise the variable is reset it to origial value in each new
-    //object.. and it has to be universal so I define _id in 'General' only once 
+    //object.. and it has to be universal so I define _id in 'General' only once
     //and the universal value keeps raising
     public static int UNIVERSALID = 0;
 
     //Holds what mouse is hitting on.. works if is hitting over an obj with a collider
-   // public static RaycastHit MOUSEHITTHIS;
+    // public static RaycastHit MOUSEHITTHIS;
 
     private static MouseListener _mouseListener = new MouseListener();
 
@@ -61,6 +61,7 @@ public class Program : MonoBehaviour {
     }
 
     private static bool debugPrint;
+
     public static bool GameFullyLoaded()
     {
         if (!gameScene) return false;
@@ -73,12 +74,12 @@ public class Program : MonoBehaviour {
         }
         return res;
     }
-    
+
     #region Unity Voids
-       
+
     // Use this for initialization
-	public void Start ()
-	{
+    public void Start()
+    {
         Load1();
         Load2();
         Load3(H.None);
@@ -91,7 +92,7 @@ public class Program : MonoBehaviour {
         Load3(H.Create);
     }
 
-    void Load1()
+    private void Load1()
     {
         Debug.Log("first load");
         //loads main menu
@@ -115,7 +116,7 @@ public class Program : MonoBehaviour {
         //AudioCollector.RedoGame();
     }
 
-    void Load2()
+    private void Load2()
     {
         Debug.Log("second load");
 
@@ -123,10 +124,10 @@ public class Program : MonoBehaviour {
 
         BuildsContainer = General.Create(Root.classesContainer, name: "BuildsContainer");
         PersonObjectContainer = General.Create(Root.classesContainer, name: "PersonObjectsContainer");
-        MeshBatchContainer = General.Create(Root.classesContainer, name: "MeshBatchContainer"); 
+        MeshBatchContainer = General.Create(Root.classesContainer, name: "MeshBatchContainer");
     }
 
-    void Load3(H hType)
+    private void Load3(H hType)
     {
         Debug.Log("third load");
 
@@ -148,14 +149,15 @@ public class Program : MonoBehaviour {
         // write FPS to "profilerLog.txt"
         UnityEngine.Profiling.Profiler.logFile = Application.persistentDataPath + "/profilerLog.txt";
 
-        // write Profiler Data to "profilerLog.txt.data"                                                                                        
+        // write Profiler Data to "profilerLog.txt.data"
         UnityEngine.Profiling.Profiler.enableBinaryLog = true;
         UnityEngine.Profiling.Profiler.enabled = true;
     }
-    
-    bool _didLoad2;
-    bool _didLoad3;
-    void Update()
+
+    private bool _didLoad2;
+    private bool _didLoad3;
+
+    private void Update()
     {
         MouseListener.Update();
         MyScreen1.Update();
@@ -172,9 +174,9 @@ public class Program : MonoBehaviour {
         //    _didLoad3 = true;
         //    Load3();
         //}
-
     }
-    #endregion
+
+    #endregion Unity Voids
 
     public void MouseClickListener(string type)
     {
@@ -208,14 +210,11 @@ public class Program : MonoBehaviour {
 
         gameScene.QuestManager.ResetNewGame();
 
-
         gameScene.Destroy();
         gameScene = null;
         InputMain.Destroy();
 
         GameController.ResumenInventory1.GameInventory.Delete();
-
-
     }
 
     /// <summary>
@@ -228,13 +227,10 @@ public class Program : MonoBehaviour {
         prog.ReloadAll();
     }
 
-
-
-
-    //there are at least two types: 
-    //lock: buildings are lock and user needs to unlock them 
+    //there are at least two types:
+    //lock: buildings are lock and user needs to unlock them
     //unlock: all buildings are unlock
-    private static H _typeOfGame = H.None;//bz traditional is the default 
+    private static H _typeOfGame = H.None;//bz traditional is the default
 
     public static H TypeOfGame
     {
@@ -248,7 +244,7 @@ public class Program : MonoBehaviour {
     }
 
     //input locking
-    static bool _isInputLocked;
+    private static bool _isInputLocked;
 
     public static bool IsInputLocked
     {
@@ -262,7 +258,7 @@ public class Program : MonoBehaviour {
     //}
 
     ///// <summary>
-    ///// Called  from INputFields when get inActive 
+    ///// Called  from INputFields when get inActive
     ///// </summary>
     //public void UnLockInput()
     //{
@@ -270,7 +266,7 @@ public class Program : MonoBehaviour {
     //}
 
     /// <summary>
-    /// Called  from INputFields when get active 
+    /// Called  from INputFields when get active
     /// </summary>
     static public void LockInputSt()
     {
@@ -278,7 +274,7 @@ public class Program : MonoBehaviour {
     }
 
     /// <summary>
-    /// Called  from INputFields when get inActive 
+    /// Called  from INputFields when get inActive
     /// </summary>
     static public void UnLockInputSt()
     {
@@ -291,7 +287,7 @@ public class Program : MonoBehaviour {
     public static bool IsPirate { get; set; }
 
     /// <summary>
-    /// Does food expires 
+    /// Does food expires
     /// </summary>
     public static bool IsFood { get; set; }
 
@@ -301,30 +297,4 @@ public class Program : MonoBehaviour {
     /// Means in this session reached the WeekDraw
     /// </summary>
     public static bool WeekDraw { get; internal set; }
-}
-
-
-
-
-
-
-
-
-
-
-class CarlosTest
-{
-    //carlos
-    public static List<NewBuild> newBildList;
-    public static List<Btn3D> menus;
-
-    public static void AddObject<T>(T obj)
-    {
-        if (obj.GetType() == typeof(NewBuild))
-        {
-            newBildList.Add(obj as NewBuild);
-        }
-        List<T> array = new List<T>();
-        array.Add(obj);
-    }
 }

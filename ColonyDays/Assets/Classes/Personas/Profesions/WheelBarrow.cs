@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class WheelBarrow : Profession
 {
@@ -18,7 +17,7 @@ public class WheelBarrow : Profession
         else LoadingFromFile(person, pF);
     }
 
-    void LoadingFromFile(Person person, PersonFile pF)
+    private void LoadingFromFile(Person person, PersonFile pF)
     {
         _wasLoaded = true;
 
@@ -30,9 +29,9 @@ public class WheelBarrow : Profession
     /// <summary>
     /// This Init is for Loading since the other was ReWriting loaded Values such as Order1
     /// </summary>
-    void InitForLoading()
+    private void InitForLoading()
     {
-        //if did not load a order will return, and take a break now  
+        //if did not load a order will return, and take a break now
         if (Order1 == null// || _destinyBuild == null
             )
         {
@@ -47,10 +46,9 @@ public class WheelBarrow : Profession
         InitRoute();
     }
 
-
-    void Init()
+    private void Init()
     {
-        //so loads 
+        //so loads
         if (_wasLoaded)
         {
             InitForLoading();
@@ -60,7 +58,7 @@ public class WheelBarrow : Profession
             return;
         }
 
-        //so its not using the same order over and over again in case the Dispatch is finding nothing 
+        //so its not using the same order over and over again in case the Dispatch is finding nothing
         CleanOldVars();
         //Debug.Log(_person.MyId+" Init WheelB");
 
@@ -74,16 +72,14 @@ public class WheelBarrow : Profession
             MyAnimation = "isCartRide";
         }
 
-
-        //if did not fouind a order will return, and take a break now  
+        //if did not fouind a order will return, and take a break now
         if (!DidPickUpOrder())
         {
             _takeABreakNow = true;
             return;
         }
 
-
-        //means no Orders avail 
+        //means no Orders avail
         if (_destinyBuild == null)
         {
             _takeABreakNow = true;
@@ -95,12 +91,10 @@ public class WheelBarrow : Profession
 
     private void CleanOldVars()
     {
-        _sourceBuild = null;//from where taking the load 
-        _destinyBuild = null;//where taking load 
+        _sourceBuild = null;//from where taking the load
+        _destinyBuild = null;//where taking load
         Order1 = null;
     }
-
-
 
     private bool DidPickUpOrder()
     {
@@ -135,14 +129,13 @@ public class WheelBarrow : Profession
         return true;
     }
 
-
-    void InitRoute()
+    private void InitRoute()
     {
         if (_sourceBuild == null)
         {
             _sourceBuild = Brain.GetStructureFromKey(Order1.SourceBuild);
         }
-        //if still null after this 
+        //if still null after this
         if (_sourceBuild == null)
         {
             //Debug.Log("srcBuild null whelbarr:" + _person.MyId + ".orderSrcBld:" + Order1.SourceBuild);
@@ -160,7 +153,6 @@ public class WheelBarrow : Profession
 
     public override void Update()
     {
-
         base.Update();
 
         if (_takeABreakNow)
@@ -172,13 +164,13 @@ public class WheelBarrow : Profession
         Execute();
     }
 
-    void Execute()
+    private void Execute()
     {
         if (ExecuteNow)
         {
             ExecuteNow = false;
 
-            //Debug.Log(_person.MyId+ " Wheel Barr got from:"+Order1.SourceBuild + 
+            //Debug.Log(_person.MyId+ " Wheel Barr got from:"+Order1.SourceBuild +
             //" : " +Order1.Product+".amt:"+Order1.Amount);
 
             Order1.Amount = _person.HowMuchICanCarry();
@@ -191,11 +183,12 @@ public class WheelBarrow : Profession
     private bool _takeABreakNow;
     private float _breakDuration = 1f;
     private float startIdleTime;
+
     /// <summary>
-    /// Used so a person is asking for bridges anchors takes a break and let brdige anchors complete then can 
+    /// Used so a person is asking for bridges anchors takes a break and let brdige anchors complete then can
     /// work on it
     /// </summary>
-    void TakeABreak()
+    private void TakeABreak()
     {
         if (startIdleTime == 0)
         { startIdleTime = Time.time; }
@@ -209,7 +202,7 @@ public class WheelBarrow : Profession
         }
     }
 
-    void DecideOnNextIteration()
+    private void DecideOnNextIteration()
     {
         if (_person == null)
         {
@@ -227,5 +220,4 @@ public class WheelBarrow : Profession
             _person.CreateProfession(Job.Builder);
         }
     }
-
 }

@@ -1,30 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+
 /*
- * on Brain.cs, void GoWork() there is interactin with Docker, WheelBarrow, Homer, Forester 
+ * on Brain.cs, void GoWork() there is interactin with Docker, WheelBarrow, Homer, Forester
  */
 
 public class Profession
 {
     protected Person _person;
-    //protected static float radius = 50f;//200 f, how far will go to cut a tree 
+    //protected static float radius = 50f;//200 f, how far will go to cut a tree
 
-    protected bool _readyToWork;//says if workers is ready to work 
+    protected bool _readyToWork;//says if workers is ready to work
     protected bool _workingNow;
 
     protected CryRouteManager _router = new CryRouteManager();
     protected CryRouteManager _routerBack = new CryRouteManager();
-    //says if _routerBack is used.RouterBack is a instance of router and bassically means that a different route is used to 
-    //go back home. For ex forester use it . As when finish cutting tree will go directrly to FoodSrc and from there Home 
-    protected bool _isRouterBackUsed;
-    protected bool _routerActive;//it says if in this moment im usign the RouterManager instances functionaliitie 
 
-    protected Vector3 _finRoutePoint;//the final point of the route 
+    //says if _routerBack is used.RouterBack is a instance of router and bassically means that a different route is used to
+    //go back home. For ex forester use it . As when finish cutting tree will go directrly to FoodSrc and from there Home
+    protected bool _isRouterBackUsed;
+
+    protected bool _routerActive;//it says if in this moment im usign the RouterManager instances functionaliitie
+
+    protected Vector3 _finRoutePoint;//the final point of the route
     protected float _moveTowOrigin = 0.275f;
 
     protected HPers _workerTask = HPers.None;
-    protected string _myAnimation;//for a foresrte will be chop wood animation 
+    protected string _myAnimation;//for a foresrte will be chop wood animation
 
     protected List<VectorM> _orderedSites = new List<VectorM>();
 
@@ -32,28 +35,31 @@ public class Profession
     //since everytime a Profession is saved all its Routes are saved already
     //protected Structure dummy;
 
-    //Will execute the action it came to do in code... 
-    //for ex will load inventory with Lumber from cutted tree 
+    //Will execute the action it came to do in code...
+    //for ex will load inventory with Lumber from cutted tree
     protected bool _executeNow;
 
-    //says the exact moment when the person finished the work in the site 
+    //says the exact moment when the person finished the work in the site
     protected bool _doneWorkNow;
+
     protected float _workTime = 4f;//1    //how long will execute the animation of work
     protected Job _profDescription = Job.None;
 
     //ShackBuilder and Builders
-    protected Building _constructing;//need to implement  to be saved and loaded 
-    public string ConstructingKey;//need to implement  to be saved and loaded 
+    protected Building _constructing;//need to implement  to be saved and loaded
 
-    private float _prodXShift = 0;//100 //Wht a person will produce or carry in a shift 
+    public string ConstructingKey;//need to implement  to be saved and loaded
 
-    //The pos to look at while working if is = new Vector3 the pos of the Work will be used then 
+    private float _prodXShift = 0;//100 //Wht a person will produce or carry in a shift
+
+    //The pos to look at while working if is = new Vector3 the pos of the Work will be used then
     private Vector3 _lookAtWork;
 
     //WheelBarrowe
     protected Order _order;//the order of a wheelBarrower
-    protected string _sourceBuildKey;//from where taking the load 
-    protected string _destinyBuildKey;//where taking load 
+
+    protected string _sourceBuildKey;//from where taking the load
+    protected string _destinyBuildKey;//where taking load
 
     protected Structure _destinyBuild;
     protected Structure _sourceBuild;
@@ -61,8 +67,8 @@ public class Profession
     //used for forester
     private string _stillElementID;
 
-    //indicates that this intances of Profession was loaded from file 
-    //so never has to be Init() bz all values were loaded 
+    //indicates that this intances of Profession was loaded from file
+    //so never has to be Init() bz all values were loaded
     protected bool _wasLoaded;
 
     public Job ProfDescription
@@ -200,10 +206,8 @@ public class Profession
 
     public Profession()
     {
-
         CleanOldProf();
         CleanOldVars();
-     
     }
 
     /// <summary>
@@ -222,14 +226,14 @@ public class Profession
         {
             return;
         }
-        
+
         var yearSchool = _person.YearsOfSchool;
         var produceFac = GetProduceFactor();
 
         //Grown man will prod 4.5KG of wood with 10 year of school
         //              (10 + 10     + 30        + ) * 0.09         = 4.5KG of Wood per shift
         //              (10 + 10     + 30        + ) * 0.008         = 0.4KG of Weapons per shift
-        ProdXShift = (_person.HowMuchICanCarry() + yearSchool) * ToolsFactor() * produceFac/10;//1000
+        ProdXShift = (_person.HowMuchICanCarry() + yearSchool) * ToolsFactor() * produceFac / 10;//1000
 
         if (ProfDescription == Job.Forester)
         {
@@ -255,7 +259,7 @@ public class Profession
         return .5f;
     }
 
-    float GetProduceFactor()
+    private float GetProduceFactor()
     {
         if (_person == null || _person.Work == null)
         {
@@ -289,24 +293,24 @@ public class Profession
             res = Person.ReturnJobType(_person.Work);
         if (res == Job.Insider)
         {
-            if (_person.Work!=null)
+            if (_person.Work != null)
             {
                 if (_person.Work.HType.ToString().Contains("School"))
                     return Languages.ReturnString("Teacher");
-                else if(_person.Work.HType == H.BlackSmith)
+                else if (_person.Work.HType == H.BlackSmith)
                     return Languages.ReturnString("BlackSmith");
-                else if(_person.Work.HType == H.SugarMill)
+                else if (_person.Work.HType == H.SugarMill)
                     return Languages.ReturnString("SugarMiller");
                 else if (_person.Work.HType == H.HeavyLoad)
                     return Languages.ReturnString("Hauler");
             }
             return Languages.ReturnString(_person.Work.HType + "") + " " + Languages.ReturnString("worker");
         }
-        return Naming.CaseItRight(res+"");
+        return Naming.CaseItRight(res + "");
     }
 
     /// <summary>
-    /// Used to create a Dummy profession instance to save all attrb to file 
+    /// Used to create a Dummy profession instance to save all attrb to file
     /// </summary>
     /// <param name="prof"></param>
     public Profession(Profession prof)
@@ -329,27 +333,27 @@ public class Profession
             PersonPot.Control.RoutesCache1.AddReplaceRoute(Router1.TheRoute);
         }
 
-        ProfDescription=prof.ProfDescription;
+        ProfDescription = prof.ProfDescription;
         //Radius=prof.Radius;
 
-        ReadyToWork=prof.ReadyToWork;
-        WorkingNow=prof.WorkingNow;
+        ReadyToWork = prof.ReadyToWork;
+        WorkingNow = prof.WorkingNow;
 
-        IsRouterBackUsed=prof.IsRouterBackUsed;
-        FinRoutePoint=prof.FinRoutePoint;
+        IsRouterBackUsed = prof.IsRouterBackUsed;
+        FinRoutePoint = prof.FinRoutePoint;
 
-        MoveTowOrigin=prof.MoveTowOrigin;
-        WorkerTask=prof.WorkerTask;
+        MoveTowOrigin = prof.MoveTowOrigin;
+        WorkerTask = prof.WorkerTask;
 
-        MyAnimation=prof.MyAnimation;
-        OrderedSites=prof.OrderedSites;
+        MyAnimation = prof.MyAnimation;
+        OrderedSites = prof.OrderedSites;
 
-        ExecuteNow=prof.ExecuteNow;
+        ExecuteNow = prof.ExecuteNow;
 
-        DoneWorkNow=prof.DoneWorkNow;
-        WorkTime=prof.WorkTime;
+        DoneWorkNow = prof.DoneWorkNow;
+        WorkTime = prof.WorkTime;
 
-        Router1=prof.Router1;
+        Router1 = prof.Router1;
         RouterBack = prof.RouterBack;
 
         ConstructingKey = prof.ConstructingKey;
@@ -379,7 +383,7 @@ public class Profession
         _workingNow = false;
         _isRouterBackUsed = false;
         _routerActive = false;
-        _finRoutePoint=new Vector3();
+        _finRoutePoint = new Vector3();
 
         _router = null;
         _routerBack = null;
@@ -393,7 +397,7 @@ public class Profession
     }
 
     /// <summary>
-    /// Work Action is called from brain when person is actually in job site 
+    /// Work Action is called from brain when person is actually in job site
     /// </summary>
     public virtual void WorkAction(HPers p)
     {
@@ -431,8 +435,8 @@ public class Profession
     }
 
     /// <summary>
-    /// Meant to be called when work is done 
-    /// 
+    /// Meant to be called when work is done
+    ///
     /// Once is called will promt the brain to continue to next StateMind which is Idle
     public virtual void DoneWork()
     {
@@ -450,7 +454,7 @@ public class Profession
 
     protected Structure CreateDummy()
     {
-        //added the finROute to name bz it could be different in a same building 
+        //added the finROute to name bz it could be different in a same building
         //return Program.gameScene.GimeMeUnusedDummy(_constructing.MyId+".Dummy."+FinRoutePoint);
 
         return (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy,
@@ -478,7 +482,7 @@ public class Profession
         //GameScene.print("Update on Profession");
 
         //SetProdXShift();
-	}
+    }
 
     /// <summary>
     /// bz sometimes profession goes and create a different profession that at the moment
@@ -487,8 +491,8 @@ public class Profession
     /// </summary>
     private void RemoveMeFromQueueIfImThereAndNotUsingIt()
     {
-        //if is routing then let it here so routes 
-        if (_routerActive || _person==null)
+        //if is routing then let it here so routes
+        if (_routerActive || _person == null)
         {
             return;
         }
@@ -500,7 +504,7 @@ public class Profession
         //}
     }
 
-    void RouterDealear()
+    private void RouterDealear()
     {
         if (_routerActive)
         {
@@ -508,16 +512,16 @@ public class Profession
 
             //if (PersonPot.Control.WorkersRoutingQueue.OnSystemNow(_person.MyId))
             //{
-                if (_isRouterBackUsed)
-                {
-                    BackRouterUpdate();
-                }
-                else SingleRouterUpdate();
+            if (_isRouterBackUsed)
+            {
+                BackRouterUpdate();
+            }
+            else SingleRouterUpdate();
             //}
         }
     }
 
-    void AddMeToWaitListOnSystem()
+    private void AddMeToWaitListOnSystem()
     {
         //bz we pulled already the routes
         if (WereTheTwoRoutesInCache())
@@ -526,8 +530,8 @@ public class Profession
             return;
         }
 
-        //needs to finish thet route first. then will create this one 
-        if (_person.Brain._workRoute.CheckPoints.Count==0)
+        //needs to finish thet route first. then will create this one
+        if (_person.Brain._workRoute.CheckPoints.Count == 0)
             return;
 
         PersonPot.Control.WorkersRoutingQueue.AddMeToOnSystemWaitList(_person.MyId);
@@ -536,14 +540,14 @@ public class Profession
     /// <summary>
     /// Will pull the routes if are in cache . will return true if they were both addressed or if was only one needed and
     /// addressed
-    /// 
+    ///
     /// Here bz otherwise will put Professional on queue to become a Homer for example when is not need bz the routes
-    /// exist. And actually the Homer could be forever waiting on a Farm for example to get the new routes 
+    /// exist. And actually the Homer could be forever waiting on a Farm for example to get the new routes
     /// </summary>
     /// <returns></returns>
-    bool WereTheTwoRoutesInCache()
+    private bool WereTheTwoRoutesInCache()
     {
-        if ( Router1 != null && !Router1.IsRouteReady)
+        if (Router1 != null && !Router1.IsRouteReady)
         {
             if (PersonPot.Control.RoutesCache1.ContainANewerOrSameRoute(Router1.OriginKey, Router1.DestinyKey,
                 new DateTime()))
@@ -575,11 +579,11 @@ public class Profession
     /// Things that need to be done to the Router if a new Route was found on RoutesCache
     /// </summary>
     /// <param name="routerP"></param>
-    void AddressRouter(CryRouteManager routerP)
+    private void AddressRouter(CryRouteManager routerP)
     {
         var route = PersonPot.Control.RoutesCache1.GiveMeTheNewerRoute();
 
-        if (route!=null)
+        if (route != null)
         {
             routerP.TheRoute = route;
             routerP.IsRouteReady = true;
@@ -594,53 +598,29 @@ public class Profession
 
     /// <summary>
     /// </summary>
-    void ReRouteDone()
+    private void ReRouteDone()
     {
         var timeOnSys = PersonPot.Control.WorkersRoutingQueue.DoneReRoute(_person.MyId);//so another people can use the Spot
-//        Debug.Log("remove from cntrl prof:" + _person.MyId + " :" + ProfDescription + " on Sys:" + timeOnSys);
+                                                                                        //        Debug.Log("remove from cntrl prof:" + _person.MyId + " :" + ProfDescription + " on Sys:" + timeOnSys);
     }
 
     /// <summary>
     /// Decisions  on the update when the Back Routers is used
     /// </summary>
-    void BackRouterUpdate()
+    private void BackRouterUpdate()
     {
-        if (!_router.IsRouteReady || (_routerBack!=null && !_routerBack.IsRouteReady))
-            //if routerBack is null is bz routerBackWasInit was not set to false
+        if (!_router.IsRouteReady || (_routerBack != null && !_routerBack.IsRouteReady))
+        //if routerBack is null is bz routerBackWasInit was not set to false
         {
             _router.Update();
 
             //for foreseter that 1st does Router1 then RouterBack
-            if (_routerBack!=null)
+            if (_routerBack != null)
             {
                 _routerBack.Update();
             }
         }                                 //for forrester
-        else if (_router.IsRouteReady && _routerBack!=null && _routerBack.IsRouteReady)
-        {
-            _readyToWork = true;
-            _routerActive = false;
-            Unlock();
-            ReRouteDone();
-
-            //foresters reset when done work
-            if (ProfDescription!=Job.Forester)
-            {
-                ResetDummy();
-            }
-        }
-    }
-
-    /// <summary>
-    /// Decisions on the update when the back router is not used 
-    /// </summary>
-    void SingleRouterUpdate()
-    {
-        if (!_router.IsRouteReady )
-        {
-            _router.Update();
-        }
-        else if (_router.IsRouteReady )
+        else if (_router.IsRouteReady && _routerBack != null && _routerBack.IsRouteReady)
         {
             _readyToWork = true;
             _routerActive = false;
@@ -656,11 +636,35 @@ public class Profession
     }
 
     /// <summary>
-    /// Created to address that sometimes derived classs dont even spawn the dummy helper 
+    /// Decisions on the update when the back router is not used
+    /// </summary>
+    private void SingleRouterUpdate()
+    {
+        if (!_router.IsRouteReady)
+        {
+            _router.Update();
+        }
+        else if (_router.IsRouteReady)
+        {
+            _readyToWork = true;
+            _routerActive = false;
+            Unlock();
+            ReRouteDone();
+
+            //foresters reset when done work
+            if (ProfDescription != Job.Forester)
+            {
+                ResetDummy();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Created to address that sometimes derived classs dont even spawn the dummy helper
     /// </summary>
     protected void ResetDummy()
     {
-        if (_person==null)
+        if (_person == null)
         {
             return;
         }
@@ -669,8 +673,8 @@ public class Profession
         _person.MyDummyProf.LandZone1.Clear();
         _person.MyDummyProf.DummyIdSpawner = "";
     }
-    
-    bool IsAnExistingBuilding(TheRoute theRoute)
+
+    private bool IsAnExistingBuilding(TheRoute theRoute)
     {
         var a = theRoute.DestinyKey.Substring(theRoute.DestinyKey.Length - 2);
 
@@ -679,10 +683,11 @@ public class Profession
             theRoute.DestinyKey.Contains("Tree") ||
             theRoute.DestinyKey.Contains("Rock") ||
             Brain.GetStructureFromKey(theRoute.DestinyKey) != null ||
-            theRoute.DestinyKey.Substring(theRoute.DestinyKey.Length-2) == ".D";//in Work Route (farmer, fisheerman)
+            theRoute.DestinyKey.Substring(theRoute.DestinyKey.Length - 2) == ".D";//in Work Route (farmer, fisheerman)
     }
 
-    bool stuckedForester;
+    private bool stuckedForester;
+
     /// <summary>
     /// If _workingNow = true this method will be called from derived class.
     ///  This is called once upon person is already on JobSite
@@ -704,18 +709,18 @@ public class Profession
 
             //_person.Body.Location = HPers.Work;
             //_workerTask = HPers.None;
-            //_person.Body.GoingTo = HPers.Work; 
+            //_person.Body.GoingTo = HPers.Work;
 
             Debug.Log("unstuck forester: " + _person.name);
         }
 
-        //walking toward the job site for forester walking towards a tree 
+        //walking toward the job site for forester walking towards a tree
         if (_person.Body.Location == HPers.Work && _workerTask == HPers.None)
         {
-            if (_router!=null && _router.TheRoute.OriginKey != _router.TheRoute.DestinyKey
+            if (_router != null && _router.TheRoute.OriginKey != _router.TheRoute.DestinyKey
                 && IsAnExistingBuilding(_router.TheRoute))
-                //so doesnt go in and out in the same building
-                //the is not booked to avoid people staying in the same House when grow older in same place 
+            //so doesnt go in and out in the same building
+            //the is not booked to avoid people staying in the same House when grow older in same place
             {
                 _person.Body.WalkRoutine(_router.TheRoute, HPers.InWork);
                 _workerTask = HPers.WalkingToJobSite;
@@ -731,7 +736,7 @@ public class Profession
         }
         //called here so animation of iddle can be fully transitioned to
         else if ((_person.Body.Location == HPers.InWork && _workerTask == HPers.WalkingToJobSite && !_person.Body.MovingNow)
-           // || stuckedForester
+            // || stuckedForester
             )
         {
             Idle(HPers.AniFullyTrans, 1f);
@@ -752,9 +757,9 @@ public class Profession
             }
 
             //so its doesnt play 'isWheelBarrow' ani in the midle of nothing tht sometimes
-            //wheel lead to wheelBarrowers that have not a WheelBarrpw to play the ani while carrying a box 
-            if (ProfDescription!=Job.WheelBarrow && ProfDescription!=Job.Docker &&
-                _person.Body.CurrentAni!= _myAnimation)//we need to pass it only once. dont keep doing it 
+            //wheel lead to wheelBarrowers that have not a WheelBarrpw to play the ani while carrying a box
+            if (ProfDescription != Job.WheelBarrow && ProfDescription != Job.Docker &&
+                _person.Body.CurrentAni != _myAnimation)//we need to pass it only once. dont keep doing it
             {
                 _person.Body.TurnCurrentAniAndStartNew(_myAnimation);
                 //Debug.Log("_myAnimation sent on siteWork:"+_myAnimation+ " .profDesc:"+ProfDescription);
@@ -772,8 +777,8 @@ public class Profession
             _doneWorkNow = true;//set here once the ani is fully transioned to
 
             //so it will get right animation . bz homer walks first and then drop/gets load
-            //there fore can have an animation of carrying with empty inv 
-            if (ProfDescription==Job.Homer)
+            //there fore can have an animation of carrying with empty inv
+            if (ProfDescription == Job.Homer)
             {
                 return;
             }
@@ -782,7 +787,7 @@ public class Profession
         else if (_person.Body.Location == HPers.FoodSource && _workerTask == HPers.DoneAtFoodScr &&
                 _person.Body.GoingTo == HPers.FoodSource)
         {
-            //so in brain all gets retarted again 
+            //so in brain all gets retarted again
             _person.Brain.CurrentTask = HPers.Walking;
             ResetMiniMindState();
         }
@@ -791,23 +796,23 @@ public class Profession
         {
             DoneWork();
         }
-        //for wheelbarrowers alone and dockers.. 
-        else if (_person.Body.Location == HPers.WheelBarrow 
+        //for wheelbarrowers alone and dockers..
+        else if (_person.Body.Location == HPers.WheelBarrow
             && _workerTask == HPers.DoneAtWheelBarrow && _person.Body.GoingTo == HPers.WheelBarrow)
         {
-            //so in brain all gets retarted again 
+            //so in brain all gets retarted again
             _person.Brain.CurrentTask = HPers.WheelBarrow;
             WheelBarrowDropLoad();
             ConvertWheelBarrow();
-        }    
+        }
         //for loading stuck Homer that was Farmer only
-        else if (_person.Body.Location == HPers.WheelBarrow 
+        else if (_person.Body.Location == HPers.WheelBarrow
             && ProfDescription == Job.Homer && _person.PrevJob == Job.Farmer && _workerTask == HPers.None
             && _person.Body.GoingTo == HPers.WheelBarrow)
         {
-            //so in brain all gets retarted again 
+            //so in brain all gets retarted again
             _person.Brain.CurrentTask = HPers.WheelBarrow;
-            ConvertToHomer();//called here bz need to restart 
+            ConvertToHomer();//called here bz need to restart
         }
         //for homers so they can start all over again at home just as had finished Work
         else if (_person.Body.Location == HPers.Home && _workerTask == HPers.DoneAtHome &&
@@ -821,7 +826,7 @@ public class Profession
         }
     }
 
-    bool CurrentConstructionIsNullOrDone()
+    private bool CurrentConstructionIsNullOrDone()
     {
         var constr = Brain.GetBuildingFromKey(ConstructingKey);
         return constr == null || constr.StartingStage == H.Done;
@@ -829,7 +834,7 @@ public class Profession
 
     #region New Logic that all go back to closer Empty Storage to drop Load
 
-    bool IsAHomerCreator()
+    private bool IsAHomerCreator()
     {
         if (ProfDescription == Job.WheelBarrow || ProfDescription == Job.Docker
             || IsNewHomerCreator() || IsNewHomerCreatorUsingAnInWorkRoute())
@@ -839,12 +844,12 @@ public class Profession
         return false;
     }
 
-    bool IsNewHomerCreator()
+    private bool IsNewHomerCreator()
     {
         return ProfDescription == Job.Insider;
     }
 
-    bool IsNewHomerCreatorUsingAnInWorkRoute()
+    private bool IsNewHomerCreatorUsingAnInWorkRoute()
     {
         return ProfDescription == Job.Farmer || ProfDescription == Job.SaltMiner || ProfDescription == Job.FisherMan;
     }
@@ -864,7 +869,7 @@ public class Profession
     }
 
     /// <summary>
-    /// 
+    ///
     /// Conditions so it works:
     /// and Router1 should be all set too. If never use Route1 can call FakeRouter1ForNewProfThatUseHomer()
     /// must be:  _routerActive = true;
@@ -876,7 +881,7 @@ public class Profession
         RouterBack = new CryRouteManager(_person.Work, ReturnStorage(), _person, HPers.InWorkBack);
     }
 
-    Structure ReturnStorage()
+    private Structure ReturnStorage()
     {
         if (_person.Work.PreferedStorage == null)
         {
@@ -885,7 +890,7 @@ public class Profession
         return _person.Work.PreferedStorage;
     }
 
-#endregion
+    #endregion New Logic that all go back to closer Empty Storage to drop Load
 
     private void ConvertWheelBarrow()
     {
@@ -903,7 +908,7 @@ public class Profession
         _person.CreateProfession(Job.Homer);
     }
 
-    void ConvertToHomer()
+    private void ConvertToHomer()
     {
         //so work Profession Mini States
         _person.Body.Location = HPers.Work;
@@ -915,7 +920,7 @@ public class Profession
     /// </summary>
     private void WheelBarrowDropLoad()
     {
-        //they just need to keep going to Final FoodSrc 
+        //they just need to keep going to Final FoodSrc
         if (ProfDescription != Job.WheelBarrow && ProfDescription != Job.Docker)
         {
             return;
@@ -951,15 +956,15 @@ public class Profession
     {
         if (_order.Product == P.Bean && _order.SourceBuild.Contains("FieldFarmSmall"))
         {
-            Program.gameScene.QuestManager.QuestFinished("Transport");   
+            Program.gameScene.QuestManager.QuestFinished("Transport");
         }
     }
 
     /// <summary>
-    /// Created so builders can used it if a building is destroy while they are working on it 
-    /// 
-    /// now foresrets use it too if they went to a tree that was recently cut and is growing now 
-    /// and for stones,iron and gold recently removed too 
+    /// Created so builders can used it if a building is destroy while they are working on it
+    ///
+    /// now foresrets use it too if they went to a tree that was recently cut and is growing now
+    /// and for stones,iron and gold recently removed too
     /// </summary>
     protected void PreparePersonToGetBackToOffice()
     {
@@ -968,9 +973,9 @@ public class Profession
     }
 
     /// <summary>
-    /// Will address the comming back to office action in where if _isRouterBackUsed will use a diff route 
+    /// Will address the comming back to office action in where if _isRouterBackUsed will use a diff route
     /// to go back
-    /// 
+    ///
     /// and if is not marked will use the _inverse of _router
     /// </summary>
     protected void ComingBackToOffice()
@@ -989,9 +994,9 @@ public class Profession
                 {
                     _person.Body.WalkRoutine(_router.TheRoute, HPers.WheelBarrow, true);
                 }
-                _workerTask = HPers.DoneAtWheelBarrow;   
+                _workerTask = HPers.DoneAtWheelBarrow;
             }
-            else  if (ProfDescription == Job.Homer)
+            else if (ProfDescription == Job.Homer)
             {
                 _person.Body.WalkRoutine(_routerBack.TheRoute, HPers.Home);
                 _workerTask = HPers.DoneAtHome; //so reset the cycle
@@ -999,17 +1004,17 @@ public class Profession
             else
             {
                 _person.Body.WalkRoutine(_routerBack.TheRoute, HPers.FoodSource);
-                _workerTask = HPers.DoneAtFoodScr; //so reset the cycle 
+                _workerTask = HPers.DoneAtFoodScr; //so reset the cycle
             }
         }
         else
         {
             //_person.Body.WalkRoutine(_router.TheRoute, HPers.Work, true);
-            //_workerTask = HPers.DoneAtWork; //so reset the cycle                 
+            //_workerTask = HPers.DoneAtWork; //so reset the cycle
         }
     }
 
-    void ResetMiniMindState()
+    private void ResetMiniMindState()
     {
         _workingNow = false;
         _workerTask = HPers.None;
@@ -1036,7 +1041,7 @@ public class Profession
         }
 
         var ele = Program.gameScene.controllerMain.TerraSpawnController.Find(StillElementId);
-        if (ele !=null && !ele.Grown())
+        if (ele != null && !ele.Grown())
         {
             _person.CreateProfession();
         }
@@ -1054,7 +1059,7 @@ public class Profession
         if (ele == null)
             return true;
 
-        //if tht is over the amount on distance is not the same 
+        //if tht is over the amount on distance is not the same
         return Vector3.Distance(ele.transform.position, FinRoutePoint) > 1f;
     }
 
@@ -1072,7 +1077,7 @@ public class Profession
     }
 
     /// <summary>
-    /// If forester Elelemts was removed recently 
+    /// If forester Elelemts was removed recently
     /// </summary>
     /// <returns></returns>
     private bool ForesterHasNullEle()
@@ -1107,21 +1112,22 @@ public class Profession
     }
 
     private float startIdleTime;
+
     /// <summary>
     /// Idle Action that is to perform the animation of work
     /// </summary>
     /// <param name="nextTask">The task will have after Idle is done</param>
-    void Idle(HPers nextTask, float idleTime)
+    private void Idle(HPers nextTask, float idleTime)
     {
         if (startIdleTime == 0)
         {
             var lookAtWork = DefineLookAt();
 
-            //this is recreateing the initial point 
+            //this is recreateing the initial point
             var t = Vector3.MoveTowards(_finRoutePoint, lookAtWork, -_moveTowOrigin);
 
-            if (_person.Work!=null && ProfDescription == Job.Builder
-                && _constructing!=null)
+            if (_person.Work != null && ProfDescription == Job.Builder
+                && _constructing != null)
             {
                 _person.transform.LookAt(new Vector3(_constructing.MiddlePoint().x, _person.transform.position.y,
                     _constructing.MiddlePoint().z));
@@ -1134,7 +1140,7 @@ public class Profession
         }
 
         if (IsGameSpeedIsZero())
-        {return;}
+        { return; }
 
         if (Time.time > startIdleTime + idleTime // / Program.gameScene.GameSpeed
             )
@@ -1148,7 +1154,7 @@ public class Profession
     /// Create to find out if look out was defined . If was not will use _person.Work.transform.position
     /// </summary>
     /// <returns></returns>
-    Vector3 DefineLookAt()
+    private Vector3 DefineLookAt()
     {
         if (LookAtWork == new Vector3() && _person.Work != null)
         {
@@ -1159,12 +1165,12 @@ public class Profession
 
     /// <summary>
     /// If game speed is zero wont allow to continue iddle . bz will consume the time there
-    /// without playing the animation 
+    /// without playing the animation
     /// </summary>
     /// <returns></returns>
-    bool IsGameSpeedIsZero()
+    private bool IsGameSpeedIsZero()
     {
-        if (Program.gameScene.GameSpeed==0)
+        if (Program.gameScene.GameSpeed == 0)
         {
             startIdleTime = Time.time;
             return true;
@@ -1175,9 +1181,9 @@ public class Profession
     #region Save . File Writting
 
     /// <summary>
-    /// Will lock on person control. So if saved is tryied will be delayed until is unlocked again 
-    /// 
-    /// This is to avoid things like saving a profession on the midddle of routing 
+    /// Will lock on person control. So if saved is tryied will be delayed until is unlocked again
+    ///
+    /// This is to avoid things like saving a profession on the midddle of routing
     /// </summary>
     protected void Lock()
     {
@@ -1186,7 +1192,7 @@ public class Profession
 
     protected void Unlock()
     {
-        //they work under Locked, if gets unlocked will lead to bugg  
+        //they work under Locked, if gets unlocked will lead to bugg
         if (ProfDescription == Job.ShackBuilder)
         {
             return;
@@ -1195,7 +1201,7 @@ public class Profession
         PersonPot.Control.Locked = false;
     }
 
-    #endregion
+    #endregion Save . File Writting
 
     /// <summary>
     /// Address to produce the selected prod in the work and the amount per shift defined in 'ProdXShift'
@@ -1212,7 +1218,7 @@ public class Profession
         Produce(instruct, prod);
         if (ReadyToWork)
         {
-//            Debug.Log("workingNow:" + _person.MyId);
+            //            Debug.Log("workingNow:" + _person.MyId);
             WorkingNow = true;
         }
     }
@@ -1232,10 +1238,11 @@ public class Profession
 
     private float amtCarrying;
     protected P prodCarrying = P.None;
+
     /// <summary>
-    /// The action of producing goods 
+    /// The action of producing goods
     /// </summary>
-    void Produce()
+    private void Produce()
     {
         _person.Work.Produce(ProdXShift, _person);
 
@@ -1245,36 +1252,36 @@ public class Profession
 
             _person.ExchangeInvetoryItem(_person.Work, _person, DefineProdWillCarry(), amtCarrying);
             prodCarrying = _person.Work.CurrentProd.Product;
-            
-            //people comsuming tools as they work 
+
+            //people comsuming tools as they work
             GameController.ResumenInventory1.Remove(P.Tool, 0.1f);
         }
     }
 
     /// <summary>
-    /// So it handles what is the first item on inventory. otherwise will return CurrentProd 
+    /// So it handles what is the first item on inventory. otherwise will return CurrentProd
     /// </summary>
     /// <returns></returns>
-    P DefineProdWillCarry()
+    private P DefineProdWillCarry()
     {
         //as they have inputs and inputs are usualy in the first of the iNventory
-        if (ProfDescription==Job.Insider)
+        if (ProfDescription == Job.Insider)
         {
             return _person.Work.CurrentProd.Product;
         }
 
-        if (_person.Work.Inventory.InventItems.Count>0)
+        if (_person.Work.Inventory.InventItems.Count > 0)
         {
-            //so removes the first item on Inventory 
+            //so removes the first item on Inventory
             return _person.Work.Inventory.InventItems[0].Key;
         }
         return _person.Work.CurrentProd.Product;
     }
-    
+
     /// <summary>
-    /// The action of producing goods 
+    /// The action of producing goods
     /// </summary>
-    void Produce(string instruct, P prod)
+    private void Produce(string instruct, P prod)
     {
         //if has not instructions is normal Produce()
         if (string.IsNullOrEmpty(instruct))
@@ -1284,11 +1291,11 @@ public class Profession
         }
 
         //if has instructions is so far from a : Forester
-        //they want to physically bring prod back and then drop it at they Storage 
-        //dont want to added to building invetory he has to drop it there when he gets there 
+        //they want to physically bring prod back and then drop it at they Storage
+        //dont want to added to building invetory he has to drop it there when he gets there
         _person.Work.Produce(_person.HowMuchICanCarry(), _person, false, prod);
 
-        //so foreseter show Wood , carry wood 
+        //so foreseter show Wood , carry wood
         _person.Body.UpdatePersonalObjAniSpeed();
 
         //means the prod was sent directly from Profession
@@ -1304,8 +1311,8 @@ public class Profession
 
     /// <summary>
     /// Will drop all goods is carrying into FoodSource
-    /// 
-    /// Change bz I need workers that were fired drop input items when they go back to 
+    ///
+    /// Change bz I need workers that were fired drop input items when they go back to
     /// Storage after being fired
     /// </summary>
     public void DropGoods()
@@ -1331,7 +1338,7 @@ public class Profession
 
     /// <summary>
     /// Used to find if something change and move on to a new task as a pRofessional
-    /// 
+    ///
     /// Ex. Builder finish building one building should find a new one to do tht
     /// </summary>
     public virtual void AnyChange()
@@ -1356,7 +1363,7 @@ public class Profession
         return Brain.GetStructureFromKey(id);
     }
 
-    #region Break Init 
+    #region Break Init
 
     protected bool _breakInitNow;
     private float _breakInitDuration = 1f;
@@ -1394,10 +1401,10 @@ public class Profession
     }
 
     /// <summary>
-    /// Used so a person is asking for bridges anchors takes a break and let brdige anchors complete then can 
+    /// Used so a person is asking for bridges anchors takes a break and let brdige anchors complete then can
     /// work on it
     /// </summary>
-    void TakeInitBreak()
+    private void TakeInitBreak()
     {
         if (Time.time > _startInitBreakTime + _breakInitDuration)
         {
@@ -1408,7 +1415,7 @@ public class Profession
         }
     }
 
-    #endregion
+    #endregion Break Init
 
     internal void OnBuildDoneHandler(object sender, EventArgs e)
     {

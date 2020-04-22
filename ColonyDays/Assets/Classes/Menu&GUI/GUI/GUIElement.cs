@@ -1,17 +1,17 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class GUIElement : General
 {
-    //inipos is used for Hide and show 
+    //inipos is used for Hide and show
     protected Vector3 iniPos;
 
     protected InputField _titleInputField;
     protected GameObject _titleInputFieldGO;
     private Scrollbar _verticScrollbar;
 
-    RectTransform _scrollContent;
+    private RectTransform _scrollContent;
     protected Text _text;
 
     private float speed = .05f;
@@ -23,8 +23,8 @@ public class GUIElement : General
         iniPos = transform.position;
 
         var textGo = FindGameObjectInHierarchy("Text", gameObject);
-        if(textGo != null)
-        _text = textGo.GetComponent<Text>();
+        if (textGo != null)
+            _text = textGo.GetComponent<Text>();
 
         _titleInputFieldGO = GetGrandChildCalled("TitleInputField");
         if (!_titleInputFieldGO) return;
@@ -32,7 +32,7 @@ public class GUIElement : General
         _titleInputFieldGO.SetActive(false);
     }
 
-    //called from GUI 
+    //called from GUI
     public void HideWindowToTheLeft()
     {
         _hideSlideToLeft = true;
@@ -64,7 +64,7 @@ public class GUIElement : General
     }
 
     /// <summary>
-    /// Will build the string to show cost 
+    /// Will build the string to show cost
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
@@ -95,7 +95,7 @@ public class GUIElement : General
         return res;
     }
 
-    //called from GUI Event Element. 
+    //called from GUI Event Element.
     //so far from NotificationWindow and Feedback Dialog
     public void CallOnMouseEnter()
     {
@@ -123,7 +123,7 @@ public class GUIElement : General
     }
 
     /// <summary>
-    /// Hides the element 
+    /// Hides the element
     /// </summary>
     public virtual void Hide()
     {
@@ -174,7 +174,6 @@ public class GUIElement : General
 
     internal void ResetScroolPos()
     {
-
         if (_verticScrollbar == null)
         {
             _verticScrollbar = FindGameObjectInHierarchy("Scrollbar Vertical", gameObject).GetComponent<Scrollbar>();
@@ -189,12 +188,11 @@ public class GUIElement : General
         SelectOkBtn();
     }
 
-    void SelectOkBtn()
+    private void SelectOkBtn()
     {
         var okBtn = GetChildCalled("Ok_Btn");
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(okBtn, null);
     }
-
 }

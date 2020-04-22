@@ -1,21 +1,20 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System;
+using UnityEngine;
 
 /*
  * All Actions related to the the Screen. Including loading screen
- * 
- * Will pass contrll to MouseListener when MainGUI is created. That is created here 
+ *
+ * Will pass contrll to MouseListener when MainGUI is created. That is created here
  */
+
 public class MyScreen : General
 {
     private MainMenuWindow _mainMenuWindow;//the window of the main menu. so can be hidden and shw back
     private NewGameWindow _newGameWindow;
     private SaveLoadGameWindow _saveLoadGameWindow;
-    
+
     private OptionsWindow _optionsWindow;
     private AchieveWindow _achieveWindow;
     private MyForm current;
@@ -24,7 +23,7 @@ public class MyScreen : General
     private string _terraRoot;//the terrain root
     private string _diff;//the game difficulty
 
-    private string _townName;//the town name 
+    private string _townName;//the town name
 
     internal SaveLoadGameWindow SaveLoadGameWindow
     {
@@ -67,11 +66,11 @@ public class MyScreen : General
     public void Start()
     {
         Settings.LoadFromFile();
-        
-        //so is used only 1st time 
+
+        //so is used only 1st time
         if (current != null)
         {
-            return;    
+            return;
         }
 
         LoadMainMenu();
@@ -79,11 +78,11 @@ public class MyScreen : General
         var first = GameObject.Find("FirstScreen");
         Destroy(first);
 
-        //can only be one on scene to work 
+        //can only be one on scene to work
         RedifineWindows();
     }
 
-    void RedifineWindows()
+    private void RedifineWindows()
     {
         if (_mainMenuWindow == null)
         {
@@ -108,14 +107,14 @@ public class MyScreen : General
     }
 
     /// <summary>
-    /// This is called when ESC key is pressed while player was plyaing 
+    /// This is called when ESC key is pressed while player was plyaing
     /// </summary>
     public void LoadMainMenuWithResumeBtn()
     {
         LoadMainMenu();
         Start();
     }
-       
+
     /// <summary>
     /// Load the main menu
     /// </summary>
@@ -132,10 +131,11 @@ public class MyScreen : General
     {
         return current != null && current.name.Contains("Menu");
     }
-    
-    bool wasOptionalFeedbackShown;
+
+    private bool wasOptionalFeedbackShown;
+
     /// <summary>
-    /// Depending on the btn was clicked will do action 
+    /// Depending on the btn was clicked will do action
     /// </summary>
     /// <param name="action"></param>
     public void MouseListenAction(string action)
@@ -168,7 +168,7 @@ public class MyScreen : General
 
             HideMainMakeWindActive(_newGameWindow);
         }
-        else if(sub == "Exit")
+        else if (sub == "Exit")
         {
             if (!wasOptionalFeedbackShown)
             {
@@ -177,18 +177,18 @@ public class MyScreen : General
                 return;
             }
 
-             Application.Quit();
-        }    
-        else if(sub == "SaveGame")
+            Application.Quit();
+        }
+        else if (sub == "SaveGame")
         {
             RedifineWindows();
             SaveLoadGameWindow.Show("Save");
-        }    
-        else if(sub == "LoadGame")
+        }
+        else if (sub == "LoadGame")
         {
             RedifineWindows();
             SaveLoadGameWindow.Show("Load");
-        }   
+        }
         else if (sub.Contains("Options"))
         {
             RedifineWindows();
@@ -202,16 +202,16 @@ public class MyScreen : General
                 RedifineWindows();
                 _achieveWindow.Show("");
             }
-                //the hit of the ok
+            //the hit of the ok
             else
             {
                 _achieveWindow.MouseListen(sub);
             }
-           
+
             //Debug.Log("Achive");
         }
     }
-    
+
     public void Update()
     {
         if (isNewGameCreated)
@@ -227,12 +227,12 @@ public class MyScreen : General
         if (Program.IsInputLocked) return;
         if (!IsMainMenuOn()) return;
 
-        if(Input.GetKey(KeyCode.C))
+        if (Input.GetKey(KeyCode.C))
         {
-            if(_mainMenuWindow == null)
-            _mainMenuWindow = FindObjectOfType<MainMenuWindow>();
+            if (_mainMenuWindow == null)
+                _mainMenuWindow = FindObjectOfType<MainMenuWindow>();
 
-            if(!_mainMenuWindow.IsContinueBtnInteractable())return;
+            if (!_mainMenuWindow.IsContinueBtnInteractable()) return;
 
             ContinueGameBtn();
         }
@@ -245,6 +245,7 @@ public class MyScreen : General
 
     private bool isNewGameCreated;
     private float timeClicked;
+
     /// <summary>
     /// Once the OK btn is clicked on the Create new game window
     /// </summary>
@@ -272,18 +273,18 @@ public class MyScreen : General
         _diff = diff;
         AssignDificulty();
 
-
         _townName = townName;
     }
 
-    int _holdDifficulty = -1;
+    private int _holdDifficulty = -1;
+
     public int HoldDifficulty
     {
         get { return _holdDifficulty; }
         set { _holdDifficulty = value; }
     }
-    
-    void AssignDificulty()
+
+    private void AssignDificulty()
     {
         if (_diff == "Newbie")
         {
@@ -296,7 +297,7 @@ public class MyScreen : General
         else if (_diff == "Moderate")
         {
             HoldDifficulty = 2;
-        } 
+        }
         else if (_diff == "Hard")
         {
             HoldDifficulty = 1;
@@ -313,6 +314,7 @@ public class MyScreen : General
     }
 
     #region Random Terra Root
+
     //IMPORTANT : To add a new Terrain
     //To add a new Terrain the only thing needed is add the XML file to Application.dataPath;
     //Also in NewGameWindow
@@ -324,7 +326,7 @@ public class MyScreen : General
 
     /// <summary>
     /// bz this Xmls are all Prefabs tht gets call in game
-    /// 
+    ///
     /// "Prefab/Terrain/" + file
     /// </summary>
     /// <param name="file"></param>
@@ -335,17 +337,18 @@ public class MyScreen : General
     }
 
     private string _dataPath;
+
     /// <summary>
     /// now user wont select terrain will be always at random
-    /// 
+    ///
     /// to remember would nt work in Standalone bz in StandAlone the root was:
     /// C:/GitHub/SM/10.05/SugarMill_Data\Bay_And_Mountain_1_River.Spawned.xml
     /// and the additional dot in '10.05' will mess below code
-    /// 
+    ///
     /// READ if is failing needs the Developer = true
     /// </summary>
     /// <returns></returns>
-    string ReturnRandomTerraRoot()
+    private string ReturnRandomTerraRoot()
     {
         _dataPath = Application.dataPath;
 
@@ -356,16 +359,15 @@ public class MyScreen : General
         for (int i = 0; i < xmls.Count; i++)
         {
             var splitArray = xmls[i].Split('.');
-            Debug.Log("xmls: "+xmls[i]);
-            
+            Debug.Log("xmls: " + xmls[i]);
+
             if (splitArray.Length > 1 && splitArray[1] == "Spawned")
             {
-                //confirms that they have a terra file tht has the same name 
+                //confirms that they have a terra file tht has the same name
                 if (ConfirmThisIsATerraFile(splitArray[0], xmls))
                 {
                     validTerras.Add(splitArray[0]);
                     Debug.Log("validTerras: " + splitArray[0]);
-
                 }
             }
         }
@@ -381,14 +383,14 @@ public class MyScreen : General
     /// <param name="terra"></param>
     /// <param name="xmls"></param>
     /// <returns></returns>
-    bool ConfirmThisIsATerraFile(string terra, List<string> xmls)
+    private bool ConfirmThisIsATerraFile(string terra, List<string> xmls)
     {
         for (int i = 0; i < xmls.Count; i++)
         {
             var cleaned = CleanRouteFile(xmls[i]);
             var terraClean = RemoveDataPath(terra, _dataPath);
 
-            Debug.Log("terra:"+terra+"...dataPath:"+_dataPath);
+            Debug.Log("terra:" + terra + "...dataPath:" + _dataPath);
 
             if (terraClean == cleaned)
             {
@@ -398,7 +400,7 @@ public class MyScreen : General
         return false;
     }
 
-    string CleanRouteFile(string fileName)
+    private string CleanRouteFile(string fileName)
     {
         var splitArray = fileName.Split('.');
         return RemoveDataPath(splitArray[0], _dataPath);
@@ -410,15 +412,15 @@ public class MyScreen : General
         return pathToClean.Substring(len + 1);//bz the: \\
     }
 
-#endregion
+    #endregion Random Terra Root
 
     /// <summary>
-    /// bzloading screen appers after the terrain is loaded . so im goona wait until loading is loaded so will fire this 
-    /// events after 
+    /// bzloading screen appers after the terrain is loaded . so im goona wait until loading is loaded so will fire this
+    /// events after
     /// </summary>
-    void FirstPartOfNewGameCreated()
+    private void FirstPartOfNewGameCreated()
     {
-        //and im waiting 1 second 
+        //and im waiting 1 second
         if (current.name.Contains("Loading") && Time.time > timeClicked + 0)
         {
             isNewGameCreated = false;
@@ -428,7 +430,6 @@ public class MyScreen : General
             BuildingPot.LoadBuildingsNow();
         }
     }
-
 
     public void ContinueGameBtn()
     {
@@ -442,12 +443,11 @@ public class MyScreen : General
     {
         CamControl.ChangeTo("Game");
 
-
         current.Destroy();
         LoadLoadingScreen();
     }
 
-    void LoadLoadingScreen()
+    private void LoadLoadingScreen()
     {
         current = (MyForm)General.Create(Root.loadingScreen, new Vector2());
     }
@@ -456,20 +456,12 @@ public class MyScreen : General
     {
         CamControl.CAMRTS.InputRts.CenterCam(true);
 
-
         Program.MouseListener.LoadMainGUI();
         Program.MouseListener.ApplyChangeScreenResolution();
 
         DestroyCurrentMenu();
         ManagerReport.AddFPS();
     }
-
-
-    //public void ReloadGUI()
-    //{
-    //    Program.MouseListener.ReloadMainGUI();
-    //    Program.MouseListener.ApplyChangeScreenResolution();
-    //}
 
     public void DestroyCurrentMenu()
     {
@@ -482,7 +474,7 @@ public class MyScreen : General
         current = null;
     }
 
-    #endregion
+    #endregion Main Menu. Load Game. New Game
 
     /// <summary>
     /// Will hide 'ele' windows and will show Main Menu Window
@@ -496,7 +488,7 @@ public class MyScreen : General
         _mainMenuWindow.Show();
     }
 
-    void HideMainMakeWindActive(GUIElement window)
+    private void HideMainMakeWindActive(GUIElement window)
     {
         RedifineWindows();
 
@@ -542,11 +534,10 @@ public class MyScreen : General
 
                 DestroyCurrentMenu();
                 LoadMainMenu();
-                Debug.Log("Reload Main Menu  ReLoadMainMenuIfActive");   
-         
+                Debug.Log("Reload Main Menu  ReLoadMainMenuIfActive");
+
                 RedifineWindows();
             }
         }
     }
-
 }

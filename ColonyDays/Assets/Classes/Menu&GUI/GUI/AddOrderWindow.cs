@@ -1,11 +1,12 @@
 ﻿using System;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 /*
  * Script atteched to the AddOrderWindow
  */
+
 public class AddOrderWindow : GUIElement
 {
     private Text _title;
@@ -21,6 +22,7 @@ public class AddOrderWindow : GUIElement
 
     //order elements
     private P _prodSelect = P.None;
+
     private float _amt;
     private H _frecuency = H.Once;
     private int _price;
@@ -33,7 +35,7 @@ public class AddOrderWindow : GUIElement
     private GameObject _content;
     private GameObject _scroll_Ini_PosGO;
 
-    ScrollViewShowInventory _ourInventories;
+    private ScrollViewShowInventory _ourInventories;
 
     // Use this for initialization
     private void Start()
@@ -42,7 +44,7 @@ public class AddOrderWindow : GUIElement
         Hide();
     }
 
-    void InitObj()
+    private void InitObj()
     {
         iniPos = transform.position;
 
@@ -99,7 +101,8 @@ public class AddOrderWindow : GUIElement
         ShowButtons(Program.gameScene.ExportImport1.ProdSpecsCured());
     }
 
-    List<ButtonTile> _btns = new List<ButtonTile>();
+    private List<ButtonTile> _btns = new List<ButtonTile>();
+
     private void ShowButtons(List<ProdSpec> list)
     {
         for (int i = 0; i < list.Count; i++)
@@ -111,9 +114,9 @@ public class AddOrderWindow : GUIElement
         }
     }
 
-    #endregion
+    #endregion Scroll
 
-    void HandlePriceGroup()
+    private void HandlePriceGroup()
     {
         if (_orderType == "Import")
         {
@@ -125,14 +128,14 @@ public class AddOrderWindow : GUIElement
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         HandleInput();
     }
 
-    void HandleInput()
+    private void HandleInput()
     {
-        //so rects dont work when hidden 
+        //so rects dont work when hidden
         if (transform.position != InitialPosition)
         {
             return;
@@ -151,7 +154,7 @@ public class AddOrderWindow : GUIElement
         AddOrderRoutine();
     }
 
-    void AddOrderRoutine()
+    private void AddOrderRoutine()
     {
         if (AddedOrder())
         {
@@ -166,14 +169,14 @@ public class AddOrderWindow : GUIElement
         CleanDisplay();
     }
 
-    void CleanDisplay()
+    private void CleanDisplay()
     {
         _errorMsgLbl.text = "";
         _priceLbl.text = "";
     }
 
     /// <summary>
-    /// The action of adding an order to the Dock 
+    /// The action of adding an order to the Dock
     /// </summary>
     private bool AddedOrder()
     {
@@ -185,7 +188,7 @@ public class AddOrderWindow : GUIElement
 
         var dockBuild = BuildingPot.Control.Registro.SelectBuilding;
 
-        //used in case the conversion has something off. 
+        //used in case the conversion has something off.
         int locAmt = -1;
         if (int.TryParse(_inputAmt.text, out locAmt))
         {
@@ -194,7 +197,6 @@ public class AddOrderWindow : GUIElement
         if (_orderType == "Export")
         {
             dockBuild.Dock1.Export(new Order(_prodSelect, "Ship", _amt));
-
 
             if (_prodSelect == P.Bean && locAmt == 300)
             {
@@ -248,14 +250,14 @@ public class AddOrderWindow : GUIElement
             }
         }
 
-        //so orders are updated 
+        //so orders are updated
         Program.MouseListener.BuildingWindow1.ShowOrders();
 
         ClearForm();
         return true;
     }
 
-    void ClearForm()
+    private void ClearForm()
     {
         _amt = 0;
         _prodSelect = P.None;
@@ -275,7 +277,7 @@ public class AddOrderWindow : GUIElement
 
     private string _errorMsg;
 
-    bool IsOrderComplete()
+    private bool IsOrderComplete()
     {
         if (!WasProdSelected())
         {
@@ -296,7 +298,7 @@ public class AddOrderWindow : GUIElement
         return true;
     }
 
-    bool WasProdSelected()
+    private bool WasProdSelected()
     {
         if (_prodSelect == P.None)
         {
@@ -305,7 +307,7 @@ public class AddOrderWindow : GUIElement
         return true;
     }
 
-    bool ThereIsSpaceRequiredAvail()
+    private bool ThereIsSpaceRequiredAvail()
     {
         //breaks with the TUto
         if (BuildingPot.Control.Registro.SelectBuilding == null)
@@ -318,12 +320,12 @@ public class AddOrderWindow : GUIElement
     }
 
     /// <summary>
-    /// Actions received from the Form 
+    /// Actions received from the Form
     /// </summary>
     /// <param name="feed"></param>
     public void FeedFromForm(string feed)
     {
-        if (!IsShownNow())//bz amt is being called all the time from the keyboard 
+        if (!IsShownNow())//bz amt is being called all the time from the keyboard
         {
             return;
         }
@@ -357,7 +359,7 @@ public class AddOrderWindow : GUIElement
         var dock = BuildingPot.Control.Registro.SelectBuilding;
 
         dock.Dispatch1.RemoveOrderByIDExIm(id);
-        //so orders are updated 
+        //so orders are updated
         Program.MouseListener.BuildingWindow1.ShowOrders();
     }
 
@@ -371,7 +373,7 @@ public class AddOrderWindow : GUIElement
     }
 
     /// <summary>
-    /// Amt selected 
+    /// Amt selected
     /// </summary>
     private void AmtSelected()
     {
@@ -393,9 +395,9 @@ public class AddOrderWindow : GUIElement
     }
 
     /// <summary>
-    /// Will displya the final order how looks like 
+    /// Will displya the final order how looks like
     /// </summary>
-    void Display()
+    private void Display()
     {
         if (_prodSelect != P.None)
         {

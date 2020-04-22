@@ -1,13 +1,13 @@
 ﻿using System;
-using UnityEngine;
 using System.Collections.Generic;
-//using Facebook.Unity;
+using UnityEngine;
 
 public class MouseListener : InputMain
 {
-    Building _bullDozerGO;
+    private Building _bullDozerGO;
 
     private MyForm _currForm = new MyForm();
+
     public MyForm CurrForm
     {
         get { return _currForm; }
@@ -43,7 +43,8 @@ public class MouseListener : InputMain
         set { _notificationWindow = value; }
     }
 
-    SteamStatsAndAchievements m_StatsAndAchievements;
+    private SteamStatsAndAchievements m_StatsAndAchievements;
+
     /// <summary>
     /// Accessing to Steam API Achivements and Stats
     /// </summary>
@@ -52,8 +53,6 @@ public class MouseListener : InputMain
         get { return m_StatsAndAchievements; }
         set { m_StatsAndAchievements = value; }
     }
-
-
 
     // Use this for initialization
     public void Start()
@@ -69,11 +68,11 @@ public class MouseListener : InputMain
         }
     }
 
-
     /// <summary>
-    /// Loading  and Reloading Main Form 
+    /// Loading  and Reloading Main Form
     /// </summary>
-    private MyForm main;//the main GUI 
+    private MyForm main;//the main GUI
+
     public void LoadMainGUI()
     {
         if (main == null)
@@ -81,7 +80,7 @@ public class MouseListener : InputMain
             main = (MyForm)Create(Root.mainGUI, new Vector2());
         }
 
-        //can only be one on scene to work 
+        //can only be one on scene to work
         _buildingsMenu = FindObjectOfType<BuildingsMenu>();
         _descriptionWindow = FindObjectOfType<DescriptionWindow>();
         _personWindow = FindObjectOfType<PersonWindow>();
@@ -94,7 +93,6 @@ public class MouseListener : InputMain
         _helpWindow = FindObjectOfType<HelpWindow>();
         TutoWindow1 = FindObjectOfType<TutoWindow>();
 
-
         //Debug.Log("LoadMainGUI() GUI");
 
         if (CamControl.IsMainMenuOn())
@@ -102,9 +100,9 @@ public class MouseListener : InputMain
             HideMainGUI();
         }
     }
-    
 
     private Vector3 mainTempIniPos;
+
     public void HideMainGUI()
     {
         main.gameObject.SetActive(false);
@@ -136,12 +134,12 @@ public class MouseListener : InputMain
 
     public void ApplyChangeScreenResolution(bool promtToGame = false)
     {
-        if(Program.gameScene.Fustrum1 != null)
-        Program.gameScene.Fustrum1.RedoRect();
+        if (Program.gameScene.Fustrum1 != null)
+            Program.gameScene.Fustrum1.RedoRect();
 
         Program.MyScreen1.ReLoadMainMenuIfActive();
-        
-        //being called before a game is loaded 
+
+        //being called before a game is loaded
         if (_personWindow == null)
         {
             return;
@@ -155,7 +153,7 @@ public class MouseListener : InputMain
         main = null;
         LoadMainGUI();
 
-        //in case PersonWindow was not null. So main menu is last 
+        //in case PersonWindow was not null. So main menu is last
         Program.MyScreen1.ReLoadMainMenuIfActive();
     }
 
@@ -185,7 +183,7 @@ public class MouseListener : InputMain
                 //if coulndt then try to select build
                 if (!SelectClickedBuild())
                 {
-                    //if was not posible to seelct a building 
+                    //if was not posible to seelct a building
                     HidePersonBuildOrderNotiWindows();
 
                     var tryBuy = SelectSellRegion();
@@ -199,11 +197,11 @@ public class MouseListener : InputMain
     }
 
     /// <summary>
-    /// Will try to select a person. Person selection has more importantce than 
-    /// building selection and priority 
+    /// Will try to select a person. Person selection has more importantce than
+    /// building selection and priority
     /// </summary>
     /// <returns>Will retrun true if a person was selected</returns>
-    bool SelectPerson()
+    private bool SelectPerson()
     {
         Transform clicked = UPoly.RayCastLayer(Input.mousePosition, 11).transform;
 
@@ -233,27 +231,27 @@ public class MouseListener : InputMain
     }
 
     /// <summary>
-    /// Will select clicked building and ret true if one was seelected 
+    /// Will select clicked building and ret true if one was seelected
     /// </summary>
     /// <returns></returns>
-    bool SelectClickedBuild()
+    private bool SelectClickedBuild()
     {
         if (!Input.GetMouseButtonUp(0))
         {
             return false;
         }
-     
+
         List<string> names = new List<string>();
         var clicked = ReturnBuildinHit();
 
-        //unselect if was click outise 
+        //unselect if was click outise
         if (clicked != null)
         {
             names = UString.ExtractNamesUntilGranpa(clicked);
             Program.InputMain.InputMouse.UnSelectRoutine(names, clicked);
         }
         //select new Build
-        if (names.Count > 0 )
+        if (names.Count > 0)
         {
             for (int i = 0; i < names.Count; i++)
             {
@@ -275,7 +273,7 @@ public class MouseListener : InputMain
         return false;
     }
 
-    bool SelectSellRegion()
+    private bool SelectSellRegion()
     {
         if (!Input.GetMouseButtonUp(0))
         {
@@ -294,11 +292,10 @@ public class MouseListener : InputMain
         return false;
     }
 
-
-        /// <summary>
-        /// Method tht address when a building is unseletced
-        /// </summary>
-        void UnselectingBuild()
+    /// <summary>
+    /// Method tht address when a building is unseletced
+    /// </summary>
+    private void UnselectingBuild()
     {
         _buildingsMenu.Hide();
         _descriptionWindow.Hide();
@@ -308,19 +305,19 @@ public class MouseListener : InputMain
     }
 
     /// <summary>
-    /// Will return the build or way hitt by mouse position 
+    /// Will return the build or way hitt by mouse position
     /// </summary>
     /// <returns></returns>
-    Transform ReturnBuildinHit()
+    private Transform ReturnBuildinHit()
     {
         //used to be UPoly.RayCastAll()
-        Transform clicked = UPoly.RayCastLayer(Input.mousePosition, 10).transform;//10: personBlock   
+        Transform clicked = UPoly.RayCastLayer(Input.mousePosition, 10).transform;//10: personBlock
 
         //Removed bz was pulling the Previews of the Buildiggs and in that way will select that building
         ////try ways then
         //if (clicked == null)
         //{
-        //    clicked = UPoly.RayCastLayer(Input.mousePosition, 12).transform;//12: way  
+        //    clicked = UPoly.RayCastLayer(Input.mousePosition, 12).transform;//12: way
         //}
 
         return clicked;
@@ -332,14 +329,14 @@ public class MouseListener : InputMain
     /// <param name="action"></param>
     public void ActionFromForm(string action)
     {
-        //play click sound 
+        //play click sound
         //AudioCollector.PlayOneShot("ClickMetal2", 0);
 
         //btn from main menu
         if (action.Contains("MainMenu."))
         {
             Program.MyScreen1.MouseListenAction(action);
-            //play click sound 
+            //play click sound
             AudioCollector.PlayOneShot("ClickMetal2", 0);
         }
         else if (action == "upgBuildMat")
@@ -367,7 +364,6 @@ public class MouseListener : InputMain
         {
             CancelDemolishAction();
             _buildingWindow.Reload();
-
         }
         else if (action == "BullDozer")
         {
@@ -378,12 +374,10 @@ public class MouseListener : InputMain
         else if (action.Contains("Dialog."))
         {
             Dialog.Listen(action);
-        }     
+        }
         else if (action.Contains("GUIBtn."))
         {
             GUIBtnHandlers(action);
-
-
         }
         else if (action == H.Next_Stage_Btn.ToString())
         {
@@ -402,13 +396,11 @@ public class MouseListener : InputMain
         else
         {
             HandleGUIClicks(action);
-
-
         }
     }
 
     /// <summary>
-    /// Handle actions from buttons in GUI 
+    /// Handle actions from buttons in GUI
     /// </summary>
     /// <param name="action"></param>
     private void GUIBtnHandlers(string action)
@@ -425,8 +417,7 @@ public class MouseListener : InputMain
         }
         else if (action == "Share")
         {
-            
-        } 
+        }
         else if (action == "MoreSpeed")
         {
             Program.InputMain.ChangeGameSpeedBy(1);
@@ -434,11 +425,11 @@ public class MouseListener : InputMain
         else if (action == "LessSpeed")
         {
             Program.InputMain.ChangeGameSpeedBy(-1);
-        } 
+        }
         else if (action == "Pause")
         {
             Program.InputMain.ChangeGameSpeedBy(-15);
-        }  
+        }
         else if (action == "Feedback")
         {
             //Dialog.InputFormDialog(H.Feedback);
@@ -493,10 +484,8 @@ public class MouseListener : InputMain
         }
     }
 
-    void TestAchieve(string cmd)
+    private void TestAchieve(string cmd)
     {
-       
-
         //m_StatsAndAchievements.Render();
         //GUILayout.Space(10);
 
@@ -504,29 +493,16 @@ public class MouseListener : InputMain
         {
             m_StatsAndAchievements.AddDistanceTraveled(100.0f);
             print("Added 100");
-        }   
+        }
         else if (cmd == "Reset")
         {
             m_StatsAndAchievements.ResetAll();
-        } 
+        }
         else if (cmd == "Render")
         {
             m_StatsAndAchievements.Render();
         }
- 
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
     #region GUI. Aug 2015
 
@@ -543,7 +519,7 @@ public class MouseListener : InputMain
 
     private QuestWindow _questWindow;
     private HelpWindow _helpWindow;
-    TutoWindow _tutoWindow;
+    private TutoWindow _tutoWindow;
 
     public HelpWindow HelpWindow
     {
@@ -564,19 +540,18 @@ public class MouseListener : InputMain
         }
     }
 
-
     /// <summary>
-    /// Will handle all the inputs from the buttons on the GUI 
+    /// Will handle all the inputs from the buttons on the GUI
     /// </summary>
     /// <param name="action"></param>
-    void HandleGUIClicks(string action)
+    private void HandleGUIClicks(string action)
     {
         //when adding a nw import or export . clicked on Dock orders tab
         if (action == "Add_Export_Btn" || action == "Add_Import_Btn")
         {
-           AddExportImport(action);
+            AddExportImport(action);
         }
-            //when selecting a prod on _addOrderForm
+        //when selecting a prod on _addOrderForm
         else if (action.Contains("AddOrder."))
         {
             _addOrderWindow.FeedFromForm(action);
@@ -585,38 +560,36 @@ public class MouseListener : InputMain
         {
             _buildingWindow.FeedFromForm(action);
         }
-
-
-
         //building new buildins
         else if (action.Contains("Slot"))
         {
             HandleSlot(action);
         }
-            //clicking on the categories of buildings . ex Road
+        //clicking on the categories of buildings . ex Road
         else
         {
             HandleBuildCat(action);
         }
     }
 
-
-
-    void AddExportImport(string action)
+    private void AddExportImport(string action)
     {
-        if (action == "Add_Export_Btn" )
+        HideBulletinHelp();
+        if (action == "Add_Export_Btn")
         {
             _addOrderWindow.Show("Export");
         }
-        else if( action == "Add_Import_Btn")
+        else if (action == "Add_Import_Btn")
         {
             _addOrderWindow.Show("Import");
         }
     }
 
-
-
-
+    void HideBulletinHelp()
+    {
+        _bulletinWindow.Hide();
+        _helpWindow.Hide();
+    }
 
     /// <summary>
     /// Will hide the Person, Building, and AddOrder Window
@@ -670,9 +643,8 @@ public class MouseListener : InputMain
         _descriptionWindow.Hide();
     }
 
-
     /// <summary>
-    /// This is when click on , Road, or House 
+    /// This is when click on , Road, or House
     /// </summary>
     /// <param name="action"></param>
     private void HandleBuildCat(string action)
@@ -685,7 +657,7 @@ public class MouseListener : InputMain
     }
 
     /// <summary>
-    /// Will load the Icons on the Menu 
+    /// Will load the Icons on the Menu
     /// </summary>
     private void LoadIconsOnMenu()
     {
@@ -695,11 +667,11 @@ public class MouseListener : InputMain
     }
 
     /// <summary>
-    /// Will return the H values of the Dict 
+    /// Will return the H values of the Dict
     /// </summary>
     /// <param name="dict"></param>
     /// <returns></returns>
-    List<H> ReturnHList(Dictionary<KeyCode, H> dict)
+    private List<H> ReturnHList(Dictionary<KeyCode, H> dict)
     {
         List<H> res = new List<H>();
 
@@ -717,7 +689,7 @@ public class MouseListener : InputMain
     /// </summary>
     /// <param name="action"></param>
     /// <returns></returns>
-    int ReturnDictSelection(string action)
+    private int ReturnDictSelection(string action)
     {
         var res = -1;
         if (action == "Infrastructure")
@@ -735,7 +707,6 @@ public class MouseListener : InputMain
         else if (action == "Raw")
         {
             res = 3;
-            
         }
         else if (action == "Prod")
         {
@@ -771,17 +742,17 @@ public class MouseListener : InputMain
 
     /// <summary>
     /// Handles a Slot. This is where 1 would be HouseA, and 2 HouseB
-    /// 
-    /// This is handlign the click action 
+    ///
+    /// This is handlign the click action
     /// </summary>
     /// <param name="action"></param>
-    void HandleSlot(string action)
+    private void HandleSlot(string action)
     {
         var dict = BuildingPot.InputU.InputListDict[_dictSelection];
         InputBuilding.InputMode = Mode.Building;
         var key = ReturnKeyCode(action);
 
-        //means is click an empty slot 
+        //means is click an empty slot
         if (!dict.ContainsKey(key))
         {
             return;
@@ -789,7 +760,7 @@ public class MouseListener : InputMain
 
         var val = dict[key];
         BuildingPot.InputU.BuildingSwitch(val);
-        
+
         _buildingsMenu.Hide();
         _descriptionWindow.Hide();
 
@@ -797,11 +768,11 @@ public class MouseListener : InputMain
     }
 
     /// <summary>
-    /// With the Slot1 as 'action' will return wht keyCode is 
+    /// With the Slot1 as 'action' will return wht keyCode is
     /// </summary>
     /// <param name="action"></param>
     /// <returns></returns>
-    KeyCode ReturnKeyCode(string action)
+    private KeyCode ReturnKeyCode(string action)
     {
         if (action == "Slot1")
         {
@@ -848,10 +819,10 @@ public class MouseListener : InputMain
 
     /// <summary>
     /// This is to know which H is the one is clicked on slot
-    /// 
+    ///
     /// Knowing already wht category was touched is easy
-    /// 
-    /// 
+    ///
+    ///
     /// </summary>
     /// <param name="slot"></param>
     /// <returns></returns>
@@ -870,7 +841,7 @@ public class MouseListener : InputMain
 
             if (!dict.ContainsKey(code))
             {
-                //to avoid when Buildins category dont have the whole 10 alpha codes. which is majority 
+                //to avoid when Buildins category dont have the whole 10 alpha codes. which is majority
                 return H.None;
             }
 
@@ -879,14 +850,7 @@ public class MouseListener : InputMain
         return H.None;
     }
 
-
-
-
-
-#endregion
-
-
-
+    #endregion GUI. Aug 2015
 
     #region Person Selection Form
 
@@ -900,9 +864,7 @@ public class MouseListener : InputMain
         set { _bulletinWindow = value; }
     }
 
-
-
-#endregion
+    #endregion Person Selection Form
 
     private void CancelDemolishAction()
     {
@@ -913,7 +875,7 @@ public class MouseListener : InputMain
         }
     }
 
-    void DemolishAction()
+    private void DemolishAction()
     {
         //print("Selected name:" + b.name);
         if (BuildingPot.Control.Registro.SelectBuilding.Category == Ca.Way)
@@ -942,7 +904,7 @@ public class MouseListener : InputMain
                 return;
             }
 
-            var wasDemolished =b.Demolish();
+            var wasDemolished = b.Demolish();
             if (wasDemolished)
             {
                 OnDemolish(EventArgs.Empty);
@@ -958,11 +920,8 @@ public class MouseListener : InputMain
         //DestroyForm();
     }
 
+    private EventHandler<EventArgs> _demolished;
 
-
-
-
-    EventHandler<EventArgs> _demolished;
     public EventHandler<EventArgs> Demolished
     {
         get { return _demolished; }
@@ -982,8 +941,7 @@ public class MouseListener : InputMain
         }
     }
 
-
-    void OnDemolish(EventArgs e)
+    private void OnDemolish(EventArgs e)
     {
         if (Demolished != null)
         {
@@ -991,17 +949,10 @@ public class MouseListener : InputMain
         }
     }
 
-
-
-
-
-
-
-	// Update is called once per frame
+    // Update is called once per frame
     public void Update()
     {
-
-	}
+    }
 
     public void CreateNewForm(H type)
     {
@@ -1022,10 +973,6 @@ public class MouseListener : InputMain
         }
     }
 
-
-
-
-
     public static bool MouseOnWindowNow { get; set; }
 
     public bool IsAWindowShownNow()
@@ -1037,7 +984,7 @@ public class MouseListener : InputMain
 
         return _buildingsMenu.IsShownNow() || _descriptionWindow.IsShownNow() ||
             _personWindow.IsShownNow() || _buildingWindow.IsShownNow() || _addOrderWindow.IsShownNow() ||
-            BulletinWindow.IsShownNow() 
+            BulletinWindow.IsShownNow()
             || QuestWindow.IsShownNow() || _helpWindow.IsShownNow();
     }
 
@@ -1052,16 +999,10 @@ public class MouseListener : InputMain
             || QuestWindow.IsShownNow() || _helpWindow.IsShownNow() || MouseOnWindowNow;
     }
 
-
-
-
-
     internal void ClickOnAnInvItem(InvItem _invItem)
     {
         HidePersonBuildOrderNotiWindows();
         BulletinWindow.Show();
         BulletinWindow.ShowSpecs();
     }
-
-
 }

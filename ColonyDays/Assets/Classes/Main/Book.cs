@@ -9,7 +9,7 @@ public class Book : General
     //structures categories with the set of its structures
     private Dictionary<H, List<H>> _structuresDict = new Dictionary<H, List<H>>();
 
-    //the list of all menuGroups of buildings 
+    //the list of all menuGroups of buildings
     private List<H> _menuGroupsList = new List<H>();
 
     //the list of all structures
@@ -39,7 +39,7 @@ public class Book : General
     }
 
     /// <summary>
-    /// Will give u the stats of a Specific type of building 
+    /// Will give u the stats of a Specific type of building
     /// </summary>
     /// <param name="hTypeP"></param>
     /// <returns></returns>
@@ -57,7 +57,7 @@ public class Book : General
         return res;
     }
 
-    void LoadBuildDict()
+    private void LoadBuildDict()
     {
         //infr
         Build.Add(new BuildStat(H.Road, 100, 0.002f, 1f, 0, 0, maxPeople: 0));
@@ -72,7 +72,7 @@ public class Book : General
         Build.Add(new BuildStat(H.HeavyLoad, 1800, 10, 0, 0, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.LightHouse, 800, 80, 20, 0, 5, maxPeople: 3));
 
-        //houses 
+        //houses
         Build.Add(new BuildStat(H.Shack, 500, 3, 0, 0, 0, maxPeople: 5, capacity: .5f));
         Build.Add(new BuildStat(H.MediumShack, 600, 4, 1, 1, 0, maxPeople: 5, capacity: .6f));
         Build.Add(new BuildStat(H.LargeShack, 700, 5, 2, 1, 1, maxPeople: 6, capacity: .8f));
@@ -81,19 +81,19 @@ public class Book : General
         Build.Add(new BuildStat(H.WoodHouseB, 500, 30, 5, 0, 5, maxPeople: 5, capacity: .5f));
         Build.Add(new BuildStat(H.WoodHouseC, 800, 20, 2, 0, 2, maxPeople: 10, capacity: .6f));
         Build.Add(new BuildStat(H.BrickHouseA, 900, 10, 5, 50, 7, maxPeople: 7, capacity: 1));
-        Build.Add(new BuildStat(H.BrickHouseB, 1200, 12, 7, 150, 10, maxPeople: 7, capacity: 1.2f));//deluxe 
+        Build.Add(new BuildStat(H.BrickHouseB, 1200, 12, 7, 150, 10, maxPeople: 7, capacity: 1.2f));//deluxe
         Build.Add(new BuildStat(H.BrickHouseC, 1100, 10, 5, 100, 10, maxPeople: 7, capacity: 1));
 
         //farming
-        Build.Add(new BuildStat(H.AnimalFarmSmall, 400, 5, 5, 5, 5, maxPeople: 5,  capacity: 1));
+        Build.Add(new BuildStat(H.AnimalFarmSmall, 400, 5, 5, 5, 5, maxPeople: 5, capacity: 1));
         Build.Add(new BuildStat(H.AnimalFarmMed, 500, 7, 5, 7, 5, maxPeople: 7, capacity: 1));
         Build.Add(new BuildStat(H.AnimalFarmLarge, 600, 9, 5, 9, 5, maxPeople: 9, capacity: 2));
         Build.Add(new BuildStat(H.AnimalFarmXLarge, 1000, 11, 5, 11, 5, maxPeople: 12, capacity: 3));
 
-        Build.Add(new BuildStat(H.FieldFarmSmall, 100, .5f, 0, 0,  maxPeople: 2, capacity: .5f));
-        Build.Add(new BuildStat(H.FieldFarmMed, 200, .75f, 0, 0,  maxPeople: 4, capacity: 1));
-        Build.Add(new BuildStat(H.FieldFarmLarge, 300, .9f, 0, 0,  maxPeople: 6, capacity: 2));
-        Build.Add(new BuildStat(H.FieldFarmXLarge, 1000, 5, 0, 0,  maxPeople: 9, capacity: 3));
+        Build.Add(new BuildStat(H.FieldFarmSmall, 100, .5f, 0, 0, maxPeople: 2, capacity: .5f));
+        Build.Add(new BuildStat(H.FieldFarmMed, 200, .75f, 0, 0, maxPeople: 4, capacity: 1));
+        Build.Add(new BuildStat(H.FieldFarmLarge, 300, .9f, 0, 0, maxPeople: 6, capacity: 2));
+        Build.Add(new BuildStat(H.FieldFarmXLarge, 1000, 5, 0, 0, maxPeople: 9, capacity: 3));
 
         //Raw
         Build.Add(new BuildStat(H.Mortar, 1000, 15, 5, 15, 5, maxPeople: 5, capacity: 20));
@@ -107,7 +107,6 @@ public class Book : General
 
         Build.Add(new BuildStat(H.ShoreMine, 400, 15, 5, 25, 5, maxPeople: 5));
         Build.Add(new BuildStat(H.QuickLime, 1000, 15, 5, 15, 5, maxPeople: 5, capacity: 30));
-
 
         //Prod
         Build.Add(new BuildStat(H.Brick, 400, 15, 5, 25, 5, maxPeople: 5, capacity: 20));
@@ -171,7 +170,6 @@ public class Book : General
         Build.Add(new BuildStat(H.FlowerPot, 100, 0, 5, 0, 0, maxPeople: 0, capacity: 0f, colonyDollar: 100));
         Build.Add(new BuildStat(H.PradoLion, 100, 0, 30, 0, 0, maxPeople: 0, capacity: 0f, colonyDollar: 250));
 
-
         //Helper
         Build.Add(new BuildStat(H.BullDozer, 2600, 20, 100, 5, 5, maxPeople: 10));
     }
@@ -183,14 +181,14 @@ public class Book : General
         MapStructuresCatego();
     }
 
-    void MapStructuresCatego()
+    private void MapStructuresCatego()
     {
         var infrastructure = StInfr.GetValues(typeof(StInfr));
         var housing = StHous.GetValues(typeof(StHous));
-        var farming = StFarm.GetValues(typeof (StFarm));
+        var farming = StFarm.GetValues(typeof(StFarm));
         var raw = StRaw.GetValues(typeof(StRaw));
         var production = StProd.GetValues(typeof(StProd));
-        var industry = StInd.GetValues(typeof (StInd));
+        var industry = StInd.GetValues(typeof(StInd));
         var trade = StTrade.GetValues(typeof(StTrade));
         var govServ = StGov.GetValues(typeof(StGov));
         var other = StOther.GetValues(typeof(StOther));
@@ -198,12 +196,11 @@ public class Book : General
         var structCateg = StCat.GetValues(typeof(StCat));
         var dec = StDec.GetValues(typeof(StDec));
 
-
         MenuGroupsList = UList.ConvertToList(structCateg);
 
         List<List<H>> listedArrays = new List<List<H>>();
 
-        listedArrays.Add(UList. ConvertToList(infrastructure));
+        listedArrays.Add(UList.ConvertToList(infrastructure));
         listedArrays.Add(UList.ConvertToList(housing));
         listedArrays.Add(UList.ConvertToList(farming));
         listedArrays.Add(UList.ConvertToList(raw));
@@ -214,7 +211,6 @@ public class Book : General
         listedArrays.Add(UList.ConvertToList(other));
         listedArrays.Add(UList.ConvertToList(mil));
         listedArrays.Add(UList.ConvertToList(dec));
-
 
         for (int i = 0; i < MenuGroupsList.Count; i++)
         {
@@ -229,8 +225,6 @@ public class Book : General
             }
         }
     }
-
-
 }
 
 /// <summary>
@@ -239,13 +233,15 @@ public class Book : General
 public class BuildStat
 {
     private float _amountOfLabour;//needed to finish the building
+
     //All Costs
     private float _wood;
+
     private float _stone;
     private float _brick;
     private float _iron;
     private float _gold;
-    private float _dollar;//Money 
+    private float _dollar;//Money
 
     private float _nail;
     private float _furniture;
@@ -253,7 +249,6 @@ public class BuildStat
     private float _machinery;
     private float _floorTile;
     private float _roofTile;
-  
 
     //Cubic Meters of storage for a build
     private float _capacity;
@@ -263,11 +258,11 @@ public class BuildStat
 
     //Technical
     private H _hType;
+
     private string _root;
 
-
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="hType"></param>
     /// <param name="amountOfLabour">multiplied by 4 in constructor</param>
@@ -284,13 +279,13 @@ public class BuildStat
     {
         float multiplier = 300;
 
-        AmountOfLabour = amountOfLabour/2 ;
+        AmountOfLabour = amountOfLabour / 2;
         HType = hType;
         Root = global::Root.RetBuildingRoot(hType);
         Wood = wood * multiplier;
-        Stone = stone * multiplier/10;
+        Stone = stone * multiplier / 10;
         Brick = brick * multiplier;
-        Iron = iron * multiplier/10;
+        Iron = iron * multiplier / 10;
         Gold = gold * multiplier;
 
         Dollar = colonyDollar;
@@ -303,7 +298,7 @@ public class BuildStat
         Mortar = Brick / 200;
         RoofTile = Brick / 5;
         FloorTile = Brick / 6;
-        
+
         //set the diiffculty
         AmountOfLabour /= DiffDivider();
         Wood /= DiffDivider();
@@ -319,20 +314,18 @@ public class BuildStat
         FloorTile /= DiffDivider();
 
         UniqueBuildings();
-    }   
+    }
 
-    void UniqueBuildings()
+    private void UniqueBuildings()
     {
         if (_hType == H.Road || _hType.ToString().Contains("Bridge"))
         {
             Nail = 0;
             Furniture = 0;
         }
-
     }
 
-    
-    int DiffDivider()
+    private int DiffDivider()
     {
         //plus 1 because Insane Program.MyScreen1.Difficulty = 0
         return Program.MyScreen1.HoldDifficultyReal();
@@ -350,7 +343,7 @@ public class BuildStat
     }
 
     /// <summary>
-    /// So far not used. but if will use in future . Double check bridge for posible bugg 
+    /// So far not used. but if will use in future . Double check bridge for posible bugg
     /// </summary>
     public string Root
     {
@@ -448,18 +441,10 @@ public class BuildStat
         set { _roofTile = value; }
     }
 
-
-
-
-
-
-  
-
-
-
     private int _factor;
     private int _minAge;
     private int _maxAge;
+
     public BuildStat(H hType, int factor, int minAge, int maxAge)
     {
         HType = hType;
@@ -467,7 +452,6 @@ public class BuildStat
         _minAge = minAge;
         _maxAge = maxAge;
     }
-
 
     public int Factor
     {
@@ -487,8 +471,6 @@ public class BuildStat
         set { _maxAge = value; }
     }
 
-
-
     /// <summary>
     /// Multiplies only Wood and Stone
     /// </summary>
@@ -504,6 +486,4 @@ public class BuildStat
 
         return s;
     }
-
-
 }

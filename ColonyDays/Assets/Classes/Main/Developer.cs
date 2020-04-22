@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-/// <summary>
+﻿/// <summary>
 /// Sometimes developing mode is needed . to add new terrains for example.
 /// </summary>
-class Developer
+internal class Developer
 {
-    //if is dev true will be able to select terrain 
+    //if is dev true will be able to select terrain
     private static bool _isDev;
 
     public static bool IsDev
@@ -17,4 +12,3 @@ class Developer
         set { _isDev = value; }
     }
 }
-

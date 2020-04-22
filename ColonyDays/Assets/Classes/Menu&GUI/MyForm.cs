@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Linq;
+﻿using System.Collections;
 using UnityEngine;
 
 public class MyForm : General
 {
-    GameObject _canvas;
-    GameObject _panel;
-    GameObject _resources;
+    private GameObject _canvas;
+    private GameObject _panel;
+    private GameObject _resources;
 
     private GameObject _startPosIni;
 
@@ -75,7 +73,7 @@ public class MyForm : General
     }
 
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         StartCoroutine("UpdateEveryMinute");
         StartCoroutine("UpdateEvery2Sec");
@@ -83,15 +81,14 @@ public class MyForm : General
         _canvas = GetChildCalled(H.Canvas, gameObject);
         _resources = FindGameObjectInHierarchy("Resources", Canvas);
 
-
-        //if resource is null is another Form. The MainMenu Form 
+        //if resource is null is another Form. The MainMenu Form
         if (_resources != null)
         {
             _startPosIni = GetChildCalled(H.Start, Resources);
             //LoadMainInventory();
         }
 
-        //is the main gui 
+        //is the main gui
         if (transform.name.Contains("MainGUI"))
         {
             _showPathToSea = new ShowPathTo();
@@ -102,10 +99,11 @@ public class MyForm : General
     }
 
     #region GUI Hides Shows
-    static GameObject _autoSaveIcon;
-    static GameObject _warModeNoti;
 
-    void InitIconsAndNotis()
+    private static GameObject _autoSaveIcon;
+    private static GameObject _warModeNoti;
+
+    private void InitIconsAndNotis()
     {
         if (name.Contains("GUI"))
         {
@@ -159,7 +157,8 @@ public class MyForm : General
 
         _warModeNoti.SetActive(false);
     }
-    #endregion
+
+    #endregion GUI Hides Shows
 
     private IEnumerator UpdateEvery2Sec()
     {
@@ -185,9 +184,10 @@ public class MyForm : General
         }
     }
 
-    bool isShownNow = true;
+    private bool isShownNow = true;
+
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         //if (_showAInventory != null)
         //{
@@ -198,12 +198,11 @@ public class MyForm : General
             _showPathToSea.Update();
         }
 
-        if (_miniHelper!= null && Input.GetKeyUp(KeyCode.F1))
+        if (_miniHelper != null && Input.GetKeyUp(KeyCode.F1))
         {
             ManagerReport.AddInput("KeyCode.F1");
             Program.MouseListener.HelpWindow.Show("");
         }
-
 
         if (Input.GetKeyUp(KeyCode.F9))
         {
@@ -212,9 +211,8 @@ public class MyForm : General
             else
                 ShowCanvas();
 
-           isShownNow = !isShownNow;
+            isShownNow = !isShownNow;
         }
-
     }
 
     private void ShowCanvas()
@@ -254,7 +252,7 @@ public class MyForm : General
     }
 
     /// <summary>
-    /// Hides the element 
+    /// Hides the element
     /// </summary>
     public virtual void Hide()
     {
@@ -307,7 +305,5 @@ public class MyForm : General
         _miniHelper.Show();
     }
 
-    #endregion
+    #endregion Set thru events on Editor
 }
-
-
