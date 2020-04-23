@@ -196,7 +196,13 @@ public class AddOrderWindow : GUIElement
 
         if (_orderType == "Export")
         {
-            dockBuild.Dock1.Export(new Order(_prodSelect, "Ship", _amt));
+            var order = new Order(_prodSelect, dockBuild.MyId, _amt);
+            order.DestinyBuildInfo = "Ship";
+
+            dockBuild.Dock1.Export(order);
+
+            //Order heavyOrder = new Order(_prodSelect, "", dockBuild.MyId);
+            dockBuild.AddToClosestHeavyLoadAsOrder(order, H.None);
 
             if (_prodSelect == P.Bean && locAmt == 300)
             {
@@ -215,7 +221,8 @@ public class AddOrderWindow : GUIElement
         }
         else if (_orderType == "Import")
         {
-            Order order = new Order(_prodSelect, "", "Ship");
+            Order order = new Order(_prodSelect, "", dockBuild.MyId);
+            order.SourceBuildInfo = "Ship";
             order.Amount = _amt;
             dockBuild.Dock1.Import(order);
 

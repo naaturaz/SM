@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -21,10 +20,11 @@ public class Person : Hoverable
     private float _height;//cm
     private Nutrition _nutrition;
 
-    private bool _isMajor; //says if a person is major age 
+    private bool _isMajor; //says if a person is major age
 
     //Birthday Related
-    private int _lastBDYear; //the year I had the last birthday. So i dont have more thn 1 BD a Year 
+    private int _lastBDYear; //the year I had the last birthday. So i dont have more thn 1 BD a Year
+
     private int _birthMonth; //the birthday of the person
     private int _unHappyYears; //if is over X amount will emmigrate
 
@@ -35,15 +35,18 @@ public class Person : Hoverable
 
     //only for females
     private bool _isPregnant;
-    private int _lastNewBornYear = -10; //the last pregnancy she had, when was the birth year 
-    //once pregnant will tell u the due date 
+
+    private int _lastNewBornYear = -10; //the last pregnancy she had, when was the birth year
+
+    //once pregnant will tell u the due date
     private int _dueMonth;
+
     private int _dueYear;
 
     private string _nutritionLevel = "Normal";
     private string _thirst = "Quenched";
 
-    ///Variables to allow the class be independet 
+    ///Variables to allow the class be independet
     //how often will check if obj has eaten
     private float checkFoodElapsed = 7.5f;
 
@@ -51,6 +54,7 @@ public class Person : Hoverable
 
     //Places
     private Structure _home;
+
     private Structure _work;
     private Structure _foodSource;
     private Structure _religion;
@@ -60,30 +64,32 @@ public class Person : Hoverable
 
     //Techincal
     private List<Vector3> _personBounds = new List<Vector3>();
-    private float _personDim = 0.0925f; //used to naviagte btw buildigns 
+
+    private float _personDim = 0.0925f; //used to naviagte btw buildigns
 
     //Person Own Objects and fields
     private Brain _brain;
 
-    MilitarBrain _militarBrain;
-    EnemyBrain _enemyBrain;
+    private MilitarBrain _militarBrain;
+    private EnemyBrain _enemyBrain;
 
     private Body _body;
     private string spouse = "";
     private bool isWidow; //if is wont get married again
 
-    private bool _isStudent; //true if found a school as being a student bz is in student age 
-    private int _yearsOfSchool; //true if found a school as being a student bz is in student age 
+    private bool _isStudent; //true if found a school as being a student bz is in student age
+    private int _yearsOfSchool; //true if found a school as being a student bz is in student age
 
     //mother and father of a person
-    private string _familyId = ""; //the id of a Family will be used to ease the process of moving 
+    private string _familyId = ""; //the id of a Family will be used to ease the process of moving
+
     private string _father;
     private string _mother;
 
     private string _isBooked = ""; //says if the person is Booked in a building to be his new home
-    //private string _homerFoodSrc; //where the Homer will grab the food  
+    //private string _homerFoodSrc; //where the Homer will grab the food
 
-    private bool _isLoading; //use to know if person is being loaded from file 
+    private bool _isLoading; //use to know if person is being loaded from file
 
     private PersonBank _personBank;
     private RandomUV _randomUV;
@@ -92,7 +98,7 @@ public class Person : Hoverable
     private Structure _myDummyProf;
 
     /// <summary>
-    /// eahc person has a dummy use to routing. here for GC 
+    /// eahc person has a dummy use to routing. here for GC
     /// </summary>
     public Structure MyDummy
     {
@@ -102,7 +108,8 @@ public class Person : Hoverable
 
     #region Reload Inventory
 
-    bool _reloadInv = true;
+    private bool _reloadInv = true;
+
     internal bool IsToReloadInventory()
     {
         return _reloadInv;
@@ -113,21 +120,22 @@ public class Person : Hoverable
         _reloadInv = false;
     }
 
-    void ShouldReloadInventory()
+    private void ShouldReloadInventory()
     {
         _reloadInv = true;
     }
 
-    #endregion
+    #endregion Reload Inventory
 
     /// <summary>
-    /// For profesions routing 
+    /// For profesions routing
     /// </summary>
     public Structure MyDummyProf
     {
         get { return _myDummyProf; }
         set { _myDummyProf = value; }
     }
+
     public MilitarBrain MilitarBrain
     {
         get { return _militarBrain; }
@@ -209,13 +217,13 @@ public class Person : Hoverable
     }
 
     /// <summary>
-    /// If person was ramdon assig a position and if was set close 
-    /// to a building like Storage or Dock . That building will be set here 
-    /// 
+    /// If person was ramdon assig a position and if was set close
+    /// to a building like Storage or Dock . That building will be set here
+    ///
     /// Not implement SaveLoad
-    /// 
+    ///
     /// Created to solve CryBridgeRoute.cs 125
-    /// 
+    ///
     /// The real solution is to find the closest building in MoveToNEwHome
     /// </summary>
     public string StartingBuild
@@ -249,7 +257,6 @@ public class Person : Hoverable
         get { return _age; }
         set { _age = value; }
     }
-
 
     public Brain Brain
     {
@@ -317,8 +324,6 @@ public class Person : Hoverable
         set { _nutritionLevel = value; }
     }
 
-
-
     public string Spouse
     {
         get { return spouse; }
@@ -330,9 +335,6 @@ public class Person : Hoverable
         get { return isWidow; }
         set { isWidow = value; }
     }
-
-
-
 
     public bool IsMajor
     {
@@ -396,9 +398,6 @@ public class Person : Hoverable
         set { _isLoading = value; }
     }
 
-
-
-
     /// <summary>
     /// Intended to be used For the first load of people spawned
     /// </summary>
@@ -407,7 +406,6 @@ public class Person : Hoverable
         Person obj = null;
 
         obj = (Person)Resources.Load(PersonPrefabRoot(PersonController.GenderLast), typeof(Person));
-
 
         //better like 17/29. since if they are less than 16 and have not parent is not addressed
         int iniAge = General.GiveRandom(17, 29); //5, 29
@@ -419,7 +417,7 @@ public class Person : Hoverable
 
         obj = (Person)Instantiate(obj, iniPos, Quaternion.identity);
 
-        //will assign ramdom pos if has none 
+        //will assign ramdom pos if has none
         if (iniPos == new Vector3())
         {
             iniPos = obj.AssignRandomIniPosition();
@@ -430,34 +428,30 @@ public class Person : Hoverable
         obj.Gender = obj.OtherGender();
         obj.InitObj(iniAge);
 
-        //todo change 
+        //todo change
         //obj.Geometry.GetComponent<Renderer>().sharedMaterial = ReturnRandoPersonMaterialRoot();
 
         //this to when Person dont have where to leave and then they find a place the teletranport effect
-        //wont be seeable bz there are spawneed hidden. 
+        //wont be seeable bz there are spawneed hidden.
         obj.Body.HideNoQuestion();
 
         return obj;
     }
 
-
-
-    static Material ReturnRandoPersonMaterialRoot()
+    private static Material ReturnRandoPersonMaterialRoot()
     {
         var random = UMath.GiveRandom(1, 6);
         return Resources.Load("Prefab/Mats/Person/Guy1UV " + random) as Material;//random
     }
 
     /// <summary>
-    /// Intended to be used while loading persons from file 
+    /// Intended to be used while loading persons from file
     /// </summary>
     public static Person CreatePersonFromFile(PersonFile pF)
     {
         Person obj = null;
 
-
         obj = (Person)Resources.Load(PersonPrefabRoot(pF._gender, true), typeof(Person));
-
 
         SMe me = new SMe();
         obj = (Person)Instantiate(obj, me.IniTerr.MathCenter, Quaternion.identity);
@@ -470,8 +464,7 @@ public class Person : Hoverable
         return obj;
     }
 
-
-    static string PersonPrefabRoot(H gender, bool load = false)
+    private static string PersonPrefabRoot(H gender, bool load = false)
     {
         if (load)
         {
@@ -495,8 +488,6 @@ public class Person : Hoverable
         }
     }
 
-
-
     #region Enemy
 
     /// <summary>
@@ -514,29 +505,18 @@ public class Person : Hoverable
         obj.InitObj(iniAge);
 
         //this to when Person dont have where to leave and then they find a place the teletranport effect
-        //wont be seeable bz there are spawneed hidden. 
+        //wont be seeable bz there are spawneed hidden.
         //obj.Body.HideNoQuestion();
 
         return obj;
     }
 
-
-
-
-    #endregion 
-
-
-
-
-
-
-
-
-
+    #endregion Enemy
 
     /// <summary>
+
     /// Returns the gennder other than the last used , keeps that saved on PersonController.GenderLast
-    /// </summary>	
+    /// </summary>
     public H OtherGender()
     {
         if (PersonController.GenderLast == H.Male)
@@ -560,7 +540,6 @@ public class Person : Hoverable
 
         obj = (Person)Resources.Load(PersonPrefabRoot(PersonController.GenderLast), typeof(Person));
 
-
         obj = (Person)Instantiate(obj, new Vector3(iniPos.x, 0.06f, iniPos.z),
             Quaternion.identity);
         obj.Gender = obj.OtherGender();
@@ -570,11 +549,9 @@ public class Person : Hoverable
         obj.InitObj(0);//15    5
                        //obj.Geometry.GetComponent<Renderer>().sharedMaterial = ReturnRandoPersonMaterialRoot();
 
-
         //this to when Person dont have where to leave and then they find a place the teletranport effect
-        //wont be seeable bz there are spawneed hidden. 
+        //wont be seeable bz there are spawneed hidden.
         obj.Body.HideNoQuestion();
-
 
         return obj;
     }
@@ -592,7 +569,7 @@ public class Person : Hoverable
         _isMajor = pF.IsMajor;
 
         //Birthday
-        _lastBDYear = pF.LastBDYear; //the year I had the last birthday. So i dont have more thn 1 BD a Year 
+        _lastBDYear = pF.LastBDYear; //the year I had the last birthday. So i dont have more thn 1 BD a Year
         _birthMonth = pF.BirthMonth; //the birthday of the person
         UnHappyYears = pF.UnHappyYears;
 
@@ -602,8 +579,8 @@ public class Person : Hoverable
         Gender = pF._gender;
 
         IsPregnant = pF._isPregnant;
-        _lastNewBornYear = pF.LastNewBornYear; //the last pregnancy she had, when was the birth year 
-        //once pregnant will tell u the due date 
+        _lastNewBornYear = pF.LastNewBornYear; //the last pregnancy she had, when was the birth year
+        //once pregnant will tell u the due date
         _dueMonth = pF.DueMonth;
         _dueYear = pF.DueYear;
 
@@ -648,7 +625,7 @@ public class Person : Hoverable
 
         WorkInputOrders = pF.WorkInputOrders;
 
-        //bz loading ends here 
+        //bz loading ends here
         IsLoading = false;
     }
 
@@ -700,13 +677,12 @@ public class Person : Hoverable
         Program.gameScene.GameController1.NotificationsManager1.Notify("BabyBorn", Name);
     }
 
-    void InitEvents()
+    private void InitEvents()
     {
         Program.InputMain.ChangeSpeed += _body.ChangedSpeedHandler;
         Program.gameScene.ChangeSpeed += _body.ChangedSpeedHandler;
         GameController.War += WarHandler;
     }
-
 
     /// <summary>
     /// redoes brain and restartCOntroller for person
@@ -727,7 +703,7 @@ public class Person : Hoverable
     }
 
     /// <summary>
-    /// Will define a ramdom Birth Month if person doesnt have one yet 
+    /// Will define a ramdom Birth Month if person doesnt have one yet
     /// </summary>
     private void DefineBirthMonth()
     {
@@ -752,14 +728,14 @@ public class Person : Hoverable
         transform.name = MyId + "...|" + Age + "|" + Gender;
     }
 
-
     /// <summary>
-    /// Static so they respect not repeating names 
+    /// Static so they respect not repeating names
     /// </summary>
-    static Naming namingMale = new Naming(H.Male);
-    static Naming namingFeMale = new Naming(H.Female);
+    private static Naming namingMale = new Naming(H.Male);
 
-    string GiveMeMyName()
+    private static Naming namingFeMale = new Naming(H.Female);
+
+    private string GiveMeMyName()
     {
         if (Gender == H.Male)
         {
@@ -767,7 +743,6 @@ public class Person : Hoverable
         }
         return namingFeMale.NewName();
     }
-
 
     /// <summary>
     /// Used by crystals and other to get an unique ID
@@ -786,9 +761,9 @@ public class Person : Hoverable
         return GiveRandomID() + "." + numb;
     }
 
-
     private int secCount;
     private Vector3 originalPoint;
+
     /// <summary>
     /// Returns Random position from origin. If fell inside a building will find another spot
     /// until is in a clear zone
@@ -842,7 +817,7 @@ public class Person : Hoverable
     /// Will return house position if not null. otherwise person current pos
     /// </summary>
     /// <returns></returns>
-    Vector3 ReturnIniPos()
+    private Vector3 ReturnIniPos()
     {
         if (Home != null)
         {
@@ -851,7 +826,7 @@ public class Person : Hoverable
         return ReturnFirstDockOrFirstStorage();
     }
 
-    Vector3 ReturnFirstDockOrFirstStorage()
+    private Vector3 ReturnFirstDockOrFirstStorage()
     {
         var build = BuildingPot.Control.Registro.ReturnFirstThatContains("Dock");
 
@@ -867,10 +842,10 @@ public class Person : Hoverable
 
             return build.SpawnPoint.transform.position;
         }
-        //all houses shoud contain House 
+        //all houses shoud contain House
         //if bug null ref
         //is bz the buildigns houses are all shacks
-        //or still on dev 
+        //or still on dev
         build = BuildingPot.Control.Registro.ReturnFirstThatContains("House");
         if (build != null)
         {
@@ -879,19 +854,20 @@ public class Person : Hoverable
             return build.SpawnPoint.transform.position;
         }
         //just here bz small town still not spwaning
-        //todo remove after small town is implemented 
+        //todo remove after small town is implemented
         return m.IniTerr.MathCenter;
     }
 
-    bool _redoOrder;
+    private bool _redoOrder;
+
     internal void OrderRedoWhenGetsHome()
     {
-        _redoOrder = true;    
+        _redoOrder = true;
     }
 
     public void CheckIfRedo()
     {
-        if(_redoOrder)
+        if (_redoOrder)
         {
             _redoOrder = false;
 
@@ -904,7 +880,7 @@ public class Person : Hoverable
     }
 
     /// <summary>
-    /// Will say if origin is on terrain 
+    /// Will say if origin is on terrain
     /// </summary>
     /// <param name="origin"></param>
     /// <returns></returns>
@@ -922,12 +898,13 @@ public class Person : Hoverable
         return false;
     }
 
-    #endregion
+    #endregion Initializing Obj
 
     #region Person Nutrition
 
-    MDate _lastWater;
-    void CheckOnNutritionAndThirst()
+    private MDate _lastWater;
+
+    private void CheckOnNutritionAndThirst()
     {
         KillStarve();
 
@@ -944,7 +921,7 @@ public class Person : Hoverable
     /// <summary>
     /// Of _nutrition level is so low will kill person
     /// </summary>
-    void KillStarve()
+    private void KillStarve()
     {
         if (_nutritionLevel == "Starve")
         {
@@ -965,18 +942,18 @@ public class Person : Hoverable
         }
     }
 
-    #endregion
+    #endregion Person Nutrition
 
     #region Age Related Methods
 
     private int month = 0;
 
     /// <summary>
-    /// Things related to time 
-    /// 
-    /// Will check if due date is now and if Birthdays is reached 
+    /// Things related to time
+    ///
+    /// Will check if due date is now and if Birthdays is reached
     /// </summary>
-    void TimeChecks()
+    private void TimeChecks()
     {
         Birthday();
         CheckIfReadyForGiveBirth();
@@ -985,7 +962,7 @@ public class Person : Hoverable
     /// <summary>
     /// Called when a person has its birthday
     /// </summary>
-    void Birthday()
+    private void Birthday()
     {
         if (!IsMyBD())
         {
@@ -995,7 +972,7 @@ public class Person : Hoverable
         GetPaid();
         AgeAction();
 
-        //Dev while debug spawned a person 
+        //Dev while debug spawned a person
         if (Home == null)
         {
             return;
@@ -1014,7 +991,7 @@ public class Person : Hoverable
 
         if (ProfessionProp != null)
         {
-            //so it relecfts new age 
+            //so it relecfts new age
             ProfessionProp.ProdXShift = 0;
         }
     }
@@ -1059,7 +1036,7 @@ public class Person : Hoverable
     /// <summary>
     /// The actions of of age in a BD
     /// </summary>
-    void AgeAction()
+    private void AgeAction()
     {
         _age++;
         Body.GrowScaleByYears();
@@ -1070,7 +1047,7 @@ public class Person : Hoverable
 #endif
     }
 
-    void CheckHappiness()
+    private void CheckHappiness()
     {
         if (Happinnes < 2f)//.5
         {
@@ -1082,10 +1059,10 @@ public class Person : Hoverable
     }
 
     /// <summary>
-    /// Will tell u if is your year will remember the last time u had a BD 
+    /// Will tell u if is your year will remember the last time u had a BD
     /// </summary>
     /// <returns></returns>
-    bool IsMyBD()
+    private bool IsMyBD()
     {
         var currYear = Program.gameScene.GameTimePeople.Year;
 
@@ -1098,23 +1075,24 @@ public class Person : Hoverable
     }
 
     public PersonReport PersonReport = new PersonReport();
+
     /// <summary>
-    /// Will contain all the functions to execute for a person when reach the Age Majority 
-    /// 
+    /// Will contain all the functions to execute for a person when reach the Age Majority
+    ///
     /// Call once a birthday if is old enough until, _isMajor = true
     /// </summary>
-    void ReachAgeMajority()
+    private void ReachAgeMajority()
     {
         //the family ID of the place he is gonna be booked
         //will be empty if is Virgin Family
-        var newFamilyID = "";//will be returned below 
+        var newFamilyID = "";//will be returned below
         //wnna keep it  here bz will be lost once past PlaceWhereIWillLiveToLive()
         //dont really needed bz the new one is stored in 'newFamilyID' the old one is needed
-        //to be removed from it 
+        //to be removed from it
         var myOldFamID = FamilyId;
 
         var place = PlaceWhereIWillLiveToLive(ref newFamilyID);
-        //will only will mark as majority age reached if he could fit a house 
+        //will only will mark as majority age reached if he could fit a house
         if (place != null)
         {
             FamilyId = myOldFamID;
@@ -1134,27 +1112,26 @@ public class Person : Hoverable
         }
     }
 
-    void PeopleDictMatters(Building newPlace)
+    private void PeopleDictMatters(Building newPlace)
     {
-        //dont need to remove if new place is same as current home 
+        //dont need to remove if new place is same as current home
         if (Home != null && newPlace == Home)
         {
             return;
         }
 
-        //removing person from Home PeopleDict here 
+        //removing person from Home PeopleDict here
         Home.PeopleDict.Remove(MyId);
         BuildingPot.Control.Registro.ResaveOnRegistro(Home.MyId);
-
     }
 
     /// <summary>
-    /// Will retrun true if a house was find that can fit a Adult 
+    /// Will retrun true if a house was find that can fit a Adult
     /// </summary>
     /// <returns></returns>
     private Building PlaceWhereIWillLiveToLive(ref string familyID)
     {
-        //means that anotehr person is ins the process of finding a new home 
+        //means that anotehr person is ins the process of finding a new home
         if (!string.IsNullOrEmpty(PersonPot.Control.IsAPersonHomeLessNow))
         {
             return null;
@@ -1180,7 +1157,7 @@ public class Person : Hoverable
     /// <summary>
     /// bz when new adult needs to get out of old home .
     /// </summary>
-    void RemoveMeFromOldHome()
+    private void RemoveMeFromOldHome()
     {
         if (Home != null)
         {
@@ -1201,17 +1178,17 @@ public class Person : Hoverable
                 throw new Exception("family null:" + MyId);
             }
 
-            Brain.MoveToNewHome.OldHomeKey = "";//so he doesnt pull that family as its old family when creating Shack or moving to new home 
+            Brain.MoveToNewHome.OldHomeKey = "";//so he doesnt pull that family as its old family when creating Shack or moving to new home
             BuildingPot.Control.AddToHousesWithSpace(Home.MyId);
 
-            //so families are resaved 
+            //so families are resaved
             BuildingPot.Control.Registro.ResaveOnRegistro(Home.MyId);
         }
     }
 
     /// <summary>
     /// Last resource when havent found the family of a person
-    /// willlook trhu all buildings and see if can find this person in any family and if so will remove it from there 
+    /// willlook trhu all buildings and see if can find this person in any family and if so will remove it from there
     /// </summary>
     public Family FindMeInAllFamiliesAndRemoveMeFromMine()
     {
@@ -1251,20 +1228,20 @@ public class Person : Hoverable
         }
     }
 
-    string WhatToAddInTheNoti(string notiType)
+    private string WhatToAddInTheNoti(string notiType)
     {
         if (notiType.Contains("DieReplacement"))
         {
-            return Name + " " + Languages.ReturnString("The." + Gender).ToLower() 
+            return Name + " " + Languages.ReturnString("The." + Gender).ToLower()
                 + " " + ProfessionProp.ProfessionDescriptionToShow();
         }
         return Name;
     }
 
     /// <summary>
-    /// Will order to the brain to disapper 
+    /// Will order to the brain to disapper
     /// </summary>
-    void ActionOfDisappear()
+    private void ActionOfDisappear()
     {
         Brain.Partido = true;
 
@@ -1273,7 +1250,7 @@ public class Person : Hoverable
         {
             Person sp = Family.FindPerson(Spouse);
 
-            //to address when a person die in btw this one, assign true to Brain and still waiting to be process 
+            //to address when a person die in btw this one, assign true to Brain and still waiting to be process
             if (sp == null)
             {
                 Debug.Log("Need to die now but cant find family " + MyId + " Spouse:" + Spouse);
@@ -1288,7 +1265,7 @@ public class Person : Hoverable
     /// <summary>
     /// Only for a person that has Blacklisted a house and dont have where to go back to
     /// </summary>
-    void ForcedDeath()
+    private void ForcedDeath()
     {
         Debug.Log("ForcedDeath: " + MyId + " Spouse:" + Spouse);
 
@@ -1296,7 +1273,7 @@ public class Person : Hoverable
         Brain.Die();
     }
 
-    #endregion
+    #endregion Age Related Methods
 
     public void Marriage(string spouseMyId)
     {
@@ -1317,7 +1294,7 @@ public class Person : Hoverable
         if (spouse != "") { return false; }
         if (isWidow) { return false; }
         if (other.Gender == Gender) { return false; }
-        if (Mathf.Abs(other.Age - _age) > ModController.AllowedAgeGapOnMarry() ) { return false; }
+        if (Mathf.Abs(other.Age - _age) > ModController.AllowedAgeGapOnMarry()) { return false; }
 
         if (Age < 16 || other.Age < 16)
         {
@@ -1327,7 +1304,7 @@ public class Person : Hoverable
         return true;
     }
 
-    Structure CreateDummy()
+    private Structure CreateDummy()
     {
         var dummyIdle = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPointUnTimed, new Vector3(), H.Dummy,
             container: Program.PersonObjectContainer.transform, name: "DummyUntimed . " + MyId);
@@ -1335,9 +1312,9 @@ public class Person : Hoverable
         return dummyIdle;
     }
 
-    void CreateTheTwoDummies()
+    private void CreateTheTwoDummies()
     {
-        //mean was created already 
+        //mean was created already
         if (MyDummy != null)
         {
             return;
@@ -1348,7 +1325,7 @@ public class Person : Hoverable
     }
 
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         if (_nutrition == null)
         {
@@ -1392,9 +1369,10 @@ public class Person : Hoverable
         Inventory = new Inventory(MyId, HType);
     }
 
-    float RestartTimes(float a, float b) { return Random.Range(a, b); }
+    private float RestartTimes(float a, float b)
+    { return Random.Range(a, b); }
 
-    void CheckQuest()
+    private void CheckQuest()
     {
         if (PersonPot.Control.All.Count > 49)
         {
@@ -1409,7 +1387,7 @@ public class Person : Hoverable
             yield return new WaitForSeconds(60); // wait
             if (IsMajor && string.IsNullOrEmpty(Spouse) && PersonPot.Control.IsPeopleCheckFull())
             {
-                //in a attempt to see if there is a house out there with a single person 
+                //in a attempt to see if there is a house out there with a single person
                 PersonPot.Control.RestartControllerForPerson(MyId);
             }
         }
@@ -1432,11 +1410,12 @@ public class Person : Hoverable
     }
 
     private bool _wasPersonParented;
+
     /// <summary>
-    /// bz if done before its all weird 
-    /// This is useful for when it loads person and when newBorn 
+    /// bz if done before its all weird
+    /// This is useful for when it loads person and when newBorn
     /// </summary>
-    void ParentPersonToHome()
+    private void ParentPersonToHome()
     {
         if (_wasPersonParented || Time.time < 5f || Home == null || transform.parent != null)
         {
@@ -1495,6 +1474,7 @@ public class Person : Hoverable
     }
 
     private float random1020Time;
+
     private IEnumerator RandomUpdate1020()
     {
         while (true)
@@ -1513,11 +1493,11 @@ public class Person : Hoverable
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         //_levelOfDetail.A45msUpdate();
 
-        //was on update so new PeopleFind their new home 
+        //was on update so new PeopleFind their new home
         if (_home == null && !PersonPot.Control.Locked && HType == H.Person)
         {
             _brain.CheckConditions();
@@ -1531,7 +1511,6 @@ public class Person : Hoverable
         //defenders
         if (HType == H.Defender)
         {
-
         }
 
         //enemy
@@ -1544,7 +1523,6 @@ public class Person : Hoverable
             _enemyBrain.Update();
         }
 
-
         _body.Update();
         //UpdateInfo();
         if (_profession != null)
@@ -1552,8 +1530,8 @@ public class Person : Hoverable
             _profession.Update();
         }
 
-        //Majority used to be called in here 
-        if (UPerson.IsMajor(_age) && !_isMajor && string.IsNullOrEmpty(IsBooked) //&& Brain.GoMindState 
+        //Majority used to be called in here
+        if (UPerson.IsMajor(_age) && !_isMajor && string.IsNullOrEmpty(IsBooked) //&& Brain.GoMindState
           && Brain.IAmHomeNow())
         {
             ReachAgeMajority();
@@ -1561,7 +1539,8 @@ public class Person : Hoverable
         }
     }
 
-    bool wasNotiAge;
+    private bool wasNotiAge;
+
     /// <summary>
     /// Notiftyng for the purpose thaty the personc an work
     /// </summary>
@@ -1635,32 +1614,30 @@ public class Person : Hoverable
         ProfessionProp.Birthday();
     }
 
-
-
     private void PayProduct(float amt, P item)
     {
         var trans = Program.gameScene.ExportImport1.CalculateTransaction(item, amt);
         _personBank.WithDraw(trans);
 
-        //if is in positive balance will pay to the Fisco. To the user 
+        //if is in positive balance will pay to the Fisco. To the user
         if (_personBank.CheckingAcct > 0)
         {
             Program.gameScene.GameController1.Dollars += trans;
         }
     }
 
-
-    #endregion
+    #endregion Bank Money
 
     #region Profession
 
     private Profession _profession = new Profession();
 
-    Job _savedJob = Job.None;//everytime a job wht to be found. wht was the last job it will be here
+    private Job _savedJob = Job.None;//everytime a job wht to be found. wht was the last job it will be here
+
     //can be used to set Prev Job
     private Job _prevJob = Job.None;
 
-    Order _prevOrder;//previous order, this so far is only of use of Wheel Barrowers
+    private Order _prevOrder;//previous order, this so far is only of use of Wheel Barrowers
 
     public Profession ProfessionProp
     {
@@ -1706,12 +1683,12 @@ public class Person : Hoverable
 
     /// <summary>
     /// Will find the type of job based on type of building we are currently working on only if jType=None
-    /// 
-    /// if jType has a value diff than None will return tht 
+    ///
+    /// if jType has a value diff than None will return tht
     /// </summary>
     /// <param name="jType"></param>
     /// <returns></returns>
-    Job DefineJobType(Job jType)
+    private Job DefineJobType(Job jType)
     {
         if (jType == Job.None)
         {
@@ -1721,7 +1698,7 @@ public class Person : Hoverable
     }
 
     /// <summary>
-    /// This is called when person finds a new job site 
+    /// This is called when person finds a new job site
     /// </summary>
     /// <param name="jType"></param>
     public void CreateProfession(Job jType = Job.None, PersonFile pF = null)
@@ -1819,7 +1796,7 @@ public class Person : Hoverable
         return Job.Insider;
     }
 
-    #endregion
+    #endregion Profession
 
     internal void Kill()
     {
@@ -1830,6 +1807,7 @@ public class Person : Hoverable
     }
 
     private MDate _lastTimeHome;
+
     public void HomeActivities()
     {
         if (Home == null || Home.Inventory == null
@@ -1837,8 +1815,8 @@ public class Person : Hoverable
             )
         { return; }
 
-        //needs to go back to work to drop it there 
-        if (IsCarryingWorkInputOrder() && !WasFired)//if was fired need to deal with that 
+        //needs to go back to work to drop it there
+        if (IsCarryingWorkInputOrder() && !WasFired)//if was fired need to deal with that
         {
             Brain.ReadyToWork(true);
             return;
@@ -1867,7 +1845,7 @@ public class Person : Hoverable
         CheckOnNutritionAndThirst();
     }
 
-    float AdditionalFoodNeeds()
+    private float AdditionalFoodNeeds()
     {
         if (NutritionLevel == "Normal")
         {
@@ -1876,10 +1854,10 @@ public class Person : Hoverable
         return 6;
     }
 
-    void EatDrink()
+    private void EatDrink()
     {
         P item = ItemToGetAtHome();
-        var kgNeeded = ReturnAmountToEat(item) + AdditionalFoodNeeds();//in case is below normal it needs to eat more 
+        var kgNeeded = ReturnAmountToEat(item) + AdditionalFoodNeeds();//in case is below normal it needs to eat more
 
         if (item == P.Water)
         {
@@ -1898,7 +1876,7 @@ public class Person : Hoverable
     /// <summary>
     /// </summary>
     /// <returns></returns>
-    float ReturnAmountToEat(P prod)
+    private float ReturnAmountToEat(P prod)
     {
         if (_nutrition == null)
         {
@@ -1908,7 +1886,7 @@ public class Person : Hoverable
         return Math.Abs((_nutrition.HowManyKGINeedOfThisToSupplyMyNeed(prod)));
     }
 
-    void ChangeHappinesBy(double by)
+    private void ChangeHappinesBy(double by)
     {
         Happinnes += by;
 
@@ -1971,7 +1949,7 @@ public class Person : Hoverable
         ExchangeInvetoryItem(FoodSource, this, item, amt);
     }
 
-    P ItemToGetAtFoodSource(Structure theFoodSrc)
+    private P ItemToGetAtFoodSource(Structure theFoodSrc)
     {
         if (_thirst == "Quenched")
         {
@@ -1980,7 +1958,7 @@ public class Person : Hoverable
         return P.Water;
     }
 
-    P ItemToGetAtHome()
+    private P ItemToGetAtHome()
     {
         if (_thirst != "Quenched" && Home.Inventory.Contains(P.Water))
         {
@@ -1991,7 +1969,7 @@ public class Person : Hoverable
 
     public void ExchangeInvetoryItem(General takenFrom, General givenTo, P product, float amt)
     {
-        //to address when food Src is destroyed when person on its way 
+        //to address when food Src is destroyed when person on its way
         if (takenFrom == null)
         { return; }
 
@@ -2015,7 +1993,7 @@ public class Person : Hoverable
 
     public void DropAllInvetoryItems(General takenFrom, General givenTo)
     {
-        //to address when food Src is destroyed when person on its way 
+        //to address when food Src is destroyed when person on its way
         if (takenFrom == null)
         { return; }
 
@@ -2036,7 +2014,7 @@ public class Person : Hoverable
         ShouldReloadInventory();
     }
 
-    void OneWayInvExchange(General takenFrom, General givenTo, P product, float amt)
+    private void OneWayInvExchange(General takenFrom, General givenTo, P product, float amt)
     {
         if (product.ToString().Contains("Random"))
         {
@@ -2050,7 +2028,7 @@ public class Person : Hoverable
     }
 
     /// <summary>
-    /// If the product is random has to actually decomposed and give that to him 
+    /// If the product is random has to actually decomposed and give that to him
     /// </summary>
     /// <param name="takenFrom"></param>
     /// <param name="givenTo"></param>
@@ -2068,9 +2046,9 @@ public class Person : Hoverable
     }
 
     /// <summary>
-    /// Will be used for person drop food at home 
+    /// Will be used for person drop food at home
     /// </summary>
-    void TransferInvetoryCat(General from, General to, PCat pCat)
+    private void TransferInvetoryCat(General from, General to, PCat pCat)
     {
         var items = from.Inventory.ReturnAllItemsCat(pCat);
 
@@ -2080,7 +2058,7 @@ public class Person : Hoverable
         }
 
         var b = (Building)to;
-        if (b.Instruction==H.WillBeDestroy)
+        if (b.Instruction == H.WillBeDestroy)
         {
             from.Inventory.Delete();
             return;
@@ -2108,7 +2086,7 @@ public class Person : Hoverable
             return false;
         }
 
-        //if State is not None means is on the middle of moving out to new place 
+        //if State is not None means is on the middle of moving out to new place
         return myFamily.DoesFamilyHasMoreThan1Member() && myFamily.State == H.None;
     }
 
@@ -2127,8 +2105,8 @@ public class Person : Hoverable
 
     /// <summary>
     /// How much phisically a person can carry. Like goods .lIke Rice
-    /// 
-    /// Age + Genre values 
+    ///
+    /// Age + Genre values
     /// </summary>
     /// <param name="item"></param>
     public float HowMuchICanCarry(float maxNeeded = 100f)
@@ -2157,7 +2135,7 @@ public class Person : Hoverable
         return res;
     }
 
-    float ProfessionMultiplierCarryWeight()
+    private float ProfessionMultiplierCarryWeight()
     {
         var mul = 1;
         if (_body.CanSpawnWheelBarrow())
@@ -2171,7 +2149,7 @@ public class Person : Hoverable
         return mul;
     }
 
-    int ReturnGenreVal()
+    private int ReturnGenreVal()
     {
         if (Gender == H.Male)
         {
@@ -2180,7 +2158,7 @@ public class Person : Hoverable
         return 10;
     }
 
-    int AgeFactor()
+    private int AgeFactor()
     {
         if (Age > 10 && Age <= 17)
         {
@@ -2204,10 +2182,10 @@ public class Person : Hoverable
     #region Reproduction Having Kids & Stuff
 
     /// <summary>
-    /// The decition of a having a new kid 
+    /// The decition of a having a new kid
     /// </summary>
     /// <returns></returns>
-    bool CanIHaveANewKid()
+    private bool CanIHaveANewKid()
     {
         if (PersonPot.Control.All.Count > GameController.CapMaxPerson)
         {
@@ -2237,11 +2215,11 @@ public class Person : Hoverable
         bool happy = AmIHappy();
         bool bodyReady = Mathf.Abs(_lastNewBornYear - Program.gameScene.GameTimePeople.Year) > 2;
 
-        //have to check Age>14 in case lost both parent really young and was made Family.HouseHeadPerson() on House 
+        //have to check Age>14 in case lost both parent really young and was made Family.HouseHeadPerson() on House
         return nutrida && hasSpace && happy && bodyReady && Age > 14 && Age < 45 && IsSpouseAlive();
     }
 
-    bool IsSpouseAlive()
+    private bool IsSpouseAlive()
     {
         var spouseFound = PersonPot.Control.All.Find(a => a.MyId == Spouse);
         return spouseFound != null;
@@ -2270,10 +2248,9 @@ public class Person : Hoverable
         IsPregnant = true;
         CalculateDueDate();
         EmoticonManager.Show("Heart", Home.transform.position);
-
     }
 
-    void CheckIfReadyForGiveBirth()
+    private void CheckIfReadyForGiveBirth()
     {
         //bz is is moving should noy give birth
         if (IsPregnant && IsMyDueDateOrPast() && string.IsNullOrEmpty(IsBooked) && Brain.IAmHomeNow())
@@ -2285,7 +2262,7 @@ public class Person : Hoverable
 
     public string DebugBornInfo;
 
-    void GiveBirth()
+    private void GiveBirth()
     {
         PersonPot.Control.HaveNewKid(Home.SpawnPoint.transform.position);
         Person kid = PersonPot.Control.All[PersonPot.Control.All.Count - 1];
@@ -2313,14 +2290,13 @@ public class Person : Hoverable
             spouseLo.Happinnes = 5;
         }
         PersonPot.Control.RestartControllerForPerson(MyId);
-
     }
 
     /// <summary>
-    /// Takes care of the actions needed to move the newBorn to Home 
+    /// Takes care of the actions needed to move the newBorn to Home
     /// </summary>
     /// <param name="newBorn"></param>
-    void MoveNewBornToHome(Person newBorn)
+    private void MoveNewBornToHome(Person newBorn)
     {
         var family = Home.FindMyFamilyChecksFamID(this);
         family.AddKids(newBorn.MyId);
@@ -2332,10 +2308,10 @@ public class Person : Hoverable
     }
 
     /// <summary>
-    /// Will return true if is due date 
+    /// Will return true if is due date
     /// </summary>
     /// <returns></returns>
-    bool IsMyDueDateOrPast()
+    private bool IsMyDueDateOrPast()
     {
         if (_dueMonth <= Program.gameScene.GameTimePeople.Month1
             && _dueYear <= Program.gameScene.GameTimePeople.Year)
@@ -2343,7 +2319,7 @@ public class Person : Hoverable
             return true;
         }
         if (_dueYear < Program.gameScene.GameTimePeople.Year)
-        //so in case it missed bz moving to newer home took forever will deliver as soon get to new Place 
+        //so in case it missed bz moving to newer home took forever will deliver as soon get to new Place
         {
             return true;
         }
@@ -2352,8 +2328,8 @@ public class Person : Hoverable
     }
 
     /// <summary>
-    /// Will calcultae the due date of a woman 
-    /// 
+    /// Will calcultae the due date of a woman
+    ///
     /// Will set _dueMonth and _dueYear
     /// </summary>
     private void CalculateDueDate()
@@ -2380,12 +2356,12 @@ public class Person : Hoverable
         return NutritionLevel == "Normal";
     }
 
-    #endregion
+    #endregion Reproduction Having Kids & Stuff
 
     /// <summary>
-    /// Every BD will ask if wnt to emmigrate 
+    /// Every BD will ask if wnt to emmigrate
     /// </summary>
-    void CheckIfEmmigrate()
+    private void CheckIfEmmigrate()
     {
         if (_unHappyYears > 2 && !Brain.Partido
             && IsMajor && string.IsNullOrEmpty(IsBooked))
@@ -2394,12 +2370,12 @@ public class Person : Hoverable
         }
     }
 
-    void Emmigrate()
+    private void Emmigrate()
     {
         //EmmigrateWithFamily();
         ActionOfDisappear();
         print(MyId + " emmigrated");
-        // The peploe had emmigrated they will talk about your port wherever they are 
+        // The peploe had emmigrated they will talk about your port wherever they are
         PersonPot.Control.EmigrateController1.AddEmigrate(this);
 
         Program.gameScene.GameController1.NotificationsManager1.Notify("Emigrate");
@@ -2433,18 +2409,12 @@ public class Person : Hoverable
         }
     }
 
-    #region OutOfScreen
 
-
-
-
-
-
-    #endregion
 
     #region LOD
 
     private LevelOfDetail _levelOfDetail;
+
     public LevelOfDetail LevelOfDetail1
     {
         get { return _levelOfDetail; }
@@ -2455,8 +2425,7 @@ public class Person : Hoverable
         _levelOfDetail = new LevelOfDetail(this);
     }
 
-
-    #endregion
+    #endregion LOD
 
     #region Bad Ass
 
@@ -2465,8 +2434,8 @@ public class Person : Hoverable
         return _light != null;
     }
 
+    private float _oldFOV;
 
-    float _oldFOV;
     internal void SelectPerson()
     {
         CreateProjector();
@@ -2494,7 +2463,6 @@ public class Person : Hoverable
         //InputRTS.IsFollowingPersonNow = false;
         //CamControl.CAMRTS.GetComponent<Camera>().fieldOfView = _oldFOV;
 
-
         //for militar brain
         if (Brain == null)
         {
@@ -2516,11 +2484,10 @@ public class Person : Hoverable
         }
     }
 
-
-
     private General _projector;
     private General _light;
     private General _reachArea;
+
     /// <summary>
     /// this is the projector that hover when creating a nw building, or the current selected building
     /// </summary>
@@ -2543,11 +2510,10 @@ public class Person : Hoverable
             _reachArea = Create(Root.reachAreaFilled, transform.position, container: transform);
             // *2 bz is from where the person is at so 'Brain.Maxdistance' is a  Radius
             _reachArea.transform.localScale = new Vector3(2, 0.1f, 2);
-
         }
     }
 
-    void DestroyProjector()
+    private void DestroyProjector()
     {
         if (_light != null)
         {
@@ -2561,11 +2527,13 @@ public class Person : Hoverable
             _reachArea = null;
         }
     }
-    #endregion
+
+    #endregion Bad Ass
 
     #region Events
 
     private Camera cam;
+
     internal void CheckMouseClicked()
     {
         return;
@@ -2575,14 +2543,13 @@ public class Person : Hoverable
             return;
         }
 
-        //bz _body.CurrentPosition is on the bottom of person 
+        //bz _body.CurrentPosition is on the bottom of person
         var posCorrectedY = new Vector3(_body.CurrentPosition.x, _body.CurrentPosition.y + 0.1f, _body.CurrentPosition.z);
         var scrnPos = cam.WorldToViewportPoint(posCorrectedY);
         var ms = cam.ScreenToViewportPoint(Input.mousePosition);
 
         var posCorrectedY2 = new Vector3(_body.CurrentPosition.x, _body.CurrentPosition.y + 0.35f, _body.CurrentPosition.z);
         var scrnPos2 = cam.WorldToViewportPoint(posCorrectedY2);
-
 
         var dist = Vector2.Distance(scrnPos, ms);
         var dist2 = Vector2.Distance(scrnPos2, ms);
@@ -2592,7 +2559,8 @@ public class Person : Hoverable
             Debug.Log(MyId + " was this close to click:" + dist);
         }
     }
-    #endregion
+
+    #endregion Events
 
     /// <summary>
     /// When a person was moving out to a new Building as they reach their majority
@@ -2612,7 +2580,7 @@ public class Person : Hoverable
 
         var homeIsGoingBackTo = Brain.GetBuildingFromKey(Brain.MoveToNewHome.OldHomeKey);
 
-        //a person tht immigrate or spawned at initial game 
+        //a person tht immigrate or spawned at initial game
         if (homeIsGoingBackTo == null)
         {
             ForcedDeath();
@@ -2637,9 +2605,10 @@ public class Person : Hoverable
     #region Showing Path
 
     /// <summary>
-    /// They all need a function calling its Update() 
+    /// They all need a function calling its Update()
     /// </summary>
     private ShowPathTo _showPathToHome;
+
     private ShowPathTo _showPathToWork;
     private ShowPathTo _showPathToFood;
     private ShowPathTo _showPathToReligion;
@@ -2671,7 +2640,7 @@ public class Person : Hoverable
         }
     }
 
-    void InitShowPath(string which)
+    private void InitShowPath(string which)
     {
         if (_showPathToHome == null && which == "Home" && Home != null)
         {
@@ -2694,7 +2663,6 @@ public class Person : Hoverable
             _showPathToChill = new ShowPathTo(this, "Relax");
         }
     }
-
 
     private void HidePaths()
     {
@@ -2719,7 +2687,6 @@ public class Person : Hoverable
             _showPathToChill.Hide();
         }
     }
-
 
     public void DestroyPaths()
     {
@@ -2769,7 +2736,7 @@ public class Person : Hoverable
         }
     }
 
-    #endregion
+    #endregion Showing Path
 
     internal void NewWeight(float kgChanged)
     {
@@ -2798,7 +2765,7 @@ public class Person : Hoverable
         }
     }
 
-    float WeightBase()
+    private float WeightBase()
     {
         if (Gender == H.Male)
         {
@@ -2807,7 +2774,7 @@ public class Person : Hoverable
         return 53.1f;
     }
 
-    float WeightFactor()
+    private float WeightFactor()
     {
         if (Gender == H.Male)
         {
@@ -2819,7 +2786,7 @@ public class Person : Hoverable
     //D. R. Miller Formula (1983)
     //56.2 kg + 1.41 kg per 2.54cm over 152.4cm       (man)
     //53.1 kg + 1.36 kg per 2.54cm over 152.4cm       (woman)
-    float NormalWeight()
+    private float NormalWeight()
     {
         var heightDiff = _height - 152.4f;
         var times = heightDiff / 2.54f;
@@ -2827,14 +2794,14 @@ public class Person : Hoverable
         return WeightBase() + (WeightFactor() * times);
     }
 
-    float LowWeight()
+    private float LowWeight()
     {
         var normal = NormalWeight();
         var a15 = NormalWeight() * 0.15f;
         return NormalWeight() - a15;
     }
 
-    float StarvingWeight()
+    private float StarvingWeight()
     {
         var normal = NormalWeight();
         var a40 = NormalWeight() * 0.40f;
@@ -2842,7 +2809,7 @@ public class Person : Hoverable
     }
 
     /// <summary>
-    /// in game 0.5f is grown male, so that is 170cm in real life 
+    /// in game 0.5f is grown male, so that is 170cm in real life
     /// </summary>
     internal void InitHeightAndWeight()
     {
@@ -2857,6 +2824,7 @@ public class Person : Hoverable
 
     //todo saveload
     public bool WasFired { get; set; }
+
     internal bool IsAroundHouseSpawnPoint()
     {
         if (Home == null)
@@ -2879,13 +2847,14 @@ public class Person : Hoverable
         base.OnMouseExit();
     }
 
-    #endregion
+    #endregion Hover All Objects. All objects that have a collider will be hoverable
 
     #region Emoticon
 
-    bool _toShowEmoticon;
-    string _instructionEmoticon;
-    float _rEmoTime = 1;
+    private bool _toShowEmoticon;
+    private string _instructionEmoticon;
+    private float _rEmoTime = 1;
+
     private IEnumerator EmoticonUpdate()
     {
         while (true)
@@ -2897,7 +2866,7 @@ public class Person : Hoverable
                 _rEmoTime = UMath.GiveRandom(0, 4f);
                 _toShowEmoticon = false;
 
-                //so they show less icons now only 25% will do so 
+                //so they show less icons now only 25% will do so
                 if (UMath.GiveRandom(0, 4) == 0)
                 {
                     EmoticonManager.Show(_instructionEmoticon, transform.position);
@@ -2918,20 +2887,22 @@ public class Person : Hoverable
         _instructionEmoticon = "Demolish";
     }
 
-    float lastIcon; 
+    private float lastIcon;
+
     //3dIcon ShowEmotion Hire Fire Crown ThumbsUp
     internal void ShowEmotion(string p)
     {
-        if(Time.time > lastIcon + 5)
+        if (Time.time > lastIcon + 5)
         {
             EmoticonManager.Show(p, transform.position);
             lastIcon = Time.time;
         }
     }
 
-    #endregion
+    #endregion Emoticon
 
     #region Militar
+
     internal bool IsMilitarNow()
     {
         return _militarBrain != null;
@@ -2942,13 +2913,12 @@ public class Person : Hoverable
         Debug.Log(Name + " war");
     }
 
-
-
-    #endregion
+    #endregion Militar
 
     #region Work Input Orders
 
-    List<Order> _workInputOrders;
+    private List<Order> _workInputOrders;
+
     public List<Order> WorkInputOrders
     {
         get
@@ -2964,14 +2934,14 @@ public class Person : Hoverable
 
     /// <summary>
     /// This orders are input for the work place
-    /// 
+    ///
     /// Once they are back in Storage from work will pick item and store it at home
-    /// then once going back to work will take it back 
+    /// then once going back to work will take it back
     /// </summary>
     /// <param name="prodNeed"></param>
     internal void AddWorkInputOrder(Order prodNeed)
     {
-        if (_workInputOrders==null)
+        if (_workInputOrders == null)
         {
             _workInputOrders = new List<Order>();
         }
@@ -2984,11 +2954,11 @@ public class Person : Hoverable
     }
 
     /// <summary>
-    /// If an order from the same place and same prod was placed before dont need to place it again 
+    /// If an order from the same place and same prod was placed before dont need to place it again
     /// </summary>
     /// <param name="ord"></param>
     /// <returns></returns>
-    bool DoIContainThatInputOrderAlready(Order ord)
+    private bool DoIContainThatInputOrderAlready(Order ord)
     {
         var found = _workInputOrders.FindIndex(a => a.DestinyBuild == ord.DestinyBuild && a.Product == ord.Product);
         return found != -1;
@@ -3040,7 +3010,7 @@ public class Person : Hoverable
         if (!Inventory.IsEmpty() && DoesHasInputOrders())
         {
             var ord = ReturnFirstOrder();
-            if (ord!=null)
+            if (ord != null)
             {
                 return Inventory.IsItemOnInv(ord.Product);
             }
@@ -3048,7 +3018,7 @@ public class Person : Hoverable
         return false;
     }
 
-    #endregion
+    #endregion Work Input Orders
 }
 
 public class PersonReport

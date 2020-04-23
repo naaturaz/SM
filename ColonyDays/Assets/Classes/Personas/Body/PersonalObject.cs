@@ -5,8 +5,9 @@ using UnityEngine;
 public class PersonalObject
 {
     private FollowObject _current;
+
     //as I spawn them Will add it here so can be reuse it for GC pupose
-    private Dictionary<string, FollowObject> _allPersonalObjects = new Dictionary<string, FollowObject>(); 
+    private Dictionary<string, FollowObject> _allPersonalObjects = new Dictionary<string, FollowObject>();
 
     private string _currentRoot;
     private string _currentAni;
@@ -17,13 +18,15 @@ public class PersonalObject
     private GameObject _rightHand;
     private GameObject _stomach;
     private GameObject _bip001Pelvis;
+
     //different roots for personc carrying stuff
-    Dictionary<P, string> _prodCarry = new Dictionary<P, string>() { };
+    private Dictionary<P, string> _prodCarry = new Dictionary<P, string>() { };
 
     private Renderer renderer;
 
-
-    public PersonalObject() { }
+    public PersonalObject()
+    {
+    }
 
     /// <summary>
     /// NEw Obj
@@ -43,19 +46,19 @@ public class PersonalObject
     public PersonalObject(Person person, string currAni, bool hide)
     {
         _person = person;
-        Init(); 
+        Init();
         AddressNewAni(currAni, hide);
     }
 
     private void Init()
     {
         LoadCarrying();
-        _rightHand = General.FindGameObjectInHierarchy("RightHand", _person.gameObject);//Bip001 R Hand    RightHand 
+        _rightHand = General.FindGameObjectInHierarchy("RightHand", _person.gameObject);//Bip001 R Hand    RightHand
         _stomach = General.FindGameObjectInHierarchy("Stomach", _person.gameObject);//Bip001 Spine    Stomach
         _bip001Pelvis = General.FindGameObjectInHierarchy("Culo", _person.gameObject);//Bip001 Spine    Stomach
     }
 
-    void LoadCarrying()
+    private void LoadCarrying()
     {
         _prodCarry.Add(P.Coal, Root.coal);
         _prodCarry.Add(P.Crate, Root.crate);
@@ -67,13 +70,11 @@ public class PersonalObject
         _prodCarry.Add(P.Water, Root.tonel);
     }
 
-
     public void AddressNewAni(string newAni, bool hide)
     {
         //return;
 
-        Hide();//will hide current 
-
+        Hide();//will hide current
 
         _currentAni = newAni;
         SetNewPersonalObject();
@@ -82,7 +83,7 @@ public class PersonalObject
 
     private void AddressNewCurrentRoot(bool hide)
     {
-        //means was used already once . could have this object we are looking for spawnerd 
+        //means was used already once . could have this object we are looking for spawnerd
         if (_current != null)
         {
             _current = null;
@@ -103,10 +104,10 @@ public class PersonalObject
         {
             return;
         }
-        
+
         //ResetPersonPosition();
 
-        _current = FollowObject.Create(_currentRoot, _currentPoint, //Program.PersonObjectContainer.transform, 
+        _current = FollowObject.Create(_currentRoot, _currentPoint, //Program.PersonObjectContainer.transform,
             _currentPoint.transform,
             _person.MyId);
 
@@ -120,7 +121,7 @@ public class PersonalObject
     }
 
     /// <summary>
-    /// Bz this objects are not childs of _person . bz Transform child weird stuff 
+    /// Bz this objects are not childs of _person . bz Transform child weird stuff
     /// </summary>
     public void DestroyAllGameObjs()
     {
@@ -136,7 +137,8 @@ public class PersonalObject
     private GameObject _toFollow;
     private Quaternion _saveQuaternion;
     private Vector3 _savePosition;
-    void ResetPersonPosition()
+
+    private void ResetPersonPosition()
     {
         _saveQuaternion = _person.transform.rotation;
         _savePosition = _person.transform.position;
@@ -145,8 +147,7 @@ public class PersonalObject
         _person.transform.position = new Vector3();
     }
 
-
-    void CheckIfHide(bool hide)
+    private void CheckIfHide(bool hide)
     {
         if (hide)
         {
@@ -157,7 +158,7 @@ public class PersonalObject
     /// <summary>
     /// Sets personal object and where will spanw _currentPoint
     /// </summary>
-    void SetNewPersonalObject()
+    private void SetNewPersonalObject()
     {
         _currentPoint = _rightHand;
 
@@ -181,7 +182,7 @@ public class PersonalObject
         {
             _currentPoint = _stomach;
             SetRootForCarrying();
-        } 
+        }
         //else if (_currentAni == "isBucket")
         //{
         //    _currentRoot = Root.bucket;
@@ -200,7 +201,7 @@ public class PersonalObject
         else _currentRoot = "";
     }
 
-    string DefineCurrentWheelBarrowRoot()
+    private string DefineCurrentWheelBarrowRoot()
     {
         if (!_person.Inventory.IsEmpty())
         {
@@ -213,17 +214,16 @@ public class PersonalObject
         return Root.wheelBarrow;
     }
 
-    List<string> _heavy = new List<string>()
+    private List<string> _heavy = new List<string>()
     {
         Root.wagon,
-        Root.cart, 
+        Root.cart,
         Root.conestogo
     };
 
+    private int _myCart = -1;
 
-
-    int _myCart = -1;
-    string DefineCurrentCartRoot()
+    private string DefineCurrentCartRoot()
     {
         string res = "";
         if (_myCart == -1)
@@ -240,7 +240,7 @@ public class PersonalObject
         return res;
     }
 
-    string WithBoxesOrBarrels()
+    private string WithBoxesOrBarrels()
     {
         if (_person.Inventory.IsCarryingLiquid())
         {
@@ -250,9 +250,9 @@ public class PersonalObject
     }
 
     /// <summary>
-    /// Only use for when people is carrying something 
+    /// Only use for when people is carrying something
     /// </summary>
-    void SetRootForCarrying()
+    private void SetRootForCarrying()
     {
         P prod = P.None;
         //find the prod is carrying in person inv
@@ -264,9 +264,9 @@ public class PersonalObject
         if (_prodCarry.ContainsKey(prod))
         {
             //find the root, set it
-            _currentRoot = _prodCarry[prod];     
+            _currentRoot = _prodCarry[prod];
         }
-        //has not val in _prodCarry 
+        //has not val in _prodCarry
         //then will assign crate
         else
         {
@@ -285,12 +285,12 @@ public class PersonalObject
             }
         }
 
-        if (_current != null 
+        if (_current != null
             //&&  _current.Renderer1 != null
             )
         {
             SetScaleOfCurrent();
-            //so its shown at first close to the person 
+            //so its shown at first close to the person
             _current.UpdatePosition();
             _current.gameObject.SetActive(true);
 
@@ -315,19 +315,10 @@ public class PersonalObject
         ScaleGameObject(dif * -0.07f);
     }
 
-    float ReturnScalerMultiplierBasedOnAni()
-    {
-        //if (_currentRoot == Root.crate || _currentRoot == Root.tonel)
-        //    return -0.10001f;
-
-        return -0.1f;
-    }
-
-    void ScaleGameObject(float toAdd)
+    private void ScaleGameObject(float toAdd)
     {
         var localScale = _current.gameObject.transform.localScale;
 
-        //var addScale = localScale * toAdd;
         var final = localScale + new Vector3(toAdd, toAdd, toAdd);
 
         _current.gameObject.transform.localScale = final;

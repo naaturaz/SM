@@ -1,20 +1,20 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 /*
- * This class is used by DryDock building 
+ * This class is used by DryDock building
  * and supplier building
- * 
+ *
  * They bigger diff as on now is the diff amount of products each
  * one can add to they inventory . This is restricted on the AddExport Window
  * for DryDock and Supplier
- * 
- * 
- * 
+ *
+ *
+ *
  */
 
-public class Dock 
+public class Dock
 {
     //the building we are in
     private Building _building;
@@ -26,7 +26,7 @@ public class Dock
     private GameObject _spotsContainer;
     private GameObject _entryGO;
     private List<GameObject> _allSpots = new List<GameObject>();
-    private List<GameObject> _allLookPoints= new List<GameObject>();
+    private List<GameObject> _allLookPoints = new List<GameObject>();
 
     private List<string> _busySpots = new List<string>();
     private string _buildKey;
@@ -40,7 +40,7 @@ public class Dock
         BuildKey = build.MyId;
         _building = build;
         InitSpots();
-        
+
         _seaRouter = new SeaRouter(_entry, build);
     }
 
@@ -61,7 +61,6 @@ public class Dock
         set { _buildKey = value; }
     }
 
-
     private void InitSpots()
     {
         _allSpots.Clear();
@@ -80,7 +79,7 @@ public class Dock
                 _entryGO = allChild[i];
                 _entry = allChild[i].transform.position;
             }
-            else if (nameGO.Length==3)
+            else if (nameGO.Length == 3)
             {
                 _allSpots.Add(allChild[i]);
             }
@@ -93,7 +92,7 @@ public class Dock
 
     public bool CanIReachRoute()
     {
-        UpdateEntry();   
+        UpdateEntry();
         return _seaRouter.CanRoute(_entry);
     }
 
@@ -106,7 +105,7 @@ public class Dock
     {
         InitSpots();
 
-        if (_seaRouter==null)
+        if (_seaRouter == null)
         {
             _seaRouter = new SeaRouter(_entry, _building);
         }
@@ -117,11 +116,10 @@ public class Dock
 
     public void Update()
     {
-
     }
 
     /// <summary>
-    /// ACtion from the user tht need an 'item' to be import 
+    /// ACtion from the user tht need an 'item' to be import
     /// </summary>
     /// <param name="item"></param>
     public void Import(Order order)
@@ -130,7 +128,7 @@ public class Dock
     }
 
     /// <summary>
-    /// ACtion from the User when needs Export and order 
+    /// ACtion from the User when needs Export and order
     /// </summary>
     /// <param name="order"></param>
     public void Export(Order order)
@@ -139,31 +137,31 @@ public class Dock
         exp = order;
         var wasAdded = _building.Dispatch1.AddToExpImpOrders(exp);
 
-        //to avoid more than 10 orders 
+        //to avoid more than 10 orders
         if (!wasAdded)
         {
             return;
         }
 
-        //so Dockers starts looking for this in the Storage Buildings 
+        //so Dockers starts looking for this in the Storage Buildings
         Order local = new Order();
         local = order;
         _building.Dispatch1.AddToOrdersToDock(local);
     }
 
-    public void AddToBusySpots( string whoIs,string nameSpot)
+    public void AddToBusySpots(string whoIs, string nameSpot)
     {
-        _busySpots.Add(whoIs+"."+nameSpot);
+        _busySpots.Add(whoIs + "." + nameSpot);
         BuildingPot.Control.Registro.ResaveOnRegistro(_building.MyId);
     }
 
-    void ReInit()
+    private void ReInit()
     {
         if (_building == null)
         {
             _building = Brain.GetBuildingFromKey(BuildKey);
             InitSpots();
-        } 
+        }
     }
 
     public void RemoveFromBusySpots(string whoIs)
@@ -179,7 +177,6 @@ public class Dock
     public bool ItHasAtLeastAFreeSpot()
     {
         ReInit();
-
 
         if (_allSpots.Count <= _busySpots.Count)
         {

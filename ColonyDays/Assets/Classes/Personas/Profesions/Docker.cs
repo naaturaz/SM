@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Docker : Profession
 {
-    Structure _source;
+    private Structure _source;
 
     public Docker(Person person, PersonFile pF)
     {
@@ -14,13 +14,13 @@ public class Docker : Profession
         else LoadingFromFile(person, pF);
     }
 
-    void CreatingNew(Person person)
+    private void CreatingNew(Person person)
     {
         _person = person;
         Init();
     }
 
-    void LoadingFromFile(Person person, PersonFile pF)
+    private void LoadingFromFile(Person person, PersonFile pF)
     {
         _wasLoaded = true;
 
@@ -36,14 +36,14 @@ public class Docker : Profession
         InitRoute();
     }
 
-    void Init()
+    private void Init()
     {
         if (_wasLoaded)
         {
             return;
         }
 
-        //so its not using the same order over and over again in case the Dispatch is finding nothing 
+        //so its not using the same order over and over again in case the Dispatch is finding nothing
         CleanOldVars();
 
         //Debug.Log(_person.MyId+" Init WheelB");
@@ -53,10 +53,9 @@ public class Docker : Profession
 
         PickUpOrder();
 
-        ////means no Orders avail 
+        ////means no Orders avail
         //if (_destinyBuild == null)
         //{
-
         //    _takeABreakNow = true;
         //    return;
         //}
@@ -66,14 +65,14 @@ public class Docker : Profession
 
     private void CleanOldVars()
     {
-        _sourceBuild = null;//from where taking the load 
-        _destinyBuild = null;//where taking load 
+        _sourceBuild = null;//from where taking the load
+        _destinyBuild = null;//where taking load
         Order1 = null;
     }
 
     private void PickUpOrder()
     {
-        if (_person.Work == null || !_person.Work.IsNaval())//bz takes a cycle to person get its new job 
+        if (_person.Work == null || !_person.Work.IsNaval())//bz takes a cycle to person get its new job
         {
             return;
         }
@@ -89,7 +88,7 @@ public class Docker : Profession
         SetSourceAndDestinyBuild();
     }
 
-    void SetSourceAndDestinyBuild()
+    private void SetSourceAndDestinyBuild()
     {
         //if(!_import && !_export)
         //Execute();
@@ -101,7 +100,7 @@ public class Docker : Profession
         SourceBuildKey = Order1.SourceBuild;
     }
 
-    void InitRoute()
+    private void InitRoute()
     {
         _source = GiveMeSourceForThisProd();
 
@@ -109,7 +108,7 @@ public class Docker : Profession
         Router1 = new CryRouteManager(_person.Work, _source, _person, HPers.InWork);
     }
 
-    Structure GiveMeSourceForThisProd()
+    private Structure GiveMeSourceForThisProd()
     {
         if (_order == null)
         {
@@ -124,7 +123,7 @@ public class Docker : Profession
         }
 
         var source = Brain.GetStructureFromKey(sourceSt);
-        //if not will default for the person FoodSource 
+        //if not will default for the person FoodSource
         if (source == null)
         {
             source = _person.FoodSource;
@@ -149,7 +148,7 @@ public class Docker : Profession
         DockerStates();
     }
 
-    void CheckIfCanPickUoNewOrder()
+    private void CheckIfCanPickUoNewOrder()
     {
         if (Order1 == null || Order1.IsCompleted)
         {
@@ -157,8 +156,7 @@ public class Docker : Profession
         }
     }
 
-
-    void DockerStates()
+    private void DockerStates()
     {
         //at dock at first
         if (_person.Body.Location == HPers.Work && _person.Body.GoingTo != HPers.DockerSupply)
@@ -189,7 +187,7 @@ public class Docker : Profession
         //back at dock
         else if (_person.Body.Location == HPers.DockerBackToDock && _person.Body.GoingTo != HPers.FoodSource)
         {
-            DropAllMyGoods(_person.Work);//so drops exports if any 
+            DropAllMyGoods(_person.Work);//so drops exports if any
             //_person.Body.WalkRoutine(Router1.TheRoute, HPers.FoodSource);
 
             //_person.Body.UpdatePersonalForWheelBa();
@@ -219,24 +217,24 @@ public class Docker : Profession
         }
     }
 
-    bool _export;
-    bool _import;
-    void Execute()
-    {
-        _export = _order != null && _order.SourceBuild != "Ship";
+    private bool _export;
+    private bool _import;
 
-        _import = _order != null && _order.SourceBuild == "Ship";
+    private void Execute()
+    {
+        _export = _order != null && _order.SourceBuildInfo != "Ship";
+        _import = _order != null && _order.SourceBuildInfo == "Ship";
     }
 
-    void HandleInventoriesAndOrder()
+    private void HandleInventoriesAndOrder()
     {
         _sourceBuild = GetStructureSrcAndDestinyExpImp();
         if (_sourceBuild == null)
         {
             return;
         }
-        
-        //need to pull left from Dispatch bz Order1 is passed by Value not Ref 
+
+        //need to pull left from Dispatch bz Order1 is passed by Value not Ref
         var left = WhatIsLeft();
         var amt = Order1.ApproveThisAmt(left);
 
@@ -250,7 +248,7 @@ public class Docker : Profession
             _person.Work.Dispatch1.AddToOrderAmtProcessed(Order1, amtTaken);
             //Debug.Log(_person.MyId + " Docker got from:" + Order1.SourceBuild + " : " + Order1.Product + ".amt:" + amt);
         }
-        else if(_import)
+        else if (_import)
         {
             _person.Work.Dispatch1.AddToOrderAmtProcessed(Order1, amt);
         }
@@ -259,8 +257,7 @@ public class Docker : Profession
         _person.Body.UpdatePersonalForWheelBa();
     }
 
-
-    float WhatIsLeft()
+    private float WhatIsLeft()
     {
         if (_import)
         {
@@ -270,10 +267,10 @@ public class Docker : Profession
         return _person.Work.Dispatch1.LeftOnThisOrder(Order1);
     }
 
+    private MDate _lastAct;
+    private string _act;
 
-    MDate _lastAct;
-    string _act;
-    bool NewAct(string act)
+    private bool NewAct(string act)
     {
         if (_lastAct != null && Program.gameScene.GameTime1.ElapsedDateInDaysToDate(_lastAct) < 15)
         {
@@ -284,16 +281,15 @@ public class Docker : Profession
         return true;
     }
 
-
-
     private bool _takeABreakNow;
     private float _breakDuration = 10f;
     private float startIdleTime;
+
     /// <summary>
-    /// Used so a person is asking for bridges anchors takes a break and let brdige anchors complete then can 
+    /// Used so a person is asking for bridges anchors takes a break and let brdige anchors complete then can
     /// work on it
     /// </summary>
-    void TakeABreak()
+    private void TakeABreak()
     {
         if (startIdleTime == 0)
         { startIdleTime = Time.time; }
@@ -306,9 +302,7 @@ public class Docker : Profession
         }
     }
 
-
-
-    Structure GetStructureSrcAndDestinyExpImp()
+    private Structure GetStructureSrcAndDestinyExpImp()
     {
         if (_export)
         {

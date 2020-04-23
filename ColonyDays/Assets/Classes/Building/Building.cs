@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections;
-using UnityEngine;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Random = UnityEngine.Random;
+using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class Building : Hoverable, Iinfo
 {
     #region Fields and Prop
 
     /// <summary>
-    /// The root of a building 
+    /// The root of a building
     /// </summary>
     public string RootBuilding { get; set; }
 
@@ -27,23 +27,24 @@ public class Building : Hoverable, Iinfo
 
     //VisualConstructionProgress
     private Vector3 _minVcp;//this is the Min point on the bound
+
     private Vector3 _maxVcp;//this is the Max point on the bound
 
     private List<Vector3> _bounds = new List<Vector3>();
     private List<Vector3> _anchors = new List<Vector3>();
 
     protected bool _isEven; //is on a even terrain
-    private bool _isColliding; //is colliding with another building 
+    private bool _isColliding; //is colliding with another building
     protected bool _isGoodWaterHeight;//indicates if this building is ok with water height
     private bool _isBuildOk; //created so we dont have to execute CheckIfEvenTerrainAndNotColl()
 
     public Vector3 ClosestSubMeshVert = new Vector3();
     public Vector3 ClosestVertOld = new Vector3();
 
-    //none of them are: except for the Way.cs, 
-    //have to be set to true on start() of the obj 
+    //none of them are: except for the Way.cs,
+    //have to be set to true on start() of the obj
     protected bool _isFakeObj;
-   
+
     protected bool _isMarine;//all marine structures should have this marked as true(dock, bridge, etc)
     protected float _minHeightToSpawn;
 
@@ -51,23 +52,15 @@ public class Building : Hoverable, Iinfo
     protected General _arrow;
 
     private bool _isLoadingFromFile;//this indicates if the creating of a obj is being call from a Load File or not
-    string _materialKey;//the key of the material of an building
-
-
-
-
-
-
-
-
-
+    private string _materialKey;//the key of the material of an building
 
     //the zone this building landed. The bridges have two landing zones and are not kept here
     private List<VectorLand> _landZone = new List<VectorLand>();
+
     /// <summary>
     /// Geograpihcally is in the spawnpoint of a building . If is a Bridge will have two
     /// each in each Bottom Middile
-    /// 
+    ///
     /// IMPORTANT: IF LANDZONES ARE NOT SET THE ROUTING SYSTEM WONT WORK
     /// </summary>
     public List<VectorLand> LandZone1
@@ -77,6 +70,7 @@ public class Building : Hoverable, Iinfo
     }
 
     protected H _startingStage = H.None;//this is is  used to load structure class from file
+
     public H StartingStage
     {
         get { return _startingStage; }
@@ -97,7 +91,7 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Bounds of the building 
+    /// Bounds of the building
     /// </summary>
     public virtual List<Vector3> Bounds
     {
@@ -139,7 +133,7 @@ public class Building : Hoverable, Iinfo
             {
                 var a = 1;
             }
-            
+
             return _anchors;
         }
         set
@@ -150,9 +144,6 @@ public class Building : Hoverable, Iinfo
             }
 
             _anchors = value;
-
-           
-            
         }
     }
 
@@ -170,27 +161,29 @@ public class Building : Hoverable, Iinfo
 
     public Vector3 MaxVcp
     {
-        get { 
-            SetVisualConstructionProgressMinMax(); 
+        get
+        {
+            SetVisualConstructionProgressMinMax();
             return _maxVcp != new Vector3() ? _maxVcp : _max;
         }
     }
 
     public Vector3 MinVcp
     {
-        get {
-            SetVisualConstructionProgressMinMax(); 
+        get
+        {
+            SetVisualConstructionProgressMinMax();
             return _minVcp != new Vector3() ? _minVcp : _min;
         }
     }
 
-    #endregion
+    #endregion Fields and Prop
 
     internal string NameBuilding()
     {
         if (string.IsNullOrEmpty(Name))
         {
-            Name = Languages.ReturnString( HType + "");
+            Name = Languages.ReturnString(HType + "");
         }
 
         return Name;
@@ -210,10 +203,10 @@ public class Building : Hoverable, Iinfo
 
         obj.ClosestSubMeshVert = origen;
         if (name != "") { obj.name = name; }
-        if (container != null){obj.transform.SetParent(container);}
+        if (container != null) { obj.transform.SetParent(container); }
 
         if (materialKey == "")
-        {materialKey = hType + "." + Ma.matBuildBase;}
+        { materialKey = hType + "." + Ma.matBuildBase; }
 
         obj.MaterialKey = materialKey;
 
@@ -221,14 +214,14 @@ public class Building : Hoverable, Iinfo
 
         return obj;
     }
-       
+
     /// <summary>
     /// Checks if Terrain below the build _isEven or _isColliding, and is tall enough
     /// </summary>
     /// <returns>True if terrain is even, not colliding and tall enough</returns>
     public virtual bool CheckEvenTerraCollWater()
     {
-        //if is fake obj will be terminated 
+        //if is fake obj will be terminated
         if (_isFakeObj || HType == H.Dummy) { return false; }
 
         _isEven = CheckIfIsEvenRoutine();
@@ -249,16 +242,15 @@ public class Building : Hoverable, Iinfo
         if (!IsThisADoubleBoundedStructure())
         {
             NotifyBuildingProblem(isScaledOnFloor);
-            
         }
-        
-        return _isEven && !_isColliding && _isGoodWaterHeight && isScaledOnFloor 
+
+        return _isEven && !_isColliding && _isGoodWaterHeight && isScaledOnFloor
             && AreAnchorsOnUnlockRegions() //&& IfIsLampIsFarEnough()
             ;
     }
- 
+
     /// <summary>
-    /// Will notify why current buliding cant be placed here 
+    /// Will notify why current buliding cant be placed here
     /// </summary>
     /// <param name="isScaledOnFloor"></param>
     private void NotifyBuildingProblem(bool isScaledOnFloor, H instruction = H.None)
@@ -290,22 +282,20 @@ public class Building : Hoverable, Iinfo
         else if (!_isGoodWaterHeight && !IsThisADoubleBoundedStructure())
         {
             Program.gameScene.GameController1.NotificationsManager1.MainNotify("BadWaterHeight");
-            
         }
         else if (!AreAnchorsOnUnlockRegions() && !IsThisADoubleBoundedStructure())
         {
             Program.gameScene.GameController1.NotificationsManager1.MainNotify("LockedRegion");
         }
-        else if(instruction == H.Show)
+        else if (instruction == H.Show)
         {
-
         }
-            //if none is true then needs to be hidden bz might have being showed already by a quick
-            //true of any above. so needs to be hidden
+        //if none is true then needs to be hidden bz might have being showed already by a quick
+        //true of any above. so needs to be hidden
         else Program.gameScene.GameController1.NotificationsManager1.HideMainNotify();
     }
 
-    bool AreAnchorsOnUnlockRegions()
+    private bool AreAnchorsOnUnlockRegions()
     {
         if (TownLoader.IsTemplate || HType == H.BullDozer)
         {
@@ -319,7 +309,7 @@ public class Building : Hoverable, Iinfo
 
         var res = MeshController.BuyRegionManager1.AreAnchorsOnUnlockRegions(Anchors);
 
-        if (!res && !IsThisADoubleBoundedStructure())//double bounded strucutres dont need unlocked regions to be placed  
+        if (!res && !IsThisADoubleBoundedStructure())//double bounded strucutres dont need unlocked regions to be placed
         {
             MeshController.BuyRegionManager1.ShowRegions();
         }
@@ -328,12 +318,12 @@ public class Building : Hoverable, Iinfo
 
     /// <summary>
     /// Tells u if the Anchors out of the anchors are on the Floor
-    /// 
+    ///
     /// Creted to avoid Streuctures be too close to Water or Mountain
-    /// Farms needs to be further still more 
+    /// Farms needs to be further still more
     /// </summary>
     /// <returns></returns>
-    bool IsScaledAnchorsOnFloor()
+    private bool IsScaledAnchorsOnFloor()
     {
         if (HType == H.BullDozer)
         {
@@ -342,7 +332,7 @@ public class Building : Hoverable, Iinfo
 
         var scale = ScaleVal();//0.2f was choose arbitrary. How far I gonna check
         //I scaled to address the problem when building is too close to water or cliff or moutain.
-        //I make Anchors a bit bigger so checks for a bit bigger that Anchor area 
+        //I make Anchors a bit bigger so checks for a bit bigger that Anchor area
         var scaledAnchors = UPoly.ScalePolyNewList(Anchors, scale);
         //bz needs to find the real Y values
         scaledAnchors = RectifyOnY(scaledAnchors);
@@ -350,11 +340,11 @@ public class Building : Hoverable, Iinfo
         return IsOnTheFloor(scaledAnchors, 0.25f);
     }
 
-    float ScaleVal()
+    private float ScaleVal()
     {
         if (MyId.Contains("Farm"))
         {
-            //Farms need to check Further so they are not close to a shore 
+            //Farms need to check Further so they are not close to a shore
             return 10f;//16
         }
         return 1.25f;
@@ -375,7 +365,7 @@ public class Building : Hoverable, Iinfo
     /// </summary>
     /// <param name="list"></param>
     /// <returns></returns>
-    List<Vector3> RectifyOnY(List<Vector3> list)
+    private List<Vector3> RectifyOnY(List<Vector3> list)
     {
         List<Vector3> res = new List<Vector3>();
         for (int i = 0; i < list.Count; i++)
@@ -386,11 +376,11 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Created so if is not defined will be defined here 
-    /// 
+    /// Created so if is not defined will be defined here
+    ///
     /// If is 'forced' wont care already some sort of acnhors exist it will find them again
     /// </summary>
-    public List<Vector3> GetAnchors(bool forced=false)
+    public List<Vector3> GetAnchors(bool forced = false)
     {
         //will find anchors
         UpdateMinAndMaxVar();
@@ -402,14 +392,12 @@ public class Building : Hoverable, Iinfo
         return _anchors;
     }
 
-
-
     /// <summary>
-    /// Returns true if the building is place over the _minHeightToSpawn 
+    /// Returns true if the building is place over the _minHeightToSpawn
     /// _minHeightToSpawn is the water body plus a number. : _minHeightToSpawn
     /// </summary>
     /// <returns></returns>
-    bool checkWaterHeight()
+    private bool checkWaterHeight()
     {
         bool res = false;
         if (!_isMarine)
@@ -421,22 +409,22 @@ public class Building : Hoverable, Iinfo
         }
         return res;
     }
-    
+
     /// <summary>
     ///will find the farest point in a gameObj is lokking for the NW, NE, SE, SW . will retu
-    ///in that sequence. 
+    ///in that sequence.
     /// </summary>
     /// <param name="min">Bound.min, will work to if we pass SW</param>
     /// <param name="max">Bound.max, will work to if we pass NE</param>
     /// <returns>a List Vector3 wit sequence: NW, NE, SE, SW</returns>
     protected List<Vector3> FindBounds(Vector3 min, Vector3 max)//
     {
-        float yMed = (min.y + max.y)/2;
+        float yMed = (min.y + max.y) / 2;
         Vector3 NW = new Vector3(min.x, yMed, max.z);
         Vector3 NE = new Vector3(max.x, yMed, max.z);
         Vector3 SE = new Vector3(max.x, yMed, min.z);
         Vector3 SW = new Vector3(min.x, yMed, min.z);
-        List<Vector3> res = new List<Vector3>() {NW, NE, SE, SW};
+        List<Vector3> res = new List<Vector3>() { NW, NE, SE, SW };
 
         //UVisHelp.CreateHelpers(res, Root.blueCubeBig);
         return res;
@@ -474,30 +462,32 @@ public class Building : Hoverable, Iinfo
             //    res.Add(new Vector3(list[i].x, m.IniTerr.MathCenter.y, list[i].z));
             //}
             //else
-                res.Add(m.Vertex.BuildVertexWithXandZ(list[i].x, list[i].z));
+            res.Add(m.Vertex.BuildVertexWithXandZ(list[i].x, list[i].z));
         }
         //UVisHelp.CreateHelpers(res, Root.blueCube);
         return res;
     }
 
+    #region LineUpTool
 
-#region LineUpTool
-    //the poly on the grid that ocupies this building 
+    //the poly on the grid that ocupies this building
     //NW, NE , SE, SW
-    List<Vector3> _polyOnGrid = new List<Vector3>();
-    List<LineUpHelper> _lineUpHelpers = new List<LineUpHelper>(); 
+    private List<Vector3> _polyOnGrid = new List<Vector3>();
+
+    private List<LineUpHelper> _lineUpHelpers = new List<LineUpHelper>();
     private bool setLineUp;
-    void SetLineUpVertexs()
+
+    private void SetLineUpVertexs()
     {
-        if (setLineUp || !PositionFixed || HType==H.Road || MyId.Contains("Bridge"))
+        if (setLineUp || !PositionFixed || HType == H.Road || MyId.Contains("Bridge"))
         {
             return;
         }
         setLineUp = true;
 
-        //bz was used to show prev 
+        //bz was used to show prev
         _polyOnGrid.Clear();
-        
+
         //DefinePolyOnGrid();
         //SpawnLineUpHelpers();
     }
@@ -506,7 +496,7 @@ public class Building : Hoverable, Iinfo
     {
         for (int i = 0; i < _polyOnGrid.Count; i++)
         {
-            _lineUpHelpers.Add(LineUpHelper.Create(Root.lineUpHelper, _polyOnGrid[i], container:transform));
+            _lineUpHelpers.Add(LineUpHelper.Create(Root.lineUpHelper, _polyOnGrid[i], container: transform));
         }
     }
 
@@ -516,7 +506,7 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Defines : _polyOnGrid. use to spawn Preview Box , and helper to aling Lines 
+    /// Defines : _polyOnGrid. use to spawn Preview Box , and helper to aling Lines
     /// </summary>
     private void DefinePolyOnGrid()
     {
@@ -525,7 +515,7 @@ public class Building : Hoverable, Iinfo
         //west
         var westOnAnchor = new Vector3(scale[0].x, scale[0].y, transform.position.z);
         var distCenterWest = Vector3.Distance(transform.position, westOnAnchor);
-        var xS =  distCenterWest/m.SubDivide.XSubStep;
+        var xS = distCenterWest / m.SubDivide.XSubStep;
 
         int xSInt = (int)Math.Ceiling(xS);
         var westOnGrid = new Vector3(transform.position.x - (xSInt * m.SubDivide.XSubStep), scale[0].y, transform.position.z);
@@ -538,13 +528,12 @@ public class Building : Hoverable, Iinfo
         int xSIntEast = (int)Math.Ceiling(xSEast);
         var eastOnGrid = new Vector3(transform.position.x + (xSIntEast * m.SubDivide.XSubStep), scale[0].y, transform.position.z);
 
-
         //north
         var northOnAnchor = new Vector3(transform.position.x, scale[0].y, scale[0].z);
         var distCenterNorth = Vector3.Distance(transform.position, northOnAnchor);
         var zS = distCenterNorth / m.SubDivide.ZSubStep;
 
-        int zSInt = (int)Math.Ceiling(zS) ;//+1 correction
+        int zSInt = (int)Math.Ceiling(zS);//+1 correction
         var northOnGrid = new Vector3(transform.position.x, scale[0].y, transform.position.z + (zSInt * m.SubDivide.ZSubStep));
 
         //south
@@ -552,7 +541,7 @@ public class Building : Hoverable, Iinfo
         var distCenterSouth = Vector3.Distance(transform.position, southOnAnchor);
         var zSSouth = distCenterSouth / m.SubDivide.ZSubStep;
 
-        int zSIntSouth = (int)Math.Ceiling(zSSouth) ;
+        int zSIntSouth = (int)Math.Ceiling(zSSouth);
         var southOnGrid = new Vector3(transform.position.x, scale[0].y, transform.position.z - (zSIntSouth * m.SubDivide.ZSubStep));
 
         _polyOnGrid.Add(new Vector3(westOnGrid.x, scale[0].y + .03f, northOnGrid.z));//NW
@@ -565,9 +554,7 @@ public class Building : Hoverable, Iinfo
         //UVisHelp.CreateHelpers(northOnGrid, Root.yellowCube);
         //UVisHelp.CreateHelpers(southOnGrid, Root.yellowCube);
         //UVisHelp.CreateHelpers(_polyOnGrid, Root.yellowCube);
-
     }
-
 
     public void ShowLineUpHelpers()
     {
@@ -587,8 +574,7 @@ public class Building : Hoverable, Iinfo
         }
     }
 
-#endregion
-
+    #endregion LineUpTool
 
     /// <summary>
     /// Update _min, _max, _bounds, _anchors and then will call CheckIfIsEven(_anchors, maxDiffAllowOnTerrain)
@@ -641,7 +627,7 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Will return bounds Building must have a collider attached 
+    /// Will return bounds Building must have a collider attached
     /// </summary>
     /// <returns></returns>
     public List<Vector3> ReturnBounds()
@@ -661,7 +647,7 @@ public class Building : Hoverable, Iinfo
         //UVisHelp.CreateText(_max, "max", 60);
     }
 
-    void SetVisualConstructionProgressMinMax()
+    private void SetVisualConstructionProgressMinMax()
     {
         //VisualConstructionProgress
         var vcp = General.GetChildCalledOnThis("VisualConstructionProgress", gameObject);
@@ -674,9 +660,6 @@ public class Building : Hoverable, Iinfo
     // Use this for initialization
     protected void Start()
     {
-
-     
-
         base.Start();
         float minHeightAboveSeaLevel = 1f;
 
@@ -684,9 +667,8 @@ public class Building : Hoverable, Iinfo
         if (!IsLoadingFromFile && HType != H.Dummy)
         {
             _rotationFacerIndex = UnivRotationFacer;
-            Inventory = new Inventory(MyId, HType); 
+            Inventory = new Inventory(MyId, HType);
         }
-
 
         InitMilitar();
         InitWheelBarrow();
@@ -695,22 +677,19 @@ public class Building : Hoverable, Iinfo
         //if gives a null ex here ussually is that u forgot a prefab on scene
         _minHeightToSpawn = Program.gameScene.WaterBody.transform.position.y + minHeightAboveSeaLevel;
 
-        if(!IsLoadingFromFile){CreateProjector();}
+        if (!IsLoadingFromFile) { CreateProjector(); }
 
         //this is for init builds propertes such as Families, inventory
         Init();
         LayerRoutine("init");
 
-        //brand new building .other wise was saved 
+        //brand new building .other wise was saved
         if (!IsLoadingFromFile)
         {
             CurrentProd = BuildingPot.Control.ProductionProp.ReturnDefaultProd(HType);
         }
 
         InitJobRelated();
-
-
-
 
         StartCoroutine("ThirtySecUpdate");
         StartCoroutine("SixtySecUpdate");
@@ -723,9 +702,6 @@ public class Building : Hoverable, Iinfo
             _lastStageTime = Time.time;
             DestroyDoubleBoundHelp();
         }
-
-
-
 
         var smokes = FindAllChildsGameObjectInHierarchyContain(gameObject, "Smoke");
         if (smokes != null)
@@ -740,44 +716,45 @@ public class Building : Hoverable, Iinfo
         _stageManager = FindObjectOfType<StageManager>();
     }
 
-#region Building preview
+    #region Building preview
 
-    BigBoxPrev buildingPrev;
+    private BigBoxPrev buildingPrev;
     private Vector3 buildingPrevPos;
+
     private void ShowPreviewBoxForBuilding()
     {
-        if (Anchors.Count == 0 || buildingPrev!=null || HType == H.Road || HType == H.Dummy)
+        if (Anchors.Count == 0 || buildingPrev != null || HType == H.Road || HType == H.Dummy)
         {
             return;
         }
         //UVisHelp.CreateHelpers(Anchors, Root.blueCube);
 
         DefinePolyOnGrid();
-        buildingPrev = (BigBoxPrev)CreatePlane.CreatePlan(Root.bigBoxPrev, Root.graySemi, container:transform);
+        buildingPrev = (BigBoxPrev)CreatePlane.CreatePlan(Root.bigBoxPrev, Root.graySemi, container: transform);
         buildingPrev.transform.name = "Building Preview: " + MyId;
         buildingPrev.UpdatePos(_polyOnGrid, .25f);
 
-        //thisi is a Loading Building 
+        //thisi is a Loading Building
         if (PositionFixed)
         {
             HideBuildingPrev();
         }
     }
 
-    void HideBuildingPrev()
+    private void HideBuildingPrev()
     {
-        if (buildingPrev!=null)
+        if (buildingPrev != null)
         {
-            if (buildingPrevPos==new Vector3())
+            if (buildingPrevPos == new Vector3())
             {
                 buildingPrevPos = buildingPrev.transform.position;
             }
-           
+
             buildingPrev.transform.position = new Vector3(buildingPrevPos.x, buildingPrevPos.y - 30, buildingPrevPos.z);
         }
     }
 
-    void ShowBulidingPrev()
+    private void ShowBulidingPrev()
     {
         if (buildingPrev != null)
         {
@@ -786,7 +763,7 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Return true if has all inputs 
+    /// Return true if has all inputs
     /// </summary>
     /// <returns></returns>
     internal bool DoIHaveInput()
@@ -797,14 +774,14 @@ public class Building : Hoverable, Iinfo
 
     internal string MissingInputs()
     {
-        return Languages.ReturnString("Missing.Input")+
+        return Languages.ReturnString("Missing.Input") +
             BuildingPot.Control.ProductionProp.ReturnInputsINeed(this);
     }
 
     /// <summary>
     /// Will return the current missing inputs. May be more than one but will give
     /// you one that at least is missign in this moment
-    /// 
+    ///
     /// If is missing none then will return P.None
     /// </summary>
     /// <returns></returns>
@@ -828,27 +805,26 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// When rotates needs to redo the whole thing 
+    /// When rotates needs to redo the whole thing
     /// </summary>
-    void DestroyPreviewBaseBuilding()
+    private void DestroyPreviewBaseBuilding()
     {
         //buildingPrev.Destroy();
         //buildingPrev = null;
         _polyOnGrid.Clear();
     }
 
-#endregion
+    #endregion Building preview
 
     private MDate _checkDate;
+
     private IEnumerator SixtySecUpdate()
     {
         while (true)
         {
             yield return new WaitForSeconds(60);
 
-
-
-            if (Instruction == H.WillBeDestroy && PeopleDict.Count == 0 && 
+            if (Instruction == H.WillBeDestroy && PeopleDict.Count == 0 &&
                 (Inventory == null || Inventory.IsEmpty()))
             {
                 if (_checkDate != null)
@@ -869,7 +845,6 @@ public class Building : Hoverable, Iinfo
         }
     }
 
-
     private Decoration _decoration;
     private bool isDecorated;
 
@@ -881,11 +856,11 @@ public class Building : Hoverable, Iinfo
 
     protected void InitDecoration()
     {
-        if (isDecorated || !PositionFixed || Anchors.Count == 0 )
+        if (isDecorated || !PositionFixed || Anchors.Count == 0)
         {
             return;
         }
-        if (MyId.Contains("Bridge") || MyId.Contains("Farm") || doubleBounds.Contains(HType) 
+        if (MyId.Contains("Bridge") || MyId.Contains("Farm") || doubleBounds.Contains(HType)
             //||            HType == H.StandLamp
             )
         {
@@ -895,7 +870,7 @@ public class Building : Hoverable, Iinfo
 
         isDecorated = true;
 
-        if (!IsLoadingFromFile || _decoration == null)//for town loader 
+        if (!IsLoadingFromFile || _decoration == null)//for town loader
         {
             _decoration = new Decoration(this);
         }
@@ -909,7 +884,7 @@ public class Building : Hoverable, Iinfo
     #region Current Product
 
     /// <summary>
-    /// Will show all the products this Building can produce 
+    /// Will show all the products this Building can produce
     /// </summary>
     /// <returns></returns>
     public List<ProductInfo> ShowProductsOfBuild()
@@ -923,12 +898,12 @@ public class Building : Hoverable, Iinfo
     /// <param name="newProd"></param>
     public void SetProductToProduce(string newProd)
     {
-        //the newProd comes with the name of the prod a . and a number that is the ID of the ProductInfo 
+        //the newProd comes with the name of the prod a . and a number that is the ID of the ProductInfo
         var split = newProd.Split('.');
         int id = int.Parse(split[1]);
         var foundProd = BuildingPot.Control.ProductionProp.ReturnExactProduct(id);
         CurrentProd = foundProd;
-       //Debug.Log("now Prod curr: "+CurrentProd.Product +" on:"+MyId);
+        //Debug.Log("now Prod curr: "+CurrentProd.Product +" on:"+MyId);
 
         AddressNewProductOnBuilding();
         ReloadInventory();
@@ -936,14 +911,12 @@ public class Building : Hoverable, Iinfo
         Quest(0, CurrentProd.Product);
     }
 
-
-
     /// <summary>
     /// So far used by: FieldFarm, and AnimalFarm
     /// </summary>
     private void AddressNewProductOnBuilding()
     {
-        //nothing needs to get done 
+        //nothing needs to get done
         if (CurrentProd.Product == P.Stop)
         {
             return;
@@ -951,7 +924,7 @@ public class Building : Hoverable, Iinfo
 
         if (MyId.Contains("FieldFarm"))
         {
-            var st = (Structure) this;
+            var st = (Structure)this;
             st.ChangeProduct(CurrentProd.Product);
         }
         else if (MyId.Contains("AnimalFarm"))
@@ -960,17 +933,16 @@ public class Building : Hoverable, Iinfo
         }
     }
 
-    #endregion
-
+    #endregion Current Product
 
     /// <summary>
-    /// Address wht to do with a buliding that is marked as  H.WillBeDestroy and is loading from file 
-    /// 
-    /// Will make IsLoadingFromFile = false once executed 
+    /// Address wht to do with a buliding that is marked as  H.WillBeDestroy and is loading from file
+    ///
+    /// Will make IsLoadingFromFile = false once executed
     /// </summary>
-    void LoadingWillBeDestroyBuild()
+    private void LoadingWillBeDestroyBuild()
     {
-        //if we deactivated , or hasnt loaded yet, or simply is not a loading Building 
+        //if we deactivated , or hasnt loaded yet, or simply is not a loading Building
         if (!IsLoadingFromFile || Instruction != H.WillBeDestroy || PersonPot.Control == null || PersonPot.Control.BuildersManager1 == null)
         {
             return;
@@ -984,10 +956,9 @@ public class Building : Hoverable, Iinfo
             //so dont call this method anymore
             IsLoadingFromFile = false;
 
-
             //if (Category != Ca.Way)
             //{
-            //    //so the action of demolish happens again 
+            //    //so the action of demolish happens again
             //    var b = (Structure)this;
             //    b.Demolish();
             //}
@@ -998,10 +969,6 @@ public class Building : Hoverable, Iinfo
             //}
         }
     }
-
-
-  
-
 
     #region Bad Ass
 
@@ -1017,6 +984,7 @@ public class Building : Hoverable, Iinfo
         get { return _projector; }
         set { _projector = value; }
     }
+
     public static General ReachArea
     {
         get { return _reachArea; }
@@ -1025,13 +993,12 @@ public class Building : Hoverable, Iinfo
 
     public void CreateProjector()
     {
-        if (Category != Ca.None && Category != Ca.DraggableSquare 
-            && Category != Ca.Way && Projector == null && !MyId.Contains("Dummy") 
-            && HType != H.None)//none are the CreatePlanes 
+        if (Category != Ca.None && Category != Ca.DraggableSquare
+            && Category != Ca.Way && Projector == null && !MyId.Contains("Dummy")
+            && HType != H.None)//none are the CreatePlanes
         {
-            Projector = (MyProjector) Create(Root.projector, container: transform);
+            Projector = (MyProjector)Create(Root.projector, container: transform);
             _light = Create(Root.lightCilWithProjScript, container: transform);
-
 
             _reachArea = Create(Root.reachArea, transform.position, container: transform);
             // *2 bz is from where the person is at so 'Brain.Maxdistance' is a  Radius
@@ -1079,10 +1046,7 @@ public class Building : Hoverable, Iinfo
         DestroyProjector();
     }
 
-    #endregion
-
-
-
+    #endregion Bad Ass
 
     private void DebugShowAnchors()
     {
@@ -1095,9 +1059,10 @@ public class Building : Hoverable, Iinfo
         //UVisHelp.CreateHelpers(GetAnchors(), Root.blueCube);
     }
 
-    bool wasPersonControlRestarted;
+    private bool wasPersonControlRestarted;
     private bool debugShowAnchors;
-    //this need to be called in derived classes 
+
+    //this need to be called in derived classes
     protected new void Update()
     {
         if (progress != null) progress.Update();
@@ -1112,16 +1077,16 @@ public class Building : Hoverable, Iinfo
 
         CheckIfNightSmoke();
 
-        if (_militar!=null)
+        if (_militar != null)
         {
             _militar.Update();
         }
 
         //if is way not need to know this.
-        //bz we will be going btw buildings 
+        //bz we will be going btw buildings
         if (Category != Ca.Way)
         {
-            LandZoneLoader(); 
+            LandZoneLoader();
         }
 
         //here I set : IsLoadingFromFile = false
@@ -1133,8 +1098,8 @@ public class Building : Hoverable, Iinfo
 
             //will updtae if is not beinfg ordered to destroy and the instrucion not = = H.WillBeDestroy
             //added the last part to avoid Exception when class was checking on Building that was marked for be destroyed
-            if(!_isOrderToDestroy && Instruction != H.WillBeDestroy)
-            {UpdateBuild();}
+            if (!_isOrderToDestroy && Instruction != H.WillBeDestroy)
+            { UpdateBuild(); }
         }
 
         if (_dock != null)
@@ -1142,12 +1107,12 @@ public class Building : Hoverable, Iinfo
             _dock.Update();
         }
 
-        //bz now is waiting for a nw build to be placed to work 
+        //bz now is waiting for a nw build to be placed to work
         //this is here so it prompts the destruction of a building after the evacuation of the
         //inv has ocurred
         if (!wasPersonControlRestarted && _isOrderToDestroy && evacAll && Inventory.IsEmpty() && PeopleDict.Count == 0
             //&& PersonPot.Control.IsPeopleCheckFull()
-            )//make sure all are checked so it doesnt interrupt anything 
+            )//make sure all are checked so it doesnt interrupt anything
         {
             wasPersonControlRestarted = true;
             //PersonPot.Control.RestartController();
@@ -1158,7 +1123,7 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Updates all from Bounds to anchors 
+    /// Updates all from Bounds to anchors
     /// </summary>
     protected void UpdateBuild()
     {
@@ -1180,7 +1145,6 @@ public class Building : Hoverable, Iinfo
             {
                 _isBuildOk = CheckDoubleBoundedStructureIsOkRoutine();
             }
-
         }
         else
         {
@@ -1189,7 +1153,7 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Created for instance where need to update '_isBuildOk' from external class 
+    /// Created for instance where need to update '_isBuildOk' from external class
     /// </summary>
     public void UpdateBuildExternally()
     {
@@ -1197,24 +1161,23 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Updates the ClosestSubMeshVert 
+    /// Updates the ClosestSubMeshVert
     /// </summary>
     protected void UpdateClosestSubMeshVert()
     {
         ClosestSubMeshVert = m.Vertex.FindClosestVertex(m.HitMouseOnTerrain.point, m.CurrentHoverVertices.ToArray());
     }
 
-
     /// <summary>
     /// Updates the ClosestVertOld = ClosestSubMeshVert if the distance is further than 0.01f
-    /// 
+    ///
     /// This is what moves a building around the grid
     /// </summary>
     public virtual void UpdateClosestVertexAndOld()
     {
         if (!UMath.nearEqualByDistance(ClosestVertOld, ClosestSubMeshVert, 0.01f))
         {
-            AudioCollector.PlayOneShot("ClickWood4",0);
+            AudioCollector.PlayOneShot("ClickWood4", 0);
             ClosestVertOld = ClosestSubMeshVert;
         }
     }
@@ -1233,7 +1196,7 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Is called when we are done placing a new building 
+    /// Is called when we are done placing a new building
     /// </summary>
     public virtual void DonePlace()
     {
@@ -1250,7 +1213,7 @@ public class Building : Hoverable, Iinfo
             //GameScene.ScreenPrint("Is colliiding.Building.cs");
         }
     }
-       
+
     /// <summary>
     /// 0 is up, 1 is right, 2 is down, 3 is left
     /// </summary>
@@ -1266,9 +1229,9 @@ public class Building : Hoverable, Iinfo
         return currentVal;
     }
 
-    void DestroyDoubleBoundHelp()
+    private void DestroyDoubleBoundHelp()
     {
-        //so it donest show the help 
+        //so it donest show the help
         if (doubleBounds.Contains(HType))
         {
             _terraBound = GetChildLastWordIs(H.TerraBound);
@@ -1282,27 +1245,26 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// This is call when we finish placing a building 
+    /// This is call when we finish placing a building
     /// </summary>
     public virtual void FinishPlacingMode(H action)
     {
-        //bz this action needs to be immediate 
+        //bz this action needs to be immediate
         if (action == H.Cancel)
         {
-            if (MyId.Contains(H.Bridge+""))
+            if (MyId.Contains(H.Bridge + ""))
             {
-                Trail t = (Trail) this;
+                Trail t = (Trail)this;
                 //means the brdige is currenty being built at the time by the class
-                if (t.CurrentLoop!=H.None)
+                if (t.CurrentLoop != H.None)
                 {
                     return;
                 }
             }
 
-            if (Category==Ca.Way)
+            if (Category == Ca.Way)
             {
                 Way t = (Way)this;
-            
             }
 
             HideBuildingPrev();
@@ -1327,7 +1289,7 @@ public class Building : Hoverable, Iinfo
         {
             BuildingPot.InputU.AddToOrginizeStructures(this);
         }
-        
+
         if (!HType.ToString().Contains("Unit") && !IsLoadingFromFile && HType != H.BullDozer)
         {
             PrivHandleZoningAddCrystals(); ;
@@ -1345,17 +1307,18 @@ public class Building : Hoverable, Iinfo
             return;
         }
 
-        //calling here bz now since Builds are placed on ground need to be seen 
+        //calling here bz now since Builds are placed on ground need to be seen
         //by all
         BuildingPot.Control.AddToQueuesRestartPersonControl(MyId);
     }
 
     #region PlacedFX
 
-    List<General> _placedBuildFX = new List<General>();
-    void PlacedBuildingFX()
+    private List<General> _placedBuildFX = new List<General>();
+
+    private void PlacedBuildingFX()
     {
-        if (IsLoadingFromFile            )
+        if (IsLoadingFromFile)
         {
             return;
         }
@@ -1378,7 +1341,7 @@ public class Building : Hoverable, Iinfo
         }
     }
 
-    void DestroyAllPlacedFX()
+    private void DestroyAllPlacedFX()
     {
         for (int i = 0; i < _placedBuildFX.Count; i++)
         {
@@ -1387,19 +1350,19 @@ public class Building : Hoverable, Iinfo
         _placedBuildFX.Clear();
     }
 
-    #endregion
+    #endregion PlacedFX
 
     #region NavMesh
 
-    NavMeshObstacle _nav;
-    float _lastStageTime = -1;
-    bool _wasNavSet;
-    Vector3 _navInitSize;
+    private NavMeshObstacle _nav;
+    private float _lastStageTime = -1;
+    private bool _wasNavSet;
+    private Vector3 _navInitSize;
 
     /// <summary>
     /// if is not here then will be reduced standard amt , on SetNavMeshObstacle() (-16, 0, -16)
     /// </summary>
-    Dictionary<H, Vector3> _percetagesReduction = new Dictionary<H, Vector3>()
+    private Dictionary<H, Vector3> _percetagesReduction = new Dictionary<H, Vector3>()
     {
         { H.Fountain, new Vector3(-99,0,-99)},
         { H.WideFountain, new Vector3(-90,0,-90)},
@@ -1463,7 +1426,7 @@ public class Building : Hoverable, Iinfo
     };
 
     //If here will assign size directly not percentage scaling
-    Dictionary<H, Vector3> _navmeshSize = new Dictionary<H, Vector3>()
+    private Dictionary<H, Vector3> _navmeshSize = new Dictionary<H, Vector3>()
     {
         { H.SugarMill, new Vector3(1.45f, 1, 3.82f)},
         { H.Church, new Vector3(3.16f, 4.53f, 5.43f)},
@@ -1474,7 +1437,7 @@ public class Building : Hoverable, Iinfo
     /// <summary>
     /// called on Start
     /// </summary>
-    void AddNavMeshObst()
+    private void AddNavMeshObst()
     {
         Debug.Log("Nav Mesh Obst added to: " + MyId);
 
@@ -1482,7 +1445,7 @@ public class Building : Hoverable, Iinfo
         _nav = Geometry.GetComponent<NavMeshObstacle>();
         _navInitSize = _nav.size;
 
-        Vector3 perc = new Vector3(10,0, 10);
+        Vector3 perc = new Vector3(10, 0, 10);
         //it grows a bit so move people away a bit so when carving the are not
         //in the middle of noWhere
         _nav.size = new Vector3(
@@ -1491,12 +1454,12 @@ public class Building : Hoverable, Iinfo
             UMath.ScalePercentage(_nav.size.z, perc.z));
     }
 
-    void CheckOnSetNavMeshObst()
+    private void CheckOnSetNavMeshObst()
     {
         if (!_wasNavSet && _lastStageTime > 0 && Time.time > _lastStageTime + .01f)//.01
         {
             _wasNavSet = true;
-            if (_nav!=null)
+            if (_nav != null)
             {
                 SetNavMeshObstacle();
             }
@@ -1504,18 +1467,18 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Called once is fully built 
+    /// Called once is fully built
     /// Needs to be added to Main GameObect or Geometry GO
     /// </summary>
     private void SetNavMeshObstacle()
     {
-        if(_navmeshSize.ContainsKey(HType))
+        if (_navmeshSize.ContainsKey(HType))
         {
             SpawnNavMeshAndSetSize();
             return;
         }
 
-        //restores initial size 
+        //restores initial size
         _nav.size = _navInitSize;
 
         var perc = new Vector3(-16, 0, -16);
@@ -1533,7 +1496,7 @@ public class Building : Hoverable, Iinfo
             return;
         }
 
-        //then scales 
+        //then scales
         _nav.size = new Vector3(
             UMath.ScalePercentage(_nav.size.x, perc.x),
             UMath.ScalePercentage(_nav.size.y, perc.y),
@@ -1563,10 +1526,10 @@ public class Building : Hoverable, Iinfo
         }
     }
 
-    #endregion
+    #endregion NavMesh
 
     /// <summary>
-    /// Checks if is colliding with another building 
+    /// Checks if is colliding with another building
     /// </summary>
     /// <returns>True if collides</returns>
     public virtual bool CheckIfColliding()
@@ -1583,7 +1546,7 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Checks if current game obj is colliding with boundsP pass as param 
+    /// Checks if current game obj is colliding with boundsP pass as param
     /// </summary>
     /// <returns>True if collide</returns>
     public virtual bool CheckIfColliding(List<Vector3> boundsP)
@@ -1593,11 +1556,11 @@ public class Building : Hoverable, Iinfo
 
     /// <summary>
     /// Will destroy the current obj and, the _isOrderToDestroy is set in Building.cs
-    /// but the call comes from child 
+    /// but the call comes from child
     /// </summary>
     protected virtual void DestroyOrdered(bool forced = false, H instruct = H.None)
     {
-        if ((_isOrderToDestroy           
+        if ((_isOrderToDestroy
             //this is for addres the problem where routing is happening and a Building is destroyed
             && PersonController.UnivCounter == -1) || forced)
         {
@@ -1620,21 +1583,21 @@ public class Building : Hoverable, Iinfo
             DestroyProjector();
 
             //when loading breaks
-            if (Program.MouseListener !=null && Program.MouseListener.BuildingWindow1 != null)
+            if (Program.MouseListener != null && Program.MouseListener.BuildingWindow1 != null)
             {
                 Program.MouseListener.BuildingWindow1.HideIfSameBuilding(this);
             }
 
-            //so saveLoad of buildings is not affected 
+            //so saveLoad of buildings is not affected
             BuildingPot.Control.Registro.RemoveFromAllRegFile(MyId);
             BuildingPot.Control.EditBuildRoutine(MyId, H.Remove, HType);
 
             //only usefull for loaded buildings that were Destroy before finish construcion
-            //and were loaded 
+            //and were loaded
             //PersonPot.Control.BuildersManager1.RemoveConstruction(MyId);//so its removed from the BuilderManager
 
-            //in case was destroyed directly needs to be removed so the next time user 
-            //wants to demolish works 
+            //in case was destroyed directly needs to be removed so the next time user
+            //wants to demolish works
             BuildingPot.Control.Registro.RemoveFromDestroyBuildings(this);
 
             var dust = General.Create("Prefab/Particles/PlaceBuildDust", MiddlePoint());
@@ -1652,11 +1615,11 @@ public class Building : Hoverable, Iinfo
     /// </summary>
     public void DestroyOrderedForced()
     {
-        DestroyOrdered(true);   
+        DestroyOrdered(true);
     }
 
     #region Mark Terra Spawn Obj When Create Building
-    
+
     /// <summary>
     /// Still spawners will call this to check
     /// </summary>
@@ -1664,9 +1627,9 @@ public class Building : Hoverable, Iinfo
     {
         MarkTerraSpawnRoutine(20, from: transform.position);
     }
-    
+
     /// <summary>
-    /// This is the routine to gather the object we are surroundig and then 
+    /// This is the routine to gather the object we are surroundig and then
     /// marking them
     /// </summary>
     /// <param name="listFrom">This will cast ffrom the whole list, stuitable for way childs</param>
@@ -1676,7 +1639,7 @@ public class Building : Hoverable, Iinfo
     {
         List<string> collidWith = new List<string>();
 
-        //if from is new Vector3() will use the list 
+        //if from is new Vector3() will use the list
         if (from == new Vector3())
         {
             for (int i = 0; i < listFrom.Count; i++)
@@ -1697,19 +1660,19 @@ public class Building : Hoverable, Iinfo
         { print("Error: Both obj passed were null. Building.MarkTerraSpawnRoutine"); }
     }
 
-   protected void DestroySpawn(string key)
+    protected void DestroySpawn(string key)
     {
         if (p.TerraSpawnController.AllRandomObjList.Contains(key))
         {
-            if (!CrystalsAreContainedInThisBuilding(key) && 
+            if (!CrystalsAreContainedInThisBuilding(key) &&
                 !key.Contains("Orna") && !key.Contains("Grass"))//refer to StillElement.AddCrystals. They
-                //dont add to the crsytals manager, so they will be removed this way
+                                                                //dont add to the crsytals manager, so they will be removed this way
             {
                 return;
             }
 
             StillElement still = (StillElement)p.TerraSpawnController.AllRandomObjList[key];
-            //so they get remved from their region 
+            //so they get remved from their region
             Program.gameScene.BatchRemove(still);
             //so they disappear, remove Crystals and Routing can work properly
             still.DestroyCool();
@@ -1724,29 +1687,28 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Will say if the Spawn has any cristals that faill in in this building 
+    /// Will say if the Spawn has any cristals that faill in in this building
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
-   private bool CrystalsAreContainedInThisBuilding(string key)
-   {
+    private bool CrystalsAreContainedInThisBuilding(string key)
+    {
         if (Bounds == null || Bounds.Count == 0)
         {
             Bounds = FindBounds();
         }
 
+        var loBound = Bounds.ToArray();
+        var scale = UPoly.ScalePoly(loBound, 0.4f).ToArray();
+        var rect = Registro.ReturnDimOnMap(scale.ToList());
 
-       var loBound = Bounds.ToArray();
-       var scale = UPoly.ScalePoly(loBound, 0.4f).ToArray();
-       var rect = Registro.ReturnDimOnMap(scale.ToList());
-
-       return MeshController.CrystalManager1.AreTheyContained(key, rect);
-   }
+        return MeshController.CrystalManager1.AreTheyContained(key, rect);
+    }
 
     /// <summary>
     /// Given a list of strings will reutn only the ones tat are contained in the KeyedColl
     /// </summary>
-    List<string> CleanList(KeyedCollection<string, TerrainRamdonSpawner> coll, List<string> list)
+    private List<string> CleanList(KeyedCollection<string, TerrainRamdonSpawner> coll, List<string> list)
     {
         for (int i = 0; i < list.Count; i++)
         {
@@ -1758,7 +1720,8 @@ public class Building : Hoverable, Iinfo
         }
         return list;
     }
-    #endregion
+
+    #endregion Mark Terra Spawn Obj When Create Building
 
     /// <summary>
     /// Will check if a path is even , default _maxDiffAllowOnTerrainForARoad if is bigger than taht is not even
@@ -1766,7 +1729,7 @@ public class Building : Hoverable, Iinfo
     protected bool AreAllPointsEven(List<Vector3> path, float maxDiff = 0)
     {
         if (maxDiff == 0)
-        {maxDiff = _maxDiffAllowOnTerrainForARoad;}
+        { maxDiff = _maxDiffAllowOnTerrainForARoad; }
 
         //print(UMath.ReturnDiffBetwMaxAndMin(path, H.Y) + ".diff");
 
@@ -1779,7 +1742,7 @@ public class Building : Hoverable, Iinfo
 
     #region Create For Double Bound Strucutres Such as Maritimes and UnderTerra
 
-    List<H> doubleBounds = new List<H>(){H.FishingHut, 
+    private List<H> doubleBounds = new List<H>(){H.FishingHut,
         H.Dock, H.Shipyard, H.Supplier,
         H.MountainMine, H.ShoreMine, H.LightHouse,
         H.PostGuard
@@ -1791,12 +1754,14 @@ public class Building : Hoverable, Iinfo
 
     //for the primary bound TerraBound
     protected Vector3 _minPrim;
+
     protected Vector3 _maxPrim;
     private List<Vector3> _boundsPrim = new List<Vector3>();
     private List<Vector3> _anchorsPrim = new List<Vector3>();
 
     //for the secondary bound Maritime or UnderTerrsa bound
     protected Vector3 _minSec;
+
     protected Vector3 _maxSec;
     private List<Vector3> _boundsSec = new List<Vector3>();
     private List<Vector3> _anchorsSec = new List<Vector3>();
@@ -1808,7 +1773,7 @@ public class Building : Hoverable, Iinfo
     {
         for (int i = 0; i < doubleBounds.Count; i++)
         {
-            if (HType == doubleBounds[i]) { return true;}
+            if (HType == doubleBounds[i]) { return true; }
         }
         return false;
     }
@@ -1826,14 +1791,14 @@ public class Building : Hoverable, Iinfo
     {
         if (HType == H.MountainMine)
         {
-           DefineBoundsGameObj(H.TerraUnderBound);
-           return RoutineToFindIfAnchorsAreGood(_terraBound, _underTerraBound, H.TerraUnderBound);
+            DefineBoundsGameObj(H.TerraUnderBound);
+            return RoutineToFindIfAnchorsAreGood(_terraBound, _underTerraBound, H.TerraUnderBound);
         }
         else
         {
             //for DockTypes
             var reachRoute = true;
-            if (IsNaval())//if is not DockType wont be affected 
+            if (IsNaval())//if is not DockType wont be affected
             {
                 reachRoute = _dock.CanIReachRoute();
             }
@@ -1848,7 +1813,7 @@ public class Building : Hoverable, Iinfo
     /// </summary>
     /// <param name="prim">Primary bound</param>
     /// <param name="sec">Secondary bound</param>
-    void UpdateDoubleBounds(GameObject prim, GameObject sec)
+    private void UpdateDoubleBounds(GameObject prim, GameObject sec)
     {
         UpdateMinAndMaxVar(prim, 1);
         UpdateMinAndMaxVar(sec, 2);
@@ -1867,10 +1832,10 @@ public class Building : Hoverable, Iinfo
     /// <param name="sec">Secondary bound</param>
     /// <param name="typeOfDoubleBound">Type of bound TerraBound or MaritimeBound</param>
     /// <returns>True if they are good</returns>
-    bool RoutineToFindIfAnchorsAreGood(GameObject prim, GameObject sec, H typeOfDoubleBound)
+    private bool RoutineToFindIfAnchorsAreGood(GameObject prim, GameObject sec, H typeOfDoubleBound)
     {
         UpdateDoubleBounds(prim, sec);
-        
+
         bool res = FindIfListIsAboveThisHeight(Program.gameScene.WaterBody.transform.position.y + 0.1f, _anchorsPrim);
 
         //notify user of FindIfListIsAboveThisHeight
@@ -1893,17 +1858,17 @@ public class Building : Hoverable, Iinfo
                 res = isListBelowHeight && arePointsEven && isOnTheFloor;
             }
 
-            //notify user 
+            //notify user
             NotifyUserOfDoubleBoundRoutineIssue(typeOfDoubleBound, true, arePointsEven, isOnTheFloor, isListBelowHeight);
         }
 
         return res;
     }
 
-    void NotifyUserOfDoubleBoundRoutineIssue(H typeOfDoubleBound, bool isAboveHeight = true,
+    private void NotifyUserOfDoubleBoundRoutineIssue(H typeOfDoubleBound, bool isAboveHeight = true,
         bool arePointsEven = true, bool isOnTheFloor = true, bool isBelowHeight = true)
     {
-        if(!isAboveHeight || !arePointsEven || !isOnTheFloor || !isBelowHeight)
+        if (!isAboveHeight || !arePointsEven || !isOnTheFloor || !isBelowHeight)
             NotifyBuildingProblem(true, H.Show);
         else
             NotifyBuildingProblem(true);
@@ -1911,18 +1876,18 @@ public class Building : Hoverable, Iinfo
         if (typeOfDoubleBound == H.MaritimeBound)
         {
             if (!isAboveHeight)
-                Program.gameScene.GameController1.NotificationsManager1.MainNotify("isAboveHeight."+typeOfDoubleBound);
-            else if(!arePointsEven)
-                Program.gameScene.GameController1.NotificationsManager1.MainNotify("arePointsEven."+typeOfDoubleBound);
-            else if(!isOnTheFloor)
-                Program.gameScene.GameController1.NotificationsManager1.MainNotify("isOnTheFloor."+typeOfDoubleBound);
-            else if(!isBelowHeight)
-                Program.gameScene.GameController1.NotificationsManager1.MainNotify("isBelowHeight."+typeOfDoubleBound);
+                Program.gameScene.GameController1.NotificationsManager1.MainNotify("isAboveHeight." + typeOfDoubleBound);
+            else if (!arePointsEven)
+                Program.gameScene.GameController1.NotificationsManager1.MainNotify("arePointsEven." + typeOfDoubleBound);
+            else if (!isOnTheFloor)
+                Program.gameScene.GameController1.NotificationsManager1.MainNotify("isOnTheFloor." + typeOfDoubleBound);
+            else if (!isBelowHeight)
+                Program.gameScene.GameController1.NotificationsManager1.MainNotify("isBelowHeight." + typeOfDoubleBound);
         }
     }
 
     /// <summary>
-    /// Check if is on the floor not to high not to low. Comparing to the most Y know value on the mesh 
+    /// Check if is on the floor not to high not to low. Comparing to the most Y know value on the mesh
     /// </summary>
     protected bool IsOnTheFloor(List<Vector3> anchorsListP, float variance = 0.1f)
     {
@@ -1955,7 +1920,7 @@ public class Building : Hoverable, Iinfo
     /// <param name="heightToEval">height to be evaluated</param>
     /// <param name="listP">list of vector3</param>
     /// <returns>True if all point are above</returns>
-    bool FindIfListIsAboveThisHeight(float heightToEval, List<Vector3> listP )
+    private bool FindIfListIsAboveThisHeight(float heightToEval, List<Vector3> listP)
     {
         for (int i = 0; i < listP.Count; i++)
         {
@@ -1968,12 +1933,12 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Find if the whole list is below 
+    /// Find if the whole list is below
     /// </summary>
     /// <param name="heightToEval">height to be evaluated</param>
     /// <param name="listP">list of vector3</param>
     /// <returns>True if all point are below</returns>
-    bool FindIfListIsBelowThisHeight(float heightToEval, List<Vector3> listP)
+    private bool FindIfListIsBelowThisHeight(float heightToEval, List<Vector3> listP)
     {
         for (int i = 0; i < listP.Count; i++)
         {
@@ -1986,12 +1951,12 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Define the Bounds of the game obj 
-    /// Depending of the typeOfDoubleBound type will define what bound it is 
+    /// Define the Bounds of the game obj
+    /// Depending of the typeOfDoubleBound type will define what bound it is
     /// _terraBound for both , and the second one could be _maritimeBound or _underTerraBound
     /// </summary>
     /// <param name="typeOfDoubleBound"></param>
-    void DefineBoundsGameObj(H typeOfDoubleBound)
+    private void DefineBoundsGameObj(H typeOfDoubleBound)
     {
         if (_terraBound == null)
         {
@@ -2009,13 +1974,13 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Updates the _minPrim, _maxPrim, _minSec, _maxSec. 
+    /// Updates the _minPrim, _maxPrim, _minSec, _maxSec.
     /// Based on the whichBound number if is 1 will update Prim
-    /// if is 2 will update the Sec 
+    /// if is 2 will update the Sec
     /// </summary>
     /// <param name="passP">Game obj that has the bound</param>
     /// <param name="whichBound">whichBound number if is 1 will update Prim if is 2 will update the Sec</param>
-    void UpdateMinAndMaxVar(GameObject passP, int whichBound)
+    private void UpdateMinAndMaxVar(GameObject passP, int whichBound)
     {
         if (whichBound == 1)
         {
@@ -2029,35 +1994,23 @@ public class Building : Hoverable, Iinfo
         }
     }
 
-    #endregion
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    #endregion Create For Double Bound Strucutres Such as Maritimes and UnderTerra
 
     #region House In Game Properties. Such as Families, Invetorey, Workers, Pay, Production
 
     //this will flag instructions on the building that will be utilize by other class
     private H _instruction;
+
     //all the people is related to this building... includes all
-    //people living, or working, or attending to church 
-    private List<string> _peopleDict = new List<string>(); 
+    //people living, or working, or attending to church
+    private List<string> _peopleDict = new List<string>();
+
     private Family[] _families;//the family or famililes living in a house (if is 2 floors)
 
-    private ProductInfo _currentProd ;//product currently is being created on this building 
-    private ProductInfo _oldProd ;//product currently is being created on this building 
-    private int _rationsPay = 2;//the pay in rations to the workers of a building 
-    private int _dollarsPay = 5;//in dollars 
+    private ProductInfo _currentProd;//product currently is being created on this building
+    private ProductInfo _oldProd;//product currently is being created on this building
+    private int _rationsPay = 2;//the pay in rations to the workers of a building
+    private int _dollarsPay = 5;//in dollars
 
     private int _comfort;//the confort of a house
     private BookedHome _bookedHome;//will hold the information if a
@@ -2085,10 +2038,9 @@ public class Building : Hoverable, Iinfo
         get { return _peopleDict; }
         set
         {
-
             _peopleDict = value;
 
-            //no need if is loading from file now 
+            //no need if is loading from file now
             if (IsLoadingFromFile)
             {
                 return;
@@ -2122,18 +2074,14 @@ public class Building : Hoverable, Iinfo
         set { _bookedHome = value; }
     }
 
-    void Init()
+    private void Init()
     {
-
-        Comfort =  ReturnHouseConfort(HType);
+        Comfort = ReturnHouseConfort(HType);
 
         InitBasePays();
 
         _oldProd = _currentProd;
     }
-
-
-
 
     #region Salary
 
@@ -2154,7 +2102,7 @@ public class Building : Hoverable, Iinfo
     /// the base pay for each job
     /// </summary>
     /// <returns></returns>
-    int BasePay()
+    private int BasePay()
     {
         if (HType == H.Pottery)
         {
@@ -2175,7 +2123,7 @@ public class Building : Hoverable, Iinfo
 
     /// <summary>
     /// The user wil click on the checkbox and tht will change the salary
-    /// 
+    ///
     /// checkBox val : 1-5
     /// </summary>
     /// <param name="which"></param>
@@ -2184,13 +2132,13 @@ public class Building : Hoverable, Iinfo
         if (which == "Less")
         {
             DollarsPay -= 1;
-        } 
+        }
         if (which == "More")
         {
             DollarsPay += 1;
         }
 
-        //wont be less than 1 
+        //wont be less than 1
         if (DollarsPay < 1)
         {
             DollarsPay = 1;
@@ -2200,11 +2148,11 @@ public class Building : Hoverable, Iinfo
 
         AudioCollector.PlayOneShot("BoughtLand", 0);
 
-        return DollarsPay+"";
+        return DollarsPay + "";
     }
 
     /// <summary>
-    /// Use to duisplay the checkbox right in the Building Windows 
+    /// Use to duisplay the checkbox right in the Building Windows
     /// </summary>
     /// <returns></returns>
     public int WhichIsTheBuildingSalaryStatus()
@@ -2214,16 +2162,12 @@ public class Building : Hoverable, Iinfo
         return diff;
     }
 
-
-#endregion
-
-
-    
+    #endregion Salary
 
     /// <summary>
     /// Adds items to the Storage Buildings
     /// </summary>
-    void InitStorage()
+    private void InitStorage()
     {
         if (!HType.ToString().Contains("Storage"))
         {
@@ -2231,33 +2175,27 @@ public class Building : Hoverable, Iinfo
         }
 
         BuildingPot.Control.DispatchManager1.ActiveDormantList();
-        
-        if (PersonPot.Control == null || Inventory == null) { return;}
+
+        if (PersonPot.Control == null || Inventory == null) { return; }
 
         //
         var amtOfStorages = BuildingPot.Control.FoodSources.Count;
-
 
         if (Inventory.IsEmpty() && amtOfStorages == 1)
         {
             int amtFood = PersonPot.Control.CurrentCondition().iniFood;
             Inventory.Add(P.Bean, amtFood);
 
-
             Program.gameScene.GameController1.SetInitialLote();
-
 
             UpdateInfo();
         }
-        
     }
 
     public void UpdateInfo(string v = "")
     {
         info = Inventory.Info();
     }
-
-
 
     protected void InitHouseProp()
     {
@@ -2283,7 +2221,6 @@ public class Building : Hoverable, Iinfo
             Families[0] = new Family(UMath.GiveRandom(2, 5), MyId, 0);
         }
 
-
         //can hhave 1 famili with 3 kids
         else if (HType == H.WoodHouseA || HType == H.WoodHouseC)
         {
@@ -2302,7 +2239,7 @@ public class Building : Hoverable, Iinfo
             Families = new Family[1];
             Families[0] = new Family(3, MyId, 0);
         }
-        else if (HType  ==  H.BrickHouseB)
+        else if (HType == H.BrickHouseB)
         {
             Families = new Family[1];
             Families[0] = new Family(UMath.GiveRandom(3, 5), MyId, 0);
@@ -2333,8 +2270,8 @@ public class Building : Hoverable, Iinfo
             }
         }
         return null;
-    }    
-    
+    }
+
     public Family FindMyFamily(Person person)
     {
         for (int i = 0; i < Families.Length; i++)
@@ -2348,9 +2285,9 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Will find the family by ID 
-    /// 
-    /// Will see if pers.MyId or pers.Spouse is contained in any of this building Family ID, 
+    /// Will find the family by ID
+    ///
+    /// Will see if pers.MyId or pers.Spouse is contained in any of this building Family ID,
     /// bz families get one or other spouse ID
     /// </summary>
     /// <param name="pers"></param>
@@ -2369,9 +2306,9 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Will find the family by ID 
-    /// 
-    /// Used by teens moving out 
+    /// Will find the family by ID
+    ///
+    /// Used by teens moving out
     /// IF they were given a family ID then then should get into that one
     /// </summary>
     /// <param name="pers"></param>
@@ -2408,7 +2345,7 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Will return true if at least one family is empty in this building 
+    /// Will return true if at least one family is empty in this building
     /// </summary>
     /// <returns></returns>
     public bool IsALeastOneFamilyEmpty()
@@ -2451,8 +2388,8 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// All Families fuul is created so Houses tht only are formed (wife and husband) are open 
-    /// to recive new kids 
+    /// All Families fuul is created so Houses tht only are formed (wife and husband) are open
+    /// to recive new kids
     /// </summary>
     /// <returns></returns>
     public bool AllFamiliesFull()
@@ -2489,33 +2426,30 @@ public class Building : Hoverable, Iinfo
         return null;
     }
 
-
     public static int ReturnHouseConfort(H HTypeP)
     {
         if (HTypeP == H.Shack || HTypeP == H.MediumShack)
         {
-            return  1;
+            return 1;
         }
         if (HTypeP == H.LargeShack || HTypeP == H.WoodHouseA)
         {
-            return  2;
+            return 2;
         }
         else if (HTypeP == H.WoodHouseB)
         {
-            return  3;
+            return 3;
         }
         else if (HTypeP == H.WoodHouseC || HTypeP == H.BrickHouseA || HTypeP == H.BrickHouseC)
         {
             return 4;
         }
-        else if ( HTypeP == H.BrickHouseB)
+        else if (HTypeP == H.BrickHouseB)
         {
-            return  5;
+            return 5;
         }
         return 1;
     }
-
-   
 
     public bool ThisPersonFitInThisHouse(Person newPerson, ref string famID)
     {
@@ -2524,19 +2458,14 @@ public class Building : Hoverable, Iinfo
             return false;
         }
 
-        if(!UPerson.IsMajor(newPerson.Age))
+        if (!UPerson.IsMajor(newPerson.Age))
         {
             return ANewKidFitsInThisHouse(newPerson, ref famID);
         }
         return ANewAdultFitsInThisHouse(newPerson, ref famID);
     }
 
-
-
-
-
-
-    bool ANewKidFitsInThisHouse(Person newP, ref string famID)
+    private bool ANewKidFitsInThisHouse(Person newP, ref string famID)
     {
         for (int i = 0; i < Families.Length; i++)
         {
@@ -2549,11 +2478,11 @@ public class Building : Hoverable, Iinfo
         return false;
     }
 
-    bool ANewAdultFitsInThisHouse(Person newP, ref string famID)
+    private bool ANewAdultFitsInThisHouse(Person newP, ref string famID)
     {
         for (int i = 0; i < Families.Length; i++)
         {
-            //some times people ask before build Start() 
+            //some times people ask before build Start()
             if (!BuildingPot.Control.Registro.AllBuilding.ContainsKey(Families[i].Home))
             {
                 return false;
@@ -2570,21 +2499,22 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Here so calls the  BuilderPot.Control and updates the method that is for the specific type of building 
+    /// Here so calls the  BuilderPot.Control and updates the method that is for the specific type of building
     /// </summary>
     public void UpdateOnBuildControl(H action)
     {
         if (action == H.Remove)
         {
-            //is needed here otherwise router.cs might detyected and then give a null ref 
+            //is needed here otherwise router.cs might detyected and then give a null ref
             //AssignLayer(0);//Default
             RemovePeople();
         }
         BuildingPot.Control.EditBuildRoutine(MyId, action, HType);
     }
 
-    private int countRemoves;//bz it makes a loop 
-    void RemovePeople()
+    private int countRemoves;//bz it makes a loop
+
+    private void RemovePeople()
     {
         //Instruction = H.WillBeDestroy;
         if (PeopleDict.Count == 0 && countRemoves == 0)//no one is registered on the build
@@ -2594,20 +2524,22 @@ public class Building : Hoverable, Iinfo
         }
     }
 
-    #endregion
+    #endregion House In Game Properties. Such as Families, Invetorey, Workers, Pay, Production
 
     #region Layer Manangement
+
     //When is placing the building needs to have the default layer so the router wont notice any of those obj on scene
     //then when is placed on scene should be restored back to the prefab layer that was ....
-    //for building we are using "PersonBlock" layer 
+    //for building we are using "PersonBlock" layer
 
-    int prefabLayer;//initial layer for prefab
+    private int prefabLayer;//initial layer for prefab
+
     /// <summary>
     /// The routinte to initialize layer
     /// </summary>
-    void LayerRoutine(string command)
+    private void LayerRoutine(string command)
     {
-        if (IsLoadingFromFile){return;}//if is loading from file doesnt need to change anything 
+        if (IsLoadingFromFile) { return; }//if is loading from file doesnt need to change anything
         if (command == "init")
         {
             GrabPrefabLayer();
@@ -2619,24 +2551,23 @@ public class Building : Hoverable, Iinfo
         }
     }
 
-    void GrabPrefabLayer()
+    private void GrabPrefabLayer()
     {
         prefabLayer = gameObject.layer;
     }
 
-
-    #endregion
+    #endregion Layer Manangement
 
     public void DestroydHiddenBuild()
     {
-        //the invetory needs to be empty to be destroyed  
-        if (Inventory != null && !Inventory.IsEmpty() )
+        //the invetory needs to be empty to be destroyed
+        if (Inventory != null && !Inventory.IsEmpty())
         {
             return;
         }
 
         //was CancelDestroy
-        if (BuildingPot.Control.DispatchManager1.DoIHaveAnyOrderOnAnyDispatch(this) || Instruction!=H.WillBeDestroy)
+        if (BuildingPot.Control.DispatchManager1.DoIHaveAnyOrderOnAnyDispatch(this) || Instruction != H.WillBeDestroy)
         {
             return;
         }
@@ -2688,20 +2619,20 @@ public class Building : Hoverable, Iinfo
 
     /// <summary>
     /// Created for brdiges
-    /// 
-    /// It only adds the box coll if has abosoultuy not colliders 
+    ///
+    /// It only adds the box coll if has abosoultuy not colliders
     /// </summary>
     /// <param name="minP">In our poly system, if u pass a poly will need be input poly[1]</param>
     /// <param name="maxP">This needs input poly[3]</param>
     public void AddBoxCollider(Vector3 minP, Vector3 maxP)
     {
         if (gameObject.GetComponent<BoxCollider>() != null)
-        {return;}
+        { return; }
 
         gameObject.layer = 10;//person bloick layer
 
-        float xDim = Mathf.Abs(minP.x - maxP.x) ;
-        float zDim = Mathf.Abs(minP.z - maxP.z) ;
+        float xDim = Mathf.Abs(minP.x - maxP.x);
+        float zDim = Mathf.Abs(minP.z - maxP.z);
         Vector3 newScale = new Vector3(xDim, 5f, zDim);
 
         Vector3 center = (minP + maxP) / 2;
@@ -2718,20 +2649,19 @@ public class Building : Hoverable, Iinfo
         }
     }
 
-
     #region Construction
 
     private float constructionAmt;
     private float amtNeeded;
-    BuildStat buildStat = new BuildStat();
-
+    private BuildStat buildStat = new BuildStat();
 
     internal float PercentageBuilt()
     {
         return (constructionAmt / amtNeeded) * 100;
     }
 
-    private float oldPercent =0f;
+    private float oldPercent = 0f;
+
     internal string PercentageBuiltCured()
     {
         var percent = PercentageBuilt();
@@ -2750,12 +2680,11 @@ public class Building : Hoverable, Iinfo
         return percent.ToString("N0");
     }
 
-
     public bool IsFullyBuilt()
     {
         if (MyId.Contains("Road"))
         {
-            //so user will never be able to be removed 
+            //so user will never be able to be removed
             return false;
         }
 
@@ -2767,7 +2696,7 @@ public class Building : Hoverable, Iinfo
                 return true;
             }
         }
-        //addres bridge 
+        //addres bridge
         else
         {
             var bridge = (Bridge)this;
@@ -2779,10 +2708,10 @@ public class Building : Hoverable, Iinfo
         return false;
     }
 
-    VisualConstructionProgress progress;
+    private VisualConstructionProgress progress;
 
-    //todo call 
-    public void AddToConstruction(float amt, Person person=null)
+    //todo call
+    public void AddToConstruction(float amt, Person person = null)
     {
         DefineAmtNeeded();
 
@@ -2809,14 +2738,14 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Will determnine if a new stage was reached or the building is fully built 
+    /// Will determnine if a new stage was reached or the building is fully built
     /// </summary>
     private void CheckIfNewStageOrDone(Person person)
     {
         var sP = ReturnCurrentStructureParent();
-        var amtPerStage = amtNeeded/4;
-        //is contruction more advandec that current stage 
-        bool isBigger = sP.CurrentStage < constructionAmt/amtPerStage;
+        var amtPerStage = amtNeeded / 4;
+        //is contruction more advandec that current stage
+        bool isBigger = sP.CurrentStage < constructionAmt / amtPerStage;
 
         // The bridge need to use a 'if' bz the new stage show call is async. Everytin else uses  a 'while;
         if (MyId.Contains("Bridge"))
@@ -2828,7 +2757,7 @@ public class Building : Hoverable, Iinfo
         }
         else
         {
-            while(isBigger && sP.CurrentStage != 4)
+            while (isBigger && sP.CurrentStage != 4)
             {
                 isBigger = sP.CurrentStage < constructionAmt / amtPerStage;
                 ShowNextStage();
@@ -2850,7 +2779,7 @@ public class Building : Hoverable, Iinfo
     {
         StructureParent sP = null;
 
-        //if is bridge will look at the first pieces stages 
+        //if is bridge will look at the first pieces stages
         if (HType.ToString().Contains(H.Bridge.ToString()))
         {
             var br = (Bridge)this;
@@ -2858,16 +2787,16 @@ public class Building : Hoverable, Iinfo
         }
         else
         {
-            sP = (StructureParent) this;
+            sP = (StructureParent)this;
         }
         return sP;
     }
 
     /// <summary>
     /// Created to modularity. And Handle Structures and Brdiges
-    /// 
+    ///
     /// </summary>
-    void ShowNextStage()
+    private void ShowNextStage()
     {
         if (HType.ToString().Contains(H.Bridge.ToString()))
         {
@@ -2881,9 +2810,8 @@ public class Building : Hoverable, Iinfo
         }
     }
 
-
     //private General _debugPercentage;
-    void SetConstructionPercent(string newVal)
+    private void SetConstructionPercent(string newVal)
     {
         var sp = this as StructureParent;
 
@@ -2906,12 +2834,13 @@ public class Building : Hoverable, Iinfo
         //_debugPercentage.transform.SetParent(transform);
     }
 
-    bool didBuiltNotify;
+    private bool didBuiltNotify;
     protected General _construcionSign;
+
     /// <summary>
-    /// Created for modularity. Handles all things related onces the building is fully built 
+    /// Created for modularity. Handles all things related onces the building is fully built
     /// </summary>
-    protected void HandleLastStage(Person person=null)
+    protected void HandleLastStage(Person person = null)
     {
         _lastStageTime = Time.time;
         DestroyAllPlacedFX();
@@ -2929,7 +2858,7 @@ public class Building : Hoverable, Iinfo
             {
                 didBuiltNotify = true;
                 Program.gameScene.GameController1.NotificationsManager1.Notify("Built", HType + "");
-            } 
+            }
         }
         //if (_debugPercentage != null)
         //{
@@ -2939,7 +2868,7 @@ public class Building : Hoverable, Iinfo
         {
             BuildingPot.Control.DockManager1.AddToDockStructure(MyId, HType);
         }
-        if (person!=null)
+        if (person != null)
         {
             person.Work.BuildersManager1.RemoveConstruction(MyId);
         }
@@ -2948,30 +2877,31 @@ public class Building : Hoverable, Iinfo
             _construcionSign.Destroy();
             _construcionSign = null;
         }
-        //if is a Unit from a bridge doesnt need to be added there 
+        //if is a Unit from a bridge doesnt need to be added there
         //Bridge bz needs to be called when all bridge elements are spanwed
         if (HType.ToString().Contains(H.Unit.ToString()))
         {
             return;
         }
         UpdateOnBuildControl(H.Add);
-        
+
         //needs to be called here other wise Dormant Orders will not become active
         InitStorage();
         Program.gameScene.BatchAdd(this);
 
-        Program.MouseListener.MStatsAndAchievements.CheckOnManualAchievements(HType+"");
+        Program.MouseListener.MStatsAndAchievements.CheckOnManualAchievements(HType + "");
     }
 
-    #endregion
+    #endregion Construction
 
     #region LandZoning
 
     private bool landZoneLoaded;
+
     /// <summary>
-    /// Loads the land Zone and adds the Crystals of this Building to Crystal Manager 
+    /// Loads the land Zone and adds the Crystals of this Building to Crystal Manager
     /// </summary>
-    void LandZoneLoader()
+    private void LandZoneLoader()
     {
         if (landZoneLoaded || !PositionFixed || !IsLoadingFromFile
             //|| XMLSerie.TownLoaded
@@ -2987,9 +2917,8 @@ public class Building : Hoverable, Iinfo
         MeshController.CrystalManager1.Add(this);
     }
 
-
     /// <summary>
-    /// bz could have being must likely saved in another Map woith other landZones 
+    /// bz could have being must likely saved in another Map woith other landZones
     /// </summary>
     protected void HandleSavedTownBuilding()
     {
@@ -3006,7 +2935,7 @@ public class Building : Hoverable, Iinfo
 
             //Debug.Log("townLoaded:" + MyId);
             Anchors = GetAnchors();
-            
+
             LandZone1.Clear();
             HandleLandZoning();
             TownLoader.NewBuildingLoaded();
@@ -3015,7 +2944,7 @@ public class Building : Hoverable, Iinfo
 
     /// <summary>
     ///  The last step of the buils th are loaded with the town
-    /// 
+    ///
     /// so MarkTerraSpawnRoutine is called and Spawner terrains around this building disappear
     ///
     /// </summary>
@@ -3033,7 +2962,6 @@ public class Building : Hoverable, Iinfo
         InitStorage();
     }
 
-
     protected void PrivHandleZoningAddCrystals()
     {
         HandleLandZoning();
@@ -3042,7 +2970,7 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Can only be called when brdige is being current spawn in this session 
+    /// Can only be called when brdige is being current spawn in this session
     /// bz uses var that are not saveLoad
     /// </summary>
     protected void PrivHandleZoningAddCrystalsForBridge()
@@ -3052,12 +2980,13 @@ public class Building : Hoverable, Iinfo
     }
 
     private bool isToFindLandZone;
+
     /// <summary>
     /// This will return the land zone a given point of a build is
-    /// 
+    ///
     /// for normal buildins we need to know the door.
-    /// 
-    /// For bridges . Both bottom ends 
+    ///
+    /// For bridges . Both bottom ends
     /// </summary>
     public void HandleLandZoning()
     {
@@ -3073,20 +3002,20 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Bz structures that are close to shores in some conditions cant get a LinkRect to link 
+    /// Bz structures that are close to shores in some conditions cant get a LinkRect to link
     /// then I will push the SpawnPoint pos a bit away from building
     /// </summary>
     /// <param name="spPoint"></param>
     /// <returns></returns>
-    Vector3 MoveSpawnPointAwayFromBuildingIfShoreBuild(StructureParent sp)
+    private Vector3 MoveSpawnPointAwayFromBuildingIfShoreBuild(StructureParent sp)
     {
-        //if is nota shore building will return spawn point 
+        //if is nota shore building will return spawn point
         if (!Builder.IsAShoreOrTerraBuilding(sp))
         {
             return sp.SpawnPoint.transform.position;
         }
 
-        //else will move it away from builidng 
+        //else will move it away from builidng
         var spawnPnt = sp.SpawnPoint.transform.position;
         return Vector3.MoveTowards(spawnPnt, sp.transform.position, -5);
     }
@@ -3094,7 +3023,7 @@ public class Building : Hoverable, Iinfo
     /// <summary>
     /// To define the landzone of a dummy by geetting the LandZone name from the c'onstructing' and
     /// the position
-    /// 
+    ///
     /// Useful to dummy spawns in Corners of a bulding that we know already the landzone
     /// </summary>
     /// <param name="constructing"></param>
@@ -3105,15 +3034,15 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Is made public so when is loding is called 
+    /// Is made public so when is loding is called
     /// </summary>
-    void LandZoningBridge()
+    private void LandZoningBridge()
     {
         Bridge br = (Bridge)this;
         var ends = br.GiveTwoRoughEnds();
 
         //will move the ends a bit away from buidliing so if the bridge is too close
-        //to rivers edges can link to the LinkRects are deeper in land 
+        //to rivers edges can link to the LinkRects are deeper in land
         var end0 = Vector3.MoveTowards(ends[0], transform.position, -8);
         var end1 = Vector3.MoveTowards(ends[1], transform.position, -8);
 
@@ -3121,7 +3050,7 @@ public class Building : Hoverable, Iinfo
         var zone1 = MeshController.CrystalManager1.ReturnLandingZone(end1);
 
         //bz they were being save loaded in Poly Anchors
-        //this is really pointless bz somehow if u move the bottom gameObj in Part12 of brdigeTrails works 
+        //this is really pointless bz somehow if u move the bottom gameObj in Part12 of brdigeTrails works
         var end0bit = Vector3.MoveTowards(ends[0], transform.position, HowFarPush());//0
         var end1bit = Vector3.MoveTowards(ends[1], transform.position, HowFarPush());
 
@@ -3129,7 +3058,7 @@ public class Building : Hoverable, Iinfo
         LandZone1.Add(new VectorLand(zone1, end1bit));
     }
 
-    float HowFarPush()
+    private float HowFarPush()
     {
         //if (HType == H.BridgeRoad)
         //{
@@ -3138,9 +3067,7 @@ public class Building : Hoverable, Iinfo
         return 0;
     }
 
-    #endregion
-
-
+    #endregion LandZoning
 
     #region Production
 
@@ -3151,13 +3078,12 @@ public class Building : Hoverable, Iinfo
     /// The Prefered storage where this Structue production should be taken to
     /// </summary>
 
-
     /// <summary>
     /// Will find out if pass has a val if does will return so. other wise CurrProd
     /// </summary>
     /// <param name="pass"></param>
     /// <returns></returns>
-    P DefineProdHere(P pass)
+    private P DefineProdHere(P pass)
     {
         if (pass != P.None)
         {
@@ -3165,11 +3091,11 @@ public class Building : Hoverable, Iinfo
         }
         return CurrentProd.Product;
     }
-    
+
     /// <summary>
     /// Produce what this Building is set to. ex Fisherman produce fish
-    /// 
-    /// 'amt' the amount the person calling this can produce in a shift 
+    ///
+    /// 'amt' the amount the person calling this can produce in a shift
     /// </summary>
     internal void Produce(float amt, Person person, bool addToBuildInv = true, P prod = P.None)
     {
@@ -3200,7 +3126,6 @@ public class Building : Hoverable, Iinfo
             }
             else if (hasThisBuildRoom && addToBuildInv && !MyId.Contains("Farm"))
             {
-
                 Inventory.Add(prodHere, amt);
                 AddProductionThisYear(prodHere, amt);
             }
@@ -3208,7 +3133,6 @@ public class Building : Hoverable, Iinfo
             {
                 person.Inventory.Add(prodHere, amt);
                 AddProductionThisYear(prodHere, amt);
-
             }
             else if (!addToBuildInv && !MyId.Contains("Farm"))
             {
@@ -3223,7 +3147,7 @@ public class Building : Hoverable, Iinfo
             //Debug.Log("Both full" + person.FoodSource.MyId + ".and." + MyId + " AddEvacuationOrder() called");
         }
         //if doesnt have input will see if can get anything out of that buliding that is not an inpput
-            //product 
+        //product
         else if (!doIHaveInput)
         {
             //todo show 3d icon
@@ -3237,7 +3161,7 @@ public class Building : Hoverable, Iinfo
                 return;
             }
         }
-        
+
         //if has more thn 2000Kg of current prd can add Evac order as weell
         if (Inventory.ReturnAmtOfItemOnInv(_currentProd.Product) > 500)//2000
         {
@@ -3255,8 +3179,8 @@ public class Building : Hoverable, Iinfo
     #region Production INput
 
     /// <summary>
-    /// Consumre the inputs needed to create the current product 
-    /// 
+    /// Consumre the inputs needed to create the current product
+    ///
     /// Return what actually was produced based on the input
     /// </summary>
     private float ConsumeInputs(float amtToProd)
@@ -3277,7 +3201,7 @@ public class Building : Hoverable, Iinfo
         //order by lowest.
         //bz if we have 100kg of clay and 50kk of wood we can only produce
         //50kg of brick bz the limit is set by the clay
-        howMuchCanProduce = howMuchCanProduce.OrderBy(a=>a).ToList();
+        howMuchCanProduce = howMuchCanProduce.OrderBy(a => a).ToList();
         ProduceThisKGAndRemove(howMuchCanProduce[0]);
 
         return howMuchCanProduce[0];
@@ -3293,7 +3217,7 @@ public class Building : Hoverable, Iinfo
         for (int i = 0; i < CurrentProd.Ingredients.Count; i++)
         {
             var ingredient = CurrentProd.Ingredients[i];
-            var kg = ingredient.Units*p;
+            var kg = ingredient.Units * p;
             Inventory.RemoveByWeight(ingredient.Element, kg);
         }
     }
@@ -3302,21 +3226,21 @@ public class Building : Hoverable, Iinfo
     /// Will find out how much can produce of a Brick for ex
     /// Will see how much Clay is, ex if is 100kg clay then can produce only 50kg brick
     /// And if there is 50kg of wood will be able to produce 500kg of brick.
-    /// 
+    ///
     /// Then the restiction will be imposed by the amot of clay on inventory and that
-    /// will be what at the end will be produced by the worker 
+    /// will be what at the end will be produced by the worker
     /// </summary>
     /// <param name="ingredient"></param>
     /// <param name="amtToProd"></param>
     /// <returns></returns>
-    float HowMuchCanProduce(InputElement ingredient, float amtToProd)
+    private float HowMuchCanProduce(InputElement ingredient, float amtToProd)
     {
         // 100 * 2 for Brick for ex = 200. he needs 200KG of clay to produce 100kg of brick
-        // 
+        //
         var kgNeeded = amtToProd * ingredient.Units;
         var onInv = Inventory.ReturnAmtOfItemOnInv(ingredient.Element);
 
-        //will return wht we need if can be covered 
+        //will return wht we need if can be covered
         if (onInv > kgNeeded)
         {
             return kgNeeded / ingredient.Units;
@@ -3325,19 +3249,16 @@ public class Building : Hoverable, Iinfo
         return onInv / ingredient.Units;
     }
 
-
-
-    #endregion
-
+    #endregion Production INput
 
     #region Reload Inventory
 
-    int oldYear = -1;
+    private int oldYear = -1;
 
     /// <summary>
     /// Called every time something is produced
     /// </summary>
-    void SomethingWasProduce()
+    private void SomethingWasProduce()
     {
         if (oldYear != Program.gameScene.GameTime1.Year)
         {
@@ -3347,10 +3268,10 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// For be use at least the first time a product is produced 
+    /// For be use at least the first time a product is produced
     /// </summary>
     /// <param name="prod"></param>
-    void DecideIfReloadInventoryWithThisProduction(P prod)
+    private void DecideIfReloadInventoryWithThisProduction(P prod)
     {
         if (!Inventory.Contains(prod))
         {
@@ -3377,18 +3298,19 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Once is used to reload the inv ,, _isToReloadInv be set to False 
+    /// Once is used to reload the inv ,, _isToReloadInv be set to False
     /// </summary>
     public void InvWasReloaded()
     {
         _isToReloadInv = false;
     }
 
-    #endregion
+    #endregion Reload Inventory
 
     #region Production Reporting (for report purposes)
 
-    ProductionReport _productionReport;
+    private ProductionReport _productionReport;
+
     public ProductionReport ProductionReport
     {
         get { return _productionReport; }
@@ -3404,11 +3326,10 @@ public class Building : Hoverable, Iinfo
 
         Quest(amt, p);
 
-
         _productionReport.AddProductionThisYear(p, amt);
         BulletinWindow.AddProduction(p, amt, "Prod");
-    }  
-    
+    }
+
     public void AddConsumeThisYear(P p, float amt)
     {
         if (_productionReport == null)
@@ -3420,7 +3341,7 @@ public class Building : Hoverable, Iinfo
         BulletinWindow.AddProduction(p, amt, "Consume");
     }
 
-#endregion
+    #endregion Production Reporting (for report purposes)
 
     /// <summary>
     /// Use for plants lie Corn to add produced ammt
@@ -3443,7 +3364,6 @@ public class Building : Hoverable, Iinfo
             //Debug.Log(MyId + " doesnt have input");
         }
         AddEvacuationOrderOfProdThatAreNotInput();
-
     }
 
     private void Quest(float amt = 0, P newProduct = P.None)
@@ -3499,7 +3419,6 @@ public class Building : Hoverable, Iinfo
             Program.gameScene.QuestManager.QuestFinished("HireLumberJack");
         }
 
-
         //called from Handle Last stage quest, tuto
         //bz when demolishes adds 10,000
         if (constructionAmt < 9500)
@@ -3553,14 +3472,12 @@ public class Building : Hoverable, Iinfo
         }
     }
 
- 
-
     /// <summary>
-    /// If is all full an evacuation order is add to Dispatch so at least this 
+    /// If is all full an evacuation order is add to Dispatch so at least this
     /// building room will be clear .
-    /// 
+    ///
     /// When this starts to happen over and over again is when u want to start to Export this Product
-    /// In the Port should be a Dispatch to Export and Import 
+    /// In the Port should be a Dispatch to Export and Import
     /// </summary>
     public void AddEvacuationOrderOfProdThatAreNotInput()
     {
@@ -3570,24 +3487,22 @@ public class Building : Hoverable, Iinfo
         {
             Order t = new Order(prodToEvac[i], "", MyId);
             AddToClosestWheelBarrowAsOrder(t, H.Evacuation);
-
         }
     }
 
+    private float lastNoti;
 
-
-    float lastNoti;
     /// <summary>
     /// Will tell worker if can take products out of the biulding
-    /// 
-    /// Used to express if a person can take goods out of building to a Storage or should leave it here in this building 
+    ///
+    /// Used to express if a person can take goods out of building to a Storage or should leave it here in this building
     /// </summary>
     /// <returns></returns>
     public bool CanTakeItOut(Person person)
     {
-        //will update it if null or full        
+        //will update it if null or full
         DefinePreferedStorage();
-        
+
         var res = (_preferedStorage != null && DoesPreferedStorageHaveCapacity());
 
         if (!res && (lastNoti == 0 || Time.time > lastNoti + NotificationsManager.NotiFrec)
@@ -3602,11 +3517,11 @@ public class Building : Hoverable, Iinfo
         return res;
     }
 
+    private float lastNoti2;
 
-    float lastNoti2;
     /// <summary>
-    /// For the buildings that need raw products as an input for the output will will tell u if 
-    /// has input enough or not 
+    /// For the buildings that need raw products as an input for the output will will tell u if
+    /// has input enough or not
     /// </summary>
     /// <returns></returns>
     public bool DoBuildHaveRawResources()
@@ -3616,7 +3531,7 @@ public class Building : Hoverable, Iinfo
         if (!res && (lastNoti2 == 0 || Time.time > lastNoti2 + NotificationsManager.NotiFrec))
         {
             Program.gameScene.GameController1.NotificationsManager1.
-              Notify("NoInput", CurrentProd.Product+"");
+              Notify("NoInput", CurrentProd.Product + "");
             lastNoti2 = Time.time;
         }
 
@@ -3627,17 +3542,17 @@ public class Building : Hoverable, Iinfo
     /// Will tell u if a Storage has enoguh capacity to hold this new amt of goods
     /// </summary>
     /// <returns></returns>
-    bool DoesPreferedStorageHaveCapacity()
+    private bool DoesPreferedStorageHaveCapacity()
     {
         DefinePreferedStorage();
-
 
         return PreferedStorage != null && !PreferedStorage.Inventory.IsFull();
     }
 
-
     #region Preferred Storage
+
     private Structure _preferedStorage;
+
     public Structure PreferedStorage
     {
         get
@@ -3651,11 +3566,12 @@ public class Building : Hoverable, Iinfo
         set { _preferedStorage = value; }
     }
 
-    List<string>oldFoodSrcs= new List<string>(); 
+    private List<string> oldFoodSrcs = new List<string>();
+
     /// <summary>
     /// Define the closest storage that its inventory is not full
-    /// 
-    /// Must be redifined  if new Storage is added to the game 
+    ///
+    /// Must be redifined  if new Storage is added to the game
     /// </summary>
     private void DefinePreferedStorage()
     {
@@ -3670,12 +3586,12 @@ public class Building : Hoverable, Iinfo
         }
         else if (oldFoodSrcs != BuildingPot.Control.FoodSources)
         {
-            //search again for the closest 
+            //search again for the closest
             PreferedStorageSerach();
         }
     }
 
-    void PreferedStorageSerach()
+    private void PreferedStorageSerach()
     {
         oldFoodSrcs.Clear();
         //masonry will check the closest
@@ -3684,14 +3600,14 @@ public class Building : Hoverable, Iinfo
             _preferedStorage =
                 BuildingController.FindTheClosestOfContainTypeFullyBuilt("Storage", transform.position, true);
 
-            //is null bz was only one then 
+            //is null bz was only one then
             if (_preferedStorage == null)
             {
                 _preferedStorage =
                     BuildingController.FindTheClosestOfContainTypeFullyBuilt("Storage", transform.position, false);
             }
         }
-        //other else strucutres will select the Prefered Storage of their closest Masory 
+        //other else strucutres will select the Prefered Storage of their closest Masory
         //as wheelBarrowers always go back to mansory makes sense to use their closer Storage
         else
         {
@@ -3701,18 +3617,17 @@ public class Building : Hoverable, Iinfo
         oldFoodSrcs.AddRange(BuildingPot.Control.FoodSources);
     }
 
-#endregion
-
+    #endregion Preferred Storage
 
     /// <summary>
     /// Will tell u if a this building has enoguh capacity to hold this new amt of goods
-    /// 
-    /// All buildings have small storage 
+    ///
+    /// All buildings have small storage
     /// </summary>
     /// <returns></returns>
-    bool DoWeHaveCapacityInThisBuilding()
+    private bool DoWeHaveCapacityInThisBuilding()
     {
-        return !Inventory.IsFull(); 
+        return !Inventory.IsFull();
     }
 
     /// <summary>
@@ -3734,7 +3649,7 @@ public class Building : Hoverable, Iinfo
                 if (list[i].Key == ingredientsNeeded[j].Element)
                 {
                     res.Add(list[i].Key);
-                } 
+                }
             }
         }
 
@@ -3762,18 +3677,19 @@ public class Building : Hoverable, Iinfo
     }
 
     public static int PROD_AMT_LIMIT = 200;
+
     /// <summary>
     /// This is the one will add order to the Dispatch if dont have the Raw input
     /// </summary>
-    void CheckIfOrdersAreNeeded()
+    private void CheckIfOrdersAreNeeded()
     {
-        if(HType == H.BlackSmith)
+        if (HType == H.BlackSmith)
         {
             var a = this;
         }
 
         //only order inpu twhen is has workers
-        if (PeopleDict.Count==0 || Instruction==H.WillBeDestroy)
+        if (PeopleDict.Count == 0 || Instruction == H.WillBeDestroy)
         {
             return;
         }
@@ -3792,15 +3708,13 @@ public class Building : Hoverable, Iinfo
             //so for nails for example for a Furnitrue will only order 0.2 x 30 = 6kg
             var amtNeeded = rawsOnNeed[i].Units * 20;//10
 
-
-            //if this item has more than 500 kg in inventory then we dont need more 
-            if(Inventory.ReturnAmtOfItemOnInv(prod) > PROD_AMT_LIMIT)
+            //if this item has more than 500 kg in inventory then we dont need more
+            if (Inventory.ReturnAmtOfItemOnInv(prod) > PROD_AMT_LIMIT)
             {
                 continue;
             }
 
-
-            if (!HaveThisProdOnInv(prod) || !doIHaveInput)//put back !doIHaveInput bz gives bug later on 
+            if (!HaveThisProdOnInv(prod) || !doIHaveInput)//put back !doIHaveInput bz gives bug later on
             {
                 //todo use 10000 to put a large number of units needed
                 Order prodNeed = new Order(prod, MyId, amtNeeded);//300
@@ -3814,7 +3728,7 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Now all workers will bring input if its needed 
+    /// Now all workers will bring input if its needed
     /// </summary>
     /// <param name="prodNeed"></param>
     private void AddOrderToOurWorkers(Order prodNeed)
@@ -3838,14 +3752,14 @@ public class Building : Hoverable, Iinfo
         }
     }
 
-
-
-
-
-
+    public void AddToClosestHeavyLoadAsOrder(Order order, H typeOfOrder)
+    {
+        var heavy = BuildingController.FindTheClosestOfContainTypeFullyBuilt(H.HeavyLoad.ToString(), transform.position);
+        AddOrderToBuild(order, typeOfOrder, heavy);
+    }
 
     /// <summary>
-    /// Will find closest WheelBarrow office from here and will add the order 
+    /// Will find closest WheelBarrow office from here and will add the order
     /// </summary>
     /// <param name="order"></param>
     public void AddToClosestWheelBarrowAsOrder(Order order, H typeOfOrder)
@@ -3858,7 +3772,7 @@ public class Building : Hoverable, Iinfo
         }
     }
 
-    void AddOrderToBuild(Order order, H typeOfOrder, Structure closest)
+    private void AddOrderToBuild(Order order, H typeOfOrder, Structure closest)
     {
         //only for debug bz a WheelBarrow always should be up
         if (closest == null)
@@ -3878,24 +3792,16 @@ public class Building : Hoverable, Iinfo
         }
     }
 
-
-
-
-
-
-
-
-
-
     private bool evacAll;
+
     /// <summary>
-    /// Bz when a building is set to be destroyed u need to remove all items on it 
-    /// 
+    /// Bz when a building is set to be destroyed u need to remove all items on it
+    ///
     /// this mtehod can be only once
     /// </summary>
     internal void AddToClosestWheelBarrowAsOrderEvacuateAllInv()
     {
-        //created to address when destroyig a building adddng the same order twice 
+        //created to address when destroyig a building adddng the same order twice
         if (evacAll)
         {
             return;
@@ -3905,13 +3811,13 @@ public class Building : Hoverable, Iinfo
 
         for (int i = 0; i < closest.Count; i++)
         {
-            //the order needs to be inserted as the 1st one so it gets addressed right away 
+            //the order needs to be inserted as the 1st one so it gets addressed right away
             //and therefore destroyed
             AddEvaToAllInv(closest[i], true);
         }
     }
 
-    void AddEvaToAllInv(Structure closest, bool isToInsert)
+    private void AddEvaToAllInv(Structure closest, bool isToInsert)
     {
         //only for debug bz a WheelBarrow always should be up
         if (closest == null)
@@ -3930,23 +3836,15 @@ public class Building : Hoverable, Iinfo
         }
     }
 
-
-
-
-
-
-
-
-
     /// <summary>
     /// If amount is less than 500kg will only look for WheelBarrowOffice but if is bigger
     /// will try to find a HeavyLoad around
-    /// 
+    ///
     /// Here loader will be called if load is bigger thn 1000KG
     /// Here heavyloader will be called if load is bigger thn 2000KG
     /// </summary>
     /// <returns></returns>
-    List<Structure> FindClosestWheelBarrowerAndHeavyLoad()
+    private List<Structure> FindClosestWheelBarrowerAndHeavyLoad()
     {
         var wheel = BuildingController.FindTheClosestOfThisType(H.Masonry, transform.position, Brain.Maxdistance);
         //var loader = BuildingController.FindTheClosestOfThisType(H.Loader, transform.position, Brain.Maxdistance);
@@ -3957,7 +3855,7 @@ public class Building : Hoverable, Iinfo
         //if (Inventory.CurrentKGsOnInv() > 000 && loader != null)//1000
         //{
         //    res.Add(loader);
-        //} 
+        //}
         if (Inventory.CurrentKGsOnInv() > 000 && heavy != null)//2000
         {
             res.AddRange(heavy);
@@ -3966,22 +3864,17 @@ public class Building : Hoverable, Iinfo
         return res;
     }
 
-
-
-
     private IEnumerator ThirtySecUpdate()
     {
         while (true)
         {
             yield return new WaitForSeconds(Random.Range(10, 20)); // wait
             CheckIfOrdersAreNeeded();
-
-
         }
     }
 
     /// <summary>
-    /// Will be called when WheelBarrower pick phisically product in there 
+    /// Will be called when WheelBarrower pick phisically product in there
     /// </summary>
     public void CheckIfCanBeDestroyNow(P prod)
     {
@@ -3991,10 +3884,11 @@ public class Building : Hoverable, Iinfo
         }
     }
 
-    #endregion
+    #endregion Production
 
     private BuildersManager _buildersManager;
-    void InitWheelBarrow()
+
+    private void InitWheelBarrow()
     {
         if (IsLoadingFromFile)
         {
@@ -4027,9 +3921,9 @@ public class Building : Hoverable, Iinfo
         if (newEmploys < 0 && _maxPeople > 0)
         {
             ChangeMaxAmoutOfWorkers("Less");
-            return newEmploys + 1;//one less that needs to be fire 
+            return newEmploys + 1;//one less that needs to be fire
         }
-        else if(newEmploys > 0 && _maxPeople < AbsMaxPeople)
+        else if (newEmploys > 0 && _maxPeople < AbsMaxPeople)
         {
             ChangeMaxAmoutOfWorkers("More");
             return newEmploys - 1;//one less that needs to be hire
@@ -4038,11 +3932,10 @@ public class Building : Hoverable, Iinfo
         return newEmploys;
     }
 
-
     private int _maxPeople;//max people this builging can hold. workers this one can change
     private int _absMaxPeople;//this one doesnt change
-    int _peopleToBeFired;
-    string _hireFireAllAction = "";
+    private int _peopleToBeFired;
+    private string _hireFireAllAction = "";
 
     public int AbsMaxPeople
     {
@@ -4057,7 +3950,7 @@ public class Building : Hoverable, Iinfo
     }
 
     //called on update
-    void HireFireAll()
+    private void HireFireAll()
     {
         if (_hireFireAllAction == "Fire All")
         {
@@ -4079,11 +3972,11 @@ public class Building : Hoverable, Iinfo
 
     internal string ChangeMaxAmoutOfWorkers(string action)
     {
-        if(action == "Fire All")
+        if (action == "Fire All")
         {
             _hireFireAllAction = "Fire All";
         }
-        else if(action == "Hire All")
+        else if (action == "Hire All")
         {
             _hireFireAllAction = "Hire All";
         }
@@ -4117,8 +4010,7 @@ public class Building : Hoverable, Iinfo
         return _maxPeople + "";
     }
 
-
-    void UpdateWorkersRoutine()
+    private void UpdateWorkersRoutine()
     {
         //fire people
         FirePeopleIfNeeded();
@@ -4155,9 +4047,9 @@ public class Building : Hoverable, Iinfo
     {
         AbsMaxPeople = Book.GiveMeStat(HType).MaxPeople;
 
-        //if is loading is better to keep what it has. This is so people get fired or hired 
+        //if is loading is better to keep what it has. This is so people get fired or hired
         //in were fired in the saved file, and then
-        //were loaded again 
+        //were loaded again
         if (!IsLoadingFromFile)
         {
             MaxPeople = PeopleDict.Count;
@@ -4173,15 +4065,15 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Will check if positions are still open on this job site if not then 
-    /// remove from List 
+    /// Will check if positions are still open on this job site if not then
+    /// remove from List
     /// </summary>
-    void CheckIfNoOpenPosLeftThenRemoveFromList()
+    private void CheckIfNoOpenPosLeftThenRemoveFromList()
     {
         if (PeopleDict.Count >= _maxPeople)
         {
             BuildingPot.Control.WorkOpenPos.Remove(MyId);
-//           //Debug.Log(MyId+" removed from curr Jobs");
+            //           //Debug.Log(MyId+" removed from curr Jobs");
         }
     }
 
@@ -4196,24 +4088,24 @@ public class Building : Hoverable, Iinfo
         }
 
         //bz if there are lazy people then we need to hire
-        //however if there are not openPositions will need to go 
+        //however if there are not openPositions will need to go
         if (removeMaxAmtWorkers && (MyText.Lazy() == 0 || !HasOpenPositions())
             )
         {
             ChangeMaxAmoutOfWorkers("Less");
         }
-        //if !HasOpenPositions() will exit below method 
+        //if !HasOpenPositions() will exit below method
         CheckIfNeedsToBeAddedToList();
     }
 
     /// <summary>
-    /// Checks if building can be added to the list 
+    /// Checks if building can be added to the list
     /// </summary>
-    void CheckIfNeedsToBeAddedToList()
+    private void CheckIfNeedsToBeAddedToList()
     {
         if (!HasOpenPositions())
         {
-            return;   
+            return;
         }
 
         if (BuildingPot.Control.WorkOpenPos.Contains(MyId))
@@ -4221,13 +4113,13 @@ public class Building : Hoverable, Iinfo
             return;
         }
 
-        //add to list 
+        //add to list
         BuildingPot.Control.WorkOpenPos.Add(MyId);
-//       //Debug.Log(MyId + " Added to curr Jobs");
+        //       //Debug.Log(MyId + " Added to curr Jobs");
     }
 
     /// <summary>
-    /// Will tell if this Buildign still has Open Positions 
+    /// Will tell if this Buildign still has Open Positions
     /// </summary>
     /// <returns></returns>
     internal bool HasOpenPositions()
@@ -4235,11 +4127,7 @@ public class Building : Hoverable, Iinfo
         return PeopleDict.Count < _maxPeople;
     }
 
-
-
-
-#endregion
-
+    #endregion Job Related
 
     #region Booking
 
@@ -4255,10 +4143,10 @@ public class Building : Hoverable, Iinfo
 
         //means he is a teen.
         //if he booked here is bz he either fits in an exisitng family
-        //or a emptyVirign family exist here 
+        //or a emptyVirign family exist here
 
         //if this is null is bz that family doesnt exist in that building so
-        //u can select a virgin family in that building then 
+        //u can select a virgin family in that building then
         if (toBeFill == null)
         {
             //toBeFill = newHome.BookedHome1.Family;
@@ -4269,11 +4157,11 @@ public class Building : Hoverable, Iinfo
         AssignBookedRole(newP, toBeFill, familyID);
         newP.transform.SetParent(transform);
 
-        //so families are resaved 
+        //so families are resaved
         BuildingPot.Control.Registro.ResaveOnRegistro(MyId);
     }
 
-    void AssignBookedRole(Person newP, Family toBeFill, string familyID)
+    private void AssignBookedRole(Person newP, Family toBeFill, string familyID)
     {
         if (toBeFill == null)
         {
@@ -4302,9 +4190,7 @@ public class Building : Hoverable, Iinfo
         }
     }
 
-
-
-    Role FindRoleOnBooking(Person newP)
+    private Role FindRoleOnBooking(Person newP)
     {
         for (int i = 0; i < BookedHome1.Family.Kids.Count; i++)
         {
@@ -4325,7 +4211,7 @@ public class Building : Hoverable, Iinfo
         return Role.None;
     }
 
-    Family ReturnFamilyByID(string familyID)
+    private Family ReturnFamilyByID(string familyID)
     {
         for (int i = 0; i < Families.Length; i++)
         {
@@ -4338,14 +4224,13 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Will return a family that is empty and has not ID set yet 
+    /// Will return a family that is empty and has not ID set yet
     /// </summary>
     /// <returns></returns>
     //internal Family FindVirginFamily()
     //{
     //    if (Families == null)
     //    {
-
     //        return null;
     //    }
 
@@ -4359,7 +4244,7 @@ public class Building : Hoverable, Iinfo
     //    return null;
     //}
 
-    #endregion
+    #endregion Booking
 
     public bool IsFarm()
     {
@@ -4368,9 +4253,10 @@ public class Building : Hoverable, Iinfo
 
     #region AnimalFarm
 
-    PlantSave _plantSave;
+    private PlantSave _plantSave;
+
     /// <summary>
-    /// If is not null a plant was save it in here 
+    /// If is not null a plant was save it in here
     /// </summary>
     public PlantSave PlantSave1
     {
@@ -4378,13 +4264,13 @@ public class Building : Hoverable, Iinfo
         set { _plantSave = value; }
     }
 
-    List<Animal> _animals = new List<Animal>();//the animals in a AnimalFarm 
+    private List<Animal> _animals = new List<Animal>();//the animals in a AnimalFarm
     private bool wasFarmInited;
 
     public void RemoveAnimal(Animal animal)
     {
-        var noti =_animals.Remove(animal);
-        Debug.Log("animal removed on:"+MyId);
+        var noti = _animals.Remove(animal);
+        Debug.Log("animal removed on:" + MyId);
     }
 
     private void InitFarm()
@@ -4401,9 +4287,9 @@ public class Building : Hoverable, Iinfo
         }
     }
 
-    void InitAnimalFarm()
+    private void InitAnimalFarm()
     {
-        if (HType==H.AnimalFarmSmall)
+        if (HType == H.AnimalFarmSmall)
         {
             SpawnFarmAnimals(H.Small);
         }
@@ -4413,15 +4299,15 @@ public class Building : Hoverable, Iinfo
         }
         else if (HType == H.AnimalFarmLarge)
         {
-            SpawnFarmAnimals(H.Large );
+            SpawnFarmAnimals(H.Large);
         }
         else if (HType == H.AnimalFarmXLarge || HType == H.HeavyLoad)
         {
             SpawnFarmAnimals(H.XLarge);
-        } 
+        }
     }
 
-    void RedoAnimalFarmIfNeeded()
+    private void RedoAnimalFarmIfNeeded()
     {
         if (_oldProd != CurrentProd)
         {
@@ -4446,11 +4332,11 @@ public class Building : Hoverable, Iinfo
         else if (size == H.Med)
         {
             SpawnAnimalNow(2 * animalFactor);
-        }    
+        }
         else if (size == H.Large)
         {
             SpawnAnimalNow(4 * animalFactor);
-        }  
+        }
         else if (size == H.XLarge)
         {
             SpawnAnimalNow(6 * animalFactor);
@@ -4458,7 +4344,7 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// The action of spawining each animal on the game in the farms 
+    /// The action of spawining each animal on the game in the farms
     /// </summary>
     /// <param name="amt"></param>
     private void SpawnAnimalNow(int amt)
@@ -4472,7 +4358,7 @@ public class Building : Hoverable, Iinfo
         }
     }
 
-    Animal SpawnSpecificAnimal(Vector3 iniPos)
+    private Animal SpawnSpecificAnimal(Vector3 iniPos)
     {
         Animal t = null;
 
@@ -4483,11 +4369,11 @@ public class Building : Hoverable, Iinfo
         else if (CurrentProd.Product == P.Beef)
         {
             t = Beef.CreateBeef(iniPos, this);
-        }  
+        }
         else if (CurrentProd.Product == P.Chicken)
         {
             t = Beef.CreateBeef(iniPos, this);
-        } 
+        }
         else if (CurrentProd.Product == P.Pork)
         {
             t = Beef.CreateBeef(iniPos, this);
@@ -4497,7 +4383,7 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Will return the zone of a game object. Use to return the FarmZone of a farm 
+    /// Will return the zone of a game object. Use to return the FarmZone of a farm
     /// </summary>
     /// <param name="zone"></param>
     /// <returns></returns>
@@ -4517,9 +4403,9 @@ public class Building : Hoverable, Iinfo
         var min = child.transform.GetComponent<Collider>().bounds.min;
         var max = child.transform.GetComponent<Collider>().bounds.max;
 
-        var mid = (min + max)/2;
+        var mid = (min + max) / 2;
 
-        return m.Vertex.BuildVertexWithXandZ( mid.x, mid.z);
+        return m.Vertex.BuildVertexWithXandZ(mid.x, mid.z);
     }
 
     /// <summary>
@@ -4528,14 +4414,14 @@ public class Building : Hoverable, Iinfo
     /// <param name="pass"></param>
     /// <param name="animalDim"></param>
     /// <returns></returns>
-    public bool CollideWithExistingAnimal(Vector3 newPos, int newID, float animalDim  )
+    public bool CollideWithExistingAnimal(Vector3 newPos, int newID, float animalDim)
     {
         var passAnimalRect = ReturnBoundsRect(newPos, animalDim);
 
         for (int i = 0; i < _animals.Count; i++)
         {
             var evalRect = ReturnBoundsRect(_animals[i].transform.position, animalDim);
-            if (passAnimalRect.Overlaps(evalRect) && _animals[i].Id != newID)//so its not asking to  himself 
+            if (passAnimalRect.Overlaps(evalRect) && _animals[i].Id != newID)//so its not asking to  himself
             {
                 return true;
             }
@@ -4549,33 +4435,32 @@ public class Building : Hoverable, Iinfo
     /// <param name="position"></param>
     /// <param name="dim"></param>
     /// <returns></returns>
-    Rect ReturnBoundsRect(Vector3 position, float dim)
+    private Rect ReturnBoundsRect(Vector3 position, float dim)
     {
-        var poly= UPoly.CreatePolyFromVector3(position, dim, dim);
+        var poly = UPoly.CreatePolyFromVector3(position, dim, dim);
         return Registro.FromALotOfVertexToRect(poly);
     }
 
-
-        /// <summary>
-    /// Will give a list of vector 3 that is a division of amt int rows and col in the rect 
+    /// <summary>
+    /// Will give a list of vector 3 that is a division of amt int rows and col in the rect
     /// </summary>
     /// <param name="zone"></param>
     /// <param name="amt"></param>
     /// <returns></returns>
-    List<Vector3> ReturnPositionsFromInGameObjectZone(H zone, int amt)
+    private List<Vector3> ReturnPositionsFromInGameObjectZone(H zone, int amt)
     {
-        List<Vector3>res = new List<Vector3>();
+        List<Vector3> res = new List<Vector3>();
         var child = GetChildThatContains(zone);
         var min = child.transform.GetComponent<Collider>().bounds.min;
         var max = child.transform.GetComponent<Collider>().bounds.max;
 
         var mid = (min + max) / 2;
-        var zonePoly = Registro.FromALotOfVertexToPoly(new List<Vector3>() {min, max});
+        var zonePoly = Registro.FromALotOfVertexToPoly(new List<Vector3>() { min, max });
 
         return DivideIntoPositions(zonePoly, amt);
     }
 
-    List<Vector3> DivideIntoPositions(List<Vector3> zonePoly, int amt)
+    private List<Vector3> DivideIntoPositions(List<Vector3> zonePoly, int amt)
     {
         List<Vector3> res = new List<Vector3>();
         amt = MakeIntAEvenNumber(amt);
@@ -4583,19 +4468,19 @@ public class Building : Hoverable, Iinfo
         var wide = Vector3.Distance(zonePoly[0], zonePoly[1]);
         var height = Vector3.Distance(zonePoly[1], zonePoly[2]);
 
-        int rows = amt/2;
-        int col = amt/rows;
+        int rows = amt / 2;
+        int col = amt / rows;
 
-        var addX = wide/rows;
-        var addZ = height/col;
+        var addX = wide / rows;
+        var addZ = height / col;
 
-        var initVector = new Vector3(zonePoly[0].x + addX/2, m.IniTerr.MathCenter.y, zonePoly[0].z + addZ/2);
+        var initVector = new Vector3(zonePoly[0].x + addX / 2, m.IniTerr.MathCenter.y, zonePoly[0].z + addZ / 2);
 
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < col; j++)
             {
-                res.Add(new Vector3(initVector.x + addX*i, m.IniTerr.MathCenter.y, initVector.z +addZ*j));
+                res.Add(new Vector3(initVector.x + addX * i, m.IniTerr.MathCenter.y, initVector.z + addZ * j));
             }
         }
 
@@ -4603,7 +4488,7 @@ public class Building : Hoverable, Iinfo
         return res;
     }
 
-    int MakeIntAEvenNumber(int amt)
+    private int MakeIntAEvenNumber(int amt)
     {
         var evenNumb = Bridge.isAEvenNumb(amt);
         if (!evenNumb)
@@ -4613,18 +4498,17 @@ public class Building : Hoverable, Iinfo
         return amt;
     }
 
-
     /// <summary>
     /// Will return the factor of animals to put in an animal farm .
     /// </summary>
     /// <param name="animalType"></param>
     /// <returns></returns>
-    int AmountOfAnimalFactor()
+    private int AmountOfAnimalFactor()
     {
         var animalType = CurrentProd.Product;
 
-        //so HeavyLoad spawns cows at start 
-        if (animalType == P.None && 
+        //so HeavyLoad spawns cows at start
+        if (animalType == P.None &&
             (HType == H.HeavyLoad))
         {
             animalType = P.Horse;
@@ -4645,9 +4529,7 @@ public class Building : Hoverable, Iinfo
         return -1;
     }
 
-#endregion
-
-
+    #endregion AnimalFarm
 
     #region HeavyLoad
 
@@ -4667,8 +4549,8 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// When a heavyLoader workers is done with an animal and its returning it to 
-    /// this 
+    /// When a heavyLoader workers is done with an animal and its returning it to
+    /// this
     /// </summary>
     public void ReturningBackAnimal()
     {
@@ -4682,22 +4564,23 @@ public class Building : Hoverable, Iinfo
         }
     }
 
-
-#endregion
+    #endregion HeavyLoad
 
     #region Militar
 
     private Militar _militar;
-    void InitMilitar()
+
+    private void InitMilitar()
     {
         if (IsMilitar())
         {
-            _militar=new Militar(this);
+            _militar = new Militar(this);
         }
     }
+
     public bool IsMilitar()
     {
-        if (HType == H.PostGuard //|| HType == H.Tower 
+        if (HType == H.PostGuard //|| HType == H.Tower
             || HType == H.Fort || HType == H.Morro)
         {
             return true;
@@ -4705,8 +4588,7 @@ public class Building : Hoverable, Iinfo
         return false;
     }
 
-#endregion
-
+    #endregion Militar
 
     /// <summary>
     /// Check if contain Bohio or House
@@ -4721,7 +4603,7 @@ public class Building : Hoverable, Iinfo
 
     #region Dock DryDock and Supplier
 
-    Dock _dock;
+    private Dock _dock;
     private Dispatch _dispatch;//dock will have a Dispatch
 
     public bool IsNaval()
@@ -4749,7 +4631,7 @@ public class Building : Hoverable, Iinfo
         }
     }
 
-    void CheckIfStaleInventoryOnDock()
+    private void CheckIfStaleInventoryOnDock()
     {
         if (HType != H.Dock) return;
 
@@ -4774,12 +4656,7 @@ public class Building : Hoverable, Iinfo
         set { _buildersManager = value; }
     }
 
-    #endregion
-
-    #region AnimalFarm
-
-
-    #endregion
+    #endregion Dock DryDock and Supplier
 
     /// <summary>
     /// Will say if one empty family spot is marked already with param 'p'
@@ -4803,24 +4680,15 @@ public class Building : Hoverable, Iinfo
         return false;
     }
 
-
-
-
-
-
-
-
-
     #region Upgrade Building Material
 
     /// <summary>
-    /// The routine call to update mat to next 
+    /// The routine call to update mat to next
     /// </summary>
     public void UpgradeMatToNext()
     {
         var current = ReturnMatUpgradeStatus();
         var next = ReturnNextUpgrade(current);
-
 
         PayUpgradeFee(FirstUpgradeAmt());
 
@@ -4828,11 +4696,11 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Will return the material of current building. Only the last portion of the Key tht 
-    /// is wht says wht status is at 
+    /// Will return the material of current building. Only the last portion of the Key tht
+    /// is wht says wht status is at
     /// </summary>
     /// <returns></returns>
-    string ReturnMatUpgradeStatus()
+    private string ReturnMatUpgradeStatus()
     {
         var matKey = BuildingPot.Control.Registro.SelectBuilding.MaterialKey;
         var alone = matKey.Split('.')[1];
@@ -4841,7 +4709,7 @@ public class Building : Hoverable, Iinfo
 
     /// <summary>
     /// Will tell u if the material of currnet bulding is the best
-    /// 
+    ///
     /// Needed bz if is the best then the upgrade mat btn must be hide
     /// </summary>
     /// <returns></returns>
@@ -4851,11 +4719,11 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Will return which one is the next update coming after the current 
+    /// Will return which one is the next update coming after the current
     /// </summary>
     /// <param name="current"></param>
     /// <returns></returns>
-    string ReturnNextUpgrade(string current)
+    private string ReturnNextUpgrade(string current)
     {
         if (current == "matBuildBase")
         {
@@ -4870,10 +4738,10 @@ public class Building : Hoverable, Iinfo
     }
 
     /// <summary>
-    /// Will upgrade building material then will update it on registro 
+    /// Will upgrade building material then will update it on registro
     /// </summary>
     /// <param name="which"></param>
-    void UpgradeBuildMat(string which)
+    private void UpgradeBuildMat(string which)
     {
         Building b = BuildingPot.Control.Registro.SelectBuilding as Building;
         b.MaterialKey = b.HType + "." + which;
@@ -4903,12 +4771,7 @@ public class Building : Hoverable, Iinfo
             b.MaterialKey);
     }
 
-
-
-    #endregion
-
-
-
+    #endregion Upgrade Building Material
 
     #region Upgrade Building Storage Capacity
 
@@ -4918,10 +4781,10 @@ public class Building : Hoverable, Iinfo
     /// <returns></returns>
     internal bool IsBuildingCapAtMax()
     {
-        //for ways 
+        //for ways
         if (Inventory == null)
         {
-            //true so the btn for addding more capacity hides 
+            //true so the btn for addding more capacity hides
             return true;
         }
 
@@ -4930,19 +4793,19 @@ public class Building : Hoverable, Iinfo
         return Inventory.CapacityVol == baseCap + FirstUpgradeAmt() + SecondUpgradeAmt();
     }
 
-    float FirstUpgradeAmt()
+    private float FirstUpgradeAmt()
     {
         var baseCap = Book.GiveMeStat(HType).Capacity;
-        return baseCap /3;
+        return baseCap / 3;
     }
 
-    float SecondUpgradeAmt()
+    private float SecondUpgradeAmt()
     {
-        return FirstUpgradeAmt()/2;
+        return FirstUpgradeAmt() / 2;
     }
 
     /// <summary>
-    /// Upgrades capacity of Storage to next level 
+    /// Upgrades capacity of Storage to next level
     /// </summary>
     internal void UpgradeCapToNext()
     {
@@ -4963,27 +4826,18 @@ public class Building : Hoverable, Iinfo
         BuildingPot.Control.Registro.ResaveOnRegistro(MyId);
     }
 
-
-
-
     /// <summary>
-    /// Everytime the next stage is used a fee must be paid 
+    /// Everytime the next stage is used a fee must be paid
     /// </summary>
     private void PayUpgradeFee(float fee)
     {
         Program.gameScene.GameController1.Dollars -= fee;
     }
 
-
-
-    #endregion
-
-
-
-
+    #endregion Upgrade Building Storage Capacity
 
     /// <summary>
-    /// Will add a 1000 if a adult will find love in this building 
+    /// Will add a 1000 if a adult will find love in this building
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
@@ -4999,19 +4853,15 @@ public class Building : Hoverable, Iinfo
         return 0;
     }
 
-
-
-
-
     #region Customers
 
     //Customers . For school the kids, church people going there, tavern is the customer
     private int _customerCap = 20;
+
     private int _currentCustomers;
 
-    void InitCustomersCap()
+    private void InitCustomersCap()
     {
-        
     }
 
     public bool CanAddOneMoreCustomer()
@@ -5037,9 +4887,10 @@ public class Building : Hoverable, Iinfo
         return (tavChu || scholar) && PeopleDict.Count >= MaxPeople;
     }
 
-#endregion
+    #endregion Customers
 
-    Vector3 _middlePoint = new Vector3();
+    private Vector3 _middlePoint = new Vector3();
+
     /// <summary>
     /// Must be called only if Anchors were defined already. Otherwise returns transform.position
     /// </summary>
@@ -5047,16 +4898,16 @@ public class Building : Hoverable, Iinfo
     internal Vector3 MiddlePoint()
     {
         if (_anchors.Count == 0)
-	    {
-	        return transform.position;
-	    }
+        {
+            return transform.position;
+        }
 
         if (_middlePoint == new Vector3())
         {
             for (int i = 0; i < _anchors.Count; i++)
-			{
-			    _middlePoint+= _anchors[i];  
-			}
+            {
+                _middlePoint += _anchors[i];
+            }
             _middlePoint /= 4;
         }
         return _middlePoint;
@@ -5095,10 +4946,11 @@ public class Building : Hoverable, Iinfo
         base.OnMouseExit();
     }
 
-    #endregion
+    #endregion Hover All Objects. All objects that have a collider will be hoverable
 
-    StageManager _stageManager;
-    List<ParticleSystem> _pSystem;
+    private StageManager _stageManager;
+    private List<ParticleSystem> _pSystem;
+
     public void SmokePlay(bool isToPlayNow)
     {
         if (_pSystem == null || _pSystem.Count == 0)
@@ -5112,29 +4964,27 @@ public class Building : Hoverable, Iinfo
         }
     }
 
-    void PlayThisSystemPart(bool isToPlayNow, ParticleSystem pSystem)
+    private void PlayThisSystemPart(bool isToPlayNow, ParticleSystem pSystem)
     {
         if (isToPlayNow && pSystem.isStopped)
         {
             pSystem.Play();
             pSystem.Clear(true);
-
         }
-        else if(!isToPlayNow && !pSystem.isStopped)
+        else if (!isToPlayNow && !pSystem.isStopped)
         {
             pSystem.Stop();
         }
     }
 
-    void CheckIfNightSmoke()
+    private void CheckIfNightSmoke()
     {
-        var isEmit = _pSystem!=null && _pSystem.Count > 0 && _pSystem[0].isEmitting;
+        var isEmit = _pSystem != null && _pSystem.Count > 0 && _pSystem[0].isEmitting;
 
-        if (isEmit && ( _stageManager.IsSunsetOrLater() || PeopleDict.Count == 0) )
+        if (isEmit && (_stageManager.IsSunsetOrLater() || PeopleDict.Count == 0))
         {
             SmokePlay(false);
         }
-
     }
 
     internal void HomeSmokePlay()
@@ -5144,44 +4994,34 @@ public class Building : Hoverable, Iinfo
             SmokePlay(true);
         }
     }
-
 }
 
-
-
-
-
-
-
-
-
-
-
-
 /// <summary>
-/// Created to booked homes to familyes so they are kept toghether 
+/// Created to booked homes to familyes so they are kept toghether
 /// </summary>
 public class BookedHome
 {
     public string Building;//the key of the building there are booked to
-    
+
     public Family Family = new Family();//the family tht booked this building
 
-    public BookedHome() { }
+    public BookedHome()
+    {
+    }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="building"></param>
     /// <param name="family">It doesnt hold the ref. cretes a copy object of family</param>
     public BookedHome(string building, Family family)
     {
         Building = building;
-        Family =  new Family(family);
+        Family = new Family(family);
     }
 
     /// <summary>
-    /// Clears all the information of the bopoking so is unbooked 
+    /// Clears all the information of the bopoking so is unbooked
     /// </summary>
     public void ClearBooking()
     {
@@ -5197,11 +5037,11 @@ public class BookedHome
     /// <returns></returns>
     public bool IAmBookedHere(Person person)
     {
-        return Family.DoIBelongToThisFamilyChecksFamID(person) && 
-            !string.IsNullOrEmpty(Building) //if is "" or null is not booked here. Spent a whole day trying to find where the 
+        return Family.DoIBelongToThisFamilyChecksFamID(person) &&
+            !string.IsNullOrEmpty(Building) //if is "" or null is not booked here. Spent a whole day trying to find where the
                                             //person write in another house BookedHome1 without being able too and with people on it
                                             //i found do that everytime tht doesnt doesnt put a Building. So thts it
-                                            //if doesnt have Building is not booked 
+                                            //if doesnt have Building is not booked
             ;
     }
 
@@ -5220,13 +5060,13 @@ public class BookedHome
     }
 
     /// <summary>
-    /// As person are assigned to  the booked place are remove from this family in the booking and 
+    /// As person are assigned to  the booked place are remove from this family in the booking and
     /// added to the Family in the building , and removed from the Familoy var in their old Home too
     /// </summary>
     public void RemovePersonFromBooking(Person personToRemove)
     {
         Family.RemovePersonFromFamily(personToRemove);
-        //everyone was added to the new place and the boking is clear 
+        //everyone was added to the new place and the boking is clear
         if (Family.IsFamilyEmpty())
         {
             //so is not there anymore as a house with space to get new people. This hose is already
@@ -5237,12 +5077,11 @@ public class BookedHome
             {
                 BuildingPot.Control.RemoveFromHousesWithSpace(Building);
             }
-            
-            //just addressingn a bugg tht book can happen 
-           //Debug.Log("Book to clear:"+personToRemove.MyId+ " famId b4:"+personToRemove.FamilyId);
-            ClearBooking();
-           //Debug.Log("Book Cleared:" + personToRemove.MyId + " famId b4:" + personToRemove.FamilyId);
 
+            //just addressingn a bugg tht book can happen
+            //Debug.Log("Book to clear:"+personToRemove.MyId+ " famId b4:"+personToRemove.FamilyId);
+            ClearBooking();
+            //Debug.Log("Book Cleared:" + personToRemove.MyId + " famId b4:" + personToRemove.FamilyId);
 
             //so Individuals tht asked and where denied get a chancee to see this building unbooked
             PersonPot.Control.RestartController();
@@ -5250,7 +5089,7 @@ public class BookedHome
     }
 
     ///// <summary>
-    ///// Will make the old Home Family var virign so can be booked properly on realtor 
+    ///// Will make the old Home Family var virign so can be booked properly on realtor
     ///// </summary>
     //private void MakeOldHomeFamilyVarVirgin(Person toRemove)
     //{
@@ -5260,7 +5099,7 @@ public class BookedHome
     //    if (oldHome!= null)
     //    {
     //        //Debug.Log("Make virgin on oldHome!= null");
-    //        //is good enoguh bz as long as the first perso moving out do this 
+    //        //is good enoguh bz as long as the first perso moving out do this
     //        var fam = oldHome.FindOldFamilyById(toRemove);
 
     //        if (fam == null)
@@ -5276,8 +5115,6 @@ public class BookedHome
     //    }
     //}
 
-
-
     internal bool MySpouseBooked(string Spouse)
     {
         if (Family.Mother == Spouse || Family.Father == Spouse)
@@ -5286,20 +5123,4 @@ public class BookedHome
         }
         return false;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

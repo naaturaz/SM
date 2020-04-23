@@ -16,9 +16,9 @@ public class Structure : StructureParent
         get { return _usedAt; }
         set { _usedAt = value; }
     }
-    
+
     /// <summary>
-    /// This is the method that moves the building around in the terrain 
+    /// This is the method that moves the building around in the terrain
     /// when is newly built
     /// </summary>
     public override void UpdateClosestVertexAndOld()
@@ -48,7 +48,7 @@ public class Structure : StructureParent
         }
     }
 
-    void ArrowColorUpdate()
+    private void ArrowColorUpdate()
     {
         if (IsBuildOk)
         {
@@ -59,9 +59,9 @@ public class Structure : StructureParent
 
     public override void DonePlace()
     {
-        //updates the build 
+        //updates the build
         //calling update here to correct bugg that plane was not in the same position
-        //as geometry 
+        //as geometry
         UpdateBuild();
         //then is Build is ok...
         if (IsBuildOk)
@@ -117,10 +117,10 @@ public class Structure : StructureParent
         //startin satge is save on ReSaveStartinStage()
         BuildingPot.Control.Registro.AddBuildToAll(this, scale, Category, transform.position,
             Inventory,
-            PeopleDict, 
+            PeopleDict,
             LandZone1,
             rotationFacerIndex: RotationFacerIndex, materialKey: MaterialKey,
-            instructionP: Instruction, BookedHome1: BookedHome1, 
+            instructionP: Instruction, BookedHome1: BookedHome1,
             dispatch: Dispatch1, Families: Families,
             dollarsPay: DollarsPay,
             anchors: Anchors, dock: Dock1, root: RootBuilding, buildersManager: BuildersManager1
@@ -132,20 +132,19 @@ public class Structure : StructureParent
     /// </summary>
     public void CancelDemolish()
     {
-       //Debug.Log("Cancel Demiolish");
+        //Debug.Log("Cancel Demiolish");
         AddOnRegistro();
         BuildingPot.Control.DispatchManager1.RemoveEvacOrders(MyId);
 
         PositionFixed = true;
         _isOrderToDestroy = false;
-        Instruction=H.None;
+        Instruction = H.None;
 
         BuildingPot.Control.Registro.RemoveFromDestroyBuildings(this);
     }
 
-
-
     private bool reverse;
+
     public void AssignNewMaterial(Material newMat)
     {
         //this is here for testing and shwoing purpose
@@ -155,7 +154,7 @@ public class Structure : StructureParent
     }
 
     /// <summary>
-    /// The action when user finish placing a building 
+    /// The action when user finish placing a building
     /// </summary>
     public override void FinishPlacingMode(H action)
     {
@@ -167,7 +166,7 @@ public class Structure : StructureParent
 
         DestroyProjector();
         base.FinishPlacingMode(action);
-        
+
         //Mark the Spawns below this obj
         if (action != H.Cancel)
         {
@@ -193,13 +192,12 @@ public class Structure : StructureParent
     }
 
     // Use this for initialization
-	protected void Start () 
+    protected void Start()
     {
-	    if (MyId.Contains("Dummy") || HType == H.Dummy)
-	    {
-	        return;
-	    }
-
+        if (MyId.Contains("Dummy") || HType == H.Dummy)
+        {
+            return;
+        }
 
         base.Start();
 
@@ -207,35 +205,32 @@ public class Structure : StructureParent
         //print("facer#:" + RotationFacerIndex);
 
         //the dummys one dont need rotation other wise will screw the BuildingPot.Control.CurrentSpawnBuild
-	    if (b.CurrentSpawnBuild != null && HType != H.Dummy)
-	    {
-	        b.CurrentSpawnBuild.transform.Rotate(0, RotationFacerIndex*90, 0);
-	    }
-        //here bz need to be called afer rotartion of building happens 
+        if (b.CurrentSpawnBuild != null && HType != H.Dummy)
+        {
+            b.CurrentSpawnBuild.transform.Rotate(0, RotationFacerIndex * 90, 0);
+        }
+        //here bz need to be called afer rotartion of building happens
         HandleSavedTownBuilding();
 
-
-	    //so bounds get updateds
+        //so bounds get updateds
         CheckIfIsEvenRoutine();
 
-        if (!IsLoadingFromFile && HType != H.BullDozer )
+        if (!IsLoadingFromFile && HType != H.BullDozer)
         {
             CreateArrow();
         }
     }
 
-
-
-    void CreateArrow()
+    private void CreateArrow()
     {
         if (b.CurrentSpawnBuild == null || _arrow != null || MyId.Contains(H.Dummy.ToString()) ||
             HType == H.StandLamp)
-        { return;}
+        { return; }
 
         _arrow = Create(Root.arrow, new Vector3());
-        _arrow.transform.Rotate(0, RotationFacerIndex*90, 0);
-        _arrow.transform.SetParent( b.CurrentSpawnBuild.transform);
-        
+        _arrow.transform.Rotate(0, RotationFacerIndex * 90, 0);
+        _arrow.transform.SetParent(b.CurrentSpawnBuild.transform);
+
         if (Bounds.Count > 0)
         {
             _arrow.transform.position = ReturnArrowIniPos(1.75f);
@@ -245,7 +240,7 @@ public class Structure : StructureParent
     /// <summary>
     /// Returns the initial position of an arrow
     /// </summary>
-    Vector3 ReturnArrowIniPos(float howApartFromBuild)
+    private Vector3 ReturnArrowIniPos(float howApartFromBuild)
     {
         Vector3 res = new Vector3();
         if (RotationFacerIndex == 0)
@@ -266,34 +261,33 @@ public class Structure : StructureParent
         }
         return res;
     }
-	
-	// Update is called once per frame
-	protected void Update () 
+
+    // Update is called once per frame
+    protected void Update()
     {
         //if is dummy doesnt need to be raycasting th blue rays all the time etc
-	    if (HType == H.Dummy)
-	    {
-	        return;
-	    }
+        if (HType == H.Dummy)
+        {
+            return;
+        }
 
-	    if (_arrow != null)
-	    {
+        if (_arrow != null)
+        {
             if (_arrow.transform.position != ReturnArrowIniPos(1.75f) && Bounds.Count > 0)
-	        {
-	            _arrow.transform.position = Vector3.Lerp(_arrow.transform.position, ReturnArrowIniPos(1.75f), 0.5f);
-	        }
-	    }
+            {
+                _arrow.transform.position = Vector3.Lerp(_arrow.transform.position, ReturnArrowIniPos(1.75f), 0.5f);
+            }
+        }
 
         UpdateFarm();
 
-
-	    base.Update();
-	    if (!PositionFixed)
-	    {
+        base.Update();
+        if (!PositionFixed)
+        {
             //Will destroy the current obj if in Building._isOrderToDestroy is set to true
             //and PersonController is -1
             DestroyOrdered();
-	    }
+        }
         else if (PositionFixed && CurrentStage == 0)
         {
             if (_startingStage == H.None)
@@ -305,21 +299,20 @@ public class Structure : StructureParent
                 RecreateStage();
             }
         }
-        
-        if (PositionFixed && PeopleDict.Count > 0 && MyId.Contains("Farm") && CurrentProd!=null)
+
+        if (PositionFixed && PeopleDict.Count > 0 && MyId.Contains("Farm") && CurrentProd != null)
         {
             CreateFarm();
         }
 
-	    if (PlantSave1!=null && IsLoadingFromFile && _farm==null)
-	    {
+        if (PlantSave1 != null && IsLoadingFromFile && _farm == null)
+        {
             _farm = new FieldFarm(this, PlantSave1);
             IsLoadingFromFile = false;
-	    }
-
+        }
     }
 
-    #region FieldFarm 
+    #region FieldFarm
 
     public Farm Farm1()
     {
@@ -328,10 +321,10 @@ public class Structure : StructureParent
 
     public FieldFarm FieldFarm1()
     {
-        return (FieldFarm) _farm;
+        return (FieldFarm)_farm;
     }
 
-    void UpdateFarm()
+    private void UpdateFarm()
     {
         if (_farm != null)
         {
@@ -348,7 +341,7 @@ public class Structure : StructureParent
         }
     }
 
-    void CreateFarm()
+    private void CreateFarm()
     {
         if (_farm != null)
         {
@@ -357,17 +350,17 @@ public class Structure : StructureParent
 
         if (MyId.Contains("FieldFarm"))
         {
-            _farm=new FieldFarm(this);
-           //Debug.Log("new farm");
+            _farm = new FieldFarm(this);
+            //Debug.Log("new farm");
         }
     }
 
-    //so a new farm can be created 
+    //so a new farm can be created
     internal void DestroyFarm()
     {
         if (MyId.Contains("FieldFarm"))
         {
-            var field = (FieldFarm) _farm;
+            var field = (FieldFarm)_farm;
             field.BatchDestroy();
         }
 
@@ -379,12 +372,12 @@ public class Structure : StructureParent
     }
 
     /// <summary>
-    /// When a worker works in a farm 
+    /// When a worker works in a farm
     /// </summary>
     public void AddWorkToFarm()
     {
-        //in case is redoing farm 
-        if (_farm==null)
+        //in case is redoing farm
+        if (_farm == null)
         {
             return;
         }
@@ -399,21 +392,21 @@ public class Structure : StructureParent
     {
         if (_farm != null)
         {
-            var fieldd = (FieldFarm) _farm;
+            var fieldd = (FieldFarm)_farm;
             fieldd.ChangeProduct(newProd);
         }
     }
 
-#endregion
+    #endregion FieldFarm
 
     /// <summary>
-    /// Demolishing a building 
-    /// 
+    /// Demolishing a building
+    ///
     /// returns if was demolished
     /// </summary>
     public bool Demolish()
     {
-        //if is a house need to know 
+        //if is a house need to know
         if (IsThisAHouseType())
         {
             var empty = CurrentStage == 4 && Families[0].IsFamilyEmpty();
@@ -438,7 +431,7 @@ public class Structure : StructureParent
         return true;
     }
 
-    void StartDemolishProcess()
+    private void StartDemolishProcess()
     {
         //if is not fully build will do this b4
         if (!IsFullyBuilt())
@@ -446,7 +439,7 @@ public class Structure : StructureParent
             AddToConstruction(100000);
             //needed for in case this is saved and load
             PersonPot.Control.Queues.AddToDestroyBuildsQueue(Anchors, MyId);
-            HideAll();   
+            HideAll();
         }
         BuildingPot.Control.Registro.RemoveItem(Category, MyId);
 
@@ -461,14 +454,14 @@ public class Structure : StructureParent
     }
 
     /// <summary>
-    /// Will return the materials this building cost to the player 
+    /// Will return the materials this building cost to the player
     /// </summary>
     private void ReturnWhatThisCost()
     {
         bool wasGreen = PersonPot.Control.BuildersManager1.WasIGreenLight(MyId);
         PersonPot.Control.BuildersManager1.RemoveConstruction(MyId);//so its removed from the BuilderManager
 
-        //only greenlit will return materials or fully built 
+        //only greenlit will return materials or fully built
         if (wasGreen || CurrentStage == 4 || StartingStage == H.Done)
         {
             ReturnMaterialsCostNoQuestion();
@@ -504,7 +497,7 @@ public class Structure : StructureParent
         Hide(Geometry);
     }
 
-    void Hide(GameObject gP)
+    private void Hide(GameObject gP)
     {
         gP.SetActive(false);
         //Renderer r = gP.GetComponent<Renderer>();
@@ -542,16 +535,16 @@ public class Structure : StructureParent
         if (!IsACoverageBuilding())
             return "";
 
-        return 
-            Languages.ReturnString("I.Can.Service") + Coverage.PeopleICanServe(CurrentCoverage(), HType) + " " 
+        return
+            Languages.ReturnString("I.Can.Service") + Coverage.PeopleICanServe(CurrentCoverage(), HType) + " "
                 + Languages.ReturnString("people in this building") + "\n\n" +
-            Languages.ReturnString(HType + "") + " " + Languages.ReturnString("overall service") + ": " 
+            Languages.ReturnString(HType + "") + " " + Languages.ReturnString("overall service") + ": "
                 + Coverage.OverallMyType(HType, true) + "\n\n" +
             Languages.ReturnString("Overall.People") + Coverage.HowManyPeopleNeedThisService(HType);
     }
 
     /// <summary>
-    /// It is producing if current Product is not Stop 
+    /// It is producing if current Product is not Stop
     /// </summary>
     /// <returns></returns>
     internal bool IsProducingNow()
@@ -560,7 +553,8 @@ public class Structure : StructureParent
     }
 
     //cached farm points
-    List<Vector3> _cachedWorkPoints = new List<Vector3>();
+    private List<Vector3> _cachedWorkPoints = new List<Vector3>();
+
     internal Vector3 ReturnFarmWorkPoint()
     {
         if (_cachedWorkPoints.Count < 20)
@@ -577,7 +571,7 @@ public class Structure : StructureParent
 
     /// <summary>
     /// Will tell u if in this building there is work to do
-    /// 
+    ///
     /// For a docker for ex will be if are orders available
     /// For a insider if all inputs are available
     /// </summary>

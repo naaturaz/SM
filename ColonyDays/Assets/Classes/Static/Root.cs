@@ -4,56 +4,62 @@
  */
 
 using System;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 //will keep all the roots of objects stored as strings in STATIC VARIABLES
 //all VAR ARE STATIC HERE
 public class Root : MonoBehaviour
 {
     ///Main Objects///
-        public static string classesContainer = "Prefab/Main/ClassesContainer";
-        ///Game Scene
-        public static string gameScene = "Prefab/Main/GameScene"; 
+    public static string classesContainer = "Prefab/Main/ClassesContainer";
+
+    ///Game Scene
+    public static string gameScene = "Prefab/Main/GameScene";
 
     ///Controllers
     public static string controllerMain = "Prefab/Controller/Controller_Main";
+
     public static string builderController = "Prefab/Controller/Builder_Controller";
-    
+
     ///Terrain All*******
-        //HelpersMeshMngr
-        public static string meshController = "Prefab/Terrain/Mesh_Controller";
-        public static string malla = "Prefab/Terrain/Malla";
-        public static string extraTallBox = "Prefab/Terrain/Extra_Tall_Box";
-        public static string tallBox = "Prefab/Terrain/Tall_Box";
-        public static string tallBoxR = "Prefab/Terrain/Tall_Box_R";//for render
+    //HelpersMeshMngr
+    public static string meshController = "Prefab/Terrain/Mesh_Controller";
 
-        public static string tallCilinder = "Prefab/Terrain/Tall_Cilinder";
-        public static string tallCilinderR = "Prefab/Terrain/Tall_Cilinder_R";//for render
+    public static string malla = "Prefab/Terrain/Malla";
+    public static string extraTallBox = "Prefab/Terrain/Extra_Tall_Box";
+    public static string tallBox = "Prefab/Terrain/Tall_Box";
+    public static string tallBoxR = "Prefab/Terrain/Tall_Box_R";//for render
 
-        //Terrain
-        public static string terrainValleyAndRiver = "Prefab/Terrain/TerrainValleyAndRiver";
-        public static string terrainIsland = "Prefab/Terrain/Terrain_Island";
-        //public static string terrainIsland2x = "Prefab/Terrain/Terrain_Island2x";
-        public static string terrainIsland2xRiverAccross = "Prefab/Terrain/Terrain_Island2x_River_Accross";
-  
-        //Big Terrains
-        public static string bayAndMountain = "Prefab/Terrain/Bay_And_Mountain";
-        public static string bayAndMountainSoft = "Prefab/Terrain/Bay_And_Mountain_Soft";
-        public static string bayAndMountain1River = "Prefab/Terrain/Bay_And_Mountain_1_River";
-        public static string two_Islands_1_River = "Prefab/Terrain/2_Islands_1_River";
-        public static string oneLand2Islands = "Prefab/Terrain/1_Land_2_Islands";
-        public static string narrowIslandsLand = "Prefab/Terrain/Narrow_Islands_Land";
+    public static string tallCilinder = "Prefab/Terrain/Tall_Cilinder";
+    public static string tallCilinderR = "Prefab/Terrain/Tall_Cilinder_R";//for render
 
-        //this terrains are the ones will show on the New Game menu
-        public static List<string> BigTerrains = new List<string>()
+    //Terrain
+    public static string terrainValleyAndRiver = "Prefab/Terrain/TerrainValleyAndRiver";
+
+    public static string terrainIsland = "Prefab/Terrain/Terrain_Island";
+
+    //public static string terrainIsland2x = "Prefab/Terrain/Terrain_Island2x";
+    public static string terrainIsland2xRiverAccross = "Prefab/Terrain/Terrain_Island2x_River_Accross";
+
+    //Big Terrains
+    public static string bayAndMountain = "Prefab/Terrain/Bay_And_Mountain";
+
+    public static string bayAndMountainSoft = "Prefab/Terrain/Bay_And_Mountain_Soft";
+    public static string bayAndMountain1River = "Prefab/Terrain/Bay_And_Mountain_1_River";
+    public static string two_Islands_1_River = "Prefab/Terrain/2_Islands_1_River";
+    public static string oneLand2Islands = "Prefab/Terrain/1_Land_2_Islands";
+    public static string narrowIslandsLand = "Prefab/Terrain/Narrow_Islands_Land";
+
+    //this terrains are the ones will show on the New Game menu
+    public static List<string> BigTerrains = new List<string>()
         {
-            //bayAndMountain, bayAndMountainSoft, 
-            bayAndMountain1River, 
+            //bayAndMountain, bayAndMountainSoft,
+            bayAndMountain1River,
             "Prefab/Terrain/Center_Island",//
 
             //two_Islands_1_River,
-            oneLand2Islands, 
+            oneLand2Islands,
             narrowIslandsLand,
             "Prefab/Terrain/Matanzas",//
             "Prefab/Terrain/3_Points",
@@ -69,114 +75,112 @@ public class Root : MonoBehaviour
             "Prefab/Terrain/Curtain_Land",
             //"Prefab/Terrain/Stack_Land",
             "Prefab/Terrain/Fingers_Land",
-        }; 
+        };
 
-        //Water 
-        public static string waterTiny = "Prefab/Terrain/Water_Tiny";
-        public static string waterSmall = "Prefab/Terrain/Water_Small";
+    //Water
+    public static string waterTiny = "Prefab/Terrain/Water_Tiny";
 
-        //Spawner 
-        public static string terrainSpawnerController = "Prefab/Terrain/Spawner/Terrain_Spawner_Controller";
-        public static string tree1 = "Prefab/Terrain/Spawner/Tree1";
-        public static string tree2 = "Prefab/Terrain/Spawner/Tree2";
-        public static string tree3 = "Prefab/Terrain/Spawner/Tree3";
+    public static string waterSmall = "Prefab/Terrain/Water_Small";
 
-        public static string tree4 = "Prefab/Terrain/Spawner/Tree4";
-        public static string tree5 = "Prefab/Terrain/Spawner/Tree5";
-        public static string tree6 = "Prefab/Terrain/Spawner/Tree6";
-        public static string tree7 = "Prefab/Terrain/Spawner/Tree7";
-        public static string tree8 = "Prefab/Terrain/Spawner/Tree8";
+    //Spawner
+    public static string terrainSpawnerController = "Prefab/Terrain/Spawner/Terrain_Spawner_Controller";
 
-        public static string tree21 = "Prefab/Terrain/Spawner/Tree21";
-        public static string tree22 = "Prefab/Terrain/Spawner/Tree22";
-        public static string tree23 = "Prefab/Terrain/Spawner/Tree23";
-        public static string tree24 = "Prefab/Terrain/Spawner/Tree24";
-        public static string tree25 = "Prefab/Terrain/Spawner/Tree25";
+    public static string tree1 = "Prefab/Terrain/Spawner/Tree1";
+    public static string tree2 = "Prefab/Terrain/Spawner/Tree2";
+    public static string tree3 = "Prefab/Terrain/Spawner/Tree3";
 
-        public static string palm1 = "Prefab/Terrain/Spawner/Palm/Palm01";
-        public static string palm2 = "Prefab/Terrain/Spawner/Palm/Palm02";
-        public static string palm3 = "Prefab/Terrain/Spawner/Palm/Palm03";
+    public static string tree4 = "Prefab/Terrain/Spawner/Tree4";
+    public static string tree5 = "Prefab/Terrain/Spawner/Tree5";
+    public static string tree6 = "Prefab/Terrain/Spawner/Tree6";
+    public static string tree7 = "Prefab/Terrain/Spawner/Tree7";
+    public static string tree8 = "Prefab/Terrain/Spawner/Tree8";
 
-        public static string palm4 = "Prefab/Terrain/Spawner/Palm/Palm04";
-        public static string palm5 = "Prefab/Terrain/Spawner/Palm/Palm05";
-        public static string palm6 = "Prefab/Terrain/Spawner/Palm/Palm06";
+    public static string tree21 = "Prefab/Terrain/Spawner/Tree21";
+    public static string tree22 = "Prefab/Terrain/Spawner/Tree22";
+    public static string tree23 = "Prefab/Terrain/Spawner/Tree23";
+    public static string tree24 = "Prefab/Terrain/Spawner/Tree24";
+    public static string tree25 = "Prefab/Terrain/Spawner/Tree25";
 
-        public static string palm10 = "Prefab/Terrain/Spawner/Palm/Palm10";
-        public static string palm11 = "Prefab/Terrain/Spawner/Palm/Palm11";
+    public static string palm1 = "Prefab/Terrain/Spawner/Palm/Palm01";
+    public static string palm2 = "Prefab/Terrain/Spawner/Palm/Palm02";
+    public static string palm3 = "Prefab/Terrain/Spawner/Palm/Palm03";
 
-        public static string palm20 = "Prefab/Terrain/Spawner/Palm/Palm20";
-        public static string palm21 = "Prefab/Terrain/Spawner/Palm/Palm21";
-        public static string palm22 = "Prefab/Terrain/Spawner/Palm/Palm22";
-        public static string palm23 = "Prefab/Terrain/Spawner/Palm/Palm23";
+    public static string palm4 = "Prefab/Terrain/Spawner/Palm/Palm04";
+    public static string palm5 = "Prefab/Terrain/Spawner/Palm/Palm05";
+    public static string palm6 = "Prefab/Terrain/Spawner/Palm/Palm06";
 
-        public static string stone0 = "Prefab/Terrain/Spawner/Stone/Stone";
-        public static string stone1 = "Prefab/Terrain/Spawner/Stone/Stone 1";
-        public static string stone2 = "Prefab/Terrain/Spawner/Stone/Stone 2";
-        public static string stone3 = "Prefab/Terrain/Spawner/Stone/Stone 3";
-        public static string stone4 = "Prefab/Terrain/Spawner/Stone/Stone 4";
-        public static string stone5 = "Prefab/Terrain/Spawner/Stone/Stone 5";
-        public static string stone6 = "Prefab/Terrain/Spawner/Stone/Stone 6";
-        public static string stone7 = "Prefab/Terrain/Spawner/Stone/Stone 7";
-        
-        public static string iron0 = "Prefab/Terrain/Spawner/Iron/Iron";
-        public static string iron1 = "Prefab/Terrain/Spawner/Iron/Iron 1";
-        public static string iron2 = "Prefab/Terrain/Spawner/Iron/Iron 2";
-        public static string iron3 = "Prefab/Terrain/Spawner/Iron/Iron 3";
-        public static string iron4 = "Prefab/Terrain/Spawner/Iron/Iron 4";
+    public static string palm10 = "Prefab/Terrain/Spawner/Palm/Palm10";
+    public static string palm11 = "Prefab/Terrain/Spawner/Palm/Palm11";
 
-        public static string gold0 = "Prefab/Terrain/Spawner/Gold/Gold";
-        public static string gold1 = "Prefab/Terrain/Spawner/Gold/Gold 1";
-        public static string gold2 = "Prefab/Terrain/Spawner/Gold/Gold 2";
-        public static string gold3 = "Prefab/Terrain/Spawner/Gold/Gold 3";
-        public static string gold4 = "Prefab/Terrain/Spawner/Gold/Gold 4";
+    public static string palm20 = "Prefab/Terrain/Spawner/Palm/Palm20";
+    public static string palm21 = "Prefab/Terrain/Spawner/Palm/Palm21";
+    public static string palm22 = "Prefab/Terrain/Spawner/Palm/Palm22";
+    public static string palm23 = "Prefab/Terrain/Spawner/Palm/Palm23";
 
-        //all grass roots and orna are now in TerrainSpawnerController
-        public static string orna1 = "Prefab/Terrain/Spawner/Orna1";
-        public static string orna2 = "Prefab/Terrain/Spawner/Orna2";
-        public static string orna3 = "Prefab/Terrain/Spawner/Orna3";
-        public static string orna4 = "Prefab/Terrain/Spawner/Orna4";
-        public static string orna5 = "Prefab/Terrain/Spawner/Orna5";
-        public static string orna6 = "Prefab/Terrain/Spawner/Orna6";
-        public static string orna7 = "Prefab/Terrain/Spawner/Orna7";
-        public static string orna8 = "Prefab/Terrain/Spawner/Orna8";
+    public static string stone0 = "Prefab/Terrain/Spawner/Stone/Stone";
+    public static string stone1 = "Prefab/Terrain/Spawner/Stone/Stone 1";
+    public static string stone2 = "Prefab/Terrain/Spawner/Stone/Stone 2";
+    public static string stone3 = "Prefab/Terrain/Spawner/Stone/Stone 3";
+    public static string stone4 = "Prefab/Terrain/Spawner/Stone/Stone 4";
+    public static string stone5 = "Prefab/Terrain/Spawner/Stone/Stone 5";
+    public static string stone6 = "Prefab/Terrain/Spawner/Stone/Stone 6";
+    public static string stone7 = "Prefab/Terrain/Spawner/Stone/Stone 7";
 
-        public static string grass1 = "Prefab/Terrain/Spawner/Grass1";
-        public static string grass2 = "Prefab/Terrain/Spawner/Grass2";
-        public static string grass3 = "Prefab/Terrain/Spawner/Grass3";  
-        public static string grass4 = "Prefab/Terrain/Spawner/Grass4";
-        public static string grass5 = "Prefab/Terrain/Spawner/Grass5";
-        public static string grass6 = "Prefab/Terrain/Spawner/Grass6";
+    public static string iron0 = "Prefab/Terrain/Spawner/Iron/Iron";
+    public static string iron1 = "Prefab/Terrain/Spawner/Iron/Iron 1";
+    public static string iron2 = "Prefab/Terrain/Spawner/Iron/Iron 2";
+    public static string iron3 = "Prefab/Terrain/Spawner/Iron/Iron 3";
+    public static string iron4 = "Prefab/Terrain/Spawner/Iron/Iron 4";
 
-        public static string grass7 = "Prefab/Terrain/Spawner/Grass7";
-        public static string grass8 = "Prefab/Terrain/Spawner/Grass8";
-        public static string grass9 = "Prefab/Terrain/Spawner/Grass9";
-        public static string grass10= "Prefab/Terrain/Spawner/Grass10";
-        public static string grass11= "Prefab/Terrain/Spawner/Grass11";
-        public static string grass12= "Prefab/Terrain/Spawner/Grass12";
+    public static string gold0 = "Prefab/Terrain/Spawner/Gold/Gold";
+    public static string gold1 = "Prefab/Terrain/Spawner/Gold/Gold 1";
+    public static string gold2 = "Prefab/Terrain/Spawner/Gold/Gold 2";
+    public static string gold3 = "Prefab/Terrain/Spawner/Gold/Gold 3";
+    public static string gold4 = "Prefab/Terrain/Spawner/Gold/Gold 4";
 
-        //Visual Hep for spawner
-        public static string selectMine1 = "Prefab/ScreenHelper/Selection_Mine1";
+    //all grass roots and orna are now in TerrainSpawnerController
+    public static string orna1 = "Prefab/Terrain/Spawner/Orna1";
 
-        //regions
-        public static string forSaleRegion = "Prefab/Terrain/Regions/ForSaleRegion";
-        
-        
+    public static string orna2 = "Prefab/Terrain/Spawner/Orna2";
+    public static string orna3 = "Prefab/Terrain/Spawner/Orna3";
+    public static string orna4 = "Prefab/Terrain/Spawner/Orna4";
+    public static string orna5 = "Prefab/Terrain/Spawner/Orna5";
+    public static string orna6 = "Prefab/Terrain/Spawner/Orna6";
+    public static string orna7 = "Prefab/Terrain/Spawner/Orna7";
+    public static string orna8 = "Prefab/Terrain/Spawner/Orna8";
+
+    public static string grass1 = "Prefab/Terrain/Spawner/Grass1";
+    public static string grass2 = "Prefab/Terrain/Spawner/Grass2";
+    public static string grass3 = "Prefab/Terrain/Spawner/Grass3";
+    public static string grass4 = "Prefab/Terrain/Spawner/Grass4";
+    public static string grass5 = "Prefab/Terrain/Spawner/Grass5";
+    public static string grass6 = "Prefab/Terrain/Spawner/Grass6";
+
+    public static string grass7 = "Prefab/Terrain/Spawner/Grass7";
+    public static string grass8 = "Prefab/Terrain/Spawner/Grass8";
+    public static string grass9 = "Prefab/Terrain/Spawner/Grass9";
+    public static string grass10 = "Prefab/Terrain/Spawner/Grass10";
+    public static string grass11 = "Prefab/Terrain/Spawner/Grass11";
+    public static string grass12 = "Prefab/Terrain/Spawner/Grass12";
+
+    //Visual Hep for spawner
+    public static string selectMine1 = "Prefab/ScreenHelper/Selection_Mine1";
+
+    //regions
+    public static string forSaleRegion = "Prefab/Terrain/Regions/ForSaleRegion";
 
     /// Input
     public static string inputMain = "Prefab/Input/Input_Main";
+
     public static string inputMeshSpawn = "Prefab/Input/Input_Mesh_Spawn";
     public static string inputBuilder = "Prefab/Input/Input_Builder";
 
     ///Building
     public static Dictionary<H, string> buildsRoot = new Dictionary<H, string>(); //for key and root
 
-
     public static string builderPot = "Prefab/Building/Builder_Pot";
     public static string fakeHouse = "Prefab/Building/Fake_House";
     //public static string tavernDone = "Prefab/Building/Tavern/Tavern";
-
-
-
 
     public static string bigBoxPrev = "Prefab/Building/Big_Box_Prev";
     public static string createPlane = "Prefab/Building/Create_Plane";
@@ -201,15 +205,14 @@ public class Root : MonoBehaviour
 
     ///Dummy buidling ......use to be thrown a Raycast by Router.cs
     public static string dummyBuild = "Prefab/Building/DummyBuild";
+
     public static string dummyBuildCollider = "Prefab/Building/DummyBuild_With_Collider";
     public static string dummyBuildWithSpawnPoint = "Prefab/Building/DummyBuild_With_SpawnPoint";
     public static string dummyBuildWithSpawnPointUnTimed = "Prefab/Building/DummyBuild_With_SpawnPoint_UnTimed";
-    
-
-
 
     ///GUI 3d Helpers
     public static string arrow = "Prefab/GUI/Arrow";
+
     public static string projector = "Prefab/GUI/Projector";
     //public static string projectorPerson = "Prefab/GUI/ProjectorPerson";
 
@@ -218,13 +221,11 @@ public class Root : MonoBehaviour
     public static string reachArea = "Prefab/GUI/ReachArea";
     public static string reachAreaFilled = "Prefab/GUI/ReachAreaFilled";
 
-
     public static string lightCilPerson = "Prefab/GUI/Civ5/LightCilPerson";
 
     public static string lockedBuilding = "Prefab/GUI/Locked_Building";
 
     public static string lineUpHelper = "Prefab/GUI/LineUpHelper";
-
 
     public static string ArrowLookAt = "Prefab/GUI/3dHelpers/ArrowLookAt";
     public static string ConstructionSign = "Prefab/GUI/3dHelpers/Construction_Sign";
@@ -232,19 +233,20 @@ public class Root : MonoBehaviour
 
     public static string CubeLookAt = "Prefab/GUI/3dHelpers/CubeLookAt";
 
-
     //FORMS
 
-    //this one is the form is on screen all time 
+    //this one is the form is on screen all time
     public static string mainGUI = "Prefab/GUI/Forms/MainGUI";
 
-    //shows the orders on the Dock 
+    //shows the orders on the Dock
     public static string orderShowClose = "Prefab/GUI/Forms/Order_Show_Close";
+
     public static string orderShow = "Prefab/GUI/Forms/Order_Show";
 
-    //generic btn 
+    //generic btn
     //so far used for products selection
     public static string orderShowGenBtn = "Prefab/GUI/Forms/Order_Show_Generic_Btn";
+
     public static string show_Order_Tile_With_Icons = "Prefab/GUI/Forms/Order/Show_Order_Tile_With_Icons";
 
     public static string showGenBtnLarge = "Prefab/GUI/Forms/Show_Generic_Btn_Large";
@@ -269,6 +271,7 @@ public class Root : MonoBehaviour
 
     //Menu
     public static string mainMenu = "Prefab/Menu/MainMenu";
+
     public static string loadingScreen = "Prefab/Menu/LoadingScreen";
     public static string saveLoadTile = "Prefab/Menu/Save_Load_Tile";
     public static string achieveTile = "Prefab/Menu/Achievement_Tile";
@@ -286,21 +289,16 @@ public class Root : MonoBehaviour
     //Images for GUI
     public static string iconBrick = "";
 
-
-
-
-
-    Dictionary<P, string> _icons = new Dictionary<P, string>(); 
-
-
+    private Dictionary<P, string> _icons = new Dictionary<P, string>();
 
     ///Planes Materials
     public static Dictionary<H, string> planesMaterialDict = new Dictionary<H, string>(); //for key and root
 
     ///Materials
     public static IDictionary<string, string> matDict = new Dictionary<string, string>(); //for key and root
+
     //for key and root used for groups of buildings
-    public static IDictionary<string, string> matDictSec = new Dictionary<string, string>(); 
+    public static IDictionary<string, string> matDictSec = new Dictionary<string, string>();
 
     public static string matGreenSel = "Prefab/Mats/Green_Selection";
     public static string matGreenSel2 = "Prefab/Mats/Green_Selection_2";
@@ -317,7 +315,6 @@ public class Root : MonoBehaviour
     public static string matBuildingBase3 = "Prefab/Mats/Building/Building_Base3";
     public static string dashedLinedSquare = "Prefab/Mats/Dashed_Line_Square";
 
-
     public static string matFarmSoil = "Prefab/Mats/FarmSoil";
 
     public static string matTavernBase = "Prefab/Mats/Building/houseBase";
@@ -325,7 +322,7 @@ public class Root : MonoBehaviour
     public static string matTavernUp2 = "Prefab/Mats/Building/houseUp2";
 
     public static string matStages = "Prefab/Mats/Building/Stages";
-    
+
     public static string matWoodForRaw = "Prefab/Mats/Building/Wood_For_Raw_copy";
     public static string matWoodClassyDoor = "Prefab/Mats/Building/WoodA_Classy_Door_copy";
     public static string matGovServices = "Prefab/Mats/Building/Gov_Serv";
@@ -336,6 +333,7 @@ public class Root : MonoBehaviour
 
     //Atlas
     public static string alphaAtlas = "Prefab/Mats/Atlas/AlphaAtlas";
+
     public static string plantAtlas = "Prefab/Mats/Atlas/PlantAtlas";
     //public static string plantAtlas = "Prefab/Mats/Atlas/AlphaAtlasShake";
 
@@ -352,17 +350,20 @@ public class Root : MonoBehaviour
     /// Personas
     /// </summary>
     public static string personPot = "Prefab/Personas/Person_Pot";
+
     public static string personController = "Prefab/Personas/Person_Controller";
     public static string personSaveLoad = "Prefab/Personas/Person_SaveLoad";
     public static string brain = "Prefab/Personas/Brain";
     public static string body = "Prefab/Personas/Body";
 
     //their starting scale is 0.26f in all axis
-    public static string personaMale1  = "Prefab/Personas/PersonaMale1";
+    public static string personaMale1 = "Prefab/Personas/PersonaMale1";
+
     public static string personaFeMale1 = "Prefab/Personas/PersonaFeMale1";
 
     //Personal Objects// objects person carry around or use
     public static string coal = "Prefab/Personas/PersonalObject/Coal";
+
     public static string crate = "Prefab/Personas/PersonalObject/Crate";
     public static string hoe = "Prefab/Personas/PersonalObject/Hoe";
     public static string axe = "Prefab/Personas/PersonalObject/Axe";
@@ -375,7 +376,6 @@ public class Root : MonoBehaviour
     public static string wheelBarrowWithBoxes = "Prefab/Personas/PersonalObject/WheelBarrowWithBoxes";
     public static string wheelBarrowWithBarrels = "Prefab/Personas/PersonalObject/WheelBarrowWithBarrels";
 
-
     public static string wood = "Prefab/Personas/PersonalObject/Wood";
 
     public static string cart = "Prefab/Personas/PersonalObject/Cart";
@@ -383,30 +383,26 @@ public class Root : MonoBehaviour
     public static string conestogo = "Prefab/Personas/PersonalObject/Conestogo";
     //public static string cartWithBoxes = "Prefab/Personas/PersonalObject/CartWithBoxes";
 
-
     /// <summary>
     /// Animals
     /// </summary>
     public static string beefMale1 = "Prefab/Animals/BeefMale1";
+
     public static string horse = "Prefab/Animals/Horse";
 
-
     public static string beefMat1 = "Prefab/Mats/Animals/Animals";
-
-   
 
     //now on ShipManager.cs
     /// <summary>
     /// Ships
     /// </summary>
-   // public static string shipSmall =  "Prefab/Ship/ShipSmall";
+    // public static string shipSmall =  "Prefab/Ship/ShipSmall";
 
-
-    static void LoadMatDict()
+    private static void LoadMatDict()
     {
-        matDict.Add(H.Trail+"."+Ma.matBuildBase, matGravilla);
-        matDict.Add(H.Trail+"."+Ma.matBuildUpg1, matStone);
-        matDict.Add(H.Trail + "." +Ma.matBuildUpg2, matAdoquin);
+        matDict.Add(H.Trail + "." + Ma.matBuildBase, matGravilla);
+        matDict.Add(H.Trail + "." + Ma.matBuildUpg1, matStone);
+        matDict.Add(H.Trail + "." + Ma.matBuildUpg2, matAdoquin);
 
         matDict.Add(H.Road + "." + Ma.matBuildBase, matGravillaRoad);
 
@@ -452,10 +448,9 @@ public class Root : MonoBehaviour
             return matDictSec[key];
         }
 
-        //returning this as default for all 
+        //returning this as default for all
         return matWoodForRaw;
     }
-
 
     public static string RetBuildingRoot(H key)
     {
@@ -468,16 +463,16 @@ public class Root : MonoBehaviour
         return buildsRoot[key];
     }
 
+    private static List<string> houseMed = new List<string>();
+    private static List<string> bohio = new List<string>();
 
-    static List<string>houseMed = new List<string>(); 
-    static List<string>bohio = new List<string>(); 
     private static string BohioRand()
     {
         return bohio[UMath.GiveRandom(0, bohio.Count)];
         //return houseMed[UMath.GiveRandom(0,1)];
     }
 
-    static void LoadHouseMedAndBohio()
+    private static void LoadHouseMedAndBohio()
     {
         //houseMed.Add("Prefab/Building/House/BohioA");
         //houseMed.Add("Prefab/Building/House/BohioB");
@@ -495,7 +490,7 @@ public class Root : MonoBehaviour
     }
 
     /// <summary>
-    /// Will return the root for the icon of a building 
+    /// Will return the root for the icon of a building
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
@@ -506,17 +501,17 @@ public class Root : MonoBehaviour
             LoadDictionaryRoots();
         }
 
-        //execption 
+        //execption
         if (key == H.Road)
         {
             return "Prefab/Building/Infrastructure/Road" + "_Icon";
         }
 
-        return buildsRoot[key]+"_Icon";
+        return buildsRoot[key] + "_Icon";
     }
 
     /// <summary>
-    /// Will return the root for the banner of a building 
+    /// Will return the root for the banner of a building
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
@@ -527,7 +522,7 @@ public class Root : MonoBehaviour
             LoadDictionaryRoots();
         }
 
-        //execption 
+        //execption
         if (key == H.Road)
         {
             return "Prefab/Building/Infrastructure/Road" + "_Banner";
@@ -535,13 +530,6 @@ public class Root : MonoBehaviour
 
         return buildsRoot[key] + "_Banner";
     }
-
-
-
-
-
-
-
 
     /// <summary>
     /// Will return the root of the Product
@@ -591,17 +579,7 @@ public class Root : MonoBehaviour
     //    set { _productsRoot = value; }
     //}
 
-
-
-
-
-
-
-
-
-
-
-    static void LoadMatDictSec()
+    private static void LoadMatDictSec()
     {
         var govServ = GovServices.GetValues(typeof(GovServices));
         var woodAClassyDoor = WoodAClassyDoor.GetValues(typeof(WoodAClassyDoor));
@@ -614,66 +592,58 @@ public class Root : MonoBehaviour
         AddToMatDictSec(matHouse2, house2, Ma.matBuildBase);
     }
 
-    static void AddToMatDictSec(string materialRoot, Array array, Ma typeOfUpdgrade)
+    private static void AddToMatDictSec(string materialRoot, Array array, Ma typeOfUpdgrade)
     {
         foreach (var item in array)
         {
-            matDictSec.Add(item.ToString() + "." +typeOfUpdgrade.ToString(), materialRoot);
+            matDictSec.Add(item.ToString() + "." + typeOfUpdgrade.ToString(), materialRoot);
         }
     }
-
 
     #region Materials Enums
 
     //this enums are the buildings that use the enum name Material
 
     //everytihng is not below or in the first dictionry will get the defaul material
-    enum GovServices
+    private enum GovServices
     {
         CommerceChamber, Customs, Library, School, TradesSchool, TownHouse, Church
     }
 
-    enum WoodAClassyDoor
+    private enum WoodAClassyDoor
     {
         Cloth, Printer, CoinStamp, Carpentry, Cigars, Mill, Slat,
         Dock, DryDock, Supplier,
         StorageSmall, StorageMed, StorageBig, StorageBigTwoDoors, StorageExtraBig,
-
     }
 
-    enum WoodA
+    private enum WoodA
     {
         GunPowder, Paper, Silk, SugarMill, LightHouse, Brick, Tilery
     }
 
-    enum MatHouse2
+    private enum MatHouse2
     {
-        HouseB, 
-        //HouseMedA, HouseMedB, 
+        HouseB,
+        //HouseMedA, HouseMedB,
     }
-    
-    #endregion
-    
-    static void LoadDictionaryRoots()
+
+    #endregion Materials Enums
+
+    private static void LoadDictionaryRoots()
     {
-
-
-
-
-
         //infr Trail, Road, BridgeTrail, BridgeRoad, CoachMan, LightHouse, WheelBarrow, StockPile,
         buildsRoot.Add(H.Road, "Prefab/Building/Farm");
-       
-        
+
         buildsRoot.Add(H.BridgeTrail, "Prefab/Building/Bridge");
         buildsRoot.Add(H.BridgeRoad, "Prefab/Building/Bridge");
-        
+
         buildsRoot.Add(H.CoachMan, "Prefab/Building/Infrastructure/CoachMan");
         buildsRoot.Add(H.Masonry, "Prefab/Building/Infrastructure/Masonry");
         buildsRoot.Add(H.StandLamp, "Prefab/Building/Infrastructure/StandLamp");
 
         buildsRoot.Add(H.HeavyLoad, "Prefab/Building/Infrastructure/HeavyLoad");
-       
+
         buildsRoot.Add(H.LightHouse, "Prefab/Building/Infrastructure/LightHouse");
         //wheel barrrow not needed anymoe. bz will be join with BuildersOffice
         buildsRoot.Add(H.WheelBarrow, "Prefab/Building/Infrastructure/WheelBarrow");
@@ -689,9 +659,8 @@ public class Root : MonoBehaviour
         buildsRoot.Add(H.BrickHouseA, "Prefab/Building/House/BrickHouseA");
         buildsRoot.Add(H.BrickHouseB, "Prefab/Building/House/BrickHouseB");
         buildsRoot.Add(H.BrickHouseC, "Prefab/Building/House/BrickHouseC");
-        
 
-        //farming 
+        //farming
         //animal farming
         buildsRoot.Add(H.AnimalFarmSmall, "Prefab/Building/Farming/AnimalFarmSmall");
         buildsRoot.Add(H.AnimalFarmMed, "Prefab/Building/Farming/AnimalFarmMed");
@@ -706,9 +675,6 @@ public class Root : MonoBehaviour
 
         buildsRoot.Add(H.FishingHut, "Prefab/Building/Farming/FishingHut");
 
-
-
-
         //Raw
         buildsRoot.Add(H.Mortar, "Prefab/Building/Raw/Mortar");
         buildsRoot.Add(H.Clay, "Prefab/Building/Raw/Clay");
@@ -718,7 +684,6 @@ public class Root : MonoBehaviour
         buildsRoot.Add(H.BlackSmith, "Prefab/Building/Raw/BlackSmith");
         buildsRoot.Add(H.ShoreMine, "Prefab/Building/Raw/ShoreMine");
         buildsRoot.Add(H.QuickLime, "Prefab/Building/Raw/QuickLime");
-
 
         //Prod
         buildsRoot.Add(H.Brick, "Prefab/Building/Prod/Brick");
@@ -779,16 +744,9 @@ public class Root : MonoBehaviour
         buildsRoot.Add(H.FlowerPot, "Prefab/Building/Decoration/FlowerPot");
         buildsRoot.Add(H.PradoLion, "Prefab/Building/Decoration/PradoLion");
 
-
         //Helper
         buildsRoot.Add(H.BullDozer, "Prefab/Building/Helper/BullDozer");
-
     }
-
-
-
-
-
 
     #region Return Base Plane Method and Dictionary
 
@@ -802,97 +760,24 @@ public class Root : MonoBehaviour
         return planesMaterialDict[key];
     }
 
-    static void LoadPlaneMaterialRoots()
+    private static void LoadPlaneMaterialRoots()
     {
         planesMaterialDict.Add(H.CoachMan, "material root");
         planesMaterialDict.Add(H.Masonry, "material root");
     }
 
-
-    #endregion
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    #endregion Return Base Plane Method and Dictionary
 
     //OLD stuff
 
-
-
     //list tht will hold all path stirngs
     public static List<string> path = new List<string>();
+
     public static bool started = false;//is use to flag if the list was filled or not
 
-    //list that are use to hold sets of Menus////////////////////////////////////////////////////////// 
+    //list that are use to hold sets of Menus//////////////////////////////////////////////////////////
     public static List<string> selNewModels = new List<string>();
+
     public static List<string> selRaws = new List<string>();
     public static List<string> selElement = new List<string>();
     public static List<string> selHelper = new List<string>();
@@ -907,35 +792,37 @@ public class Root : MonoBehaviour
 
     //hold all the menu list set of menus///////////////////////////////////////////////////////////////
     public static List<List<string>> myMenuSets = new List<List<string>>();
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
-    
     //--------------------------------------------------------------------------------------------------------------
     //Misc
     public static string threeDBtnMenuHandler = "Prefab/Misc/ThreeDBtnMenuHandler";
+
     public static string twoDBtnMenuHandler = "Prefab/Misc/TwoDBtnMenuHandler";
 
     //were in General.cs
     public static string peopleMan1 = "Prefab/People/Man1/Man1Prefab";
+
     public static string helperNewBuild = "Prefab/Misc/NewBuild";
 
     //were in Menus.cs
     public static string menusTextLeft = "Prefab/GUI/Help_Text_Left";
+
     public static string menusTextMiddle = "Prefab/GUI/Help_Text_Middle";
     public static string GUIState = "Prefab/GUI/State";
     public static string basic3dMenu = "Prefab/Menu/RightClick/Basic/Basic3dMenu";
 
     //Select New Model Menu
     public static string selRaw3dMenu = "Prefab/Menu/RightClick/SelectModel/Select_Raw_Btn_NewMenu_3dMenu";
+
     public static string selElement3dMenu = "Prefab/Menu/RightClick/SelectModel/Select_Element_Btn_NewMenu_3dMenu";
     public static string selHelper3dMenu = "Prefab/Menu/RightClick/SelectModel/Select_Helper_Btn_NewMenu_3dMenu";
     public static string newModelSpawner = "RightClicked_Menu_Spawner";
 
     //Select New Raw Menu
     public static string selCube = "Prefab/Menu/RightClick/SelectRaw/Select_Cube_Btn_Raw_3dMenu";
+
     public static string selCylinder = "Prefab/Menu/RightClick/SelectRaw/Select_Cylinder_Btn_Raw_3dMenu";
     public static string selSphere = "Prefab/Menu/RightClick/SelectRaw/Select_Sphere_Btn_Raw_3dMenu";
     public static string selPyramid = "Prefab/Menu/RightClick/SelectRaw/Select_Pyramid_Btn_Raw_3dMenu";
@@ -944,14 +831,16 @@ public class Root : MonoBehaviour
 
     //Select New Element Menu
     public static string selBomb = "Prefab/Menu/RightClick/SelectElement/Select_Bomb_Btn_Element_3dMenu";
+
     public static string selElevator = "Prefab/Menu/RightClick/SelectElement/Select_Elevator_Btn_Element_3dMenu";
     public static string selMine = "Prefab/Menu/RightClick/SelectElement/Select_Mine_Btn_Element_3dMenu";
     public static string selSpike = "Prefab/Menu/RightClick/SelectElement/Select_Spike_Btn_Element_3dMenu";
     public static string selSpring = "Prefab/Menu/RightClick/SelectElement/Select_Spring_Btn_Element_3dMenu";
     public static string elementSpawner = "Element_Menu_Spawner";
 
-    //3d Helper 
+    //3d Helper
     public static string redSphereHelp = "Prefab/Misc/RedSphereHelp";
+
     public static string yellowSphereHelp = "Prefab/Misc/YellowSphereHelp";
     public static string yellowSphereHelp_ZeroAlpha = "Prefab/Misc/YellowSphereHelp_ZeroAlpha";
 
@@ -965,6 +854,7 @@ public class Root : MonoBehaviour
 
     //Raw Models
     public static string cone = "Prefab/Model/Raw/Cone";
+
     public static string cube = "Prefab/Model/Raw/Cube";
     public static string cylinder = "Prefab/Model/Raw/Cylinder";
     public static string pyramid = "Prefab/Model/Raw/Pyramid";
@@ -972,6 +862,7 @@ public class Root : MonoBehaviour
 
     //Elements Models
     public static string bomb = "Prefab/Model/Element/Bomb";
+
     public static string elevator = "Prefab/Model/Element/Elevator";
     public static string mine = "Prefab/Model/Element/Mine";
     public static string spike = "Prefab/Model/Element/Spike";
@@ -980,6 +871,7 @@ public class Root : MonoBehaviour
 
     //Helper Models //Drone, Goblins, Soldiers, Doctor, Builders
     public static string builder = "Prefab/Model/Helper/Builder";
+
     public static string goblin = "Prefab/Model/Helper/Goblin";
     public static string drone = "Prefab/Model/Helper/Drone";
     public static string doctor = "Prefab/Model/Helper/Doctor";
@@ -988,6 +880,7 @@ public class Root : MonoBehaviour
     //////////////////////////////////////////////////////MAIN MENU         MAIN MENU       MAIN MENU
     //Main Menu
     public static string campaign = "Prefab/Menu/MainMenu/Select_Campaign_Btn_Main_3dMenu";
+
     public static string profile = "Prefab/Menu/MainMenu/Select_Profile_Btn_Main_3dMenu";
     public static string multiPlayer = "Prefab/Menu/MainMenu/Select_MultiPlayer_Btn_Main_3dMenu";
     public static string settings = "Prefab/Menu/MainMenu/Select_Settings_Btn_Main_3dMenu";
@@ -996,35 +889,40 @@ public class Root : MonoBehaviour
     public static string moreGames = "Prefab/Menu/MainMenu/Select_More_Games_Btn_Main_3dMenu";
     public static string mainSpawner = "Main_Menu_Spawner";
 
-
-
     //Campaign / Select Character Menu//
     public static string singleBoard = "Prefab/Menu/Campaign/Select_SingleBoard_Btn_Main_3dMenu";
+
     public static string selMaleOne = "Prefab/Menu/Campaign/Actionable_Male1_Btn_Main_3dMenu";//Actionable_Male1_Btn_Main_3dMenu"  Actionable_Male1_Btn3d
     public static string selMaleTwo = "Prefab/Menu/Campaign/Actionable_Male2_Btn_Main_3dMenu";
     public static string play = "Prefab/Menu/Campaign/Actionable_Play_Btn_Main_3dMenu";
     public static string campaignSpawner = "Campaign_Menu_Spawner";
+
     //chartacters to choose
     public static string boardMale1 = "Prefab/Menu/Campaign/Board_Male1_Btn_Main_3dMenu";
+
     public static string boardMale2 = "Prefab/Menu/Campaign/Board_Male2_Btn_Main_3dMenu";
 
     //Profile Menu
     public static string profileBoard = "Prefab/Menu/Profile/Select_Profile_Btn_Main_3dMenu";
+
     public static string profileSpawner = "Profile_Menu_Spawner";
 
     //Multiplayer menu//
     public static string multiBoard = "Prefab/Menu/MultiPlayer/Select_MultiPlayerBoard_Btn_Main_3dMenu";
+
     public static string playMulti = "Prefab/Menu/MultiPlayer/Select_PlayMulti_Btn_Main_3dMenu";
     public static string multiPlayerSpawner = "MultiPlayer_Menu_Spawner";
 
     //Settings Menu
     public static string soundOnMain = "Prefab/Menu/Settings/Select_Sound_Btn_Main_3dMenu";
+
     public static string musicOnMain = "Prefab/Menu/Settings/Select_Music_Btn_Main_3dMenu";
     public static string creditsOnMain = "Prefab/Menu/Settings/Select_Credits_Btn_Main_3dMenu";
     public static string settingsSpawner = "Settings_Menu_Spawner";
 
-    //Create online user 
+    //Create online user
     public static string userBoard = "Prefab/Menu/CreateUser/Select_UserBoard_Btn_Main_3dMenu";
+
     public static string okCreateProfile = "Prefab/Menu/CreateUser/Select_OkCreateProfile_Btn_Main_3dMenu";
     public static string createUserSpawner = "CreateUser_Menu_Spawner";
 
@@ -1038,59 +936,62 @@ public class Root : MonoBehaviour
     //END MAIN MENU
     /////////////////////////////////////////////////////
 
-
     //Players
     public static string godPlayer = "Prefab/People/GodPlayer/GodPlayer";
+
     public static string maleOneModel = "Prefab/People/Male/Male";
     public static string maleTwoModel = "Prefab/People/MaleTwoModel/MaleTwoModel";
 
     //Cameras
     public static string cameraFollow = "Prefab/Cameras/CameraFollow";
+
     public static string cameraFollowLobby = "Prefab/Cameras/CameraFollowLobby";
     public static string cameraFPS = "Prefab/Cameras/CameraFPS";
 
     //RTS Camera
     public static string cameraRTS = "Prefab/Cameras/CameraRTS";
+
     public static string mouseInBorderRTS = "Prefab/Cameras/RTS/MouseInBorderRTS";
     public static string rotateRTS = "Prefab/Cameras/RTS/RotateRTS";
     public static string inputRTS = "Prefab/Cameras/RTS/InputRTS";
     public static string miniMapRTS = "Prefab/Cameras/RTS/MiniMapRTS";
     public static string centerTarget = "Prefab/Cameras/RTS/CenterTarget";
+
     //GUI**************************************************************************************
     //Still Buttons
     public static string pauseButton = "Prefab/GUI/Pause_Button/Select_Pause_Btn2D_NewMenu_PauseMenu";
+
     public static string heart = "Prefab/GUI/Heart/Heart_GUI";
 
-    //Pause Menu 
+    //Pause Menu
     public static string mainMenu2DBtnInPauseMenu = "Prefab/Menu/Pause/Actionable_BackToMain_Btn2D_NewMenu_PauseMenu";
+
     public static string resume2DBtnInPauseMenu = "Prefab/Menu/Pause/Select_Resume_Btn2D_Click_PauseMenu";
     public static string settings2DBtnInPauseMenu = "Prefab/Menu/Pause/Actionable_Settings_Btn2D_NewMenu_PauseMenu";
+
     //not added to  pauseMenu list bz this label is spawned mannualy and this are intended to follow a
     //one row pattern on screen ... this obj is a whole screen label
     public static string backGroundLabelPauseMenu = "Prefab/Menu/Pause/Back_Ground_Label_Pasive_PauseMenu";
+
     public static string pauseMenuSpawner = "Pause_Menu_Spawner";
 
     //Confirm Menu
     public static string okPause = "Prefab/Menu/Confirm/Actionable_Ok_PauseMenu";
+
     public static string cancelPause = "Prefab/Menu/Confirm/Actionable_Cancel_PauseMenu";
     public static string confirmMenuSpawner = "Confirm_Menu_Spawner";
 
     //Settings on Pause
     public static string soundOnPaused = "Prefab/Menu/SettingsPause/Actionable_Sound_Btn_Main_Paused";
+
     public static string musicOnPaused = "Prefab/Menu/SettingsPause/Actionable_Music_Btn_Main_Paused";
     public static string backToPauseMenu = "Prefab/Menu/SettingsPause/Actionable_BackToPause_Btn2D_Click_Pause";
     public static string settingsPauseSpawner = "Settings_Pause_Menu_Spawner";
-    
-    
-
-
- 
 
     //End of GUI*************************************************************************************
 
     public static void Start()
     {
-      
     }
 
     public static string ReturnFullPath(string which)
@@ -1130,7 +1031,7 @@ public class Root : MonoBehaviour
             //print("spawner:" + spawner);
             for (int k = 0; k < myMenuSets[i].Count; k++)
             {
-                //IMPORTATNT what is being stored in the list cant be "" other wise will bug 
+                //IMPORTATNT what is being stored in the list cant be "" other wise will bug
                 if ((myMenuSets[i][k]) != "" && (myMenuSets[i][k]) != null)
                 {
                     //spawner is longer than what is stored.. as may have (Clone) and .MiddleMenu in the name
@@ -1144,8 +1045,3 @@ public class Root : MonoBehaviour
         return temp;
     }
 }
-
-
-
-
-

@@ -5,39 +5,42 @@ using UnityEngine;
 
 /*
  * Used for keep track and organization of the orders for WheelBarrowers
- * 
+ *
  * Regular orders are the one place for example for the SmallPrint when they need paper. So
  * U know the DestinyBuild
- * 
+ *
  * Evacuation orders are place when deleting a FoodSrc or a Factory storage is full. So the SourceBuilding
  * is known wht is needed is a destiniyBuild to get rid of the products
- * 
- * 
- * In the Dock case tht has a Dispatch too 
+ *
+ *
+ * In the Dock case tht has a Dispatch too
  * the Import are evac orders
  * and Export are regular orders
- * 
+ *
  */
 
 public class Dispatch
 {
     private bool _isUsingPrimary;// IF true we are using the Primary _orders list
-    List<Order> _orders = new List<Order>();//the current orders
+    private List<Order> _orders = new List<Order>();//the current orders
+
     //the old orders kept here in the order they were processed so once we run out of order will
     //start from the beginning of recicled and will put it at the end , so in that way WheelBarrowers
-    //will keep working , even if we have no orders 
-    List<Order> _recycledOrders = new List<Order>();
+    //will keep working , even if we have no orders
+    private List<Order> _recycledOrders = new List<Order>();
+
     //here will be added Evacuated orders than cant find a spot into any Food Src
-    List<Order> _dormantOrders = new List<Order>();
+    private List<Order> _dormantOrders = new List<Order>();
+
     private H _type = H.None;//type of Dispatch. So for there is the Regular one and Dock
 
-    List<Order> _expImpOrders = new List<Order>();
+    private List<Order> _expImpOrders = new List<Order>();
     private int maxAmtOfExpImpOrders = 10;
 
     /// <summary>
     /// orders tht are being added on this session. Were not loaded
     /// </summary>
-    List<Order> _fresh = new List<Order>();
+    private List<Order> _fresh = new List<Order>();
 
     public bool IsUsingPrimary
     {
@@ -47,9 +50,9 @@ public class Dispatch
 
     internal void IncreaseOrderPriority(Order order)
     {
-        //before on process 
-        var myIndex = _expImpOrders.FindIndex(a=>a.ID == order.ID);
-        if(myIndex > 0)
+        //before on process
+        var myIndex = _expImpOrders.FindIndex(a => a.ID == order.ID);
+        if (myIndex > 0)
         {
             for (int i = myIndex; i > -1; i--)
             {
@@ -65,7 +68,7 @@ public class Dispatch
             }
         }
 
-        //on process 
+        //on process
         myIndex = _orders.FindIndex(a => a.ID == order.ID);
         if (myIndex > 0)
         {
@@ -86,7 +89,7 @@ public class Dispatch
 
     internal void DecreaseOrderPriority(Order order)
     {
-        //before on process 
+        //before on process
         var myIndex = _expImpOrders.FindIndex(a => a.ID == order.ID);
         if (myIndex < _expImpOrders.Count && myIndex >= 0)
         {
@@ -104,7 +107,7 @@ public class Dispatch
             }
         }
 
-        //on process 
+        //on process
         myIndex = _orders.FindIndex(a => a.ID == order.ID);
         if (myIndex < _orders.Count && myIndex >= 0)
         {
@@ -126,8 +129,8 @@ public class Dispatch
     internal void DeleteOrder(Order order)
     {
         RemoveOrderFromAllListByID(order.ID);
-        //need to remove money gain and 
-        //set check on food so when is on Dock and not Order contains 
+        //need to remove money gain and
+        //set check on food so when is on Dock and not Order contains
         //its product the product will get delete it from Dock
     }
 
@@ -150,7 +153,7 @@ public class Dispatch
 
         return false;
     }
-    
+
     internal bool DoYouHaveThisOrderInCurrentLists(Order order)
     {
         var orderFound = _expImpOrders.Find(a => a.ID == order.ID);
@@ -173,7 +176,6 @@ public class Dispatch
         get { return _orders; }
         set { _orders = value; }
     }
-
 
     public List<Order> RecycledOrders
     {
@@ -203,11 +205,13 @@ public class Dispatch
     }
 
     /// <summary>
-    /// Only exports needed so ships know what to get 
+    /// Only exports needed so ships know what to get
     /// </summary>
     public List<Order> ExportsOrders { get; private set; }
 
-    public Dispatch() { }
+    public Dispatch()
+    {
+    }
 
     public Dispatch(H type)
     {
@@ -218,7 +222,7 @@ public class Dispatch
     /// Will return the Orders if at least is one other wise the RecycledOrders
     /// </summary>
     /// <returns></returns>
-    List<Order> ReturnCurrentList()
+    private List<Order> ReturnCurrentList()
     {
         if (Orders.Count > 0)
         {
@@ -230,7 +234,7 @@ public class Dispatch
     /// <summary>
     /// Will define _isUsingPrimary
     /// </summary>
-    bool DefineUsingPrimary(List<Order> list)
+    private bool DefineUsingPrimary(List<Order> list)
     {
         if (list == Orders)
         {
@@ -243,20 +247,18 @@ public class Dispatch
     /// Will return the cureent list of orders and will define _isUsingPrimary
     /// </summary>
     /// <returns></returns>
-    List<Order> ReturnCurrentListAndDefinePrimary()
+    private List<Order> ReturnCurrentListAndDefinePrimary()
     {
         _isUsingPrimary = DefineUsingPrimary(ReturnCurrentList());
 
-
         return ReturnCurrentList();
-
     }
 
     /// <summary>
-    /// This is the public method that building problably a factory of some kind 
+    /// This is the public method that building problably a factory of some kind
     /// will call when have zero of a ingredient in their inventory
-    /// so an order will be on place, so WheelBarrowers can find where to pull the ingredient from if is 
-    /// in  any Storage 
+    /// so an order will be on place, so WheelBarrowers can find where to pull the ingredient from if is
+    /// in  any Storage
     /// </summary>
     /// <param name="prod">The product/ingredient  is needed</param>
     public void AddToOrdersToDock(Order prod)
@@ -268,13 +270,12 @@ public class Dispatch
             Orders.Add(prod);
             //OrderByPlacedTime(Orders);
 
-
             _recycledOrders.Remove(prod);
         }
     }
 
     /// <summary>
-    /// Bz they dont need to check ID if building place a order of a material should wait until is completed 
+    /// Bz they dont need to check ID if building place a order of a material should wait until is completed
     /// </summary>
     /// <param name="prod"></param>
     public void AddToOrdersToWheelBarrow(Order prod)
@@ -288,40 +289,8 @@ public class Dispatch
         }
     }
 
-    #region Heavy Load
-    /// <summary>
-    /// Bz they dont need to check ID if building place a order of a material should wait until is completed 
-    /// </summary>
-    /// <param name="prod"></param>
-    public void AddToOrdersToHeavyLoad(Order prod)
-    {
-        if (!ListContains(Orders, prod))
-        {
-            Debug.Log("Order Added on Heavy:" + prod.Product + ".placed by:" + prod.DestinyBuild);
-            Orders.Add(prod);
-            _recycledOrders.Remove(prod);
-            //OrderByPlacedTime(Orders);
-        }
-    }
-
-
-    /// <summary>
-    /// Evac order in a wheelbacrrow will overwrite if they are from the same place and same prod 
-    /// </summary>
-    /// <param name="evacOrder"></param>
-    public void AddEvacuationOrderToHeavyLoad(Order evacOrder)
-    {
-        if (!ListContains(Orders, evacOrder) && !ListContains(_dormantOrders, evacOrder))
-        {
-            Orders.Add(evacOrder);
-            //OrderByPlacedTime(Orders);
-            Debug.Log("evac order added:" + evacOrder.Product + " orig:" + evacOrder.SourceBuild);
-        }
-    }
-    #endregion
-
-    //ordering them by time placed so first placed is given always first 
-    void OrderByPlacedTime(List<Order> list)
+    //ordering them by time placed so first placed is given always first
+    private void OrderByPlacedTime(List<Order> list)
     {
         list = list.OrderBy(a => a.PlacedTime).ToList();
     }
@@ -330,7 +299,7 @@ public class Dispatch
     /// This is the order added onces user is ordering to Destroy an non empty FoodSrc
     /// and is use too if a Factory has stopped producing bz workers have ther FoodSrc full and
     /// Factory inventor is full too
-    /// 
+    ///
     /// Evac orders in dock are all unique
     /// </summary>
     /// <param name="evacOrder"></param>
@@ -342,9 +311,10 @@ public class Dispatch
             //OrderByPlacedTime(Orders);
         }
     }
+
     /// <summary>
-    /// Evac order in a wheelbacrrow will overwrite if they are from the same place and same prod 
-    /// 
+    /// Evac order in a wheelbacrrow will overwrite if they are from the same place and same prod
+    ///
     /// isToInsertOrder to be used by buildings destroyed
     /// </summary>
     /// <param name="evacOrder"></param>
@@ -358,7 +328,7 @@ public class Dispatch
             }
         }
         //it doesnt need to see if is coitained in any list. As this are sent from Buildings that are
-        //being set to be destrioyed 
+        //being set to be destrioyed
         if (isToInsertOrder)
         {
             Orders.Insert(0, evacOrder);
@@ -366,10 +336,10 @@ public class Dispatch
     }
 
     /// <summary>
-    /// Will return true if the 'prod' param was found in the 'list' as having the same 'Product and 
+    /// Will return true if the 'prod' param was found in the 'list' as having the same 'Product and
     /// (DestinyBuild or SourceBuild) and ID'
     /// </summary>
-    bool ListContainsCheckID(List<Order> list, Order prod)
+    private bool ListContainsCheckID(List<Order> list, Order prod)
     {
         for (int i = 0; i < list.Count; i++)
         {
@@ -393,7 +363,7 @@ public class Dispatch
     /// <param name="list"></param>
     /// <param name="prod"></param>
     /// <returns></returns>
-    bool ListContains(List<Order> list, Order prod)
+    private bool ListContains(List<Order> list, Order prod)
     {
         for (int i = 0; i < list.Count; i++)
         {
@@ -416,7 +386,7 @@ public class Dispatch
     /// <param name="list"></param>
     /// <param name="prod"></param>
     /// <returns></returns>
-    int ReturnItemIndex(List<Order> list, Order prod)
+    private int ReturnItemIndex(List<Order> list, Order prod)
     {
         for (int i = 0; i < list.Count; i++)
         {
@@ -438,7 +408,7 @@ public class Dispatch
     /// Call when a Order is being sent to WheelBarrower
     /// </summary>
     /// <param name="prod"></param>
-    void RemoveFromOrdersAddToRecycled(Order prod)
+    private void RemoveFromOrdersAddToRecycled(Order prod)
     {
         RemoveOrderFromTheList(Orders, prod);
         if (!ListContainsCheckID(_recycledOrders, prod))
@@ -454,10 +424,10 @@ public class Dispatch
     }
 
     /// <summary>
-    /// This is for when using the Recycled orders, once an order is given 
-    /// needs to be sent to the last place on the list 
+    /// This is for when using the Recycled orders, once an order is given
+    /// needs to be sent to the last place on the list
     /// </summary>
-    void RemoveFromPosToLast(Order prod)
+    private void RemoveFromPosToLast(Order prod)
     {
         var indx = _recycledOrders.IndexOf(prod);
         Order temp = _recycledOrders[indx];
@@ -479,10 +449,10 @@ public class Dispatch
 
         for (int i = 0; i < currOrders.Count; i++)
         {
-            //if the Inventory of destiny build is full will skip that order 
+            //if the Inventory of destiny build is full will skip that order
             if (//IsDestinyBuildInvFullForThisProd(currOrders[i]) ||
-                IsDestinyWithOverSoManyKGOfThisProd(Building.PROD_AMT_LIMIT, currOrders[i])
-                || currOrders[i].IsCompleted)
+                (IsDestinyWithOverSoManyKGOfThisProd(Building.PROD_AMT_LIMIT, currOrders[i]) && !currOrders[i].IsRelatedToDock()
+                || currOrders[i].IsCompleted))
             {
                 //todo Notify
                 Debug.Log("*Inv full to DestBuild:" + currOrders[i].DestinyBuild + "|for prod:" + currOrders[i].Product + ""
@@ -510,7 +480,7 @@ public class Dispatch
         return null;
     }
 
-    List<Order> ReturnCurrentListForDocker()
+    private List<Order> ReturnCurrentListForDocker()
     {
         if (ExpImpOrders.Count > 0)
         {
@@ -523,6 +493,22 @@ public class Dispatch
         return _recycledOrders;
     }
 
+    public void CleanOrdersIfNeeded()
+    {
+        LoadOrdersIfNeeded();
+        var currOrders = ReturnCurrentListAndDefinePrimary();
+
+        for (int i = 0; i < currOrders.Count; i++)
+        {
+            if (currOrders[i].IsCompleted)
+            {
+                Debug.Log("Order removed:" + currOrders[i].DestinyBuild + "|for prod:" + currOrders[i].Product + "" + "");
+                RemoveOrderByIDExIm(currOrders[i].ID);
+                i--;
+            }
+        }
+    }
+
     public Order GiveMeOrderDocker(Person person)
     {
         LoadOrdersIfNeeded();
@@ -530,7 +516,7 @@ public class Dispatch
 
         for (int i = 0; i < currOrders.Count; i++)
         {
-            //if the Inventory of destiny build is full will skip that order 
+            //if the Inventory of destiny build is full will skip that order
             if (IsDestinyBuildInvFullForThisProd(currOrders[i]) || currOrders[i].IsCompleted)
             {
                 //todo Notify
@@ -557,13 +543,12 @@ public class Dispatch
     /// </summary>
     private void LoadOrdersIfNeeded()
     {
-
     }
 
     /// <summary>
     /// Will tell u if on order destiny has more that 'amtMax' of the order prod.
-    /// 
-    /// In the context that we have 1000KG of iron on carpintery we dont need more 
+    ///
+    /// In the context that we have 1000KG of iron on carpintery we dont need more
     /// </summary>
     /// <param name="amtMax"></param>
     /// <param name="order"></param>
@@ -590,8 +575,7 @@ public class Dispatch
         return false;
     }
 
-
-    bool IsDestinyBuildInvFullForThisProd(Order order)
+    private bool IsDestinyBuildInvFullForThisProd(Order order)
     {
         var destBuild = Brain.GetBuildingFromKey(order.DestinyBuild);
 
@@ -602,13 +586,13 @@ public class Dispatch
 
         if (destBuild.Inventory.IsFullForThisProd(order.Product))
         {
-            Debug.Log(String.Format("Building {0} can't accept more {1} therefore order is removed", order.DestinyBuild, order.Product ));
+            Debug.Log(String.Format("Building {0} can't accept more {1} therefore order is removed", order.DestinyBuild, order.Product));
             return true;
         }
         return false;
     }
 
-    bool IsDestinyBuildInvFull(Order order)
+    private bool IsDestinyBuildInvFull(Order order)
     {
         var destBuild = Brain.GetBuildingFromKey(order.DestinyBuild);
 
@@ -678,12 +662,12 @@ public class Dispatch
     }
 
     /// <summary>
-    /// Returns a regular order 
+    /// Returns a regular order
     /// </summary>
     /// <param name="person"></param>
     /// <param name="order"></param>
     /// <returns></returns>
-    Order RegularOrder(Person person, Order order)
+    private Order RegularOrder(Person person, Order order)
     {
         var foodSrc = FindFoodSrcWithProd(person, order.Product);
 
@@ -694,7 +678,10 @@ public class Dispatch
             //OrderFound(order);
 
             temp.Amount = order.ApproveThisAmt(person.HowMuchICanCarry());
-            order.AddToFullFilled(temp.Amount);
+
+            //if is a Heavy Loader moving a Dock order doesnt need to take order amount from here. Will do it in Wheelbarrow class
+            if (person.Work.HType != H.HeavyLoad && !order.IsRelatedToDock())
+                order.AddToFullFilled(temp.Amount);
 
             temp.SourceBuild = foodSrc;
             return temp;
@@ -728,9 +715,9 @@ public class Dispatch
     }
 
     /// <summary>
-    /// Matching ID of order will look into _orders and _recycledOrders 
-    /// 
-    /// If not found 0 is return 
+    /// Matching ID of order will look into _orders and _recycledOrders
+    ///
+    /// If not found 0 is return
     /// </summary>
     /// <param name="ord"></param>
     /// <returns></returns>
@@ -754,7 +741,7 @@ public class Dispatch
 
     /// <summary>
     /// So if is a loaded game will show progress, bz orders are loaded and saved
-    /// after loaded will get updated only if done mannually 
+    /// after loaded will get updated only if done mannually
     /// </summary>
     /// <param name="ord"></param>
     private void UpdateExportsAndImport(Order ord, float amt)
@@ -779,7 +766,7 @@ public class Dispatch
         }
     }
 
-    Order RegularOrderDocker(Person person, Order order)
+    private Order RegularOrderDocker(Person person, Order order)
     {
         var foodSrc = FindFoodSrcWithProd(person, order.Product);
 
@@ -796,13 +783,12 @@ public class Dispatch
             return temp;
         }
         //bz dock inventory amount of this item must be less other wise wont be given
-        //this is to avoid dockkers keep dumping an item into Dock Inventory until a ship arrives 
+        //this is to avoid dockkers keep dumping an item into Dock Inventory until a ship arrives
         else if (foodSrc != "" && person.Work.Inventory.ReturnAmtOfItemOnInv(order.Product) > order.Amount)
         {
             //this is once the invnetory in the port has more than the ammount. u need
             //to find a way to see how much is left of the order so that amt will become
             //the current order for this person... order object maybe needs a feel with completion amt, and completed bool
-
         }
         //if not found a FoodSrc with the Product need to seend it to the back of the queue
         //or send it to Recycled Orders
@@ -838,14 +824,14 @@ public class Dispatch
             }
         }
 
-        if(ExportsOrders != null)
-        for (int i = 0; i < ExportsOrders.Count; i++)
-        {
-            if (ExportsOrders[i].Product == key)
+        if (ExportsOrders != null)
+            for (int i = 0; i < ExportsOrders.Count; i++)
             {
-                res = true;
+                if (ExportsOrders[i].Product == key)
+                {
+                    res = true;
+                }
             }
-        }
 
         for (int i = 0; i < _fresh.Count; i++)
         {
@@ -865,9 +851,9 @@ public class Dispatch
     }
 
     /// <summary>
-    /// Wil do the actions needed once an order is found 
+    /// Wil do the actions needed once an order is found
     /// </summary>
-    void OrderFound(Order prod)
+    private void OrderFound(Order prod)
     {
         if (_isUsingPrimary)
         {
@@ -881,7 +867,7 @@ public class Dispatch
 
     /// <summary>
     /// Here will loop thru all Food Srcs looking for the 'prod'
-    /// 
+    ///
     /// Will return a string value if one found with the prod other wise returs ""
     /// </summary>
     public static string FindFoodSrcWithProd(Person person, P prod)
@@ -900,7 +886,7 @@ public class Dispatch
         return "";
     }
 
-    string FindClosestFoodSrcNotFull(Person person, Order ord)
+    private string FindClosestFoodSrcNotFull(Person person, Order ord)
     {
         var foodSrcs = ScoreAllFoodSources(person, ord);
 
@@ -916,7 +902,7 @@ public class Dispatch
         return "";
     }
 
-    static List<BuildRank> ScoreAllFoodSources(Person person, Order ord = null)
+    private static List<BuildRank> ScoreAllFoodSources(Person person, Order ord = null)
     {
         List<BuildRank> rank = new List<BuildRank>();
         for (int i = 0; i < BuildingPot.Control.FoodSources.Count; i++)
@@ -935,25 +921,25 @@ public class Dispatch
 
     /// <summary>
     /// used to be from the closest from Home. Now is from Work
-    /// 
+    ///
     /// used by evacuation orders
     /// and regular orders. they need to find the closest FoodSrc to the Works of the Persons
-    /// not their homes 
+    /// not their homes
     /// </summary>
     /// <param name="person"></param>
     /// <param name="toScore"></param>
     /// <returns></returns>
-    static float ScoreABuild(Person person, Building toScore, Order ord)
+    private static float ScoreABuild(Person person, Building toScore, Order ord)
     {
         if (person.Work == null)
         {
             return Vector3.Distance(person.transform.position, toScore.transform.position);
         }
 
-        //when is an evacuation order will be passed here 
+        //when is an evacuation order will be passed here
         if (ord != null)
         {
-            //so if is a Evacuation order will score based in proximity to the Origin building. 
+            //so if is a Evacuation order will score based in proximity to the Origin building.
             var origen = Brain.GetStructureFromKey(ord.SourceBuild);
             if (origen != null)
             {
@@ -1005,7 +991,7 @@ public class Dispatch
     /// </summary>
     /// <param name="list"></param>
     /// <param name="order"></param>
-    void RemoveOrderFromTheList(List<Order> list, Order order)
+    private void RemoveOrderFromTheList(List<Order> list, Order order)
     {
         var index = ReturnItemIndex(list, order);
 
@@ -1019,7 +1005,7 @@ public class Dispatch
 
     /// <summary>
     /// Will take care of destroying the building if was waiting for the inventory
-    /// for be evacuated 
+    /// for be evacuated
     /// </summary>
     internal void CheckIfWasWatingToBeEvacuated(Order order, Building building)
     {
@@ -1027,14 +1013,14 @@ public class Dispatch
         InputElement ing = new InputElement(order.Product, order.Amount);
 
         //if doesnt have enought means we will deplete this Item in the inventory with this .
-        //So I can go ahead and remove tht order from evacuation order so its not used anymore 
+        //So I can go ahead and remove tht order from evacuation order so its not used anymore
         if (building != null && building.Inventory != null &&
             !building.Inventory.IsHasEnoughToCoverThisIngredient(ing))
         {
             RemoveEvacuationOrder(order.ID);
             //Debug.Log("Removed evac order:" + order.Product+".date"+Program.gameScene.GameTime1.TodayYMD());
 
-            //so people pass check in with Queues and this building finnaly gets removed 
+            //so people pass check in with Queues and this building finnaly gets removed
             if (building.Inventory.IsEmpty())
             {
                 PersonPot.Control.RestartController();
@@ -1042,7 +1028,7 @@ public class Dispatch
         }
     }
 
-    #endregion
+    #endregion Evacuation Order
 
     public bool DoIHaveAnyOrderOnDispatch(Building build)
     {
@@ -1070,7 +1056,7 @@ public class Dispatch
         RemoveRegularOrdersOnList(_recycledOrders, myId);
     }
 
-    void RemoveRegularOrdersOnList(List<Order> list, string destinBuild)
+    private void RemoveRegularOrdersOnList(List<Order> list, string destinBuild)
     {
         for (int i = 0; i < list.Count; i++)
         {
@@ -1088,7 +1074,7 @@ public class Dispatch
     {
         for (int i = 0; i < ExpImpOrders.Count; i++)
         {
-            if (ExpImpOrders[i].SourceBuild == "Ship")
+            if (ExpImpOrders[i].SourceBuildInfo == "Ship")
             {
                 return true;
             }
@@ -1096,7 +1082,7 @@ public class Dispatch
 
         for (int i = 0; i < Orders.Count; i++)
         {
-            if (Orders[i].SourceBuild == "Ship")
+            if (Orders[i].SourceBuildInfo == "Ship")
             {
                 return true;
             }
@@ -1105,21 +1091,20 @@ public class Dispatch
         return false;
     }
 
-
     internal bool HasExportOrders()
     {
         return ExportsOrders != null && ExportsOrders.Count > 0;
     }
 
     /// <summary>
-    /// The action of importing an order to Inventory. This is called by ship 
+    /// The action of importing an order to Inventory. This is called by ship
     /// </summary>
     /// <param name="dock"></param>
     internal bool Import(Building dock)
     {
         for (int i = 0; i < ExpImpOrders.Count; i++)
         {
-            if (ExpImpOrders[i].SourceBuild == "Ship")
+            if (ExpImpOrders[i].SourceBuildInfo == "Ship")
             {
                 var ord = ExpImpOrders[i];
 
@@ -1139,7 +1124,7 @@ public class Dispatch
     /// </summary>
     /// <param name="dock"></param>
     /// <param name="ord"></param>
-    void HandleThatImport(Building dock, Order ord)
+    private void HandleThatImport(Building dock, Order ord)
     {
         var maxAmtCanTake = dock.Inventory.MaxAmtOnKGCanTakeOfAProd(ord.Product);
         AddEvacuationOrderInDock(ord);
@@ -1151,6 +1136,9 @@ public class Dispatch
             Debug.Log("Imported:" + ord.Product + " . " + ord.Amount + " Done");
             Program.gameScene.ExportImport1.Buy(ord.Product, ord.Amount, dock.Name);
 
+            //Order heavyOrder = new Order(ord.Product, "", dock.MyId);
+            dock.AddToClosestHeavyLoadAsOrder(ord, H.Evacuation);
+
             dock.Inventory.Add(ord.Product, ord.Amount);
             ExpImpOrders.Remove(ord);
         }
@@ -1161,6 +1149,9 @@ public class Dispatch
             Debug.Log("Imported:" + ord.Product + " . " + maxAmtCanTake);
             Program.gameScene.ExportImport1.Buy(ord.Product, maxAmtCanTake, dock.Name);
 
+            //Order heavyOrder = new Order(ord.Product, "", dock.MyId);
+            dock.AddToClosestHeavyLoadAsOrder(ord, H.Evacuation);
+
             dock.Inventory.Add(ord.Product, maxAmtCanTake);
             ord.ChangeAmountBy(-maxAmtCanTake);
         }
@@ -1168,7 +1159,7 @@ public class Dispatch
 
     /// <summary>
     /// Will remove the Import order from Dispatch. Import orders are evacuation orders
-    /// 
+    ///
     /// Export orders are removed at HandleThatExport()
     /// </summary>
     public void RemoveImportOrder(Building dock, Order ord)
@@ -1185,7 +1176,6 @@ public class Dispatch
         }
     }
 
-
     /// <summary>
     /// The action of export from dock inventory to Ship. Ship object is the one calling this
     /// </summary>
@@ -1196,7 +1186,7 @@ public class Dispatch
 
         for (int i = 0; i < ExportsOrders.Count; i++)
         {
-            if (ExportsOrders[i].DestinyBuild == "Ship")
+            if (ExportsOrders[i].DestinyBuildInfo == "Ship")
             {
                 if (dock.Inventory.IsItemOnInv(ExportsOrders[i].Product))
                 {
@@ -1220,9 +1210,10 @@ public class Dispatch
         return res;
     }
 
-    static bool _exportsShown;
+    private static bool _exportsShown;
+
     /// <summary>
-    /// The first time a game exports any goods will show the exports window 
+    /// The first time a game exports any goods will show the exports window
     /// </summary>
     private void ShowExportsAsHelp()
     {
@@ -1240,7 +1231,7 @@ public class Dispatch
     /// </summary>
     /// <param name="dock"></param>
     /// <param name="i"></param>
-    void HandleThatExport(Building dock, Order ord)
+    private void HandleThatExport(Building dock, Order ord)
     {
         //ord = dock.Inventory.ManageExportOrder(ord);
         float leftOnOrder = ord.Left();
@@ -1255,7 +1246,7 @@ public class Dispatch
     {
         if (ExpImpOrders.Count < maxAmtOfExpImpOrders)
         {
-            if (order.DestinyBuild == "Ship")
+            if (order.DestinyBuildInfo == "Ship")
             {
                 if (ExportsOrders == null)
                 {
@@ -1278,10 +1269,10 @@ public class Dispatch
         }
     }
 
-    #endregion
+    #endregion Dock Related
 
     /// <summary>
-    /// Only on _orders list 
+    /// Only on _orders list
     ///      Created to pull the import orders on Building Window
     /// </summary>
     /// <returns></returns>
@@ -1299,8 +1290,8 @@ public class Dispatch
     }
 
     /// <summary>
-    /// Only on _orders list 
-    /// 
+    /// Only on _orders list
+    ///
     /// Created to pull the import orders on Building Window
     /// </summary>
     /// <returns></returns>
@@ -1319,10 +1310,10 @@ public class Dispatch
 
     /// <summary>
     /// Bz as amount change in the order and .
-    /// 
+    ///
     /// use to remove the export and import orders
-    /// 
-    /// will return true if was removed 
+    ///
+    /// will return true if was removed
     /// </summary>
     /// <param name="id"></param>
     internal bool RemoveOrderByIDExIm(string id)
@@ -1358,7 +1349,7 @@ public class Dispatch
         return res;
     }
 
-    bool RemoveOrderFromAllListByID(string id)
+    private bool RemoveOrderFromAllListByID(string id)
     {
         var res = false;
         for (int i = 0; i < Orders.Count; i++)
@@ -1389,14 +1380,14 @@ public class Dispatch
         }
 
         if (ExportsOrders != null)
-        for (int i = 0; i < ExportsOrders.Count; i++)
-        {
-            if (ExportsOrders[i].ID == id)
+            for (int i = 0; i < ExportsOrders.Count; i++)
             {
-                ExportsOrders.RemoveAt(i);
-                res = true;
+                if (ExportsOrders[i].ID == id)
+                {
+                    ExportsOrders.RemoveAt(i);
+                    res = true;
+                }
             }
-        }
 
         for (int i = 0; i < _fresh.Count; i++)
         {
@@ -1411,13 +1402,12 @@ public class Dispatch
 
     /// <summary>
     /// in this case will be added as a evacuation order on the Dock with Price zero
-    /// bz then will appear as an Import 
-    /// 
+    /// bz then will appear as an Import
+    ///
     /// this is when an Export Order was candelled by user and still some goods on Dock
     /// </summary>
-    void CheckIfExportAndStillOnDockStorage()
+    private void CheckIfExportAndStillOnDockStorage()
     {
-
     }
 
     /// <summary>
@@ -1441,20 +1431,20 @@ public class Dispatch
 
 public class Order
 {
-    public H TypeOrder = H.None;//the type of order is 
+    public H TypeOrder = H.None;//the type of order is
     public P Product;
     public string SourceBuild;
 
-    string _destinyBuild;
+    private string _destinyBuild;
 
     //the amount dispatched in an order
-    float _amount;
+    private float _amount;
 
-    float _fullFilled;
-    bool _isCompleted;
+    private float _fullFilled;
+    private bool _isCompleted;
 
-    float _amtExportThisTime;
-    float _totalAmtExported;
+    private float _amtExportThisTime;
+    private float _totalAmtExported;
 
     public float Amount
     {
@@ -1528,6 +1518,8 @@ public class Order
     }
 
     public Dispatch Dispatch { get; private set; }
+    public string SourceBuildInfo { get; internal set; }
+    public string DestinyBuildInfo { get; internal set; }
 
     public DateTime PlacedTime;
 
@@ -1558,7 +1550,9 @@ public class Order
         return res;
     }
 
-    public Order() { }
+    public Order()
+    {
+    }
 
     public Order(P prod, string destiny, float amt)
     {
@@ -1644,20 +1638,20 @@ public class Order
 
     /// <summary>
     /// Will return what a ship will export this time
-    /// Will also remove the amt from the Dock Inv 
+    /// Will also remove the amt from the Dock Inv
     /// </summary>
     /// <returns></returns>
     internal float AmtExportThisTimeVoid(Inventory dockInv)
     {
         AmtExportThisTime = FullFilled - TotalAmtExported;
 
-        //if the amt to export this time is bigger than what it is on Invetory...  
+        //if the amt to export this time is bigger than what it is on Invetory...
         if (AmtExportThisTime > dockInv.ReturnAmtOfItemOnInv(Product))
         {
-            //then will export then all tht is in the inventory of that product 
+            //then will export then all tht is in the inventory of that product
             AmtExportThisTime = dockInv.ReturnAmtOfItemOnInv(Product);
         }
-        //addiing what was exported this time to TotalAmtExported 
+        //addiing what was exported this time to TotalAmtExported
         TotalAmtExported += AmtExportThisTime;
 
         //removingn the amt from the Dock Inv
@@ -1669,5 +1663,10 @@ public class Order
     internal bool ExportOrderIsComplete()
     {
         return TotalAmtExported != 0 && TotalAmtExported >= Amount;
+    }
+
+    internal bool IsRelatedToDock()
+    {
+        return SourceBuild != null && SourceBuild.Contains("Dock") || DestinyBuild != null && DestinyBuild.Contains("Dock");
     }
 }

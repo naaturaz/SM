@@ -174,11 +174,80 @@ public class WheelBarrow : Profession
             //" : " +Order1.Product+".amt:"+Order1.Amount);
 
             Order1.Amount = _person.HowMuchICanCarry();
+            if (_person.Work.HType == H.HeavyLoad)
+            {
+                Order1.Amount = Order1.Amount < WhatIsLeft() ? Order1.Amount : WhatIsLeft();
+            }
+
             _person.ExchangeInvetoryItem(_sourceBuild, _person, Order1.Product, Order1.Amount);
             _sourceBuild.CheckIfCanBeDestroyNow(Order1.Product);
+
+            if (_person.Work.HType == H.HeavyLoad)
+            {
+                //update Order in Dock if is a dock
+                if (import() || export())
+                {
+                    HandleInventoriesAndOrder();
+                }
+                Debug.Log("Order1.SourceBuild:" + Order1.SourceBuild);
+                return;
+            }
+
             _person.Body.UpdatePersonalForWheelBa();
         }
     }
+
+    #region Heavy Loaders
+
+    //import: Order1.SourceBuild.Contains("Dock")
+    private bool import()
+    {
+        return Order1.SourceBuild.Contains("Dock");
+    }
+
+    //export: Order1.DestinyBuild.Contains("Dock")
+    private bool export()
+    {
+        return Order1.DestinyBuild.Contains("Dock");
+    }
+
+    private Building Dock()
+    {
+        if (import())
+            return Brain.GetBuildingFromKey(Order1.SourceBuild);
+        return Brain.GetBuildingFromKey(Order1.DestinyBuild);
+    }
+
+    private float WhatIsLeft()
+    {
+        if (import())
+        {
+            //bz is gets completed b4 hits this and was checked already for the amt
+            return Order1.Amount;
+        }
+        return Dock().Dispatch1.LeftOnThisOrder(Order1);
+    }
+
+    private void HandleInventoriesAndOrder()
+    {
+        //need to pull left from Dispatch bz Order1 is passed by Value not Ref
+        var left = WhatIsLeft();
+        var amt = Order1.ApproveThisAmt(left);
+
+        if (_person.Inventory.ReturnAmtOfItemOnInv(Order1.Product) > 0 && export())
+        {
+            var amtTaken = _person.Inventory.ReturnAmtOfItemOnInv(Order1.Product);
+            //and will report actually only was he physically took from it
+            Dock().Dispatch1.AddToOrderAmtProcessed(Order1, amtTaken);
+        }
+        else if (import())
+        {
+            Dock().Dispatch1.AddToOrderAmtProcessed(Order1, amt);
+        }
+        Dock().Dispatch1.CleanOrdersIfNeeded();
+    }
+
+    #endregion Heavy Loaders
 
     private bool _takeABreakNow;
     private float _breakDuration = 1f;

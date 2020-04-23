@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 public class GameTime
 {
-    //0.0007f = 1Year at 10x 687.84sec; 
-    //then decied do it 5 times faster since people reach 10Year in 2 Calendar years in Banished 
+    //0.0007f = 1Year at 10x 687.84sec;
+    //then decied do it 5 times faster since people reach 10Year in 2 Calendar years in Banished
     //when put on FixedUpdate is 3 times slower... at time use to have 0.0035f
     //0.01, it was too fast. at 10 x 1 year will pass in 20 sec
     private float _timeFactor = 0.005f; //0.001f
+
     //0.005 at 10x 3m47s
 
     private float _accumDays;
@@ -17,7 +17,7 @@ public class GameTime
     private int _year;
 
     //second playing actually the game. Not including paused time that includes Main Menu
-    float _inGameTime;
+    private float _inGameTime;
 
     public float AccumDays
     {
@@ -78,7 +78,6 @@ public class GameTime
 
         //add ingame time, only if the player is playing, not while in pause: Meaning in pause or in Main Menu
         //Program.gameScene.GameSpeed
-
     }
 
     public void OneSecUpdate()
@@ -89,16 +88,16 @@ public class GameTime
 
     /// <summary>
     /// The amount of time that pass. Includes the Speed of the game
-    /// 
+    ///
     /// This is the ref for all things that need a Time Factor included or Speed
-    /// 
-    /// return Program.gameScene.GameSpeed*_timeFactor*Program.gameScene.GameSpeed; 
+    ///
+    /// return Program.gameScene.GameSpeed*_timeFactor*Program.gameScene.GameSpeed;
     /// </summary>
     /// <returns></returns>
     public float TimeFactorInclSpeed()
     {
         var multi = 1;
-        return Program.gameScene.GameSpeed*_timeFactor * multi;
+        return Program.gameScene.GameSpeed * _timeFactor * multi;
         //like this now at 10x 1 years takes 4 min with  _timeFactor = 0.001f * Program.gameScene.GameSpeed;
     }
 
@@ -113,7 +112,7 @@ public class GameTime
             var oldDay = _day;
             _day = UMath.GoAround(1, _day, 1, 30);
 
-            //if true a new month was reached 
+            //if true a new month was reached
             if (CheckIfNew(oldDay, _day))
             {
                 NewMonth();
@@ -122,14 +121,14 @@ public class GameTime
     }
 
     /// <summary>
-    /// A new month was reached 
+    /// A new month was reached
     /// </summary>
-    void NewMonth()
+    private void NewMonth()
     {
         var oldMonth = _month;
         _month = UMath.GoAround(1, _month, 1, 12);
 
-        //if true a new year was reached 
+        //if true a new year was reached
         if (CheckIfNew(oldMonth, _month))
         {
             NewYear();
@@ -146,11 +145,11 @@ public class GameTime
     }
 
     /// <summary>
-    /// Will tell u if the newDate is smaller than old. that means tht a new Monht or year was reached 
+    /// Will tell u if the newDate is smaller than old. that means tht a new Monht or year was reached
     /// </summary>
     /// <param name="old"></param>
     /// <param name="?"></param>
-    bool CheckIfNew(int oldDate, int newDate)
+    private bool CheckIfNew(int oldDate, int newDate)
     {
         if (newDate < oldDate)
             return true;
@@ -162,17 +161,17 @@ public class GameTime
         return FromIntToMonth(_month);
     }
 
-    static List<string> _enMonths = new List<string>() { "None", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
-    static List<string> _spMonths = new List<string>() { "Ninguno", "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" };
-    static List<string> _frMonths = new List<string>() { "Aucun", "Jan", "Fév", "Mar", "Avr", "Mai", "Jui", "Jui", "Aou", "Sep", "Oct", "Nov", "Déc" };
-    static List<string> _deMonths = new List<string>() { "Keiner", "Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez" };
+    private static List<string> _enMonths = new List<string>() { "None", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+    private static List<string> _spMonths = new List<string>() { "Ninguno", "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" };
+    private static List<string> _frMonths = new List<string>() { "Aucun", "Jan", "Fév", "Mar", "Avr", "Mai", "Jui", "Jui", "Aou", "Sep", "Oct", "Nov", "Déc" };
+    private static List<string> _deMonths = new List<string>() { "Keiner", "Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez" };
 
-    static Dictionary<string, List<string>> _months = new Dictionary<string, List<string>>() {
+    private static Dictionary<string, List<string>> _months = new Dictionary<string, List<string>>() {
         { "English", _enMonths }, { "Español(Beta)", _spMonths }, { "Français(Beta)", _frMonths }, { "Deutsch", _deMonths }
     };
 
     /// <summary>
-    ///         
+    ///
     /// </summary>
     /// <param name="val">1-12</param>
     /// <returns></returns>
@@ -210,7 +209,7 @@ public class GameTime
     }
 
     /// <summary>
-    /// Here the last param is current date 
+    /// Here the last param is current date
     /// </summary>
     /// <param name="first"></param>
     /// <returns></returns>
@@ -242,13 +241,13 @@ public class GameTime
         var monFull = 0;
         if (daysToConvert / 360 > 0)
         {
-            var year = daysToConvert/360;
+            var year = daysToConvert / 360;
             yearFull = (int)year;
 
             left = year - yearFull;
         }
         daysToConvert = left * 360;
-        
+
         if (daysToConvert / 30 > 0)
         {
             var mon = daysToConvert / 30;
@@ -258,7 +257,7 @@ public class GameTime
         }
         daysToConvert = left * 30;
 
-        //will return the days left tht are less than a year and a month, 
+        //will return the days left tht are less than a year and a month,
         //plus the calculate amount of Year and month
         return new MDate((int)daysToConvert, monFull, yearFull);
     }
@@ -288,7 +287,7 @@ public class GameTime
 }
 
 /// <summary>
-/// My Date Class to return date 
+/// My Date Class to return date
 /// </summary>
 public class MDate
 {
@@ -314,7 +313,9 @@ public class MDate
         set { _year = value; }
     }
 
-    public MDate() { }
+    public MDate()
+    {
+    }
 
     public MDate(int day, int mon, int year)
     {

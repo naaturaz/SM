@@ -1,38 +1,40 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 public class MoveThruPoints
 {
-    private bool _movingNow;//says if body is moving 
+    private bool _movingNow;//says if body is moving
     private int _currentRoutePoint;
     private int iniRoutePoint;//so i can access the first point of a route
     private int lastRoutePoint;
 
-    TheRoute _currTheRoute = new TheRoute();
+    private TheRoute _currTheRoute = new TheRoute();
     private List<CheckPoint> _routePoins = new List<CheckPoint>();
-    
+
     private int sign = 1;
-    //the speed local of this player they should be all at the same but can be used to slow down 
+
+    //the speed local of this player they should be all at the same but can be used to slow down
     //or speed up temporarily
     private float _speed = .5f;
- //   private Person _person;
-    GameObject _gameObject;
-    GameObject _sails;
+
+    //   private Person _person;
+    private GameObject _gameObject;
+
+    private GameObject _sails;
     private HPers _location = HPers.None;//curr loc
-    private HPers _goingTo=HPers.None;//going to location
-    bool _inverse;//inverse route
+    private HPers _goingTo = HPers.None;//going to location
+    private bool _inverse;//inverse route
 
     private Router dummyRouter = new Router();
 
-    HPers _whichRoute;//which route we are using currentlu only iddle is using this 
+    private HPers _whichRoute;//which route we are using currentlu only iddle is using this
 
-    Vector3 _loadedPosition = new Vector3();//the position was saved the GameObj was at
-    Quaternion _loadedRotation = new Quaternion();
+    private Vector3 _loadedPosition = new Vector3();//the position was saved the GameObj was at
+    private Quaternion _loadedRotation = new Quaternion();
 
     //for save Load current animation of body
     private string _currentAni;
+
     private string _loadedAni;
 
     private PersonalObject _personalObject;
@@ -44,7 +46,7 @@ public class MoveThruPoints
         {
             if (_location == HPers.MovingToNewHome && value != HPers.Restarting)
             {
-//               //Debug.Log("Ret Body Location: "+_person.MyId);
+                //               //Debug.Log("Ret Body Location: "+_person.MyId);
             }
 
             _location = value;
@@ -104,9 +106,9 @@ public class MoveThruPoints
         set { _currTheRoute = value; }
     }
 
-
-
-    public MoveThruPoints() { }
+    public MoveThruPoints()
+    {
+    }
 
     public MoveThruPoints(GameObject gO)
     {
@@ -117,8 +119,8 @@ public class MoveThruPoints
 
     public MoveThruPoints(Building Building1, GameObject gO, string myIDP)
     {
-        //when is not lloading 
-        if (_currTheRoute.CheckPoints.Count==0)
+        //when is not lloading
+        if (_currTheRoute.CheckPoints.Count == 0)
         {
             _currTheRoute = Building1.Dock1.CreateRoute(myIDP);
         }
@@ -128,7 +130,7 @@ public class MoveThruPoints
     }
 
     /// <summary>
-    /// For loading reasons. bz gO was not spawn when this obj was loaded 
+    /// For loading reasons. bz gO was not spawn when this obj was loaded
     /// </summary>
     /// <param name="gO"></param>
     public void PassGameObject(GameObject gO)
@@ -140,7 +142,7 @@ public class MoveThruPoints
     public void Init()
     {
         var child = General.FindGameObjectInHierarchy("Child", _gameObject);
-        myAnimator = child.GetComponent<Animator>(); 
+        myAnimator = child.GetComponent<Animator>();
         oldGameSpeed = Program.gameScene.GameSpeed;
         renderer = _gameObject.GetComponent<Renderer>();
 
@@ -156,6 +158,7 @@ public class MoveThruPoints
     }
 
     private Animator myAnimator;
+
     /// <summary>
     /// Here is when u set the new Animation
     /// </summary>
@@ -168,7 +171,7 @@ public class MoveThruPoints
         _currentAni = animationPass;
         myAnimator.SetBool(animationPass, true);
         myAnimator.SetBool(oldAnimation, false);
-        
+
         //_personalObject.AddressNewAni(animationPass, ShouldHide());
     }
 
@@ -183,7 +186,7 @@ public class MoveThruPoints
     {
         SetCurrentAni(_currentAni, "isIdle");
     }
-    
+
     /// <summary>
     /// Walkable animations so far:
     /// Walk, Carry
@@ -198,17 +201,15 @@ public class MoveThruPoints
         else _speed = .5f;
     }
 
-
-
     /// <summary>
     /// Init the Variables to walk
-	/// 
-	/// If loading from file loadCurrentPoint will be specified 
+	///
+	/// If loading from file loadCurrentPoint will be specified
     /// </summary>
     /// <param name="route">The route to be walked</param>
     /// <param name="inverse">If we are coming back from the route</param>
     /// <param name="loadCurrentPoint">Use to load person last aprox position </param>
-    void InitWalk(TheRoute route, bool inverse, int loadCurrentPoint = -1 )
+    private void InitWalk(TheRoute route, bool inverse, int loadCurrentPoint = -1)
     {
         //FindIfAAniIsSaved();
 
@@ -242,15 +243,15 @@ public class MoveThruPoints
     }
 
     /// <summary>
-    /// Address the time where the body is being loaded and wants to load an animation that 
+    /// Address the time where the body is being loaded and wants to load an animation that
     /// was saved . Other wise will use walk ani
     /// </summary>
-    void FindIfAAniIsSaved()
+    private void FindIfAAniIsSaved()
     {
         //_loadedAni == "isIdle" for people that were saved idling.
-        //for debug puporses or people that was in the dock waiting to get into 
-        //the city as new immigrant 
-        if (string.IsNullOrEmpty(_loadedAni) 
+        //for debug puporses or people that was in the dock waiting to get into
+        //the city as new immigrant
+        if (string.IsNullOrEmpty(_loadedAni)
             //|| _loadedAni == "isIdle"
             )
         {
@@ -259,19 +260,19 @@ public class MoveThruPoints
         else
         {
             TurnCurrentAniAndStartNew(_loadedAni);
-         //   SetCurrentAni(_loadedAni, "isIdle");
-            _loadedAni = "";//so its used only once 
+            //   SetCurrentAni(_loadedAni, "isIdle");
+            _loadedAni = "";//so its used only once
         }
     }
 
     /// <summary>
-    /// Is gonnabe ethier 0 or currentROute.count -1 
-    /// 
-    /// I created this so is not related to the loading process 
+    /// Is gonnabe ethier 0 or currentROute.count -1
+    ///
+    /// I created this so is not related to the loading process
     /// </summary>
-    void SetInitRoutePoint()
+    private void SetInitRoutePoint()
     {
-        //used when is not being loaded from file 
+        //used when is not being loaded from file
         if (_inverse)
         {
             iniRoutePoint = _routePoins.Count - 1;
@@ -287,7 +288,7 @@ public class MoveThruPoints
     /// </summary>
     private void CorrectLoadedPoint(int loadCurrentPoint)
     {
-        //I need to remove one from the loaded bz when initiating always add a new one 
+        //I need to remove one from the loaded bz when initiating always add a new one
         if (_whichRoute == HPers.IdleSpot)
         {
             if (_inverse)
@@ -305,15 +306,15 @@ public class MoveThruPoints
         }
     }
 
-    void DefineCurrentRoutePoint(int loadCurrentPoint, bool inverse)
+    private void DefineCurrentRoutePoint(int loadCurrentPoint, bool inverse)
     {
-        //if 'loadCurrentPoint' is not -1 means that is being loaded from File 
+        //if 'loadCurrentPoint' is not -1 means that is being loaded from File
         if (loadCurrentPoint != -1)
         {
             CorrectLoadedPoint(loadCurrentPoint);
             return;
         }
-		//used when is not being loaded from file 
+        //used when is not being loaded from file
         if (inverse)
         {
             _currentRoutePoint = _routePoins.Count - 1;
@@ -324,7 +325,7 @@ public class MoveThruPoints
         }
     }
 
-    int CorrectBounds(int current, int min, int max)
+    private int CorrectBounds(int current, int min, int max)
     {
         if (current < min)
         {
@@ -340,20 +341,20 @@ public class MoveThruPoints
     /// <summary>
     /// Is here bz the rotation on the reverse Route needs to be corrected again
     /// </summary>
-    void DefineInversedRouteRot()
+    private void DefineInversedRouteRot()
     {
         if (_routePoins[0].InverseWasSet)//means was setup already once
         { return; }
-    
+
         GameScene.dummyBlue.transform.position = _routePoins[_currentRoutePoint].Point;
         _routePoins[0].InverseWasSet = true;//only the first one is marked as bool
 
         for (int i = _currentRoutePoint; i > 0; i--)
         {
-            //so it doesnt tilt when going up or down the brdige hill 
-            //im putting in the same height on Y as the next point 
+            //so it doesnt tilt when going up or down the brdige hill
+            //im putting in the same height on Y as the next point
             var nexPos = new Vector3(_routePoins[i].Point.x, _routePoins[i - 1].Point.y, _routePoins[i].Point.z);
-            GameScene. dummyBlue.transform.position = nexPos;
+            GameScene.dummyBlue.transform.position = nexPos;
 
             GameScene.dummyBlue.transform.LookAt(_routePoins[i - 1].Point);
             _routePoins[i].QuaterniRotationInv = GameScene.dummyBlue.transform.rotation;
@@ -363,12 +364,12 @@ public class MoveThruPoints
         //PersonPot.Control.RoutesCache1.AddReplaceRoute(_currTheRoute);
     }
 
-	///Set the next point on the route
-    void SetNextPoint()
+    ///Set the next point on the route
+    private void SetNextPoint()
     {
         //GameScene.print("_currentRoutePoint:" + _currentRoutePoint + ".Count:" + _currRoute.Count +
         //    ".Loaded" + _pFile._body.CurrentRoutePoint);
-	    _currentRoutePoint = CorrectBounds(_currentRoutePoint, 0, _routePoins.Count - 1);
+        _currentRoutePoint = CorrectBounds(_currentRoutePoint, 0, _routePoins.Count - 1);
 
         //if (_person.Work != null && _person.Work.HType == H.Dock)
         //{
@@ -380,7 +381,7 @@ public class MoveThruPoints
 
         //if (!_inverse)
         //{
-        //    _person.transform.rotation = _routePoins[_currentRoutePoint].QuaterniRotation;     
+        //    _person.transform.rotation = _routePoins[_currentRoutePoint].QuaterniRotation;
         //}
         //else
         //{
@@ -394,14 +395,14 @@ public class MoveThruPoints
     /// <summary>
     /// needs to rotate body in first and second point sharply bz since is too fast
     /// dont ave time to pass before is created the gameobj
-    /// 
+    ///
     /// this method in seems that doesnt help when they are coming back... however the workaround
-    /// is that since they are inside a building who cares how they caome out from the building for the 
+    /// is that since they are inside a building who cares how they caome out from the building for the
     /// 2nd point on the route,, since all that time was inside the building... another thing is to add
-    /// a small idle time in that place and that will make it too... since the problem now is only on the church 
-    /// bz doesnt have an idle time over there 
+    /// a small idle time in that place and that will make it too... since the problem now is only on the church
+    /// bz doesnt have an idle time over there
     /// </summary>
-    void SetNextPointOverFive()
+    private void SetNextPointOverFive()
     {
         if (speedOver5)
         {
@@ -422,7 +423,7 @@ public class MoveThruPoints
         if (inverse)
         {
             SetCurrentAni("isOlasRouteBack", "isOlas");
-            //so it makes the transitionm to isOlasRouteBack  
+            //so it makes the transitionm to isOlasRouteBack
             //_speed = 0;
         }
 
@@ -438,14 +439,14 @@ public class MoveThruPoints
         WalkRoutineTail(goingTo, whichRouteP);
     }
 
-    void WalkRoutineTail(HPers goingTo, HPers whichRouteP = HPers.None)
+    private void WalkRoutineTail(HPers goingTo, HPers whichRouteP = HPers.None)
     {
         GoingTo = goingTo;
         _movingNow = true;
         _whichRoute = whichRouteP;
     }
 
-    void InitRotaVars()
+    private void InitRotaVars()
     {
         double angle = 0;
 
@@ -471,13 +472,15 @@ public class MoveThruPoints
     }
 
     private bool speedOver5;
+
     //multiplies the step for rotation on ChangeRotation().. is speed is over 5 i make it 10
-    //to correct the bugg where would not rotate completly if speed was high 
+    //to correct the bugg where would not rotate completly if speed was high
     private int speedCorrection = 10;
+
     /// <summary>
     /// Needs to be here to address speeds bigger than 1
     /// </summary>
-    void InitRotaVarsOnSpeed()
+    private void InitRotaVarsOnSpeed()
     {
         speedOver5 = false;
         if (Program.gameScene.GameSpeed > 1 && Program.gameScene.GameSpeed <= 5)
@@ -495,10 +498,11 @@ public class MoveThruPoints
     }
 
     private int oldCurrent;//the previus route point
-	/// <summary>
+
+    /// <summary>
     /// The walk handler is being called on Update() if MovingNow = true
     /// </summary>
-    void WalkHandler()
+    private void WalkHandler()
     {
         if (oldCurrent != _currentRoutePoint)
         {
@@ -516,21 +520,21 @@ public class MoveThruPoints
         if (UMath.nearEqualByDistance(curr, next, 0.01f))// 0.001f
         {
             if (next == _routePoins[lastRoutePoint].Point)
-            {WalkDone();}
+            { WalkDone(); }
             SetNextPoint();
         }
     }
 
     /// <summary>
-    /// The action of moving the GameObj 
+    /// The action of moving the GameObj
     /// </summary>
-    void MoveAction()
+    private void MoveAction()
     {
         LoadPosition();
 
         if (_routePoins.Count == 0 || _currentRoutePoint > _routePoins.Count - 1)
         {
-           //Debug.Log("Called in body exp");
+            //Debug.Log("Called in body exp");
             var t = this;
         }
 
@@ -538,12 +542,12 @@ public class MoveThruPoints
             _speed * Program.gameScene.GameSpeed * Time.deltaTime * _routePoins[_currentRoutePoint].Speed);
     }
 
-	/// <summary>
+    /// <summary>
     /// If the _loadedPosition != new Vector3() will load the saved position and rotation
     /// </summary>
-    void LoadPosition()
+    private void LoadPosition()
     {
-        //if _loadedPosition has a value means that we are loading from file so will move the person to there 
+        //if _loadedPosition has a value means that we are loading from file so will move the person to there
         if (_loadedPosition != new Vector3())
         {
             //GameScene.print(_loadedPosition + "._loadedPosition");
@@ -554,11 +558,12 @@ public class MoveThruPoints
     }
 
     //if dist btw Person and neext point is less than 'param':distToChangeRot we fire ChangeRot()
-    private float distToChangeRot = 0.275f;//.299 is the max can be 
+    private float distToChangeRot = 0.275f;//.299 is the max can be
 
     //use to make smooth transition on route points the higher the smoother
     private int smoothDivider = 20;//4
-    void CheckRotation()
+
+    private void CheckRotation()
     {
         //correction needed when loading the _idle route inverse.. to avoid out of range excp
         if (_routePoins.Count > 0)
@@ -575,10 +580,10 @@ public class MoveThruPoints
         }
     }
 
-	/// <summary>
+    /// <summary>
     /// Change the rotatation on the GameObj
     /// </summary>
-    void ChangeRotation(float currDist)
+    private void ChangeRotation(float currDist)
     {
         var nextPoint = _routePoins[_currentRoutePoint];
         var pastPoint = _routePoins[_currentRoutePoint - sign];
@@ -592,10 +597,10 @@ public class MoveThruPoints
         {
             diffRotY = nextPoint.QuaterniRotation.eulerAngles.y - pastPoint.QuaterniRotation.eulerAngles.y;//dif on Y rotation btz next and past point
         }
-        
-        var perUnitChange = diffRotY/distToChangeRot;//how much has to change per unit
+
+        var perUnitChange = diffRotY / distToChangeRot;//how much has to change per unit
         var units = distToChangeRot - currDist;//how far had come to the next point
-        var finRot = Mathf.Abs(units*perUnitChange) * speedCorrection * Program.gameScene.GameSpeed;
+        var finRot = Mathf.Abs(units * perUnitChange) * speedCorrection * Program.gameScene.GameSpeed;
 
         if (_inverse)
         {
@@ -610,19 +615,20 @@ public class MoveThruPoints
     }
 
     private float _walkDoneAt;
-	//Called when the last point of a route was reached
-    void WalkDone()
+
+    //Called when the last point of a route was reached
+    private void WalkDone()
     {
         _location = GoingTo;
         _movingNow = false;
-        SetCurrentAni("isIdle",_currentAni);//_current ani could be walk or carry
+        SetCurrentAni("isIdle", _currentAni);//_current ani could be walk or carry
         _walkDoneAt = Time.time;
     }
 
     /// <summary>
     /// bz sometimes loads to fast an anmation and still the old one is being transited to
-    /// 
-    /// 
+    ///
+    ///
     /// </summary>
     private void ReSetAnimation()
     {
@@ -637,24 +643,23 @@ public class MoveThruPoints
         }
     }
 
-
     #region Hide Show
+
     public void Show()
     {
-        if (renderer!=null)
+        if (renderer != null)
         {
             renderer.enabled = true;
-            
         }
 
-        if (_personalObject!=null)
+        if (_personalObject != null)
         {
             _personalObject.Show();
         }
     }
 
-
     private Renderer renderer;
+
     public void Hide()
     {
         if (ShouldHide())
@@ -671,11 +676,11 @@ public class MoveThruPoints
         }
     }
 
-    bool ShouldHide()
+    private bool ShouldHide()
     {
         return false;
 
-        if (CurrTheRoute==null )
+        if (CurrTheRoute == null)
         {
             return false;
         }
@@ -691,9 +696,9 @@ public class MoveThruPoints
         return false;
     }
 
-    bool ContainsOpenAirJob(string key)
+    private bool ContainsOpenAirJob(string key)
     {
-        if (key==null)
+        if (key == null)
         {
             return true;
         }
@@ -705,29 +710,26 @@ public class MoveThruPoints
         return false;
     }
 
+    #endregion Hide Show
 
-#endregion
-	
-	// Update is called once per frame
-	public void Update ()
+    // Update is called once per frame
+    public void Update()
     {
-	    if (_movingNow)
-	    {WalkHandler();}
-	    CheckOnGameSpeed();
+        if (_movingNow)
+        { WalkHandler(); }
+        CheckOnGameSpeed();
         CheckIfGoingIntoBuild();
 
-	    //ReSetAnimation();
-	    CheckIfCanLetThisGo();
+        //ReSetAnimation();
+        CheckIfCanLetThisGo();
     }
 
     private void CheckIfCanLetThisGo()
     {
-        if (_speed>0)
+        if (_speed > 0)
         {
             return;
         }
-
-     
     }
 
     /// <summary>
@@ -735,16 +737,16 @@ public class MoveThruPoints
     /// </summary>
     private void CheckIfGoingIntoBuild()
     {
-        if (  _gameObject == null || _routePoins == null || _routePoins.Count == 0){ return; }
+        if (_gameObject == null || _routePoins == null || _routePoins.Count == 0) { return; }
 
         var dist = 0.25f;//.2
         var currDist = Vector3.Distance(_gameObject.transform.position, _routePoins[lastRoutePoint].Point);
         //getting close to last point
-        if (currDist < dist ) 
+        if (currDist < dist)
         {
             Hide();
             //not when gonna idle .. other wise will just hide body on miuddle of iddle
-            //when is coming back ca be hidden not problem bz will be in the house again 
+            //when is coming back ca be hidden not problem bz will be in the house again
             if (_whichRoute == HPers.IdleSpot && !_inverse)
             { Show(); }
         }
@@ -761,13 +763,13 @@ public class MoveThruPoints
         }
 
         currDist = Vector3.Distance(_gameObject.transform.position, _routePoins[index].Point);
-        if (currDist < dist  ){Show();}
+        if (currDist < dist) { Show(); }
     }
 
     private int oldGameSpeed;//same speed the game is always started at
 
     /// <summary>
-    /// Will change the speed of the animator 
+    /// Will change the speed of the animator
     /// </summary>
     private void CheckOnGameSpeed()
     {
@@ -786,6 +788,5 @@ public class MoveThruPoints
     internal void SailUp()
     {
         _sails.SetActive(true);
-
     }
 }

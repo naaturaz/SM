@@ -16,22 +16,22 @@ public class Builder : Profession
         else LoadingFromFile(person, pF);
     }
 
-    void CreatingNew(Person person)
+    private void CreatingNew(Person person)
     {
-        //in case was a Wheelbarrow the prevProfession and when home route back gives problem 
+        //in case was a Wheelbarrow the prevProfession and when home route back gives problem
         person.PrevOrder = null;
 
         B4Init(person);
     }
 
-    void LoadingFromFile(Person person, PersonFile pF)
+    private void LoadingFromFile(Person person, PersonFile pF)
     {
         _person = person;
         LoadAttributes(pF.ProfessionProp);
         B4Init(person);
     }
 
-    void B4Init(Person person)
+    private void B4Init(Person person)
     {
         MyAnimation = "isHammer";
         _person = person;
@@ -39,9 +39,9 @@ public class Builder : Profession
     }
 
     /// <summary>
-    /// Use to address if consturcitng is null or is fully built already 
+    /// Use to address if consturcitng is null or is fully built already
     /// </summary>
-    void DefineConstructingRoutine()
+    private void DefineConstructingRoutine()
     {
         if (_constructing == null || ReturnCurrentStage() == 4)
         {
@@ -72,10 +72,10 @@ public class Builder : Profession
     }
 
     /// <summary>
-    /// Need to remove brdige so no one else keeps working on it. since gives bugg bz is async the call when 
+    /// Need to remove brdige so no one else keeps working on it. since gives bugg bz is async the call when
     /// removing it from BuilderManager
     /// </summary>
-    void RemoveFromBuilderManagerIfBridge()
+    private void RemoveFromBuilderManagerIfBridge()
     {
         if (_constructing.HType.ToString().Contains("Bridge"))
         {
@@ -85,10 +85,10 @@ public class Builder : Profession
     }
 
     /// <summary>
-    /// Cretaed to address when he has over 40 times nothing to build then will become a 
-    /// WheelBarrow worker , until is something to build again 
+    /// Cretaed to address when he has over 40 times nothing to build then will become a
+    /// WheelBarrow worker , until is something to build again
     /// </summary>
-    void CheckHowManyNothingToBuild()
+    private void CheckHowManyNothingToBuild()
     {
         if (_person == null || _person.Brain == null)
         {
@@ -108,7 +108,7 @@ public class Builder : Profession
 
     private void Init()
     {
-        //was destroy 
+        //was destroy
         if (_constructing == null)
         {
             B4Init(_person);
@@ -123,7 +123,7 @@ public class Builder : Profession
 
         FinRoutePoint = FindFinRoutePoint();
 
-        //means the anchors are not ready yet in the Bridge case 
+        //means the anchors are not ready yet in the Bridge case
         if (FinRoutePoint == new Vector3())
         {
             _takeABreakNow = true;
@@ -132,11 +132,11 @@ public class Builder : Profession
 
         //UVisHelp.CreateHelpers(FinRoutePoint, Root.yellowCube);
 
-        //bz I want '_finRoutePoint' to be moved away from building and affects too that it will look towards the 
-        //building when is performng the action of buildign 
+        //bz I want '_finRoutePoint' to be moved away from building and affects too that it will look towards the
+        //building when is performng the action of buildign
         MoveTowOrigin = -0.01f;
 
-        //moving the route point a bit away from the origin 
+        //moving the route point a bit away from the origin
         FinRoutePoint = Vector3.MoveTowards(FinRoutePoint, _constructing.transform.position, MoveTowOrigin);
 
         MoveTowOrigin = -0.05f;//when looks at on Profession works properly
@@ -147,10 +147,10 @@ public class Builder : Profession
     //so when using dummy on CryBrdigeRoute can find its spawner
     //private string dummySpawnerId;
     /// <summary>
-    /// Will return the init point which is the place will go to build and execute the animation on a building 
+    /// Will return the init point which is the place will go to build and execute the animation on a building
     /// </summary>
     /// <returns></returns>
-    Vector3 FindFinRoutePoint()
+    private Vector3 FindFinRoutePoint()
     {
         //bridge
         if (_constructing.HType.ToString().Contains(H.Bridge.ToString()))
@@ -179,8 +179,8 @@ public class Builder : Profession
         if (_constructing.Anchors.Count == 0)
         { return new Vector3(); }
 
-        //for all other cases 
-        //forcing geting the anchors was giving anchors really far appart sometimes 
+        //for all other cases
+        //forcing geting the anchors was giving anchors really far appart sometimes
         return _constructing.GetAnchors(true)[UMath.GiveRandom(0, 4)];
     }
 
@@ -197,7 +197,7 @@ public class Builder : Profession
         return false;
     }
 
-    void InitRoute()
+    private void InitRoute()
     {
         Router1 = null;
         RouterBack = null;
@@ -207,7 +207,7 @@ public class Builder : Profession
         routerBackWasInit = false;
 
         //that ID will remove dummy so can be cache and will add the FinRoutePoint so if another builder
-        //will go to that corner can use the cached one 
+        //will go to that corner can use the cached one
         _person.MyDummyProf.MyId = _constructing.MyId + ".Dummy." + FinRoutePoint;
         _person.MyDummyProf.transform.position = FinRoutePoint;
 
@@ -220,9 +220,9 @@ public class Builder : Profession
         Router1 = new CryRouteManager(_person.Work, _person.MyDummyProf, _person, HPers.InWork, finDoor: false);
     }
 
-    Building FindBestToBuild()
+    private Building FindBestToBuild()
     {
-        //first time wheel barrow chekcs 
+        //first time wheel barrow chekcs
         if (_person == null || _person.Work == null || _person.Work.BuildersManager1 == null)
         {
             return null;
@@ -230,7 +230,7 @@ public class Builder : Profession
 
         ConstructingKey = _person.Work.BuildersManager1.GiveMeBestConstruction(_person);
 
-        //todo should ask for 2nd better building 
+        //todo should ask for 2nd better building
         if (_person.Brain.BlackList.Contains(ConstructingKey))
         {
             ConstructingKey = "";
@@ -252,7 +252,6 @@ public class Builder : Profession
         }
 
         base.Update();
-
 
         AnyChange();
         Execute();
@@ -280,6 +279,7 @@ public class Builder : Profession
     }
 
     private bool routerBackWasInit;
+
     /// <summary>
     /// So it doesnt blackList nothing in the second Route if he is blackListug a tree in the Router1
     /// </summary>
@@ -300,16 +300,16 @@ public class Builder : Profession
             return;
         }
 
-        //when is just on site to play animation of building 
+        //when is just on site to play animation of building
         if (_person.Body.Location == HPers.InWork && _workerTask == HPers.WalkingToJobSite && !_person.Body.MovingNow
             && _constructing == null)
         {
-            //so skip all that and goes back to office 
+            //so skip all that and goes back to office
             _workerTask = HPers.WalkingBackToOffice;
         }
     }
 
-    void Execute()
+    private void Execute()
     {
         if (ExecuteNow)
         {
@@ -325,7 +325,7 @@ public class Builder : Profession
             //todo mod
             var amt = Developer.IsDev ? 100f : 24f;
             _constructing.AddToConstruction(amt * ToolsFactor(), _person);
-            //so find new construction everytime before goes out to work 
+            //so find new construction everytime before goes out to work
             _constructing = null;
         }
     }
@@ -338,7 +338,7 @@ public class Builder : Profession
         }
 
         base.AnyChange();
-        //means we finisished 
+        //means we finisished
 
         if (_constructing == null || ReturnCurrentStage() == 4)
         {
@@ -350,7 +350,7 @@ public class Builder : Profession
     /// Will return the current stage of the building depending on wht type of building is
     /// </summary>
     /// <returns></returns>
-    int ReturnCurrentStage()
+    private int ReturnCurrentStage()
     {
         int stage = 0;
         if (_constructing.HType.ToString().Contains(H.Bridge.ToString()))
@@ -366,15 +366,15 @@ public class Builder : Profession
         return stage;
     }
 
-    void SearchANewWorkPlace()
+    private void SearchANewWorkPlace()
     {
-        _readyToWork = false;//here so Professional can change for things ard him 
+        _readyToWork = false;//here so Professional can change for things ard him
 
-        //call init so we move on and start workiing on something new 
+        //call init so we move on and start workiing on something new
         DefineConstructingRoutine();
     }
 
-    void CheckIfNothingToDo()
+    private void CheckIfNothingToDo()
     {
         if (_nothingToBuild && !_wheelBarrowNow)
         {
@@ -384,10 +384,11 @@ public class Builder : Profession
     }
 
     #region WheelBarrow Work
+
     /// <summary>
-    /// Will check so often to see if new Constructing is needed 
+    /// Will check so often to see if new Constructing is needed
     /// </summary>
-    void WheelBarrowCheck()
+    private void WheelBarrowCheck()
     {
         if (!_wheelBarrowNow)
         { return; }
@@ -403,11 +404,12 @@ public class Builder : Profession
     private bool _takeABreakNow;
     private float _breakDuration = 1f;
     private float startIdleTime;
+
     /// <summary>
-    /// Used so a person is asking for bridges anchors takes a break and let brdige anchors complete then can 
+    /// Used so a person is asking for bridges anchors takes a break and let brdige anchors complete then can
     /// work on it
     /// </summary>
-    void TakeABreak()
+    private void TakeABreak()
     {
         if (startIdleTime == 0)
         { startIdleTime = Time.time; }
@@ -417,9 +419,10 @@ public class Builder : Profession
             _takeABreakNow = false;
             startIdleTime = 0;
 
-            //so it restarted 
+            //so it restarted
             Init();
         }
     }
-    #endregion
+
+    #endregion WheelBarrow Work
 }

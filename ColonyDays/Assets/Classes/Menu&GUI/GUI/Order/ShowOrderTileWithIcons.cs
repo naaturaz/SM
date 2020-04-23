@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-class ShowOrderTileWithIcons : ShowInvetoryItem
+internal class ShowOrderTileWithIcons : ShowInvetoryItem
 {
     private Text _title;
     private P _prod;
@@ -14,10 +14,10 @@ class ShowOrderTileWithIcons : ShowInvetoryItem
     private GameObject _downBtn;
     private GameObject _trashBtn;
 
-    DispatchManager _dispatchManager = new DispatchManager();
-    BuildingWindow _buildingWindow;
+    private DispatchManager _dispatchManager = new DispatchManager();
+    private BuildingWindow _buildingWindow;
 
-    float oldAmt = -1000;
+    private float oldAmt = -1000;
 
     public float xOff = 220;
     public float yOff = -22;
@@ -126,7 +126,7 @@ class ShowOrderTileWithIcons : ShowInvetoryItem
     }
 
     /// <summary>
-    /// Resets the position of the element 
+    /// Resets the position of the element
     /// </summary>
     /// <param name="i"></param>
     /// <param name="type"></param>
@@ -142,7 +142,7 @@ class ShowOrderTileWithIcons : ShowInvetoryItem
     }
 
     /// <summary>
-    /// Resets the position of the element 
+    /// Resets the position of the element
     /// </summary>
     /// <param name="i"></param>
     /// <param name="type"></param>
@@ -198,20 +198,20 @@ class ShowOrderTileWithIcons : ShowInvetoryItem
         transform.name = String.Format("{0} | {1} | {2}", _prod, _amt, Id);
     }
 
-    float AddYSpaceIfIsOnProcess()
+    private float AddYSpaceIfIsOnProcess()
     {
-        //on Process order 
+        //on Process order
         //var yDiff = Mathf.Abs(orderPos.y - onProcessOrderPos.y);
         return 45;//62
     }
 
     /// <summary>
     /// This is to address when is export should be moved to the right some pixesl
-    /// 
+    ///
     /// Here have to address when screen is smaller. Or dif ratio
     /// </summary>
     /// <returns></returns>
-    int ReturnPixelsToTheRight()
+    private int ReturnPixelsToTheRight()
     {
         return 233;
     }
