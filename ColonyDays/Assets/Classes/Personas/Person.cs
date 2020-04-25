@@ -1946,7 +1946,7 @@ public class Person : Hoverable
         var amt = HowMuchICanCarry();
         PayProduct(amt, item);
 
-        ExchangeInvetoryItem(FoodSource, this, item, amt);
+        ExchangeInvetoryItem(FoodSource, this, item, amt, FoodSource);
     }
 
     private P ItemToGetAtFoodSource(Structure theFoodSrc)
@@ -1967,8 +1967,11 @@ public class Person : Hoverable
         return Home.Inventory.GiveRandomFood();
     }
 
-    public void ExchangeInvetoryItem(General takenFrom, General givenTo, P product, float amt)
+    public void ExchangeInvetoryItem(General takenFrom, General givenTo, P product, float amt, Building build)
     {
+        //so inventory reloads when a person leaves something anywhere 
+        if (build != null) build.ReloadInventory();
+
         //to address when food Src is destroyed when person on its way
         if (takenFrom == null)
         { return; }
@@ -2041,7 +2044,7 @@ public class Person : Hoverable
 
         for (int i = 0; i < listItems.Count; i++)
         {
-            ExchangeInvetoryItem(takenFrom, givenTo, listItems[i].Key, listItems[i].Amount);
+            ExchangeInvetoryItem(takenFrom, givenTo, listItems[i].Key, listItems[i].Amount, null);
         }
     }
 

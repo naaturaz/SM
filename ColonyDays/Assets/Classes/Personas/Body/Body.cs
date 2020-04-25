@@ -1647,9 +1647,6 @@ public class Body //: MonoBehaviour //: General
     /// </summary>
     internal void ResetPersonalObject()
     {
-        //return;
-
-        //_currentAni = "";
         _personalObject.Reset();
 
         //to address when person is changing from Wood to Crate
@@ -1657,6 +1654,12 @@ public class Body //: MonoBehaviour //: General
         {
             _personalObject.AddressNewAni(_currentAni, false);
         }
+    }
+
+    internal void ResetPersonalObjectForHeavyLoader()
+    {
+        _personalObject.Reset();
+        _personalObject.AddressNewAni(_currentAni, false);
     }
 
     /// <summary>

@@ -83,6 +83,13 @@ internal class ShowOrderTileWithIcons : ShowInvetoryItem
 
         dispatch.IncreaseOrderPriority(_order);
 
+        //order from all Heavy Loaders
+        var heavys = BuildingController.FindAllStructOfThisType(H.HeavyLoad);
+        for (int i = 0; i < heavys.Count; i++)
+        {
+            heavys[i].Dispatch1.IncreaseOrderPriority(_order);
+        }
+
         //so it repositions
         oldAmt = -1000;
         _buildingWindow.ResetShownInventory();
@@ -97,6 +104,13 @@ internal class ShowOrderTileWithIcons : ShowInvetoryItem
 
         dispatch.DecreaseOrderPriority(_order);
 
+        //order from all Heavy Loaders
+        var heavys = BuildingController.FindAllStructOfThisType(H.HeavyLoad);
+        for (int i = 0; i < heavys.Count; i++)
+        {
+            heavys[i].Dispatch1.DecreaseOrderPriority(_order);
+        }
+
         //so it repositions
         oldAmt = -1000;
         _buildingWindow.ResetShownInventory();
@@ -110,6 +124,13 @@ internal class ShowOrderTileWithIcons : ShowInvetoryItem
         if (dispatch == null) return;
 
         dispatch.DeleteOrder(_order);
+
+        //remove order from all Heavy Loaders
+        var heavys = BuildingController.FindAllStructOfThisType(H.HeavyLoad);
+        for (int i = 0; i < heavys.Count; i++)
+        {
+            heavys[i].Dispatch1.DeleteOrder(_order);
+        }
 
         //so it repositions
         oldAmt = -1000;

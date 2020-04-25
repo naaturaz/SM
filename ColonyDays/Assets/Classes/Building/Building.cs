@@ -2708,6 +2708,12 @@ public class Building : Hoverable, Iinfo
         return false;
     }
 
+    public int CurrentStage()
+    {
+        var st = (Structure)this;
+        return st.CurrentStage;
+    }
+
     private VisualConstructionProgress progress;
 
     //todo call
@@ -3282,7 +3288,7 @@ public class Building : Hoverable, Iinfo
     /// <summary>
     /// Called when a new Product is selected to be produced in the building
     /// </summary>
-    protected void ReloadInventory()
+    public void ReloadInventory()
     {
         oldYear = -1;
         _isToReloadInv = true;
@@ -3847,16 +3853,11 @@ public class Building : Hoverable, Iinfo
     private List<Structure> FindClosestWheelBarrowerAndHeavyLoad()
     {
         var wheel = BuildingController.FindTheClosestOfThisType(H.Masonry, transform.position, Brain.Maxdistance);
-        //var loader = BuildingController.FindTheClosestOfThisType(H.Loader, transform.position, Brain.Maxdistance);
         var heavy = BuildingController.FindAllStructOfThisType(H.HeavyLoad);
 
         var res = new List<Structure> { wheel };
 
-        //if (Inventory.CurrentKGsOnInv() > 000 && loader != null)//1000
-        //{
-        //    res.Add(loader);
-        //}
-        if (Inventory.CurrentKGsOnInv() > 000 && heavy != null)//2000
+        if (Inventory.CurrentKGsOnInv() > 000 && heavy != null && DoesFitAHeavyLoader())//2000
         {
             res.AddRange(heavy);
         }
@@ -4599,6 +4600,11 @@ public class Building : Hoverable, Iinfo
     {
         return (passID.Contains("House") || passID.Contains("Bohio") || passID.Contains("Shack"))
         && !passID.Contains("LightHouse");
+    }
+
+    bool DoesFitAHeavyLoader()
+    {
+        return HType != H.FieldFarmSmall && HType != H.FieldFarmMed;
     }
 
     #region Dock DryDock and Supplier

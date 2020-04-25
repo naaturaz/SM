@@ -3,24 +3,24 @@ using UnityEngine;
 
 /// <summary>
 /// This script must be attached to a ScrollView element
-/// 
+///
 /// must have a content and inside a Scroll_Ini_Pos gameobject
 /// </summary>
 public class ScrollViewShowInventory : GUIElement
 {
     private GameObject _content;
     private GameObject _scroll_Ini_PosGO;
-    Inventory _inv;
-    float _pad = 0;
+    private Inventory _inv;
+    private float _pad = 0;
 
     public string Which;//which inv needs to show and wht type of tile , need to be set in inspector
 
-    ShowAInventory _showAInv;
-    int _oldItemsAmt;
+    private ShowAInventory _showAInv;
+    private int _oldItemsAmt;
     private float _tileHeight = 3.5f;//3.48
 
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         _content = FindGameObjectInHierarchy("Content", gameObject);
         _scroll_Ini_PosGO = GetChildCalledOnThis("Scroll_Ini_Pos", _content);
@@ -40,7 +40,7 @@ public class ScrollViewShowInventory : GUIElement
         }
     }
 
-    void ReAdjustIfDiff()
+    private void ReAdjustIfDiff()
     {
         if (_showAInv != null && _showAInv.RedoItemsIfOldInvIsDiff())
         {
@@ -49,9 +49,9 @@ public class ScrollViewShowInventory : GUIElement
     }
 
     /// <summary>
-    /// So far used for ourInventories in the add import export order 
+    /// So far used for ourInventories in the add import export order
     /// </summary>
-    void RedoInvIfWhichIsEmpty()
+    private void RedoInvIfWhichIsEmpty()
     {
         if (string.IsNullOrEmpty(Which))
         {
@@ -64,7 +64,7 @@ public class ScrollViewShowInventory : GUIElement
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
     }
 
@@ -73,7 +73,7 @@ public class ScrollViewShowInventory : GUIElement
         if (_inv == null) return;
 
         _pad = _pad == 0 ? pad : _pad;
-        if (_showAInv!=null)
+        if (_showAInv != null)
         {
             _showAInv.DestroyAll();
             RedoInvIfWhichIsEmpty();
@@ -90,8 +90,8 @@ public class ScrollViewShowInventory : GUIElement
     static public bool IsMouseOnMe { get; set; }
 
     //Called from GUI
-    //if mouse is on me will not scroll. 
-    //however this obj need to be set on Inspector with a trigger events  poinitng here 
+    //if mouse is on me will not scroll.
+    //however this obj need to be set on Inspector with a trigger events  poinitng here
     public void CallMeWhenMouseEnter()
     {
         IsMouseOnMe = true;
@@ -102,11 +102,10 @@ public class ScrollViewShowInventory : GUIElement
         IsMouseOnMe = false;
     }
 
-    public void ReloadNewInvetory(Inventory inv)
+    public void ReloadNewInventory(Inventory inv, float pad)
     {
         _inv = inv;
-        AdjustContentHeight((_inv.InventItems.Count * _tileHeight) + _pad);
+        AdjustContentHeight((_inv.InventItems.Count * _tileHeight) + _pad + pad);
         Show();
     }
-
 }

@@ -179,7 +179,11 @@ public class WheelBarrow : Profession
                 Order1.Amount = Order1.Amount < WhatIsLeft() ? Order1.Amount : WhatIsLeft();
             }
 
-            _person.ExchangeInvetoryItem(_sourceBuild, _person, Order1.Product, Order1.Amount);
+            _person.ExchangeInvetoryItem(_sourceBuild, _person, Order1.Product, Order1.Amount, _sourceBuild);
+            
+            //bz is putting car anim before has inventory loaded
+            _person.Body.ResetPersonalObjectForHeavyLoader();
+
             _sourceBuild.CheckIfCanBeDestroyNow(Order1.Product);
 
             if (_person.Work.HType == H.HeavyLoad)

@@ -301,11 +301,12 @@ public class Profession
                     return Languages.ReturnString("BlackSmith");
                 else if (_person.Work.HType == H.SugarMill)
                     return Languages.ReturnString("SugarMiller");
-                else if (_person.Work.HType == H.HeavyLoad)
-                    return Languages.ReturnString("Hauler");
             }
             return Languages.ReturnString(_person.Work.HType + "") + " " + Languages.ReturnString("worker");
         }
+        if (_person.Work.HType == H.HeavyLoad)
+            return Languages.ReturnString("Hauler");
+
         return Naming.CaseItRight(res + "");
     }
 
@@ -430,7 +431,7 @@ public class Profession
             var ord = _person.ReturnFirstOrder();
 
             _person.AddToOrdersCompleted(_person.Inventory.InventItems[0].Amount);
-            _person.ExchangeInvetoryItem(_person, _person.Work, ord.Product, _person.Inventory.InventItems[0].Amount);
+            _person.ExchangeInvetoryItem(_person, _person.Work, ord.Product, _person.Inventory.InventItems[0].Amount, _person.Work);
         }
     }
 
@@ -943,7 +944,7 @@ public class Profession
             return;
         }
 
-        _person.ExchangeInvetoryItem(_person, destinyBuild, _order.Product, _order.Amount);
+        _person.ExchangeInvetoryItem(_person, destinyBuild, _order.Product, _order.Amount, destinyBuild);
 
         //each time a wheelbarrow or docker uses a wheelBarrow dimish them a bit in the main storages
         //as the wheelbarrows get use they get destroy
@@ -1250,7 +1251,7 @@ public class Profession
         {
             amtCarrying = _person.HowMuchICanCarry();//ProdXShift
 
-            _person.ExchangeInvetoryItem(_person.Work, _person, DefineProdWillCarry(), amtCarrying);
+            _person.ExchangeInvetoryItem(_person.Work, _person, DefineProdWillCarry(), amtCarrying, _person.Work);
             prodCarrying = _person.Work.CurrentProd.Product;
 
             //people comsuming tools as they work

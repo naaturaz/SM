@@ -214,6 +214,7 @@ public class BuildingWindow : Window
     /// <param name="val"></param>
     public void Show(Building val)
     {
+        oldBuildID = Building == null ? "" : Building.MyId;
         Building = val;
         Program.MouseListener.HideBuildingsMenu();
 
@@ -238,7 +239,7 @@ public class BuildingWindow : Window
 
     void LoadInitialTabDependingOnBuilding()
     {
-        if (Building.StartingStage != H.Done)
+        if (Building.CurrentStage() != 4)
         {
             MakeThisTabActive(_general);
             return;
@@ -433,53 +434,14 @@ public class BuildingWindow : Window
     {
         if (Building.Inventory == null) return;
 
-        if (oldBuildID != Building.MyId)
+        if (oldBuildID != Building.MyId || Building.IsToReloadInv())
         {
             ShowProductionReport();
             oldBuildID = Building.MyId;
-            _scrollInventory.ReloadNewInvetory(Building.Inventory);
+            _scrollInventory.ReloadNewInventory(Building.Inventory, 0);//pad at 1.7 works fine but it cuts the first item 
         }
 
         ReloadStatsWhenNeeded();
-        _inv.text = BuildStringInv(Building);
-    }
-
-    void Inventory2()
-    {
-        if (Building.Inventory == null)
-            return;
-
-        if (_showAInventory == null)
-        {
-            _showAInventory = new ShowAInventory(Building.Inventory, _gaveta.gameObject, _invIniPos.transform.localPosition);
-            ShowProductionReport();
-        }
-        else if (oldBuildID != Building.MyId)
-        {
-            oldBuildID = Building.MyId;
-            oldItemsCount = Building.Inventory.InventItems.Count;
-
-            _showAInventory.DestroyAll();
-            _showAInventory = new ShowAInventory(Building.Inventory, _gaveta.gameObject, _invIniPos.transform.localPosition);
-
-            //so when a new building is clicked changes
-            ShowProductionReport();
-        }
-        else if (_showAInventory != null && (oldItemsCount != Building.Inventory.InventItems.Count
-            || Building.IsToReloadInv()))
-        {
-            //if new items got in the inv needs to redo Stats in case is a new production 
-            if (oldItemsCount != Building.Inventory.InventItems.Count)
-            {
-                ReloadStatsWhenNeeded(true);
-                oldItemsCount = Building.Inventory.InventItems.Count;
-            }
-            _showAInventory.UpdateToThisInv(Building.Inventory);
-        }
-
-        ReloadStatsWhenNeeded();
-
-        _showAInventory.ManualUpdate();
         _inv.text = BuildStringInv(Building);
     }
 
@@ -537,7 +499,6 @@ public class BuildingWindow : Window
         {
             return 0;
         }
-
         if (Building.ProductionReport.ProduceReport.Count < 6)
         {
             return Building.ProductionReport.ProduceReport.Count;

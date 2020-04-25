@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class QuestManager
 {
-    float _lastCompleted;
+    private float _lastCompleted;
 
-    QuestButton _questBtn;
-    List<int> _currentQuests = new List<int>();
-    List<int> _doneQuest = new List<int>();
-    bool _wasLoaded;//whe is a loaded game
+    private QuestButton _questBtn;
+    private List<int> _currentQuests = new List<int>();
+    private List<int> _doneQuest = new List<int>();
+    private bool _wasLoaded;//whe is a loaded game
 
-    float _timeToNextQuest = 5;//90
+    private float _timeToNextQuest = 5;//90
 
     public List<int> CurrentQuests
     {
@@ -38,7 +38,7 @@ public class QuestManager
         }
     }
 
-    List<Quest> _bank = new List<Quest>()
+    private List<Quest> _bank = new List<Quest>()
     {
         new Quest("Shack.Quest", 500, 5.5f),
 
@@ -65,9 +65,6 @@ public class QuestManager
         new Quest("WeaponsProduce.Quest", 500, 5.5f, 100),
         new Quest("ExportWeapons.Quest", 500, 5.5f),
 
-
-
-
         new Quest( "BuildLargeShack.Quest",  400, 5.0f),//
 
         //new Quest("Population50.Quest", 900, 5.5f),
@@ -77,7 +74,6 @@ public class QuestManager
 
         new Quest( "BuildLumber.Quest",  400, 5.0f),//
         new Quest( "HireLumberJack.Quest",  400, 5.0f),//
-
 
        new Quest( "BuildGunPowder.Quest",  400, 5.0f),//
        new Quest( "ImportSulfur.Quest",  400, 5.0f, 1000),//
@@ -93,7 +89,6 @@ public class QuestManager
        new Quest( "Import2000Coal.Quest",  400, 5.0f, 2000),//
     };
 
-
     public List<Quest> CurrentPlsDone()
     {
         var res = _currentQuests.ToArray();
@@ -101,7 +96,7 @@ public class QuestManager
         var listRes = _doneQuest.ToArray().ToList();
         listRes.AddRange(res.ToList());
 
-        listRes = listRes.Distinct().OrderByDescending(a=>a).ToList();
+        listRes = listRes.Distinct().OrderByDescending(a => a).ToList();
 
         List<Quest> fin = new List<Quest>();
         for (int i = 0; i < listRes.Count; i++)
@@ -114,7 +109,7 @@ public class QuestManager
 
     public Quest CurrentQuest()
     {
-        if(Program.gameScene.QuestManager.CurrentPlsDone().Count > 0)
+        if (Program.gameScene.QuestManager.CurrentPlsDone().Count > 0)
             return Program.gameScene.QuestManager.CurrentPlsDone()[0];
 
         return null;
@@ -134,7 +129,7 @@ public class QuestManager
         //}
     }
 
-    bool IsAnyActiveQuestMatchThisKey(string key)
+    private bool IsAnyActiveQuestMatchThisKey(string key)
     {
         for (int i = 0; i < _currentQuests.Count; i++)
         {
@@ -146,13 +141,13 @@ public class QuestManager
         return false;
     }
 
-    Quest GetQuestWithKey(string key)
+    private Quest GetQuestWithKey(string key)
     {
         var ind = _bank.FindIndex(a => a.Key == key);
         return _bank[ind];
     }
 
-    int GetIndexOfQuest(Quest q)
+    private int GetIndexOfQuest(Quest q)
     {
         return _bank.FindIndex(a => a.Key == q.Key);
     }
@@ -177,7 +172,7 @@ public class QuestManager
 
     public void QuestFinished(string which)
     {
-        ShowQuestBtn();//in case questBtn is null 
+        ShowQuestBtn();//in case questBtn is null
 
         which = which + ".Quest";
         _questBtn.HideArrow();
@@ -194,12 +189,12 @@ public class QuestManager
             BulletinWindow.SubBulletinFinance1.FinanceLogger.AddToAcct("Quests Completion", quest.Prize);
 
             _currentQuests.Remove(indexQ);//remove from _current list
-            _doneQuest.Add(indexQ);//adds to done list 
+            _doneQuest.Add(indexQ);//adds to done list
         }
     }
 
     /// <summary>
-    /// Some quest need progess and here is where it gets reported 
+    /// Some quest need progess and here is where it gets reported
     /// </summary>
     /// <param name="which"></param>
     /// <param name="amt"></param>
@@ -222,7 +217,7 @@ public class QuestManager
 
     public void SpawnDialog(string which)
     {
-        //spawn dialog 
+        //spawn dialog
         Dialog.OKDialog(H.InfoKey, which);
 
         ShowQuestBtn();
@@ -230,7 +225,7 @@ public class QuestManager
         _questBtn.ShowNewQuestAvail();
     }
 
-    void ShowPrize(Quest q)
+    private void ShowPrize(Quest q)
     {
         Dialog.OKDialog(H.CompleteQuest, q.Prize + "");
         //AudioCollector.PlayOneShot("QUEST_COMPLETED_1", 0);
@@ -253,7 +248,7 @@ public class QuestManager
             return;
         }
 
-        //to show  others  and loaded 
+        //to show  others  and loaded
         if (Time.time > _lastCompleted + _timeToNextQuest)
         {
             if (Dialog.IsActive() || BuildingPot.Control.CurrentSpawnBuild != null)
@@ -291,12 +286,13 @@ public class QuestManager
         }
         else
         {
+            //should only add a Hire if that Building has not workers
             _currentQuests.Add(highest + 1);
             SpawnDialog(_bank[highest + 1].Key);
         }
     }
 
-    int GetHighestQuestCompletedOrCurrent()
+    private int GetHighestQuestCompletedOrCurrent()
     {
         var highestC = 0;
         var highestD = 0;
@@ -324,7 +320,7 @@ public class QuestManager
     }
 
     /// <summary>
-    /// Called right after loaded meant to show current 
+    /// Called right after loaded meant to show current
     /// </summary>
     internal void JustLoadedShowCurrent()
     {
@@ -335,26 +331,27 @@ public class QuestManager
     {
         _lastCompleted = Time.time;
     }
-
 }
 
 public class Quest
 {
-    string _key;
+    private string _key;
 
     public string Key
     {
         get { return _key; }
         set { _key = value; }
     }
-    float _prize;
+
+    private float _prize;
 
     public float Prize
     {
         get { return _prize; }
         set { _prize = value; }
     }
-    float _secWait;
+
+    private float _secWait;
 
     public float SecWait
     {
@@ -362,10 +359,11 @@ public class Quest
         set { _secWait = value; }
     }
 
-    float _progress;
+    private float _progress;
+
     /// <summary>
-    /// How far the quest has progressed. This will be used for ex to see how much 
-    /// money is being gained trhu exports until its goal is met, then the quest is completed 
+    /// How far the quest has progressed. This will be used for ex to see how much
+    /// money is being gained trhu exports until its goal is met, then the quest is completed
     /// </summary>
     public float Progress
     {
@@ -373,7 +371,8 @@ public class Quest
         set { _progress = value; }
     }
 
-    float _goal;
+    private float _goal;
+
     /// <summary>
     /// The goal to reach for a quest. Used for ex when a $100 bucks are needed be gained to finish a quest
     /// this will hold that Goal value
@@ -384,7 +383,9 @@ public class Quest
         set { _goal = value; }
     }
 
-    public Quest() { }
+    public Quest()
+    {
+    }
 
     public Quest(string key, float prize, float secWait, float goal = -1)
     {
@@ -407,7 +408,6 @@ public class Quest
         }
         return Progress >= Goal;
     }
-
 
     internal bool IsAPercetangeOne()
     {

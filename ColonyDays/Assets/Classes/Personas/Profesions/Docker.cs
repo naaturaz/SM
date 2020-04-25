@@ -238,7 +238,7 @@ public class Docker : Profession
         var left = WhatIsLeft();
         var amt = Order1.ApproveThisAmt(left);
 
-        _person.ExchangeInvetoryItem(_sourceBuild, _person, Order1.Product, amt);
+        _person.ExchangeInvetoryItem(_sourceBuild, _person, Order1.Product, amt, _sourceBuild);
         //will add to processed order only if actually took something...
 
         if (_person.Inventory.ReturnAmtOfItemOnInv(Order1.Product) > 0 && _export)

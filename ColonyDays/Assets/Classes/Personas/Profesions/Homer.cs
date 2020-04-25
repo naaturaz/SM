@@ -219,7 +219,7 @@ public class Homer : Profession
             {
                 //getting the input item
                 var amt = _person.HowMuchICanCarry() * 2;
-                _person.ExchangeInvetoryItem(BuildToGoBackTo, _person, ord.Product, amt);
+                _person.ExchangeInvetoryItem(BuildToGoBackTo, _person, ord.Product, amt, BuildToGoBackTo);
             }
         }
     }
