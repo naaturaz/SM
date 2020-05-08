@@ -45,6 +45,11 @@ public class PersonalObject
     /// <param name="currAni"></param>
     public PersonalObject(Person person, string currAni, bool hide)
     {
+        if (UPerson.IsThisPersonTheSelectedOne(_person))
+        {
+            var a = 1;
+        }
+
         _person = person;
         Init();
         AddressNewAni(currAni, hide);
@@ -72,7 +77,10 @@ public class PersonalObject
 
     public void AddressNewAni(string newAni, bool hide)
     {
-        //return;
+        if (UPerson.IsThisPersonTheSelectedOne(_person))
+        {
+            var a = 1;
+        }
 
         Hide();//will hide current
 
@@ -93,8 +101,15 @@ public class PersonalObject
         {
             _current = _allPersonalObjects[_currentRoot];
 
+            //for Docker and HeavyLoader so it doesnt show this when on Dock
+            if (_person.Work != null && 
+                (_person.Work.HType == H.Dock || _person.Work.HType == H.HeavyLoad) &&
+                _person.DistanceToWorkSpawnPoint() < 0.1f)
+            {
+            }
             //for hammer so is shown
-            Show();
+            else
+                Show();
 
             CheckIfHide(hide);
             return;
@@ -105,8 +120,6 @@ public class PersonalObject
             return;
         }
 
-        //ResetPersonPosition();
-
         _current = FollowObject.Create(_currentRoot, _currentPoint, //Program.PersonObjectContainer.transform,
             _currentPoint.transform,
             _person.MyId);
@@ -116,8 +129,6 @@ public class PersonalObject
 
         _allPersonalObjects.Add(_currentRoot, _current);
         CheckIfHide(hide);
-
-        //ReloadPersonPosition();
     }
 
     /// <summary>
@@ -160,6 +171,8 @@ public class PersonalObject
     /// </summary>
     private void SetNewPersonalObject()
     {
+        var person = _person;
+
         _currentPoint = _rightHand;
 
         if (_currentAni == "isHammer")
@@ -276,6 +289,11 @@ public class PersonalObject
 
     internal void Show()
     {
+        if (UPerson.IsThisPersonTheSelectedOne(_person))
+        {
+            var a = 1;
+        }
+
         if (_current != null && _current.Renderer1 == null)
         {
             var gO = General.FindGameObjectInHierarchy("Geometry", _current.gameObject);
@@ -326,6 +344,11 @@ public class PersonalObject
 
     internal void Hide()
     {
+        if (_person.MyId.Contains("Claire"))
+        {
+            var a = 1;
+        }
+
         if (_current != null && _current.Renderer1 == null)
         {
             var gO = General.FindGameObjectInHierarchy("Geometry", _current.gameObject);

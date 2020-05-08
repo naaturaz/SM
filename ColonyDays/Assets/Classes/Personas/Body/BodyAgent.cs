@@ -213,9 +213,27 @@ public class BodyAgent
 
         //Debugg(point);
 
+        //if person is:
+        //hidden
+        //close enough to the destiny spawnpoint
+        //destiny is a:
+        //Dock
+        //Library
+        //Dont show
         if (_person.Body != null)
         {
-            _person.Body.Show();
+            if (UPerson.IsThisPersonTheSelectedOne(_person))
+            {
+                var a = 1;
+            }
+
+            if (_person.Body.IsHidden() && _person.Body.IsNearBySpawnPointOfInitStructure() && 
+                (_person.Body.IsDestinyOrOrigin(H.Library) || _person.Body.IsDestinyOrOrigin(H.Dock) ))
+            {
+
+            }
+            else
+                _person.Body.Show();
         }
 
         if (goingTo == HPers.InWork && _person.ProfessionProp != null

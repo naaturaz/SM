@@ -4,7 +4,7 @@
 internal class Developer
 {
     //if is dev true will be able to select terrain
-    private static bool _isDev = false;
+    private static bool _isDev = true;
 
     public static bool IsDev
     {

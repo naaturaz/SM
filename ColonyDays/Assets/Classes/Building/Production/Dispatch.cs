@@ -509,7 +509,7 @@ public class Dispatch
         }
     }
 
-    public Order GiveMeOrderDocker(Person person)
+    public Order GiveMeOrderDocker(Person person, H type = H.None)
     {
         LoadOrdersIfNeeded();
         var currOrders = ReturnCurrentListAndDefinePrimary();
@@ -529,14 +529,23 @@ public class Dispatch
                 continue;
             }
 
-            if (currOrders[i].TypeOrder == H.None)
+            if(type == H.None)
             {
-                return RegularOrderDocker(person, currOrders[i]);
+                if (currOrders[i].TypeOrder == H.None)
+                    return RegularOrderDocker(person, currOrders[i]);
+                else if (currOrders[i].TypeOrder == H.Evacuation)
+                    return EvacuationOrderDocker(person, currOrders[i]);
             }
-            else if (currOrders[i].TypeOrder == H.Evacuation)
+            else
             {
-                return EvacuationOrderDocker(person, currOrders[i]);
+                //*and Export are regular orders
+                if (type == H.Export)
+                    return RegularOrderDocker(person, currOrders[i]);
+                //*the Import are evac orders
+                if (type == H.Import)
+                    return EvacuationOrderDocker(person, currOrders[i]);
             }
+
         }
         return null;
     }
@@ -1405,6 +1414,50 @@ public class Dispatch
         return res;
     }
 
+
+    private Order FindOrderByID(string id)
+    {
+        var res = false;
+        for (int i = 0; i < Orders.Count; i++)
+        {
+            if (Orders[i].ID == id)
+            {
+                return Orders[i];
+            }
+        }
+        for (int i = 0; i < RecycledOrders.Count; i++)
+        {
+            if (RecycledOrders[i].ID == id)
+            {
+                return RecycledOrders[i];
+            }
+        }
+        for (int i = 0; i < ExpImpOrders.Count; i++)
+        {
+            if (ExpImpOrders[i].ID == id)
+            {
+                return ExpImpOrders[i];
+            }
+        }
+        if (ExportsOrders != null)
+            for (int i = 0; i < ExportsOrders.Count; i++)
+            {
+                if (ExportsOrders[i].ID == id)
+                {
+                    return ExportsOrders[i];
+                }
+            }
+
+        for (int i = 0; i < _fresh.Count; i++)
+        {
+            if (_fresh[i].ID == id)
+            {
+                return _fresh[i];
+            }
+        }
+        return null;
+    }
+
     /// <summary>
     /// in this case will be added as a evacuation order on the Dock with Price zero
     /// bz then will appear as an Import
@@ -1431,6 +1484,27 @@ public class Dispatch
     public List<Order> ReturnImportOrdersOnProcess()
     {
         return _expImpOrders.Where(a => a.TypeOrder == H.Evacuation).ToList();
+    }
+
+    public Order GiveMeOrderIfAny(H type)
+    {
+        //export
+        var exports = ReturnRegularOrders();
+        exports.AddRange(ReturnExportOrdersOnProcess());
+
+        var id = "";
+
+        if (type == H.Export && exports.Count > 0)
+            id = exports[exports.Count - 1].ID;
+
+        //imports
+        var imports = ReturnEvacuaOrders();
+        imports.AddRange(ReturnImportOrdersOnProcess());
+
+        if (type == H.Import && imports.Count > 0)
+            id = imports[imports.Count - 1].ID;
+
+        return FindOrderByID(id);
     }
 }
 

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class UPerson
 {
@@ -25,4 +24,11 @@ public class UPerson
         return false;
     }
 
+    internal static bool IsThisPersonTheSelectedOne(Person person)
+    {
+        if (!Developer.IsDev) return false;
+
+        var win = GameObject.FindObjectOfType<PersonWindow>();
+        return Program.MouseListener.PersonSelect != null && Program.MouseListener.PersonSelect.MyId == person.MyId && win.IsShownNow();
+    }
 }

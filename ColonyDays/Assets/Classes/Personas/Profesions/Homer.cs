@@ -40,7 +40,6 @@ public class Homer : Profession
 
         if (_person.PrevJob == Job.Farmer && _person.Work != null && _person.Work.MyId.Contains("Farm")
             && WorkerTask == HPers.None//standing in field
-                                       //&& (router1 || routerBack)
             )
         {
             FinRoutePoint = DefineFinRoute();
@@ -115,7 +114,6 @@ public class Homer : Profession
         else
         {
             throw new Exception("MyFoodSrc cant be null");
-            //InitRouteWithOutFoodSrc();
         }
     }
 
@@ -124,12 +122,6 @@ public class Homer : Profession
     /// </summary>
     private void InitRouteWithFoodSrc()
     {
-        //if (IsRouterBackUsed && AnFarmer())
-        //{
-        //    return;
-        //}
-
-        //       //Debug.Log(_person.MyId+ ".Prev job:" + _person.PrevJob);
         IsRouterBackUsed = true;
 
         Structure building = null;
@@ -147,7 +139,6 @@ public class Homer : Profession
         }
 
         Router1 = new CryRouteManager(building, BuildToGoBackTo, _person);
-        //Router1 = new RouterManager(building, MyFoodSrc, _person, HPers.InWork);
         RouterBack = new CryRouteManager(BuildToGoBackTo, _person.Home, _person, HPers.InWork);
 
         _routingStarted = Program.gameScene.GameTime1.CurrentDate();
@@ -167,17 +158,6 @@ public class Homer : Profession
         WorkAction(HPers.None);
         Execute();
         CheckWhenDone();
-
-        CheckIfNeedToBeRedone();
-    }
-
-    private void CheckIfNeedToBeRedone()
-    {
-        //if (_routingStarted != null &&  Program.gameScene.GameTime1.ElapsedDateInDaysToDate(_routingStarted) > 10)
-        //{
-        //    Debug.Log("more than 10 days homer.");
-        //    Init();
-        //}
     }
 
     private void Execute()
@@ -225,7 +205,7 @@ public class Homer : Profession
     }
 
     /// <summary>
-    /// As exDocker will have wheelbarrow willget food once every 4 times random
+    /// As exDocker will have wheelbarrow will get food once every 4 times random
     /// </summary>
     /// <returns></returns>
     private bool ExDockerIsGettingFood()

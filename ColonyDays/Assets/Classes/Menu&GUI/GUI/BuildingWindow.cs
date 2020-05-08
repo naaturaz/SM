@@ -988,7 +988,6 @@ public class BuildingWindow : Window
 
     private void ShowImportOrdersOnProcess()
     {
-        //var impOrd = _building.Dispatch1.ReturnEvacOrdersOnProcess();
         var impOrd = Building.Dispatch1.ReturnEvacuaOrders();
         DisplayOrders(impOrd, _importIniPosOnProcess, Root.orderShow, true);
     }

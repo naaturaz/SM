@@ -487,6 +487,8 @@ public enum H
     PathToSeaExplain,
     Show,
     DontDestroyYet,
+    Import,
+    Export,
 }
 
 //if new categorY IS ADDED PLS ADD ON BOOK.CS

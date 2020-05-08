@@ -97,6 +97,12 @@ public class Person : Hoverable
     private Structure _myDummy;
     private Structure _myDummyProf;
 
+    internal float DistanceToWorkSpawnPoint()
+    {
+        if (Work == null) return -1;
+        return Vector3.Distance(transform.position, Work.SpawnPoint.transform.position);
+    }
+
     /// <summary>
     /// eahc person has a dummy use to routing. here for GC
     /// </summary>

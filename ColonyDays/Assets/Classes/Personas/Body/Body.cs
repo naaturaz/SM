@@ -266,6 +266,13 @@ public class Body //: MonoBehaviour //: General
         savedParenTransform = null;
     }
 
+    internal bool IsDestinyOrOrigin(H pass)
+    {
+        var stOri = Brain.GetStructureFromKey(_currTheRoute.OriginKey);
+        var stDes = Brain.GetStructureFromKey(_currTheRoute.DestinyKey);
+        return stDes != null && stDes.HType == pass || stOri != null && stOri.HType == pass;
+    }
+
     /// <summary>
     /// Will grow the scale of the body by the years pass as param in 'howMany'
     /// </summary>
@@ -1170,12 +1177,13 @@ public class Body //: MonoBehaviour //: General
         var isArdDes = false;
 
         if (stOri != null)
-        {
             isArdOri = UMath.nearEqualByDistance(stOri.SpawnPoint.transform.position, _person.transform.position, 0.4f);
-        }
         if (stDes != null)
-        {
             isArdDes = UMath.nearEqualByDistance(stDes.SpawnPoint.transform.position, _person.transform.position, 0.4f);
+
+        if (UPerson.IsThisPersonTheSelectedOne(_person))
+        {
+            var a = 1;
         }
 
         return isArdOri || isArdDes;
@@ -1346,6 +1354,12 @@ public class Body //: MonoBehaviour //: General
 
     public void Show()
     {
+        if(UPerson.IsThisPersonTheSelectedOne(_person))
+        {
+            var aaNear = IsNearBySpawnPointOfInitStructure();
+            var a = 1;
+        }
+
         renderer.enabled = true;
 
         if (_personalObject != null)
@@ -1356,6 +1370,11 @@ public class Body //: MonoBehaviour //: General
 
     public void HideNoQuestion()
     {
+        if (UPerson.IsThisPersonTheSelectedOne(_person))
+        {
+            var a = 1;
+        }
+
         renderer.enabled = false;
 
         if (_personalObject != null)
@@ -1368,6 +1387,11 @@ public class Body //: MonoBehaviour //: General
 
     public void Hide()
     {
+        if (UPerson.IsThisPersonTheSelectedOne(_person))
+        {
+            var a = 1;
+        }
+
         if (ShouldPersonHide())
         {
             renderer.enabled = false;
@@ -1491,6 +1515,7 @@ public class Body //: MonoBehaviour //: General
         CheckSound();
     }
 
+
     /// <summary>
     /// If is inside a building will hide or show Geometry
     /// </summary>
@@ -1524,6 +1549,7 @@ public class Body //: MonoBehaviour //: General
         currDist = Vector3.Distance(_currentPosition, _routePoins[index].Point);
         if (currDist < 0.01f) { Show(); }
     }
+
 
     /// <summary>
     /// Needed so when passed close to house and is close to last point doesnt desappear.
@@ -1773,7 +1799,7 @@ public class Body //: MonoBehaviour //: General
         return Time.time + ConvertFramesIntoSeconds(framesToPlayWholeAni);
     }
 
-    private bool IsHidden()
+    public bool IsHidden()
     {
         return renderer.enabled == false;
     }

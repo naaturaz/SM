@@ -148,8 +148,13 @@ public class Docker : Profession
         DockerStates();
     }
 
-    private void CheckIfCanPickUoNewOrder()
+    private void CheckIfCanPickUpNewOrder()
     {
+        if (UPerson.IsThisPersonTheSelectedOne(_person))
+        {
+            var a = 1;
+        }
+
         if (Order1 == null || Order1.IsCompleted)
         {
             PickUpOrder();
@@ -161,8 +166,8 @@ public class Docker : Profession
         //at dock at first
         if (_person.Body.Location == HPers.Work && _person.Body.GoingTo != HPers.DockerSupply)
         {
-            CheckIfCanPickUoNewOrder();
-
+            //CheckIfCanPickUpNewOrder();
+            GetMeOrderIfAny(H.Import);
             ImportIfPossible();
 
             if (PersonPot.Control.RoutesCache1.ContainANewerOrSameRoute(_person.Work.MyId, _person.FoodSource.MyId,
@@ -179,7 +184,8 @@ public class Docker : Profession
         {
             DropAllMyGoods(_person.FoodSource);//so drop imports if any
 
-            CheckIfCanPickUoNewOrder();
+            //CheckIfCanPickUpNewOrder();
+            GetMeOrderIfAny(H.Export);
 
             ExportIfPossible();
             _person.Body.WalkRoutine(Router1.TheRoute, HPers.DockerBackToDock, true);
@@ -188,9 +194,10 @@ public class Docker : Profession
         else if (_person.Body.Location == HPers.DockerBackToDock && _person.Body.GoingTo != HPers.FoodSource)
         {
             DropAllMyGoods(_person.Work);//so drops exports if any
-            //_person.Body.WalkRoutine(Router1.TheRoute, HPers.FoodSource);
 
-            //_person.Body.UpdatePersonalForWheelBa();
+            //Then Homer Will handle the drop of those goods in the Storage 
+            GetMeOrderIfAny(H.Import);
+            ImportIfPossible();
 
             //so homer works
             _person.Body.Location = HPers.Work;
@@ -199,8 +206,31 @@ public class Docker : Profession
         }
     }
 
+    private void GetMeOrderIfAny(H type)
+    {
+        if (UPerson.IsThisPersonTheSelectedOne(_person))
+        {
+            var a = 1;
+        }
+
+        if (_person.Work == null || _person.Work.HType != H.Dock)
+            return;
+
+        var ord = _person.Work.Dispatch1.GiveMeOrderIfAny(type);
+        if(ord != null)
+        {
+            Order1 = ord;
+            _person.PrevOrder = Order1;
+        }
+    }
+
     private void ExportIfPossible()
     {
+        if (UPerson.IsThisPersonTheSelectedOne(_person))
+        {
+            var a = 1;
+        }
+
         Execute();
         if (_export)
         {
@@ -210,6 +240,11 @@ public class Docker : Profession
 
     private void ImportIfPossible()
     {
+        if (UPerson.IsThisPersonTheSelectedOne(_person))
+        {
+            var a = 1;
+        }
+
         Execute();
         if (_import)
         {
@@ -222,6 +257,11 @@ public class Docker : Profession
 
     private void Execute()
     {
+        if (UPerson.IsThisPersonTheSelectedOne(_person))
+        {
+            var a = 1;
+        }
+
         _export = _order != null && _order.SourceBuildInfo != "Ship";
         _import = _order != null && _order.SourceBuildInfo == "Ship";
     }
@@ -230,13 +270,12 @@ public class Docker : Profession
     {
         _sourceBuild = GetStructureSrcAndDestinyExpImp();
         if (_sourceBuild == null)
-        {
             return;
-        }
 
         //need to pull left from Dispatch bz Order1 is passed by Value not Ref
         var left = WhatIsLeft();
-        var amt = Order1.ApproveThisAmt(left);
+        var carryWeight = _person.HowMuchICanCarry() < left ? _person.HowMuchICanCarry() : left;
+        var amt = Order1.ApproveThisAmt(carryWeight);
 
         _person.ExchangeInvetoryItem(_sourceBuild, _person, Order1.Product, amt, _sourceBuild);
         //will add to processed order only if actually took something...

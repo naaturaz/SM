@@ -209,8 +209,8 @@ public class MouseListener : InputMain
         {
             ManagerReport.AddInput("Selected person: " + clicked.name);
 
-            _personSelect = clicked.GetComponent<Person>();
-            _personWindow.Show(_personSelect);
+            PersonSelect = clicked.GetComponent<Person>();
+            _personWindow.Show(PersonSelect);
 
             UnselectingBuild();
 
@@ -224,8 +224,8 @@ public class MouseListener : InputMain
     public void SelectPerson(Person pers)
     {
         ManagerReport.AddInput("Selected person: " + pers.name);
-        _personSelect = pers;
-        _personWindow.Show(_personSelect);
+        PersonSelect = pers;
+        _personWindow.Show(PersonSelect);
         UnselectingBuild();
         _buildingWindow.Hide();
     }
@@ -974,6 +974,19 @@ public class MouseListener : InputMain
     }
 
     public static bool MouseOnWindowNow { get; set; }
+
+    public Person PersonSelect
+    {
+        get
+        {
+            return _personSelect;
+        }
+
+        set
+        {
+            _personSelect = value;
+        }
+    }
 
     public bool IsAWindowShownNow()
     {

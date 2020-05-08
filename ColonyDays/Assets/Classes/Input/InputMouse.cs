@@ -41,7 +41,7 @@ public class InputMouse : InputParent
             return;
 
         if (BuildingPot.Control.Registro.SelectBuilding != null && Input.GetKeyUp(KeyCode.Z))
-            BuildingPot.Control.Registro.SelectBuilding.AddToConstruction(10000);
+            BuildingPot.Control.Registro.SelectBuilding.AddToConstruction(500);
     }
 
     /// <summary>
