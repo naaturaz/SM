@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using System;
+﻿using System;
 
 public enum Job
 {
@@ -46,8 +44,10 @@ public enum HPers //to be use for the person class
     WalkingToJobSite, WalkingBackToOffice,
     Done,
     InWorkBack,
+
     // WorkDrop
     WorkingInPlaceNow,
+
     AniFullyTrans,
     DoneAtFoodScr,
     DoneAtWork,
@@ -74,64 +74,83 @@ public enum Role
 { Father, Mother, Kid, None }
 
 /// <summary>
-/// For production, the products can be produce in buildings  
-/// 
+/// For production, the products can be produce in buildings
+///
 /// //inventory items... invetory for people and houses, and business
 /// </summary>
 public enum P
 {
     //Farm
     Bean, Potato, SugarCane, Corn, Cotton,
+
     Banana, Coconut,
+
     //Animal Farm
     Chicken, Egg, Pork, Beef, Leather,
+
     Clay, PalmLeaf,
     Crockery,
+
     //Fishes
     Fish,
+
     //Mines
     Gold, Stone, Iron,
+
     //Resin,
     //Wood,
     Wood,
+
     //BlackSmith,
-    //Sword, Axe, 
+    //Sword, Axe,
     Tool,
 
-    //Brick, 
+    //Brick,
     Brick,
+
     //Carpintery,
     Barrel,
+
     //Cigars,
     Cigar,
+
     //Slat,
     //Slat,
     //Tilery,
     FloorTile,
+
     //Cloth,
     Fabric,
+
     //GunPowder,
     GunPowder,
+
     //Paper,
     Paper,
+
     //PrinterSmall, PrinterBig,
     Map, Book,
-    //Silk, 
-    //Silk, //decide if include or not in the game 
+
+    //Silk,
+    //Silk, //decide if include or not in the game
     SugarMill,
+
     Sugar,
     None,
 
     //other not defined yet
     Person, Food, Dollar,
+
     Salt,
     Coal,
     Sulfur,
     Potassium,
     Silver,
     Henequen,
+
     //HolyWood,
     Sail,
+
     String,
     Nail,
     CannonBall,
@@ -151,8 +170,10 @@ public enum P
     Crate,
     Coin
     ,
+
     //CrystalCoin, CaribbeanCoin, SugarCoin,
     CannonPart,
+
     Ink,
     Steel,
     RandomMineOutput, RandomFoundryOutput,
@@ -167,11 +188,13 @@ public enum P
     SweetPotato,
     Cassava,
     Pineapple,
+
     //Mango,
     //Avocado,
     //Guava,
     //Orange,
     Papaya,
+
     Wool,
     Shoe,
     CigarBox,
@@ -208,7 +231,6 @@ public enum PCat
     None, Food
 }
 
-
 //This enum is H for helper so we dont have to type anything eventually all strings around should be here
 //shhort strings
 public enum H
@@ -223,31 +245,31 @@ public enum H
 
     Bridge, BridgeRoadUnit, BridgeTrailUnit, Wheel, Storage,
 
-
     //ADDING A NEW STRUCTURE INSTRUCTIONS:
     /////////////////anything u change BELOW HERE SHOULD BE ADDED IN THEIR SPECIFIC ENUM USED TO MAP KEYBOARD
-    /// and added on Root.cs and 
+    /// and added on Root.cs and
     /// stats should be added on Book.cs.
     /// and add Desc on Languages.cs
     /// add on UnlockBuilds.cs
     /// and underneath the proper region in this file
     /// and if produces anything u want to added in Production.cs
     /// Adjustment may be needed in the NavMesh, Building.cs 1410
-    /// 
+    ///
     /// more below for: Decorations, Production, Category, DoubleBound
-    /// 
+    ///
     /// if is a decoration needs to be added as small item in Decorations.cs
-    /// 
+    ///
     /// add the type of Product produces on Production.cs
     /// if Category will be diff than structure set on General.DefineCategory()
-    /// 
-    /// if is a Double bound structure such as Dock or MountainMine needs to be added on 
+    ///
+    /// if is a Double bound structure such as Dock or MountainMine needs to be added on
     /// List: doubleBounds on Building.cs
     //Structures Categores
     Infrastructure, Housing, Farming, Raw, Production, Industry, Trade, GovServices, Other, Militar,
 
     //infr F1
     StandLamp,
+
     Trail, Road, BridgeTrail, BridgeRoad, CoachMan,
     LightHouse, WheelBarrow, StockPile, Masonry,
     HeavyLoad,
@@ -255,6 +277,7 @@ public enum H
     //house F2 ... bugg bz they had numbers on it .. They cant have numbers
     //Bohio, BohioB,
     Shack,
+
     MediumShack,
     LargeShack,
 
@@ -263,42 +286,52 @@ public enum H
     BrickHouseC,
     BrickHouseB,
 
-
     //farming F3
-    //Farm, this farm removed is the draggable farm 
+    //Farm, this farm removed is the draggable farm
     AnimalFarmSmall, AnimalFarmMed, AnimalFarmLarge, AnimalFarmXLarge,
+
     FieldFarmSmall, FieldFarmMed,
-    FieldFarmLarge, FieldFarmXLarge, //blockin the game, when they are selected 
+    FieldFarmLarge, FieldFarmXLarge, //blockin the game, when they are selected
     FishingHut,
+
     //raw F4
     LumberMill, Clay, ShoreMine,
+
     MountainMine,
     BlackSmith, QuickLime,
     Mortar, Pottery,
+
     //prod F5
     Brick, Carpentry, Cigars, Mill, Tailor,
+
     Armory, Distillery, Chocolate, Ink,
+
     //industry F6
     Cloth, GunPowder, PaperMill, Printer, CoinStamp, SugarMill, Foundry, SugarShop,
+
     //Trade F7
     Dock, Shipyard, Supplier, StorageSmall, StorageMed, StorageBig, StorageBigTwoDoors, StorageExtraBig,
+
     //gov F8
-    //Clinic, CommerceChamber, Customs, 
+    //Clinic, CommerceChamber, Customs,
     Library, School, TradesSchool,
+
     TownHouse,
+
     //other F9
     //Religous
     Church,
+
     //Old
     Tavern,
 
     //Militar
-    WoodPost, PostGuard, Fort, Morro, 
+    WoodPost, PostGuard, Fort, Morro,
 
-    //Decorations 
+    //Decorations
     Fountain, WideFountain, PalmTree,
-    FloorFountain, FlowerPot, PradoLion,
 
+    FloorFountain, FlowerPot, PradoLion,
 
     WillBeDestroy,
     Initial,
@@ -376,7 +409,6 @@ public enum H
     Upg_Btn,
     Upg_Mat_Btn,
     Upg_Cap_Btn,
-
 
     Obstacle, MountainObstacle, WaterObstacle,
 
@@ -463,26 +495,31 @@ public enum StCat //strucutre categories
     Infrastructure, Housing, Farming, Raw, Production, Industry, Trade, GovServices, Other, Militar, Decoration
 }
 
-public enum StInfr //for structures game structure.cs 
+public enum StInfr //for structures game structure.cs
 {
     //Infrastructure
     StandLamp,
+
     //Trail,
     Road,
+
     //BridgeTrail, BridgeRoad,
-    //CoachMan, 
+    //CoachMan,
     LightHouse,
-    //WheelBarrow, 
-    //b4StockPile, 
+
+    //WheelBarrow,
+    //b4StockPile,
     Masonry,
+
     HeavyLoad,
 }
 
-public enum StHous //for structures game structure.cs 
+public enum StHous //for structures game structure.cs
 {
     //Housing
     //Bohio,
     Shack, MediumShack, LargeShack,
+
     WoodHouseA, WoodHouseB, WoodHouseC,
     BrickHouseA,
     BrickHouseC,
@@ -493,25 +530,28 @@ public enum StFarm
 {
     //Farm,
     //AnimalFarmSmall, AnimalFarmMed, AnimalFarmLarge, AnimalFarmXLarge,
-    FieldFarmSmall, FieldFarmMed, 
+    FieldFarmSmall, FieldFarmMed,
+
     //FieldFarmLarge, FieldFarmXLarge,
-    //FishingHut, 
+    //FishingHut,
 }
 
-public enum StRaw //for structures game structure.cs 
+public enum StRaw //for structures game structure.cs
 {
     LumberMill, Clay, ShoreMine,
     MountainMine,
-    BlackSmith, QuickLime, 
+    BlackSmith, QuickLime,
     Mortar, Pottery,
 }
 
-public enum StProd //for structures game structure.cs 
+public enum StProd //for structures game structure.cs
 {
     //Production
-    Brick, Carpentry, Cigars, 
+    Brick, Carpentry, Cigars,
+
     //Mill,
-    Tailor, 
+    Tailor,
+
     Armory, Distillery, Chocolate, Ink,
 }
 
@@ -519,57 +559,60 @@ public enum StProd //for structures game structure.cs
 public enum StInd
 {
     Cloth, GunPowder, PaperMill, Printer,
+
     //CoinStamp,
     SugarMill,
+
     Foundry, SugarShop
 }
 
-public enum StTrade //for structures game structure.cs 
+public enum StTrade //for structures game structure.cs
 {
     //Trade
-    Dock, //Shipyard, Supplier, 
-    StorageSmall, StorageMed, StorageBig, 
+    Dock, //Shipyard, Supplier,
+
+    StorageSmall, StorageMed, StorageBig,
     //StorageBigTwoDoors, StorageExtraBig,
 }
 
-
-
-public enum StGov //for structures game structure.cs 
+public enum StGov //for structures game structure.cs
 {
     //Gov Services
     //Clinic,CommerceChamber,Customs,
-    //Library,
-    School,TradesSchool,
+    Library,
+
+    School, TradesSchool,
     //TownHouse,
 }
 
-public enum StOther //for structures game structure.cs 
+public enum StOther //for structures game structure.cs
 {
     //Religous
     Church,
+
     //Old
     Tavern,
 }
 
-public enum StMil //for structures game structure.cs 
+public enum StMil //for structures game structure.cs
 {
     //WoodPost,
     PostGuard,
+
     //Fort, Morro,
 }
 
-public enum StDec //for structures game structure.cs 
+public enum StDec //for structures game structure.cs
 {
     Fountain, WideFountain, PalmTree,
     FloorFountain, FlowerPot, PradoLion,
-
 }
 
 public enum Ma //for materials
 {
     matBuildBase, matBuildUpg1, matBuildUpg2
-
 }
+
 public enum Ca //category
 {
     None, Way, Structure, DraggableSquare, Spawn, Shore,
@@ -601,7 +644,7 @@ public enum F//for fades
 { FadeIn, FadeOut }
 
 //for STATIC STRINGS this is  is created so we start removing all strings from the code
-//this is for longer strings 2 words or more  
+//this is for longer strings 2 words or more
 public enum S
 {
     Confirm_Menu_Spawner,
@@ -646,21 +689,18 @@ public enum G//for General Random stuff
 public enum Ron1
 {
     Brick, Wood, Carpintery, Clay, SaltMine, BlackSmith, FishHut, Masonry, LightHouse,
-    Church, Tavern, 
+    Church, Tavern,
     MountainMine, Mill, School, PostGuard
 }
 
 public enum Ron2
 {
-    Library, TradesSchool, 
+    Library, TradesSchool,
     Dock, StorageSmall,
-    BridgeRoad, 
+    BridgeRoad,
     GunPowder, Armory, Tailor, Pottery,
     CoinStamp, Chocolate, Distillery, Foundry, Printer, Cigars, Ink,
     Cloth,
-
-
-    
 }
 
 public enum Ron3
@@ -688,10 +728,10 @@ public enum RonBohioHouse
     Bohio, BohioB
 }
 
-public static class Enums 
+public static class Enums
 {
     /// <summary>
-    /// All Enums pass here need to have a None defined as an element 
+    /// All Enums pass here need to have a None defined as an element
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="value"></param>
@@ -701,7 +741,6 @@ public static class Enums
         try
         {
             return (T)Enum.Parse(typeof(T), value, true);
-
         }
         catch (Exception)
         {

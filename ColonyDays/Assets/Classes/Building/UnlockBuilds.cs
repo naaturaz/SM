@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 /// <summary>
 /// This class will in one event will define wich building are unlock
-/// to be built. the others all will be locked by default 
+/// to be built. the others all will be locked by default
 /// </summary>
 public class UnlockBuilds
 {
@@ -52,7 +51,7 @@ public class UnlockBuilds
             new BRequires(H.AnimalFarmSmall, H.OnlyForDev),
             new BRequires(H.AnimalFarmMed, H.OnlyForDev),
             new BRequires(H.AnimalFarmLarge, H.OnlyForDev),
-            new BRequires(H.AnimalFarmXLarge, H.OnlyForDev),  
+            new BRequires(H.AnimalFarmXLarge, H.OnlyForDev),
             new BRequires(H.FieldFarmSmall, true),
             new BRequires(H.FieldFarmMed, 35),
             new BRequires(H.FieldFarmLarge, H.OnlyForDev),
@@ -90,12 +89,11 @@ public class UnlockBuilds
             new BRequires(H.Foundry, 50, 500, 900),
             new BRequires(H.SugarShop, true),
 
-
             //trade
             new BRequires(H.Dock, true),
             new BRequires(H.Shipyard, 50, 500, 500, priorBuilds: new List<H>(){H.Supplier}),
             new BRequires(H.Supplier, 50, 500, 1000, priorBuilds: new List<H>(){H.LightHouse}),
-            
+
             new BRequires(H.StorageSmall, true),
             new BRequires(H.StorageMed, 50, 500, 900, priorBuilds: new List<H>(){H.StorageSmall}),
             new BRequires(H.StorageBig, 150, 10000, 900, priorBuilds: new List<H>(){H.StorageMed}),
@@ -103,7 +101,8 @@ public class UnlockBuilds
             new BRequires(H.StorageExtraBig, 350, 2500, 900, priorBuilds: new List<H>(){H.StorageBigTwoDoors}),
 
             //gov
-            new BRequires(H.Library, H.OnlyForDev),
+            new BRequires(H.Library, 50, 500, 900),
+            //new BRequires(H.Library, H.OnlyForDev),
             new BRequires(H.School, 50, 500, 900),
             new BRequires(H.TradesSchool, 50, 500, 900, priorBuilds: new List<H>(){H.School}),
             new BRequires(H.TownHouse, H.Coming_Soon),
@@ -115,7 +114,7 @@ public class UnlockBuilds
             //military
             new BRequires(H.WoodPost, H.OnlyForDev),
             new BRequires(H.PostGuard, 50, 500, 900, 0, 95),
-            new BRequires(H.Fort, H.Coming_Soon),       
+            new BRequires(H.Fort, H.Coming_Soon),
             new BRequires(H.Morro, H.Coming_Soon),
 
             //decoration
@@ -126,11 +125,8 @@ public class UnlockBuilds
             new BRequires(H.FlowerPot, true),
             new BRequires(H.PradoLion, true),
 
-
-
             //helper
             new BRequires(H.BullDozer, true),
-
         };
     }
 
@@ -152,8 +148,6 @@ public class UnlockBuilds
         }
     }
 
-
-
     internal string RequirementsNeeded(H type)
     {
         return _dict[type].InfoMsg;
@@ -163,7 +157,7 @@ public class UnlockBuilds
 /// <summary>
 /// What a build requires to be built
 /// </summary>
-class BRequires
+internal class BRequires
 {
     public H HType;
     public int Persons;
@@ -173,7 +167,7 @@ class BRequires
     public float PortReputation;
     public float PirateThreat;
 
-    //priors build that need to exist 
+    //priors build that need to exist
     public List<H> PriorBuilds = new List<H>();
 
     //The sugarMill for example needs 20,000KG of SugarCane on stock before can be built
@@ -187,7 +181,9 @@ class BRequires
     private bool p1;
     private string p2;
 
-    public BRequires() { }
+    public BRequires()
+    {
+    }
 
     public BRequires(H hType, int persons = 50, float food = 1000, float dollars = 0,
         float portReputation = 5, float pirateTreath = 50, List<H> priorBuilds = null,
@@ -205,8 +201,6 @@ class BRequires
         //CheckIfIsABuildThatHasInputProds();
         SetFoodNeededAsHouse();
     }
-
-
 
     private void SetFoodNeededAsHouse()
     {
@@ -246,10 +240,8 @@ class BRequires
         CurrentState = currState;
     }
 
-
-
     /// <summary>
-    /// If so add at least some prod requirements 
+    /// If so add at least some prod requirements
     /// </summary>
     private void CheckIfIsABuildThatHasInputProds()
     {
@@ -273,14 +265,14 @@ class BRequires
     /// </summary>
     public void DefineCurrentState(float currentAmtOfFood)
     {
-        //to buildings that has not 3d yet done. or will be added in the future 
-        if (CurrentState == H.Coming_Soon || 
+        //to buildings that has not 3d yet done. or will be added in the future
+        if (CurrentState == H.Coming_Soon ||
             (CurrentState == H.OnlyForDev && !Developer.IsDev))
         {
             return;
         }
 
-        //needs to be called here again bz the amt of people changes all the time 
+        //needs to be called here again bz the amt of people changes all the time
         SetFoodNeededAsHouse();
 
         var person = PersonPot.Control.All.Count > Persons || Persons == 0;
@@ -320,12 +312,12 @@ class BRequires
 
     /// <summary>
     /// If is a house will check if the Population is below the Cap.
-    /// 
+    ///
     /// </summary>
     /// <returns>if is not below and a house will return false</returns>
     private bool IsAHouseBelowCapMax()
     {
-        if (! Building.IsHouseType(HType+""))
+        if (!Building.IsHouseType(HType + ""))
         {
             return true;
         }
@@ -349,7 +341,7 @@ class BRequires
         }
         if (Food != 0)
         {
-            res += Unit.WeightConverted(Food) + " " + Unit.WeightUnit() +  Languages.ReturnString("Of.Food");
+            res += Unit.WeightConverted(Food) + " " + Unit.WeightUnit() + Languages.ReturnString("Of.Food");
             appends++;
         }
         if (Dollars != 0)
@@ -382,7 +374,7 @@ class BRequires
         {
             for (int i = 0; i < PriorBuilds.Count; i++)
             {
-                res +=  Languages.ReturnString(".At least 1: ") + PriorBuilds[i] + ". ";
+                res += Languages.ReturnString(".At least 1: ") + PriorBuilds[i] + ". ";
                 appends++;
             }
         }
@@ -390,10 +382,9 @@ class BRequires
         res = DescriptionWindow.CheckIfAppend3(ref appends, res, 1);
 
         InfoMsg = res;
-
     }
 
-    bool DoWeHaveEnoughOnStorages()
+    private bool DoWeHaveEnoughOnStorages()
     {
         if (ProductRequired == null)
         {
@@ -408,7 +399,7 @@ class BRequires
         return true;
     }
 
-    bool DoesPriorBuildingsExist()
+    private bool DoesPriorBuildingsExist()
     {
         if (PriorBuilds == null || PriorBuilds.Count == 0)
         {
@@ -427,8 +418,4 @@ class BRequires
         }
         return false;
     }
-
 }
-
-
-

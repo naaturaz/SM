@@ -1,18 +1,15 @@
-﻿using System;
+﻿//using Facebook.Unity;
+using Steamworks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
-//using Facebook.Unity;
-using Steamworks;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
-
 public class GameScene : General
 {
-
-    float _gameLoadedTime;//when this game fullyLoaded 
+    private float _gameLoadedTime;//when this game fullyLoaded
     public Terreno Terreno;
 
     private static Btn3D textMessage;
@@ -21,13 +18,14 @@ public class GameScene : General
     public ControllerMain controllerMain;
     private General _waterBody;
 
-    private Book _book = new Book(); //keeps all the caps for each object of the game 
+    private Book _book = new Book(); //keeps all the caps for each object of the game
 
     //the scale of the small units in a farm
     private Vector3 _subDivideBlockScale = new Vector3();
 
     //how thick a block of way is
     private float _subDivideBlockYVal = 0.05f; //0.001f;
+
     private int _gameSpeed = 1; //the speed of the whole Game
 
     public static General dummyBlue; //for help everywhere()
@@ -38,13 +36,12 @@ public class GameScene : General
 
     //load save in BuildingSaveLoad.cs
     private GameTime _gameTime = new GameTime();
-    //people will grow ard 3x faster than anything else bz game is boring like is now 
+
+    //people will grow ard 3x faster than anything else bz game is boring like is now
     private GameTime _gameTimePeople;
-    
-    
+
     private GameController _gameController = new GameController();
     private ExportImport _exportImport = new ExportImport();
-
 
     private BatchManager _batchManager;
     private Culling _culling;
@@ -52,9 +49,8 @@ public class GameScene : General
     private StaticBatch _staticBatch;
     private MeshBatch _meshBatch;
 
-
-    QuestManager _questManager;
-    EnemyManager _enemyManager;
+    private QuestManager _questManager;
+    private EnemyManager _enemyManager;
 
     public EnemyManager EnemyManager
     {
@@ -140,10 +136,10 @@ public class GameScene : General
         set { _fustrum = value; }
     }
 
-
-#region SaveLoad Game General
+    #region SaveLoad Game General
 
     private string _gameVersion = "";
+
     public string GameVersion
     {
         get { return _gameVersion; }
@@ -168,10 +164,10 @@ public class GameScene : General
             _unitsManager = value;
         }
     }
-    
+
     //from Toy Army
 
-    UnitsManager _unitsManager;
+    private UnitsManager _unitsManager;
 
     private void ProgramDataInit()
     {
@@ -180,8 +176,8 @@ public class GameScene : General
         XMLSerie.WriteXMLProgram(CreateProgramDataObjOrUpdate());
 #endif
     }
-    
-    ProgramData CreateProgramDataObjOrUpdate()
+
+    private ProgramData CreateProgramDataObjOrUpdate()
     {
         //reads the Program.xls
         var pData = XMLSerie.ReadXMLProgram();
@@ -200,26 +196,26 @@ public class GameScene : General
     /// version on botton of the game like 0.0.0.16.05.22
     /// </summary>
     /// <returns></returns>
-    string Version()
+    private string Version()
     {
         if (Developer.IsDev)
         {
             return "Developer Version.";
         }
 
-        var discl = 
-            //"Legal: This is a Non Diclosure Agreement. By playing this game you " +
-            //        "agree on not release, share or send any media about the game, nor talk about it. " +
-            //        "You can not share any information about this game. " +
-            //        "Thanks for your help. "  +
+        var discl =
+                    //"Legal: This is a Non Diclosure Agreement. By playing this game you " +
+                    //        "agree on not release, share or send any media about the game, nor talk about it. " +
+                    //        "You can not share any information about this game. " +
+                    //        "Thanks for your help. "  +
                     "Aatlantis Code Copyright"
                     //+"Not for distribution, nor publicity. \n"
                     ;
 
         return discl +
-               "\nv1.1.0." +
-            //    " Early Access \n v0.9.0." +
-               //"Closed Beta \n v0.0.1." + 
+               "\nv1.2.0." +
+               //    " Early Access \n v0.9.0." +
+               //"Closed Beta \n v0.0.1." +
                TimeStamp();
     }
 
@@ -234,18 +230,18 @@ public class GameScene : General
             AddZeroInFrontIfOneChar(DateTime.Now.Second);
     }
 
-    static string AddZeroInFrontIfOneChar(int v)
+    private static string AddZeroInFrontIfOneChar(int v)
     {
         if (v.ToString().Length == 1)
         {
             return "0" + v;
         }
-        return v+"";
+        return v + "";
     }
 
-    #endregion
+    #endregion SaveLoad Game General
 
-    bool loadTerrain;
+    private bool loadTerrain;
 
     // Use this for initialization
     private void Start()
@@ -255,28 +251,26 @@ public class GameScene : General
 
         Book.Start();
 
-        if(HType == H.Create)
-        LoadTerrain();
+        if (HType == H.Create)
+            LoadTerrain();
 
         GameController1.Start();
         StartCoroutine("SixtySecUpdate");
         StartCoroutine("OneSecUpdate");
 
-        textMessage = (Btn3D) General.Create(Root.menusTextMiddle, new Vector3(0.85f, 0.3f, 0));
+        textMessage = (Btn3D)General.Create(Root.menusTextMiddle, new Vector3(0.85f, 0.3f, 0));
         textMessage.MoveSpeed = 40f; //so fade happens
         textMessage.FadeDirection = "FadeIn";
 
         dummyBlue = General.Create(Root.blueCubeBig, new Vector3());
         dummyRed = General.Create(Root.redCube, new Vector3());
 
-
         createDummySpawn = true;
 
-        dummySpawnPoint = (Structure) Building.CreateBuild(Root.dummyBuildWithSpawnPointUnTimed, new Vector3(), H.Dummy,
+        dummySpawnPoint = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPointUnTimed, new Vector3(), H.Dummy,
             container: Program.ClassContainer.transform);
 
         //hudColor = textMessage.GetComponent<GUIText>().color;
-
 
         ProgramDataInit();
 
@@ -290,14 +284,11 @@ public class GameScene : General
         Debug.Log("GameScene Start():" + Time.time);
     }
 
-
-
-
     #region BatchManager
 
     /// <summary>
-    /// Is only gonna be called when CrystalManager is loaded 
-    /// other wise Im creating a new Terrain 
+    /// Is only gonna be called when CrystalManager is loaded
+    /// other wise Im creating a new Terrain
     /// </summary>
     public void BatchManagerCreate()
     {
@@ -305,10 +296,10 @@ public class GameScene : General
     }
 
     /// <summary>
-    /// call when all buildigns are loaded and 
+    /// call when all buildigns are loaded and
     /// when all Spwaners are loaded.
-    /// 
-    /// Will pass only if both are done 
+    ///
+    /// Will pass only if both are done
     /// </summary>
     public void BatchInitial()
     {
@@ -320,16 +311,15 @@ public class GameScene : General
 
         //Debug.Log("BatchInitial() gameScene");
         _batchManager.BatchInitial();
-
     }
 
     /// <summary>
-    /// call when all buildigns are loaded and 
+    /// call when all buildigns are loaded and
     /// when all Spwaners are loaded.
-    /// 
-    /// Will pass only if both are done 
-    /// 
-    /// Called directly too when Spawners are rehuse 
+    ///
+    /// Will pass only if both are done
+    ///
+    /// Called directly too when Spawners are rehuse
     /// </summary>
     public void ReleaseLoadingScreen()
     {
@@ -337,9 +327,9 @@ public class GameScene : General
         {
             return;
         }
-        //so the loading screen is kill and gui loaded 
+        //so the loading screen is kill and gui loaded
         Program.MyScreen1.LoadingScreenIsDone();
-        //so its loaded to the right Screen resolution 
+        //so its loaded to the right Screen resolution
         Program.MouseListener.ApplyChangeScreenResolution();
 
         RedoStuffWithLoadedData();
@@ -348,6 +338,7 @@ public class GameScene : General
     }
 
     #region Tutorial
+
     private TutoWindow _tutoWindow;
 
     public void TutoStepCompleted(string step)
@@ -375,7 +366,7 @@ public class GameScene : General
         return _tutoWindow.IsShownNow();
     }
 
-    #endregion
+    #endregion Tutorial
 
     /// <summary>
     /// Add the Object to the BatchMesh
@@ -389,7 +380,6 @@ public class GameScene : General
     internal void BatchRemove(General gen)
     {
         _batchManager.RemoveGen(gen);
-
     }
 
     /// <summary>
@@ -399,10 +389,9 @@ public class GameScene : General
     internal void BatchRemoveNotRedo(General gen)
     {
         _batchManager.RemoveGen(gen, false);
-
     }
 
-#endregion
+    #endregion BatchManager
 
     private IEnumerator SixtySecUpdate()
     {
@@ -425,7 +414,7 @@ public class GameScene : General
             HUDFPS.Message = " | " + MouseInBorderRTS.GlobalDir.ToString() + "| Dragged: " + Way._dir +
                              " | InputMode: " + BuildingPot.InputMode + "\n" + more + "\n"
                              + AddPersonControllerInfo() + " | " + AddLoadingInfo()
-                //  +               Pull AddUnityStats()
+                             //  +               Pull AddUnityStats()
                              + AddCachedReoutesCount();
         }
     }
@@ -437,13 +426,13 @@ public class GameScene : General
     {
         CreatePlane cP = new CreatePlane();
         //the rectify are added so it looks seamles on terrain the farm
-        _subDivideBlockScale.x = m.SubDivide.XSubStep + cP.RectifyOnX * 2 ;
+        _subDivideBlockScale.x = m.SubDivide.XSubStep + cP.RectifyOnX * 2;
         _subDivideBlockScale.y = _subDivideBlockYVal - 0.01f;//so it doesnt overlap ways like trail
         _subDivideBlockScale.z = Mathf.Abs(m.SubDivide.ZSubStep) + cP.RectifyOnZ * 2;
     }
 
-	// Update is called once per frame
-    void Update()
+    // Update is called once per frame
+    private void Update()
     {
         //means tht it has it loaded
         if (_gameTime == null)
@@ -469,7 +458,7 @@ public class GameScene : General
 
         AudioCollector.Update();
         CreateDummySpawnPoint();
-        
+
         DebugInput();
         DebugChangeScreenResolution();
 
@@ -480,12 +469,12 @@ public class GameScene : General
             _fustrum = new Fustrum();
         }
 
-        if (_fustrum!=null)
+        if (_fustrum != null)
         {
             _fustrum.Update();
         }
 
-        if (hud==null)
+        if (hud == null)
         {
             var hudGO = FindObjectOfType<HUDFPS>();
             if (hudGO != null)
@@ -502,7 +491,7 @@ public class GameScene : General
         //}
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         //means tht it has it loaded
         if (_gameTime == null || _gameTimePeople == null)
@@ -513,7 +502,7 @@ public class GameScene : General
         GameTimePeople.FixedUpdate();
     }
 
-    string AddCachedReoutesCount()
+    private string AddCachedReoutesCount()
     {
         if (PersonPot.Control == null || PersonPot.Control.RoutesCache1 == null)
         {
@@ -523,29 +512,26 @@ public class GameScene : General
         return "\n Cached: " + PersonPot.Control.RoutesCache1.ItemsCount();
     }
 
-    string AddPersonControllerInfo()
+    private string AddPersonControllerInfo()
     {
         if (PersonPot.Control == null || PersonPot.Control.WorkersRoutingQueue == null)
         {
             return "";
         }
 
-
         string res = "";
-        if (PersonPot.Control.WorkersRoutingQueue.OnSystemNow1.Count>0)
+        if (PersonPot.Control.WorkersRoutingQueue.OnSystemNow1.Count > 0)
         {
-            res += "on sysNow:"+ PersonPot.Control.WorkersRoutingQueue.OnSystemNow1[0].Id;
+            res += "on sysNow:" + PersonPot.Control.WorkersRoutingQueue.OnSystemNow1[0].Id;
         }
-        res += " waitList ct:"+PersonPot.Control.WorkersRoutingQueue.WaitList.Count;
+        res += " waitList ct:" + PersonPot.Control.WorkersRoutingQueue.WaitList.Count;
 
         return res;
     }
 
-
-
-    string AddLoadingInfo()
+    private string AddLoadingInfo()
     {
-        if (Program.gameScene.controllerMain != null 
+        if (Program.gameScene.controllerMain != null
                         && Program.gameScene.controllerMain.TerraSpawnController != null
                         && !Program.gameScene.controllerMain.TerraSpawnController.HasLoadedOrLoadedTreesAndRocks())
         {
@@ -556,10 +542,10 @@ public class GameScene : General
 
     /// <summary>
     /// To be called if the screen res was changed
-    /// 
-    /// This is to be called when u hit 'apply' on the Display Setup 
+    ///
+    /// This is to be called when u hit 'apply' on the Display Setup
     /// </summary>
-    void DebugChangeScreenResolution()
+    private void DebugChangeScreenResolution()
     {
         bool shouldWork = Developer.IsDev;
 
@@ -569,11 +555,12 @@ public class GameScene : General
 
         if (shouldWork && Input.GetKeyUp(KeyCode.Keypad1))
         {
-           Program.MouseListener.ApplyChangeScreenResolution();
+            Program.MouseListener.ApplyChangeScreenResolution();
         }
     }
 
     private bool _hideText = true;
+
     private void DebugInput()
     {
         bool shouldWork = Developer.IsDev;
@@ -586,15 +573,14 @@ public class GameScene : General
         {
             _hideText = !_hideText;
             HideShowTextMsg();
-
         }
-
     }
 
     private GUIText hud;
     private Color hudColor;
-    //Wont change color bz is not in updte directly 
-    void HideShowTextMsg()
+
+    //Wont change color bz is not in updte directly
+    private void HideShowTextMsg()
     {
         Color col = Color.green;
 
@@ -603,8 +589,6 @@ public class GameScene : General
             col.a = 0;
         }
         else col.a = 255;
-
-
 
         if (hud == null)
         {
@@ -615,12 +599,13 @@ public class GameScene : General
     }
 
     private string more;
+
     /// <summary>
     /// Adds to the HUDFPS.Message
     /// </summary>
     /// <param name="moreP"></param>
     public void AddToMainScreen(string moreP)
-    {more = moreP;}
+    { more = moreP; }
 
     public static void ScreenPrint(string newA)
     {
@@ -643,21 +628,15 @@ public class GameScene : General
 
     //public static void ResetDummyWithSpawnPoint(Structure dummPass)
     //{
-    //    var ind = 
+    //    var ind =
 
     //    dummyWithSpawnPoint.transform.position = new Vector3();
     //    dummyWithSpawnPoint.transform.rotation = Quaternion.identity;
     //}
 
-
-
-
-
-
-
     public void Destroy()
     {
-        if (Terreno!=null)
+        if (Terreno != null)
         {
             Program.gameScene.controllerMain.TerraSpawnController.SendAllToPool();
             Terreno.Destroy();
@@ -670,18 +649,18 @@ public class GameScene : General
     }
 
     /// <summary>
-    /// Load terrain and water 
+    /// Load terrain and water
     /// </summary>
     /// <param name="terrainRoot"></param>
     public void LoadTerrain()
     {
         Debug.Log("LoadTerrain:" + Time.time);
-        //bz music 
+        //bz music
         CamControl.CreateCam(H.CamRTS);
 
         if (string.IsNullOrEmpty(Program.MyScreen1.TerraRoot))
         {
-            //the default terrain 
+            //the default terrain
             Terreno = Terreno.CreateTerrain(Root.bayAndMountain1River, true);
         }
         else
@@ -689,7 +668,7 @@ public class GameScene : General
             //will create cvamera if is null
             Terreno = Terreno.CreateTerrain(Program.MyScreen1.TerraRoot);
         }
-        
+
         if (WaterBody == null)
         {
             //at the Moment Water Small is not visible Apr1 2016. since the mirror was duplicating
@@ -705,7 +684,7 @@ public class GameScene : General
     private int poolSize = 30;
     private bool createDummySpawn = true;
 
-    void CreateDummySpawnPoint()
+    private void CreateDummySpawnPoint()
     {
         if (!createDummySpawn || BuildingPot.Control == null || BuildingPot.Control.ProductionProp == null)
         {
@@ -715,11 +694,11 @@ public class GameScene : General
         InitDummyPool();
     }
 
-    void InitDummyPool()
+    private void InitDummyPool()
     {
         for (int i = 0; i < poolSize; i++)
         {
-            dummiesSpwnPoint.Add((Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPointUnTimed, new Vector3(), H.Dummy, 
+            dummiesSpwnPoint.Add((Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPointUnTimed, new Vector3(), H.Dummy,
                 container: Program.ClassContainer.transform));
         }
     }
@@ -731,29 +710,29 @@ public class GameScene : General
             if (dummiesSpwnPoint[i].transform.position == new Vector3() &&
                 dummiesSpwnPoint[i].transform.rotation == Quaternion.identity &&
                 string.IsNullOrEmpty(dummiesSpwnPoint[i].DummyIdSpawner) &&
-                dummiesSpwnPoint[i].LandZone1.Count==0)
+                dummiesSpwnPoint[i].LandZone1.Count == 0)
             {
-               //Debug.Log("return dummy #:"+i);
+                //Debug.Log("return dummy #:"+i);
                 dummiesSpwnPoint[i].name = myIDP + ".Dummy";
                 dummiesSpwnPoint[i].UsedAt = GameTime1.CurrentDate();
                 return dummiesSpwnPoint[i];
             }
-      }
-      return null;
+        }
+        return null;
     }
 
     internal void ReturnUsedDummy(Structure usedDummy)
     {
         usedDummy.transform.position = new Vector3();
         usedDummy.transform.rotation = Quaternion.identity;
-        usedDummy.name = usedDummy.Id+".Dummy";
+        usedDummy.name = usedDummy.Id + ".Dummy";
 
-        //bz is needed for next Routing 
+        //bz is needed for next Routing
         usedDummy.LandZone1.Clear();
         //usedDummy.DummyIdSpawner = "";
     }
 
-    #endregion
+    #endregion Dummy Pool
 
     internal bool GameFullyLoaded()
     {
@@ -772,9 +751,10 @@ public class GameScene : General
 
         return res;
     }
-         
+
     public EventHandler<EventArgs> ChangeSpeed;
-    void OnChangeSpeed(EventArgs e)
+
+    private void OnChangeSpeed(EventArgs e)
     {
         if (ChangeSpeed != null)
         {
@@ -783,6 +763,7 @@ public class GameScene : General
     }
 
     private int oldSpeed;
+
     /// <summary>
     /// Will pause game. GameSpeed at 0
     /// </summary>
@@ -794,7 +775,7 @@ public class GameScene : General
     }
 
     /// <summary>
-    /// Will resume the game at the Paused Speed 
+    /// Will resume the game at the Paused Speed
     /// </summary>
     internal void ResumeGameSpeed()
     {
@@ -815,16 +796,16 @@ public class GameScene : General
             return "Wait Loading";
         }
     }
-         
+
     #region LogUploader
-    
-    //Logs will be uploaded only from people listed here 
-    Dictionary<string, string> whiteList = new Dictionary<string, string>()
+
+    //Logs will be uploaded only from people listed here
+    private Dictionary<string, string> whiteList = new Dictionary<string, string>()
     {
         {"76561198245800476", "aatlantisstudios"},
     };
 
-    bool IsCurrentUserOnLogUploadList()
+    private bool IsCurrentUserOnLogUploadList()
     {
         return whiteList.ContainsKey(SteamUser.GetSteamID() + "");
     }
@@ -832,12 +813,12 @@ public class GameScene : General
     /// <summary>
     /// Will open separate small .exe to upload and delete Log
     /// </summary>
-    void OpenLogHandler()
+    private void OpenLogHandler()
     {
         // Prepare the process to run
         ProcessStartInfo start = new ProcessStartInfo();
         // Enter in the command line arguments, everything you would enter after the executable name itself
-        start.Arguments = SteamUser.GetSteamID() + "." +SteamFriends.GetPersonaName();
+        start.Arguments = SteamUser.GetSteamID() + "." + SteamFriends.GetPersonaName();
         // Enter the executable to run, including the complete path
         start.FileName = Application.dataPath + "/Logs/LogsHandler.exe";
         // Do you want to show a console window?
@@ -855,19 +836,19 @@ public class GameScene : General
         }
     }
 
-    #endregion
-        
+    #endregion LogUploader
+
     internal bool IsDefaultTerreno()
     {
         return Terreno.Default;
     }
-       
+
     /// <summary>
     /// Once data is loaded the Book has to be redo
     /// </summary>
-    void RedoStuffWithLoadedData()
+    private void RedoStuffWithLoadedData()
     {
-        //means is a new game and this below is not needed 
+        //means is a new game and this below is not needed
         if (Program.MyScreen1.HoldDifficulty != -1)
         {
             return;
@@ -883,9 +864,8 @@ public class GameScene : General
         Program.IsPirate = pData.PersonControllerSaveLoad.IsPirate;
         Program.IsFood = pData.PersonControllerSaveLoad.IsFood;
         Program.WasTutoPassed = pData.PersonControllerSaveLoad.WasTutoPassed;
-
     }
-    
+
     internal bool GameWasFullyLoadedAnd10SecAgo()
     {
         return Time.time > _gameLoadedTime + 10 && _gameLoadedTime != 0;
@@ -895,9 +875,11 @@ public class GameScene : General
     {
         return Time.time > _gameLoadedTime + 2 && _gameLoadedTime != 0;
     }
-       
+
     #region Used for when GUI reloads dont lose Reports
-    PersonData _personData;
+
+    private PersonData _personData;
+
     public void DoATempSave()
     {
         //bz is called at every change Resolution event
@@ -917,5 +899,6 @@ public class GameScene : General
     {
         _personData = null;
     }
-    #endregion
+
+    #endregion Used for when GUI reloads dont lose Reports
 }

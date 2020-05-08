@@ -1969,8 +1969,8 @@ public class Person : Hoverable
 
     public void ExchangeInvetoryItem(General takenFrom, General givenTo, P product, float amt, Building build)
     {
-        //so inventory reloads when a person leaves something anywhere 
-        if (build != null) build.ReloadInventory();
+        //so inventory reloads when a person leaves something anywhere
+        //if (build != null) build.ReloadInventory();
 
         //to address when food Src is destroyed when person on its way
         if (takenFrom == null)
@@ -2411,8 +2411,6 @@ public class Person : Hoverable
             PersonPot.Control.RestartControllerForPerson(members[i].MyId);
         }
     }
-
-
 
     #region LOD
 

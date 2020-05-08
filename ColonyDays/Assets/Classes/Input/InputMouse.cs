@@ -6,12 +6,12 @@ public class InputMouse : InputParent
 {
     private Building oldSelection;
 
-	// Use this for initialization
+    // Use this for initialization
     public void Start()
     {
     }
-	
-	// Update is called once per frame
+
+    // Update is called once per frame
     public void Update()
     {
         DebugFullConstructedBuilding();
@@ -32,9 +32,9 @@ public class InputMouse : InputParent
     }
 
     //Will get fully built
-    void DebugFullConstructedBuilding()
+    private void DebugFullConstructedBuilding()
     {
-        if (!Developer.IsDev)
+        if (!Developer.IsDev)//void DebugFullConstructedBuilding()
             return;
 
         if (BuildingPot.Control == null)
@@ -76,8 +76,6 @@ public class InputMouse : InputParent
                 if (BuildingPot.Control.Registro.Structures.ContainsKey(keyName))
                 {
                     BuildingPot.Control.Registro.SelectBuilding = BuildingPot.Control.Registro.Structures[keyName];
-
-                   
                 }
             }
         }
@@ -101,7 +99,7 @@ public class InputMouse : InputParent
                 if (UKeyColl.CheckIfKeyInColl<TerrainRamdonSpawnerKey, string>(p.TerraSpawnController.AllRandomObjList, keyName))
                 {
                     General t = p.TerraSpawnController.AllRandomObjList[keyName];
-                    BuildingPot.Control.Registro.SelectBuilding = (Building) t;
+                    BuildingPot.Control.Registro.SelectBuilding = (Building)t;
                 }
             }
         }
@@ -131,20 +129,20 @@ public class InputMouse : InputParent
         SelectDecisions();
     }
 
-    void SelectDecisions()
+    private void SelectDecisions()
     {
         if (BuildingPot.Control.Registro.SelectBuilding == null) { return; }
 
         if (oldSelection != null)
         {
-            //so the old one is unselected 
+            //so the old one is unselected
             if (oldSelection != BuildingPot.Control.Registro.SelectBuilding)
             {
                 oldSelection.UnSelectBuilding();
             }
         }
 
-        if (BuildingPot.Control.Registro.SelectBuilding.PositionFixed 
+        if (BuildingPot.Control.Registro.SelectBuilding.PositionFixed
             && BuildingPot.Control.Registro.SelectBuilding.Category != Ca.None
             //&& BuildingPot.InputMode == Mode.None
             )
@@ -157,7 +155,7 @@ public class InputMouse : InputParent
     /// <summary>
     /// Select current object
     /// </summary>
-    void SelectCurrent()
+    private void SelectCurrent()
     {
         if (BuildingPot.Control.Registro.SelectBuilding == null || BuildingPot.Control.Registro.SelectBuilding == new General())
         { return; }
@@ -165,11 +163,12 @@ public class InputMouse : InputParent
         if (BuildingPot.Control.Registro.SelectBuilding.Category == Ca.Way ||
             //BuildingPot.Control.Registro.SelectBuilding.Category == Ca.DraggableSquare ||
             BuildingPot.Control.Registro.SelectBuilding.Category == Ca.None)
-        { return;}
+        { return; }
 
         BuildingPot.Control.Registro.SelectBuilding.CreateProjectorConditionals();
         oldSelection = BuildingPot.Control.Registro.SelectBuilding;
     }
+
     /// <summary>
     /// Un Select what was the current object
     /// </summary>

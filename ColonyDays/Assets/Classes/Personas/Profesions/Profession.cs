@@ -304,7 +304,7 @@ public class Profession
             }
             return Languages.ReturnString(_person.Work.HType + "") + " " + Languages.ReturnString("worker");
         }
-        if (_person.Work.HType == H.HeavyLoad)
+        if (_person != null && _person.Work != null && _person.Work.HType == H.HeavyLoad)
             return Languages.ReturnString("Hauler");
 
         return Naming.CaseItRight(res + "");

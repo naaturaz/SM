@@ -3296,11 +3296,7 @@ public class Building : Hoverable, Iinfo
 
     internal bool IsToReloadInv()
     {
-        if (_isToReloadInv)
-        {
-            return true;
-        }
-        return false;
+        return _isToReloadInv;
     }
 
     /// <summary>

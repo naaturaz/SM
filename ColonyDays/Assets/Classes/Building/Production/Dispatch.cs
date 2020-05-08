@@ -519,6 +519,9 @@ public class Dispatch
             //if the Inventory of destiny build is full will skip that order
             if (IsDestinyBuildInvFullForThisProd(currOrders[i]) || currOrders[i].IsCompleted)
             {
+                if (person.Work != null)
+                    person.Work.ReloadInventory();
+
                 //todo Notify
                 Debug.Log("Docker order removed:" + currOrders[i].DestinyBuild + "|for prod:" + currOrders[i].Product + "" + "");
                 RemoveOrderByIDExIm(currOrders[i].ID);
@@ -1155,6 +1158,7 @@ public class Dispatch
             dock.Inventory.Add(ord.Product, maxAmtCanTake);
             ord.ChangeAmountBy(-maxAmtCanTake);
         }
+        dock.ReloadInventory();
     }
 
     /// <summary>
@@ -1207,6 +1211,7 @@ public class Dispatch
                 }
             }
         }
+        dock.ReloadInventory();
         return res;
     }
 
@@ -1546,6 +1551,9 @@ public class Order
         res.Amount = amt;
         res.ID = id;
         res.PlacedTime = pTime;
+
+        res.SourceBuildInfo = aOrder.SourceBuildInfo;
+        res.DestinyBuildInfo = aOrder.DestinyBuildInfo;
 
         return res;
     }
