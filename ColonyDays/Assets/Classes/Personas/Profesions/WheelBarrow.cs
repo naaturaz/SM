@@ -5,8 +5,6 @@ public class WheelBarrow : Profession
     private Structure _destinyBuild;
     private Structure _sourceBuild;
 
-    private bool _isDelayedCreatingNew;
-
     public WheelBarrow(Person person, PersonFile pF)
     {
         if (pF == null)
@@ -31,6 +29,11 @@ public class WheelBarrow : Profession
     /// </summary>
     private void InitForLoading()
     {
+        if (Program.Debugger.IsThisOneTarget(_person))
+        {
+            var a = 1;
+        }
+
         //if did not load a order will return, and take a break now
         if (Order1 == null// || _destinyBuild == null
             )
@@ -145,7 +148,6 @@ public class WheelBarrow : Profession
 
         RouterActive = true;
         Router1 = new CryRouteManager(_person.Work, _sourceBuild, _person, HPers.InWork);
-        // Router1 = new RouterManager(_person.Work, _sourceBuild, _person, HPers.InWork);
 
         IsRouterBackUsed = true;
         RouterBack = new CryRouteManager(_sourceBuild, _destinyBuild, _person, HPers.InWorkBack);
@@ -180,7 +182,7 @@ public class WheelBarrow : Profession
             }
 
             _person.ExchangeInvetoryItem(_sourceBuild, _person, Order1.Product, Order1.Amount, _sourceBuild);
-            
+
             //bz is putting car anim before has inventory loaded
             _person.Body.ResetPersonalObjectForHeavyLoader();
 

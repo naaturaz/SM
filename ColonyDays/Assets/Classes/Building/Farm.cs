@@ -1,13 +1,10 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-
-/*
+﻿/*
  * This class is the parent of Field Farm
  */
-public class Farm  {
 
-    //how much work the farmers have done so far in this farm 
+public class Farm
+{
+    //how much work the farmers have done so far in this farm
     protected float _workAdded;
 
     protected bool _isReadyToHarvest;
@@ -15,7 +12,7 @@ public class Farm  {
     protected bool _harvestNow;
 
     /// <summary>
-    /// When a worker works in the farm 
+    /// When a worker works in the farm
     /// </summary>
     public void AddWorkToFarm()
     {
@@ -25,7 +22,7 @@ public class Farm  {
             return;
         }
 
-        //so its fair bz the amount of time pass is changed by the speed in the power 
+        //so its fair bz the amount of time pass is changed by the speed in the power
         //+info@: GameTime.FixedUpdate()
         var add = 1000 * Program.gameScene.GameTime1.TimeFactorInclSpeed();
         _workAdded += add;
@@ -35,7 +32,4 @@ public class Farm  {
     {
         _harvestNow = true;
     }
-
-
-  
 }

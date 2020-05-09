@@ -955,18 +955,6 @@ public class Building : Hoverable, Iinfo
 
             //so dont call this method anymore
             IsLoadingFromFile = false;
-
-            //if (Category != Ca.Way)
-            //{
-            //    //so the action of demolish happens again
-            //    var b = (Structure)this;
-            //    b.Demolish();
-            //}
-            //else
-            //{
-            //    var b = (Trail)this;
-            //    b.Demolish();
-            //}
         }
     }
 
@@ -1115,8 +1103,6 @@ public class Building : Hoverable, Iinfo
             )//make sure all are checked so it doesnt interrupt anything
         {
             wasPersonControlRestarted = true;
-            //PersonPot.Control.RestartController();
-            //DestroyOrdered(true);
         }
 
         HireFireAll();
@@ -2710,6 +2696,8 @@ public class Building : Hoverable, Iinfo
 
     public int CurrentStage()
     {
+        if (HType == H.Road)
+            return 4;
         var st = (Structure)this;
         return st.CurrentStage;
     }
@@ -4598,7 +4586,7 @@ public class Building : Hoverable, Iinfo
         && !passID.Contains("LightHouse");
     }
 
-    bool DoesFitAHeavyLoader()
+    private bool DoesFitAHeavyLoader()
     {
         return HType != H.FieldFarmSmall && HType != H.FieldFarmMed;
     }
@@ -4899,6 +4887,14 @@ public class Building : Hoverable, Iinfo
     /// <returns></returns>
     internal Vector3 MiddlePoint()
     {
+
+        if (HType == H.Road)
+        {
+            DragSquare t = this as DragSquare;
+            return t.MiddlePoint();
+
+        }
+
         if (_anchors.Count == 0)
         {
             return transform.position;

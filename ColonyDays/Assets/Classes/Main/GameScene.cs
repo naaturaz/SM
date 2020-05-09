@@ -246,8 +246,9 @@ public class GameScene : General
     // Use this for initialization
     private void Start()
     {
+        if (Developer.IsDev) GameSpeed = 0;
+
         Debug.Log("GameScene Start():" + Time.time);
-        //FB.Init();
 
         Book.Start();
 

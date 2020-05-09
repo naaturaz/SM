@@ -2,18 +2,18 @@
 
 public class ForSaleRegionGO : Hoverable
 {
-    bool _isUpNow;
+    private bool _isUpNow;
 
     private int _index;
     private Rect _region;
 
-    BigBoxPrev buildingPrev;
-    Animator _animator;
+    private BigBoxPrev buildingPrev;
+    private Animator _animator;
 
     //GameObject _hover;
 
     /// <summary>
-    /// The index of the region 
+    /// The index of the region
     /// </summary>
     public int Index
     {
@@ -32,7 +32,7 @@ public class ForSaleRegionGO : Hoverable
     {
         ForSaleRegionGO obj = null;
         obj = (ForSaleRegionGO)Resources.Load(root, typeof(ForSaleRegionGO));
-        obj = (ForSaleRegionGO)Instantiate(obj, U2D.FromV2ToV3(region.center) , Quaternion.identity);
+        obj = (ForSaleRegionGO)Instantiate(obj, U2D.FromV2ToV3(region.center), Quaternion.identity);
         obj.HType = hType;
 
         obj.MyId += " " + index;
@@ -40,11 +40,11 @@ public class ForSaleRegionGO : Hoverable
         obj.Index = index;
         obj.Region = region;
 
-        if (container != null) { obj.transform.SetParent( container); }
+        if (container != null) { obj.transform.SetParent(container); }
         return obj;
     }
 
-    void Start()
+    private void Start()
     {
         _animator = gameObject.GetComponent<Animator>();
         //_hover = GetChildCalled("Hover");
@@ -54,7 +54,7 @@ public class ForSaleRegionGO : Hoverable
         buildingPrev = (BigBoxPrev)CreatePlane.CreatePlan(Root.bigBoxPrev, Root.dashedLinedSquare, container: transform);
         buildingPrev.UpdatePos(poly, .25f);
         buildingPrev.transform.position = U2D.FromV2ToV3(Region.center);
-        
+
         //MeshController.CrystalManager1.CrystalRegions[Index].StartWithAudioReport();
         Name = "Buy region";
         HType = H.BuyRegion;
@@ -62,10 +62,9 @@ public class ForSaleRegionGO : Hoverable
         transform.position += new Vector3(0, 10000, 0);
     }
 
+    private bool _isShown;
 
-
-    bool _isShown;
-    void Update()
+    private void Update()
     {
         if (!_isShown && MeshController.BuyRegionManager1.IsToShowNow())
         {
@@ -81,7 +80,6 @@ public class ForSaleRegionGO : Hoverable
         AddressHide();
         //CheckMouse();
     }
-
 
     private void AddressHide()
     {
@@ -101,13 +99,12 @@ public class ForSaleRegionGO : Hoverable
         }
     }
 
-
     /// <summary>
     /// On mouse click
     /// </summary>
     public void ClickOnMe()
     {
-        if (Program.IsInputLocked || Dialog.IsActive() || BuildingPot.Control.CurrentSpawnBuild!=null)
+        if (Program.IsInputLocked || Dialog.IsActive() || BuildingPot.Control.CurrentSpawnBuild != null)
         {
             return;
         }
@@ -118,10 +115,9 @@ public class ForSaleRegionGO : Hoverable
         Dialog.OKCancelDialog(H.BuyRegion);
     }
 
-
     #region Hover All Objects. All objects that have a collider will be hoverable
 
-    float lastMouseOver;
+    private float lastMouseOver;
 
     private void OnMouseEnter()
     {
@@ -147,6 +143,5 @@ public class ForSaleRegionGO : Hoverable
     //    }
     //}
 
-    #endregion
-
+    #endregion Hover All Objects. All objects that have a collider will be hoverable
 }

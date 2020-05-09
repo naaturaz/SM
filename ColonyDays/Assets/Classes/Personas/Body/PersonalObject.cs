@@ -103,7 +103,8 @@ public class PersonalObject
 
             //for Docker and HeavyLoader so it doesnt show this when on Dock
             if (_person.Work != null && 
-                (_person.Work.HType == H.Dock || _person.Work.HType == H.HeavyLoad) &&
+                (_person.Work.HType == H.Dock) &&
+                //(_person.Work.HType == H.Dock || _person.Work.HType == H.HeavyLoad) &&
                 _person.DistanceToWorkSpawnPoint() < 0.1f)
             {
             }

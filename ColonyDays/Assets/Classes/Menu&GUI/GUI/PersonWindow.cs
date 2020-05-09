@@ -4,7 +4,6 @@ using UnityEngine.UI;
 public class PersonWindow : Window
 {
     private Text _title;
-    private Text _info;
     private Rect _genBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
     private Rect _invBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
 
@@ -15,19 +14,24 @@ public class PersonWindow : Window
     private ShowAPersonBuildingDetails _aPersonBuildingDetails;
 
     private GameObject _general;
-    private GameObject _genBtn;//the btn 
+    private GameObject _genBtn;//the btn
 
     public Person Person1 { get; set; }
+    private string _oldPersonMyId;
+
+    private GameObject oldTabActive;
+    private GameObject _debugger;
+    private Text _debugger_Text;
 
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         base.Start();
         InitObj();
         Hide();
     }
 
-    void InitObj()
+    private void InitObj()
     {
         _general = GetChildThatContains(H.General);
 
@@ -35,15 +39,15 @@ public class PersonWindow : Window
         _inv_Ini_Pos_Gen = GetGrandChildCalled("Inv_Ini_Pos_Gen");
         _title = GetChildThatContains(H.Title).GetComponent<Text>();
 
-        _info = GetChildThatContains(H.Info).GetComponent<Text>();
         _genBtn = GetChildThatContains(H.Gen_Btn);
-
         _genBtnRect = GetRectFromBoxCollider2D(_genBtn.transform);
         var img = _genBtn.GetComponent<Image>();
         _initialTabColor = img.color;
+
+        _debugger = GetChildCalled("Debugger");
+        _debugger_Text = GetChildCalledOnThis("Debugger_Text", _debugger).GetComponent<Text>();
     }
 
-    string _oldPersonMyId;
     public void Show(Person val)
     {
         Program.MouseListener.HideBuildingsMenu();
@@ -54,7 +58,7 @@ public class PersonWindow : Window
             if (_oldPersonMyId != Person1.MyId)
             {
                 CleanPersonDetails();
-                //so if its a diff person will redo _aPersonBuildingDetails 
+                //so if its a diff person will redo _aPersonBuildingDetails
                 _aPersonBuildingDetails = null;
                 _oldPersonMyId = Person1.MyId;
 
@@ -74,6 +78,8 @@ public class PersonWindow : Window
 
         transform.position = iniPos;
         Person1.SelectPerson();
+
+        LoadOrHideDebuggerTab();
     }
 
     private void LoadMenu()
@@ -82,7 +88,6 @@ public class PersonWindow : Window
             return;
 
         _title.text = Person1.Name + "";
-        _info.text = BuildPersonInfo();
 
         if (_showAInventory == null)
         {
@@ -109,11 +114,12 @@ public class PersonWindow : Window
     }
 
     private int updCount;
+
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         updCount++;
-        //means is showing 
+        //means is showing
         if (Vector3.Distance(transform.position, iniPos) < 0.1f)
         {
             if (updCount > 6)
@@ -131,16 +137,15 @@ public class PersonWindow : Window
             MakeThisTabActive(_general);
     }
 
-    private GameObject oldTabActive;
     /// <summary>
     /// Use to swith Tabs on Window. Will hide all and make the pass one as active
     /// </summary>
     /// <param name="g"></param>
-    void MakeThisTabActive(GameObject g)
+    private void MakeThisTabActive(GameObject g)
     {
         if (Person1 == null) return;
 
-        //first time loaded ever in game 
+        //first time loaded ever in game
         if (g == null) g = _general;
 
         _general.SetActive(false);
@@ -148,7 +153,7 @@ public class PersonWindow : Window
 
         g.SetActive(true);
 
-        if(g == _general)
+        if (g == _general)
             ColorTabActive(_genBtn);
 
         oldTabActive = g;
@@ -164,7 +169,7 @@ public class PersonWindow : Window
         CleanPersonDetails();
     }
 
-    void CleanPersonDetails()
+    private void CleanPersonDetails()
     {
         if (_aPersonBuildingDetails != null)
         {
@@ -180,7 +185,7 @@ public class PersonWindow : Window
 
     /// <summary>
     /// Called from GUI
-    /// 
+    ///
     /// Or added event to ShowPersonBuildingTile
     /// </summary>
     /// <param name="which"></param>
@@ -205,7 +210,7 @@ public class PersonWindow : Window
         _title.text = Person1.Name;
         Program.UnLockInputSt();
 
-        if(oldName != Person1.Name)
+        if (oldName != Person1.Name)
             Program.gameScene.TutoStepCompleted("Rename.Tuto");
     }
 
@@ -216,12 +221,12 @@ public class PersonWindow : Window
 
     //Debug
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <returns></returns>
-    string BuildPersonInfo()
+    private string BuildPersonInfo()
     {
-        return "";
+        if (Person1 == null) return "";
 
         string res = "Age: " + Person1.Age + "\n Gender: " + Person1.Gender
                      + "\n Nutrition: " + Person1.NutritionLevel
@@ -231,7 +236,6 @@ public class PersonWindow : Window
                      + "\n Happinness: " + Person1.Happinnes
                      + "\n Years Of School: " + Person1.YearsOfSchool
                      + "\n Age majority reach: " + Person1.IsMajor;
-
 
         if (Person1.Home != null)
         {
@@ -249,8 +253,6 @@ public class PersonWindow : Window
         }
         else res += "\n Food Source: None";
 
-
-
 #if UNITY_EDITOR
         res += DebugInfo();
 
@@ -259,12 +261,12 @@ public class PersonWindow : Window
         return res;
     }
 
-    string DebugAgentInfo()
+    private string DebugAgentInfo()
     {
         return Person1.Body.BodyAgent.DebugInfo();
     }
 
-    string DebugInfo()
+    private string DebugInfo()
     {
         var res = "\n___________________\n" +
             "\n currentAni:" + Person1.Body.CurrentAni +
@@ -306,4 +308,31 @@ public class PersonWindow : Window
         return res;
     }
 
+    public void ToggleDebugger()
+    {
+        _debugger.SetActive(!_debugger.activeSelf);
+        PlayerPrefs.SetString("PersonWindow_Debugger", _debugger.activeSelf + "");
+
+        LoadOrHideDebuggerTab();
+    }
+
+    private void LoadOrHideDebuggerTab()
+    {
+        if (!Developer.IsDev) return;
+
+        var sav = PlayerPrefs.GetString("PersonWindow_Debugger");
+        if (sav == "True")
+        {
+            _debugger_Text.text = BuildPersonInfo();
+            _debugger.SetActive(true);
+        }
+        else
+            _debugger.SetActive(false);
+    }
+
+    public void DebugWasDestSetToFalse()
+    {
+        Person1.Body.BodyAgent.DebugWasDestSetToFalse();
+        Debug.Log("DebugWasDestSetToFalse()");
+    }
 }

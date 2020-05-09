@@ -83,6 +83,7 @@ public class Program : MonoBehaviour
         Load1();
         Load2();
         Load3(H.None);
+        Debugger = gameObject.GetComponent<Debugger>();
     }
 
     public void ReloadAll()
@@ -246,24 +247,13 @@ public class Program : MonoBehaviour
     //input locking
     private static bool _isInputLocked;
 
+    private static Debugger _debugger;
+
     public static bool IsInputLocked
     {
         get { return Program._isInputLocked; }
         set { Program._isInputLocked = value; }
     }
-
-    //public void LockInput()
-    //{
-    //    IsInputLocked = true;
-    //}
-
-    ///// <summary>
-    ///// Called  from INputFields when get inActive
-    ///// </summary>
-    //public void UnLockInput()
-    //{
-    //    IsInputLocked = false;
-    //}
 
     /// <summary>
     /// Called  from INputFields when get active
@@ -297,4 +287,17 @@ public class Program : MonoBehaviour
     /// Means in this session reached the WeekDraw
     /// </summary>
     public static bool WeekDraw { get; internal set; }
+
+    internal static Debugger Debugger
+    {
+        get
+        {
+            return _debugger;
+        }
+
+        set
+        {
+            _debugger = value;
+        }
+    }
 }

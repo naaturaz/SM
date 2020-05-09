@@ -1723,7 +1723,6 @@ public class Person : Hoverable
         else if (jType == Job.Builder)
         {
             _profession = new Builder(this, pF);
-
             //caller, broadcaster           //client
             PersonPot.Control.BuildDone += _profession.OnBuildDoneHandler;
         }
@@ -1734,7 +1733,6 @@ public class Person : Hoverable
         else if (jType == Job.Insider)
         {
             _profession = new Insider(this, pF);
-            //GameScene.print("new Insider :" + MyId);
         }
         else if (jType == Job.ShackBuilder)
         {
@@ -1743,14 +1741,10 @@ public class Person : Hoverable
         else if (jType == Job.WheelBarrow)
         {
             _profession = new WheelBarrow(this, pF);
-            //WheelBarrow wB = (WheelBarrow) _profession;
-            //wB.DelayedCreatingNew();
-            //print("new WheelBarrow:"+MyId);
         }
         else if (jType == Job.Homer)
         {
             _profession = new Homer(this, pF);
-            //print("new Homer:" + MyId);
         }
         else if (jType == Job.Farmer)
         {

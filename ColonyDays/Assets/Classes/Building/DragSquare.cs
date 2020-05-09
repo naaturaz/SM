@@ -557,4 +557,12 @@ public class DragSquare : Trail
 	        CreatePlanesRoutine(soil, transform);
 	    }
     }
+
+    public new Vector3 MiddlePoint()
+    {
+        var s = (PlanesSoil.Count / 2).ToString();
+        var i = int.Parse( Math.Round(float.Parse(s)).ToString() );
+
+        return PlanesSoil[i].transform.position;
+    }
 }
