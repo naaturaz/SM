@@ -1172,7 +1172,8 @@ public class Spanish
 
         //Main Menu
         _sp.Add("Command Keys", "Teclas");
-        _sp.Add("Command Keys.Text", "[F1] Ayuda\n[F9] Esconder/Mostrar GUI\n[P] Centra la cámara al Pueblo");
+        _sp.Add("Command Keys.Text", "[F1] Ayuda\n[F9] Esconder/Mostrar GUI\n[P] Centra la cámara al Pueblo\n[F] Salva rápida");
+
         _sp.Add("Credits.Text", "Translation:\nCédric Gauché (fr)\nKarsten Eidner (de)");
 
         _sp.Add("BuyRegion", "Comprar Tierras");
@@ -1194,7 +1195,7 @@ public class Spanish
         _sp.Add("Rotten", "Podrido");
         _sp.Add("Ready", "Listo");
         _sp.Add("Teacher", "Maestro(a)"); 
-        _sp.Add("BlackSmith", "Herrero(a)"); 
+        //_sp.Add("BlackSmith", "Herrero(a)"); 
         _sp.Add("SugarMiller", "Azucarero(a)"); 
         _sp.Add("worker", "trabajador(a)");
         _sp.Add("Overall.People", "Personas que necesitan este servicio: ");

@@ -432,7 +432,6 @@ public class CamRTSController : CamControl
             //CreateRotCam360GuidesY();
             //IsMouseMiddle = true;
             RotateDealer();
-
         }
         else if (Input.GetKeyUp(KeyCode.Q) || Input.GetKeyUp(KeyCode.E))
         {

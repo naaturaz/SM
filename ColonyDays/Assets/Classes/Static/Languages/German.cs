@@ -1162,7 +1162,7 @@ public class German
         _de.Add("Rotten", "Verfault");
         _de.Add("Ready", "Bereit");
         _de.Add("Teacher", "Lehrer"); 
-        _de.Add("BlackSmith", "Schmied"); 
+        //_de.Add("BlackSmith", "Schmied"); 
         _de.Add("SugarMiller", "Zuckerarbeiter"); 
         _de.Add("worker", "arbeiter");
         _de.Add("Overall.People", "Insgesamt Menschen, die diesen Service benötigen: ");

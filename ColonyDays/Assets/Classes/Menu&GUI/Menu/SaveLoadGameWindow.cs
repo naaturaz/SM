@@ -1,64 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-class SaveLoadGameWindow : GUIElement
+internal class SaveLoadGameWindow : GUIElement
 {
-    private GameObject _inputNameGO;
-    private InputField _inputName;
-
-    private Text _title;
-    private Text _saveNameLbl;
-    private Text _selectedToLoadNName;
-
     private GameObject _content;
     private RectTransform _contentRectTransform;
-
+    private InputField _inputName;
+    private GameObject _inputNameGO;
+    private Text _saveNameLbl;
     private GameObject _scroll_Ini_PosGO;
-    private string _which;//is load or save dialog
-
+    private Vector3 _scrollIniPos;
+    private Text _selectedToLoadNName;
     private string _tileNameSelected;
     private List<ShowSaveLoadTile> _tilesSpawn = new List<ShowSaveLoadTile>();
-    private Vector3 _scrollIniPos;
-
+    private Text _title;
     private Scrollbar _verticScrollbar;
-
-    void Start()
+    private string _which;//is load or save dialog
+    public void DeleteCallBack()
     {
+        PopulateScrollView();
+        ClearForm();
+    }
 
-
-        iniPos = transform.position;
-        Hide();
-
-
-
-        _inputNameGO = GetChildCalled("Input_Name");
-        _inputName = _inputNameGO.GetComponent<InputField>();
-
-        var titleLbl = GetChildCalled("Title");
-        _title = titleLbl.GetComponentInChildren<Text>();
-
-        var selLoad = GetChildCalled("Selected_To_Load");
-        _selectedToLoadNName = selLoad.GetComponentInChildren<Text>();
-
-        var saveNameLbl = GetChildCalled("Save_Name_Lbl");
-        _saveNameLbl = saveNameLbl.GetComponentInChildren<Text>();
-
-        var scroll = GetChildCalled("Scroll_View");
-
-        _content = GetGrandChildCalledFromThis("Content", scroll);
-        _contentRectTransform = _content.GetComponent<RectTransform>();
-
-        _scroll_Ini_PosGO = GetChildCalledOnThis("Scroll_Ini_Pos", _content);
-
-
-        //pull the last Saved game if one
-        _tileNameSelected = PlayerPrefs.GetString("Last_Saved");
+    /// <summary>
+    /// Called from GUI
+    /// </summary>
+    public void LockInput()
+    {
+        Program.LockInputSt();
     }
 
     public void Show(string which)
@@ -83,56 +55,19 @@ class SaveLoadGameWindow : GUIElement
             _inputNameGO.SetActive(false);
             _title.text = Languages.ReturnString("LoadGame.Dialog");
             _selectedToLoadNName.enabled = true;
-
         }
         PopulateScrollView();
         Show();
         ResetScroolPos();
-    }
-
-
-    public void DeleteCallBack()
-    {
-        PopulateScrollView();
-        ClearForm();
-    }
-
-
-    void ClearForm()
-    {
-        _tileNameSelected = "";
-        _selectedToLoadNName.text = "";
-        _inputName.text = "";
-
-        if (_verticScrollbar != null)
-        {
-            _verticScrollbar.value = 1;
-        }
+        LockInput();
     }
 
     /// <summary>
-    /// So as changes size will be available or not. 
-    /// We need this ref ' _verticScrollbar ' to set it to defauitl value 
+    /// Called from GUI
     /// </summary>
-    void TakeScrollVerticBar()
+    public void UnLockInput()
     {
-        var vert = GetGrandChildCalled("Scrollbar Vertical");
-        if (vert != null)
-        {
-            _verticScrollbar = vert.GetComponent<Scrollbar>();
-        }
-        else
-        {
-            _verticScrollbar = null;
-        }
-    }
-
-    void Update()
-    {
-        if (transform.position == iniPos && Input.GetKeyUp(KeyCode.Return))
-        {
-            MouseListen("Save.OKBtn");
-        }
+        Program.UnLockInputSt();
     }
 
     internal void MouseListen(string sub)
@@ -159,8 +94,7 @@ class SaveLoadGameWindow : GUIElement
         {
             if (string.IsNullOrEmpty(_tileNameSelected))
             {
-                //pls select a game to delete 
-
+                //pls select a game to delete
                 return;
             }
             DataController.DeleteGame(_tileNameSelected);
@@ -181,11 +115,19 @@ class SaveLoadGameWindow : GUIElement
         }
     }
 
+    private void ClearForm()
+    {
+        _tileNameSelected = "";
+        _selectedToLoadNName.text = "";
+        _inputName.text = "";
 
+        if (_verticScrollbar != null)
+        {
+            _verticScrollbar.value = 1;
+        }
+    }
 
-
-
-    void DestroyPrevTiles()
+    private void DestroyPrevTiles()
     {
         for (int i = 0; i < _tilesSpawn.Count; i++)
         {
@@ -194,7 +136,13 @@ class SaveLoadGameWindow : GUIElement
         _tilesSpawn.Clear();
     }
 
-    void PopulateScrollView()
+    private void Hide()
+    {
+        base.Hide();
+        UnLockInput();
+    }
+
+    private void PopulateScrollView()
     {
         SetTileIniPos();
 
@@ -205,6 +153,44 @@ class SaveLoadGameWindow : GUIElement
         ShowAllItems(saves);
 
         TakeScrollVerticBar();
+    }
+
+    private Vector3 ReturnIniPos(int i)
+    {
+        var xAddVal = Screen.width / 5.87407f;
+        return new Vector3(xAddVal + _scrollIniPos.x, ReturnY(i) + _scrollIniPos.y, _scrollIniPos.z);
+    }
+
+    private float ReturnY(int i)
+    {
+        if (i == 0)
+        {
+            return 0;
+        }
+
+        var y = (Screen.height * 30) / 892;
+        return -y * i;
+    }
+
+    private void SetHeightOfContentRect(int tiles)
+    {
+        //892
+        var tileYSpace = 5.57f;
+
+        //5.57f the space btw two of them
+        var size = (tileYSpace * tiles) + tileYSpace;
+        _contentRectTransform.sizeDelta = new Vector2(0, size);
+    }
+
+    /// <summary>
+    /// need to be called to set the Ini POs everytime
+    /// </summary>
+    private void SetTileIniPos()
+    {
+        var ySpace = Screen.height / 59.46667f;    //15 on editor
+
+        _scrollIniPos = _scroll_Ini_PosGO.transform.position;
+        _scrollIniPos = new Vector3(_scrollIniPos.x, _scrollIniPos.y - ySpace, _scrollIniPos.z);
     }
 
     private void ShowAllItems(List<string> saves)
@@ -218,66 +204,55 @@ class SaveLoadGameWindow : GUIElement
         }
     }
 
+    private void Start()
+    {
+        iniPos = transform.position;
+        Hide();
+
+        _inputNameGO = GetChildCalled("Input_Name");
+        _inputName = _inputNameGO.GetComponent<InputField>();
+
+        var titleLbl = GetChildCalled("Title");
+        _title = titleLbl.GetComponentInChildren<Text>();
+
+        var selLoad = GetChildCalled("Selected_To_Load");
+        _selectedToLoadNName = selLoad.GetComponentInChildren<Text>();
+
+        var saveNameLbl = GetChildCalled("Save_Name_Lbl");
+        _saveNameLbl = saveNameLbl.GetComponentInChildren<Text>();
+
+        var scroll = GetChildCalled("Scroll_View");
+
+        _content = GetGrandChildCalledFromThis("Content", scroll);
+        _contentRectTransform = _content.GetComponent<RectTransform>();
+
+        _scroll_Ini_PosGO = GetChildCalledOnThis("Scroll_Ini_Pos", _content);
+
+        //pull the last Saved game if one
+        _tileNameSelected = PlayerPrefs.GetString("Last_Saved");
+    }
     /// <summary>
-    /// need to be called to set the Ini POs everytime 
+    /// So as changes size will be available or not.
+    /// We need this ref ' _verticScrollbar ' to set it to defauitl value
     /// </summary>
-    void SetTileIniPos()
+    private void TakeScrollVerticBar()
     {
-        var ySpace = Screen.height / 59.46667f;    //15 on editor
-
-        _scrollIniPos = _scroll_Ini_PosGO.transform.position;
-        _scrollIniPos = new Vector3(_scrollIniPos.x, _scrollIniPos.y - ySpace, _scrollIniPos.z);
-    }
-
-
-    private void SetHeightOfContentRect(int tiles)
-    {
-        //892
-        var tileYSpace = 5.57f;
-        //var tileYSpace = Screen.height / 160.1436f;//5.57f on editor
-
-        //5.57f the space btw two of them 
-        var size = (tileYSpace * tiles) + tileYSpace;
-        _contentRectTransform.sizeDelta = new Vector2(0, size);
-    }
-
-
-
-    Vector3 ReturnIniPos(int i)
-    {
-        var xAddVal = Screen.width / 5.87407f;
-        return new Vector3(xAddVal + _scrollIniPos.x, ReturnY(i) + _scrollIniPos.y, _scrollIniPos.z);
-    }
-
-    float ReturnY(int i)
-    {
-        if (i == 0)
+        var vert = GetGrandChildCalled("Scrollbar Vertical");
+        if (vert != null)
         {
-            return 0;
+            _verticScrollbar = vert.GetComponent<Scrollbar>();
         }
-
-        var y = (Screen.height * 30) / 892;
-        //return -(ShowAInventory.ReturnRelativeYSpace(28, _tilesSpawn[0].transform.localScale.y)) * i;
-        return -y * i;
+        else
+        {
+            _verticScrollbar = null;
+        }
     }
 
-
-
-
-    /// <summary>
-    /// Called from GUI
-    /// </summary>
-    public void LockInput()
+    private void Update()
     {
-        Program.LockInputSt();
-    }
-
-    /// <summary>
-    /// Called from GUI
-    /// </summary>
-    public void UnLockInput()
-    {
-        Program.UnLockInputSt();
+        if (transform.position == iniPos && Input.GetKeyUp(KeyCode.Return))
+        {
+            MouseListen("Save.OKBtn");
+        }
     }
 }
-

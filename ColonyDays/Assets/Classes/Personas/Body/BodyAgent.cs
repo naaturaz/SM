@@ -12,9 +12,7 @@ public class BodyAgent
     private bool _destWasSet;
 
     private Vector3 _nextDest;
-
     private float _initRadius;
-
     private MDate _startDate;
 
     public Vector3 Destiny
@@ -50,7 +48,7 @@ public class BodyAgent
     // Update is called once per frame
     public void Update()
     {
-        if (UPerson.IsThisPersonTheSelectedOne(_person) || Program.Debugger.IsThisOneTarget(_person))
+        if (UPerson.IsThisPersonTheSelectedOne(_person))
         {
             var a = 1;
         }
@@ -63,7 +61,7 @@ public class BodyAgent
             (_agent.pathStatus == NavMeshPathStatus.PathInvalid && _agent.enabled && _agent.isOnNavMesh)
             )
         {
-            if (UPerson.IsThisPersonTheSelectedOne(_person) || Program.Debugger.IsThisOneTarget(_person))
+            if (UPerson.IsThisPersonTheSelectedOne(_person))
             {
                 //UVisHelp.CreateHelpers(Destiny, Root.yellowSphereHelp);
                 var a = 1;
@@ -75,7 +73,7 @@ public class BodyAgent
 
         if (_nextDest != new Vector3() && !_destWasSet && _agent.isOnNavMesh && _agent.enabled)
         {
-            if (UPerson.IsThisPersonTheSelectedOne(_person) || Program.Debugger.IsThisOneTarget(_person))
+            if (UPerson.IsThisPersonTheSelectedOne(_person))
             {
                 //UVisHelp.CreateHelpers(Destiny, Root.redSphereHelp);
                 var a = 1;
@@ -105,13 +103,27 @@ public class BodyAgent
         return _startDate != null && Program.gameScene.GameTime1.ElapsedDateInDaysToDate(_startDate) > 28;
     }
 
-
     private void CheckIfStuck()
     {
+        //For Heavy Haulers stuck on Load, if they were saved in a Storage in the way of exporting something to the port
+        if (_person.Work != null && _person.Work.HType == H.HeavyLoad && _person.Body.MovingNow &&
+            !_agent.hasPath && _agent.pathStatus == NavMeshPathStatus.PathInvalid && _agent.enabled && _agent.isOnNavMesh)
+        {
+            if (_startDate == null)
+                _startDate = Program.gameScene.GameTime1.CurrentDate();
+            if (_startDate != null && Program.gameScene.GameTime1.ElapsedDateInDaysToDate(_startDate) > 3)
+            {
+                Debug.Log(_person.Name + " - stuck. restarts the routing => isCart");
+
+                _person.Body.TurnCurrentAniAndStartNew("isCart");
+                _startDate = null;
+            }
+        }
+
         if (_startDate != null && Program.gameScene.GameTime1.ElapsedDateInDaysToDate(_startDate) > 30)
         {
             //so restarts the routing
-            Debug.Log(_person.Name + " - stuck. restarts the routing");
+            Debug.Log(_person.Name + " - stuck. restarts the routing => _destWasSet = false");
             _destWasSet = false;
             _startDate = null;
         }
@@ -171,6 +183,11 @@ public class BodyAgent
     /// </summary>
     private void CheckIfPathPending()
     {
+        if (UPerson.IsThisPersonTheSelectedOne(_person))
+        {
+            var a = 1;
+        }
+
         //if is waiting for a path and suppose to be movung already, then will be promt to Iddle
         if (_savedAniPathPending == "" && _agent.pathPending && _person.Body.IAmShown())
         {
@@ -181,6 +198,11 @@ public class BodyAgent
         //once is ready will retake its ani
         else if (_savedAniPathPending != "" && !_agent.pathPending)
         {
+            if (UPerson.IsThisPersonTheSelectedOne(_person))
+            {
+                var a = 1;
+            }
+
             _person.Body.TurnCurrentAniAndStartNew(_savedAniPathPending);
             _savedAniPathPending = "";
             _startDate = Program.gameScene.GameTime1.CurrentDate();
@@ -264,14 +286,10 @@ public class BodyAgent
     private void RadiusForHeavyLoaders()
     {
         if (_person == null || _person.Body == null)
-        {
             return;
-        }
 
         if (_person.Body.CurrentAni.Contains("Cart") && _initRadius == 0)
-        {
             CartRideRadius();
-        }
         //rezising the radius down to original size
         else if (_initRadius > 0 && !_person.Body.CurrentAni.Contains("Cart"))
         {
@@ -283,7 +301,7 @@ public class BodyAgent
     private void CartRideRadius()
     {
         _initRadius = _agent.radius;
-        _agent.radius *= 4;//2
+        _agent.radius = 0.5f;//2
     }
 
     #region Speed
@@ -293,11 +311,6 @@ public class BodyAgent
 
     internal void NewSpeed()
     {
-        if (_person.Name == "Barry")
-        {
-            var a = 1;
-        }
-
         _agent.speed = NewSpeedValue();
         CheckOnAnimation();
     }

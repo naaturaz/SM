@@ -1,25 +1,24 @@
 ﻿using System;
 using System.IO;
-using System.IO.Compression;
 using System.Net;
 using System.Text;
-using Steamworks;
 using UnityEngine;
-
 
 public class LogUploader
 {
     public string Url { get; set; }
     public long StreamigBlockSize { get; set; }
-    public event EventHandler<ProgressEventArgs> Compressing;
-    public event EventHandler<ProgressEventArgs> Uploading;
-    public event EventHandler<CompletedEventArgs> Completed;
-    public event EventHandler<ErrorEventArgs> Error;
 
+    public event EventHandler<ProgressEventArgs> Compressing;
+
+    public event EventHandler<ProgressEventArgs> Uploading;
+
+    public event EventHandler<CompletedEventArgs> Completed;
+
+    public event EventHandler<ErrorEventArgs> Error;
 
     public LogUploader(string url, long streamigBlockSize)
     {
-
         Url = url;
         StreamigBlockSize = streamigBlockSize;
     }
@@ -37,8 +36,7 @@ public class LogUploader
         return compressFile;
     }
 
-
-    void StartCompress()
+    private void StartCompress()
     {
         // Convert 10000 character string to byte array.
         byte[] text1 = Encoding.ASCII.GetBytes(new string('X', 10000));
@@ -72,10 +70,6 @@ public class LogUploader
         }
         return true;
     }
-
-
-
-
 
     public void UploadLog(string fileName)
     {
@@ -145,8 +139,6 @@ public class LogUploader
         }
     }
 
-
-
     private void OnCompressing(long percentage)
     {
         if (Compressing != null) { Compressing(this, new ProgressEventArgs(percentage)); }
@@ -167,21 +159,20 @@ public class LogUploader
         if (Error != null) { Error(this, new ErrorEventArgs(errorMessage)); }
     }
 
-
     //
-    static LogUploader log = new LogUploader("http://52.38.157.199:80/logs/upload", 10000);
+    private static LogUploader log = new LogUploader("http://52.38.157.199:80/logs/upload", 10000);
+
     public static void UploadDirectToAWSCarlos(string nameFile)
     {
         log.Completed += log_Completed;
         log.UploadLog(nameFile);
     }
 
-    static void log_Completed(object sender, CompletedEventArgs e)
+    private static void log_Completed(object sender, CompletedEventArgs e)
     {
         MonoBehaviour.print("log uploaded completed");
     }
 }
-
 
 public class ProgressEventArgs : EventArgs
 {

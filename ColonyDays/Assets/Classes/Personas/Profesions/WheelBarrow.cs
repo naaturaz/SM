@@ -29,7 +29,7 @@ public class WheelBarrow : Profession
     /// </summary>
     private void InitForLoading()
     {
-        if (Program.Debugger.IsThisOneTarget(_person))
+        if (UPerson.IsThisPersonTheSelectedOne(_person))
         {
             var a = 1;
         }
@@ -102,26 +102,18 @@ public class WheelBarrow : Profession
     private bool DidPickUpOrder()
     {
         if (_person == null)
-        {
             return false;
-        }
         if (_person.Work == null)
-        {
             return false;
-        }
         if (_person.Work.Dispatch1 == null)
-        {
             return false;
-        }
 
         Order1 = _person.Work.Dispatch1.GiveMeOrder(_person);
 
         _person.PrevOrder = Order1;
 
         if (Order1 == null)
-        {
             return false;
-        }
 
         _destinyBuild = Brain.GetStructureFromKey(Order1.DestinyBuild);
         _sourceBuild = Brain.GetStructureFromKey(Order1.SourceBuild);

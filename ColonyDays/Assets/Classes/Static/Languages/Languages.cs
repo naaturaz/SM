@@ -1017,7 +1017,7 @@ public class Languages
         //Dec 18
         //Main Menu
         _en.Add("Command Keys", "Command Keys");
-        _en.Add("Command Keys.Text", "[F1] Help\n[F9] Hide/Show GUI\n[P] Centers Camera to Town");
+        _en.Add("Command Keys.Text", "[F1] Help\n[F9] Hide/Show GUI\n[P] Centers Camera to Town\n[F] Quick Save");
 
         _en.Add("Credits", "Credits");
         _en.Add("Credits.Text", "Translation:\nCédric Gauché (fr)\nKarsten Eidner (de)");
@@ -1033,7 +1033,6 @@ public class Languages
         _en.Add("Rotten", "Rotten");
         _en.Add("Ready", "Ready");
         _en.Add("Teacher", "Teacher"); 
-        _en.Add("BlackSmith", "BlackSmith"); 
         _en.Add("SugarMiller", "SugarMiller"); 
         _en.Add("worker", "worker");
         _en.Add("Overall.People", "Overall people needing this service: ");

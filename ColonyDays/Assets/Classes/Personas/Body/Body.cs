@@ -322,6 +322,11 @@ public class Body //: MonoBehaviour //: General
     /// <param name="oldAnimation"></param>
     public void SetCurrentAni(string animationPass, string oldAnimation)
     {
+        if (UPerson.IsThisPersonTheSelectedOne(_person))
+        {
+            var a = 1;
+        }
+
         if (!myAnimator.enabled)
         {
             savedAnimation = animationPass;

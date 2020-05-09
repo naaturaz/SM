@@ -352,10 +352,9 @@ public class Building : Hoverable, Iinfo
 
     public bool IsSmallBuilding()
     {
-        var isADecora = Root.RetBuildingRoot(HType).Contains("Decoration");
-
         return HType == H.StandLamp
-             || isADecora
+             || HType == H.Fountain || HType == H.WideFountain || HType == H.PalmTree
+             || HType == H.FloorFountain || HType == H.FlowerPot || HType == H.PradoLion
              ;
     }
 
@@ -860,9 +859,7 @@ public class Building : Hoverable, Iinfo
         {
             return;
         }
-        if (MyId.Contains("Bridge") || MyId.Contains("Farm") || doubleBounds.Contains(HType)
-            //||            HType == H.StandLamp
-            )
+        if (MyId.Contains("Bridge") || MyId.Contains("Farm") || doubleBounds.Contains(HType))
         {
             isDecorated = true;
             return;
@@ -1313,7 +1310,7 @@ public class Building : Hoverable, Iinfo
         var dust = General.Create("Prefab/Particles/PlaceBuildDust", MiddlePoint());
         AudioCollector.PlayOneShot("ConstructionPlaced", transform.position);
 
-        if (HType == H.StandLamp)
+        if (IsSmallBuilding())
         {
             return;
         }

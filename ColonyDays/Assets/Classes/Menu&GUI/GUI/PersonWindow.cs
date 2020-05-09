@@ -335,4 +335,10 @@ public class PersonWindow : Window
         Person1.Body.BodyAgent.DebugWasDestSetToFalse();
         Debug.Log("DebugWasDestSetToFalse()");
     }
+
+    public void DebugMakePersonIsCartAni()
+    {
+        Person1.Body.TurnCurrentAniAndStartNew("isCart");
+        Debug.Log("DebugMakePersonIsCartAni()");
+    }
 }

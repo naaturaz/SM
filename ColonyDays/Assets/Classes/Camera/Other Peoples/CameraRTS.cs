@@ -67,11 +67,20 @@ public class CameraRTS : MonoBehaviour
         }
 
         //Rotates the camera
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKey(KeyCode.Q) && (Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt)))
+        {
+            transform.Rotate(0, -0.5f * Time.deltaTime * cameraSpeed, 0, Space.World);
+        }
+        else if (Input.GetKey(KeyCode.Q))
         {
             transform.Rotate(0, -2.5f * Time.deltaTime * cameraSpeed, 0, Space.World);
         }
-        if (Input.GetKey(KeyCode.E))
+
+        if (Input.GetKey(KeyCode.E) && (Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt)))
+        {
+            transform.Rotate(0, 0.5f * Time.deltaTime * cameraSpeed, 0, Space.World);
+        }
+        else if (Input.GetKey(KeyCode.E))
         {
             transform.Rotate(0, 2.5f * Time.deltaTime * cameraSpeed, 0, Space.World);
         }

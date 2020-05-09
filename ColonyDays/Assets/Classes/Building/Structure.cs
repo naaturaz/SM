@@ -224,7 +224,7 @@ public class Structure : StructureParent
     private void CreateArrow()
     {
         if (b.CurrentSpawnBuild == null || _arrow != null || MyId.Contains(H.Dummy.ToString()) ||
-            HType == H.StandLamp)
+            b.CurrentSpawnBuild.IsSmallBuilding())
         { return; }
 
         _arrow = Create(Root.arrow, new Vector3());

@@ -1,19 +1,19 @@
 ﻿using UnityEngine;
 
-public class RotateRTS : GenericCameraComponent {
+public class RotateRTS : GenericCameraComponent
+{
+    private float MIN_Y = 17.7f;//17.7f 18  10.8   20
+    private float MAX_Y = 110f;//120 60 50
+    private Vector3 oldPos;
 
-    float MIN_Y = 17.7f;//17.7f 18  10.8   20     
-    float MAX_Y = 110f;//120 60 50
-    Vector3 oldPos;
-
-    float tutorialStepStartedAt = -1;
+    private float tutorialStepStartedAt = -1;
 
     //move down and up thru Y
     public Vector3 MoveThruY(Transform current, float min, float max, float change)
     {
         Vector3 temp = current.position;
         temp.y += change;
-        var fovChange = -5*change;
+        var fovChange = -5 * change;
         if (temp.y > max)
         {
             Program.gameScene.TutoStepCompleted("CamHeaven.Tuto");
@@ -36,7 +36,6 @@ public class RotateRTS : GenericCameraComponent {
     public void RotateCam(General helpCam360GrabPosY, General helpCam360MainY,
         Transform target, float camSensivity, float smoothTime, ref Vector3 velocity)
     {
-
         if (Input.GetAxis("Mouse ScrollWheel") == 0)
         {
             RotateCamHor(helpCam360GrabPosY.transform,
@@ -49,16 +48,17 @@ public class RotateRTS : GenericCameraComponent {
         TransformCam.parent = CamControl.CAMRTS.centerTarget.transform;
     }
 
-    Transform _target;
+    private Transform _target;
+
     public void RotateCamVert(float camSensivity, Transform target, float changeValue)
     {
         var qOrE = (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.E)) && !MouseListener.MouseOnWindowNow;
         TransformCam.parent = null;
- 
+
         _target = target;
         if (changeValue != 0 && !qOrE)
         {
-            //reset leftChange if val change direction 
+            //reset leftChange if val change direction
             if (leftChangeVal < 0 && changeValue > 0)
             {
                 leftChangeVal = 0;
@@ -68,13 +68,8 @@ public class RotateRTS : GenericCameraComponent {
                 leftChangeVal = 0;
             }
             leftChangeVal += changeValue;
-
         }
     }
-
-
-
-
 
     public void RotateCamHor(Transform helpCam360GrabPosY, Transform helpCam360MainY,
         Transform target, float camSensivity)
@@ -83,17 +78,29 @@ public class RotateRTS : GenericCameraComponent {
         float changeValue = 0;
 
         bool qOrE = false;
-        if (Input.GetKey(KeyCode.Q))
+
+        if (Input.GetKey(KeyCode.Q) && (Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt)))
+        {
+            qOrE = true;
+            changeValue = .1f * camSensivity;
+        }
+        else if (Input.GetKey(KeyCode.Q))
         {
             qOrE = true;
             changeValue = .4f * camSensivity;
         }
-        if (Input.GetKey(KeyCode.E))
+
+        if (Input.GetKey(KeyCode.E) && (Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt)))
+        {
+            qOrE = true;
+            changeValue = -.1f * camSensivity;
+        }
+        else if (Input.GetKey(KeyCode.E))
         {
             qOrE = true;
             changeValue = -.4f * camSensivity;
         }
-        
+
         //when Q or E this wont work
         if (Input.GetAxis("Mouse X") != 0 && !qOrE)
         {
@@ -115,13 +122,11 @@ public class RotateRTS : GenericCameraComponent {
             {
                 Program.gameScene.TutoStepCompleted("CamRot.Tuto");
             }
-
         }
     }
 
-    float leftChangeVal;
+    private float leftChangeVal;
 
-    
     public void Update()
     {
         if (leftChangeVal != 0)
@@ -133,17 +138,17 @@ public class RotateRTS : GenericCameraComponent {
         }
     }
 
-    void ResetLeftChangeVal()
+    private void ResetLeftChangeVal()
     {
         leftChangeVal = 0;
     }
 
-    void ResetValorMove()
+    private void ResetValorMove()
     {
-        valorMove = .1f + (TransformCam.position.y/100);
+        valorMove = .1f + (TransformCam.position.y / 100);
     }
 
-    float ChangeValHand()
+    private float ChangeValHand()
     {
         if (leftChangeVal < 1.5 && leftChangeVal > -1.5)
         {
@@ -158,11 +163,11 @@ public class RotateRTS : GenericCameraComponent {
     }
 
     /// <summary>
-    /// Will change LeftToCHangeVal however if the new 
+    /// Will change LeftToCHangeVal however if the new
     /// </summary>
     /// <param name="locChange"></param>
     /// <param name="sign"></param>
-    void ChangeLeftChangeVal(float locChange, int sign)
+    private void ChangeLeftChangeVal(float locChange, int sign)
     {
         var oldSign = GetSign();
         leftChangeVal += (locChange * sign);
@@ -174,13 +179,13 @@ public class RotateRTS : GenericCameraComponent {
         }
     }
 
+    private float valorMove = -1;
 
-    float valorMove = -1;
     /// <summary>
     /// lineal increase
     /// </summary>
     /// <returns></returns>
-    float ValorMove()
+    private float ValorMove()
     {
         ResetValorMove();
 
@@ -192,7 +197,7 @@ public class RotateRTS : GenericCameraComponent {
     /// bz needs to find the zero
     /// </summary>
     /// <returns></returns>
-    float GetSign()
+    private float GetSign()
     {
         if (leftChangeVal < 0)
         {

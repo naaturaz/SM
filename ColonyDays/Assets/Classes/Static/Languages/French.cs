@@ -1052,7 +1052,7 @@ public class French
 
 
         _fr.Add("Command Keys", "Teclas");
-        _fr.Add("Command Keys.Text", "[F1] Ayuda\n[F9] Esconder/Mostrar GUI\n[P] Centra la cámara al Pueblo");
+        _fr.Add("Command Keys.Text", "[F1] Ayuda\n[F9] Esconder/Mostrar GUI\n[P] Centra la cámara al Pueblo\n[F] Salva rápida");
         _fr.Add("Credits", "Créditos");
         _fr.Add("Credits.Text", "Translation:\nCédric Gauché (fr)\nKarsten Eidner (de)");
         _fr.Add("Loading...", "Loading...");
@@ -1152,7 +1152,7 @@ public class French
         _fr.Add("Rotten", "Pourrie");
         _fr.Add("Ready", "Prête");
         _fr.Add("Teacher", "Professeur"); 
-        _fr.Add("BlackSmith", "Forgeron"); 
+        //_fr.Add("BlackSmith", "Forgeron"); 
         _fr.Add("SugarMiller", "Ouvrier sucrier"); 
         _fr.Add("worker", "ouvrier");
         _fr.Add("Overall.People", "Globalement, les personnes ayant besoin de ce service: ");
