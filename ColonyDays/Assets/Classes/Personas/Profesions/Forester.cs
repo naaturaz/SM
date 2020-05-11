@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -18,9 +17,9 @@ public class Forester : Profession
         else LoadingFromFile(person, pF);
     }
 
-    void CreatingNew(Person person)
+    private void CreatingNew(Person person)
     {
-        //in case was a Wheelbarrow the prevProfession and when home route back gives problem 
+        //in case was a Wheelbarrow the prevProfession and when home route back gives problem
         person.PrevOrder = null;
 
         MyAnimation = "isAxe";
@@ -31,12 +30,12 @@ public class Forester : Profession
         Init();
     }
 
-    void LoadingFromFile(Person person, PersonFile pF)
+    private void LoadingFromFile(Person person, PersonFile pF)
     {
         _person = person;
         LoadAttributes(pF.ProfessionProp);
 
-        //so the detecting CheckIfShouldReDoProf() works 
+        //so the detecting CheckIfShouldReDoProf() works
         FindSpawnersToMine();
     }
 
@@ -45,7 +44,7 @@ public class Forester : Profession
         FindSpawnersToMine();
         OrderedSites = OrderSpawners(_spawnersList);
 
-        //didnt find any tree. That means tht Trees prob have not been loaded yet 
+        //didnt find any tree. That means tht Trees prob have not been loaded yet
         if (OrderedSites.Count == 0 || _person.FoodSource == null)
         {
             _takeABreakNow = true;
@@ -58,7 +57,7 @@ public class Forester : Profession
 
         _stillElement = Program.gameScene.controllerMain.TerraSpawnController.Find(StillElementId);
 
-        //asking for grown in case is there but from an old list  
+        //asking for grown in case is there but from an old list
         if (!_stillElement.Grown())
         {
             StillElementId = "";
@@ -67,8 +66,8 @@ public class Forester : Profession
             return;
         }
         HandleStillElement();
-       
-        //moving the route point a bit towards the origin so when chopping tree its not inside the tree 
+
+        //moving the route point a bit towards the origin so when chopping tree its not inside the tree
         FinRoutePoint = Vector3.MoveTowards(_stillElement.transform.position, _person.Work.transform.position, 0.4f);
 
         //correcting y
@@ -81,7 +80,7 @@ public class Forester : Profession
         InitRoute();
     }
 
-    void HandleStillElement()
+    private void HandleStillElement()
     {
         if (_stillElement != null)
         {
@@ -99,7 +98,7 @@ public class Forester : Profession
         }
     }
 
-    Vector3 DefineMiddlePos(List<VectorM> list)
+    private Vector3 DefineMiddlePos(List<VectorM> list)
     {
         Vector3 res = new Vector3();
 
@@ -107,10 +106,10 @@ public class Forester : Profession
         {
             res += list[i].Point;
         }
-        return res/list.Count;
+        return res / list.Count;
     }
 
-    void InitRoute()
+    private void InitRoute()
     {
         RouterActive = true;
         IsRouterBackUsed = true;
@@ -118,9 +117,9 @@ public class Forester : Profession
         //bz dummy.DummyIdSpawner
         _person.MyDummyProf.MyId = StillElementId;
         _person.MyDummyProf.transform.position = FinRoutePoint;
-        
+
         _person.MyDummyProf.transform.LookAt(new Vector3(_treeCenterPos.x, _person.MyDummyProf.transform.position.y,
-            _treeCenterPos.z) );
+            _treeCenterPos.z));
 
         _person.MyDummyProf.LandZone1.Clear();
         _person.MyDummyProf.HandleLandZoning();
@@ -132,18 +131,18 @@ public class Forester : Profession
         //MoveDummyAwayFromEleSoDoesntFallInsideOfIt();
 
         //so it doesnt add like a door at the end when gets to tree
-        Router1 = new CryRouteManager(_person.Work, _person.MyDummyProf, _person,HPers.InWork, true, false);
+        Router1 = new CryRouteManager(_person.Work, _person.MyDummyProf, _person, HPers.InWork, true, false);
     }
-    
-    void FindSpawnersToMine()
+
+    private void FindSpawnersToMine()
     {
         var all = Program.gameScene.controllerMain.TerraSpawnController.AllRandomObjList;
 
         for (int i = 0; i < all.Count; i++)
         {
             var t = all[i];
-            //or if is blacklisted 
-            if (t == null || _person.Brain.BlackList.Contains(t.MyId) || !t.Grown() )
+            //or if is blacklisted
+            if (t == null || _person.Brain.BlackList.Contains(t.MyId) || !t.Grown())
             {
                 continue;
             }
@@ -156,7 +155,7 @@ public class Forester : Profession
         }
     }
 
-    List<VectorM> OrderSpawners(List<TerrainRamdonSpawner> listP)
+    private List<VectorM> OrderSpawners(List<TerrainRamdonSpawner> listP)
     {
         List<VectorM> loc = new List<VectorM>();
 
@@ -168,7 +167,7 @@ public class Forester : Profession
 
         for (int i = 0; i < listP.Count; i++)
         {
-            //means that tree was deleted but the list has not being updated 
+            //means that tree was deleted but the list has not being updated
             if (listP[i] == null || !listP[i].Grown())
             {
                 continue;
@@ -205,7 +204,8 @@ public class Forester : Profession
         Execute();
     }
 
-    int count;
+    private int count;
+
     /// <summary>
     /// bz sometimes they blacklist the Storage
     /// </summary>
@@ -225,19 +225,20 @@ public class Forester : Profession
     /// </summary>
     private void CheckIfStillEleWasBlackListedOrIsDiff()
     {
-        if (_person==null || _stillElement==null)
+        if (_person == null || _stillElement == null)
         {
             return;
         }
 
         if (_person.Brain.BlackList.Contains(_stillElement.MyId))
         {
-            Debug.Log("Forester take break:"+_person.MyId);
+            Debug.Log("Forester take break:" + _person.MyId);
             _takeABreakNow = true;
         }
     }
 
     private bool routerBackWasInit;
+
     /// <summary>
     /// So it doesnt blackList nothing in the second Route if he is blackListug a tree in the Router1
     /// </summary>
@@ -245,30 +246,30 @@ public class Forester : Profession
     {
         if (RouterActive && Router1.IsRouteReady && !routerBackWasInit)
         {
-            routerBackWasInit=true;
+            routerBackWasInit = true;
             RouterBack = new CryRouteManager(_person.MyDummyProf, _person.FoodSource, _person, HPers.InWorkBack, false, true);
         }
     }
 
     /// <summary>
-    /// Needed so the route starts a bits away from Still element 
+    /// Needed so the route starts a bits away from Still element
     /// </summary>
     private void MoveDummyAwayFromEleSoDoesntFallInsideOfIt()
     {
-        _person.MyDummyProf.transform.position = 
+        _person.MyDummyProf.transform.position =
             Vector3.MoveTowards(_person.MyDummyProf.transform.position, _stillElement.transform.position, -2);
     }
 
     /// <summary>
-    /// Bz need to redo Prof if could 
+    /// Bz need to redo Prof if could
     /// If StillElement is null
-    /// 
+    ///
     /// So people dont go to stare to an non existing tree over and over again
     /// </summary>
     private void CheckIfShouldReDoProf()
     {
-        //seein the spawner list bz if last time was bigger than one I can still find prob another 
-        //stillElement to mine 
+        //seein the spawner list bz if last time was bigger than one I can still find prob another
+        //stillElement to mine
         if (!_workingNow && _spawnersList.Count > 1 &&
             (prodCarrying == P.None || _person.Inventory.CurrentVolumeOcuppied() == 0))//if is carrying someting need to drop it 1st
         {
@@ -277,18 +278,17 @@ public class Forester : Profession
     }
 
     /// <summary>
-    /// The specific action of a Proffession 
+    /// The specific action of a Proffession
     /// Ex: Forester add lumber to its inventory and removed the amt from tree invetory
     /// </summary>
-    void Execute()
+    private void Execute()
     {
         if (ExecuteNow && ReadyToWork)
         {
             ExecuteNow = false;
-            if (_stillElement!=null)
+            if (_stillElement != null)
             {
                 //AudioPlayer.PlaySoundOneTime(RootSound.axe, _stillElement.gameObject.transform.position);
-                
             }
             ////foresters reset when done work
             ResetDummy();
@@ -299,7 +299,7 @@ public class Forester : Profession
                 {
                     return;
                 }
-                
+
                 P prod = FindProdImMining(_stillElement.MyId, _person);
                 SetProdImMiningWeight();
                 base.Execute(Job.Forester.ToString(), prod);
@@ -337,9 +337,8 @@ public class Forester : Profession
         return false;
     }
 
-
     /// <summary>
-    /// Remove the weight from the element Im mining 
+    /// Remove the weight from the element Im mining
     /// </summary>
     private void RemoveWeightFromMiningEle(P prod)
     {
@@ -354,11 +353,11 @@ public class Forester : Profession
     }
 
     /// <summary>
-    /// Sets the initial weight of the element Im Mining 
+    /// Sets the initial weight of the element Im Mining
     /// </summary>
     private void SetProdImMiningWeight()
     {
-        //was recently destroyed 
+        //was recently destroyed
         if (_stillElement == null)
         {
             return;
@@ -381,11 +380,11 @@ public class Forester : Profession
 
             return person.Work.CurrentProd.Product;
         }
-        
+
         return ProcessHTypeSpawnerIntoProduct(ele.HType);
     }
 
-    static P ProcessHTypeSpawnerIntoProduct(H hTypeP)
+    private static P ProcessHTypeSpawnerIntoProduct(H hTypeP)
     {
         if (hTypeP == H.Tree)
         {
@@ -405,11 +404,12 @@ public class Forester : Profession
     private bool _takeABreakNow;
     private float _breakDuration = 1f;
     private float startIdleTime;
+
     /// <summary>
-    /// Used so a person is asking for bridges anchors takes a break and let brdige anchors complete then can 
+    /// Used so a person is asking for bridges anchors takes a break and let brdige anchors complete then can
     /// work on it
     /// </summary>
-    void TakeABreak()
+    private void TakeABreak()
     {
         if (startIdleTime == 0)
         { startIdleTime = Time.time; }
@@ -419,7 +419,7 @@ public class Forester : Profession
             _takeABreakNow = false;
             startIdleTime = 0;
 
-            //so it restarted 
+            //so it restarted
             Init();
         }
     }

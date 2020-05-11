@@ -1,10 +1,10 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 /*
  * There is more Job Managment on Brain.RemoveAndAddPositionsToJob()
- * 
+ *
  */
 
 public class JobManager
@@ -19,26 +19,26 @@ public class JobManager
         var key = DecideBasedOnAge(person);
         var st = Brain.GetStructureFromKey(key);
 
-        //if has open positions bigger people has to Occupoied those positions bz they are for Teachers 
+        //if has open positions bigger people has to Occupoied those positions bz they are for Teachers
         if (UPerson.IsWorkingAtSchool(person, st) && !UPerson.IsMajor(person.Age) && !st.HasOpenPositions())
         {
             person.IsStudent = true;
-            //add to new school here 
+            //add to new school here
         }
         else if (UPerson.IsMajor(person.Age) && person.IsStudent)
         {
             person.IsStudent = false;
-            //remove from old school here 
+            //remove from old school here
         }
         return st;
     }
 
     /// <summary>
-    /// Will look for specific School or Work depending Age 
+    /// Will look for specific School or Work depending Age
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    string DecideBasedOnAge(Person person)
+    private string DecideBasedOnAge(Person person)
     {
         startSchool = ModController.AgeKidStartSchool();
         startTrade = ModController.AgeKidStartTradeSchool();
@@ -53,7 +53,7 @@ public class JobManager
             //try find trade
             var res = FindBestSchool(H.TradesSchool, person);
             //if cant find, try find school
-            if (res=="")
+            if (res == "")
             {
                 res = FindBestSchool(H.School, person);
             }
@@ -67,12 +67,12 @@ public class JobManager
         return "";
     }
 
-    bool OneMoreKidFitOnTheSchool(Building building)
+    private bool OneMoreKidFitOnTheSchool(Building building)
     {
         return true;
     }
 
-    string FindBestSchool(H hTypeP, Person person)
+    private string FindBestSchool(H hTypeP, Person person)
     {
         var trades = ReturnListType(hTypeP, person);
 
@@ -88,18 +88,18 @@ public class JobManager
 
     private string DefineClosestBuild(Person person)
     {
-        var currListOfBuild =  BuildingPot.Control.WorkOpenPos;
+        var currListOfBuild = BuildingPot.Control.WorkOpenPos;
         int size = currListOfBuild.Count;
         List<VectorM> loc = new List<VectorM>();
 
         for (int i = 0; i < size; i++)
         {
-            //to address if building was deleted and not updated on the list 
+            //to address if building was deleted and not updated on the list
             string key = currListOfBuild[i];
             var build = Brain.GetBuildingFromKey(key);
 
             if (!person.Brain.BlackList.Contains(key) && BuildingPot.Control.Registro.AllBuilding.ContainsKey(key)
-                && build != null && build.HasOpenPositions())//to avoid checking on deleted building 
+                && build != null && build.HasOpenPositions())//to avoid checking on deleted building
             {
                 Vector3 pos = BuildingPot.Control.Registro.AllBuilding[key].transform.position;
                 loc.Add(new VectorM(pos, person.Home.transform.position, key));
@@ -109,8 +109,8 @@ public class JobManager
 
         int index = 0;
 
-        if (loc.Count==0)
-        {return "";}
+        if (loc.Count == 0)
+        { return ""; }
 
         while (BuildingPot.Control.Registro.AllBuilding[loc[index].LocMyId].Instruction == H.WillBeDestroy)
         {
@@ -128,7 +128,7 @@ public class JobManager
     /// <summary>
     /// Created for modularity
     /// </summary>
-    string DefineClosestBuildTail(List<VectorM> loc, int index)
+    private string DefineClosestBuildTail(List<VectorM> loc, int index)
     {
         string closestKey = "";
 
@@ -140,13 +140,13 @@ public class JobManager
     }
 
     /// <summary>
-    /// Will return a list of the type pass 
-    /// 
-    /// Used to find out shcools 
+    /// Will return a list of the type pass
+    ///
+    /// Used to find out shcools
     /// </summary>
     /// <param name="hTypeP"></param>
     /// <returns></returns>
-      List<Building> ReturnListType(H hTypeP, Person person)
+    private List<Building> ReturnListType(H hTypeP, Person person)
     {
         List<Building> Re = new List<Building>();
         for (int i = 0; i < BuildingPot.Control.Registro.AllRegFile.Count; i++)
@@ -154,28 +154,28 @@ public class JobManager
             var key = BuildingPot.Control.Registro.AllRegFile[i].MyId;
             var struc = Brain.GetStructureFromKey(key);
 
-            //brdige 
-            if (struc==null)
+            //brdige
+            if (struc == null)
             {
                 continue;
             }
 
             if (struc.HType == hTypeP &&
                 struc.Instruction != H.WillBeDestroy && !person.Brain.BlackList.Contains(key)
-                && (struc.StartingStage==H.Done||struc.CurrentStage==4))//so they are fully built 
+                && (struc.StartingStage == H.Done || struc.CurrentStage == 4))//so they are fully built
             {
                 Re.Add(BuildingPot.Control.Registro.AllBuilding.ElementAt(i).Value);
             }
         }
         return Re;
-    }  
-    
-#endregion
+    }
+
+    #endregion Give Initial Work
 
     public Structure ThereIsABetterJob(Person person)
     {
         if (person.Home == null)
-        {return null;}
+        { return null; }
 
         if (!UPerson.IsMajor(person.Age))
         {
@@ -185,11 +185,11 @@ public class JobManager
     }
 
     /// <summary>
-    /// Will return a beetter job if is one 
+    /// Will return a beetter job if is one
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    Structure BetterWork(Person person)
+    private Structure BetterWork(Person person)
     {
         if (BuildingPot.Control.WorkOpenPos.Count == 0 ||
             (person.Work != null && person.Work.Instruction == H.WillBeDestroy))
@@ -208,10 +208,10 @@ public class JobManager
     }
 
     /// <summary>
-    /// Created to address the case when a teen need to go to a Trades school if exist 
+    /// Created to address the case when a teen need to go to a Trades school if exist
     /// </summary>
     /// <returns></returns>
-      Structure BetterSchool(Person person)
+    private Structure BetterSchool(Person person)
     {
         return GiveWork(person);
     }
@@ -236,10 +236,10 @@ public class JobManager
         return "";
     }
 
+    private List<string> _oldJobs = new List<string>();
+    private List<BuildRank> _allJobAvailGC = new List<BuildRank>();
 
-    List<string> _oldJobs = new List<string>();
-    List<BuildRank> _allJobAvailGC = new List<BuildRank>();
-    public   void UpdateAllJobAvail(Person person)
+    public void UpdateAllJobAvail(Person person)
     {
         if (_oldJobs != BuildingPot.Control.WorkOpenPos)
         {
@@ -250,34 +250,35 @@ public class JobManager
         }
     }
 
-      private int rationsWeight = 50;
-      private int dollarsWeight = 100;
+    private int rationsWeight = 50;
+    private int dollarsWeight = 100;
+
     /// <summary>
-    /// Score one building 
+    /// Score one building
     /// </summary>
     /// <param name="building"></param>
     /// <param name="person"></param>
     /// <returns></returns>
-      float ScoreABuild(Building building, Vector3 comparePoint)
+    private float ScoreABuild(Building building, Vector3 comparePoint)
     {
-        if (building==null)
+        if (building == null)
         {
             return -1000;
         }
 
         var distToWork = Vector3.Distance(building.transform.position, comparePoint);
-        var rations = building.RationsPay*rationsWeight;
-        var dollars = building.DollarsPay*dollarsWeight;
+        var rations = building.RationsPay * rationsWeight;
+        var dollars = building.DollarsPay * dollarsWeight;
 
         return rations + dollars - distToWork;
     }
 
     /// <summary>
-    /// Return a list with the Job rank ordered descending 
+    /// Return a list with the Job rank ordered descending
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-      List<BuildRank> ScoreAllAvailBuilds(Person person, Vector3 comparePoint)
+    private List<BuildRank> ScoreAllAvailBuilds(Person person, Vector3 comparePoint)
     {
         List<BuildRank> res = new List<BuildRank>();
 
@@ -286,7 +287,7 @@ public class JobManager
             var key = BuildingPot.Control.WorkOpenPos[i];
             var struc = Brain.GetStructureFromKey(key);
 
-            //to avoid struct tht weere recentrly deleted 
+            //to avoid struct tht weere recentrly deleted
             if (struc == null)
             {
                 continue;
@@ -302,7 +303,7 @@ public class JobManager
             }
         }
 
-        return res.OrderByDescending(a=>a.Score).ToList();
+        return res.OrderByDescending(a => a.Score).ToList();
     }
 }
 

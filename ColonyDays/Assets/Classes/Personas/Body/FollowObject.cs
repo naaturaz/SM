@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class FollowObject : General
 {
-
     private GameObject _toFollow;
 
     public GameObject ToFollow
@@ -21,20 +19,20 @@ public class FollowObject : General
         obj = (FollowObject)Resources.Load(root, typeof(FollowObject));
         obj = (FollowObject)Instantiate(obj, new Vector3(), Quaternion.identity);
         // obj.HType = hType;
-        obj.transform.name = obj.MyId = obj.Rename(obj.transform.name, obj.Id, obj.HType) + " own:"+owner ;
+        obj.transform.name = obj.MyId = obj.Rename(obj.transform.name, obj.Id, obj.HType) + " own:" + owner;
         obj.ToFollow = toFollow;
 
-        if (container != null) { obj.transform.SetParent( container); }
+        if (container != null) { obj.transform.SetParent(container); }
         return obj;
     }
 
     // Use this for initialization
-	void Start () 
+    private void Start()
     {
         _objOriginalDimensions = gameObject.transform.localScale;
-	}
-	
-	// Update is called once per frame
+    }
+
+    // Update is called once per frame
     //void Update ()
     //{
     //    //transform.position = _toFollow.transform.position;
@@ -58,6 +56,5 @@ public class FollowObject : General
         }
 
         gameObject.transform.localScale = _objOriginalDimensions;
-
     }
 }

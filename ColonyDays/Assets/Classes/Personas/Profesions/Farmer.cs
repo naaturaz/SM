@@ -1,11 +1,10 @@
 ﻿using System;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Farmer : Profession
 {
-
-   public Farmer(Person person, PersonFile pF)
+    public Farmer(Person person, PersonFile pF)
     {
         if (pF == null)
         {
@@ -14,14 +13,13 @@ public class Farmer : Profession
         else LoadingFromFile(person, pF);
     }
 
-    void CreatingNew(Person person)
+    private void CreatingNew(Person person)
     {
-        if (person.PrevOrder!=null)
+        if (person.PrevOrder != null)
         {
-            //other wise will malfuntion when creating backRouting 
+            //other wise will malfuntion when creating backRouting
             person.PrevOrder = null;
         }
-
 
         IsRouterBackUsed = false;
         MyAnimation = "isHoe";
@@ -31,7 +29,7 @@ public class Farmer : Profession
         Init();
     }
 
-    void LoadingFromFile(Person person, PersonFile pF)
+    private void LoadingFromFile(Person person, PersonFile pF)
     {
         _person = person;
         LoadAttributes(pF.ProfessionProp);
@@ -44,7 +42,7 @@ public class Farmer : Profession
             return;
         }
 
-        //when get a number here is defined by wht worker is this on the building 
+        //when get a number here is defined by wht worker is this on the building
         //workers will be numbered on buildingsB
 
         //will return cache 20 validated points in Farm and then no need of run this anymore
@@ -52,9 +50,8 @@ public class Farmer : Profession
 
         if (FinRoutePoint == new Vector3())
         {
-            FinRoutePoint = DefineFinalPoint(); 
+            FinRoutePoint = DefineFinalPoint();
         }
-
 
         InitRoute();
     }
@@ -63,23 +60,24 @@ public class Farmer : Profession
     /// Will ramdomly assign an final point in the FarmZone
     /// </summary>
     /// <returns></returns>
-    Vector3 DefineFinalPoint()
+    private Vector3 DefineFinalPoint()
     {
         Rect area = _person.Work.ReturnInGameObjectZone(H.FarmZone);
-        var middlePointOfArea  = _person.Work.ReturnGroundMiddleOfInGameObjectZone(H.FarmZone);
+        var middlePointOfArea = _person.Work.ReturnGroundMiddleOfInGameObjectZone(H.FarmZone);
 
         var newPoint = AssignRandomIniPosition(middlePointOfArea, area);
         if (newPoint == new Vector3())
         {
             return middlePointOfArea;
         }
-        //since is validated will be added as cached point 
+        //since is validated will be added as cached point
         _person.Work.AddAsFarmWorkPoint(newPoint);
         return newPoint;
     }
 
     private int count;
-    Vector3 AssignRandomIniPosition(Vector3 origin, Rect area)
+
+    private Vector3 AssignRandomIniPosition(Vector3 origin, Rect area)
     {
         var howFar = HowFar();
 
@@ -112,7 +110,7 @@ public class Farmer : Profession
         if (_person.Work.MyId.Contains("Small"))
         {
             return .5f;
-        } 
+        }
         if (_person.Work.MyId.Contains("Med"))
         {
             return 1f;
@@ -120,24 +118,23 @@ public class Farmer : Profession
         if (_person.Work.MyId.Contains("XLarge"))
         {
             return 2.5f;
-        } 
+        }
         if (_person.Work.MyId.Contains("Large"))
         {
             return 2f;
-        } 
+        }
         //unkown
         return .1f;
-        
     }
 
-    void InitRoute()
+    private void InitRoute()
     {
         RouterActive = true;
         Router1 = new CryRouteManager();
 
-        if (_person.Work.HType.ToString().Contains(H.AnimalFarm+""))
+        if (_person.Work.HType.ToString().Contains(H.AnimalFarm + ""))
         {
-            ConformInBuildRouteAnimal();     
+            ConformInBuildRouteAnimal();
         }
         else
         {
@@ -160,12 +157,12 @@ public class Farmer : Profession
         //    return;
         //}
 
-        List<Vector3> inBuildPoints = new List<Vector3>() 
+        List<Vector3> inBuildPoints = new List<Vector3>()
         { _person.Work.BehindMainDoorPoint, FinRoutePoint};
 
         var TheRoute = ReachBean.RouteVector3s(inBuildPoints);
-       
-        //the .O is to pass the profession or brain reurn 
+
+        //the .O is to pass the profession or brain reurn
         TheRoute.OriginKey = _person.Work.MyId + ".O";
         TheRoute.DestinyKey = _person.Work.MyId + ".D";
 
@@ -176,9 +173,9 @@ public class Farmer : Profession
     }
 
     /// <summary>
-    /// For an animal farm 
+    /// For an animal farm
     /// </summary>
-    void ConformInBuildRouteAnimal()
+    private void ConformInBuildRouteAnimal()
     {
         if (PersonPot.Control.RoutesCache1.ContainANewerOrSameRoute(_person.Work.MyId + ".O", _person.Work.MyId + ".D",
                    new DateTime()))
@@ -191,18 +188,17 @@ public class Farmer : Profession
         var inBuildPoints = DefineInBuildPoint();
         var TheRoute = ReachBean.RouteVector3s(inBuildPoints);
 
-        //the .O is to pass the profession or brain reurn 
+        //the .O is to pass the profession or brain reurn
         TheRoute.OriginKey = _person.Work.MyId + ".O";
         TheRoute.DestinyKey = _person.Work.MyId + ".D";
 
-        Router1.TheRoute=TheRoute;
+        Router1.TheRoute = TheRoute;
         Router1.IsRouteReady = true;
 
         PersonPot.Control.RoutesCache1.AddReplaceRoute(TheRoute);
-
     }
 
-    List<Vector3> DefineInBuildPoint()
+    private List<Vector3> DefineInBuildPoint()
     {
         List<Vector3> points = new List<Vector3>();
 
@@ -232,10 +228,10 @@ public class Farmer : Profession
     }
 
     /// <summary>
-    /// The specific action of a Proffession 
+    /// The specific action of a Proffession
     /// Ex: Forester add lumber to its inventory and removed the amt from tree invetory
     /// </summary>
-    void Execute()
+    private void Execute()
     {
         if (ExecuteNow && ReadyToWork)
         {

@@ -12,7 +12,7 @@ public class ShackBuilder : Profession
         else LoadingFromFile(person, pF);
     }
 
-    void CreatingNew(Person person)
+    private void CreatingNew(Person person)
     {
         ProfDescription = Job.ShackBuilder;
         MyAnimation = "isHammer";
@@ -23,11 +23,11 @@ public class ShackBuilder : Profession
         Init();
     }
 
-    void LoadingFromFile(Person person, PersonFile pF)
+    private void LoadingFromFile(Person person, PersonFile pF)
     {
         _person = person;
         LoadAttributes(pF.ProfessionProp);
-        
+
         //needs to redo the Family on _constructing
         var oldBuild = Brain.GetBuildingFromKey(_person.Brain.MoveToNewHome.OldHomeKey);
         var myFamily = oldBuild.FindMyFamilyChecksFamID(_person);
@@ -38,7 +38,7 @@ public class ShackBuilder : Profession
 
     private void Init()
     {
-        //when get a number here is defined by wht worker is this on the building 
+        //when get a number here is defined by wht worker is this on the building
         //workers will be numbered on buildingsB
         FinRoutePoint = _constructing.transform.position;
 
@@ -46,7 +46,7 @@ public class ShackBuilder : Profession
         InitRoute();
     }
 
-    void InitRoute()
+    private void InitRoute()
     {
         RouterActive = true;
 
@@ -61,7 +61,7 @@ public class ShackBuilder : Profession
 
     //private void CreateShack()
     //{
-    //    _constructing = (Structure)Building.CreateBuild(Root.RetBuildingRoot(H.Shack), _person.transform.position, 
+    //    _constructing = (Structure)Building.CreateBuild(Root.RetBuildingRoot(H.Shack), _person.transform.position,
     //        H.Shack, materialKey: H.Shack.ToString() + "." + Ma.matBuildBase);
 
     //    ConstructingKey = _constructing.MyId;
@@ -71,21 +71,20 @@ public class ShackBuilder : Profession
     //    AssignRandomIniPosition(_constructing.transform.position, _constructing);
     //    FixBuildingToGround();
 
-
     //    StructureParent sp = (StructureParent) _constructing;
     //    sp.ResetedSpawnPoint();
 
     //    _constructing.HandleZoningAddCrystals();
     //}
 
-    void RotateShack()
+    private void RotateShack()
     {
         //since i change 'UnivRotationFacer' when I rotate I keep it here so at the end will return back to its first value
         //in this way doestn affect the Building we have spawened rotation
         var RotUni = General.UnivRotationFacer;
 
         //so I hold the value of it and its not lost .. I will assign it again a few lines later so if
-        //i had spawned a building doesnt suffer 
+        //i had spawned a building doesnt suffer
         var temp = BuildingPot.Control.CurrentSpawnBuild;
         BuildingPot.Control.CurrentSpawnBuild = _constructing;
 
@@ -97,19 +96,19 @@ public class ShackBuilder : Profession
         {
             BuildingPot.Control.CurrentSpawnBuild.RotationAction();
         }
-        //asigning back the real CurrentSpawnBuild so user can keep working with it 
+        //asigning back the real CurrentSpawnBuild so user can keep working with it
         BuildingPot.Control.CurrentSpawnBuild = temp;
 
-        //assign its initial value 
+        //assign its initial value
         General.UnivRotationFacer = RotUni;
     }
 
     /// <summary>
     /// If person has family will book Shack
     /// </summary>
-    void BookShack()
+    private void BookShack()
     {
-        //this is for new Adults 
+        //this is for new Adults
         if (string.IsNullOrEmpty(_person.Brain.MoveToNewHome.OldHomeKey))
         {
             return;
@@ -119,14 +118,13 @@ public class ShackBuilder : Profession
         var oldHome = Brain.GetStructureFromKey(_person.Brain.MoveToNewHome.OldHomeKey);
         myFamily = oldHome.FindMyFamilyChecksFamID(_person);
 
-        //is bz im a recently 16 years guy or moved from empty house 
+        //is bz im a recently 16 years guy or moved from empty house
         if (myFamily == null)
         {
             //myFamily = CreateNewFamily(myFamily);
         }
-        
-        //Realtor.BookMyFamilyToNewBuild(_person, _constructing, myFamily);
 
+        //Realtor.BookMyFamilyToNewBuild(_person, _constructing, myFamily);
     }
 
     //Family CreateNewFamily(Family myFamily = null)
@@ -141,10 +139,11 @@ public class ShackBuilder : Profession
     //}
 
     private int counter;
+
     /// <summary>
     /// Returns Random position from origin. If fell inside a building will find another spot
     /// until is in a clear zone
-    /// 
+    ///
     /// </summary>
     /// <param name="howFar">How far will go</param>
     public void AssignRandomIniPosition(Vector3 origin, Building building, float howFar = 8)
@@ -163,12 +162,12 @@ public class ShackBuilder : Profession
     }
 
     /// <summary>
-    /// Created to address if recursion happens more than 100 times 
+    /// Created to address if recursion happens more than 100 times
     /// </summary>
     /// <param name="origin"></param>
     /// <param name="building"></param>
     /// <param name="howFar"></param>
-    void CheckIfCanRecurseAgain(Vector3 origin, Building building, float howFar)
+    private void CheckIfCanRecurseAgain(Vector3 origin, Building building, float howFar)
     {
         if (counter < 100)
         {
@@ -178,7 +177,7 @@ public class ShackBuilder : Profession
         }
         else
         {
-           //GameScene.print("ShackBilder cant find place to establish shack. will Emigrate");
+            //GameScene.print("ShackBilder cant find place to establish shack. will Emigrate");
             //_person.Emmigrate();
         }
     }
@@ -188,7 +187,7 @@ public class ShackBuilder : Profession
         throw new NotImplementedException();
     }
 
-    bool IsBuildingGood(Building building)
+    private bool IsBuildingGood(Building building)
     {
         building.UpdateBuildExternally();
 
@@ -202,7 +201,7 @@ public class ShackBuilder : Profession
     /// <summary>
     /// Creates the the new building, category: structure
     /// </summary>
-    void FixBuildingToGround()
+    private void FixBuildingToGround()
     {
         //since i change 'UnivRotationFacer' when I rotate I keep it here so at the end will return back to its first value
         //in this way doestn affect the Building we have spawened rotation
@@ -211,7 +210,7 @@ public class ShackBuilder : Profession
         _constructing.PositionFixed = true;
 
         //so I hold the value of it and its not lost .. I will assign it again a few lines later so if
-        //i had spawned a building doesnt suffer 
+        //i had spawned a building doesnt suffer
         var temp = BuildingPot.Control.CurrentSpawnBuild;
 
         //needed bz when I call FixBuildingToGround(); will save that CurrentSpawnBuild in Registro
@@ -219,10 +218,10 @@ public class ShackBuilder : Profession
         _constructing.DonePlace();
 
         BuildingPot.Control.CurrentSpawnBuild = temp;
-        
+
         //called here bz when trying to added the anchors to Queues so Router can see new shacks on way
         //the shacks are not added to the All in registro ,
-        //so here I added to there so the router detects them 
+        //so here I added to there so the router detects them
         //_constructing.UpdateOnBuildControl(H.Add);
 
         General.UnivRotationFacer = RotUni;
@@ -239,8 +238,9 @@ public class ShackBuilder : Profession
     }
 
     private bool workActionCalled;
+
     /// <summary>
-    /// Created to address the situation that ShackBuilder has to do all on his own. 
+    /// Created to address the situation that ShackBuilder has to do all on his own.
     /// Brain dosnt call him to start work
     /// </summary>
     private void InitForceAction()
@@ -256,10 +256,10 @@ public class ShackBuilder : Profession
     }
 
     /// <summary>
-    /// The specific action of a Proffession 
+    /// The specific action of a Proffession
     /// Ex: Forester add lumber to its inventory and removed the amt from tree invetory
     /// </summary>
-    void Execute()
+    private void Execute()
     {
         if (ExecuteNow)
         {
@@ -278,10 +278,10 @@ public class ShackBuilder : Profession
         {
             base.DoneWorkNow = false;
 
-            //to avoid ShackBuilder infinite Loop on this method once was finished 
+            //to avoid ShackBuilder infinite Loop on this method once was finished
             _workerTask = HPers.None;
-           
-//           //GameScene.print("Done work on ShackBulider:" + _person.MyId);
+
+            //           //GameScene.print("Done work on ShackBulider:" + _person.MyId);
             //_person.Brain.ShackBuilderDone(_constructing);
         }
     }

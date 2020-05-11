@@ -195,7 +195,7 @@ public class Docker : Profession
         {
             DropAllMyGoods(_person.Work);//so drops exports if any
 
-            //Then Homer Will handle the drop of those goods in the Storage 
+            //Then Homer Will handle the drop of those goods in the Storage
             GetMeOrderIfAny(H.Import);
             ImportIfPossible();
 
@@ -216,8 +216,8 @@ public class Docker : Profession
         if (_person.Work == null || _person.Work.HType != H.Dock)
             return;
 
-        var ord = _person.Work.Dispatch1.GiveMeOrderIfAny(type);
-        if(ord != null)
+        var ord = _person.Work.Dispatch1.GiveMeOrderIfAny(_person, type);
+        if (ord != null)
         {
             Order1 = ord;
             _person.PrevOrder = Order1;

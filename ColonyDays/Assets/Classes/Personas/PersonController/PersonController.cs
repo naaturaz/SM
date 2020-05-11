@@ -10,33 +10,36 @@ using Random = UnityEngine.Random;
 //This class holds and controlls all persons
 public class PersonController : PersonPot
 {
-	//initiating a game difficulty
-    //0 insane, 4 newbie 
+    //initiating a game difficulty
+    //0 insane, 4 newbie
     private int _difficulty = 0;
 
     private List<Person> _all = new List<Person>();
-    //same as above for GC reasons 
-    Dictionary<string, Person> _allGC = new Dictionary<string, Person>(); 
+
+    //same as above for GC reasons
+    private Dictionary<string, Person> _allGC = new Dictionary<string, Person>();
 
     private StartingCondition[] conditions;
 
     //the counter to do the brainChecks.. BrainCheck is when looking to see if somethinglike a new Job is open
-    private static int _univCounter=-1;
+    private static int _univCounter = -1;
 
     private QueuesContainer _queues = new QueuesContainer();
-	//the last gender person created 
+
+    //the last gender person created
     public static H GenderLast = H.Male;
 
     private bool _locked;//if is locked cant do CheckBrain
 
-    //contains functionalities to manager the builders 
-    BuildersManager _buildersManager = new BuildersManager();
+    //contains functionalities to manager the builders
+    private BuildersManager _buildersManager = new BuildersManager();
 
-    RoutesCache _routesCache = new RoutesCache();
+    private RoutesCache _routesCache = new RoutesCache();
 
-    PeopleQueue _workersRoutingQueue=new PeopleQueue();
+    private PeopleQueue _workersRoutingQueue = new PeopleQueue();
 
-    EmigrateController _emigrateController = new EmigrateController();
+    private EmigrateController _emigrateController = new EmigrateController();
+
     public EmigrateController EmigrateController1
     {
         get { return _emigrateController; }
@@ -77,7 +80,7 @@ public class PersonController : PersonPot
     }
 
     /// <summary>
-    /// 
+    ///
     ///game difficulty
     ///
     /// </summary>
@@ -110,7 +113,7 @@ public class PersonController : PersonPot
     /// </summary>
     /// <returns></returns>
     public StartingCondition CurrentCondition()
-    {return Conditions[Difficulty];}
+    { return Conditions[Difficulty]; }
 
     public static PersonController CreatePersonController(string root, int difficultyP, Transform container = null)
     {
@@ -120,17 +123,17 @@ public class PersonController : PersonPot
 
         obj.Difficulty = difficultyP;
 
-        if (container != null) { obj.transform.SetParent( container); }
+        if (container != null) { obj.transform.SetParent(container); }
         return obj;
     }
 
-    void Map()
+    private void Map()
     {
         //being both a 100 since late 2016 till Dec 18, 2019
         int multiplier = 100;
         int factor = 50;
 
-        int ini = multiplier*factor;
+        int ini = multiplier * factor;
 
         int templateFactor = 1;
         if (TownLoader.IsTemplate)
@@ -148,6 +151,7 @@ public class PersonController : PersonPot
     }
 
     private bool init;
+
     public void Initialize()
     {
         if (!MeshController.CrystalManager1.IsFullyLoaded() || !Program.GameFullyLoaded())//making sure all build are fullt loaded
@@ -165,10 +169,10 @@ public class PersonController : PersonPot
             SpawnIniPersonas();
             GameController.LoadStartingConditions(conditions[Difficulty]);
             RestartController();
-            
-            //here bz trees all spawneed after buildings. 
+
+            //here bz trees all spawneed after buildings.
             //so if tree is inside a building wont be deleted. bz the building
-            //might be to big and wont collide with the building 
+            //might be to big and wont collide with the building
             BuildingPot.Control.Registro.DoLastStepOfTownLoaded();
         }
         //loading from file game
@@ -187,16 +191,13 @@ public class PersonController : PersonPot
 
         Program.gameScene.GameController1.ReCheckWhatsOnStorage();
         Program.gameScene.ReleaseLoadingScreen();
-
-
     }
-
 
     /// <summary>
     /// Loads Person controller
     /// </summary>
     /// <param name="pData"></param>
-    void LoadFromFile(PersonData pData)
+    private void LoadFromFile(PersonData pData)
     {
         //person controller vars
         Difficulty = pData.PersonControllerSaveLoad.Difficulty;
@@ -221,7 +222,6 @@ public class PersonController : PersonPot
 
         //BulletinWindow.SubBulletinProduction1 = pData.PersonControllerSaveLoad.SubBulletinProduction;
         //BulletinWindow.SubBulletinFinance1 = pData.PersonControllerSaveLoad.SubBulletinFinance;
-        
 
         Program.gameScene.QuestManager = pData.PersonControllerSaveLoad.QuestManager;
         Program.gameScene.QuestManager.JustLoadedShowCurrent();
@@ -235,7 +235,6 @@ public class PersonController : PersonPot
             BuildingPot.InputU.BuildPlaced += t.BuildPlacedHandler;
             Program.MouseListener.Demolished += t.BuildWasDemolished;
 
-
             All.Add(t);
             _allGC.Add(t.MyId, t);
         }
@@ -244,6 +243,7 @@ public class PersonController : PersonPot
     }
 
     private Person tempPerson;
+
     public void SpawnIniPersonas(int amtP = 0, Vector3 iniPos = new Vector3(), int age = 0)
     {
         if (amtP == 0)
@@ -260,16 +260,10 @@ public class PersonController : PersonPot
             BuildingPot.InputU.BuildPlaced += t.BuildPlacedHandler;
             Program.MouseListener.Demolished += t.BuildWasDemolished;
 
-
-            All.Add( t);
+            All.Add(t);
             _allGC.Add(t.MyId, t);
         }
     }
-
-
-
-
-
 
     public void HaveNewKid(Vector3 iniPos)
     {
@@ -279,30 +273,21 @@ public class PersonController : PersonPot
         BuildingPot.InputU.BuildPlaced += t.BuildPlacedHandler;
         Program.MouseListener.Demolished += t.BuildWasDemolished;
 
-
         All.Add(t);
         _allGC.Add(t.MyId, t);
     }
 
-
-
-#region events
+    #region events
 
     public EventHandler<EventArgs> MouseClick;
 
-    void OnMouseClick(EventArgs e)
+    private void OnMouseClick(EventArgs e)
     {
         if (MouseClick != null)
         {
             MouseClick(this, e);
         }
     }
-
-
-
-
-
-
 
     public EventHandler<EventArgs> BuildDone;
 
@@ -314,15 +299,7 @@ public class PersonController : PersonPot
         }
     }
 
-
-    #endregion
-
-
-
-
-
-
-
+    #endregion events
 
     public void RemovePerson(Person p)
     {
@@ -341,8 +318,8 @@ public class PersonController : PersonPot
 
     #region MovingToNewHome Related
 
-    //means that a person is moving from one hose to another 
-    //if this is on. No One can move 
+    //means that a person is moving from one hose to another
+    //if this is on. No One can move
     private string _isAPersonHomeLessNow;
 
     public string IsAPersonHomeLessNow
@@ -353,23 +330,22 @@ public class PersonController : PersonPot
 
     /// <summary>
     /// Will clean the homeless slot if the person asking for it is the one that
-    /// ocupied 
+    /// ocupied
     /// </summary>
     /// <param name="personId"></param>
     public void CleanHomeLessSlot(string personId)
     {
         if (personId == _isAPersonHomeLessNow)
         {
-           //Debug.Log(personId + " clean homless now:");
-
+            //Debug.Log(personId + " clean homless now:");
 
             _isAPersonHomeLessNow = "";
         }
     }
 
-    #endregion
+    #endregion MovingToNewHome Related
 
-    void Start()
+    private void Start()
     {
         Map();
 
@@ -379,38 +355,36 @@ public class PersonController : PersonPot
         UVisHelp.CreateHelpers(Program.gameScene.controllerMain.MeshController.wholeMalla, Root.redSphereHelp);
 
         StartCoroutine("A2sUpdate");
-
     }
 
-	// Update is called once per frame
-	void Update ()
-	{
-	    DebugHere();
+    // Update is called once per frame
+    private void Update()
+    {
+        DebugHere();
         Count();
 
         //needs to be here for efficiency as people wont add routes to it if is bein checkked
         //agaisnt new queues (new buildings added) here will get checked really fast.
-        //So people will use Cache routes more and buidings will get Greenlit faster too. 
+        //So people will use Cache routes more and buidings will get Greenlit faster too.
         RoutesCache1.Update();
 
         if (init)
         {
             Initialize();
         }
-        
+
         if (Input.GetMouseButtonUp(0))
         {
             OnMouseClick(EventArgs.Empty);
         }
-	}
-
+    }
 
     private IEnumerator A2sUpdate()
     {
         while (true)
         {
             yield return new WaitForSeconds(3.33f); // wait
-            
+
             _buildersManager.Update();
             WorkersRoutingQueue.Update();
             SanitizeCurrent();
@@ -418,15 +392,12 @@ public class PersonController : PersonPot
         }
     }
 
-
-
     private void UpdateOnScreen()
     {
         if (!GameController.ResumenInventory1.IsItemOnInv(P.Wood))
         {
             return;
         }
-
 
         var msg =
             "Person:" + _all.Count + " | " +
@@ -436,7 +407,7 @@ public class PersonController : PersonPot
             "Brick:" + GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Brick) + " | " +
             "Iron:" + GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Iron) + " | " +
             "Gold:" + GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Gold) + " | " +
-            "Dollar:" + Program.gameScene.GameController1.Dollars.ToString("C0", new CultureInfo(0x0816)) + 
+            "Dollar:" + Program.gameScene.GameController1.Dollars.ToString("C0", new CultureInfo(0x0816)) +
             "\nSpeed:" + Program.gameScene.GameSpeed + "x"
                 ;
 
@@ -446,31 +417,31 @@ public class PersonController : PersonPot
         Program.gameScene.AddToMainScreen(msg);
     }
 
-    void DebugHere()
+    private void DebugHere()
     {
         if (!Developer.IsDev)
         {
             return;
         }
 
-        //make sure when execute this a least oneempty house exst 
+        //make sure when execute this a least oneempty house exst
         if (Input.GetKeyUp(KeyCode.M))
         {
             DebugSpawnMorePeople(5 * AmtOfPeople());
         }
-        //make sure when execute this a least oneempty house exst 
+        //make sure when execute this a least oneempty house exst
         if (Input.GetKeyUp(KeyCode.N))
         {
             DebugSpawnMorePeople(1 * AmtOfPeople());
         }
-        //spawns a kid 
+        //spawns a kid
         if (Input.GetKeyUp(KeyCode.K))
         {
             SpawnIniPersonas(1, new Vector3(), 8);
         }
     }
 
-    int AmtOfPeople()
+    private int AmtOfPeople()
     {
         if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
         {
@@ -483,10 +454,10 @@ public class PersonController : PersonPot
         return 1;
     }
 
-    void DebugSpawnMorePeople(int amt, Vector3 iniPos = new Vector3())
+    private void DebugSpawnMorePeople(int amt, Vector3 iniPos = new Vector3())
     {
         //so acts like immigration arruve to scene
-        //ShacksManager.Wave = true;   
+        //ShacksManager.Wave = true;
 
         //so people can look for houses and stuff
         RestartController();
@@ -498,15 +469,13 @@ public class PersonController : PersonPot
     #region People Check
 
     //the people had check for current new stuff. like new house or work
-    List<string> _peopleChecked = new List<string>();
-
-
+    private List<string> _peopleChecked = new List<string>();
 
     public void CheckPeopleIn(string newPeople)
     {
         if (!_peopleChecked.Contains(newPeople))
         {
-           // print(newPeople+".Checked in");
+            // print(newPeople+".Checked in");
             _peopleChecked.Add(newPeople);
         }
     }
@@ -522,7 +491,7 @@ public class PersonController : PersonPot
 
     public bool IsPeopleCheckFull()
     {
-        //needs to be the same otherwise Will left people 
+        //needs to be the same otherwise Will left people
         //without checking out
         if (_peopleChecked.Count >= All.Count)
         {
@@ -537,7 +506,7 @@ public class PersonController : PersonPot
         return false;
     }
 
-    List<Person> ThatHasNotChecked()
+    private List<Person> ThatHasNotChecked()
     {
         List<Person> res = new List<Person>();
 
@@ -562,10 +531,10 @@ public class PersonController : PersonPot
 
     /// <summary>
     /// Will set the controoler to Restart
-    /// 
+    ///
     /// makes:
     /// _univCounter = 0
-    /// and Clears PeopleCheck List 
+    /// and Clears PeopleCheck List
     /// </summary>
     public void RestartController()
     {
@@ -596,28 +565,31 @@ public class PersonController : PersonPot
         _peopleChecked.Remove(p);
     }
 
-    #endregion
-    
-    #region CoolDown 
+    #endregion People Check
 
-    //the amount of cooldown has to be wait to be able to a person check again 
+    #region CoolDown
+
+    //the amount of cooldown has to be wait to be able to a person check again
     //.. measured on FixedUpdate Frames
     private int currentCoolDown;
-    //the person locking this so cant be used by him again.. the person needs to 
-    //be able to continue doing all so it doesnt get out of the building first 
-    //without reachiung the new one for ex 
+
+    //the person locking this so cant be used by him again.. the person needs to
+    //be able to continue doing all so it doesnt get out of the building first
+    //without reachiung the new one for ex
     private string whoLocked;
+
     //saids who had locked this already.. will get clear once all had lockeds once
-    private Dictionary<string, string> peopleLocked = new Dictionary<string, string>(); 
+    private Dictionary<string, string> peopleLocked = new Dictionary<string, string>();
+
     public bool IsGoodToCheck()
     {
         if (currentCoolDown > 0)
-        {return false;}
+        { return false; }
         return true;
     }
 
     /// <summary>
-    /// Will add more to the cool down. So the person has to wait more to check here 
+    /// Will add more to the cool down. So the person has to wait more to check here
     /// </summary>
     /// <param name="time">Time added to cooldown</param>
     public void AddToCoolDown(int time)
@@ -625,7 +597,7 @@ public class PersonController : PersonPot
         currentCoolDown += time;
     }
 
-    void RemoveCurrentCoolDown()
+    private void RemoveCurrentCoolDown()
     {
         if (currentCoolDown == 0)
         {
@@ -635,7 +607,7 @@ public class PersonController : PersonPot
         if (currentCoolDown < 0)
         {
             whoLocked = "";
-            currentCoolDown =0;
+            currentCoolDown = 0;
             return;
         }
         currentCoolDown -= 1;
@@ -650,38 +622,34 @@ public class PersonController : PersonPot
         return false;
     }
 
-    #endregion
-    
+    #endregion CoolDown
+
     #region Local Counter Will be Looping all the time so a person will check stuff at the time
 
     private int _peopleCounter;
+
     public int PeopleCounter
     {
         get { return _peopleCounter; }
     }
 
-   
-
-
-    void Count()
+    private void Count()
     {
         _peopleCounter++;
         if (PeopleCounter == All.Count)
         { _peopleCounter = 0; }
     }
 
-    #endregion
+    #endregion Local Counter Will be Looping all the time so a person will check stuff at the time
 
     #region Immigrants
 
+    private int debugCount;
 
-
-
-    private int debugCount ;
     /// <summary>
-    /// Will emmigrate people to the Town Randomly. If town has at least one Dock 
+    /// Will emmigrate people to the Town Randomly. If town has at least one Dock
     /// </summary>
-    void CheckIfImmigrants()
+    private void CheckIfImmigrants()
     {
         if (debugCount > 2)
         {
@@ -690,7 +658,7 @@ public class PersonController : PersonPot
 
         var count = BuildingController.HowManyOfThisTypeAre(H.Dock);
 
-        if (OverAllHappinesIsOk() && OverAllFoodIsOk() && ProsperitySense() &&  count > 0)
+        if (OverAllHappinesIsOk() && OverAllFoodIsOk() && ProsperitySense() && count > 0)
         {
             ImmigrateSome();
             debugCount++;
@@ -698,14 +666,14 @@ public class PersonController : PersonPot
     }
 
     /// <summary>
-    /// The action of immigrating some people 
+    /// The action of immigrating some people
     /// </summary>
     private void ImmigrateSome()
     {
         var rand = Random.Range(5, 9);
 
         var dock = BuildingPot.Control.FindRandomBuildingOfThisType(H.Dock);
-        var dockST = (Structure) dock;
+        var dockST = (Structure)dock;
 
         DebugSpawnMorePeople(rand, dockST.SpawnPoint.transform.position);
     }
@@ -718,7 +686,6 @@ public class PersonController : PersonPot
     private bool OverAllFoodIsOk()
     {
         return true;
-
     }
 
     private bool ProsperitySense()
@@ -726,41 +693,43 @@ public class PersonController : PersonPot
         return true;
     }
 
-    #endregion
+    #endregion Immigrants
 
     private bool wasFullyLoaded;
+
     /// <summary>
-    /// Will tell u if this Controller is fully loaded 
-    /// 
-    /// If you put speed on game and people still routing will give exception 
+    /// Will tell u if this Controller is fully loaded
+    ///
+    /// If you put speed on game and people still routing will give exception
     /// </summary>
     /// <returns></returns>
     public bool IsFullyLoaded()
     {
-        //so it doesnt stop in Game when people is ReRouting 
+        //so it doesnt stop in Game when people is ReRouting
         if (wasFullyLoaded)
         {
             return true;
         }
 
-        wasFullyLoaded =_onSystemNow.Count == 0 && _waitList.Count == 0
+        wasFullyLoaded = _onSystemNow.Count == 0 && _waitList.Count == 0
                && _workersRoutingQueue.OnSystemNow1.Count == 0 && _workersRoutingQueue.WaitList.Count == 0;
 
         return wasFullyLoaded;
     }
-    
+
     #region People ReRouting System
-    //People will reroute if they had not reroute already in this cycle and 
-    //if queue has space. Other wise person should wait at home 
+
+    //People will reroute if they had not reroute already in this cycle and
+    //if queue has space. Other wise person should wait at home
 
     private List<CheckedIn> _onSystemNow = new List<CheckedIn>();
-    
+
     //the number is not inclusinve so if u put a 3 will alow 2
     private int _systemCap = 7;//5   2   4  //amt of person
 
     //people waiting to be pass to _onSystemNow
-    List<CheckedIn>  _waitList = new List<CheckedIn>();
-    
+    private List<CheckedIn> _waitList = new List<CheckedIn>();
+
     /// <summary>
     /// This doesnt need to be SaveLoad. Will give probl
     /// </summary>
@@ -775,9 +744,6 @@ public class PersonController : PersonPot
         get { return _waitList; }
         set { _waitList = value; }
     }
-
-
-
 
     public void CheckMeOnSystem(string id)
     {
@@ -841,19 +807,19 @@ public class PersonController : PersonPot
             return false;
         }
 
-        if (//WaitList.Count <= WaitingListCap() && 
+        if (//WaitList.Count <= WaitingListCap() &&
             !PeopleHasCheck(id))
         {
-           //Debug.Log("added to wait list:" + id);
+            //Debug.Log("added to wait list:" + id);
             WaitList.Add(new CheckedIn(id, Time.time));
             return true;
         }
         return false;
     }
 
-    int WaitingListCap()
+    private int WaitingListCap()
     {
-        var res = All.Count/5;
+        var res = All.Count / 5;
 
         if (res > 1)
         {
@@ -863,21 +829,20 @@ public class PersonController : PersonPot
     }
 
     /// <summary>
-    /// Called when DoneReRoute() is called 
+    /// Called when DoneReRoute() is called
     /// </summary>
-    void TransferFirstInWaitingListToOnSystemNow()
+    private void TransferFirstInWaitingListToOnSystemNow()
     {
-        if (WaitList.Count==0)
+        if (WaitList.Count == 0)
         {
             return;
         }
-
 
         var t = WaitList[0];
         WaitList.RemoveAt(0);
         OnSystemNow1.Add(t);
 
-       //Debug.Log("transfer to System:"+t.Id);
+        //Debug.Log("transfer to System:"+t.Id);
     }
 
     internal bool OnWaitListNow(string id)
@@ -893,7 +858,7 @@ public class PersonController : PersonPot
     }
 
     /// <summary>
-    /// To bne call when person dies 
+    /// To bne call when person dies
     /// </summary>
     /// <param name="id"></param>
     public void RemoveMeFromSystem(string id)
@@ -901,15 +866,15 @@ public class PersonController : PersonPot
         var wIndex = WaitList.FindIndex(a => a.Id == id);
         if (wIndex > -1)
         {
-           //Debug.Log("remove from waitL:"+id);
+            //Debug.Log("remove from waitL:"+id);
             WaitList.RemoveAt(wIndex);
         }
 
         var sIndex = OnSystemNow1.FindIndex(a => a.Id == id);
         if (sIndex > -1)
         {
-           //Debug.Log("remove from systemNow:" + id);
-            OnSystemNow1.RemoveAt(sIndex);    
+            //Debug.Log("remove from systemNow:" + id);
+            OnSystemNow1.RemoveAt(sIndex);
         }
     }
 
@@ -922,34 +887,34 @@ public class PersonController : PersonPot
         return OnSystemNow(id) || OnWaitListNow(id);
     }
 
-    void SanitizeCurrent()
+    private void SanitizeCurrent()
     {
-        if (OnSystemNow1.Count==0)
+        if (OnSystemNow1.Count == 0)
         {
             return;
         }
 
         var p = OnSystemNow1[0];
 
-        //if is being there for 10 sec we need to check 
-        if(Time.time > p.Time + 10f)
+        //if is being there for 10 sec we need to check
+        if (Time.time > p.Time + 10f)
         {
             if (OnSystemNow1.Contains(p) && Family.FindPerson(p.Id) == null)
             {
-               //Debug.Log("remove bz was gone OnSystemNow1:" + p.Id);
+                //Debug.Log("remove bz was gone OnSystemNow1:" + p.Id);
                 OnSystemNow1.Remove(p);
                 TransferFirstInWaitingListToOnSystemNow();
             }
             if (WaitList.Contains(p) && Family.FindPerson(p.Id) == null)
             {
-               //Debug.Log("remove bz was gone WaitList:" + p.Id);
+                //Debug.Log("remove bz was gone WaitList:" + p.Id);
                 WaitList.Remove(p);
             }
         }
     }
 
-#endregion
-    
+    #endregion People ReRouting System
+
     /// <summary>
     /// Average of overall happiness
     /// </summary>
@@ -963,7 +928,7 @@ public class PersonController : PersonPot
             total += _all[i].Happinnes;
         }
 
-        return (total/_all.Count).ToString("n2") + " / 5";
+        return (total / _all.Count).ToString("n2") + " / 5";
     }
 
     public void SetIsBookedToPerson(string id, string isBooked)
@@ -987,13 +952,8 @@ public class PersonController : PersonPot
         All[index].FamilyId = famId;
     }
 
-
-
-
-
-
     /// <summary>
-    /// Called when new game is gonna be created 
+    /// Called when new game is gonna be created
     /// </summary>
     internal void ClearAll()
     {
@@ -1011,9 +971,11 @@ public class PersonController : PersonPot
 public class CheckedIn
 {
     public string Id;
-    public float Time;//the time checked in 
+    public float Time;//the time checked in
 
-    public CheckedIn() { }
+    public CheckedIn()
+    {
+    }
 
     public CheckedIn(string id, float time)
     {
@@ -1022,22 +984,22 @@ public class CheckedIn
     }
 }
 
-
-
 public class StartingCondition
 {
     //the initial amount of person when start a brand new game
     public int iniPerson;
+
     public int iniWood;
     public int iniFood;
     public int iniStone;
     public int iniBrick;
     public int iniIron;
+
     //if adding a new prod for initial val also add in GameController.CreateInitialInv()
     public int iniGold, iniDollar, iniWheelBarrow, iniTool, iniCrate, iniCart, iniTonel,
         iniCloth, iniUtensil, iniCrockery, iniFurniture, iniNail, iniMortar, iniRoof, iniFloor;
 
-    private int _thisDifficultyLevel;//    //0 insane, 4 newbie 
+    private int _thisDifficultyLevel;//    //0 insane, 4 newbie
     public float iniWhaleOil;
 
     public StartingCondition(int iniPersonP, int iniWoodP, int iniFoodP, int iniStoneP, int iniBrickP, int iniIronP,
@@ -1052,17 +1014,17 @@ public class StartingCondition
         iniGold = iniGoldP / 2;
         iniDollar = iniDollarP;
         iniWheelBarrow = 0;//iniWheelBarrowP
-        iniTool = iniWheelBarrowP/2;
-        iniCrate = iniWheelBarrowP/2;
-        iniCart = iniWheelBarrowP/4;
-        iniTonel = iniWheelBarrowP/2;
+        iniTool = iniWheelBarrowP / 2;
+        iniCrate = iniWheelBarrowP / 2;
+        iniCart = iniWheelBarrowP / 4;
+        iniTonel = iniWheelBarrowP / 2;
 
         iniCloth = iniTonel;
-        iniUtensil= iniTonel;
+        iniUtensil = iniTonel;
         iniCrockery = iniTonel;
         iniFurniture = iniTonel * 2;
-        iniMortar = iniBrickP/2;
-        iniNail = iniTonel/2;
+        iniMortar = iniBrickP / 2;
+        iniNail = iniTonel / 2;
         iniRoof = iniMortar;
         iniFloor = iniMortar;
 
@@ -1073,23 +1035,24 @@ public class StartingCondition
 }
 
 /// <summary>
-/// Use to Save and Load PersonController vars 
+/// Use to Save and Load PersonController vars
 /// </summary>
 public class PersonControllerSaveLoad
 {
-    //    //0 insane, 4 newbie 
+    //    //0 insane, 4 newbie
     public int Difficulty;
 
     //the counter to do the brainChecks.. BrainCheck is when looking to see if somethinglike a new Job is open
     public int UnivCounter;
 
     public QueuesContainer Queues = new QueuesContainer();
-    //the last gender person created 
-    public H GenderLast ;
+
+    //the last gender person created
+    public H GenderLast;
 
     public bool Locked;//if is locked cant do CheckBrain
 
-    //contains functionalities to manager the builders 
+    //contains functionalities to manager the builders
     public BuildersManager BuildersManager = new BuildersManager();
 
     public RoutesCache RoutesCache = new RoutesCache();
@@ -1108,7 +1071,6 @@ public class PersonControllerSaveLoad
 
     public string TownName { get; set; }
 
-
     public SubBulletinProduction SubBulletinProduction { get; set; }
     public SubBulletinFinance SubBulletinFinance { get; set; }
 
@@ -1119,5 +1081,4 @@ public class PersonControllerSaveLoad
     public bool WasTutoPassed { get; set; }
 
     public QuestManager QuestManager { get; set; }
-
 }

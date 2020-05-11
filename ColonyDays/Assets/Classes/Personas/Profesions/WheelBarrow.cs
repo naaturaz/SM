@@ -213,7 +213,9 @@ public class WheelBarrow : Profession
     {
         if (import())
             return Brain.GetBuildingFromKey(Order1.SourceBuild);
-        return Brain.GetBuildingFromKey(Order1.DestinyBuild);
+        if (export())
+            return Brain.GetBuildingFromKey(Order1.DestinyBuild);
+        return null;
     }
 
     private float WhatIsLeft()
@@ -223,7 +225,9 @@ public class WheelBarrow : Profession
             //bz is gets completed b4 hits this and was checked already for the amt
             return Order1.Amount;
         }
-        return Dock().Dispatch1.LeftOnThisOrder(Order1);
+        if(Dock() != null)
+            return Dock().Dispatch1.LeftOnThisOrder(Order1);
+        return Order1.Left();
     }
 
     private void HandleInventoriesAndOrder()

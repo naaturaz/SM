@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
 using System.Collections.Generic;
-using System;
+using UnityEngine;
 
 /*This class manage wich buildings need to be built next and which has already
  * the resources assigned and ready to be built
@@ -8,11 +8,11 @@ using System;
 
 public class BuildersManager
 {
-    List<Construction> _constructions = new List<Construction>();//constructions on list waiting to be greenlit
-    List<Construction> _greenLight = new List<Construction>();//constrtucyions that have receive the resources already 
+    private List<Construction> _constructions = new List<Construction>();//constructions on list waiting to be greenlit
+    private List<Construction> _greenLight = new List<Construction>();//constrtucyions that have receive the resources already
 
-    //the buildings that were on Queue and are not anymore so all person checked on them 
-    List<string> _passedQueue = new List<string>();
+    //the buildings that were on Queue and are not anymore so all person checked on them
+    private List<string> _passedQueue = new List<string>();
 
     private Building _building;
 
@@ -34,7 +34,9 @@ public class BuildersManager
         set { _passedQueue = value; }
     }
 
-    public BuildersManager() { }
+    public BuildersManager()
+    {
+    }
 
     public BuildersManager(Building building)
     {
@@ -58,7 +60,7 @@ public class BuildersManager
                 {
                     return _greenLight[i].Key;
                 }
-                else//means the build was deleted 
+                else//means the build was deleted
                 {
                     _greenLight.RemoveAt(i);
                     i--;
@@ -73,7 +75,7 @@ public class BuildersManager
         if (hTypeP == H.Road)
         { return; }
 
-        //Brain.GetStructureFromKey(key) == null is a way and is not a brdige 
+        //Brain.GetStructureFromKey(key) == null is a way and is not a brdige
         if (Brain.GetStructureFromKey(key) == null && !key.Contains("Bridge"))
         {
             return;
@@ -132,22 +134,22 @@ public class BuildersManager
     }
 
     /// <summary>
-    /// Reordered list 
+    /// Reordered list
     /// </summary>
     /// <param name="key"></param>
     /// <param name="priority"></param>
     /// <param name="list"></param>
     /// <returns></returns>
-    List<Construction> ChangePriorityList(string key, int priority, List<Construction> list)
+    private List<Construction> ChangePriorityList(string key, int priority, List<Construction> list)
     {
         for (int i = 0; i < list.Count; i++)
         {
             if (list[i].Key == key)
             {
                 //send one step close ahead in the queue
-                if(priority == 1)
+                if (priority == 1)
                 {
-                    if(i > 0)
+                    if (i > 0)
                     {
                         var current = list[i];
                         var prev = list[i - 1];
@@ -162,7 +164,7 @@ public class BuildersManager
                 //send one step behind in the queue
                 else
                 {
-                    if(i + 1 < list.Count)
+                    if (i + 1 < list.Count)
                     {
                         var current = list[i];
                         var next = list[i + 1];
@@ -211,7 +213,7 @@ public class BuildersManager
         st.ReturnMaterialsCostNoQuestion();
     }
 
-    bool ContainKey(List<Construction> list, string key)
+    private bool ContainKey(List<Construction> list, string key)
     {
         for (int i = 0; i < list.Count; i++)
         {
@@ -224,15 +226,15 @@ public class BuildersManager
     }
 
     /// <summary>
-    /// Will put the item passed as index in the right position 
+    /// Will put the item passed as index in the right position
     /// </summary>
     /// <param name="index"></param>
-    List<Construction> ReorderItemOnList(int index, List<Construction> list)
+    private List<Construction> ReorderItemOnList(int index, List<Construction> list)
     {
         while (index > 0)
         {
             //if the item in the list below me the prioritu is smaller than mine then I can
-            //ocupy its spot , so we swap positions on the list 
+            //ocupy its spot , so we swap positions on the list
             if (list[index - 1].Priority < list[index].Priority)
             {
                 SwapItems(index - 1, index, list);
@@ -248,11 +250,11 @@ public class BuildersManager
     }
 
     /// <summary>
-    /// Swaps items in the list 
+    /// Swaps items in the list
     /// </summary>
     /// <param name="indexA"></param>
     /// <param name="indexB"></param>
-    List<Construction> SwapItems(int indexA, int indexB, List<Construction> list)
+    private List<Construction> SwapItems(int indexA, int indexB, List<Construction> list)
     {
         var t = list[indexA];
         list[indexA] = list[indexB];
@@ -270,11 +272,11 @@ public class BuildersManager
 
     /// <summary>
     /// Will commu8nicate with GameCOntrooler to see if have enought material to authorizr a building contruction
-    /// 
-    /// 
+    ///
+    ///
     /// </summary>
     /// <returns></returns>
-    static bool CanGreenLight(Construction cons, List<string> passedQueue)
+    private static bool CanGreenLight(Construction cons, List<string> passedQueue)
     {
         var stat = Book.GiveMeStat(cons.HType);
 
@@ -297,13 +299,13 @@ public class BuildersManager
         bool machine = GameController.ResumenInventory1.ReturnAmtOfItemOnInv(P.Machinery) >= stat.Machinery
           || stat.Machinery == 0;
 
-        //other wise would remove it from _passedQueue if was mising Brick for example and wont be 
+        //other wise would remove it from _passedQueue if was mising Brick for example and wont be
         //build it ever again
         if (wood && stone && brick && iron && gold && dollar //&& passedQue
             && nail && furniture && mortar && floor && roof && machine)
         {
             //if is null is just a question for a building if can be greenlit
-            //if not null means is this class trying to pass a Construction 
+            //if not null means is this class trying to pass a Construction
             if (passedQueue != null)
             {
                 var build = Brain.GetBuildingFromKey(cons.Key);
@@ -322,12 +324,12 @@ public class BuildersManager
         FreeUp();
     }
 
-
     private float _lastFreeUp;
+
     /// <summary>
-    /// So people check their surroundings if constructions are up for over a minute 
+    /// So people check their surroundings if constructions are up for over a minute
     /// </summary>
-    void FreeUp()
+    private void FreeUp()
     {
         if (Time.time > _lastFreeUp + 60 && _constructions.Count > 0)
         {
@@ -338,12 +340,12 @@ public class BuildersManager
 
     /// <summary>
     /// Bz if they are fuly built sometimes they stay in the _constructions
-    /// 
-    /// So if is fully built or being removed can be removed from _constructions 
+    ///
+    /// So if is fully built or being removed can be removed from _constructions
     /// </summary>
     private void RemoveFullyBuiltOrRemoved()
     {
-        if (_constructions.Count == 0)return;
+        if (_constructions.Count == 0) return;
 
         for (int i = 0; i < _constructions.Count; i++)
         {
@@ -351,9 +353,9 @@ public class BuildersManager
         }
     }
 
-    void RemoveAConstructionIfFullyBuilt(string Key, int index)
+    private void RemoveAConstructionIfFullyBuilt(string Key, int index)
     {
-        if (Key.Contains("Bridge"))//bz brdige will be null on below if 
+        if (Key.Contains("Bridge"))//bz brdige will be null on below if
         { return; }
 
         var st = Brain.GetStructureFromKey(Key);
@@ -366,9 +368,9 @@ public class BuildersManager
     }
 
     /// <summary>
-    /// Will check if at least there is one that need greenlight 
+    /// Will check if at least there is one that need greenlight
     /// </summary>
-    void CheckIfAnyToGreenLight()
+    private void CheckIfAnyToGreenLight()
     {
         if (_constructions.Count == 0) return;
         if (_constructions[0].WasGreenlit) return;
@@ -387,10 +389,10 @@ public class BuildersManager
     }
 
     /// <summary>
-    /// Will remove 
+    /// Will remove
     /// </summary>
     /// <param name="construction"></param>
-    void HandleList(Construction construction)
+    private void HandleList(Construction construction)
     {
         construction.WasGreenlit = true;
         Structure st = Brain.GetStructureFromKey(construction.Key);
@@ -403,12 +405,12 @@ public class BuildersManager
     }
 
     /// <summary>
-    /// The main BuildersManager contain in person controller will send this greenlight 
-    /// building to the closest BuilderManager to the building 
+    /// The main BuildersManager contain in person controller will send this greenlight
+    /// building to the closest BuilderManager to the building
     /// </summary>
-    void AddBuildingToClosestBuildingOffice(Structure st, Construction construction)
+    private void AddBuildingToClosestBuildingOffice(Structure st, Construction construction)
     {
-        //if is null is a brdige 
+        //if is null is a brdige
         if (st == null || st.StartingStage != H.Done)
         {
             //_greenLight.Add(construction);
@@ -425,7 +427,7 @@ public class BuildersManager
         }
     }
 
-    void RemoveFromGameControllerInventory(H hTypeP)
+    private void RemoveFromGameControllerInventory(H hTypeP)
     {
         var stat = Book.GiveMeStat(hTypeP);
 
@@ -453,7 +455,7 @@ public class BuildersManager
                 return _constructions[i].WasGreenlit;
             }
         }
-        //if is not found means was greenlit a while ago 
+        //if is not found means was greenlit a while ago
         return false;
     }
 
@@ -464,7 +466,7 @@ public class BuildersManager
 
     /// <summary>
     /// Called from QueuesContainer when all clearing a list of new builds
-    /// 
+    ///
     /// Its adding buildings that are being checked to _passedQueue list
     /// </summary>
     /// <param name="_newBuildsQueue"></param>
@@ -477,7 +479,7 @@ public class BuildersManager
                 && newBuildsQueue.Elements[i].IsCheckedByAll())
             {
                 _passedQueue.Add(key);
-                //so its not readded here again later 
+                //so its not readded here again later
                 newBuildsQueue.Elements[i].WasUsedToGreenLightOrDestroy = true;
             }
         }
@@ -494,11 +496,12 @@ public class BuildersManager
         qEle.WasUsedToGreenLightOrDestroy = true;
     }
 
-    static List<string> _resources = new List<string>()
+    private static List<string> _resources = new List<string>()
     {
         "wood", "stone", "brick" , "iron" ,"gold" , "money",
             "nail", "furniture", "mortar" , "floor" , "roof"  ,"machinery"
     };
+
     internal static string MissingResources(H hType)
     {
         var stat = Book.GiveMeStat(hType);
@@ -550,7 +553,7 @@ public class BuildersManager
         }
         return "";
     }
-    
+
     internal string CurrentPriorityRank(string myId)
     {
         for (int i = 0; i < _constructions.Count; i++)
@@ -560,7 +563,6 @@ public class BuildersManager
         }
         return "";
     }
-
 }
 
 public class Construction
@@ -570,7 +572,9 @@ public class Construction
     public int Priority;
     public Vector3 Position;
 
-    public Construction() { }
+    public Construction()
+    {
+    }
 
     public bool WasGreenlit { get; internal set; }
 }

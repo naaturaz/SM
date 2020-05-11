@@ -1486,7 +1486,7 @@ public class Dispatch
         return _expImpOrders.Where(a => a.TypeOrder == H.Evacuation).ToList();
     }
 
-    public Order GiveMeOrderIfAny(H type)
+    public Order GiveMeOrderIfAny(Person person, H type)
     {
         //export
         var exports = ReturnRegularOrders();
@@ -1495,16 +1495,32 @@ public class Dispatch
         var id = "";
 
         if (type == H.Export && exports.Count > 0)
-            id = exports[exports.Count - 1].ID;
+            id = exports[0].ID;
 
         //imports
         var imports = ReturnEvacuaOrders();
         imports.AddRange(ReturnImportOrdersOnProcess());
 
         if (type == H.Import && imports.Count > 0)
-            id = imports[imports.Count - 1].ID;
+            id = imports[0].ID;
 
-        return FindOrderByID(id);
+        var order = FindOrderByID(id);
+
+        //if the Inventory of destiny build is full will skip that order
+        if (order != null && order.IsCompleted)
+        {
+            if (person.Work != null)
+                person.Work.ReloadInventory();
+
+            //todo Notify
+            Debug.Log("Docker order removed:" + order.DestinyBuild + "|for prod:" + order.Product + "" + "");
+            RemoveOrderByIDExIm(order.ID);
+
+            //Recursion
+            return GiveMeOrderIfAny(person, type);
+        }
+
+        return order;
     }
 }
 

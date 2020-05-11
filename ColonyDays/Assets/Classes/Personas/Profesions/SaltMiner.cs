@@ -1,6 +1,6 @@
 ﻿using System;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class SaltMiner : Profession
@@ -14,9 +14,9 @@ public class SaltMiner : Profession
         else LoadingFromFile(person, pF);
     }
 
-    void CreatingNew(Person person)
+    private void CreatingNew(Person person)
     {
-        //in case was a Wheelbarrow the prevProfession and when home route back gives problem 
+        //in case was a Wheelbarrow the prevProfession and when home route back gives problem
         person.PrevOrder = null;
 
         IsRouterBackUsed = false;
@@ -27,7 +27,7 @@ public class SaltMiner : Profession
         Init();
     }
 
-    void LoadingFromFile(Person person, PersonFile pF)
+    private void LoadingFromFile(Person person, PersonFile pF)
     {
         _person = person;
         LoadAttributes(pF.ProfessionProp);
@@ -40,7 +40,7 @@ public class SaltMiner : Profession
             return;
         }
 
-        //when get a number here is defined by wht worker is this on the building 
+        //when get a number here is defined by wht worker is this on the building
         //workers will be numbered on buildingsB
         FinRoutePoint = ReturnRandomFinalPoint();
 
@@ -48,10 +48,10 @@ public class SaltMiner : Profession
     }
 
     /// <summary>
-    /// Bz the Fisher site has varius endings 
+    /// Bz the Fisher site has varius endings
     /// </summary>
     /// <returns></returns>
-    Vector3 ReturnRandomFinalPoint()
+    private Vector3 ReturnRandomFinalPoint()
     {
         List<Vector3> list = new List<Vector3>()
         {
@@ -64,7 +64,7 @@ public class SaltMiner : Profession
         return list[ind];
     }
 
-    void InitRoute()
+    private void InitRoute()
     {
         RouterActive = true;
         ConformInBuildRoute();
@@ -72,7 +72,7 @@ public class SaltMiner : Profession
         RouteBackForNewProfThatUseHomer();
     }
 
-    void ConformInBuildRoute()
+    private void ConformInBuildRoute()
     {
         Router1 = new CryRouteManager();
 
@@ -84,23 +84,19 @@ public class SaltMiner : Profession
             return;
         }
 
-
-
         var inBuildPoints = DefineInBuildPoint();
         //UVisHelp.CreateHelpers(inBuildPoints, Root.yellowCube);
         var TheRoute = ReachBean.RouteVector3s(inBuildPoints);
 
-        //so they go trhu on Profession 
+        //so they go trhu on Profession
         TheRoute.OriginKey = _person.Work.MyId + ".O";
         TheRoute.DestinyKey = _person.Work.MyId + ".D";
 
         Router1.TheRoute = TheRoute;
         Router1.IsRouteReady = true;
-
-
     }
 
-    List<Vector3> DefineInBuildPoint()
+    private List<Vector3> DefineInBuildPoint()
     {
         List<Vector3> points = new List<Vector3>();
 
@@ -131,10 +127,10 @@ public class SaltMiner : Profession
     }
 
     /// <summary>
-    /// The specific action of a Proffession 
+    /// The specific action of a Proffession
     /// Ex: Forester add lumber to its inventory and removed the amt from tree invetory
     /// </summary>
-    void Execute()
+    private void Execute()
     {
         if (ExecuteNow && ReadyToWork)
         {

@@ -205,6 +205,18 @@ public class InputMain : InputParent {
 
     string NowGameName()
     {
+        var s = Program.MyScreen1.TownName + " " + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + 
+            " .year." + Program.gameScene.GameTime1.Year + ".month." + Program.gameScene.GameTime1.Month1;
+
+        s = s.Replace('/', '-');
+        s = s.Replace(':', '.');
+
+        Debug.Log("Save name: " + s);
+        return s;
+    }
+
+    string NowGameName2()
+    {
         return Program.MyScreen1.TownName + " " + DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + " " +
                DateTime.Now.Hour + "h" + DateTime.Now.Minute + "m" + DateTime.Now.Second + "s";
     }

@@ -1,22 +1,19 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 /*
  * This is a queue of people . can be used to queue People to get a task done.
  * copyied and pasted from PersonController. just the _peopleChecked if statement was removed
  * as this class objects are independent of anything on game
- * 
+ *
  * Created to be used by professionals to reroute. so they dont reroute all toghetehr
- * at the same time 
+ * at the same time
  */
 
-public class PeopleQueue {
-
-
-
-    //People will reroute if they had not reroute already in this cycle and 
-    //if queue has space. Other wise person should wait at home 
+public class PeopleQueue
+{
+    //People will reroute if they had not reroute already in this cycle and
+    //if queue has space. Other wise person should wait at home
 
     private List<CheckedIn> _onSystemNow = new List<CheckedIn>();
 
@@ -24,7 +21,7 @@ public class PeopleQueue {
     private int _systemCap = 7;//amt of person   //1
 
     //people waiting to be pass to _onSystemNow
-    List<CheckedIn> _waitList = new List<CheckedIn>();
+    private List<CheckedIn> _waitList = new List<CheckedIn>();
 
     /// <summary>
     /// This doesnt need to be SaveLoad. Will give probl
@@ -41,7 +38,9 @@ public class PeopleQueue {
         set { _waitList = value; }
     }
 
-    public PeopleQueue() { }
+    public PeopleQueue()
+    {
+    }
 
     public void CheckMeOnSystem(string id)
     {
@@ -102,7 +101,7 @@ public class PeopleQueue {
             return;
         }
 
-        if (_onSystemNow.Count == 0 && WaitList.Count==0)
+        if (_onSystemNow.Count == 0 && WaitList.Count == 0)
         {
             _onSystemNow.Add(new CheckedIn(id, Time.time));
             return;
@@ -116,9 +115,9 @@ public class PeopleQueue {
     }
 
     /// <summary>
-    /// Called when DoneReRoute() is called 
+    /// Called when DoneReRoute() is called
     /// </summary>
-    void TransferFirstInWaitingListToOnSystemNow()
+    private void TransferFirstInWaitingListToOnSystemNow()
     {
         if (WaitList.Count == 0)
         {
@@ -143,7 +142,7 @@ public class PeopleQueue {
     }
 
     /// <summary>
-    /// To bne call when person dies 
+    /// To bne call when person dies
     /// </summary>
     /// <param name="id"></param>
     public void RemoveMeFromSystem(string id)
@@ -154,7 +153,6 @@ public class PeopleQueue {
         {
             WaitList.RemoveAt(wIndex);
         }
-
 
         var sIndex = OnSystemNow1.FindIndex(a => a.Id == id);
 
@@ -168,7 +166,7 @@ public class PeopleQueue {
     /// Either on WaitList or SystemNow1
     /// </summary>
     /// <returns></returns>
-    bool IAmOnSystemNow(string id)
+    private bool IAmOnSystemNow(string id)
     {
         return OnSystemNow(id) || OnWaitListNow(id);
     }
@@ -178,8 +176,7 @@ public class PeopleQueue {
         SanitizeCurrent();
     }
 
-
-    void SanitizeCurrent()
+    private void SanitizeCurrent()
     {
         if (OnSystemNow1.Count == 0)
         {
@@ -189,10 +186,10 @@ public class PeopleQueue {
         var p = OnSystemNow1[0];
         var person = Family.FindPerson(p.Id);
 
-        //if is being there for 10 sec we need to check 
+        //if is being there for 10 sec we need to check
         if (Time.time > p.Time + 10f)
         {
-            //if the person is not RouterActive means he is not working somehow so can be removed from here 
+            //if the person is not RouterActive means he is not working somehow so can be removed from here
             if (OnSystemNow1.Contains(p) && (person == null || !person.ProfessionProp.RouterActive))
             {
                 //Debug.Log("remove from WorkQueue OnSystemNow1 Prof:" + p.Id);

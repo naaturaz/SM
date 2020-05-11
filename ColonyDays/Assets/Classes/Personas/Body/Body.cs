@@ -1359,7 +1359,7 @@ public class Body //: MonoBehaviour //: General
 
     public void Show()
     {
-        if(UPerson.IsThisPersonTheSelectedOne(_person))
+        if (UPerson.IsThisPersonTheSelectedOne(_person))
         {
             var aaNear = IsNearBySpawnPointOfInitStructure();
             var a = 1;
@@ -1520,7 +1520,6 @@ public class Body //: MonoBehaviour //: General
         CheckSound();
     }
 
-
     /// <summary>
     /// If is inside a building will hide or show Geometry
     /// </summary>
@@ -1554,7 +1553,6 @@ public class Body //: MonoBehaviour //: General
         currDist = Vector3.Distance(_currentPosition, _routePoins[index].Point);
         if (currDist < 0.01f) { Show(); }
     }
-
 
     /// <summary>
     /// Needed so when passed close to house and is close to last point doesnt desappear.

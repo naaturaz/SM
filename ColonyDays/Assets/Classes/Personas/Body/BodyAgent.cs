@@ -294,6 +294,8 @@ public class BodyAgent
         else if (_initRadius > 0 && !_person.Body.CurrentAni.Contains("Cart"))
         {
             _agent.radius = _initRadius;
+            _agent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
+
             _initRadius = 0;
         }
     }
@@ -301,7 +303,8 @@ public class BodyAgent
     private void CartRideRadius()
     {
         _initRadius = _agent.radius;
-        _agent.radius = 0.5f;//2
+        _agent.radius = 0.3f;//2
+        _agent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
     }
 
     #region Speed
@@ -363,12 +366,12 @@ public class BodyAgent
         }
 
         //will restablish normal speed
-        if (Time.time > _tempSpeedSetAt + 4f)
-        {
-            _tempSpeedSetAt = 0;
-            _agent.speed = _speedInitial * AgeSpeedCorrection() * Program.gameScene.GameSpeed;
-            _person.Body.SetAnimatorSpeed(Program.gameScene.GameSpeed);
-        }
+        //if (Time.time > _tempSpeedSetAt + 4f)
+        //{
+        //    _tempSpeedSetAt = 0;
+        //    _agent.speed = _speedInitial * AgeSpeedCorrection() * Program.gameScene.GameSpeed;
+        //    _person.Body.SetAnimatorSpeed(Program.gameScene.GameSpeed);
+        //}
     }
 
     private float AgeSpeedCorrection()
