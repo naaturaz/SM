@@ -2,13 +2,13 @@
 using UnityEngine.UI;
 
 //Attached to Mod GameObject
-public class ModController: MonoBehaviour
+public class ModController : MonoBehaviour
 {
     //GO
     public Text Text;
 
     //private
-    float _shown;
+    private float _shown;
 
     public static PeopleModData PeopleModData;
 
@@ -29,7 +29,7 @@ public class ModController: MonoBehaviour
         _shown = Time.time;
     }
 
-    static void ReloadModStatic()
+    private static void ReloadModStatic()
     {
         if (PeopleModData == null)
         {
@@ -38,7 +38,7 @@ public class ModController: MonoBehaviour
 
             if (PeopleModData != null)
             {
-                if(modController != null)
+                if (modController != null)
                     modController.Text.text = "MOD loaded";
             }
             else
@@ -51,7 +51,7 @@ public class ModController: MonoBehaviour
 
     private void Update()
     {
-        if(Text.text.Length>0 && Time.time > _shown + 10)
+        if (Text.text.Length > 0 && Time.time > _shown + 10)
         {
             Text.text = "";
         }
@@ -106,7 +106,7 @@ public class ModController: MonoBehaviour
 
         if (PeopleModData != null)
         {
-            int.TryParse(UnityEngine.Random.Range(PeopleModData.DieAgeStart, PeopleModData.DieAgeEnd)+"", out age2);
+            int.TryParse(UnityEngine.Random.Range(PeopleModData.DieAgeStart, PeopleModData.DieAgeEnd) + "", out age2);
         }
 
         if (age2 > 0)

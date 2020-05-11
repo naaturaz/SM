@@ -1,17 +1,16 @@
 ﻿//life cycle corn 4 month
-using System;
 using UnityEngine;
 
 public class Plant : General
 {
     private P _type;//type of plant. ex : Bean
-    private Building _building;//the buildign tht contains this plant 
+    private Building _building;//the buildign tht contains this plant
     private FieldFarm _fieldFarm;//the dfarm tht contains this plant
 
     private float _growGen; //btw 90-100 will indicate how farr will go a plant just by genes
 
     //the duration of a plant in days
-    private int _lifeDuration = 120;//120 is for corn 
+    private int _lifeDuration = 120;//120 is for corn
 
     //the factor of production a carrots will produce less as a corn. in a plant in kg
     private float _productionFactor = 10;
@@ -22,7 +21,7 @@ public class Plant : General
     //at wht step of growing is,  0.1-1
     private float _currentGrowStep;
 
-    //the amout will grow the gameObj created so it happens nie and smotth the grow 
+    //the amout will grow the gameObj created so it happens nie and smotth the grow
     private float _amtToGrow;
 
     private bool _isReadyToHarvest;
@@ -31,7 +30,9 @@ public class Plant : General
     private int _daysToRotten;
     private bool _isRotten;
 
-    public Plant() { }
+    public Plant()
+    {
+    }
 
     public P Type
     {
@@ -121,14 +122,14 @@ public class Plant : General
         //define
         DefineLifeDuration();
 
-        transform.name = "";//so it renames 
+        transform.name = "";//so it renames
         DefineNameAndMyID();
 
         //re add
         _fieldFarm.BatchAdd(this);
     }
 
-    void CreateBasePlane()
+    private void CreateBasePlane()
     {
         var dimen = _fieldFarm.SpaceBtwPlants - 0.5f;
 
@@ -137,7 +138,7 @@ public class Plant : General
         basePlane.UpdatePos(locPoly);
     }
 
-    //how long take to a plant to rotten its fruits 
+    //how long take to a plant to rotten its fruits
     private void DefineRottingDays()
     {
         _daysToRotten = 30;
@@ -151,7 +152,7 @@ public class Plant : General
     /// <summary>
     /// Always in days
     /// </summary>
-    void DefineLifeDuration()
+    private void DefineLifeDuration()
     {
         if (_type == P.Bean)
         {
@@ -201,12 +202,12 @@ public class Plant : General
         }
     }
 
-    void Start()
+    private void Start()
     {
         _growGen = UnityEngine.Random.Range(.1f, .9f);
         DetermineSeedDate();
 
-        //sets the Production factor of this plant 
+        //sets the Production factor of this plant
         _productionFactor = Program.gameScene.ExportImport1.ReturnProduceFactor(_type);
 
         SavePlant();
@@ -217,7 +218,7 @@ public class Plant : General
         _seedDate = Program.gameScene.GameTime1.CurrentDate();
     }
 
-    void CheckIfCanGrow()
+    private void CheckIfCanGrow()
     {
         var timeInSoil = Program.gameScene.GameTime1.ElapsedDateInDaysToDate(_seedDate);
         float advance = (float)timeInSoil / (float)_lifeDuration;
@@ -262,12 +263,13 @@ public class Plant : General
         _readyToHarvestDate = Program.gameScene.GameTime1.CurrentDate();
     }
 
-    const float GROWFACTOR = 0.01f;//0.01
+    private const float GROWFACTOR = 0.01f;//0.01
+
     //Will grow in 10 percent increments
     private void Grow()
     {
         //divide by current step so its always not more and more
-        //pls GROWFACTOR so we dont divide a zero 
+        //pls GROWFACTOR so we dont divide a zero
         var addWorkedAmt = ((_fieldFarm.GiveMeMyWorkedAmt() + GROWFACTOR) / _currentGrowStep / 1) + 0.02f;
         _fieldFarm.PlantGrew();
 
@@ -284,7 +286,8 @@ public class Plant : General
 
     private int checkEverySoManyFrames = 240;
     private int count;
-    void Update()
+
+    private void Update()
     {
         count++;
 
@@ -300,7 +303,7 @@ public class Plant : General
     }
 
     /// <summary>
-    /// This will take care of if the plant is being ready for harvest for a long time 
+    /// This will take care of if the plant is being ready for harvest for a long time
     /// </summary>
     private void CheckIfIsRottenByNow()
     {
@@ -334,7 +337,7 @@ public class Plant : General
         }
     }
 
-    void SavePlant()
+    private void SavePlant()
     {
         if (_building.PlantSave1 == null)
         {
@@ -348,7 +351,7 @@ public class Plant : General
     /// Will scale this plant
     /// </summary>
     /// <param name="toAdd"></param>
-    void ScaleGameObject(float toAdd)
+    private void ScaleGameObject(float toAdd)
     {
         var localScale = gameObject.transform.localScale;
         //var singleX = localScale.x + toAdd;
@@ -362,13 +365,13 @@ public class Plant : General
     }
 
     /// <summary>
-    /// Will scale the batched farm,,, containing all the plants 
+    /// Will scale the batched farm,,, containing all the plants
     /// </summary>
     /// <param name="toAdd"></param>
-    void ScaleBatchedPlantsGO(float toAdd)
+    private void ScaleBatchedPlantsGO(float toAdd)
     {
         //will affect only Y so the Batch doestn scale completely
-        _fieldFarm.ScaleBatchedGO(new Vector3(0, toAdd/150, 0));
+        _fieldFarm.ScaleBatchedGO(new Vector3(0, toAdd / 150, 0));
     }
 
     internal void Harvest()
@@ -381,7 +384,6 @@ public class Plant : General
         var amt = WhatIProduce();
         _building.Produce(amt);
 
-
         DestroyPlant();
     }
 
@@ -392,17 +394,18 @@ public class Plant : General
     }
 
     /// <summary>
-    /// The amount this plant produce 
+    /// The amount this plant produce
     /// </summary>
     /// <returns></returns>
     private float WhatIProduce()
     {
         //how much grew
         var localScale = gameObject.transform.localScale;
-        return localScale.y * _productionFactor * .1f; //.5   .75f 
+        return localScale.y * _productionFactor * .1f; //.5   .75f
     }
 
     private bool wasLoaded;
+
     public void LoadPlant(PlantSave plant)
     {
         if (wasLoaded)
@@ -416,7 +419,7 @@ public class Plant : General
         _growGen = plant.GrowGen; //btw 90-100 will indicate how farr will go a plant just by genes
 
         //the duration of a plant in days
-        _lifeDuration = plant.LifeDuration;//120 is for corn 
+        _lifeDuration = plant.LifeDuration;//120 is for corn
 
         //when was seeded
         _seedDate = plant.SeedDate;
@@ -424,7 +427,7 @@ public class Plant : General
         //at wht step of growing is,  0.1-1
         _currentGrowStep = plant.CurrentGrowStep;
 
-        //the amout will grow the gameObj created so it happens nie and smotth the grow 
+        //the amout will grow the gameObj created so it happens nie and smotth the grow
         _amtToGrow = plant.AmtToGrow;
 
         _isReadyToHarvest = plant.IsReadyToHarvest;
@@ -450,7 +453,7 @@ public class PlantSave
     private float _growGen; //btw 90-100 will indicate how farr will go a plant just by genes
 
     //the duration of a plant in days
-    private int _lifeDuration = 120;//120 is for corn 
+    private int _lifeDuration = 120;//120 is for corn
 
     //when was seeded
     private MDate _seedDate;
@@ -458,7 +461,7 @@ public class PlantSave
     //at wht step of growing is,  0.1-1
     private float _currentGrowStep;
 
-    //the amout will grow the gameObj created so it happens nie and smotth the grow 
+    //the amout will grow the gameObj created so it happens nie and smotth the grow
     private float _amtToGrow;
 
     private bool _isReadyToHarvest;
@@ -535,7 +538,9 @@ public class PlantSave
         set { _localScale = value; }
     }
 
-    public PlantSave() { }
+    public PlantSave()
+    {
+    }
 
     public void SavePlant(Plant plant)
     {
@@ -544,7 +549,7 @@ public class PlantSave
         _growGen = plant.GrowGen; //btw 90-100 will indicate how farr will go a plant just by genes
 
         //the duration of a plant in days
-        _lifeDuration = plant.LifeDuration;//120 is for corn 
+        _lifeDuration = plant.LifeDuration;//120 is for corn
 
         //when was seeded
         _seedDate = plant.SeedDate;
@@ -552,7 +557,7 @@ public class PlantSave
         //at wht step of growing is,  0.1-1
         _currentGrowStep = plant.CurrentGrowStep;
 
-        //the amout will grow the gameObj created so it happens nie and smotth the grow 
+        //the amout will grow the gameObj created so it happens nie and smotth the grow
         _amtToGrow = plant.AmtToGrow;
 
         _isReadyToHarvest = plant.IsReadyToHarvest;

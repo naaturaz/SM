@@ -1,27 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Shooter : General
 {
-
     private GameObject _badUnitGO;
 
-    HealthBar _healthBar;
+    private HealthBar _healthBar;
 
     private float _fireTime;
     private float _fireRate = .2f;
-    GameObject _bulletSpawn;
-    GameObject _bullet;
-    string _bulletRoot;
+    private GameObject _bulletSpawn;
+    private GameObject _bullet;
+    private string _bulletRoot;
     private int _health = 5;
 
-    int _ammo = 200;
+    private int _ammo = 200;
 
-    float _bulletRange = 1.5f;
-    float _bulletSpeed = 15;
+    private float _bulletRange = 1.5f;
+    private float _bulletSpeed = 15;
 
     public int Ammo
     {
@@ -36,7 +31,7 @@ public class Shooter : General
         }
     }
 
-    static float _lastShoot;
+    private static float _lastShoot;
 
     public int Health
     {
@@ -63,7 +58,6 @@ public class Shooter : General
             _bulletSpawn = value;
         }
     }
-
 
     public float FireRate
     {
@@ -130,8 +124,6 @@ public class Shooter : General
         }
     }
 
-
-
     protected void Start()
     {
         base.Start();
@@ -145,14 +137,11 @@ public class Shooter : General
         HealthBar = (HealthBar)Create("Prefab/TA/GUI/Health_Bar", pos, "H_Bar", transform);
         HealthBar.PassShooter(this);
 
-
         _badUnitGO = GetChildCalled("Bad_Unit");
         if (_badUnitGO != null && IsGood)
         {
             _badUnitGO.SetActive(false);
         }
-
-
 
         if (BulletSpawn == null)
         {
@@ -163,7 +152,7 @@ public class Shooter : General
         {
             BulletSpawn = GetGrandChildCalled("Bullet_Spawn");
 
-            //a building that doesnt shoot 
+            //a building that doesnt shoot
             if (BulletSpawn == null)
             {
                 return;
@@ -181,7 +170,7 @@ public class Shooter : General
     }
 
     /// <summary>
-    /// Has to be loaded mannually . so call this 
+    /// Has to be loaded mannually . so call this
     /// </summary>
     protected void LoadBulletGO()
     {
@@ -204,7 +193,7 @@ public class Shooter : General
         }
     }
 
-    void SpawnBullet()
+    private void SpawnBullet()
     {
         if (_ammo < 1)
         {
@@ -227,9 +216,6 @@ public class Shooter : General
             //Program.gameScene.SoundManager.PlaySound(0);
             _lastShoot = Time.time;
         }
-
-
-
     }
 
     protected void OnTriggerEnter(Collider other)
@@ -240,12 +226,10 @@ public class Shooter : General
             Debug.Log("10");
         }
         //touching a person
-        else if(other.gameObject.layer == 11)
+        else if (other.gameObject.layer == 11)
         {
             Debug.Log("11");
         }
-
-
 
         if (Health > 1)
         {
@@ -265,9 +249,4 @@ public class Shooter : General
     {
         return _health == 0;
     }
-
-
 }
-
-
-

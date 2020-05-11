@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
-
 
 public class SpawnPool : General
 {
     //List<GameObject> _list = new List<GameObject>();
-    List<TerrainRamdonSpawner> _tree = new List<TerrainRamdonSpawner>();
-    List<TerrainRamdonSpawner> _lawn = new List<TerrainRamdonSpawner>();
-    List<TerrainRamdonSpawner> _stone = new List<TerrainRamdonSpawner>();
-    List<TerrainRamdonSpawner> _iron = new List<TerrainRamdonSpawner>();
-    List<TerrainRamdonSpawner> _gold = new List<TerrainRamdonSpawner>();
-    List<TerrainRamdonSpawner> _orna = new List<TerrainRamdonSpawner>();
+    private List<TerrainRamdonSpawner> _tree = new List<TerrainRamdonSpawner>();
 
-    void Start()
+    private List<TerrainRamdonSpawner> _lawn = new List<TerrainRamdonSpawner>();
+    private List<TerrainRamdonSpawner> _stone = new List<TerrainRamdonSpawner>();
+    private List<TerrainRamdonSpawner> _iron = new List<TerrainRamdonSpawner>();
+    private List<TerrainRamdonSpawner> _gold = new List<TerrainRamdonSpawner>();
+    private List<TerrainRamdonSpawner> _orna = new List<TerrainRamdonSpawner>();
+
+    private void Start()
     {
         //var all = FindAllChildsGameObjectInHierarchy(gameObject);
         var all = GetAllChilds(gameObject);
@@ -49,7 +47,7 @@ public class SpawnPool : General
         }
     }
 
-    void AddToItsList(TerrainRamdonSpawner terra, List<TerrainRamdonSpawner> listP)
+    private void AddToItsList(TerrainRamdonSpawner terra, List<TerrainRamdonSpawner> listP)
     {
         if (terra != null)
         {
@@ -58,13 +56,11 @@ public class SpawnPool : General
         }
     }
 
-
-    void Update()
+    private void Update()
     {
-
     }
 
-    TerrainRamdonSpawner OneByType(H hType)
+    private TerrainRamdonSpawner OneByType(H hType)
     {
         TerrainRamdonSpawner res = null;
 
@@ -87,7 +83,7 @@ public class SpawnPool : General
         else if (hType == H.Gold)
         {
             res = HandleTheList(_gold);
-        }  
+        }
         else if (hType == H.Ornament)
         {
             res = HandleTheList(_orna);
@@ -123,15 +119,14 @@ public class SpawnPool : General
         else if (res.HType == H.Gold)
         {
             _gold.Add(res);
-        } 
+        }
         else if (res.HType == H.Ornament)
         {
             _orna.Add(res);
         }
     }
 
-
-    TerrainRamdonSpawner HandleTheList(List<TerrainRamdonSpawner> listP)
+    private TerrainRamdonSpawner HandleTheList(List<TerrainRamdonSpawner> listP)
     {
         if (listP.Count == 0)
         {
@@ -158,7 +153,7 @@ public class SpawnPool : General
             return obj;
         }
 
-        var still = (StillElement) obj;
+        var still = (StillElement)obj;
         still.enabled = true;
         obj.enabled = true;
 
@@ -184,7 +179,4 @@ public class SpawnPool : General
 
         return obj;
     }
-
-
 }
-

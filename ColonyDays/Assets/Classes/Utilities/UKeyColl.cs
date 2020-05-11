@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class UKeyColl : MonoBehaviour {
-
-
+public class UKeyColl : MonoBehaviour
+{
     /// <summary>
-    /// Say if a key is contained in its KeyedCollection 
+    /// Say if a key is contained in its KeyedCollection
     /// </summary>
     public static bool CheckIfKeyInColl<A, T>(A coll, T item)
     {

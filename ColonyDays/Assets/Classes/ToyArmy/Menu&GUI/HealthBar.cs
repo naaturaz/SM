@@ -1,16 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class HealthBar : General
 {
+    private GameObject _healthBarGO;
+    private Shooter _shot;
+    private int _oldHealth;
+    private int _fullHealth;
 
-    GameObject _healthBarGO;
-    Shooter _shot;
-    int _oldHealth;
-    int _fullHealth;
-
-    float _xWorthXHealthUnit;
+    private float _xWorthXHealthUnit;
 
     public void PassShooter(Shooter shot)
     {
@@ -22,13 +19,13 @@ public class HealthBar : General
     }
 
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         _healthBarGO = GetChildCalled("Health_Bar_Green");
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (_shot == null)
         {

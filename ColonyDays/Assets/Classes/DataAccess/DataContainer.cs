@@ -1,8 +1,6 @@
-﻿using System.Xml.Serialization;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Xml;
+using System.Xml.Serialization;
 using UnityEngine;
 
 [XmlRoot("DataCollection")]
@@ -26,10 +24,9 @@ public class DataContainer
 
     [XmlArrayItem("ProgramData")]
     public ProgramData ProgramData;
-    
+
     [XmlArrayItem("FinalReport")]
     public FinalReport FinalReport;
-
 
     //Mods
     [XmlArrayItem("PeopleModData")]
@@ -43,7 +40,7 @@ public class DataContainer
             serializer.Serialize(stream, this);
         }
     }
-    
+
     public static DataContainer Load(string path)
     {
         var serializer = new XmlSerializer(typeof(DataContainer));
@@ -57,7 +54,7 @@ public class DataContainer
         }
         catch (System.Exception ex)
         {
-            Debug.Log("exception: " +ex.Message);
+            Debug.Log("exception: " + ex.Message);
             return null;
         }
     }

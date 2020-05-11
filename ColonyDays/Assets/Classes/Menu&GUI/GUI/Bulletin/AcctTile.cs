@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 
 public class AcctTile : GUIElement
 {
@@ -14,14 +10,14 @@ public class AcctTile : GUIElement
     private Text _rightText;
     private Text _centerText;
 
-    List<Text> _allText;
+    private List<Text> _allText;
 
-    GameObject _nextBtn;
-    GameObject _prevBtn;
+    private GameObject _nextBtn;
+    private GameObject _prevBtn;
 
-    Sprite _back;
+    private Sprite _back;
 
-    SubBulletinFinance _finance;
+    private SubBulletinFinance _finance;
 
     public SubBulletinFinance Finance
     {
@@ -35,7 +31,7 @@ public class AcctTile : GUIElement
         set { _acct = value; }
     }
 
-    void Start()
+    private void Start()
     {
         _leftText = FindGameObjectInHierarchy("Left_Lbl", gameObject).GetComponent<Text>();
         _rightText = FindGameObjectInHierarchy("Right_Lbl", gameObject).GetComponent<Text>();
@@ -51,7 +47,6 @@ public class AcctTile : GUIElement
         _allText.Add(_leftText);
         _allText.Add(_rightText);
         _allText.Add(_centerText);
-
 
         Init();
     }
@@ -78,7 +73,7 @@ public class AcctTile : GUIElement
 
     private void Year()
     {
-        //uncoomment to deal with the Next, Prev year featuree 
+        //uncoomment to deal with the Next, Prev year featuree
 
         if (Acct.Name != "Year")
         {
@@ -103,7 +98,7 @@ public class AcctTile : GUIElement
         }
     }
 
-    void Fonts()
+    private void Fonts()
     {
         if (Acct.BoldFont)
         {
@@ -119,11 +114,9 @@ public class AcctTile : GUIElement
         }
     }
 
-    void Update()
+    private void Update()
     {
-
     }
-
 
     internal static AcctTile CreateTile(Transform container,
         DisplayAccount acct, Vector3 iniPos, SubBulletinFinance finance)
@@ -145,7 +138,6 @@ public class AcctTile : GUIElement
         return obj;
     }
 
-
     public void NextYear()
     {
         _finance.BulletinWindow1.ShowNextYearBudget();
@@ -154,6 +146,5 @@ public class AcctTile : GUIElement
     public void PrevYear()
     {
         _finance.BulletinWindow1.ShowPrevYearBudget();
-
     }
 }

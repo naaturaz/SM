@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-public class German
+﻿public class German
 {
     private static LangDict _de = new LangDict();
 
@@ -19,113 +17,108 @@ public class German
 
         _de = new LangDict();
 
+        //Descriptions
+        //Infr
+        _de.Add("Road.Desc", "Dies dient zu Dekorationszwecken. Die Menschen sind schlichtweg zufriedener, wenn sie Straßen vorfinden");
+        _de.Add("BridgeTrail.Desc", "Erlaubt es den Menschen, von einer Seite des Ufers zur anderen zu gelangen ohne nasse Füße zu bekommen");
+        _de.Add("BridgeRoad.Desc", "Erlaubt es den Menschen, von einer Seite des Ufers zur anderen zu gelangen. Die Menschen lieben diese Brücken. Sie geben ihnen ein Gefühl von Wohlstand und Glück" + _houseTail);
+        _de.Add("LightHouse.Desc", "Hilft dabei, die Sichtbarkeit des Hafens zu erhöhen. Der Hafen verfügt damit über ein Ansehen, unter der Bedingung dass hier Arbeiter tätig sind");
+        _de.Add(H.Masonry + ".Desc", "Unabdingbares Gebäude. Die hier beschäftigten Arbeiter bauen neue Gebäude und arbeiten ausserdem als Transporteure, wenn es mal nichts zu tun gibt");
+        _de.Add(H.StandLamp + ".Desc", "Beleuchtet nachs die Strassen, wenn Walöl im Lager der Stadt verfügbar ist");
 
-            //Descriptions
-            //Infr
-        _de.Add("Road.Desc","Dies dient zu Dekorationszwecken. Die Menschen sind schlichtweg zufriedener, wenn sie Straßen vorfinden");
-        _de.Add("BridgeTrail.Desc","Erlaubt es den Menschen, von einer Seite des Ufers zur anderen zu gelangen ohne nasse Füße zu bekommen");
-        _de.Add("BridgeRoad.Desc","Erlaubt es den Menschen, von einer Seite des Ufers zur anderen zu gelangen. Die Menschen lieben diese Brücken. Sie geben ihnen ein Gefühl von Wohlstand und Glück" +_houseTail);
-        _de.Add("LightHouse.Desc","Hilft dabei, die Sichtbarkeit des Hafens zu erhöhen. Der Hafen verfügt damit über ein Ansehen, unter der Bedingung dass hier Arbeiter tätig sind");
-        _de.Add(H.Masonry + ".Desc","Unabdingbares Gebäude. Die hier beschäftigten Arbeiter bauen neue Gebäude und arbeiten ausserdem als Transporteure, wenn es mal nichts zu tun gibt");
-        _de.Add(H.StandLamp + ".Desc","Beleuchtet nachs die Strassen, wenn Walöl im Lager der Stadt verfügbar ist");
+        _de.Add(H.HeavyLoad + ".Desc", "Diese Arbeiter benutzen Pferdefuhrwerke, um Waren zu transportieren");
 
-        _de.Add(H.HeavyLoad + ".Desc","Diese Arbeiter benutzen Pferdefuhrwerke, um Waren zu transportieren");
-
-
-            //House
+        //House
         _de.Add("Bohio.Desc", "Das Bohiohaus, primitive Bedingungen, welche die Menschen unzufrieden lassen. Maximal finden hier 2-3 Kinder Platz");
 
         _de.Add("Shack.Desc", "Die Hütte, primitive Verhältnisse mit unzufriedenen Menschen, die maximal 2 Kinder haben können");
         _de.Add("MediumShack.Desc", "Die mittelgroße Hütte, mit primitiven Bedingungen für ein wenig mehr Zufriedenheit, Hier haben 2-3 Kinder ein Zuhause");
         _de.Add("LargeShack.Desc", "Die große Hütte, bietet etwas bessere Bedingungen. Die Menschen sind zufriedener und sie bietet Platz für 2-4 Kinder");
 
-
-        _de.Add("WoodHouseA.Desc", "Mittelgroßes Holzhaus, eine Familie kann maximal 2-3 Kinder haben" );
-        _de.Add("WoodHouseB.Desc", "Mittelgroßes Holzhaus, eine Familie kann maximal 3-4 Kinder haben"  );
+        _de.Add("WoodHouseA.Desc", "Mittelgroßes Holzhaus, eine Familie kann maximal 2-3 Kinder haben");
+        _de.Add("WoodHouseB.Desc", "Mittelgroßes Holzhaus, eine Familie kann maximal 3-4 Kinder haben");
         _de.Add("WoodHouseC.Desc", "Mittelgroßes Holzhaus, eine Familie kann maximal 2-3 Kinder haben");
         _de.Add("BrickHouseA.Desc", "Mittleres Haus, eine Familie kann maximal 3 Kinder haben");
-        _de.Add("BrickHouseB.Desc","Großes Haus, eine Familie kann maximal 3-4 Kinder haben");
-        _de.Add("BrickHouseC.Desc","Großes Haus, eine Familie kann maximal 4 Kinder haben");
+        _de.Add("BrickHouseB.Desc", "Großes Haus, eine Familie kann maximal 3-4 Kinder haben");
+        _de.Add("BrickHouseC.Desc", "Großes Haus, eine Familie kann maximal 4 Kinder haben");
 
-            
-            //Farms
-            //Animal
-        _de.Add("AnimalFarmSmall.Desc","Kleine Tierfarm"+_animalFarmTail);
-        _de.Add("AnimalFarmMed.Desc","Mittlere Tierfarm"+_animalFarmTail);
-        _de.Add("AnimalFarmLarge.Desc","Große Tierfarm"+_animalFarmTail);
-        _de.Add("AnimalFarmXLarge.Desc","Riesige Tierfarm"+_animalFarmTail);
-            //Fields
-        _de.Add("FieldFarmSmall.Desc","Kleine Feldfarm"+_fieldFarmTail);
-        _de.Add("FieldFarmMed.Desc","Mittlere Feldfarm"+_fieldFarmTail);
-        _de.Add("FieldFarmLarge.Desc","Große Feldfarm"+_fieldFarmTail);
-        _de.Add("FieldFarmXLarge.Desc","Riesige Feldfarm"+_fieldFarmTail);
-        _de.Add(H.FishingHut + ".Desc","Mit diesem Gebäude kann ein Arbeiter in einem Fluss Fische fangen (muss an einem Fluss plaziert werden)." + _notRegionNeeded);
+        //Farms
+        //Animal
+        _de.Add("AnimalFarmSmall.Desc", "Kleine Tierfarm" + _animalFarmTail);
+        _de.Add("AnimalFarmMed.Desc", "Mittlere Tierfarm" + _animalFarmTail);
+        _de.Add("AnimalFarmLarge.Desc", "Große Tierfarm" + _animalFarmTail);
+        _de.Add("AnimalFarmXLarge.Desc", "Riesige Tierfarm" + _animalFarmTail);
+        //Fields
+        _de.Add("FieldFarmSmall.Desc", "Kleine Feldfarm" + _fieldFarmTail);
+        _de.Add("FieldFarmMed.Desc", "Mittlere Feldfarm" + _fieldFarmTail);
+        _de.Add("FieldFarmLarge.Desc", "Große Feldfarm" + _fieldFarmTail);
+        _de.Add("FieldFarmXLarge.Desc", "Riesige Feldfarm" + _fieldFarmTail);
+        _de.Add(H.FishingHut + ".Desc", "Mit diesem Gebäude kann ein Arbeiter in einem Fluss Fische fangen (muss an einem Fluss plaziert werden)." + _notRegionNeeded);
 
-            //Raw
-        _de.Add("Mortar.Desc","In diesem Gebäude ensteht Mörtel, der für Bauvorhaben benötigt wird");
-        _de.Add("Clay.Desc","Dieses Gebäude stellt Ton her. Dieser dient als Rohmaterial für Ziegel und mehr");
-        _de.Add("Pottery.Desc","In diesem Gebäude entstehen Keramikprodukte wie Geschirr, Gläser usw.");
-        _de.Add("Mine.Desc","Dieses Gebäude dient dem Bergbau");
-        _de.Add("MountainMine.Desc","Dieses Gebäude dient der Förderung von Erz");
-        _de.Add("Resin.Desc","Minenarbeiter sind hier tätig. Bei der Arbeit ist es möglich dass sie zufällige Mineralien und Metalle gewinnen.");
-        _de.Add( H.LumberMill +".Desc","Hier finden Arbeiter Ressourcen wie Holz, Stein und Erz");
-        _de.Add("BlackSmith.Desc","Dieses Gebäude dient der Herstellung verschiedener Dinge"+_asLongHasInput);
-        _de.Add("ShoreMine.Desc","In diesem Gebäude werden Salz und Sand hergestellt");
-        _de.Add("QuickLime.Desc","Dieses Gebäude produziert ungelöschten Kalk");
+        //Raw
+        _de.Add("Mortar.Desc", "In diesem Gebäude ensteht Mörtel, der für Bauvorhaben benötigt wird");
+        _de.Add("Clay.Desc", "Dieses Gebäude stellt Ton her. Dieser dient als Rohmaterial für Ziegel und mehr");
+        _de.Add("Pottery.Desc", "In diesem Gebäude entstehen Keramikprodukte wie Geschirr, Gläser usw.");
+        _de.Add("Mine.Desc", "Dieses Gebäude dient dem Bergbau");
+        _de.Add("MountainMine.Desc", "Dieses Gebäude dient der Förderung von Erz");
+        _de.Add("Resin.Desc", "Minenarbeiter sind hier tätig. Bei der Arbeit ist es möglich dass sie zufällige Mineralien und Metalle gewinnen.");
+        _de.Add(H.LumberMill + ".Desc", "Hier finden Arbeiter Ressourcen wie Holz, Stein und Erz");
+        _de.Add("BlackSmith.Desc", "Dieses Gebäude dient der Herstellung verschiedener Dinge" + _asLongHasInput);
+        _de.Add("ShoreMine.Desc", "In diesem Gebäude werden Salz und Sand hergestellt");
+        _de.Add("QuickLime.Desc", "Dieses Gebäude produziert ungelöschten Kalk");
 
-            //Prod
-        _de.Add("Brick.Desc","Dieses Gebäude stellt Produkte aus Lehm her, wie Ziegelsteine usw.");
-        _de.Add("Carpentry.Desc","Dieses Gebäude stellt Holzprodukte her, wie Kisten, Fässer usw.");
-        _de.Add("Cigars.Desc","Dieses Gebäude dient der Herstellung von Zigarren"+_asLongHasInput);
-        _de.Add("Mill.Desc","In diesem Gebäude wird Korn gemahlen"+_asLongHasInput);
-        _de.Add(H.Tailor+".Desc","Dieses Gebäude dient der Herstellung von Kleidung"+_asLongHasInput);
-        _de.Add("Tilery.Desc","Dieses Gebäude dient der Herstellung von Dachziegeln"+_asLongHasInput);
-        _de.Add("Armory.Desc","Dieses Gebäude dient der Herstellung von Waffen"+_asLongHasInput);
-        _de.Add(H.Distillery+".Desc",_produce);
-        _de.Add("Chocolate.Desc",_produce);
-        _de.Add("Ink.Desc",_produce);
+        //Prod
+        _de.Add("Brick.Desc", "Dieses Gebäude stellt Produkte aus Lehm her, wie Ziegelsteine usw.");
+        _de.Add("Carpentry.Desc", "Dieses Gebäude stellt Holzprodukte her, wie Kisten, Fässer usw.");
+        _de.Add("Cigars.Desc", "Dieses Gebäude dient der Herstellung von Zigarren" + _asLongHasInput);
+        _de.Add("Mill.Desc", "In diesem Gebäude wird Korn gemahlen" + _asLongHasInput);
+        _de.Add(H.Tailor + ".Desc", "Dieses Gebäude dient der Herstellung von Kleidung" + _asLongHasInput);
+        _de.Add("Tilery.Desc", "Dieses Gebäude dient der Herstellung von Dachziegeln" + _asLongHasInput);
+        _de.Add("Armory.Desc", "Dieses Gebäude dient der Herstellung von Waffen" + _asLongHasInput);
+        _de.Add(H.Distillery + ".Desc", _produce);
+        _de.Add("Chocolate.Desc", _produce);
+        _de.Add("Ink.Desc", _produce);
 
-            //Ind
-        _de.Add("Cloth.Desc",_produce);
-        _de.Add("GunPowder.Desc",_produce);
-        _de.Add("PaperMill.Desc",_produce);
-        _de.Add("Printer.Desc",_produce);
-        _de.Add("CoinStamp.Desc",_produce);
-        _de.Add("Silk.Desc",_produce);
-        _de.Add("SugarMill.Desc",_produce);
-        _de.Add("Foundry.Desc",_produce);
+        //Ind
+        _de.Add("Cloth.Desc", _produce);
+        _de.Add("GunPowder.Desc", _produce);
+        _de.Add("PaperMill.Desc", _produce);
+        _de.Add("Printer.Desc", _produce);
+        _de.Add("CoinStamp.Desc", _produce);
+        _de.Add("Silk.Desc", _produce);
+        _de.Add("SugarMill.Desc", _produce);
+        _de.Add("Foundry.Desc", _produce);
         _de.Add("SugarShop.Desc", "Stellt Produkte aus Zucker her!!!. " + _produce);
 
+        _de.Add("SteelFoundry.Desc", _produce);
 
-            _de.Add("SteelFoundry.Desc",_produce);
+        //trade
+        _de.Add("Dock.Desc", "Hier kannst du Import- oder Exportaufträge hinzufügen (muss am Meer platziert werden)." + _notRegionNeeded);
+        _de.Add(H.Shipyard + ".Desc", "Hier lassen sich Schiffe reparieren, aber achte darauf dass die nötigen Reparaturmaterialien im Bestand sind");
+        _de.Add("Supplier.Desc", "Hier werden Schiffe mit Waren be- und entladen, aber es müssen Artikel im Inventar sein, die auf dem Schiff für die lange Fahrt verwendet werden");
+        _de.Add("StorageSmall.Desc", _storage);
+        _de.Add("StorageMed.Desc", _storage);
+        _de.Add("StorageBig.Desc", _storage);
+        _de.Add("StorageBigTwoDoors.Desc", _storage);
+        _de.Add("StorageExtraBig.Desc", _storage);
 
-            //trade
-        _de.Add("Dock.Desc","Hier kannst du Import- oder Exportaufträge hinzufügen (muss am Meer platziert werden)." + _notRegionNeeded);
-        _de.Add(H.Shipyard + ".Desc","Hier lassen sich Schiffe reparieren, aber achte darauf dass die nötigen Reparaturmaterialien im Bestand sind");
-        _de.Add("Supplier.Desc","Hier werden Schiffe mit Waren be- und entladen, aber es müssen Artikel im Inventar sein, die auf dem Schiff für die lange Fahrt verwendet werden");
-        _de.Add("StorageSmall.Desc",_storage);
-        _de.Add("StorageMed.Desc",_storage);
-        _de.Add("StorageBig.Desc",_storage);
-        _de.Add("StorageBigTwoDoors.Desc",_storage);
-        _de.Add("StorageExtraBig.Desc",_storage);
+        //gov
+        _de.Add("Library.Desc", "Die Leute kommen in dieses Gebäude, um Bücher zu lesen oder sie zu leihen um ihr Wissen zu erweitern. Je mehr Inventar in den Bibliotheken, desto besser");
+        _de.Add("School.Desc", "Hier erhalten die Leute eine Ausbildung. Hier gilt mehr ist besser");
+        _de.Add("TradesSchool.Desc", "Hier erhalten die Menschen eine spezialisierte Ausbildung im Handwerk. Gut ein paar Spezialisten zu haben");
+        _de.Add("TownHouse.Desc", "Das Stadthaus erhöht die Zufriedenheit und den Wohlstand Ihres Volkes");
 
-            //gov
-        _de.Add("Library.Desc","Die Leute kommen in dieses Gebäude, um Bücher zu lesen oder sie zu leihen um ihr Wissen zu erweitern. Je mehr Inventar in den Bibliotheken, desto besser");
-        _de.Add("School.Desc","Hier erhalten die Leute eine Ausbildung. Hier gilt mehr ist besser");
-        _de.Add("TradesSchool.Desc","Hier erhalten die Menschen eine spezialisierte Ausbildung im Handwerk. Gut ein paar Spezialisten zu haben");
-        _de.Add("TownHouse.Desc","Das Stadthaus erhöht die Zufriedenheit und den Wohlstand Ihres Volkes");
+        //other
+        _de.Add("Church.Desc", "Die Kirche gibt deinem Volk Glück und Hoffnung");
+        _de.Add("Tavern.Desc", "Die Taverne bietet deinen Leuten Entspannung und Unterhaltung");
 
-            //other
-        _de.Add("Church.Desc","Die Kirche gibt deinem Volk Glück und Hoffnung");
-        _de.Add("Tavern.Desc","Die Taverne bietet deinen Leuten Entspannung und Unterhaltung");
-
-            //Militar
+        //Militar
         _de.Add("WoodPost.Desc", "Entdeckt Banditen und Piraten schneller, so dass du dich im Voraus darauf vorbereiten können");
-        _de.Add("PostGuard.Desc",_militar);
-        _de.Add("Fort.Desc",_militar);
-        _de.Add("Morro.Desc",_militar+". Sobald Sie dies gebaut haben, sollten Piraten es besser wissen");
+        _de.Add("PostGuard.Desc", _militar);
+        _de.Add("Fort.Desc", _militar);
+        _de.Add("Morro.Desc", _militar + ". Sobald Sie dies gebaut haben, sollten Piraten es besser wissen");
 
-            //Decoration
+        //Decoration
         _de.Add("Fountain.Desc", "Verschönert deine Stadt und erhöht bei deinen Bürgern die allgemeine Zufriedenheit");
         _de.Add("WideFountain.Desc", "Verschönert deine Stadt und erhöht bei deinen Bürgern die allgemeine Zufriedenheit");
         _de.Add("PalmTree.Desc", "Verschönert deine Stadt und erhöht bei deinen Bürgern die allgemeine Zufriedenheit");
@@ -133,104 +126,99 @@ public class German
         _de.Add("FlowerPot.Desc", "Verschönert deine Stadt und erhöht bei deinen Bürgern die allgemeine Zufriedenheit");
         _de.Add("PradoLion.Desc", "Verschönert deine Stadt und erhöht bei deinen Bürgern die allgemeine Zufriedenheit");
 
+        //Buildings name
+        //Infr
+        _de.Add("Road", "Straße");
+        _de.Add("BridgeTrail", "Fußgängerbrücke");
+        _de.Add("BridgeRoad", "Straßenbrücke");
+        _de.Add("LightHouse", "Leuchtturm");
+        _de.Add("Masonry", "Maurerbetrieb");
+        _de.Add("StandLamp", "Straßenlaterne");
+        _de.Add("HeavyLoad", "Schwerlastbetrieb");
 
-
-            //Buildings name
-            //Infr
-        _de.Add("Road","Straße");
-        _de.Add("BridgeTrail","Fußgängerbrücke");
-        _de.Add("BridgeRoad","Straßenbrücke");
-        _de.Add("LightHouse","Leuchtturm");
-        _de.Add("Masonry","Maurerbetrieb");
-        _de.Add("StandLamp","Straßenlaterne");
-        _de.Add("HeavyLoad","Schwerlastbetrieb");
-
-
-            //House
+        //House
         _de.Add("Shack", "Hütte");
         _de.Add("MediumShack", "Mittelgroße Hütte");
         _de.Add("LargeShack", "Große Hütte");
 
-        _de.Add("WoodHouseA", "Mittelgroßes Holzhaus" );
-        _de.Add("WoodHouseB", "Großes Holzhaus"  );
+        _de.Add("WoodHouseA", "Mittelgroßes Holzhaus");
+        _de.Add("WoodHouseB", "Großes Holzhaus");
         _de.Add("WoodHouseC", "Luxuriöses Holzhaus");
         _de.Add("BrickHouseA", "Mittelgroßes Ziegelhaus");
-        _de.Add("BrickHouseB","Luxuriöses Ziegelhaus");
-        _de.Add("BrickHouseC","Großes Ziegelhaus");
+        _de.Add("BrickHouseB", "Luxuriöses Ziegelhaus");
+        _de.Add("BrickHouseC", "Großes Ziegelhaus");
 
-            
-            //Farms
-            //Animal
-        _de.Add("AnimalFarmSmall","Kleine Tierfarm");
-        _de.Add("AnimalFarmMed","Mittelgroße Tierfarm");
-        _de.Add("AnimalFarmLarge","Große Tierfarm");
-        _de.Add("AnimalFarmXLarge","Extragroße Tierfarm");
-            //Fields
-        _de.Add("FieldFarmSmall","Kleine Feldfarm");
-        _de.Add("FieldFarmMed","Mittelgroße Feldfarm");
-        _de.Add("FieldFarmLarge","Große Feldfarm");
-        _de.Add("FieldFarmXLarge","Extragroße Feldfarm");
-        _de.Add("FishingHut","Fischerhütte");
+        //Farms
+        //Animal
+        _de.Add("AnimalFarmSmall", "Kleine Tierfarm");
+        _de.Add("AnimalFarmMed", "Mittelgroße Tierfarm");
+        _de.Add("AnimalFarmLarge", "Große Tierfarm");
+        _de.Add("AnimalFarmXLarge", "Extragroße Tierfarm");
+        //Fields
+        _de.Add("FieldFarmSmall", "Kleine Feldfarm");
+        _de.Add("FieldFarmMed", "Mittelgroße Feldfarm");
+        _de.Add("FieldFarmLarge", "Große Feldfarm");
+        _de.Add("FieldFarmXLarge", "Extragroße Feldfarm");
+        _de.Add("FishingHut", "Fischerhütte");
 
-            //Raw
-        _de.Add("Mortar","Mörtel");
-        _de.Add("Clay","Lehm");
-        _de.Add("Pottery","Keramik");
-        _de.Add("MountainMine","Bergarbeitermine");
-        _de.Add("LumberMill" ,"Sägewerk");
-        _de.Add("BlackSmith","Schmiede");
-        _de.Add("ShoreMine","Ufermine");
-        _de.Add("QuickLime","Ungelöschter Kalk");
+        //Raw
+        _de.Add("Mortar", "Mörtel");
+        _de.Add("Clay", "Lehm");
+        _de.Add("Pottery", "Keramik");
+        _de.Add("MountainMine", "Bergarbeitermine");
+        _de.Add("LumberMill", "Sägewerk");
+        _de.Add("BlackSmith", "Schmiede");
+        _de.Add("ShoreMine", "Ufermine");
+        _de.Add("QuickLime", "Ungelöschter Kalk");
 
-            //Prod
-        _de.Add("Brick","Ziegel");
-        _de.Add("Carpentry","Zimmerei");
-        _de.Add("Cigars","Zigarren");
-        _de.Add("Mill","Mühle");
-        _de.Add("Tailor","Schneider");
-        _de.Add("Tilery","Fliesenleger");
-        _de.Add("Armory","Waffenkammer");
-        _de.Add("Distillery","Destillerie");
-        _de.Add("Chocolate","Schokolade");
-        _de.Add("Ink","Tinte");
+        //Prod
+        _de.Add("Brick", "Ziegel");
+        _de.Add("Carpentry", "Zimmerei");
+        _de.Add("Cigars", "Zigarren");
+        _de.Add("Mill", "Mühle");
+        _de.Add("Tailor", "Schneider");
+        _de.Add("Tilery", "Fliesenleger");
+        _de.Add("Armory", "Waffenkammer");
+        _de.Add("Distillery", "Destillerie");
+        _de.Add("Chocolate", "Schokolade");
+        _de.Add("Ink", "Tinte");
 
-            //Ind
-        _de.Add("Cloth","Kleidung");
-        _de.Add("GunPowder","Schießpulver");
-        _de.Add("PaperMill","Papiermühle");
-        _de.Add("Printer","Druckerei");
-        _de.Add("CoinStamp","Münzprägerei");
-        _de.Add("SugarMill","Zuckermühle");
-        _de.Add("Foundry","Gießerei");
-        _de.Add("SteelFoundry","Stahlgießerei");
-        _de.Add("SugarShop","Süßigkeitengeschäft");
+        //Ind
+        _de.Add("Cloth", "Kleidung");
+        _de.Add("GunPowder", "Schießpulver");
+        _de.Add("PaperMill", "Papiermühle");
+        _de.Add("Printer", "Druckerei");
+        _de.Add("CoinStamp", "Münzprägerei");
+        _de.Add("SugarMill", "Zuckermühle");
+        _de.Add("Foundry", "Gießerei");
+        _de.Add("SteelFoundry", "Stahlgießerei");
+        _de.Add("SugarShop", "Süßigkeitengeschäft");
 
+        //trade
+        _de.Add("Dock", "Dock");
+        _de.Add("Shipyard", "Werft");
+        _de.Add("Supplier", "Lieferant");
+        _de.Add("StorageSmall", "Kleines Lager");
+        _de.Add("StorageMed", "Mittelgroßes Lager");
+        _de.Add("StorageBig", "Großes Lager");
 
-            //trade
-        _de.Add("Dock","Dock");
-        _de.Add("Shipyard","Werft");
-        _de.Add("Supplier","Lieferant");
-        _de.Add("StorageSmall","Kleines Lager");
-        _de.Add("StorageMed","Mittelgroßes Lager");
-        _de.Add("StorageBig","Großes Lager");
+        //gov
+        _de.Add("Library", "Bücherei");
+        _de.Add("School", "Schule");
+        _de.Add("TradesSchool", "Handelsschule");
+        _de.Add("TownHouse", "Stadthaus");
 
-            //gov
-        _de.Add("Library","Bücherei");
-        _de.Add("School","Schule");
-        _de.Add("TradesSchool","Handelsschule");
-        _de.Add("TownHouse","Stadthaus");
+        //other
+        _de.Add("Church", "Kirche");
+        _de.Add("Tavern", "Taverne");
 
-            //other
-        _de.Add("Church","Kirche");
-        _de.Add("Tavern","Taverne");
-
-            //Militar
+        //Militar
         _de.Add("WoodPost", "Holzwachturm");
-        _de.Add("PostGuard","Steinwachturm");
-        _de.Add("Fort","Fort");
+        _de.Add("PostGuard", "Steinwachturm");
+        _de.Add("Fort", "Fort");
         _de.Add("Morro", "Spanische Festung");
 
-            //Decorations
+        //Decorations
         _de.Add("Fountain", "Springrunnen");
         _de.Add("WideFountain", "Großer Springbrunnen");
         _de.Add("PalmTree", "Palme");
@@ -238,7 +226,7 @@ public class German
         _de.Add("FlowerPot", "Blumenkübel");
         _de.Add("PradoLion", "Prado Löwe");
 
-            //Main GUI
+        //Main GUI
         _de.Add("SaveGame.Dialog", "Speichere deinen Spielfortschritt");
         _de.Add("LoadGame.Dialog", "Spiel laden");
         _de.Add("NameToSave", "Speichere dein Spiel unter:");
@@ -255,23 +243,20 @@ public class German
         _de.Add("MandatoryFeedback", "Das sieht nur das Entwicklerteam. Deine Bewertung ist?");
         _de.Add("PathToSeaExplain", "Zeigt den kürzesten Weg zum Meer.");
 
-
         _de.Add("BugReport", "Einen Fehler gefunden? ähm, hoppla... schick es auf diesem Weg !! Vielen Dank");
         _de.Add("Invitation", "Die E-Mail-Adresse deines Freundes, um an der Private Beta teilzunehmen");
         _de.Add("Info", "");//use for informational Dialogs
-        _de.Add("Negative", "Die Krone hat dir einen Kreditrahmen gewährt. Wenn du mehr als $ 100.000,00 besitzt, ist das Spiel vorbei");  
+        _de.Add("Negative", "Die Krone hat dir einen Kreditrahmen gewährt. Wenn du mehr als $ 100.000,00 besitzt, ist das Spiel vorbei");
 
+        //MainMenu
+        _de.Add("Types_Explain", "Traditionell: \nDas ist eine Spielvariante, bei dem am Anfang einige Gebäude gesperrt sind und man sie freischalten muss. " +
+                "Das Gute daran ist, dass du hier eine Anleitung bekommst." +
+                "\n\nFreier Wille: \nAlle verfügbaren Gebäude werden sofort freigeschaltet. " +
+                "Das Schlimme daran ist, dass du so leicht versagen kannst." +
+                "\n\nDie Stufe 'Schwer' ist verflucht nah der Realität");
 
-            //MainMenu
-            _de.Add("Types_Explain", "Traditionell: \nDas ist eine Spielvariante, bei dem am Anfang einige Gebäude gesperrt sind und man sie freischalten muss. " +
-                    "Das Gute daran ist, dass du hier eine Anleitung bekommst." +
-                    "\n\nFreier Wille: \nAlle verfügbaren Gebäude werden sofort freigeschaltet. " +
-                    "Das Schlimme daran ist, dass du so leicht versagen kannst." +
-                    "\n\nDie Stufe 'Schwer' ist verflucht nah der Realität");
-
-
-            //Tooltips
-            //Small Tooltips
+        //Tooltips
+        //Small Tooltips
         _de.Add("Person.HoverSmall", "Gesamt/Erwachsene/Kinder");
         _de.Add("Emigrate.HoverSmall", "Auswanderer");
         _de.Add("CurrSpeed.HoverSmall", "Spieltempo");
@@ -295,7 +280,7 @@ public class German
         _de.Add("Hide.HoverSmall", "Verbergen");
         _de.Add("CleanAll.HoverSmall", "Sauber");
         _de.Add("Bulletin.HoverSmall", "Kontrolle/Bulletin");
-        _de.Add("ShowAgainTuto.HoverSmall","Tutorial");
+        _de.Add("ShowAgainTuto.HoverSmall", "Tutorial");
         _de.Add("BuyRegion.HoverSmall", "Kaufe Regionen");
         _de.Add("Help.HoverSmall", "Hilfe");
 
@@ -306,8 +291,7 @@ public class German
         _de.Add("More Positions.HoverSmall", "Mehr");
         _de.Add("Less Positions.HoverSmall", "Weniger");
 
-
-            //down bar
+        //down bar
         _de.Add("Infrastructure.HoverSmall", "Infrastruktur");
         _de.Add("House.HoverSmall", "Häuser");
         _de.Add("Farming.HoverSmall", "Landwirtschaft");
@@ -324,8 +308,8 @@ public class German
         _de.Add("WhereIsSea.HoverSmall", "Weg zum Meer anzeigen");
         _de.Add("Helper.HoverSmall", "Hilfe");
         _de.Add("Tempeture.HoverSmall", "Temperatur");
-            
-            //building window
+
+        //building window
         _de.Add("Gen_Btn.HoverSmall", "Allgemeiner Tab");
         _de.Add("Inv_Btn.HoverSmall", "Inventar Tab");
         _de.Add("Upg_Btn.HoverSmall", "Verbesserungen Tab");
@@ -341,7 +325,6 @@ public class German
         _de.Add("Current_Positions.HoverSmall", "Aktuelle Positionen");
         _de.Add("Max_Positions.HoverSmall", "Maximale Positionen");
 
-
         _de.Add("Add_Import_Btn.HoverSmall", "Import hinzufügen");
         _de.Add("Add_Export_Btn.HoverSmall", "Export hinzufügen");
         _de.Add("Upg_Cap_Btn.HoverSmall", "Verbesserungskapazität");
@@ -353,27 +336,25 @@ public class German
         _de.Add("BullDozer.HoverSmall", "Bulldozer");
         _de.Add("Rate.HoverSmall", "Bewerten");
 
-            //addOrder windiw
+        //addOrder windiw
         _de.Add("Amt_Tip.HoverSmall", "Produktmenge");
 
-            //Med Tooltips 
+        //Med Tooltips
         _de.Add("Build.HoverMed", "Gebäude platzieren: 'Linksklick' \n" +
                                 "Gebäude drehen: 'R' Taste \n" +
                                 "Abbrechen: 'Rechtsklick'");
-            _de.Add("BullDozer.HoverMed", "Gebiet bereinigen: 'Linksklick' \n" +
-                "Abbruch: 'Rechtsklick' \nKosten: $10 pro Nutzung ");
+        _de.Add("BullDozer.HoverMed", "Gebiet bereinigen: 'Linksklick' \n" +
+            "Abbruch: 'Rechtsklick' \nKosten: $10 pro Nutzung ");
 
-            _de.Add("Road.HoverMed", "Start: 'Linksklick' \n" +
-                    "Erweitern: 'Maus bewegen' \n" +
-                    "Setzen: 'Nochmal Linksklick' \n" +
-                "Abbruch: 'Rechtsklick'");
+        _de.Add("Road.HoverMed", "Start: 'Linksklick' \n" +
+                "Erweitern: 'Maus bewegen' \n" +
+                "Setzen: 'Nochmal Linksklick' \n" +
+            "Abbruch: 'Rechtsklick'");
 
         _de.Add("Current_Salary.HoverMed", "Die Arbeitnehmer gehen dort arbeiten wo das meiste Gehalt wartet." +
                                             " Wenn 2 Arbeitgeber das gleiche Gehalt zahlen nehmen sie den Job der ihrer Wohnung am nächsten ist.");
 
-
-
-            //Notifications
+        //Notifications
         _de.Add("BabyBorn.Noti.Name", "Neugeborenes");
         _de.Add("BabyBorn.Noti.Desc", "{0} ist geboren");
         _de.Add("PirateUp.Noti.Name", "Piraten nähern sich");
@@ -399,7 +380,6 @@ public class German
         _de.Add("AgeMajor.Noti.Name", "Neuer Arbeiter");
         _de.Add("AgeMajor.Noti.Desc", "{0} ist bereit für die Arbeit");
 
-
         _de.Add("PersonDie.Noti.Name", "Jemand ist verstorben");
         _de.Add("PersonDie.Noti.Desc", "{0} ist verstorben");
 
@@ -408,7 +388,6 @@ public class German
 
         _de.Add("DieReplacementNotFound.Noti.Name", "Jemand ist verstorben");
         _de.Add("DieReplacementNotFound.Noti.Desc", "{0} ist verstorben. Es wurde kein Ersatz für den Job gefunden");
-
 
         _de.Add("FullStore.Noti.Name", "Ein Lager wird voll");
         _de.Add("FullStore.Noti.Desc", "Ein Lager ist bei einer Kapazität von {0}%");
@@ -424,12 +403,8 @@ public class German
 
         _de.Add("cannot produce", "kann nicht herstellen");
 
-            
-
-
-
-            //Main notificaion
-            //Shows on the middle of the screen
+        //Main notificaion
+        //Shows on the middle of the screen
         _de.Add("NotScaledOnFloor", "Das Gebäude liegt entweder zu nahe am Ufer oder zu nah am Berg");
         _de.Add("NotEven", "Der Boden unter dem Gebäude ist nicht eben");
         _de.Add("Colliding", "Gebäude kollidiert mit einem anderen");
@@ -443,15 +418,14 @@ public class German
         _de.Add("LastMasonry", "Kann nicht zerstört werden, dies ist der einzige Maurer in deinem Dorf");
         _de.Add("OnlyOneDemolish", "Du zerstörst bereits ein Gebäude. Versuche es erneut, nachdem der Abbruch abgeschlossen ist");
 
+        //help
 
-            //help
-
-        _de.Add("Construction.HoverMed", "Für den Bau eines Gebäudes benötigst du Arbeiter im Maurerbetrieb. "+
-                    " Klicke auf den Maurer und dann auf das Symbol "+" auf der Registerkarte 'Allgemein'.");
+        _de.Add("Construction.HoverMed", "Für den Bau eines Gebäudes benötigst du Arbeiter im Maurerbetrieb. " +
+                    " Klicke auf den Maurer und dann auf das Symbol " + " auf der Registerkarte 'Allgemein'.");
         _de.Add("Demolition.HoverMed", "Sobald die Vorräte frei sind, wird es abgerissen. Schubkarren transportieren die Reste ab");
 
-        _de.Add("Construction.Help", "Für den Bau eines Gebäudes benötigen Sie Arbeiter im Maurerbetrieb. "+
-                    " Klicke auf den Maurer und dann auf das Symbol "+" auf der Registerkarte 'Allgemein'. Stelle sicher, dass du über ausreichende Ressourcen verfügst.");
+        _de.Add("Construction.Help", "Für den Bau eines Gebäudes benötigen Sie Arbeiter im Maurerbetrieb. " +
+                    " Klicke auf den Maurer und dann auf das Symbol " + " auf der Registerkarte 'Allgemein'. Stelle sicher, dass du über ausreichende Ressourcen verfügst.");
         _de.Add("Camera.Help", "Kamera: Benutze [W,A,S,D] oder den Cursor zum bewegen. " +
                         "Drücke das Scrollrad deiner Maus und halte es gedrückt, um zu drehen, oder nutze [Q] und [E].");
         _de.Add("Sea Path.Help", "Klicke auf die linke untere Ecke 'Seepfad ein- / ausblenden' " +
@@ -468,8 +442,8 @@ public class German
         _de.Add("Emigrate.Help", "Auswanderer: Wenn die Menschen einige Jahre unglücklich sind, gehen sie. Das Schlechte" +
                                     " daran ist, dass sie nicht wiederkommen, keine Kinder bekommen oder Kinder haben werden." +
                                     " Das einzig Gute ist, dass sie den 'Ruf des Hafens' erhöhen.");
-        _de.Add("Food.Help", "Lebensmittel: Je höher die Vielfalt an Lebensmitteln, die in einem Haushalt verfügbar sind, desto zufriedener "+
-                                 " werden sie sein.");
+        _de.Add("Food.Help", "Lebensmittel: Je höher die Vielfalt an Lebensmitteln, die in einem Haushalt verfügbar sind, desto zufriedener " +
+ " werden sie sein.");
 
         _de.Add("Weight.Help", "Gewicht: Alle Gewichtsangaben im Spiel sind in kg oder Pfund, abhängig davon, welches Einheitensystem ausgewählt ist." +
                                 " Du kannst dies unter 'Optionen' im 'Hauptmenü' ändern.");
@@ -477,7 +451,7 @@ public class German
 
         _de.Add("More.Help", "Wenn du weitere Hilfe benötigst, empfiehlt es sich, das Tutorial abzuschließen oder einfach deine Frage in den SugarMill-Foren zu posten.");
 
-                //more 
+        //more
         _de.Add("Products Expiration.Help", "Produktverfall: Wie in der Realität verfällt jedes Produkt. Einige Lebensmittel verfallen früher als andere. Du kannst unter Bulletin/Prod/Verfall sehen welche Produkte abgelaufen sind.");
         _de.Add("Horse Carriages.Help", "Da das Spiel echte Maße hat, können die Menschen nur begrenzt viel tragen. Danach kommen Pferdefuhrwerk zum Einsatz. Sie transportieren viel mehr, wodurch deine Wirtschaft gestärkt wird. Eine Person in ihren besten Jahren könnte etwa 15 kg, eine Schubkarre ca. 60 kg und der kleinere Wagen kann 240 kg tragen. Um diese zu benutzen, baue eine Schwertransportstation.");
         _de.Add("Usage of goods.Help", "Verwendung von Gütern: Kisten, Fässer, Schubkarren, Karren, Werkzeuge, Kleidung, Geschirr, Möbel und Utensilien sind erforderlich, um die traditionellen Aktivitäten einer Stadt zu erledigen. Wenn diese Waren verwendet werden, verringert sich ihre Anzahl, so dass eine Person nichts trägt, wenn keine Kisten vorhanden sind. Behalte das im Auge ;)");
@@ -499,52 +473,46 @@ public class German
         _de.Add("Our Inventories.Help", "TDer Abschnitt 'Unsere Lagerbestände' im Fenster 'Auftrag hinzufügen' ist eine Zusammenfassung dessen, was wir aus den Lagerbeständen unserer Lagergebäude erhalten haben.");
         _de.Add("Inventories Explanation.Help", "Dies ist eine Zusammenfassung dessen, was wir in unseren Lagerbeständen haben. Gegenstände in anderen Gebäudebeständen gehören nicht zur Stadt.");
 
-            ///word and grammarly below
+        ///word and grammarly below
 
-
-
-
-            //to  add on spanish         //to correct  
+        //to  add on spanish         //to correct
         _de.Add("TutoOver", "Deine Belohnung beträgt $ 10.000,00, wenn du es zum ersten Mal abschließt. Das Tutorial ist nun beendet. Jetzt kannst dieses Spiel entweder weiterspielen oder ein neues Spiel beginnen.");
 
-            //Tuto
+        //Tuto
         _de.Add("CamMov.Tuto", "Die Belohnung für den Abschluss des Tutorials beträgt $10.000, - (einmalige Belohnung pro Spiel). Schritt 1: Bewege die Kamera mit den Tasten [WASD] oder den Pfeiltasten. Tue dies mindestens 5 Sekunden lang");
         _de.Add("CamMov5x.Tuto", "Verwende die [WASD] oder die Pfeiltasten und halte die linke Umschalttaste gedrückt, um die Kamera fünfmal schneller zu bewegen. Tue dies mindestens 5 Sekunden lang");
         _de.Add("CamRot.Tuto", "Drücke nun das Mausrad nach unten und bewege die Maus, um die Kamera zu drehen. Tue dies mindestens 5 Sekunden lang");
 
-
         _de.Add("BackToTown.Tuto", "PDrücke die Taste [P] auf der Tastatur, um zur Ausgangsposition der Kamera zu gelangen");
 
-        _de.Add("BuyRegion.Tuto", "Regionen musst du besitzen, um bauen zu können. Klicke auf das "+" - Zeichen in der unteren Leiste und dann auf das 'Zum Verkauf' -Symbol in der" +
+        _de.Add("BuyRegion.Tuto", "Regionen musst du besitzen, um bauen zu können. Klicke auf das " + " - Zeichen in der unteren Leiste und dann auf das 'Zum Verkauf' -Symbol in der" +
                     " Mitte einer Region, um es zu kaufen. Einige Gebäude sind ausgenommen, sie können gebaut werden, ohne die Region zu besitzen" +
                     " (Fischerhütte, Dock, Bergwerk, Uferbergwerk, Leuchtturm, Wachposten)"
                     );
 
-        _de.Add("Trade.Tuto", "Das war echt einfach, aber der schwierige Teil kommt jetzt. Klicke auf die Schaltfläche 'Handelsgebäude' in der rechten unteren Leiste. "+
+        _de.Add("Trade.Tuto", "Das war echt einfach, aber der schwierige Teil kommt jetzt. Klicke auf die Schaltfläche 'Handelsgebäude' in der rechten unteren Leiste. " +
                 "Wenn du den Mauszeiger darüber bewegst, erscheint ein Popup-Fenster namens 'Handel'.");
         _de.Add("CamHeaven.Tuto", "Scrolle mit der mittleren Maustaste zurück, bis die Kamera den"
                     + " Himmel erreicht. Diese Ansicht ist nützlich, um größere Gebäude wie den Hafen zu platzieren");
 
-        _de.Add("Dock.Tuto", "Klicke nun auf das 'Dock'-Gebäude, es ist der 1. Button. Wenn du darüber schwebbleibst, zeigt es"+
+        _de.Add("Dock.Tuto", "Klicke nun auf das 'Dock'-Gebäude, es ist der 1. Button. Wenn du darüber schwebbleibst, zeigt es" +
                 "die Kosten und die Beschreibung");
-        _de.Add("Dock.Placed.Tuto", "Nun zum schweren Teil, daher sorgfältig lesen. Beachte, dass du die "+
+        _de.Add("Dock.Placed.Tuto", "Nun zum schweren Teil, daher sorgfältig lesen. Beachte, dass du die " +
                 "'R' Taste zum rotieren nutzen kannst und den Rechtklick zum Bauabbruch. Dieses Gebäude hat einen Teil im Ozean und einen anderen an Land." +
                 " Der Pfeil zeigt zum Meer, der Lagerbereich ist an Land. Wenn der Pfeil weiß ist, klicke mit der linken Maustaste.");
         _de.Add("2XSpeed.Tuto", "Erhöhe die Geschwindigkeit des Spiels, gehe zum mittleren Geschwindigkeitsregler für die Simulation auf dem oberen Bildschirm und klicke auf die"
-                    +" 'Schneller' Schaltfläche 1 Mal bis 2x angezeigt wird");
+                    + " 'Schneller' Schaltfläche 1 Mal bis 2x angezeigt wird");
 
-        _de.Add("ShowWorkersControl.Tuto", "Klicke auf die Schaltfläche 'Steuerung/ Bulletin' in der unteren Leiste. "+
+        _de.Add("ShowWorkersControl.Tuto", "Klicke auf die Schaltfläche 'Steuerung/ Bulletin' in der unteren Leiste. " +
                 "Wenn du den Mauszeiger darüber bewegst, wird 'Steuerung / Bulletin' angezeigt.. ");
-        _de.Add("AddWorkers.Tuto", "Klicke auf das "+" - Zeichen rechts neben dem Maurerbetrieb. So fügst du weitere Arbeiter hinzu.");
+        _de.Add("AddWorkers.Tuto", "Klicke auf das " + " - Zeichen rechts neben dem Maurerbetrieb. So fügst du weitere Arbeiter hinzu.");
         _de.Add("HideBulletin.Tuto", "Denke bitte daran, dass du in diesem Fenster verschiedene Aspekte des Spiels steuern und sehen kannst. Klicke außerhalb des Fensters, um es zu schließen, oder auf die Schaltfläche 'OK'.");
         _de.Add("FinishDock.Tuto", "Beende nun den Dockbau. Je mehr Arbeiter im Maurerbetrieb sind, desto schneller wird die Arbeit auch erledigt."
             + " Vergewissere dich auch, dass du über alle Materialien verfügst, die für den Bau erforderlich sind");
-        _de.Add("ShowHelp.Tuto", "Klicke auf die Schaltfläche 'Hilfe' in der unteren Leiste. "+
+        _de.Add("ShowHelp.Tuto", "Klicke auf die Schaltfläche 'Hilfe' in der unteren Leiste. " +
                 "Wenn du den Mauszeiger darüber bewegst, wird die Hilfe angezeigt. Dort findest du einige hilfreiche Tipps.");
 
-
         _de.Add("SelectDock.Tuto", "Schiffe legen Waren nach dem Zufallsprinzip aus dem Inventar des Docks ab. Arbeiter werden benötigt, um Güter auf dem Dock ein- und auszulagern. Sie benötigen Schubkarren und Kisten. Wenn sich keine dieser Materialien im Docklager befinden, arbeiten sie nicht. Klicke nun auf das Dock.");
-
 
         _de.Add("OrderTab.Tuto", "Wechsele zur Registerkarte 'Bestellungen' im Dockfenster.");
         _de.Add("ImportOrder.Tuto", "Klicke auf das '+' neben Importauftrag hinzufügen.");
@@ -556,14 +524,12 @@ public class German
 
         _de.Add("BullDozer.Tuto", "Klicke nun auf das Bulldozer-Symbol in der unteren Leiste. Dann entferne einen Baum oder einen Stein vom Gelände.");
 
-
         _de.Add("Budget.Tuto", "Klicke auf die Schaltfläche 'Steuerung / Bulletin', dann auf das Menü 'Finanzen' und dann auf 'Hauptbuch'. Dies ist das Spielkonto");
         _de.Add("Prod.Tuto", "Klicke auf 'Prod' und dann auf 'Produziert'. Dies zeigt die Produktion des Dorfes der letzten 5 Jahre");
         _de.Add("Spec.Tuto", "Klicke auf das Menü 'Prod' und dann auf 'Spez'. Hier kannst du genau sehen, wie du jedes Produkt im Spiel herstellst. Die notwendigen Eingänge und wo wird produziert. Auch die Import- und Exportpreise");
         _de.Add("Exports.Tuto", "Klicke auf das Menü 'Finanzen' und dann auf 'Exportieren'. Hier siehst eine Aufschlüsselung der Exporte deines Dorfes");
 
-
-                //Quest
+        //Quest
         _de.Add("Tutorial.Quest", "Quest: Beende das Tutorial. Belohnung 10.000 $. Dies dauert ungefähr 3 Minuten");
 
         _de.Add("Lamp.Quest", "Quest: Baue eine Straßenlaterne. Du findest sie in der Infrastruktur. Sie leuchtet nachts, wenn Walöl im Lager ist");
@@ -572,49 +538,40 @@ public class German
 
         _de.Add("SmallFarm.Quest", "Quest: Baue eine kleine Feldfarm. Du benötigst Farmen, um deine Leute zu ernähren");
         _de.Add("FarmHire.Quest", "Quest: Stellen Sie zwei Bauern auf der kleinen Feldfarm ein. Klicke auf die Farm und klicke das Pluszeichen um Arbeiter einzustellen. Arbeitlos sollten sie aber schon sein"
-                    +" um sie einem Gebäude zuweisen zu können");
-
-
+                    + " um sie einem Gebäude zuweisen zu können");
 
         _de.Add("FarmProduce.Quest", "Quest: Produziere " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " Bohnen auf einer kleinen Feldfarm. Klicke auf die Registerkarte 'Stat' und zeige die Produktion der letzten 5 Jahre an. Du kannst den Questfortschritt im Questfenster sehen. Wenn du weitere kleine Farmen baust, werden diese für die Quest berücksichtigt");
         _de.Add("Transport.Quest", "Quest: Transportiere nun die Bohnen vom Feld zum Lager. Um dies tun zu können" +
                 " solltest du genügend Arbeiter frei haben. Sie fungieren als Transporteure, wenn sie nichts bauen");
 
-
-        _de.Add("HireDocker.Quest", "Quest: Einen Hafenarbeiter anstellen. Die Aufgabe von Hafenarbeitern besteht nur darin, die Waren aus dem Lager in das Dock zu verschieben, wenn sie exportiert werden sollen."+
+        _de.Add("HireDocker.Quest", "Quest: Einen Hafenarbeiter anstellen. Die Aufgabe von Hafenarbeitern besteht nur darin, die Waren aus dem Lager in das Dock zu verschieben, wenn sie exportiert werden sollen." +
             " Natürlich auch umgekehrt beim Import. Sie arbeiten, wenn eine Bestellung vorliegt und die Ware transportbereit ist. Ansonsten bleiben sie zu Hause und ruhen sich aus." +
-                " Wie du hast noch kein Dock gebaut? Dann wird´s aber Zeit ein zu bauen."+
-            " Du findest es unter Handel." );
+                " Wie du hast noch kein Dock gebaut? Dann wird´s aber Zeit ein zu bauen." +
+            " Du findest es unter Handel.");
 
-
-        _de.Add("Export.Quest", "Quest: Erstelle im Dock einen Auftrag und exportiere genau 300 " + Unit.CurrentWeightUnitsString() + " Bohnen."+
-                " Klicke im Dock auf die Registerkarte 'Bestellungen' und füge einen Exportauftrag mit dem "+" - Zeichen hinzu."+
+        _de.Add("Export.Quest", "Quest: Erstelle im Dock einen Auftrag und exportiere genau 300 " + Unit.CurrentWeightUnitsString() + " Bohnen." +
+                " Klicke im Dock auf die Registerkarte 'Bestellungen' und füge einen Exportauftrag mit dem " + " - Zeichen hinzu." +
             " Produkt auswählen und Betrag eingeben");
 
-
-
-        _de.Add("MakeBucks.Quest", "Quest: Verdiene $ 100 beim Export von Waren im Dock. "+
+        _de.Add("MakeBucks.Quest", "Quest: Verdiene $ 100 beim Export von Waren im Dock. " +
             "Sobald ein Schiff ankommt, werden die Produkte nach dem Zufallsprinzip im Inventar Ihres Docks bezahlt");
-        _de.Add("HeavyLoad.Quest", "Quest: Baue ein Schwerlastgebäude. Dies sind Spediteure, die mehr Gewicht tragen können. Sie werden nützlich sein, wenn der Transport von Gütern erforderlich ist." ); //In den Lagern der Städte müssen Karren vorhanden sein, damit sie arbeiten können");
+        _de.Add("HeavyLoad.Quest", "Quest: Baue ein Schwerlastgebäude. Dies sind Spediteure, die mehr Gewicht tragen können. Sie werden nützlich sein, wenn der Transport von Gütern erforderlich ist."); //In den Lagern der Städte müssen Karren vorhanden sein, damit sie arbeiten können");
         _de.Add("HireHeavy.Quest", "Quest: Im Schwerlastgebäude einen Schwerlasttransporteur einstellen.");
-
 
         _de.Add("ImportOil.Quest", "Quest: Importiere 500 " + Unit.CurrentWeightUnitsString() + " Walöl über das Dock. Dies ist erforderlich, um Lichter nachts eingeschaltet zu lassen. Schiffe werden Importe zufällig im Inventar Ihres Dock ablegen");
 
         _de.Add("Population50.Quest", "Erreiche eine Gesamtbevölkerung von 50 Einwohnern");
 
-            //added Aug 11 2017, result: sep 9(30% off biggest sale ever)
+        //added Aug 11 2017, result: sep 9(30% off biggest sale ever)
         _de.Add("Production.Quest", "Lass uns jetzt ein paar Waffen herstellen und später verkaufen. Baue dazu zuerst einen Schmied. Diesen findest du im Gebäudemenü unter 'Güter'");
         _de.Add("ChangeProductToWeapon.Quest", "Im 'Produkte Reiter' des Schmieds änderst du die Produktion in Waffen. Die Arbeiter bringen das Rohmaterial mit, wenn es vorrätig ist, um Waffen zu schmieden");
         _de.Add("BlackSmithHire.Quest", "Stelle zwei Schmiedegesellen ein");
         _de.Add("WeaponsProduce.Quest", "Nun produziere " + Unit.WeightConverted(100).ToString("n0") + " " + Unit.CurrentWeightUnitsString() + " Waffen in der Schmiede. Klicke auf die Registerkarte 'Stat' und zeige die Produktion der letzten 5 Jahre an. Du kannst den Questfortschritt im Questfenster verfolgen.");
         _de.Add("ExportWeapons.Quest", "Nun exportiere 100 " + Unit.CurrentWeightUnitsString() + " Waffen. Füge im Dock eine Bestellung für den Export hinzu. Denke stets daran dass Waffen ein sehr profitables Geschäft sind");
 
-
         _de.Add("CompleteQuest", "Deine Belohnung ist {0}");
 
-
-            //added Sep 14 2017
+        //added Sep 14 2017
         _de.Add("BuildFishingHut.Quest", "Baue eine Fischerhütte. Auf diese Weise haben die Bürger verschiedene Nahrungsmittel zur Verfügung, was sich in Zufriedenheit niederschlägt");
         _de.Add("HireFisher.Quest", "Stelle einen Fischer ein");
 
@@ -638,22 +595,19 @@ public class German
 
         _de.Add("Import2000Wood.Quest", "Importiere nun auf dem Importdock 2000 " + Unit.CurrentWeightUnitsString() + " Holz. Dieses Rohmaterial wird für alles mögliche benötigt. Allerdings ist es auch als Brennstoff");
 
-            //IT HAS FINAL MESSAGE 
-            //last quest it has a final message to the player. if new quest added please put the final message in the last quest
+        //IT HAS FINAL MESSAGE
+        //last quest it has a final message to the player. if new quest added please put the final message in the last quest
         _de.Add("Import2000Coal.Quest", "Imortiere nun im Importdock 2000 " + Unit.CurrentWeightUnitsString() + " Kohle. Kohle wird auch für alles benötigt, weil sie als Brennstoff verwendet wird. Ich hoffe, du genießt die bisherige Spielerfahrung. Erweitere deine Kolonie und deinen Wohlstand. Bitte hilf auch mit das Spiel zu verbessern. Beteilige dich an unserem Online-Forum, denn deine Stimme und deine Meinung sind wichtig! Viel Spaß Sugarmiller!");
 
-            //
+        //
 
-
-
-            //Quest Titles
+        //Quest Titles
         _de.Add("Tutorial.Quest.Title", "Tutorial");
         _de.Add("Lamp.Quest.Title", "Straßenlaterne");
 
         _de.Add("Shack.Quest.Title", "Baue eine Hütte");
         _de.Add("SmallFarm.Quest.Title", "Baue ein Farmfeld");
         _de.Add("FarmHire.Quest.Title", "Stelle zwei Farmer ein");
-
 
         _de.Add("FarmProduce.Quest.Title", "Landwirtschaftlicher Produzent");
 
@@ -666,15 +620,15 @@ public class German
         _de.Add("ImportOil.Quest.Title", "Walöl");
 
         _de.Add("Population50.Quest.Title", "50 Einwohner");
-            
-            //
+
+        //
         _de.Add("Production.Quest.Title", "Stelle Waffen her");
         _de.Add("ChangeProductToWeapon.Quest.Title", "Ändere ein Produkt");
         _de.Add("BlackSmithHire.Quest.Title", "Stelle zwei Schmiedegesellen ein");
         _de.Add("WeaponsProduce.Quest.Title", "Schmiede Waffen");
-        _de.Add("ExportWeapons.Quest.Title", "Mach ordentlich Profit" );
-            
-            //
+        _de.Add("ExportWeapons.Quest.Title", "Mach ordentlich Profit");
+
+        //
         _de.Add("BuildFishingHut.Quest.Title", "Baue eine Fischerhütte");
         _de.Add("HireFisher.Quest.Title", "Stelle einen Fischer ein");
         _de.Add("BuildLumber.Quest.Title", "Baue eine Sägemühle");
@@ -692,26 +646,19 @@ public class German
         _de.Add("Import2000Wood.Quest.Title", "Importiere etwas Holz");
         _de.Add("Import2000Coal.Quest.Title", "Importiere etwas Kohle");
 
-
-
-
         _de.Add("Tutorial.Arrow", "Dies ist das Tutorial. Sobald du es abgeschlossen hast, kannst du 10.000 $ einsacken");
         _de.Add("Quest.Arrow", "Dies ist die Aufgaben-Schaltfläche. Du kannst hier auf das Aufgabenfenster zugreifen, indem du einfach darauf klickst");
         _de.Add("New.Quest.Avail", "Mindestens eine Aufgabe ist verfügbar");
         _de.Add("Quest_Button.HoverSmall", "Aufgabe");
 
-
-
-            //Products
-            //Notification.Init()
+        //Products
+        //Notification.Init()
         _de.Add("RandomFoundryOutput", "Geschmolzenes Erz");
 
-            //OrderShow.ShowToSetCurrentProduct()
+        //OrderShow.ShowToSetCurrentProduct()
         _de.Add("RandomFoundryOutput (Ore, Wood)", "Geschmolzenes Erz (Erz, Holz)");
 
-
-
-            //Bulleting helps
+        //Bulleting helps
         _de.Add("Help.Bulletin/Prod/Produce", "Hier wird angezeigt, was im Dorf produziert wird.");
         _de.Add("Help.Bulletin/Prod/Expire", "Hier wird angezeigt, was im Dorf an Waren verfallen ist.");
         _de.Add("Help.Bulletin/Prod/Consume", "Hier wird angezeigt, was von deinen Leuten verbraucht wird.");
@@ -728,20 +675,14 @@ public class German
         _de.Add("Help.Bulletin/Finance/Exports", "Ein Zusammenbruch der Exporte");
         _de.Add("Help.Bulletin/Finance/Imports", "Ein Zusammenbruch der Importe");
 
-
         _de.Add("Help.Bulletin/Finance/Prices", "Hilfe Bulletin/Finanzen/Preise");
-
 
         _de.Add("LoadWontFit", "Diese Ladung passt nicht in den Lagerbereich");
 
-        _de.Add("Missing.Input", "Gebäude kann nichts produzieren (Materialien müssen sich zuerst im Gebäudeinventar befinden). Fehlende Materialien: \n" );
+        _de.Add("Missing.Input", "Gebäude kann nichts produzieren (Materialien müssen sich zuerst im Gebäudeinventar befinden). Fehlende Materialien: \n");
 
+        //in game
 
-
-
-
-            //in game
-            
         _de.Add("Buildings.Ready", "\n Gebäude fertig zum Bau:");
         _de.Add("People.Living", "Menschen, die in diesem Haus leben:");
         _de.Add("Occupied:", "Gefüllt:");
@@ -750,19 +691,15 @@ public class German
         _de.Add("Amt.Cant.Be.0", "Menge kann nicht 0 sein ");
         _de.Add("Prod.Not.Select", "Bitte wähle ein Produkt");
 
-
-            //articles
+        //articles
         _de.Add("The.Male", "Der");
         _de.Add("The.Female", "Die");
 
-            //
+        //
         _de.Add("Build.Destroy.Soon", "Dieses Gebäude wird bald zerstört. Wenn das Inventar nicht leer ist, muss es mit Schubkarren abtransportiert werden");
 
-
-
-
-            //words
-            //Field Farms
+        //words
+        //Field Farms
         _de.Add("Bean", "Bohnen");
         _de.Add("Potato", "Kartoffeln");
         _de.Add("SugarCane", "Zuckerrohr");
@@ -770,23 +707,23 @@ public class German
         _de.Add("Cotton", "Baumwolle");
         _de.Add("Banana", "Bananen");
         _de.Add("Coconut", "Kokosnüsse");
-            //Animal Farm
+        //Animal Farm
         _de.Add("Chicken", "Hühner");
         _de.Add("Egg", "Eier");
         _de.Add("Pork", "Schweine");
         _de.Add("Beef", "Rindfleisch");
         _de.Add("Leather", "Leder");
         _de.Add("Fish", "Fisch");
-            //mines
+        //mines
         _de.Add("Gold", "Gold");
         _de.Add("Stone", "Stein");
         _de.Add("Iron", "Eisen");
 
-            // { "Clay", "Lehm");
+        // { "Clay", "Lehm");
         _de.Add("Ceramic", "Keramik");
         _de.Add("Wood", "Holz");
 
-            //Prod
+        //Prod
         _de.Add("Tool", "Werkzeuge");
         _de.Add("Tonel", "Ton");
         _de.Add("Cigar", "Zigarren");
@@ -797,7 +734,7 @@ public class German
         _de.Add("Book", "Buch");
         _de.Add("Sugar", "Zucker");
         _de.Add("None", "Nichts");
-            //
+        //
         _de.Add("Person", "Person");
         _de.Add("Food", "Nahrung");
         _de.Add("Dollar", "Dollar");
@@ -807,7 +744,7 @@ public class German
         _de.Add("Potassium", "Kalium");
         _de.Add("Silver", "Silber");
         _de.Add("Henequen", "Agave");
-            //
+        //
         _de.Add("Sail", "Segel");
         _de.Add("String", "Seil");
         _de.Add("Nail", "Nägel");
@@ -818,7 +755,7 @@ public class German
         _de.Add("Weapon", "Waffe");
         _de.Add("WheelBarrow", "Schubkarre");
         _de.Add("WhaleOil", "Walöl");
-            //
+        //
         _de.Add("Diamond", "Diamanten");
         _de.Add("Jewel", "Juwelen");
         _de.Add("Rum", "Rum");
@@ -828,7 +765,7 @@ public class German
         _de.Add("Coin", "Münzen");
         _de.Add("CannonPart", "Kanonenteil");
         _de.Add("Steel", "Stahl");
-            //
+        //
         _de.Add("CornFlower", "Sonnenblume");
         _de.Add("Bread", "Brot");
         _de.Add("Carrot", "Karotte");
@@ -839,7 +776,7 @@ public class German
         _de.Add("SweetPotato", "Süßkartoffel");
         _de.Add("Yucca", "Yucca");
         _de.Add("Pineapple", "Ananas");
-            //
+        //
         _de.Add("Papaya", "Papaya");
         _de.Add("Wool", "Wolle");
         _de.Add("Shoe", "Schuh");
@@ -857,8 +794,7 @@ public class German
         _de.Add("Utensil", "Utensilien");
         _de.Add("Stop", "Stop");
 
-
-            //more Main GUI
+        //more Main GUI
         _de.Add("Workers distribution", "Arbeiterverteilung");
         _de.Add("Buildings", "Gebäude");
 
@@ -883,7 +819,7 @@ public class German
 
         _de.Add("Early Access Build", "Early Access Version");
 
-            //Main Menu
+        //Main Menu
         _de.Add("Resume Game", "Spiel fortsetzen");
         _de.Add("Continue Game", "Weiterspielen");
         _de.Add("Tutorial(Beta)", "Tutorial(Beta)");
@@ -893,8 +829,8 @@ public class German
         _de.Add("Achievements", "Errungenschaften");
         _de.Add("Options", "Optionen");
         _de.Add("Exit", "Beenden");
-            //Screens
-            //New Game
+        //Screens
+        //New Game
         _de.Add("Town Name:", "Stadtname:");
         _de.Add("Difficulty:", "Schwierigkeitsgrad:");
         _de.Add("Easy", "Leicht");
@@ -909,7 +845,7 @@ public class German
         _de.Add("Cancel", "Abbruch");
         _de.Add("Delete", "Löschen");
         _de.Add("Enter name...", "Namen eingeben...");
-            //Options
+        //Options
         _de.Add("General", "Allgemein");
         _de.Add("Unit System:", "Einheitensystem:");
         _de.Add("Metric", "Metrisch");
@@ -942,14 +878,12 @@ public class German
         _de.Add("Newborn", "Neugeborenes");
         _de.Add("Build Completed", "Bau abgeschlossen");
         _de.Add("People's Voice", "Volkes Stimme");
-            
-            //in game gui
+
+        //in game gui
         _de.Add("Prod", "Produktion");
         _de.Add("Finance", "Finanzen");
 
-
-            
-            //After Oct 20th 2018
+        //After Oct 20th 2018
         _de.Add("Resources", "Ressourcen");
         _de.Add("Dollars", "Dollar");
         _de.Add("Coming.Soon", "Dieses Gebäude ist erst später im Spiel verfügbar");
@@ -962,7 +896,7 @@ public class German
         _de.Add("Pirate.Threat.Less", "Piratenbedrohung niedriger als ");
         _de.Add("Skip", "Überspringen");
 
-            //After Dec 8, 2018
+        //After Dec 8, 2018
         _de.Add("ReloadMod.HoverSmall", "Lade Mod Dateien neu");
         _de.Add("isAboveHeight.MaritimeBound", "Der Grundstücksbereich des Gebäudes liegt unter der zulässigen Höhe");
         _de.Add("arePointsEven.MaritimeBound", "Der Grundstücksbereich des Gebäudes befindet sich nicht auf ebenen Gelände");
@@ -972,14 +906,14 @@ public class German
         _de.Add("InLand.Helper", "an Land");
         _de.Add("InWater.Helper", "auf Wasser");
 
-            //After Dec 28, 2018
+        //After Dec 28, 2018
         _de.Add("Down.HoverSmall", "Priorität verringern");
         _de.Add("Up.HoverSmall", "Priorität erhöhen");
         _de.Add("Trash.HoverSmall", "Auftrag löschen");
         _de.Add("Counting...", "Zähle...");
         _de.Add("Ten Orders Limit", "Das Limit für Aufträge liegt bei 10");
 
-            //After May 1, 2019
+        //After May 1, 2019
         _de.Add("Our inventories:", "Unsere Bestände:");
         _de.Add("Select Product:", "Produktauswahl:");
         _de.Add("Current_Rank.HoverSmall", "Nummer in der Warteschlange");
@@ -987,86 +921,83 @@ public class German
         _de.Add("Deutsch(Beta)", "Deutsch(Beta)");
         _de.Add("Deutsch", "Deutsch");
 
-
-
         //
-        // 
+        //
         // Below It needs to be double checked by Karsten. Dec 20, 2019
 
         //Dec 14
 
         //in game gui
 
-        _de.Add("Help", "Hilfe" );
-        _de.Add("Quest", "Aufgabe" );
-        _de.Add("Add Order", "Auftrag zufügen" );
-        _de.Add("Suggest Change", "Vorschläge" );
+        _de.Add("Help", "Hilfe");
+        _de.Add("Quest", "Aufgabe");
+        _de.Add("Add Order", "Auftrag zufügen");
+        _de.Add("Suggest Change", "Vorschläge");
 
-        _de.Add("Panel Control / Bulletin", "Kontrollfeld" );
-        _de.Add("Exports", "Exporte" );
-        _de.Add("Ledger", "Hauptbuch" );
+        _de.Add("Panel Control / Bulletin", "Kontrollfeld");
+        _de.Add("Exports", "Exporte");
+        _de.Add("Ledger", "Hauptbuch");
 
-        _de.Add("Consume", "Verbrauch" );
-        _de.Add("Produce", "Produktion" );
-        _de.Add("Expire", "Verfall" );
+        _de.Add("Consume", "Verbrauch");
+        _de.Add("Produce", "Produktion");
+        _de.Add("Expire", "Verfall");
 
-        _de.Add("Spec", "Spezifikation" );
-        _de.Add("Input1", "Eingabe1" );
-        _de.Add("Input2", "Eingabe2" );
-        _de.Add("Input3", "Eingabe3" );
-        _de.Add("Building", "Gebäude" );
-        _de.Add("Price", "Preis" );
+        _de.Add("Spec", "Spezifikation");
+        _de.Add("Input1", "Eingabe1");
+        _de.Add("Input2", "Eingabe2");
+        _de.Add("Input3", "Eingabe3");
+        _de.Add("Building", "Gebäude");
+        _de.Add("Price", "Preis");
 
-        _de.Add("Date", "Datum" );
-        _de.Add("Product", "Produkt" );
-        _de.Add("Amount", "Menge" );
-        _de.Add("Transaction", "Transaktion" );
+        _de.Add("Date", "Datum");
+        _de.Add("Product", "Produkt");
+        _de.Add("Amount", "Menge");
+        _de.Add("Transaction", "Transaktion");
 
-        _de.Add("Workers", "Arbeiter" );
+        _de.Add("Workers", "Arbeiter");
 
         //Help
-        _de.Add("Bulletin", "Bulletin" );
-        _de.Add("Construction", "Konstruktion" );
-        _de.Add("Happiness", "Zufriedenheit" );
-        _de.Add("Horse Carriages", "Pferdekutschen" );
-        _de.Add("Inputs", "Billets" );
-        _de.Add("Line production", "Serienfertigung" );
-        _de.Add("Our Inventories", "Unsere Bestände" );
-        _de.Add("Inventories Explanation", "Vorräte Erläuterung" );
-        _de.Add("People Range", "Persönliche Reichweite" );
-        _de.Add("Pirate Threat", "Piratenbedrohung" );
-        _de.Add("Population", "Bevölkerung" );
-        _de.Add("Port Reputation", "Ansehen des Hafens" );
-        _de.Add("Production Tab", "Produktionsreiter" );
-        _de.Add("Products Expiration", "Produktablauf" );
-        _de.Add("Sea Path", "Seeweg" );
-        _de.Add("Trading", "Handel" );
-        _de.Add("Usage of goods", "Verwendung von Waren" );
-        _de.Add("What is Ft3 and M3?", "Was ist Ft3 und M3?" );
-        _de.Add("WheelBarrows", "Schubkarren" );
+        _de.Add("Bulletin", "Bulletin");
+        _de.Add("Construction", "Konstruktion");
+        _de.Add("Happiness", "Zufriedenheit");
+        _de.Add("Horse Carriages", "Pferdekutschen");
+        _de.Add("Inputs", "Billets");
+        _de.Add("Line production", "Serienfertigung");
+        _de.Add("Our Inventories", "Unsere Bestände");
+        _de.Add("Inventories Explanation", "Vorräte Erläuterung");
+        _de.Add("People Range", "Persönliche Reichweite");
+        _de.Add("Pirate Threat", "Piratenbedrohung");
+        _de.Add("Population", "Bevölkerung");
+        _de.Add("Port Reputation", "Ansehen des Hafens");
+        _de.Add("Production Tab", "Produktionsreiter");
+        _de.Add("Products Expiration", "Produktablauf");
+        _de.Add("Sea Path", "Seeweg");
+        _de.Add("Trading", "Handel");
+        _de.Add("Usage of goods", "Verwendung von Waren");
+        _de.Add("What is Ft3 and M3?", "Was ist Ft3 und M3?");
+        _de.Add("WheelBarrows", "Schubkarren");
 
-          //All Lang Needed for sure
-        
-        _de.Add("Unemployed", "Arbeitslos" );
+        //All Lang Needed for sure
+
+        _de.Add("Unemployed", "Arbeitslos");
 
         //Budget
-        _de.Add("Budget Resumen", "Konten" );
-        _de.Add("Initial Balance", "Anfangsguthaben" );
-        _de.Add("Income", "Einkommen" );
-        _de.Add("Quests Completion", "Abschluss der Aufgabe" );
-        _de.Add("Income Subtotal", "Zwischensumme der Einnahmen" );
+        _de.Add("Budget Resumen", "Konten");
+        _de.Add("Initial Balance", "Anfangsguthaben");
+        _de.Add("Income", "Einkommen");
+        _de.Add("Quests Completion", "Abschluss der Aufgabe");
+        _de.Add("Income Subtotal", "Zwischensumme der Einnahmen");
 
-        _de.Add("Expenses", "Kosten" );
-        _de.Add("New bought lands", "Neu gekaufte Grundstücke" );
-        _de.Add("Salary", "Gehalt" );
-        _de.Add("Expenses Subtotal", "Zwischensumme der Ausgaben" );
+        _de.Add("Expenses", "Kosten");
+        _de.Add("New bought lands", "Neu gekaufte Grundstücke");
+        _de.Add("Salary", "Gehalt");
+        _de.Add("Expenses Subtotal", "Zwischensumme der Ausgaben");
 
-        _de.Add("Year", "Jahr" );
-        _de.Add("Imports", "Importe" );
-        _de.Add("Balance", "Bilanz" );
-        _de.Add("Year Balance", "Jahresbilanz" );
-        _de.Add("Ending Balance", "Endbilanz" );
-
+        _de.Add("Year", "Jahr");
+        _de.Add("Imports", "Importe");
+        _de.Add("Balance", "Bilanz");
+        _de.Add("Year Balance", "Jahresbilanz");
+        _de.Add("Ending Balance", "Endbilanz");
 
         _de.Add("Command Keys", "Befehlstasten");
         _de.Add("Command Keys.Text", "[F1] Hilfe\n[F9] GUI ein- / ausblenden\n[P] Kamera auf das Dorf zentrieren");
@@ -1119,16 +1050,16 @@ public class German
 
         _de.Add("Notifications", "Benachrichtigungen");
 
-		_de.Add("Attention.Production", "Achtung: Produktion wurde eingestellt. Um die Produktion in diesem Gebäude wieder aufzunehmen, wähle ein Produkt aus");
-		_de.Add("Selected product: ", "Produkt auswählen: ");
-		_de.Add("Price: ", "Preis: ");
-		_de.Add(" per ", " pro ");
-		_de.Add("Inputs needed per ", "Eingaben benötigt von");
-		_de.Add("Inventory:", "Inventar:");
+        _de.Add("Attention.Production", "Achtung: Produktion wurde eingestellt. Um die Produktion in diesem Gebäude wieder aufzunehmen, wähle ein Produkt aus");
+        _de.Add("Selected product: ", "Produkt auswählen: ");
+        _de.Add("Price: ", "Preis: ");
+        _de.Add(" per ", " pro ");
+        _de.Add("Inputs needed per ", "Eingaben benötigt von");
+        _de.Add("Inventory:", "Inventar:");
 
-		_de.Add("CornMeal", "Maismehl");
-		_de.Add("PalmLeaf", "Palmblätter");
-		_de.Add("Rubber", "Gummi");
+        _de.Add("CornMeal", "Maismehl");
+        _de.Add("PalmLeaf", "Palmblätter");
+        _de.Add("Rubber", "Gummi");
 
         //Dec 9, 2019
         _de.Add("Barrel", "Fass");
@@ -1161,9 +1092,9 @@ public class German
         //Mar 20 2020
         _de.Add("Rotten", "Verfault");
         _de.Add("Ready", "Bereit");
-        _de.Add("Teacher", "Lehrer"); 
-        //_de.Add("BlackSmith", "Schmied"); 
-        _de.Add("SugarMiller", "Zuckerarbeiter"); 
+        _de.Add("Teacher", "Lehrer");
+        //_de.Add("BlackSmith", "Schmied");
+        _de.Add("SugarMiller", "Zuckerarbeiter");
         _de.Add("worker", "arbeiter");
         _de.Add("Overall.People", "Insgesamt Menschen, die diesen Service benötigen: ");
         _de.Add("overall service", "gesamtservice");
@@ -1191,5 +1122,4 @@ public class German
     {
         return _de.ContainsKey(key);
     }
-
 }

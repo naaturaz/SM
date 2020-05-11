@@ -1,22 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 /*
  * Each person and building will have one inventory
 */
+
 public class Inventory
 {
-
     //this is the items the inventory has inside
     private List<InvItem> _inventItems = new List<InvItem>();
+
     private string _info;
     private string _locMyId;
     private bool _isAStorage;
     private H _hType;
 
-    List<P> _foodItems = new List<P>();
+    private List<P> _foodItems = new List<P>();
 
     //Cubic meters of a Inventory
     private float _capacityVol;
@@ -60,7 +60,9 @@ public class Inventory
         set { _hType = value; }
     }
 
-    public Inventory() { }
+    public Inventory()
+    {
+    }
 
     public Inventory(string myId, H hTypeP)
     {
@@ -91,7 +93,7 @@ public class Inventory
     /// <summary>
     /// Will order items alphabetically
     /// </summary>
-    void OrderItemsAlphaLang()
+    private void OrderItemsAlphaLang()
     {
         InvItem year = null;
         for (int i = 0; i < _inventItems.Count; i++)
@@ -107,12 +109,12 @@ public class Inventory
 
         _inventItems = _inventItems.OrderBy(a => a.KeyLang.ToString()).ToList();
 
-        if(year != null)
+        if (year != null)
             _inventItems.Insert(0, year);
     }
 
     /// <summary>
-    /// Will tell u wht amt of a specific type is on inventory 
+    /// Will tell u wht amt of a specific type is on inventory
     /// </summary>
     /// <param name="Key"></param>
     /// <returns></returns>
@@ -134,11 +136,11 @@ public class Inventory
     }
 
     /// <summary>
-    /// Will tell u wht amt of a specific key is 
+    /// Will tell u wht amt of a specific key is
     /// </summary>
     /// <param name="Key"></param>
     /// <returns></returns>
-    InvItem SetAmtWithKey(P Key, float newVal)
+    private InvItem SetAmtWithKey(P Key, float newVal)
     {
         for (int i = 0; i < _inventItems.Count; i++)
         {
@@ -151,7 +153,7 @@ public class Inventory
         return null;
     }
 
-    void RemoveWithKey(P Key)
+    private void RemoveWithKey(P Key)
     {
         for (int i = 0; i < _inventItems.Count; i++)
         {
@@ -175,7 +177,7 @@ public class Inventory
         return true;
     }
 
-    void UpdateInfo()
+    private void UpdateInfo()
     {
         if (IsItemOnInv(P.Corn))
         {
@@ -187,7 +189,7 @@ public class Inventory
         {
             _info = "Emptied";
         }
-        //if is a building 
+        //if is a building
         if (BuildingPot.Control.Registro.AllBuilding.ContainsKey(_locMyId))
         {
             BuildingPot.Control.Registro.AllBuilding[_locMyId].UpdateInfo();
@@ -214,7 +216,7 @@ public class Inventory
         }
 
         //in this way a new expiration date is going to be set as soon a prod is
-        //added to a new inventory. is not pefect bz doesnt carry old expiration date 
+        //added to a new inventory. is not pefect bz doesnt carry old expiration date
         //foward but at the same time the majority of the product expires as stays behind and
         //gets check in the inventory
         var expireCalc = ExpirationDate(key, expiration);
@@ -237,11 +239,11 @@ public class Inventory
     #region Expiration
 
     /// <summary>
-    /// Will calcluate the expiration date of a product 
-    /// 
+    /// Will calcluate the expiration date of a product
+    ///
     /// if already has one will return that one that has already
-    /// 
-    /// if product doestn have expiration will return null 
+    ///
+    /// if product doestn have expiration will return null
     /// </summary>
     /// <param name="prod"></param>
     /// <param name="current"></param>
@@ -261,7 +263,6 @@ public class Inventory
         return Program.gameScene.GameTime1.ReturnCurrentDatePlsAdded(days);
     }
 
-
     private void SetAmtExpiration(InvItem item, float amt, MDate expiration)
     {
         if (expiration == null || item == null)
@@ -276,9 +277,10 @@ public class Inventory
     {
         curr.CheckIfAnyHasExpired(this);
     }
-    #endregion
 
-    void AddressGameInventory(P key, float amt, bool add)
+    #endregion Expiration
+
+    private void AddressGameInventory(P key, float amt, bool add)
     {
         if (!IsAStorage)
             return;
@@ -295,6 +297,7 @@ public class Inventory
     }
 
     #region Main Inventory
+
     public void AddToSpecialInv(P key)
     {
         InventItems.Add(new InvItem(key, 0));
@@ -309,7 +312,7 @@ public class Inventory
     {
         for (int i = 0; i < InventItems.Count; i++)
         {
-            if(InventItems[i].Info == buildMyId)
+            if (InventItems[i].Info == buildMyId)
             {
                 InventItems.RemoveAt(i);
                 return;
@@ -322,7 +325,7 @@ public class Inventory
         SetAmtWithKey(key, amt);
     }
 
-    #endregion
+    #endregion Main Inventory
 
     private void AddToCategory(P key)
     {
@@ -341,7 +344,7 @@ public class Inventory
     }
 
     /// <summary>
-    /// Bz if is random has to be decompose 
+    /// Bz if is random has to be decompose
     /// </summary>
     /// <param name="key"></param>
     /// <param name="amt"></param>
@@ -368,7 +371,7 @@ public class Inventory
     /// <summary>
     /// The int returned is the amount was removed from the inventory.
     /// If wht was asked in 'amt' was not fully returned means the inventory hadnt enough to coverred it
-    /// 
+    ///
     /// Then item will be removed from inventory
     /// </summary>
     /// <param name="key"></param>
@@ -399,18 +402,16 @@ public class Inventory
             AddressGameInventory(key, kg, false);
             return t;
         }
-        //storages has a well attached 
+        //storages has a well attached
         if (key == P.Water && LocMyId.Contains("Storage"))
         {
             return kg;
         }
 
-        //docker having negative amount of item on inventory 
+        //docker having negative amount of item on inventory
         RemoveWithKey(key);
         return 0;
     }
-
-
 
     public void RemoveItems(List<InvItem> items)
     {
@@ -421,7 +422,7 @@ public class Inventory
     }
 
     /// <summary>
-    /// Will remove an item from the Inv. U should know tht item amt is zero to call this 
+    /// Will remove an item from the Inv. U should know tht item amt is zero to call this
     /// </summary>
     /// <param name="key"></param>
     internal void RemoveItem(P key)
@@ -429,7 +430,10 @@ public class Inventory
         RemoveWithKey(key);
     }
 
-    public string Info() { return _info; }
+    public string Info()
+    {
+        return _info;
+    }
 
     public bool IsEmpty()
     {
@@ -454,9 +458,9 @@ public class Inventory
         return false;
     }
 
+    private float lastNoti;//so it notifies every 3min
 
-    float lastNoti;//so it notifies every 3min
-    void NotifyIfFilling(float currentOccupied)
+    private void NotifyIfFilling(float currentOccupied)
     {
         var perc = currentOccupied / _capacityVol;
         if (perc > 0.74f && (lastNoti + NotificationsManager.NotiFrec < Time.time || lastNoti == 0) && IsAStorage)
@@ -496,7 +500,7 @@ public class Inventory
         return false;
     }
 
-    int ReturnPartThatBelongToThisProdInThisBuilding(P prod)
+    private int ReturnPartThatBelongToThisProdInThisBuilding(P prod)
     {
         var build = Brain.GetBuildingFromKey(LocMyId);
 
@@ -554,7 +558,6 @@ public class Inventory
         _foodItems.Clear();
     }
 
-
     /// <summary>
     /// Random is better so people get ramd stuff from Storages
     /// </summary>
@@ -567,10 +570,6 @@ public class Inventory
         }
         return _foodItems[UnityEngine.Random.Range(0, _foodItems.Count)];
     }
-
-
-
-
 
     /// <summary>
     /// Gives the best food
@@ -590,21 +589,20 @@ public class Inventory
         return order[0];
     }
 
-
     public static PCat CategorizeProd(P prod)
     {
         if (prod == P.Water ||
 
             prod == P.Bean || prod == P.Potato || prod == P.SugarCane || prod == P.Corn
             || prod == P.Chicken || prod == P.Egg || prod == P.Pork || prod == P.Beef
-            || prod == P.Fish //||prod == P.Sugar 
-            || prod == P.Coconut || prod == P.Banana 
+            || prod == P.Fish //||prod == P.Sugar
+            || prod == P.Coconut || prod == P.Banana
 
             //prod == P.CornFlower
             || prod == P.Bread || prod == P.Carrot || prod == P.Tomato
             || prod == P.Cucumber || prod == P.Cabbage || prod == P.Lettuce || prod == P.SweetPotato
             || prod == P.Cassava || prod == P.Pineapple
-            //|| prod == P.Mango || prod == P.Avocado || prod == P.Guava || prod == P.Orange 
+            //|| prod == P.Mango || prod == P.Avocado || prod == P.Guava || prod == P.Orange
             || prod == P.Papaya || prod == P.Chocolate //|| prod == P.Candy
             )
         {
@@ -615,11 +613,11 @@ public class Inventory
 
     /// <summary>
     /// Will return a list with all the products in the inventory of tht category.
-    /// For ex if is food will put all the food items 
+    /// For ex if is food will put all the food items
     /// </summary>
     /// <param name="pCat"></param>
     /// <returns></returns>
-    List<P> ReturnListOfCatOfProd(PCat pCat)
+    private List<P> ReturnListOfCatOfProd(PCat pCat)
     {
         List<P> res = new List<P>();
 
@@ -630,7 +628,6 @@ public class Inventory
 
         return res;
     }
-
 
     /// <summary>
     /// Use for see how much food is it in all Storages
@@ -666,8 +663,8 @@ public class Inventory
     }
 
     /// <summary>
-    /// Will return items of type  
-    /// 
+    /// Will return items of type
+    ///
     /// Used to get all the food out of a person
     /// </summary>
     /// <returns></returns>
@@ -685,9 +682,6 @@ public class Inventory
         }
         return res;
     }
-
-
-
 
     /// <summary>
     /// Will tell u if the inventory has enought capacity to store this Load
@@ -708,7 +702,7 @@ public class Inventory
 
     /// <summary>
     /// Will manage the Export Order. Will take from Inventory wht is needed and if order
-    /// is fully covered will make it zero, other wise will remove wht was on inventory then 
+    /// is fully covered will make it zero, other wise will remove wht was on inventory then
     /// </summary>
     /// <param name="order"></param>
     internal Order ManageExportOrder(Order order)
@@ -720,7 +714,7 @@ public class Inventory
         {
             order.ChangeAmountBy(-amtTaken);
         }
-        //the whole order was taken 
+        //the whole order was taken
         else if (amtTaken == order.Amount)
         {
             order.Amount = 0;
@@ -750,10 +744,10 @@ public class Inventory
     /// Will return the inv items needed to repair a ship of that Volume
     /// This volume is not the ship invetory volume is certainly bigger than that
     /// is the Whole Ship volume
-    /// 
-    /// This should refer to the inventory of a DryDock 
-    /// 
-    /// Will remove the items from the invenroty 
+    ///
+    /// This should refer to the inventory of a DryDock
+    ///
+    /// Will remove the items from the invenroty
     /// </summary>
     /// <param name="vol"></param>
     /// <returns></returns>
@@ -780,12 +774,12 @@ public class Inventory
 
     /// <summary>
     /// Will give u a random prod of max amt 'param'
-    /// 
-    /// Will remove the item from the invetory too 
+    ///
+    /// Will remove the item from the invetory too
     /// </summary>
     /// <param name="maxVol"></param>
     /// <returns></returns>
-    InvItem GiveMeRandomItem(float maxVol)
+    private InvItem GiveMeRandomItem(float maxVol)
     {
         //random index of Item
         var ind = UnityEngine.Random.Range(0, InventItems.Count);
@@ -804,7 +798,7 @@ public class Inventory
 
     /// <summary>
     /// will remove by volume
-    /// finds the weight and then removes by weight 
+    /// finds the weight and then removes by weight
     /// </summary>
     /// <param name="p"></param>
     /// <param name="vol"></param>
@@ -830,7 +824,7 @@ public class Inventory
         return true;
     }
 
-    bool IfSpecialItem(P prod)
+    private bool IfSpecialItem(P prod)
     {
         if (prod == P.Tool || prod == P.Cloth || prod == P.Crockery || prod == P.Barrel || prod == P.Crate)
         {
@@ -840,8 +834,8 @@ public class Inventory
     }
 
     /// <summary>
-    /// Will create a list of Evacation Orders . 
-    /// So this Building invetory is all evacuated 
+    /// Will create a list of Evacation Orders .
+    /// So this Building invetory is all evacuated
     /// </summary>
     /// <returns></returns>
     public List<Order> CreateOrderToEvacWholeInv()
@@ -856,10 +850,8 @@ public class Inventory
         return res;
     }
 
-
-
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="pCat"></param>
     /// <param name="amtNeeded"></param>
@@ -878,7 +870,7 @@ public class Inventory
                 //will delete tht item from inventory
                 RemoveByWeight(items[i].Key, items[i].Amount);
             }
-            //if can cover the rest needed 
+            //if can cover the rest needed
             else
             {
                 RemoveByWeight(items[i].Key, amtNeeded);
@@ -903,13 +895,9 @@ public class Inventory
         return IsLiquid(_inventItems[0].Key);
     }
 
+    #region Containers
 
-
-
-
-#region Containers
-
-    static bool IsLiquid(P prod)
+    private static bool IsLiquid(P prod)
     {
         return prod == P.Water || prod == P.Beer || prod == P.Rum || prod == P.Ink || prod == P.Clay;
     }
@@ -941,8 +929,7 @@ public class Inventory
         }
     }
 
-
-    static bool DoesNeedACrate(P prod)
+    private static bool DoesNeedACrate(P prod)
     {
         if (prod == P.Wood || prod == P.Stone || prod == P.Ore || IsLiquid(prod))
         {
@@ -960,8 +947,7 @@ public class Inventory
         return LocMyId.Contains("Storage") || Contains(P.Water);
     }
 
-
-    #endregion
+    #endregion Containers
 
     /// <summary>
     /// Check if a this inventory has Stale product
@@ -978,7 +964,6 @@ public class Inventory
             }
         }
     }
-
 }
 
 public class InvItem
@@ -987,11 +972,11 @@ public class InvItem
     private float _amount;
     private float _volume;
     private string _info;//for year for reports
-    List<SubInvItem> _expiresAmts = new List<SubInvItem>();
+    private List<SubInvItem> _expiresAmts = new List<SubInvItem>();
 
     /// <summary>
-    /// How many KG of this Item 
-    /// 
+    /// How many KG of this Item
+    ///
     /// Everytime is set.
     /// Will recalculte the Volume
     /// </summary>
@@ -1035,16 +1020,18 @@ public class InvItem
         Volume = Program.gameScene.ExportImport1.CalculateVolume(Key, amtP);
     }
 
-    public InvItem(string info) {
+    public InvItem(string info)
+    {
         _info = info;
     }
 
-    public InvItem() { }
-
+    public InvItem()
+    {
+    }
 
     internal void AddExpirationDate(float amt, MDate expiration, Inventory inv)
     {
-        //no expiration needed for this 2 below 
+        //no expiration needed for this 2 below
         if (inv.HType == H.Person || inv.HType == H.None || inv.HType == H.YearReport || !Program.IsFood)
         {
             return;
@@ -1098,14 +1085,16 @@ public class InvItem
 }
 
 /// <summary>
-/// So the expirattion of a product can be done 
+/// So the expirattion of a product can be done
 /// </summary>
 public class SubInvItem
 {
     private float _amt;
     private MDate _expires;
 
-    public SubInvItem() { }
+    public SubInvItem()
+    {
+    }
 
     public SubInvItem(float amt, MDate expires)
     {

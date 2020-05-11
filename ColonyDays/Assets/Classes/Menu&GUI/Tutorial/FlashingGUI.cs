@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-class FlashingGUI: MonoBehaviour
+internal class FlashingGUI : MonoBehaviour
 {
     public Color InitialColor;
     public Color FlashToColor;
 
-    Graphic _graphic;
-    float _interval = 2;
-    bool _goingUp = true;
+    private Graphic _graphic;
+    private float _interval = 2;
+    private bool _goingUp = true;
     private Color _lerpedColor;
 
     private void Start()

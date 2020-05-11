@@ -1,26 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
-
-internal class GOLookAt: General
+internal class GOLookAt : General
 {
     private bool _isShownNow;
     private Quaternion _targetRot;
     private Quaternion _oldRot;
 
-
     public GameObject PrevGO { get; set; }
     public GameObject NextGO { get; set; }
 
-    void Start()
+    private void Start()
     {
         Hide();
     }
 
-    void Update()
+    private void Update()
     {
         if (_isShownNow)
         {
@@ -29,7 +23,7 @@ internal class GOLookAt: General
             if (PrevGO != null)
             {
                 //the middle average point btw ur next and previos link object in the chain
-                var movingTo = (PrevGO.transform.position+NextGO.transform.position)/2;
+                var movingTo = (PrevGO.transform.position + NextGO.transform.position) / 2;
                 transform.position = Vector3.MoveTowards(transform.position, movingTo, .1f);
             }
         }
@@ -39,9 +33,9 @@ internal class GOLookAt: General
     {
         Geometry.SetActive(false);
         _isShownNow = false;
-        //restores ini rota, so it looks cool again whenloads 
+        //restores ini rota, so it looks cool again whenloads
         transform.rotation = _oldRot;
-        
+
         //sublte sound when hides
         //AudioCollector.PlayOneShot("ClickMetal1", 15f);
     }
@@ -51,7 +45,7 @@ internal class GOLookAt: General
         //sublte sound when shows off
         AudioCollector.PlayOneShot("ClickWood4", 10f);
         _oldRot = transform.rotation;
-        
+
         transform.LookAt(lookToPos);
         _targetRot = transform.rotation;
 
@@ -61,8 +55,4 @@ internal class GOLookAt: General
         Geometry.SetActive(true);
         _isShownNow = true;
     }
-
-
-
 }
-

@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class Passive : MonoBehaviour {
-
-    float destroyStartTime;
+public class Passive : MonoBehaviour
+{
+    private float destroyStartTime;
     public bool isTimeDestroy = true;
     public float timedDestroyInSec = 5f;
 
@@ -15,18 +14,19 @@ public class Passive : MonoBehaviour {
         return obj;
     }
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    private void Start()
+    {
         destroyStartTime = Time.time;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
 
+    // Update is called once per frame
+    private void Update()
+    {
         if (isTimeDestroy) { AutoDestroy(); }
-	}
+    }
 
-    void AutoDestroy()
+    private void AutoDestroy()
     {
         if (Time.time > destroyStartTime + timedDestroyInSec)
         {

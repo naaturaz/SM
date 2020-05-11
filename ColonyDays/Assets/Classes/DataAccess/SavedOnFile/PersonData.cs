@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-public class PersonData  {
-
-    public  PersonControllerSaveLoad PersonControllerSaveLoad = new PersonControllerSaveLoad();
+public class PersonData
+{
+    public PersonControllerSaveLoad PersonControllerSaveLoad = new PersonControllerSaveLoad();
 
     private List<PersonFile> _all = new List<PersonFile>();
 
@@ -18,7 +18,7 @@ public class PersonData  {
         PersonControllerSaveLoad = personControllerSaveLoad;
     }
 
-    public PersonData() { }
-
-
+    public PersonData()
+    {
+    }
 }

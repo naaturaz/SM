@@ -6,7 +6,7 @@ public class HelpTile : GUIElement
     private Text _descText;
     private Text _priceText;
     private HelpWindow _window;
-    string _key;
+    private string _key;
 
     public string Key
     {
@@ -20,7 +20,7 @@ public class HelpTile : GUIElement
         set { _window = value; }
     }
 
-    void Start()
+    private void Start()
     {
         _descText = FindGameObjectInHierarchy("Item_Desc", gameObject).GetComponent<Text>();
         _priceText = FindGameObjectInHierarchy("Price_Desc", gameObject).GetComponent<Text>();
@@ -35,7 +35,7 @@ public class HelpTile : GUIElement
         _priceText.text = "";
     }
 
-    void Update()
+    private void Update()
     {
     }
 
@@ -65,5 +65,4 @@ public class HelpTile : GUIElement
 
         return obj;
     }
-
 }

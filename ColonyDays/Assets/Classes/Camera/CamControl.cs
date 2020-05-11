@@ -3,10 +3,11 @@
 //THIS IS A STATIC FUNCTION CLASS
 public class CamControl : MonoBehaviour
 {
-
     public static SmoothFollow CAMFollow;
+
     //RTS cam object and is a CamRTSController reference obj
     public static CamRTSController CAMRTS;
+
     //public static CamFPS CAMFPS;
 
     private static Camera rtsCamera;
@@ -15,23 +16,26 @@ public class CamControl : MonoBehaviour
 
     private GameObject menuCam;
 
-    public static Camera RTSCamera() { return rtsCamera; }
+    public static Camera RTSCamera()
+    {
+        return rtsCamera;
+    }
 
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         mainMenuCamera = GameObject.Find("MainMenuCamera").GetComponent<Camera>();
     }
 
     public static Camera CurrentCamera()
     {
-        if(!mainMenuCamera)
-        mainMenuCamera = GameObject.Find("MainMenuCamera").GetComponent<Camera>();
+        if (!mainMenuCamera)
+            mainMenuCamera = GameObject.Find("MainMenuCamera").GetComponent<Camera>();
 
         if (rtsCamera && rtsCamera.enabled) return rtsCamera;
         if (firstPersonCamera && firstPersonCamera.enabled) return firstPersonCamera;
 
-        if(mainMenuCamera) return mainMenuCamera;
+        if (mainMenuCamera) return mainMenuCamera;
 
         return Camera.main;
     }
@@ -68,13 +72,14 @@ public class CamControl : MonoBehaviour
     }
 
     private static string currentCam = "Main";//bz is the first camera on
+
     public static void ChangeTo(string newVal)
     {
         if (currentCam != newVal)
         {
             currentCam = newVal;
         }
-        else//if is reACtivating same cam will return 
+        else//if is reACtivating same cam will return
         {
             return;
         }
@@ -86,7 +91,7 @@ public class CamControl : MonoBehaviour
             mainMenuCamera.enabled = true;
             mainMenuCamera.GetComponent<AudioListener>().enabled = true;
         }
-        else if(newVal == "Game")
+        else if (newVal == "Game")
         {
             if (CAMRTS) CAMRTS.CamSensivity = 6;
 
@@ -97,8 +102,8 @@ public class CamControl : MonoBehaviour
                 rtsCamera.enabled = true;
                 rtsCamera.GetComponent<AudioListener>().enabled = true;
             }
-        } 
-        else if(newVal == "First")
+        }
+        else if (newVal == "First")
         {
             CAMRTS.CamSensivity = 0;
 
@@ -108,13 +113,12 @@ public class CamControl : MonoBehaviour
             {
                 firstPersonCamera.enabled = true;
                 firstPersonCamera.GetComponent<AudioListener>().enabled = true;
-
             }
         }
         AudioPlayer.CameraWasChanged();
     }
 
-    static void DisableAllCams()
+    private static void DisableAllCams()
     {
         if (mainMenuCamera != null)
         {

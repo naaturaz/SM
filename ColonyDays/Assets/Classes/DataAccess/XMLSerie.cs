@@ -1,9 +1,7 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System;
-using System.Security.Permissions;
+using UnityEngine;
 
 //to be able to serializea an obj cant inherit from monobeaviour
 
@@ -12,12 +10,10 @@ using System.Security.Permissions;
 
 public class XMLSerie
 {
-
     //public static string dataPath = @"C:\Temp";
     //public static string dataPath = @"D:\Temp";
 
     public static string dataPath = Application.dataPath;
-
 
     public static void WriteXML(List<RTSData> listP)
     {
@@ -42,21 +38,14 @@ public class XMLSerie
         return res;
     }
 
-
-
-
-
-
-
-
-
-
     private static ProgramData _programData;
+
     public static ProgramData ProgramData1
     {
         get { return _programData; }
         set { _programData = value; }
     }
+
     public static ProgramData ReadXMLProgram()
     {
         var load =
@@ -120,8 +109,8 @@ public class XMLSerie
 
     //Will check if FBX file was written after the pertaining submesh XML
     //XML File, FBX File and Program.gameScene.Terreno.name must have exactly same name for this to work
-    //FBX files must be in same location 
-    static bool IsFBXNewerThanXML()
+    //FBX files must be in same location
+    private static bool IsFBXNewerThanXML()
     {
         DateTime lastWriteTimeXMLFile = File.GetLastWriteTime(dataPath + "/" + Program.gameScene.Terreno.name + ".xml");
         DateTime lastWriteTimeFBXFile = File.GetLastWriteTime(dataPath + "/RawFiles/3d/Geometry/All_Terrains/" + Program.gameScene.Terreno.name + ".fbx");
@@ -136,8 +125,6 @@ public class XMLSerie
         return false;
     }
 
-
-
     public static void WriteXMLSpawned(SpawnedData spawnedData)
     {
         DataContainer DataCollection = new DataContainer();
@@ -146,7 +133,7 @@ public class XMLSerie
     }
 
     /// <summary>
-    /// read on caller of this if trying to create Terrain.Spawner file 
+    /// read on caller of this if trying to create Terrain.Spawner file
     /// </summary>
     /// <param name="defaultP"></param>
     /// <returns></returns>
@@ -171,17 +158,15 @@ public class XMLSerie
         return res;
     }
 
-    static string ReturnRightSpawnerRoot()
+    private static string ReturnRightSpawnerRoot()
     {
-        //is a new game 
+        //is a new game
         if (dataPath == "")
         {
             return Application.dataPath;
         }
         return dataPath;
     }
-
-
 
     public static void WriteXMLBuilding(BuildingData buildingData)
     {
@@ -200,25 +185,19 @@ public class XMLSerie
         {
             res = loaded.BuildingData;
         }
-        //if not saved town found will load Deffault town         
+        //if not saved town found will load Deffault town
         else
         {
-            res = LoadDefaultTown(); 
+            res = LoadDefaultTown();
         }
 
         return res;
     }
 
-
     private static BuildingData LoadDefaultTown()
     {
         return TownLoader.LoadDefault();
     }
-
-
-
-
-
 
     public static void WriteXMLPerson(PersonData personData)
     {
@@ -248,11 +227,10 @@ public class XMLSerie
 
     public static void SaveGame(string path)
     {
-        //set  last saved dataPath, 
+        //set  last saved dataPath,
 
         //and dataPath to newName
         dataPath = path;
-
     }
 
     public static void LoadGame(string path)
@@ -268,9 +246,10 @@ public class XMLSerie
         return dataPath == Application.dataPath + @"\" + "Tutorial";
     }
 
-    #endregion
+    #endregion Main Menu
 
     #region Reports
+
     public static string WriteXMLFinalReport(FinalReport report)
     {
         DataContainer DataCollection = new DataContainer();
@@ -281,16 +260,11 @@ public class XMLSerie
 
         return root;
     }
-    #endregion
 
-
-
-
-
-
-
+    #endregion Reports
 
     #region Mod
+
     //Mods
 
     public static PeopleModData ReadXMLPeopleModData()
@@ -299,13 +273,11 @@ public class XMLSerie
 
         var loaded = DataContainer.Load(path);
 
-
-
         PeopleModData res = null;
         if (loaded != null) { res = loaded.PeopleModData; }
 
         return res;
     }
 
-    #endregion
+    #endregion Mod
 }

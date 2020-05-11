@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
-/// This manages all notifications of the game 
+/// This manages all notifications of the game
 /// </summary>
 public class NotificationsManager
 {
     /// <summary>
     /// Some notifications repeat like full storage or cant produce bz full storage they will repeat every:
     /// </summary>
-    static float _notiFrec = 120;
+    private static float _notiFrec = 120;
 
     public static float NotiFrec
     {
@@ -23,11 +18,12 @@ public class NotificationsManager
 
     //set of notifications to uncheck on Options
     private bool _pirates;
+
     private float _lowPirate10;//the low 10%, means if im in 25% this is going to be 20%
     private float _highPirate10 = 10;//the high 10%, means if im in 25% this is going to be 30%
     private float _lastPirate;
 
-    //the time willwait until notify again 
+    //the time willwait until notify again
     private float _coolDown = 20;//seconds
 
     private bool _reputation;
@@ -49,7 +45,6 @@ public class NotificationsManager
         }
         _stillNeedInit = false;
         FindEnds(BuildingPot.Control.DockManager1.PirateThreat, out _lowPirate10, out _highPirate10);
-
     }
 
     private void FindEnds(float val, out float low, out float high)
@@ -66,7 +61,6 @@ public class NotificationsManager
             high = float.Parse(firstDigit + 0) + 10;
         }
     }
-
 
     public void UpdateOneSecond()
     {
@@ -93,7 +87,6 @@ public class NotificationsManager
         {
             //went down 10
             Notify("PirateDown");
-
         }
         _lowPirate10 = newLow;
         _highPirate10 = newHi;
@@ -124,8 +117,6 @@ public class NotificationsManager
         Program.MouseListener.NotificationWindow.Notify(which, addP);
     }
 
-
-
     public void MainNotify(string which)
     {
         if (_mainNotificationGo == null)
@@ -136,7 +127,6 @@ public class NotificationsManager
         _mainNotificationGo.Show(which);
     }
 
-
     internal void HideMainNotify()
     {
         if (_mainNotificationGo == null)
@@ -144,8 +134,5 @@ public class NotificationsManager
             _mainNotificationGo = GameObject.FindObjectOfType<MainNotificationGO>();
         }
         _mainNotificationGo.Hide();
-
     }
-
-
 }

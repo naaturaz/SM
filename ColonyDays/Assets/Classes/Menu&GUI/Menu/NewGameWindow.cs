@@ -5,31 +5,34 @@ using UnityEngine.UI;
 public class NewGameWindow : GUIElement
 {
     private string _townName;
+
     //private string _size;
     private string _terraName;
+
     private string _terraRoot;
     private string _difficulty;
 
-    //private Text _sizeTxt;//the btn tht contains the size 
-    private Text _terraNameTxt;//the btn tht contains the size 
-    private LangUpdateScript _diffLang;//the btn tht contains the size 
-    private LangUpdateScript _typeLang; 
+    //private Text _sizeTxt;//the btn tht contains the size
+    private Text _terraNameTxt;//the btn tht contains the size
+
+    private LangUpdateScript _diffLang;//the btn tht contains the size
+    private LangUpdateScript _typeLang;
     private InputField _inputTownName;
 
-    private List<string> _terraNames = new List<string>();//the names will be displayed on the terra name drop down  
+    private List<string> _terraNames = new List<string>();//the names will be displayed on the terra name drop down
 
-    //this is the options in the drop down names 
-    private List<GameObject> _buttonsName = new List<GameObject>();// 
+    //this is the options in the drop down names
+    private List<GameObject> _buttonsName = new List<GameObject>();//
 
     private GameObject Terra_Name_Btn;
     private GameObject Diff_Btn;
     private Toggle _pirateToggle;
     private Toggle _foodToggle;
 
-	// Use this for initialization
-	void Start ()
-	{
-	    iniPos = transform.position;
+    // Use this for initialization
+    private void Start()
+    {
+        iniPos = transform.position;
         Hide();
 
         //var Terra_Size_Btn = GetGrandChildCalled("Terra_Size_Btn");
@@ -40,7 +43,7 @@ public class NewGameWindow : GUIElement
 
         Diff_Btn = GetGrandChildCalled("Diff_Btn");
         _diffLang = Diff_Btn.GetComponentInChildren<LangUpdateScript>();
-        
+
         var t_Btn = GetGrandChildCalled("Type_Btn");
         _typeLang = t_Btn.GetComponentInChildren<LangUpdateScript>();
         _typeLang.SetKey("Freewill");
@@ -51,7 +54,7 @@ public class NewGameWindow : GUIElement
         _foodToggle = GetChildCalled("Food_Toggle").GetComponent<Toggle>();
 
         LoadDefaultForNewGame();
-	    AddressDevVer();
+        AddressDevVer();
     }
 
     private void AddressDevVer()
@@ -63,23 +66,23 @@ public class NewGameWindow : GUIElement
         }
     }
 
-    string[] array = new string[] {
+    private string[] array = new string[] {
         "Matanzas", "Havana", "Baracoa", "Varadero", "Santiago de Cuba", "Pinar del Rio", "Versalles", "Colon", "Las Villas",
         "Topes de Collante", "La Cumbre", "Cumbre Alta", "Santa Cristina", "Aranguren", "Ancon", "Vinales", "Havana Libre",
         "San Severino",
         "Sacti Spiritus", "Trinidad",
-        "Sevilla", 
+        "Sevilla",
         "San Hipolito", "Paseo Marti",
         "La Pinta", "La Nina", "La Santa Maria",
         "Sedano", "Hialeah", "Key West", "Orlando", "San Agustine",
         "Boca Raton", "Florida", "Palm Beach", "Calusa",
     };
+
     /// <summary>
     /// Load default conditions for a game
     /// </summary>
-    void LoadDefaultForNewGame()
+    private void LoadDefaultForNewGame()
     {
-
         _townName = array[UMath.GiveRandom(0, array.Length)];
 #if UNITY_EDITOR
         _townName = "Editor";
@@ -89,16 +92,17 @@ public class NewGameWindow : GUIElement
         DefineTerrainNames();
         Display();
     }
-	
-	// Update is called once per frame
-	void Update () {
-	}
+
+    // Update is called once per frame
+    private void Update()
+    {
+    }
 
     public void MouseListen(string action)
     {
         var sub = action.Substring(4);
 
-        //create new game 
+        //create new game
         if (sub == "OKBtn")
         {
             DefineTownName();
@@ -144,21 +148,21 @@ public class NewGameWindow : GUIElement
     }
 
     /// <summary>
-    /// Once the size is selected in the TerraName the terrain names must be loaded there 
+    /// Once the size is selected in the TerraName the terrain names must be loaded there
     /// </summary>
     private void DefineTerrainNames()
     {
         //if (_size == "Big")
         //{
-            DefineEachTerraName(Root.BigTerrains);
+        DefineEachTerraName(Root.BigTerrains);
         //}
     }
 
     /// <summary>
-    /// Will make __terraNames the last part of each element on the list 
+    /// Will make __terraNames the last part of each element on the list
     /// </summary>
     /// <param name="list"></param>
-    void DefineEachTerraName(List<string> list)
+    private void DefineEachTerraName(List<string> list)
     {
         _terraNames.Clear();
 
@@ -183,19 +187,19 @@ public class NewGameWindow : GUIElement
     public void DefineTownName()
     {
         _townName = _inputTownName.text;
-        
-        //so that gets define 
+
+        //so that gets define
         ClickOnTypeOfGame(_typeLang.Key);
     }
 
     /// <summary>
     /// The last part of the name of the terrain which is wht is added on the Button when they are loaded
-    /// with a specific terrain set of names 
+    /// with a specific terrain set of names
     /// </summary>
     /// <param name="last"></param>
     /// <param name="roots"></param>
     /// <returns></returns>
-    string ReturnTerrainOnList(string last, List<string> roots )
+    private string ReturnTerrainOnList(string last, List<string> roots)
     {
         for (int i = 0; i < roots.Count; i++)
         {
@@ -208,7 +212,7 @@ public class NewGameWindow : GUIElement
     }
 
     /// <summary>
-    /// Is called when the terraName drop down Btn is clicked 
+    /// Is called when the terraName drop down Btn is clicked
     /// </summary>
     public void ClickTerraNameDropDown()
     {
@@ -221,9 +225,9 @@ public class NewGameWindow : GUIElement
     }
 
     /// <summary>
-    /// Each button on the tera name drop down wil be set here 
-    /// 
-    /// Will add the event and change the name 
+    /// Each button on the tera name drop down wil be set here
+    ///
+    /// Will add the event and change the name
     /// </summary>
     private void SetEachButton(GameObject b, string terraName)
     {
@@ -262,14 +266,14 @@ public class NewGameWindow : GUIElement
     }
 
     /// <summary>
-    /// Once a specicifc terra name was seelected 
+    /// Once a specicifc terra name was seelected
     /// </summary>
     public void ClickTerraNameSelection(string terraName)
     {
         _terraName = terraName;
         //if (_size == "Big")
         //{
-            _terraRoot = ReturnTerrainOnList(terraName, Root.BigTerrains);
+        _terraRoot = ReturnTerrainOnList(terraName, Root.BigTerrains);
         //}
         Display();
     }
@@ -278,7 +282,7 @@ public class NewGameWindow : GUIElement
 
     //
     /// <summary>
-    /// Is called when the terraName drop down Btn is clicked 
+    /// Is called when the terraName drop down Btn is clicked
     /// </summary>
     public void ClickDifficultyDropDown()
     {

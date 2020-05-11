@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿using System.Collections.Generic;
 
 public class ProductionReport
 {
-    List<Inventory> _produceReport = new List<Inventory>();
-    List<Inventory> _consumeReport = new List<Inventory>();
+    private List<Inventory> _produceReport = new List<Inventory>();
+    private List<Inventory> _consumeReport = new List<Inventory>();
 
     public List<Inventory> ProduceReport
     {
@@ -25,7 +21,7 @@ public class ProductionReport
     {
         var thisYear = Program.gameScene.GameTime1.Year + "";
 
-        //find this year report 
+        //find this year report
         var thisYearReport = _produceReport.Find(a => a.LocMyId == thisYear);
 
         //if none will create this year report right away
@@ -42,7 +38,7 @@ public class ProductionReport
     {
         var thisYear = Program.gameScene.GameTime1.Year + "";
 
-        //find this year report 
+        //find this year report
         var thisYearReport = _consumeReport.Find(a => a.LocMyId == thisYear);
 
         //if none will create this year report right away
@@ -55,4 +51,3 @@ public class ProductionReport
         thisYearReport.Add(p, amt);
     }
 }
-

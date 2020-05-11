@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using Random = UnityEngine.Random;
-
 
 public class MusicManager
 {
-    static Dictionary<string, string> _musicRoots = new Dictionary<string, string>()
+    private static Dictionary<string, string> _musicRoots = new Dictionary<string, string>()
     {
         {"THEME 2_simple", ""},
         {"THEME 3", ""},
@@ -22,27 +20,22 @@ public class MusicManager
         {"THEME 2_simple_CUBAN_BONGO", ""},
     };
 
-    static Dictionary<string, string> _musicCivRoots = new Dictionary<string, string>()
+    private static Dictionary<string, string> _musicCivRoots = new Dictionary<string, string>()
     {
         {"PIRATES_10%", ""},
         {"PIRATES_20%", ""},
     };
 
-
-
-
-
-    static List<string> _playedSongs = new List<string>();
+    private static List<string> _playedSongs = new List<string>();
 
     private static Dictionary<string, AudioContainer> _musics = new Dictionary<string, AudioContainer>();
     private static Dictionary<string, AudioContainer> _musicsCiv = new Dictionary<string, AudioContainer>();
-    static AudioContainer _currMusic;
+    private static AudioContainer _currMusic;
 
     public static bool IsMusic(string val)
     {
         return _musicRoots.ContainsKey(val) || _musicCivRoots.ContainsKey(val);
     }
-
 
     public static void Start()
     {
@@ -56,9 +49,8 @@ public class MusicManager
         PlayRandom();
     }
 
+    private static int secCount;
 
-
-    static int secCount;
     private static void PlayRandom()
     {
         //Debug.Log("MusicManager.PlayRandom()");
@@ -72,7 +64,7 @@ public class MusicManager
             throw new Exception("Trying to reach Random music over 1000 times");
         }
 
-        //if is contained we need a new one 
+        //if is contained we need a new one
         if (_playedSongs.Contains(_currMusic.Key))
         {
             PlayRandom();
@@ -91,7 +83,7 @@ public class MusicManager
     {
         AudioContainer res = null;
 
-        //never a song was played 
+        //never a song was played
         if (_playedSongs.Count == 0)
         {
             res = ReturnOrCreate(_musicRoots.ElementAt(5));//las maracas
@@ -104,11 +96,11 @@ public class MusicManager
     }
 
     /// <summary>
-    /// Will return if exist or will create and return 
+    /// Will return if exist or will create and return
     /// </summary>
     /// <param name="item"></param>
     /// <returns></returns>
-    static AudioContainer ReturnOrCreate(KeyValuePair<string, string> item)
+    private static AudioContainer ReturnOrCreate(KeyValuePair<string, string> item)
     {
         if (!_musics.ContainsKey(item.Key))
         {
@@ -129,7 +121,6 @@ public class MusicManager
         _musics.Add(item.Key, audCont);
     }
 
-
     //private static void LoadMusics()
     //{
     //    for (int i = 0; i < _musicRoots.Count; i++)
@@ -137,22 +128,15 @@ public class MusicManager
     //        var item = _musicRoots.ElementAt(i);
     //        var root = DefineRoot(item.Key);
 
-
     //        var audCont = AudioContainer.Create(_musicRoots.ElementAt(i).Key, root, 0,
     //            container: AudioPlayer.SoundsCointaner.transform);
 
     //        LevelChanged += audCont.LevelChanged;
 
-
-
     //        _musics.Add(item.Key, audCont);
     //    }
 
     //}
-
-
-
-
 
     //private static void LoadMusicCiv()
     //{
@@ -165,7 +149,6 @@ public class MusicManager
     //            container: AudioPlayer.SoundsCointaner.transform));
     //    }
     //}
-
 
     private static string DefineRoot(string key)
     {
@@ -183,7 +166,6 @@ public class MusicManager
     {
         _currMusic.UnPause();
     }
-
 
     internal static void PlayANewSong(string key)
     {
@@ -219,4 +201,3 @@ public class MusicManager
         }
     }
 }
-

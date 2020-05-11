@@ -1,45 +1,44 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class SmoothFollow : CamControl {
-
-	public bool isToFollowPlayer;
-    public Transform target ;
+public class SmoothFollow : CamControl
+{
+    public bool isToFollowPlayer;
+    public Transform target;
     public static Transform TARGET;
     public float smoothTime = 0.3f;
 
     private Vector3 velocity;
     public float yOffset = 0.7f;
-	public float xOffset = 0.0f;
+    public float xOffset = 0.0f;
     public float zOffset = 0.0f;
-	
+
     public bool useSmoothing = false;
-	
-	public float velocityX = 0.5f;
-	public float velocityY = 0.5f;
+
+    public float velocityX = 0.5f;
+    public float velocityY = 0.5f;
     public float velocityZ = 0.5f;
 
-    float cameraAngleX = 0;
+    private float cameraAngleX = 0;
 
-    Transform[] arrayChilds = null;
+    private Transform[] arrayChilds = null;
 
-    void Start()
+    private void Start()
     {
         velocity = new Vector2(velocityX, velocityY);
 
-        if(Application.loadedLevelName == "Lobby")
+        if (Application.loadedLevelName == "Lobby")
         {
             HideAllHelpers();
         }
     }
 
     /// <summary>
-    /// Hides all helpers Tagged with Visual_Helper and disables the collider too 
+    /// Hides all helpers Tagged with Visual_Helper and disables the collider too
     /// </summary>
-    void HideAllHelpers()
+    private void HideAllHelpers()
     {
         GameObject[] array = GameObject.FindGameObjectsWithTag(S.Visual_Helper.ToString());
-        
+
         for (int i = 0; i < array.Length; i++)
         {
             for (int k = 0; k < array[i].transform.childCount; k++)
@@ -50,7 +49,7 @@ public class SmoothFollow : CamControl {
         }
     }
 
-    void LateUpdate() 
+    private void LateUpdate()
     {
         if (target == null && isToFollowPlayer)
         {
@@ -83,7 +82,7 @@ public class SmoothFollow : CamControl {
             var newRotation = Quaternion.LookRotation(target.forward, Vector3.up);
 
             // Smoothly rotate towards the target //speedPass is the retardation, the higher the speedy is
-            //in temp is stored the new rotation only for y and z 
+            //in temp is stored the new rotation only for y and z
             Quaternion temp = Quaternion.Slerp(target.rotation, newRotation, 2f * Time.deltaTime);
 
             if (cameraAngleX == 0)//if is zero we assign it

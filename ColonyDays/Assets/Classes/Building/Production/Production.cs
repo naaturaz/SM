@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
-public class Production  {
-
-    //if product doesnt have ingredients must be added here alone 
+public class Production
+{
+    //if product doesnt have ingredients must be added here alone
     //if has ingredients must be added here and in _inputProducts
-    Food _food = new Food();
+    private Food _food = new Food();
 
     public Production()
     {
@@ -19,11 +18,8 @@ public class Production  {
         set { _food = value; }
     }
 
-
-
-
     /// <summary>
-    /// Which will be the first element of the List 
+    /// Which will be the first element of the List
     /// </summary>
     /// <param name="typeKey"></param>
     /// <returns></returns>
@@ -35,7 +31,7 @@ public class Production  {
         {
             return prod;
         }
-        //so i dont have to check for Null Ref in a lot of places 
+        //so i dont have to check for Null Ref in a lot of places
         return new ProductInfo(P.None, null, H.None);
     }
 
@@ -43,7 +39,6 @@ public class Production  {
     {
         return ReturnDefaultProd(type).Product != P.None;
     }
-
 
     /// <summary>
     /// Will return the prod the building can produce
@@ -76,8 +71,8 @@ public class Production  {
         {
             return new ProductInfo(P.Stop, null, H.None);
         }
-        
-       //Debug.Log("Prod not found: ReturnExactProduct(). pls check");
+
+        //Debug.Log("Prod not found: ReturnExactProduct(). pls check");
         return null;
     }
 
@@ -95,24 +90,24 @@ public class Production  {
             return prod;
         }
 
-       //Debug.Log("Prod not found: ReturnProdInfoWithOutput(). pls check");
+        //Debug.Log("Prod not found: ReturnProdInfoWithOutput(). pls check");
         return null;
     }
 
     #region Inputs for Create a Product
 
     //contains which products are needed in the input to generate 1 unit of the final product
-    List<ProductInfo> _inputProducts = new List<ProductInfo>();
+    private List<ProductInfo> _inputProducts = new List<ProductInfo>();
 
-    InputElement _eleWoodComb = new InputElement(P.Wood, 0.05f);
-    InputElement _eleCoalComb = new InputElement(P.Coal, 0.05f);
+    private InputElement _eleWoodComb = new InputElement(P.Wood, 0.05f);
+    private InputElement _eleCoalComb = new InputElement(P.Coal, 0.05f);
 
     public List<ProductInfo> InputProducts()
     {
         return _inputProducts;
     }
 
-    void InputProdCheckAndAdd(ProductInfo pInfo)
+    private void InputProdCheckAndAdd(ProductInfo pInfo)
     {
         _inputProducts.Add(pInfo);
     }
@@ -123,7 +118,7 @@ public class Production  {
 
         LoadAllGenerics();
         Mine();
-        
+
         FieldFarm();
 
         CannonParts();
@@ -164,12 +159,10 @@ public class Production  {
         InputElement elementS = new InputElement(P.Sand, 2);
         InputElement elementC = new InputElement(P.QuickLime, 1);
 
-        List<InputElement> prodFormu1 = new List<InputElement>() { elementS,  elementC };
-        List<InputElement> prodFormu2 = new List<InputElement>() { elementS,  elementC };
+        List<InputElement> prodFormu1 = new List<InputElement>() { elementS, elementC };
+        List<InputElement> prodFormu2 = new List<InputElement>() { elementS, elementC };
         InputProdCheckAndAdd(new ProductInfo(P.Mortar, prodFormu1, H.Mortar));
     }
-
-
 
     private void CannonParts()
     {
@@ -193,6 +186,7 @@ public class Production  {
         InputProdCheckAndAdd(new ProductInfo(P.Rum, prodFormu1, H.Distillery));
         InputProdCheckAndAdd(new ProductInfo(P.Rum, prodFormu2, H.Distillery));
     }
+
     private void Chocolate()
     {
         InputElement elementS = new InputElement(P.Sugar, 2);
@@ -203,9 +197,10 @@ public class Production  {
         InputProdCheckAndAdd(new ProductInfo(P.Chocolate, prodFormu1, H.Chocolate));
         InputProdCheckAndAdd(new ProductInfo(P.Chocolate, prodFormu2, H.Chocolate));
     }
+
     private void Ink()
     {
-        List<InputElement> prodFormu1 = new List<InputElement>() { _eleCoalComb};
+        List<InputElement> prodFormu1 = new List<InputElement>() { _eleCoalComb };
         InputProdCheckAndAdd(new ProductInfo(P.Ink, prodFormu1, H.Ink));
     }
 
@@ -223,7 +218,7 @@ public class Production  {
     private void Foundry()
     {
         //doesnt have Coal as Combustion element bz then leaves a lot of Coal in the inventory
-        //and gets full 
+        //and gets full
 
         InputElement elementS = new InputElement(P.Ore, 5);
 
@@ -247,9 +242,6 @@ public class Production  {
         InputProdCheckAndAdd(productInfo1);
         //InputProdCheckAndAdd(productInfo2);
 
-
-
-
         //Steel
         InputElement elementI = new InputElement(P.Iron, 5);
         InputElement elementC = new InputElement(P.Coal, 5);
@@ -258,15 +250,11 @@ public class Production  {
         List<InputElement> prodFormuB = new List<InputElement>() { elementI, elementC, _eleCoalComb };
         InputProdCheckAndAdd(new ProductInfo(P.Steel, prodFormuA, H.Foundry));
         InputProdCheckAndAdd(new ProductInfo(P.Steel, prodFormuB, H.Foundry));
-
     }
 
     private void LoadAllGenerics()
     {
-
-
-        InputProdCheckAndAdd(new ProductInfo(P.Fish, null, new List<H>() { H.FishingHut,  }));
-
+        InputProdCheckAndAdd(new ProductInfo(P.Fish, null, new List<H>() { H.FishingHut, }));
 
         //animal farms
         List<H> listAnimalFarm = new List<H>() { H.AnimalFarmSmall, H.AnimalFarmMed, H.AnimalFarmLarge, H.AnimalFarmXLarge };
@@ -274,14 +262,11 @@ public class Production  {
         //InputProdCheckAndAdd(new ProductInfo(P.Chicken, null, listAnimalFarm));
         InputProdCheckAndAdd(new ProductInfo(P.Beef, null, listAnimalFarm));
 
-
-
         InputProdCheckAndAdd(new ProductInfo(P.Wood, null, H.LumberMill));
-
 
         InputProdCheckAndAdd(new ProductInfo(P.Salt, null, H.ShoreMine));
         InputProdCheckAndAdd(new ProductInfo(P.Sand, null, H.ShoreMine));
-        
+
         InputProdCheckAndAdd(new ProductInfo(P.QuickLime, null, H.QuickLime));
     }
 
@@ -295,10 +280,9 @@ public class Production  {
         InputProdCheckAndAdd(productInfo);
     }
 
-
     private void FieldFarm()
     {
-        List<H> listH = new List<H>() { H.FieldFarmSmall, H.FieldFarmMed, 
+        List<H> listH = new List<H>() { H.FieldFarmSmall, H.FieldFarmMed,
             H.FieldFarmLarge, H.FieldFarmXLarge
         };
 
@@ -321,17 +305,11 @@ public class Production  {
         //InputProdCheckAndAdd(new ProductInfo(P.Pineapple, null, listH));
         //InputProdCheckAndAdd(new ProductInfo(P.Papaya, null, listH));
 
-
-
-
-
         //InputProdCheckAndAdd(new ProductInfo(P.Mango, null, listH));
         //InputProdCheckAndAdd(new ProductInfo(P.Avocado, null, listH));
         //InputProdCheckAndAdd(new ProductInfo(P.Guava, null, listH));
         //InputProdCheckAndAdd(new ProductInfo(P.Orange, null, listH));
     }
-
-   
 
     private void DryMeats()
     {
@@ -339,15 +317,15 @@ public class Production  {
         InputElement salt = new InputElement(P.Salt, 0.25f);
         InputElement sugar = new InputElement(P.Sugar, 0.01f);
 
-        List<H> listH = new List<H>(){H.AnimalFarmSmall, H.AnimalFarmMed, H.AnimalFarmLarge, H.AnimalFarmXLarge};
+        List<H> listH = new List<H>() { H.AnimalFarmSmall, H.AnimalFarmMed, H.AnimalFarmLarge, H.AnimalFarmXLarge };
 
-        List<InputElement> dryMeatFormu = new List<InputElement>() { salt, sugar};
+        List<InputElement> dryMeatFormu = new List<InputElement>() { salt, sugar };
         InputProdCheckAndAdd(new ProductInfo(P.Pork, dryMeatFormu, listH));
         InputProdCheckAndAdd(new ProductInfo(P.Chicken, dryMeatFormu, listH));
         InputProdCheckAndAdd(new ProductInfo(P.Beef, dryMeatFormu, listH));
     }
 
-    //sulfur, charcoal, and potassium 
+    //sulfur, charcoal, and potassium
     private void GunPodwer()
     {
         InputElement sulfur = new InputElement(P.Sulfur, 1);
@@ -357,31 +335,25 @@ public class Production  {
         InputProdCheckAndAdd(new ProductInfo(P.GunPowder, one, H.GunPowder));
     }
 
-
-
-
-
-
     private void Clay()
     {
         InputProdCheckAndAdd(new ProductInfo(P.Clay, null, H.Clay));
     }
-
 
     private void Brick()
     {
         InputElement element = new InputElement(P.Clay, 2);
         List<InputElement> prod = new List<InputElement>() { element, _eleWoodComb };
         List<InputElement> prod2 = new List<InputElement>() { element, _eleCoalComb };
-        
+
         InputProdCheckAndAdd(new ProductInfo(P.Brick, prod, H.Brick));
         InputProdCheckAndAdd(new ProductInfo(P.Brick, prod2, H.Brick));
         InputProdCheckAndAdd(new ProductInfo(P.RoofTile, prod, H.Brick));
         InputProdCheckAndAdd(new ProductInfo(P.RoofTile, prod2, H.Brick));
         InputProdCheckAndAdd(new ProductInfo(P.FloorTile, prod, H.Brick));
         InputProdCheckAndAdd(new ProductInfo(P.FloorTile, prod2, H.Brick));
-    }   
-    
+    }
+
     private void Ceramic()
     {
         InputElement element = new InputElement(P.Clay, 3);
@@ -400,20 +372,16 @@ public class Production  {
         //InputProdCheckAndAdd(new ProductInfo(P.FloorTile, null, H.Tilery));
     }
 
-
-    void Carpintery()
+    private void Carpintery()
     {
         InputElement wood = new InputElement(P.Wood, 2);
         InputElement wood2 = new InputElement(P.Wood, 4);
         InputElement iron = new InputElement(P.Iron, 1);
         InputElement iron2 = new InputElement(P.Iron, 3);
 
-
-
         List<InputElement> tonel = new List<InputElement>() { wood };
-        List<InputElement> wheelBar = new List<InputElement>() { wood,iron };
-        List<InputElement> cart = new List<InputElement>() { wood2,iron2 };
-
+        List<InputElement> wheelBar = new List<InputElement>() { wood, iron };
+        List<InputElement> cart = new List<InputElement>() { wood2, iron2 };
 
         List<InputElement> cigarBox = new List<InputElement>() { new InputElement(P.Wood, 1), new InputElement(P.Iron, 0.2f) };
         List<InputElement> furni = new List<InputElement>() { new InputElement(P.Wood, 20), new InputElement(P.Nail, 0.2f) };
@@ -427,11 +395,11 @@ public class Production  {
         InputProdCheckAndAdd(new ProductInfo(P.Furniture, furni, H.Carpentry));
     }
 
-    void BlackSmith()
+    private void BlackSmith()
     {
         InputElement wood = new InputElement(P.Wood, 3);
         InputElement iron = new InputElement(P.Iron, 2);
-        
+
         List<InputElement> tool = new List<InputElement>() { wood, iron };
 
         InputProdCheckAndAdd(new ProductInfo(P.Tool, tool, H.BlackSmith));
@@ -444,20 +412,18 @@ public class Production  {
         //InputProdCheckAndAdd(new ProductInfo(P.Sword, tool, H.BlackSmith));
     }
 
-
     private void Cigar()
     {
         //H.Cigar
         InputElement element = new InputElement(P.TobaccoLeaf, 3);
         InputElement cigarBox = new InputElement(P.CigarBox, 1);
-        
-        List<InputElement> prodFormu1 = new List<InputElement>() { element,cigarBox, _eleWoodComb };
-        List<InputElement> prodFormu2 = new List<InputElement>() { element,cigarBox, _eleCoalComb};
-        
+
+        List<InputElement> prodFormu1 = new List<InputElement>() { element, cigarBox, _eleWoodComb };
+        List<InputElement> prodFormu2 = new List<InputElement>() { element, cigarBox, _eleCoalComb };
+
         InputProdCheckAndAdd(new ProductInfo(P.Cigar, prodFormu1, H.Cigars));
         InputProdCheckAndAdd(new ProductInfo(P.Cigar, prodFormu2, H.Cigars));
     }
-
 
     private void Tailor()
     {
@@ -474,33 +440,27 @@ public class Production  {
         InputProdCheckAndAdd(new ProductInfo(P.Shoe, shoe, H.Tailor));
     }
 
-
-
-
-
     private void Fabric()
     {
         InputElement cotton = new InputElement(P.Cotton, 2);
         InputElement henequen = new InputElement(P.Henequen, 2);
-        
+
         List<InputElement> cloth1 = new List<InputElement>() { cotton, _eleWoodComb };
         List<InputElement> cloth2 = new List<InputElement>() { cotton, _eleCoalComb };
 
         List<InputElement> string1 = new List<InputElement>() { henequen, _eleWoodComb };
         List<InputElement> string2 = new List<InputElement>() { henequen, _eleCoalComb };
 
-
-        InputProdCheckAndAdd(new ProductInfo(P.Fabric, cloth1, H.Cloth ));
+        InputProdCheckAndAdd(new ProductInfo(P.Fabric, cloth1, H.Cloth));
         InputProdCheckAndAdd(new ProductInfo(P.Fabric, cloth2, H.Cloth));
 
         InputProdCheckAndAdd(new ProductInfo(P.String, string1, H.Cloth));
         InputProdCheckAndAdd(new ProductInfo(P.String, string2, H.Cloth));
     }
 
-
     /// <summary>
     /// My Secret Weapon
-    /// 
+    ///
     /// Will have to have a lot of Req to be able to build
     /// </summary>
     private void Coins()
@@ -527,19 +487,17 @@ public class Production  {
 
         //1 formula that do paper
         List<InputElement> formula1 = new List<InputElement>() { eleInputWood, eleWoodComb };
-        //2nd forumala that do paper 
+        //2nd forumala that do paper
         List<InputElement> formula2 = new List<InputElement>() { eleInputWood, eleCoalComb };
         InputProdCheckAndAdd(new ProductInfo(P.Paper, formula1, H.PaperMill));
         InputProdCheckAndAdd(new ProductInfo(P.Paper, formula2, H.PaperMill));
 
-
         //paper news
         InputElement paper1 = new InputElement(P.Paper, 2);
-        List<InputElement> paperForm1 = new List<InputElement>() { paper1, eleWoodComb};
-        List<InputElement> paperForm2 = new List<InputElement>() { paper1, eleCoalComb};
+        List<InputElement> paperForm1 = new List<InputElement>() { paper1, eleWoodComb };
+        List<InputElement> paperForm2 = new List<InputElement>() { paper1, eleCoalComb };
         InputProdCheckAndAdd(new ProductInfo(P.Map, paperForm1, H.Printer));
         InputProdCheckAndAdd(new ProductInfo(P.Map, paperForm2, H.Printer));
-
 
         //books
         InputElement paper2 = new InputElement(P.Paper, 2);
@@ -549,8 +507,6 @@ public class Production  {
         InputProdCheckAndAdd(new ProductInfo(P.Book, bookForm1, H.Printer));
         InputProdCheckAndAdd(new ProductInfo(P.Book, bookForm2, H.Printer));
     }
-
-
 
     private void Sugar()
     {
@@ -568,7 +524,7 @@ public class Production  {
     /// </summary>
     /// <param name="hTypeP"></param>
     /// <returns></returns>
-    int ReturnAllInputsThisBuildingTake(H typeKey)
+    private int ReturnAllInputsThisBuildingTake(H typeKey)
     {
         var prods = _inputProducts.Where(a => a.HType.Contains(typeKey)).ToList();
         return prods.Sum(t => t.Ingredients.Count);
@@ -595,7 +551,7 @@ public class Production  {
     {
         List<P> res = new List<P>();
 
-        if (productInfo.Ingredients==null)
+        if (productInfo.Ingredients == null)
         {
             return res;
         }
@@ -606,8 +562,6 @@ public class Production  {
         }
         return res;
     }
-
-
 
     /// <summary>
     /// Given a Inventory and HType will tell u which products are not input
@@ -622,7 +576,7 @@ public class Production  {
 
         for (int i = 0; i < inv.InventItems.Count; i++)
         {
-            //if nnot imput like Brick. just can add all items inventory to res 
+            //if nnot imput like Brick. just can add all items inventory to res
             if (inputs.Count == 0)
             {
                 res.Add(inv.InventItems[i].Key);
@@ -636,7 +590,7 @@ public class Production  {
                     notEqual++;
                 }
             }
-            //if all inputs are not equal to inv.InventItems[i].Key then that is a product produced in that building 
+            //if all inputs are not equal to inv.InventItems[i].Key then that is a product produced in that building
             if (notEqual == inputs.Count)
             {
                 res.Add(inv.InventItems[i].Key);
@@ -648,7 +602,7 @@ public class Production  {
     /// <summary>
     /// bz if is an input will get half of the storage divided by the amount of ingredients
     /// for ex for Axe: the input is wood and iron.
-    /// 
+    ///
     /// If axe is pass will return a 2 so half of the storage
     /// if wood is pass will return a 4 so a quater of the storage
     /// if iron is pass will return a 4 ...
@@ -660,20 +614,18 @@ public class Production  {
     {
         var inputsAmt = ReturnAllInputsThisBuildingTake(hTypeP);
 
-        //a building without inputs then 
+        //a building without inputs then
         if (inputsAmt == 0)
         {
             //the whole storage
             //ex: Dock, Wood, SaltMine
             return 1;
         }
-        return inputsAmt*2;
+        return inputsAmt * 2;
     }
 
-
-
     /// <summary>
-    /// Given a product will return the list of ingrediets needed 
+    /// Given a product will return the list of ingrediets needed
     /// </summary>
     /// <param name="product"></param>
     /// <returns></returns>
@@ -698,34 +650,7 @@ public class Production  {
     {
         var ingredients = ReturnIngredients(building.CurrentProd.Product);
 
-        //this is for buildings tht Produce and dont need any input 
-        if (ingredients == null)
-        {
-            return true;
-        }
-
-        int covered = 0;
-
-        for (int i = 0; i < ingredients.Count; i++)
-        {
-            if (building.Inventory.IsHasEnoughToCoverThisIngredient(ingredients[i]))
-            {
-                covered++;
-            }
-        }
-
-        if (covered == ingredients.Count)
-        {
-            return true;
-        }
-        return false;
-    }  
-    
-    public bool DoIHaveEnoughOnInvToProdThis(Building building, P prod)
-    {
-        var ingredients = ReturnIngredients(prod);
-
-        //this is for buildings tht Produce and dont need any input 
+        //this is for buildings tht Produce and dont need any input
         if (ingredients == null)
         {
             return true;
@@ -748,19 +673,44 @@ public class Production  {
         return false;
     }
 
+    public bool DoIHaveEnoughOnInvToProdThis(Building building, P prod)
+    {
+        var ingredients = ReturnIngredients(prod);
 
+        //this is for buildings tht Produce and dont need any input
+        if (ingredients == null)
+        {
+            return true;
+        }
+
+        int covered = 0;
+
+        for (int i = 0; i < ingredients.Count; i++)
+        {
+            if (building.Inventory.IsHasEnoughToCoverThisIngredient(ingredients[i]))
+            {
+                covered++;
+            }
+        }
+
+        if (covered == ingredients.Count)
+        {
+            return true;
+        }
+        return false;
+    }
 
     /// <summary>
-    /// Will  ret string with inputs is missing to prod current prod 
+    /// Will  ret string with inputs is missing to prod current prod
     /// </summary>
     /// <param name="building"></param>
     /// <returns></returns>
     public string ReturnInputsINeed(Building building)
     {
         var ingredients = ReturnIngredients(building.CurrentProd.Product);
-        string res="";
+        string res = "";
 
-        //this is for buildings tht Produce and dont need any input 
+        //this is for buildings tht Produce and dont need any input
         if (ingredients == null)
         {
             return "";
@@ -776,5 +726,5 @@ public class Production  {
         return res;
     }
 
-    #endregion
+    #endregion Inputs for Create a Product
 }

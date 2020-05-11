@@ -1,12 +1,9 @@
-﻿using System;
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-public class EmigrateController  {
-
-    List<Emigrate>_emigrates=new List<Emigrate>();
-    Dictionary<string, Emigrate> _emigratesGC = new Dictionary<string, Emigrate>(); 
+public class EmigrateController
+{
+    private List<Emigrate> _emigrates = new List<Emigrate>();
+    private Dictionary<string, Emigrate> _emigratesGC = new Dictionary<string, Emigrate>();
 
     private int _lastYearChecked;
 
@@ -16,19 +13,21 @@ public class EmigrateController  {
         set { _emigrates = value; }
     }
 
-    public EmigrateController() { }
+    public EmigrateController()
+    {
+    }
 
     // Update is called once per frame
-	public void Update ()
+    public void Update()
     {
-	    if (_lastYearChecked != Program.gameScene.GameTime1.Year)
-	    {
-	        CheckOnAllEmigrates();
-	    }
-	}
-
+        if (_lastYearChecked != Program.gameScene.GameTime1.Year)
+        {
+            CheckOnAllEmigrates();
+        }
+    }
 
     private int count;
+
     private void CheckOnAllEmigrates()
     {
         if (count < _emigrates.Count)

@@ -1,6 +1,5 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using System.Collections.Generic;
 
 public class CryBridgeRoute
 {
@@ -10,32 +9,30 @@ public class CryBridgeRoute
 
     private BridgePsuedoPath _bridgePsuedoPath;
 
-
     private CryRoute _cryRoute1;
     private CryRoute _cryRoute2;
     private CryRoute _cryRoute3;
 
-    List< CryRoute > _myRoutes = new List<CryRoute>(); 
+    private List<CryRoute> _myRoutes = new List<CryRoute>();
 
     //legs to create Routes. They will be always, 1,2 sequenced
-    List<VectorLand> _legs = new List<VectorLand>();
+    private List<VectorLand> _legs = new List<VectorLand>();
+
     private Structure _ini;
     private Structure _fin;
 
     private bool _isRouteReady;
-    TheRoute _theRoute = new TheRoute();
+    private TheRoute _theRoute = new TheRoute();
     private string _destinyKey;
     private string _origenKey;
 
     private HPers _routeType = HPers.None;
-
 
     public HPers RouteType
     {
         get { return _routeType; }
         set { _routeType = value; }
     }
-
 
     public bool IsRouteReady
     {
@@ -48,7 +45,6 @@ public class CryBridgeRoute
         get { return _theRoute; }
         set { _theRoute = value; }
     }
-
 
     public CryBridgeRoute(Structure ini, Structure fin, Person person, string destinyKey, HPers routeType)
     {
@@ -66,12 +62,10 @@ public class CryBridgeRoute
         Init();
     }
 
-
     private void Init()
     {
         //NavMesh();
         //return;
-
 
         _bridgePsuedoPath = BuildingPot.Control.BridgeManager1.ReturnBestPath(_one, _two);
 
@@ -85,13 +79,12 @@ public class CryBridgeRoute
         InitIndividualRoutes();
     }
 
-
-    void NavMesh()
+    private void NavMesh()
     {
         var iniH = (Structure)_ini;
         var finH = (Structure)_fin;
 
-        //bz navmesh now this is all I needed 
+        //bz navmesh now this is all I needed
         List<CheckPoint> pts = new List<CheckPoint>()
         {
             new CheckPoint(iniH.BehindMainDoorPoint),
@@ -104,27 +97,27 @@ public class CryBridgeRoute
     }
 
     /// <summary>
-    /// Will define from _one to _two the points of the bridges in the botton icnluding _one to _two 
+    /// Will define from _one to _two the points of the bridges in the botton icnluding _one to _two
     /// </summary>
     private void FindTheLegsPoints()
     {
         var in1Bridge = FindPointInBridge(_one, H.Bottom);
         var in2Bridge = FindPointInBridge(_two, H.Bottom);
-        in2Bridge.Reverse();//need to be reversed bz is ordered from the the second land point 
+        in2Bridge.Reverse();//need to be reversed bz is ordered from the the second land point
 
         for (int i = 0; i < in1Bridge.Count; i++)
         {
-            CreateAndAddToLegs(in1Bridge[i], _bridgePsuedoPath.Bridges[0].BuildMyId, isBridgeLeg:true);
+            CreateAndAddToLegs(in1Bridge[i], _bridgePsuedoPath.Bridges[0].BuildMyId, isBridgeLeg: true);
         }
 
-        if (_bridgePsuedoPath.Bridges.Count >1)
+        if (_bridgePsuedoPath.Bridges.Count > 1)
         {
             AddSecondBridgeLegs(in2Bridge);
         }
 
         var one = CreateAndAddToLegs(_one.Position, _ini.MyId, false);
         _legs.Insert(0, one);
-        
+
         CreateAndAddToLegs(_two.Position, _fin.MyId);
 
         //Debug();
@@ -134,12 +127,12 @@ public class CryBridgeRoute
     /// Add the second brdige legs
     /// </summary>
     /// <param name="list"></param>
-    void AddSecondBridgeLegs(List<Vector3> list)
+    private void AddSecondBridgeLegs(List<Vector3> list)
     {
         for (int i = 0; i < list.Count; i++)
         {
             //will not be added if is same tht upper. will happen if there is only1 brdige
-            CreateAndAddToLegs(list[i], _bridgePsuedoPath.Bridges[1].BuildMyId, isBridgeLeg:true);
+            CreateAndAddToLegs(list[i], _bridgePsuedoPath.Bridges[1].BuildMyId, isBridgeLeg: true);
         }
     }
 
@@ -150,12 +143,12 @@ public class CryBridgeRoute
     /// <param name="buildId"></param>
     /// <param name="add">If is false will not added to legs</param>
     /// <returns>The new Vector Land</returns>
-    VectorLand CreateAndAddToLegs(Vector3 pos, string buildId, bool add=true, bool isBridgeLeg=false)
+    private VectorLand CreateAndAddToLegs(Vector3 pos, string buildId, bool add = true, bool isBridgeLeg = false)
     {
         var build = Brain.GetBuildingFromKey(buildId);
-        
+
         ////todo
-        //is the _fin or _ini being a dummy 
+        //is the _fin or _ini being a dummy
         if (build == null && buildId.Contains("Dummy"))
         {
             build = ReturnIniOrFinAsIDPass(buildId);
@@ -163,7 +156,7 @@ public class CryBridgeRoute
             //throw new Exception("Fix");
         }
 
-        //bz the Leg falls insiede the Bridge anchors 
+        //bz the Leg falls insiede the Bridge anchors
         pos = MoveItAwayABitIfBridgeRoad(build, pos, isBridgeLeg);
 
         VectorLand newVectorLand = new VectorLand();
@@ -181,12 +174,12 @@ public class CryBridgeRoute
     /// </summary>
     /// <param name="IdPass"></param>
     /// <returns></returns>
-    Structure ReturnIniOrFinAsIDPass(string IdPass)
+    private Structure ReturnIniOrFinAsIDPass(string IdPass)
     {
         if (IdPass.Contains(_fin.MyId))
         {
             return _fin;
-        } 
+        }
         if (IdPass.Contains(_ini.MyId))
         {
             return _ini;
@@ -195,22 +188,20 @@ public class CryBridgeRoute
         return null;
     }
 
-    Vector3 MoveItAwayABitIfBridgeRoad(Building b, Vector3 pos, bool isBridgeLeg)
+    private Vector3 MoveItAwayABitIfBridgeRoad(Building b, Vector3 pos, bool isBridgeLeg)
     {
         if (b.HType == H.BridgeRoad && isBridgeLeg)
         {
             var clstAnchor = Brain.ReturnClosestVector3(pos, b.Anchors);
             var distFromBotomPosToClstAnchr = Vector3.Distance(clstAnchor, pos);
 
-            //so its moves just enough to get out of acnhors taht are use to put Crsitals 
+            //so its moves just enough to get out of acnhors taht are use to put Crsitals
             return Vector3.MoveTowards(pos, b.transform.position, -distFromBotomPosToClstAnchr);
         }
         return pos;
     }
 
-
-
-    void DebugLoc()
+    private void DebugLoc()
     {
         //UVisHelp.CreateHelpers(_legs, Root.yellowCube);
         for (int i = 0; i < _legs.Count; i++)
@@ -219,7 +210,7 @@ public class CryBridgeRoute
         }
     }
 
-    List<VectorLand> AddIfsNotContain(List<VectorLand> lis, VectorLand newV)
+    private List<VectorLand> AddIfsNotContain(List<VectorLand> lis, VectorLand newV)
     {
         if (!lis.Contains(newV))
         {
@@ -229,12 +220,12 @@ public class CryBridgeRoute
     }
 
     /// <summary>
-    /// Will find the point in the bridge from that zone. ordered from that zone point on brdige 
+    /// Will find the point in the bridge from that zone. ordered from that zone point on brdige
     /// </summary>
     /// <param name="from"></param>
     /// <param name="which"></param>
     /// <returns></returns>
-    List<Vector3> FindPointInBridge(VectorLand from, H which)
+    private List<Vector3> FindPointInBridge(VectorLand from, H which)
     {
         var bridge = FindBridgeOnVectorLand(from);
 
@@ -253,12 +244,12 @@ public class CryBridgeRoute
     /// </summary>
     /// <param name="land"></param>
     /// <returns></returns>
-    Bridge FindBridgeOnVectorLand(VectorLand land)
+    private Bridge FindBridgeOnVectorLand(VectorLand land)
     {
         for (int i = 0; i < _bridgePsuedoPath.Bridges.Count; i++)
         {
             var link = _bridgePsuedoPath.Bridges[i];
-            //if has 1 with the same leg. then this is the brdige im looking for 
+            //if has 1 with the same leg. then this is the brdige im looking for
             if (link.Has1OfSameType(land.LandZone))
             {
                 var key = _bridgePsuedoPath.Bridges[i].BuildMyId;
@@ -270,7 +261,7 @@ public class CryBridgeRoute
 
     public static Bridge FromKeyToBridge(string key)
     {
-        return (Bridge) Brain.GetBuildingFromKey(key);
+        return (Bridge)Brain.GetBuildingFromKey(key);
     }
 
     /// <summary>
@@ -278,11 +269,11 @@ public class CryBridgeRoute
     /// </summary>
     private void InitIndividualRoutes()
     {
-        for (int i = 0; i < _legs.Count; i+=2)
+        for (int i = 0; i < _legs.Count; i += 2)
         {
             VectorLand uno = _legs[i];
-            VectorLand dos = _legs[i+ 1];
-            
+            VectorLand dos = _legs[i + 1];
+
             _myRoutes.Add(new CryRoute(uno, dos, _person));
         }
     }
@@ -312,10 +303,9 @@ public class CryBridgeRoute
         return fin.MyId;
     }
 
-
     public void Update()
     {
-        if (_myRoutes.Count==0)
+        if (_myRoutes.Count == 0)
         {
             return;
         }
@@ -335,7 +325,7 @@ public class CryBridgeRoute
     }
 
     /// <summary>
-    /// Will tell u if routes are done 
+    /// Will tell u if routes are done
     /// </summary>
     private void CheckIfAllDone()
     {
@@ -347,17 +337,16 @@ public class CryBridgeRoute
         //    {
         //        ConformRoute();
         //    }
-        //}    
-  
+        //}
+
         if (_myRoutes.Count == 2)
         {
             if (one && _myRoutes[1].IsRouteReady)
             {
                 ConformRoute();
             }
-
         }
-        if (_myRoutes.Count ==3)
+        if (_myRoutes.Count == 3)
         {
             if (one && _myRoutes[1].IsRouteReady && _myRoutes[2].IsRouteReady)
             {
@@ -366,22 +355,21 @@ public class CryBridgeRoute
         }
     }
 
-
-    void ConformRoute()
+    private void ConformRoute()
     {
         TheRoute.CheckPoints.AddRange(_myRoutes[0].TheRoute.CheckPoints);
         //get the tops of the brdige in same land zone as _one
 
         var botsBrid1 = FindPointInBridge(_one, H.Bottom);
         CorrectLastPointRotationAndAddNextCheckPoint(TheRoute, botsBrid1[0]);
-        
+
         var topsBrid1 = FindPointInBridge(_one, H.Top);
         CorrectLastPointRotationAndAddNextCheckPoint(TheRoute, topsBrid1[0]);
 
         HandleInPointsBridge(topsBrid1, botsBrid1, _myRoutes[1].TheRoute.CheckPoints[0].Point);
         TheRoute.CheckPoints.AddRange(_myRoutes[1].TheRoute.CheckPoints);
 
-        //if has two bridges 
+        //if has two bridges
         if (_legs.Count == 6)
         {
             var topsBrid2 = FindPointInBridge(_two, H.Top);
@@ -403,9 +391,9 @@ public class CryBridgeRoute
 
     /// <summary>
     /// Will correct the last poinst of the route rotation
-    /// 
+    ///
     /// Needed bz the last point of a route doesnt have any rotation since we didnt know wht was next
-    /// here I know wht is next so it can be added 
+    /// here I know wht is next so it can be added
     /// </summary>
     /// <param name="cryRoute"></param>
     /// <param name="vector3"></param>
@@ -416,16 +404,16 @@ public class CryBridgeRoute
 
         //removes the last
         theRoute.CheckPoints.RemoveAt(theRoute.CheckPoints.Count - 1);
-        //adds the new one 
+        //adds the new one
         theRoute.CheckPoints.Add(newCheck);
     }
 
     /// <summary>
-    /// Will Conform a new leg in the routing of bridges 
+    /// Will Conform a new leg in the routing of bridges
     /// </summary>
     /// <param name="tops">The points of top of the bridge </param>
     /// <param name="pointAfterBridge">The  exit point in the botton on the  bridge </param>
-    void HandleInPointsBridge(List<Vector3> tops, List<Vector3> bottoms, Vector3 pointAfterBridge)
+    private void HandleInPointsBridge(List<Vector3> tops, List<Vector3> bottoms, Vector3 pointAfterBridge)
     {
         var brid1stPoint = ReturnFacingTo(bottoms[0], tops[1]);
 
@@ -433,7 +421,6 @@ public class CryBridgeRoute
         var brid3rdPoint = ReturnFacingTo(tops[1], pointAfterBridge);
 
         var brid4thPoint = ReturnFacingTo(bottoms[1], pointAfterBridge);
-
 
         TheRoute.CheckPoints.Add(brid1stPoint);
         TheRoute.CheckPoints.Add(brid2ndPoint);
@@ -448,13 +435,13 @@ public class CryBridgeRoute
     /// <param name="facingTo">Point that will look at</param>
     /// <param name="iniPos">The Point of the CHeckPoint, which most of the time is the same as 'from'</param>
     /// <returns></returns>
-    CheckPoint ReturnFacingTo(Vector3 position, Vector3 facingTo)
+    private CheckPoint ReturnFacingTo(Vector3 position, Vector3 facingTo)
     {
         CheckPoint re = new CheckPoint(position);
         GameScene.dummyBlue.transform.position = position;
 
-        //so it doesnt tilt when going up or down the brdige hill 
-        //im putting in the same height on Y as the next point 
+        //so it doesnt tilt when going up or down the brdige hill
+        //im putting in the same height on Y as the next point
         GameScene.dummyBlue.transform.position = new Vector3(GameScene.dummyBlue.transform.position.x, facingTo.y, GameScene.dummyBlue.transform.position.z);
         GameScene.dummyBlue.transform.LookAt(facingTo);
 

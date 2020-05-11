@@ -5,13 +5,14 @@ using UnityEngine;
 //Created so Bridge Units can instantiate this class.
 //Structure.cs class is to specific to structures like houses
 
-public class StructureParent : Building {
-
+public class StructureParent : Building
+{
     //the plane is shown in the botton of the builiding
     protected CreatePlane basePlane;
 
     //construtction stages of a building... Stage 1 is just one plane on the bottom
     private GameObject _stage2;
+
     private GameObject _stage3;
 
     private GameObject _spawnPoint;
@@ -22,11 +23,11 @@ public class StructureParent : Building {
     //1 Plane in the ground, 2 fundition, 3 paredes palos, 4 all geometry
     protected int _currentStage;
 
-
     private Material _stagesMaterial;
 
     //Wheel
     private GameObject wheel;
+
     private bool rotateWheel;
 
     public GameObject Stage2
@@ -123,7 +124,6 @@ public class StructureParent : Building {
         }
     }
 
-
     public Vector3 BehindMainDoorPoint
     {
         get
@@ -143,17 +143,15 @@ public class StructureParent : Building {
             _behindMainDoorPoint = value;
         }
     }
-    
+
     /// <summary>
-    /// Bz the prop doesnt have a real setter 
+    /// Bz the prop doesnt have a real setter
     /// </summary>
     /// <param name="newVa"></param>
     public void SetBehindMainDoorPoint(Vector3 newVa)
     {
         _behindMainDoorPoint = newVa;
     }
-
-
 
     public Material StagesMaterial
     {
@@ -167,18 +165,16 @@ public class StructureParent : Building {
         set { _currentStage = value; }
     }
 
-   
-
     #region Working Places Prop
 
-    //For works places that have in building routes. Like fishing site 
+    //For works places that have in building routes. Like fishing site
     private Vector3 _inBuildIniPoint;
+
     private Vector3 _inBuildMidPointA;
 
     private Vector3 _inBuildWorkPoint01;
     private Vector3 _inBuildWorkPoint02;
     private Vector3 _inBuildWorkPoint03;
-
 
     public Vector3 InBuildIniPoint
     {
@@ -211,7 +207,7 @@ public class StructureParent : Building {
         get { return FindVector3IfNull(_inBuildWorkPoint03, H.InBuildWorkPoint03); }
     }
 
-    #endregion
+    #endregion Working Places Prop
 
     /// <summary>
     /// Will Determine if I need to find the position other wise wil return 'current'
@@ -219,7 +215,7 @@ public class StructureParent : Building {
     /// <param name="current"></param>
     /// <param name="byGameObjName">The child gameObj name pos Im looking for </param>
     /// <returns></returns>
-    Vector3 FindVector3IfNull(Vector3 current, H byGameObjName)
+    private Vector3 FindVector3IfNull(Vector3 current, H byGameObjName)
     {
         if (current == null || current == new Vector3())
         {
@@ -228,7 +224,7 @@ public class StructureParent : Building {
         return current;
     }
 
-    Vector3 GetVector3OnChild(H byGameObjName)
+    private Vector3 GetVector3OnChild(H byGameObjName)
     {
         return GetChildCalled(byGameObjName).transform.position;
     }
@@ -246,7 +242,7 @@ public class StructureParent : Building {
 
         obj.ClosestSubMeshVert = origen;
         if (name != "") { obj.name = name; }
-        if (container != null) { obj.transform.SetParent( container); }
+        if (container != null) { obj.transform.SetParent(container); }
 
         if (materialKey == "")
         { materialKey = hType + "." + Ma.matBuildBase; }
@@ -260,9 +256,9 @@ public class StructureParent : Building {
 
     /// <summary>
     /// Return the point inside the building opositing SpawnPoint
-    /// Needed to be the very first and last points on routes 
+    /// Needed to be the very first and last points on routes
     /// </summary>
-    Vector3 FindPointBehindDoor()
+    private Vector3 FindPointBehindDoor()
     {
         float dist = 1f;
 
@@ -282,7 +278,7 @@ public class StructureParent : Building {
 
     /// <summary>
     /// This will recreate the building satgae(1 only the base plane,2,3,4 for fully) builded .
-    /// This on is used to Load the building 
+    /// This on is used to Load the building
     /// </summary>
     protected void RecreateStage()
     {
@@ -309,7 +305,7 @@ public class StructureParent : Building {
         if ((HType == H.Mill || HType == H.SugarMill) && Instruction != H.WillBeDestroy)
         {
             GameObject wheel = GetChildLastWordIs(H.Wheel);
-            if (wheel == null) { throw new Exception("Obj doenst have obj attached called |...Wheel|");}
+            if (wheel == null) { throw new Exception("Obj doenst have obj attached called |...Wheel|"); }
 
             //print(HType + ".HType.Show" + show);
 
@@ -328,19 +324,19 @@ public class StructureParent : Building {
     protected void RotateWheel()
     {
         float speed = 0.1f * Program.gameScene.GameSpeed;
-        if (wheel == null){wheel = GetChildLastWordIs(H.Wheel);}
+        if (wheel == null) { wheel = GetChildLastWordIs(H.Wheel); }
         if (wheel != null)
         {
-            if(HType == H.SugarMill)
+            if (HType == H.SugarMill)
             {
                 wheel.transform.Rotate(new Vector3(speed, 0, 0));
             }
             else
-            wheel.transform.Rotate(new Vector3(0, 0, speed));
+                wheel.transform.Rotate(new Vector3(0, 0, speed));
         }
     }
 
-    int ReturnCurrentStageInt(H stage)
+    private int ReturnCurrentStageInt(H stage)
     {
         if (H.Stage1 == stage)
         {
@@ -362,7 +358,7 @@ public class StructureParent : Building {
     }
 
     /// <summary>
-    /// Shwo next stange of a building from stage1 to done 
+    /// Shwo next stange of a building from stage1 to done
     /// </summary>
     public virtual void ShowNextStage()
     {
@@ -393,15 +389,15 @@ public class StructureParent : Building {
     }
 
     /// <summary>
-    /// Creates a Plane for the base of the Strcuture 
+    /// Creates a Plane for the base of the Strcuture
     /// </summary>
-    void CreateBasePlane()
+    private void CreateBasePlane()
     {
         var locPoly = UPoly.ScalePoly(Anchors, 0.04f);
         basePlane = CreatePlane.CreatePlan(Root.createPlane, ReturnMatBase(), raiseFromFloor: 0.08f, container: transform);
     }
 
-    string ReturnMatBase()
+    private string ReturnMatBase()
     {
         if (MyId.Contains("Farm"))
         {
@@ -414,7 +410,7 @@ public class StructureParent : Building {
     //Resave the .StartingStage on Control.Registro.All
     public void ResaveOnRegistro(H stage, string myIdP)
     {
-        //Savign the Srating Stage on All everytime is changed here 
+        //Savign the Srating Stage on All everytime is changed here
         int index = BuildingPot.Control.Registro.AllRegFile.FindIndex(a => a.MyId == myIdP);
         BuildingPot.Control.Registro.AllRegFile[index].StartingStage = stage;
     }
@@ -423,15 +419,15 @@ public class StructureParent : Building {
     /// Handles the geomtry subobject of a structure will do the sequence of building from stage1 to done
     /// it hides and shows geomtries
     /// </summary>
-    void HandleMeshChild(H name)
+    private void HandleMeshChild(H name)
     {
-        //if its not done pay fee for using next stage 
+        //if its not done pay fee for using next stage
         if (name != H.Done)
         {
             //no fees will be payed for now. Removed bz on Stage1 a fee is payed and throws Ledger off
             //this fees are intended as a pay now to get a building finish
 
-            //NextStageFee(); 
+            //NextStageFee();
         }
 
         _startingStage = name;
@@ -441,14 +437,13 @@ public class StructureParent : Building {
 
         //if (IsDoubleBound() || IsSmallBuilding() || IsFarm())
         //{
-            Geometry.SetActive(false);
+        Geometry.SetActive(false);
         //}
         //else
         //{
         //    Geometry.SetActive(true);
         //    Geometry.GetComponent<MeshRenderer>().enabled = false;
         //}
-
 
         if (Stage2 != null) Stage2.gameObject.SetActive(false);
         if (Stage3 != null) Stage3.gameObject.SetActive(false);
@@ -468,8 +463,8 @@ public class StructureParent : Building {
             //basePlane.Geometry.renderer.material =  (Material)Resources.Load(Root.matBuildingBase2) ;
             if (Stage2 != null)
             {
-               Stage2.gameObject.SetActive(true);
-               AssignMaterialToStage(Stage2);
+                Stage2.gameObject.SetActive(true);
+                AssignMaterialToStage(Stage2);
             }
         }
         else if (name == H.Stage3)
@@ -486,7 +481,7 @@ public class StructureParent : Building {
             //Geometry.SetActive(true);
             //if (IsDoubleBound() || IsSmallBuilding() || IsFarm())
             //{
-                Geometry.SetActive(true);
+            Geometry.SetActive(true);
             //}
             //else
             //    Geometry.GetComponent<MeshRenderer>().enabled = true;
@@ -496,25 +491,25 @@ public class StructureParent : Building {
 
         //this is here bz units stuff must be saved with the bridge
         if (!HType.ToString().Contains("Unit"))
-        {ResaveOnRegistro(name, MyId);}
+        { ResaveOnRegistro(name, MyId); }
     }
 
     /// <summary>
-    /// Everytime the next stage is used a fee must be paid 
+    /// Everytime the next stage is used a fee must be paid
     /// </summary>
     private void NextStageFee()
     {
         Program.gameScene.GameController1.Dollars -= ReturnFee(HType);
     }
 
-    int ReturnFee(H typeP)
+    private int ReturnFee(H typeP)
     {
         return 500;
     }
 
     //assign the material Stage to all Stage 2 or 3 passed but a few ex
     //this is here to address the exepctions
-    void AssignMaterialToStage(GameObject passP)
+    private void AssignMaterialToStage(GameObject passP)
     {
         return;
 
@@ -530,32 +525,31 @@ public class StructureParent : Building {
         }
     }
 
-
-	// Use this for initialization
-	protected void Start ()
-	{
-        //just i know it works 
+    // Use this for initialization
+    protected void Start()
+    {
+        //just i know it works
         ToggleWheelRotate();
 
         //this is here bz gave me a null ref ex
-	    if (!HType.ToString().Contains(H.Bridge.ToString()))
-	    {
-	        Stage2.SetActive(false);
-	        Stage3.SetActive(false);
-	    }
+        if (!HType.ToString().Contains(H.Bridge.ToString()))
+        {
+            Stage2.SetActive(false);
+            Stage3.SetActive(false);
+        }
 
-	    if (HType.ToString().Contains("Unit"))
-	    {
-	        PositionFixed = true;
+        if (HType.ToString().Contains("Unit"))
+        {
+            PositionFixed = true;
             if (_startingStage == H.None)
             {
                 _startingStage = H.Stage2;
             }
-	    }
-	    
+        }
+
         base.Start();
 
-        //this is for BridgeUnits in here 
+        //this is for BridgeUnits in here
         if (PositionFixed && _currentStage == 0)
         {
             if (_startingStage != H.None && _currentStage == 0)
@@ -563,33 +557,31 @@ public class StructureParent : Building {
                 RecreateStage();
             }
         }
-	}
+    }
 
+    private bool wasBasePlaneUpdated;
 
-    bool wasBasePlaneUpdated;
-	// Update is called once per frame
+    // Update is called once per frame
     protected void Update()
     {
-	    base.Update();
+        base.Update();
 
-        if (rotateWheel) { RotateWheel();}
+        if (rotateWheel) { RotateWheel(); }
 
-
-        if (wasBasePlaneUpdated || basePlane==null)
+        if (wasBasePlaneUpdated || basePlane == null)
         {
             return;
         }
         wasBasePlaneUpdated = true;
         basePlane.UpdatePos(Anchors);
-	}
-
+    }
 
     #region Tops and Bottom of Piece 12
 
     private List<GameObject> _bottoms = new List<GameObject>();
     private List<GameObject> _tops = new List<GameObject>();
 
-    System.Random rand = new System.Random();
+    private System.Random rand = new System.Random();
     private int picked;
 
     /// <summary>
@@ -601,15 +593,15 @@ public class StructureParent : Building {
         LoadBottomsAndTops();
 
         return _bottoms[1];
-    }   
-    
+    }
+
     public Vector3 BottonIn()
     {
         LoadBottomsAndTops();
 
         return _bottoms[2].transform.position;
-    }   
-    
+    }
+
     public Vector3 BottonOut()
     {
         LoadBottomsAndTops();
@@ -631,7 +623,6 @@ public class StructureParent : Building {
         return _tops[0].transform.position;
     }
 
-
     internal GameObject TopMiddle()
     {
         LoadBottomsAndTops();
@@ -639,7 +630,7 @@ public class StructureParent : Building {
         return _tops[1];
     }
 
-    void LoadBottomsAndTops()
+    private void LoadBottomsAndTops()
     {
         if (_bottoms.Count == 0)
         {
@@ -655,8 +646,7 @@ public class StructureParent : Building {
         }
     }
 
-
-    GameObject Bottom()
+    private GameObject Bottom()
     {
         if (_bottoms.Count == 0)
         {
@@ -668,7 +658,7 @@ public class StructureParent : Building {
         return _bottoms[picked];
     }
 
-    GameObject Top()
+    private GameObject Top()
     {
         if (_tops.Count == 0)
         {
@@ -677,12 +667,12 @@ public class StructureParent : Building {
             LoadChildGameObj(_tops, H.Top03);
         }
         //bz must be the same Top and Down
-        
+
         return _tops[picked];
     }
 
     /// <summary>
-    /// Will return random row in the brdige 
+    /// Will return random row in the brdige
     /// </summary>
     /// <returns></returns>
     public GameObject[] BottomTop()
@@ -713,17 +703,10 @@ public class StructureParent : Building {
         }
     }
 
-    void LoadChildGameObj(List<GameObject> list, H typPass)
+    private void LoadChildGameObj(List<GameObject> list, H typPass)
     {
         list.Add(GetChildCalled(typPass));
     }
 
-    #endregion
-
-
-
-
-
-
-
+    #endregion Tops and Bottom of Piece 12
 }

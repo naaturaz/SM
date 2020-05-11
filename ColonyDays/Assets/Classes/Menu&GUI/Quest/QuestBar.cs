@@ -1,9 +1,9 @@
 ﻿using System;
 
-public class QuestBar: GUIElement
+public class QuestBar : GUIElement
 {
-    QuestWindow _questWin;
-    string _oldQuest;
+    private QuestWindow _questWin;
+    private string _oldQuest;
 
     private void Start()
     {
@@ -16,8 +16,8 @@ public class QuestBar: GUIElement
     internal void QuestSelected(Quest q)
     {
         _text.text = Languages.ReturnString("Current Quest:");
-        _text.text += String.Format("\n- {0}",  Languages.ReturnString(q.Key+".Title"));
-        _text.text += "\n    "+ Languages.ReturnString("Reward: ") + q.Prize.ToString("C1");
+        _text.text += String.Format("\n- {0}", Languages.ReturnString(q.Key + ".Title"));
+        _text.text += "\n    " + Languages.ReturnString("Reward: ") + q.Prize.ToString("C1");
     }
 
     private void Update()
@@ -35,7 +35,7 @@ public class QuestBar: GUIElement
             return;
         }
 
-        if(_oldQuest != q.Key)
+        if (_oldQuest != q.Key)
         {
             _oldQuest = q.Key;
             QuestSelected(q);

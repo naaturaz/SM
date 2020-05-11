@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class Button : GuiClass {
-
+public class Button : GuiClass
+{
     public Btn btnAction;
 
     internal int autoDestroyInSec = 1;
@@ -12,16 +11,17 @@ public class Button : GuiClass {
     private string _fadeDirection;
     private string _fadeState;
     private float _moveSpeed;
-    public bool isClickAble = true;//if is false wont do anything on click event 
+    public bool isClickAble = true;//if is false wont do anything on click event
 
     //use for Btn3D
     internal bool isStarting;//allows rotation and move once the object is created
+
     internal bool isDestroying;
 
     public string FadeDirection
     {
-        get {return _fadeDirection;}
-        set { _fadeDirection = value;}
+        get { return _fadeDirection; }
+        set { _fadeDirection = value; }
     }
 
     public string FadeState
@@ -30,19 +30,20 @@ public class Button : GuiClass {
         set { _fadeState = value; }
     }
 
-	// Use this for initialization
-	public void Start () {
-        base.Start();
-	}
-	
-	// Update is called once per frame
-	public void Update () 
+    // Use this for initialization
+    public void Start()
     {
-        if(isAutoDestroy)
-        { AutoDestroy(); }
-	}
+        base.Start();
+    }
 
-    void AutoDestroy()
+    // Update is called once per frame
+    public void Update()
+    {
+        if (isAutoDestroy)
+        { AutoDestroy(); }
+    }
+
+    private void AutoDestroy()
     {
         if (Time.time > destroyStartTime + autoDestroyInSec)
         {
@@ -101,7 +102,6 @@ public class Button : GuiClass {
         return targetMatchValue;
     }
 
-
     ///will fade color in objects
     ///so far includes:
     ///     1 - guiText,
@@ -137,7 +137,7 @@ public class Button : GuiClass {
         }
     }
 
-    public void Destroyer(bool isToDestroyInmediate = false)    
+    public void Destroyer(bool isToDestroyInmediate = false)
     {
         isStarting = false;//needs to be false when we kill so moveTo InitialPosition
         isDestroying = true;//
@@ -155,5 +155,4 @@ public class Button : GuiClass {
             Destroy(gameObject);
         }
     }
-
 }

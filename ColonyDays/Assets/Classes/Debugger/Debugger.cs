@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 internal class Debugger : MonoBehaviour
 {
@@ -23,7 +22,6 @@ internal class Debugger : MonoBehaviour
             Save = false;
             PlayerPrefs.SetString("Target", Target);
             Debug.Log("Saved:=> Target:" + Target);
-
         }
     }
 }

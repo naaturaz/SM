@@ -1,11 +1,10 @@
 ﻿/*
  * IMPORTANT: IF LANDZONES ARE NOT SET THE ROUTING SYSTEM WONT WORK
- * 
- * 
+ *
+ *
  */
 
 using System;
-using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
 
@@ -17,8 +16,8 @@ public class CryRouteManager
     private VectorLand _two;
 
     private CryRoute _cryRoute = new CryRoute();
-    CryBridgeRoute _cryBridgeRoute ;
-    
+    private CryBridgeRoute _cryBridgeRoute;
+
     private bool _isRouteReady;
     private TheRoute _theRoute = new TheRoute();
     private Structure _ini;
@@ -30,13 +29,13 @@ public class CryRouteManager
     private string _destinyKey;//to be added to TheRoute obj
     private string _originKey;//to be added to TheRoute obj
 
-    void SetIsRouteReady(bool val)
+    private void SetIsRouteReady(bool val)
     {
         _isRouteReady = val;
         _cryRoute.IsRouteReady = val;
     }
 
-    void SetTheRoute(TheRoute val)
+    private void SetTheRoute(TheRoute val)
     {
         _cryRoute = new CryRoute();
         _cryRoute.TheRoute = val;
@@ -67,14 +66,16 @@ public class CryRouteManager
         set { _originKey = value; }
     }
 
-    public CryRouteManager(){}
+    public CryRouteManager()
+    {
+    }
 
     private DateTime _askDateTime;
 
     public CryRouteManager(Structure ini, Structure fin, Person person,
         HPers routeType = HPers.None, bool iniDoor = true, bool finDoor = true, DateTime askDateTime = new DateTime())
     {
-        //so profession routes are not redone everytime 
+        //so profession routes are not redone everytime
         //if (askDateTime == new DateTime())
         //{
         //    askDateTime=DateTime.Now;
@@ -83,7 +84,7 @@ public class CryRouteManager
         _askDateTime = askDateTime;
         _originKey = ini.MyId;
         _destinyKey = fin.MyId;
-        
+
         _iniDoor = iniDoor;
         _finDoor = finDoor;
 
@@ -91,20 +92,20 @@ public class CryRouteManager
         _person = person;
 
         DefineOneAndTwo(ini, fin);
-        
+
         _ini = ini;
         _fin = fin;
 
         if (ini == fin)
         {
-           //Debug.Log("Same ini-fin:"+ini.MyId+" . "+person.MyId);
+            //Debug.Log("Same ini-fin:"+ini.MyId+" . "+person.MyId);
         }
 
         ClearOldVars();
         Init();
     }
 
-    void DefineOneAndTwo(Structure ini, Structure fin)
+    private void DefineOneAndTwo(Structure ini, Structure fin)
     {
         if (ini != null && ini.LandZone1.Count > 0)
         {
@@ -113,8 +114,8 @@ public class CryRouteManager
         else
         {
             _one = new VectorLand("", ini.transform.position);
-        }        
-        
+        }
+
         if (fin != null && fin.LandZone1.Count > 0)
         {
             _two = fin.LandZone1[0];
@@ -144,13 +145,11 @@ public class CryRouteManager
         //will stop a lot of instances where the landzone is not being initiated
         if (_one.LandZone == "" || _two.LandZone == "")
         {
-            throw new Exception("One Routing was stopped bz 1 or more Lanzones were empty"+" oneLandZ:"+_one.LandZone+
-            " twoLandZ:"+_two.LandZone);
-           //Debug.Log("One Routing was stopped bz 1 or more Lanzones were empty");
+            throw new Exception("One Routing was stopped bz 1 or more Lanzones were empty" + " oneLandZ:" + _one.LandZone +
+            " twoLandZ:" + _two.LandZone);
+            //Debug.Log("One Routing was stopped bz 1 or more Lanzones were empty");
             return;
         }
-
-
 
         if (PersonPot.Control.RoutesCache1.ContainANewerOrSameRoute(_ini.MyId, _fin.MyId, _askDateTime)
             && string.IsNullOrEmpty(_person.IsBooked))
@@ -163,25 +162,23 @@ public class CryRouteManager
         }
     }
 
-
     #region Cache Route
 
     private TheRoute tempTheRoute;//will hold the route for a bit until is realeased on Fake()
+
     private void WeHaveAnExisitingRoute()
     {
-        //so it doesnt reference 
+        //so it doesnt reference
         tempTheRoute = new TheRoute();
-        
+
         //GameScene.print("We have exisint route "+_person.MyId+" o:"+OriginKey + " d:"+DestinyKey + " askT:" +_askDateTime);
         tempTheRoute = PersonPot.Control.RoutesCache1.GiveMeTheNewerRoute();
         time = Time.time;
-
-
     }
 
     private void WeHaveToCreateTheRoute()
     {
-       //GameScene.print("We have to create new route " + _person.MyId + " o:" + OriginKey + " d:" + DestinyKey + " askT:" + _askDateTime);
+        //GameScene.print("We have to create new route " + _person.MyId + " o:" + OriginKey + " d:" + DestinyKey + " askT:" + _askDateTime);
 
         if (_one.LandZone != _two.LandZone)
         {
@@ -196,9 +193,10 @@ public class CryRouteManager
     }
 
     private float time;
+
     /// <summary>
     /// Crated to fake the time of giving a route ready... bz the brain is set tht a router will take a bit
-    /// too finish a route. This is to use it with the existing routes 
+    /// too finish a route. This is to use it with the existing routes
     /// </summary>
     private void FakeRealRoute()
     {
@@ -218,9 +216,9 @@ public class CryRouteManager
         }
     }
 
-#endregion
+    #endregion Cache Route
 
-    public void Update () 
+    public void Update()
     {
         if (_cryRoute != null && !_isRouteReady)
         {
@@ -231,7 +229,7 @@ public class CryRouteManager
                 _isRouteReady = true;
                 _theRoute = _cryRoute.TheRoute;
 
-                //calling here so at least is there already even if has not the inverse Route set 
+                //calling here so at least is there already even if has not the inverse Route set
                 PersonPot.Control.RoutesCache1.AddReplaceRoute(_theRoute);
                 SetFinalRouteOnBrain();
             }
@@ -246,22 +244,19 @@ public class CryRouteManager
                 _isRouteReady = true;
                 _theRoute = _cryBridgeRoute.TheRoute;
 
-                //calling here so at least is there already even if has not the inverse Route set 
+                //calling here so at least is there already even if has not the inverse Route set
                 PersonPot.Control.RoutesCache1.AddReplaceRoute(_theRoute);
                 SetFinalRouteOnBrain();
             }
         }
 
         FakeRealRoute();
-
-	}
-
-
+    }
 
     [XmlIgnoreAttribute]
     public EventHandler<EventArgs> DoneRoute;
 
-    void OnDoneRoute(EventArgs e)
+    private void OnDoneRoute(EventArgs e)
     {
         if (DoneRoute != null)
         {
@@ -269,7 +264,7 @@ public class CryRouteManager
         }
     }
 
-    void SetFinalRouteOnBrain()
+    private void SetFinalRouteOnBrain()
     {
         OnDoneRoute(EventArgs.Empty);
     }

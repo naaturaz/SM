@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 //for render utility
 public class URender : MonoBehaviour
 {
-    public static void AssignMaterialToGObj(GameObject goPass, Material mPass0, Material mPass1, 
+    public static void AssignMaterialToGObj(GameObject goPass, Material mPass0, Material mPass1,
         Material mPass2 = null)
     {
         Material[] pass = { mPass0, mPass1, mPass2 };

@@ -1,14 +1,15 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 /*The bulidings new RegFiles are created on Registro.AddBuildToAll()
  */
+
 public class BuildingSaveLoad : BuildingPot
 {
     private int counter;//the counter of buildigns being recreated
     private BuildingData _buildingData;
-    private bool _isToRecreateNow;//if true is Loading Buildings 
+    private bool _isToRecreateNow;//if true is Loading Buildings
 
     public BuildingData BuildingData
     {
@@ -36,7 +37,7 @@ public class BuildingSaveLoad : BuildingPot
         BuildingData = XMLSerie.ReadXMLBuilding();
         if (BuildingData != null)
         {
-            counter = 0;//in case something was loaded first 
+            counter = 0;//in case something was loaded first
             _isToRecreateNow = true;
             Control.Registro.AllRegFile = BuildingData.All;
         }
@@ -44,10 +45,8 @@ public class BuildingSaveLoad : BuildingPot
         else CreatePersonPot();
     }
 
-
-
     /// <summary>
-    /// Recreate all the buildings that are in the BuildingData.All 
+    /// Recreate all the buildings that are in the BuildingData.All
     /// which were read it from  XMLSerie.ReadXMLBuilding()
     /// </summary>
     public void LoadAllBuildings()
@@ -65,19 +64,18 @@ public class BuildingSaveLoad : BuildingPot
             Control.CurrentSpawnBuild = null;
             CreatePersonPot();
 
-            //the pos where cam was last saved by system 
-
+            //the pos where cam was last saved by system
         }
     }
 
     /// <summary>
     /// Game is fully loaded will:
     /// </summary>
-    void CreatePersonPot()
+    private void CreatePersonPot()
     {
         BuildingPot.Control.Registro.IsFullyLoaded = true;
 
-        //The person pot creating is called when we loaded all buildings 
+        //The person pot creating is called when we loaded all buildings
         Program.InputMain.CreatePersonPot();
 
         Program.gameScene.GameController1.NotificationsManagerInit();
@@ -85,15 +83,14 @@ public class BuildingSaveLoad : BuildingPot
         CamControl.CAMRTS.ReportAudioNow();
 
         Program.gameScene.BatchInitial();
-
     }
 
     /// <summary>
     /// Routine that create all the building based on the category
-    /// that regFile brings 
+    /// that regFile brings
     /// </summary>
     /// <param name="regFile">The file that has all the information to load a new building</param>
-    void CreateAllBuildings(RegFile regFile)
+    private void CreateAllBuildings(RegFile regFile)
     {
         if (regFile.Category == Ca.Structure || regFile.Category == Ca.Shore)
         {
@@ -103,7 +100,7 @@ public class BuildingSaveLoad : BuildingPot
         {
             CreateWay(regFile);
         }
-        else if(regFile.Category == Ca.DraggableSquare)
+        else if (regFile.Category == Ca.DraggableSquare)
         {
             CreateDraggableSquare(regFile);
         }
@@ -112,7 +109,7 @@ public class BuildingSaveLoad : BuildingPot
     /// <summary>
     /// Will create a draggable category building (Farm, StockPile, Farm)
     /// </summary>
-    void CreateDraggableSquare(RegFile regFile)
+    private void CreateDraggableSquare(RegFile regFile)
     {
         Control.CurrentSpawnBuild = Way.CreateWayObj(Root.farm, regFile.IniPos,
             previewObjRoot: Root.previewTrail, hType: regFile.HType, isLoadingFromFile: true
@@ -121,17 +118,14 @@ public class BuildingSaveLoad : BuildingPot
         Control.CurrentSpawnBuild.MyId = regFile.MyId;
         Control.CurrentSpawnBuild.transform.name = regFile.MyId;
 
-        DragSquare f = (DragSquare) Control.CurrentSpawnBuild;
+        DragSquare f = (DragSquare)Control.CurrentSpawnBuild;
         f.PlanesSoil = CreatePlanes(regFile.PlaneOnAirPos, f.transform, regFile.TileScale, regFile.MaterialKey, Control.CurrentSpawnBuild);
-
-
 
         f.AddBoxCollider(regFile);
         f.PositionFixed = true;
         f.PeopleDict = regFile.PeopleDict;
 
         f.transform.position = regFile.IniPos;
-
 
         Program.gameScene.BatchAdd(f);
 
@@ -142,28 +136,26 @@ public class BuildingSaveLoad : BuildingPot
     /// <summary>
     /// Creates the plane of pos lineanly
     /// </summary>
-    List<CreatePlane> CreatePlanes(List<Vector3> pos, Transform containerP, Vector3 scaleP, string materialKey, Building spawner)
+    private List<CreatePlane> CreatePlanes(List<Vector3> pos, Transform containerP, Vector3 scaleP, string materialKey, Building spawner)
     {
         List<CreatePlane> res = new List<CreatePlane>();
         for (int i = 0; i < pos.Count; i++)
         {
             if (spawner.HType == H.Road)
             {
-                res.Add(CreatePlane.CreatePlanSmartTile(spawner,Root.createPlane, Root.RetMaterialRoot(materialKey),
-                 pos[i], scale: scaleP, container: containerP, isLoadingFromFile:true));
+                res.Add(CreatePlane.CreatePlanSmartTile(spawner, Root.createPlane, Root.RetMaterialRoot(materialKey),
+                 pos[i], scale: scaleP, container: containerP, isLoadingFromFile: true));
             }
             else
             {
                 res.Add(CreatePlane.CreatePlan(Root.createPlane, Root.RetMaterialRoot(materialKey),
                  pos[i], scale: scaleP, container: containerP));
             }
-
-
         }
         return res;
     }
 
-    string FindRootForStructure(RegFile regFile)
+    private string FindRootForStructure(RegFile regFile)
     {
         if (!string.IsNullOrEmpty(regFile.Root))
         {
@@ -175,12 +167,12 @@ public class BuildingSaveLoad : BuildingPot
     /// <summary>
     /// Creates the the new building, category: structure
     /// </summary>
-    void CreateStructure(RegFile regFile)
+    private void CreateStructure(RegFile regFile)
     {
-        Control.CurrentSpawnBuild = Building.CreateBuild(FindRootForStructure(regFile), regFile.IniPos, 
+        Control.CurrentSpawnBuild = Building.CreateBuild(FindRootForStructure(regFile), regFile.IniPos,
             regFile.HType, isLoadingFromFile: true, materialKey: regFile.MaterialKey
             , container: Program.BuildsContainer.transform);
-            
+
         //this is part of the Reduce Draw calls experiment
         //Material n = Batcher.BuildsStatic[H.Tavern + "." + Ma.matBuildBase];
         //n.name = "BaseOriginalRenamed";
@@ -195,13 +187,12 @@ public class BuildingSaveLoad : BuildingPot
         s.Category = regFile.Category;
         s.RotationFacerIndex = regFile.RotationFacerIndex;
         s.PositionFixed = true;
-        
+
         s.Inventory = regFile.Inventory;
 
         s.Instruction = regFile.Instruction;
         s.PeopleDict = regFile.PeopleDict;
         s.BookedHome1 = regFile.BookedHome1;
-
 
         s.Dispatch1 = regFile.Dispatch1;
 
@@ -209,7 +200,6 @@ public class BuildingSaveLoad : BuildingPot
         {
             var a = 1;
         }
- 
 
         s.BuildersManager1 = regFile.BuildersManager1;
         s.Families = regFile.Familes;
@@ -232,10 +222,11 @@ public class BuildingSaveLoad : BuildingPot
     }
 
     private Trail trail;
+
     /// <summary>
-    /// Creates a new way object 
+    /// Creates a new way object
     /// </summary>
-    void CreateWay(RegFile regFile)
+    private void CreateWay(RegFile regFile)
     {
         if (regFile.HType == H.Trail)
         {
@@ -245,10 +236,10 @@ public class BuildingSaveLoad : BuildingPot
         }
         else if (regFile.HType == H.BridgeTrail)
         {
-             trail = (Bridge)
-                Way.CreateWayObj(Root.bridge, regFile.IniPos, previewObjRoot: Root.previewTrail,
-                hType: H.BridgeTrail, isLoadingFromFile: true
-                , container: Program.BuildsContainer.transform);
+            trail = (Bridge)
+               Way.CreateWayObj(Root.bridge, regFile.IniPos, previewObjRoot: Root.previewTrail,
+               hType: H.BridgeTrail, isLoadingFromFile: true
+               , container: Program.BuildsContainer.transform);
         }
         else if (regFile.HType == H.BridgeRoad)
         {
@@ -278,7 +269,7 @@ public class BuildingSaveLoad : BuildingPot
         //if (trail.name.Contains("Bridge"))
         //{
         //    UVisHelp.CreateHelpers(trail.Anchors, Root.blueCube);
-            
+
         //}
 
         trail.StartingStage = regFile.StartingStage;
@@ -297,7 +288,7 @@ public class BuildingSaveLoad : BuildingPot
         }
 
         Program.gameScene.BatchAdd(trail);
-        
+
         Control.CurrentSpawnBuild = trail;
         Control.Registro.Ways.Add(trail.MyId, Control.CurrentSpawnBuild as Way);
         Control.Registro.AllBuilding.Add(trail.MyId, Control.CurrentSpawnBuild);
@@ -307,7 +298,7 @@ public class BuildingSaveLoad : BuildingPot
     /// <summary>
     /// Creates the planes of a bridge, The first and last one
     /// </summary>
-    Trail CreateBridgePlanes(Trail current, RegFile regFile)
+    private Trail CreateBridgePlanes(Trail current, RegFile regFile)
     {
         if (regFile.DominantSide == H.Vertic)
         {
@@ -338,10 +329,10 @@ public class BuildingSaveLoad : BuildingPot
     /// Creates the  parts of a bridge visualiiy
     /// </summary>
     /// <param name="iniPos"></param>
-    List<StructureParent> CreateBridgePartList(RegFile regFile, Transform containerP)
+    private List<StructureParent> CreateBridgePartList(RegFile regFile, Transform containerP)
     {
         List<StructureParent> res = new List<StructureParent>();
-        //below brdige instance is a dummy instance. Only useed to instantiate parts 
+        //below brdige instance is a dummy instance. Only useed to instantiate parts
         Bridge b = new Bridge(regFile.HType, regFile.StartingStage);
         res = b.CreatePartListOnAir(regFile.PlaneOnAirPos, regFile.PartsOnAir, containerP, regFile.DominantSide);
         res.AddRange(b.CreatePartListOnGround(regFile.PlanesOnSoil, regFile.PartsOnSoil, containerP, regFile.DominantSide));
@@ -349,7 +340,7 @@ public class BuildingSaveLoad : BuildingPot
     }
 
     //this cretes planes vertically and horizontally
-    List<CreatePlane> CreatePlanesVertAndHor(RegFile regFile, H which, Transform containerP, Trail trail)
+    private List<CreatePlane> CreatePlanesVertAndHor(RegFile regFile, H which, Transform containerP, Trail trail)
     {
         List<CreatePlane> res = new List<CreatePlane>();
         if (which == H.Vertic)
@@ -380,23 +371,25 @@ public class BuildingSaveLoad : BuildingPot
     }
 
     // Use this for initialization
-	void Start (){}
-	
-	// Update is called once per frame
-	public void Update () 
-    {
-	    if (_isToRecreateNow)
-	    {
-	        LoadBuildingController();
-	        LoadAllBuildings();
-	    }
-	}
+    private void Start()
+    { }
 
-    #region Save Load 
+    // Update is called once per frame
+    public void Update()
+    {
+        if (_isToRecreateNow)
+        {
+            LoadBuildingController();
+            LoadAllBuildings();
+        }
+    }
+
+    #region Save Load
+
     //Save Load Building Controller .cs
 
     //For Saving
-    BuildingControllerData PullAllVarFromBuildingController()
+    private BuildingControllerData PullAllVarFromBuildingController()
     {
         BuildingControllerData res = new BuildingControllerData();
 
@@ -444,23 +437,22 @@ public class BuildingSaveLoad : BuildingPot
 
         if (BuildingData.BuildingControllerData.DispatchManager1 != null)
         {
-            Control.DispatchManager1 = BuildingData.BuildingControllerData.DispatchManager1;    
+            Control.DispatchManager1 = BuildingData.BuildingControllerData.DispatchManager1;
         }
 
         if (BuildingData.BuildingControllerData._GameTime != null)
         {
-            Program.gameScene.GameTime1 = BuildingData.BuildingControllerData._GameTime;    
+            Program.gameScene.GameTime1 = BuildingData.BuildingControllerData._GameTime;
         }
         if (BuildingData.BuildingControllerData.GameTimePeople != null)
         {
-            Program.gameScene.GameTimePeople = BuildingData.BuildingControllerData.GameTimePeople;    
+            Program.gameScene.GameTimePeople = BuildingData.BuildingControllerData.GameTimePeople;
         }
 
         if (BuildingData.BuildingControllerData._GameController != null)
         {
             Program.gameScene.GameController1 = BuildingData.BuildingControllerData._GameController;
         }
-
 
         if (BuildingData.BuildingControllerData.DockManager1 != null)
         {
@@ -470,23 +462,22 @@ public class BuildingSaveLoad : BuildingPot
         {
             Control.ShipManager1 = BuildingData.BuildingControllerData.ShipManager1;
         }
-        if (Control.ShipManager1!=null)
+        if (Control.ShipManager1 != null)
         {
             Control.ShipManager1.MarkToLoadShips();
         }
 
         var type = BuildingData.BuildingControllerData.TypeOfGame;
-        if (type != H.None)//loaded default town 
+        if (type != H.None)//loaded default town
         {
             Program.TypeOfGame = type;
         }
-
-
     }
-    #endregion
+
+    #endregion Save Load
 
     /// <summary>
-    /// Will say if that building was loaded from File 
+    /// Will say if that building was loaded from File
     /// </summary>
     /// <param name="build"></param>
     /// <returns></returns>

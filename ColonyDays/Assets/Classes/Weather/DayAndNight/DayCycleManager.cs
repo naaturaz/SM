@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
-
+﻿using UnityEngine;
 
 public class DayCycleManager : MonoBehaviour
 {
-    void Start()
+    private void Start()
     {
-
     }
 
-    void Update()
+    private void Update()
     {
-
     }
 }
-

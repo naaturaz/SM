@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
-
 
 public class BatchManager
 {
     //here with an Int that is the CrystalRegion you can find to which Batch Region you belong to
-    //mostly to be use by semiOpaque 
-    Dictionary<int, string> _semiIndeces = new Dictionary<int, string>();  
+    //mostly to be use by semiOpaque
+    private Dictionary<int, string> _semiIndeces = new Dictionary<int, string>();
 
     //stirng is the ID
-    Dictionary<string, BatchRegion> _batchRegions = new Dictionary<string, BatchRegion>();
+    private Dictionary<string, BatchRegion> _batchRegions = new Dictionary<string, BatchRegion>();
 
     //the Opaque region is open to add more GameObj
     private string _openOpaque;
@@ -50,7 +47,7 @@ public class BatchManager
         //the last 2 never get to the 'else'
         Set2BatchRegions(idH, regions, dict);
         //Debug.Log("_semiIndeces ct:" + _semiIndeces.Count + ". Cryst.Regions ct:" +
-            //MeshController.CrystalManager1.CrystalRegions.Count);
+        //MeshController.CrystalManager1.CrystalRegions.Count);
     }
 
     /// <summary>
@@ -68,7 +65,7 @@ public class BatchManager
     }
 
     /// <summary>
-    /// means we are working on the creation of a new terrain 
+    /// means we are working on the creation of a new terrain
     /// </summary>
     /// <returns></returns>
     public bool IsABrandNewTerrain()
@@ -108,7 +105,7 @@ public class BatchManager
             Structure st = (Structure)go;
             if (st.StartingStage != H.Done && st.CurrentStage != 4)
             {
-                //only will add fully finished buildings 
+                //only will add fully finished buildings
                 return;
             }
             HandleCurrentOpenRegion("Opaque");
@@ -116,7 +113,7 @@ public class BatchManager
         }
         else if (go.Category == Ca.DraggableSquare)
         {
-            //adding only the blocks that contain the roads 
+            //adding only the blocks that contain the roads
             if (!go.MyId.Contains("Create_Plane"))
             {
                 return;
@@ -127,7 +124,7 @@ public class BatchManager
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="gen"></param>
     /// <param name="redo">redo batching again</param>
@@ -142,8 +139,8 @@ public class BatchManager
         _batchRegions[gen.BatchRegionId].Remove(gen, redo);
     }
 
-
     private int lastNewOpaque;
+
     private void HandleCurrentOpenRegion(string name)
     {
         //first region of its type
@@ -164,16 +161,10 @@ public class BatchManager
         }
     }
 
-    void CreateNewOpenRegion()
+    private void CreateNewOpenRegion()
     {
         _batchRegions.Add(_openOpaque, new BatchRegion(_openOpaque));
     }
-
-
-
-
-
-
 
     internal void BatchInitial()
     {
@@ -181,8 +172,8 @@ public class BatchManager
         {
             _batchRegions.ElementAt(i).Value.DecideIfRedoBatch();
         }
-    }    
-    
+    }
+
     internal void BatchDestroy()
     {
         for (int i = 0; i < _batchRegions.Count; i++)
@@ -190,9 +181,7 @@ public class BatchManager
             if (_batchRegions.ElementAt(i).Value.IsAlive())
             {
                 _batchRegions.ElementAt(i).Value.Destroy();
-                
             }
-
         }
     }
 
@@ -206,7 +195,4 @@ public class BatchManager
             item.Value.ScaleBatchedGO(addScale);
         }
     }
-
- 
 }
-

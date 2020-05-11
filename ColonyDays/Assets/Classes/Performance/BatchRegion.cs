@@ -1,26 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 
 /*
  * For deal with Trees (SemiOpaque) material will do regions that are 4 CrystalRegions.
  * Will incluse all Decora, Rocks, bz they are in the same Material
  * The roof of a Bohio should come into this too. Since the Material is SemiOpaque
- * 
+ *
  * For Opaque, Buildings etc, will do BatchRegions until they the Vertices count is 30K
- * 
+ *
  */
 
 public class BatchRegion
 {
     private string _id;
     private General _batchMaster;
-    GameObject[] _all = new GameObject[1500];
+    private GameObject[] _all = new GameObject[1500];
 
     //the object ID and the INT in the array
-    Dictionary<string, int> _keymap = new Dictionary<string, int>();
+    private Dictionary<string, int> _keymap = new Dictionary<string, int>();
 
     private int _totalVertices;
     private int _emptySpot;
@@ -30,7 +29,7 @@ public class BatchRegion
         this._id = id;
     }
 
-    int ReturnVertices(GameObject go, string id)
+    private int ReturnVertices(GameObject go, string id)
     {
         var meshF = go.GetComponent<MeshFilter>();
 
@@ -47,13 +46,11 @@ public class BatchRegion
         return 1000;
     }
 
-
-
-    void AddToAll(GameObject go, string id)
+    private void AddToAll(GameObject go, string id)
     {
         //todo Label Correctly object u want to put in here when Opaque
         //now Mansory has C Main as main and has a lot of subOjects . wont pass bz : meshF == null
-        if (go == null || go.transform == null)//if meshF == null is a 'Main' with subOjects in it 
+        if (go == null || go.transform == null)//if meshF == null is a 'Main' with subOjects in it
         {
             return;
         }
@@ -71,7 +68,7 @@ public class BatchRegion
         DefineNextEmptySpot();
     }
 
-    string ReturnProperID(General go)
+    private string ReturnProperID(General go)
     {
         if (go.Category == Ca.Spawn)
         {
@@ -81,11 +78,11 @@ public class BatchRegion
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="go"></param>
     /// <param name="destroyGameObj">If true will destroy the game object is going to be removed</param>
-    void RemoveFromAll(General go, bool destroyGameObj = false)
+    private void RemoveFromAll(General go, bool destroyGameObj = false)
     {
         var myID = ReturnProperID(go);
         var indexes = _keymap.Where(a => a.Key.Contains(myID)).OrderBy(a => a.Value).ToList();
@@ -101,7 +98,7 @@ public class BatchRegion
             var index = indexes[i].Value;
             var key = indexes[i].Key;
 
-            //so it seen 
+            //so it seen
             _all[index].SetActive(true);
             ActivateAllChildsObj(_all[index]);
             //asign it back to original gamebject
@@ -115,8 +112,6 @@ public class BatchRegion
 
             _all[index] = null;
             _keymap.Remove(key);
-
-
         }
     }
 
@@ -149,7 +144,7 @@ public class BatchRegion
                 RemoveFromAll(go, true);
                 DecideIfRedoBatch();
             }
-            //bz Strcuture calls twice 
+            //bz Strcuture calls twice
             else if (_keymap.ContainsKey(go.MyId))
             {
                 return;
@@ -172,18 +167,16 @@ public class BatchRegion
         }
     }
 
-    GameObject ReturnObjectToMeshUp(General go)
+    private GameObject ReturnObjectToMeshUp(General go)
     {
         if (go.Category == Ca.DraggableSquare)
         {
-            //returning the first son of the first son. bz on smartCreatePlanes is like that 
+            //returning the first son of the first son. bz on smartCreatePlanes is like that
             return go.transform.GetChild(1).transform.GetChild(0).gameObject;
         }
 
         return go.Geometry.gameObject;
     }
-
-
 
     private void FindAllChildObjectsAndAddThem(General go)
     {
@@ -196,24 +189,23 @@ public class BatchRegion
     }
 
     /// <summary>
-    /// bz techos de guano needs has alphaAtlas material 
+    /// bz techos de guano needs has alphaAtlas material
     /// </summary>
     /// <param name="geometry"></param>
     /// <param name="mainGen"></param>
-    void InspectGameObject(GameObject geometry, General mainGen)
+    private void InspectGameObject(GameObject geometry, General mainGen)
     {
         var subs = General.FindAllChildsGameObjectInHierarchy(geometry);
 
         for (int i = 0; i < subs.Length; i++)
         {
-            //if is a roof will take it back 
+            //if is a roof will take it back
             if (subs[i].name.Contains("Guano"))
             {
                 subs[i].transform.SetParent(mainGen.transform);
             }
         }
     }
-
 
     internal void Remove(General go, bool redo = true)
     {
@@ -233,8 +225,8 @@ public class BatchRegion
         return false;
     }
 
-
     private SPr p = new SPr();
+
     public void DecideIfRedoBatch()
     {
         //soi buildings dont do anything while they are being aded
@@ -251,7 +243,7 @@ public class BatchRegion
                 //if is child of batchMaster needs to get off him. need to ask tht in case a object has subobjects
                 if (child[i].transform.parent == _batchMaster.transform)
                 {
-                    //so doesnt get wiped when destoryed 
+                    //so doesnt get wiped when destoryed
                     child[i].transform.SetParent(null);
                 }
             }
@@ -268,13 +260,13 @@ public class BatchRegion
         CreateBatchMesh();
     }
 
-
     private static int highestInd;
     private static int highestVert;
+
     /// <summary>
     /// Kepps the highes array used
     /// </summary>
-    void StatKeeper(int newVal)
+    private void StatKeeper(int newVal)
     {
         if (newVal > highestInd)
         {
@@ -288,7 +280,7 @@ public class BatchRegion
         }
     }
 
-    void CreateBatchMesh()
+    private void CreateBatchMesh()
     {
         if (_batchMaster == null)
         {
@@ -301,7 +293,7 @@ public class BatchRegion
         {
             if (_all[i] == null && nullCt > 99)
             {
-                //at 10 cts in a round of null means the last of the Array was reached 
+                //at 10 cts in a round of null means the last of the Array was reached
                 StatKeeper(i - 100);
                 break;
             }
@@ -319,7 +311,7 @@ public class BatchRegion
         CombineMeshes(_batchMaster.gameObject, ReturnProperMaterial());
     }
 
-    Material ReturnProperMaterial()
+    private Material ReturnProperMaterial()
     {
         if (_id.Contains("Opaque"))
         {
@@ -337,10 +329,10 @@ public class BatchRegion
     }
 
     /// <summary>
-    /// In case an GameObj has child they need to be activate 
+    /// In case an GameObj has child they need to be activate
     /// </summary>
     /// <param name="go"></param>
-    void ActivateAllChildsObj(GameObject go)
+    private void ActivateAllChildsObj(GameObject go)
     {
         var child = General.FindAllChildsGameObjectInHierarchy(go);
 
@@ -350,7 +342,7 @@ public class BatchRegion
         }
     }
 
-    void CombineMeshes(GameObject onGO, Material mat)
+    private void CombineMeshes(GameObject onGO, Material mat)
     {
         //Zero transformation is needed because of localToWorldMatrix transform
         Vector3 position = onGO.transform.position;
@@ -361,7 +353,7 @@ public class BatchRegion
         MeshFilter[] meshFilters = onGO.GetComponentsInChildren<MeshFilter>();
         CombineInstance[] combine = new CombineInstance[meshFilters.Length];
 
-        //to avoid Combine mesh instance 0 is null. 
+        //to avoid Combine mesh instance 0 is null.
         if (_totalVertices == 0 || meshFilters.Length == 0 || combine.Length == 0)
         {
             return;
@@ -387,7 +379,6 @@ public class BatchRegion
 
     internal void Destroy()
     {
-
         _batchMaster.Destroy();
         _batchMaster = null;
 
@@ -406,14 +397,11 @@ public class BatchRegion
         return _batchMaster != null;
     }
 
-
-
-
-
     #region Scale _batchMaster
 
-    float _scaleYCap = 2f;
-    General _batchPivotContainer;//created so the pivot point is in the middle of this
+    private float _scaleYCap = 2f;
+    private General _batchPivotContainer;//created so the pivot point is in the middle of this
+
     /// <summary>
     /// Will scale the Combined Mesh GameObj
     /// </summary>
@@ -435,7 +423,7 @@ public class BatchRegion
             return;
         }
 
-        //now I scale the Pivot GO that contains the _batchMaster inside 
+        //now I scale the Pivot GO that contains the _batchMaster inside
         var parent = _batchPivotContainer.gameObject.transform.parent;
         _batchPivotContainer.gameObject.transform.SetParent(null);
 
@@ -452,6 +440,6 @@ public class BatchRegion
             _batchMaster.name + ".Pivot",
             _batchMaster.transform.parent.transform);
     }
-    #endregion
-}
 
+    #endregion Scale _batchMaster
+}

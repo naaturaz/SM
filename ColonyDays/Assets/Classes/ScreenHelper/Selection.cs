@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class SelectionGO : General {
-
-    int _indexAllVertex;
+public class SelectionGO : General
+{
+    private int _indexAllVertex;
 
     public int IndexAllVertex
     {
@@ -12,14 +11,14 @@ public class SelectionGO : General {
     }
 
     // Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    private void Start()
+    {
+    }
+
+    // Update is called once per frame
+    private void Update()
+    {
+    }
 
     public int AllVertexIndex;//this is the correspondent allvertex index
 
@@ -31,7 +30,7 @@ public class SelectionGO : General {
         obj = (SelectionGO)Resources.Load(root, typeof(SelectionGO));
         obj = (SelectionGO)Instantiate(obj, origen, Quaternion.identity);
         if (name != "") { obj.name = name; }
-        if (container != null) { obj.transform.SetParent( container); }
+        if (container != null) { obj.transform.SetParent(container); }
         obj.IndexAllVertex = indexAllVertex;
         return obj;
     }

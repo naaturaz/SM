@@ -1,30 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
-using System.Security.Permissions;
 using System.Text;
 using UnityEngine;
 
 /// <summary>
-/// The saves and Loads etc 
+/// The saves and Loads etc
 /// </summary>
 public class DataController
 {
     private static string _path;
-    static float _iconShown;
-
+    private static float _iconShown;
 
     public static void Start()
     {
         DefinePath();
         CheckIfSugarMillFolderExists();
-
     }
-
-
 
     private static void DefinePath()
     {
@@ -43,8 +37,8 @@ public class DataController
         }
     }
 
-    
     private static string savePath;
+
     /// <summary>
     /// Each save is a directory
     /// </summary>
@@ -54,7 +48,7 @@ public class DataController
         savePath = _path + @"\" + name;
         var exist = Directory.Exists(savePath);
         var hasSpace = HasHDDSpace();
-        
+
         if (!hasSpace)
         {
             //todo notify cant bz space
@@ -74,19 +68,15 @@ public class DataController
             SaveNow(!quickSave);
             PlayerPrefs.SetString("Last_Saved", name);
             PlayerPrefs.SetString(name, DateTime.Now.ToString());
-           
+
             Debug.Log("DateTie now:" + DateTime.Now.ToString());
             //Debug.Log("Ticks now:" + DateTime.Now.Ticks.ToString());
-
         }
         PlayerPrefs.Save();
 
         _iconShown = Time.time;
         Program.MouseListener.CurrForm.ShowAutoSave();
-
     }
-
-   
 
     public static bool ThereIsALastSavedFile()
     {
@@ -95,8 +85,8 @@ public class DataController
         {
             return false;
         }
-        
-        //making sure was not deleted that save 
+
+        //making sure was not deleted that save
         var saves = Directory.GetDirectories(SugarMillPath()).ToList();
         for (int i = 0; i < saves.Count; i++)
         {
@@ -108,15 +98,14 @@ public class DataController
         return false;
     }
 
-    static string ReturnPathPlsThsName(string name)
+    private static string ReturnPathPlsThsName(string name)
     {
         return _path + @"\" + name;
     }
 
-
     /// <summary>
     /// Saving all XMLS
-    /// 
+    ///
     /// if 'callEscapeKey' will call : Program.InputMain.EscapeKey();
     /// should be called always unless is a quicksave
     /// </summary>
@@ -125,7 +114,7 @@ public class DataController
         PlayerPrefs.Save();
 
         Directory.CreateDirectory(savePath);
-        XMLSerie.SaveGame(savePath); 
+        XMLSerie.SaveGame(savePath);
 
         //print("Resave Spawner and Buildings");
         Program.gameScene.controllerMain.TerraSpawnController.ReSaveData();
@@ -137,7 +126,7 @@ public class DataController
 
         if (callEscapeKey)
         {
-            //so goes back to show the game 
+            //so goes back to show the game
             Program.InputMain.EscapeKey();
         }
     }
@@ -149,20 +138,16 @@ public class DataController
         return DriveSpace.DriveFreeBytes(_path, out space);
     }
 
-
     public static bool ThereIsAtLeastAGameToLoad()
     {
         var saves = Directory.GetDirectories(SugarMillPath()).ToList();
         return saves.Count > 0;
     }
 
-
     internal static string SugarMillPath()
     {
         return _path;
     }
-
-
 
     internal static void LoadGame(string p)
     {
@@ -186,7 +171,7 @@ public class DataController
         Load2ndStep();
     }
 
-    static void Load2ndStep()
+    private static void Load2ndStep()
     {
         SetLoadedTerrainInTerraRoot();
 
@@ -198,15 +183,15 @@ public class DataController
     }
 
     /// <summary>
-    /// It sets Program.MyScreen1.TerraRoot so it loads the terrain saved 
+    /// It sets Program.MyScreen1.TerraRoot so it loads the terrain saved
     /// </summary>
     /// <param name="p"></param>
-    static void SetLoadedTerrainInTerraRoot()
+    private static void SetLoadedTerrainInTerraRoot()
     {
         PersonData pData = XMLSerie.ReadXMLPerson();
 
         //if(pData != null)
-        //so it loads the saved terrain into the new game 
+        //so it loads the saved terrain into the new game
         Program.MyScreen1.TerraRoot = MyScreen.AddPrefabTerrainRoot(pData.PersonControllerSaveLoad.TerrainName);
     }
 
@@ -242,13 +227,13 @@ public class DataController
         savePath = "";
     }
 
-
-#region AutoSave
+    #region AutoSave
 
     private static float lastAutoSavedFile;
+
     public static void Update()
     {
-        if (Time.time > lastAutoSavedFile + Settings.AutoSaveFrec )
+        if (Time.time > lastAutoSavedFile + Settings.AutoSaveFrec)
         {
             AutoSave();
             lastAutoSavedFile = Time.time;
@@ -260,9 +245,7 @@ public class DataController
         }
     }
 
-
-
-    static void AutoSave()
+    private static void AutoSave()
     {
         if (!Program.GameFullyLoaded())
         {
@@ -270,9 +253,9 @@ public class DataController
         }
         SaveGame("AutoSave", true);
     }
-#endregion
 
-    
+    #endregion AutoSave
+
     public static void LastModifiedTime()
     {
         if (Directory.Exists(savePath))
@@ -280,7 +263,6 @@ public class DataController
             System.IO.DirectoryInfo di = new DirectoryInfo(savePath);
             foreach (FileInfo file in di.GetFiles())
             {
-
             }
             Directory.Delete(savePath);
             Program.MyScreen1.DeleteSavedGameCallBack();
@@ -289,20 +271,16 @@ public class DataController
         savePath = "";
     }
 
-    bool IsLoadFileValid(string name)
+    private bool IsLoadFileValid(string name)
     {
         var thisPath = _path + @"\" + name;
         var getSavedStamp = PlayerPrefs.GetString(name);
 
         return false;
     }
-
-
 }
 
-
-
-class DriveSpace
+internal class DriveSpace
 {
     [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
     [return: MarshalAs(UnmanagedType.Bool)]
@@ -338,12 +316,10 @@ class DriveSpace
     }
 }
 
-
-
-
 public class SimpleEncryption
 {
     #region Constructor
+
     public SimpleEncryption(string password)
     {
         byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
@@ -353,13 +329,16 @@ public class SimpleEncryption
         _InitVectorBytes = Encoding.UTF8.GetBytes(InitVector);
         _KeyBytes = _DeriveBytes.GetBytes(32);
     }
-    #endregion
+
+    #endregion Constructor
 
     #region Private Fields
+
     private readonly Rfc2898DeriveBytes _DeriveBytes;
     private readonly byte[] _InitVectorBytes;
     private readonly byte[] _KeyBytes;
-    #endregion
+
+    #endregion Private Fields
 
     private const string InitVector = "T=A4rAzu94ez-dra";
     private const int PasswordIterations = 1000; //2;

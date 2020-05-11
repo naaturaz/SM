@@ -1,22 +1,16 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class ControllerMain : General {
-
+﻿public class ControllerMain : General
+{
     public MeshController MeshController;
     public TerrainSpawnerController TerraSpawnController;
 
-    void Start()
+    private void Start()
     {
-      
-            TerraSpawnController =
-                (TerrainSpawnerController)
-                    General.Create(Root.terrainSpawnerController);
-      
-
+        TerraSpawnController =
+            (TerrainSpawnerController)
+                General.Create(Root.terrainSpawnerController);
     }
 
-    void Update()
+    private void Update()
     {
         if (CamControl.CAMRTS != null)
         {
@@ -34,5 +28,4 @@ public class ControllerMain : General {
 
         base.Destroy();
     }
-
 }

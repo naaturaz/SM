@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class BuildingController : BuildingPot
 {
-    Building _currentSpawnBuild;//current building we are spwaning
+    private Building _currentSpawnBuild;//current building we are spwaning
     private Registro _registro = new Registro();
 
     private List<int> _oldIndexesHover = new List<int>();
     private BigBoxPrev _buildWayCursor;
 
-    Production _production = new Production();
-    DispatchManager _dispatchManager = new DispatchManager();
+    private Production _production = new Production();
+    private DispatchManager _dispatchManager = new DispatchManager();
 
-    BridgeManager _bridgeManager = new BridgeManager();
+    private BridgeManager _bridgeManager = new BridgeManager();
 
-    ShipManager _shipManager = new ShipManager();
-    DockManager _dockManager = new DockManager();
+    private ShipManager _shipManager = new ShipManager();
+    private DockManager _dockManager = new DockManager();
 
     public Building CurrentSpawnBuild
     {
@@ -36,29 +36,29 @@ public class BuildingController : BuildingPot
         set { _buildWayCursor = value; }
     }
 
-    void Start()
+    private void Start()
     {
     }
-	
-	void Update ()
-	{
+
+    private void Update()
+    {
         CheckHover();
 
         BridgeManager1.Update();
         ShipManager1.Update();
         DockManager1.Update();
-	}
+    }
 
     /// <summary>
     /// Checks if the hovering of current had changed. If does will update on obj Rectangles
     /// and will update _oldIndexesHover
     /// </summary>
-    void CheckHover()
+    private void CheckHover()
     {
-        if (_currentSpawnBuild == null) { return;}
+        if (_currentSpawnBuild == null) { return; }
         //if they are the same will not go in. So this Method will be use only when a building is
         //being use. Basically while the Building.Place() is being called
-        if (_currentSpawnBuild.ClosestSubMeshVert == _currentSpawnBuild.ClosestVertOld) { return;}
+        if (_currentSpawnBuild.ClosestSubMeshVert == _currentSpawnBuild.ClosestVertOld) { return; }
 
         int amoutOfEqItems = 0;
         for (int i = 0; i < m.Vertex.IndexesHover.Count; i++)
@@ -80,16 +80,22 @@ public class BuildingController : BuildingPot
     }
 
     #region Building Administrative. This is the section that will administer the buildings. Ex: a new house was built
+
     //all the places that have food currently
     private List<string> _foodSources = new List<string>();
+
     //all buildins that have open Positions of work ... I only hold the keys (MyId s)
     private List<string> _workOpenPos = new List<string>();
+
     //houses that currently have more space available
     private List<string> _housesWithSpace = new List<string>();
+
     //houses that currently have more space available
     private List<string> _religiousBuilds = new List<string>();
+
     //houses that currently have more space available
     private List<string> _chillBuilds = new List<string>();
+
     //new ways built
     private List<string> _wayBuilds = new List<string>();
 
@@ -134,7 +140,6 @@ public class BuildingController : BuildingPot
         get { return _housesWithSpace; }
         set { _housesWithSpace = value; }
     }
-
 
     public List<string> ReligiousBuilds
     {
@@ -196,9 +201,9 @@ public class BuildingController : BuildingPot
         set { _dockManager = value; }
     }
 
-
     private HPers buildFunc;//building function will determine what set of palces will be used wen editing building
-    List<string> current = new List<string>();//current list of buildiings being edited
+    private List<string> current = new List<string>();//current list of buildiings being edited
+
     /// <summary>
     /// Will start to routine to add or remove an Build from its list
     /// </summary>
@@ -208,7 +213,7 @@ public class BuildingController : BuildingPot
         EditBuildAction(MyIdP, action);
     }
 
-    void EditBuildAction(string MyIdP, H action)
+    private void EditBuildAction(string MyIdP, H action)
     {
         if (action == H.Remove)
         {
@@ -250,10 +255,10 @@ public class BuildingController : BuildingPot
     }
 
     /// <summary>
-    /// Created so items are not duplicated in the current list 
+    /// Created so items are not duplicated in the current list
     /// </summary>
     /// <param name="toAdd"></param>
-    void AddToCurrent(string toAdd)
+    private void AddToCurrent(string toAdd)
     {
         if (!current.Contains(toAdd))
         {
@@ -268,16 +273,16 @@ public class BuildingController : BuildingPot
     public void AddToQueuesRestartPersonControl(string MyIdP)
     {
         Building b = ReturnLocalCurrent(MyIdP);
-        //needs to be restarted to people 
+        //needs to be restarted to people
         PersonPot.Control.RestartController();
 
-        if (PersonPot.Control == null || b==null)
-        {return;}
+        if (PersonPot.Control == null || b == null)
+        { return; }
 
         //so people can routes if new build fell in the midle of one
         if (b.HType.ToString().Contains(H.Bridge.ToString()))
         {
-            //b.MyId so doesnt add units 
+            //b.MyId so doesnt add units
             PersonPot.Control.Queues.AddToNewBuildsQueue(b.Anchors, b.MyId);
         }
         else
@@ -289,11 +294,11 @@ public class BuildingController : BuildingPot
     /// <summary>
     /// Will return the passed key 'MyIdP' from 'Registro.AllBuilding' if is there
     /// other wise will return 'CurrentSpawnBuild'
-    /// 
+    ///
     /// I used to only use the 'CurrentSpawnBuild' but for brdige need to use the 'Registro.AllBuilding'
     /// since Brdige call this function only when all its parts are built
     /// </summary>
-    Building ReturnLocalCurrent(string MyIdP)
+    private Building ReturnLocalCurrent(string MyIdP)
     {
         if (Registro.AllBuilding.ContainsKey(MyIdP))
         {
@@ -303,9 +308,10 @@ public class BuildingController : BuildingPot
     }
 
     #region This 2 Methods are doing the same juts that the last one doesnt select Anything if one is change the second must be changed too
-    HPers SelectCurrentList(H hTypeP)
+
+    private HPers SelectCurrentList(H hTypeP)
     {
-        if (Building.IsHouseType(hTypeP+""))
+        if (Building.IsHouseType(hTypeP + ""))
         {
             current = HousesWithSpace;
             return HPers.Home;
@@ -324,10 +330,10 @@ public class BuildingController : BuildingPot
         }
         else if (hTypeP == H.Church)
         {
-           current = ReligiousBuilds;
-           return HPers.Religion;
+            current = ReligiousBuilds;
+            return HPers.Religion;
         }
-        else if(hTypeP == H.Tavern || hTypeP == H.Library)
+        else if (hTypeP == H.Tavern || hTypeP == H.Library)
         {
             current = ChillBuilds;
             return HPers.Chill;
@@ -361,12 +367,10 @@ public class BuildingController : BuildingPot
         }
         return HPers.Work;
     }
-    #endregion
 
+    #endregion This 2 Methods are doing the same juts that the last one doesnt select Anything if one is change the second must be changed too
 
-
-
-    void UpdateCurrent(HPers which)
+    private void UpdateCurrent(HPers which)
     {
         if (which == HPers.Home)
         {
@@ -414,7 +418,8 @@ public class BuildingController : BuildingPot
             IsNewChill = val;
         }
     }
-    #endregion
+
+    #endregion Building Administrative. This is the section that will administer the buildings. Ex: a new house was built
 
     internal void AddToHousesWithSpace(string newHomeWithSpace)
     {
@@ -428,13 +433,13 @@ public class BuildingController : BuildingPot
 
     public void RemoveFromHousesWithSpace(string houseToRemove)
     {
-//      print("Removed " + houseToRemove);
+        //      print("Removed " + houseToRemove);
         HousesWithSpace.Remove(houseToRemove);
     }
 
     /// <summary>
     /// Will tell u if the last building is the one just passed ,
-    /// If there is more thn 1 foodSrc then will return false 
+    /// If there is more thn 1 foodSrc then will return false
     /// </summary>
     public bool IsThisTheLastFoodSrc(Building building)
     {
@@ -443,7 +448,7 @@ public class BuildingController : BuildingPot
             return false;
         }
 
-        //needs to be remove with real game 
+        //needs to be remove with real game
         if (_foodSources.Count == 0)
         {
             return false;
@@ -460,8 +465,8 @@ public class BuildingController : BuildingPot
 
     /// <summary>
     /// Will tell u if the 'hType' pass in all the buildings is the last one in all buildings .
-    /// 
-    /// If none is found will return false 
+    ///
+    /// If none is found will return false
     /// </summary>
     /// <param name="hType"></param>
     /// <returns></returns>
@@ -473,9 +478,8 @@ public class BuildingController : BuildingPot
             if (BuildingPot.Control.Registro.AllBuilding.ElementAt(i).Value.HType == hType)
             {
                 count++;
-            }   
+            }
         }
-
 
         if (count == 1 && s.HType == H.Masonry)
         {
@@ -485,7 +489,7 @@ public class BuildingController : BuildingPot
     }
 
     /// <summary>
-    /// Will tell u how many buildings of that type exist 
+    /// Will tell u how many buildings of that type exist
     /// </summary>
     /// <param name="hType"></param>
     /// <returns></returns>
@@ -532,7 +536,7 @@ public class BuildingController : BuildingPot
 
         //eliminating the ones are way too Far
         distances = distances.Where(a => a.Distance < maxDistance).ToList();
-        //Ordering by distance 
+        //Ordering by distance
         distances = distances.OrderBy(a => a.Distance).ToList();
         var clostKey = "";
 
@@ -540,7 +544,6 @@ public class BuildingController : BuildingPot
         {
             clostKey = distances[0].LocMyId;
         }
-
 
         return Brain.GetStructureFromKey(clostKey);
     }
@@ -559,14 +562,14 @@ public class BuildingController : BuildingPot
         {
             var build = BuildingPot.Control.Registro.AllBuilding.ElementAt(i).Value;
 
-            //bz cant cast a brdige 
+            //bz cant cast a brdige
             Structure st = null;
             if (!build.MyId.Contains("Bridge") && build.Category != Ca.Way && !build.MyId.Contains("Road"))
             {
                 st = (Structure)build;
             }
 
-            if (build.HType == hType && (build.StartingStage==H.Done || st.CurrentStage==4))
+            if (build.HType == hType && (build.StartingStage == H.Done || st.CurrentStage == 4))
             {
                 distances.Add(new VectorM(build.transform.position, fromPos, build.MyId));
             }
@@ -593,7 +596,7 @@ public class BuildingController : BuildingPot
         {
             var build = BuildingPot.Control.Registro.AllBuilding.ElementAt(i).Value;
 
-            //bz cant cast a brdige 
+            //bz cant cast a brdige
             Structure st = null;
             if (!build.MyId.Contains("Bridge") && build.Category != Ca.Way && !build.MyId.Contains("Road"))
             {
@@ -607,8 +610,8 @@ public class BuildingController : BuildingPot
                 {
                     distances.Add(new VectorM(build.transform.position, fromPos, build.MyId));
                 }
-                //will added anyways 
-                else if(!includeOnlyIfInvHasRoom)
+                //will added anyways
+                else if (!includeOnlyIfInvHasRoom)
                 {
                     distances.Add(new VectorM(build.transform.position, fromPos, build.MyId));
                 }
@@ -650,7 +653,7 @@ public class BuildingController : BuildingPot
     }
 
     /// <summary>
-    /// wont find Road 
+    /// wont find Road
     /// </summary>
     /// <param name="hType"></param>
     /// <returns></returns>
@@ -668,7 +671,7 @@ public class BuildingController : BuildingPot
             }
 
             var st = (Structure)build;
-            if (build.HType+"" == hType && (build.StartingStage==H.Done || st.CurrentStage==4))
+            if (build.HType + "" == hType && (build.StartingStage == H.Done || st.CurrentStage == 4))
             {
                 res.Add((Structure)build);
             }
@@ -701,7 +704,7 @@ public class BuildingController : BuildingPot
     }
 
     /// <summary>
-    /// Will find the first building of the type asked  
+    /// Will find the first building of the type asked
     /// </summary>
     /// <param name="hType"></param>
     /// <returns></returns>
@@ -713,13 +716,13 @@ public class BuildingController : BuildingPot
         {
             if (BuildingPot.Control.Registro.AllBuilding.ElementAt(i).Value.HType == hType)
             {
-                list.Add( BuildingPot.Control.Registro.AllBuilding.ElementAt(i).Value);
+                list.Add(BuildingPot.Control.Registro.AllBuilding.ElementAt(i).Value);
             }
         }
 
         if (list.Count == 0)
         {
-            return null;    
+            return null;
         }
 
         var rand = Random.Range(0, list.Count);

@@ -1,24 +1,22 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class Sound : Audio {
-
+public class Sound : Audio
+{
     public int autoDestroyInSec = 3;
     public bool isAutoDestroy = true;
     private AudioSource _audioSource;
 
+    private float creationTime;
 
-    float creationTime;
-
-	// Use this for initialization
-	void Start ()
-	{
-	    _audioSource = gameObject.GetComponent<AudioSource>();
+    // Use this for initialization
+    private void Start()
+    {
+        _audioSource = gameObject.GetComponent<AudioSource>();
         creationTime = Time.time;
-	}
-	
-	// Update is called once per frame
-	void Update () 
+    }
+
+    // Update is called once per frame
+    private void Update()
     {
         if (Time.time > creationTime + autoDestroyInSec && isAutoDestroy)
         {
@@ -26,7 +24,7 @@ public class Sound : Audio {
         }
 
         base.Update();
-	}
+    }
 
     internal void Play()
     {

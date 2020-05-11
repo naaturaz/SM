@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class RootUI : MonoBehaviour {
+public class RootUI : MonoBehaviour
+{
 }

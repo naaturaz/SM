@@ -1,7 +1,7 @@
 ﻿using System;
-using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 //todo fix
 //bug . be aware that Anchors of Bridge get bigger in game. dont know how or where
@@ -12,7 +12,9 @@ public class Bridge : Trail
     private bool createSoilPartsNow;
     private bool showNextStage;
 
-    public Bridge() {}
+    public Bridge()
+    {
+    }
 
     public Bridge(H hType, H startingStageForPieces)
     {
@@ -21,36 +23,37 @@ public class Bridge : Trail
     }
 
     // Use this for initialization
-	void Start ()
+    private void Start()
     {
         base.Start();
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    }
+
+    // Update is called once per frame
+    private void Update()
     {
         //if (_isOrderToDestroy)
         //{
-        //    DestroyOrdered(); 
+        //    DestroyOrdered();
         //    return;
         //}
 
         base.Update();
 
-	    if (createAirPartsNow)
-	    {CreatePartListOnAir();}
+        if (createAirPartsNow)
+        { CreatePartListOnAir(); }
 
-	    if (createSoilPartsNow)
-	    {CreatePartListOnGround();}
+        if (createSoilPartsNow)
+        { CreatePartListOnGround(); }
 
-        if(showNextStage)
-        { ShowNextStageOfPartsRoutine();}
+        if (showNextStage)
+        { ShowNextStageOfPartsRoutine(); }
 
-	    AddBridgeToBuildControl();
-	    Loading();
+        AddBridgeToBuildControl();
+        Loading();
     }
 
     private bool loaded;
+
     private void Loading()
     {
         if (loaded)
@@ -63,11 +66,11 @@ public class Bridge : Trail
             //so crystals are added to ground right away
             //PrivHandleZoningAddCrystalsForBridge();
 
-            //bz we have the Anchors already loaded 
+            //bz we have the Anchors already loaded
             MeshController.CrystalManager1.Add(this);
             loaded = true;
 
-            //if bridge is done will load this into BridgeManager 
+            //if bridge is done will load this into BridgeManager
             var b = (Building)this;
             if (b.StartingStage == H.Done)
             {
@@ -78,6 +81,7 @@ public class Bridge : Trail
     }
 
     private bool addedToBuildControl;
+
     private void AddBridgeToBuildControl()
     {
         if (PositionFixed && !createSoilPartsNow && !createAirPartsNow && Pieces.Count == PartsOnAir.Count + PartsOnSoil.Count
@@ -101,12 +105,11 @@ public class Bridge : Trail
 
         Anchors = GetBridgeAnchors();
         BuildingPot.Control.Registro.ResaveOnRegistro(MyId);
-
     }
 
     /// <summary>
-    /// If call will set showNextStage true that will allow 
-    /// ShowNextStageOfPartsRoutine() to be called from Update 
+    /// If call will set showNextStage true that will allow
+    /// ShowNextStageOfPartsRoutine() to be called from Update
     /// </summary>
     public void ShowNextStageOfParts()
     {
@@ -114,7 +117,7 @@ public class Bridge : Trail
     }
 
     /// <summary>
-    /// Show next stage of all Pieces... as loopCounter adds... 
+    /// Show next stage of all Pieces... as loopCounter adds...
     /// This is called from Update if showNextStage = true
     /// </summary>
     private void ShowNextStageOfPartsRoutine()
@@ -128,7 +131,7 @@ public class Bridge : Trail
         {
             if (Pieces[0].StartingStage == H.Done)
             {
-                //will be added to BrdigeManager only when is fully built 
+                //will be added to BrdigeManager only when is fully built
                 BuildingPot.Control.BridgeManager1.AddBridge(LandZone1[0].LandZone, LandZone1[1].LandZone,
                     transform.position, MyId);
             }
@@ -142,9 +145,9 @@ public class Bridge : Trail
     }
 
     /// <summary>
-    /// Will remove this building from builders manager if done since this is an async building to be finished 
+    /// Will remove this building from builders manager if done since this is an async building to be finished
     /// </summary>
-    void RemoveFromBuildersManager()
+    private void RemoveFromBuildersManager()
     {
         if (Pieces[0].CurrentStage == 4)
         {
@@ -160,7 +163,7 @@ public class Bridge : Trail
         //creates parts above river
         PlanesOnAirPos = ReturnPlanesOnAirPosAndDefinePlanesOnSoil();
         PartsOnAir = ClassifyABridgeByParts(ReturnPlanesOnAirPosAndDefinePlanesOnSoil().Count);
-        
+
         createAirPartsNow = true;
 
         //creates parts on gorund
@@ -188,9 +191,9 @@ public class Bridge : Trail
     /// This eliminates duplicates of the bridge parts vectors3. Some pos are to close
     /// based on dominant side this will elimitaes the duplicates taht are less than 5 times the subdive x or z - 0.01f
     /// </summary>
-    List<Vector3> EliminatesDuplicateDependingOnDominantSide(List<Vector3> list)
+    private List<Vector3> EliminatesDuplicateDependingOnDominantSide(List<Vector3> list)
     {
-        if(_dominantSide == H.Vertic)
+        if (_dominantSide == H.Vertic)
         {
             return UList.EliminateDuplicatesByDist(list, (Mathf.Abs(m.SubDivide.ZSubStep) * 5) - 0.01f);
         }
@@ -205,11 +208,11 @@ public class Bridge : Trail
     /// Depending if is doninait side vertic or horiz will order by
     /// </summary>
     /// <returns></returns>
-    List<Vector3> OrderByXorZ(List<Vector3> list)
+    private List<Vector3> OrderByXorZ(List<Vector3> list)
     {
-        if(_dominantSide == H.Vertic)
+        if (_dominantSide == H.Vertic)
         {
-            return list.OrderBy(a => a.z).ToList(); 
+            return list.OrderBy(a => a.z).ToList();
         }
         if (_dominantSide == H.Horiz)
         {
@@ -223,7 +226,7 @@ public class Bridge : Trail
     /// this method must be called after ReturnPlanesOnAirPos()
     /// </summary>
     /// <returns></returns>
-    List<int> ClassifyShorePoints()
+    private List<int> ClassifyShorePoints()
     {
         List<int> res = new List<int>();
 
@@ -253,7 +256,7 @@ public class Bridge : Trail
             {
                 root = ReturnBridgePartRoot(partsP[i]);
             }
-            else if (partsP[i] == 2) 
+            else if (partsP[i] == 2)
             {
                 root = ReturnBridgePartRoot(partsP[i]);
             }
@@ -325,14 +328,14 @@ public class Bridge : Trail
 
             //so crystals are added to ground right away
             PrivHandleZoningAddCrystalsForBridge();
-
         }
     }
+
     /// <summary>
-    /// REturn wht type of bridge unit is this one 
+    /// REturn wht type of bridge unit is this one
     /// </summary>
     /// <returns></returns>
-    H BridgeUnit()
+    private H BridgeUnit()
     {
         if (HType == H.BridgeRoad)
         {
@@ -425,11 +428,11 @@ public class Bridge : Trail
         }
     }
 
-    string ReturnBridgePartRoot(int which)
+    private string ReturnBridgePartRoot(int which)
     {
         string base1 = "Prefab/Building/Infrastructure/";
 
-        //for the stone brdige 
+        //for the stone brdige
         if ((HType.ToString().Contains("Road")))
         {
             base1 += "Stone/";
@@ -442,7 +445,7 @@ public class Bridge : Trail
     /// Created to resize the vertical dominant side bridges bz they are slightly smaller
     /// and rezised part 11 on the horizontal
     /// </summary>
-    StructureParent ReSizeObj(StructureParent current, int objPart, H dominantSideP)
+    private StructureParent ReSizeObj(StructureParent current, int objPart, H dominantSideP)
     {
         StructureParent res = null;
         //the percent from a horizntal
@@ -474,7 +477,7 @@ public class Bridge : Trail
             t.y /= 5;
             t.z /= 5;
         }
-        if (HType == H.None) { throw new Exception("HType cant be None");}
+        if (HType == H.None) { throw new Exception("HType cant be None"); }
         current.transform.localScale = t;
         return current;
     }
@@ -482,7 +485,7 @@ public class Bridge : Trail
     /// <summary>
     /// give u the planes list pos are on the air and defines planes on soil too
     /// </summary>
-    List<Vector3> ReturnPlanesOnAirPosAndDefinePlanesOnSoil()
+    private List<Vector3> ReturnPlanesOnAirPosAndDefinePlanesOnSoil()
     {
         float minHeightToCreate = 0.1f;
         List<Vector3> res = new List<Vector3>();
@@ -490,7 +493,7 @@ public class Bridge : Trail
         for (int i = 0; i < bridgePlanes.Count; i++)
         {
             Vector3 planePos = bridgePlanes[i].transform.position;
-            if(planePos.y - m.Vertex.BuildVertexWithXandZ(planePos.x, planePos.z).y > minHeightToCreate)
+            if (planePos.y - m.Vertex.BuildVertexWithXandZ(planePos.x, planePos.z).y > minHeightToCreate)
             {
                 res.Add(planePos);
             }
@@ -502,52 +505,52 @@ public class Bridge : Trail
     /// <summary>
     /// Will return the path was used to create the bridge based on the _dominantSide
     /// </summary>
-    List<CreatePlane> WhichPathWasUsedToBridge()
+    private List<CreatePlane> WhichPathWasUsedToBridge()
     {
         List<CreatePlane> res = new List<CreatePlane>();
-        if(_dominantSide == H.Vertic)
+        if (_dominantSide == H.Vertic)
         {
             res = PlanesListVertic;
         }
-        else if(_dominantSide == H.Horiz)
+        else if (_dominantSide == H.Horiz)
         {
             res = PlanesListHor;
         }
         return res;
     }
-   
+
     /// <summary>
     /// Will return the classification of each peace in a order of 1, 2 , 3 ,4.. Depending
     /// if is even or not will make it different
-    /// The sequence of a bridge is 1,2,3,4,1,2,3,4,1... ,  1 is the tallest part and 3 the middle one 
+    /// The sequence of a bridge is 1,2,3,4,1,2,3,4,1... ,  1 is the tallest part and 3 the middle one
     /// </summary>
     /// <param name="amount"></param>
-    List<int> ClassifyABridgeByParts(int amount)
+    private List<int> ClassifyABridgeByParts(int amount)
     {
         List<int> res = new List<int>();
 
-        if(isAEvenNumb(amount))
+        if (isAEvenNumb(amount))
         {
-           res = CreateEvenSequence(amount);
+            res = CreateEvenSequence(amount);
         }
-        else if(!isAEvenNumb(amount))
+        else if (!isAEvenNumb(amount))
         {
             res = CreateUnEvenSequence(amount);
         }
         return res;
     }
-    
+
     /// <summary>
     /// Will return true if the value passed was an even numb
     /// </summary>
     public static bool isAEvenNumb(int value)
-    {return value % 2 == 0;}
+    { return value % 2 == 0; }
 
- //todo below sequence
+    //todo below sequence
     /// <summary>
-    /// Create The sequence of a bridge is 1,2,3,4,1,2,3,4,1... ,  1 is the tallest part and 3 the middle one 
+    /// Create The sequence of a bridge is 1,2,3,4,1,2,3,4,1... ,  1 is the tallest part and 3 the middle one
     /// </summary>
-    List<int> CreateEvenSequence(int amount)
+    private List<int> CreateEvenSequence(int amount)
     {
         List<int> res = new List<int>();
         List<int> firstHalf = new List<int>();
@@ -562,7 +565,7 @@ public class Bridge : Trail
             firstHalf.Add(current);
         }
         firstHalf.Reverse();
-        
+
         //2nd half
         current = 4;
         secondHalf.Add(current);
@@ -578,9 +581,9 @@ public class Bridge : Trail
     }
 
     /// <summary>
-    /// Create The sequence of a bridge is 1,2,3,4,1,2,3,4,1... ,  1 is the tallest part and 3 the middle one 
+    /// Create The sequence of a bridge is 1,2,3,4,1,2,3,4,1... ,  1 is the tallest part and 3 the middle one
     /// </summary>
-    List<int> CreateUnEvenSequence(int amount)
+    private List<int> CreateUnEvenSequence(int amount)
     {
         List<int> res = new List<int>();
         List<int> firstHalf = new List<int>();
@@ -589,7 +592,7 @@ public class Bridge : Trail
         //1st half
         int current = 3;
         firstHalf.Add(current);
-        for (int i = 0; i < (amount-1) / 2; i++)
+        for (int i = 0; i < (amount - 1) / 2; i++)
         {
             current = UMath.GoAround(-1, current, 1, 4);
             firstHalf.Add(current);
@@ -610,16 +613,10 @@ public class Bridge : Trail
         return res;
     }
 
-
-
-
-
-
-
-    #region Parts 12 
+    #region Parts 12
 
     /// <summary>
-    /// Returns the 2 Parts 12 of the Bridge .. the two ends 
+    /// Returns the 2 Parts 12 of the Bridge .. the two ends
     /// </summary>
     /// <returns></returns>
     public List<StructureParent> GiveTheTwoEndsParts10and12()
@@ -637,23 +634,23 @@ public class Bridge : Trail
     }
 
     //<summary>
-    //I get the anchors of the 2 points and then I find the polygon of them thats the 
-    //Acnhors of a bridge 
+    //I get the anchors of the 2 points and then I find the polygon of them thats the
+    //Acnhors of a bridge
     //</summary>
     public List<Vector3> GetBridgeAnchors()
     {
-        if (Anchors.Count>0)
+        if (Anchors.Count > 0)
         {
             var aCopy = Anchors.ToArray();
             return aCopy.ToList();
         }
 
-        if (BoundsHoriz!=null && BoundsHoriz.Count > 0)
+        if (BoundsHoriz != null && BoundsHoriz.Count > 0)
         {
             return Registro.FromALotOfVertexToPoly(BoundsHoriz);
         }
 
-        if (BoundsVertic!=null && BoundsVertic.Count > 0)
+        if (BoundsVertic != null && BoundsVertic.Count > 0)
         {
             return Registro.FromALotOfVertexToPoly(BoundsVertic);
         }
@@ -663,17 +660,17 @@ public class Bridge : Trail
     /// <summary>
     /// Used to find LandZones
     /// return new List<Vector3>(){_firstWayPoint, _secondWayPoint};
-    /// 
+    ///
     /// but those above are not save loaded
     /// </summary>
     /// <returns></returns>
     public List<Vector3> GiveTwoRoughEnds()
     {
-        return new List<Vector3>(){_firstWayPoint, _secondWayPoint};
+        return new List<Vector3>() { _firstWayPoint, _secondWayPoint };
     }
 
     /// <summary>
-    /// Will give the 2 ends of a brdige 
+    /// Will give the 2 ends of a brdige
     /// </summary>
     /// <returns></returns>
     public List<Vector3> GiveTwoBottoms(Vector3 from)
@@ -686,7 +683,6 @@ public class Bridge : Trail
         FindCloseAndFar(from, parts, out close, out far);
 
         return new List<Vector3>() { close.BottonIn(), far.BottonOut() };
-
     }
 
     private List<Vector3> GiveTwoTops(Vector3 from)
@@ -701,8 +697,7 @@ public class Bridge : Trail
         return new List<Vector3>() { close.TopIn(), far.TopOut() };
     }
 
-
-    void FindCloseAndFar(Vector3 from, List<StructureParent> list, out StructureParent close,
+    private void FindCloseAndFar(Vector3 from, List<StructureParent> list, out StructureParent close,
         out StructureParent far)
     {
         float dist0 = Vector3.Distance(from, list[0].transform.position);
@@ -720,17 +715,12 @@ public class Bridge : Trail
         }
     }
 
-
-
-
-
-
     /// <summary>
-    /// Will find the VectorLand the bridge has in that zone 
+    /// Will find the VectorLand the bridge has in that zone
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    VectorLand ReturnMyVectorLandOnThatZone(VectorLand other)
+    private VectorLand ReturnMyVectorLandOnThatZone(VectorLand other)
     {
         if (other.LandZone == LandZone1[0].LandZone)
         {
@@ -747,10 +737,9 @@ public class Bridge : Trail
         }
     }
 
-
     /// <summary>
     /// Will return first the botton of the vectorland, then the top of the vector land.
-    /// Then the top of the other side of the bridge , and then the bottom of the other side 
+    /// Then the top of the other side of the bridge , and then the bottom of the other side
     ///
     /// brVectorLand: is  vector land tht is asking for this brdige points
     /// </summary>
@@ -759,7 +748,7 @@ public class Bridge : Trail
     public List<Vector3> ReturnBottonAndTopBasedOnVectorLand(VectorLand posVectorLand)
     {
         //bz need to get the VectorLand on the Bridge
-        posVectorLand = ReturnMyVectorLandOnThatZone(posVectorLand); 
+        posVectorLand = ReturnMyVectorLandOnThatZone(posVectorLand);
         List<Vector3> res = new List<Vector3>();
 
         var bots = ReturnTwoOrderedByDistance(posVectorLand.Position, H.Bottom);
@@ -767,7 +756,7 @@ public class Bridge : Trail
 
         res.AddRange(tops);
         res.Insert(0, bots[0]);//insert 1st one
-        res.Add(bots[1]);//add last 
+        res.Add(bots[1]);//add last
 
         return res;
     }
@@ -786,7 +775,7 @@ public class Bridge : Trail
         var bots = ReturnTwoOrderedByDistance(posVectorLand.Position, H.Bottom);
 
         res.Insert(0, bots[0]);//insert 1st one
-        res.Add(bots[1]);//add last 
+        res.Add(bots[1]);//add last
 
         return res;
     }
@@ -812,7 +801,7 @@ public class Bridge : Trail
     /// <param name="from"></param>
     /// <param name="which"></param>
     /// <returns></returns>
-    List<Vector3> ReturnTwoOrderedByDistance(Vector3 from, H which)
+    private List<Vector3> ReturnTwoOrderedByDistance(Vector3 from, H which)
     {
         List<Vector3> res = new List<Vector3>();
         List<Vector3> compare = new List<Vector3>();
@@ -843,14 +832,12 @@ public class Bridge : Trail
         return compare;
     }
 
-
-
-    #endregion
+    #endregion Parts 12
 
     /// <summary>
     /// Will check if this bridge has anchors that were saved. basically
     /// see if has a saved file. otherwise just call GetBridgeAnchors()
-    /// 
+    ///
     /// Also if has a saved file will reassign Anchors. Anchors = saved;
     /// </summary>
     /// <returns></returns>

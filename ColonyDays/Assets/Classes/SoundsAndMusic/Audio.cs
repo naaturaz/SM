@@ -1,19 +1,17 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class Audio : General 
+public class Audio : General
 {
     public bool isToFollowCamera = true;
-    CamControl mainCamera;
+    private CamControl mainCamera;
 
-	// Use this for initialization
-	void Start () 
+    // Use this for initialization
+    private void Start()
     {
+    }
 
-	}
-	
-	// Update is called once per frame
-	new internal void Update () 
+    // Update is called once per frame
+    new internal void Update()
     {
         if (isToFollowCamera)
         {
@@ -27,7 +25,5 @@ public class Audio : General
                 transform.position = mainCamera.transform.position;
             }
         }
-	}
-
-
+    }
 }

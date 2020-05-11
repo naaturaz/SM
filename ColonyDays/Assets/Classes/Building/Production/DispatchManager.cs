@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 
 /// <summary>
-/// Will address stuff and question thru all Dispatches that are in the game 
-/// 
-/// WheelBarrow Offices and Dock are the only tht have dispatch so far 
+/// Will address stuff and question thru all Dispatches that are in the game
+///
+/// WheelBarrow Offices and Dock are the only tht have dispatch so far
 /// </summary>
 
-public class DispatchManager {
-
+public class DispatchManager
+{
     /// <summary>
-    /// Will make all dormant Orders active in all Disptaches 
+    /// Will make all dormant Orders active in all Disptaches
     /// </summary>
     internal void ActiveDormantList()
     {
@@ -19,11 +19,10 @@ public class DispatchManager {
         {
             all[i].Dispatch1.ActiveDormantList();
         }
-
     }
 
     /// <summary>
-    /// Will find out if has an order in any dispatch 
+    /// Will find out if has an order in any dispatch
     /// </summary>
     /// <param name="building"></param>
     /// <returns></returns>
@@ -83,12 +82,10 @@ public class DispatchManager {
         return null;
     }
 
-    List<Structure> FindAllWheelBarrAndDockBuilds()
+    private List<Structure> FindAllWheelBarrAndDockBuilds()
     {
         List<Structure> all = BuildingController.FindAllStructOfThisType(H.Masonry);
         all.AddRange(BuildingController.FindAllStructOfThisType(H.Dock));
         return all;
     }
-
-  
 }

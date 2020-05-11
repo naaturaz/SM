@@ -1,22 +1,20 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections;
 
 public class Settings
 {
     public static bool ISPAUSED;//not used in this proj
 
-    static bool _isSoundOn = true;
-    static bool _isMusicOn = true;
-    static bool _isHalloweenTheme;
-    static bool _isXmas;
+    private static bool _isSoundOn = true;
+    private static bool _isMusicOn = true;
+    private static bool _isHalloweenTheme;
+    private static bool _isXmas;
 
-
-    //this is the music variable use for the whole game 
+    //this is the music variable use for the whole game
     public static Music music = null;
 
-
     private static int _autoSaveFrec = 300;//5min
+
     public static int AutoSaveFrec
     {
         get { return _autoSaveFrec; }
@@ -66,10 +64,7 @@ public class Settings
 
     #region Save Load Settings
 
-
-
-
-    static void LoadAndApplyResolution()
+    private static void LoadAndApplyResolution()
     {
         var width = PlayerPrefs.GetInt("Res.Width");
         var height = PlayerPrefs.GetInt("Res.Height");
@@ -78,8 +73,6 @@ public class Settings
 
         //var scnLoaded = PlayerPrefs.GetString("SceneSaved");
     }
-
-
 
     /// <summary>
     /// Will be called from OptionsWindow
@@ -96,20 +89,18 @@ public class Settings
         //PlayerPrefs.SetString("SceneSaved", "Scn02");
     }
 
-
-
-#endregion
+    #endregion Save Load Settings
 
     #region Audio
 
     public static Music Switch(H what, Music current = null)
     {
-        if(what == H.Sound)
+        if (what == H.Sound)
         {
             _isSoundOn = MecanicSwitcher(_isSoundOn);
             AudioCollector.SoundIsSwitchNow();
         }
-        else if(what == H.Music)
+        else if (what == H.Music)
         {
             _isMusicOn = MecanicSwitcher(_isMusicOn);
             MusicManager.MusicIsSwitchNow();
@@ -132,14 +123,14 @@ public class Settings
 
     public static void PlayMusic()
     {
-        if(Application.loadedLevelName != "Lobby")
+        if (Application.loadedLevelName != "Lobby")
             music = (Music)AudioPlayer.PlayAudio(RootSound.musicLvl1Start, H.Music);
-        else if(Application.loadedLevelName == "Lobby")
+        else if (Application.loadedLevelName == "Lobby")
             music = (Music)AudioPlayer.PlayAudio(RootSound.musicLobby, H.Music);
     }
 
+    private static bool loadedOnce;
 
-    static bool loadedOnce;
     /// <summary>
     /// Loads Audio Settings from file
     /// </summary>
@@ -177,14 +168,10 @@ public class Settings
         {
             Languages.SetCurrentLang("English");
         }
-
-
     }
 
-
-
     /// <summary>
-    /// Saves to file audio settings 
+    /// Saves to file audio settings
     /// </summary>
     public static void SaveToFile()
     {
@@ -211,7 +198,6 @@ public class Settings
         pData.Lang = Languages.CurrentLang();
 
         XMLSerie.WriteXMLProgram(pData);
-
     }
 
     private static void LoadFromFilePlayerPref()
@@ -224,21 +210,21 @@ public class Settings
         }
 
         var l = PlayerPrefs.GetString("Sound");
-        ISSoundOn =  PlayerPrefs.GetString("Sound") == "True";
+        ISSoundOn = PlayerPrefs.GetString("Sound") == "True";
         ISMusicOn = PlayerPrefs.GetString("Music") == "True";
 
         IsHalloweenTheme = PlayerPrefs.GetString("Hallo") == "True";
         IsXmas = PlayerPrefs.GetString("Xmas") == "True";
 
         CamSliderVal = PlayerPrefs.GetFloat("CamSliderVal");
-        ISDay = PlayerPrefs.GetInt("Day") == 1 || PlayerPrefs.GetInt("Day") == 0;//0 is for the 1st time loads 
+        ISDay = PlayerPrefs.GetInt("Day") == 1 || PlayerPrefs.GetInt("Day") == 0;//0 is for the 1st time loads
 
         AudioCollector.SoundLevel = PlayerPrefs.GetFloat("SoundLevel");
         AudioCollector.MusicLevel = PlayerPrefs.GetFloat("MusicLevel");
 
         char u;
         char.TryParse(PlayerPrefs.GetString("CurrentSystem"), out u);
-        if (u==null)
+        if (u == null)
         {
             Unit.Units = 'i';
         }
@@ -250,7 +236,7 @@ public class Settings
 
         //screen
         QualitySettings.SetQualityLevel((int)PlayerPrefs.GetFloat("QualityLevel"));
-        Screen.fullScreen = PlayerPrefs.GetString("FullScreen") =="True";
+        Screen.fullScreen = PlayerPrefs.GetString("FullScreen") == "True";
         Languages.SetCurrentLang(PlayerPrefs.GetString("Lang"));
         //in case was deleted or somehting
         if (string.IsNullOrEmpty(Languages.CurrentLang()))
@@ -259,15 +245,15 @@ public class Settings
         }
     }
 
-    static void SaveToFilePlayerPref()
+    private static void SaveToFilePlayerPref()
     {
-        PlayerPrefs.SetString("Sound", ISSoundOn+"");
+        PlayerPrefs.SetString("Sound", ISSoundOn + "");
         PlayerPrefs.SetString("Music", ISMusicOn + "");
 
         PlayerPrefs.SetFloat("SoundLevel", AudioCollector.SoundLevel);
         PlayerPrefs.SetFloat("MusicLevel", AudioCollector.MusicLevel);
 
-        PlayerPrefs.SetString("CurrentSystem", Unit.CurrentSystem()+"");
+        PlayerPrefs.SetString("CurrentSystem", Unit.CurrentSystem() + "");
         PlayerPrefs.SetFloat("AutoSaveFrec", AutoSaveFrec);
 
         //screen
@@ -278,13 +264,12 @@ public class Settings
 
         //it was saved b4,,, if not will use default stuff
         PlayerPrefs.SetString("P1Once", "Yes");
-
-
     }
 
-    #endregion
+    #endregion Audio
 
-    #region Change Params 
+    #region Change Params
+
     internal static void SetQuality(string qual)
     {
         string[] names = QualitySettings.names;
@@ -297,14 +282,13 @@ public class Settings
             }
         }
         Program.MyScreen1.OptionsWindow1.RefreshAllDropDowns();
-
     }
 
     internal static void SetResolution(string name)
     {
         SaveResolution(name);
-        LoadAndApplyResolution();            
-     
+        LoadAndApplyResolution();
+
         Program.MyScreen1.OptionsWindow1.ChangeResNow();
         U2D.RedoScreenRect();
     }
@@ -329,8 +313,8 @@ public class Settings
         var spl = name.Split(' ');
         AutoSaveFrec = Int32.Parse(spl[0]) * 60;
         Program.MyScreen1.OptionsWindow1.RefreshAllDropDowns();
-    }  
-    
+    }
+
     internal static void SetLanguage(string name)
     {
         Languages.SetCurrentLang(name);
@@ -357,14 +341,14 @@ public class Settings
         IsXmas = !IsXmas;
         PlayerPrefs.SetString("Xmas", IsXmas + "");
     }
-    #endregion
+
+    #endregion Change Params
 }
 
 public class Unit
 {
     //imperial or metric
     private static char _units = 'i';//'i'
-
 
     public static char Units
     {
@@ -402,14 +386,13 @@ public class Unit
     /// <returns></returns>
     public static float WeightFromMetricToImp(float input)
     {
-        return input*2.2046f;
+        return input * 2.2046f;
     }
 
     private static float WeightFromImpToMetric(float input)
     {
         return input / 2.2046f;
     }
-
 
     /// <summary>
     /// From m3 to ft3
@@ -418,9 +401,9 @@ public class Unit
     /// <returns></returns>
     public static float VolFromMetricToImp(float input)
     {
-        return input*35.315f;
-    }   
-    
+        return input * 35.315f;
+    }
+
     /// <summary>
     /// from "kg/m3" to "lb/ft3"
     /// </summary>
@@ -428,18 +411,17 @@ public class Unit
     /// <returns></returns>
     public static float DensityFromMetricToImp(float input)
     {
-        return input*0.062427974f;
+        return input * 0.062427974f;
     }
-
 
     /// <summary>
     /// Weight converted to proper current Unit
-    /// 
-    /// 
+    ///
+    ///
     /// </summary>
     /// <param name="p">The metric amount</param>
     /// <returns></returns>
-    internal static float  WeightConverted(float p)
+    internal static float WeightConverted(float p)
     {
         if (_units == 'm')
         {
@@ -462,7 +444,6 @@ public class Unit
         return WeightFromImpToMetric(p);
     }
 
-
     /// <summary>
     /// used to The input amt in order Converted if needed
     /// </summary>
@@ -475,7 +456,6 @@ public class Unit
             return p;
         }
         return WeightFromMetricToImp(p);
-
     }
 
     public static float ConvertFromCMToCurrent(float p)
@@ -485,7 +465,6 @@ public class Unit
             return p;
         }
         return HeightFromMetricToImp(p);
-
     }
 
     private static float HeightFromMetricToImp(float p)
@@ -522,7 +501,6 @@ public class Unit
         return (input * 1.8f) + 32;
     }
 
-
     internal static string CurrentWeightUnitsString()
     {
         if (_units == 'm')
@@ -531,7 +509,6 @@ public class Unit
         }
         return "lbs";
     }
-
 
     /// <summary>
     /// If is in Metric the price is fine but if is in imperial the price
@@ -546,7 +523,7 @@ public class Unit
             return input;
         }
 
-        return input/ 2.20462f;
+        return input / 2.20462f;
     }
 
     /// <summary>
@@ -558,5 +535,4 @@ public class Unit
     {
         return ProperPrice(input).ToString("C2");
     }
-
 }

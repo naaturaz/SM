@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ColorManager : MonoBehaviour
 {
@@ -13,11 +9,11 @@ public class ColorManager : MonoBehaviour
 
     public Color[] BackGroundCam = new Color[2];
 
-    void Start()
+    private void Start()
     {
     }
 
-    void Update()
+    private void Update()
     {
     }
 

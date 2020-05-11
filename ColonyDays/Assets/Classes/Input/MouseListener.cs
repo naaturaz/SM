@@ -585,7 +585,7 @@ public class MouseListener : InputMain
         }
     }
 
-    void HideBulletinHelp()
+    private void HideBulletinHelp()
     {
         _bulletinWindow.Hide();
         _helpWindow.Hide();

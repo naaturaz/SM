@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class NavigationArea
 {
-    bool _wasAdded;
-    float _startTime;
-    GameObject _go;
+    private bool _wasAdded;
+    private float _startTime;
+    private GameObject _go;
 
     public bool WasAdded
     {
@@ -39,8 +37,6 @@ public class NavigationArea
         _go = go;
         StartTime = Time.time;
     }
-
-
 
     public void AddNavArea()
     {

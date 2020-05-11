@@ -18,7 +18,7 @@ public class ShowInvetoryItem : GUIElement
     private string _invType;
     private ShowAInventory _parent;
 
-    ProdSpec _pSpec;
+    private ProdSpec _pSpec;
 
     private float oldAmt = -100;//the value so it gets started
                                 // Update is called once per frame
@@ -49,7 +49,7 @@ public class ShowInvetoryItem : GUIElement
     }
 
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         if (_icon != null)
             return;
@@ -74,7 +74,7 @@ public class ShowInvetoryItem : GUIElement
         }
         else
         {
-            //bz we change it names and for when needs to be renamed needs to be get it like this 
+            //bz we change it names and for when needs to be renamed needs to be get it like this
             _textCol2 = container.gameObject.transform.GetChild(1).GetComponent<Text>();
         }
 
@@ -139,7 +139,7 @@ public class ShowInvetoryItem : GUIElement
         return obj;
     }
 
-    static void CorrectLocalScaleBasedOnScreenSize(Transform objTransform)
+    private static void CorrectLocalScaleBasedOnScreenSize(Transform objTransform)
     {
         var xCorrect = (float)Screen.width / (float)1920;
         var yCorrect = (float)Screen.height / (float)900;
@@ -148,7 +148,7 @@ public class ShowInvetoryItem : GUIElement
             objTransform.localScale.z);
     }
 
-    void Update()
+    private void Update()
     {
         if (InvItem1 == null || (InvItem1.Amount <= 0 && string.IsNullOrEmpty(InvType)))
         {
@@ -164,7 +164,7 @@ public class ShowInvetoryItem : GUIElement
                 oldAmt = InvItem1.Amount;
                 _textCol1.text = Formatter();
             }
-            //3 text used to builidings inventoryes 
+            //3 text used to builidings inventoryes
             else
             {
                 Set3Text();
@@ -172,7 +172,7 @@ public class ShowInvetoryItem : GUIElement
         }
     }
 
-    void Set3Text()
+    private void Set3Text()
     {
         if (InvItem1.Key == P.Year)
         {
@@ -203,7 +203,7 @@ public class ShowInvetoryItem : GUIElement
         _back3.SetActive(false);
     }
 
-    string ReturnAmt()
+    private string ReturnAmt()
     {
         if (_pSpec == null)
             _pSpec = Program.gameScene.ExportImport1.FindProdSpec(InvItem1.Key);
@@ -224,7 +224,7 @@ public class ShowInvetoryItem : GUIElement
         return (InvItem1.Amount / _pSpec.WeightPerUnit).ToString("n0") + " u";
     }
 
-    string ReturnVol()
+    private string ReturnVol()
     {
         if (InvItem1.Amount <= 0)
         {
@@ -255,7 +255,7 @@ public class ShowInvetoryItem : GUIElement
         //return InvItem1.Key + " " + (int)amt + BuildStringUnits() + vol.ToString("F1");
     }
 
-    string BuildStringUnits()
+    private string BuildStringUnits()
     {
         return " " + Unit.WeightUnit() + ". v(" + Unit.VolumeUnit() + "):";
     }

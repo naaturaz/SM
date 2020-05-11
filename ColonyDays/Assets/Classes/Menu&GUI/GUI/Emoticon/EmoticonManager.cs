@@ -1,32 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-
 
 /// <summary>
-/// If a new emoticon is added on Good or Bad please update the random range 
+/// If a new emoticon is added on Good or Bad please update the random range
 /// </summary>
 
 public class EmoticonManager
 {
-    static Transform _canvas;
+    private static Transform _canvas;
 
-    static List<string> _goodWords = new List<string>()
+    private static List<string> _goodWords = new List<string>()
     {
         "Built", "Hired"
     };
 
-    static List<string> _badWords = new List<string>()
+    private static List<string> _badWords = new List<string>()
     {
         "Demolish", "Fired"
     };
 
+    private static bool wasInit;
 
-    static bool wasInit;
-    static void Init()
+    private static void Init()
     {
         if (wasInit)
         {
@@ -46,8 +41,6 @@ public class EmoticonManager
 
         General go = General.Create(root, pos);
 
-
-
         //root = "Prefab/GUI/Emoticon/Good_1";
 
         //var p2 = CamControl.CAMRTS.GetComponent<Camera>().WorldToScreenPoint(pos);
@@ -57,21 +50,21 @@ public class EmoticonManager
         //ins.transform.SetParent(_canvas);
     }
 
-    static string ReturnIsGoodOrBad(string which)
+    private static string ReturnIsGoodOrBad(string which)
     {
         if (_goodWords.Contains(which))
         {
             return "Good";
         }
-        else if(_badWords.Contains(which))
+        else if (_badWords.Contains(which))
         {
             return "Bad";
         }
-        //other wise is somehting else 
+        //other wise is somehting else
         return which;
     }
 
-    static string ReturnRootOfEmoticon(string which)
+    private static string ReturnRootOfEmoticon(string which)
     {
         if (which == "Good")
         {
@@ -88,8 +81,5 @@ public class EmoticonManager
             return "Prefab/GUI/Emoticon/Heart";
         }
         return "Prefab/GUI/Emoticon/Stork";
-
     }
 }
-
-

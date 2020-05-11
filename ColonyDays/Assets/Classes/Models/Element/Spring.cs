@@ -1,19 +1,18 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class Spring : Element {
+public class Spring : Element
+{
+    // Use this for initialization
+    private void Start()
+    {
+    }
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () 
+    // Update is called once per frame
+    private void Update()
     {
         base.Update();
         //SpringIt();
-	}
+    }
 
     //void SpringIt()
     //{
@@ -25,7 +24,6 @@ public class Spring : Element {
     //    Ray rayUp = new Ray(transform.position + originOffSet, transform.up);
     //    if (Physics.Raycast(rayUp, out hitUp))
     //    {
-
     //    }
     //    if (hitUp.transform != null)
     //    {
@@ -41,7 +39,7 @@ public class Spring : Element {
     //    }
     //}
 
-    void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
         print(collision.transform.name);
         Vector3 jump = new Vector3(0, 10f, 0);

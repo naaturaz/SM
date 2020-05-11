@@ -1,12 +1,11 @@
-﻿using System;
-using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
-public class SeaRouter  {
-
-    SMe m = new SMe();
-    List<VectorM> _map8entries = new List<VectorM>();
+public class SeaRouter
+{
+    private SMe m = new SMe();
+    private List<VectorM> _map8entries = new List<VectorM>();
     private Vector3 _entry;
 
     private Vector3 _closerMapEntryReachable;
@@ -42,9 +41,9 @@ public class SeaRouter  {
         for (int i = 0; i < m.MeshController.wholeMalla.Count; i++)
         {
             var v1 = m.MeshController.wholeMalla[i];
-            var v2 = m.MeshController.wholeMalla[UMath.GoAround(1,i,0,3)];
+            var v2 = m.MeshController.wholeMalla[UMath.GoAround(1, i, 0, 3)];
 
-            var dist = Vector3.Distance(v1, v2)/2;
+            var dist = Vector3.Distance(v1, v2) / 2;
             var newV = Vector3.MoveTowards(v1, v2, dist);
 
             _map8entries.Add(new VectorM(newV, _entry));
@@ -71,18 +70,18 @@ public class SeaRouter  {
     }
 
     /// <summary>
-    /// Will tell u if can route 
-    /// 
+    /// Will tell u if can route
+    ///
     /// Defines too : _closerMapEntryReachable
     /// </summary>
     /// <param name="entry"></param>
     /// <returns></returns>
-    public bool CanRoute(Vector3 entry, bool addDebugHelp=false)
+    public bool CanRoute(Vector3 entry, bool addDebugHelp = false)
     {
         for (int i = 0; i < _map8entries.Count; i++)
         {
             Line line = new Line(_map8entries[i].Point, entry, 50f);
-            //if a can reach 1 then I can use that one 
+            //if a can reach 1 then I can use that one
             if (!MeshController.CrystalManager1.DoIIntersectAnyLine(line, H.WaterObstacle))
             {
                 _closerMapEntryReachable = _map8entries[i].Point;
@@ -96,8 +95,7 @@ public class SeaRouter  {
         return false;
     }
 
-
-    public TheRoute PlotRoute(Vector3 entry, List<GameObject> spots, List<GameObject> finalLookPoint, 
+    public TheRoute PlotRoute(Vector3 entry, List<GameObject> spots, List<GameObject> finalLookPoint,
         Building build, string shipGOMyId)
     {
         //needed to define _closerMapEntryReachable
@@ -115,15 +113,15 @@ public class SeaRouter  {
         //    }
         //}
 
-        //correct Y  
-        _closerMapEntryReachable = 
+        //correct Y
+        _closerMapEntryReachable =
             new Vector3(_closerMapEntryReachable.x, spot.transform.position.y, _closerMapEntryReachable.z);
 
-        var lis = new List<Vector3>() {_closerMapEntryReachable, entry, spot.transform.position};
+        var lis = new List<Vector3>() { _closerMapEntryReachable, entry, spot.transform.position };
         return ConformInBuildRouteAnimal(lis);
     }
 
-    GameObject FindRandomSpot(List<GameObject> spots, Building build, string shipGOMyId)
+    private GameObject FindRandomSpot(List<GameObject> spots, Building build, string shipGOMyId)
     {
         for (int i = 0; i < spots.Count; i++)
         {
@@ -138,17 +136,16 @@ public class SeaRouter  {
     }
 
     /// <summary>
-    /// For an animal farm 
+    /// For an animal farm
     /// </summary>
-    TheRoute ConformInBuildRouteAnimal(List<Vector3> points)
+    private TheRoute ConformInBuildRouteAnimal(List<Vector3> points)
     {
         var TheRoute = ReachBean.RouteVector3s(points);
 
-        //the .O is to pass the profession or brain reurn 
+        //the .O is to pass the profession or brain reurn
         TheRoute.OriginKey = _building.MyId + ".O";
         TheRoute.DestinyKey = _building.MyId + ".D";
 
         return TheRoute;
     }
-
 }

@@ -3,18 +3,18 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-class TutoWindow : GUIElement
+internal class TutoWindow : GUIElement
 {
-    //to be accessible in the Editor and if not null will be shown when the step is present 
+    //to be accessible in the Editor and if not null will be shown when the step is present
     public GameObject[] Helpers;
 
     /// <summary>
-    /// To add tutorial 
-    /// add the corresponding entry on Languages and 
+    /// To add tutorial
+    /// add the corresponding entry on Languages and
     /// then make sure the step is being completed with the call from some
     /// action .... so it needs to be called from somewhere so the step is done
     /// </summary>
-    List<string> _steps = new List<string>()
+    private List<string> _steps = new List<string>()
     {
         "CamMov.Tuto",
         "CamMov5x.Tuto",
@@ -50,15 +50,15 @@ class TutoWindow : GUIElement
         "Exports.Tuto",
     };
 
-    //which is being shown now 
-    int _currentIndex;
+    //which is being shown now
+    private int _currentIndex;
 
     private Text _text;
     private RectTransform _rectTransform;
     private Vector3 _iniPos;
-    GameObject _showAgainTuto;
+    private GameObject _showAgainTuto;
 
-    void Start()
+    private void Start()
     {
         //the helper btn
         var helper = FindGameObjectInHierarchy("Helper", ReturnMainGUI().gameObject);
@@ -77,7 +77,7 @@ class TutoWindow : GUIElement
         HideAllHelpers();
     }
 
-    void HideAllHelpers()
+    private void HideAllHelpers()
     {
         for (int i = 0; i < Helpers.Length; i++)
         {
@@ -88,8 +88,9 @@ class TutoWindow : GUIElement
         }
     }
 
-    bool wasShown;
-    void Update()
+    private bool wasShown;
+
+    private void Update()
     {
         if (Program.GameFullyLoaded() && !wasShown && string.IsNullOrEmpty(PlayerPrefs.GetString("Tuto")))
         {
@@ -98,7 +99,7 @@ class TutoWindow : GUIElement
         }
     }
 
-    MyForm ReturnMainGUI()
+    private MyForm ReturnMainGUI()
     {
         var forms = FindObjectsOfType<MyForm>();
 
@@ -125,7 +126,7 @@ class TutoWindow : GUIElement
 
     internal void Show()
     {
-        //when retake from Skipped 
+        //when retake from Skipped
         if (_currentIndex < 0)
         {
             _currentIndex = 0;
@@ -226,8 +227,8 @@ class TutoWindow : GUIElement
 
     #region Manage delay on tutorials
 
-    static float _thisStepStartedAt = -1;
-    static string _thisStepIs = "";
+    private static float _thisStepStartedAt = -1;
+    private static string _thisStepIs = "";
 
     static public bool IsStepReady(string step)
     {
@@ -248,6 +249,5 @@ class TutoWindow : GUIElement
         return false;
     }
 
-    #endregion
-
+    #endregion Manage delay on tutorials
 }

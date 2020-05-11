@@ -5,7 +5,7 @@ public class BuildingData
     //all buildings
     private List<RegFile> _all = new List<RegFile>();
 
-    //building controller data to save and load 
+    //building controller data to save and load
     public BuildingControllerData BuildingControllerData = new BuildingControllerData();
 
     public List<RegFile> All
@@ -20,29 +20,35 @@ public class BuildingData
         BuildingControllerData = BuildingControllerDataP;
     }
 
-    public BuildingData() { }
+    public BuildingData()
+    {
+    }
 }
 
 public class BuildingControllerData
 {
     public List<string> _foodSources = new List<string>();
+
     //all buildins that have open Positions of work ... I only hold the keys (MyId s)
     public List<string> _workOpenPos = new List<string>();
+
     //houses that currently have more space available
     public List<string> _housesWithSpace = new List<string>();
+
     //houses that currently have more space available
     public List<string> _religiousBuilds = new List<string>();
+
     //houses that currently have more space available
     public List<string> _chillBuilds = new List<string>();
+
     //new ways built
     public List<string> _wayBuilds = new List<string>();
-
 
     public bool _isfoodSourceChange;//if any one was removed or added from the list will be mark as true
     public bool _isWorkChanged;//new work pos opened
     public bool _isHouseSpaceChanged;//new space available in a house
     public bool _isReligionChanged;
-    bool _isChillChanged;//new tavern etc
+    private bool _isChillChanged;//new tavern etc
 
     public bool IsChillChanged
     {
@@ -54,22 +60,20 @@ public class BuildingControllerData
     public DockManager DockManager1;
     public ShipManager ShipManager1;
 
-    public BuildingControllerData() { }
-
-
+    public BuildingControllerData()
+    {
+    }
 
     //They load on BuildingSaveLoad. LoadBuildingController()
 
     ///GameTime Data
-    /// 
+    ///
     public GameTime _GameTime;
-    public GameTime GameTimePeople { get; set; }
 
+    public GameTime GameTimePeople { get; set; }
 
     ///GameController Data
     public GameController _GameController;
-
-
 
     public H TypeOfGame { get; set; }
 }

@@ -20,48 +20,45 @@ public class Crystal
     //who is the parent Id of this crystal
     private string _parentId;
 
-    
-    //Section use to order the routing 
+    //Section use to order the routing
 
     //the base weight for a crystal
     private int _baseWeight = 1000;
+
     //this like distance is calculated from other Vector3 and is only good if was recently set up
     private float _calcWeight;
 
     private float _sine;
 
-
     private bool _isDoor;
 
     //the lines tht this Crystal connect to
-    //normally Cyrstals have only 3 lines. But LinkRect will need more than tht 
-    List<Line> _lines = new List<Line>();
+    //normally Cyrstals have only 3 lines. But LinkRect will need more than tht
+    private List<Line> _lines = new List<Line>();
+
     private int _maxAmtLines = 3;
 
     //to help when organizing to link the marines, and others. Distance is a relaticve number
-    //so should be used only if is recently set 
+    //so should be used only if is recently set
     private float _distance;
 
-    SMe m = new SMe();
+    private SMe m = new SMe();
 
     //this is the stored positoin for Terra Obstavles to take after the Lines were created
     //this is for Lines dont be in the same spot tht the cristals . bz people walk alone crystals
     private Vector2 _positionAfterLines;
 
     //the crystals im linked to
-    List<Crystal> _links = new List<Crystal>();
-  
+    private List<Crystal> _links = new List<Crystal>();
 
     //will hold extra information abt this crystal, created to hold wht crystal is in a buildin like NW,NE, etc
     private string _info;
 
-    //will hold extra information abt this crystal, created to hold wht crystal is in a buildin 
+    //will hold extra information abt this crystal, created to hold wht crystal is in a buildin
     //wht his index in the anchors is from 0-3, from NW to SW
     private int _anchorIndex;
 
-
-    List<Crystal> _siblings = new List<Crystal>();
-
+    private List<Crystal> _siblings = new List<Crystal>();
 
     public float Distance
     {
@@ -118,7 +115,7 @@ public class Crystal
     }
 
     /// <summary>
-    ///     will hold extra information abt this crystal, created to hold wht crystal is in a buildin 
+    ///     will hold extra information abt this crystal, created to hold wht crystal is in a buildin
     /// wht his index in the anchors is from 0-3, from NW to SW
     /// </summary>
     public int AnchorIndex
@@ -130,18 +127,18 @@ public class Crystal
     /// <summary>
     /// if is a obstacle cristal will have siblings. the other crystalks belong to the same polygon
     /// building or stil element
-    /// 
-    /// dor or entry points of brdiges are not consiedred siblings only the poly crystals 
+    ///
+    /// dor or entry points of brdiges are not consiedred siblings only the poly crystals
     /// </summary>
     /// <returns></returns>
     public List<Crystal> Siblings()
     {
-        return _siblings; 
+        return _siblings;
     }
 
-
-
-    public Crystal() { }
+    public Crystal()
+    {
+    }
 
     public Crystal(Vector3 pos, H type, string parId, bool isDoor = false, bool setIdAndName = true)
     {
@@ -182,10 +179,10 @@ public class Crystal
         }
     }
 
-    void SetPosition(Vector2 pos)
+    private void SetPosition(Vector2 pos)
     {
-        //if is a water obstavle need to push it away a bit from the sea bottom. so lines are closer to the shore line 
-        //this position is only to create the lines 
+        //if is a water obstavle need to push it away a bit from the sea bottom. so lines are closer to the shore line
+        //this position is only to create the lines
         if (_type == H.WaterObstacle)
         {
             pos = m.MeshController.WaterBound1.ReturnPushMeAwayFromSeaBottom(pos, 1f);
@@ -212,10 +209,8 @@ public class Crystal
         _distance = Vector2.Distance(_position, otherPos);
     }
 
-
     private int weightFactor = 1;
     private int sineFactor = 10;
-
 
     internal void CalculateWeight(Vector3 vector3)
     {
@@ -232,7 +227,7 @@ public class Crystal
         //can't be further than C
         furtherWeight += CheckIfFurtherThanCurr(curr, finOrC);
 
-        //we are going to substract then 
+        //we are going to substract then
         if (Type1.ToString().Contains("Way"))
         {
             Distance = Mathf.Abs(Vector3.Distance(U2D.FromV2ToV3(_position), curr));
@@ -242,7 +237,8 @@ public class Crystal
     }
 
     public static DebugCrystal DebugCrystal = new DebugCrystal();
-    public static List<string> passes = new List<string>(); 
+    public static List<string> passes = new List<string>();
+
     /// <summary>
     /// Will set the _calcWeight on the Cristal from 'otherPos'
     /// </summary>
@@ -253,7 +249,7 @@ public class Crystal
         //var pilot = Vector2.MoveTowards(curr, final, pilotDistance);
 
         var angle = AbsoluteAngleFrom3PointsInDegrees(final, Position, curr);
-        var sine =  Math.Abs( (float)Math.Sin(ConvertToRadians(angle)));
+        var sine = Math.Abs((float)Math.Sin(ConvertToRadians(angle)));
         //Debug.Log("Angle: " + angle);
 
         var furtherWeight = CheckIfFurtherThanCurr(curr, final);
@@ -261,15 +257,15 @@ public class Crystal
         //var posiToFin = Math.Abs( Vector2.Distance(Position, final));
         //var currToPosit =  Math.Abs(Vector2.Distance(curr, Position));
 
-        var posiToFin = Math.Abs( Vector3.Distance(U2D.FromV2ToV3(Position), U2D.FromV2ToV3(final)));
-        
-        var currToPosit =  Math.Abs(Vector3.Distance(U2D.FromV2ToV3(curr), U2D.FromV2ToV3(Position)));
+        var posiToFin = Math.Abs(Vector3.Distance(U2D.FromV2ToV3(Position), U2D.FromV2ToV3(final)));
+
+        var currToPosit = Math.Abs(Vector3.Distance(U2D.FromV2ToV3(curr), U2D.FromV2ToV3(Position)));
 
         //Distance = 3 * Vector2.Distance(_position, curr);//pilot
-        Distance =  ( posiToFin + currToPosit );//pilot
+        Distance = (posiToFin + currToPosit);//pilot
 
-        _calcWeight = // sine * sineFactor + 
-            (Distance) 
+        _calcWeight = // sine * sineFactor +
+            (Distance)
             //+ furtherWeight
             ;
 
@@ -286,13 +282,13 @@ public class Crystal
     }
 
     /// <summary>
-    /// If the position of the crystal we are now is further than curr to Final will 
+    /// If the position of the crystal we are now is further than curr to Final will
     /// return a 100
     /// </summary>
     /// <param name="curr"></param>
     /// <param name="final"></param>
     /// <returns></returns>
-    int CheckIfFurtherThanCurr(Vector2 curr, Vector2 final)
+    private int CheckIfFurtherThanCurr(Vector2 curr, Vector2 final)
     {
         var distToFinalFromCurr = Vector2.Distance(final, curr);
         var distToFinalFromPosit = Vector2.Distance(final, Position);
@@ -304,14 +300,15 @@ public class Crystal
         return 0;
     }
 
-    double ConvertToRadians(double angle)
+    private double ConvertToRadians(double angle)
     {
         return (Math.PI / 180) * angle;
     }
 
-    private static float yDebug ;
-    static Vector3 oldPos = new Vector3();
-    void Debug()
+    private static float yDebug;
+    private static Vector3 oldPos = new Vector3();
+
+    private void Debug()
     {
         var pos = new Vector3(_position.x, yDebug, _position.y);
         if (Vector3.Distance(oldPos, pos) < 0.2f)
@@ -329,7 +326,6 @@ public class Crystal
         UVisHelp.CreateText(pos, _calcWeight.ToString("F1"), 40);
     }
 
-
     public float AbsoluteAngleFrom3PointsInDegrees(Vector2 oldPoint, Vector2 centerPoint, Vector2 newPoint)
     {
         double a = centerPoint.x - oldPoint.x;
@@ -341,19 +337,16 @@ public class Crystal
         double atanB = Math.Atan2(c, d);
 
         return (float)Math.Abs((atanA - atanB) * (-180 / Math.PI));
-        // if Second line is counterclockwise from 1st line angle is 
+        // if Second line is counterclockwise from 1st line angle is
         // positive, else negative
     }
-
 
     private float CalcPilotDistance(Vector2 curr, Vector2 final)
     {
         var dist = Vector2.Distance(curr, final);
         //Debug.Log("dist"+dist);
 
-        var medi = dist/2;
-
-
+        var medi = dist / 2;
 
         //if distnace longee thn 5 will ret 5. otherwise retu dist
         if (medi > 5)
@@ -367,10 +360,8 @@ public class Crystal
         return medi;
     }
 
-
-
     /// <summary>
-    /// Depending on the type will define base weight 
+    /// Depending on the type will define base weight
     /// </summary>
     private void DefineBaseWeight()
     {
@@ -394,12 +385,12 @@ public class Crystal
         {
             _baseWeight = 5;
         }
-        //will rather to go to a RectCorner thn a TerraObstacle 
+        //will rather to go to a RectCorner thn a TerraObstacle
         else if (_type == H.RectCorner)
         {
             _baseWeight = 200;
         }
-        // bz always should be the 1st to try 
+        // bz always should be the 1st to try
         else if (_type == H.Door)
         {
             _baseWeight = 0;
@@ -410,20 +401,18 @@ public class Crystal
         }
     }
 
-
-
-
-
-
     private List<Crystal> _pool;
+
     //this is the index of the current Crystal on the _pool
     //use to organize the pool correctcly for LinkRect
-    private int _poolIndex ;
+    private int _poolIndex;
+
     private int countCapacity = 50;
+
     /// <summary>
-    /// Will link with the two closest tht dont have the same parent ID and 
-    /// that dont have a same line ID 
-    /// 
+    /// Will link with the two closest tht dont have the same parent ID and
+    /// that dont have a same line ID
+    ///
     /// the one is gonna be link is always gonna be element 0 of the pool ,
     /// will try to link to element 1,2, etc
     /// </summary>
@@ -460,7 +449,7 @@ public class Crystal
     /// Will define the top for OrganizeByDist()
     /// </summary>
     /// <returns></returns>
-    int DefineTop()
+    private int DefineTop()
     {
         int res = 0;
 
@@ -468,12 +457,12 @@ public class Crystal
 
         if (poolIndexStart == 0)
         {
-            res=countCapacity;
+            res = countCapacity;
         }
         else
         {
             //the strart pls the half of its caapacity
-            res=poolIndexStart + (countCapacity / 2);
+            res = poolIndexStart + (countCapacity / 2);
         }
 
         if (res > _pool.Count)
@@ -483,7 +472,7 @@ public class Crystal
         return res;
     }
 
-    int DefineStartPoolIndex()
+    private int DefineStartPoolIndex()
     {
         if (_poolIndex == 0)
         {
@@ -492,7 +481,7 @@ public class Crystal
         else
         {
             //will remove 25 so we include the 25 before and the 25 after on the OrganizeByDist()
-            _poolIndex -= (countCapacity/2);
+            _poolIndex -= (countCapacity / 2);
 
             if (_poolIndex > -1)
             {
@@ -506,7 +495,8 @@ public class Crystal
     }
 
     private int index = 1;
-    void LinkTo()
+
+    private void LinkTo()
     {
         var add = IndexAddition();
 
@@ -519,7 +509,7 @@ public class Crystal
                 LinkAction(nextCrystal);
             }
 
-            if (Lines.Count == _maxAmtLines )
+            if (Lines.Count == _maxAmtLines)
             {
                 index = 1;
                 RemoveMySelFromPool();
@@ -542,12 +532,12 @@ public class Crystal
 
     /// <summary>
     /// bz dep[ending on the type of cristals the addition on the while of index will be diff
-    /// 
-    /// for ex: in water bouns is used +4 so it goes further and make lines longer 
+    ///
+    /// for ex: in water bouns is used +4 so it goes further and make lines longer
     /// ex: in mountains is +1 bz u need to have mountains togther
     /// </summary>
     /// <returns></returns>
-    int IndexAddition()
+    private int IndexAddition()
     {
         if (_type == H.WaterObstacle)
         {
@@ -557,12 +547,12 @@ public class Crystal
         {
             return 1;
         }
-        //mountain  
+        //mountain
         return 4;//4
     }
 
     /// <summary>
-    /// the action of getting linked 
+    /// the action of getting linked
     /// </summary>
     /// <param name="nextCrystal"></param>
     private void LinkAction(Crystal nextCrystal)
@@ -584,7 +574,7 @@ public class Crystal
     }
 
     /// <summary>
-    /// Take care of the linking of a LandZone 
+    /// Take care of the linking of a LandZone
     /// </summary>
     private void LinkALandZone(string nextCrystal)
     {
@@ -593,7 +583,7 @@ public class Crystal
             return;
         }
 
-        var l = (LandZone) this;
+        var l = (LandZone)this;
         l.LandZoneName = nextCrystal;
         l.RenameAllMyLinkRects(nextCrystal);
     }
@@ -616,7 +606,7 @@ public class Crystal
     /// Will add to _links if is not there already
     /// </summary>
     /// <param name="newLink"></param>
-    void AddToLinks(Crystal newLink)
+    private void AddToLinks(Crystal newLink)
     {
         if (!_links.Contains(newLink))
         {
@@ -628,7 +618,7 @@ public class Crystal
     /// Another Crystal adding all its links to this obj
     /// </summary>
     /// <param name="newLinks"></param>
-    void AddExternalLinks(List<Crystal> newLinks)
+    private void AddExternalLinks(List<Crystal> newLinks)
     {
         for (int i = 0; i < newLinks.Count; i++)
         {
@@ -637,12 +627,12 @@ public class Crystal
     }
 
     /// <summary>
-    /// Link Rects will be giving to linked new Crystal thir own name, bz I need to have all wth the same name 
+    /// Link Rects will be giving to linked new Crystal thir own name, bz I need to have all wth the same name
     /// </summary>
     /// <param name="nextCrystal"></param>
     private void RenameAsNextLinkRect(Crystal nextCrystal)
     {
-        if (_type == H.LinkRect || _type ==H.LandZone)
+        if (_type == H.LinkRect || _type == H.LandZone)
         {
             Rename(nextCrystal.Name);
         }
@@ -660,7 +650,7 @@ public class Crystal
         {
             if (newName != _links[i].Name)
             {
-                _links[i].Rename(newName);    
+                _links[i].Rename(newName);
             }
         }
 
@@ -678,13 +668,13 @@ public class Crystal
     //}
 
     /// <summary>
-    /// Will assigin line to the available line spot 
+    /// Will assigin line to the available line spot
     /// </summary>
     public void AssignLine(Line tLine)
     {
         if (Lines.Count < _maxAmtLines)
         {
-            Lines.Add(tLine);;
+            Lines.Add(tLine); ;
         }
 
         //else
@@ -694,11 +684,11 @@ public class Crystal
     }
 
     /// <summary>
-    /// Will return true if can be linked 
+    /// Will return true if can be linked
     /// </summary>
     /// <param name="nextCrystal"></param>
     /// <returns></returns>
-    bool CanILinkToThis(Crystal nextCrystal)
+    private bool CanILinkToThis(Crystal nextCrystal)
     {
         if (!CanLinkRectOrLandZone(nextCrystal))
         {
@@ -730,7 +720,7 @@ public class Crystal
         {
             return false;
         }
-        if (IsTooFar( nextCrystal))
+        if (IsTooFar(nextCrystal))
         {
             return false;
         }
@@ -756,7 +746,7 @@ public class Crystal
     /// </summary>
     /// <param name="nextCrystal"></param>
     /// <returns></returns>
-    bool CanLinkRectOrLandZone(Crystal nextCrystal)
+    private bool CanLinkRectOrLandZone(Crystal nextCrystal)
     {
         if (_type != H.LinkRect && _type != H.LandZone && _type != H.Poll)
         {
@@ -790,14 +780,14 @@ public class Crystal
         return false;
     }
 
-    bool EvalFarnessOnTypeIsTooFar(float dist, float aver, float tolerance)
+    private bool EvalFarnessOnTypeIsTooFar(float dist, float aver, float tolerance)
     {
         //mountains wont link if are 40f units of distance  apart
         if (_type == H.MountainObstacle)
         {
             return dist > 30f;
         }
-        return dist > aver*tolerance && IsAverReady();
+        return dist > aver * tolerance && IsAverReady();
     }
 
     /// <summary>
@@ -831,7 +821,7 @@ public class Crystal
         {
             return false;
         }
-        //if the lines contain the id on next then are cousing so no linking allow 
+        //if the lines contain the id on next then are cousing so no linking allow
         for (int i = 0; i < Lines.Count; i++)
         {
             if (Lines[i].Id.Contains(nextCrystal.Id))
@@ -844,17 +834,17 @@ public class Crystal
 
     /// <summary>
     /// Bz if is a Water obstacle for ex. the crystal cant be on the line. other wise will intersect
-    /// while a person is walking alone the line 
+    /// while a person is walking alone the line
     /// </summary>
-    void SetPositionAfterLines()
+    private void SetPositionAfterLines()
     {
-        //if is a water obstavle need to push it away a bit from the sea bottom. So people can use the crystals 
-        //if they are a bit awy from the seaBoundsLines 
+        //if is a water obstavle need to push it away a bit from the sea bottom. So people can use the crystals
+        //if they are a bit awy from the seaBoundsLines
         if (_type == H.WaterObstacle)
         {
-            _position = m.MeshController.WaterBound1.ReturnPushMeAwayFromSeaBottom(_position, 2.5f); 
+            _position = m.MeshController.WaterBound1.ReturnPushMeAwayFromSeaBottom(_position, 2.5f);
 
-            //they show exacatly where the points fall in terrain 
+            //they show exacatly where the points fall in terrain
             //UVisHelp.CreateHelpers(new Vector3(_position.x, m.IniTerr.MathCenter.y, _position.y), Root.yellowCube);
         }
         else if (_type == H.MountainObstacle)
@@ -865,11 +855,10 @@ public class Crystal
     }
 
     /// <summary>
-    /// will remove this Crystal form pool 
+    /// will remove this Crystal form pool
     /// </summary>
     private void RemoveMySelFromPool()
     {
-
         if (_type == H.Poll)
         {
             MeshController.CrystalManager1.RemoveCrystalPoll();
@@ -880,9 +869,8 @@ public class Crystal
         {
             MeshController.CrystalManager1.RemoveCrystal(this, _type);
         }
-        
-        SetPositionAfterLines();
 
+        SetPositionAfterLines();
     }
 
     /// <summary>
@@ -908,42 +896,33 @@ public class Crystal
             }
         }
 
-        
-   
         return false;
     }
 
-
-
-
-
-
-
     #region Accumulative Numbers
-
 
     private static int crystalsAccum;
     private static float distanceAccum;
     private int averaReadyAmt = 40;
 
-    static void AddToAccum(float dist)
+    private static void AddToAccum(float dist)
     {
         crystalsAccum++;
         distanceAccum += dist;
     }
 
     /// <summary>
-    /// Will tell u the average distance of a crystal to other in current Set of Cristals 
-    /// 
-    /// use to avoid mountains far away linking to each other 
+    /// Will tell u the average distance of a crystal to other in current Set of Cristals
+    ///
+    /// use to avoid mountains far away linking to each other
     /// </summary>
     /// <returns></returns>
-    float AverageDist()
+    private float AverageDist()
     {
-        return distanceAccum/crystalsAccum;
+        return distanceAccum / crystalsAccum;
     }
 
-    bool IsAverReady()
+    private bool IsAverReady()
     {
         //must be at least 20 to give a number
         if (crystalsAccum < averaReadyAmt)
@@ -962,8 +941,7 @@ public class Crystal
         distanceAccum = 0;
     }
 
-#endregion
-
+    #endregion Accumulative Numbers
 
     /// <summary>
     /// Created for LinkRect they need to be relink a few times to be named all by Zones
@@ -985,8 +963,6 @@ public class Crystal
 
     public void SetSiblings(List<Crystal> allPolyCrystals)
     {
-
-
         for (int i = 0; i < allPolyCrystals.Count; i++)
         {
             if (this != allPolyCrystals[i])
@@ -999,16 +975,18 @@ public class Crystal
 
 public class DebugCrystal
 {
-    SMe m = new SMe();
+    private SMe m = new SMe();
     public string Info;
     public Vector3 _position;
 
-    List<DebugCrystal> debug = new List<DebugCrystal>();
-    List<General> gameObjects = new List<General>();
+    private List<DebugCrystal> debug = new List<DebugCrystal>();
+    private List<General> gameObjects = new List<General>();
 
     private bool shownNow;
 
-    public DebugCrystal() { }
+    public DebugCrystal()
+    {
+    }
 
     public DebugCrystal(string info, Vector3 pos)
     {
@@ -1016,8 +994,7 @@ public class DebugCrystal
         _position = pos;
     }
 
-
-    public void AddNewCrystals( string addInfo, Vector3 pos)
+    public void AddNewCrystals(string addInfo, Vector3 pos)
     {
         //if (shownNow)
         //{
@@ -1042,11 +1019,11 @@ public class DebugCrystal
         {
             ShowEach(debug[i]);
         }
-       //Debug.Log(debug.Count+" debuc ct");
+        //Debug.Log(debug.Count+" debuc ct");
         //shownNow = true;
     }
 
-    void ShowEach(DebugCrystal each)
+    private void ShowEach(DebugCrystal each)
     {
         var locPos = each._position;
         var locInf = each.Info;
@@ -1054,7 +1031,7 @@ public class DebugCrystal
         var yDebug = m.IniTerr.MathCenter.y + 0.2f;
         var pos3 = new Vector3(locPos.x, yDebug, locPos.y);
 
-        gameObjects.Add( UVisHelp.CreateHelpers(pos3, Root.largeBlueCube));
+        gameObjects.Add(UVisHelp.CreateHelpers(pos3, Root.largeBlueCube));
         gameObjects.Add(UVisHelp.CreateText(pos3, locInf, 15));
     }
 
@@ -1074,11 +1051,11 @@ public class DebugCrystal
     /// </summary>
     /// <param name="pos"></param>
     /// <returns></returns>
-    int IsHereAlready(Vector3 pos)
+    private int IsHereAlready(Vector3 pos)
     {
         for (int i = 0; i < debug.Count; i++)
         {
-            if (Vector3.Distance(debug[i]._position,  pos) < 1f)
+            if (Vector3.Distance(debug[i]._position, pos) < 1f)
             {
                 return i;
             }
@@ -1090,6 +1067,4 @@ public class DebugCrystal
     {
         gameObjects.Add(UVisHelp.CreateHelpers(pos, root));
     }
-
-
 }

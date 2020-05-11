@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class FinanceLogger
 {
-    List<Budget> _budgets = new List<Budget>();
-    int yearModified;
+    private List<Budget> _budgets = new List<Budget>();
+    private int yearModified;
 
     public List<Budget> Budgets
     {
@@ -12,7 +12,9 @@ public class FinanceLogger
         set { _budgets = value; }
     }
 
-    public FinanceLogger() { }
+    public FinanceLogger()
+    {
+    }
 
     public FinanceLogger(bool first)
     {
@@ -41,14 +43,14 @@ public class FinanceLogger
     }
 
     /// <summary>
-    /// Will create the resume of the current budget 
+    /// Will create the resume of the current budget
     /// </summary>
     /// <returns></returns>
     internal List<DisplayAccount> ResumenCurrentBudget(int which)
     {
         which += yearModified;
         var index = _budgets.FindIndex(a => a.Year == which);
-        Budget curr = null;;
+        Budget curr = null; ;
 
         if (index == -1)
         {
@@ -65,6 +67,7 @@ public class FinanceLogger
     {
         yearModified -= 1;
     }
+
     public void SetResumenToNextYear()
     {
         yearModified += 1;
@@ -90,7 +93,7 @@ public class FinanceLogger
 
 public class Budget
 {
-    int _year;
+    private int _year;
 
     public int Year
     {
@@ -98,7 +101,7 @@ public class Budget
         set { _year = value; }
     }
 
-    float _initBalAcct;
+    private float _initBalAcct;
 
     public float InitBalAcct
     {
@@ -106,27 +109,28 @@ public class Budget
         set { _initBalAcct = value; }
     }
 
-    //if change update negative or positve acct right below 
-    List<string> _acctNames = new List<string>()
+    //if change update negative or positve acct right below
+    private List<string> _acctNames = new List<string>()
     {
-        "Exports", 
-        // "Overseas Trade", "Crown Trade", 
+        "Exports",
+        // "Overseas Trade", "Crown Trade",
         "Quests Completion",
         "Imports", "New bought lands", "Salary", "Construction"
     };
 
-    List<string> _posAcctNames = new List<string>()
+    private List<string> _posAcctNames = new List<string>()
     {
-         "Exports", 
-        //  "Overseas Trade", "Crown Trade", 
+         "Exports",
+        //  "Overseas Trade", "Crown Trade",
          "Quests Completion",
     };
-    List<string> _negativeAcctNames = new List<string>()
+
+    private List<string> _negativeAcctNames = new List<string>()
     {
         "Imports", "New bought lands", "Salary", "Construction"
     };
 
-    List<Account> _accounts = new List<Account>();
+    private List<Account> _accounts = new List<Account>();
 
     public List<Account> Accounts
     {
@@ -134,7 +138,9 @@ public class Budget
         set { _accounts = value; }
     }
 
-    public Budget(){}
+    public Budget()
+    {
+    }
 
     public Budget(int year)
     {
@@ -153,13 +159,13 @@ public class Budget
         _accounts[index].Add(bal);
     }
 
-    float ValOfAnAcct(string acct)
+    private float ValOfAnAcct(string acct)
     {
         var index = _accounts.FindIndex(a => a.Name == acct);
         return _accounts[index].Balance;
     }
 
-    float SubTotal(List<string> list)
+    private float SubTotal(List<string> list)
     {
         float res = 0;
         for (int i = 0; i < list.Count; i++)
@@ -185,7 +191,7 @@ public class Budget
         res.Add(new DisplayAccount(Color.black, 0, "Income", -1, true, 1));
         for (int i = 0; i < _posAcctNames.Count; i++)
         {
-            var name =_posAcctNames[i];
+            var name = _posAcctNames[i];
             res.Add(new DisplayAccount(Color.green, 3, name, ValOfAnAcct(name), false, 0));
         }
         res.Add(new DisplayAccount(Color.yellow, 1, "Income Subtotal", SubTotal(_posAcctNames), false, 0));
@@ -202,7 +208,7 @@ public class Budget
 
         //space
         res.Add(new DisplayAccount(Color.white, 0, "Balance", -1, false, 0));
-        var yearBal =  SubTotal(_posAcctNames) - SubTotal(_negativeAcctNames);
+        var yearBal = SubTotal(_posAcctNames) - SubTotal(_negativeAcctNames);
         res.Add(new DisplayAccount(Color.yellow, 1, "Year Balance"
             , yearBal, false, 0));
         res.Add(new DisplayAccount(Color.black, 0, "Ending Balance", InitBalAcct + yearBal, true, 2));
@@ -213,14 +219,15 @@ public class Budget
 
 public class Account
 {
-    string _name;
+    private string _name;
 
     public string Name
     {
         get { return _name; }
         set { _name = value; }
     }
-    float _balance;
+
+    private float _balance;
 
     public float Balance
     {
@@ -228,7 +235,9 @@ public class Account
         set { _balance = value; }
     }
 
-    public Account() { }
+    public Account()
+    {
+    }
 
     public Account(string name, float bal)
     {
@@ -247,42 +256,47 @@ public class Account
 /// </summary>
 public class DisplayAccount
 {
-    Color _color = Color.white;
+    private Color _color = Color.white;
 
     public Color Color
     {
         get { return _color; }
         set { _color = value; }
     }
-    int _blankSpaces;
+
+    private int _blankSpaces;
 
     public int BlankSpaces
     {
         get { return _blankSpaces; }
         set { _blankSpaces = value; }
     }
-    string _name;
+
+    private string _name;
 
     public string Name
     {
         get { return _name; }
         set { _name = value; }
     }
-    float _balance;
+
+    private float _balance;
 
     public float Balance
     {
         get { return _balance; }
         set { _balance = value; }
     }
-    bool _boldFont;
+
+    private bool _boldFont;
 
     public bool BoldFont
     {
         get { return _boldFont; }
         set { _boldFont = value; }
     }
-    float _addSizeFont;
+
+    private float _addSizeFont;
 
     public float AddSizeFont
     {
@@ -290,7 +304,7 @@ public class DisplayAccount
         set { _addSizeFont = value; }
     }
 
-    public DisplayAccount(Color color, int blankSpaces, string name, float balance, 
+    public DisplayAccount(Color color, int blankSpaces, string name, float balance,
         bool boldFont, float addSizeFont)
     {
         _color = color;
@@ -300,5 +314,4 @@ public class DisplayAccount
         _boldFont = boldFont;
         _addSizeFont = addSizeFont;
     }
-
 }

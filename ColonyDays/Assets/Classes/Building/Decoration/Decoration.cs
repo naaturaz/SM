@@ -1,14 +1,12 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
-/// Will decorate the surroundings of a building 
+/// Will decorate the surroundings of a building
 /// </summary>
 public class Decoration
 {
-
-    List<string> _roots = new List<string>()
+    private List<string> _roots = new List<string>()
     {
         //"Prefab/Terrain/Spawner/Decora/Crate 1",
         //"Prefab/Terrain/Spawner/Decora/Crate 2",
@@ -20,19 +18,17 @@ public class Decoration
         //"Prefab/Terrain/Spawner/Decora/RusticChair",
     };
 
-
-
-
-
     private Building _building;
-    List<Line> _lines = new List<Line>();
+    private List<Line> _lines = new List<Line>();
 
-    List<Vector3> _positionsToSpawnDecor = new List<Vector3>();
+    private List<Vector3> _positionsToSpawnDecor = new List<Vector3>();
     private General _spwnedObj;
 
     private RandomUV _randomUV;
 
-    public Decoration() { }
+    public Decoration()
+    {
+    }
 
     public Decoration(Building build)
     {
@@ -44,35 +40,34 @@ public class Decoration
         B4Init(build);
     }
 
-
-    bool IsSmallBuilding()
+    private bool IsSmallBuilding()
     {
         var isADecora = Root.RetBuildingRoot(_building.HType).Contains("Decoration");
 
         return _building.HType == H.StandLamp
              //|| _building.HType == H.Fountain || _building.HType == H.WideFountain || _building.HType == H.PalmTree
-             //|| _building.HType == H.FloorFountain || _building.HType == H.FlowerPot || _building.HType == H.PradoLion 
+             //|| _building.HType == H.FloorFountain || _building.HType == H.FlowerPot || _building.HType == H.PradoLion
              || isADecora
              ;
     }
 
     /// <summary>
     /// Buildings that dont need any spawns around them like:
-    /// FlowerPot 
+    /// FlowerPot
     /// </summary>
     /// <returns></returns>
-    bool IsATinyBuilding()
+    private bool IsATinyBuilding()
     {
         return Root.RetBuildingRoot(_building.HType).Contains("Flower");
     }
 
-    int HowMany()
+    private int HowMany()
     {
         //return 2;
 
         if (IsATinyBuilding())
             return 0;
-        //bz it should be small so it doest cover the lamp 
+        //bz it should be small so it doest cover the lamp
         if (IsSmallBuilding())
             return 2 + 1;
         if (_building.HType.ToString().Contains("House") || _building.HType.ToString().Contains("Shack"))
@@ -80,7 +75,7 @@ public class Decoration
         return 9 + 1;
     }
 
-    void B4Init(Building build)
+    private void B4Init(Building build)
     {
         _building = build;
         for (int i = 1; i < HowMany(); i++)
@@ -99,7 +94,7 @@ public class Decoration
         Init();
     }
 
-    void AddHalloweenToRoot()
+    private void AddHalloweenToRoot()
     {
         if (!Settings.IsHalloweenTheme)
         {
@@ -112,7 +107,7 @@ public class Decoration
         }
     }
 
-    void AddXMasToRoot()
+    private void AddXMasToRoot()
     {
         if (!Settings.IsXmas)
         {
@@ -151,9 +146,9 @@ public class Decoration
     private int _bravo;
     private int _pirate;
     private GameObject _main;
+
     private void IfHouseMedAssignRandomMat()
     {
-
         DefineRamdonSelection();
 
         _main = General.GetChildThatContains("Main", _building.gameObject);
@@ -223,18 +218,15 @@ public class Decoration
         _pirate = UMath.GiveRandom(1, 4);
     }
 
-
-
-
-    #endregion
+    #endregion Romeo Bravo Pirate
 
     /// <summary>
     /// The line facing spawnPoint wil be removed
     /// </summary>
-    void RemoveSpwnPointLine()
+    private void RemoveSpwnPointLine()
     {
         var st = (Structure)_building;
-        //moveing the spwn point away from building . assuimng is fallin inside building 
+        //moveing the spwn point away from building . assuimng is fallin inside building
         var spwPoint = Vector3.MoveTowards(st.SpawnPoint.transform.position, _building.transform.position, -.75f);
 
         var spwnLine = new Line(U2D.FromV3ToV2(spwPoint), U2D.FromV3ToV2(_building.transform.position));
@@ -290,7 +282,7 @@ public class Decoration
         }
     }
 
-    void AddToBatchMesh()
+    private void AddToBatchMesh()
     {
         Program.gameScene.BatchAdd(_spwnedObj);
     }
@@ -300,12 +292,12 @@ public class Decoration
         Program.gameScene.BatchRemove(_spwnedObj);
     }
 
-    void RandomizeRotAndScale(GameObject spwnObj, string root)
+    private void RandomizeRotAndScale(GameObject spwnObj, string root)
     {
         //return;
         spwnObj.transform.Rotate(new Vector3(0, UMath.GiveRandom(0, 360), 0));
 
-        //they are well scaled 
+        //they are well scaled
         if (root.Contains("Prefab/Terrain/Spawner/Decora"))
         {
             return;
@@ -315,6 +307,4 @@ public class Decoration
         var actScale = spwnObj.transform.localScale;
         spwnObj.transform.localScale = actScale / 2f;//2.5
     }
-
-
 }

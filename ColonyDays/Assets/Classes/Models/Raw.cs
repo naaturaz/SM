@@ -1,15 +1,11 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class Raw : Model {
-
-	// Use this for initialization
-	void Start () 
+﻿public class Raw : Model
+{
+    // Use this for initialization
+    private void Start()
     {
-	
-	}
+    }
 
-    new void Update()
+    private new void Update()
     {
         CheckOnMouse();
     }

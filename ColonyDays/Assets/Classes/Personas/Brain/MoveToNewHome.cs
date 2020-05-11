@@ -1,18 +1,18 @@
 ﻿/*
- * All actions related to moving to a new home 
+ * All actions related to moving to a new home
  * this was a section in Brain . Decided to make it a class for readability etc
- * 
+ *
  */
 
 using System;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// Is inheritng from Brain just to access the field:
-///  _person 
-///  currStructure 
-/// 
+///  _person
+///  currStructure
+///
 /// It couldnt be public bz XML serializer will find redundancy
 /// </summary>
 public class MoveToNewHome
@@ -24,10 +24,10 @@ public class MoveToNewHome
     private List<string> _homeOldKeysList = new List<string>();
     private TheRoute _routeToNewHome = new TheRoute();
 
-    private bool buildRouteToNewHome;//main bool here to build route to new Home 
+    private bool buildRouteToNewHome;//main bool here to build route to new Home
     private bool newHomeRouteStart;
     private CryRouteManager _newHomeRouter = new CryRouteManager();
-    private int searchedNewHome;//counter of new search for a home 
+    private int searchedNewHome;//counter of new search for a home
     private Structure old;
 
     public string OldHomeKey
@@ -48,9 +48,9 @@ public class MoveToNewHome
         set { _routeToNewHome = value; }
     }
 
-
-
-    public MoveToNewHome() { }
+    public MoveToNewHome()
+    {
+    }
 
     public MoveToNewHome(Brain brain, Person person)
     {
@@ -77,12 +77,12 @@ public class MoveToNewHome
     }
 
     /// <summary>
-    /// Will tell u if current person still belown to one of the buildins passed in the list 
-    /// 
-    /// To avoid people to destroy a building they are in 
-    /// 
-    /// Address to the case where a person keeps the current building old key but that buildign 
-    /// wont be destroy 
+    /// Will tell u if current person still belown to one of the buildins passed in the list
+    ///
+    /// To avoid people to destroy a building they are in
+    ///
+    /// Address to the case where a person keeps the current building old key but that buildign
+    /// wont be destroy
     /// </summary>
     private bool HasOldKeyOfCurrentPlaceAndPlaceWillBeDestroyed(List<string> list)
     {
@@ -108,7 +108,7 @@ public class MoveToNewHome
 
     /// <summary>
     /// Removing people from the 'oldBuild' Building object  PeopleDict Dictionary
-    /// So we can destroy that building 
+    /// So we can destroy that building
     /// </summary>
     public void RemovePeopleDict(string oldBuild)
     {
@@ -117,18 +117,17 @@ public class MoveToNewHome
             return;
         }
 
-        //if the person was in the PeopleDict of the oldbuilding gets removed 
+        //if the person was in the PeopleDict of the oldbuilding gets removed
         if (BuildingPot.Control.Registro.AllBuilding[oldBuild].PeopleDict.Contains(_person.MyId))
         {
             BuildingPot.Control.Registro.AllBuilding[oldBuild].PeopleDict.Remove(_person.MyId);
             BuildingPot.Control.Registro.ResaveOnRegistro(oldBuild);
-
         }
     }
 
     /// <summary>
-    /// MAIN METHOD for moving to nw Home 
-    /// 
+    /// MAIN METHOD for moving to nw Home
+    ///
     /// It has the logic to build the route and everytjhing while moving to new house
     /// </summary>
     public void BuildRouteToNewHomeRoutine()
@@ -139,17 +138,17 @@ public class MoveToNewHome
         SearchForNewHome();
         if (!newHomeRouteStart)
         {
-            //_person.Home == null person is in the proccess of getting a new house   
+            //_person.Home == null person is in the proccess of getting a new house
             if (_person.Home == null)
             {
                 return;
             }
 
-            _newHomeRouter = new CryRouteManager(ReturnCorrectInitStructure(), 
+            _newHomeRouter = new CryRouteManager(ReturnCorrectInitStructure(),
                 _person.Home, _person, HPers.NewHome);
             newHomeRouteStart = true;
         }
-        //person getting ready to move to new home 
+        //person getting ready to move to new home
         if (_newHomeRouter.IsRouteReady && _routeToNewHome.CheckPoints.Count == 0
             && _brain.IAmHomeNow())
         {
@@ -167,7 +166,7 @@ public class MoveToNewHome
         }
     }
 
-    Structure ReturnCorrectInitStructure()
+    private Structure ReturnCorrectInitStructure()
     {
         Structure dummy = null;
 
@@ -188,7 +187,7 @@ public class MoveToNewHome
         //_routeToNewHome.CheckPoints.Clear();
 
         if (_brain.PullOldHome() != null && _brain.PullOldHome() == _person.Home)
-        {   //means is moving towards the same house 
+        {   //means is moving towards the same house
             //todo fix this keep being calling thru the game
             //Debug.Log(_person.MyId + " InitValForNewHome() Canceled");
             return;
@@ -204,12 +203,12 @@ public class MoveToNewHome
         old = BuildingPot.Control.Registro.AllBuilding[firstKeyOnList] as Structure;
         buildRouteToNewHome = true;
 
-        //so that state happens 
+        //so that state happens
         _brain.CurrentTask = HPers.MovingToNewHome;
         _brain.CheckMeOnSystemNow();
     }
 
-    void InitValForNewHomeForNewSpawned()
+    private void InitValForNewHomeForNewSpawned()
     {
         //_routeToNewHome.CheckPoints.Clear();
         Debug.Log(_person.MyId + " InitValForNewHomeForNewSpawned()");
@@ -224,25 +223,25 @@ public class MoveToNewHome
         _brain.CheckMeOnSystemNow();
     }
 
-    void GoMindTrue()
+    private void GoMindTrue()
     {
         _brain.GoMindState = true;
-        //if not wauting and cant reroute now then im done 
+        //if not wauting and cant reroute now then im done
     }
 
     /// <summary>
-    /// Search for new home 
+    /// Search for new home
     /// </summary>
     private void SearchForNewHome()
     {
-        //childs dont look for new homes here 
+        //childs dont look for new homes here
         if (newHomeRouteStart)
         { return; }
 
         _brain.Who = HPers.Home;
         _brain.SearchAgain(true);
 
-        //only will be added if is not moving bz in Brain.CheckHome() we wont allow the search if is moving 
+        //only will be added if is not moving bz in Brain.CheckHome() we wont allow the search if is moving
         if (!_person.Body.MovingNow)
         {
             searchedNewHome++;
@@ -250,12 +249,12 @@ public class MoveToNewHome
 
         if (searchedNewHome > 50)
         {
-           //Debug.Log("whoGreenMeToBecomeMajor: " +_person.PersonReport.whoGreenMeToBecomeMajor+
+            //Debug.Log("whoGreenMeToBecomeMajor: " +_person.PersonReport.whoGreenMeToBecomeMajor+
             //    "."+_person.MyId);
         }
 
-        //at 11x , 100 was fine. So I leave it like this 
-        //what happens is that ask too many times close to each other and breaks 
+        //at 11x , 100 was fine. So I leave it like this
+        //what happens is that ask too many times close to each other and breaks
         if (searchedNewHome > 100)// * Program.gameScene.GameSpeed)
         {
             throw new Exception("House never should be searched more than 100 times since was initiated" +
@@ -278,7 +277,7 @@ public class MoveToNewHome
     public void GetMyNameOutOfOldHomePeopleList()
     {
         //addressing when is a brand new spwaned
-        if (_homeOldKeysList.Count==0)
+        if (_homeOldKeysList.Count == 0)
         {
             return;
         }
@@ -291,7 +290,7 @@ public class MoveToNewHome
     }
 
     /// <summary>
-    /// Will add currrent home to _homeOldKeysList so the InitValForNewHome() gets initiated 
+    /// Will add currrent home to _homeOldKeysList so the InitValForNewHome() gets initiated
     /// </summary>
     public void AddToHomeOldKeysList(string oldHomeP = "")
     {
@@ -321,7 +320,7 @@ public class MoveToNewHome
     public void CheckOnOldKeysList(bool inHomeForce = false)
     {
         //if the oldHomeKey was cleared and homeOldKeysList has more than one means that we have
-        //olds key to address 
+        //olds key to address
         if (_oldHomeKey == "" && _homeOldKeysList.Count > 0 && _routeToNewHome.CheckPoints.Count == 0 //&& _brain.IAmHomeNow()
             )
         {

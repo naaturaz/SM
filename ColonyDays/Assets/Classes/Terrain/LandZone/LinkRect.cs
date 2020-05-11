@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// Will inherit from Crsytal so is easy to link the LinkRects.
@@ -7,13 +7,13 @@ using System.Collections.Generic;
 /// </summary>
 public class LinkRect : Crystal
 {
-    SMe m = new SMe();
+    private SMe m = new SMe();
     private string _id;
 
-    Rect _rect = new Rect();
+    private Rect _rect = new Rect();
 
-    //he cant grow towards the one added here 
-    List<int> _constraint = new List<int>();
+    //he cant grow towards the one added here
+    private List<int> _constraint = new List<int>();
 
     //what ever is left on the grid to grow. the grid in the mosy common Y but this
     //LinkRects will feed from there and will chew the _grid completely
@@ -22,8 +22,9 @@ public class LinkRect : Crystal
     //N, E, S, W..... : 0,1,2,3
     private int _direction;
 
-    //this is the current row looking to eat more land 
+    //this is the current row looking to eat more land
     private List<Vector3> _currRow = new List<Vector3>();
+
     //how many tiles the currentRow List has
     private int _rowTiles;
 
@@ -31,11 +32,13 @@ public class LinkRect : Crystal
     private List<Vector3> _currVector3s = new List<Vector3>();
 
     private const int STEP = 3;
+
     //will step further into the grid on 3s unless a constraint is found
     private int _stepFurther = 3;
 
     //the tiles size
     private float _xTile;
+
     private float _zTile;
 
     //the vector3 has eaten already this Rect
@@ -56,20 +59,22 @@ public class LinkRect : Crystal
         set { _rect = value; }
     }
 
-    public LinkRect() { }
+    public LinkRect()
+    {
+    }
 
     /// <summary>
-    /// When creatig a Disconnected one 
-    /// 
-    /// like a brand new . 
+    /// When creatig a Disconnected one
+    ///
+    /// like a brand new .
     /// </summary>
     /// <param name="grid"></param>
     public LinkRect(List<Vector3> grid) : base(new Vector3(), H.LinkRect, "")
     {
         _grid = grid;
         //_xTile = Mathf.Abs(m.SubDivide.XSubStep);
-        //_zTile = Mathf.Abs( m.SubDivide.ZSubStep);    
-        
+        //_zTile = Mathf.Abs( m.SubDivide.ZSubStep);
+
         _xTile = Mathf.Abs(m.IniTerr.StepX);
         _zTile = Mathf.Abs(m.IniTerr.StepZ);
 
@@ -80,8 +85,7 @@ public class LinkRect : Crystal
         Grow();
     }
 
-
-    void Grow()
+    private void Grow()
     {
         if (StillOneDir())
         {
@@ -97,7 +101,7 @@ public class LinkRect : Crystal
     }
 
     /// <summary>
-    /// will add vertext to current Verctor 3 List based on direction and current position 
+    /// will add vertext to current Verctor 3 List based on direction and current position
     /// </summary>
     private void EatLand()
     {
@@ -110,7 +114,7 @@ public class LinkRect : Crystal
     /// </summary>
     private void DefineCurrentVector3s()
     {
-        //will find te sign where to go base on direction 
+        //will find te sign where to go base on direction
         Vector3 sign = UDir.FromDirToVector3(_direction);
         var xSign = sign.x;
         var zSign = sign.z;
@@ -121,7 +125,7 @@ public class LinkRect : Crystal
 
             for (int j = 0; j < _stepFurther; j++)
             {
-                //will move the initial row point towards the sign and times the size of the tile 
+                //will move the initial row point towards the sign and times the size of the tile
                 rowIniDot += new Vector3((_xTile * xSign), 0, (_zTile * zSign));
                 _currVector3s.Add(rowIniDot);
             }
@@ -131,9 +135,9 @@ public class LinkRect : Crystal
         //DebugHere();
     }
 
-    void DebugHere()
+    private void DebugHere()
     {
-        if (_eaten.Count == 4 && _currVector3s.Count ==12 && _debug.Count == 0)
+        if (_eaten.Count == 4 && _currVector3s.Count == 12 && _debug.Count == 0)
         {
             ShowDebug(_currVector3s, Root.blueSphereHelp);
             ShowDebug(_eaten, Root.yellowCube);
@@ -152,7 +156,7 @@ public class LinkRect : Crystal
         float find = 0;
         H axis = H.None;
 
-        //norht find the top value on z 
+        //norht find the top value on z
         if (_direction == 0)
         {
             find = UMath.ReturnMax(zS);
@@ -180,12 +184,12 @@ public class LinkRect : Crystal
         _currRow = UList.FindVectorsOnSameRange(_eaten, find, axis, 0.05f);
     }
 
-    void ChangeToNextDir()
+    private void ChangeToNextDir()
     {
         _direction = UMath.GoAround(1, _direction, 0, 3);
     }
 
-    //will feed 
+    //will feed
     private void Feed()
     {
         if (FeedIsOk())
@@ -214,7 +218,7 @@ public class LinkRect : Crystal
         {
             _stepFurther--;
         }
-        //means cant move forward towards thi direction even 1 tile 
+        //means cant move forward towards thi direction even 1 tile
         else
         {
             //exit point of while loop
@@ -230,9 +234,9 @@ public class LinkRect : Crystal
     }
 
     /// <summary>
-    /// Will rtell u if current Vectors 3 List can be feed. Need to know if the are a perfect Rectangle 
-    /// 
-    /// Will try to find all the Current Vector3 asked for on the first 1000 on the grid 
+    /// Will rtell u if current Vectors 3 List can be feed. Need to know if the are a perfect Rectangle
+    ///
+    /// Will try to find all the Current Vector3 asked for on the first 1000 on the grid
     /// </summary>
     /// <returns></returns>
     private bool FeedIsOk()
@@ -252,11 +256,11 @@ public class LinkRect : Crystal
             {
                 if (UMath.nearEqualByDistance(_currVector3s[i], _grid[j], 0.3f))
                 {
-                    //so it can be removed 
+                    //so it can be removed
                     _currVector3s[i] = _grid[j];
 
                     local++;
-                    break;    
+                    break;
                 }
             }
 
@@ -274,7 +278,7 @@ public class LinkRect : Crystal
         return false;
     }
 
-    bool IsOnEaten(Vector3 a)
+    private bool IsOnEaten(Vector3 a)
     {
         for (int i = 0; i < _eaten.Count; i++)
         {
@@ -287,6 +291,7 @@ public class LinkRect : Crystal
     }
 
     private bool loop;
+
     public void Update()
     {
         if (loop)
@@ -296,8 +301,7 @@ public class LinkRect : Crystal
         }
     }
 
-
-    int DefineTop()
+    private int DefineTop()
     {
         int top = 100;
 
@@ -323,8 +327,8 @@ public class LinkRect : Crystal
 
     /// <summary>
     /// bz the first is not removed anywere else and needs to be remvoed from the _grid
-    /// 
-    /// this is only needed the 1st time 
+    ///
+    /// this is only needed the 1st time
     /// </summary>
     private void Remove1stEatean()
     {
@@ -339,7 +343,7 @@ public class LinkRect : Crystal
         }
     }
 
-    void CleanCurrents()
+    private void CleanCurrents()
     {
         _currRow.Clear();
         _currVector3s.Clear();
@@ -356,34 +360,31 @@ public class LinkRect : Crystal
     }
 
     /// <summary>
-    /// Return true if at least can keep growing in one direction 
+    /// Return true if at least can keep growing in one direction
     /// </summary>
     /// <returns></returns>
-    bool StillOneDir()
+    private bool StillOneDir()
     {
         return _constraint.Count < 4;
     }
 
-
-
-    void LastActions()
+    private void LastActions()
     {
-        //jst in case is a Link tht only has one _eatean 
+        //jst in case is a Link tht only has one _eatean
         Remove1stEatean();
 
         ConformRect();
         CreateNewLinkRect();
     }
 
-
-    void ConformRect()
+    private void ConformRect()
     {
         var poly = Registro.FromALotOfVertexToPolyMathCenterY(_eaten);
 
         //ShowDebug(poly, Root.blueCube);
 
         //expanding the rect
-        //Expands this rect a bit to be linked to others thru with .Contain 
+        //Expands this rect a bit to be linked to others thru with .Contain
         poly = UPoly.ScalePoly(poly, _rectForcedGrow);
 
         _rect = Registro.FromALotOfVertexToRect(poly);
@@ -393,39 +394,29 @@ public class LinkRect : Crystal
     }
 
     /// <summary>
-    /// Getting the crystal ready for the linking later 
+    /// Getting the crystal ready for the linking later
     /// </summary>
     private void FinalizeBaseProps()
     {
         Position = _rect.center;
     }
 
-
-
     /// <summary>
-    /// the last step here 
+    /// the last step here
     /// </summary>
-    void CreateNewLinkRect()
+    private void CreateNewLinkRect()
     {
-        m.MeshController.LandZoneManager1.AddNewLinkRectToCurrentLandZone();   
+        m.MeshController.LandZoneManager1.AddNewLinkRectToCurrentLandZone();
     }
 
+    private List<General> _debug = new List<General>();
 
-
-
-
-
-
-
-
-    List<General> _debug  = new List<General>();
-
-    void ShowDebug(List<Vector3> list, string root )
+    private void ShowDebug(List<Vector3> list, string root)
     {
         _debug.AddRange(UVisHelp.CreateHelpers(list, root));
     }
 
-    void DeleteDebug()
+    private void DeleteDebug()
     {
         for (int i = 0; i < _debug.Count; i++)
         {

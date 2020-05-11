@@ -10,7 +10,7 @@ public class Languages
     private static Dictionary<string, string> _portuguese = new Dictionary<string, string>();
 
     /// <summary>
-    /// Will be called when a System Units is changed 
+    /// Will be called when a System Units is changed
     /// </summary>
     public static void ReloadDict()
     {
@@ -26,7 +26,6 @@ public class Languages
 
         _en = new LangDict();
 
-
         //Descriptions
         //Infr
         _en.Add("Road.Desc", "Used for decoration purposes. People are happier if there are roads around them");
@@ -37,7 +36,6 @@ public class Languages
         _en.Add(H.StandLamp + ".Desc", "Illuminates at night if Whale Oil is available on the town's storage");
 
         _en.Add(H.HeavyLoad + ".Desc", "These workers use horse wagons to move goods around");
-
 
         //House
         _en.Add("Bohio.Desc", "Bohio house, primitive conditions with unhappy people whom can only have a maximum of 2 to 3 kids");
@@ -100,7 +98,6 @@ public class Languages
         _en.Add("SugarMill.Desc", _produce);
         _en.Add("Foundry.Desc", _produce);
         _en.Add("SugarShop.Desc", "Produces sugar subproducts!!!. " + _produce);
-
 
         _en.Add("SteelFoundry.Desc", _produce);
 
@@ -255,12 +252,10 @@ public class Languages
         _en.Add("MandatoryFeedback", "Only the dev team will see this. Your rate is?");
         _en.Add("PathToSeaExplain", "Displays the shortest way to the sea.");
 
-
         _en.Add("BugReport", "Caught a bug? uhmm yummy.... Send it this way!! Thanks");
         _en.Add("Invitation", "Your friend's email for a chance to join the Private Beta");
         _en.Add("Info", "");//use for informational Dialogs
         _en.Add("Negative", "The Crown extended a line of credit for you. If you own more than $100,000.00 is game over");
-
 
         //MainMenu
         _en.Add("Types_Explain", "Traditional: \nIt's a game where in the beginning some buildings are locked and you have to unlock them. " +
@@ -268,7 +263,6 @@ public class Languages
                 "\n\nFreewill: \nAll available buildings are unlocked right away. " +
                 "The bad thing is this way you can fail very easily." +
                 "\n\nThe 'Hard' difficulty is the closest to reality");
-
 
         //Tooltips
         //Small Tooltips
@@ -306,7 +300,6 @@ public class Languages
         _en.Add("More Positions.HoverSmall", "More");
         _en.Add("Less Positions.HoverSmall", "Less");
 
-
         //down bar
         _en.Add("Infrastructure.HoverSmall", "Infrastructure");
         _en.Add("House.HoverSmall", "Housing");
@@ -341,7 +334,6 @@ public class Languages
         _en.Add("Current_Positions.HoverSmall", "Current Positions");
         _en.Add("Max_Positions.HoverSmall", "Max Positions");
 
-
         _en.Add("Add_Import_Btn.HoverSmall", "Add an Import");
         _en.Add("Add_Export_Btn.HoverSmall", "Add an Export");
         _en.Add("Upg_Cap_Btn.HoverSmall", "Upgrades Capacity");
@@ -356,7 +348,7 @@ public class Languages
         //addOrder windiw
         _en.Add("Amt_Tip.HoverSmall", "Product Amount");
 
-        //Med Tooltips 
+        //Med Tooltips
         _en.Add("Build.HoverMed", "Place building: 'Left click' \n" +
                                 "Rotate building: 'R' key \n" +
                                 "Cancel: 'Right click'");
@@ -370,8 +362,6 @@ public class Languages
 
         _en.Add("Current_Salary.HoverMed", "Workers will go to work, where the highest salary is paid." +
                                             " If 2 places pay the same salary, then the closest to home will be chosen.");
-
-
 
         //Notifications
         _en.Add("BabyBorn.Noti.Name", "New Born");
@@ -399,7 +389,6 @@ public class Languages
         _en.Add("AgeMajor.Noti.Name", "New worker");
         _en.Add("AgeMajor.Noti.Desc", "{0} is ready to work");
 
-
         _en.Add("PersonDie.Noti.Name", "A person has died");
         _en.Add("PersonDie.Noti.Desc", "{0} has died");
 
@@ -408,7 +397,6 @@ public class Languages
 
         _en.Add("DieReplacementNotFound.Noti.Name", "A person has died");
         _en.Add("DieReplacementNotFound.Noti.Desc", "{0} has died. No job replacement was found");
-
 
         _en.Add("FullStore.Noti.Name", "A storage is getting full");
         _en.Add("FullStore.Noti.Desc", "A storage is at {0}% capacity");
@@ -423,10 +411,6 @@ public class Languages
         _en.Add("Built.Noti.Desc", "{0} has been fully built");
 
         _en.Add("cannot produce", "cannot produce");
-
-
-
-
 
         //Main notificaion
         //Shows on the middle of the screen
@@ -472,12 +456,12 @@ public class Languages
 
         _en.Add("Weight.Help", "Weight: All the weights in the game are in Kg or Lbs depending on which Unit system is selected." +
                                 " You can change it in 'Options' in the 'Main Menu'");
-        _en.Add("What is Ft3 and M3?.Help", "The storage capacity is determined by the volume of the building. Ft3 is a cubic foot. M3 is a cubic meter. Keep in mind that less dense products will fill up your storage quickly."); 
+        _en.Add("What is Ft3 and M3?.Help", "The storage capacity is determined by the volume of the building. Ft3 is a cubic foot. M3 is a cubic meter. Keep in mind that less dense products will fill up your storage quickly.");
         // To see products density Bulletin/Prod/Spec" );
 
         _en.Add("More.Help", "If you need more help might be a good idea completing the tutorial, or simply posting a question on SugarMill's Forums");
 
-        //more 
+        //more
         _en.Add("Products Expiration.Help", "Products expiration: Just like in real life, in this game every product expires. Some food items expire sooner than others. You can see how many products had expired on Bulletin/Prod/Expire");
         _en.Add("Horse Carriages.Help", "As the game has real measurements people can carry only so much. That's when horse-drawn carriages come into place. They carry a lot more, as a result, your economy gets boosted. A person in their best years might carry around 15KG, a wheelbarrow closer to 60KG, but the smaller cart can carry 240KG. To use them build a HeavyLoad");
         _en.Add("Usage of goods.Help", "Usage of goods: Crates, barrels, wheelbarrows, carts, tools, cloth, crockery, furniture and utensils are all needed to do the traditional activities of a town. As these goods get used, they diminish, as a result, a person won't carry anything if there are no crates. Keep an eye on that ;)");
@@ -490,7 +474,6 @@ public class Languages
 
         _en.Add("Population.Help", "Once they turn 16 will move to a free house if found. If there is always a free house to move to the population growth will be guaranteed. If they get into the new houses at 16 years old, you are maximizing population growth");
 
-
         _en.Add("F1.Help", "Press [F1] for help");
 
         _en.Add("Inputs.Help", "If a building can't produce because is missing inputs. Check you have the needed input(s) in the main storage and at least one worker in the masonry");
@@ -502,19 +485,15 @@ public class Languages
 
         _en.Add("Orders.Help", "Import orders have precedence");
 
-
         ///word and grammarly below
 
-
-
-        //to  add on spanish         //to correct  
+        //to  add on spanish         //to correct
         _en.Add("TutoOver", "Your reward is $10,000.00 if is the first time you complete it. The tutorial is over now you can keep playing this game or start a new one.");
 
         //Tuto
         _en.Add("CamMov.Tuto", "Tutorial completion reward is $10,000 (one time reward per game). Step1: Use [WASD] or arrow keys to move the Camera. Do this for at least 5 seconds");
         _en.Add("CamMov5x.Tuto", "Use [WASD] or arrow keys and keep press the 'Left Shift' key to move the Camera 5 times quicker. Do this for at least 5 seconds");
         _en.Add("CamRot.Tuto", "Now press the scroll wheel down on your mouse and move your mouse to rotate the Camera. Do this for at least 5 seconds");
-
 
         _en.Add("BackToTown.Tuto", "Press the key [P] on the keyboard to go to the initial position of the camera");
 
@@ -577,7 +556,6 @@ public class Languages
         _en.Add("Transport.Quest", "Quest: Transport the beans from the farm to the Storage. To do that make sure you have" +
                 " workers on the masonry. They act as wheelbarrows when not building.");
 
-
         _en.Add("HireDocker.Quest", "Quest: Hire a docker. Dockers only task is to move the goods into the Dock from the Storage if you are exporting." +
             " Or vice-versa if importing. They work when there is an order in place and the goods are ready to transport. Otherwise, they stay at home resting." +
                 " If you haven't built a Dock then build one." +
@@ -629,13 +607,11 @@ public class Languages
 
         _en.Add("Import2000Wood.Quest", "In the Imports dock import 2000 " + Unit.CurrentWeightUnitsString() + " of Wood. This raw material is needed for everything because is used as fuel");
 
-        //IT HAS FINAL MESSAGE 
+        //IT HAS FINAL MESSAGE
         //last quest it has a final message to the player. if new quest added please put the final message in the last quest
         _en.Add("Import2000Coal.Quest", "In the Imports dock import 2000 " + Unit.CurrentWeightUnitsString() + " of Coal. Coal also, is needed for everything because is used as fuel. Hope you enjoy the experience so far. Keep expanding your colony, and wealth. Also, please help to improve the game. Participate in the online forums your voice and opinions are important! Have fun Sugarmiller!");
 
         //
-
-
 
         //Quest Titles
         _en.Add("Tutorial.Quest.Title", "Tutorial");
@@ -644,7 +620,6 @@ public class Languages
         _en.Add("Shack.Quest.Title", "Build a Shack");
         _en.Add("SmallFarm.Quest.Title", "Build a Farm Field");
         _en.Add("FarmHire.Quest.Title", "Hire Two Farmers");
-
 
         _en.Add("FarmProduce.Quest.Title", "Farm Producer");
 
@@ -683,15 +658,11 @@ public class Languages
         _en.Add("Import2000Wood.Quest.Title", "Import some Wood");
         _en.Add("Import2000Coal.Quest.Title", "Import some Coal");
 
-
-
         //
         _en.Add("Tutorial.Arrow", "This is the tutorial. Once finished you will be rewarded $10,000");
         _en.Add("Quest.Arrow", "This is the quest button. You can access the quest window by clicking on it");
         _en.Add("New.Quest.Avail", "At least one quest is available");
         _en.Add("Quest_Button.HoverSmall", "Quest");
-
-
 
         //Products
         //Notification.Init()
@@ -699,8 +670,6 @@ public class Languages
 
         //OrderShow.ShowToSetCurrentProduct()
         _en.Add("RandomFoundryOutput (Ore, Wood)", "Melted Ore (Ore, Wood)");
-
-
 
         //Bulleting helps
         _en.Add("Help.Bulletin/Prod/Produce", "Here is shown what is being produced in the village.");
@@ -719,18 +688,12 @@ public class Languages
         _en.Add("Help.Bulletin/Finance/Exports", "A breakdown of the exports");
         _en.Add("Help.Bulletin/Finance/Imports", "A breakdown of the imports");
 
-
         _en.Add("Help.Bulletin/Finance/Prices", "....");
-
 
         _en.Add("LoadWontFit", "This load won't fit in the storage area");
 
         //and so on
         _en.Add("Missing.Input", "Building can't produce (Inputs must be in this building inventory). Missing inputs: \n");
-
-
-
-
 
         //in game
 
@@ -742,16 +705,12 @@ public class Languages
         _en.Add("Amt.Cant.Be.0", "Amount can't be 0");
         _en.Add("Prod.Not.Select", "Please select a product");
 
-
         //articles
         _en.Add("The.Male", "The");
         _en.Add("The.Female", "The");
 
         //
         _en.Add("Build.Destroy.Soon", "This building will be destroyed soon. If inventory is not empty, it needs to be cleared by wheelbarrows");
-
-
-
 
         //words
         //Field Farms
@@ -852,7 +811,6 @@ public class Languages
 
         _en.Add("Utensil", "Utensil");
         _en.Add("Stop", "Stop");
-
 
         //more Main GUI
         _en.Add("Workers distribution", "Workers distribution");
@@ -997,7 +955,7 @@ public class Languages
         _en.Add("Amount:", "Amount:");
         _en.Add("Order total price:", "Order total price:");
         _en.Add("Add", "Add");
-        
+
         //BuildingWindow GUI
         _en.Add("Product Description:", "Product Description:");
         _en.Add("Production report by years:", "Production report by years:");
@@ -1023,8 +981,7 @@ public class Languages
         _en.Add("Credits.Text", "Translation:\nCédric Gauché (fr)\nKarsten Eidner (de)");
 
         //All Lang Needed for sure
-		_en.Add("Attention.Production", "Attention: Production was stopped. To resume production in this Building select a product");
-
+        _en.Add("Attention.Production", "Attention: Production was stopped. To resume production in this Building select a product");
 
         //Dec 20 2019 for all Langs
         _en.Add("I.Can.Service", "\n\nI can service ");
@@ -1032,8 +989,8 @@ public class Languages
         //Mar 20 2020
         _en.Add("Rotten", "Rotten");
         _en.Add("Ready", "Ready");
-        _en.Add("Teacher", "Teacher"); 
-        _en.Add("SugarMiller", "SugarMiller"); 
+        _en.Add("Teacher", "Teacher");
+        _en.Add("SugarMiller", "SugarMiller");
         _en.Add("worker", "worker");
         _en.Add("Overall.People", "Overall people needing this service: ");
         _en.Add("overall service", "overall service");
@@ -1052,12 +1009,8 @@ public class Languages
         _en.Add("Hire All.HoverSmall", "Hire All");
         _en.Add("Hauler", "Hauler");
 
-
-
-
-
         //(rev: Mar 20 2020)
-        //has a lot of text to put here 
+        //has a lot of text to put here
         //ProductStat.cs (rev)
         //Dispatch.cs (rev)
         //ButtonTile.cs (rev)
@@ -1066,9 +1019,6 @@ public class Languages
         //Profession.cs (rev)
         //GUIElement.cs (rev)
         //OrderShow.cs (rev)
-
-
-
 
         ////PORTUGUESE
         //_portuguese = new Dictionary<string, string>()
@@ -1172,7 +1122,6 @@ public class Languages
 
         //    { "Utensil", "Utensílio"},
         //    { "Stop", "Para"},
-
 
         //    //more Main GUI
         //    { "Workers distribution", "Distribuição de Trabalhadores"},
@@ -1327,7 +1276,7 @@ public class Languages
         return currentLang.ContainsKey(key + ".HoverMed");
     }
 
-    static Dictionary<string, string> ReturnCurrentDict()
+    private static Dictionary<string, string> ReturnCurrentDict()
     {
         if (_currentLang == "Español(Beta)")
         {

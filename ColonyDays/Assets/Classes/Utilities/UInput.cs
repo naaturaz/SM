@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class UInput : MonoBehaviour {
+public class UInput : MonoBehaviour
+{
     private static SMe m = new SMe();
 
     private static Vector3 _transformedMPos;
@@ -47,7 +48,7 @@ public class UInput : MonoBehaviour {
         }
 
         bool result = false;
-        
+
         if (Input.GetKey(KeyCode.D) || Input.GetKey("right"))
         {
             result = true;
@@ -91,19 +92,14 @@ public class UInput : MonoBehaviour {
 
     public static float VertiVal()
     {
-
-
         return Input.GetAxis("Vertical");
     }
 
+    // Use this for initialization
+    private void Start()
+    { }
 
-    
-
-
-	// Use this for initialization
-	void Start () {}
-	
-	// Update is called once per frame
+    // Update is called once per frame
     public static void Update()
     {
         if (Program.gameScene.controllerMain != null)

@@ -225,7 +225,7 @@ public class WheelBarrow : Profession
             //bz is gets completed b4 hits this and was checked already for the amt
             return Order1.Amount;
         }
-        if(Dock() != null)
+        if (Dock() != null)
             return Dock().Dispatch1.LeftOnThisOrder(Order1);
         return Order1.Left();
     }

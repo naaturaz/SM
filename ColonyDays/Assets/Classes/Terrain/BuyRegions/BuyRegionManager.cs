@@ -5,12 +5,12 @@ using UnityEngine;
 public class BuyRegionManager
 {
     //regions that are being unlock
-    List<int> _unlockRegions = new List<int>();
+    private List<int> _unlockRegions = new List<int>();
 
-    //regions that are not being unlock. they are up for sale 
-    List<int> _forSaleRegions = new List<int>();
+    //regions that are not being unlock. they are up for sale
+    private List<int> _forSaleRegions = new List<int>();
 
-    List<ForSaleRegionGO> _forSaleRegionGoes = new List<ForSaleRegionGO>();
+    private List<ForSaleRegionGO> _forSaleRegionGoes = new List<ForSaleRegionGO>();
 
     //the region we might be able to unlock now
     private int _currentRegion;
@@ -59,7 +59,7 @@ public class BuyRegionManager
             var index = _forSaleRegions[i];
             var reg = MeshController.CrystalManager1.CrystalRegions[index].Region;
 
-            //if is not inland will remove it from Sale will added to unlock 
+            //if is not inland will remove it from Sale will added to unlock
             if (MeshController.CrystalManager1.CrystalRegions[index].WhatAudioIReport != "InLand")
             {
                 //_unlockRegions.Add(i);
@@ -72,7 +72,7 @@ public class BuyRegionManager
     }
 
     /// <summary>
-    /// Assign the first lot of regions 
+    /// Assign the first lot of regions
     /// </summary>
     private void AssignUnlockRegionsToNewGame()
     {
@@ -86,7 +86,6 @@ public class BuyRegionManager
 
         _unlockRegions.AddRange(first1x1Regions);
     }
-
 
     private void LoadUnlockRegions()
     {
@@ -103,6 +102,7 @@ public class BuyRegionManager
     }
 
     private int moneyMul = 3000;//2000
+
     public bool HasEnoughResourcesToBuy()
     {
         var moneyNeeded = MoneyNeeded();
@@ -117,7 +117,7 @@ public class BuyRegionManager
         return MyText.DollarFormat(MoneyNeeded());
     }
 
-    float MoneyNeeded()
+    private float MoneyNeeded()
     {
         if ((Developer.IsDev && Input.GetKey(KeyCode.F9)))
         {
@@ -155,7 +155,7 @@ public class BuyRegionManager
     }
 
     /// <summary>
-    /// bz FullOceans dont need to be spanwed 
+    /// bz FullOceans dont need to be spanwed
     /// </summary>
     /// <param name="indexP"></param>
     public void DestroyForSaleGO(int indexP)
@@ -186,9 +186,8 @@ public class BuyRegionManager
 
     #region Showing Regions
 
-
-    bool _isToShowNow;
-    float _showedAt;
+    private bool _isToShowNow;
+    private float _showedAt;
 
     public float ShowedAt
     {
@@ -224,13 +223,11 @@ public class BuyRegionManager
         return _isToShowNow;
     }
 
-
-
-    #endregion
+    #endregion Showing Regions
 
     public void Update()
     {
-        //so while a dialog is up dont disapear, that dialog could be a BuyRegion dialog 
+        //so while a dialog is up dont disapear, that dialog could be a BuyRegion dialog
         if (Dialog.IsActive())
         {
             return;
@@ -247,7 +244,7 @@ public class BuyRegionManager
     /// Lineally looking at the regions
     /// Owned | Locked1 | Locked2
     /// Will return Locked2 regions
-    /// 
+    ///
     /// Used to spawn Ghost town with enemies
     /// </summary>
     /// <returns></returns>
@@ -258,6 +255,5 @@ public class BuyRegionManager
 
         return
         MeshController.CrystalManager1.CrystalRegions[index].Position();
-
     }
 }

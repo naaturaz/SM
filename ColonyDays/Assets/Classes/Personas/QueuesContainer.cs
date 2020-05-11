@@ -1,15 +1,16 @@
 ﻿using System;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class QueuesContainer 
+public class QueuesContainer
 {
     //new buildings built
     private QueueTask _newBuildsQueue = new QueueTask();
+
     //building that are order to be destroyed
     private QueueTask _destroyBuildsQueue = new QueueTask();
 
-    List<string> _peopleChecked = new List<string>();
+    private List<string> _peopleChecked = new List<string>();
 
     public List<string> PeopleChecked
     {
@@ -29,7 +30,6 @@ public class QueuesContainer
         set { _destroyBuildsQueue = value; }
     }
 
-
     /// <summary>
     /// Add the param 'objP' to _newBuildsAnchors and clears the _peopleChecked list
     /// </summary>
@@ -37,17 +37,17 @@ public class QueuesContainer
     {
         if (key.Contains("Bridge"))
         {
-           //Debug.Log("Called:"+key);
+            //Debug.Log("Called:"+key);
         }
 
         _newBuildsQueue.AddToQueue(objP, key, "new");
         RestartPeopleChecked();
         PersonPot.Control.RoutesCache1.CheckQueuesNow();
     }
-	
-	/// <summary>
+
+    /// <summary>
     /// Add the param 'objP' to _destroyedBuildsAnchors and clears the _peopleChecked list
-    /// </summary>	
+    /// </summary>
     public void AddToDestroyBuildsQueue(List<Vector3> objP, string key)
     {
         _destroyBuildsQueue.AddToQueue(objP, key, "old");
@@ -57,7 +57,7 @@ public class QueuesContainer
         PersonPot.Control.RoutesCache1.CheckQueuesNow();
     }
 
-    void RestartPeopleChecked()
+    private void RestartPeopleChecked()
     {
         _peopleChecked.Clear();
     }
@@ -70,7 +70,7 @@ public class QueuesContainer
     public bool ContainAnyBuild(TheRoute theRoute, string personMyID, HPers which = HPers.None)
     {
         InitVal();
-        if (_peopleChecked.Contains(personMyID)){return false;}
+        if (_peopleChecked.Contains(personMyID)) { return false; }
 
         var onNewB = IsOnQueue(theRoute, _newBuildsQueue, personMyID);
         var onDesB = IsOnQueue(theRoute, _destroyBuildsQueue, personMyID);
@@ -89,21 +89,22 @@ public class QueuesContainer
         return onNewB || onDesB;
     }
 
-    int buidingsWhenStartChecking;
+    private int buidingsWhenStartChecking;
+
     private void InitVal()
     {
-        if (_peopleChecked.Count == 0 && buidingsWhenStartChecking== 0)
+        if (_peopleChecked.Count == 0 && buidingsWhenStartChecking == 0)
         {
             buidingsWhenStartChecking = _newBuildsQueue.Elements.Count + _destroyBuildsQueue.Elements.Count;
         }
     }
 
-	/// <summary>
+    /// <summary>
     /// Called everytime all the person checked.
-	/// Will redo it again if everyone didnt check all buildings already
-	///
+    /// Will redo it again if everyone didnt check all buildings already
+    ///
     /// </summary>
-    void ClearAllQueues()
+    private void ClearAllQueues()
     {
         PersonPot.Control.BuildersManager1.AddGreenLightKeys(_newBuildsQueue);
         FinalForcedDestroy();
@@ -115,13 +116,13 @@ public class QueuesContainer
         }
 
         buidingsWhenStartChecking = 0;
-        //always is clear here 
+        //always is clear here
         _peopleChecked.Clear();
     }
 
     public void IWasCheckedByAllPeople(QueueElement qEle)
     {
-        if (qEle.Type1=="new")
+        if (qEle.Type1 == "new")
         {
             //NewBuildsQueue.Elements.Remove(qEle);
             PersonPot.Control.BuildersManager1.AddGreenLightKeys(qEle);
@@ -131,18 +132,17 @@ public class QueuesContainer
             //DestroyBuildsQueue.Elements.Remove(qEle);
             FinalForceDestroyLastStp(qEle);
         }
-
     }
 
     /// <summary>
-    /// Because some Structure dont get destroy bz UnivCounter is not in -1 
-    /// when is called then here we finally destory them Bz all people checked on this 
+    /// Because some Structure dont get destroy bz UnivCounter is not in -1
+    /// when is called then here we finally destory them Bz all people checked on this
     /// for rerouting purposes
-    /// 
+    ///
     /// this can be done bz once a building is in this list is that went tru everything
     /// the only thing stopped it to be deleted was the UnivCounter
     /// </summary>
-    void FinalForcedDestroy()
+    private void FinalForcedDestroy()
     {
         for (int i = 0; i < _destroyBuildsQueue.Elements.Count; i++)
         {
@@ -157,7 +157,7 @@ public class QueuesContainer
         }
     }
 
-    void FinalForceDestroyLastStp(QueueElement qEle)
+    private void FinalForceDestroyLastStp(QueueElement qEle)
     {
         if (qEle.WasUsedToGreenLightOrDestroy)
         {
@@ -168,14 +168,14 @@ public class QueuesContainer
         var build = Brain.GetBuildingFromKey(qEle.Key);
 
         //when loading a WillBeDestroy strucutre sometimes gets destroyed right away
-        if (build!=null)
+        if (build != null)
         {
-            build.DestroyOrderedForced(); 
+            build.DestroyOrderedForced();
         }
     }
 
+    private DateTime _currenTime = new DateTime();
 
-    DateTime _currenTime=new DateTime();
     /// <summary>
     /// Wioll return the last element that return true time if any
     /// </summary>
@@ -185,12 +185,12 @@ public class QueuesContainer
         return _currenTime;
     }
 
-	/// <summary>
+    /// <summary>
     /// Says if the param 'other' is contained in any _newBuildsAnchors
-    /// 
-    /// and if the element on the queue was added after the route was created 
+    ///
+    /// and if the element on the queue was added after the route was created
     /// </summary>
-    bool IsOnQueue(TheRoute theRoute, QueueTask queueTask, string personID = "")
+    private bool IsOnQueue(TheRoute theRoute, QueueTask queueTask, string personID = "")
     {
         for (int i = 0; i < queueTask.Elements.Count; i++)
         {
@@ -198,7 +198,7 @@ public class QueuesContainer
             DateTime date2 = theRoute.DateTime1;
 
             int result = DateTime.Compare(date1, date2);
-            //can be called here bz a person when call the Queues to check in goes trhu all of them 
+            //can be called here bz a person when call the Queues to check in goes trhu all of them
             queueTask.Elements[i].CheckPersonIn(personID);
 
             //if they intersect and //the queue element was created later than the route then need to reroute
@@ -213,7 +213,7 @@ public class QueuesContainer
 
     /// <summary>
     /// Created so chache will Check if anything new in the queue interfieres with thm
-    /// 
+    ///
     /// Needed bz Homers will keep using old Cached ROutes and they will never get updated
     /// </summary>
     /// <param name="cachedRoute"></param>
@@ -227,7 +227,7 @@ public class QueuesContainer
     }
 
     /// <summary>
-    /// Manullay checks person in into all _newBuildsQueue and _destroyBuildsQueue Elements 
+    /// Manullay checks person in into all _newBuildsQueue and _destroyBuildsQueue Elements
     /// </summary>
     /// <param name="personID"></param>
     public void CheckMeInToQueueElements(string personID)
@@ -235,7 +235,7 @@ public class QueuesContainer
         for (int i = 0; i < _newBuildsQueue.Elements.Count; i++)
         {
             _newBuildsQueue.Elements[i].CheckPersonIn(personID);
-        } 
+        }
         for (int i = 0; i < _destroyBuildsQueue.Elements.Count; i++)
         {
             _destroyBuildsQueue.Elements[i].CheckPersonIn(personID);
@@ -243,7 +243,7 @@ public class QueuesContainer
     }
 
     /// <summary>
-    /// So it decreses the AllCount in the Element 
+    /// So it decreses the AllCount in the Element
     /// </summary>
     public void PersonDie()
     {
@@ -257,7 +257,7 @@ public class QueuesContainer
         }
     }
 
-	/// <summary>
+    /// <summary>
     /// Indicates if the Queue is empty or not
     /// </summary>
     public bool IsEmpty()
@@ -267,5 +267,5 @@ public class QueuesContainer
             return true;
         }
         return false;
-    }    
+    }
 }

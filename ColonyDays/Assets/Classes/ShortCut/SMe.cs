@@ -1,14 +1,14 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
+
 //Will containt properties that will reference directyl to Terreno.MeshController.variable
 
 //ShortCut MeshController Variables
-public class SMe {
-
+public class SMe
+{
     /// <summary>
     /// Shared from MeshCrontoller
     /// </summary>
-
 
     public MeshController MeshController
     {
@@ -24,7 +24,6 @@ public class SMe {
 
     //Mesh classes helpers, these all inherit from General: Monobehaviuor
 
-
     public Malla Malla
     {
         get { return Program.gameScene.controllerMain.MeshController.Malla; }
@@ -37,7 +36,6 @@ public class SMe {
         set { Program.gameScene.controllerMain.MeshController.AllVertexs = value; }
     }
 
-
     public UPoly Poly
     {
         get { return Program.gameScene.controllerMain.MeshController.Poly; }
@@ -46,8 +44,9 @@ public class SMe {
 
     public SubDivider SubDivide
     {
-        get {
-            return Program.gameScene.controllerMain.MeshController.subDivide; 
+        get
+        {
+            return Program.gameScene.controllerMain.MeshController.subDivide;
         }
         set { Program.gameScene.controllerMain.MeshController.subDivide = value; }
     }
@@ -64,7 +63,6 @@ public class SMe {
         set { Program.gameScene.controllerMain.MeshController.iniTerr = value; }
     }
 
-
     public SubPolyr SubPolyr
     {
         get { return Program.gameScene.controllerMain.MeshController.SubPolyr; }
@@ -73,14 +71,11 @@ public class SMe {
 
     //dont inherit
 
-
     public SubMeshData SubMesh
     {
         get { return Program.gameScene.controllerMain.MeshController.subMesh; }
         set { Program.gameScene.controllerMain.MeshController.subMesh = value; }
     }
-
-
 
     public bool IsMouseOnTerrain
     {
@@ -90,7 +85,6 @@ public class SMe {
 
     //Malla the big lot vertices held in current hovering
 
-
     public List<Vector3> CurrentHoverVertices
     {
         get { return Program.gameScene.controllerMain.MeshController.CurrentHoverVertices; }
@@ -98,7 +92,6 @@ public class SMe {
     }
 
     //SubPolygons
-
 
     public List<Vector3> SubPolysList
     {

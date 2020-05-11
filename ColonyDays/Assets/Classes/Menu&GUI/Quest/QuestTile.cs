@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-
 
 public class QuestTile : GUIElement
 {
@@ -21,7 +16,7 @@ public class QuestTile : GUIElement
         set { _window = value; }
     }
 
-    void Start()
+    private void Start()
     {
         _descText = FindGameObjectInHierarchy("Item_Desc", gameObject).GetComponent<Text>();
         _priceText = FindGameObjectInHierarchy("Price_Desc", gameObject).GetComponent<Text>();
@@ -31,13 +26,12 @@ public class QuestTile : GUIElement
 
     private void Init()
     {
-        _descText.text = Value.Key+".Title";
+        _descText.text = Value.Key + ".Title";
         _priceText.text = _window.Status(Value);
     }
 
-    void Update()
+    private void Update()
     {
-
     }
 
     /// <summary>
@@ -68,5 +62,4 @@ public class QuestTile : GUIElement
 
         return obj;
     }
-
 }

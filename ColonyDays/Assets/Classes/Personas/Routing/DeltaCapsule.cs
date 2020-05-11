@@ -1,9 +1,9 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 /* Encapsulates DeltaRouter and do the logic to find the delta route
  * and do the recursion too
- * 
+ *
  */
 
 public class DeltaCapsule
@@ -18,15 +18,17 @@ public class DeltaCapsule
     private Vector3 _iniBehindDoor;
     private Vector3 _finBehindDoor;
 
-    List<Structure> _debugList = new List<Structure>();
-    private bool _deltaRoutingDone;//says when the delta routing is done 
+    private List<Structure> _debugList = new List<Structure>();
+    private bool _deltaRoutingDone;//says when the delta routing is done
 
     private Router _router1 = new Router();
     private Router _router2 = new Router();
     private Router _router3 = new Router();
     private bool deltaRouted;
 
-    public DeltaCapsule() { }
+    public DeltaCapsule()
+    {
+    }
 
     /// <summary>
     /// Used to do from Structure A to B
@@ -74,7 +76,7 @@ public class DeltaCapsule
 
     private void Init()
     {
-       //GameScene.print("Init()  DeltaRouting ");
+        //GameScene.print("Init()  DeltaRouting ");
         _finalRouter = new Router();
         _deltaRouter = new DeltaRouter(_iniPos, _finPos, _person);
     }
@@ -82,7 +84,7 @@ public class DeltaCapsule
     /// <summary>
     /// Creates the routes btw the 4 points of the Delta Route
     /// </summary>
-    void DeltaRoute()
+    private void DeltaRoute()
     {
         Structure dummy = (Structure)Building.CreateBuild(Root.dummyBuildWithSpawnPoint, new Vector3(), H.Dummy);
         dummy.transform.position = _deltaRouter.DeltaRoute.Points[1];
@@ -103,13 +105,13 @@ public class DeltaCapsule
     }
 
     /// <summary>
-    /// Created to address when the last point of a route is passed with Structure or not 
-    /// 
+    /// Created to address when the last point of a route is passed with Structure or not
+    ///
     /// If is strucutre we use :_fin.SpawnPoint.transform.position
     /// other wise _finPos
     /// </summary>
     /// <returns></returns>
-    Vector3 DefineFinalPoint()
+    private Vector3 DefineFinalPoint()
     {
         if (_fin != null && _fin.SpawnPoint != null)
         {
@@ -119,10 +121,10 @@ public class DeltaCapsule
     }
 
     /// <summary>
-    /// To address when the _fin structure is null 
+    /// To address when the _fin structure is null
     /// </summary>
     /// <returns></returns>
-    Vector3 DefineFinalPointBehingDoor()
+    private Vector3 DefineFinalPointBehingDoor()
     {
         if (_fin != null && _fin.BehindMainDoorPoint != null)
         {
@@ -135,13 +137,14 @@ public class DeltaCapsule
         return new Vector3();
     }
 
-    private List<CheckPoint> bucketCheckPoints = new List<CheckPoint>();//checks points to be validated 
-    List<CheckPoint> validCheckPoints = new List<CheckPoint>();//checkpoint validated they will be used for last result
+    private List<CheckPoint> bucketCheckPoints = new List<CheckPoint>();//checks points to be validated
+    private List<CheckPoint> validCheckPoints = new List<CheckPoint>();//checkpoint validated they will be used for last result
+
     private void DeltaQualityCheck()
     {
         for (int i = 0; i < bucketCheckPoints.Count - 1; i++)
         {
-            //if is not the same 
+            //if is not the same
             if (!UMath.nearEqualByDistance(bucketCheckPoints[i].Point, bucketCheckPoints[i + 1].Point, 0.1f))
             {
                 if (!RouterManager.IsWaterOrMountainBtw(bucketCheckPoints[i].Point, bucketCheckPoints[i + 1].Point))
@@ -158,14 +161,14 @@ public class DeltaCapsule
                 }
             }
         }
-        //add the last one 
+        //add the last one
         validCheckPoints.Add(bucketCheckPoints[bucketCheckPoints.Count - 1]);
         DoneDelta();
     }
 
     private void DoneDelta()
     {
-       //GameScene.print("Done Delta Routing ");
+        //GameScene.print("Done Delta Routing ");
         DestroyDebuger();
 
         var t = CreateTheRouteObj();
@@ -176,18 +179,18 @@ public class DeltaCapsule
     }
 
     /// <summary>
-    /// Created for modularity 
+    /// Created for modularity
     /// </summary>
-    TheRoute CreateTheRouteObj()
+    private TheRoute CreateTheRouteObj()
     {
         var ori = "";
         var dest = "";
 
-        if (_ini!=null)
+        if (_ini != null)
         {
             ori = _ini.MyId;
         }
-        if (_fin!=null)
+        if (_fin != null)
         {
             dest = _fin.MyId;
         }
@@ -195,17 +198,17 @@ public class DeltaCapsule
         return new TheRoute(validCheckPoints, ori, dest);
     }
 
-    void InitDeltaQualityCheck()
+    private void InitDeltaQualityCheck()
     {
         bucketCheckPoints.AddRange(_router1.TheRoute.CheckPoints);
         bucketCheckPoints.AddRange(_router2.TheRoute.CheckPoints);
         bucketCheckPoints.AddRange(_router3.TheRoute.CheckPoints);
     }
 
-    void RestartDeltaRouter(Vector3 newIni = new Vector3())
+    private void RestartDeltaRouter(Vector3 newIni = new Vector3())
     {
         bucketCheckPoints.Clear();
-       //GameScene.print("One Recursion on Delta Routimng");
+        //GameScene.print("One Recursion on Delta Routimng");
 
         //will change _iniPos value if newIni was specified
         if (newIni != new Vector3())
@@ -226,7 +229,7 @@ public class DeltaCapsule
         DestroyDebuger();
     }
 
-    void DestroyDebuger()
+    private void DestroyDebuger()
     {
         for (int i = 0; i < _debugList.Count; i++)
         {
@@ -253,7 +256,7 @@ public class DeltaCapsule
         else if (!deltaRouted && _deltaRouter.DeltaRoute.Points.Count == 0 && !_deltaRouter.IsDeltaRoutable())
         {
             DeltaRoutingDone = true;
-           //GameScene.print("delta Routing Done for Not routable ");
+            //GameScene.print("delta Routing Done for Not routable ");
         }
 
         if (_router1.IsRouteReady && _router2.IsRouteReady && _router3.IsRouteReady

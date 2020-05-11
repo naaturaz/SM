@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-
-class HoverWindowMed : MonoBehaviour
+internal class HoverWindowMed : MonoBehaviour
 {
     private string _msg;
 
     //windows props
     private Vector3 _min;
+
     private Vector3 _max;
 
     private GameObject _geometry;
@@ -19,14 +15,14 @@ class HoverWindowMed : MonoBehaviour
 
     private RectTransform _rectTransform;
 
-    //the Key that is showing this HoverWindow. 
+    //the Key that is showing this HoverWindow.
     //needed to pull the string from Languages.cs
     private string _key;
 
     //the medium hover window
 
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         _geometry = General.FindGameObjectInHierarchy("Geometry", gameObject);
         var textGO = General.FindGameObjectInHierarchy("Text", gameObject);
@@ -81,7 +77,6 @@ class HoverWindowMed : MonoBehaviour
         return _msg;
     }
 
-
     //so mouse never touches this one. so it doesnt trigger a OnMouseExit on the spawer
     //of this window
     private Vector3 diffToMouse;
@@ -90,10 +85,10 @@ class HoverWindowMed : MonoBehaviour
     private float showedAt;
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         //means is hiding.
-        //and wont let any other click happen if is on front of everything 
+        //and wont let any other click happen if is on front of everything
         if (string.IsNullOrEmpty(_msg))
         {
             return;
@@ -109,15 +104,15 @@ class HoverWindowMed : MonoBehaviour
     }
 
     /// <summary>
-    /// To show small tutorials like how to place a building 
+    /// To show small tutorials like how to place a building
     /// </summary>
     /// <param name="key"></param>
     internal void ShowSemiTut(string key)
     {
-        Show( Input.mousePosition + new Vector3(150,150,150), key);
+        Show(Input.mousePosition + new Vector3(150, 150, 150), key);
     }
 
-    void OnGUI()
+    private void OnGUI()
     {
         var isAStructureAndFixed = BuildingPot.Control.CurrentSpawnBuild != null &&
             BuildingPot.Control.CurrentSpawnBuild.Category == Ca.Structure &&
@@ -134,6 +129,4 @@ class HoverWindowMed : MonoBehaviour
             Hide();
         }
     }
-
 }
-

@@ -11,9 +11,10 @@ public class ShowAPersonBuildingDetails
     private Vector3 _iniPos;
 
     //this is the items they are a Key and a Value
-    Dictionary<string, string> _items = new Dictionary<string, string>();
+    private Dictionary<string, string> _items = new Dictionary<string, string>();
+
     private Person _person;
-    List<PersonBuildingDetailTile> _tiles = new List<PersonBuildingDetailTile>();
+    private List<PersonBuildingDetailTile> _tiles = new List<PersonBuildingDetailTile>();
 
     public List<PersonBuildingDetailTile> Tiles
     {
@@ -43,7 +44,7 @@ public class ShowAPersonBuildingDetails
             InitPerson();
     }
 
-    void CreateItemsPerson()
+    private void CreateItemsPerson()
     {
         //return;
 
@@ -72,7 +73,7 @@ public class ShowAPersonBuildingDetails
         AddToItems("Relax", Chill());
     }
 
-    void AddToItems(string key, string val)
+    private void AddToItems(string key, string val)
     {
         _items.Add(key, val);
     }
@@ -85,7 +86,6 @@ public class ShowAPersonBuildingDetails
 
     public void DestroyTiles()
     {
-
     }
 
     private void ShowAllItems()
@@ -100,23 +100,24 @@ public class ShowAPersonBuildingDetails
         }
     }
 
-    Vector3 ReturnIniPos(int i)
+    private Vector3 ReturnIniPos(int i)
     {
         return new Vector3(_iniPos.x, ReturnY(i) + _iniPos.y, _iniPos.z);
     }
 
     private int _mainLines = 18;//24
-    float ReturnX(int i)
+
+    private float ReturnX(int i)
     {
         return 0;
     }
 
-    float ReturnY(int i)
+    private float ReturnY(int i)
     {
         return -3.6f * i;
     }
 
-    string Home()
+    private string Home()
     {
         if (_person.Home != null)
         {
@@ -125,7 +126,7 @@ public class ShowAPersonBuildingDetails
         return "-";
     }
 
-    string Work()
+    private string Work()
     {
         if (_person.Work != null)
         {
@@ -134,7 +135,7 @@ public class ShowAPersonBuildingDetails
         return "-";
     }
 
-    string Food()
+    private string Food()
     {
         if (_person.FoodSource != null)
         {
@@ -143,7 +144,7 @@ public class ShowAPersonBuildingDetails
         return "-";
     }
 
-    string Religion()
+    private string Religion()
     {
         if (_person.Religion != null)
         {
@@ -152,7 +153,7 @@ public class ShowAPersonBuildingDetails
         return "-";
     }
 
-    string Chill()
+    private string Chill()
     {
         if (_person.Chill != null)
         {
@@ -162,8 +163,9 @@ public class ShowAPersonBuildingDetails
     }
 
     private int count;
+
     /// <summary>
-    /// it is updated every 20 calls 
+    /// it is updated every 20 calls
     /// </summary>
     /// <param name="_person"></param>
     internal void ManualUpdate(Person person, bool forced = false)

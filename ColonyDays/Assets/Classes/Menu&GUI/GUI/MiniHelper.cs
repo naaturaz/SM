@@ -3,10 +3,10 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-class MiniHelper : GUIElement
+internal class MiniHelper : GUIElement
 {
     //helps available. u can add anything here, but need to be add on Langugaes.cs
-    List<string> _helps = new List<string>()
+    private List<string> _helps = new List<string>()
     {
         "Construction.HoverMed",
         "Camera",
@@ -20,14 +20,14 @@ class MiniHelper : GUIElement
         "More.Help"
     };
 
-    //which is being shown now 
+    //which is being shown now
     private int _currentIndex;
 
     private Text _text;
     private RectTransform _rectTransform;
     private Vector3 _iniPos;
 
-    void Start()
+    private void Start()
     {
         //the helper btn
         var helper = FindGameObjectInHierarchy("Helper", ReturnMainGUI().gameObject);
@@ -41,7 +41,7 @@ class MiniHelper : GUIElement
         Hide();
     }
 
-    MyForm ReturnMainGUI()
+    private MyForm ReturnMainGUI()
     {
         var forms = FindObjectsOfType<MyForm>();
 
@@ -85,7 +85,7 @@ class MiniHelper : GUIElement
     /// </summary>
     public void Next()
     {
-        _currentIndex = UMath.GoAround(1, _currentIndex, 0, _helps.Count-1);
+        _currentIndex = UMath.GoAround(1, _currentIndex, 0, _helps.Count - 1);
         Show();
     }
 
@@ -104,4 +104,3 @@ class MiniHelper : GUIElement
         Show();
     }
 }
-

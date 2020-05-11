@@ -1,14 +1,11 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System;
-using System.IO;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-public class SaveLoad: MonoBehaviour {
-
-    static List<RTSData> nfoRTS = new List<RTSData>();
-    static ObjectToSerialize objectToSerialize;
-    static SerializerClass serializer;
+public class SaveLoad : MonoBehaviour
+{
+    private static List<RTSData> nfoRTS = new List<RTSData>();
+    private static ObjectToSerialize objectToSerialize;
+    private static SerializerClass serializer;
 
     //static void InitiateObj()
     //{
@@ -31,7 +28,6 @@ public class SaveLoad: MonoBehaviour {
     ////    List<string> res = new List<string>();
     ////    for (int i = 0; i < listPass.Count; i++)
     ////    {
-         
     ////    }
     ////}
 
@@ -46,7 +42,7 @@ public class SaveLoad: MonoBehaviour {
     //    print( "loaded: " + nfoRTS[0].pos);
     //}
 
-    int ReturnProfileIndex(string currentUser)
+    private int ReturnProfileIndex(string currentUser)
     {
         int userNumber = -1;
         string[] users = { "Pepe", "Cuco" };
@@ -60,27 +56,27 @@ public class SaveLoad: MonoBehaviour {
         return userNumber;
     }
 
-	public void PlayerPrefSave(string current, bool isToResetProfile = false)
-	{
+    public void PlayerPrefSave(string current, bool isToResetProfile = false)
+    {
         int resetValue = 1;
-        if (isToResetProfile) 
-        { resetValue = 0; }//will reset all values to zero 
+        if (isToResetProfile)
+        { resetValue = 0; }//will reset all values to zero
 
         int indexProfile = ReturnProfileIndex(current);
 
         PlayerPrefs.SetFloat("Time_Played" + indexProfile, Program.THEProfile.TimePlayed * resetValue);
         PlayerPrefs.SetInt("Player_Lives" + indexProfile, Program.THEPlayer.Lives);
-		/*PlayerPrefs.SetInt("TTLSCOREAMOUNT", GameController.TTLSCOREAMOUNT);
+        /*PlayerPrefs.SetInt("TTLSCOREAMOUNT", GameController.TTLSCOREAMOUNT);
 		PlayerPrefs.SetInt("TTLSTARTSAMOUNT", GameController.TTLSTARTSAMOUNT);
-		
+
 		tempKg = (float)GameController.TTLKGRECYCLEDAMOUNT;
 		PlayerPrefs.SetFloat("TTLKGRECYCLEDAMOUNT", tempKg);
         */
-		PlayerPrefs.Save();
-	}
+        PlayerPrefs.Save();
+    }
 
     public void PlayerPrefLoad(string current)
-	{
+    {
         int indexProfile = ReturnProfileIndex(current);
 
         if (PlayerPrefs.GetString("Is_New_Profi" + indexProfile) == ""
@@ -94,19 +90,19 @@ public class SaveLoad: MonoBehaviour {
         Program.THEProfile.TimePlayed = PlayerPrefs.GetFloat("Time_Played" + indexProfile);
         Program.THEPlayer.Lives = PlayerPrefs.GetInt("Player_Lives" + indexProfile);
 
-		/*
+        /*
 		tempKg = PlayerPrefs.GetFloat("TTLKGRECYCLEDAMOUNT");
 		string tempString = tempKg.ToString("n1");
 		GameController.TTLKGRECYCLEDAMOUNT = double.Parse(tempString);
 
 		GameController.PLAYERLEVEL = PlayerPrefs.GetInt("PLAYERLEVEL");
 		GameController.MAXWORLDLEVEL = PlayerPrefs.GetInt("MAXWORLDLEVEL");
-		
+
 		//this is implemented so when loads the player has not kinematic on
 		Player.ISKINEMATICON = "notkinet";*/
-	}
+    }
 
-    void InitializeAllStoreVars(string current)
+    private void InitializeAllStoreVars(string current)
     {
         int indexProfile = ReturnProfileIndex(current);
         PlayerPrefs.SetString("Is_New_Profi" + indexProfile, "Is_Old_Now");

@@ -1,17 +1,15 @@
-﻿using System;
-using UnityEngine;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using Debug = UnityEngine.Debug;
 
 public class CryRoute
 {
     private Person _person;
     private List<CheckPoint> _checkPoints = new List<CheckPoint>();
-    List<int> _historicRegions = new List<int>();//the regions we are being dealing with this Route 
-    List<int> _prevHistoRegions = new List<int>();//the regions we are being dealing with this Route 
-    List<Crystal> _historicCrystals = new List<Crystal>();//the regions we are being dealing with this Route 
+    private List<int> _historicRegions = new List<int>();//the regions we are being dealing with this Route
+    private List<int> _prevHistoRegions = new List<int>();//the regions we are being dealing with this Route
+    private List<Crystal> _historicCrystals = new List<Crystal>();//the regions we are being dealing with this Route
 
     private VectorLand _one;
     private VectorLand _two;
@@ -19,12 +17,12 @@ public class CryRoute
     private Crystal _curr = new Crystal();
     private Vector3 _next;
 
-    private CryRect _currRect;//the current rect we are working with right now 
-    List<Crystal> _crystals = new List<Crystal>();//the cryustals contain on my rect
+    private CryRect _currRect;//the current rect we are working with right now
+    private List<Crystal> _crystals = new List<Crystal>();//the cryustals contain on my rect
 
     //this are the crystals tht will be evaluated to be move to .
-    //here u will see the 2 crystals tht are closer to '_curr' being evaluated 
-    List<Crystal> _eval = new List<Crystal>();
+    //here u will see the 2 crystals tht are closer to '_curr' being evaluated
+    private List<Crystal> _eval = new List<Crystal>();
 
     private bool loop;
 
@@ -34,25 +32,26 @@ public class CryRoute
     private Building _ini;
     private Building _fin;
 
-    //debug lines duration shown on Scene view 
+    //debug lines duration shown on Scene view
     private float durationOfLines = 1f;//20
-    //kept in case are needed to be shown for any reason... like finding a bug 
-    List<Line> _debugLines = new List<Line>();
+
+    //kept in case are needed to be shown for any reason... like finding a bug
+    private List<Line> _debugLines = new List<Line>();
 
     private bool _iniDoor;
     private bool _finDoor;
 
     //a created _crystal tht hoold all the information of the last door, is fake in the sense that is not the
-    //real one in the CrystalRegion but is here so is always in the _eval as 1st 
+    //real one in the CrystalRegion but is here so is always in the _eval as 1st
     private Crystal _finCrystal;
+
     private string _destinyKey;//to be added to TheRoute obj
 
-    Explorer _explorer = new Explorer();
+    private Explorer _explorer = new Explorer();
 
-    private float _timeStamp;//when the Route was started 
+    private float _timeStamp;//when the Route was started
 
     private HPers _routeType = HPers.None;
-
 
     public HPers RouteType
     {
@@ -70,14 +69,10 @@ public class CryRoute
                 if (_person != null && _checkPoints != null)
                 {
                     //Debug.Log(_person.MyId + " isRouteREady chk.Cont:" + _checkPoints.Count);
-                    
                 }
-
             }
 
-            _isRouteReady = value; 
-            
-
+            _isRouteReady = value;
         }
     }
 
@@ -87,10 +82,8 @@ public class CryRoute
         set { _theRoute = value; }
     }
 
-
-
     public CryRoute(Structure ini, Structure fin, Person person, string destinyKey, bool iniDoor = true, bool finDoor = true,
-        HPers routetype= HPers.None)
+        HPers routetype = HPers.None)
     {
         _origenKey = ini.MyId;
         _destinyKey = destinyKey;
@@ -111,7 +104,9 @@ public class CryRoute
         Init();
     }
 
-    public CryRoute() { }
+    public CryRoute()
+    {
+    }
 
     public CryRoute(VectorLand uno, VectorLand dos, Person person, bool iniDoor = true, bool finDoor = true,
         HPers routeType = HPers.None)
@@ -131,7 +126,6 @@ public class CryRoute
 
         RouteType = routeType;
 
-
         ClearOldVars();
         Init();
     }
@@ -146,15 +140,12 @@ public class CryRoute
         //ClearDebugLocal();
         _finCrystal = new Crystal(_two.Position, H.Door, _fin.MyId, true, false);
 
-//        NavMesh();
+        //        NavMesh();
 
         return;
-
-
     }
 
-
-    void NavMesh()
+    private void NavMesh()
     {
         var iniH = (Structure)_ini;
         var finH = (Structure)_fin;
@@ -162,7 +153,7 @@ public class CryRoute
         if (iniH == null) return;
         if (finH == null) return;
 
-        //bz navmesh now this is all I needed 
+        //bz navmesh now this is all I needed
         List<CheckPoint> pts = new List<CheckPoint>()
         {
             new CheckPoint(iniH.BehindMainDoorPoint),
@@ -188,14 +179,11 @@ public class CryRoute
         IsRouteReady = true;
     }
 
-
-
-    void ClearDebugLocal()
+    private void ClearDebugLocal()
     {
         Crystal.DebugCrystal.Restart();
         Crystal.passes.Clear();
     }
-
 
     private void ClearOldVars()
     {
@@ -209,11 +197,11 @@ public class CryRoute
 
     #region Loop on Update
 
-    //the Method is looping now 
+    //the Method is looping now
     private string looping = "";
-    private string prevLoop = "";//the loop before this one 
-    private int loopCount;
 
+    private string prevLoop = "";//the loop before this one
+    private int loopCount;
 
     private void CallSpecLoop()
     {
@@ -238,7 +226,7 @@ public class CryRoute
         }
     }
 
-    bool CanPrepareLoop(string loopingP)
+    private bool CanPrepareLoop(string loopingP)
     {
         if (looping != "" && looping != loopingP)
         {
@@ -256,12 +244,12 @@ public class CryRoute
         loopCount = 0;
     }
 
-    void ClearPrevLoop()
+    private void ClearPrevLoop()
     {
         prevLoop = "";
     }
 
-    #endregion
+    #endregion Loop on Update
 
     public void AddKeyToExplorer(Crystal key, Vector3 intersection)
     {
@@ -276,7 +264,6 @@ public class CryRoute
         }
         return;
 
-
         if (wasBlackListed)
         {
             return;
@@ -289,7 +276,6 @@ public class CryRoute
             return;
         }
 
-
         if (loop)
         {
             loop = false;
@@ -297,7 +283,7 @@ public class CryRoute
         }
 
         //something went wrong so must likely isnt able to reach the _fin
-        //so hence is BlackLIsted 
+        //so hence is BlackLIsted
         if (_checkPoints.Count > 0 && loop == false && !IsRouteReady)
         {
             CheckIfIsToBlackList();
@@ -306,11 +292,12 @@ public class CryRoute
 
     //u can explore only once for a _curr
     private bool canIExplore = true;
+
     private void Recursive()
     {
         if (prevLoop == "")
         {
-            //tha adding of a good point to the Route 
+            //tha adding of a good point to the Route
             _checkPoints.Add(new CheckPoint(U2D.FromV2ToV3(_curr.Position), _curr.Type1));
 
             if (wasThrow)
@@ -333,8 +320,6 @@ public class CryRoute
 
             DefineHistoCrys();
             DefineCrystalsOnMyRect();
-
-
         }
         else if (prevLoop == "DefineCrystalsOnMyRect")
         {
@@ -348,7 +333,7 @@ public class CryRoute
             AddToEvalFromRect();//i place it here so Auto Delta Routing works
 
             if (OrderEvalByWeight())
-            { return; }//so then is called again until I finish the loop 
+            { return; }//so then is called again until I finish the loop
         }
         else if (prevLoop == "OrderEvalByWeight")
         {
@@ -390,7 +375,7 @@ public class CryRoute
         //    return;
         //}
 
-        //is added as an obstacle bz is where we are heding to so i will give less weight 
+        //is added as an obstacle bz is where we are heding to so i will give less weight
         _eval.Add(_currRect.CCrystal);
         _eval.Add(_currRect.DCrystal);
         _eval.Add(_currRect.BCrystal);
@@ -398,8 +383,8 @@ public class CryRoute
 
     /// <summary>
     /// Created to avoid bugg where Rect was gettting created again and again bz could not find any crystalls
-    /// 
-    /// Will add to crystalls all the buildings I intersect crystals . So they can be considered when routing 
+    ///
+    /// Will add to crystalls all the buildings I intersect crystals . So they can be considered when routing
     /// </summary>
     private void DefineCrystalsMyRectIntersects()
     {
@@ -409,7 +394,8 @@ public class CryRoute
         _crystals = _crystals.Distinct().ToList();
     }
 
-    bool debugMarkedOnLand;
+    private bool debugMarkedOnLand;
+
     /// <summary>
     /// Will try to reach any of the _eval Crystals
     /// </summary>
@@ -421,13 +407,13 @@ public class CryRoute
         }
 
         var canI = CanPrepareLoop("TryReachEval");
-        if (!canI) { return false; }//means tht another llop is running now 
+        if (!canI) { return false; }//means tht another llop is running now
         var i = loopCount;
 
         if (_explorer.IsBuildingRouting)
         {
-            //case that we are hitting a builing 
-            //bz only has 4 _evals to work with 
+            //case that we are hitting a builing
+            //bz only has 4 _evals to work with
             return TryReachBuilding();
         }
 
@@ -443,32 +429,23 @@ public class CryRoute
 
             //is the crystal in the door side and only interset 1 line
             if ((!Intersect(aLine) || isIntersectingOnlyTheDoorSide || isCryFromOld)
-                && !IsOnTheRoute(_eval[i].Position)) //they cant be the same 
+                && !IsOnTheRoute(_eval[i].Position)) //they cant be the same
             {
                 //will reset black vount if 1 is true
                 blackCount = 0;
 
-                //make current _eval[i] and loop 
+                //make current _eval[i] and loop
                 _curr = _eval[i];
 
                 loop = true;
 
                 ResetExplorer();
-                
-
 
                 ResetLoop();
                 ClearPrevLoop();//so can restart Recursive()
                 return true;
             }
             loopCount++;
-
-
-
-
-
-          
-
 
             CheckIfIsToBlackList();
             return false;
@@ -480,7 +457,7 @@ public class CryRoute
         }
     }
 
-    bool TryReachBuilding()
+    private bool TryReachBuilding()
     {
         loop = true;
         //UVisHelp.CreateTextEnumarate(_eval, Root.blueCube, counter1+"", 60);
@@ -489,7 +466,7 @@ public class CryRoute
         {
             Line aLine = new Line(U2D.FromV2ToV3(_curr.Position), U2D.FromV2ToV3(_eval[i].Position), durationOfLines);
             _debugLines.Add(aLine);
-            
+
             var linesIntersected = IntersectCount(aLine);
 
             if (linesIntersected == 0 && !IsOnTheRoute(_eval[i].Position))
@@ -516,7 +493,7 @@ public class CryRoute
         Debug.Log("At least the intersection should be reached. Go and investigate but at least once should " +
                             "pass this if all fail pls investigate" +
                             "\n ini:" + _ini.MyId + " mid:" + _eval[0].ParentId + " end:" + _fin.MyId + " person:" + _person.MyId + " " +
-                            "eval ct:" + _eval.Count + " prof:"+_person.ProfessionProp.ProfDescription);
+                            "eval ct:" + _eval.Count + " prof:" + _person.ProfessionProp.ProfDescription);
 
         BlackList();
 
@@ -528,9 +505,9 @@ public class CryRoute
     }
 
     /// <summary>
-    /// bz a new _curr is set and a new exploration needs to be done 
+    /// bz a new _curr is set and a new exploration needs to be done
     /// </summary>
-    void ResetExplorer()
+    private void ResetExplorer()
     {
         canIExplore = true;//
         _explorer.Restart();
@@ -550,13 +527,11 @@ public class CryRoute
             return false;
         }
 
-
-
         return false;
     }
 
     /// <summary>
-    /// Will tell u if is just crossing a brdige this time 
+    /// Will tell u if is just crossing a brdige this time
     /// </summary>
     /// <param name="_curr"></param>
     /// <param name="crystal"></param>
@@ -575,12 +550,13 @@ public class CryRoute
     private int oldGameSpeed = 1;
     private bool wasBlackListed;
     private int blackCount;
+
     //the rect will be allow to grow only 10 times. then will be black list tht building if was not reach
     private int maxCounts = 100;//100
 
+    private bool wasThrow;
 
-    bool wasThrow;
-    void CheckIfIsToBlackList()
+    private void CheckIfIsToBlackList()
     {
         if (Program.gameScene.GameSpeed == 0)
         {
@@ -619,9 +595,7 @@ public class CryRoute
         }
     }
 
-
-
-    void DebugBlackThrow()
+    private void DebugBlackThrow()
     {
 #if UNITY_EDITOR
 
@@ -653,16 +627,15 @@ public class CryRoute
 #endif
     }
 
-
     private void BlackList()
     {
         var key = RoutesCache.CreateRouteKey(_origenKey, _destinyKey);
 
-        Debug.Log("CryROute.BlackList() : "+ _fin.MyId);
+        Debug.Log("CryROute.BlackList() : " + _fin.MyId);
 
         if (_fin.MyId.Contains("Bridge"))
         {
-            _person.Brain.BlackListBuild(_fin.MyId, key, RouteType);            
+            _person.Brain.BlackListBuild(_fin.MyId, key, RouteType);
         }
         else
         {
@@ -672,14 +645,12 @@ public class CryRoute
         wasBlackListed = true;
     }
 
-
-
     /// <summary>
     /// Will say if 'newPos' is on the route already
     /// </summary>
     /// <param name="newPos"></param>
     /// <returns></returns>
-    bool IsOnTheRoute(Vector2 newPos)
+    private bool IsOnTheRoute(Vector2 newPos)
     {
         for (int i = 0; i < _checkPoints.Count; i++)
         {
@@ -695,28 +666,28 @@ public class CryRoute
 
     /// <summary>
     /// Will say if 'c' is one of the corners tht are in closest to the door
-    /// 
+    ///
     /// Those crystal if a line from door to them is intersecting can be ignore bz is in the same building
     /// and only means is getting out of building or in
     /// </summary>
     /// <param name="c"></param>
     /// <returns></returns>
-    bool IsCrystalOnDoorCorners(Crystal c)
+    private bool IsCrystalOnDoorCorners(Crystal c)
     {
         var iniBool = _ini != null && _ini.MyId == c.ParentId;
         var finBool = _fin != null && _fin.MyId == c.ParentId;
 
-        //if is not a Crystal of ini or fin then return 
+        //if is not a Crystal of ini or fin then return
         if (!iniBool && !finBool)
         {
             return false;
         }
-        if (c.ParentId.Contains("Dummy"))//used for idle routing 
+        if (c.ParentId.Contains("Dummy"))//used for idle routing
         {
             return false;
         }
 
-        //this is to address the case of a Terrain Spawner 
+        //this is to address the case of a Terrain Spawner
         var build = Brain.GetBuildingFromKey(c.ParentId);
         if (build == null)
         {
@@ -728,18 +699,18 @@ public class CryRoute
     }
 
     /// <summary>
-    /// Will tell u if _curr is inside old home and we are trying to get out of it 
+    /// Will tell u if _curr is inside old home and we are trying to get out of it
     /// </summary>
     /// <param name="c"></param>
     /// <returns></returns>
-    bool IsCrystalPartOfOldHome(Crystal c)
+    private bool IsCrystalPartOfOldHome(Crystal c)
     {
         var cIsOldHomeCry = _person.Brain.MoveToNewHome.OldHomeKey == c.ParentId && !string.IsNullOrEmpty(c.ParentId);
 
         var isInside = IsCurrInsideOldHome(c);
 
         if (
-            //cIsOldHomeCry && 
+            //cIsOldHomeCry &&
             isInside)
         {
             return true;
@@ -747,7 +718,7 @@ public class CryRoute
         return false;
     }
 
-    bool IsCurrInsideOldHome(Crystal c)
+    private bool IsCurrInsideOldHome(Crystal c)
     {
         bool isInside = false;
 
@@ -773,7 +744,7 @@ public class CryRoute
     /// <param name="facer"></param>
     /// <param name="anchorIndex"></param>
     /// <returns></returns>
-    bool IsThisCrystalOnDoorSide(int facer, int anchorIndex)
+    private bool IsThisCrystalOnDoorSide(int facer, int anchorIndex)
     {
         //the next facer
         var nextFacer = UMath.Clamper(1, facer, 0, 3);
@@ -792,7 +763,7 @@ public class CryRoute
     private bool OrderEvalByWeight()
     {
         var canI = CanPrepareLoop("OrderEvalByWeight");
-        if (!canI) { return false; }//means tht another llop is running now 
+        if (!canI) { return false; }//means tht another llop is running now
         var i = loopCount;
 
         if (loopCount < _eval.Count)
@@ -811,7 +782,7 @@ public class CryRoute
             _eval = _eval.OrderBy(a => a.CalcWeight).ToList();
             ResetLoop();
 
-            return false;//so let Recursive Keeps it course 
+            return false;//so let Recursive Keeps it course
         }
     }
 
@@ -831,7 +802,7 @@ public class CryRoute
 
         for (int i = 0; i < _eval.Count; i++)
         {
-            //if the distance is bigger tht the distace from Curr then will be removed 
+            //if the distance is bigger tht the distace from Curr then will be removed
             if (_eval[i].Distance > distFromCurr)
             {
                 temp.Add(_eval[i]);
@@ -840,19 +811,18 @@ public class CryRoute
             }
         }
 
-        //will add the ones tht are fuehter to last on _eval so are checked last 
+        //will add the ones tht are fuehter to last on _eval so are checked last
         _eval.AddRange(temp);
     }
 
     /// <summary>
-    /// Will order _crystals from _curr using Distance 
+    /// Will order _crystals from _curr using Distance
     /// </summary>
-    bool OrderCyrstalsFromCurr()
+    private bool OrderCyrstalsFromCurr()
     {
         var canI = CanPrepareLoop("OrderCyrstalsFromCurr");
-        if (!canI) { return false; }//means tht another llop is running now 
+        if (!canI) { return false; }//means tht another llop is running now
         var i = loopCount;
-
 
         if (loopCount < _crystals.Count)
         {
@@ -863,7 +833,6 @@ public class CryRoute
         }
         else
         {
-
             _crystals = _crystals.OrderBy(a => a.Distance).ToList();
             ResetLoop();
             return false;
@@ -888,21 +857,20 @@ public class CryRoute
     }
 
     /// <summary>
-    /// Will define '_crystals' whicih is the Crystals on the rect 
-    /// 
-    /// Will return true when is done so Way Routing works 
+    /// Will define '_crystals' whicih is the Crystals on the rect
+    ///
+    /// Will return true when is done so Way Routing works
     /// </summary>
     private void DefineCrystalsOnMyRect()
     {
         var canI = CanPrepareLoop("DefineCrystalsOnMyRect");
-        if (!canI) { return; }//means tht another llop is running now 
+        if (!canI) { return; }//means tht another llop is running now
         var i = loopCount;
 
-        if (i == 0)//means is starting the loop now 
+        if (i == 0)//means is starting the loop now
         {
             _crystals.Clear();
         }
-
 
         if (i < _historicCrystals.Count)
         {
@@ -917,16 +885,16 @@ public class CryRoute
     }
 
     /// <summary>
-    /// 
-    /// 
-    /// All the body of this method used to be called in recursive 
+    ///
+    ///
+    /// All the body of this method used to be called in recursive
     /// </summary>
     private void Reach()
     {
-        //will return only if is Done. Other wise needs to be going so _crystals are set 
-        //if is BuildingRouting then can return so a new _curr is added and we can keep going 
+        //will return only if is Done. Other wise needs to be going so _crystals are set
+        //if is BuildingRouting then can return so a new _curr is added and we can keep going
 
-        //if doesnt have a way cna do this 
+        //if doesnt have a way cna do this
         if (canIExplore && ExploreToFin()
             //&& (CheckIfDone() || _explorer.IsBuildingRouting)
             )
@@ -934,14 +902,14 @@ public class CryRoute
             return;
         }
 
-        //if doesnt have a way cna do this 
-        //if has a way will go trhu the way 
+        //if doesnt have a way cna do this
+        //if has a way will go trhu the way
         RoutineIfBuildWasHit();
     }
 
-    void RoutineIfBuildWasHit()
+    private void RoutineIfBuildWasHit()
     {
-        //behavoiur if a build was hit 
+        //behavoiur if a build was hit
         if (_explorer.IsBuildingRouting)
         {
             _eval.Clear();
@@ -961,7 +929,7 @@ public class CryRoute
     /// Will loop 10 items to speed
     /// </summary>
     /// <param name="i"></param>
-    void InnerLoop()
+    private void InnerLoop()
     {
         for (int j = 0; j < 20; j++)
         {
@@ -984,10 +952,7 @@ public class CryRoute
         }
     }
 
-
-
-
-    void AddToCrystalsIfNotThere(List<Crystal> sibling)
+    private void AddToCrystalsIfNotThere(List<Crystal> sibling)
     {
         for (int i = 0; i < sibling.Count; i++)
         {
@@ -1000,11 +965,11 @@ public class CryRoute
 
     /// <summary>
     /// Depending on _curr position will return Final or C.
-    /// So when Im explirng to Final takes in account that we are hitting the sea or a mountain 
+    /// So when Im explirng to Final takes in account that we are hitting the sea or a mountain
     /// in some RectC
     /// </summary>
     /// <returns></returns>
-    Vector3 ReturnCorFinal()
+    private Vector3 ReturnCorFinal()
     {
         var curr = U2D.FromV2ToV3(_curr.Position);
         var two = _two.Position;
@@ -1021,7 +986,7 @@ public class CryRoute
     }
 
     /// <summary>
-    /// Will try to reach RectC or Final and will set explorer object that will tell if are 
+    /// Will try to reach RectC or Final and will set explorer object that will tell if are
     /// Buidings in the middle or not
     /// </summary>
     /// <returns></returns>
@@ -1056,8 +1021,9 @@ public class CryRoute
     private const float GROWC = 3f;
     private float grow = 3f;//3
     private float howFarIsRectC = 40f;//20 . 20 was too small bz will go trhu mountains
+
     /// <summary>
-    /// This is the area we gonna be looking at to evaluate crystals 
+    /// This is the area we gonna be looking at to evaluate crystals
     /// </summary>
     private void CreateCryRect()
     {
@@ -1083,15 +1049,14 @@ public class CryRoute
 
     ///// <summary>
     ///// Will push the 'val' away from the center of the '_currRect.TheRect.center'
-    ///// Use to grow the rectagle . Is needed when addressing delta routing 
+    ///// Use to grow the rectagle . Is needed when addressing delta routing
     ///// </summary>
     ///// <param name="val"></param>
     ///// <returns></returns>
     //Vector3 PushAwayFromCurrRectCenter(Vector3 val)
     //{
-
     //    var center = U2D.FromV2ToV3(_currRect.TheRect.center);
-    //    var dist = Vector3.Distance(center, val);//distnace to center of the rect 
+    //    var dist = Vector3.Distance(center, val);//distnace to center of the rect
 
     //    //so its moves away from center
     //    Vector3 res = Vector3.MoveTowards(val, center, -grow * dist);
@@ -1099,8 +1064,8 @@ public class CryRoute
     //}
 
     /// <summary>
-    /// Will check if _currRect needs to grow bz _curr didnt change . 
-    /// 
+    /// Will check if _currRect needs to grow bz _curr didnt change .
+    ///
     ///      Created to avoid bugg where Rect was gettting created again and again bz could not find any crystalls
     /// </summary>
     private bool CheckIfNeedGrow()
@@ -1132,7 +1097,7 @@ public class CryRoute
     ///  looked at when examinating if intersecting
     /// </summary>
     /// <param name="position"></param>
-    void AddToHistoricalRegions(Vector3 position)
+    private void AddToHistoricalRegions(Vector3 position)
     {
         var newRegions = MeshController.CrystalManager1.ReturnMySurroundRegions(U2D.FromV3ToV2(position));
 
@@ -1149,11 +1114,12 @@ public class CryRoute
 
     private int count = 0;
     private string _origenKey;
+
     /// <summary>
     /// Will try to reach 2 points before the last one to see if a line can be draw btw them
     /// if does actually will eliminate the point in btw them and will recurse.
-    /// 
-    /// If cant wont do nothing 
+    ///
+    /// If cant wont do nothing
     /// </summary>
     private void CanIReach2PointAfter()
     {
@@ -1172,7 +1138,7 @@ public class CryRoute
         Line draw = new Line(firstP, twoAfter, durationOfLines);
         _debugLines.Add(draw);
 
-        //IF DOesnt intersect . will remove the point in the middle and will recurse here 
+        //IF DOesnt intersect . will remove the point in the middle and will recurse here
         if (!Intersect(draw))
         {
             //Debug.Log("point route removed:" + count + 1 +" "+_person.MyId);
@@ -1191,24 +1157,22 @@ public class CryRoute
     /// </summary>
     /// <param name="nLine"></param>
     /// <returns></returns>
-    bool Intersect(Line nLine)
+    private bool Intersect(Line nLine)
     {
         return MeshController.CrystalManager1.DoIIntersectAnyLine(nLine, _historicRegions, this);
     }
 
-
-
     /// <summary>
-    /// Return 0 if none was intersected 
+    /// Return 0 if none was intersected
     /// </summary>
     /// <param name="nLine"></param>
     /// <returns></returns>
-    int IntersectCount(Line nLine)
+    private int IntersectCount(Line nLine)
     {
         return MeshController.CrystalManager1.CountLinesIIntersect(nLine, _historicRegions, this);
     }
 
-    List<Line> LinesIIntersect(Line nLine)
+    private List<Line> LinesIIntersect(Line nLine)
     {
         return MeshController.CrystalManager1.LinesIIntersect(nLine, _historicRegions);
     }
@@ -1228,7 +1192,7 @@ public class CryRoute
     }
 
     /// <summary>
-    /// Will added only if _ini or _fin are not a bridge 
+    /// Will added only if _ini or _fin are not a bridge
     /// </summary>
     private void AddBehindDoors()
     {
@@ -1247,7 +1211,7 @@ public class CryRoute
     /// <summary>
     /// Will pass point by point and will find wht is the angle facing the next one
     /// </summary>
-    void AddAnglesToRoute()
+    private void AddAnglesToRoute()
     {
         var myDummy = Program.gameScene.GimeMeUnusedDummy("");
 
@@ -1263,24 +1227,22 @@ public class CryRoute
         Program.gameScene.ReturnUsedDummy(myDummy);
     }
 
-    void CreateTheRouteObj()
+    private void CreateTheRouteObj()
     {
         TheRoute = new TheRoute(_checkPoints, _origenKey, _destinyKey);
     }
 
-
     /// <summary>
-    /// Will return true if _curr and _two are really close 
+    /// Will return true if _curr and _two are really close
     /// </summary>
     /// <returns></returns>
-    bool CheckIfDone()
+    private bool CheckIfDone()
     {
         //bz Bridge road on Y is really far apart
         if (_two != null && _two.MyBuildKey != null && _two.MyBuildKey.Contains("BridgeRoad"))
         {
             return ReturnBridgeRoadEquality();
         }
-
 
         //2d only bz then it wont care about Y difference so Docks cant get built
         var currPos = new Vector3(_curr.Position.x, _two.Position.y, _curr.Position.y);
@@ -1300,6 +1262,4 @@ public class CryRoute
         }
         return false;
     }
-
-  
 }

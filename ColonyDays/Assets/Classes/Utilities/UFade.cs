@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 //The Fade Utility
 public class UFade : MonoBehaviour
@@ -41,9 +40,11 @@ public class UFade : MonoBehaviour
         return targetMatchValue;
     }
 
-	// Use this for initialization
-	void Start () {}
-	
-	// Update is called once per frame
-	void Update () {}
+    // Use this for initialization
+    private void Start()
+    { }
+
+    // Update is called once per frame
+    private void Update()
+    { }
 }

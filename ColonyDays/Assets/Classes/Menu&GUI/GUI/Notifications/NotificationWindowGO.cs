@@ -15,7 +15,7 @@ public class NotificationWindowGO : GUIElement
     private Scrollbar _verticalScrollbar;
 
     //todo saveload
-    List<string> _allNotifications = new List<string>(){}; 
+    private List<string> _allNotifications = new List<string>() { };
 
     /// <summary>
     /// IMPORTANT
@@ -23,11 +23,11 @@ public class NotificationWindowGO : GUIElement
     /// Add name and desc and Languages.cs
     /// Add sound file on Prefab/audio/sound/other and icon on GUI/Notification_Icon/
     /// Then add it in sound name added it on _rootsToSpawn on AudioCollector.cs
-    /// 
+    ///
     /// Also if want to have a sound place the sound in Prefab/Audio/Sound/Other with the
     /// same name of the Notification as called in Languages.cs
 
-    void Start()
+    private void Start()
     {
         iniPos = transform.position;
         Hide();
@@ -40,7 +40,8 @@ public class NotificationWindowGO : GUIElement
         _scroll_Ini_PosGO = GetChildCalledOnThis("Scroll_Ini_Pos", _content);
     }
 
-    float _showedAt;
+    private float _showedAt;
+
     public void Show(string which)
     {
         ClearForm();
@@ -49,7 +50,7 @@ public class NotificationWindowGO : GUIElement
         _showedAt = Time.time;
     }
 
-    void ClearForm()
+    private void ClearForm()
     {
         if (_verticalScrollbar != null)
         {
@@ -58,10 +59,10 @@ public class NotificationWindowGO : GUIElement
     }
 
     /// <summary>
-    /// So as changes size will be available or not. 
-    /// We need this ref ' _verticScrollbar ' to set it to defauitl value 
+    /// So as changes size will be available or not.
+    /// We need this ref ' _verticScrollbar ' to set it to defauitl value
     /// </summary>
-    void TakeScrollVerticBar()
+    private void TakeScrollVerticBar()
     {
         var vert = GetGrandChildCalled("Scrollbar Vertical");
         if (vert != null)
@@ -74,7 +75,7 @@ public class NotificationWindowGO : GUIElement
         }
     }
 
-    void Update()
+    private void Update()
     {
         base.Update();
         if (transform.position == iniPos && Input.GetKeyUp(KeyCode.Return))
@@ -108,7 +109,7 @@ public class NotificationWindowGO : GUIElement
         }
     }
 
-    void DestroyPrevTiles()
+    private void DestroyPrevTiles()
     {
         for (int i = 0; i < _tilesSpawn.Count; i++)
         {
@@ -117,7 +118,7 @@ public class NotificationWindowGO : GUIElement
         _tilesSpawn.Clear();
     }
 
-    void PopulateScrollView()
+    private void PopulateScrollView()
     {
         SetTileIniPos();
         DestroyPrevTiles();
@@ -146,24 +147,24 @@ public class NotificationWindowGO : GUIElement
         }
     }
 
-    string GetKey(string notificationString)
+    private string GetKey(string notificationString)
     {
         var arr = notificationString.Split('|');
 
-        //when has additional 
+        //when has additional
         if (arr.Length > 1)
         {
-            return arr[0]; 
+            return arr[0];
         }
         //doesnt have additional info
         return notificationString;
     }
 
-    string GetParam1(string notificationString)
+    private string GetParam1(string notificationString)
     {
         var arr = notificationString.Split('|');
 
-        //when has additional 
+        //when has additional
         if (arr.Length > 1)
         {
             return arr[1];
@@ -173,9 +174,9 @@ public class NotificationWindowGO : GUIElement
     }
 
     /// <summary>
-    /// need to be called to set the Ini POs everytime 
+    /// need to be called to set the Ini POs everytime
     /// </summary>
-    void SetTileIniPos()
+    private void SetTileIniPos()
     {
         _scrollIniPos = _scroll_Ini_PosGO.transform.position;
     }
@@ -190,12 +191,12 @@ public class NotificationWindowGO : GUIElement
         _contentRectTransform.sizeDelta = new Vector2(0, size);
     }
 
-    Vector3 ReturnIniPos(int i)
+    private Vector3 ReturnIniPos(int i)
     {
         return new Vector3(_scrollIniPos.x, ReturnY(i) + _scrollIniPos.y, _scrollIniPos.z);
     }
 
-    float ReturnY(int i)
+    private float ReturnY(int i)
     {
         if (i == 0)
         {
@@ -206,14 +207,14 @@ public class NotificationWindowGO : GUIElement
         return -y * i;
     }
 
-    //called from GUI 
+    //called from GUI
     public void ShowWindow()
     {
         Show();
         Show("");
-    }    
-    
-    //called from GUI 
+    }
+
+    //called from GUI
     public void CleanAll()
     {
         _allNotifications.Clear();
@@ -235,7 +236,7 @@ public class NotificationWindowGO : GUIElement
 
     public void Notify(string notiKey, string addP)
     {
-        _allNotifications.Insert(0, notiKey+"|"+addP);
+        _allNotifications.Insert(0, notiKey + "|" + addP);
         Show("");
 
         //means the sound of the noti is set off

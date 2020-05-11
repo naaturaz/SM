@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
-public class TerrainRamdonSpawner : Hoverable {
-
-    //the tree height 
-    //used when a tree is replanted 
+public class TerrainRamdonSpawner : Hoverable
+{
+    //the tree height
+    //used when a tree is replanted
     /// <summary>
-    /// the height of the elements they start always with 1. if a tree is replanted is 
+    /// the height of the elements they start always with 1. if a tree is replanted is
     /// set to zero and has to reegrow
     /// </summary>
     public float Height = .25f;
@@ -14,14 +14,12 @@ public class TerrainRamdonSpawner : Hoverable {
 
     private float _maxHeight;
 
-
     private int _rootToSpawnIndex;
 
-
-    int _region;
+    private int _region;
 
     /// <summary>
-    /// The region they fall into 
+    /// The region they fall into
     /// </summary>
     public int Region
     {
@@ -36,17 +34,15 @@ public class TerrainRamdonSpawner : Hoverable {
         set { _maxHeight = value; }
     }
 
-
     public bool ReplantedTree { get; set; }
 
     private bool _shouldReplant;
+
     public bool ShouldReplant
     {
         get { return _shouldReplant; }
         set { _shouldReplant = value; }
     }
-
-
 
     /// <summary>
     /// Only used by PoolTrees bz they thenw will pass this info into the DataList
@@ -56,7 +52,6 @@ public class TerrainRamdonSpawner : Hoverable {
         get { return _rootToSpawnIndex; }
         set { _rootToSpawnIndex = value; }
     }
-
 
     static public TerrainRamdonSpawner CreateTerraSpawn(string root, Vector3 origen, Vector3 rotation,
         int indexAllVertex, H hType,
@@ -68,14 +63,14 @@ public class TerrainRamdonSpawner : Hoverable {
         TerrainRamdonSpawner obj = null;
         obj = (TerrainRamdonSpawner)Resources.Load(root, typeof(TerrainRamdonSpawner));
 
-        if (obj==null)
+        if (obj == null)
         {
-            Debug.Log("null:"+root);
+            Debug.Log("null:" + root);
         }
 
         obj = (TerrainRamdonSpawner)Instantiate(obj, origen, Quaternion.identity);
         if (name != "") { obj.name = name; }
-        if (container != null){obj.transform.SetParent( container);}
+        if (container != null) { obj.transform.SetParent(container); }
         obj.IndexAllVertex = indexAllVertex;
         obj.HType = hType;
         obj.Category = obj.DefineCategory(hType);
@@ -94,25 +89,23 @@ public class TerrainRamdonSpawner : Hoverable {
         return obj;
     }
 
-	// Use this for initialization
-	protected void Start () 
+    // Use this for initialization
+    protected void Start()
     {
-        //needs to be define so in Router.cs he can see it as a blocking 
+        //needs to be define so in Router.cs he can see it as a blocking
         Category = DefineCategory(HType);
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    }
 
-
+    // Update is called once per frame
+    private void Update()
+    {
+    }
 
     internal bool Grown()
     {
         var ele = Program.gameScene.controllerMain.TerraSpawnController.Find(MyId);
 
-        if (ele==null)
+        if (ele == null)
         {
             return false;
         }
@@ -138,10 +131,10 @@ public class TerrainRamdonSpawner : Hoverable {
 
     //}
 
-    
     protected int howDeepInY = 50;
+
     /// <summary>
-    /// The action of getting a new Swaped in tree ready 
+    /// The action of getting a new Swaped in tree ready
     /// </summary>
     /// <param name="oldTree"></param>
     internal void SwapIn(TerrainRamdonSpawner oldTree)
@@ -169,6 +162,5 @@ public class TerrainRamdonSpawner : Hoverable {
         }
         var still = (StillElement)this;
         still.RedoCrystals();
-
     }
 }

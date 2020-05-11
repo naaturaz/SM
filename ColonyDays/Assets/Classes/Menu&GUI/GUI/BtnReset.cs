@@ -1,18 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class BtnReset : MonoBehaviour {
+public class BtnReset : MonoBehaviour
+{
+    // Use this for initialization
+    private void Start()
+    {
+    }
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    // Update is called once per frame
+    private void Update()
+    {
+    }
 
     public void Reset()
     {
@@ -21,10 +19,8 @@ public class BtnReset : MonoBehaviour {
         PlayerPrefs.SetInt("Reward", 0);
         PlayerPrefs.SetInt("Week", -1);
 
-
         PlayerPrefs.SetString("F1", "");
         PlayerPrefs.SetString("QuestArrow", "");
         PlayerPrefs.SetString("TutoArrow", "");
     }
-
 }

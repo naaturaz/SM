@@ -10,7 +10,7 @@ public class SubDivider : General
     public float XSubStep
     {
         get { return _xSubStep; }
-        set{_xSubStep = value;}
+        set { _xSubStep = value; }
     }
 
     /// <summary>
@@ -20,11 +20,11 @@ public class SubDivider : General
     public float ZSubStep
     {
         get { return Mathf.Abs(_zSubStep); }
-        set{ _zSubStep = value;}
+        set { _zSubStep = value; }
     }
 
     /// <summary>
-    /// Subdive a lot. Will move the ref Vector3 start to the end of 
+    /// Subdive a lot. Will move the ref Vector3 start to the end of
     ///  the lot and will send the value bak to the caller of this method
     /// </summary>
     /// <param name="start">Start point of the lot... will be ref back here</param>
@@ -81,7 +81,7 @@ public class SubDivider : General
     }
 
     //use only now to show last row of ScanTerra() elements
-    void CheckIfStopScanning(List<Vector3> newLot, int polyX, int polyZ, 
+    private void CheckIfStopScanning(List<Vector3> newLot, int polyX, int polyZ,
         Vector3 start)
     {
         if (newLot.Count < polyX * polyZ)
@@ -98,7 +98,7 @@ public class SubDivider : General
     }
 
     // Full,//this will use create object everywere in the poly
-    //Tile//this one will only fill so the next poly doesnt create any obj was created on this one 
+    //Tile//this one will only fill so the next poly doesnt create any obj was created on this one
     //already
     public List<Vector3> SubDividePoly(List<Vector3> poly, int divs, H fillStyle)
     {
@@ -123,7 +123,7 @@ public class SubDivider : General
         return filled;
     }
 
-    List<Vector3> SubDivideLine(List<Vector3> poly, int iniPolyIndex, int endPolyIndex,
+    private List<Vector3> SubDivideLine(List<Vector3> poly, int iniPolyIndex, int endPolyIndex,
      int numberDivs, H axis)
     {
         float lenght = 0;
@@ -143,10 +143,10 @@ public class SubDivider : General
             //if was setep already not override it to zero
             //that happens when we are closing on the scanning process at the
             //end of the mesh
-                if (lenght / numberDivs != 0 && ZSubStep == 0)
-                {
-                    ZSubStep = lenght / numberDivs;
-                }
+            if (lenght / numberDivs != 0 && ZSubStep == 0)
+            {
+                ZSubStep = lenght / numberDivs;
+            }
         }
 
         float yTemp = FindYValueOnTerrain(poly[iniPolyIndex].x, poly[iniPolyIndex].z);
@@ -170,7 +170,7 @@ public class SubDivider : General
     }
 
     /// Fill the inside of a polygon given the topLine and leftLine vectors3
-    List<Vector3> FillPolygonWrite(List<Vector3> topLine, List<Vector3> leftLine)
+    private List<Vector3> FillPolygonWrite(List<Vector3> topLine, List<Vector3> leftLine)
     {
         List<Vector3> fill = new List<Vector3>();
         for (int indexX = 1; indexX < leftLine.Count; indexX++)
@@ -184,7 +184,7 @@ public class SubDivider : General
         return fill;
     }
 
-    Vector3 ReturnFilledPos(List<Vector3> topLine, List<Vector3> leftLine,
+    private Vector3 ReturnFilledPos(List<Vector3> topLine, List<Vector3> leftLine,
         int indexX, float y, int i)
     {
         return new Vector3(topLine[indexX].x, y, leftLine[i].z);

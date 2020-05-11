@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 /*
- * The hover window is wht is shown when hovering 
+ * The hover window is wht is shown when hovering
  */
 
 public class HoverWindow : MonoBehaviour
@@ -14,14 +14,14 @@ public class HoverWindow : MonoBehaviour
 
     private RectTransform _rectTransform;
 
-    //the Key that is showing this HoverWindow. 
+    //the Key that is showing this HoverWindow.
     //needed to pull the string from Languages.cs
     private string _key;
 
     //the medium hover window
     private HoverWindowMed _hoverWindowMed;
 
-    int hideVal = -90000;
+    private int hideVal = -90000;
 
     //when was showed
     private float showedAt;
@@ -33,20 +33,20 @@ public class HoverWindow : MonoBehaviour
     }
 
     // Use this for initialization
-	void Start ()
-	{
-	    _geometry = General.FindGameObjectInHierarchy("Geometry", gameObject);
-	    var textGO = General.FindGameObjectInHierarchy("Text", gameObject);
+    private void Start()
+    {
+        _geometry = General.FindGameObjectInHierarchy("Geometry", gameObject);
+        var textGO = General.FindGameObjectInHierarchy("Text", gameObject);
 
-	    if (textGO!= null)
-	    {
-	        _text = textGO.GetComponent<Text>();
-	    }
+        if (textGO != null)
+        {
+            _text = textGO.GetComponent<Text>();
+        }
 
-	    _hoverWindowMed = FindObjectOfType<HoverWindowMed>();
-	    _rectTransform = transform.GetComponent<RectTransform>();
-	    Hide();
-	}
+        _hoverWindowMed = FindObjectOfType<HoverWindowMed>();
+        _rectTransform = transform.GetComponent<RectTransform>();
+        Hide();
+    }
 
     public void Hide()
     {
@@ -68,8 +68,8 @@ public class HoverWindow : MonoBehaviour
 
         _text.text = _msg;
         showedAt = Time.time;
-    }  
-    
+    }
+
     /// <summary>
     /// This one is a simple message
     /// </summary>
@@ -99,8 +99,8 @@ public class HoverWindow : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update ()
-	{
+    private void Update()
+    {
         //means is hiding.
         if (_rectTransform.position.x < -80000)
             return;
@@ -110,8 +110,8 @@ public class HoverWindow : MonoBehaviour
         //after 3 seconds of being show
         //if key = "" is a simple msg with out key
         if (Time.time > showedAt + .7 && !string.IsNullOrEmpty(_key))
-	        SpawnMedHover();
-	}
+            SpawnMedHover();
+    }
 
     //Hover Med
 
@@ -130,10 +130,9 @@ public class HoverWindow : MonoBehaviour
         //*3 to make it abit further from mouse pointer
         _hoverWindowMed.ShowSemiTut(_key);
     }
-    
+
     internal string Message()
     {
         return _msg;
     }
-
 }

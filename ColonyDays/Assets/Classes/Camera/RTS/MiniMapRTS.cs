@@ -1,16 +1,18 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 //http://ralphbarbagallo.com/2012/04/09/3-ways-to-capture-a-screenshot-in-unity3d/
-public class MiniMapRTS : GenericCameraComponent {
-
+public class MiniMapRTS : GenericCameraComponent
+{
     public static bool isMouseOnGUI;
     public static bool isOnTheLimits;
 
-    Vector3 mP;//mouse pos
+    private Vector3 mP;//mouse pos
+
     //Rect mapDimRect; the rect of the MiniMap
-    float xStart = 20;
-    float yStart = 20;
+    private float xStart = 20;
+
+    private float yStart = 20;
 
     public Texture2D tex;
     public static Texture2D tex2;//debug green semitransparant
@@ -22,33 +24,33 @@ public class MiniMapRTS : GenericCameraComponent {
     protected float widthProportionSize = 8;
     protected float heightProportionSize = 6;
 
-    List<Transform> cardinalPointsTransf;
-    Vector2 NW, NE, SW, SE;
+    private List<Transform> cardinalPointsTransf;
+    private Vector2 NW, NE, SW, SE;
 
     //reducing the normal size of map
-    Vector2 reducedNE, reducedSW , reducedNW;
+    private Vector2 reducedNE, reducedSW, reducedNW;
 
-    //this is the Variable that reduce the map limits in where the camera can go  
-    //todo a X and Z reduction is needed 
-    private float reductionX = 30;//50 
+    //this is the Variable that reduce the map limits in where the camera can go
+    //todo a X and Z reduction is needed
+    private float reductionX = 30;//50
+
     private float reductionY = 60;//50
 
+    private float terraStartX;
+    private float terraStartY;
+    private float terraEndX;
+    private float terraEndY;
+    private float terraWidth;
+    private float terraHeight;
 
-    float terraStartX;
-    float terraStartY;
-    float terraEndX;
-    float terraEndY;
-    float terraWidth;
-    float terraHeight;
+    private Vector3 oldPos;
 
-    Vector3 oldPos;
+    private Transform centerTarget;
 
-    Transform centerTarget;
-
-	// Use this for initialization
-	void Start ()
-	{
-	    tex2 = tex;
+    // Use this for initialization
+    private void Start()
+    {
+        tex2 = tex;
 
         oldScreenWidth = Screen.width;
         oldScreenHeight = Screen.height;
@@ -56,19 +58,20 @@ public class MiniMapRTS : GenericCameraComponent {
         //mapDimRect = new Rect(xStart, yStart, oldScreenWidth / widthProportionSize, oldScreenHeight / heightProportionSize);
 
         GetCardinals();
-	    SetReducedCardinals();
+        SetReducedCardinals();
         GetTerrainSpecs();
-	}
+    }
 
-    Rect mapRect = new Rect();
+    private Rect mapRect = new Rect();
+
     private void SetReducedCardinals()
     {
         reducedNE = new Vector2(NE.x - reductionX, NE.y - reductionY);
         reducedSW = new Vector2(SW.x + reductionX, SW.y + reductionY);
-        
+
         reducedNW = new Vector2(NW.x + reductionX, NW.y - reductionY);
 
-        mapRect = Registro.FromALotOfVertexToRect(new List<Vector3>() {reducedNW, reducedNE, reducedSW});
+        mapRect = Registro.FromALotOfVertexToRect(new List<Vector3>() { reducedNW, reducedNE, reducedSW });
     }
 
     public bool IsOnMapConstraints(Vector3 pos)
@@ -76,27 +79,28 @@ public class MiniMapRTS : GenericCameraComponent {
         return mapRect.Contains(pos);
     }
 
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    private void Update()
+    {
         if (CamControl.CAMRTS.centerTarget != null && centerTarget == null)
         {
             centerTarget = CamControl.CAMRTS.centerTarget.transform;
         }
-        
+
         CheckIfMouseInMap();
         UpdateRectDim();
-	}
+    }
 
     public Vector3 ConstrainLimits(Vector3 newPos)
     {
         Vector3 limit = newPos;
         if (newPos.x < reducedSW.x)
         {
-            limit.x = reducedSW.x ;
+            limit.x = reducedSW.x;
         }
         if (newPos.z < reducedSW.y)
         {
-            limit.z = reducedSW.y ;
+            limit.z = reducedSW.y;
         }
         if (newPos.x > reducedNE.x)
         {
@@ -109,9 +113,9 @@ public class MiniMapRTS : GenericCameraComponent {
         return limit;
     }
 
-    void UpdateRectDim()
+    private void UpdateRectDim()
     {
-        if(oldScreenHeight != Screen.height || oldScreenWidth != Screen.width)
+        if (oldScreenHeight != Screen.height || oldScreenWidth != Screen.width)
         {
             //mapDimRect.width = Screen.width / widthProportionSize;
             //mapDimRect.height = Screen.height / heightProportionSize;
@@ -121,7 +125,7 @@ public class MiniMapRTS : GenericCameraComponent {
         }
     }
 
-    void GetCardinals()
+    private void GetCardinals()
     {
         cardinalPointsTransf = new List<Transform>();
         Transform terrain = Program.gameScene.Terreno.transform;
@@ -131,23 +135,23 @@ public class MiniMapRTS : GenericCameraComponent {
         {
             cardinalPointsTransf.Add(terrain.transform.GetChild(i));
         }
-                NW = new Vector2(cardinalPointsTransf[0].transform.position.x,
-        cardinalPointsTransf[0].transform.position.z);
+        NW = new Vector2(cardinalPointsTransf[0].transform.position.x,
+cardinalPointsTransf[0].transform.position.z);
 
-                NE = new Vector2(cardinalPointsTransf[1].transform.position.x,
-        cardinalPointsTransf[1].transform.position.z);
+        NE = new Vector2(cardinalPointsTransf[1].transform.position.x,
+cardinalPointsTransf[1].transform.position.z);
 
-                SW = new Vector2(cardinalPointsTransf[2].transform.position.x,
-        cardinalPointsTransf[2].transform.position.z);
+        SW = new Vector2(cardinalPointsTransf[2].transform.position.x,
+cardinalPointsTransf[2].transform.position.z);
 
-                SE = new Vector2(cardinalPointsTransf[3].transform.position.x,
-        cardinalPointsTransf[3].transform.position.z);
+        SE = new Vector2(cardinalPointsTransf[3].transform.position.x,
+cardinalPointsTransf[3].transform.position.z);
     }
 
     /// <summary>
     /// Get all the terrain specs
     /// </summary>
-    void GetTerrainSpecs()
+    private void GetTerrainSpecs()
     {
         terraStartX = SW.x;
         terraStartY = SW.y;
@@ -159,11 +163,11 @@ public class MiniMapRTS : GenericCameraComponent {
     }
 
     /// <summary>
-    /// If mouse in on minimap rectangle and was clicked 
+    /// If mouse in on minimap rectangle and was clicked
     /// this method will return the world pos the cam has to be moved to
     /// </summary>
     /// <returns></returns>
-    Vector3 ReturnWorldPos()
+    private Vector3 ReturnWorldPos()
     {
         //float unitPerPixelsX = terraWidth / mapDimRect.width;
         //float unitPerPixelsY = terraHeight / mapDimRect.height;
@@ -180,7 +184,7 @@ public class MiniMapRTS : GenericCameraComponent {
         return new Vector3();
     }
 
-    void CheckIfMouseInMap()
+    private void CheckIfMouseInMap()
     {
         mP = Input.mousePosition;
         //if (mapDimRect.Contains(mP))
@@ -194,7 +198,7 @@ public class MiniMapRTS : GenericCameraComponent {
         //else isMouseOnGUI = false;
     }
 
-    void OnGUI()
+    private void OnGUI()
     {
         if (tex == null)
         {
@@ -208,9 +212,7 @@ public class MiniMapRTS : GenericCameraComponent {
         //DebugFirstPersonRoutesArea();
     }
 
-
-
-    void DebugAllBuildingOnTerrainColl()
+    private void DebugAllBuildingOnTerrainColl()
     {
         for (int i = 0; i < Registro.toDraw.Count; i++)
         {
@@ -224,26 +226,18 @@ public class MiniMapRTS : GenericCameraComponent {
         }
     }
 
-    void DrawMagnify(Rect toDrawP, int xZoom, Texture2D texP)
+    private void DrawMagnify(Rect toDrawP, int xZoom, Texture2D texP)
     {
         Rect mag = (toDrawP);
         mag = Magnify(mag, xZoom);
         GUI.DrawTexture(Magnify(toDrawP, xZoom), texP);
     }
 
-    Rect Magnify(Rect to, int times)
+    private Rect Magnify(Rect to, int times)
     {
         to = new Rect(to.x * times, to.y * times, to.width * times, to.height * times);
         return to;
     }
-
-
-
-
-
-
-
-
 
     //private void DebugFirstPersonRoutesArea()
     //{

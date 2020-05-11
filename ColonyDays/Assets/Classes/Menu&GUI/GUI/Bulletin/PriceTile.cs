@@ -13,7 +13,7 @@ public class PriceTile : GUIElement
         set { _prodSpec = value; }
     }
 
-    void Start()
+    private void Start()
     {
         _descText = FindGameObjectInHierarchy("Item_Desc", gameObject).GetComponent<Text>();
         _input = FindGameObjectInHierarchy("Input", gameObject).GetComponent<InputField>();
@@ -27,7 +27,7 @@ public class PriceTile : GUIElement
         _input.text = _prodSpec.Price.ToString("C");
     }
 
-    void Update()
+    private void Update()
     {
     }
 
@@ -64,7 +64,7 @@ public class PriceTile : GUIElement
         {
             _prodSpec.Price = float.Parse(_input.text);
         }
-        //else wont do anything just will reload last price 
+        //else wont do anything just will reload last price
         Init();
     }
 
@@ -87,5 +87,4 @@ public class PriceTile : GUIElement
 
         return obj;
     }
-
 }

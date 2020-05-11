@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 
 public class Notification
 {
@@ -17,7 +13,6 @@ public class Notification
     /// </summary>
     public string Param1 { get; set; }
 
-
     public Notification(string key)
     {
         NotificationKey = key;
@@ -29,7 +24,7 @@ public class Notification
         Init();
     }
 
-    void Init()
+    private void Init()
     {
         Name = Languages.ReturnString(NotificationKey + ".Noti.Name");
         Description = Languages.ReturnString(NotificationKey + ".Noti.Desc");
@@ -40,11 +35,11 @@ public class Notification
             {
                 Param1 = MyText.DollarFormat(float.Parse(Param1));
             }
-            else if(NotificationKey == "NoInput")
+            else if (NotificationKey == "NoInput")
             {
                 Param1 = Languages.ReturnString(Param1);
             }
-            else if (NotificationKey == "Built")//so StorageBig is Big Storage 
+            else if (NotificationKey == "Built")//so StorageBig is Big Storage
             {
                 Param1 = Languages.ReturnString(Param1);
             }
@@ -54,9 +49,4 @@ public class Notification
 
         NotificationKey = NotificationKey;
     }
-
-
-
-
 }
-

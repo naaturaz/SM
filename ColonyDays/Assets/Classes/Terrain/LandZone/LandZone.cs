@@ -1,25 +1,25 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class LandZone : Crystal
 {
-    SMe m = new SMe();
+    private SMe m = new SMe();
     private string _id = "";
 
-    List<LinkRect> _linkRects = new List<LinkRect>();
+    private List<LinkRect> _linkRects = new List<LinkRect>();
 
     private LinkRect _cuRect;
 
     private string _landZoneName;
 
-    public LandZone() { }
+    public LandZone()
+    {
+    }
 
     public LandZone(List<Vector3> grid)
     {
-        
         StartLinking(grid);
     }
-
 
     public LandZone(List<LinkRect> list)
     {
@@ -72,7 +72,7 @@ public class LandZone : Crystal
         }
         else
         {
-            if (_cuRect ==null)
+            if (_cuRect == null)
             {
                 return;
             }
@@ -101,11 +101,11 @@ public class LandZone : Crystal
 
     /// <summary>
     /// Will tell u if current LinkRect is valid
-    /// 
+    ///
     /// If is on top or intersect  of a line from Terra is not valid
     /// </summary>
     /// <returns></returns>
-    bool IsCurrentValid()
+    private bool IsCurrentValid()
     {
         if (_cuRect == null)
         {
@@ -123,9 +123,7 @@ public class LandZone : Crystal
         return true;
     }
 
-
-
-    void RectLinkingDone()
+    private void RectLinkingDone()
     {
         for (int i = 0; i < _linkRects.Count; i++)
         {
@@ -133,7 +131,6 @@ public class LandZone : Crystal
         }
 
         MeshController.CrystalManager1.LinkCrystals();
-
     }
 
     public void AddLinkRect(LinkRect linkRect)
@@ -173,12 +170,11 @@ public class LandZone : Crystal
         }
     }
 
-
     /// <summary>
     /// This will be the middle of the LandZone
-    /// 
+    ///
     /// This is created bz landzones at beggining always are split in the same physycal land.
-    /// 
+    ///
     /// So I will try to connect them
     /// </summary>
     /// <returns></returns>
@@ -190,11 +186,11 @@ public class LandZone : Crystal
             pos = pos + _linkRects[i].Position;
         }
 
-        return pos/_linkRects.Count;
+        return pos / _linkRects.Count;
     }
 
     /// <summary>
-    /// Use to remane all its linkRects when a LandZone was connected to another 
+    /// Use to remane all its linkRects when a LandZone was connected to another
     /// </summary>
     /// <param name="p"></param>
     internal void RenameAllMyLinkRects(string p)
@@ -209,7 +205,7 @@ public class LandZone : Crystal
     {
         Id = Person.GiveRandomID();
         Type1 = H.LandZone;
-        Position =  CalcPosition();
+        Position = CalcPosition();
         Name = LandZoneName;
     }
 }

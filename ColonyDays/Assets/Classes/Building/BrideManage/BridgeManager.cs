@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BridgeManager 
+public class BridgeManager
 {
-    SMe m = new SMe();
-  
-    //types of LandZoneLinkers they have the 2 ends equalls, disreagardin the order of them 
-    List<LandZoneLinker> _types = new List<LandZoneLinker>(); 
-    
-    List<Connection> _connections = new List<Connection>();
-    private bool load;
+    private SMe m = new SMe();
 
+    //types of LandZoneLinkers they have the 2 ends equalls, disreagardin the order of them
+    private List<LandZoneLinker> _types = new List<LandZoneLinker>();
+
+    private List<Connection> _connections = new List<Connection>();
+    private bool load;
 
     public BridgeManager()
     {
@@ -25,17 +24,17 @@ public class BridgeManager
             return;
 
         if (load)
-            CreateTypes(); 
+            CreateTypes();
     }
 
     /// <summary>
     /// Depending on the amount of landZones on this Terrain will create the types:
-    /// 
+    ///
     /// One type is from Shore A to Shore B, the next one :
     /// from Shore B to C. then
     /// from Shore C to A,
-    /// 
-    /// in a 3 LandZone Terrains those are all the combinations posible 
+    ///
+    /// in a 3 LandZone Terrains those are all the combinations posible
     /// </summary>
     private void CreateTypes()
     {
@@ -60,25 +59,14 @@ public class BridgeManager
         }
         else if (landZones.Count > 3)
         {
-            for (int i = 0; i < landZones.Count     ; i++)
+            for (int i = 0; i < landZones.Count; i++)
             {
-                Debug.Log("landZones:"+i+"."+landZones[i].LandZoneName);
+                Debug.Log("landZones:" + i + "." + landZones[i].LandZoneName);
             }
 
             throw new Exception("Game only support a Max of 3 LandZones. Expect this to trhow is creating brand new terrain");
         }
     }
-
-
-
-
-
-
-
-
-
-
-
 
     /// <summary>
     /// The action of adding a new Bridge when is fully built
@@ -109,7 +97,7 @@ public class BridgeManager
     }
 
     /// <summary>
-    /// Will try to see if new connections can be done with the new Bridge 
+    /// Will try to see if new connections can be done with the new Bridge
     /// </summary>
     /// <param name="connection"></param>
     private void ThereAreMoreNewConnections(Connection connection)
@@ -122,7 +110,7 @@ public class BridgeManager
         }
     }
 
-    void CreateOneConnectionFromTwo(Connection one, Connection two)
+    private void CreateOneConnectionFromTwo(Connection one, Connection two)
     {
         var list = FindUncommonZones(one, two);
 
@@ -139,14 +127,14 @@ public class BridgeManager
     }
 
     /// <summary>
-    /// Will return the two zone that are uncommom here 
+    /// Will return the two zone that are uncommom here
     /// </summary>
     /// <param name="one"></param>
     /// <param name="two"></param>
     /// <returns></returns>
-    List<string> FindUncommonZones(Connection one, Connection two)
+    private List<string> FindUncommonZones(Connection one, Connection two)
     {
-        List<string>res = new List<string>();
+        List<string> res = new List<string>();
 
         res = AddToListAndRemoveIfDuplicate(res, one.Zone1);
         res = AddToListAndRemoveIfDuplicate(res, one.Zone2);
@@ -156,7 +144,7 @@ public class BridgeManager
         return res;
     }
 
-    private List<string> AddToListAndRemoveIfDuplicate(List<string>list,string p)
+    private List<string> AddToListAndRemoveIfDuplicate(List<string> list, string p)
     {
         if (list.Contains(p))
         {
@@ -167,14 +155,12 @@ public class BridgeManager
         return list;
     }
 
-
-
     /// <summary>
-    /// Will return all connections ttht do not have the same ends but and share only 1 leg zone 
+    /// Will return all connections ttht do not have the same ends but and share only 1 leg zone
     /// </summary>
     /// <param name="connection"></param>
     /// <returns></returns>
-    List<Connection> ReturnAllConnectionThatAreDiffTypeAndShareAtLeastOneZone(Connection connection)
+    private List<Connection> ReturnAllConnectionThatAreDiffTypeAndShareAtLeastOneZone(Connection connection)
     {
         List<Connection> res = new List<Connection>();
 
@@ -188,21 +174,12 @@ public class BridgeManager
         return res;
     }
 
-
-
-
-
-
-
-
-
-
     /// <summary>
-    /// Will clasifi it depending on the zones it has and will added to the list tht contains same 
-    /// type of elements bz they all have the same 2 ends 
+    /// Will clasifi it depending on the zones it has and will added to the list tht contains same
+    /// type of elements bz they all have the same 2 ends
     /// </summary>
     /// <param name="land"></param>
-    int Classify(LandZoneLinker land)
+    private int Classify(LandZoneLinker land)
     {
         for (int i = 0; i < _types.Count; i++)
         {
@@ -220,7 +197,7 @@ public class BridgeManager
     /// </summary>
     /// <param name="conn"></param>
     /// <returns></returns>
-    Connection ReturnOrderedConn(Connection conn)
+    private Connection ReturnOrderedConn(Connection conn)
     {
         for (int i = 0; i < _types.Count; i++)
         {
@@ -232,12 +209,9 @@ public class BridgeManager
         return null;
     }
 
-
-
-
     /// <summary>
     /// Will return the closest combitnation of bridges to reach from pos1 to pos2
-    /// 
+    ///
     /// Before the method will evalute all the posibilities
     /// </summary>
     /// <returns></returns>
@@ -277,18 +251,12 @@ public class BridgeManager
         return list[0];
     }
 
-
-
-
-
-
-
     /// <summary>
     /// Will find all connections with same end as the param
     /// </summary>
     /// <param name="connection"></param>
     /// <returns></returns>
-    List<Connection> FindAllConnWithSameEnds(Connection connection)
+    private List<Connection> FindAllConnWithSameEnds(Connection connection)
     {
         List<Connection> res = new List<Connection>();
 
@@ -301,14 +269,7 @@ public class BridgeManager
         }
         return res;
     }
-
-
-
-
-
-
 }
-
 
 /// <summary>
 /// Everytime a new bridge is built will open up new connection, (s)
@@ -319,7 +280,7 @@ public class Connection
     private string _zone2;
     private List<LandZoneLinker> _thruBridge = new List<LandZoneLinker>();
     private string p1;
-    private string p2; 
+    private string p2;
 
     public string Zone1
     {
@@ -338,7 +299,6 @@ public class Connection
         get { return _thruBridge; }
         set { _thruBridge = value; }
     }
-
 
     public Connection(string zone1, string zone2, LandZoneLinker bridge)
     {
@@ -372,7 +332,7 @@ public class Connection
         return false;
     }
 
-    bool ShareOneZone(Connection connection)
+    private bool ShareOneZone(Connection connection)
     {
         int same = 0;
         if (_zone1 == connection.Zone1 || _zone1 == connection.Zone2)
@@ -397,16 +357,13 @@ public class Connection
     }
 }
 
-
 /// <summary>
-/// Use to keep the Bridge combination 
+/// Use to keep the Bridge combination
 /// </summary>
 public class BridgePsuedoPath
 {
     private List<LandZoneLinker> _bridges = new List<LandZoneLinker>();
     private float _distance;
-
-
 
     public float Distance
     {
@@ -435,9 +392,8 @@ public class BridgePsuedoPath
         }
     }
 
-
     /// <summary>
-    /// If is only one bridge 
+    /// If is only one bridge
     /// </summary>
     /// <param name="pos1"></param>
     /// <param name="pos2"></param>
@@ -447,9 +403,6 @@ public class BridgePsuedoPath
     {
         return Vector3.Distance(pos1.Position, theBridgePos) + Vector3.Distance(pos2.Position, theBridgePos);
     }
-
-
-
 
     private float CalcDistance(VectorLand pos1, VectorLand pos2)
     {
@@ -475,12 +428,11 @@ public class BridgePsuedoPath
         //distance from 1st pos to first bridge
         dist += Vector3.Distance(firstPos, brPositions[0]);
 
-        //distance from pos2 to last brdige 
+        //distance from pos2 to last brdige
         dist += Vector3.Distance(secPos, brPositions[brPositions.Count - 1]);
 
         return dist;
     }
-
 
     /// <summary>
     /// Because when is more tht 1 brdige I need to know wich VectorLand is the one in land with the bridge
@@ -492,7 +444,7 @@ public class BridgePsuedoPath
     /// <returns></returns>
     private Vector3 ReturnInZonePos(VectorLand pos1, VectorLand pos2, LandZoneLinker bridge)
     {
-        List<string> temp = new List<string>() {pos1.LandZone, pos2.LandZone, bridge.Zone1, bridge.Zone2};
+        List<string> temp = new List<string>() { pos1.LandZone, pos2.LandZone, bridge.Zone1, bridge.Zone2 };
         var common = UString.ReturnMostCommonName(temp);
 
         //if the common is the one is pos1.LandZone
@@ -505,7 +457,7 @@ public class BridgePsuedoPath
 }
 
 /// <summary>
-/// So a Position asked for and a LandZone are kept tpghetejhr this is important to calculate distance 
+/// So a Position asked for and a LandZone are kept tpghetejhr this is important to calculate distance
 /// and basically use to know if when going from point A to B a brdige is gonna be needed
 /// properluy
 /// </summary>
@@ -517,14 +469,16 @@ public class VectorLand
 
     private Building _building;//use to when is dummy so far
 
-    public VectorLand() { }
+    public VectorLand()
+    {
+    }
 
     public VectorLand(string landzon, Vector3 pos)
     {
         LandZone = landzon;
         Position = pos;
-    }  
-    
+    }
+
     public VectorLand(string landzon, Vector3 pos, Building st)
     {
         LandZone = landzon;
@@ -541,7 +495,7 @@ public class VectorLand
     //for serializations requirements
     public Building MyBuild()
     {
-        if (_building!=null)
+        if (_building != null)
         {
             return _building;
         }

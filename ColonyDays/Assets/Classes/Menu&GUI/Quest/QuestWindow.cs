@@ -4,13 +4,13 @@ using UnityEngine.UI;
 
 public class QuestWindow : GUIElement
 {
-    Text _rewardText;
-    Text _contentText;
+    private Text _rewardText;
+    private Text _contentText;
 
     private GameObject _content;
     private GameObject _scroll_Ini_PosGO;
 
-    void Start()
+    private void Start()
     {
         iniPos = transform.position;
 
@@ -44,8 +44,8 @@ public class QuestWindow : GUIElement
 
     #region Scroll
 
-    float _tileHeight = 5.3f;
-    float _pad = 0.9f;
+    private float _tileHeight = 5.3f;
+    private float _pad = 0.9f;
 
     private void PopulateScrollView()
     {
@@ -65,7 +65,8 @@ public class QuestWindow : GUIElement
         _btns.Clear();
     }
 
-    List<QuestTile> _btns = new List<QuestTile>();
+    private List<QuestTile> _btns = new List<QuestTile>();
+
     private void ShowButtons(List<Quest> list)
     {
         for (int i = 0; i < list.Count; i++)
@@ -77,9 +78,9 @@ public class QuestWindow : GUIElement
         }
     }
 
-    #endregion
+    #endregion Scroll
 
-    void Update()
+    private void Update()
     {
     }
 
@@ -93,7 +94,7 @@ public class QuestWindow : GUIElement
     {
         if (Program.gameScene.QuestManager.IsDone(q))
         {
-            return Languages.ReturnString("Done");    
+            return Languages.ReturnString("Done");
         }
         else if (q.IsAPercetangeOne())
         {

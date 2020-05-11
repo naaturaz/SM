@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-
-public class PersonBank
+﻿public class PersonBank
 {
     private Person _person;
     private float _checkingAcct;
@@ -15,7 +9,9 @@ public class PersonBank
         set { _checkingAcct = value; }
     }
 
-    public PersonBank() { }
+    public PersonBank()
+    {
+    }
 
     internal void SetPerson(Person person)
     {
@@ -28,8 +24,8 @@ public class PersonBank
         {
             _checkingAcct += amt;
         }
-    }  
-    
+    }
+
     public void WithDraw(float amt, string acct = "Check")
     {
         if (acct == "Check")
@@ -38,4 +34,3 @@ public class PersonBank
         }
     }
 }
-

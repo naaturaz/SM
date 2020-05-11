@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
 /*
- * Game obj tht have this script wioll pop up small form with help as is being hover 
- * 
- * This GObj it spawns it doesnt move wit mouse 
+ * Game obj tht have this script wioll pop up small form with help as is being hover
+ *
+ * This GObj it spawns it doesnt move wit mouse
  */
 
 public class HoverBtn : MonoBehaviour
@@ -12,12 +12,12 @@ public class HoverBtn : MonoBehaviour
     private Rect screenRect;
 
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         InitObjects();
     }
 
-    void InitObjects()
+    private void InitObjects()
     {
         //for this to work only one gameObj can have the HoverWindow attached
         if (hoverWindow == null)
@@ -28,9 +28,7 @@ public class HoverBtn : MonoBehaviour
         screenRect = DefineScreenRect();
     }
 
-
-
-    Rect DefineScreenRect()
+    private Rect DefineScreenRect()
     {
         Rect res = new Rect();
         res.min = new Vector2();
@@ -39,7 +37,7 @@ public class HoverBtn : MonoBehaviour
         return res;
     }
 
-    Rect GetRectFromBoxCollider2D()
+    private Rect GetRectFromBoxCollider2D()
     {
         var res = new Rect();
         var min = transform.GetComponent<BoxCollider2D>().bounds.min;
@@ -53,7 +51,7 @@ public class HoverBtn : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (hoverWindow == null)
         {
@@ -63,21 +61,19 @@ public class HoverBtn : MonoBehaviour
             }
             return;
         }
-
-
     }
 
     /// <summary>
     /// </summary>
     /// <returns></returns>
-    string MyMsg()
+    private string MyMsg()
     {
         return transform.name;
     }
 
+    private static string oldMsg = "";
 
-    static string oldMsg = "";
-    void SpawnHelp()
+    private void SpawnHelp()
     {
         if (oldMsg == MyMsg())
             return;
@@ -101,7 +97,7 @@ public class HoverBtn : MonoBehaviour
         return moved;
     }
 
-    void DestroyHelp()
+    private void DestroyHelp()
     {
         hoverWindow.Hide();
     }
@@ -117,5 +113,4 @@ public class HoverBtn : MonoBehaviour
     {
         DestroyHelp();
     }
-
 }

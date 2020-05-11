@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-class AchieveWindow : GUIElement
+internal class AchieveWindow : GUIElement
 {
     private Text _title;
 
@@ -18,7 +18,7 @@ class AchieveWindow : GUIElement
 
     private SteamStatsAndAchievements _steamStatsAndAchievements;
 
-    void Start()
+    private void Start()
     {
         iniPos = transform.position;
         Hide();
@@ -47,7 +47,7 @@ class AchieveWindow : GUIElement
         Show();
     }
 
-    void ClearForm()
+    private void ClearForm()
     {
         if (_verticScrollbar != null)
         {
@@ -56,10 +56,10 @@ class AchieveWindow : GUIElement
     }
 
     /// <summary>
-    /// So as changes size will be available or not. 
-    /// We need this ref ' _verticScrollbar ' to set it to defauitl value 
+    /// So as changes size will be available or not.
+    /// We need this ref ' _verticScrollbar ' to set it to defauitl value
     /// </summary>
-    void TakeScrollVerticBar()
+    private void TakeScrollVerticBar()
     {
         var vert = GetGrandChildCalled("Scrollbar Vertical");
         if (vert != null)
@@ -72,7 +72,7 @@ class AchieveWindow : GUIElement
         }
     }
 
-    void Update()
+    private void Update()
     {
         if (transform.position == iniPos && Input.GetKeyUp(KeyCode.Return))
         {
@@ -90,10 +90,9 @@ class AchieveWindow : GUIElement
             DestroyPrevTiles();
             Program.MyScreen1.HideWindowShowMain(this);
         }
-       
     }
 
-    void DestroyPrevTiles()
+    private void DestroyPrevTiles()
     {
         for (int i = 0; i < _tilesSpawn.Count; i++)
         {
@@ -102,7 +101,7 @@ class AchieveWindow : GUIElement
         _tilesSpawn.Clear();
     }
 
-    void PopulateScrollView()
+    private void PopulateScrollView()
     {
         SetTileIniPos();
 
@@ -119,7 +118,7 @@ class AchieveWindow : GUIElement
         for (int i = 0; i < _steamStatsAndAchievements.Achievements_t.Length; i++)
         {
             var iniPos = ReturnIniPos(i);
-            var tile = AchieveTile.Create(Root.achieveTile, _content.transform, iniPos, 
+            var tile = AchieveTile.Create(Root.achieveTile, _content.transform, iniPos,
                 _steamStatsAndAchievements.Achievements_t[i]);
 
             _tilesSpawn.Add(tile);
@@ -127,9 +126,9 @@ class AchieveWindow : GUIElement
     }
 
     /// <summary>
-    /// need to be called to set the Ini POs everytime 
+    /// need to be called to set the Ini POs everytime
     /// </summary>
-    void SetTileIniPos()
+    private void SetTileIniPos()
     {
         var ySpace = Screen.height / 59.46667f;    //15 on editor
 
@@ -143,18 +142,18 @@ class AchieveWindow : GUIElement
         var tileYSpace = 5.57f * 3.3f;
         //var tileYSpace = Screen.height / 160.1436f;//5.57f on editor
 
-        //5.57f the space btw two of them 
+        //5.57f the space btw two of them
         var size = (tileYSpace * tiles) + tileYSpace;
         _contentRectTransform.sizeDelta = new Vector2(0, size);
     }
 
-    Vector3 ReturnIniPos(int i)
+    private Vector3 ReturnIniPos(int i)
     {
         var xAddVal = Screen.width / 5.87407f;
         return new Vector3(xAddVal + _scrollIniPos.x, ReturnY(i) + _scrollIniPos.y, _scrollIniPos.z);
     }
 
-    float ReturnY(int i)
+    private float ReturnY(int i)
     {
         if (i == 0)
         {
@@ -165,4 +164,3 @@ class AchieveWindow : GUIElement
         return -y * i;
     }
 }
-

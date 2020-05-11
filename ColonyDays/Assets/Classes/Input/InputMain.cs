@@ -1,18 +1,19 @@
 ﻿using System;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 
-public class InputMain : InputParent {
-
-    int _oldSpeed = -1;
+public class InputMain : InputParent
+{
+    private int _oldSpeed = -1;
 
     public EventHandler<EventArgs> ChangeSpeed;
+
     /// <summary>
     /// This event is called everytime speed is changed on game
     /// </summary>
     /// <param name="e"></param>
-    void OnChangeSpeed(EventArgs e)
+    private void OnChangeSpeed(EventArgs e)
     {
         if (ChangeSpeed != null)
         {
@@ -40,21 +41,21 @@ public class InputMain : InputParent {
         set { _personPot = value; }
     }
 
-    int localDebugCounter;
+    private int localDebugCounter;
     private List<General> debuger = new List<General>();
 
     public void CreatePersonPot()
     {
-        PersonPot = (PersonPot)Create(Root.personPot, container: Program.ClassContainer.transform); 
+        PersonPot = (PersonPot)Create(Root.personPot, container: Program.ClassContainer.transform);
     }
 
-    void Start()
+    private void Start()
     {
         inputMouse.Start();
         InputMeshSpawnObj = (InputMeshSpawn)Create(Root.inputMeshSpawn, container: Program.ClassContainer.transform);
     }
 
-    void Update()
+    private void Update()
     {
         UpdateCaller();
 
@@ -78,15 +79,15 @@ public class InputMain : InputParent {
     {
         if (Program.IsInputLocked) return;
 
-        if(Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyUp(KeyCode.Space))
         {
-            if(Program.gameScene.GameSpeed > 0)
+            if (Program.gameScene.GameSpeed > 0)
             {
                 _oldSpeed = Program.gameScene.GameSpeed;
                 Program.gameScene.GameSpeed = 0;
                 OnChangeSpeed(EventArgs.Empty);
             }
-            else if(Program.gameScene.GameSpeed == 0 && _oldSpeed != -1)
+            else if (Program.gameScene.GameSpeed == 0 && _oldSpeed != -1)
             {
                 Program.gameScene.GameSpeed = _oldSpeed;
                 OnChangeSpeed(EventArgs.Empty);
@@ -97,7 +98,8 @@ public class InputMain : InputParent {
 
     private FirstPersonController firstPersonController;
     private bool isFirstCamOn;
-    void FirstPersonCam()
+
+    private void FirstPersonCam()
     {
         if (!Developer.IsDev) return;
 
@@ -106,7 +108,7 @@ public class InputMain : InputParent {
             var ini = CamControl.CAMRTS.centerTarget.transform.position;
             ini = new Vector3(ini.x, m.IniTerr.MathCenter.y, ini.z);
 
-            firstPersonController=FirstPersonController.Create(ini);
+            firstPersonController = FirstPersonController.Create(ini);
             isFirstCamOn = true;
             CamControl.ChangeTo("First");
         }
@@ -118,7 +120,7 @@ public class InputMain : InputParent {
         }
     }
 
-    void AddressPointerOutOfScreen()
+    private void AddressPointerOutOfScreen()
     {
         if (!Screen.fullScreen)
         {
@@ -127,7 +129,7 @@ public class InputMain : InputParent {
                 return;
             }
 
-            //if mouse ppointer gets out of screen 
+            //if mouse ppointer gets out of screen
             Rect screenRect = new Rect(0, 0, Screen.width, Screen.height);
             if (!screenRect.Contains(Input.mousePosition))
             {
@@ -137,8 +139,8 @@ public class InputMain : InputParent {
     }
 
     /// <summary>
-    /// Will tell if game is fully loaded 
-    /// 
+    /// Will tell if game is fully loaded
+    ///
     /// Improve: Might need to add more stuff to include person Loading
     /// </summary>
     /// <returns></returns>
@@ -172,7 +174,7 @@ public class InputMain : InputParent {
         }
     }
 
-    void GeneralSwitch()
+    private void GeneralSwitch()
     {
         var ctrlS = Input.GetKeyUp(KeyCode.F) && (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl));
 
@@ -189,7 +191,7 @@ public class InputMain : InputParent {
         {
             Program.gameScene.controllerMain.MeshController.ForcedTerraScanning();
         }
-        else if (!Dialog.IsActive() && 
+        else if (!Dialog.IsActive() &&
             (Input.GetKeyUp(KeyCode.F) || ctrlS)
             && !Program.IsInputLocked)
         {
@@ -203,9 +205,9 @@ public class InputMain : InputParent {
         DataController.SaveGame(NowGameName(), true);
     }
 
-    string NowGameName()
+    private string NowGameName()
     {
-        var s = Program.MyScreen1.TownName + " " + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + 
+        var s = Program.MyScreen1.TownName + " " + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() +
             " .year." + Program.gameScene.GameTime1.Year + ".month." + Program.gameScene.GameTime1.Month1;
 
         s = s.Replace('/', '-');
@@ -215,7 +217,7 @@ public class InputMain : InputParent {
         return s;
     }
 
-    string NowGameName2()
+    private string NowGameName2()
     {
         return Program.MyScreen1.TownName + " " + DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + " " +
                DateTime.Now.Hour + "h" + DateTime.Now.Minute + "m" + DateTime.Now.Second + "s";
@@ -236,12 +238,11 @@ public class InputMain : InputParent {
             CamControl.ChangeTo("Main");
 
             Program.gameScene.PauseGameSpeed();
-            
+
             Program.MouseListener.HideMainGUI();
             Program.MyScreen1.LoadMainMenuWithResumeBtn();
 
             CamControl.CAMRTS.StopReportingAudioNow();
-
         }
         //is on main Menu
         else if (CamControl.IsMainMenuOn() && Program.GameFullyLoaded())
@@ -258,29 +259,28 @@ public class InputMain : InputParent {
     }
 
     /// <summary>
-    /// Says if game is unlock and can be saved now 
+    /// Says if game is unlock and can be saved now
     /// </summary>
     /// <returns></returns>
-    bool IsGameUnLock()
+    private bool IsGameUnLock()
     {
         var personLock = PersonPot.Control.Locked;
         return !personLock;
     }
 
-    void CancelCurrentAction()
+    private void CancelCurrentAction()
     {
         CancelBuilding();
         //print("game is paused now, mouse out of game windows");
     }
 
-    void CancelBuilding()
+    private void CancelBuilding()
     {
         HandleWayDestroy();
 
         if (BuildingPot.Control.CurrentSpawnBuild != null)
         {
             BuildingPot.Control.CurrentSpawnBuild.FinishPlacingMode(H.Cancel);
-
         }
         //BuilderPot.InputU.BuildNowNew(BuilderPot.DoingNow);
         BuildingPot.InputMode = Mode.None;
@@ -288,14 +288,13 @@ public class InputMain : InputParent {
     }
 
     /// <summary>
-    /// This is for the roads farm when they are canceled neeed to to all this 
+    /// This is for the roads farm when they are canceled neeed to to all this
     /// </summary>
-    void HandleWayDestroy()
+    private void HandleWayDestroy()
     {
         //in case is a dragable square
         BuildingPot.InputU.KillCursor();
         BuildingPot.InputU.IsDraggingWay = false;
-
 
         DragSquare farm = BuildingPot.Control.CurrentSpawnBuild as DragSquare;
         if (farm != null)
@@ -312,9 +311,9 @@ public class InputMain : InputParent {
     }
 
     /// <summary>
-    /// Switch between modes 
+    /// Switch between modes
     /// </summary>
-    void ModeSwitcher()
+    private void ModeSwitcher()
     {
         if (Input.GetKeyUp(KeyCode.B))
         {
@@ -332,9 +331,9 @@ public class InputMain : InputParent {
     }
 
     /// <summary>
-    /// To avoid the bugg where once a new building was spawned the Unfixed one will saty around 
+    /// To avoid the bugg where once a new building was spawned the Unfixed one will saty around
     /// </summary>
-    void DestroyCurrentSpawnBuild()
+    private void DestroyCurrentSpawnBuild()
     {
         if (BuildingPot.Control.CurrentSpawnBuild != null)
         {
@@ -349,7 +348,7 @@ public class InputMain : InputParent {
         {
             debuger = UVisHelp.CreateHelpers(m.CurrentHoverVertices, Root.blueCube);
         }
-        else if(Input.GetKey(KeyCode.LeftControl))
+        else if (Input.GetKey(KeyCode.LeftControl))
         {
             debuger = UVisHelp.CreateHelpers(m.Malla.Lots[localDebugCounter + 0].LotVertices, Root.blueCube);
             debuger.AddRange(UVisHelp.CreateHelpers(m.Malla.Lots[localDebugCounter + 10].LotVertices,
@@ -361,7 +360,7 @@ public class InputMain : InputParent {
         }
     }
 
-    void DeleteAllDrawDebug()
+    private void DeleteAllDrawDebug()
     {
         if (debuger != null)
         {
@@ -373,48 +372,46 @@ public class InputMain : InputParent {
         debuger.Clear();
     }
 
-
     #region This calls Updates on Obj that needed but dont have a real obj on Scene
 
     /// <summary>
-    /// Calls updates 
+    /// Calls updates
     /// </summary>
-    void UpdateCaller()
+    private void UpdateCaller()
     {
         inputMouse.Update();
         UInput.Update();//needs to be call
     }
 
-    #endregion
+    #endregion This calls Updates on Obj that needed but dont have a real obj on Scene
 
     /// <summary>
-    /// Will say if game has fully loaded 
-    /// 
+    /// Will say if game has fully loaded
+    ///
     /// Still might be missing few stuff
-    /// Mar17 2015 most recent 
+    /// Mar17 2015 most recent
     /// </summary>
     /// <returns></returns>
-    bool HasGameAllLoaded()
+    private bool HasGameAllLoaded()
     {
         return PersonPot.Control != null && PersonPot.Control.IsFullyLoaded()
-                        && Program.gameScene.controllerMain != null 
+                        && Program.gameScene.controllerMain != null
                         && Program.gameScene.controllerMain.TerraSpawnController != null
                         && Program.gameScene.controllerMain.TerraSpawnController.HasLoadedOrLoadedTreesAndRocks();
     }
 
-
-    void ChangeGameSpeed()
+    private void ChangeGameSpeed()
     {
         if (Program.IsInputLocked) return;
 
         //if there are foresters for example they wil cut trees while the TerrainController is still loading. so
-        //its not a good idea . all TerrainContrroller must be loaded before it can be played the game 
+        //its not a good idea . all TerrainContrroller must be loaded before it can be played the game
         if (!HasGameAllLoaded() || Program.gameScene.GameController1.IsGameOver)
         {
             return;
         }
 
-        //not developer 
+        //not developer
         if (!Developer.IsDev)
         {
             if (Input.GetKeyUp(KeyCode.PageUp))
@@ -457,7 +454,6 @@ public class InputMain : InputParent {
             Program.gameScene.GameSpeed = 0;
             OnChangeSpeed(EventArgs.Empty);
         }
-
     }
 
     public void ChangeGameSpeedBy(int val)
@@ -486,13 +482,14 @@ public class InputMain : InputParent {
 
         //needs to be call for Body.cs
         OnChangeSpeed(EventArgs.Empty);
-        ManagerReport.AddInput("Speed changed by:"+val + ". CurrSpeed: "+Program.gameScene.GameSpeed);
+        ManagerReport.AddInput("Speed changed by:" + val + ". CurrSpeed: " + Program.gameScene.GameSpeed);
         ManagerReport.AddNewSpeed(Program.gameScene.GameSpeed);
     }
 
-    int _currIndex = 1;//bz games starts at 1x speed
-    //the only posibles values of speed 
-    List<int> _values = new List<int>() { 0, 1, 2, 5, 10 };
+    private int _currIndex = 1;//bz games starts at 1x speed
+
+    //the only posibles values of speed
+    private List<int> _values = new List<int>() { 0, 1, 2, 5, 10 };
 
     private int DefineChangedVal(int val)
     {
@@ -505,9 +502,8 @@ public class InputMain : InputParent {
         }
         else if (_currIndex >= _values.Count)
         {
-            _currIndex = _values.Count-1;
+            _currIndex = _values.Count - 1;
         }
         return _values[_currIndex];
     }
-
 }

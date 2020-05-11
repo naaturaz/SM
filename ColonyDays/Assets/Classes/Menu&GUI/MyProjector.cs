@@ -17,20 +17,20 @@ public class MyProjector : General
 
     private float wasCreated;
 
-	// Use this for initialization
-	void Start ()
-	{
+    // Use this for initialization
+    private void Start()
+    {
         wasCreated = Time.time;
 
-	    engineProjector = GetComponent<Projector>();
+        engineProjector = GetComponent<Projector>();
 
-	    //initialColor = engineProjector.material.color;
+        //initialColor = engineProjector.material.color;
         transform.Rotate(new Vector3(_initialXRot, 0, 0));
 
         Initialize();
-	}
+    }
 
-    void Initialize()
+    private void Initialize()
     {
         if (BuildingPot.Control.CurrentSpawnBuild != null)
         {
@@ -46,31 +46,31 @@ public class MyProjector : General
         wasInit = true;
     }
 
-	// Update is called once per frame
-	void Update () 
+    // Update is called once per frame
+    private void Update()
     {
         //to address a Null Ref Excp
-	    if (!wasInit)
-	    {
-	        return;
-	    }
+        if (!wasInit)
+        {
+            return;
+        }
 
-        if (BuildingPot.Control.CurrentSpawnBuild != null) 
+        if (BuildingPot.Control.CurrentSpawnBuild != null)
         {
             MoveToThere(BuildingPot.Control.CurrentSpawnBuild.ClosestSubMeshVert);
         }
-	    else if (BuildingPot.Control.Registro.SelectBuilding != null)
-	    {
+        else if (BuildingPot.Control.Registro.SelectBuilding != null)
+        {
             MoveToThere(BuildingPot.Control.Registro.SelectBuilding.transform.position);
-	    }
+        }
 
-	    if (BuildingPot.Control.CurrentSpawnBuild == null && BuildingPot.Control.Registro.SelectBuilding == null)
-	    {
-	        SwitchColorLight(true);
+        if (BuildingPot.Control.CurrentSpawnBuild == null && BuildingPot.Control.Registro.SelectBuilding == null)
+        {
+            SwitchColorLight(true);
             Destroy();
-	    }
+        }
 
-        if (BuildingPot.Control.CurrentSpawnBuild != null 
+        if (BuildingPot.Control.CurrentSpawnBuild != null
             || BuildingPot.Control.Registro.SelectBuilding != null)
         {
             var build = BuildingPot.Control.CurrentSpawnBuild;
@@ -89,14 +89,11 @@ public class MyProjector : General
                 {
                     MoveToThereBuilding(build.transform.position);
                 }
-
             }
-	    }
-
-	    
+        }
     }
 
-    void MoveToThere(Vector3 to)
+    private void MoveToThere(Vector3 to)
     {
         if (transform.position != to)
         {
@@ -105,7 +102,7 @@ public class MyProjector : General
         }
     }
 
-    void MoveToThereBuilding(Vector3 to)
+    private void MoveToThereBuilding(Vector3 to)
     {
         if (transform.position != to)
         {
@@ -120,7 +117,7 @@ public class MyProjector : General
             Start();
         }
 
-        if (engineProjector==null)
+        if (engineProjector == null)
         {
             return;
         }

@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Net.Mail;
 using System.Text.RegularExpressions;
+
 //using Steamworks;
 using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// The dialog GameObject 
+/// The dialog GameObject
 /// </summary>
-class DialogGO : GUIElement
+internal class DialogGO : GUIElement
 {
-
-    private H _type;//type of Dialog 
+    private H _type;//type of Dialog
     private Text _textHere;
     private string _str1;
 
@@ -23,9 +22,9 @@ class DialogGO : GUIElement
     private InputField _inputTextEmail1;
     private InputField _inputTextEmail2;
 
-    GameObject _rateBtnGO;
+    private GameObject _rateBtnGO;
 
-    GameObject _completeQuest;
+    private GameObject _completeQuest;
 
     public H Type1
     {
@@ -69,16 +68,16 @@ class DialogGO : GUIElement
         Program.UnLockInputSt();
     }
 
-    void Start()
+    private void Start()
     {
-        if(Type1 == H.OptionalFeedback || Type1 == H.BugReport) 
+        if (Type1 == H.OptionalFeedback || Type1 == H.BugReport)
             Program.LockInputSt();
 
         _completeQuest = GetChildCalled("CompleteQuest");
-        if(_completeQuest != null)
+        if (_completeQuest != null)
             _completeQuest.SetActive(false);
 
-        if(Type1 == H.CompleteQuest)
+        if (Type1 == H.CompleteQuest)
             _completeQuest.SetActive(true);
 
         var t = GetChildCalled("TextHere");
@@ -144,14 +143,12 @@ class DialogGO : GUIElement
         _textHere.text = String.Format(Languages.ReturnString(Type1 + ""), Str1);
     }
 
-
     private void AddressBuyRegionType()
     {
         if (_type != H.BuyRegion)
         {
             return;
         }
-
 
         //if has enough to buy
         var hasEnough = MeshController.BuyRegionManager1.HasEnoughResourcesToBuy();
@@ -169,8 +166,6 @@ class DialogGO : GUIElement
         }
         _textHere.text += " Cost: " + MeshController.BuyRegionManager1.Cost();
     }
-
-
 
     internal void ValidateInvitation()
     {
@@ -275,5 +270,4 @@ class DialogGO : GUIElement
         Dialog.CreateFile("MandatoryFeedBack", add);
         Program.MouseClickListenerSt("Dialog.OKBtn");
     }
-
 }

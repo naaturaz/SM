@@ -1,6 +1,7 @@
 ﻿using System;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
+
 //using UnityEditor;
 
 /*In this class we create and update a obj that usually is a block*/
@@ -10,7 +11,7 @@ public class CreatePlane : Building
     private Material _material;
     private float _raisedFromFloor;
 
-    private Vector3 _scale = new Vector3();//implemented for when the planes are loaded 
+    private Vector3 _scale = new Vector3();//implemented for when the planes are loaded
     private bool _isAnInVisiblePlane;
 
     private GameObject _planeGeometry;
@@ -18,7 +19,6 @@ public class CreatePlane : Building
     private Tile _tile = Tile.None;//the tile is like NE corner
     private string _spawnerID;//the building spwaned this.  used for tiles
 
-    
     private bool _isSmartTile;
 
     //THis is the kind the will be looking to see if a new Street or road
@@ -30,7 +30,7 @@ public class CreatePlane : Building
     }
 
     /// <summary>
-    /// This is the gameObj that is rendered 
+    /// This is the gameObj that is rendered
     /// </summary>
     public new GameObject PlaneGeometry
     {
@@ -84,7 +84,7 @@ public class CreatePlane : Building
             obj.Material = (Material)Resources.Load(materialRoot);
         }
         else obj.Material = mat;
-        
+
         obj.RaisedFromFloor = raiseFromFloor;
         obj.IsAnInVisiblePlane = isAnInvisiblePlane;
 
@@ -93,7 +93,7 @@ public class CreatePlane : Building
     }
 
     /// <summary>
-    /// Will find which tile is like NE corner 
+    /// Will find which tile is like NE corner
     /// </summary>
     static public CreatePlane CreatePlanSmartTile(Building spawner, string root, string materialRoot, Vector3 origen = new Vector3(), string name = "", Transform container = null,
      float raiseFromFloor = 0.09f, Material mat = null, Vector3 scale = new Vector3(), bool isAnInvisiblePlane = false,
@@ -129,15 +129,15 @@ public class CreatePlane : Building
     /// <summary>
     /// Initialize Material Color. Define initial color as Geometry.renderer.material.color
     /// </summary>
-    void InitializeMatColors()
+    private void InitializeMatColors()
     {
         //InitialColor = Geometry.GetComponent<Renderer>().material.color;
     }
 
-    void Awake()
+    private void Awake()
     {
         GameObject loc = Resources.Load<GameObject>(ReturnGeometryRoot());
-        _planeGeometry = (GameObject) Instantiate(loc);
+        _planeGeometry = (GameObject)Instantiate(loc);
         _planeGeometry.name = H.Geometry.ToString();
 
         _planeGeometry.transform.SetParent(gameObject.transform);
@@ -145,14 +145,14 @@ public class CreatePlane : Building
         _planeGeometry.GetComponent<Renderer>().castShadows = false;
     }
 
-    string ReturnGeometryRoot()
+    private string ReturnGeometryRoot()
     {
         return Root.createPlaneUnit;
     }
 
     protected void Start()
     {
-        if (MyId==null)
+        if (MyId == null)
             return;
 
         base.Start();
@@ -163,7 +163,7 @@ public class CreatePlane : Building
         {
             _planeGeometry.transform.SetParent(null);
             _planeGeometry.transform.position = transform.position;
-            _planeGeometry.transform.localScale = _scale; //it will work it if is initiated with a scale 
+            _planeGeometry.transform.localScale = _scale; //it will work it if is initiated with a scale
 
             if (!_isAnInVisiblePlane)
             {
@@ -177,9 +177,11 @@ public class CreatePlane : Building
     }
 
     #region SmartTile
-    bool wasScaled;
-    GameObject _geometrySmart;
-    List<Tile> _onPrefab = new List<Tile>(){
+
+    private bool wasScaled;
+    private GameObject _geometrySmart;
+
+    private List<Tile> _onPrefab = new List<Tile>(){
        Tile. NW, Tile.N, Tile.NE, Tile.E, Tile.SE, Tile.S, Tile.SW, Tile.W, Tile.In
     };
 
@@ -189,7 +191,7 @@ public class CreatePlane : Building
         if (!_isSmartTile)
             return;
 
-        if (_geometrySmart!=null)
+        if (_geometrySmart != null)
         {
             Destroy(_geometrySmart);
         }
@@ -207,27 +209,27 @@ public class CreatePlane : Building
         PlaneGeometry.SetActive(false);
         ScaleSmart();
 
-        //seting an area cost 
+        //seting an area cost
         //var child = _geometrySmart.transform.GetChild(0);
         //child.gameObject.AddComponent<NavMeshSourceTag>();
         //GameObjectUtility.SetNavMeshArea(child.gameObject, 3);
     }
 
-    void ScaleSmart()
+    private void ScaleSmart()
     {
         Vector3 scale = _planeGeometry.transform.localScale;
         scale.y = _geometrySmart.transform.localScale.y;
         _geometrySmart.transform.localScale = scale;
     }
 
-    string ReturnSmartTileRoot()
+    private string ReturnSmartTileRoot()
     {
         if (_onPrefab.Contains(_tile))
         {
-            //if is in will be randomw selected 
+            //if is in will be randomw selected
             if (_tile == Tile.In)
             {
-                return "Prefab/Mats/SmartTile/Road3D/" + _tile  + "Pre" + UMath.GiveRandom(0, 7);
+                return "Prefab/Mats/SmartTile/Road3D/" + _tile + "Pre" + UMath.GiveRandom(0, 7);
             }
             //means is N , S, E, or W
             if (_tile.ToString().ToCharArray().Length == 1)
@@ -236,24 +238,21 @@ public class CreatePlane : Building
             }
 
             //corners
-            return "Prefab/Mats/SmartTile/Road3D/"+_tile+"Pre";
+            return "Prefab/Mats/SmartTile/Road3D/" + _tile + "Pre";
         }
 
-        //path that are only one square wide 
-        return "Prefab/Mats/SmartTile/Road3D/" +"InPre" + UMath.GiveRandom(0, 7);//7
+        //path that are only one square wide
+        return "Prefab/Mats/SmartTile/Road3D/" + "InPre" + UMath.GiveRandom(0, 7);//7
     }
 
-
-    #endregion
-
-
+    #endregion SmartTile
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         //then wait so all gets loaded into Regist
         if (!IsSmartTile ||
-            (IsLoadingFromFile && 
+            (IsLoadingFromFile &&
                     BuildingPot.Control.Registro.AllRegFile.Count != BuildingPot.Control.Registro.AllBuilding.Count))
         {
             return;
@@ -263,20 +262,21 @@ public class CreatePlane : Building
         CheckIfNewRoadIsBuilt();
     }
 
-    #region New Road Checking which Tile is 
+    #region New Road Checking which Tile is
 
     private bool beAlert;
+
     private void CheckIfNewRoadIsBuilt()
     {
-        if (BuildingPot.Control.CurrentSpawnBuild != null && BuildingPot.Control.CurrentSpawnBuild.HType==H.Road)
+        if (BuildingPot.Control.CurrentSpawnBuild != null && BuildingPot.Control.CurrentSpawnBuild.HType == H.Road)
         {
             beAlert = true;
         }
 
         if (beAlert && BuildingPot.Control.CurrentSpawnBuild == null)
         {
-            beAlert=false;
-            //so updates material    
+            beAlert = false;
+            //so updates material
             DetermineTileImAndSmartStart();
             //Program.gameScene.BatchAdd(this);
         }
@@ -287,11 +287,11 @@ public class CreatePlane : Building
         var build = Brain.GetBuildingFromKey(SpawnerId);
 
         //lets wait all gets loaded into Registro
-        if ( build == null)
+        if (build == null)
         {
             return;
         }
-        
+
         if (_tile != Tile.None || !IsSmartTile || !build.PositionFixed)
         {
             return;
@@ -305,13 +305,14 @@ public class CreatePlane : Building
     }
 
     private General debugTileType;
-    void DetermineTileImAndSmartStart()
+
+    private void DetermineTileImAndSmartStart()
     {
         DetermineWhichTileIAm();
         //AssignSharedMaterial(ReturnTileMaterialRoot());
         StartSmart();
 
-        if (debugTileType!=null)
+        if (debugTileType != null)
         {
             debugTileType.Destroy();
         }
@@ -325,12 +326,12 @@ public class CreatePlane : Building
         Tile W = FreeOn(Tile.W);
         Tile E = FreeOn(Tile.E);
 
-        List<Tile> survey = new List<Tile>(){N, S, W, E};
+        List<Tile> survey = new List<Tile>() { N, S, W, E };
         DefineCurrentTile(survey);
     }
 
     /// <summary>
-    /// Will tell if has not tile on that direction 
+    /// Will tell if has not tile on that direction
     /// </summary>
     /// <param name="tile"></param>
     /// <returns></returns>
@@ -347,16 +348,16 @@ public class CreatePlane : Building
     }
 
     /// <summary>
-    /// Will create the poly small. on the direction and will find if is coliiding with another 
+    /// Will create the poly small. on the direction and will find if is coliiding with another
     /// </summary>
     /// <param name="dir"></param>
     /// <returns></returns>
-    List<Vector3> ReturnPolyToEval(Tile dir)
+    private List<Vector3> ReturnPolyToEval(Tile dir)
     {
         var x = m.SubDivide.XSubStep;
         var z = m.SubDivide.ZSubStep;
         var pos = new Vector3();
-        
+
         if (dir == Tile.N)
         {
             pos = new Vector3(transform.position.x, transform.position.y, transform.position.z + z);
@@ -392,7 +393,7 @@ public class CreatePlane : Building
             }
         }
 
-        if (concat=="")
+        if (concat == "")
         {
             _tile = Tile.In;
             return;
@@ -406,7 +407,7 @@ public class CreatePlane : Building
     /// </summary>
     /// <param name="survey"></param>
     /// <returns></returns>
-    List<Tile> CleanSurvey(List<Tile> survey)
+    private List<Tile> CleanSurvey(List<Tile> survey)
     {
         for (int i = 0; i < survey.Count; i++)
         {
@@ -419,16 +420,15 @@ public class CreatePlane : Building
         return survey;
     }
 
-
     /// <summary>
-    /// Thats the way to use it to new and diferent decoration SmartTiles 
-    /// 
-    /// Below will pull the material. The material for a new type needs to be creted 
+    /// Thats the way to use it to new and diferent decoration SmartTiles
+    ///
+    /// Below will pull the material. The material for a new type needs to be creted
     /// in the right location for ex: for road is Prefab/Mats/SmartTile/Road/ + _tile
     /// for dirt could be  Prefab/Mats/SmartTile/Dirt/ + _tile
     /// </summary>
     /// <returns></returns>
-    string ReturnTileMaterialRoot()
+    private string ReturnTileMaterialRoot()
     {
         if (_tile == Tile.None)
         {
@@ -446,34 +446,31 @@ public class CreatePlane : Building
             }
             return "Prefab/Mats/SmartTile/" + HType + "/" + _tile + UMath.GiveRandom(1, 5);
         }
-        return "Prefab/Mats/SmartTile/" + HType +"/"+ _tile;
+        return "Prefab/Mats/SmartTile/" + HType + "/" + _tile;
     }
-
 
     public void AssignSharedMaterial(string materialRoot)
     {
-
         //Geometry.GetComponent<Renderer>().sharedMaterial = (Material)Resources.Load(materialRoot);
     }
 
-    #endregion
+    #endregion New Road Checking which Tile is
 
     //if is on the BigBox Class will correct minumulliy the scale for Big Box Prev Purposes
     protected bool corretMinimuScaleOnBigBox;
 
     /// <summary>
     /// routine to update position.. will get geometry out of current gameobject parenting and will
-    /// place current game obj in middle of newVert. Will make geometry vertices same as 
-    /// newVert.. then will make geomtry child of gameObject again 
+    /// place current game obj in middle of newVert. Will make geometry vertices same as
+    /// newVert.. then will make geomtry child of gameObject again
     /// </summary>
     public void UpdatePos(List<Vector3> newVert, float blockthickNess = 0, bool makeThisInvisible = false,
         bool corretMinimuScaleOnBigBoxP = false)
     {
-
         //if is on the BigBox Class will correct minumulliy the scale for Big Box Prev Purposes
         corretMinimuScaleOnBigBox = corretMinimuScaleOnBigBoxP;
 
-        if (blockthickNess == 0){blockthickNess = Program.gameScene.SubDivideBlockYVal;}
+        if (blockthickNess == 0) { blockthickNess = Program.gameScene.SubDivideBlockYVal; }
 
         _planeGeometry.transform.SetParent(null);
         //updattinf pos of gameObj : To the middle btw NW and SE points
@@ -496,8 +493,8 @@ public class CreatePlane : Building
         }
     }
 
-
     #region Rectifys this(class) when are used on a Road or Trail so it looks seamleas when built.
+
     private float rectifyOnX = 0.01374f;
     private float rectifyOnZ = 0.0125f;
 
@@ -513,12 +510,10 @@ public class CreatePlane : Building
         set { rectifyOnZ = value; }
     }
 
-
-
     /// <summary>
-    /// this is created so all of them are perfect dont overlap 
+    /// this is created so all of them are perfect dont overlap
     /// </summary>
-    List<Vector3> RectifyScaleRoutine(List<Vector3> polyP)
+    private List<Vector3> RectifyScaleRoutine(List<Vector3> polyP)
     {
         //to address when build shack that CurrentSpawnBuild is null
         if (BuildingPot.Control.CurrentSpawnBuild == null)
@@ -527,10 +522,11 @@ public class CreatePlane : Building
         }
         return RectifyPolyScale(BuildingPot.Control.CurrentSpawnBuild.HType, polyP);
     }
+
     /// <summary>
     /// Makes poly on way seamless on terrain. This has hard coded values
     /// </summary>
-    List<Vector3> RectifyPolyScale(H hTypeP, List<Vector3> polyP)
+    private List<Vector3> RectifyPolyScale(H hTypeP, List<Vector3> polyP)
     {
         float onX = RectifyOnX;
         float onZ = RectifyOnZ;
@@ -547,14 +543,15 @@ public class CreatePlane : Building
         }
         return UPoly.ScalePoly(polyP, onX, onZ);
     }
-    #endregion
+
+    #endregion Rectifys this(class) when are used on a Road or Trail so it looks seamleas when built.
 
     /// <summary>
     /// Updating the scale of the propertie scale
     /// </summary>
-    void UpdateGeometryScale(List<Vector3> newVert, float blockthickNess = 0.1f)
+    private void UpdateGeometryScale(List<Vector3> newVert, float blockthickNess = 0.1f)
     {
-        float xDim = newVert[1].x - newVert[0].x ;
+        float xDim = newVert[1].x - newVert[0].x;
         float zDim = newVert[0].z - newVert[3].z;
 
         //Scaling
@@ -570,11 +567,11 @@ public class CreatePlane : Building
     /// <summary>
     /// update the tileScale in trail so can be saved on disk
     /// </summary>
-    void SaveScale(Vector3 scale)
+    private void SaveScale(Vector3 scale)
     {
-        if (BuildingPot.Control.CurrentSpawnBuild == null) { return;}
+        if (BuildingPot.Control.CurrentSpawnBuild == null) { return; }
         Trail t = BuildingPot.Control.CurrentSpawnBuild as Trail;
-        if (t == null) { return;}
+        if (t == null) { return; }
         if (t.TileScale != scale) { t.TileScale = scale; }
         BuildingPot.Control.CurrentSpawnBuild = t;
     }
@@ -582,21 +579,21 @@ public class CreatePlane : Building
     #region Used When was creating a plane mesh procedural
 
     //this flips the plane facing... always has to be used so the planes can be seen from user camera
-    Vector3[] flipPlaneVert(Vector3[] vert)
+    private Vector3[] flipPlaneVert(Vector3[] vert)
     {
         return new Vector3[] { vert[3], vert[2], vert[1], vert[0] };
     }
 
     //this is converting from sequence used on Terrain: topLeft, topRoght, botRight, leftRight ,
     //to local sequence: botLeft, botRught, topRight, topLeft
-    Vector3[] translateFromTerrainSeqToLocal(List<Vector3> newVert)
+    private Vector3[] translateFromTerrainSeqToLocal(List<Vector3> newVert)
     {
         return new Vector3[] { newVert[3], newVert[2], newVert[1], newVert[0] };
     }
 
     //will raised the vector3 on Y mainly the reason is to be able to see it to the user out
     //of the terrain
-    Vector3[] raisedOnY(Vector3[] pass, float raiseAmt)
+    private Vector3[] raisedOnY(Vector3[] pass, float raiseAmt)
     {
         for (int i = 0; i < pass.Length; i++)
         {
@@ -676,6 +673,6 @@ public class CreatePlane : Building
         theMesh.tangents = tangents;
         return theMesh;
     }
-    #endregion
 
+    #endregion Used When was creating a plane mesh procedural
 }

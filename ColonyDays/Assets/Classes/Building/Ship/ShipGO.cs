@@ -2,12 +2,12 @@
 
 /// <summary>
 /// This class spawns visible Ships with Geometry
-/// 
+///
 /// Ship Game Object
 /// </summary>
-public class ShipGO : General {
-
-    Ship _ship;
+public class ShipGO : General
+{
+    private Ship _ship;
     private Building _building;
 
     public Building Building1
@@ -32,22 +32,22 @@ public class ShipGO : General {
         obj.Building1 = building;
         obj.Ship1 = ship;
 
-        obj.transform.SetParent( building.transform);
+        obj.transform.SetParent(building.transform);
         obj.MyId = myID;
 
         return obj;
     }
 
-	// Use this for initialization
-	void Start ()
-	{
+    // Use this for initialization
+    private void Start()
+    {
         //new objetc
         if (Ship1.Position == new Vector3())
-	    {
+        {
             MyId = "Ship |" + HType + " | " + Id;
             Ship1.MoveThruPoints1 = new MoveThruPoints(Building1, gameObject, MyId);
             Ship1.MoveThruPoints1.WalkRoutine(Ship1.MoveThruPoints1.CurrTheRoute, HPers.Work);
-	    }
+        }
         //loading
         else
         {
@@ -56,23 +56,22 @@ public class ShipGO : General {
         }
 
         transform.name = MyId;
-	}
-	
-    
-	// Update is called once per frame
-	void Update ()
+    }
+
+    // Update is called once per frame
+    private void Update()
     {
         _ship.Update();
 
         if (Ship1.MoveThruPoints1.Location == HPers.Work && _ship.LeaveDate == null)
-	    {
+        {
             _ship.CheckDockOrders();
 
-	        _ship.SetLeaveDate();
-	    }
+            _ship.SetLeaveDate();
+        }
 
-	    CheckIfIsLeaveDate();
-	    CheckIfHome();
+        CheckIfIsLeaveDate();
+        CheckIfHome();
     }
 
     private void CheckIfHome()
@@ -82,7 +81,7 @@ public class ShipGO : General {
             return;
         }
 
-        //thats is its back to its original point 
+        //thats is its back to its original point
         if (Ship1.MoveThruPoints1.Location == HPers.Home)
         {
             BuildingPot.Control.ShipManager1.RemoveMeFromShipsOnIsland(Ship1);
@@ -96,7 +95,7 @@ public class ShipGO : General {
         {
             return;
         }
-        if (GameTime. IsPastOrNow(_ship.LeaveDate) && Ship1.MoveThruPoints1.Location == HPers.Work && !Ship1.MoveThruPoints1.MovingNow)
+        if (GameTime.IsPastOrNow(_ship.LeaveDate) && Ship1.MoveThruPoints1.Location == HPers.Work && !Ship1.MoveThruPoints1.MovingNow)
         {
             _ship.CheckDockOrders();
 
@@ -104,6 +103,4 @@ public class ShipGO : General {
             _ship.Leaving(MyId);
         }
     }
-
-   
 }

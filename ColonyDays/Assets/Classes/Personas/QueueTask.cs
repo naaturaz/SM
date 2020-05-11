@@ -1,19 +1,16 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class QueueTask : IComparable {
-    
-    List<QueueElement> _elements = new List<QueueElement>();
-
+public class QueueTask : IComparable
+{
+    private List<QueueElement> _elements = new List<QueueElement>();
 
     public List<QueueElement> Elements
     {
         get { return _elements; }
         set { _elements = value; }
     }
-
-  
 
     internal void AddToQueue(List<Vector3> objP, string key, string typeP)
     {
@@ -27,19 +24,19 @@ public class QueueTask : IComparable {
 
         _elements.Add(new QueueElement(objP, key, typeP));
     }
-    
+
     public bool Contains(Rect other, int index)
     {
         return IntersectMyRouteArea(other, index);
     }
 
-    bool IntersectMyRouteArea(Rect other, int index)
+    private bool IntersectMyRouteArea(Rect other, int index)
     {
         List<Vector3> e = Elements[index].Poly;
 
         //means doesnt have Anchors set.. for ex Ways like road
-        if (e.Count ==0){return false;}
-        
+        if (e.Count == 0) { return false; }
+
         Rect a = U2D.ReturnRectYInverted(U2D.FromPolyToRect(e));
 
         if (a.Overlaps(other))
@@ -51,14 +48,12 @@ public class QueueTask : IComparable {
     {
         throw new NotImplementedException();
     }
-
-  
 }
 
 public class QueueElement
 {
     public List<Vector3> Poly = new List<Vector3>();
-    public DateTime DateTime1;//created to compare in Queues when A route is needed to be redone or not 
+    public DateTime DateTime1;//created to compare in Queues when A route is needed to be redone or not
 
     //will tell if this queue element was used already for destroy or greelight a building
     private bool _wasUsedToGreenLightOrDestroy;
@@ -69,7 +64,7 @@ public class QueueElement
 
     //people that has checked this Element
     //when all had u can proceed to be used to Greenlight or destryo
-    List<string> _personChecked = new List<string>();
+    private List<string> _personChecked = new List<string>();
 
     private int _allCount;
 
@@ -84,11 +79,13 @@ public class QueueElement
         _type = type;
         _key = key;
         Poly = eList;
-        DateTime1=DateTime.Now;
+        DateTime1 = DateTime.Now;
         AllCount = PersonPot.Control.All.Count;
     }
 
-    public QueueElement() { }
+    public QueueElement()
+    {
+    }
 
     public string Key
     {
@@ -112,7 +109,7 @@ public class QueueElement
     }
 
     /// <summary>
-    /// The count of all people at the time this was created 
+    /// The count of all people at the time this was created
     /// used to defined when all people checked this element
     /// </summary>
     public int AllCount
@@ -122,7 +119,7 @@ public class QueueElement
     }
 
     /// <summary>
-    /// Will return true if person took Element out of Queue 
+    /// Will return true if person took Element out of Queue
     /// </summary>
     /// <param name="personID"></param>
     /// <returns></returns>
@@ -145,7 +142,7 @@ public class QueueElement
     }
 
     /// <summary>
-    /// Decreases the AllCOunt in the element 
+    /// Decreases the AllCOunt in the element
     /// </summary>
     public void PersonDie()
     {
@@ -158,7 +155,7 @@ public class QueueElement
     /// <returns></returns>
     public bool IsCheckedByAll()
     {
-        //> is bz some people had die in the process so will be bigger that current 
+        //> is bz some people had die in the process so will be bigger that current
         return _personChecked.Count >= AllCount;
     }
 }

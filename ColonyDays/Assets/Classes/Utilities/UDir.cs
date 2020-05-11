@@ -1,9 +1,8 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-public class UDir  {
-
+public class UDir
+{
     /// <summary>
     /// Returns rectangle of dragged mouse action based on first and second Vector2
     /// </summary>
@@ -42,8 +41,8 @@ public class UDir  {
     }
 
     /// <summary>
-    /// Return the direction from first to second. 
-    /// This is suitable for onscreen points 
+    /// Return the direction from first to second.
+    /// This is suitable for onscreen points
     /// First dragged point and second point,.
     /// </summary>
     /// <param name="first"></param>
@@ -77,7 +76,7 @@ public class UDir  {
     }
 
     /// <summary>
-    /// Return the direction from first to second. 
+    /// Return the direction from first to second.
     /// This is suitable for Vector3 3 positions in world. With out cordinate system
     /// </summary>
     public static Dir ReturnDragDir(Vector3 first, Vector3 second)
@@ -140,7 +139,7 @@ public class UDir  {
         {
             return Dir.N;
         }
-    
+
         return Dir.None;
     }
 
@@ -166,18 +165,18 @@ public class UDir  {
             return Dir.NW;
         }
         // SE case
-    
+
         //print("mapDimRect instante obj");
         return Dir.None;
     }
 
     /// <summary>
-    /// Tells u in which side a hit point landed on ppoly 
+    /// Tells u in which side a hit point landed on ppoly
     /// </summary>
     public static Dir TellMeWhenHitLanded(List<Vector3> poly, Vector3 hitVector3)
     {
         float ep = 0.01f;
-        if(UMath.nearlyEqual(hitVector3.x,poly[0].x, ep ) && UMath.nearlyEqual(hitVector3.x,poly[3].x, ep ))
+        if (UMath.nearlyEqual(hitVector3.x, poly[0].x, ep) && UMath.nearlyEqual(hitVector3.x, poly[3].x, ep))
         {
             return Dir.W;
         }
@@ -195,7 +194,6 @@ public class UDir  {
         }
         return Dir.None;
     }
-
 
     static public Dir FromIntToDir(int intD)
     {
@@ -219,10 +217,10 @@ public class UDir  {
     }
 
     /// <summary>
-    /// 
+    ///
     ///N, E, S, W..... : 0,1,2,3
-    /// 
-    /// will return the sign of a multiplication towards that direction 
+    ///
+    /// will return the sign of a multiplication towards that direction
     /// for ex: North will return: new Vector3(0,0,1)
     ///
     /// </summary>
@@ -232,7 +230,7 @@ public class UDir  {
     {
         if (intD == 0)
         {
-            return new Vector3(0,0,1);
+            return new Vector3(0, 0, 1);
         }
         else if (intD == 1)
         {
@@ -250,32 +248,30 @@ public class UDir  {
     }
 
     /// <summary>
-    /// Created to convet int to cardinal. Only useful to int the are organize correctly from 0-3, like a 
+    /// Created to convet int to cardinal. Only useful to int the are organize correctly from 0-3, like a
     /// building anchors
-    /// 
+    ///
     /// 0 = NW, 1 = NE, 2 = SE, 3 = SW
     /// </summary>
     /// <param name="i"></param>
     static public Dir BuildingFromIntToCardinal(int i)
     {
-        if (i==0)
+        if (i == 0)
         {
             return Dir.NW;
-        }     
-        if (i==1)
+        }
+        if (i == 1)
         {
             return Dir.NE;
-        }    
-        if (i==2)
+        }
+        if (i == 2)
         {
             return Dir.SE;
-        }  
-        if (i==3)
+        }
+        if (i == 3)
         {
             return Dir.SW;
         }
         return Dir.None;
     }
-
-
 }

@@ -2,15 +2,14 @@
 
 public class Beef : Animal
 {
-
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    private void Start()
     {
-	    base.Start();
+        base.Start();
 
-	    MoveToRandomSpot();
-	    RotateRandomly();
-	    SetRandomIdleStart();
+        MoveToRandomSpot();
+        RotateRandomly();
+        SetRandomIdleStart();
     }
 
     /// <summary>
@@ -29,14 +28,12 @@ public class Beef : Animal
 
         return obj;
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    private void Update()
     {
-	    base.Update();
+        base.Update();
 
-	    CheckIfYield();
+        CheckIfYield();
     }
-
-
 }

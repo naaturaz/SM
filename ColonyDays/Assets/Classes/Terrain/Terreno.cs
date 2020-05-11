@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Terreno : General
 {
-    NavigationArea _navArea;
+    private NavigationArea _navArea;
 
     private string _root;
     private bool _default;//the one loaded at first time
@@ -22,7 +22,7 @@ public class Terreno : General
 
     static public Terreno CreateTerrain(string root, bool defaultP = false)//, Transform spawn, string name = ""//)
     {
-        Debug.Log("Creating terrain:"+root);
+        Debug.Log("Creating terrain:" + root);
         Terreno obj = (Terreno)Resources.Load(root, typeof(Terreno));
         obj = (Terreno)Instantiate(obj, new Vector3(0, 0, 0), Quaternion.identity);
         obj.name = obj.name.Remove(obj.name.Length - 7);//removeing the '(clone)'
@@ -36,11 +36,11 @@ public class Terreno : General
         base.Start();
         _navArea = new NavigationArea(gameObject);
 
-        //seting an area cost 
+        //seting an area cost
         //GameObjectUtility.SetNavMeshArea(gameObject, 0);
     }
 
-    void Update()
+    private void Update()
     {
         _navArea.AddNavArea();
     }

@@ -1,34 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
-/// Buildings, Persons, and StillElements will be able to show their name 
-/// 
+/// Buildings, Persons, and StillElements will be able to show their name
+///
 /// Also Signs will show information
-/// 
+///
 /// The object calling this must have a box collider or a collider for this to work
 /// </summary>
 public class Hoverable : General
 {
     private HoverWindow hoverWindow;//the window tht will pop up msg
-    HoverWindowMed hoverWindowMed;
+    private HoverWindowMed hoverWindowMed;
 
-    void Start()
+    private void Start()
     {
         if (hoverWindowMed == null)
         {
             hoverWindow = FindObjectOfType<HoverWindow>();
             hoverWindowMed = FindObjectOfType<HoverWindowMed>();
-
         }
     }
 
     protected void OnMouseEnter()
     {
-        //so dont show on top of other while placing a building 
+        //so dont show on top of other while placing a building
         if (BuildingPot.InputMode == Mode.Placing)
         {
             return;
@@ -49,9 +44,9 @@ public class Hoverable : General
     /// <
     /// summary>
     /// For unity eventTrigger
-    /// 
+    ///
     /// </summary>
-    void PublicSpawnHelp()
+    private void PublicSpawnHelp()
     {
         if (hoverWindowMed == null)
         {
@@ -62,7 +57,7 @@ public class Hoverable : General
         if (hoverWindowMed == null)
             return;
 
-        if(Category == Ca.Structure || Category == Ca.Shore || Category == Ca.Way ||
+        if (Category == Ca.Structure || Category == Ca.Shore || Category == Ca.Way ||
             //Category == Ca.Spawn ||
             HType == H.BuyRegion)
         {
@@ -73,7 +68,7 @@ public class Hoverable : General
             hoverWindow.ShowExplicitThis(Name);
         }
         //Construction Sign
-        //bz if more than 6 he know how to build already 
+        //bz if more than 6 he know how to build already
         else if (transform.name == "Construction" && BuildingPot.Control.Registro.AllBuilding.Count < 10)
         {
             hoverWindowMed.Show(MousePositionTowardsScreenCenter(), transform.name);
@@ -84,14 +79,14 @@ public class Hoverable : General
             hoverWindowMed.Show(MousePositionTowardsScreenCenter(), transform.name);
         }
     }
-    
+
     public static Vector2 MousePositionTowardsScreenCenter()
     {
         var dir = ReturnScreenQuadrantMousePosition();
 
         int far = 50;
         Vector2 add = new Vector2();
-        if(dir == Dir.NW)
+        if (dir == Dir.NW)
         {
             add = new Vector2(far, -far);
         }
@@ -113,7 +108,7 @@ public class Hoverable : General
     }
 
     //x:0 and y:0 are in the bottom left of the screen
-    static Dir ReturnScreenQuadrantMousePosition()
+    private static Dir ReturnScreenQuadrantMousePosition()
     {
         var w = Screen.width / 2;
         var h = Screen.height / 2;
@@ -131,7 +126,7 @@ public class Hoverable : General
     /// <summary>
     /// For unity event
     /// </summary>
-    void HideHelp()
+    private void HideHelp()
     {
         if (hoverWindowMed == null)
         {
@@ -140,7 +135,6 @@ public class Hoverable : General
         hoverWindow.Hide();
         hoverWindowMed.Hide();
     }
-
 
     private void OnDestroy()
     {
@@ -152,4 +146,3 @@ public class Hoverable : General
         //hoverWindowMed.Hide();
     }
 }
-

@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class KeepHeight : MonoBehaviour {
-
+public class KeepHeight : MonoBehaviour
+{
     public bool isKeepingCamHeight = true;
     public bool isToKeepDistanceFromCamAndRotateLikeChild;
 
@@ -15,33 +14,33 @@ public class KeepHeight : MonoBehaviour {
     public bool isKeepingCamYRotY;
     public bool isKeepingCamYRotZ;
 
-    CamControl mainCam;
-    Transform iniTransf;
-    Vector3 difference;
+    private CamControl mainCam;
+    private Transform iniTransf;
+    private Vector3 difference;
 
-	// Use this for initialization
-	void Start () 
+    // Use this for initialization
+    private void Start()
     {
         iniTransf = transform;
         mainCam = USearch.FindCurrentCamera();
 
-        if(isToKeepDistanceFromCamAndRotateLikeChild)
+        if (isToKeepDistanceFromCamAndRotateLikeChild)
         {
             difference = mainCam.transform.position - transform.position;
         }
-	}
-	
-	// Update is called once per frame
-	void Update () 
+    }
+
+    // Update is called once per frame
+    private void Update()
     {
-        //this line is the one that makes this obj go togther with the camera 
-        //every where they go... keeping a distance and keeping the 
-        //same rotation as camera 
+        //this line is the one that makes this obj go togther with the camera
+        //every where they go... keeping a distance and keeping the
+        //same rotation as camera
         difference = mainCam.transform.position - transform.position;
         Keeps();
-	}
+    }
 
-    void Keeps()
+    private void Keeps()
     {
         if (isKeepingCamHeight)
         {
@@ -57,7 +56,7 @@ public class KeepHeight : MonoBehaviour {
             transform.position = t;
         }
 
-        if( isKeepingParentHeight)
+        if (isKeepingParentHeight)
         {
             Vector3 t = transform.position;
             t.y = transform.parent.transform.position.y;

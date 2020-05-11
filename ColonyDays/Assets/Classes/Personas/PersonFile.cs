@@ -5,16 +5,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PersonFile  {
-
+public class PersonFile
+{
     public int _age;
 
     public bool IsMajor;
 
     //Birthday
-    public int LastBDYear;//the year I had the last birthday. So i dont have more thn 1 BD a Year 
+    public int LastBDYear;//the year I had the last birthday. So i dont have more thn 1 BD a Year
+
     public int BirthMonth;//the birthday of the person
-    public  int UnHappyYears;//if is over X amount will emmigrate
+    public int UnHappyYears;//if is over X amount will emmigrate
 
     public int _lifeLimit;
     public string _name;
@@ -25,16 +26,18 @@ public class PersonFile  {
     //only for females
     public bool _isPregnant;
 
-    public int LastNewBornYear = -10;//the last pregnancy she had, when was the birth year 
-    //once pregnant will tell u the due date 
-    public int DueMonth;
-    public int DueYear;
+    public int LastNewBornYear = -10;//the last pregnancy she had, when was the birth year
 
+    //once pregnant will tell u the due date
+    public int DueMonth;
+
+    public int DueYear;
 
     public string _nutritionLevel;
 
     //Places
     public string _home;
+
     public string _work;
     public string _foodSource;
     public string _religion;
@@ -42,14 +45,16 @@ public class PersonFile  {
 
     //Person Own Objects and fields
     public Brain _brain;
+
     public Body _body;
     public string _spouse = "";
     public bool _isWidow;//if is wont get married again
 
-    public string MyId; 
+    public string MyId;
 
     //tehc stuff
     public Vector3 Position;
+
     public Quaternion Rotation;
 
     public Inventory Inventory;
@@ -68,9 +73,8 @@ public class PersonFile  {
 
     public Order PrevOrder;
 
-
-    public string SourceBuildKey;//from where taking the load 
-    public string DestinyBuildKey;//where taking load 
+    public string SourceBuildKey;//from where taking the load
+    public string DestinyBuildKey;//where taking load
 
     public string FamilyId;
 
@@ -88,11 +92,9 @@ public class PersonFile  {
         IsMajor = pers.IsMajor;
 
         //Birthday
-        LastBDYear = pers.LastBdYear;//the year I had the last birthday. So i dont have more thn 1 BD a Year 
+        LastBDYear = pers.LastBdYear;//the year I had the last birthday. So i dont have more thn 1 BD a Year
         BirthMonth = pers.BirthMonth;//the birthday of the person
         UnHappyYears = pers.UnHappyYears;
-
-
 
         _lifeLimit = pers.LifeLimit;
         _name = pers.Name;
@@ -101,24 +103,19 @@ public class PersonFile  {
         _prosperity = pers.Prosperity;
         _gender = pers.Gender;
 
-
-
-        LastNewBornYear = pers.LastNewBornYear;//the last pregnancy she had, when was the birth year 
-        //once pregnant will tell u the due date 
+        LastNewBornYear = pers.LastNewBornYear;//the last pregnancy she had, when was the birth year
+        //once pregnant will tell u the due date
         DueMonth = pers.DueMonth;
         DueYear = pers.DueYear;
 
-
-
         _isPregnant = pers.IsPregnant;
         _nutritionLevel = pers.NutritionLevel;
-       
-        
+
         SavePersonStructs(pers);
-        
+
         _brain = pers.Brain;
         _body = pers.Body;
-        _spouse= pers.Spouse;
+        _spouse = pers.Spouse;
         _isWidow = pers.IsWidow;
         MyId = pers.MyId;
         Position = pers.transform.position;
@@ -156,7 +153,7 @@ public class PersonFile  {
         WorkInputOrders = pers.WorkInputOrders;
     }
 
-    void SavePersonStructs(Person pers)
+    private void SavePersonStructs(Person pers)
     {
         if (pers.Home != null)
         {
@@ -182,18 +179,17 @@ public class PersonFile  {
     }
 
     /// <summary>
-    /// Created to save Profesion. Since cant save a derived class will create a prof instance and will 
-    /// copy all attribute 
+    /// Created to save Profesion. Since cant save a derived class will create a prof instance and will
+    /// copy all attribute
     /// </summary>
-    void SaveProfesion(Person personToSave)
+    private void SaveProfesion(Person personToSave)
     {
         ProfessionProp = new Profession(personToSave.ProfessionProp);
     }
 
-    public PersonFile() { }
-
-
-
+    public PersonFile()
+    {
+    }
 
     public Job SavedJob { get; set; }
 

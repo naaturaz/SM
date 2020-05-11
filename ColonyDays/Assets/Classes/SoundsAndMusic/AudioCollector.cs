@@ -1,32 +1,32 @@
-﻿using System;
+﻿using Assets.Classes.SoundsAndMusic;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-using Assets.Classes.SoundsAndMusic;
 using Random = UnityEngine.Random;
 
 public class AudioCollector
 {
     //determined by user on Interface. Saved and loaded too
     private static float _soundLevel = 1;
+
     private static float _musicLevel = 1;
 
-    static Dictionary<string, string> _languages = new Dictionary<string, string>();
+    private static Dictionary<string, string> _languages = new Dictionary<string, string>();
 
     //TO ADD A SOUND ====>
     //Add first the type of HType is initiating the Sound Ex: "Person" then the sound
     //as named in Prefab/Audio/Sound/Other/
     //place the sound in that folder
-    //done 
-    static Dictionary<string, string> _roots = new Dictionary<string, string>()
+    //done
+    private static Dictionary<string, string> _roots = new Dictionary<string, string>()
     {
-
     };
 
     //TO ADD A SOUND in person added below pls the other steps ====>
     //Keep in mind that Animations sounds must be played from Body.cs
-    static Dictionary<string, string> _personRoots = new Dictionary<string, string>()
+    private static Dictionary<string, string> _personRoots = new Dictionary<string, string>()
     {
         {"Person", ""},//so persons are spawned
         //Animations
@@ -39,7 +39,7 @@ public class AudioCollector
     //this roots sounds get spawned anywas. Like BabyBorn sound
     private static Dictionary<string, string> _rootsToSpawn = new Dictionary<string, string>()
     {
-        //one shots 
+        //one shots
         {"BabyBorn", ""},
         {"Emigrate", ""},
         {"FallingTree", ""},
@@ -70,7 +70,7 @@ public class AudioCollector
     //this roots sounds get spawned anywas. Like BabyBorn sound
     private static Dictionary<string, string> _ambience = new Dictionary<string, string>()
     {
-        //one shots 
+        //one shots
         {"FullOcean", ""},
         {"InLand", ""},
         {"OceanShore", ""},
@@ -80,11 +80,11 @@ public class AudioCollector
         {"Mountain", ""},
     };
 
-    static Dictionary<string, AudioContainer> _audioContainers = new Dictionary<string, AudioContainer>();
+    private static Dictionary<string, AudioContainer> _audioContainers = new Dictionary<string, AudioContainer>();
 
-    static Dictionary<string, AudioReport> _report = new Dictionary<string, AudioReport>();
+    private static Dictionary<string, AudioReport> _report = new Dictionary<string, AudioReport>();
 
-    static float _timeLastReport;
+    private static float _timeLastReport;
 
     /// <summary>
     /// The roots that are on file for sounds
@@ -141,7 +141,7 @@ public class AudioCollector
         set { _languages = value; }
     }
 
-    static void StartRoots()
+    private static void StartRoots()
     {
         if (_roots.Count > 0)
         {
@@ -165,7 +165,7 @@ public class AudioCollector
     }
 
     /// <summary>
-    /// Reporting how far an GameObj is 
+    /// Reporting how far an GameObj is
     /// </summary>
     /// <param name="key"></param>
     /// <param name="dist"></param>
@@ -189,15 +189,16 @@ public class AudioCollector
         _timeLastReport = Time.time;
     }
 
-    static IEnumerable<KeyValuePair<string, AudioReport>> reportOrdered;
+    private static IEnumerable<KeyValuePair<string, AudioReport>> reportOrdered;
+
     /// <summary>
     /// Executing the report. It ordered it and then acts in the first 10
     /// </summary>
-    static void ExecuteReport()
+    private static void ExecuteReport()
     {
         //take is limit
         //is Descending bz the closest one is the one that reported less
-        //desitance 
+        //desitance
         reportOrdered = _report.OrderByDescending(a => a.Value.AverageDistance()).Take(40);
 
         foreach (var item in reportOrdered)
@@ -207,11 +208,10 @@ public class AudioCollector
 
         //we need to clean the report after
         _report.Clear();
-
     }
 
     /// <summary>
-    /// The first 10 items will be pplayed by its Audio Container 
+    /// The first 10 items will be pplayed by its Audio Container
     /// </summary>
     /// <param name="item"></param>
     private static void OnTheFirst40Items(KeyValuePair<string, AudioReport> item)
@@ -221,7 +221,7 @@ public class AudioCollector
         {
             _audioContainers[item.Key].Play(item.Value.AverageDistance());
         }
-        //Other wise will be spawned 
+        //Other wise will be spawned
         else
         {
             if (!_roots.ContainsKey(item.Key))
@@ -246,12 +246,13 @@ public class AudioCollector
         return plsFolders + key;
     }
 
-    static bool _peopleVoiceStarted;
+    private static bool _peopleVoiceStarted;
+
     public static void Update()
     {
         StartRoots();
 
-        //if half second had pass since last element reported 
+        //if half second had pass since last element reported
         if (_timeLastReport != 0 && Time.time + 0.5f > _timeLastReport)
         {
             ExecuteReport();
@@ -295,7 +296,7 @@ public class AudioCollector
     }
 
     /// <summary>
-    /// Mainly for Persons animations 
+    /// Mainly for Persons animations
     /// </summary>
     /// <param name="key"></param>
     /// <param name="pos"></param>
@@ -306,7 +307,6 @@ public class AudioCollector
             SpawnASound(new KeyValuePair<string, string>(key, ""));
         }
         _audioContainers[key].PlayAShot(dist);
-
     }
 
     public static void PlayOneShot(string key, Vector3 urPos)
@@ -326,7 +326,7 @@ public class AudioCollector
         {
             StopCurrAmbienceThatIsNotNewSound(playThis);
 
-            if (_audioContainers.ContainsKey(playThis) 
+            if (_audioContainers.ContainsKey(playThis)
                 && _audioContainers[playThis].IsPlayingNow())
             {
                 //do nothing
@@ -353,8 +353,8 @@ public class AudioCollector
         for (int i = 0; i < _ambience.Count; i++)
         {
             var keyHere = _ambience.ElementAt(i).Key;
-            if (_audioContainers.ContainsKey(keyHere) 
-                && _audioContainers[keyHere].IsPlayingNow() 
+            if (_audioContainers.ContainsKey(keyHere)
+                && _audioContainers[keyHere].IsPlayingNow()
                 && keyHere != playThis)
             {
                 _audioContainers[keyHere].StopAmbience();
@@ -376,7 +376,7 @@ public class AudioCollector
 
     static public EventHandler<EventArgs> LevelChanged;
 
-    static void OnLevelChanged(EventArgs e)
+    private static void OnLevelChanged(EventArgs e)
     {
         if (LevelChanged != null)
         {
@@ -386,7 +386,7 @@ public class AudioCollector
 
     public static void SoundTurnedOff()
     {
-        //wills stop all ambiences noises 
+        //wills stop all ambiences noises
         StopCurrAmbienceThatIsNotNewSound("");
     }
 
@@ -394,7 +394,6 @@ public class AudioCollector
     {
         if (Settings.ISSoundOn)
         {
-
         }
         else
         {
@@ -406,7 +405,7 @@ public class AudioCollector
 
     /// <summary>
     /// Make sure that a sound of man dont have any keywords like "Mujer" "Boy" "Girl"
-    /// and the same for each one 
+    /// and the same for each one
     /// </summary>
     /// <param name="p"></param>
     public static void PlayPersonVoice(Person p)
@@ -434,23 +433,21 @@ public class AudioCollector
                 PlayPerson(_womanList);
             }
         }
-
     }
 
+    private static List<string> info = new List<string>();
+    private static List<string> _kindOfPeople = new List<string>() { "Man", "Woman", "Boy" };
 
-    static List<string> info = new List<string>();
-    static List<string> _kindOfPeople = new List<string>() { "Man", "Woman", "Boy" };
-
-    static List<string> _manList = new List<string>();
-    static List<string> _womanList = new List<string>();
-    static List<string> _boyList = new List<string>();
-
+    private static List<string> _manList = new List<string>();
+    private static List<string> _womanList = new List<string>();
+    private static List<string> _boyList = new List<string>();
 
     private static int infoIndex;
-    static void PlayPerson(List<string> list)
+
+    private static void PlayPerson(List<string> list)
     {
         //if a sound for a lang is not being added yet just return
-        if (list.Count==0)
+        if (list.Count == 0)
         {
             return;
         }
@@ -480,10 +477,10 @@ public class AudioCollector
     /// <summary>
     /// Be aware if new sounds were added to a Language it needs
     /// to be run at least once in EDITOR b4 works in Standalone.
-    /// So in editor play the game and click a person so it talks 
+    /// So in editor play the game and click a person so it talks
     /// </summary>
     /// <param name="typeOfPerson"></param>
-    static void InitInfoList()
+    private static void InitInfoList()
     {
         if (info.Count > 0)
         {
@@ -526,7 +523,7 @@ public class AudioCollector
         XMLSerie.WriteXMLProgram(pData);
     }
 
-    static List<string> GetFilesInStandAlone()
+    private static List<string> GetFilesInStandAlone()
     {
         var pData = XMLSerie.ReadXMLProgram();
 
@@ -536,7 +533,7 @@ public class AudioCollector
         return res;
     }
 
-    static List<string> GetFilesAllInEditor()
+    private static List<string> GetFilesAllInEditor()
     {
         List<string> res = new List<string>();
 
@@ -551,8 +548,7 @@ public class AudioCollector
         return res;
     }
 
-
-    static List<string> GetFilesInEditor(string typeOfPerson, string lang)
+    private static List<string> GetFilesInEditor(string typeOfPerson, string lang)
     {
         var root = "Assets/Resources/Prefab/Audio/Sound/" + lang + "/"
             + typeOfPerson + "/";
@@ -565,12 +561,10 @@ public class AudioCollector
         }
         catch (Exception)
         {
-            
         }
 
         return res;
     }
 
-    #endregion
-
+    #endregion Person Voice
 }

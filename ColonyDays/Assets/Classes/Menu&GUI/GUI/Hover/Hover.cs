@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
 /*
- * Game obj tht have this script wioll pop up small form with help as is being hover 
- * 
- * This GObj it spawns it doesnt move wit mouse 
+ * Game obj tht have this script wioll pop up small form with help as is being hover
+ *
+ * This GObj it spawns it doesnt move wit mouse
  */
 
 public class Hover : MonoBehaviour
@@ -12,14 +12,14 @@ public class Hover : MonoBehaviour
     private HoverWindow hoverWindow;//the window tht will pop up msg
     private Rect screenRect;
 
-	// Use this for initialization
-	void Start ()
-	{
-	    InitObjects();
-	}
+    // Use this for initialization
+    private void Start()
+    {
+        InitObjects();
+    }
 
-    void InitObjects()
-    {       
+    private void InitObjects()
+    {
         //for this to work only one gameObj can have the HoverWindow attached
         if (hoverWindow == null)
         {
@@ -30,16 +30,16 @@ public class Hover : MonoBehaviour
         screenRect = DefineScreenRect();
     }
 
-    Rect DefineScreenRect()
+    private Rect DefineScreenRect()
     {
         Rect res = new Rect();
         res.min = new Vector2();
         res.max = new Vector2(Screen.width, Screen.height);
-        
+
         return res;
     }
 
-    Rect GetRectFromBoxCollider2D()
+    private Rect GetRectFromBoxCollider2D()
     {
         var res = new Rect();
         var min = transform.GetComponent<BoxCollider2D>().bounds.min;
@@ -51,9 +51,9 @@ public class Hover : MonoBehaviour
 
         return res;
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    private void Update()
     {
         if (hoverWindow == null)
         {
@@ -64,7 +64,7 @@ public class Hover : MonoBehaviour
             return;
         }
 
-        //will redo Rect. Spawning hover with this so it can Scroll with mouse when on Main Inventories 
+        //will redo Rect. Spawning hover with this so it can Scroll with mouse when on Main Inventories
         if (Input.GetAxis("Mouse ScrollWheel") != 0 && ScrollViewShowInventory.IsMouseOnMe)
         {
             myRect = GetRectFromBoxCollider2D();
@@ -75,23 +75,24 @@ public class Hover : MonoBehaviour
         {
             SpawnHelp();
         }
-        //ig got out 
+        //ig got out
         else if (!myRect.Contains(Input.mousePosition) && MyMsg() == hoverWindow.Message())
         {
             DestroyHelp();
         }
-	}
+    }
 
     /// <summary>
     /// </summary>
     /// <returns></returns>
-    string MyMsg()
+    private string MyMsg()
     {
         return transform.name;
     }
 
-    static string oldMsg = "";
-    void SpawnHelp()
+    private static string oldMsg = "";
+
+    private void SpawnHelp()
     {
         if (oldMsg == MyMsg())
         {
@@ -100,7 +101,7 @@ public class Hover : MonoBehaviour
 
         oldMsg = MyMsg();
         hoverWindow.ShowMsg(MyMsg());
-    } 
+    }
 
     private Vector3 ReturnHoverPos()
     {
@@ -120,9 +121,8 @@ public class Hover : MonoBehaviour
         return moved;
     }
 
-    void DestroyHelp()
+    private void DestroyHelp()
     {
         hoverWindow.Hide();
     }
-
 }

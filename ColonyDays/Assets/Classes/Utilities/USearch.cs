@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 //for search utility
 public class USearch : MonoBehaviour
@@ -14,7 +13,7 @@ public class USearch : MonoBehaviour
     /// <returns></returns>
     public static Vector3 FindClosestPos(List<Vector3> list, Vector3 stone)
     {
-        List<float > distances = new List<float>();
+        List<float> distances = new List<float>();
         for (int i = 0; i < list.Count; i++)
         {
             float dist = Vector3.Distance(stone, list[i]);
@@ -110,7 +109,7 @@ public class USearch : MonoBehaviour
         Model t = null;
         for (int i = 0; i < collPass.Count; i++)
         {
-            if (collPass[i].transform == gameObjToFind )
+            if (collPass[i].transform == gameObjToFind)
             {
                 t = collPass[i];
                 return t;
@@ -139,14 +138,14 @@ public class USearch : MonoBehaviour
         int counter = 0;
         for (int i = 0; i < collPass.Length; i++)
         {
-            if(collPass[i].name == gameObjToFind)
+            if (collPass[i].name == gameObjToFind)
             {
                 t = collPass[i];
                 counter++;
             }
         }
-        
-        if(counter > 1)
+
+        if (counter > 1)
         {
             print("were more than one obj with the same name StringUtil.FindGameObjInCollectionWithString()");
         }
@@ -179,9 +178,9 @@ public class USearch : MonoBehaviour
         Transform[] final = new Transform[objWithChild.childCount - indexToRest];
 
         for (int i = 0; i < final.Length; i++)
-		{
+        {
             final[i] = objs[i];
-		}
+        }
 
         return final;
     }
@@ -257,7 +256,6 @@ public class USearch : MonoBehaviour
         return final;
     }
 
-
     /// <summary>
     /// Will search trhu the scene and Will return an Transform wit all the transforms childs if the have the same name as include
     /// </summary>
@@ -295,7 +293,7 @@ public class USearch : MonoBehaviour
         return final;
     }
 
-    static List<string> WildcardFiles()
+    private static List<string> WildcardFiles()
     {
         List<string> listRange = new List<string>();
         listRange.Add("q");
@@ -317,7 +315,7 @@ public class USearch : MonoBehaviour
         //}
         else if (CamControl.CAMRTS != null)
         {
-            cc  = CamControl.CAMRTS;
+            cc = CamControl.CAMRTS;
         }
         return cc;
     }

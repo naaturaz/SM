@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 /// <summary>
-/// The tile that display an achievement 
+/// The tile that display an achievement
 /// </summary>
 public class AchieveTile : GUIElement
 {
@@ -19,25 +19,25 @@ public class AchieveTile : GUIElement
         set { _achievement = value; }
     }
 
-    void Start()
+    private void Start()
     {
         var backO = GetChildCalled("BackOwn");
-        _backOwn = backO.GetComponent<Image>();  
-        
+        _backOwn = backO.GetComponent<Image>();
+
         var icon = GetChildCalled("Icon");
         _icon = icon.GetComponent<Image>();
-        
+
         var titleLbl = GetChildCalled("Title");
         _title = titleLbl.GetComponentInChildren<Text>();
 
         var descLbl = GetChildCalled("Desc");
         _description = descLbl.GetComponentInChildren<Text>();
 
-        Set();   
+        Set();
     }
 
-     void Set()
-     {
+    private void Set()
+    {
         //if is not achieved disable stuff
         if (!_achievement.m_bAchieved)
         {
@@ -46,36 +46,35 @@ public class AchieveTile : GUIElement
         }
         _icon.sprite = LoadIcons();
 
-
-         _title.text = _achievement.m_strName;
-         _description.text = _achievement.m_strDescription;
+        _title.text = _achievement.m_strName;
+        _description.text = _achievement.m_strDescription;
     }
 
     /// <summary>
-     /// An Icon is named for ex: ACH_TRAVEL_FAR_ACCUM_WON, ACH_TRAVEL_FAR_ACCUM_DOLL
+    /// An Icon is named for ex: ACH_TRAVEL_FAR_ACCUM_WON, ACH_TRAVEL_FAR_ACCUM_DOLL
     /// </summary>
     /// <returns></returns>
-     private Sprite LoadIcons()
-     {
-         var root = "Prefab/Menu/Achieve_Icons/"
-             +_achievement.m_eAchievementID+"_"+IsDollOrWon();
-         Sprite sp = Resources.Load<Sprite>(root);
+    private Sprite LoadIcons()
+    {
+        var root = "Prefab/Menu/Achieve_Icons/"
+            + _achievement.m_eAchievementID + "_" + IsDollOrWon();
+        Sprite sp = Resources.Load<Sprite>(root);
 
-         //debug only. if is new will use the standard one
-         if (sp == null)//new Sprite()
+        //debug only. if is new will use the standard one
+        if (sp == null)//new Sprite()
         {
-             root = "Prefab/Menu/Achieve_Icons/STANDARD_" + IsDollOrWon();
-             sp = Resources.Load<Sprite>(root);
-         }
+            root = "Prefab/Menu/Achieve_Icons/STANDARD_" + IsDollOrWon();
+            sp = Resources.Load<Sprite>(root);
+        }
 
-         return sp;
-     }
+        return sp;
+    }
 
     /// <summary>
     /// Doll is not won
     /// </summary>
     /// <returns></returns>
-    string IsDollOrWon()
+    private string IsDollOrWon()
     {
         if (_achievement.m_bAchieved)
         {
@@ -83,7 +82,6 @@ public class AchieveTile : GUIElement
         }
         return "DOLL";
     }
-
 
     /// <summary>
     /// For show Save Load Tiles
@@ -94,7 +92,7 @@ public class AchieveTile : GUIElement
     /// <param name="parent"></param>
     /// <param name="invType"></param>
     /// <returns></returns>
-    static public AchieveTile Create(string root, Transform container, Vector3 iniPos, 
+    static public AchieveTile Create(string root, Transform container, Vector3 iniPos,
         SteamStatsAndAchievements.Achievement_t achievement)
     {
         AchieveTile obj = null;
@@ -105,7 +103,7 @@ public class AchieveTile : GUIElement
         var localScale = obj.transform.localScale;
 
         obj.transform.position = iniPos;
-        obj.transform.SetParent( container);
+        obj.transform.SetParent(container);
 
         obj.transform.localScale = localScale;
         obj.Achievement = achievement;
@@ -113,14 +111,7 @@ public class AchieveTile : GUIElement
         return obj;
     }
 
- 
-
-
-
-
-    void Update()
+    private void Update()
     {
-        
     }
 }
-

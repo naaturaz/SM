@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
+
 /*
- * Here will be the price Base for all products and the variability they will have 
- * 
+ * Here will be the price Base for all products and the variability they will have
+ *
  * The Export and Import action happen in Dispatch.cs
  */
 
 public class ExportImport
 {
-    List<ProdSpec> _prodSpecs = new List<ProdSpec>();
-    List<ProdSpec> _townProdSpecs = new List<ProdSpec>();
-
-
+    private List<ProdSpec> _prodSpecs = new List<ProdSpec>();
+    private List<ProdSpec> _townProdSpecs = new List<ProdSpec>();
 
     //craeted for GC reasons
-    Dictionary<P, int> _prodSpecsGC = new Dictionary<P, int>();
-    Dictionary<P, int> _townProdSpecsGC = new Dictionary<P, int>();
+    private Dictionary<P, int> _prodSpecsGC = new Dictionary<P, int>();
 
+    private Dictionary<P, int> _townProdSpecsGC = new Dictionary<P, int>();
 
     public ExportImport()
     {
@@ -61,11 +58,9 @@ public class ExportImport
         }
     }
 
-
-
-
     //
-    List<ProdSpec> _prodSpecsCured = new List<ProdSpec>();
+    private List<ProdSpec> _prodSpecsCured = new List<ProdSpec>();
+
     /// <summary>
     /// Is just a called for one that doesnt have the Random and YEar
     /// </summary>
@@ -92,20 +87,17 @@ public class ExportImport
 
     /// <summary>
     /// Will load the base price of each prod
-    /// 
+    ///
     /// The Sprite Icion should be added on Prefab/GUI/Inventory_Items/Brick and just named same as Prod name
-    /// 
+    ///
     /// </summary>
     private void LoadBasePrices()
     {
         _prodSpecs.Add(new ProdSpec(P.RandomMineOutput, 150, 4100, 100));
         _prodSpecs.Add(new ProdSpec(P.RandomFoundryOutput, 150, 4100, 100));
 
-        //for report purposes, and needed here only  for the icon root 
+        //for report purposes, and needed here only  for the icon root
         _prodSpecs.Add(new ProdSpec(P.Year, 150, 4100, 100));
-
-
-
 
         _prodSpecs.Add(new ProdSpec(P.Bean, 90, 368, 100));
         _prodSpecs.Add(new ProdSpec(P.CoffeeBean, 100, 308, 100, 30 * 6));
@@ -146,14 +138,11 @@ public class ExportImport
         //procesed foods
         _prodSpecs.Add(new ProdSpec(P.Candy, 1600, 200, 60));
 
-
         //frutas
         //_prodSpecs.Add(new ProdSpec(P.Mango, 100, 550, 100));
         //_prodSpecs.Add(new ProdSpec(P.Avocado, 100, 550, 100));
         //_prodSpecs.Add(new ProdSpec(P.Guava, 100, 550, 100));
         //_prodSpecs.Add(new ProdSpec(P.Orange, 100, 550, 100));
-
-
 
         //liquids
         _prodSpecs.Add(new ProdSpec(P.Water, 1, 1000, 100));
@@ -163,7 +152,6 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Wine, 450, 990, 100));
         _prodSpecs.Add(new ProdSpec(P.Ink, 100, 990, 100));
         _prodSpecs.Add(new ProdSpec(P.WhaleOil, 200, 1090, 100));
-
 
         _prodSpecs.Add(new ProdSpec(P.Coal, 20, 180, 70));
         _prodSpecs.Add(new ProdSpec(P.Sulfur, 20, 1960, 70));
@@ -185,7 +173,6 @@ public class ExportImport
         //_prodSpecs.Add(new ProdSpec(P.CaribbeanCoin, 1500, 11441, 5));
         _prodSpecs.Add(new ProdSpec(P.Coin, 1500, 14550, 5));
 
-
         _prodSpecs.Add(new ProdSpec(P.Stone, 50, 2515, 20));
         _prodSpecs.Add(new ProdSpec(P.Ore, 70, 4200, 20));
         _prodSpecs.Add(new ProdSpec(P.Iron, 150, 7874, 15));
@@ -202,23 +189,17 @@ public class ExportImport
         //_prodSpecs.Add(new ProdSpec(P.Axe, 50, 2500, 10));
         _prodSpecs.Add(new ProdSpec(P.GunPowder, 500, 1281, 60));
 
-
-
         _prodSpecs.Add(new ProdSpec(P.Clay, 10, 30, 100));
         _prodSpecs.Add(new ProdSpec(P.PalmLeaf, 10, 30));
-
 
         _prodSpecs.Add(new ProdSpec(P.Wood, 5, 800, 100));
         _prodSpecs.Add(new ProdSpec(P.Tool, 500, 3000, 15));
         _prodSpecs.Add(new ProdSpec(P.Utensil, 200, 3000, 15));
 
-
         _prodSpecs.Add(new ProdSpec(P.Brick, 150, 2000, 100));
         _prodSpecs.Add(new ProdSpec(P.Mortar, 350, 2500, 100));
         _prodSpecs.Add(new ProdSpec(P.QuickLime, 25, 1800, 100));
         _prodSpecs.Add(new ProdSpec(P.Sand, 20, 1500, 100));
-
-
 
         _prodSpecs.Add(new ProdSpec(P.Barrel, 300, 100, 50));
         _prodSpecs.Add(new ProdSpec(P.Bucket, 300, 90, 60));
@@ -227,13 +208,11 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.Cart, 1400, 20, 20, weightPerUnit: 120));
         _prodSpecs.Add(new ProdSpec(P.Furniture, 840, 10, 15, weightPerUnit: 20));
 
-
         _prodSpecs.Add(new ProdSpec(P.Cigar, 450, 700, 50));
         _prodSpecs.Add(new ProdSpec(P.CigarBox, 200, 200, 60));
         //_prodSpecs.Add(new ProdSpec(P.Slat, 40, 600, 70));
         _prodSpecs.Add(new ProdSpec(P.FloorTile, 600, 2100, 90));
         _prodSpecs.Add(new ProdSpec(P.RoofTile, 600, 2100, 90));
-
 
         _prodSpecs.Add(new ProdSpec(P.Fabric, 300, 400, 20));
         _prodSpecs.Add(new ProdSpec(P.Cloth, 120, 380, 20));
@@ -243,23 +222,16 @@ public class ExportImport
         _prodSpecs.Add(new ProdSpec(P.String, 200, 321, 15));
         _prodSpecs.Add(new ProdSpec(P.Shoe, 220, 100, 10));
 
-
         _prodSpecs.Add(new ProdSpec(P.Paper, 150, 192, 30));
         _prodSpecs.Add(new ProdSpec(P.Map, 300, 292, 50));
         _prodSpecs.Add(new ProdSpec(P.Book, 500, 502, 5));
         _prodSpecs.Add(new ProdSpec(P.Rubber, 500, 502, 50));
 
         // _prodSpecs.Add(new ProdSpec(P.Silk, 150, 1300, 5));
-
-
     }
 
-
-
-
-
     /// <summary>
-    /// Will calculate the volume of a Product given the mass in KG 
+    /// Will calculate the volume of a Product given the mass in KG
     /// </summary>
     /// <param name="prod"></param>
     /// <param name="mass"></param>
@@ -287,7 +259,6 @@ public class ExportImport
     /// <returns></returns>
     public float CalculateMass(P prod, float cubicMetersVol)
     {
-
         var prodLo = FindProdSpec(prod);
 
         if (prodLo == null)
@@ -300,10 +271,9 @@ public class ExportImport
         return prodLo.Density * cubicMetersVol;
     }
 
-
     /// <summary>
     /// The action of selling a Product and the amount
-    /// 
+    ///
     /// The sale happens when export
     /// </summary>
     /// <param name="prod"></param>
@@ -329,12 +299,10 @@ public class ExportImport
         Program.gameScene.QuestManager.AddToQuest("MakeBucks", amt);
     }
 
-
-
     /// <summary>
     /// The action of buying a Product and the amount
-    /// 
-    /// The buy happens when import 
+    ///
+    /// The buy happens when import
     /// </summary>
     /// <param name="prod"></param>
     /// <param name="amt"></param>
@@ -358,7 +326,6 @@ public class ExportImport
     {
         var prodFound = FindProdSpec(prod);
 
-
         if (prodFound == null)
         {
             //Debug.Log("ReturnDensityKGM3 asked of not found prod:" + prod);
@@ -368,7 +335,7 @@ public class ExportImport
         return _prodSpecs.Find(a => a.Product == prod).Density;
     }
 
-    //todo GC . pass Index of List. map index to Prod while creating the Dict 
+    //todo GC . pass Index of List. map index to Prod while creating the Dict
     public ProdSpec FindProdSpec(P prod)
     {
         if (_prodSpecsGC.ContainsKey(prod))
@@ -381,7 +348,6 @@ public class ExportImport
 
     public float ReturnProduceFactor(P prod)
     {
-
         var prodFound = FindProdSpec(prod);
 
         if (prodFound == null)
@@ -439,10 +405,6 @@ public class ExportImport
         return prodFound.IconRoot;
     }
 
-
-
-
-
     //Town Prices
     internal float ReturnPriceTown(P prod)
     {
@@ -456,8 +418,8 @@ public class ExportImport
         return prodFound.Price;
     }
 
-    //todo GC . pass Index of List. map index to Prod while creating the Dict 
-    ProdSpec FindTownProdSpec(P prod)
+    //todo GC . pass Index of List. map index to Prod while creating the Dict
+    private ProdSpec FindTownProdSpec(P prod)
     {
         if (_townProdSpecsGC.ContainsKey(prod))
         {
@@ -466,17 +428,15 @@ public class ExportImport
         }
         return null;
     }
-
-
 }
 
 /// <summary>
 /// Will hold the product and its base price
-/// Also the Density of the product 
+/// Also the Density of the product
 /// and the produce factor:  Producing item factor. Can produce more KG of rice than Ceramic
-/// 
+///
 /// The Sprite Icion should be added on Prefab/GUI/Inventory_Items/Brick
-/// 
+///
 /// </summary>
 public class ProdSpec
 {
@@ -486,17 +446,16 @@ public class ProdSpec
     private float _density;
     private float _produceFactor;
 
-
     private string _iconRoot;
 
-    //how many days can be used before is expired 
+    //how many days can be used before is expired
     private int _expireDays;
 
     /// <summary>
-    /// how muach weight a unit of this 
+    /// how muach weight a unit of this
     /// Useful for WheelBarrow, Furniture, etc
     /// </summary>
-    float _weightPerUnit;
+    private float _weightPerUnit;
 
     public float WeightPerUnit
     {
@@ -506,7 +465,7 @@ public class ProdSpec
 
     /// <summary>
     /// The amount of Cubic Meters Needed to fit one KG of this Product
-    /// 
+    ///
     /// Density in kg/m3
     /// </summary>
     public float Density
@@ -540,7 +499,9 @@ public class ProdSpec
         set { _expireDays = value; }
     }
 
-    public ProdSpec() { }
+    public ProdSpec()
+    {
+    }
 
     /// <summary>
     /// The price is divided by 100 in Constructor

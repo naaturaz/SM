@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
-
+﻿using UnityEngine;
 
 public class LevelOfDetail
 {
@@ -14,7 +9,6 @@ public class LevelOfDetail
     private H _oldLOD;
 
     private OutOfScreen _outOfScreen;
-
 
     public LevelOfDetail(Person person)
     {
@@ -41,14 +35,12 @@ public class LevelOfDetail
         get { return _outOfScreen; }
     }
 
-    void SetLOD()
+    private void SetLOD()
     {
-        _bip = General.GetChildCalledOnThis( "Bip001", _gO);
+        _bip = General.GetChildCalledOnThis("Bip001", _gO);
     }
 
-
-
-    void LODCheck()
+    private void LODCheck()
     {
         var newLOD = ReturnCurrentLOD();
 
@@ -74,7 +66,7 @@ public class LevelOfDetail
         }
     }
 
-    H ReturnCurrentLOD()
+    private H ReturnCurrentLOD()
     {
         //var dist = Vector3.Distance(_gO.transform.position, Camera.main.transform.position);
         var dist = Vector3.Distance(_gO.transform.position, CamControl.CAMRTS.transform.position);
@@ -90,7 +82,7 @@ public class LevelOfDetail
         return H.LOD0;
     }
 
-    float CloserDistLOD1()
+    private float CloserDistLOD1()
     {
         if (_type == H.Person)
         {
@@ -99,23 +91,23 @@ public class LevelOfDetail
         return 25;
     }
 
-    void LOD1()
+    private void LOD1()
     {
         _bip.SetActive(false);
         //_geometry.SetActive(true);
     }
 
-    void LOD2()
+    private void LOD2()
     {
         //_geometry.SetActive(false);
     }
 
-    void LOD3()
+    private void LOD3()
     {
         _geometry.SetActive(false);
     }
 
-    void LODBest()
+    private void LODBest()
     {
         _bip.SetActive(true);
         //_geometry.SetActive(true);
@@ -127,4 +119,3 @@ public class LevelOfDetail
         LODCheck();
     }
 }
-

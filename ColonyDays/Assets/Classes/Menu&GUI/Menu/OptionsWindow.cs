@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +7,7 @@ public class OptionsWindow : GUIElement
 {
     private Toggle _fullToggle;
     private Toggle _dayToggle;
-    StageManager _stageManager;
+    private StageManager _stageManager;
 
     private Toggle _musicToggle;
     private Toggle _soundToggle;
@@ -17,18 +16,16 @@ public class OptionsWindow : GUIElement
     private Toggle _buildCompletedToggle;
     private Toggle _citizensVoiceToggle;
 
-
     private Toggle _halloToggle;
     private Toggle _xmasToggle;
-
 
     private GameObject _autoSaveBtn;
     private GameObject _unitBtn;
     private GameObject _langBtn;
-    
+
     private GameObject _resBtn;
-    private GameObject _qualityBtn;  
-    
+    private GameObject _qualityBtn;
+
     private Text _autoSaveBtnTxt;
     private LangUpdateScript _unitBtnLang;
     private Text _langBtnTxt;
@@ -40,7 +37,7 @@ public class OptionsWindow : GUIElement
     private Slider _soundSlider;
     private Slider _cameraSlider;
 
-    void Start()
+    private void Start()
     {
         iniPos = transform.position;
 
@@ -54,15 +51,12 @@ public class OptionsWindow : GUIElement
         _buildCompletedToggle = GetGrandChildCalled("Building_Completed_Toggle").GetComponent<Toggle>();
         _citizensVoiceToggle = GetGrandChildCalled("Citizens_Voice_Toggle").GetComponent<Toggle>();
 
-
         _halloToggle = GetGrandChildCalled("Halloween_Toggle").GetComponent<Toggle>();
         _xmasToggle = GetGrandChildCalled("Xmas_Toggle").GetComponent<Toggle>();
-
 
         _musicSlider = GetGrandChildCalled("Music_Slider").GetComponent<Slider>();
         _soundSlider = GetGrandChildCalled("Sound_Slider").GetComponent<Slider>();
         _cameraSlider = GetGrandChildCalled("Camera_Slider").GetComponent<Slider>();
-
 
         var autoSavePanel = GetGrandChildCalled("Panel_AutoSave");
         _autoSaveBtn = GetChildCalledOnThis("AutoSave_Btn", autoSavePanel);
@@ -71,16 +65,15 @@ public class OptionsWindow : GUIElement
         var langPanel = GetGrandChildCalled("Panel_Lang");
         _langBtn = GetChildCalledOnThis("Lang_Btn", langPanel);
         _langBtnTxt = GetChildCalledOnThis("Text", _langBtn).GetComponent<Text>();
-        
+
         var unitPanel = GetGrandChildCalled("Panel_Unit");
         _unitBtn = GetChildCalledOnThis("Unit_Btn", unitPanel);
         _unitBtnLang = GetChildCalledOnThis("Text", _unitBtn).GetComponent<LangUpdateScript>();
-        
 
         var resPanel = GetGrandChildCalled("Panel_Res");
         _resBtn = GetChildCalledOnThis("Res_Btn", resPanel);
         _resBtnTxt = GetChildCalledOnThis("Text", _resBtn).GetComponent<Text>();
-        
+
         var qualityPanel = GetGrandChildCalled("Panel_Quality");
         _qualityBtn = GetChildCalledOnThis("Quality_Btn", qualityPanel);
         _qualityBtnLang = GetChildCalledOnThis("Text", _qualityBtn).GetComponent<LangUpdateScript>();
@@ -90,8 +83,8 @@ public class OptionsWindow : GUIElement
 
         Hide();
 
-        //means was hidden by a Res Change 
-        if (resTimeChanged!=0)
+        //means was hidden by a Res Change
+        if (resTimeChanged != 0)
         {
             resTimeChanged = 0;
             Show();
@@ -105,7 +98,6 @@ public class OptionsWindow : GUIElement
         _fullToggle.isOn = Screen.fullScreen;
         _dayToggle.isOn = Settings.ISDay;
 
-
         _musicToggle.isOn = Settings.ISMusicOn;
         _soundToggle.isOn = Settings.ISSoundOn;
 
@@ -114,14 +106,10 @@ public class OptionsWindow : GUIElement
         _buildCompletedToggle.isOn = PlayerPrefs.GetInt("Built") > -1;
         _citizensVoiceToggle.isOn = PlayerPrefs.GetInt("Voice") > -1;
 
-
         _halloToggle.isOn = Settings.IsHalloweenTheme;
         _xmasToggle.isOn = Settings.IsXmas;
 
-
-
-
-        //so they dont trigger event 
+        //so they dont trigger event
         _fullToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Full"));
         _dayToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Day"));
 
@@ -132,10 +120,8 @@ public class OptionsWindow : GUIElement
         _buildCompletedToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Built"));
         _citizensVoiceToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Voice"));
 
-
         _halloToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Hallo"));
         _xmasToggle.onValueChanged.AddListener((value) => Program.MouseClickListenerSt("MainMenu.Options.Xmas"));
-
     }
 
     public void RefreshAllDropDowns()
@@ -157,7 +143,7 @@ public class OptionsWindow : GUIElement
             {
                 _qualityBtnLang.SetKey(names[i]);
             }
-        }   
+        }
     }
 
     /// <summary>
@@ -165,7 +151,7 @@ public class OptionsWindow : GUIElement
     /// of the screen and not the window
     /// </summary>
     /// <returns></returns>
-    string CurrentResolution()
+    private string CurrentResolution()
     {
         if (Screen.fullScreen)
         {
@@ -175,25 +161,24 @@ public class OptionsWindow : GUIElement
         return Screen.width + " x " + Screen.height + " @ " + splt[4];//the Hz
     }
 
-
     private bool resChanged;
     private static float resTimeChanged;
-    void Update()
+
+    private void Update()
     {
         if (resChanged && Time.time > resTimeChanged + .5f)
         {
             resChanged = false;
             Program.MouseListener.ApplyChangeScreenResolution(true);
-
         }
     }
 
     /// <summary>
     /// So it leaves a  while(.5s) before can redo MainGUI and MainMenu
-    /// 
+    ///
     /// is called too when switched to Full Screen or back
-    /// 
-    /// is called too when switch from Imperial to Metric and vice versa 
+    ///
+    /// is called too when switch from Imperial to Metric and vice versa
     /// </summary>
     public void ChangeResNow()
     {
@@ -201,9 +186,7 @@ public class OptionsWindow : GUIElement
         resTimeChanged = Time.time;
     }
 
-
-
-    string HandleAction(string sub)
+    private string HandleAction(string sub)
     {
         if (sub.Length > 8)
         {
@@ -217,11 +200,11 @@ public class OptionsWindow : GUIElement
         ReFreshDropsThenShow();
         sub = HandleAction(sub);
 
-        if(sub == "OKBtn")
+        if (sub == "OKBtn")
         {
             Hide();
         }
-        else if(sub == "CancelBtn")
+        else if (sub == "CancelBtn")
         {
             Hide();
         }
@@ -231,7 +214,7 @@ public class OptionsWindow : GUIElement
             ChangeAudioSettings(sub);
         }
         //
-        else if(sub == "BabyBorn")
+        else if (sub == "BabyBorn")
         {
             SetPlayerPrefInt(sub, _babyBornToggle.isOn);
         }
@@ -262,7 +245,7 @@ public class OptionsWindow : GUIElement
             SetPlayerPrefInt(sub, _dayToggle.isOn);
             Settings.ISDay = _dayToggle.isOn;
 
-            if(_stageManager == null)
+            if (_stageManager == null)
                 _stageManager = FindObjectOfType<StageManager>();
             _stageManager.OptionsDayCycleWasToggled();
 
@@ -270,7 +253,7 @@ public class OptionsWindow : GUIElement
         }
     }
 
-    void SetPlayerPrefInt(string which, bool onOrOff)
+    private void SetPlayerPrefInt(string which, bool onOrOff)
     {
         if (onOrOff)
         {
@@ -302,6 +285,7 @@ public class OptionsWindow : GUIElement
     }
 
     #region DropDowns
+
     private List<GameObject> _buttonsName = new List<GameObject>();
 
     public void ClickQualityDropDown()
@@ -317,12 +301,12 @@ public class OptionsWindow : GUIElement
             }
             else
             {
-                //so dont show empty btns in the drop down 
+                //so dont show empty btns in the drop down
                 Destroy(_buttonsName[i]);
             }
         }
-    }    
-    
+    }
+
     public void ClickResDropDown()
     {
         SetButtonsList(_resBtn);
@@ -337,7 +321,7 @@ public class OptionsWindow : GUIElement
             }
             else
             {
-                //so dont show empty btns in the drop down 
+                //so dont show empty btns in the drop down
                 Destroy(_buttonsName[i]);
             }
         }
@@ -360,7 +344,7 @@ public class OptionsWindow : GUIElement
             if (i < names.Count)
                 SetEachButton(_buttonsName[i], names[i].ToString(), "Lang");
             else
-                //so dont show empty btns in the drop down 
+                //so dont show empty btns in the drop down
                 Destroy(_buttonsName[i]);
         }
     }
@@ -368,7 +352,7 @@ public class OptionsWindow : GUIElement
     public void ClickAutoSaveDropDown()
     {
         SetButtonsList(_autoSaveBtn);
-        List<string> names = new List<string>() {"5 min", "10 min", "15 min", "20 min"};
+        List<string> names = new List<string>() { "5 min", "10 min", "15 min", "20 min" };
 
         for (int i = 0; i < _buttonsName.Count; i++)
         {
@@ -378,16 +362,16 @@ public class OptionsWindow : GUIElement
             }
             else
             {
-                //so dont show empty btns in the drop down 
+                //so dont show empty btns in the drop down
                 Destroy(_buttonsName[i]);
             }
         }
-    }    
-    
+    }
+
     public void ClickUnitDropDown()
     {
         SetButtonsList(_unitBtn);
-        List<string> names = new List<string>() {"Metric", "Imperial"};
+        List<string> names = new List<string>() { "Metric", "Imperial" };
 
         for (int i = 0; i < _buttonsName.Count; i++)
         {
@@ -397,16 +381,16 @@ public class OptionsWindow : GUIElement
             }
             else
             {
-                //so dont show empty btns in the drop down 
+                //so dont show empty btns in the drop down
                 Destroy(_buttonsName[i]);
             }
         }
     }
 
     /// <summary>
-    /// Each button on the tera name drop down wil be set here 
-    /// 
-    /// Will add the event and change the name 
+    /// Each button on the tera name drop down wil be set here
+    ///
+    /// Will add the event and change the name
     /// </summary>
     private void SetEachButton(GameObject b, string click, string type)
     {
@@ -417,7 +401,7 @@ public class OptionsWindow : GUIElement
         child.GetComponent<Text>().text = click;
     }
 
-    void SetBtnEvent(UnityEngine.UI.Button button, string name, string type)
+    private void SetBtnEvent(UnityEngine.UI.Button button, string name, string type)
     {
         if (type == "Quality")
         {
@@ -434,7 +418,7 @@ public class OptionsWindow : GUIElement
         else if (type == "AutoSave")
         {
             button.onClick.AddListener(() => Settings.SetAutoSave(name));
-        }  
+        }
         else if (type == "Lang")
         {
             button.onClick.AddListener(() => Settings.SetLanguage(name));
@@ -455,15 +439,15 @@ public class OptionsWindow : GUIElement
             GetGrandChildCalledFromThis("Btn_3", Terra_Name_Btn),
             GetGrandChildCalledFromThis("Btn_4", Terra_Name_Btn),
             GetGrandChildCalledFromThis("Btn_5", Terra_Name_Btn),
-            GetGrandChildCalledFromThis("Btn_6", Terra_Name_Btn),     
-            
+            GetGrandChildCalledFromThis("Btn_6", Terra_Name_Btn),
+
             GetGrandChildCalledFromThis("Btn_7", Terra_Name_Btn),
             GetGrandChildCalledFromThis("Btn_8", Terra_Name_Btn),
             GetGrandChildCalledFromThis("Btn_9", Terra_Name_Btn),
             GetGrandChildCalledFromThis("Btn_10", Terra_Name_Btn),
             GetGrandChildCalledFromThis("Btn_11", Terra_Name_Btn),
-            GetGrandChildCalledFromThis("Btn_12", Terra_Name_Btn),         
-            
+            GetGrandChildCalledFromThis("Btn_12", Terra_Name_Btn),
+
             GetGrandChildCalledFromThis("Btn_13", Terra_Name_Btn),
             GetGrandChildCalledFromThis("Btn_14", Terra_Name_Btn),
             GetGrandChildCalledFromThis("Btn_15", Terra_Name_Btn),
@@ -473,9 +457,9 @@ public class OptionsWindow : GUIElement
         };
     }
 
-    #endregion
+    #endregion DropDowns
 
-    void OnEnable()
+    private void OnEnable()
     {
         Debug.Log("PrintOnEnable: OptionsWindow was enabled");
         LoadSlidersValues();
@@ -483,7 +467,7 @@ public class OptionsWindow : GUIElement
 
     #region Sliders Sound and Music , Camera
 
-    void LoadSlidersValues()
+    private void LoadSlidersValues()
     {
         if (!_soundSlider) return;
 
@@ -495,7 +479,7 @@ public class OptionsWindow : GUIElement
         //else
         //    _cameraSlider.value = CamControl.CAMRTS.CamSensivity/factorSens;
 
-        if(Settings.CamSliderVal > 0.0f)
+        if (Settings.CamSliderVal > 0.0f)
             _cameraSlider.value = Settings.CamSliderVal;
         else
             _cameraSlider.value = 0.5f;
@@ -514,11 +498,12 @@ public class OptionsWindow : GUIElement
     }
 
     private float factorSens = 12f;//bz .5 in the slider is 6 for the cam senstivity
-    private float factorDesi = 2f;//bz .5 in the slider is 1 
+    private float factorDesi = 2f;//bz .5 in the slider is 1
+
     //Called from GUI
     public void NewCamSensitivity()
     {
-        if(CamControl.CAMRTS != null)
+        if (CamControl.CAMRTS != null)
         {
             CamControl.CAMRTS.CamSensivity = _cameraSlider.value * factorSens;
             CamControl.CAMRTS.DesiredSpeed = _cameraSlider.value * factorDesi;
@@ -526,5 +511,5 @@ public class OptionsWindow : GUIElement
         Settings.SetCamSliderVal(_cameraSlider.value);
     }
 
-    #endregion
+    #endregion Sliders Sound and Music , Camera
 }

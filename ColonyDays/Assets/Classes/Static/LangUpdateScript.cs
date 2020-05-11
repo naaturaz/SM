@@ -8,15 +8,15 @@ public class LangUpdateScript : MonoBehaviour
     public string Key { get; set; }
 
     // Use this for initialization
-    void Start ()
-	{
-	    _text = GetComponent<Text>();
+    private void Start()
+    {
+        _text = GetComponent<Text>();
 
         if (Key == null)
-	        Key = _text.text;
+            Key = _text.text;
 
-	    _text.text = Languages.ReturnString(Key);
-	}
+        _text.text = Languages.ReturnString(Key);
+    }
 
     private void Update()
     {

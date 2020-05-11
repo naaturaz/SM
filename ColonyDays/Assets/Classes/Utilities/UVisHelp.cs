@@ -1,16 +1,14 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using Object = UnityEngine.Object;
 
-public class UVisHelp : MonoBehaviour {
-
-    static SMe m = new SMe();
+public class UVisHelp : MonoBehaviour
+{
+    private static SMe m = new SMe();
 
     public static List<General> CreateTextEnumarate(List<CheckPoint> list, string texto = "", int fontSize = 120)
     {
-         List<General> res = new List<General>();
+        List<General> res = new List<General>();
         for (int i = 0; i < list.Count; i++)
         {
             General g = General.Create(Root.texto3d, list[i].Point);
@@ -55,12 +53,11 @@ public class UVisHelp : MonoBehaviour {
         return res;
     }
 
-
     public static General CreateHelpers(Vector3 pos, string root)
     {
         return General.Create(root, pos);
-    }   
-    
+    }
+
     public static General CreateHelpers(Vector2 pos, string root)
     {
         return General.Create(root, U2D.FromV2ToV3(pos));
@@ -74,12 +71,10 @@ public class UVisHelp : MonoBehaviour {
         res.Add(General.Create(root, new Vector3(lines[0].B1.x, m.IniTerr.MathCenter.y, lines[0].B1.y)));
 
         res.Add(General.Create(root, new Vector3(lines[2].A1.x, m.IniTerr.MathCenter.y, lines[2].A1.y)));
-        res.Add(General.Create(root, new Vector3(lines[2].B1.x, m.IniTerr.MathCenter.y, lines[2].B1.y)));  
-
+        res.Add(General.Create(root, new Vector3(lines[2].B1.x, m.IniTerr.MathCenter.y, lines[2].B1.y)));
 
         return res;
     }
-
 
     public static List<General> CreateHelpers(Rect rect, string root)
     {
@@ -93,7 +88,7 @@ public class UVisHelp : MonoBehaviour {
         list.Add(new Vector3(NW.x, m.IniTerr.MathCenter.y, NW.y));
         list.Add(new Vector3(NE.x, m.IniTerr.MathCenter.y, NE.y));
         list.Add(new Vector3(SE.x, m.IniTerr.MathCenter.y, SE.y));
-        list.Add(new Vector3(SW.x, m.IniTerr.MathCenter.y,  SW.y));
+        list.Add(new Vector3(SW.x, m.IniTerr.MathCenter.y, SW.y));
 
         return CreateHelpers(list, root);
     }
@@ -111,9 +106,6 @@ public class UVisHelp : MonoBehaviour {
         Debug.DrawLine(SW, NW, color, duration);
     }
 
-
-
-
     public static List<PreviewWay> CreatePreviewWay(List<Vector3> list, string root, float radius)
     {
         List<PreviewWay> res = new List<PreviewWay>();
@@ -121,9 +113,9 @@ public class UVisHelp : MonoBehaviour {
         {
             //if (list[i] != new Vector3() || list[i] != null)
             //{
-                PreviewWay w = (PreviewWay) General.Create(root, list[i]);
-                w.Radius = radius;
-                res.Add(w);
+            PreviewWay w = (PreviewWay)General.Create(root, list[i]);
+            w.Radius = radius;
+            res.Add(w);
             //}
         }
         return res;
@@ -138,7 +130,6 @@ public class UVisHelp : MonoBehaviour {
         return obj;
     }
 
-
     static public Canvas CreateFormCanvas(string root, Vector3 origin)
     {
         Canvas obj = null;
@@ -147,8 +138,6 @@ public class UVisHelp : MonoBehaviour {
 
         return obj;
     }
-
-
 
     static public Material CreateMaterial(string root)
     {
@@ -161,19 +150,16 @@ public class UVisHelp : MonoBehaviour {
     {
         GameObject texto = (GameObject)Resources.Load("Prefab/Misc/3dText", typeof(GameObject));
 
-            GameObject cloneTexto = Instantiate(texto, iniPos, Quaternion.identity) as GameObject;
+        GameObject cloneTexto = Instantiate(texto, iniPos, Quaternion.identity) as GameObject;
 
-            cloneTexto.name = textMsg;
+        cloneTexto.name = textMsg;
         return cloneTexto;
     }
-
-
 
     internal static List<General> CreateHelpers(List<Vector2> _seaSoul, string root)
     {
         List<General> res = new List<General>();
         var list = U2D.FromListV2ToV3(_seaSoul);
-
 
         for (int i = 0; i < list.Count; i++)
         {
@@ -181,8 +167,6 @@ public class UVisHelp : MonoBehaviour {
         }
         return res;
     }
-
-
 
     internal static List<General> CreateHelpers(List<Crystal> _eval, string root)
     {
@@ -194,8 +178,6 @@ public class UVisHelp : MonoBehaviour {
         }
         return res;
     }
-
-
 
     internal static List<General> CreateHelpers(List<VectorM> _map8entries, string root)
     {

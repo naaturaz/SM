@@ -1,10 +1,10 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 /*
- * This is the menu where u can select Buildings from a specific category 
- * 
+ * This is the menu where u can select Buildings from a specific category
+ *
  */
 
 public class BuildingsMenu : GUIElement
@@ -23,17 +23,17 @@ public class BuildingsMenu : GUIElement
     private GameObject slot9;
     private GameObject slot10;
 
-    List<GameObject> slots = new List<GameObject>();
-    
-    private Sprite _lockedSprite; //the sprite when a Build is locked 
+    private List<GameObject> slots = new List<GameObject>();
 
-	// Use this for initialization
-	void Start ()
-	{
-	    InitObj();
+    private Sprite _lockedSprite; //the sprite when a Build is locked
 
-	    Hide();
-	}
+    // Use this for initialization
+    private void Start()
+    {
+        InitObj();
+
+        Hide();
+    }
 
     private void InitObj()
     {
@@ -49,7 +49,7 @@ public class BuildingsMenu : GUIElement
         slot7 = GetChildThatContains(H.Slot7);
         slot8 = GetChildThatContains(H.Slot8);
         slot9 = GetChildThatContains(H.Slot9);
-        slot10= GetChildThatContains(H.Slot10);
+        slot10 = GetChildThatContains(H.Slot10);
 
         slots = new List<GameObject>()
         {
@@ -63,10 +63,10 @@ public class BuildingsMenu : GUIElement
             //so rects are set bz is hidden
             hoverBuild.InitObjects();
         }
-        locked = (Sprite) Resources.Load(Root.lockedBuilding, typeof (Sprite));
+        locked = (Sprite)Resources.Load(Root.lockedBuilding, typeof(Sprite));
     }
-    private Sprite locked;
 
+    private Sprite locked;
 
     public void Show(List<H> vals)
     {
@@ -76,21 +76,18 @@ public class BuildingsMenu : GUIElement
             BuildingPot.CreateUnlockBuilds();
         }
 
-
         BuildingPot.UnlockBuilds1.UpdateBuildsStatuses();
         LoadMenu(vals);
         transform.position = iniPosition;
     }
 
-
     /// <summary>
-    /// Loads the menu of the Buildins Menu 
+    /// Loads the menu of the Buildins Menu
     /// </summary>
     /// <param name="vals"></param>
-    void LoadMenu(List<H> vals)
+    private void LoadMenu(List<H> vals)
     {
         Program.MouseListener.HidePersonBuildingOrderBulletin();
-
 
         for (int i = 0; i < slots.Count; i++)
         {
@@ -98,14 +95,14 @@ public class BuildingsMenu : GUIElement
             {
                 MakeAlphaColorMax(slots[i]);
 
-                //find is if locked 
+                //find is if locked
                 bool unlocked = H.Unlock == BuildingPot.UnlockBuilds1.ReturnBuildingState(vals[i]);
 
                 if (unlocked)
                 {
-                    //load the root of the ico 
+                    //load the root of the ico
                     var iconRoot = Root.RetBuildingIconRoot(vals[i]);
-                    var s = (Sprite) Resources.Load(iconRoot, typeof (Sprite));
+                    var s = (Sprite)Resources.Load(iconRoot, typeof(Sprite));
 
                     //didnt found an Icon
                     if (s == null)//new Sprite()
@@ -115,10 +112,10 @@ public class BuildingsMenu : GUIElement
 
                     slots[i].GetComponent<Image>().sprite = s;
                 }
-                //locked icon 
+                //locked icon
                 else ShowLockedIcon(slots[i]);
             }
-            //so if slot is empty 
+            //so if slot is empty
             else MakeAlphaColorZero(slots[i]);
         }
     }
@@ -128,14 +125,14 @@ public class BuildingsMenu : GUIElement
         g.GetComponent<Image>().sprite = locked;
     }
 
-    void MakeAlphaColorZero(GameObject g)
+    private void MakeAlphaColorZero(GameObject g)
     {
         Color bl = Color.white;
         bl.a = 0f;
         g.GetComponent<Image>().color = bl;
     }
 
-    void MakeAlphaColorMax(GameObject g)
+    private void MakeAlphaColorMax(GameObject g)
     {
         Color bl = Color.white;
         bl.a = 255f;
@@ -144,13 +141,13 @@ public class BuildingsMenu : GUIElement
 
     /// <summary>
     /// Here have to implement the locking and unlocking of buildings
-    /// todo 
+    /// todo
     /// </summary>
     /// <param name="build"></param>
     /// <returns></returns>
-    bool IsThisBuildLocked(H build)
+    private bool IsThisBuildLocked(H build)
     {
-        //debug 
+        //debug
         if (build == H.Shipyard)
         {
             return true;
@@ -158,9 +155,9 @@ public class BuildingsMenu : GUIElement
 
         return false;
     }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+    // Update is called once per frame
+    private void Update()
+    {
+    }
 }

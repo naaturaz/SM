@@ -1,26 +1,27 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 /// <summary>
 /// The terrain is gonna be divided in varius regions and they will have the
-/// Crytals 
+/// Crytals
 /// </summary>
 public class CrystalRegion
 {
-    private int _index;//the region index 
+    private int _index;//the region index
 
-    //the region 
+    //the region
     private Rect _region;
 
-    List<Crystal> _terraCrystals = new List<Crystal>(); 
-    List<Crystal> _obstaCrystals = new List<Crystal>();
+    private List<Crystal> _terraCrystals = new List<Crystal>();
+    private List<Crystal> _obstaCrystals = new List<Crystal>();
 
     private string _landZoneID;
 
     //will indicate if this region has a Water Crystal
-    //null not set, Yes : it has it, No: doesnt have it 
+    //null not set, Yes : it has it, No: doesnt have it
     private string _waterCrystalInfo;
+
     private string _mountCrystalInfo;
 
     private string _whatAudioIReport;
@@ -69,8 +70,8 @@ public class CrystalRegion
     //}
 
     /// <summary>
-    /// OMG 1 day of work to find out that ObstaCrystals were being saved and loaded 
-    /// 
+    /// OMG 1 day of work to find out that ObstaCrystals were being saved and loaded
+    ///
     /// They were actually saved on the XML file 'Bay_And_Mountain_1_River'  >
     /// </summary>
     /// <returns></returns>
@@ -102,7 +103,7 @@ public class CrystalRegion
         {
             return;
         }
-        
+
         //DebugHere();
     }
 
@@ -126,11 +127,6 @@ public class CrystalRegion
 
         return _mountCrystalInfo == "Yes" || ItHasAWaterCristal();
     }
-
-
-
-
-
 
     /// <summary>
     /// Will tell u if this Region contains at least one Water Crystal
@@ -161,9 +157,6 @@ public class CrystalRegion
         return "No";
     }
 
-
-
-
     /// <summary>
     /// Add crystals to TerraCrystal
     /// </summary>
@@ -193,7 +186,7 @@ public class CrystalRegion
         }
     }
 
-    void AddToTerraCrystals(Crystal c)
+    private void AddToTerraCrystals(Crystal c)
     {
         if (!_terraCrystals.Contains(c))
         {
@@ -214,26 +207,26 @@ public class CrystalRegion
         {
             _landZoneID = myZones[0];
         }
-        else if(myZones.Count > 1)
+        else if (myZones.Count > 1)
         {
             _landZoneID = "Mixed";
         }
     }
 
     /// <summary>
-    /// Will return the different ZOnes names. 
+    /// Will return the different ZOnes names.
     /// </summary>
     /// <returns></returns>
-    List<string> ReturnDiffZonesNames()
+    private List<string> ReturnDiffZonesNames()
     {
         return ReturnDiffCrystals(_terraCrystals, H.LinkRect);
     }
 
-        /// <summary>
+    /// <summary>
     /// Will return diff crystals of the type pass, crystals wont be repeated
     /// </summary>
     /// <returns></returns>
-    List<string> ReturnDiffCrystals(List<Crystal> list, H typeP)
+    private List<string> ReturnDiffCrystals(List<Crystal> list, H typeP)
     {
         List<string> res = new List<string>();
 
@@ -253,7 +246,7 @@ public class CrystalRegion
     /// to detect River, Ocean shore and Full Ocean
     /// </summary>
     /// <returns></returns>
-    string DefineWhichAudioIReport()
+    private string DefineWhichAudioIReport()
     {
         //106 ocean shore, 84 river , 64 riv
         if (Index == 106 || Index == 84 || Index == 64)
@@ -266,7 +259,7 @@ public class CrystalRegion
         }
 
         var myCrsytals = ReturnDiffCrystalsNames();
-        //crystals that are seaType 
+        //crystals that are seaType
         var seaTypes = myCrsytals.Where(a => a.Type1 == H.WaterObstacle).ToList();
         var mountTypes = myCrsytals.Where(a => a.Type1 == H.MountainObstacle).ToList();
 
@@ -284,7 +277,7 @@ public class CrystalRegion
         else if (myCrsytals.Count > 1 && uniqueZones.Count == 0)
         {
             return "Later";//OceanSHore
-        }   
+        }
         else if (myCrsytals.Count > 1 && uniqueZones.Count == 1)
         {
             //this ones will find later if have a Full Ocean around if they do that
@@ -308,7 +301,7 @@ public class CrystalRegion
     /// Will return Crystalls are in this region
     /// </summary>
     /// <returns></returns>
-    List<Crystal> ReturnDiffCrystalsNames()
+    private List<Crystal> ReturnDiffCrystalsNames()
     {
         List<Crystal> res = new List<Crystal>();
         List<string> keyers = new List<string>();
@@ -359,13 +352,12 @@ public class CrystalRegion
             }
         }
         WhatAudioIReport = "River";
-        
     }
 
     public float TempDistance { get; set; }
 
     /// <summary>
-    /// The center position of the rect of the region 
+    /// The center position of the rect of the region
     /// </summary>
     /// <returns></returns>
     internal Vector3 Position()

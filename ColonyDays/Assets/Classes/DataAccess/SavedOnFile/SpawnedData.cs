@@ -1,8 +1,8 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-public class SpawnedData {
-
+public class SpawnedData
+{
     public Vector3 Pos;
     public Quaternion Rot;
     public H Type;
@@ -12,8 +12,8 @@ public class SpawnedData {
     public List<SpawnedData> AllSpawnedObj = new List<SpawnedData>();//containts all spawned date serie saved
     public int TerraMshCntrlAllVertexIndexCount;//Terreno.MeshController.AllVertex saved
 
-    //the tree height 
-    //used when a tree is replanted 
+    //the tree height
+    //used when a tree is replanted
     public float TreeHeight = 1;
 
     public MDate SeedDate;
@@ -23,10 +23,9 @@ public class SpawnedData {
 
     public int Region;
 
-
-    public SpawnedData(Vector3 posP, Quaternion rotP, H typeP,  int rootStringIndexP,
-        int allVertexIndexP, float treeHeight=0, MDate seedDate=null, float maxHeight=0,
-        bool treeFall=false, float weight=0, int region = -1)
+    public SpawnedData(Vector3 posP, Quaternion rotP, H typeP, int rootStringIndexP,
+        int allVertexIndexP, float treeHeight = 0, MDate seedDate = null, float maxHeight = 0,
+        bool treeFall = false, float weight = 0, int region = -1)
     {
         Pos = posP;
         Rot = rotP;
@@ -44,13 +43,12 @@ public class SpawnedData {
         Region = region;
     }
 
-    public SpawnedData(){}
-
-
-
+    public SpawnedData()
+    {
+    }
 
     /// <summary>
-    /// The distance of the midle of the region to the init region 
+    /// The distance of the midle of the region to the init region
     /// </summary>
     /// <returns></returns>
     internal float RegionDistanceToInit()

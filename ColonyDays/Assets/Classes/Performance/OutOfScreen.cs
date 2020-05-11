@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
-using System.Collections;
+
 /// <summary>
 /// Each Person , Still element will have one instance of this class
 /// </summary>
 public class OutOfScreen
 {
-
     //there are 2 types now, Person and StillElement
     private H _type;
 
@@ -47,7 +46,7 @@ public class OutOfScreen
     }
 
     /// <summary>
-    /// Says if is on the Screen Rect now 
+    /// Says if is on the Screen Rect now
     /// </summary>
     public bool OnScreenRectNow
     {
@@ -61,13 +60,10 @@ public class OutOfScreen
         _renderer = _person.Geometry.gameObject.GetComponent<Renderer>();
     }
 
-
-
     private void InitAnimal()
     {
         _animator = _animal.gameObject.GetComponent<Animator>();
         _boxCollider = _animal.gameObject.GetComponent<BoxCollider>();
-
 
         if (_animal.Geometry == null)
         {
@@ -81,20 +77,20 @@ public class OutOfScreen
     public void A45msUpdate()
     {
         _onScreenRectNow = Program.gameScene.Fustrum1.OnScreen(ExtractObjPos());
-        //if is moving now can be reshown bz might be on his way somewhere 
+        //if is moving now can be reshown bz might be on his way somewhere
         if (_onScreenRectNow &&
-            (_renderer.isVisible || _person.Body.MovingNow || _person.Body.Location == HPers.InWork)//inwork is for forester 
+            (_renderer.isVisible || _person.Body.MovingNow || _person.Body.Location == HPers.InWork)//inwork is for forester
             && !_onScreenRenderNow)
         {
             _onScreenRenderNow = true;
             SwitchNow();
         }
-        else if (_person != null && 
+        else if (_person != null &&
             (!_onScreenRectNow || !_renderer.isVisible) &&
             _onScreenRenderNow && _person.Body.Location != HPers.InWork)
         {
             _onScreenRenderNow = false;
-            //wont deactivate the animator if is on RectNow and close enough to the camera 
+            //wont deactivate the animator if is on RectNow and close enough to the camera
             if (_onScreenRectNow && _currentLOD == H.LOD0)
             {
                 return;
@@ -102,7 +98,7 @@ public class OutOfScreen
             SwitchNow();
         }
         HideShow();
-	}
+    }
 
     //void UpdateOnObjt()
     //{
@@ -112,7 +108,7 @@ public class OutOfScreen
     //    }
     //}
 
-    Vector3 ExtractObjPos()
+    private Vector3 ExtractObjPos()
     {
         if (_type == H.Person)
         {
@@ -125,7 +121,6 @@ public class OutOfScreen
     {
         _currentLOD = newLOD;
         SwitchNow();
-    
     }
 
     private void SwitchNow()
@@ -140,14 +135,14 @@ public class OutOfScreen
         {
             OnBecameInvisible();
         }
-        
+
         HideShow();
     }
 
-
     private bool oldScreenRectState;
+
     /// <summary>
-    /// so it gets hidden when camera lets him outOfScreen 
+    /// so it gets hidden when camera lets him outOfScreen
     /// </summary>
     private void HideShow()
     {
@@ -163,7 +158,7 @@ public class OutOfScreen
         {
             if (_type == H.Person)
             {
-               _person.Body.Show();
+                _person.Body.Show();
             }
         }
         else if (!OnScreenRenderNow)
@@ -175,9 +170,9 @@ public class OutOfScreen
         }
     }
 
-    void OnBecameVisible()
+    private void OnBecameVisible()
     {
-        if (_person!=null)
+        if (_person != null)
         {
             //Debug.Log("became visible " + _person.MyId);
             _person.Body.EnableAnimator();
@@ -188,14 +183,14 @@ public class OutOfScreen
         }
     }
 
-    void OnBecameInvisible()
+    private void OnBecameInvisible()
     {
         if (_person != null)
         {
             //Debug.Log("became Invisible " + _person.MyId);
             _person.Body.DisAbleAnimator();
         }
-        else if(_animal != null)
+        else if (_animal != null)
         {
             _animator.enabled = false;
         }

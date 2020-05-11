@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 /// <summary>
-/// The tile that display an achievement 
+/// The tile that display an achievement
 /// </summary>
 public class NotificationTile : GUIElement
 {
@@ -19,7 +19,7 @@ public class NotificationTile : GUIElement
         set { _notification = value; }
     }
 
-    void Start()
+    private void Start()
     {
         var backO = GetChildCalled("BackOwn");
         _backOwn = backO.GetComponent<Image>();
@@ -36,7 +36,7 @@ public class NotificationTile : GUIElement
         Set();
     }
 
-    void Set()
+    private void Set()
     {
         _icon.sprite = LoadIcons();
         _title.text = _notification.Name;
@@ -82,7 +82,7 @@ public class NotificationTile : GUIElement
         var localScale = obj.transform.localScale;
 
         obj.transform.position = iniPos;
-        obj.transform.SetParent( container);
+        obj.transform.SetParent(container);
 
         obj.transform.localScale = localScale;
         obj.Notification1 = notification;
@@ -90,16 +90,7 @@ public class NotificationTile : GUIElement
         return obj;
     }
 
-
-
-
-
-
-    void Update()
+    private void Update()
     {
-
     }
 }
-
-
-

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Fustrum
 {
@@ -30,7 +29,7 @@ public class Fustrum
 
     public bool OnScreen(Vector3 objPosition)
     {
-        //todo change this cam.WorldToScreenPoint so its not asked by everyone all the time 
+        //todo change this cam.WorldToScreenPoint so its not asked by everyone all the time
         var convertedPos = cam.WorldToScreenPoint(objPosition);
         if (screenRect.Contains(convertedPos))
         {
@@ -42,6 +41,7 @@ public class Fustrum
     }
 
     private Vector3 _oldCamPos;
+
     public void Update()
     {
         //if (_oldCamPos!=cam.transform.position)
@@ -51,14 +51,14 @@ public class Fustrum
         //}
     }
 
-
     //the pad outside the screen so things are seeing slighly before getting into screen
     private float screenPad = 50;
+
     /// <summary>
-    /// Needed to init and if ScreenGame resolution is changed 
+    /// Needed to init and if ScreenGame resolution is changed
     /// </summary>
     public void RedoRect()
     {
-        screenRect = new Rect(0 - screenPad, 0 - screenPad , Screen.width + screenPad, Screen.height + screenPad);
+        screenRect = new Rect(0 - screenPad, 0 - screenPad, Screen.width + screenPad, Screen.height + screenPad);
     }
 }

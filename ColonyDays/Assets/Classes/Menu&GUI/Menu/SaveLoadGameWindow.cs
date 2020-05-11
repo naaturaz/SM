@@ -19,6 +19,7 @@ internal class SaveLoadGameWindow : GUIElement
     private Text _title;
     private Scrollbar _verticScrollbar;
     private string _which;//is load or save dialog
+
     public void DeleteCallBack()
     {
         PopulateScrollView();
@@ -231,6 +232,7 @@ internal class SaveLoadGameWindow : GUIElement
         //pull the last Saved game if one
         _tileNameSelected = PlayerPrefs.GetString("Last_Saved");
     }
+
     /// <summary>
     /// So as changes size will be available or not.
     /// We need this ref ' _verticScrollbar ' to set it to defauitl value

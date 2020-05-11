@@ -1,15 +1,14 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class GoldRock : StillElement {
-
-	// Use this for initialization
-	void Start () {
+﻿public class GoldRock : StillElement
+{
+    // Use this for initialization
+    private void Start()
+    {
         base.Start();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	    base.Update();
-	}
+    }
+
+    // Update is called once per frame
+    private void Update()
+    {
+        base.Update();
+    }
 }

@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-//they used to be the Prevoew Way now is only use to see how far this colliders go 
-//so i can define bounds 
+//they used to be the Prevoew Way now is only use to see how far this colliders go
+//so i can define bounds
 
-public class PreviewWay : Building {
-
+public class PreviewWay : Building
+{
     private bool _isActiveElement = true;//is the active element of a way
     private Way way;
+
     //this is the radues of the sphere that search thru to see what was collided when was fixed to terrain
     private float radius = 2f;
 
@@ -24,17 +25,17 @@ public class PreviewWay : Building {
     }
 
     // Use this for initialization
-	void Start ()
+    private void Start()
     {
         //InitializeMatColors();
-	}
-    
+    }
+
     /// <summary>
     /// Initilize the color of this obj InitialColor prop.
     /// Will keep it like that if all good or red if is not good.
     /// This is not needed bz this obj is not being rendered
     /// </summary>
-    void InitializeMatColors()
+    private void InitializeMatColors()
     {
         way = (Way)BuildingPot.Control.CurrentSpawnBuild;
         InitialColor = Geometry.GetComponent<Renderer>().material.color;
@@ -44,18 +45,18 @@ public class PreviewWay : Building {
             Geometry.GetComponent<Renderer>().material.color = Color.red;
         }
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    private void Update()
     {
         //Will be useful if this class instances were rendered but thhere are not
         //if (_isActiveElement)
         //{
         //    CheckAndSwitchColor();
         //}
-	}
+    }
 
-    void CheckAndSwitchColor()
+    private void CheckAndSwitchColor()
     {
         if (Geometry.GetComponent<Renderer>().material.color == InitialColor && !way.IsWayOk)
         {

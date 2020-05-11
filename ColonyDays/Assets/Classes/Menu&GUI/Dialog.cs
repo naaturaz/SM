@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Steamworks;
+using System;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using Steamworks;
 using UnityEngine;
-
 
 public class Dialog
 {
@@ -23,7 +18,6 @@ public class Dialog
 
     public static void Start()
     {
-
     }
 
     public static void OKCancelDialog(H type)
@@ -69,7 +63,6 @@ public class Dialog
         {
             _dialogGo = DialogGO.Create(Root.inputFormDialog, _canvas, _middleOfScreen, _type, str1);
         }
-
     }
 
     /// <summary>
@@ -114,14 +107,13 @@ public class Dialog
             }
             else if (_type == H.Negative)
             {
-
             }
             else if (_type == H.CompleteQuest)
             {
                 Program.gameScene.QuestManager.QuestCompletedAcknowled();
             }
         }
-        //cant create dialog b4 bz will get destroyed 
+        //cant create dialog b4 bz will get destroyed
         DestroyCurrDialog();
 
         //after destroy
@@ -132,10 +124,9 @@ public class Dialog
                 Dialog.OKDialog(H.Info, "Done! Thank you :)");
             }
         }
-
     }
 
-    static void DestroyCurrDialog()
+    private static void DestroyCurrDialog()
     {
         //when calling a BuyRegion it will try to delete current dialog.
         //thi is to prevent NullRef exp if is none
@@ -154,14 +145,14 @@ public class Dialog
     }
 
     /// <summary>
-    /// if resolution is chagned 
+    /// if resolution is chagned
     /// </summary>
     public static void RedoMiddleOfScreen()
     {
         _middleOfScreen = new Vector3(Screen.width / 2, Screen.height / 2, 0);
     }
 
-    static void RefindCanvas()
+    private static void RefindCanvas()
     {
         var myForms = MonoBehaviour.FindObjectsOfType<MyForm>();
 
@@ -180,7 +171,7 @@ public class Dialog
         }
     }
 
-    static void CanvasStep(GameObject go)
+    private static void CanvasStep(GameObject go)
     {
         var canvGO = General.GetChildCalledOnThis("Canvas", go);
 
@@ -190,16 +181,9 @@ public class Dialog
         }
     }
 
-
-
-
-
-
-
-
     /// <summary>
     /// Creates a file of the type. Is a .txt with extension .sm
-    /// 
+    ///
     /// </summary>
     /// <param name="type"></param>
     public static void CreateFile(string type, string text)
@@ -255,7 +239,6 @@ public class Dialog
         DataCollection.Save(path);
         //
 
-
         if (SteamUser.GetSteamID().m_SteamID == 76561198245800476 ||
             SteamUser.GetSteamID().m_SteamID == 76561197970401438)
         {
@@ -266,8 +249,6 @@ public class Dialog
         LogUploader.UploadDirectToAWSCarlos(path);
         return path;
     }
-
-
 
     private static string FileHeader()
     {
@@ -286,16 +267,8 @@ public class Dialog
             "\n\n";
     }
 
-
-
-
     public static bool IsActive()
     {
         return _dialogGo != null;
     }
-
-
-
-
 }
-

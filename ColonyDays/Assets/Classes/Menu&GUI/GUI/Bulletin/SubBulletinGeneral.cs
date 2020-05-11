@@ -4,14 +4,14 @@ using UnityEngine;
 
 namespace Assets.Classes.Menu_GUI.GUI.Bulletin
 {
-    class SubBulletinGeneral
+    internal class SubBulletinGeneral
     {
         private BulletinWindow _bulletinWindow;
 
         //how many people work in places
-        Dictionary<string, int> _report = new Dictionary<string, int>(); 
+        private Dictionary<string, int> _report = new Dictionary<string, int>();
 
-        List<Item> _finReport = new List<Item>(); 
+        private List<Item> _finReport = new List<Item>();
 
         public SubBulletinGeneral(BulletinWindow win)
         {
@@ -19,7 +19,9 @@ namespace Assets.Classes.Menu_GUI.GUI.Bulletin
         }
 
         #region Control Workers
-        bool reDoneSalaries;//for users  that changed salaries already
+
+        private bool reDoneSalaries;//for users  that changed salaries already
+
         public void ShowWorkers()
         {
             if (!reDoneSalaries)
@@ -38,7 +40,8 @@ namespace Assets.Classes.Menu_GUI.GUI.Bulletin
             _bulletinWindow.AdjustContentHeight(list.Count * 5.2f);
         }
 
-        List<WorkerTile> _reports = new List<WorkerTile>();
+        private List<WorkerTile> _reports = new List<WorkerTile>();
+
         private void ShowWorkers(List<string> list)
         {
             var tileHeight = -4.35f;
@@ -60,7 +63,7 @@ namespace Assets.Classes.Menu_GUI.GUI.Bulletin
             }
         }
 
-        float ReturnTileYScale()
+        private float ReturnTileYScale()
         {
             if (_reports.Count > 0)
             {
@@ -83,9 +86,9 @@ namespace Assets.Classes.Menu_GUI.GUI.Bulletin
             _reports.Clear();
         }
 
-        #endregion
+        #endregion Control Workers
 
-        string Pad(string pad, int current, int max, int padCount)
+        private string Pad(string pad, int current, int max, int padCount)
         {
             string res = "";
 
@@ -98,11 +101,11 @@ namespace Assets.Classes.Menu_GUI.GUI.Bulletin
             return res;
         }
 
-        void CreateDict(List<Person> workers)
+        private void CreateDict(List<Person> workers)
         {
             for (int i = 0; i < workers.Count; i++)
             {
-                AddKeyToReport(workers[i].Work.HType+"");
+                AddKeyToReport(workers[i].Work.HType + "");
             }
 
             for (int i = 0; i < _report.Count; i++)
@@ -110,9 +113,9 @@ namespace Assets.Classes.Menu_GUI.GUI.Bulletin
                 _finReport.Add(new Item(_report.ElementAt(i).Key, _report.ElementAt(i).Value));
             }
             _finReport = _finReport.OrderByDescending(a => a.Value).ToList();
-        }   
-        
-        void CreateDict(List<string> builds)
+        }
+
+        private void CreateDict(List<string> builds)
         {
             for (int i = 0; i < builds.Count; i++)
             {
@@ -126,7 +129,7 @@ namespace Assets.Classes.Menu_GUI.GUI.Bulletin
             _finReport = _finReport.OrderByDescending(a => a.Value).ToList();
         }
 
-        void AddKeyToReport(string key)
+        private void AddKeyToReport(string key)
         {
             //if (key.Contains("AnimalFarm"))
             //{
@@ -176,11 +179,10 @@ namespace Assets.Classes.Menu_GUI.GUI.Bulletin
             return res;
         }
 
-#endregion
-
+        #endregion Buildings
     }
 
-    class Item
+    internal class Item
     {
         private string _key;
         private int _value;

@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using Assets.Classes.Menu_GUI.GUI.Bulletin;
+﻿using Assets.Classes.Menu_GUI.GUI.Bulletin;
 using UnityEngine;
 using UnityEngine.UI;
-
 
 public class BulletinWindow : GUIElement
 {
@@ -16,10 +14,11 @@ public class BulletinWindow : GUIElement
 
     //subBulletins
     private SubBulletinGeneral _workers;
+
     private static SubBulletinProduction _production;
     private static SubBulletinFinance _finance;
 
-    Text _help;//help in this window
+    private Text _help;//help in this window
 
     public static SubBulletinProduction SubBulletinProduction1
     {
@@ -51,7 +50,7 @@ public class BulletinWindow : GUIElement
         set { _scroll_Ini_PosGO = value; }
     }
 
-    void Start()
+    private void Start()
     {
         _body = GetChildCalled("Body_Lbl").GetComponent<Text>();
         iniPos = transform.position;
@@ -61,7 +60,7 @@ public class BulletinWindow : GUIElement
         _workers = new SubBulletinGeneral(this);
         _production = new SubBulletinProduction(this);
         _finance = new SubBulletinFinance(this);
-        
+
         _scroll = GetChildCalled("Scroll_View");
         _content = GetGrandChildCalledFromThis("Content", _scroll);
         _contentRectTransform = _content.GetComponent<RectTransform>();
@@ -71,15 +70,15 @@ public class BulletinWindow : GUIElement
         _help = h.GetComponent<Text>();
         _help.text = "";
 
-        //bz GUI Loades like 4 times 
+        //bz GUI Loades like 4 times
         PersonData pData = XMLSerie.ReadXMLPerson();
 
         var tempData = Program.gameScene.ProvideMeWithTempData();
         //means is reloading from a change in GUI a
-        if (tempData!=null)
+        if (tempData != null)
             pData = tempData;
 
-        //loading 
+        //loading
         if (pData != null)
         {
             SubBulletinProduction1 = pData.PersonControllerSaveLoad.SubBulletinProduction;
@@ -92,17 +91,17 @@ public class BulletinWindow : GUIElement
             }
         }
 
-        //means is brand new game 
+        //means is brand new game
         if (_finance.FinanceLogger.Budgets.Count == 0)
             _finance.FinanceLogger.AddYearBudget();
     }
 
-    void Update()
+    private void Update()
     {
     }
 
     /// <summary>
-    /// Called from GUI 
+    /// Called from GUI
     /// </summary>
     public void Show()
     {
@@ -114,7 +113,7 @@ public class BulletinWindow : GUIElement
         Program.MouseListener.HelpWindow.Hide();
     }
 
-    void HideAll()
+    private void HideAll()
     {
         _help.text = "";
         _scroll.SetActive(false);
@@ -127,7 +126,7 @@ public class BulletinWindow : GUIElement
     public void ShowScrool()
     {
         _scroll.SetActive(true);
-        //all the way up 
+        //all the way up
         base.ResetScroolPos();
     }
 
@@ -145,8 +144,8 @@ public class BulletinWindow : GUIElement
         _workers.ShowWorkers();
 
         _help.text = Languages.ReturnString("Help.Bulletin/General/Workers");
-    }  
-    
+    }
+
     /// <summary>
     /// Called from GUI
     /// </summary>
@@ -180,8 +179,8 @@ public class BulletinWindow : GUIElement
 
         _production.ShowConsumeReport();
         _help.text = Languages.ReturnString("Help.Bulletin/Prod/Consume");
-    } 
-    
+    }
+
     /// <summary>
     /// Called from GUI
     /// </summary>
@@ -194,7 +193,7 @@ public class BulletinWindow : GUIElement
 
     /// <summary>
     /// Called from GUI
-    /// 
+    ///
     /// Also from GUI on Show_Invent_Item_Small_Med_3_Text
     /// </summary>
     public void ShowSpecs()
@@ -214,14 +213,14 @@ public class BulletinWindow : GUIElement
         else if (type == "Consume")
         {
             _production.AddConsumeThisYear(p, amt);
-        }   
+        }
         else if (type == "Expire")
         {
             _production.AddToExpirationThisYear(p, amt);
         }
     }
 
-    void ClickAndHideAll()
+    private void ClickAndHideAll()
     {
         AudioCollector.PlayOneShotFullAudio("ClickMetal2");
         HideAll();
@@ -305,7 +304,7 @@ public class BulletinWindow : GUIElement
         base.Show();
         ShowExports();
     }
-    
+
     /// <summary>
     /// called from GUI  Dollars
     /// </summary>
@@ -316,13 +315,13 @@ public class BulletinWindow : GUIElement
         ShowProducedReport();
     }
 
-    void ShowProducedReport()
+    private void ShowProducedReport()
     {
         ClickAndHideAll();
         _production.ShowProdReport();
 
         _help.text = Languages.ReturnString("Help.Bulletin/Prod/Produce");
     }
-    
-    #endregion
+
+    #endregion Finance
 }

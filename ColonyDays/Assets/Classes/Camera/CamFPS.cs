@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 //http://forum.unity3d.com/threads/a-free-simple-smooth-mouselook.73117/
 
 public class CamFPS : MonoBehaviour
 {
-    Vector2 _mouseAbsolute;
-    Vector2 _smoothMouse;
+    private Vector2 _mouseAbsolute;
+    private Vector2 _smoothMouse;
 
     public Vector2 clampInDegrees = new Vector2(360, 180);
     public bool lockCursor;
@@ -19,14 +18,14 @@ public class CamFPS : MonoBehaviour
     // Yaw rotation will affect this object instead of the camera if set.
     public GameObject characterBody;
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         Rotates();
         Moves(10f, 100f);
     }
 
     //by me
-    void Moves(float speedMove, float speedZoom)
+    private void Moves(float speedMove, float speedZoom)
     {
         //zoom
         if (Input.GetAxis("Mouse ScrollWheel") > 0) // forward
@@ -38,7 +37,7 @@ public class CamFPS : MonoBehaviour
             transform.position += transform.forward * -1 * speedZoom * Time.deltaTime;
         }
         //WASD Keys
-        if(Input.GetKey("w"))
+        if (Input.GetKey("w"))
         {
             transform.Translate(Vector3.up * speedMove * Time.deltaTime);
         }
@@ -56,7 +55,7 @@ public class CamFPS : MonoBehaviour
         }
     }
 
-    void Start()
+    private void Start()
     {
         // Set target direction to the camera's initial orientation.
         targetDirection = transform.localRotation.eulerAngles;
@@ -65,7 +64,7 @@ public class CamFPS : MonoBehaviour
         if (characterBody) targetCharacterDirection = characterBody.transform.localRotation.eulerAngles;
     }
 
-    void Rotates()
+    private void Rotates()
     {
         // Ensure the cursor is always locked when set
         Screen.lockCursor = lockCursor;

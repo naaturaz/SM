@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class LineRender : General
 {
@@ -35,8 +34,8 @@ public class LineRender : General
         //if (container != null) { obj.transform.SetParent(container); }
         return obj;
     }
-    
-    void Start()
+
+    private void Start()
     {
         var render = Geometry.GetComponent<MeshRenderer>();
         //_mesh = render.
@@ -46,10 +45,9 @@ public class LineRender : General
         //{
         //    UVisHelp.CreateText(_mesh.mesh.vertices[i], i + "");
         //}
-
     }
-    
-    void Update()
+
+    private void Update()
     {
         if (_person == null)
         {
@@ -64,14 +62,12 @@ public class LineRender : General
         SetPositions();
     }
 
-    void SetPositions()
+    private void SetPositions()
     {
         _mesh.mesh.vertices[0] = new Vector3(vector1.x + _withd, vector1.y, vector1.z + _withd);
         _mesh.mesh.vertices[3] = new Vector3(vector1.x - _withd, vector1.y, vector1.z - _withd);
-        
+
         _mesh.mesh.vertices[2] = new Vector3(vector2.x + _withd, vector2.y, vector2.z + _withd);
         _mesh.mesh.vertices[1] = new Vector3(vector2.x - _withd, vector2.y, vector2.z - _withd);
-
-        
     }
 }

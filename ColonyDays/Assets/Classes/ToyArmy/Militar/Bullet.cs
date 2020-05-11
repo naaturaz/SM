@@ -1,15 +1,13 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System;
 
 public class Bullet : General
 {
     private float Range = 1.5f;
     public AudioClip ShootSound = null;
     private bool canMove;
-    float _speed = 15;
-    float _startTime;
-    string _whoShootMe;
+    private float _speed = 15;
+    private float _startTime;
+    private string _whoShootMe;
 
     private void Start()
     {
@@ -18,7 +16,7 @@ public class Bullet : General
         {
             //Program.GameScene.SoundManager.PlaySound(8, 0.09f);
         }
-        else if(_whoShootMe.Contains("Sniper"))
+        else if (_whoShootMe.Contains("Sniper"))
         {
             //Program.GameScene.SoundManager.PlaySound(9, 0.09f);
         }
@@ -28,12 +26,12 @@ public class Bullet : General
         }
     }
 
-    void Update()
+    private void Update()
     {
         Move();
     }
 
-    void Move()
+    private void Move()
     {
         if (canMove)
         {
@@ -48,7 +46,7 @@ public class Bullet : General
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Terrain" || other.tag == "Player")
         {
@@ -61,19 +59,18 @@ public class Bullet : General
         return;
     }
 
-    void RPG()
+    private void RPG()
     {
         if (name.Contains("RPG"))
         {
-           // Program.GameScene.SoundManager.PlaySound(2, 0.05f);
+            // Program.GameScene.SoundManager.PlaySound(2, 0.05f);
             var exp = General.Create("Prefab/Particles/Explosion_Small", transform.position, "Explosion_Small");
         }
     }
 
-    void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
         //Destroy(gameObject);
-
     }
 
     internal void Fire(float bulletRange, float bulletSpeed, bool isGood, string whoShoots)
@@ -84,6 +81,4 @@ public class Bullet : General
         IsGood = isGood;
         canMove = true;
     }
-
-
 }

@@ -4,18 +4,18 @@ using System.Linq;
 using UnityEngine;
 
 /// <summary>
-/// Will load a random town and will place it in random spot 
+/// Will load a random town and will place it in random spot
 /// </summary>
-class TownLoader
+internal class TownLoader
 {
-    static SMe m = new SMe();
+    private static SMe m = new SMe();
 
     private static int _loadedBuildCalls;
     static private int _buildCounts;
-    static bool _townLoaded;
-    static string _dataPath;
-    static int _initRegion;
-    static Vector3 _initialPosition;
+    private static bool _townLoaded;
+    private static string _dataPath;
+    private static int _initRegion;
+    private static Vector3 _initialPosition;
 
     public static int InitRegion
     {
@@ -29,9 +29,8 @@ class TownLoader
         set { _townLoaded = value; }
     }
 
-
     /// <summary>
-    /// Called from builing.cs when a building is loaded 
+    /// Called from builing.cs when a building is loaded
     /// </summary>
     public static void NewBuildingLoaded()
     {
@@ -48,7 +47,7 @@ class TownLoader
     }
 
     /// <summary>
-    /// Returns the Data of a Random town for initial game 
+    /// Returns the Data of a Random town for initial game
     /// </summary>
     /// <returns></returns>
     public static BuildingData LoadDefault()
@@ -100,7 +99,7 @@ class TownLoader
     /// Gets random Town*.xml file
     /// </summary>
     /// <returns></returns>
-    static string GetRandomTownFile()
+    private static string GetRandomTownFile()
     {
         ///to  create Template towns.
         //new:
@@ -108,7 +107,7 @@ class TownLoader
         //-make isDev = true
 
         //old instruccions:
-        //-uncomment 2 line below  
+        //-uncomment 2 line below
         //-Also make sure in PErsonController the amt of people spawned will be zero
         //-Also make sure that the saved BuildingData.BuildingControllerData.TypeOfGame = H.None
         //other wise will give bugg changing btw Freewill and Traditional Mode
@@ -129,7 +128,8 @@ class TownLoader
     }
 
     private static int prot;
-    static Vector3 GetRandomMapPos()
+
+    private static Vector3 GetRandomMapPos()
     {
         var randPos = MeshController.CrystalManager1.ReturnTownIniPos();
         return randPos;
@@ -140,7 +140,7 @@ class TownLoader
     /// </summary>
     /// <param name="bData"></param>
     /// <returns></returns>
-    static BuildingData ShiftToRandBuildsPos(BuildingData bData)
+    private static BuildingData ShiftToRandBuildsPos(BuildingData bData)
     {
         var randIniPos = GetRandomMapPos();
         InitialPosition = randIniPos;
@@ -156,8 +156,9 @@ class TownLoader
     }
 
     private static Vector3 difference;
+
     /// <summary>
-    /// Moves all the building to the new spot 
+    /// Moves all the building to the new spot
     /// </summary>
     /// <param name="randIniPos"></param>
     /// <param name="bData"></param>
@@ -169,13 +170,13 @@ class TownLoader
         {
             var newPos = bData.All[i].IniPos + difference;
             //its is important to get the newPOs in the closest vertex so is aling with new buildings to
-            //spawn by user 
+            //spawn by user
             //newPos = m.Vertex.FindClosestVertex(newPos, m.AllVertexs.ToArray());
             bData.All[i].IniPos = newPos;
         }
     }
 
-    static List<Vector3> GetTownDim(BuildingData bData)
+    private static List<Vector3> GetTownDim(BuildingData bData)
     {
         List<Vector3> allAnchors = new List<Vector3>();
 
@@ -186,5 +187,4 @@ class TownLoader
 
         return Registro.FromALotOfVertexToPoly(allAnchors);
     }
-
 }

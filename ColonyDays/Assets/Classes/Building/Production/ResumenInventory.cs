@@ -1,18 +1,15 @@
-﻿using System;
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 /*
- * This is the one that will Resume all Storage Inventories 
- * 
+ * This is the one that will Resume all Storage Inventories
+ *
  */
 
 public class ResumenInventory
 {
-
-    Inventory _gameInventory = new Inventory("GameInventory", H.None);
+    private Inventory _gameInventory = new Inventory("GameInventory", H.None);
 
     /// <summary>
     /// All Game items are resumed here. Is updated from inventory.cs everytime something is added or removed
@@ -25,7 +22,7 @@ public class ResumenInventory
 
     /// <summary>
     /// Will retruen the amt of Category in all inventories.
-    /// 
+    ///
     /// Used for GUI
     /// </summary>
     /// <param name="pCat"></param>
@@ -42,7 +39,7 @@ public class ResumenInventory
 
     /// <summary>
     /// Will retruen the amt of item in all inventories.
-    /// 
+    ///
     /// Used for GUI
     /// </summary>
     /// <param name="item"></param>
@@ -52,7 +49,7 @@ public class ResumenInventory
         return GameInventory.ReturnAmtOfItemOnInv(item);
     }
 
-    void SetInitialGameInventory()
+    private void SetInitialGameInventory()
     {
         var storages = BuildingController.FindAllStructOfThisTypeContain(H.Storage);
 
@@ -63,7 +60,7 @@ public class ResumenInventory
     }
 
     /// <summary>
-    /// Will tell u if the item is on one of the inventorires 
+    /// Will tell u if the item is on one of the inventorires
     /// </summary>
     /// <param name="item"></param>
     /// <returns></returns>
@@ -105,12 +102,11 @@ public class ResumenInventory
         return accum > amt;
     }
 
-
     /// <summary>
     /// Will remove the item and the amount from the inventories.
-    /// 
-    /// This method is use for an building was built and 40 wood for ex needs to be removed 
-    /// 
+    ///
+    /// This method is use for an building was built and 40 wood for ex needs to be removed
+    ///
     /// Will loop thru the storages until remove the full amt
     /// </summary>
     /// <param name="item"></param>
@@ -131,9 +127,9 @@ public class ResumenInventory
     }
 
     /// <summary>
-    /// Will remove from the 'building' and will tell u how much is left to be removed 
+    /// Will remove from the 'building' and will tell u how much is left to be removed
     /// </summary>
-    float LeftToRemove(P item, float amt, Structure building)
+    private float LeftToRemove(P item, float amt, Structure building)
     {
         if (building.Inventory.IsItemOnInv(item))
         {
@@ -146,7 +142,7 @@ public class ResumenInventory
     }
 
     /// <summary>
-    /// So it gets added back to the closest Storage 
+    /// So it gets added back to the closest Storage
     /// </summary>
     /// <param name="item"></param>
     /// <param name="amt"></param>
@@ -159,9 +155,9 @@ public class ResumenInventory
 
     /// <summary>
     /// Will remove the item and the amount from the inventories.
-    /// 
-    /// This method is use for an building was built and 40 wood for ex needs to be removed 
-    /// 
+    ///
+    /// This method is use for an building was built and 40 wood for ex needs to be removed
+    ///
     /// Will loop thru the storages until remove the full amt
     /// </summary>
     /// <param name="item"></param>
@@ -182,9 +178,9 @@ public class ResumenInventory
     }
 
     /// <summary>
-    /// Will remove from the 'building' and will tell u how much is left to be removed 
+    /// Will remove from the 'building' and will tell u how much is left to be removed
     /// </summary>
-    float LeftToRemovePCat(PCat cat, float amt, Structure building)
+    private float LeftToRemovePCat(PCat cat, float amt, Structure building)
     {
         if (building.Inventory.DoWeHaveOfThisCat(cat))
         {
@@ -196,11 +192,8 @@ public class ResumenInventory
         return amt;
     }
 
-
-
-
     /// <summary>
-    /// Will tell u if all inventories are empty on the storages 
+    /// Will tell u if all inventories are empty on the storages
     /// </summary>
     /// <returns></returns>
     internal bool IsEmpty()
@@ -276,14 +269,14 @@ public class Coverage
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="type"></param>
     /// <param name="factor"></param>
     /// <param name="ageMin">not included</param>
     /// <param name="ageMax">not incl</param>
     /// <returns></returns>
-    static float CalculateCoverage(H type)
+    private static float CalculateCoverage(H type)
     {
         if (_build.Count == 0)
         {
@@ -302,9 +295,9 @@ public class Coverage
             acumPercent += schools[i].CurrentCoverage();
         }
         //the people can cover this tyoes of buildings shcools for ex. with 2 schools working at full will cover
-        //40 people bz the factor is 2 
+        //40 people bz the factor is 2
         var peopleCanCover = acumPercent * factor;
-        //amt of people that need the coverage 
+        //amt of people that need the coverage
         var amtPplTtl = PersonPot.Control.All.Count(a => a.Age > ageMin && a.Age < ageMax);
         //final coverage if can cover 20 people and 30 needed then the cover is gonna be .66
         var fin = peopleCanCover / amtPplTtl;
@@ -321,7 +314,7 @@ public class Coverage
     }
 
     /// <summary>
-    /// If is 
+    /// If is
     /// </summary>
     /// <param name="HType"></param>
     /// <param name="forced">if is marked will be found out every 10s </param>
@@ -359,17 +352,18 @@ public class Coverage
         return PersonPot.Control.All.Count(a => a.Age > stat.MinAge && a.Age < stat.MaxAge);
     }
 
-    static string PercentFormat(float val)
+    private static string PercentFormat(float val)
     {
         return (val * 100).ToString("n1") + "%";
     }
 
-    static string WholeNumbFormat(float val, int factor)
+    private static string WholeNumbFormat(float val, int factor)
     {
         return ((int)(val * factor)) + "";
     }
 
-    static List<BuildStat> _build = new List<BuildStat>();
+    private static List<BuildStat> _build = new List<BuildStat>();
+
     static private void LoadBuildStats()
     {
         _build.Add(new BuildStat(H.School, 10, ModController.AgeKidStartSchool(), ModController.AgeKidStartSchool() + 6));
@@ -379,7 +373,7 @@ public class Coverage
         _build.Add(new BuildStat(H.Library, 30, 3, 100));
     }
 
-    static BuildStat GiveMeStat(H hTypeP)
+    private static BuildStat GiveMeStat(H hTypeP)
     {
         if (_build.Count == 0)
         {
@@ -399,7 +393,7 @@ public class Coverage
 
     public static bool CanIUseThisBuilding(H typeP, Person p)
     {
-        if (p.Age>20)
+        if (p.Age > 20)
         {
             var a = 1;
         }

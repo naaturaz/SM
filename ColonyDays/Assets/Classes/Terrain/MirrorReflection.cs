@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
 // This is in fact just the Water script from Pro Standard Assets,
 // just with refraction stuff removed.
@@ -34,7 +34,7 @@ public class MirrorReflection : MonoBehaviour
         if (!cam)
             return;
 
-        // Safeguard from recursive reflections.        
+        // Safeguard from recursive reflections.
         if (s_InsideRendering)
             return;
         s_InsideRendering = true;
@@ -94,9 +94,8 @@ public class MirrorReflection : MonoBehaviour
         s_InsideRendering = false;
     }
 
-
     // Cleanup all the objects we possibly have created
-    void OnDisable()
+    private void OnDisable()
     {
         if (m_ReflectionTexture)
         {
@@ -107,7 +106,6 @@ public class MirrorReflection : MonoBehaviour
             DestroyImmediate(((Camera)kvp.Value).gameObject);
         m_ReflectionCameras.Clear();
     }
-
 
     private void UpdateCameraModes(Camera src, Camera dest)
     {

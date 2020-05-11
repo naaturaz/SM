@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class SubPolyr : General
 {
-    //Return the subpolygons selected ... this are fake subpolygons... a bunch of them 
+    //Return the subpolygons selected ... this are fake subpolygons... a bunch of them
     public List<Vector3> SubPolygonsSelected(int cols, int rows, ref List<Vector3> objsHitTerrain,
-        Vector3 iniHit,  SubDivider subDivide, int rotationFacer, bool isMouseOnTerrain,
+        Vector3 iniHit, SubDivider subDivide, int rotationFacer, bool isMouseOnTerrain,
         Vertexer vertex, UPoly poly, List<Vector3> currentHoverVertices)
     {
         List<Vector3> subPolys = new List<Vector3>();
@@ -19,7 +19,7 @@ public class SubPolyr : General
     }
 
     /// Creates a list for the selected sub polygons given the columns and rows
-    List<Vector3> CreateListSelected(ref List<Vector3> objsHitTerrain, int columns, int rows, Vector3 iniHit,
+    private List<Vector3> CreateListSelected(ref List<Vector3> objsHitTerrain, int columns, int rows, Vector3 iniHit,
         SubDivider subDivide, bool isMouseOnTerrain, Vertexer vertex, UPoly poly, List<Vector3> currentHoverVertices)
     {
         objsHitTerrain = UMesh.ReturnThePos(iniHit, subDivide.XSubStep, subDivide.ZSubStep, columns, rows);
@@ -30,7 +30,7 @@ public class SubPolyr : General
             res = UList.AddOneListToList(res, CreateOneSubPoly(objsHitTerrain[i], isMouseOnTerrain, vertex,
                 subDivide, poly, currentHoverVertices));
         }
-        //still needs to eliminate duplicates 
+        //still needs to eliminate duplicates
 
         return res;
     }
@@ -91,7 +91,7 @@ public class SubPolyr : General
     }
 
     //create one subpoly based on where we hit the terrain
-    List<Vector3> CreateOneSubPoly(Vector3 hitPointOnSubPoly, bool isMouseOnTerrain, Vertexer vertex,
+    private List<Vector3> CreateOneSubPoly(Vector3 hitPointOnSubPoly, bool isMouseOnTerrain, Vertexer vertex,
         SubDivider subDivide, UPoly poly, List<Vector3> currentHoverVertices)
     {
         //print(isMouseOnTerrain + "isMouseOnTerrain");

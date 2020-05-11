@@ -1,18 +1,18 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class Bomb : Explosive {
+public class Bomb : Explosive
+{
+    private bool isAPlayerInside;
 
-    bool isAPlayerInside;
+    // Use this for initialization
+    private void Start()
+    { destroyStartTime = Time.time; }
 
-	// Use this for initialization
-    void Start() { destroyStartTime = Time.time; }
-	
-	// Update is called once per frame
-	void Update () 
+    // Update is called once per frame
+    private void Update()
     {
         base.Update();
-	}
+    }
 
     protected override void FixedUpdate()
     {
@@ -20,19 +20,19 @@ public class Bomb : Explosive {
         {
             Explode();
 
-            if(isAPlayerInside)
+            if (isAPlayerInside)
             {
                 Program.THEPlayer.Lives = Program.THEPlayer.TakeOneLiveDamage();
             }
 
             if (isTimeDestroy)
             {
-                TimerDestroy(); 
+                TimerDestroy();
             }
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.transform != null)
         {
@@ -44,7 +44,7 @@ public class Bomb : Explosive {
         }
     }
 
-    void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if (other.transform != null)
         {

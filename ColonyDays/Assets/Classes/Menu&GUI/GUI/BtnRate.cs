@@ -1,14 +1,11 @@
-﻿using Steamworks;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BtnRate : MonoBehaviour
 {
-    bool _isGoodPlayer;
+    private bool _isGoodPlayer;
 
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         _isGoodPlayer = PlayerPrefs.GetInt("Rate") > 0;
 
@@ -17,7 +14,6 @@ public class BtnRate : MonoBehaviour
         //Debug.Log("id1:" + SteamUser.GetSteamID());
         //Debug.Log("id1 inner:" + SteamUser.GetSteamID().m_SteamID);
 
-
         if (!_isGoodPlayer)
         {
             gameObject.SetActive(false);
@@ -25,9 +21,8 @@ public class BtnRate : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-
     }
 
     public void Rate()

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Serialization;
 using UnityEngine;
 
 //Person Brain more complicated clas so far apr 14 2015
-//bz the many states 
+//bz the many states
 public class Brain
 {
     private HPers _currentTask = HPers.None;
@@ -13,11 +12,12 @@ public class Brain
 
     ///All Routes start on home, if person donstn have home will build shack or bohio
     /// They are only pulbic to be saved by the XML serial
-    public TheRoute _workRoute = new TheRoute(); //from home to work 
-    public TheRoute _foodRoute = new TheRoute(); //from home to food 
-    public TheRoute _idleRoute = new TheRoute(); //from home to idle point 
-    public TheRoute _religionRoute = new TheRoute(); //from home to idle point 
-    public TheRoute _chillRoute = new TheRoute(); //from home to idle point 
+    public TheRoute _workRoute = new TheRoute(); //from home to work
+
+    public TheRoute _foodRoute = new TheRoute(); //from home to food
+    public TheRoute _idleRoute = new TheRoute(); //from home to idle point
+    public TheRoute _religionRoute = new TheRoute(); //from home to idle point
+    public TheRoute _chillRoute = new TheRoute(); //from home to idle point
 
     private CryRouteManager _routerWork;
     private CryRouteManager _routerFood;
@@ -25,12 +25,13 @@ public class Brain
     private CryRouteManager _routerReligion;
     private CryRouteManager _routerChill;
 
-    CryRouteManager _eventSetter = new CryRouteManager();
-    Person _person;
+    private CryRouteManager _eventSetter = new CryRouteManager();
+    private Person _person;
 
     //Routes Started. they are kept started thru all the life of the route
-    //if is set back to false. Then the system will redo that route 
+    //if is set back to false. Then the system will redo that route
     private bool workRouteStart = true;
+
     private bool foodRouteStart = true;
     private bool idleRouteStart = true;
     private bool religionRouteStart = true;
@@ -40,11 +41,12 @@ public class Brain
 
     //breaing down 2700 lines of codes in subclasses
     private MoveToNewHome _moveToNewHome;
+
     private MajorityAgeReached _majorAge;
 
-    StageManager _stageManager;
+    private StageManager _stageManager;
 
-    MoveNow _moveNow;
+    private MoveNow _moveNow;
 
     public HPers CurrentTask
     {
@@ -62,7 +64,6 @@ public class Brain
         {
             _previousTask = value;
             //MindState();
-
         }
     }
 
@@ -86,7 +87,6 @@ public class Brain
     {
         _eventSetter.DoneRoute += DoneRouteHandler;
 
-
         _moveToNewHome = new MoveToNewHome(this, person);
         _majorAge = new MajorityAgeReached(this, person, MoveToNewHome);
 
@@ -101,7 +101,7 @@ public class Brain
     public Brain(Person person, PersonFile pF)
     {
         _moveToNewHome = new MoveToNewHome(this, person);
-        _majorAge = new MajorityAgeReached(this, person, MoveToNewHome, pF) ;
+        _majorAge = new MajorityAgeReached(this, person, MoveToNewHome, pF);
 
         Init(person);
         LoadFromFile(pF);
@@ -117,7 +117,6 @@ public class Brain
         _moveToNewHome = new MoveToNewHome(this, person);
         _majorAge = new MajorityAgeReached(this, person, MoveToNewHome);
 
-       
         Init(person);
 
         //goMindState = true;
@@ -134,18 +133,18 @@ public class Brain
         CurrentTask = HPers.None;
     }
 
-    string[] myBuilds;
-    void LoadFromFile(PersonFile pF)
+    private string[] myBuilds;
+
+    private void LoadFromFile(PersonFile pF)
     {
         _person.Home = GetStructureFromKey(pF._home);
         _person.Work = GetStructureFromKey(pF._work);
-        
+
         oldJob = pF._work;
         if (string.IsNullOrEmpty(oldJob))
         {
             oldJob = "";//so it keeps the logic on  WorkPositionsUpdate()
         }
-
 
         _person.FoodSource = GetStructureFromKey(pF._foodSource);
         _person.Religion = GetStructureFromKey(pF._religion);
@@ -166,7 +165,7 @@ public class Brain
         PersonPot.Control.RoutesCache1.AddReplaceRoute(_religionRoute);
         PersonPot.Control.RoutesCache1.AddReplaceRoute(_chillRoute);
 
-        //so routes dont get started 
+        //so routes dont get started
         if (pF._brain.CurrentTask != HPers.MovingToNewHome)
         {
             //bz is is moving dont worry abt this bz all routes need to get
@@ -175,7 +174,7 @@ public class Brain
             oldWork = pF._work;
             oldFoodSrc = pF._foodSource;
             oldReligion = pF._religion;
-            oldChill = pF._chill;            
+            oldChill = pF._chill;
         }
 
         SetBrainToMindState();
@@ -190,7 +189,7 @@ public class Brain
     /// <summary>
     /// so the MindState() works
     /// </summary>
-    void SetBrainToMindState()
+    private void SetBrainToMindState()
     {
         _routerFood.IsRouteReady = true;
         _routerWork.IsRouteReady = true;
@@ -200,10 +199,10 @@ public class Brain
     }
 
     /// <summary>
-    /// Created to redo old routes quickly. Once the are make "" the method CheckIfABuildWasChange() will 
+    /// Created to redo old routes quickly. Once the are make "" the method CheckIfABuildWasChange() will
     /// address the rerest
     /// </summary>
-    void WillRedoOldLoadedRoutes()
+    private void WillRedoOldLoadedRoutes()
     {
         if (_workRoute != null && _person.Work != null && _workRoute.DestinyKey != _person.Work.MyId)
         {
@@ -267,35 +266,33 @@ public class Brain
     private DateTime askReligion = new DateTime();
     private DateTime askChill = new DateTime();
 
-    void DefineWorkRoute()
+    private void DefineWorkRoute()
     {
         AddToGenOldKeyIfAOldRouteHasOneOldBridgeOnIt(_workRoute);
 
-       // _routerWork = new CryRouteManager(_person.Home, _person.Work, _person, HPers.Work, askDateTime: askWork);
+        // _routerWork = new CryRouteManager(_person.Home, _person.Work, _person, HPers.Work, askDateTime: askWork);
         _routerWork = new CryRouteManager(_person.Home, _person.Work, _person, askDateTime: askWork);
         _routerWork.DoneRoute += DoneRouteHandler;
-     
+
         workRouteStart = true;
     }
 
-    void DefineFoodSourceRoute()
+    private void DefineFoodSourceRoute()
     {
         AddToGenOldKeyIfAOldRouteHasOneOldBridgeOnIt(_foodRoute);
 
-       // _routerFood = new RouterManager(_person.Home, _person.FoodSource, _person, HPers.FoodSource, askDateTime: askFood);
-
+        // _routerFood = new RouterManager(_person.Home, _person.FoodSource, _person, HPers.FoodSource, askDateTime: askFood);
 
         _routerFood = new CryRouteManager(_person.Home, _person.FoodSource, _person, askDateTime: askFood);
         _routerFood.DoneRoute += DoneRouteHandler;
 
-
-
         foodRouteStart = true;
     }
 
-   // private Structure dummyIdle;
+    // private Structure dummyIdle;
     private Vector3 _idlePoint;
-    void DefineIdleRoute()
+
+    private void DefineIdleRoute()
     {
         AddToGenOldKeyIfAOldRouteHasOneOldBridgeOnIt(_idleRoute);
         _idlePoint = Return1HouseCorner();
@@ -310,44 +307,41 @@ public class Brain
         idleRouteStart = true;
     }
 
-    Vector3 Return1HouseCorner()
+    private Vector3 Return1HouseCorner()
     {
         var chosen = _person.Home.Anchors[UMath.GiveRandom(0, 4)];
         return Vector3.MoveTowards(chosen, _person.Home.transform.position, -.02f);//-.2
     }
 
-
-
-    void ResetDummyIdle()
+    private void ResetDummyIdle()
     {
         _person.MyDummy.LandZone1.Clear();
     }
 
-    void DefineReligionRoute()
+    private void DefineReligionRoute()
     {
         AddToGenOldKeyIfAOldRouteHasOneOldBridgeOnIt(_religionRoute);
 
         //_routerReligion = new RouterManager(_person.Home, _person.Religion, _person, HPers.Religion, askDateTime: askReligion);
         _routerReligion = new CryRouteManager(_person.Home, _person.Religion, _person, askDateTime: askReligion);
         _routerReligion.DoneRoute += DoneRouteHandler;
-        
-        
+
         religionRouteStart = true;
     }
 
-    void DefineChillRoute()
+    private void DefineChillRoute()
     {
         AddToGenOldKeyIfAOldRouteHasOneOldBridgeOnIt(_chillRoute);
 
         //_routerChill = new RouterManager(_person.Home, _person.Chill, _person, HPers.Chill, askDateTime: askChill);
         _routerChill = new CryRouteManager(_person.Home, _person.Chill, _person, askDateTime: askChill);
         _routerChill.DoneRoute += DoneRouteHandler;
-       
+
         chillRouteStart = true;
     }
 
     ///// <summary>
-    ///// Idle route is half way going to food source route 
+    ///// Idle route is half way going to food source route
     ///// </summary>
     //void DefineIdleRoute()
     //{
@@ -365,17 +359,17 @@ public class Brain
     //}
 
     /// <summary>
-    /// So it only kills the brdige after we create a new route 
-    /// 
-    /// To address that brdiges were killed way before new routes were created 
-    /// 
-    /// Will turn the goMindState to false so can do the route. Is here bz when was b4 will stop the 
-    /// Brain from going  
+    /// So it only kills the brdige after we create a new route
+    ///
+    /// To address that brdiges were killed way before new routes were created
+    ///
+    /// Will turn the goMindState to false so can do the route. Is here bz when was b4 will stop the
+    /// Brain from going
     /// </summary>
-    void AddToGenOldKeyIfAOldRouteHasOneOldBridgeOnIt(TheRoute theRoute)
+    private void AddToGenOldKeyIfAOldRouteHasOneOldBridgeOnIt(TheRoute theRoute)
     {
         GoMindState = false;
-       ////Debug.Log("AddToGenOldKey goMindState");
+        ////Debug.Log("AddToGenOldKey goMindState");
 
         if (String.IsNullOrEmpty(theRoute.BridgeKey))
         {
@@ -399,8 +393,9 @@ public class Brain
     #region MindStates
 
     private float lastCall;
+
     /// <summary>
-    /// Really important the mind states . 
+    /// Really important the mind states .
     /// Depending where the person is and goping and doing will do neext state
     /// </summary>
     public void MindState()
@@ -415,9 +410,8 @@ public class Brain
         lastCall = Time.time;
         //RemoveFromSystemIfNeed();
 
-
         //SkipIdleInHome();
-        GoIdleInHome();//to clear and check stuff in case is not doing it like when is only working 
+        GoIdleInHome();//to clear and check stuff in case is not doing it like when is only working
 
         SkipWork();
         GoWork();
@@ -455,28 +449,27 @@ public class Brain
 
     /*Promts are created with the purpose of allow to be able to move arond only with 2 builds
      * If the person is ready to move to a new state and that building we are going to is not null is all good...
-     * But if is null the promt will make Brain vars equal so next condition can be executed . and so on 
+     * But if is null the promt will make Brain vars equal so next condition can be executed . and so on
      */
     //private void SkipIdleInHome()
     //{
-    //    //doesnt need anything bz need to execute IdleInHome() Always 
+    //    //doesnt need anything bz need to execute IdleInHome() Always
     //}
-
 
     public void SkipWorkForced()
     {
         ReadyToGetFood(true);
     }
 
-    void SkipWork()
+    private void SkipWork()
     {
         //if is ready to work and Work is null or is not producing now, then Skip work
         if (ReadyToWork() &&
 
             (_person.Work == null || !_person.Work.IsProducingNow() //|| _stageManager.IsSunsetOrLater())
-            //without FoodSource wont go to work
-            //|| _person.FoodSource == null)
-            )) 
+                                                                    //without FoodSource wont go to work
+                                                                    //|| _person.FoodSource == null)
+            ))
         {
             ReadyToGetFood(true);
         }
@@ -500,7 +493,7 @@ public class Brain
 
     private void SkipReligion()
     {
-        if (ReadyToGoToReligion() && (_person.Religion == null || _stageManager.IsMidNightOrLater() ))
+        if (ReadyToGoToReligion() && (_person.Religion == null || _stageManager.IsMidNightOrLater()))
         {
             ReadyToGoChill(true);
         }
@@ -512,7 +505,7 @@ public class Brain
     private void SkipChill()
     {
         if (ReadyToGoChill() &&
-            (_person.Chill == null || !UPerson.IsMajor(_person.Age) 
+            (_person.Chill == null || !UPerson.IsMajor(_person.Age)
             || _stageManager.IsMidNightOrLater()))
         {
             ReadyToIdleInHome(true);
@@ -521,15 +514,15 @@ public class Brain
 
     /* This bools below are created to modularize the bool when asking for a specific state if is ready for its execution
      * This is to start the proccess of a person being able to move around only with 2 structures .. so wont be needed all
-     * 5 structueres to work 
+     * 5 structueres to work
      */
 
     /// <summary>
-    /// Tell if person is ready to work. 
+    /// Tell if person is ready to work.
     /// </summary>
     /// <returns></returns>
 
-    bool ReadyToIdleInHome(bool makeItTrue = false)
+    private bool ReadyToIdleInHome(bool makeItTrue = false)
     {
         if (makeItTrue)
         {
@@ -541,28 +534,27 @@ public class Brain
                (_person.Body.Location == HPers.Home || _person.Body.Location == HPers.None);
     }
 
-
     public bool ReadyToWork(bool makeItTrue = false)
     {
-        //this is when the prev state is calling this so it the state can get prompted to this new state 
+        //this is when the prev state is calling this so it the state can get prompted to this new state
         if (makeItTrue)
         {
             CurrentTask = HPers.IdleInHome;
             _person.Body.Location = HPers.None;
         }
 
-        return 
-            CurrentTask == HPers.IdleInHome && 
-            _person.FoodSource != null &&//person shoudld not go work if that is null 
+        return
+            CurrentTask == HPers.IdleInHome &&
+            _person.FoodSource != null &&//person shoudld not go work if that is null
                (_person.Body.Location == HPers.Home || _person.Body.Location == HPers.None);
     }
 
-    bool SomeThingToDoAtWork()
+    private bool SomeThingToDoAtWork()
     {
         return _person.Work != null && _person.Work.ThereIsWorkToDo(_person);
     }
 
-    bool ReadyToGetFood(bool makeItTrue = false)
+    private bool ReadyToGetFood(bool makeItTrue = false)
     {
         if (makeItTrue)
         {
@@ -574,7 +566,7 @@ public class Brain
         return CurrentTask == HPers.Walking && _person.Body.Location == HPers.Home && _person.Body.GoingTo == HPers.Home;
     }
 
-    bool ReadyToGoIdle(bool makeItTrue = false)
+    private bool ReadyToGoIdle(bool makeItTrue = false)
     {
         if (makeItTrue)
         {
@@ -589,7 +581,7 @@ public class Brain
                 && PreviousTask == HPers.IdleSpot;
     }
 
-    bool ReadyToGoToReligion(bool makeItTrue = false)
+    private bool ReadyToGoToReligion(bool makeItTrue = false)
     {
         if (makeItTrue)
         {
@@ -603,7 +595,7 @@ public class Brain
                _person.Body.Location == HPers.Home && _person.Body.GoingTo == HPers.Home;
     }
 
-    bool ReadyToGoChill(bool makeItTrue = false)
+    private bool ReadyToGoChill(bool makeItTrue = false)
     {
         if (makeItTrue)
         {
@@ -621,7 +613,7 @@ public class Brain
 
     //////////////////////////////
     /// <summary>
-    /// Below all the Mind States Posible, this is the Logic of the Brain 
+    /// Below all the Mind States Posible, this is the Logic of the Brain
     /// </summary>
     //////////////////////////////
 
@@ -633,11 +625,11 @@ public class Brain
         }
     }
 
-    void GoWork()
+    private void GoWork()
     {
         if (ReadyToWork() && SomeThingToDoAtWork()
             && _routerWork.IsRouteReady && _workRoute.CheckPoints.Count > 0
-            && _workRoute.DestinyKey == _person.Work.MyId 
+            && _workRoute.DestinyKey == _person.Work.MyId
             )
         {
             _person.Body.WalkRoutine(_workRoute, HPers.Work);
@@ -650,7 +642,7 @@ public class Brain
         //("work now")
         else if (CurrentTask == HPers.Working && _person.Body.Location == HPers.Work)
         {
-            //this is to address when loading a person to a Job that is marked to be destroy 
+            //this is to address when loading a person to a Job that is marked to be destroy
             if (_person.ProfessionProp.ProfDescription != Job.None)
             {
                 _person.ProfessionProp.WorkAction(HPers.None);
@@ -659,9 +651,9 @@ public class Brain
         }
         else if (CurrentTask == HPers.None && _person.Body.Location == HPers.Work)
         {
-            //to avoid jump to dock and then back to current building 
+            //to avoid jump to dock and then back to current building
             if (
-                //_person.PrevJob == Job.Docker && 
+                //_person.PrevJob == Job.Docker &&
                 _person.ProfessionProp.ProfDescription == Job.Homer)
             {
                 return;
@@ -673,11 +665,11 @@ public class Brain
         }
     }
 
-    void GoGetFood()
+    private void GoGetFood()
     {   //get food
-        if (ReadyToGetFood() && _foodRoute!=null && _foodRoute.DestinyKey == _person.FoodSource.MyId)
+        if (ReadyToGetFood() && _foodRoute != null && _foodRoute.DestinyKey == _person.FoodSource.MyId)
         {
-            //is called here right before leaves home to go find food 
+            //is called here right before leaves home to go find food
             CurrentTask = HPers.GettingFood;
         }
         else if (CurrentTask == HPers.GettingFood && _person.Body.Location == HPers.Home && _routerFood.IsRouteReady
@@ -702,7 +694,7 @@ public class Brain
         }
     }
 
-    void GoIdle()
+    private void GoIdle()
     {
         //go idle
         if (ReadyToGoIdle() && _idleRoute.CheckPoints.Count > 0)
@@ -776,9 +768,9 @@ public class Brain
     private void GoToNewHome()
     {
         if (CurrentTask == HPers.MovingToNewHome
-            //none is if person is just spwaneed and foudn new home 
+            //none is if person is just spwaneed and foudn new home
             && (_person.Body.Location == HPers.Home || _person.Body.Location == HPers.None) &&
-            //as long is idling in home is ok. cant be going to home bz tht means it went trhu this if once 
+            //as long is idling in home is ok. cant be going to home bz tht means it went trhu this if once
             _person.Body.GoingTo != HPers.MovingToNewHome && _isIdleHomeNow
             && MoveToNewHome.RouteToNewHome.CheckPoints.Count > 0)
         {
@@ -799,9 +791,9 @@ public class Brain
     }
 
     /// <summary>
-    /// Created for modularity and be called from another method 
+    /// Created for modularity and be called from another method
     /// </summary>
-    void GoToNewHomeTail()
+    private void GoToNewHomeTail()
     {
         //Debug.Log("Unbooking. Got to new home:" + _person.MyId + ".famID" + _person.FamilyId);
 
@@ -818,21 +810,21 @@ public class Brain
 
         //will add Home to avail spot if can
         var oldHomeH = GetStructureFromKey(MoveToNewHome.OldHomeKey);
-        if (oldHomeH !=  null)
+        if (oldHomeH != null)
         {
             AddOldHomeToAvailHomeIfHasSpace(oldHomeH);
             RemoveMeFromOldHomeFamily(oldHomeH);
         }
 
-       ////Debug.Log("2 got to new home:" + _person.MyId+".famID"+_person.FamilyId);
+        ////Debug.Log("2 got to new home:" + _person.MyId+".famID"+_person.FamilyId);
         MoveToNewHome.GetMyNameOutOfOldHomePeopleList();
         MoveToNewHome.CleanUpRouteToNewHome();
 
-        //will add to genOldKeys since he wont use that route ever again. 
+        //will add to genOldKeys since he wont use that route ever again.
         AddToList(_generalOldKeysList, MoveToNewHome.RouteToNewHome.BridgeKey);
 
         //CheckIfClearBlackList();
-        
+
         //in case was wiaint to Unbokk to die
         Die();
     }
@@ -845,16 +837,16 @@ public class Brain
         }
     }
 
-    #endregion
+    #endregion MindStates
 
     private const float IDLETIME = 1f;
     private float _idleTime = 1f;//1   .5   4.5
 
     private float startIdleTime;
-    private bool _isIdleHomeNow;//will tell if person is at home idleing now 
+    private bool _isIdleHomeNow;//will tell if person is at home idleing now
 
     //says if we ask for new routes. Created to stop the goMindState until the new routes are finished
-    //this bool will hold the idle until the goStateMind is true. Then will release the idle 
+    //this bool will hold the idle until the goStateMind is true. Then will release the idle
     private bool _routesWereStarted;
 
     public bool RoutesWereStarted
@@ -864,11 +856,12 @@ public class Brain
     }
 
     private HPers _savedNextTask = HPers.None;
+
     /// <summary>
-    /// Idle Action 
+    /// Idle Action
     /// </summary>
     /// <param name="nextTask">The task will have after Idle is done</param>
-    void Idle(HPers nextTask, bool saveNextTask=true)
+    private void Idle(HPers nextTask, bool saveNextTask = true)
     {
         if (saveNextTask)
         {
@@ -891,10 +884,10 @@ public class Brain
         AddIdleTimeIfHasOldKeys();
         if (Time.time > startIdleTime + _idleTime && !_routesWereStarted)
         {
-            //if is booked and still doesnt have the route to new home pls dont release iddle 
+            //if is booked and still doesnt have the route to new home pls dont release iddle
             if (!string.IsNullOrEmpty(_person.IsBooked) && MoveToNewHome.RouteToNewHome.CheckPoints.Count == 0
                 && nextTask != HPers.Homing)//bz is needed to be release because after that one come Idle in Home in where
-                                            //brain will call for actions in home ListOfActionsInHome(); 
+                                            //brain will call for actions in home ListOfActionsInHome();
             {
                 Debug.Log("Idle Broken: next would be:" + nextTask + " ." + _person.name);
                 return;
@@ -913,9 +906,9 @@ public class Brain
     }
 
     /// <summary>
-    /// Created to make sure when is in home all things he need get done will get done 
+    /// Created to make sure when is in home all things he need get done will get done
     /// </summary>
-    void ListOfActionsInHome()
+    private void ListOfActionsInHome()
     {
         if (_person.WasFired)
         {
@@ -923,14 +916,14 @@ public class Brain
         }
 
         _routesWereStarted = StartRoutes();
-        _person.ProfessionProp.Update();//bz need to do somesutff when on home 
+        _person.ProfessionProp.Update();//bz need to do somesutff when on home
 
-        //in case we have something to do 
+        //in case we have something to do
         CheckConditions();
         _person.HomeActivities();
     }
 
-    void ReRoutes()
+    private void ReRoutes()
     {
         //this are the 2 method tht do ReRouting
         CheckOnTheQueues();
@@ -938,10 +931,10 @@ public class Brain
     }
 
     /// <summary>
-    /// Will extend idle in home until we resolve the old keys we have 
+    /// Will extend idle in home until we resolve the old keys we have
     /// </summary>
     /// <param name="nextTask"></param>
-    void AddIdleTimeIfHasOldKeys()
+    private void AddIdleTimeIfHasOldKeys()
     {
         if (IAmHomeNow() && _routesWereStarted)
         {
@@ -992,17 +985,12 @@ public class Brain
         _moveNow.Update();
     }
 
-
-
-
     #region Rerouting Pool
-
-
 
     private int _timesCall;
 
     //u are only waiting if u are checked in ready to reroute
-    private bool _waiting;//waiting to reroute 
+    private bool _waiting;//waiting to reroute
 
     public bool Waiting
     {
@@ -1011,8 +999,9 @@ public class Brain
     }
 
     //last time I got into Checkin for new routes OnSystem
-    //here so people when is the one of the first are not getting in all the time 
+    //here so people when is the one of the first are not getting in all the time
     private float _lastTimeICheckedInOnSystem;
+
     private float _delayToGetIntoOnSystem = 5f;
 
     /// <summary>
@@ -1048,7 +1037,7 @@ public class Brain
         PersonPot.Control.CheckPeopleIn(_person.MyId);
 
         PersonPot.Control.CheckMeOnSystem(_person.MyId);
-        
+
         //so does the profesional routing too now
         PersonPot.Control.WorkersRoutingQueue.CheckMeOnSystem(_person.MyId);
 
@@ -1056,10 +1045,9 @@ public class Brain
         _waiting = true;
     }
 
-    void AddMeToSystemWaitingList()
+    private void AddMeToSystemWaitingList()
     {
-
-        //if it was added to waiting list 
+        //if it was added to waiting list
         if (PersonPot.Control.AddMeToOnSystemWaitList(_person.MyId))
         {
             PersonPot.Control.CheckPeopleIn(_person.MyId);
@@ -1078,27 +1066,27 @@ public class Brain
         return false;
     }
 
-    void ReRoutesDealer()
+    private void ReRoutesDealer()
     {
-        //so things get started 
+        //so things get started
         if (IJustSpawn() || IAmHomeNow() || IsInLimbo() || LocatedAtHomeNow())
         {
             //there is room for me to check now on System
             //if (PersonPot.Control.OnSystemNow(_person.MyId) && _waiting)
             //{
-                //NewBornStuff();
+            //NewBornStuff();
 
-                //redo routes to see if some change 
-                ReRoutes();
-                ReRouteCallsCounter();
+            //redo routes to see if some change
+            ReRoutes();
+            ReRouteCallsCounter();
             //}
         }
     }
 
     /// <summary>
-    /// When at home but location says none and is going to home 
-    /// 
-    /// So blacklisting works 
+    /// When at home but location says none and is going to home
+    ///
+    /// So blacklisting works
     /// </summary>
     /// <returns></returns>
     private bool IsInLimbo()
@@ -1110,18 +1098,16 @@ public class Brain
         }
         return false;
     }
-    
-
 
     /// <summary>
-    /// So a person can ask twice for rerouting then thats it 
+    /// So a person can ask twice for rerouting then thats it
     /// </summary>
-    void ReRouteCallsCounter()
+    private void ReRouteCallsCounter()
     {
         _timesCall++;
         if (_waiting && _timesCall > 10)//65 20 60
         {
-            PersonPot.Control.DoneReRoute(_person.MyId);//so another people can use the Spot 
+            PersonPot.Control.DoneReRoute(_person.MyId);//so another people can use the Spot
             _timesCall = 0;
             _waiting = false;
 
@@ -1131,8 +1117,7 @@ public class Brain
         }
     }
 
-#endregion
-
+    #endregion Rerouting Pool
 
     /// <summary>
     /// Define isAllSet bool
@@ -1161,7 +1146,7 @@ public class Brain
     /// <summary>
     /// Needed for when the guys is spawn. First event in CheckIfABuildWasChange() starts
     /// </summary>
-    bool IJustSpawn()
+    private bool IJustSpawn()
     {
         if (_person.Body.Location == HPers.None && _person.Body.GoingTo == HPers.None)
         {
@@ -1171,14 +1156,14 @@ public class Brain
         return false;
     }
 
-
     private string oldHome;
     private string oldWork;
     private string oldFoodSrc;
     private Vector3 oldIdle;
     private string oldReligion;
     private string oldChill;
-    //I will keep all the other buildings beside homse old keys here so in case a 
+
+    //I will keep all the other buildings beside homse old keys here so in case a
     //old key is overwritten is kepts here and then I will clear this list
     private List<string> _generalOldKeysList = new List<string>();
 
@@ -1188,32 +1173,33 @@ public class Brain
         set { _generalOldKeysList = value; }
     }
 
-
-
-    bool DoIHaveAWork()
+    private bool DoIHaveAWork()
     {
         return _person.Work != null;
     }
-    bool DoIHaveAFood()
+
+    private bool DoIHaveAFood()
     {
         return _person.FoodSource != null;
     }
-    bool DoIHaveAReligion()
+
+    private bool DoIHaveAReligion()
     {
         return _person.Religion != null;
-    } 
-    bool DoIHaveAChill()
+    }
+
+    private bool DoIHaveAChill()
     {
         return _person.Chill != null;
     }
 
     /// <summary>
     /// This method starts all the routes too since the var above have empty vvalues
-    /// 
-    /// If isAllSet will find if a new building was changed ,, 
+    ///
+    /// If isAllSet will find if a new building was changed ,,
     /// ex: used to work in Clay now is working on FishSite
-    /// 
-    /// Evaluates if a new value is beeing found. For ex. if  nnew job is being found is bz is 
+    ///
+    /// Evaluates if a new value is beeing found. For ex. if  nnew job is being found is bz is
     /// diff that the value stored in 'oldWork'. Then will act upon and will store new value found in
     /// 'oldWork'
     /// </summary>
@@ -1223,7 +1209,7 @@ public class Brain
         if (_isAllSet)
         {
             //if home was changed u need to star all routes .
-            //the ones that dont have the building not need to redo them 
+            //the ones that dont have the building not need to redo them
             if (oldHome != _person.Home.MyId)
             {
                 //Debug.Log(_person.MyId + " redoing all routes");
@@ -1232,7 +1218,7 @@ public class Brain
                 idleRouteStart = false;
                 religionRouteStart = !DoIHaveAReligion();
                 chillRouteStart = !DoIHaveAChill();//if have not a child then will stay as true.
-                                                //so we dont need to redo a chill route
+                                                   //so we dont need to redo a chill route
                 if (!IJustSpawn())
                 {
                     //false pass as param so it doesnt remove the people from Houses
@@ -1244,7 +1230,7 @@ public class Brain
             //work related
             if (_person.Work != null && oldWork != _person.Work.MyId)
             {
-                _person.CreateProfession();//if a new job was found need to create a profession 
+                _person.CreateProfession();//if a new job was found need to create a profession
                 workRouteStart = false;
 
                 RestartVarsAndAddToGenList();
@@ -1281,17 +1267,15 @@ public class Brain
         }
     }
 
-   
-
     /// <summary>
-    /// To address when a person changes FoodSrc , must change The whole Routes in Profession 
-    /// otherwise will keep routes to old FoodSrc 
+    /// To address when a person changes FoodSrc , must change The whole Routes in Profession
+    /// otherwise will keep routes to old FoodSrc
     /// </summary>
     private void RedoProfession()
     {
         if (_person.Work != null)
         {
-           ////Debug.Log("Redoing Profesional:"+_person.MyId+" . "+_person.Work.MyId);
+            ////Debug.Log("Redoing Profesional:"+_person.MyId+" . "+_person.Work.MyId);
             _person.CreateProfession();
         }
     }
@@ -1299,20 +1283,19 @@ public class Brain
     #region Job Manangment
 
     /// <summary>
-    /// If old job is not null or "" will remove from that Job position and 
-    /// to the new one will be added to it 
+    /// If old job is not null or "" will remove from that Job position and
+    /// to the new one will be added to it
     /// </summary>
-    void RemoveAndAddPositionsToJob()
+    private void RemoveAndAddPositionsToJob()
     {
         if (!string.IsNullOrEmpty(oldWork))
         {
             var build = GetBuildingFromKey(oldWork);
 
-            if (build!=null)
+            if (build != null)
             {
                 build.RemovePosition();
             }
-
         }
 
         if (_person.Work != null)
@@ -1321,7 +1304,7 @@ public class Brain
         }
     }
 
-#endregion
+    #endregion Job Manangment
 
     public void AddToNewBuildRemoveFromOld(Structure oldBuildKey, string newBuildKey)
     {
@@ -1330,7 +1313,7 @@ public class Brain
             if (oldBuildKey.MyId == newBuildKey)//so it doest get all the buildings
             { return; }
 
-            //if its home has to be added to anotehr list 
+            //if its home has to be added to anotehr list
             if (oldBuildKey != _person.Home)
             {
                 if (!_generalOldKeysList.Contains(oldBuildKey.MyId))
@@ -1346,7 +1329,7 @@ public class Brain
     /// <summary>
     /// The person gets added to the building peoples Dict
     /// </summary>
-    void AddToPeopleDict(string keyP)
+    private void AddToPeopleDict(string keyP)
     {
         if (keyP == "" || Partido)
         {
@@ -1357,14 +1340,12 @@ public class Brain
             return;
         }
 
-        //dont need to add to PeopleDict. In school will bring problems 
+        //dont need to add to PeopleDict. In school will bring problems
         var buildCurrWork = GetBuildingFromKey(keyP);
         if (buildCurrWork.IsBuildingCustomerType(_person))
         {
             return;
         }
-
-      
 
         Structure s = BuildingPot.Control.Registro.AllBuilding[keyP] as Structure;
         if (!s.PeopleDict.Contains(_person.MyId))
@@ -1387,22 +1368,21 @@ public class Brain
         {
             s.PeopleDict.Add(personKey);
             BuildingPot.Control.Registro.ResaveOnRegistro(s.MyId);
-
         }
     }
 
     /// <summary>
-    /// Restart the 'goMindState' 
-    void RestartVarsAndAddToGenList()
+    /// Restart the 'goMindState'
+    private void RestartVarsAndAddToGenList()
     {
         GoMindState = false;
-       ////Debug.Log("RestartVarsAndAddToGenList goMindState");
+        ////Debug.Log("RestartVarsAndAddToGenList goMindState");
     }
 
     /// <summary>
     /// Checks if build was emptied and if was is destroyed... for all builds ...
-    /// 
-    /// If build was emptied and was a shack will be destroyed  
+    ///
+    /// If build was emptied and was a shack will be destroyed
     /// </summary>
     public void DestroyOldBuildIfEmptyOrShack(string oldBuild)
     {
@@ -1412,7 +1392,7 @@ public class Brain
         }
 
         Building s = BuildingPot.Control.Registro.AllBuilding[oldBuild];
-        if (s.PeopleDict.Count == 0 && 
+        if (s.PeopleDict.Count == 0 &&
             s.Instruction == H.WillBeDestroy)
         {
             s.DestroydHiddenBuild();
@@ -1420,8 +1400,6 @@ public class Brain
 
         //GameScene.print(_person.MyId + "."+oldBuild + ".Count:" + s.PeopleDict.Count);
     }
-
-
 
     public bool GoMindState
     {
@@ -1431,15 +1409,14 @@ public class Brain
             if (goMindState && !value)
             {
                 var t = 1;
-              ////Debug.Log(_person.MyId+" goMind false");
+                ////Debug.Log(_person.MyId+" goMind false");
             }
-            
+
             goMindState = value;
         }
     }
 
-
-    bool DefineIfRouterHasABlackListedBuild(CryRouteManager router)
+    private bool DefineIfRouterHasABlackListedBuild(CryRouteManager router)
     {
         if (router == null)
         {
@@ -1448,11 +1425,7 @@ public class Brain
         return BlackList.Contains(router.OriginKey) || BlackList.Contains(router.DestinyKey);
     }
 
-
-
-
-
-    void DoneRouteHandler(object sender, EventArgs e)
+    private void DoneRouteHandler(object sender, EventArgs e)
     {
         //var v = (CryBridgeRoute) sender;
         //Debug.Log("DoneRouteHandler event: ");
@@ -1461,22 +1434,22 @@ public class Brain
 
     //if is true the Brain will executed the MindStates()
     private bool goMindState;
+
     /// <summary>
-    /// Routes Have to be set after they were started and are ready. Bz they are progesively going thru all 
-    /// called by update 
+    /// Routes Have to be set after they were started and are ready. Bz they are progesively going thru all
+    /// called by update
     /// </summary>
-    void SetFinalRoutes()
+    private void SetFinalRoutes()
     {
         //Debug.Log("SetFinaRou "+_person.MyId);
 
         //this is so Person dont stay stuff there bz has some bacl listed buildings
         //what happens is that in ChangesBuildings this is start but never ended bz
-        //then Building becomes null 
+        //then Building becomes null
         var religBlack = DefineIfRouterHasABlackListedBuild(_routerReligion);
         var workBlack = DefineIfRouterHasABlackListedBuild(_routerWork);
         var foodBlack = DefineIfRouterHasABlackListedBuild(_routerFood);
         var chillBlack = DefineIfRouterHasABlackListedBuild(_routerChill);
-
 
         if (workRouteStart && _routerWork.IsRouteReady && _workRoute.CheckPoints.Count == 0)
         {
@@ -1489,7 +1462,6 @@ public class Brain
             CheckIfGoMindReady();
         }
 
-
         if (foodRouteStart && _routerFood.IsRouteReady && _foodRoute.CheckPoints.Count == 0)
         {
             _foodRoute = _routerFood.TheRoute;
@@ -1500,7 +1472,6 @@ public class Brain
             foodRouteStart = false;
             CheckIfGoMindReady();
         }
-
 
         if (religionRouteStart && _routerReligion.IsRouteReady && _religionRoute.CheckPoints.Count == 0)
         {
@@ -1513,7 +1484,6 @@ public class Brain
             CheckIfGoMindReady();
         }
 
-
         if (chillRouteStart && _routerChill.IsRouteReady && _chillRoute.CheckPoints.Count == 0)
         {
             _chillRoute = _routerChill.TheRoute;
@@ -1524,7 +1494,6 @@ public class Brain
             chillRouteStart = false;
             CheckIfGoMindReady();
         }
-
 
         if (idleRouteStart && _routerIdle.IsRouteReady && _idleRoute.CheckPoints.Count == 0)
         {
@@ -1542,7 +1511,7 @@ public class Brain
     /// Created to see if _isAllSet if true. If is and this is called from the SetFinalRoutes() once a new route is being
     /// establish then we can try to give it a go to goMindState
     /// </summary>
-    void CheckIfGoMindReady()
+    private void CheckIfGoMindReady()
     {
         _routesWereStarted = false;
         DefineIfIsAllSet();
@@ -1555,14 +1524,14 @@ public class Brain
 
     /// <summary>
     /// Will start routes depending which one is marked as false
-    /// 
+    ///
     /// Then the rooutes will be get from SetFinalRoutes()
-    /// 
+    ///
     /// Here the route is just initiated. Is an Async method call
-    /// 
-    /// Will return true if at least one was started 
+    ///
+    /// Will return true if at least one was started
     /// </summary>
-    bool StartRoutes()
+    private bool StartRoutes()
     {
         bool res = false;
 
@@ -1604,9 +1573,9 @@ public class Brain
         return res;
     }
 
-    void UpdateRouters()
+    private void UpdateRouters()
     {
-        //so if is moving and released idle then do do this routes and teleport to new home 
+        //so if is moving and released idle then do do this routes and teleport to new home
         if (!string.IsNullOrEmpty(_person.IsBooked))
         {
             return;
@@ -1622,8 +1591,8 @@ public class Brain
     #region Brain Checker - MAIN REGION OF THIS CLASS
 
     private List<string> orderedFoodSources = new List<string>();
-    HPers[] allPlaces = new HPers[] { HPers.Home, HPers.Work, HPers.FoodSource, HPers.Religion, HPers.Chill };
-    
+    private HPers[] allPlaces = new HPers[] { HPers.Home, HPers.Work, HPers.FoodSource, HPers.Religion, HPers.Chill };
+
     public HPers[] AllPlaces
     {
         get { return allPlaces; }
@@ -1644,9 +1613,7 @@ public class Brain
         bool ifIsgettingOutOfBuild = CheckIfAnyOfMyBuildsWillBeDestroyAndGetOut();
         if (ifIsgettingOutOfBuild) { return; }
 
-
         //CheckOnTheQueues();
-
 
         if (PersonController.UnivCounter == -1) { return; }
 
@@ -1662,12 +1629,11 @@ public class Brain
         }
     }
 
-
     /// <summary>
-    /// Teel u if person has old key from buidings he used to be on 
+    /// Teel u if person has old key from buidings he used to be on
     /// </summary>
     /// <returns></returns>
-    bool IHaveOldKeys()
+    private bool IHaveOldKeys()
     {
         if (_generalOldKeysList.Count > 0 || MoveToNewHome.HomeOldKeysList.Count > 0)
         {
@@ -1687,10 +1653,10 @@ public class Brain
         }
     }
 
-    void RemoveFromPeopleDict(string key)
+    private void RemoveFromPeopleDict(string key)
     {
         var build = GetBuildingFromKey(key);
-        if (build!=null)
+        if (build != null)
         {
             build.PeopleDict.Remove(_person.MyId);
             BuildingPot.Control.Registro.ResaveOnRegistro(build.MyId);
@@ -1704,7 +1670,7 @@ public class Brain
     /// </summary>
     private void AddressBuildingSavedWithPeople(Building build)
     {
-        if (build.PeopleDict.Count >0)
+        if (build.PeopleDict.Count > 0)
         {
             return;
         }
@@ -1712,13 +1678,13 @@ public class Brain
         if (build.Instruction == H.WillBeDestroy && BuildingPot.SaveLoad.IsWasLoaded(build))
         {
             build.DestroydHiddenBuild();
-            //so everyones checks on that added building to QueuesContainer and gets deleted 
+            //so everyones checks on that added building to QueuesContainer and gets deleted
             PersonPot.Control.RestartController();
         }
     }
 
     /// <summary>
-    /// If one of the buildings he is will be destroy then he need to get out of there 
+    /// If one of the buildings he is will be destroy then he need to get out of there
     /// </summary>
     private bool CheckIfAnyOfMyBuildsWillBeDestroyAndGetOut()
     {
@@ -1739,6 +1705,7 @@ public class Brain
     }
 
     #region Checking on Queues
+
     /// <summary>
     /// Check to see what is on the queues
     /// </summary>
@@ -1767,14 +1734,15 @@ public class Brain
 
     private DateTime askInWork = new DateTime();
     private DateTime askInWorkBack = new DateTime();
+
     /// <summary>
     /// Check thru the queues for each route AreaRecy to se if collide with any Anchors on the queues
     /// </summary>
-    void CheckQueuesLoop()
+    private void CheckQueuesLoop()
     {
         List<HPers> collisionsOn = new List<HPers>();
 
-        if (_person.ProfessionProp!=null)
+        if (_person.ProfessionProp != null)
         {
             if (_person.ProfessionProp.Router1 != null && _person.ProfessionProp.Router1.TheRoute != null
                 && PersonPot.Control.Queues.ContainAnyBuild(_person.ProfessionProp.Router1.TheRoute, _person.MyId))
@@ -1789,8 +1757,6 @@ public class Brain
                 askInWorkBack = PersonPot.Control.Queues.GetLastCollisionTime();
             }
         }
-
-
 
         //bugg was doing if, else if below... where should be if, if , if
         if (PersonPot.Control.Queues.ContainAnyBuild(_workRoute, _person.MyId))
@@ -1809,9 +1775,6 @@ public class Brain
             collisionsOn.Add(HPers.IdleSpot);
             askIdle = PersonPot.Control.Queues.GetLastCollisionTime();
         }
-
-
-
 
         if (PersonPot.Control.Queues.ContainAnyBuild(_religionRoute, _person.MyId))
         {
@@ -1834,7 +1797,7 @@ public class Brain
     /// Is called for redo all the routes that were found collided on queues
     /// </summary>
     /// <param name="collisionsOn">All the routes were collided with on Queues</param>
-    void RedoRoutes(List<HPers> collisionsOn)
+    private void RedoRoutes(List<HPers> collisionsOn)
     {
         for (int i = 0; i < collisionsOn.Count; i++)
         {
@@ -1869,21 +1832,17 @@ public class Brain
             //routes of professionals
             //if (which == HPers.InWork)
             //{
-                
-            //}   
+            //}
             //if (which == HPers.InWorkBack)
             //{
-                
             //}
         }
-
-
 
         if (collisionsOn.Contains(HPers.InWork))
         {
             PersonPot.Control.RoutesCache1.RemoveRoute(_person.ProfessionProp.Router1.TheRoute, askInWork);
             //RedoProfession();
-        } 
+        }
         if (collisionsOn.Contains(HPers.InWorkBack))
         {
             PersonPot.Control.RoutesCache1.RemoveRoute(_person.ProfessionProp.RouterBack.TheRoute, askInWorkBack);
@@ -1892,12 +1851,12 @@ public class Brain
 
         //in case a new route needs to be start
         StartRoutes();
-
     }
-    #endregion
+
+    #endregion Checking on Queues
 
     /// <summary>
-    /// Used to get a NewBorn Child going 
+    /// Used to get a NewBorn Child going
     /// </summary>
     public void SetNewHouseFound()
     {
@@ -1905,12 +1864,12 @@ public class Brain
         //CheckMeOnSystemNow();
         AddMeToSystemWaitingList();
         CheckAround(false, false, false, false, false, true);
-    }   
-    
+    }
+
     /// <summary>
     /// Used when fired peoeple
     /// </summary>
-    void SetNewWorkFound()
+    private void SetNewWorkFound()
     {
         //so can reroutre and stuff
         AddMeToSystemWaitingList();
@@ -1918,9 +1877,9 @@ public class Brain
     }
 
     /// <summary>
-    /// This method is the one that will look for new buildings if the respective flag is true 
+    /// This method is the one that will look for new buildings if the respective flag is true
     /// </summary>
-    void CheckAround(bool checkHouse, bool checkWork, bool checkFood, bool checkReligion, bool checkChill, bool newHouseFound = false)
+    private void CheckAround(bool checkHouse, bool checkWork, bool checkFood, bool checkReligion, bool checkChill, bool newHouseFound = false)
     {
         var tempKey = "";
         //bool newHouseFound = false;//if new house is found will allow to check for everything around him
@@ -1959,6 +1918,7 @@ public class Brain
     }
 
     #region Check Closest Build
+
     //Structure currStructure;
     //private List<string> currListOfBuild;
 
@@ -1995,9 +1955,6 @@ public class Brain
         }
         return false;
     }
-
-    
-
 
     public Structure ReturnCurrStructure(HPers which)
     {
@@ -2052,14 +2009,13 @@ public class Brain
         else if (which == HPers.Chill)
         {
             _person.Chill = st;
-            
+
             return _person.Chill;
         }
         return null;
     }
 
-
-    List<string> ReturnCurrListOfBuilds(HPers which)
+    private List<string> ReturnCurrListOfBuilds(HPers which)
     {
         if (which == HPers.Work)
         {
@@ -2073,10 +2029,8 @@ public class Brain
         {
             return BuildingPot.Control.ChillBuilds;
         }
-        return  new List<string>();
+        return new List<string>();
     }
-
-
 
     /// <summary>
     /// Define the closest build of a type. Will defined in the 'currStructure'
@@ -2088,7 +2042,7 @@ public class Brain
 
         for (int i = 0; i < size; i++)
         {
-            //to address if building was deleted and not updated on the list 
+            //to address if building was deleted and not updated on the list
             string key = ReturnCurrListOfBuilds(which)[i];
             Structure building = GetStructureFromKey(key);
 
@@ -2121,7 +2075,7 @@ public class Brain
     /// <summary>
     /// Created for modularity
     /// </summary>
-    void DefineClosestBuildTail(List<VectorM> loc, int index, HPers which)
+    private void DefineClosestBuildTail(List<VectorM> loc, int index, HPers which)
     {
         string closestKey = "";
         if (index != -1 && loc.Count > 0)
@@ -2134,25 +2088,25 @@ public class Brain
 
         if (closestKey != "")
         {
-            AssignCurrStructure(which,(Structure)BuildingPot.Control.Registro.AllBuilding[closestKey] )  ;
+            AssignCurrStructure(which, (Structure)BuildingPot.Control.Registro.AllBuilding[closestKey]);
         }
-        else AssignCurrStructure(which,null);
+        else AssignCurrStructure(which, null);
     }
-    #endregion
+
+    #endregion Check Closest Build
 
     /// <summary>
     /// Starting from the Home will find all the food sources ordered by distance to home
-    /// Will keep only the first 5 closest to home 
+    /// Will keep only the first 5 closest to home
     /// </summary>
-    void CheckFood()
+    private void CheckFood()
     {
         //is allset is here so will check if closest building exist
         CheckFoodAction();
         UnivCounter(HPers.FoodSource);
     }
 
-
-    void CheckFoodAction()
+    private void CheckFoodAction()
     {
         if (_person.FoodSource == null || _person.FoodSource.Instruction == H.WillBeDestroy)
         {
@@ -2177,7 +2131,7 @@ public class Brain
     /// I made i diff method for modularity and for be called from Checking on food availabait
     /// in case is diff from wht the 'BuilderPot.Control.FoodSources' is then we need to update
     /// </summary>
-    void UpdateOrderedFoodSources()
+    private void UpdateOrderedFoodSources()
     {
         //addressing nullRef
         if (_person == null || _person.Home == null)
@@ -2216,7 +2170,7 @@ public class Brain
 
         for (int i = 0; i < loc.Count; i++)
         {
-            //so it doesnt add to foodSources Strucutres that will be taken down 
+            //so it doesnt add to foodSources Strucutres that will be taken down
             if (GetStructureFromKey(loc[i].LocMyId).Instruction == H.None)
             {
                 orderedFoodSources.Add(loc[i].LocMyId);
@@ -2224,7 +2178,7 @@ public class Brain
         }
     }
 
-    void CheckWork()
+    private void CheckWork()
     {
         //isallset is here so will check if closest building exist
         if (!ItHasOneAlready(HPers.Work) || _person.Work.Instruction == H.WillBeDestroy || _person.WasFired)
@@ -2246,19 +2200,19 @@ public class Brain
     /// <summary>
     /// Will find the house for this person. Depending in the person Gender and Age will fit it in a house
     /// </summary>
-    void CheckHome()
+    private void CheckHome()
     {
-        //to avoid the jump of house when doenst have got to the first one yet 
+        //to avoid the jump of house when doenst have got to the first one yet
         if (_person.Body.MovingNow)
         {
             return;
         }
 
-        //set to check for a new home 
+        //set to check for a new home
         if (_person.Home != null && (_person.Home.Instruction == H.WillBeDestroy || !string.IsNullOrEmpty(_person.IsBooked)))
         {
             //does only need to check on AllBuilding List... simple on the case if is a new home it was removed
-            //already from tht list 
+            //already from tht list
             CheckHomeLoop();
             return;
         }
@@ -2266,7 +2220,7 @@ public class Brain
         //if is not null and is not shack then dont need to  call CheckHomeLoop()
         if (_person.Home != null)
         {
-            //for CPU reasons only ask if really needed 
+            //for CPU reasons only ask if really needed
             var shouldAsk = ShouldAskForBetterHome();
 
             if (shouldAsk)
@@ -2281,16 +2235,15 @@ public class Brain
             else
             {
                 UnivCounter(HPers.Home);
-                return; 
+                return;
             }
         }
         CheckHomeLoop();
     }
 
-
     #region Added Apr7 2016
 
-    bool ShouldAskForBetterHome()
+    private bool ShouldAskForBetterHome()
     {
         var ageToBeMajorNoOwnHome = UPerson.IsMajor(_person.Age) && !_person.IsMajor;
         var singleAndNotWidow = string.IsNullOrEmpty(_person.Spouse) && !_person.IsWidow;
@@ -2304,29 +2257,25 @@ public class Brain
         return false;
     }
 
+    #endregion Added Apr7 2016
 
-#endregion
+    private Realtor _realtor = new Realtor();
 
-
-
-
-    Realtor _realtor = new Realtor();
     public Realtor Realtor1
     {
         get { return _realtor; }
         set { _realtor = value; }
     }
 
-
     /// <summary>
     /// Looks thru all the 'BuilderPot.Control.HousesWithSpace' items to see if this person can find
     /// a suitable Home
     /// </summary>
-    void CheckHomeLoop()
+    private void CheckHomeLoop()
     {
         bool thereIsABetterHome = _realtor.PublicIsABetterHome(_person);
 
-        //shack builders can not look into this. Othr wise they will stay on Limbo once better home found 
+        //shack builders can not look into this. Othr wise they will stay on Limbo once better home found
         if (thereIsABetterHome || !string.IsNullOrEmpty(_person.IsBooked))
         {
             var oldHomeP = PullOldHome();
@@ -2334,30 +2283,27 @@ public class Brain
 
             if (s != null)
             {
-                //bz is has more than zero created the route already. is just getting the home here 
-                if (oldHomeP != null && MoveToNewHome.RouteToNewHome.CheckPoints.Count==0)
+                //bz is has more than zero created the route already. is just getting the home here
+                if (oldHomeP != null && MoveToNewHome.RouteToNewHome.CheckPoints.Count == 0)
                 {
                     MoveToNewHome.AddToHomeOldKeysList(oldHomeP.MyId);
                     MoveToNewHome.OldHomeKey = "";
 
                     if (MoveToNewHome.RouteToNewHome.CheckPoints.Count > 0)
                     {
-                       ////Debug.Log(_person.MyId + " clear RouteToNewHome");
+                        ////Debug.Log(_person.MyId + " clear RouteToNewHome");
                     }
                     MoveToNewHome.RouteToNewHome.CheckPoints.Clear();
                 }
                 else
-                {  
-                   ////Debug.Log(_person.MyId + " didNot clear RouteToNewHome");
+                {
+                    ////Debug.Log(_person.MyId + " didNot clear RouteToNewHome");
                 }
-
 
                 AddToPeopleDict(s.MyId);
                 _person.Home = s;
-                //needs to be call here in case this person is the one ocpied the slot 
+                //needs to be call here in case this person is the one ocpied the slot
                 PersonPot.Control.CleanHomeLessSlot(_person.MyId);
-
-
 
                 _isIdleHomeNow = true;
                 MoveToNewHome.CheckOnOldKeysList();
@@ -2375,7 +2321,7 @@ public class Brain
     /// Will check if old home has at least avail for one family. If so will be added to the List in BuidingControlelr
     /// </summary>
     /// <param name="oldHomeP"></param>
-    void AddOldHomeToAvailHomeIfHasSpace(Structure oldHomeP)
+    private void AddOldHomeToAvailHomeIfHasSpace(Structure oldHomeP)
     {
         if (oldHomeP == null)
         {
@@ -2384,24 +2330,22 @@ public class Brain
 
         var oldHomeIsEmptyOrNull = IsTheFamilyThatICameFromEmpty(oldHomeP);
 
-
         if (oldHomeP.IsALeastOneFamilyEmpty() && oldHomeIsEmptyOrNull)
         {
             BuildingPot.Control.AddToHousesWithSpace(oldHomeP.MyId);
 
             PersonPot.Control.RestartController();
-          ////Debug.Log("Home added :" + oldHomeP.MyId);
+            ////Debug.Log("Home added :" + oldHomeP.MyId);
         }
     }
 
     /// <summary>
-    /// Will say if the family u had in the old home was emptied or not 
+    /// Will say if the family u had in the old home was emptied or not
     /// </summary>
     /// <returns></returns>
-    bool IsTheFamilyThatICameFromEmpty(Structure oldHomeP)
+    private bool IsTheFamilyThatICameFromEmpty(Structure oldHomeP)
     {
-
-        //the var family on old home needs to be make it virgin 
+        //the var family on old home needs to be make it virgin
         var FamilyOnOldHome = oldHomeP.FindMyFamilyChecksFamID(_person);
 
         if (FamilyOnOldHome == null)
@@ -2416,7 +2360,7 @@ public class Brain
     /// Will make PersonController.UnivCounter = -1
     /// </summary>
     /// <param name="from">From where was called</param>
-    void UnivCounter(HPers from)
+    private void UnivCounter(HPers from)
     {
         //this is only needed to be working if the PersonController.UnivCounter was externally changed to 0
         //this is to correct a bugg in where since many methods are callling this. Will make the value 0 unintentionally
@@ -2451,7 +2395,7 @@ public class Brain
             }
             PersonPot.Control.ClearPeopleCheck();
 
-            //called here bz here I know the Checked on PersonPot was full and clear 
+            //called here bz here I know the Checked on PersonPot was full and clear
             //CheckIfShacksAreNeed();
 
             if (!BuildingPot.Control.IsfoodSourceChange && !BuildingPot.Control.AreNewWorkPos &&
@@ -2459,7 +2403,7 @@ public class Brain
                 !BuildingPot.Control.IsNewChill)
             {
                 PersonController.UnivCounter = -1;
-               //GameScene.print("Univ at -1 Done Checking!!!!");
+                //GameScene.print("Univ at -1 Done Checking!!!!");
             }
         }
     }
@@ -2469,10 +2413,12 @@ public class Brain
         get { return MAXDISTANCE; }
         set { MAXDISTANCE = value; }
     }
+
     private static float MAXDISTANCE = 125f;//50 the max distance a person will go to find a building //50
+
     /// <summary>
-    /// Return an ordered list of places ordered by distance by stone . If the place element is farther then 
-    /// MAXDISTANCE wont be added to the final result 
+    /// Return an ordered list of places ordered by distance by stone . If the place element is farther then
+    /// MAXDISTANCE wont be added to the final result
     /// </summary>
     /// <param name="stone">The initial point from where needs to be ordered</param>
     /// <param name="places">Places to order</param>
@@ -2512,9 +2458,7 @@ public class Brain
         return orderd[0].Point;
     }
 
-
-
-    #endregion
+    #endregion Brain Checker - MAIN REGION OF THIS CLASS
 
     #region Get Out Of Build and Search Again
 
@@ -2522,7 +2466,7 @@ public class Brain
     /// Gets out of building
     /// If was a house is gonna be added to 'old keys homes' otherwise
     /// will be searchAgain and 'who' will be set to the param 'whichType'
-    /// so in the searchAgain only that one will be searched for 
+    /// so in the searchAgain only that one will be searched for
     /// </summary>
     /// <param name="whichType">The type of building</param>
     public void GetOutOfBuild(HPers whichType)
@@ -2540,19 +2484,21 @@ public class Brain
         //UpdateCurrent(whichType);
     }
 
-
     private bool searchAgain;
-    //who activiated the searchAgain . created to address bugg where finds everyone 
-    //eveytime is called 
+
+    //who activiated the searchAgain . created to address bugg where finds everyone
+    //eveytime is called
     private HPers who;
+
     public HPers Who
     {
         get { return who; }
         set { who = value; }
     }
+
     /// <summary>
     /// Will search for the specific type of building on the var 'who'.
-    /// 
+    ///
     /// Will search again if is at home and searchAgain true... or if 'now' is true
     /// </summary>
     public void SearchAgain(bool now = false)
@@ -2565,10 +2511,10 @@ public class Brain
 
     /// <summary>
     /// The action of search again
-    /// 
+    ///
     /// This was create for modularity and can be called from another method too if is ready
     /// </summary>
-    void SearchAgainAction()
+    private void SearchAgainAction()
     {
         //set the flag
         SetFlag(who, true);
@@ -2586,6 +2532,7 @@ public class Brain
     private bool _isHouse;
     private bool _isReligion;
     private bool _isChill;
+
     /// <summary>
     /// Set the aboves vars to param 'val'
     /// </summary>
@@ -2613,7 +2560,7 @@ public class Brain
         }
     }
 
-    #endregion
+    #endregion Get Out Of Build and Search Again
 
     #region Slow Update: Here will find checks that are checked at a slower pace: Food Source Availability Check
 
@@ -2629,9 +2576,9 @@ public class Brain
 
     /// <summary>
     /// Checks if the FoodSource was depleted
-    /// Must be at home to check this 
+    /// Must be at home to check this
     /// </summary>
-    void ExecuteSlowCheckUp()
+    private void ExecuteSlowCheckUp()
     {
         if (slowCheckUp)
         {
@@ -2647,20 +2594,21 @@ public class Brain
         }
     }
 
-    JobManager _jobManager = new JobManager();
+    private JobManager _jobManager = new JobManager();
 
-    void HandleNewJobSearch()
+    private void HandleNewJobSearch()
     {
         var newWork = _jobManager.ThereIsABetterJob(_person);
         if (newWork == null)
         {
-           ////Debug.Log("New work should not be null");
+            ////Debug.Log("New work should not be null");
         }
         _person.Work = newWork;
         WorkPositionsUpdate();
     }
 
-    private string oldJob="";
+    private string oldJob = "";
+
     private void WorkPositionsUpdate()
     {
         var currWork = oldJob;
@@ -2677,46 +2625,45 @@ public class Brain
             RemoveFromPeopleDict(oldJob);
 
             var buildCurrWork = GetBuildingFromKey(currWork);
-            if (buildCurrWork!=null && !buildCurrWork.IsBuildingCustomerType(_person))
+            if (buildCurrWork != null && !buildCurrWork.IsBuildingCustomerType(_person))
             {
                 AddToPeopleDict(currWork);
                 RemoveAndAddPositionsToJob();
                 _person.ShowEmotion("Hired");
             }
-       
 
-            //when is a game loaded and changed work need to mannually restart Controller to see it 
-            //forcing it here 
+            //when is a game loaded and changed work need to mannually restart Controller to see it
+            //forcing it here
             PersonPot.Control.RestartControllerForPerson(_person.MyId);
         }
         //in case we have a job
         oldJob = currWork;
     }
 
-
     private int emptyCount;
+
     /// <summary>
     /// Checks the availability of food on the closest 5 food sources.
     /// If the closest doesnt have will keep looping until finds the one that has
     /// food
-    /// 
+    ///
     /// Then will make that your main food source
     /// </summary>
-    void CheckOnFoodSourceAvail()
+    private void CheckOnFoodSourceAvail()
     {
-        if (//orderedFoodSources.Count == 0 || 
+        if (//orderedFoodSources.Count == 0 ||
             !IAmHomeNow())
         {
             return;
         }
-        //means that a Food Src was destroyed. Then have to update 'orderedFoodSources 
+        //means that a Food Src was destroyed. Then have to update 'orderedFoodSources
         UpdateOrderedFoodSources();
 
         emptyCount = 0;
         for (int i = 0; i < orderedFoodSources.Count; i++)
         {
             Structure s = GetStructureFromKey(orderedFoodSources[i]);
-            //will assign the first one is not empty... 
+            //will assign the first one is not empty...
             //now if we assign a diff one from the current then the Brain will trace route to new FoodSrc
             if (s.Inventory.FoodCatItems.Count > 0 || IsWorkMissingInput())
             {
@@ -2731,9 +2678,9 @@ public class Brain
         }
     }
 
-    #region If Work is missing input: 2017, Aug 2nd 
+    #region If Work is missing input: 2017, Aug 2nd
 
-    bool IsWorkMissingInput()
+    private bool IsWorkMissingInput()
     {
         if (_person.Work == null)
         {
@@ -2743,32 +2690,31 @@ public class Brain
     }
 
     /// <summary>
-    /// When called make sure, you asked before if were Inputs missing on this building 
+    /// When called make sure, you asked before if were Inputs missing on this building
     /// </summary>
     /// <returns></returns>
-    P WhatInputProdIsMissingWork()
+    private P WhatInputProdIsMissingWork()
     {
         return _person.Work.MissingInput();
     }
 
-    string FindFoodSourceThatHasProd(P prod)
+    private string FindFoodSourceThatHasProd(P prod)
     {
         var source = Dispatch.FindFoodSrcWithProd(_person, prod);
-        if (source!=null)
+        if (source != null)
         {
             return source;
         }
         return "";
     }
 
-    #endregion
-
+    #endregion If Work is missing input: 2017, Aug 2nd
 
     /// <summary>
-    /// If all food sources are empty the closest is the one assign to it 
+    /// If all food sources are empty the closest is the one assign to it
     /// </summary>
     /// <param name="index"></param>
-    void AreTheyAllEmpty(int index)
+    private void AreTheyAllEmpty(int index)
     {
         if (index == BuildingPot.Control.FoodSources.Count)
         {
@@ -2776,15 +2722,17 @@ public class Brain
             _person.FoodSource = s;
         }
     }
-    #endregion
+
+    #endregion Slow Update: Here will find checks that are checked at a slower pace: Food Source Availability Check
 
     #region Bridges Piece of Mind
 
-    Dictionary<string,string> brigdesKeyRoutes = new Dictionary<string, string>();//routes that have a brdige key on it  
+    private Dictionary<string, string> brigdesKeyRoutes = new Dictionary<string, string>();//routes that have a brdige key on it
+
     /// <summary>
     /// Will be checking so if one Route has a brdige and was marked will Try to black list that building on the route
     /// </summary>
-    void CheckIfABridgeIUseIsMarked()
+    private void CheckIfABridgeIUseIsMarked()
     {
         if (!IAmHomeNow() || !goMindState) { return; }
 
@@ -2810,35 +2758,35 @@ public class Brain
     /// </summary>
     private void UpdateBridgeKeyListMarked()
     {
-        if (!string.IsNullOrEmpty(_workRoute.BridgeKey) && !string.IsNullOrEmpty(_workRoute.DestinyKey ))
+        if (!string.IsNullOrEmpty(_workRoute.BridgeKey) && !string.IsNullOrEmpty(_workRoute.DestinyKey))
         {
             brigdesKeyRoutes.Add(_workRoute.DestinyKey, _workRoute.BridgeKey);
         }
         if (!string.IsNullOrEmpty(_foodRoute.BridgeKey) && !string.IsNullOrEmpty(_foodRoute.DestinyKey))
         {
-            brigdesKeyRoutes.Add(_foodRoute.DestinyKey,_foodRoute.BridgeKey);
+            brigdesKeyRoutes.Add(_foodRoute.DestinyKey, _foodRoute.BridgeKey);
         }
-        if (!string.IsNullOrEmpty(_idleRoute.BridgeKey ) && !string.IsNullOrEmpty(_idleRoute.DestinyKey ))
+        if (!string.IsNullOrEmpty(_idleRoute.BridgeKey) && !string.IsNullOrEmpty(_idleRoute.DestinyKey))
         {
             brigdesKeyRoutes.Add(_idleRoute.DestinyKey, _idleRoute.BridgeKey);
         }
-        if (!string.IsNullOrEmpty(_religionRoute.BridgeKey)  && !string.IsNullOrEmpty(_religionRoute.DestinyKey))
+        if (!string.IsNullOrEmpty(_religionRoute.BridgeKey) && !string.IsNullOrEmpty(_religionRoute.DestinyKey))
         {
             brigdesKeyRoutes.Add(_religionRoute.DestinyKey, _religionRoute.BridgeKey);
         }
-        if (!string.IsNullOrEmpty(_chillRoute.BridgeKey ) && !string.IsNullOrEmpty(_chillRoute.DestinyKey ))
+        if (!string.IsNullOrEmpty(_chillRoute.BridgeKey) && !string.IsNullOrEmpty(_chillRoute.DestinyKey))
         {
             brigdesKeyRoutes.Add(_chillRoute.DestinyKey, _chillRoute.BridgeKey);
         }
     }
 
     /// <summary>
-    /// If the param 'newKeyP' is not contain in the list and is not empty will be added to list 
+    /// If the param 'newKeyP' is not contain in the list and is not empty will be added to list
     /// </summary>
     /// <param name="list"></param>
     /// <param name="newKeyP"></param>
     /// <returns></returns>
-    List<string> AddToList(List<string> list, string newKeyP)
+    private List<string> AddToList(List<string> list, string newKeyP)
     {
         if (!list.Contains(newKeyP) && !String.IsNullOrEmpty(newKeyP))
         {
@@ -2849,37 +2797,36 @@ public class Brain
 
     /// <summary>
     /// Will make the strcuture null so we reRoute again there to see if we can go thru a diff
-    /// brdige or may have to just blacklist that buildign 
-    /// 
+    /// brdige or may have to just blacklist that buildign
+    ///
     /// Then will call ChecKAround depending on which one was pass as 'Key'
-    /// 
-    /// If u use the 'buildFunc' param then will make that Structure in the person Null and will search again 
+    ///
+    /// If u use the 'buildFunc' param then will make that Structure in the person Null and will search again
     /// for that kind of Structure
-    /// 
+    ///
     /// Will make the old key = "" so it clicks on 'CheckIfABuildWasChange()' and reRoute this is to address for ex:
     /// the case in where 2 bridges exist and only 1 work place we kill one brdige and we found the same
     /// place again ... it will be the same key value so and wont start to create new routes
     /// that why here i mke old value = "" so it will start new route even if the same key
     /// </summary>
-    void MakeStructureNull(string key)
+    private void MakeStructureNull(string key)
     {
         var build = GetStructureFromKey(key);
         if (build == null)
         {
             return;
         }
-        //the function this  building has 
+        //the function this  building has
         var buildFunc = BuildingController.ReturnBuildingFunction(build.HType);
 
-
-      ////Debug.Log("MakeStructureNull");
+        ////Debug.Log("MakeStructureNull");
         var checkWork = false;
         var checkFood = false;
         var checkReligion = false;
         var checkChill = false;
 
         //todo remove person from People Dict of the place will be made null
-        if ((buildFunc == HPers.Work ))
+        if ((buildFunc == HPers.Work))
         {
             RemoveAndAddPositionsToJob();
 
@@ -2888,21 +2835,20 @@ public class Brain
 
             checkWork = true;
             oldWork = "";
-
         }
-        else if ((buildFunc == HPers.FoodSource ))
+        else if ((buildFunc == HPers.FoodSource))
         {
             _person.FoodSource = null;
             checkFood = true;
             oldFoodSrc = "";
         }
-        else if ((buildFunc == HPers.Religion ))
+        else if ((buildFunc == HPers.Religion))
         {
             _person.Religion = null;
             checkReligion = true;
             oldReligion = "";
         }
-        else if ((buildFunc == HPers.Chill ))
+        else if ((buildFunc == HPers.Chill))
         {
             _person.Chill = null;
             checkChill = true;
@@ -2910,23 +2856,25 @@ public class Brain
         }
         CheckAround(false, checkWork, checkFood, checkReligion, checkChill);
     }
-    #endregion
+
+    #endregion Bridges Piece of Mind
 
     #region BlackListing
+
     //contains all buildings I can currently reach. Since all builignds in a piece of land should be reacheable
     //this list will clear if one bridge is built or moved to a new hose
     //this is not saved or loaded
-    List<string> _blackList = new List<string>();
+    private List<string> _blackList = new List<string>();
 
-    //the amt of bridges 
+    //the amt of bridges
     //used to know if a new bridge was built.
-    //if so blackList can be clear 
+    //if so blackList can be clear
     private int bridgesCount;
 
     public List<string> BlackList
     {
-        get{return _blackList;}
-        set{_blackList = value;}
+        get { return _blackList; }
+        set { _blackList = value; }
     }
 
     /// <summary>
@@ -2940,24 +2888,23 @@ public class Brain
         {
             bridgesCount = newBridges;
 
-
             CheckIfClearBlackList();
         }
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="buildID"></param>
     /// <param name="checkedOnBrdges">Can only be marked as false when is asking from CheckConditions bz
-    /// I have it really check yet how many brdiges are 
-    /// 
+    /// I have it really check yet how many brdiges are
+    ///
     /// If is callign from BridgesRouter then should look at the exception bz if i called from there
     /// i could not find any bridge</param>
     internal void BlackListBuild(string buildID, string routeKey, HPers routeType)
     {
         //This block needs to be called first in case is BlackListing a blacklisted building already
-        //was not tested 
+        //was not tested
 
         //so leaves the reRoutes free
         PersonPot.Control.RemoveMeFromSystem(_person.MyId);
@@ -2967,7 +2914,7 @@ public class Brain
         //can reroute again later when is his turn again
         PersonPot.Control.RemovePersonFromPeopleChecked(_person.MyId);
 
-        if (_blackList.Contains(buildID)|| string.IsNullOrEmpty(buildID))//addresing the call of a Dummy
+        if (_blackList.Contains(buildID) || string.IsNullOrEmpty(buildID))//addresing the call of a Dummy
         {
             return;
         }
@@ -2976,8 +2923,8 @@ public class Brain
         Debug.Log("_person booked:" + _person.IsBooked);
 
         //the route key is added so we dont blaclist 2 buildings of a same route
-        //only the 1st one need to be blacklisted. this applys for BridgeRouting 
-        
+        //only the 1st one need to be blacklisted. this applys for BridgeRouting
+
         //bz of navMesh im commeting this out
         _blackList = AddToList(_blackList, buildID);
 
@@ -2987,9 +2934,9 @@ public class Brain
             return;
         }
 
-        //person blacklisting Home 
+        //person blacklisting Home
         //if person is blacklisting while moving is becuase they became major. the 2nd is to address when is blacklisting
-        //a brdige 
+        //a brdige
         if (Building.IsHouseType(buildID) || !string.IsNullOrEmpty(_person.IsBooked))
         {
             _person.RollBackMajority();
@@ -3000,17 +2947,17 @@ public class Brain
 
     private void BlackListProfesional()
     {
-        Debug.Log("Profesional Blacklisting "+_person.MyId + " " + _person.ProfessionProp.ProfDescription);
+        Debug.Log("Profesional Blacklisting " + _person.MyId + " " + _person.ProfessionProp.ProfDescription);
         if (_person.ProfessionProp.ProfDescription == Job.Homer)
         {
-            Debug.Log("Redouing brain bz Homer blacklisted: "+_person.MyId);
+            Debug.Log("Redouing brain bz Homer blacklisted: " + _person.MyId);
 
-            //person is not selected 
+            //person is not selected
             if (!_person.ImITheSelectedPerson())
             {
-                //should call redoBrain if person not selected and teletransported to Home 
+                //should call redoBrain if person not selected and teletransported to Home
                 _person.transform.position = _person.Home.transform.position;
-                _person.RedoBrain(BlackList);                
+                _person.RedoBrain(BlackList);
             }
             else
             {
@@ -3022,8 +2969,6 @@ public class Brain
 
         _person.CreateProfession();
     }
-    
-
 
     /// <summary>
     /// Will tell if any of the two keys passed are contained in BlackList
@@ -3041,13 +2986,13 @@ public class Brain
     }
 
     /// <summary>
-    /// If a building of this route was blacklisted we dont have dto blaclist the 
+    /// If a building of this route was blacklisted we dont have dto blaclist the
     /// the second one too.
-    /// 
+    ///
     /// this applys for BridgeRouting
     /// </summary>
     /// <returns></returns>
-    bool WasABuildFromThisRouteBlacked(string routeKey)
+    private bool WasABuildFromThisRouteBlacked(string routeKey)
     {
         for (int i = 0; i < _blackList.Count; i++)
         {
@@ -3063,12 +3008,12 @@ public class Brain
 
     /// <summary>
     /// Created to address when is called from brain doesnt need to cjeck if is another bridge or not
-    /// 
+    ///
     /// Just needs to black list everytihng bz means that a brdige is gonna be out
-    /// 
-    /// It doesnt add to backlisting bz is not needed. I only need to reroute  
+    ///
+    /// It doesnt add to backlisting bz is not needed. I only need to reroute
     /// </summary>
-    void BridgeMarkedAction(string build, string bridge = "")
+    private void BridgeMarkedAction(string build, string bridge = "")
     {
         //and will add to genOldKeys in case that was used by him b4. Otherwise will be dimiss the key
 
@@ -3076,7 +3021,7 @@ public class Brain
         MakeStructureNull(build);
     }
 
-    int HowManyBuiltBridges()
+    private int HowManyBuiltBridges()
     {
         int res = 0;
         for (int i = 0; i < BuildingPot.Control.Registro.Ways.Count; i++)
@@ -3091,22 +3036,22 @@ public class Brain
     }
 
     /// <summary>
-    /// Will clear blacklist if at least one item on it 
+    /// Will clear blacklist if at least one item on it
     /// </summary>
-    void CheckIfClearBlackList()
+    private void CheckIfClearBlackList()
     {
         if (_blackList.Count > 0)
         {
             ClearEachBlackListedBuilding();
             brigdesKeyRoutes.Clear();
-          ////Debug.Log(_person.MyId+" cleared blackList .famID"+_person.FamilyId);
+            ////Debug.Log(_person.MyId+" cleared blackList .famID"+_person.FamilyId);
         }
     }
 
     /// <summary>
-    /// Will clear the black list and will make those buildings in this person null so he 
+    /// Will clear the black list and will make those buildings in this person null so he
     /// can search again for those kind of places .. just in case the ones blacklisted now are
-    /// closer for him 
+    /// closer for him
     /// </summary>
     public void ClearEachBlackListedBuilding()
     {
@@ -3117,22 +3062,21 @@ public class Brain
         {
             if (BuildingPot.Control.Registro.AllBuilding.ContainsKey(arr[i]))
             {
-                //we dont need to make null his current house 
+                //we dont need to make null his current house
                 if (Building.IsHouseType(arr[i]))
                 {
-                    continue;    
+                    continue;
                 }
                 MakeStructureNull(arr[i]);
             }
         }
     }
-    #endregion
+
+    #endregion BlackListing
 
     #region Die Related
 
     private bool _partido;
-
-
 
     public bool Partido
     {
@@ -3146,23 +3090,20 @@ public class Brain
         set { _timesCall = value; }
     }
 
-
-
-
     /// <summary>
-    /// A person die 
+    /// A person die
     /// </summary>
     public void Die()
     {
         if (Partido && string.IsNullOrEmpty(_person.IsBooked))
         {
             _person.UnselectPerson();
-            //called bz doesnt hide as person obj disapears 
+            //called bz doesnt hide as person obj disapears
             _person.DestroyPaths();
 
             _person.Body.DestroyAllPersonalObj();
             PersonPot.Control.Queues.PersonDie();
-            
+
             PersonPot.Control.RemoveMeFromSystem(_person.MyId);
             PersonPot.Control.WorkersRoutingQueue.RemoveMeFromSystem(_person.MyId);
 
@@ -3176,21 +3117,21 @@ public class Brain
             }
             RemoveFromAllPeopleDict();
             Partido = false;
-            //so person goes to heaven, and ray is sent from Sky to take him //or angels take him 
+            //so person goes to heaven, and ray is sent from Sky to take him //or angels take him
             _person.DestroyCool();
             PersonPot.Control.RemovePerson(_person);
         }
     }
 
-    void RemoveFromOldFamily()
+    private void RemoveFromOldFamily()
     {
         var fam = _person.Home.FindFamilyById(_person.FamilyId);
 
         if (fam == null)
         {
             var i = this;
-            throw new Exception("Die():"+_person.MyId+" sp:"+_person.Spouse+
-                " bInfo:"+_person.DebugBornInfo+" homeID:"+_person.Home.MyId+" famID:"+_person.FamilyId);
+            throw new Exception("Die():" + _person.MyId + " sp:" + _person.Spouse +
+                " bInfo:" + _person.DebugBornInfo + " homeID:" + _person.Home.MyId + " famID:" + _person.FamilyId);
         }
 
         fam.RemovePersonFromFamily(_person);
@@ -3200,9 +3141,9 @@ public class Brain
     /// <summary>
     /// Will remove the person from all PeoplesDict he might be on . Will call destroy building if is marked or is a shack
     /// </summary>
-    void RemoveFromAllPeopleDict()
+    private void RemoveFromAllPeopleDict()
     {
-        List<Structure> all = new List<Structure>(){_person.Home, _person.Work, _person.FoodSource, _person.Religion, _person.Chill};
+        List<Structure> all = new List<Structure>() { _person.Home, _person.Work, _person.FoodSource, _person.Religion, _person.Chill };
 
         for (int i = 0; i < all.Count; i++)
         {
@@ -3215,17 +3156,17 @@ public class Brain
             }
         }
 
-        if (_person.Work!=null)
+        if (_person.Work != null)
         {
             _person.Work.RemovePosition(true);
         }
     }
 
-#endregion
+    #endregion Die Related
 
     internal bool JustSpawned()
     {
-        if (_person.Body.Location==HPers.None && _person.Body.GoingTo==HPers.None &&
+        if (_person.Body.Location == HPers.None && _person.Body.GoingTo == HPers.None &&
             _person.Work == null && _person.FoodSource == null && _person.Religion == null &&
             _person.Chill == null)
         {

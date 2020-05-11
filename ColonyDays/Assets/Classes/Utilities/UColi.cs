@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 //collidaer utility
-public class UColi : MonoBehaviour {
-
+public class UColi : MonoBehaviour
+{
     public static void SetColiState(Transform[] array, H action)
     {
         bool state = false;

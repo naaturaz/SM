@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
-
+﻿using UnityEngine;
 
 public class RandomUV
 {
@@ -28,7 +23,9 @@ public class RandomUV
         set { _hType = value; }
     }
 
-    public RandomUV() { }
+    public RandomUV()
+    {
+    }
 
     public RandomUV(GameObject main, H hType)
     {
@@ -43,7 +40,7 @@ public class RandomUV
         InitUVMap();
     }
 
-    void InitUVMap()
+    private void InitUVMap()
     {
         SetYs();
         if (_yMulti == -1)
@@ -63,7 +60,7 @@ public class RandomUV
             uvs = myMesh.uv; // Take the existing UVs
         }
 
-        //so it moves down randomwly 
+        //so it moves down randomwly
         _yOffset = _yOffset * _yMulti;
         for (int i = 0; i < uvs.Length; i++)
         {
@@ -85,7 +82,7 @@ public class RandomUV
     {
         if (IsA5Stripes())
         {
-            _yOffset = 409.6f *2;
+            _yOffset = 409.6f * 2;
             _yMaxSteps = 5;
         }
         else if (IsA4Stripes())
@@ -93,23 +90,22 @@ public class RandomUV
             _yOffset = 1024;
             _yMaxSteps = 4;
         }
-        else if(HType == H.Person)
+        else if (HType == H.Person)
         {
             _yOffset = 1024f;
             _yMaxSteps = 6;
         }
     }
 
-    bool IsA5Stripes()
+    private bool IsA5Stripes()
     {
-        return 
+        return
                HType.ToString().Contains("BrickHouse") ||
                HType.ToString().Contains("Bohio");
     }
 
-    bool IsA4Stripes()
+    private bool IsA4Stripes()
     {
         return HType.ToString().Contains("WoodHouse") || HType.ToString().Contains("Shack");
     }
 }
-

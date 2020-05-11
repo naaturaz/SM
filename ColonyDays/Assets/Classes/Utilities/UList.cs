@@ -1,14 +1,13 @@
 ﻿using System;
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
-public class UList : MonoBehaviour {
-
+public class UList : MonoBehaviour
+{
     public static List<Vector3> FindVectorsOnSameHeight(List<Vector3> list, float height, float epsilon)
     {
-        List<Vector3>res=new List<Vector3>();
+        List<Vector3> res = new List<Vector3>();
         for (int i = 0; i < list.Count; i++)
         {
             if (UMath.nearlyEqual(list[i].y, height, epsilon))
@@ -45,8 +44,6 @@ public class UList : MonoBehaviour {
                     res.Add(list[i]);
                 }
             }
-
-    
         }
         return res;
     }
@@ -54,7 +51,7 @@ public class UList : MonoBehaviour {
     /// <summary>
     /// Find the common values of the 'list' on the 'axis' passed.
     /// For ex: is used to find all the values of Y in the mesh
-    /// 
+    ///
     /// Will order by if 'order' was specified
     /// </summary>
     /// <param name="axis"></param>
@@ -71,10 +68,8 @@ public class UList : MonoBehaviour {
             list = list.OrderBy(a => a.y).ToList();
         }
 
-
         var res = UList.ReturnAxisList(list, H.Y);
         res = res.Distinct().ToList();
-
 
         return res;
     }
@@ -82,7 +77,7 @@ public class UList : MonoBehaviour {
     /// <summary>
     /// Find the common values of the 'list' on the 'axis' passed.
     /// For ex: is used to find all the values of Y in the mesh
-    /// 
+    ///
     /// Will order by if 'order' was specified
     /// </summary>
     /// <param name="axis"></param>
@@ -99,10 +94,8 @@ public class UList : MonoBehaviour {
             list = list.OrderBy(a => a.x).ToList();
         }
 
-
         var res = UList.ReturnAxisList(list, H.X);
         res = res.Distinct().ToList();
-
 
         return res;
     }
@@ -110,7 +103,7 @@ public class UList : MonoBehaviour {
     /// <summary>
     /// Find the common values of the 'list' on the 'axis' passed.
     /// For ex: is used to find all the values of Y in the mesh
-    /// 
+    ///
     /// Will order by if 'order' was specified
     /// </summary>
     /// <param name="axis"></param>
@@ -127,16 +120,14 @@ public class UList : MonoBehaviour {
             list = list.OrderBy(a => a.z).ToList();
         }
 
-
         var res = UList.ReturnAxisList(list, H.Z);
         res = res.Distinct().ToList();
-
 
         return res;
     }
 
     /// <summary>
-    /// For this to work fine the 'list' passed most be ordered Descending 
+    /// For this to work fine the 'list' passed most be ordered Descending
     /// </summary>
     /// <param name="list"></param>
     /// <param name="below"></param>
@@ -167,11 +158,9 @@ public class UList : MonoBehaviour {
 
     public static float FindMostCommonValue(H axis, List<Vector3> list)
     {
-
         var ordered = list.OrderBy(a => a.y).ToList();
         return ordered[ordered.Count / 2].y;
     }
-
 
     public static List<H> ConvertToList(System.Array array)
     {
@@ -186,7 +175,7 @@ public class UList : MonoBehaviour {
     }
 
     /// <summary>
-    /// Eliminates duplicates ... robust code.. 
+    /// Eliminates duplicates ... robust code..
     /// </summary>
     /// <param name="list"></param>
     /// <returns></returns>
@@ -222,11 +211,11 @@ public class UList : MonoBehaviour {
                         duplicateIndex++;
                     }
                 }
-                //if the duplicate val is only 1 then we will added bz is not being added ever 
+                //if the duplicate val is only 1 then we will added bz is not being added ever
                 //yet to newList
                 if (duplicateIndex < 2)
                 {
-                     newList.Add(list[i]);
+                    newList.Add(list[i]);
                 }
             }
             sameValCounter = 0;
@@ -236,7 +225,7 @@ public class UList : MonoBehaviour {
     }
 
     /// <summary>
-    /// Eliminates duplicates ... robust code.. 
+    /// Eliminates duplicates ... robust code..
     /// </summary>
     /// <param name="list"></param>
     /// <returns></returns>
@@ -254,7 +243,7 @@ public class UList : MonoBehaviour {
             {
                 float dist = Vector3.Distance(list[i], a[j]);
                 //if the distance is less thn the minimun distance allowed
-                //then is the same Vector3 
+                //then is the same Vector3
                 if (dist < Mathf.Abs(minDist))
                 {
                     sameValCounter++;
@@ -276,7 +265,7 @@ public class UList : MonoBehaviour {
                         duplicateIndex++;
                     }
                 }
-                //if the duplicate val is only 1 then we will added bz is not being added ever 
+                //if the duplicate val is only 1 then we will added bz is not being added ever
                 //yet to newList
                 if (duplicateIndex < 2)
                 {
@@ -294,7 +283,7 @@ public class UList : MonoBehaviour {
         List<Vector3> toAdd4 = null)
     {
         current = AddOneListToList(current, toAdd1);
-        if(toAdd2!=null)
+        if (toAdd2 != null)
         { current = AddOneListToList(current, toAdd2); }
         if (toAdd3 != null)
         { current = AddOneListToList(current, toAdd3); }
@@ -305,6 +294,7 @@ public class UList : MonoBehaviour {
 
     //carlos
     public static List<NewBuild> newBildList;
+
     public static List<Btn3D> menus;
 
     public static void AddObject<T>(T obj)
@@ -318,7 +308,7 @@ public class UList : MonoBehaviour {
     }
 
     //make this <T>
-    public static List<Vector3> AddOneListToList(List<Vector3> current, 
+    public static List<Vector3> AddOneListToList(List<Vector3> current,
     List<Vector3> toAdd)
     {
         for (int i = 0; i < toAdd.Count; i++)
@@ -336,7 +326,7 @@ public class UList : MonoBehaviour {
         }
         return current;
     }
-    
+
     public static List<float> ReturnAxisList(List<Vector3> list, H axis)
     {
         List<float> res = new List<float>();
@@ -346,7 +336,7 @@ public class UList : MonoBehaviour {
             {
                 res.Add(list[i].x);
             }
-        }        
+        }
         else if (axis == H.Y)
         {
             for (int i = 0; i < list.Count; i++)
@@ -364,7 +354,6 @@ public class UList : MonoBehaviour {
         return res;
     }
 
-
     public static List<TreeVeget> UpdateAList(List<TreeVeget> list, TerrainRamdonSpawner newObj)
     {
         for (int i = 0; i < list.Count; i++)
@@ -373,7 +362,6 @@ public class UList : MonoBehaviour {
             {
                 list[i] = newObj as TreeVeget;
             }
-            
         }
         return list;
     }
@@ -389,7 +377,6 @@ public class UList : MonoBehaviour {
             {
                 list[i] = newObj as StoneRock;
             }
-
         }
         return list;
     }
@@ -402,7 +389,6 @@ public class UList : MonoBehaviour {
             {
                 list[i] = newObj as IronRock;
             }
-
         }
         return list;
     }
@@ -415,14 +401,13 @@ public class UList : MonoBehaviour {
             {
                 list[i] = newObj as StillElement;
             }
-
         }
         return list;
     }
 
     public static List<Vector3> ReturnTheVector3List(List<PreviewWay> list)
     {
-        List<Vector3> res = new List<Vector3>(); 
+        List<Vector3> res = new List<Vector3>();
         for (int i = 0; i < list.Count; i++)
         {
             res.Add(list[i].transform.position);
@@ -430,16 +415,14 @@ public class UList : MonoBehaviour {
         return res;
     }
 
-
     public static List<Vector3> ReturnTrunckedList(List<Vector3> list, int much)
     {
-            List<Vector3 > res= new List<Vector3>();
+        List<Vector3> res = new List<Vector3>();
 
         for (int i = 0; i < much; i++)
         {
-res.Add(list[i]);
+            res.Add(list[i]);
         }
         return res;
     }
-
 }

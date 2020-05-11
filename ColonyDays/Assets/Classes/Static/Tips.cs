@@ -1,25 +1,24 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 //THIS CLASS ONLY HOLD STATIC VALUES
-public class Tips : MonoBehaviour {
-
+public class Tips : MonoBehaviour
+{
     //will hold diferent word that can be change to address
-    //correctly the description given the hardware 
+    //correctly the description given the hardware
     //ex: On Windows - 'Click' ==> Xbox - 'Button A'
     public static List<List<string>> hardwares = new List<List<string>>();
+
     public static List<string> win = new List<string>();
     public static List<string> xBox = new List<string>();
-
 
     public static List<string> tips = new List<string>();
     public static List<string> spawner = new List<string>();
 
     public static bool isStarted = false;
 
-	// Use this for initialization
-	public static void Start () 
+    // Use this for initialization
+    public static void Start()
     {
         //HARDWARES LIST
         //windows LIST
@@ -71,15 +70,12 @@ public class Tips : MonoBehaviour {
 
         //Elements
 
-
         //Helpers
 
         //Pause Menu Message
         //tips.Add("If you exit will lose all the progress");//Helpers
         //spawner.Add("");
-
-
-	}
+    }
 
     public static string ReturnTip(string spawnPass)
     {
@@ -94,17 +90,16 @@ public class Tips : MonoBehaviour {
         string s = "No tips";
         for (int i = 0; i < tips.Count; i++)
         {
-            if(spawnPass.Contains(spawner[i]))
+            if (spawnPass.Contains(spawner[i]))
             {
                 s = tips[i];
             }
         }
         return s;
     }
-	
-	// Update is called once per frame
-	void Update () 
+
+    // Update is called once per frame
+    private void Update()
     {
-	
-	}
+    }
 }

@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-//This calss Prefab is exactly the same as CreatePlane just with diff classes added 
+//This calss Prefab is exactly the same as CreatePlane just with diff classes added
 //this class was initillly created only to see ifi can reduce createPlanes drw calls
 
-public class BigBoxPrev : CreatePlane {
-    
+public class BigBoxPrev : CreatePlane
+{
     private bool isToBeCoolDestroyed;
     private float moveTimeStap;
     private float moveForThisLong;
@@ -19,28 +19,28 @@ public class BigBoxPrev : CreatePlane {
         set { isToBeCoolDestroyed = value; }
     }
 
-	// Use this for initialization
-	void Start () 
+    // Use this for initialization
+    private void Start()
     {
-	    base.Start();
+        base.Start();
 
         //if (BuildingPot.Control.CurrentSpawnBuild.HType == H.BridgeRoad)
         //{
         //    prevWideSquares = 5;
         //}
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    private void Update()
     {
         if (IsToBeCoolDestroyed) { DestroyCoolMoveFirstRoutine(); }
-	    CorrectPreviewSize();
+        CorrectPreviewSize();
     }
 
     /// <summary>
     /// Created so the build of a road is not alittle bit off wheen is to large
     /// </summary>
-    void CorrectPreviewSize()
+    private void CorrectPreviewSize()
     {
         if (corretMinimuScaleOnBigBox)
         {
@@ -50,7 +50,7 @@ public class BigBoxPrev : CreatePlane {
     }
 
     /// <summary>
-    /// Check what is current color if is initial color or red and with condition will 
+    /// Check what is current color if is initial color or red and with condition will
     /// switch current game obj color
     /// </summary>
     /// <param name="condition">condition true = initial_color, condition false = red</param>
@@ -89,22 +89,22 @@ public class BigBoxPrev : CreatePlane {
     /// <summary>
     /// The routine for the Destroy Cool
     /// </summary>
-    void DestroyCoolMoveFirstRoutine()
+    private void DestroyCoolMoveFirstRoutine()
     {
         MoveThis();
         CheckOnTime();
     }
 
     /// <summary>
-    /// Move this game object 
+    /// Move this game object
     /// </summary>
-    void MoveThis()
+    private void MoveThis()
     {
         Vector3 tempPos = transform.position;
         moveSpeed *= 1.5f;//so speeds up
 
         if (moveInThisAxis == H.X)
-        {tempPos.x += moveSpeed * Time.deltaTime;}
+        { tempPos.x += moveSpeed * Time.deltaTime; }
         else if (moveInThisAxis == H.Y)
         { tempPos.y += moveSpeed * Time.deltaTime; }
         else if (moveInThisAxis == H.Z)
@@ -116,7 +116,7 @@ public class BigBoxPrev : CreatePlane {
     /// <summary>
     /// Checks on the time passed and will destroy gameobj if has passed
     /// </summary>
-    void CheckOnTime()
+    private void CheckOnTime()
     {
         if (Time.time > moveTimeStap + moveForThisLong)
         {
@@ -126,7 +126,7 @@ public class BigBoxPrev : CreatePlane {
     }
 
     /// <summary>
-    /// Updates the Big Box when is behaving as a Cursor 
+    /// Updates the Big Box when is behaving as a Cursor
     /// </summary>
     public void UpdateCursor()
     {

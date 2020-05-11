@@ -1,15 +1,15 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-public class URayCast : MonoBehaviour {
-
-    static SMe m = new SMe();
+public class URayCast : MonoBehaviour
+{
+    private static SMe m = new SMe();
 
     /// <summary>
     /// Will find the Obj on its way btw ini and end param
-    /// 
+    ///
     /// Suitable for Persons
-    /// 
+    ///
     /// This would cast rays only against colliders in layer passed as Param 'layer'
     /// </summary>
     public static RaycastHit FindObjOnMyWay(Vector3 ini, Vector3 end, int layer, Color color)
@@ -27,7 +27,6 @@ public class URayCast : MonoBehaviour {
         if (Physics.Raycast(dummyRayCaster.transform.position,
             dummyRayCaster.transform.TransformDirection(Vector3.forward) * 100, out hit, Mathf.Infinity, layerMask))
         {
-
         }
         else
         {
@@ -39,8 +38,8 @@ public class URayCast : MonoBehaviour {
     }
 
     /// <summary>
-    /// Will find all obj are colliding with this as an sphere and will 
-    /// look to the parent and granpa 
+    /// Will find all obj are colliding with this as an sphere and will
+    /// look to the parent and granpa
     /// </summary>
     /// <returns></returns>
     public static List<string> CastSphere(Vector3 castingFromTransform, float castRadius)

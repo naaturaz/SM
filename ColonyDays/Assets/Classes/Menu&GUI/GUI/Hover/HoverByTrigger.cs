@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-class HoverByTrigger : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
+internal class HoverByTrigger : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
 {
     public bool IsAProductHover;
 
     private HoverWindow hoverWindow;//the window tht will pop up msg
 
-    void Start()
+    private void Start()
     {
         if (hoverWindow == null)
             hoverWindow = FindObjectOfType<HoverWindow>();
@@ -23,7 +23,7 @@ class HoverByTrigger : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
         PublicDestroyHelp();
     }
 
-    void OnGUI()
+    private void OnGUI()
     {
         if (Event.current.type == EventType.KeyUp || Event.current.type == EventType.MouseUp)
         {
@@ -34,29 +34,28 @@ class HoverByTrigger : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
     /// <
     /// summary>
     /// For unity eventTrigger
-    /// 
+    ///
     /// </summary>
-    void PublicSpawnHelp()
+    private void PublicSpawnHelp()
     {
         var pos = Hoverable.MousePositionTowardsScreenCenter();
 
-        if(IsAProductHover)
+        if (IsAProductHover)
             hoverWindow.ShowMsg(MyMsg());
         else
             hoverWindow.Show(MyMsg());
     }
-    
+
     /// <summary>
     /// For unity event
     /// </summary>
-    void PublicDestroyHelp()
+    private void PublicDestroyHelp()
     {
         hoverWindow.Hide();
     }
 
-    string MyMsg()
+    private string MyMsg()
     {
         return transform.name;
     }
 }
-

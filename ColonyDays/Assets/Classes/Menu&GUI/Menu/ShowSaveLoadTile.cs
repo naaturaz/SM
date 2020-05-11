@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-
 
 public class ShowSaveLoadTile : GUIElement
 {
@@ -36,37 +31,34 @@ public class ShowSaveLoadTile : GUIElement
         var localScale = obj.transform.localScale;
 
         obj.transform.position = iniPos;
-        obj.transform.SetParent( container);
+        obj.transform.SetParent(container);
 
         obj.transform.localScale = localScale;
-        obj.SaveName=saveName;
+        obj.SaveName = saveName;
 
         return obj;
     }
 
-    void Start()
+    private void Start()
     {
         Set(SaveName);
     }
 
     public void Set(string saveName)
     {
-        //making the string Readable 
+        //making the string Readable
         var len = DataController.SugarMillPath().Length;
         saveName = saveName.Substring(len + 1);
 
         var text = GetChildCalledOnThis("Title", gameObject).GetComponent<Text>();
         text.text = saveName;
 
-       // _btn = GetChildCalledOnThis("Btn", gameObject).GetComponent<UnityEngine.UI.Button>();
+        // _btn = GetChildCalledOnThis("Btn", gameObject).GetComponent<UnityEngine.UI.Button>();
         _btn = gameObject.GetComponent<UnityEngine.UI.Button>();
         _btn.onClick.AddListener(() => Program.MouseClickListenerSt("MainMenu.Save." + saveName));
     }
 
-
-    void Update()
+    private void Update()
     {
-        
     }
 }
-

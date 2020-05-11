@@ -1,34 +1,33 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class Profile : MonoBehaviour {
+public class Profile : MonoBehaviour
+{
+    private SaveLoad saveLoad = new SaveLoad();
 
-    SaveLoad saveLoad = new SaveLoad();
+    private float creationTime;
+    private float _timePlayed;
+    private string _userName;
 
-    float creationTime;
-    float _timePlayed;
-    string _userName;
+    private bool _isSoundOn;
+    private bool _isMusicOn;
+    private bool _isToAskB4Exit;
 
-    bool _isSoundOn;
-    bool _isMusicOn;
-    bool _isToAskB4Exit;
+    private int _playerLevel;
+    private int _playerXP;
 
-    int _playerLevel;
-    int _playerXP;
-
-    H _difficulty;
+    private H _difficulty;
 
     public float TimePlayed
-	{
+    {
         get { return _timePlayed; }
         set { _timePlayed = value; }
-	}
+    }
 
     public string UserName
-	{
+    {
         get { return _userName; }
         set { _userName = value; }
-	}
+    }
 
     public bool IsSoundOn
     {
@@ -66,17 +65,16 @@ public class Profile : MonoBehaviour {
         set { _difficulty = value; }
     }
 
-	// Use this for initialization
-	void Start () 
+    // Use this for initialization
+    private void Start()
     {
         creationTime = Time.time;
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
+    }
 
-	}
+    // Update is called once per frame
+    private void Update()
+    {
+    }
 
     public void LoadProfile(string currentUser)
     {
@@ -98,7 +96,7 @@ public class Profile : MonoBehaviour {
         //print("TimePlayed:" + TimePlayed);
     }
 
-    void FindTimePlayed(out float creationTime, out float timeElapsedSinceLastUpdate)
+    private void FindTimePlayed(out float creationTime, out float timeElapsedSinceLastUpdate)
     {
         creationTime = this.creationTime;
         timeElapsedSinceLastUpdate = Time.time - creationTime;
@@ -106,7 +104,7 @@ public class Profile : MonoBehaviour {
     }
 
     //FindOutElapseAmountThenReset
-    double FetchReset(double propertyInPlayer, out double elapsedAmount)
+    private double FetchReset(double propertyInPlayer, out double elapsedAmount)
     {
         elapsedAmount = propertyInPlayer;
         propertyInPlayer = 0;
@@ -114,7 +112,7 @@ public class Profile : MonoBehaviour {
     }
 
     //FindOutElapseAmountThenReset
-    int FetchReset(int propertyInPlayer, out int elapsedAmount)
+    private int FetchReset(int propertyInPlayer, out int elapsedAmount)
     {
         elapsedAmount = propertyInPlayer;
         propertyInPlayer = 0;

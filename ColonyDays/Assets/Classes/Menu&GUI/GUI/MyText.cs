@@ -10,7 +10,7 @@ public class MyText : MonoBehaviour
     private Text thisText;
 
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         thisText = GetComponent<Text>();
         Map();
@@ -31,7 +31,8 @@ public class MyText : MonoBehaviour
         }
     }
 
-    int adult;
+    private int adult;
+
     private void Map()
     {
         if (Program.InputMain == null)
@@ -78,7 +79,6 @@ public class MyText : MonoBehaviour
         {
             thisText.text = PersonPot.Control.OverAllHappiness();
         }
-
         else if (name == "PortReputation")
         {
             thisText.text = BuildingPot.Control.DockManager1.PortReputation.ToString("F0");
@@ -93,12 +93,10 @@ public class MyText : MonoBehaviour
 
             thisText.text = BuildingPot.Control.DockManager1.PirateThreat.ToString("F0");
         }
-
         else if (name == "Dollars")
         {
             thisText.text = DollarFormat(Program.gameScene.GameController1.Dollars);
         }
-
         else if (name == "Temp")
         {
             thisText.text = Tempeture.Current().ToString("n0");
@@ -114,7 +112,7 @@ public class MyText : MonoBehaviour
         return Sign(amt) + "$" + String.Format("{0:n}", Math.Abs(amt));
     }
 
-    static string Sign(float amt)
+    private static string Sign(float amt)
     {
         if (amt < 0)
         {
@@ -123,21 +121,16 @@ public class MyText : MonoBehaviour
         return "";
     }
 
-
     public static int Lazy()
     {
         return PersonPot.Control.All.Count(a => a.Age >= ModController.AgeMajorityReached())
             - BuildingPot.Control.Registro.MaxPositions();
     }
 
-
-
-
-
     private static int reMapCount;//since is static need to remap all the times exist MyText.cs scripts
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         reMapCount++;
 
@@ -163,7 +156,6 @@ public class MyText : MonoBehaviour
             return;
         }
 
-
         if (name == "Date")
         {
             thisText.text = Program.gameScene.GameTime1.MonthFormat() + " "
@@ -176,10 +168,9 @@ public class MyText : MonoBehaviour
     }
 
     private static bool _speedChanged;
+
     public static void UpdateNow()
     {
         _speedChanged = true;
     }
-
-
 }

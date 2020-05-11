@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-class LangDict
+internal class LangDict
 {
-    Dictionary<string, string> _dict = new Dictionary<string, string>();
+    private Dictionary<string, string> _dict = new Dictionary<string, string>();
 
     public int Count { get { return _dict.Count; } }
     public Dictionary<string, string> Dictionary { get { return _dict; } }
 
     public void Add(string key, string value)
     {
-        if(_dict.ContainsKey(key))
+        if (_dict.ContainsKey(key))
         {
             Debug.Log("'" + key + "' is already is dict. Not added");
             return;

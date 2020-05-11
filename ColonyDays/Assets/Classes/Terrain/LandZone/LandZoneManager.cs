@@ -1,16 +1,15 @@
 ﻿using System;
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class LandZoneManager
 {
-    SMe m  = new SMe();
-    private List<Vector3> _commomLayer; 
+    private SMe m = new SMe();
+    private List<Vector3> _commomLayer;
 
-    List<LandZone> _landZones = new List<LandZone>(); 
-    LandZone _current = new LandZone();
+    private List<LandZone> _landZones = new List<LandZone>();
+    private LandZone _current = new LandZone();
 
     private bool load;
 
@@ -19,13 +18,10 @@ public class LandZoneManager
         load = true;
     }
 
-
-
     public void AddANewLandZone()
     {
         _current = new LandZone(_commomLayer);
     }
-
 
     public List<Vector3> CommomLayer
     {
@@ -39,10 +35,9 @@ public class LandZoneManager
         set { _landZones = value; }
     }
 
-
-
     private int secCount;
     private float valYSearch = 0.0001f;//0.05f
+
     private void PullMostCommonYLayer()
     {
         var yS = UList.FindYAxisCommonValues(m.AllVertexs, H.Descending);
@@ -50,7 +45,7 @@ public class LandZoneManager
 
         _commomLayer = UList.FindVectorsOnSameHeight(m.Vertices.ToList(), yCommon, valYSearch);
 
-        Debug.Log("_commomLayer.Count:"+_commomLayer.Count);
+        Debug.Log("_commomLayer.Count:" + _commomLayer.Count);
 
         if (_commomLayer.Count == 0 && secCount < 1000)
         {
@@ -62,28 +57,27 @@ public class LandZoneManager
         {
             throw new Exception("Not pull anything from CommonY Layer");
         }
-        
     }
 
-
     private bool addNew;
-	// Update is called once per frame
-	public void Update () 
+
+    // Update is called once per frame
+    public void Update()
     {
-	    if (load)
-	    {
-	        Load();
-	    }
+        if (load)
+        {
+            Load();
+        }
 
         _current.Update();
 
-	    if (addNew)
-	    {
-	        addNew = false;
+        if (addNew)
+        {
+            addNew = false;
             _current.StartLinking(_commomLayer);
-           //Debug.Log("nw: cnt:" + _commomLayer.Count);
-	    }
-	}
+            //Debug.Log("nw: cnt:" + _commomLayer.Count);
+        }
+    }
 
     internal void Create()
     {
@@ -106,9 +100,9 @@ public class LandZoneManager
         //if is linkRect calling this will try to simplified
         if (type == H.LinkRect)
         {
-            SimpliFyLandZones();  
+            SimpliFyLandZones();
         }
-        //else will save and show 
+        //else will save and show
         else
         {
             AddAllLandZonesLinkRectsToItsRegions();
@@ -117,7 +111,7 @@ public class LandZoneManager
             Save();
             DebugShowNames();
 
-            //save is handled in CrystalManager     
+            //save is handled in CrystalManager
             //m.MeshController.WaterBound1.Create();
         }
     }
@@ -152,9 +146,9 @@ public class LandZoneManager
     }
 
     /// <summary>
-    /// Will show names on game 
+    /// Will show names on game
     /// </summary>
-    void DebugShowNames()
+    private void DebugShowNames()
     {
         for (int i = 0; i < _current.LinkRects.Count; i++)
         {
@@ -165,7 +159,7 @@ public class LandZoneManager
         for (int i = 0; i < _landZones.Count; i++)
         {
             //   //Debug.Log(_current.LinkRects[i].Name);
-            UVisHelp.CreateText(U2D.FromV2ToV3(_landZones[i].CalcPosition()) + new Vector3(0,15,0), _landZones[i].LandZoneName, 1400);
+            UVisHelp.CreateText(U2D.FromV2ToV3(_landZones[i].CalcPosition()) + new Vector3(0, 15, 0), _landZones[i].LandZoneName, 1400);
         }
     }
 
@@ -174,7 +168,7 @@ public class LandZoneManager
     /// </summary>
     private void CreateDiffLandZones()
     {
-        //bz is called twice 
+        //bz is called twice
         _landZones.Clear();
 
         var zoneNames = ReturnDiffZonesNames();
@@ -190,7 +184,7 @@ public class LandZoneManager
     /// <summary>
     /// Will add the llinkRect to respective zone
     /// </summary>
-    void AddToRespectiveZone()
+    private void AddToRespectiveZone()
     {
         for (int i = 0; i < _current.LinkRects.Count; i++)
         {
@@ -206,9 +200,9 @@ public class LandZoneManager
         }
     }
 
-    List<string> ReturnDiffZonesNames()
+    private List<string> ReturnDiffZonesNames()
     {
-        List<string>res=new List<string>();
+        List<string> res = new List<string>();
 
         for (int i = 0; i < _current.LinkRects.Count; i++)
         {
@@ -223,13 +217,13 @@ public class LandZoneManager
 
     #region SaveLoad
 
-    void Save()
+    private void Save()
     {
         m.SubMesh.LandZoneManager1 = this;
         m.MeshController.WriteXML();
     }
 
-    void Load()
+    private void Load()
     {
         if (m.SubMesh == null)
         {
@@ -242,10 +236,9 @@ public class LandZoneManager
 
         //if (LandZones.Count == 0)
         //{
-            //Create();
+        //Create();
         //}
     }
 
-
-    #endregion
+    #endregion SaveLoad
 }

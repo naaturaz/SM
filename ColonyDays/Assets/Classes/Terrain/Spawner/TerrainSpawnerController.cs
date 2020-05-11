@@ -1,56 +1,57 @@
 ﻿using System;
-using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class TerrainSpawnerController : ControllerParent
 {
-    int loadingIndex;
+    private int loadingIndex;
     private SpawnedData spawnedData;
 
-    bool isSpawned;//tells if a set of obj were spawned
-    System.Random rand = new System.Random();
-    float minHeightToSpawn;//min height to spawn obj on terrain
+    private bool isSpawned;//tells if a set of obj were spawned
+    private System.Random rand = new System.Random();
+    private float minHeightToSpawn;//min height to spawn obj on terrain
     private float maxHeightToSpawn;
 
     //UNITY EDITOR ManualStart()
-    private int multiplier = 40;//80  
+    private int multiplier = 40;//80
 
-    int howManyTreesToSpawn = 75;//30  20    50
-    int howManyStonesToSpawn = 1;//3
-    int howManyIronToSpawn = 1;//3
-    int howManyGoldToSpawn = 1;//3
-    int howManyOrnaToSpawn = 1;//30  
-    int howManyGrassToSpawn = 5;//20  40
-    //the ones spawn in the marine bounds 
-    int howManyMarineBoundsToSpawn = 1;//1
-    int howManyMountainBoundsToSpawn = 0;//
+    private int howManyTreesToSpawn = 75;//30  20    50
+    private int howManyStonesToSpawn = 1;//3
+    private int howManyIronToSpawn = 1;//3
+    private int howManyGoldToSpawn = 1;//3
+    private int howManyOrnaToSpawn = 1;//30
+    private int howManyGrassToSpawn = 5;//20  40
+
+    //the ones spawn in the marine bounds
+    private int howManyMarineBoundsToSpawn = 1;//1
+
+    private int howManyMountainBoundsToSpawn = 0;//
 
     private SpawnPool _spawnPool;
 
     //will be use when spawing new obj to know if that position was used alread by another one
-    bool[] usedVertexPos;
+    private bool[] usedVertexPos;
 
     private List<string> allTrees = new List<string>()
     {
         //Root.palm1, Root.palm2,
-        //Root.palm3, Root.palm4, Root.palm5, Root.palm6, 
+        //Root.palm3, Root.palm4, Root.palm5, Root.palm6,
         //Root.palm10  ,Root.palm11  ,
-        Root.palm20, Root.palm21, 
+        Root.palm20, Root.palm21,
         Root.palm22, Root.palm23,
-
     };
 
-    List<string> allStones = new List<string>() { };
+    private List<string> allStones = new List<string>() { };
 
-    List<string> allIron = new List<string>()
+    private List<string> allIron = new List<string>()
     {
         Root.iron1
         //, Root.iron2, Root.iron3 ,Root.iron4,Root.iron5
-    
     };
-    //gold stones here 
-    List<string> allGold = new List<string>()
+
+    //gold stones here
+    private List<string> allGold = new List<string>()
     {
         //Root.gold0
          Root.gold1
@@ -63,29 +64,30 @@ public class TerrainSpawnerController : ControllerParent
     public static List<string> allMarine = new List<string>() { };
     public static List<string> allMountain = new List<string>() { };
 
-    List<H> toSpawnList = new List<H>()
+    private List<H> toSpawnList = new List<H>()
     {
         H.Tree, H.Stone, H.Iron, H.Gold, H.Ornament, H.Grass, H.Marine, H.Mountain
-        
     };
+
     private List<int> howManySpawn;//will containt a list in serie of how many spawn for each type
 
-    int toSpawnListCounter;
+    private int toSpawnListCounter;
 
     public TerrainRamdonSpawnerKey AllRandomObjList = new TerrainRamdonSpawnerKey();//containts all spawned obj
     public List<SpawnedData> AllSpawnedDataList = new List<SpawnedData>();//containts all spawned data serie saved
 
     private Vector3 centerOfTerrain;//center of terrain, defined in Terreno.MeshController.iniTerr.MathCenter
-    private Vector3 voidNWCorner, voidSECorner;//starting zone, will not spawn anything btw them. 
+    private Vector3 voidNWCorner, voidSECorner;//starting zone, will not spawn anything btw them.
 
-    //List that holds the spawned objects 
-    List<TreeVeget> treeList = new List<TreeVeget>();
-    List<StoneRock> stoneList = new List<StoneRock>();
-    List<IronRock> ironList = new List<IronRock>();
-    List<StillElement> ornaList = new List<StillElement>();
-    List<StillElement> grassList = new List<StillElement>();
-    List<StillElement> marineList = new List<StillElement>();
-    List<StillElement> mountainList = new List<StillElement>();
+    //List that holds the spawned objects
+    private List<TreeVeget> treeList = new List<TreeVeget>();
+
+    private List<StoneRock> stoneList = new List<StoneRock>();
+    private List<IronRock> ironList = new List<IronRock>();
+    private List<StillElement> ornaList = new List<StillElement>();
+    private List<StillElement> grassList = new List<StillElement>();
+    private List<StillElement> marineList = new List<StillElement>();
+    private List<StillElement> mountainList = new List<StillElement>();
     private bool _isToLoadFromFile;
 
     public bool IsToLoadFromFile
@@ -99,12 +101,12 @@ public class TerrainSpawnerController : ControllerParent
         var index = AllRandomObjList.IndexOf(ele);
         AllRandomObjList.RemoveAt(index);
 
-        //SpawnedData sData = new SpawnedData(ele.transform.position, ele.transform.rotation, ele.HType, 
+        //SpawnedData sData = new SpawnedData(ele.transform.position, ele.transform.rotation, ele.HType,
         //    ele.RootToSpawnIndex, ele.IndexAllVertex);
 
         var sData = AllSpawnedDataList.Where(a => a.Pos == savedPos).FirstOrDefault();
 
-        //a not valid Spawner calling this 
+        //a not valid Spawner calling this
         if (sData == null)
         {
             return;
@@ -148,10 +150,8 @@ public class TerrainSpawnerController : ControllerParent
 
     public bool IsToSave;
 
-    private int loadingAllowTimes = 1;//how many times system is allow to load 
+    private int loadingAllowTimes = 1;//how many times system is allow to load
     private int loadedTimes = 0;//loaded times
-
-
 
     internal void SendAllToPool()
     {
@@ -160,17 +160,17 @@ public class TerrainSpawnerController : ControllerParent
             MeshController.CrystalManager1.Delete((StillElement)AllRandomObjList[i]);
             Program.gameScene.BatchRemoveNotRedo((StillElement)AllRandomObjList[i]);
 
-            var still =(StillElement)AllRandomObjList[i];
+            var still = (StillElement)AllRandomObjList[i];
             still.DestroyCool();
         }
-    } 
-    
+    }
+
     internal void SendToPool(StillElement stillElement)
     {
         _spawnPool.AddToPool(stillElement);
     }
 
-    void LeaveEditorPool(SpawnPool[] pools)
+    private void LeaveEditorPool(SpawnPool[] pools)
     {
         for (int i = 0; i < pools.Length; i++)
         {
@@ -183,12 +183,12 @@ public class TerrainSpawnerController : ControllerParent
                 pools[i].Destroy();
             }
         }
-    }    
-    
-    void LeaveStandPool(SpawnPool[] pools)
+    }
+
+    private void LeaveStandPool(SpawnPool[] pools)
     {
-        //in editor but bz Unity bugg was in here 
-        if (_spawnPool!=null)
+        //in editor but bz Unity bugg was in here
+        if (_spawnPool != null)
         {
             return;
         }
@@ -207,11 +207,9 @@ public class TerrainSpawnerController : ControllerParent
     }
 
     // Use this for initialization
-    void ManualStart()
+    private void ManualStart()
     {
         var pools = GameObject.FindObjectsOfType<SpawnPool>();
-
-
 
 #if UNITY_EDITOR
         multiplier = 2;//2
@@ -219,13 +217,10 @@ public class TerrainSpawnerController : ControllerParent
 
         LeaveEditorPool(pools);
 #endif
-#if UNITY_STANDALONE 
+#if UNITY_STANDALONE
         LeaveStandPool(pools);
 
-
 #endif
-
-
 
         AddTreesToTreesRoots();
         DefineAllOrnaRoots();
@@ -236,19 +231,17 @@ public class TerrainSpawnerController : ControllerParent
 
         DefineStartVoidArea(1f, 1f);//20,20
         howManySpawn = new List<int>() {
-            Multiplier(howManyTreesToSpawn), Multiplier(howManyStonesToSpawn), 
+            Multiplier(howManyTreesToSpawn), Multiplier(howManyStonesToSpawn),
             Multiplier(howManyIronToSpawn), Multiplier(howManyGoldToSpawn),
             Multiplier(howManyOrnaToSpawn), Multiplier(howManyGrassToSpawn),
             //Marines
             Multiplier(howManyMarineBoundsToSpawn) / 2,
             Multiplier(howManyMountainBoundsToSpawn),
-
         };
 
         float minHeightAboveSeaLevel = 1.4f;//1.2
         minHeightToSpawn = Program.gameScene.WaterBody.transform.position.y + minHeightAboveSeaLevel;
         maxHeightToSpawn = minHeightToSpawn + 2.4f;//6.9
-
     }
 
     private void DefineAllLawnRoots()
@@ -269,8 +262,8 @@ public class TerrainSpawnerController : ControllerParent
 
     /// <summary>
     /// Anything u chahnge here might need to be changed on Decoration.cs
-    /// 
-    /// bz some ornaments are not suitable to be beside a building 
+    ///
+    /// bz some ornaments are not suitable to be beside a building
     /// </summary>
     private void DefineAllOrnaRoots()
     {
@@ -312,29 +305,28 @@ public class TerrainSpawnerController : ControllerParent
         }
     }
 
-
     /// <summary>
     /// So I dont have to change from 10 to 10,000 everytime a need to spawn more or less lawn for ex
     /// </summary>
     /// <returns></returns>
-    int Multiplier(int mul)
+    private int Multiplier(int mul)
     {
         return mul * multiplier;
     }
 
+    private int frameCount;
 
+    //everyhow many frames will spawn an StilElement
+    private int everyFrames = 1;
 
-    int frameCount;
-    //everyhow many frames will spawn an StilElement 
-    int everyFrames = 1;
-
-    int loopSize = 100;
+    private int loopSize = 100;
     private bool wasStarted;
+
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (MeshController.CrystalManager1 == null || MeshController.CrystalManager1.CrystalRegions.Count == 0
-            || 
+            ||
             (!TownLoader.TownLoaded && !TownLoader.IsTemplate
             && BuildingPot.Control.Registro.AllBuilding.Count == 0)
             )
@@ -409,7 +401,7 @@ public class TerrainSpawnerController : ControllerParent
     /// Spawn all objects routine, trys to spawn current obj list.
     /// if was sueccesfull will move on to next obj list
     /// </summary>
-    void SpawnAllObj()
+    private void SpawnAllObj()
     {
         if (toSpawnListCounter < toSpawnList.Count)
         {
@@ -422,11 +414,11 @@ public class TerrainSpawnerController : ControllerParent
     }
 
     /// <summary>
-    /// Spawns specific type of object 
+    /// Spawns specific type of object
     /// </summary>
     /// <param name="typePass">type of object</param>
     /// <param name="amountToSpawn">how many will spawn</param>
-    void SpawnObj(H typePass, int amountToSpawn)
+    private void SpawnObj(H typePass, int amountToSpawn)
     {
         if (!isSpawned)
         {
@@ -460,7 +452,7 @@ public class TerrainSpawnerController : ControllerParent
                     else
                     {
                         //todo fix
-                        //showing rejected positions 
+                        //showing rejected positions
                         //UVisHelp.CreateText(AllVertexs[index], index + "");
                         //Debug.Log("terra: " + index + "." + isOnTheStartZone + "." + regionContainTerraCry + "." +
                         //    isHasMinHeight + "." + isLowerThanMaxHeight + "." + !usedVertexPos[index]);
@@ -474,15 +466,15 @@ public class TerrainSpawnerController : ControllerParent
 
     /// <summary>
     /// Will valorate if is a Regular type or a marine or mountain type.
-    /// If is marine will only look into the positions of marine bounds 
+    /// If is marine will only look into the positions of marine bounds
     /// </summary>
     /// <param name="typeP"></param>
     /// <param name="iniPos"></param>
     /// <param name="howFar"></param>
     /// <returns></returns>
-    Vector3 ReturnIniPosOfSpawn(H typeP, Vector3 iniPos, float howFar)
+    private Vector3 ReturnIniPosOfSpawn(H typeP, Vector3 iniPos, float howFar)
     {
-        //if is a marine will 
+        //if is a marine will
         if (typeP == H.Marine && m.SubMesh.MarineBounds.Count > 0)
         {
             return m.SubMesh.MarineBounds[rand.Next(0, m.SubMesh.MarineBounds.Count)];
@@ -498,8 +490,8 @@ public class TerrainSpawnerController : ControllerParent
 
     /// <summary>
     /// Call to replant a tree
-    /// 
-    /// 
+    ///
+    ///
     /// </summary>
     /// <param name="pos"></param>
     public void SpawnRandomTreeInThisPos(Vector3 pos, string oldTreeId)
@@ -555,7 +547,7 @@ public class TerrainSpawnerController : ControllerParent
         }
         temp.Region = region;
 
-        //if is replant tree we want to place it first so when loading is faster 
+        //if is replant tree we want to place it first so when loading is faster
         if (replantedTree)
         {
             temp.MyId = oldTreeID;
@@ -580,20 +572,20 @@ public class TerrainSpawnerController : ControllerParent
             var a = 1;
         }
 
-        StillElement still = (StillElement) temp;
-        if (still!=null)
+        StillElement still = (StillElement)temp;
+        if (still != null)
         {
             still.Start();
         }
     }
 
     //Save all the data into AllSpawnedDataList
-    void SaveOnListData(General obj, H typeP, int rootToSpawnIndex, int indexPass, bool replantTree, int region)
+    private void SaveOnListData(General obj, H typeP, int rootToSpawnIndex, int indexPass, bool replantTree, int region)
     {
         if (obj == null) { return; }
         if (obj is StillElement)
         {
-            SpawnedData sData = new SpawnedData(obj.transform.position, obj.transform.rotation, typeP, 
+            SpawnedData sData = new SpawnedData(obj.transform.position, obj.transform.rotation, typeP,
                 rootToSpawnIndex, indexPass, region: region);
             AddToAllSpawnedDataOnSpecificIndex(sData, replantTree);
         }
@@ -605,7 +597,7 @@ public class TerrainSpawnerController : ControllerParent
         }
     }
 
-    void AddToAllSpawnedDataOnSpecificIndex(SpawnedData sData, bool replantTree)
+    private void AddToAllSpawnedDataOnSpecificIndex(SpawnedData sData, bool replantTree)
     {
         if (replantTree)
         {
@@ -622,7 +614,7 @@ public class TerrainSpawnerController : ControllerParent
     /// </summary>
     /// <param name="typePass">Tpye of object</param>
     /// <returns>Random string root</returns>
-    int ReturnRandomRootIndex(H typePass)
+    private int ReturnRandomRootIndex(H typePass)
     {
         int index = 0;
         if (typePass == H.Tree) { index = rand.Next(0, allTrees.Count); }
@@ -641,7 +633,7 @@ public class TerrainSpawnerController : ControllerParent
     /// </summary>
     /// <param name="typePass">Tpye of object</param>
     /// <returns>Random string root</returns>
-    string ReturnRoot(H typePass, int indexP)
+    private string ReturnRoot(H typePass, int indexP)
     {
         //Coomment out if not need pls
         indexP = CorrectRootIfAmountOfObjectsChanged(typePass, indexP);
@@ -659,28 +651,28 @@ public class TerrainSpawnerController : ControllerParent
     }
 
     /// <summary>
-    /// When changed the amout of Trees or Orna then a Save file will brake 
-    /// bz they save which one was there. Now with this method I will reassign 
+    /// When changed the amout of Trees or Orna then a Save file will brake
+    /// bz they save which one was there. Now with this method I will reassign
     /// a new int value if the numner pass is too big
-    /// 
+    ///
     /// Addressing now only Tree and Ornament changed
-    /// 
+    ///
     /// Coomment out if not need pls
     /// </summary>
     /// <param name="typePass"></param>
     /// <param name="indexP"></param>
     /// <returns></returns>
-    int CorrectRootIfAmountOfObjectsChanged(H typePass, int indexP)
+    private int CorrectRootIfAmountOfObjectsChanged(H typePass, int indexP)
     {
         if (typePass == H.Tree)
         {
             indexP = UMath.GiveRandom(0, allTrees.Count);
         }
-        else if (typePass == H.Ornament) 
+        else if (typePass == H.Ornament)
         {
             indexP = UMath.GiveRandom(0, allOrna.Count);
         }
-        else if (typePass == H.Grass )
+        else if (typePass == H.Grass)
         {
             indexP = UMath.GiveRandom(0, allGrass.Count);
         }
@@ -688,8 +680,8 @@ public class TerrainSpawnerController : ControllerParent
     }
 
     //thisis the area where not trees or rocks or anything else will be spawned
-    //bz will be the starting poiint og the game 
-    void DefineStartVoidArea(float x, float z)
+    //bz will be the starting poiint og the game
+    private void DefineStartVoidArea(float x, float z)
     {
         voidNWCorner = new Vector3(centerOfTerrain.x - x, centerOfTerrain.y, centerOfTerrain.z + z);
         voidSECorner = new Vector3(centerOfTerrain.x + x, centerOfTerrain.y, centerOfTerrain.z - z);
@@ -720,7 +712,7 @@ public class TerrainSpawnerController : ControllerParent
 
         for (int i = 0; i < AllRandomObjList.Count; i++)
         {
-            //if is null was deelleted by user 
+            //if is null was deelleted by user
             if (AllRandomObjList[i] != null)//bz bugg there is more Rand than Data
             {
                 var ele = AllRandomObjList[i];
@@ -736,7 +728,7 @@ public class TerrainSpawnerController : ControllerParent
         SaveData();
     }
 
-    SpawnedData CreateApropData(TerrainRamdonSpawner ele)
+    private SpawnedData CreateApropData(TerrainRamdonSpawner ele)
     {
         SpawnedData sData = null;
 
@@ -757,8 +749,8 @@ public class TerrainSpawnerController : ControllerParent
         return sData;
     }
 
-    //create or updates specific lists 
-    void CreateOrUpdateSpecificsList(H typePass, TerrainRamdonSpawner temp, H action)
+    //create or updates specific lists
+    private void CreateOrUpdateSpecificsList(H typePass, TerrainRamdonSpawner temp, H action)
     {
         //print(typePass + " " + action);
 
@@ -811,11 +803,11 @@ public class TerrainSpawnerController : ControllerParent
 
     /// <summary>
     /// How To create new Spawned Data for terrain
-    ///  
+    ///
     /// make  :
     ///spawnedData = XMLSerie.ReadXMLSpawned(true)
-    ///spawnedData = XMLSerie.ReadXMLSpawned() 
-    /// 
+    ///spawnedData = XMLSerie.ReadXMLSpawned()
+    ///
     /// </summary>
     public void LoadData()
     {
@@ -824,15 +816,15 @@ public class TerrainSpawnerController : ControllerParent
             if (!Program.gameScene.IsDefaultTerreno())
             {
                 spawnedData = XMLSerie.ReadXMLSpawned();
-                
+
                 if (spawnedData == null)
                 {
                     Debug.Log("spawnedData == null big");
                 }
             }
-            else//the first teraain to load 
+            else//the first teraain to load
             {
-                spawnedData = XMLSerie.ReadXMLSpawned(true);//true once Terrain.Spawned is created  
+                spawnedData = XMLSerie.ReadXMLSpawned(true);//true once Terrain.Spawned is created
 
                 if (spawnedData == null)
                 {
@@ -859,13 +851,13 @@ public class TerrainSpawnerController : ControllerParent
         p.TerraSpawnController.IsToLoadFromFile = true;
     }
 
-    #region Regions 
+    #region Regions
 
-    bool wasDataOrganized;
-    List<RegionD> _closest9 = new List<RegionD>();
-    List<RegionD> _rest = new List<RegionD>();
+    private bool wasDataOrganized;
+    private List<RegionD> _closest9 = new List<RegionD>();
+    private List<RegionD> _rest = new List<RegionD>();
 
-    bool _releaseLoadingScreen;
+    private bool _releaseLoadingScreen;
 
     public bool ReleaseLoadingScreen
     {
@@ -885,17 +877,17 @@ public class TerrainSpawnerController : ControllerParent
         }
         wasDataOrganized = true;
         HandleRegions();
-        
-        //organize data by regions, split in 2 lists, 9 regions and the rest 
+
+        //organize data by regions, split in 2 lists, 9 regions and the rest
         //AllSpawnedDataList = AllSpawnedDataList.OrderBy(a => a.RegionDistanceToInit()).ToList();
     }
 
     /// <summary>
-    /// Will orginze regions by distance to initial region 
-    /// 
-    /// also defines the closest9 regions to init 
+    /// Will orginze regions by distance to initial region
+    ///
+    /// also defines the closest9 regions to init
     /// </summary>
-    void HandleRegions()
+    private void HandleRegions()
     {
         //find regions distances
         for (int i = 0; i < MeshController.CrystalManager1.CrystalRegions.Count; i++)
@@ -919,13 +911,14 @@ public class TerrainSpawnerController : ControllerParent
         }
     }
 
-    int lastRegion = -1;
-    List<int> regionsLoaded = new List<int>();
+    private int lastRegion = -1;
+    private List<int> regionsLoaded = new List<int>();
+
     /// <summary>
     /// This will release loading screeen when the x region was loaded and will
-    /// keep loading the rest 
+    /// keep loading the rest
     /// </summary>
-    void HandleLoadingRegions()
+    private void HandleLoadingRegions()
     {
         if (lastRegion != AllSpawnedDataList[loadingIndex].Region)
         {
@@ -933,17 +926,16 @@ public class TerrainSpawnerController : ControllerParent
             {
                 regionsLoaded.Add(lastRegion);
                 //destroy loading sign on Region GO
-
             }
             lastRegion = AllSpawnedDataList[loadingIndex].Region;
         }
 
         BuildingPot.Control.Registro.MarkTerraIfNeeded(AllSpawnedDataList[loadingIndex], _closest9);
 
-        if (regionsLoaded.Count>55)//55
+        if (regionsLoaded.Count > 55)//55
         {
             //release loading screen
-            //and then is loading slowly the other elements 
+            //and then is loading slowly the other elements
             ReleaseLoadingScreen = true;
             loopSize = 1;
             everyFrames = 10;
@@ -951,13 +943,13 @@ public class TerrainSpawnerController : ControllerParent
 
         if (regionsLoaded.Count == _rest.Count)
         {
-            //done loading 
+            //done loading
         }
     }
 
-#endregion
+    #endregion Regions
 
-    void LoadFromFile()
+    private void LoadFromFile()
     {
         CreateObjAndAddToMainList(AllSpawnedDataList[loadingIndex].Type,
             AllSpawnedDataList[loadingIndex].Pos,
@@ -987,6 +979,7 @@ public class TerrainSpawnerController : ControllerParent
     }
 
     private int ttlToSpawn = 0;
+
     public string PercentageLoaded()
     {
         if (AllSpawnedDataList.Count == 0)
@@ -1007,7 +1000,7 @@ public class TerrainSpawnerController : ControllerParent
         return (perc - 1).ToString("n0") + " %";
     }
 
-    void ClearCurrentFileAndList()
+    private void ClearCurrentFileAndList()
     {
         AllSpawnedDataList.Clear();
         SaveData();
@@ -1015,16 +1008,17 @@ public class TerrainSpawnerController : ControllerParent
 
     private static int secCount;
     private static Vector3 originalPoint;
+
     /// <summary>
     /// Returns Random position from origin. If fell inside a building will find another spot
     /// until is in a clear zone
-    /// 
+    ///
     /// If origin is not specified will use MeshController.AllVertexs.Count
-    /// 
+    ///
     /// Will throw new Exception("Cant be use if MeshController.AllVertexs.Count == 0");
     /// </summary>
     /// <param name="howFar">How far will go</param>
-    Vector3 AssignRandomIniPosition(Vector3 origin = new Vector3(), float howFar = 1)
+    private Vector3 AssignRandomIniPosition(Vector3 origin = new Vector3(), float howFar = 1)
     {
         if (origin == new Vector3())
         {
@@ -1045,7 +1039,7 @@ public class TerrainSpawnerController : ControllerParent
         //doesnt matter that is positive bz in ReturnRandomPos goes in the range of the same number negative and positive
         howFar += .1f;//.1f
 
-        //to check if the poly ard it is free of obstacles 
+        //to check if the poly ard it is free of obstacles
         var polyToCheck = UPoly.CreatePolyFromVector3(origin, 1f, 1f);//1, 1
 
         if (MeshController.CrystalManager1.IntersectAnyLine(polyToCheck, origin) || !IsOnTerrain(origin)
@@ -1065,7 +1059,7 @@ public class TerrainSpawnerController : ControllerParent
         return origin;
     }
 
-    bool ComplyWithTerraRules(Vector3 toEval)
+    private bool ComplyWithTerraRules(Vector3 toEval)
     {
         bool isOnTheStartZone = UMesh.Contains(toEval, voidNWCorner, voidSECorner);
         bool regionContainTerraCry =
@@ -1098,7 +1092,7 @@ public class TerrainSpawnerController : ControllerParent
     }
 
     /// <summary>
-    /// Will say if origin is on terrain 
+    /// Will say if origin is on terrain
     /// </summary>
     /// <param name="origin"></param>
     /// <returns></returns>
@@ -1118,15 +1112,16 @@ public class TerrainSpawnerController : ControllerParent
 
     public bool HasLoadedOrLoadedTreesAndRocks()
     {
-        return !IsToLoadFromFile || IsOrnamenting();//means is spwaning ornaments 
+        return !IsToLoadFromFile || IsOrnamenting();//means is spwaning ornaments
     }
 
     private bool isOrnamentingNow;
+
     /// <summary>
     /// Will tell u if while loading is ornamienting (spawning ornaments or grass )
     /// </summary>
     /// <returns></returns>
-    bool IsOrnamenting()
+    private bool IsOrnamenting()
     {
         if (isOrnamentingNow)
         {
@@ -1138,23 +1133,23 @@ public class TerrainSpawnerController : ControllerParent
 
         return isOrnamentingNow;
     }
-
 }
 
 /// <summary>
 /// This is to contain the int id and distance from the initial region .
 /// D for dummy
 /// </summary>
-class RegionD
+internal class RegionD
 {
-    int _region;
+    private int _region;
 
     public int Region
     {
         get { return _region; }
         set { _region = value; }
     }
-    float _distanceToInit;
+
+    private float _distanceToInit;
 
     public float DistanceToInit
     {
@@ -1162,7 +1157,7 @@ class RegionD
         set { _distanceToInit = value; }
     }
 
-    Vector3 _pos;
+    private Vector3 _pos;
 
     public Vector3 Pos
     {

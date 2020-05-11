@@ -4,11 +4,12 @@ using UnityEngine;
 
 /* Address the Route case in where the person needs to go around a bay
  * or the Delta of a River
- * 
+ *
  * Will return 4 points like this shape: /--\ to go around a delta river or bay
- * 
+ *
  * When is here is bz somehow the route is colliding with Water btw Point A and B
  */
+
 public class DeltaRouter
 {
     private Person _person;
@@ -22,6 +23,7 @@ public class DeltaRouter
 
     //the last good _a1 position I can reach with without hitting a water body
     private Vector3 _lastGoodA1FromA;
+
     private Vector3 _lastGoodA1FromB;
 
     private Vector3 _lastGoodB1FromA;
@@ -35,24 +37,25 @@ public class DeltaRouter
     private Vector3 currentOrigin;
 
     //indicates if this is  Delta routable
-    //is initiated at true bz until is found otherwise is 
+    //is initiated at true bz until is found otherwise is
     private bool _isDeltaRoutable = true;
 
-    //the route// 
-    DeltaRoute _deltaRoute = new DeltaRoute();
+    //the route//
+    private DeltaRoute _deltaRoute = new DeltaRoute();
+
     public DeltaRoute DeltaRoute
     {
         get { return _deltaRoute; }
         set { _deltaRoute = value; }
     }
 
-    //temporary stores the positions where the algorithm is checking 
+    //temporary stores the positions where the algorithm is checking
     //if can reach it withoput water on the middle
     private List<Vector3> positionsToCheck = new List<Vector3>();
 
-
-
-    public DeltaRouter() { }
+    public DeltaRouter()
+    {
+    }
 
     public DeltaRouter(Vector3 a, Vector3 b, Person person)
     {
@@ -85,14 +88,14 @@ public class DeltaRouter
     /// <summary>
     /// Find the initial position of prime _a1 and _b1
     /// </summary>
-    void InitPrimes()
+    private void InitPrimes()
     {
         var midHelp = UVisHelp.CreateHelpers(_mid, Root.yellowCube);
         var a1Help = UVisHelp.CreateHelpers(_a, Root.yellowCube);
         var b1Help = UVisHelp.CreateHelpers(_b, Root.yellowCube);
 
-        a1Help.transform.SetParent( midHelp.transform);
-        b1Help.transform.SetParent( midHelp.transform);
+        a1Help.transform.SetParent(midHelp.transform);
+        b1Help.transform.SetParent(midHelp.transform);
         midHelp.transform.Rotate(0, 90, 0);
 
         _a1 = a1Help.transform.position;
@@ -111,9 +114,9 @@ public class DeltaRouter
     }
 
     /// <summary>
-    /// Main Method on this Class this is the one that is recursed 4 times as the 'currentCheck' changes 
+    /// Main Method on this Class this is the one that is recursed 4 times as the 'currentCheck' changes
     /// </summary>
-    void RecurseRoutine()
+    private void RecurseRoutine()
     {
         currentLast = new Vector3();
         DefineCurrent();
@@ -128,7 +131,7 @@ public class DeltaRouter
     }
 
     /// <summary>
-    /// Defines the last good position from the origin to that prime 
+    /// Defines the last good position from the origin to that prime
     /// in this case the prime is not seeing or use directly bz 'positionsToCheck' was created
     /// using the prime position already
     /// </summary>
@@ -145,12 +148,12 @@ public class DeltaRouter
         }
         DefineLastCurrent(lastI);
     }
-    
+
     /// <summary>
     /// Created so the player doesnt pass thru river terrain tht is unenven
     /// </summary>
     /// <param name="lastI">Last index was good</param>
-    void DefineLastCurrent(int lastI)
+    private void DefineLastCurrent(int lastI)
     {
         if (lastI != -1)
         {
@@ -160,7 +163,7 @@ public class DeltaRouter
                 //IMPORTANT here am checking if the one before is visible
                 if (!RouterManager.IsWaterOrMountainBtw(positionsToCheck[lastI + 1], currentOrigin))
                 {
-                    //the middle btw the last good and the one before 
+                    //the middle btw the last good and the one before
                     currentLast = (positionsToCheck[lastI] + positionsToCheck[lastI + 1]) / 2;
                 }
             }
@@ -168,7 +171,7 @@ public class DeltaRouter
     }
 
     /// <summary>
-    /// Define the current variables to use 
+    /// Define the current variables to use
     /// </summary>
     private void DefineCurrent()
     {
@@ -209,9 +212,9 @@ public class DeltaRouter
     }
 
     /// <summary>
-    /// Saves the 'currentLast' on the actually current Vector 3 holding that 
+    /// Saves the 'currentLast' on the actually current Vector 3 holding that
     /// </summary>
-    void SaveCurrent()
+    private void SaveCurrent()
     {
         if (currentCheck == H.AtoA1)
         {
@@ -235,7 +238,7 @@ public class DeltaRouter
         }
     }
 
-    void AfterChecks()
+    private void AfterChecks()
     {
         currentCheck = H.Done;
         DefineDeltaRoute();
@@ -250,22 +253,23 @@ public class DeltaRouter
         }
     }
 
-    void Stop()
+    private void Stop()
     {
         recurseRoutineNow = false;//so stops the recursion
-        //throw new Exception("Not Posible routeing btw points on DeltaRouter");
-       //GameScene.print("Not Posible routeing btw points on DeltaRouter");
+                                  //throw new Exception("Not Posible routeing btw points on DeltaRouter");
+                                  //GameScene.print("Not Posible routeing btw points on DeltaRouter");
     }
 
     //step to move along towards middle and then towards last good position
-    private float step = 10f;//3f was working ok for mountain 
-    void DefinePositionsToCheck(Vector3 primeVector)
+    private float step = 10f;//3f was working ok for mountain
+
+    private void DefinePositionsToCheck(Vector3 primeVector)
     {
         positionsToCheck.Clear();
         float dist = Vector3.Distance(primeVector, _mid);//sp it goes twice as far to check
         Vector3 t = _mid;
 
-        for (float i = 0; i < dist ; i = i + step)
+        for (float i = 0; i < dist; i = i + step)
         {
             t = Vector3.MoveTowards(t, primeVector, step);
             //if is not on Terrain will break loop so wont add antyhing else towards that Prime
@@ -273,7 +277,7 @@ public class DeltaRouter
             //out of terrain
             if (!UTerra.IsOnTerrain(t))
             {
-               //Debug.Log("not on terrain Delta DefinePositionsToCheck()");
+                //Debug.Log("not on terrain Delta DefinePositionsToCheck()");
                 break;
             }
             step *= 2f;
@@ -283,7 +287,7 @@ public class DeltaRouter
         step = 10f;
     }
 
-    void DefineDeltaRoute()
+    private void DefineDeltaRoute()
     {
         //if a pair of them towards A1 or B1 are set that means yeas we found a middle point
         //for each that can ponteatlly be used to create route
@@ -291,47 +295,48 @@ public class DeltaRouter
         {
             _deltaRoute = new DeltaRoute(_a, _b, _lastGoodA1FromA, _lastGoodA1FromB);
 
-          //  _person.DebugList.Add(UVisHelp.CreateText(_lastGoodA1FromA, "_lastGoodA1FromA"));
-           // _person.DebugList.Add(UVisHelp.CreateText(_lastGoodA1FromB, "_lastGoodA1FromB"));
+            //  _person.DebugList.Add(UVisHelp.CreateText(_lastGoodA1FromA, "_lastGoodA1FromA"));
+            // _person.DebugList.Add(UVisHelp.CreateText(_lastGoodA1FromB, "_lastGoodA1FromB"));
         }
         else if (_lastGoodB1FromA != new Vector3() && _lastGoodB1FromB != new Vector3())
         {
             /*DefineDeltaRoute() somehting is not working fine.
-            //if a river is on middle should never have 2 points with good on the same side 
+            //if a river is on middle should never have 2 points with good on the same side
              *
              *The problem with river freezing will give one point on first if. and 2 in this one.
              *Whit a river onmiddle ... so tht is bugg... I fixed with addressing the infinite loop.
-             *But this still need to be fixed 
+             *But this still need to be fixed
              */
             _deltaRoute = new DeltaRoute(_a, _b, _lastGoodB1FromA, _lastGoodB1FromB);
 
             //_person.DebugList.Add(UVisHelp.CreateText(_lastGoodB1FromA, "_lastGoodB1FromA"));
-          //  _person.DebugList.Add(UVisHelp.CreateText(_lastGoodB1FromB, "_lastGoodB1FromB"));
+            //  _person.DebugList.Add(UVisHelp.CreateText(_lastGoodB1FromB, "_lastGoodB1FromB"));
         }
         else _isDeltaRoutable = false;
     }
 
     private int loopCounts;
+
     /// <summary>
-    /// Move each point towards is target and throw Ray agaisnt the other to see if can 
+    /// Move each point towards is target and throw Ray agaisnt the other to see if can
     /// see it already
     /// </summary>
-    void MoveEachOneAloneAndThrowRayAndConformRoute()
+    private void MoveEachOneAloneAndThrowRayAndConformRoute()
     {
         Vector3 aMove = _deltaRoute.AnyA;
         Vector3 bMove = _deltaRoute.AnyB;
 
-        //will keep mpving them towards target until they can see eachother without water on midle 
+        //will keep mpving them towards target until they can see eachother without water on midle
         while (RouterManager.IsWaterOrMountainBtw(aMove, bMove))
         {
             aMove = Vector3.MoveTowards(aMove, _deltaRoute.TargetA, step / 2);
             bMove = Vector3.MoveTowards(bMove, _deltaRoute.TargetB, step / 2);
 
             loopCounts++;
-            
+
             //this address probblem of inifitnie loop
             //for some reason in  void DefineDeltaRoute() somehting is not working fine.
-            //if a river is on middle should never have 2 points with good on the same side 
+            //if a river is on middle should never have 2 points with good on the same side
             if (loopCounts > 100)
             {
                 loopCounts = 0;
@@ -341,7 +346,7 @@ public class DeltaRouter
             }
         }
 
-        //push away a bit towards target. To avoid infinite recursion on certain spots 
+        //push away a bit towards target. To avoid infinite recursion on certain spots
         aMove = Vector3.MoveTowards(aMove, _deltaRoute.TargetA, step);
         bMove = Vector3.MoveTowards(bMove, _deltaRoute.TargetB, step);
 
@@ -349,8 +354,8 @@ public class DeltaRouter
         _deltaRoute.BestB = AssignIniPositionIfNotInBuild(bMove, _deltaRoute.TargetB);
         _deltaRoute.ConformRoute();
 
-       // _person.DebugList.Add( UVisHelp.CreateHelpers(_deltaRoute.BestA, Root.redSphereHelp));
-       // _person.DebugList.Add(UVisHelp.CreateHelpers(_deltaRoute.BestB, Root.redSphereHelp));
+        // _person.DebugList.Add( UVisHelp.CreateHelpers(_deltaRoute.BestA, Root.redSphereHelp));
+        // _person.DebugList.Add(UVisHelp.CreateHelpers(_deltaRoute.BestB, Root.redSphereHelp));
     }
 
     /// <summary>
@@ -394,10 +399,8 @@ public class DeltaRouter
         return origin;
     }
 
+    private List<Vector3> debugPos = new List<Vector3>();
 
-
-    
-    List<Vector3> debugPos = new List<Vector3>(); 
     public void DebugDestroy()
     {
         for (int i = 0; i < _person.DebugList.Count; i++)
@@ -407,16 +410,15 @@ public class DeltaRouter
         _person.DebugList.Clear();
     }
 
-    void DebugRender()
+    private void DebugRender()
     {
         for (int i = 0; i < debugPos.Count; i++)
         {
-           // _person.DebugList.Add(UVisHelp.CreateHelpers(debugPos[i], Root.blueCube));
-          //  _person.DebugList.Add(UVisHelp.CreateText(debugPos[i], i.ToString(), 55));
+            // _person.DebugList.Add(UVisHelp.CreateHelpers(debugPos[i], Root.blueCube));
+            //  _person.DebugList.Add(UVisHelp.CreateText(debugPos[i], i.ToString(), 55));
         }
     }
 }
-
 
 public class DeltaRoute
 {
@@ -428,9 +430,11 @@ public class DeltaRoute
     private Vector3 _bestA;//this is the clostst theyu can see each other on A
     private Vector3 _bestB;//this is the clostst theyu can see each other on B
 
-    List<Vector3> _points = new List<Vector3>();
+    private List<Vector3> _points = new List<Vector3>();
 
-    public DeltaRoute() { }
+    public DeltaRoute()
+    {
+    }
 
     public DeltaRoute(Vector3 anyA, Vector3 anyB, Vector3 targetA, Vector3 targetB)
     {

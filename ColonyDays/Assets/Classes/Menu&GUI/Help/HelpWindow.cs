@@ -5,16 +5,16 @@ using UnityEngine.UI;
 
 public class HelpWindow : GUIElement
 {
-    Text _contentText;
+    private Text _contentText;
 
     private GameObject _content;
     private GameObject _scroll_Ini_PosGO;
 
-    InputField _searchInput;
-    GameObject _f1forHelp;
+    private InputField _searchInput;
+    private GameObject _f1forHelp;
 
     //helps available. u can add anything here, but need to be add on Langugaes.cs
-    List<string> _helps = new List<string>()
+    private List<string> _helps = new List<string>()
     {
         "Construction.Help",
         "Camera.Help",
@@ -45,7 +45,7 @@ public class HelpWindow : GUIElement
         "Inventories Explanation.Help",
     };
 
-    void Start()
+    private void Start()
     {
         iniPos = transform.position;
 
@@ -80,7 +80,7 @@ public class HelpWindow : GUIElement
             _f1forHelp = GameObject.Find("F1 for help");
         }
 
-        if (_f1forHelp!=null)
+        if (_f1forHelp != null)
         {
             _f1forHelp.SetActive(false);
             PlayerPrefs.SetString("F1", "Used");
@@ -89,8 +89,8 @@ public class HelpWindow : GUIElement
 
     #region Scroll
 
-    float _tileHeight = 5.3f;
-    float _pad = 0.9f;
+    private float _tileHeight = 5.3f;
+    private float _pad = 0.9f;
 
     private void PopulateScrollView()
     {
@@ -110,7 +110,8 @@ public class HelpWindow : GUIElement
         _btns.Clear();
     }
 
-    List<HelpTile> _btns = new List<HelpTile>();
+    private List<HelpTile> _btns = new List<HelpTile>();
+
     private void ShowButtons(List<string> list)
     {
         for (int i = 0; i < list.Count; i++)
@@ -122,9 +123,9 @@ public class HelpWindow : GUIElement
         }
     }
 
-    #endregion
+    #endregion Scroll
 
-    void Update()
+    private void Update()
     {
     }
 
@@ -172,5 +173,4 @@ public class HelpWindow : GUIElement
         ClearBtns();
         ShowButtons(arr.ToList());
     }
-
 }

@@ -6,32 +6,32 @@ public class VisualConstructionProgress
 {
     private Building _building;
     private Structure _structure;
-    float _amtNeeded;
-    float _currAmt;
+    private float _amtNeeded;
+    private float _currAmt;
 
-    List<String> _roots = new List<string>() {
+    private List<String> _roots = new List<string>() {
         "Prefab/Building/VisualProgress/Cube1",
         "Prefab/Building/VisualProgress/Cube2",
     };
 
-    List<General> _cubes = new List<General>();
+    private List<General> _cubes = new List<General>();
 
-    float _height;
-    float _width;
-    float _length;
-    int _cubesShown;
+    private float _height;
+    private float _width;
+    private float _length;
+    private int _cubesShown;
 
-    float _long;
-    float _tall;
-    float _wide;
-    float _cubesTtl;
-    float _amtPerCube;
+    private float _long;
+    private float _tall;
+    private float _wide;
+    private float _cubesTtl;
+    private float _amtPerCube;
 
-    float _cubeLength = .4f;
-    float _cubeHeight = .4f;
-    float _cubeWidth = .4f;
+    private float _cubeLength = .4f;
+    private float _cubeHeight = .4f;
+    private float _cubeWidth = .4f;
 
-    Vector3 _cubePos;
+    private Vector3 _cubePos;
     private bool _buildingSetToBeDestroyed;
 
     public VisualConstructionProgress(Building building, float _amtNeeded, float amt)
@@ -47,7 +47,7 @@ public class VisualConstructionProgress
         AddAmount(amt);
     }
 
-    void CalcDim()
+    private void CalcDim()
     {
         _height = _building.MaxVcp.y - _building.MinVcp.y;
         _length = _building.MaxVcp.z - _building.MinVcp.z;
@@ -63,7 +63,7 @@ public class VisualConstructionProgress
 
     internal void AddAmount(float amt)
     {
-        if(amt == 100000)
+        if (amt == 100000)
         {
             _buildingSetToBeDestroyed = true;
             return;
@@ -77,7 +77,8 @@ public class VisualConstructionProgress
 
         if (_amtPerCube == 0) _amtPerCube = 1;
 
-        if (_currAmt > _cubesShown * _amtPerCube){
+        if (_currAmt > _cubesShown * _amtPerCube)
+        {
             var newCubes = amt / _amtPerCube;
 
             for (int i = 0; i < newCubes; i++)
@@ -85,7 +86,7 @@ public class VisualConstructionProgress
         }
     }
 
-    void CreateCube()
+    private void CreateCube()
     {
         if (_cubePos == new Vector3()) _cubePos = GetInitPos();
 
@@ -94,13 +95,13 @@ public class VisualConstructionProgress
 
         //define next cubePos
         _cubePos.x += _cubeWidth;
-        if(_cubePos.x > _building.MaxVcp.x - _cubeWidth)
+        if (_cubePos.x > _building.MaxVcp.x - _cubeWidth)
         {
             //reset to init
             _cubePos.x = _building.MinVcp.x;
             _cubePos.z += _cubeLength;
 
-            if(_cubePos.z > _building.MaxVcp.z - _cubeLength)
+            if (_cubePos.z > _building.MaxVcp.z - _cubeLength)
             {
                 _cubePos.y += _cubeHeight;
                 //reset to init
@@ -110,7 +111,7 @@ public class VisualConstructionProgress
         }
     }
 
-    Vector3 GetInitPos()
+    private Vector3 GetInitPos()
     {
         return Vector3.MoveTowards(_building.MinVcp, _building.MaxVcp, _cubeHeight);
     }

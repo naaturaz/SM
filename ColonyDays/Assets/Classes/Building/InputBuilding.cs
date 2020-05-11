@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using UnityEngine;
 
 /// <summary>
@@ -9,22 +8,21 @@ using UnityEngine;
 
 public class InputBuilding : BuildingPot
 {
-
-    Vector2 oldMousePos;
+    private Vector2 oldMousePos;
     private float timeStart;
 
-    bool _isDraggingWay;
-    Dictionary<KeyCode, H> _fInputKeys = new Dictionary<KeyCode, H>();
+    private bool _isDraggingWay;
+    private Dictionary<KeyCode, H> _fInputKeys = new Dictionary<KeyCode, H>();
 
     //this one has a list with dictionaries.. This dictiories have mapped
-    //which key is for each H elemenet. So all buildings are here 
+    //which key is for each H elemenet. So all buildings are here
     //Each dictionary will be for the category
     //for ex: List[0] is the dictionary for Roads
-    List<Dictionary<KeyCode, H>> _inputListDict = new List<Dictionary<KeyCode, H>>();
+    private List<Dictionary<KeyCode, H>> _inputListDict = new List<Dictionary<KeyCode, H>>();
 
     //this will defined the type of building will be biult F1-F...
     //Infra, Prod, House, etc
-    H selection = H.None;
+    private H selection = H.None;
 
     /// <summary>
     /// Must be set to false when Way or DragSquaare is cancelled
@@ -43,7 +41,7 @@ public class InputBuilding : BuildingPot
 
     private HoverWindowMed _hoverWindowMed;
 
-    void Start()
+    private void Start()
     {
         oldMousePos = Input.mousePosition;
         timeStart = Time.time;
@@ -52,7 +50,7 @@ public class InputBuilding : BuildingPot
         _hoverWindowMed = FindObjectOfType<HoverWindowMed>();
     }
 
-    void InputKeyMapping()
+    private void InputKeyMapping()
     {
         List<KeyCode> numbers = new List<KeyCode>()
         {
@@ -94,7 +92,7 @@ public class InputBuilding : BuildingPot
         }
     }
 
-    void Update()
+    private void Update()
     {
         BuildingSwitch();
         if (Time.time > timeStart + 0.01)
@@ -108,10 +106,11 @@ public class InputBuilding : BuildingPot
     }
 
     #region LineUpTool
+
     private Mode oldInputMode = Mode.None;
     private bool helpLoop;
     private bool showHelp;
-    List<Building> _orgStructuresFromMouseHitPoint = new List<Building>();
+    private List<Building> _orgStructuresFromMouseHitPoint = new List<Building>();
 
     private void AdressIfBuildingMode()
     {
@@ -137,7 +136,7 @@ public class InputBuilding : BuildingPot
         count = 0;
     }
 
-    void ShowHelp()
+    private void ShowHelp()
     {
         count = 0;
         _orgStructuresFromMouseHitPoint = DragSquare.ReturnClosestBuildings(m.HitMouseOnTerrain.point,
@@ -146,7 +145,7 @@ public class InputBuilding : BuildingPot
         helpLoop = true;
     }
 
-    void HideHelp()
+    private void HideHelp()
     {
         count = 0;
         _orgStructuresFromMouseHitPoint = DragSquare.ReturnClosestBuildings(m.HitMouseOnTerrain.point,
@@ -157,7 +156,8 @@ public class InputBuilding : BuildingPot
     }
 
     private int count;
-    void ShowHideHelpLoopOnUpdate()
+
+    private void ShowHideHelpLoopOnUpdate()
     {
         if (!helpLoop || _orgStructuresFromMouseHitPoint == null)
         {
@@ -183,7 +183,7 @@ public class InputBuilding : BuildingPot
         }
     }
 
-    #endregion
+    #endregion LineUpTool
 
     /// <summary>
     /// Depending on the current InputMode will direct the code to  BuildingMode(); or
@@ -216,14 +216,13 @@ public class InputBuilding : BuildingPot
             //    return;
             //}
 
-
             //Screen.showCursor = false;
             //Structures
             if (Control.CurrentSpawnBuild.Category == Ca.Structure || Control.CurrentSpawnBuild.Category == Ca.Shore)
             {
                 Structure str = Control.CurrentSpawnBuild as Structure;
 
-                //for bulldozer 
+                //for bulldozer
                 if (str != null)
                 {
                     str.UpdateClosestVertexAndOld();
@@ -261,7 +260,7 @@ public class InputBuilding : BuildingPot
     /// <summary>
     /// Updates the cursor of a farm
     /// </summary>
-    void UpdateWayFarmCursor()
+    private void UpdateWayFarmCursor()
     {
         //updating current vertex which is used in Way.cs
         if (Control.BuildWayCursor != null)
@@ -271,12 +270,11 @@ public class InputBuilding : BuildingPot
     }
 
     /// <summary>
-    /// This gets call when user is dreaggin a Farm object. 
+    /// This gets call when user is dreaggin a Farm object.
     /// </summary>
-    void DragFarm()
+    private void DragFarm()
     {
         DragSquare farm = Control.CurrentSpawnBuild as DragSquare;
-
 
         if (Control.CurrentSpawnBuild != null && Input.GetMouseButtonUp(0) && !_isDraggingWay)
         {
@@ -305,7 +303,7 @@ public class InputBuilding : BuildingPot
     /// Draggin a Way , all below HTypes
     /// DoingNow == H.Trail  || DoingNow == H.BridgeTrail || DoingNow == H.BridgeRoad)
     /// </summary>
-    void DrawWay()
+    private void DrawWay()
     {
         Trail way = Control.CurrentSpawnBuild as Trail;
 
@@ -324,9 +322,9 @@ public class InputBuilding : BuildingPot
         }
     }
 
-
     public EventHandler<EventArgs> BuildPlaced;
-    void OnBuildPlaced(EventArgs e)
+
+    private void OnBuildPlaced(EventArgs e)
     {
         if (BuildPlaced != null)
         {
@@ -334,17 +332,15 @@ public class InputBuilding : BuildingPot
         }
     }
 
-
-
     /// <summary>
-    /// Routine when mouse is clicked 
+    /// Routine when mouse is clicked
     /// </summary>
     public void MouseUp()
     {
         if (Control.CurrentSpawnBuild.Category == Ca.Structure || Control.CurrentSpawnBuild.Category == Ca.Shore)
         {
             Structure h = Control.CurrentSpawnBuild as Structure;
-            //for bulldozer 
+            //for bulldozer
             if (h != null)
             {
                 h.DonePlace();
@@ -354,7 +350,6 @@ public class InputBuilding : BuildingPot
             {
                 OnBuildPlaced(EventArgs.Empty);
             }
-
 
             if (h.PositionFixed)
             {
@@ -374,7 +369,7 @@ public class InputBuilding : BuildingPot
     }
 
     /// <summary>
-    /// Is being called from this class on  public void MouseUp() and from the Farm instance 
+    /// Is being called from this class on  public void MouseUp() and from the Farm instance
     /// bz we need to prevent from building a new one before the old obj was added to registro.
     /// So the 1st call is expected to do the first if... the second call is expected to comply with the 2nd if
     /// </summary>
@@ -394,7 +389,7 @@ public class InputBuilding : BuildingPot
     }
 
     /// <summary>
-    /// Is called from MouseUp() and if all is good will get the way done 
+    /// Is called from MouseUp() and if all is good will get the way done
     /// </summary>
     public void DoneWayRoutine()
     {
@@ -423,11 +418,10 @@ public class InputBuilding : BuildingPot
         }
     }
 
-
     /// <summary>
     /// This is where the selection of a new building to be built happen
     /// </summary>
-    void BuildingMode()
+    private void BuildingMode()
     {
         foreach (var item in _fInputKeys)
         {
@@ -435,13 +429,13 @@ public class InputBuilding : BuildingPot
             {
                 ManagerReport.AddInput("SelecNewBuild: " + item.Key);
 
-                //selection of the type of Building is goonna be build 
+                //selection of the type of Building is goonna be build
                 selection = item.Value;
                 //print(selection + ".");
             }
         }
 
-        //if something was selected 
+        //if something was selected
         if (selection != H.None)
         {
             //will find what numbers is that selection in Book.MenuGroupsList
@@ -468,7 +462,6 @@ public class InputBuilding : BuildingPot
                         BuildNowNew(item.Value);
                         //print(selection + "."+item.Value );
                         ManagerReport.AddInput("BuildNowNew: " + item.Value);
-
                     }
                 }
             }
@@ -476,7 +469,7 @@ public class InputBuilding : BuildingPot
     }
 
     /// <summary>
-    /// Builds all the new Buildings .. The buildinga are loaded thue this method 
+    /// Builds all the new Buildings .. The buildinga are loaded thue this method
     /// </summary>
     public void BuildNowNew(H buildWhat)
     {
@@ -488,13 +481,11 @@ public class InputBuilding : BuildingPot
             return;
         }
 
-
         CleanCurrentSpawnBuildIfNewBuildIsADiffType(buildWhat);
         Vector3 iniPos = m.HitMouseOnTerrain.point;
 
         var onMap = CamControl.CAMRTS.MiniMapRts.IsOnMapConstraints(iniPos);
         iniPos = CamControl.CAMRTS.MiniMapRts.ConstrainLimits(iniPos);
-
 
         if (DefineCategory(buildWhat) == Ca.Structure || DefineCategory(buildWhat) == Ca.Shore)
         {
@@ -518,7 +509,6 @@ public class InputBuilding : BuildingPot
 
         DoingNow = buildWhat;
 
-
         AudioCollector.PlayOneShot("ClickWood7", 0);
 
         _hoverWindowMed = FindObjectOfType<HoverWindowMed>();
@@ -540,7 +530,7 @@ public class InputBuilding : BuildingPot
         InputMode = Mode.Placing;
     }
 
-    bool IsRoadOk(H buildWhat)
+    private bool IsRoadOk(H buildWhat)
     {
         //in this case is when a road is being clicked on top of a spawned one
         var roadSkip = buildWhat.ToString().Contains("Road") && Control.CurrentSpawnBuild != null
@@ -561,17 +551,17 @@ public class InputBuilding : BuildingPot
     /// Cleans CurrentSpawnBuild If buildWhat is a Is A Diff Type of what is in CurrentSpawnBuild.
     /// This is creeated to fixing bugg where new obj will be hainging there bz was never destroyed
     /// </summary>
-    void CleanCurrentSpawnBuildIfNewBuildIsADiffType(H buildWhat)
+    private void CleanCurrentSpawnBuildIfNewBuildIsADiffType(H buildWhat)
     {
         var isRoad = buildWhat.ToString().Contains("Road");
 
         if (Control.CurrentSpawnBuild == null || Control.CurrentSpawnBuild.PositionFixed
-            || (isRoad && IsRoadOk(buildWhat)) )
+            || (isRoad && IsRoadOk(buildWhat)))
         {
             return;
         }
 
-        //if is a road would leave previews behind if a new building was clicked 
+        //if is a road would leave previews behind if a new building was clicked
         if (Control.CurrentSpawnBuild.Category == Ca.DraggableSquare)
         {
             var drag = (DragSquare)Control.CurrentSpawnBuild;
@@ -584,6 +574,7 @@ public class InputBuilding : BuildingPot
     }
 
     #region Building the 3 types of posible buildins
+
     private void BuildDragSquare(H buildWhat, Vector3 iniPos)
     {
         Control.CurrentSpawnBuild = Way.CreateWayObj(Root.farm, iniPos,
@@ -591,7 +582,7 @@ public class InputBuilding : BuildingPot
             , container: Program.BuildsContainer.transform);
     }
 
-    void BuildStructure(H buildWhat, Vector3 iniPos)
+    private void BuildStructure(H buildWhat, Vector3 iniPos)
     {
         var root = Root.RetBuildingRoot(buildWhat);
 
@@ -607,7 +598,7 @@ public class InputBuilding : BuildingPot
         AssignSharedMaterial();
     }
 
-    void BuildWay(H buildWhat, Vector3 iniPos)
+    private void BuildWay(H buildWhat, Vector3 iniPos)
     {
         if (buildWhat == H.Trail)
         {
@@ -644,14 +635,15 @@ public class InputBuilding : BuildingPot
     /// <summary>
     /// Will asign a shared material to the Control.CurrentSpawnBuild
     /// </summary>
-    void AssignSharedMaterial()
+    private void AssignSharedMaterial()
     {
         //Material n = Resources.Load<Material>(Root.RetMaterialRoot(Control.CurrentSpawnBuild.MaterialKey));
         //n.name = "BaseOri";
 
         //Control.CurrentSpawnBuild.Geometry.GetComponent<Renderer>().sharedMaterial = n;
     }
-    #endregion
+
+    #endregion Building the 3 types of posible buildins
 
     /// <summary>
     /// This create or destroy the create plane that the user can see where the new Way is gonna

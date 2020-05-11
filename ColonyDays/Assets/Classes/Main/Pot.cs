@@ -1,19 +1,12 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class Pot : General {
-
-
-
-	// Use this for initialization
-	void Start ()
+﻿public class Pot : General
+{
+    // Use this for initialization
+    private void Start()
     {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () 
+    }
+
+    // Update is called once per frame
+    private void Update()
     {
-	
-	}
+    }
 }

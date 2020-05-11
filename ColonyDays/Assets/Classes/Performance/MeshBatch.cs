@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MeshBatch
 {
@@ -23,13 +19,13 @@ public class MeshBatch
 
         for (int i = 0; i < array.Length; i++)
         {
-            array[i].transform.SetParent( batchmaster.transform);
+            array[i].transform.SetParent(batchmaster.transform);
         }
 
         CombineMeshes(batchmaster.gameObject, array[0].GetComponent<Renderer>().material);
     }
 
-    void House()
+    private void House()
     {
         // find the corresponding objects e.g. with loading into cache
         General batchmaster = General.Create(Root.classesContainer, new Vector3(),
@@ -39,13 +35,13 @@ public class MeshBatch
 
         for (int i = 0; i < array.Length; i++)
         {
-            array[i].transform.SetParent( batchmaster.transform);
+            array[i].transform.SetParent(batchmaster.transform);
         }
 
         CombineMeshes(batchmaster.gameObject, array[0].GetComponent<Renderer>().material);
     }
 
-    void CombineMeshes(GameObject onGO, Material mat)
+    private void CombineMeshes(GameObject onGO, Material mat)
     {
         //Zero transformation is needed because of localToWorldMatrix transform
         Vector3 position = onGO.transform.position;
@@ -64,8 +60,8 @@ public class MeshBatch
             i++;
         }
 
-        //onGO.GetComponent<Renderer>().sharedMaterial = (Material)Resources.Load(Root.matTavernBase); 
-        onGO.GetComponent<Renderer>().sharedMaterial = mat; 
+        //onGO.GetComponent<Renderer>().sharedMaterial = (Material)Resources.Load(Root.matTavernBase);
+        onGO.GetComponent<Renderer>().sharedMaterial = mat;
 
         onGO.transform.GetComponent<MeshFilter>().mesh = new Mesh();
         onGO.transform.GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
@@ -75,12 +71,10 @@ public class MeshBatch
         onGO.transform.position = position;
     }
 
-
-
     //  https://www.reddit.com/r/gamedev/comments/22mlem/reducing_draw_calls_in_unity_by_combining_meshes/
     /// <summary>
     ///  Assign the cluster of GameObjects with an identical mesh to a parent object, and run this
-    ///  script on that parent object. This will reduce the amount of drawcalls of the object from 'n' 
+    ///  script on that parent object. This will reduce the amount of drawcalls of the object from 'n'
     /// (for each sub-object) to 1 if you do it correctly.
     /// </summary>
     /// <param name="obj"></param>

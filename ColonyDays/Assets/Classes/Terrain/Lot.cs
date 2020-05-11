@@ -1,15 +1,16 @@
-﻿/* This class that hold the lots object. Each mesh 
+﻿/* This class that hold the lots object. Each mesh
  * is subdived in many lots... Nov 27 2014
- * The lots are 5 real col times 5 real rows. When 
+ * The lots are 5 real col times 5 real rows. When
  * I say real Im refering to real vetices of the mesh. Each real
- * poly is subdived in 25 fake subpolygons and 
+ * poly is subdived in 25 fake subpolygons and
  * that is a lot: 5 rows times 5 col times 25 fake poly (those numbers can change).
- * 
- * Each Lot has an specific index that we use to determine the 9 lots closer to 
+ *
+ * Each Lot has an specific index that we use to determine the 9 lots closer to
  * where the mouse is hitting the terrain
  */
-using UnityEngine;
+
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Lot
 {
@@ -27,7 +28,10 @@ public class Lot
         set { _realVertices = value; }
     }
 
-    public Lot(){}
+    public Lot()
+    {
+    }
+
     public Lot(Vector3 squareStart, Vector3 squareEnd)
     {
         this.squareStart = squareStart;
@@ -52,14 +56,14 @@ public class Lot
     public void SetRealVertices()
     {
         RealVertices = RetuFillPolyRealY(squareStart, squareEnd,
-            Mathf.Abs( Program.gameScene.controllerMain.MeshController.iniTerr.StepX),
-            Mathf.Abs( Program.gameScene.controllerMain.MeshController.iniTerr.StepZ));
+            Mathf.Abs(Program.gameScene.controllerMain.MeshController.iniTerr.StepX),
+            Mathf.Abs(Program.gameScene.controllerMain.MeshController.iniTerr.StepZ));
     }
 
     /// <summary>
     /// Return a filed poly with RealYs if  bool findRealY is true. Otherwise the same but the Y is NW.y
     /// </summary>
-    List<Vector3> RetuFillPolyRealY(Vector3 NW, Vector3 SE, float xStep, float zStep)
+    private List<Vector3> RetuFillPolyRealY(Vector3 NW, Vector3 SE, float xStep, float zStep)
     {
         List<Vector3> res = new List<Vector3>();
         SE = MoveVector3Towards(SE, Dir.NW, xStep, zStep);
@@ -70,18 +74,18 @@ public class Lot
             for (float z = NW.z; z > SE.z; z -= zStep)
             {
                 //for fill a field we shiyld use the REal Y so tiles look close to ground
-                res.Add(Program.gameScene.controllerMain.MeshController.Vertex.BuildVertexWithXandZ(x, z)); 
+                res.Add(Program.gameScene.controllerMain.MeshController.Vertex.BuildVertexWithXandZ(x, z));
             }
         }
         //UVisHelp.CreateHelpers(res, Root.blueCube);
         return res;
     }
 
-    Vector3 MoveVector3Towards(Vector3 current, Dir towards, float moveInX, float moveInZ)
+    private Vector3 MoveVector3Towards(Vector3 current, Dir towards, float moveInX, float moveInZ)
     {
         if (towards == Dir.NW)
         {
-            current.x = current.x - Mathf.Abs( moveInX);
+            current.x = current.x - Mathf.Abs(moveInX);
             current.z = current.z + Mathf.Abs(moveInZ);
         }
         return current;

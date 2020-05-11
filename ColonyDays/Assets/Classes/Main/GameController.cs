@@ -1,21 +1,21 @@
 ﻿/*
  * This is a really omportatn class. This is the one the control the whole game in sense of inventory.
  * Holds the inventory of the game
- * 
- * 
+ *
+ *
  * Controls the game in the sense to which Scene with BUilding with Person Load.
- * Or create new game 
+ * Or create new game
  */
 
 using System;
-using System.Collections;
 using UnityEngine;
 
-public class GameController  {
-
+public class GameController
+{
     public bool IsGameOver { get; set; }
 
     private static bool _areThereWheelBarrowsOnStorage;
+
     /// <summary>
     /// updated every 60sec from GameScene
     /// </summary>
@@ -25,16 +25,16 @@ public class GameController  {
         set { _areThereWheelBarrowsOnStorage = value; }
     }
 
-
     private static bool _areThereCratesOnStorage;
+
     public static bool AreThereCratesOnStorage
     {
         get { return _areThereCratesOnStorage; }
         set { _areThereCratesOnStorage = value; }
     }
 
-
     private static bool _areThereCartsOnStorage;
+
     public static bool AreThereCartsOnStorage
     {
         get { return _areThereCartsOnStorage; }
@@ -42,12 +42,12 @@ public class GameController  {
     }
 
     private static bool _areThereTonelsOnStorage;
+
     public static bool AreThereTonelsOnStorage
     {
         get { return _areThereTonelsOnStorage; }
         set { _areThereTonelsOnStorage = value; }
     }
-
 
     private static bool _areThereWhaleOil;
 
@@ -57,23 +57,22 @@ public class GameController  {
         set { GameController._areThereWhaleOil = value; }
     }
 
-
-
-    static float _notificationFrec = 120;
+    private static float _notificationFrec = 120;
 
     public static float NotificationFrec
     {
         get { return GameController._notificationFrec; }
         set { GameController._notificationFrec = value; }
     }
-    bool _wasNegativeAlerted;
-    
-    //Main inventory of the game .. wht u see on the GUI 
-    //will have all tht is in all Storages combined 
-    //is a total inventory. Representing all tht is in those inventories 
-    static ResumenInventory _resumenInventory = new ResumenInventory();
 
-    private float _dollars;//the dollars the player has 
+    private bool _wasNegativeAlerted;
+
+    //Main inventory of the game .. wht u see on the GUI
+    //will have all tht is in all Storages combined
+    //is a total inventory. Representing all tht is in those inventories
+    private static ResumenInventory _resumenInventory = new ResumenInventory();
+
+    private float _dollars;//the dollars the player has
     private static StartingCondition _startingCondition;
 
     private int _lastYearWorkersSalaryWasPaid;
@@ -81,8 +80,9 @@ public class GameController  {
     private NotificationsManager _notificationsManager;
 
     private static int _capMaxPerson = 1100;
+
     /// <summary>
-    /// tHE Max amt of person in a game 
+    /// tHE Max amt of person in a game
     /// </summary>
     public static int CapMaxPerson
     {
@@ -101,7 +101,6 @@ public class GameController  {
         get { return _resumenInventory; }
         set
         {
-            
             _resumenInventory = value;
         }
     }
@@ -131,7 +130,7 @@ public class GameController  {
     }
 
     /// <summary>
-    /// Says the last year the salaray was paid 
+    /// Says the last year the salaray was paid
     /// </summary>
     public int LastYearWorkersSalaryWasPaid
     {
@@ -139,14 +138,12 @@ public class GameController  {
         set { _lastYearWorkersSalaryWasPaid = value; }
     }
 
-
     static public void LoadStartingConditions(StartingCondition startingCondition)
     {
         _startingCondition = startingCondition;
     }
 
-
-    Inventory CreateInitialInv(StartingCondition startingCondition)
+    private Inventory CreateInitialInv(StartingCondition startingCondition)
     {
         Dollars += startingCondition.iniDollar;
         Inventory inv = new Inventory();
@@ -162,14 +159,14 @@ public class GameController  {
         inv.Add(P.WheelBarrow, startingCondition.iniWheelBarrow);
         inv.Add(P.Tool, startingCondition.iniTool);
         inv.Add(P.Crate, startingCondition.iniCrate);
-        
+
         inv.Add(P.Cart, startingCondition.iniCart);
         inv.Add(P.Barrel, startingCondition.iniTonel);
 
         inv.Add(P.Cloth, startingCondition.iniCloth);
         inv.Add(P.Utensil, startingCondition.iniUtensil);
         inv.Add(P.Crockery, startingCondition.iniCrockery);
-       
+
         inv.Add(P.Furniture, startingCondition.iniFurniture);
         inv.Add(P.Nail, startingCondition.iniNail);
         inv.Add(P.Mortar, startingCondition.iniMortar);
@@ -178,7 +175,6 @@ public class GameController  {
 
         inv.Add(P.WhaleOil, startingCondition.iniWhaleOil);
 
-
         return inv;
     }
 
@@ -186,9 +182,9 @@ public class GameController  {
     /// Will load the Starting conditions into the 1st Storage Type of building.
     /// This is done only at first when game is created
     /// </summary>
-    static void LoadIntoInv(Inventory invt)
+    private static void LoadIntoInv(Inventory invt)
     {
-        if (BuildingPot.Control.FoodSources.Count == 0 )
+        if (BuildingPot.Control.FoodSources.Count == 0)
         {
             return;
         }
@@ -201,7 +197,7 @@ public class GameController  {
     }
 
     /// <summary>
-    /// The first Storage will call this so the first Lote is get into there 
+    /// The first Storage will call this so the first Lote is get into there
     /// </summary>
     public void SetInitialLote()
     {
@@ -230,17 +226,16 @@ public class GameController  {
         if (_notificationsManager != null)
         {
             _notificationsManager.UpdateOneSecond();
-            
         }
     }
 
     private void CheckIfGameOverCondition()
     {
-        if (Dollars<-100000)
+        if (Dollars < -100000)
         {
             GameOver('m');
         }
-        if (BuildingPot.Control!=null &&  BuildingPot.Control.DockManager1!=null &&
+        if (BuildingPot.Control != null && BuildingPot.Control.DockManager1 != null &&
             BuildingPot.Control.DockManager1.PirateThreat > 90 && Program.IsPirate)
         {
             GameOver('p');
@@ -261,7 +256,7 @@ public class GameController  {
         if (type == 'p')
         {
             Dialog.OKDialog(H.GameOverPirate);
-        } 
+        }
         else if (type == 'm')
         {
             Dialog.OKDialog(H.GameOverMoney);
@@ -283,12 +278,12 @@ public class GameController  {
         var pts = 0f;
         if (Dollars > 10000)
         {
-            pts = Dollars/10000;
+            pts = Dollars / 10000;
         }
-        if (ResumenInventory1.ReturnAmtOfItemOnInv(P.Gold)> 1000)
+        if (ResumenInventory1.ReturnAmtOfItemOnInv(P.Gold) > 1000)
         {
-            pts += ResumenInventory1.ReturnAmtOfItemOnInv(P.Gold)/1000;
-        } 
+            pts += ResumenInventory1.ReturnAmtOfItemOnInv(P.Gold) / 1000;
+        }
         if (ResumenInventory1.ReturnAmtOfItemOnInv(P.Silver) > 1000)
         {
             pts += ResumenInventory1.ReturnAmtOfItemOnInv(P.Silver) / 2000;
@@ -299,7 +294,7 @@ public class GameController  {
         }
 
         //from late 2016 to Dec 18, 2019 was:
-        //to make game easier 
+        //to make game easier
         //pts /= 100;
 
         pts /= 10;
@@ -309,7 +304,7 @@ public class GameController  {
     }
 
     /// <summary>
-    /// If not wheelBarrow objects are on game storages then . WheelBarrowers and DOcker will carry everytihng on 
+    /// If not wheelBarrow objects are on game storages then . WheelBarrowers and DOcker will carry everytihng on
     /// bare hands. (Crates)
     /// </summary>
     /// <returns></returns>
@@ -329,7 +324,7 @@ public class GameController  {
 
     #region GameMode Could be Normal( Peace) or War
 
-    static H _gameMode = H.Normal;
+    private static H _gameMode = H.Normal;
 
     public static H GameMode
     {
@@ -341,7 +336,7 @@ public class GameController  {
     {
         if (_gameMode != to && to == H.War)
         {
-            //notify the user 
+            //notify the user
             OnWar(EventArgs.Empty);
             Program.MouseListener.CurrForm.ShowWarMode();
         }
@@ -353,11 +348,9 @@ public class GameController  {
         _gameMode = to;
     }
 
-
-
-
     public static EventHandler<EventArgs> War;
-    static void OnWar(EventArgs e)
+
+    private static void OnWar(EventArgs e)
     {
         if (War != null)
         {
@@ -365,7 +358,5 @@ public class GameController  {
         }
     }
 
-
-
-    #endregion
+    #endregion GameMode Could be Normal( Peace) or War
 }

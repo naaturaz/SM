@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-
+﻿using System.Collections.Generic;
 
 public class ProgramData
 {
     public string GameVersion;
 
-    public List<string> Waves =new List<string>(); 
+    public List<string> Waves = new List<string>();
 
-    public ProgramData() { }
+    public ProgramData()
+    {
+    }
 
     public ProgramData(string gameVersion)
     {

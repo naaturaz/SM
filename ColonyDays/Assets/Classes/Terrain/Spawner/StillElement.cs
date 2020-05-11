@@ -1,10 +1,9 @@
 ﻿using System.Collections;
-using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using Random = UnityEngine.Random;
-using System;
+using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class StillElement : TerrainRamdonSpawner
 {
@@ -23,15 +22,13 @@ public class StillElement : TerrainRamdonSpawner
     private float _weight;//the weight of the element //
 
     //says how many foreseter are mining this now
-    private int _minedNowBy; 
+    private int _minedNowBy;
 
-    List<Vector3> _anchors = new List<Vector3>();
+    private List<Vector3> _anchors = new List<Vector3>();
 
     private GameObject _billBoardGO;
     private List<GameObject> _collObjects = new List<GameObject>();//for palms
-    float _startTime;
-
-
+    private float _startTime;
 
     public List<Vector3> Anchors
     {
@@ -59,61 +56,59 @@ public class StillElement : TerrainRamdonSpawner
 
     private bool _hasStart;
 
-
     // Use this for initialization
-	public void Start ()
+    public void Start()
     {
         if (_hasStart)
-	    {
+        {
             return;
-	    }
+        }
 
-
-	    _hasStart = true;
+        _hasStart = true;
         _startTime = Time.time;
 
-	    _billBoardGO = GetChildThatContains("Billboard", gameObject);
+        _billBoardGO = GetChildThatContains("Billboard", gameObject);
 
-        //only will be used for palms 
+        //only will be used for palms
         for (int i = 0; i < 4; i++)
         {
             var gO = GetChildThatContains("Object" + i, gameObject);
-            if (gO!= null)
+            if (gO != null)
             {
                 //wont be null if a palm
                 _collObjects.Add(gO);
             }
         }
 
-	    StartCoroutine("TenSecUpdate");
-        Name = HType+"";
+        StartCoroutine("TenSecUpdate");
+        Name = HType + "";
 
         if (MyId.Contains("Decora"))
-	    {
-	        return;
-	    }
+        {
+            return;
+        }
 
         UpdateMinAndMaxVar();
         var bou = FindBounds(_min, _max);
         Anchors = FindAnchors(bou);
 
-	    if (!AmIValid()  )
-	    {
-	        return;
-	    }
+        if (!AmIValid())
+        {
+            return;
+        }
 
-	    InitTree();
-	    addCrystals = true;
+        InitTree();
+        addCrystals = true;
         AddCrystalsStart();
         base.Start();//intended to call TerrainRandomSpawner.cs
 
-	    if (ReplantedTree)
-	    {
-	        ReplantThisTree();
-	    }
+        if (ReplantedTree)
+        {
+            ReplantThisTree();
+        }
 
-	    LoadGrowingTree();
-	}
+        LoadGrowingTree();
+    }
 
     /// <summary>
     /// The start for pool trees
@@ -133,7 +128,6 @@ public class StillElement : TerrainRamdonSpawner
 
         LoadGrowingTree();
 
-
         var oldP = transform.position;
         //so it appears on terrain
         transform.position = new Vector3(oldP.x, oldP.y + howDeepInY, oldP.z);
@@ -141,7 +135,7 @@ public class StillElement : TerrainRamdonSpawner
 
     private void InitTree()
     {
-        if (HType!=H.Tree)
+        if (HType != H.Tree)
         {
             return;
         }
@@ -157,18 +151,18 @@ public class StillElement : TerrainRamdonSpawner
         {
             CutDownTree();
         }
-        if (Weight<0)
+        if (Weight < 0)
         {
             DestroyCool();
         }
     }
 
-
-#region Deactiavte Animator
+    #region Deactiavte Animator
 
     private float _timeOfInit;
     private float _tenSecCourotine = 10;
-    void CheckIfCanBeDeactivated()
+
+    private void CheckIfCanBeDeactivated()
     {
         if (_timeOfInit == 0)
         {
@@ -179,7 +173,7 @@ public class StillElement : TerrainRamdonSpawner
             _timeOfInit = 0;
             //so is not called in Update
             _myAnimator.enabled = false;
-            //so its not asked for really long periods of time 
+            //so its not asked for really long periods of time
             _tenSecCourotine = 10000;
         }
     }
@@ -193,18 +187,13 @@ public class StillElement : TerrainRamdonSpawner
         }
     }
 
-#endregion
-
-
-
-
+    #endregion Deactiavte Animator
 
     public void CutDownTree()
     {
         _myAnimator.enabled = true;
         _myAnimator.SetBool("isTreeIdle", false);
         _myAnimator.SetBool("isTreeFall", true);
-
 
         Destroy(_billBoardGO);
 
@@ -225,11 +214,10 @@ public class StillElement : TerrainRamdonSpawner
         Destroy(nav);
 
         AudioCollector.PlayOneShot("FallingTree", transform.position);
-
     }
 
     /// <summary>
-    /// Will tel if anchors are colliding with anyohter obstacle on Scene . if so will remove it 
+    /// Will tel if anchors are colliding with anyohter obstacle on Scene . if so will remove it
     /// This is only need to be done the first time the obj is spwaning if is loadin from file is not needed
     /// </summary>
     /// <returns></returns>
@@ -243,11 +231,11 @@ public class StillElement : TerrainRamdonSpawner
 
         if (MeshController.CrystalManager1.IntersectAnyLine(Anchors, transform.position))
         {
-            Debug.Log("not valid:"+MyId);
+            Debug.Log("not valid:" + MyId);
 
-            //bz need to remove old Crystals 
-            
-            //so it get removed the Crsytals forever 
+            //bz need to remove old Crystals
+
+            //so it get removed the Crsytals forever
             ShouldReplant = false;
 
             DestroyCool();
@@ -256,7 +244,7 @@ public class StillElement : TerrainRamdonSpawner
         return true;
     }
 
-    void AddCrystalsStart()
+    private void AddCrystalsStart()
     {
         if (addCrystals && MeshController.CrystalManager1.CrystalRegions.Count > 0)
         {
@@ -278,7 +266,7 @@ public class StillElement : TerrainRamdonSpawner
     }
 
     /// <summary>
-    /// Will redo crystals 
+    /// Will redo crystals
     /// </summary>
     public void RedoCrystals()
     {
@@ -287,10 +275,10 @@ public class StillElement : TerrainRamdonSpawner
         AddCrystals();
     }
 
-    void AddCrystals()
+    private void AddCrystals()
     {
-        //ornaments and grass wont be added 
-        //replant should not add bz never was deleted 
+        //ornaments and grass wont be added
+        //replant should not add bz never was deleted
         if (ReplantedTree || ShouldReplant || name.Contains("Orna") || name.Contains("Grass"))
         {
             return;
@@ -299,8 +287,8 @@ public class StillElement : TerrainRamdonSpawner
         MeshController.CrystalManager1.Add(this);
     }
 
-	// Update is called once per frame
-	protected void Update () 
+    // Update is called once per frame
+    protected void Update()
     {
         CheckIfCanGrow();
         CheckIfWasDestroyAndPlayedFullAnimation();
@@ -308,11 +296,10 @@ public class StillElement : TerrainRamdonSpawner
         CouldGrowPlantNow();
 
         MakeInactiveWhenNeeded();
-
     }
 
+    private bool _checked;
 
-    bool _checked;
     /// <summary>
     /// IF still element too close to center of town will get destroy
     /// </summary>
@@ -323,19 +310,19 @@ public class StillElement : TerrainRamdonSpawner
             return;
         }
 
-        //is a loaded game 
+        //is a loaded game
         if (TownLoader.InitialPosition == new Vector3() && Program.gameScene.GameWasFullyLoadedAnd10SecAgo())
         {
             _checked = true;
         }
 
-        if (TownLoader.InitialPosition != new Vector3() && 
+        if (TownLoader.InitialPosition != new Vector3() &&
             Vector3.Distance(transform.position, TownLoader.InitialPosition) < 9f && !_checked)
         {
             //UVisHelp.CreateText(transform.position,
             //     Vector3.Distance(transform.position, TownLoader.InitialPosition) + "");
 
-            Debug.Log("Too close to town: "+MyId);
+            Debug.Log("Too close to town: " + MyId);
             _checked = true;
             DestroyCool();
         }
@@ -346,9 +333,8 @@ public class StillElement : TerrainRamdonSpawner
         CheckIfTooCloseToMiddleOfTown();
     }
 
-
     /// <summary>
-    /// Will make it inactive if is not being used for Performance 
+    /// Will make it inactive if is not being used for Performance
     /// </summary>
     private void MakeInactiveWhenNeeded()
     {
@@ -364,8 +350,6 @@ public class StillElement : TerrainRamdonSpawner
         }
     }
 
-
-
     private void CheckIfWasDestroyAndPlayedFullAnimation()
     {
         if (!_destroyElement)
@@ -374,7 +358,7 @@ public class StillElement : TerrainRamdonSpawner
         }
 
         //bz the fall tree animtion last 5sec and so
-        if (Time.time > _fallTime + 6 && HType==H.Tree)
+        if (Time.time > _fallTime + 6 && HType == H.Tree)
         {
             DestroyCool();
         }
@@ -401,7 +385,7 @@ public class StillElement : TerrainRamdonSpawner
 
     /// <summary>
     ///will find the farest point in a gameObj is lokking for the NW, NE, SE, SW . will retu
-    ///in that sequence. 
+    ///in that sequence.
     /// </summary>
     /// <param name="min">Bound.min, will work to if we pass SW</param>
     /// <param name="max">Bound.max, will work to if we pass NE</param>
@@ -429,13 +413,14 @@ public class StillElement : TerrainRamdonSpawner
         for (int i = 0; i < list.Count; i++)
         {
             //res.Add(m.Vertex.BuildVertexWithXandZ(list[i].x, list[i].z));
-            res.Add(new Vector3( list[i].x, m.IniTerr.MathCenter.y, list[i].z));
+            res.Add(new Vector3(list[i].x, m.IniTerr.MathCenter.y, list[i].z));
         }
         //UVisHelp.CreateHelpers(res, Root.blueCube);
         return res;
     }
 
-    bool wasDestroyed;
+    private bool wasDestroyed;
+
     public override void DestroyCool()
     {
         if (wasDestroyed)
@@ -454,12 +439,12 @@ public class StillElement : TerrainRamdonSpawner
 
         //removes from List in TerraSpawnerController
         Program.gameScene.controllerMain.TerraSpawnController.RemoveStillElement(this, savedPos);
-        
+
         if (HType == H.Tree && ShouldReplant)
         {
             Program.gameScene.controllerMain.TerraSpawnController.SpawnRandomTreeInThisPos(savedPos, MyId);
         }
-        else if (!ShouldReplant || HType != H.Tree)//for GC will remove only if is not getting replanted 
+        else if (!ShouldReplant || HType != H.Tree)//for GC will remove only if is not getting replanted
         {
             //remove from CrystalManager
             MeshController.CrystalManager1.Delete(this);
@@ -468,11 +453,9 @@ public class StillElement : TerrainRamdonSpawner
         Destroy(gameObject);
     }
 
-
-
     /// <summary>
-    /// So a still element is not mined endessly this 
-    /// gives the elements a weight so when is depleted is deleted 
+    /// So a still element is not mined endessly this
+    /// gives the elements a weight so when is depleted is deleted
     /// and foreseted can move to next item
     /// </summary>
     internal void SetWeight()
@@ -502,7 +485,7 @@ public class StillElement : TerrainRamdonSpawner
     }
 
     /// <summary>
-    /// Called when  a Forester iis has mined 
+    /// Called when  a Forester iis has mined
     /// </summary>
     /// <param name="ProdXShift"></param>
     internal void RemoveWeight(float ProdXShift, Person pers)
@@ -514,9 +497,9 @@ public class StillElement : TerrainRamdonSpawner
 
         CheckIfTreeMustBeCut();
         _weight -= ProdXShift;
-        
+
         //depleted
-        //mined now only by one person . The person calling this Method 
+        //mined now only by one person . The person calling this Method
         if (_weight < 0)
         {
             _destroyElement = true;
@@ -544,11 +527,12 @@ public class StillElement : TerrainRamdonSpawner
     }
 
     #region Grow
+
     //when was seeded
     //10 years to be fully grown
-    private int _lifeDuration = 3600;//1800;// 
+    private int _lifeDuration = 3600;//1800;//
 
-    void ReplantThisTree()
+    private void ReplantThisTree()
     {
         if (HType != H.Tree)
         {
@@ -556,7 +540,7 @@ public class StillElement : TerrainRamdonSpawner
         }
         MaxHeight = transform.localScale.y;
 
-        Debug.Log(MyId+" maxHeight:"+MaxHeight);
+        Debug.Log(MyId + " maxHeight:" + MaxHeight);
 
         SeedDate = Program.gameScene.GameTime1.CurrentDate();
         Height = 0;
@@ -565,9 +549,9 @@ public class StillElement : TerrainRamdonSpawner
         Program.gameScene.controllerMain.TerraSpawnController.ReSaveStillElement(this);
     }
 
-    void CheckIfCanGrow()
+    private void CheckIfCanGrow()
     {
-        if (SeedDate==null)
+        if (SeedDate == null)
         {
             return;
         }
@@ -598,6 +582,7 @@ public class StillElement : TerrainRamdonSpawner
     }
 
     private float _amtToGrow;
+
     private void CouldGrowPlantNow()
     {
         if (_amtToGrow > 0)
@@ -607,7 +592,7 @@ public class StillElement : TerrainRamdonSpawner
         }
     }
 
-    void ScaleGameObject(float toAdd)
+    private void ScaleGameObject(float toAdd)
     {
         var localScale = gameObject.transform.localScale;
         var singleX = localScale.x + toAdd;
@@ -618,13 +603,13 @@ public class StillElement : TerrainRamdonSpawner
         gameObject.transform.localScale = newScale;
     }
 
-    void SetGameObjectScaleTo(float val)
+    private void SetGameObjectScaleTo(float val)
     {
         var newScale = new Vector3(val, val, val);
         gameObject.transform.localScale = newScale;
-    }  
-    
-    void ScaleGameObjectToZero()
+    }
+
+    private void ScaleGameObjectToZero()
     {
         var newScale = new Vector3(0, 0, 0);
         gameObject.transform.localScale = newScale;
@@ -634,14 +619,14 @@ public class StillElement : TerrainRamdonSpawner
     {
         return Height >= MaxHeight;
     }
-    #endregion
 
+    #endregion Grow
 
+    //so if a strucutre ask for 2nd time I have the value stored
+    private Dictionary<string, Vector3> _cachedStructures = new Dictionary<string, Vector3>();
 
-    //so if a strucutre ask for 2nd time I have the value stored 
-    Dictionary<string, Vector3> _cachedStructures = new Dictionary<string, Vector3>();
     /// <summary>
-    /// Will find the closest anchor to that Structure 
+    /// Will find the closest anchor to that Structure
     /// </summary>
     /// <param name="structure"></param>
     /// <returns></returns>
@@ -656,19 +641,19 @@ public class StillElement : TerrainRamdonSpawner
 
         //if (listOrdered.Count>0)
         //{
-            _cachedStructures.Add(structure.MyId, listOrdered[0].Point);
-            return listOrdered[0].Point;
+        _cachedStructures.Add(structure.MyId, listOrdered[0].Point);
+        return listOrdered[0].Point;
         //}
         //return new Vector3();
     }
 
     /// <summary>
-    /// Will return current anchors if exist already 
+    /// Will return current anchors if exist already
     /// </summary>
     /// <returns></returns>
-    List<Vector3> GetAnchors()
+    private List<Vector3> GetAnchors()
     {
-        if (Anchors.Count>0)
+        if (Anchors.Count > 0)
         {
             return Anchors;
         }
@@ -691,17 +676,6 @@ public class StillElement : TerrainRamdonSpawner
         return anchorOrdered.OrderBy(a => a.Distance).ToList();
     }
 
-
-
-
-
-
-
-
-
-
-
-
     #region Hover All Objects. All objects that have a collider will be hoverable
 
     //protected void OnMouseEnter()
@@ -714,5 +688,5 @@ public class StillElement : TerrainRamdonSpawner
     //    base.OnMouseExit();
     //}
 
-    #endregion
+    #endregion Hover All Objects. All objects that have a collider will be hoverable
 }

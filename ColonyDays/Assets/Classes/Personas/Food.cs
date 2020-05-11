@@ -3,9 +3,9 @@ using System.Linq;
 
 public class Food
 {
-    List<NutritionValue> _nValues = new List<NutritionValue>();//nutrition values
+    private List<NutritionValue> _nValues = new List<NutritionValue>();//nutrition values
 
-    Dictionary<P, NutritionValue> _nValuesGC = new Dictionary<P, NutritionValue>();
+    private Dictionary<P, NutritionValue> _nValuesGC = new Dictionary<P, NutritionValue>();
 
     public Food()
     {
@@ -26,11 +26,9 @@ public class Food
         if (_nValuesGC.ContainsKey(prod))
         {
             return _nValuesGC[prod];
-            
         }
         return null;
     }
-
 
     private void LoadNutriVals()
     {
@@ -66,7 +64,6 @@ public class Food
         //_nValues.Add(new NutritionValue(P.Orange, 1f));
         _nValues.Add(new NutritionValue(P.Papaya, 1f));
 
-
         _nValues.OrderBy(a => a.NutritionVal).ToList();
     }
 
@@ -91,7 +88,7 @@ public class Food
         return res;
     }
 
-    float PullNutriVal(P ele)
+    private float PullNutriVal(P ele)
     {
         for (int i = 0; i < _nValues.Count; i++)
         {
@@ -106,7 +103,6 @@ public class Food
 
 public class NutritionValue
 {
-
     private P _nutrient;//the food itself like : egg
     private float _nutritionVal;
 
@@ -122,14 +118,13 @@ public class NutritionValue
         set { _nutrient = value; }
     }
 
-    public NutritionValue(){}
+    public NutritionValue()
+    {
+    }
 
     public NutritionValue(P nutrient, float nutriVal)
     {
         _nutrient = nutrient;
         _nutritionVal = nutriVal;
     }
-
-   
 }
-

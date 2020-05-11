@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-/// <summary>
+﻿/// <summary>
 /// Since a building now needs an Inventory, WaterInventory
 /// </summary>
 public class InventoryManager
@@ -24,11 +19,13 @@ public class InventoryManager
         set { _waterInventory = value; }
     }
 
-    public InventoryManager() { }
+    public InventoryManager()
+    {
+    }
 
     public InventoryManager(General gen)
     {
-        _inventory=new Inventory(gen.MyId, gen.HType);
+        _inventory = new Inventory(gen.MyId, gen.HType);
         _waterInventory = new Inventory(gen.MyId, gen.HType);
         _liquidInventory = new Inventory(gen.MyId, gen.HType);
     }
@@ -38,12 +35,12 @@ public class InventoryManager
         //and not buckets : return
         if (IsLiquid(product))
         {
-            //if not bukkect 
+            //if not bukkect
             if (!GameController.AreThereTonelsOnStorage && IsLiquid(product))
             {
                 return;
             }
-            
+
             if (product == P.Water)
             {
                 _waterInventory.RemoveByWeight(product, amt);
@@ -84,13 +81,13 @@ public class InventoryManager
         RemoveContainerUsed(product);
     }
 
-    bool IsLiquid(P prod)
+    private bool IsLiquid(P prod)
     {
         return prod == P.Water || prod == P.Beer || prod == P.Rum || prod == P.Ink;
     }
 
     //Usage of Containers
-    void RemoveContainerUsed(P prod)
+    private void RemoveContainerUsed(P prod)
     {
         if (DoesNeedACrate(prod))
         {
@@ -104,7 +101,7 @@ public class InventoryManager
         }
     }
 
-    bool DoesNeedACrate(P prod)
+    private bool DoesNeedACrate(P prod)
     {
         if (prod == P.Wood || prod == P.Stone || prod == P.Ore)
         {
@@ -118,4 +115,3 @@ public class InventoryManager
         return _waterInventory.IsFull();
     }
 }
-

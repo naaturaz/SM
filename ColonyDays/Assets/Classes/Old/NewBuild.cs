@@ -1,25 +1,25 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public enum BuildType
 {
-
 }
 
-public class NewBuild : General {
-
+public class NewBuild : General
+{
     //variables
-	private Transform _newPos;
+    private Transform _newPos;
+
     private int _lot;
-	private bool newWasCreated;
-	private NewBuild newBuilt;
+    private bool newWasCreated;
+    private NewBuild newBuilt;
 
     #region Properties
-	public Transform NewPos
-	{
-		get{ return _newPos;}
-		set{ _newPos = value;}
-	}
+
+    public Transform NewPos
+    {
+        get { return _newPos; }
+        set { _newPos = value; }
+    }
 
     public int Lot
     {
@@ -27,30 +27,29 @@ public class NewBuild : General {
         set { _lot = value; }
     }
 
-    #endregion
+    #endregion Properties
 
     #region Unity Voids
 
     // Use this for initialization
-	void Start () 
-	{
-		newBuilt = null;
-	}
+    private void Start()
+    {
+        newBuilt = null;
+    }
 
-	// Update is called once per frame
-	void FixedUpdate () 
-	{
-		//MouseControl ();
-		if(newBuilt != null)
-		{
+    // Update is called once per frame
+    private void FixedUpdate()
+    {
+        //MouseControl ();
+        if (newBuilt != null)
+        {
+        }
+    }
 
-		}
-
-	}
-
-    #endregion
+    #endregion Unity Voids
 
     #region General Function
+
     //void MouseControl()
     //{
     //    //hovering will move the new building thru the grid
@@ -75,7 +74,7 @@ public class NewBuild : General {
     //            AddInProgramCSArray("NewBuild", this);
     //        }
     //    }
-    //    //right click... creates new building 
+    //    //right click... creates new building
     //    if(Input.GetMouseButtonUp (1))
     //    {
     //        //if this is null ...
@@ -104,38 +103,39 @@ public class NewBuild : General {
     //    Program.SPACELOT = FindSpace(Program.DETECTSPACE.name, "Space");
     //}
 
-	//will return int value with space was passed as input
-	public int FindSpace(string input, string type)
-	{
-		int temp = 0;
-		int twoDigit = 0;
-		int firstDigit = 0;
-		int secondDigit = 0;
-		if(type == "Space")
-		{
-			twoDigit = int.Parse(input.Substring(5, 2));
-			firstDigit = int.Parse(input.Substring(5, 1));
-			secondDigit = int.Parse(input.Substring(6, 1));
+    //will return int value with space was passed as input
+    public int FindSpace(string input, string type)
+    {
+        int temp = 0;
+        int twoDigit = 0;
+        int firstDigit = 0;
+        int secondDigit = 0;
+        if (type == "Space")
+        {
+            twoDigit = int.Parse(input.Substring(5, 2));
+            firstDigit = int.Parse(input.Substring(5, 1));
+            secondDigit = int.Parse(input.Substring(6, 1));
 
-			/*
+            /*
 			print ("input:" + input);
 			print ("twoDigit:" + twoDigit);
 			print ("firstDigit:" + firstDigit);
 			print ("secondDigit:" + secondDigit);
 			 */
 
-			//if first digit after 'space' = 0...
-			if(firstDigit == 0)
-			{
-				temp = secondDigit;
-			}
-			//if is bigger than 0...
-			else if(firstDigit > 0)
-			{
-				temp = twoDigit;
-			}
-		}
-		return temp;
+            //if first digit after 'space' = 0...
+            if (firstDigit == 0)
+            {
+                temp = secondDigit;
+            }
+            //if is bigger than 0...
+            else if (firstDigit > 0)
+            {
+                temp = twoDigit;
+            }
+        }
+        return temp;
     }
-    #endregion
+
+    #endregion General Function
 }

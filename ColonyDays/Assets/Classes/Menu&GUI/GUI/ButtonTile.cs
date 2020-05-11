@@ -10,21 +10,21 @@ public class ButtonTile : GUIElement
 
     public AddOrderWindow OrderWindow { get; set; }
 
-    void Start()
+    private void Start()
     {
         _descText = FindGameObjectInHierarchy("Item_Desc", gameObject).GetComponent<Text>();
         _priceText = FindGameObjectInHierarchy("Price_Desc", gameObject).GetComponent<Text>();
-        
+
         Init();
     }
 
     private void Init()
     {
-        _descText.text = Languages.ReturnString(Value.Product+"");
+        _descText.text = Languages.ReturnString(Value.Product + "");
         _priceText.text = Unit.ProperPricedAndFormat(Value.Price) + Languages.ReturnString(" per ") + Unit.CurrentWeightUnitsString();
     }
 
-    void Update()
+    private void Update()
     {
     }
 
@@ -33,7 +33,7 @@ public class ButtonTile : GUIElement
     /// </summary>
     public void ButtonClick()
     {
-        OrderWindow.ProdSelected(Value.Product+"");
+        OrderWindow.ProdSelected(Value.Product + "");
     }
 
     internal static ButtonTile CreateTile(Transform container,

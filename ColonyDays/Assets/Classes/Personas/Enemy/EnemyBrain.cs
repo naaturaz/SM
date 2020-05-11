@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-/// <summary>
+﻿/// <summary>
 /// An Enemy will only have a MilitarBrain
 public class EnemyBrain : MilitarBrain
 {
-    Structure _storage;
-
-
+    private Structure _storage;
 
     public EnemyBrain(Person person)
     {
@@ -28,9 +21,8 @@ public class EnemyBrain : MilitarBrain
         base.Update();
     }
 
-    void CreateRoute()
+    private void CreateRoute()
     {
         _cryRouteManager = new CryRouteManager(_ini, _fin, _person, iniDoor: false, finDoor: false);
     }
 }
-

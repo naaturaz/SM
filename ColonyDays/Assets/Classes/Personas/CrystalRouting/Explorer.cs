@@ -1,26 +1,27 @@
 ﻿/*
- * This class helps with the routing will tell if reaching the Final 
+ * This class helps with the routing will tell if reaching the Final
  * a building was found or not and if was found will find closest building
  * will pick closest 3 points to Final and will add the 4 point as the intersection
- * 
- * Those 4 points will be the only ones the CryRoute will look into 
- * 
+ *
+ * Those 4 points will be the only ones the CryRoute will look into
+ *
  * Explorer is used once a new _curr is set on CryRoute. A explorations needs to be done
- * to see what is on front 
+ * to see what is on front
  */
 
-using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
-public class Explorer 
+public class Explorer
 {
-    List<ExplorerUnit> _units = new List<ExplorerUnit>();
+    private List<ExplorerUnit> _units = new List<ExplorerUnit>();
     public ExplorerUnit Result;//the one will contain the Unit for work for the CryRoute
-    //is building routing if is true we can use 
+
+    //is building routing if is true we can use
     private bool _isBuildingRouting = true;
 
-    //says if from curr to Final are only bulidings or still elemtents intersectin 
+    //says if from curr to Final are only bulidings or still elemtents intersectin
     private bool _isIntersectingOnlyObstacles = true;
 
     //use to say. if is intersecting only stills then IsBuildingRouting is false. So
@@ -28,7 +29,7 @@ public class Explorer
     private bool _isIntersectingOnlyStills = true;
 
     /// <summary>
-    /// is building routing if is true we can use 
+    /// is building routing if is true we can use
     /// </summary>
     public bool IsBuildingRouting
     {
@@ -36,7 +37,7 @@ public class Explorer
         //at the same time must have being intersecting only obstacles
 
         //and is not only intersecting stills. bz if so BuidingRouting is false
-        //so way routing can happen 
+        //so way routing can happen
         get
         {
             if (_isBuildingRouting && _isIntersectingOnlyObstacles && !_isIntersectingOnlyStills)
@@ -48,10 +49,12 @@ public class Explorer
         }
     }
 
-    public Explorer() { }
+    public Explorer()
+    {
+    }
 
     /// <summary>
-    /// Adds a key to the explorer 
+    /// Adds a key to the explorer
     /// </summary>
     /// <param name="crystal">Key of the Parent ID with intersect with</param>
     /// <param name="intersection">The point where we intersect</param>
@@ -64,14 +67,14 @@ public class Explorer
         {
             doesExistKey = _units.Find(a => a.Key == crystal.ParentId);
         }
-            
+
         //so it doesnt add duplicates keys
         if (doesExistKey == null)
         {
             _units.Add(new ExplorerUnit(crystal, intersection, currPosition, final));
         }
-        //bz a line can have diff intersections in a building. usually 2 
-        //if exist will add Intersection 
+        //bz a line can have diff intersections in a building. usually 2
+        //if exist will add Intersection
         else
         {
             doesExistKey.AddIntersection(intersection, crystal);
@@ -85,7 +88,7 @@ public class Explorer
     /// </summary>
     /// <param name="result"></param>
     /// <returns></returns>
-    bool WasAObstacleHit()
+    private bool WasAObstacleHit()
     {
         _units = _units.OrderBy(a => a.Distance).ToList();
 
@@ -102,18 +105,18 @@ public class Explorer
     }
 
     /// <summary>
-    /// sets for saying if from curr to Final are only bulidings or still elemtents intersectin 
+    /// sets for saying if from curr to Final are only bulidings or still elemtents intersectin
     /// </summary>
     /// <param name="c"></param>
-    void SetIfIsIntersectingOnlyObstacles(Crystal c)
+    private void SetIfIsIntersectingOnlyObstacles(Crystal c)
     {
         if (_isIntersectingOnlyObstacles && c.Type1 != H.Obstacle)
-        {        
-            //intersected something was not a obstacle 
+        {
+            //intersected something was not a obstacle
             _isIntersectingOnlyObstacles = false;
             _isIntersectingOnlyStills = false;
         }
-        //is intersecting only obstacles 
+        //is intersecting only obstacles
         else
         {
             //if is intersecting only stills
@@ -131,7 +134,7 @@ public class Explorer
     }
 
     /// <summary>
-    /// So its restarted so can be used again 
+    /// So its restarted so can be used again
     /// </summary>
     public void Restart()
     {
@@ -143,13 +146,13 @@ public class Explorer
     }
 
     /// <summary>
-    /// Adding the Crystals contain in RectC so if one Crystal is not obstacle then we cannnot use the 
+    /// Adding the Crystals contain in RectC so if one Crystal is not obstacle then we cannnot use the
     /// Building Routing system
     /// </summary>
     /// <param name="c"></param>
     public void AddCrystalOfRectC(Crystal c)
     {
-        //as soon one is found that is not type obstacle then we cant use Building Routing 
+        //as soon one is found that is not type obstacle then we cant use Building Routing
         if (_isBuildingRouting && c.Type1 != H.Obstacle)
         {
             _isBuildingRouting = false;
@@ -161,20 +164,21 @@ public class ExplorerUnit
 {
     public string Key;
     public List<Vector3> Intersections = new List<Vector3>();
-    
+
     public Building Building;
     public StillElement StillElement;
 
     //the 4 crystals to be eval in CryRoute
     public List<Crystal> Crystals = new List<Crystal>();
 
-    //distance to currPosition of Crystal Reaching final and intersect 
+    //distance to currPosition of Crystal Reaching final and intersect
     public float Distance;
 
     //the current point on the route
-    //the intersections should be moved towards this 
+    //the intersections should be moved towards this
     public Vector3 Current;
-    public Vector3 Final;//the final point of the Route 
+
+    public Vector3 Final;//the final point of the Route
     public bool IsHasAValidObstacle;
 
     public ExplorerUnit(Crystal crystal, Vector3 intersect, Vector3 currPosition, Vector3 final)//the curr Position of the Crystal reaching Final
@@ -202,23 +206,22 @@ public class ExplorerUnit
         }
         else
         {
-            //is set to that so if never was calculated its really far 
-            //since distance will be used for ordering 
+            //is set to that so if never was calculated its really far
+            //since distance will be used for ordering
             Distance = 10000;
         }
     }
 
     /// <summary>
-    /// So i know wich one is closer to Current 
+    /// So i know wich one is closer to Current
     /// </summary>
     private void OrderIntersections()
     {
-        
     }
 
     /// <summary>
     /// Will be call only if was the select building to be route trhu
-    /// 
+    ///
     /// Will set the Crystals
     /// will pick closest 3 points of the buildig to Final and will add the 4th point as the intersection
     /// </summary>
@@ -226,12 +229,12 @@ public class ExplorerUnit
     {
         Crystals.Clear();
         var anchorOrder = ReturnOrderedAnchors();
-     
+
         Crystals.AddRange(anchorOrder);
         Crystals.AddRange(ReturnIntersectionsPriorityToFin());
     }
 
-    List<Crystal> ReturnOrderedAnchors()
+    private List<Crystal> ReturnOrderedAnchors()
     {
         List<Crystal> anchorOrdered = new List<Crystal>();
 
@@ -246,8 +249,9 @@ public class ExplorerUnit
         return anchorOrdered;
     }
 
-    float scale = 0.04f;//5
-    List<Crystal> ReturnScaledAnchorsFromBuildingOrStillElement()
+    private float scale = 0.04f;//5
+
+    private List<Crystal> ReturnScaledAnchorsFromBuildingOrStillElement()
     {
         List<Crystal> res = new List<Crystal>();
 
@@ -264,7 +268,7 @@ public class ExplorerUnit
         return res;
     }
 
-    List<Crystal> ReturnScaledAnchors(Vector3[] anchors, string myIDP)
+    private List<Crystal> ReturnScaledAnchors(Vector3[] anchors, string myIDP)
     {
         List<Crystal> res = new List<Crystal>();
         anchors = UPoly.ScalePoly(anchors, scale);
@@ -276,14 +280,13 @@ public class ExplorerUnit
         return res;
     }
 
-
-        /// <summary>
+    /// <summary>
     /// Ordering to be closer to _fin
-    /// 
+    ///
     /// Pls interseection
     /// </summary>
     //List<Crystal> ReturnPriorityToFin(List<Crystal> res)
-    List<Crystal> ReturnIntersectionsPriorityToFin()
+    private List<Crystal> ReturnIntersectionsPriorityToFin()
     {
         List<Crystal> res = new List<Crystal>();
 
@@ -292,21 +295,21 @@ public class ExplorerUnit
         {
             var inter = new Crystal(Intersections[i], H.None, "", setIdAndName: false);
             //must be moved closer to Current/Origin so in tight towns can be reached
-            //bz if is moved Away from center of the building can be too far to be 
-            //reached 
+            //bz if is moved Away from center of the building can be too far to be
+            //reached
             res.Add(ReturnCrystalFurtherTo(inter, obstaMidPos));
         }
         //UVisHelp.CreateHelpers(Intersections, Root.yellowCube);
         return res;
     }
 
-    Vector3 ReturnTransformPosOfBuildingOrStillEle()
+    private Vector3 ReturnTransformPosOfBuildingOrStillEle()
     {
-        if (Building!=null)
+        if (Building != null)
         {
             return Building.transform.position;
         }
-        if (StillElement!=null)
+        if (StillElement != null)
         {
             return StillElement.transform.position;
         }
@@ -317,7 +320,7 @@ public class ExplorerUnit
     /// Bz they needs to be moved a bit away from Buildign
     /// </summary>
     /// <returns></returns>
-    Crystal ReturnCrystalFurtherTo(Crystal crystal, Vector3 closerTo)
+    private Crystal ReturnCrystalFurtherTo(Crystal crystal, Vector3 closerTo)
     {
         float moveBy = 0.1f;
 

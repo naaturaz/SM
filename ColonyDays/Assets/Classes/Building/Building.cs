@@ -4884,12 +4884,10 @@ public class Building : Hoverable, Iinfo
     /// <returns></returns>
     internal Vector3 MiddlePoint()
     {
-
         if (HType == H.Road)
         {
             DragSquare t = this as DragSquare;
             return t.MiddlePoint();
-
         }
 
         if (_anchors.Count == 0)

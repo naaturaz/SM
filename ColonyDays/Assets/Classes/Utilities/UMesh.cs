@@ -1,13 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using System.Collections.Generic;
 
-public class UMesh : MonoBehaviour {
-
- 
-
+public class UMesh : MonoBehaviour
+{
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="objPos"></param>
     /// <param name="lotStart">NW</param>
@@ -91,7 +89,7 @@ public class UMesh : MonoBehaviour {
                 }
             }
         }
-        
+
         return list;
     }
 
@@ -123,7 +121,6 @@ public class UMesh : MonoBehaviour {
         }
         return vertexs;
     }
-
 
     /// <summary>
     /// Will return the index of the Square we are on

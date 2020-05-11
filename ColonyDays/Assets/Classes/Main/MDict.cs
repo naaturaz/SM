@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 
 //My Generic Dict... do it for XML serialization
-public class MDict<TKey, TValue>: IComparable
+public class MDict<TKey, TValue> : IComparable
 {
+    private List<TKey> _keys = new List<TKey>();
+    private List<TValue> _values = new List<TValue>();
 
-    List<TKey> _keys = new List<TKey>();
-    List<TValue> _values = new List<TValue>(); 
-
-    public MDict() { }
+    public MDict()
+    {
+    }
 
     public MDict(TKey key, TValue value)
     {
-        
     }
-
 
     public List<TKey> Keys
     {
@@ -45,7 +44,6 @@ public class MDict<TKey, TValue>: IComparable
 
     public void Remove(TKey key)
     {
-
         for (int i = 0; i < _keys.Count; i++)
         {
             if (CompareTo(_keys[i], key) == 0)
@@ -54,9 +52,6 @@ public class MDict<TKey, TValue>: IComparable
                 _values.RemoveAt(i);
             }
         }
-
-
-      
     }
 
     public int Count()
@@ -68,7 +63,7 @@ public class MDict<TKey, TValue>: IComparable
     {
         for (int i = 0; i < _keys.Count; i++)
         {
-            if (CompareTo(_keys[i] , key)== 0)
+            if (CompareTo(_keys[i], key) == 0)
             {
                 _values[i] = value;
             }

@@ -1,8 +1,8 @@
-﻿﻿/*
- * IMPORTANT: IF LANDZONES ARE NOT SET THE ROUTING SYSTEM WONT WORK
- * 
- * 
- */
+﻿/*
+* IMPORTANT: IF LANDZONES ARE NOT SET THE ROUTING SYSTEM WONT WORK
+*
+*
+*/
 
 using System;
 using System.Collections.Generic;
@@ -10,21 +10,20 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class CrystalManager  {
+public class CrystalManager
+{
+    private SMe m = new SMe();
 
-    SMe m = new SMe();
-
-    //all the regions 
-    List<CrystalRegion> _crystalRegions = new List<CrystalRegion>();
+    //all the regions
+    private List<CrystalRegion> _crystalRegions = new List<CrystalRegion>();
 
     private bool load;
 
     //all the crystals on the regions . for GC purpose
-    List<Crystal> _all = new List<Crystal>(); 
-    
-    //only use for finding them 
-    List<Crystal> _allObstas = new List<Crystal>(); 
+    private List<Crystal> _all = new List<Crystal>();
 
+    //only use for finding them
+    private List<Crystal> _allObstas = new List<Crystal>();
 
     public List<CrystalRegion> CrystalRegions
     {
@@ -46,8 +45,8 @@ public class CrystalManager  {
         //search _crystalRegions points are
         var indexes = ReturnRegionsOfPointsInStructure(building);
         DeleteCrystals(indexes, building.MyId);
-    }   
-    
+    }
+
     public void Delete(StillElement still)
     {
         //search _crystalRegions points are
@@ -56,7 +55,7 @@ public class CrystalManager  {
     }
 
     /// <summary>
-    /// Will delete all crystals related to tht building 
+    /// Will delete all crystals related to tht building
     /// </summary>
     private void DeleteCrystals(List<int> indexes, string myIdP)
     {
@@ -66,16 +65,16 @@ public class CrystalManager  {
             var indexLoc = indexes[i];
             CrystalRegions[indexLoc].RemoveCrystal(myIdP);
         }
-        //dont need to resave bz the adding of a build is done once is spwaned 
-        
+        //dont need to resave bz the adding of a build is done once is spwaned
+
         RemoveFromAllObstas(myIdP);
     }
 
     /// <summary>
-    /// Other wise the crystal stay in _allobsta 
+    /// Other wise the crystal stay in _allobsta
     /// </summary>
     /// <param name="myIdP"></param>
-    void RemoveFromAllObstas(string myIdP)
+    private void RemoveFromAllObstas(string myIdP)
     {
         var crystals = _allObstas.Where(a => a.ParentId == myIdP).ToList();
 
@@ -85,7 +84,6 @@ public class CrystalManager  {
             //Debug.Log("Crystal removed: " + myIdP + ". from _allObsta");
         }
     }
-
 
     /// <summary>
     /// Is the Spawner contained in the Rect
@@ -107,17 +105,12 @@ public class CrystalManager  {
         return false;
     }
 
-
-
-
-
-
     /// <summary>
     /// Will return the region index where all the StillElement points are
     /// </summary>
     /// <param name="still"></param>
     /// <returns></returns>
-    List<int> ReturnRegionsOfPointsInStructure(StillElement still)
+    private List<int> ReturnRegionsOfPointsInStructure(StillElement still)
     {
         List<Vector3> points = new List<Vector3>();
 
@@ -136,13 +129,12 @@ public class CrystalManager  {
         return res.Distinct().ToList();
     }
 
-
     /// <summary>
     /// Will return the Crystals that belong to the building pass aas param
     /// </summary>
     public List<Crystal> ReturnCrystalsThatBelongTo(Building building, bool includeDoor)
     {
-        List<Crystal> res =new List<Crystal>();
+        List<Crystal> res = new List<Crystal>();
         //search _crystalRegions points are
         var indexes = ReturnRegionsOfPointsInStructure(building);
         for (int i = 0; i < indexes.Count; i++)
@@ -158,11 +150,11 @@ public class CrystalManager  {
             res = res.Where(a => a.ParentId == building.MyId && a.Type1 == type).ToList();
         }
         return res;
-    }  
-    
+    }
+
     public List<Crystal> ReturnCrystalsThatBelongTo(StillElement still, bool includeDoor)
     {
-        List<Crystal> res =new List<Crystal>();
+        List<Crystal> res = new List<Crystal>();
         //search _crystalRegions points are
         var indexes = ReturnRegionsOfPointsInStillElement(still);
         for (int i = 0; i < indexes.Count; i++)
@@ -185,7 +177,7 @@ public class CrystalManager  {
     /// </summary>
     /// <param name="includeDoor"></param>
     /// <returns></returns>
-    H WhichType(bool includeDoor)
+    private H WhichType(bool includeDoor)
     {
         if (includeDoor)
         {
@@ -199,15 +191,14 @@ public class CrystalManager  {
     /// </summary>
     /// <param name="building"></param>
     /// <returns></returns>
-    List<int> ReturnRegionsOfPointsInStructure(Building building)
+    private List<int> ReturnRegionsOfPointsInStructure(Building building)
     {
-        //nt for Trails 
+        //nt for Trails
         List<Vector3> points = new List<Vector3>();
         if (!building.MyId.Contains("Trail"))
         {
             points = PassAnchorsGetPositionForCrystals(building.Anchors);
         }
-
 
         //for buildings
         if (!building.MyId.Contains("Bridge") && !building.MyId.Contains("Trail"))
@@ -225,15 +216,15 @@ public class CrystalManager  {
 
             points.Add(U2D.FromV2ToV3(entries[0].Position));
             points.Add(U2D.FromV2ToV3(entries[1].Position));
-        }       
+        }
         //for Ways that are Trails
         if (building.MyId.Contains("Trail"))
         {
-            var obstas = _allObstas.Where(a=>a.ParentId==building.MyId).ToList();
+            var obstas = _allObstas.Where(a => a.ParentId == building.MyId).ToList();
 
             for (int i = 0; i < obstas.Count; i++)
             {
-                points.Add(U2D.FromV2ToV3( obstas[i].Position));
+                points.Add(U2D.FromV2ToV3(obstas[i].Position));
                 _allObstas.Remove(obstas[i]);
             }
         }
@@ -251,7 +242,7 @@ public class CrystalManager  {
     /// </summary>
     /// <param name="building"></param>
     /// <returns></returns>
-    List<int> ReturnRegionsOfPointsInStillElement(StillElement still)
+    private List<int> ReturnRegionsOfPointsInStillElement(StillElement still)
     {
         var points = PassAnchorsGetPositionForCrystals(still.Anchors);
 
@@ -263,8 +254,8 @@ public class CrystalManager  {
         return res.Distinct().ToList();
     }
 
-    //the bridges entries will act like doors 
-    List<Crystal> GetBridgeEntries(Bridge b)
+    //the bridges entries will act like doors
+    private List<Crystal> GetBridgeEntries(Bridge b)
     {
         List<Crystal> re = new List<Crystal>();
 
@@ -274,13 +265,9 @@ public class CrystalManager  {
         return re;
     }
 
-
-
-
-
     //private string _info;//info that will be added to the crystal
     //the siblings of current crustal
-    List<Crystal> _siblings = new List<Crystal>(); 
+    private List<Crystal> _siblings = new List<Crystal>();
 
     public void Add(Building building)
     {
@@ -288,7 +275,7 @@ public class CrystalManager  {
 
         if (building.MyId.Contains("Bridge"))
         {
-            AddBridge((Bridge) building);
+            AddBridge((Bridge)building);
         }
         else AddBuilding(building);
     }
@@ -300,14 +287,14 @@ public class CrystalManager  {
 
         if (still.Anchors.Count > 4)
         {
-            Debug.Log("acnhors:"+still.Anchors.Count + " "+still.MyId);
+            Debug.Log("acnhors:" + still.Anchors.Count + " " + still.MyId);
         }
 
         AddPoly(still.Anchors, still.MyId);
     }
 
     /// <summary>
-    /// For adding ways 
+    /// For adding ways
     /// </summary>
     /// <param name="wayPos">The position</param>
     public void Add(Vector3 wayPos, Trail trail)
@@ -321,7 +308,7 @@ public class CrystalManager  {
 
         AddCrystalToItsRegion(c);
 
-//       //Debug.Log("Crys added:" + trail.MyId);
+        //       //Debug.Log("Crys added:" + trail.MyId);
         //_siblings.Add(c);
     }
 
@@ -329,7 +316,7 @@ public class CrystalManager  {
     /// When adding a building Crystals to its region
     /// </summary>
     /// <param name="building"></param>
-    void AddBuilding(Building building)
+    private void AddBuilding(Building building)
     {
         AddPoly(building.Anchors, building.MyId);
 
@@ -342,7 +329,7 @@ public class CrystalManager  {
     }
 
     /// <summary>
-    /// Will set the siblings in each sibling member 
+    /// Will set the siblings in each sibling member
     /// </summary>
     private void SetSiblings()
     {
@@ -352,7 +339,7 @@ public class CrystalManager  {
         }
     }
 
-    void AddBridge(Bridge b)
+    private void AddBridge(Bridge b)
     {
         Vector3[] copy = b.GetBridgeAnchorsCheckIfSave();
 
@@ -361,14 +348,14 @@ public class CrystalManager  {
     }
 
     /// <summary>
-    /// Add the bridge 2 ends to crystals 
-    /// 
-    /// not adding this to siblings 
+    /// Add the bridge 2 ends to crystals
+    ///
+    /// not adding this to siblings
     /// </summary>
     /// <param name="b"></param>
     private void AddBridgeEnds(Bridge b)
     {
-        //the bridges entries will act like doors 
+        //the bridges entries will act like doors
         Crystal entry1 = new Crystal(b.LandZone1[0].Position, H.Obstacle, b.MyId, true);
         Crystal entry2 = new Crystal(b.LandZone1[1].Position, H.Obstacle, b.MyId, true);
 
@@ -376,20 +363,19 @@ public class CrystalManager  {
         AddCrystalToItsRegion(entry2);
     }
 
-
     /// <summary>
     /// Adding a polygon type of object to crystalss used for Buildings and StillElement
     /// </summary>
     /// <param name="anchors"></param>
     /// <param name="parentId"></param>
-    void AddPoly(List<Vector3> anchors, string parentId, bool debug=false)
+    private void AddPoly(List<Vector3> anchors, string parentId, bool debug = false)
     {
         var lines = U2D.FromPolyToLines(anchors);
         var scale = PassAnchorsGetPositionForCrystals(anchors);
-       
+
         if (debug)
         {
-            Debug.Log("crystal added by:"+parentId);
+            Debug.Log("crystal added by:" + parentId);
             UVisHelp.CreateHelpers(scale, Root.yellowCube);
         }
 
@@ -402,19 +388,19 @@ public class CrystalManager  {
     }
 
     private float polyScale = 0.04f;
+
     //pushing them way from building center
-    List<Vector3> PassAnchorsGetPositionForCrystals(List<Vector3> anchors)
+    private List<Vector3> PassAnchorsGetPositionForCrystals(List<Vector3> anchors)
     {
         //pushing them way from building center
         return UPoly.ScalePoly(anchors, polyScale);//0.04
     }
 
-
     /// <summary>
     /// This is to create and add to its respective Region a Crystal tht is part of a building or a
-    /// still element 
+    /// still element
     /// </summary>
-    void CreateAndAddPolyCrystal(Vector3 pos, Line line, string parentID, int i, bool isDoor = false)
+    private void CreateAndAddPolyCrystal(Vector3 pos, Line line, string parentID, int i, bool isDoor = false)
     {
         var crystalType = CrystaType(isDoor);
 
@@ -424,13 +410,11 @@ public class CrystalManager  {
 
         if (line != null)
         {
-            c.Lines.Add(line);  
+            c.Lines.Add(line);
         }
 
         AddCrystalToItsRegion(c);
         _siblings.Add(c);
-
-        
 
         //UVisHelp.CreateHelpers(U2D.FromV2ToV3(c.Position), Root.blueCube);
         //if (isDoor)
@@ -439,7 +423,7 @@ public class CrystalManager  {
         //}
     }
 
-    H CrystaType(bool isDoor)
+    private H CrystaType(bool isDoor)
     {
         if (isDoor)
         {
@@ -448,11 +432,9 @@ public class CrystalManager  {
         return H.Obstacle;
     }
 
+    #region REGIONS
 
-
-#region REGIONS
-
-    //how many tiles on x and z the whole terrain is divided by 
+    //how many tiles on x and z the whole terrain is divided by
     private int tiles = 12;
 
     private void InitRegions()
@@ -473,18 +455,19 @@ public class CrystalManager  {
     }
 
     private int index;
+
     /// <summary>
-    /// Loop thru all terrain creating the regions 
+    /// Loop thru all terrain creating the regions
     /// </summary>
     /// <param name="xStp"></param>
     /// <param name="zStp"></param>
     /// <param name="iniP"></param>
     /// <param name="endP"></param>
-    void LoopCreateRegions(float xStp, float zStp, Vector3 iniP, Vector3 endP)
+    private void LoopCreateRegions(float xStp, float zStp, Vector3 iniP, Vector3 endP)
     {
-        for (float x = iniP.x; x < endP.x; x+= xStp)
+        for (float x = iniP.x; x < endP.x; x += xStp)
         {
-            for (float z = iniP.z; z > endP.z; z-= zStp)
+            for (float z = iniP.z; z > endP.z; z -= zStp)
             {
                 //UVisHelp.CreateHelpers(new Vector3(x, m.IniTerr.MathCenter.y, z), Root.blueCubeBig);
                 CreateRegion(index, x, z, xStp, zStp);
@@ -493,7 +476,7 @@ public class CrystalManager  {
         }
     }
 
-    void CreateRegion(int index, float iniX, float iniZ, float len, float hei)
+    private void CreateRegion(int index, float iniX, float iniZ, float len, float hei)
     {
         Rect rect = new Rect();
         rect.xMin = iniX;
@@ -506,7 +489,7 @@ public class CrystalManager  {
     }
 
     /// <summary>
-    /// Will return in which region the 'pos' is 
+    /// Will return in which region the 'pos' is
     /// </summary>
     /// <param name="pos"></param>
     /// <returns></returns>
@@ -535,7 +518,7 @@ public class CrystalManager  {
         //tht the pos didnt fall inside any region
         if (regionIndex == -1)
         {
-            //will act as if will have terraCrystals on it 
+            //will act as if will have terraCrystals on it
             return true;
         }
         return _crystalRegions[regionIndex].ItHasATerraCristal();
@@ -546,32 +529,25 @@ public class CrystalManager  {
         pos = U2D.FromV3ToV2(pos);
         var regionIndex = ReturnMyRegion(pos);
 
-
-
-
-
         return false;
     }
 
-
-
-    
     //Dictionary<string, List<int>> SurroundIndRegGC = new Dictionary<string, List<int>>();
     /// <summary>
-    /// Given the current index will look for the other 8 blocks tht surrounding him 
-    /// 
+    /// Given the current index will look for the other 8 blocks tht surrounding him
+    ///
     /// muchTiles is like 3x3, or 5x5 etc, number must be impar
     /// </summary>
     /// <param name="curr"></param>
     /// <returns></returns>
-    List<int> ReturnCurrentSurroundIndexRegions(int curr, int muchTiles)
+    private List<int> ReturnCurrentSurroundIndexRegions(int curr, int muchTiles)
     {
         //if (SurroundIndRegGC.ContainsKey(curr + "." + muchTiles))
         //{
         //    return SurroundIndRegGC[curr + "." + muchTiles];
         //}
 
-        List<int> re = new List<int>(){curr};
+        List<int> re = new List<int>() { curr };
         List<int> tem = new List<int>() { curr };
 
         if (muchTiles % 2 == 0)
@@ -605,11 +581,11 @@ public class CrystalManager  {
 
     /// <summary>
     /// Will make index 0, and will add index, and remove indexes to create a midle row.
-    /// 
+    ///
     /// For ex if 5 is sent. will ret: -2,-1,0,1,2
     /// </summary>
     /// <returns></returns>
-    List<int> FindMiddleOneAndRetSurr(int much, int addition, int curr)
+    private List<int> FindMiddleOneAndRetSurr(int much, int addition, int curr)
     {
         List<int> re = new List<int>();
 
@@ -629,11 +605,11 @@ public class CrystalManager  {
     }
 
     /// <summary>
-    /// Will tell u if the pass index is valid on _crystalRegions 
+    /// Will tell u if the pass index is valid on _crystalRegions
     /// </summary>
     /// <param name="index"></param>
     /// <returns></returns>
-    bool IsAValidIndex(int index)
+    private bool IsAValidIndex(int index)
     {
         if (index < _crystalRegions.Count && index > 0)
         {
@@ -662,9 +638,8 @@ public class CrystalManager  {
         return ReturnCurrentSurroundIndexRegions(curr, muchTiles);
     }
 
-
     /// <summary>
-    /// Will tell if rect contain any line point, A or B, if does. then is colliding  
+    /// Will tell if rect contain any line point, A or B, if does. then is colliding
     /// </summary>
     /// <param name="rect"></param>
     /// <returns></returns>
@@ -678,7 +653,7 @@ public class CrystalManager  {
             for (int j = 0; j < crystals[i].Lines.Count; j++)
             {
                 var line = crystals[i].Lines[j];
-                if (rect.Contains( line.A1 ) || rect.Contains( line.B1 ))
+                if (rect.Contains(line.A1) || rect.Contains(line.B1))
                 {
                     return true;
                 }
@@ -687,10 +662,8 @@ public class CrystalManager  {
         return false;
     }
 
-
-
     /// <summary>
-    /// Will tell if rect intersect any line on the Terra Crystals.   
+    /// Will tell if rect intersect any line on the Terra Crystals.
     /// </summary>
     /// <param name="rect"></param>
     /// <returns></returns>
@@ -720,9 +693,9 @@ public class CrystalManager  {
     }
 
     /// <summary>
-    /// Will tell if line intersect any line on the Terra Lines  
-    /// 
-    /// typeOfTerra: the type of terraObstacle we are considering 
+    /// Will tell if line intersect any line on the Terra Lines
+    ///
+    /// typeOfTerra: the type of terraObstacle we are considering
     /// </summary>
     /// <returns></returns>
     public bool DoIIntersectAnyLine(Line line, H typeOfTerra)
@@ -745,32 +718,32 @@ public class CrystalManager  {
         return false;
     }
 
-#region CPU too high
+    #region CPU too high
 
     /// <summary>
-    /// Will return all crsytals in the regions around that surround the line 
+    /// Will return all crsytals in the regions around that surround the line
     /// </summary>
     /// <returns></returns>
-    List<Crystal> GiveMeAllTerraCrystalsInTheLine(Line line)
+    private List<Crystal> GiveMeAllTerraCrystalsInTheLine(Line line)
     {
         var regions = ReturnRegionsOfALine(line);
         return GiveAllCrystalsInTheseRegionsExcludLinkRects(regions);
     }
 
-        /// <summary>
-    /// given a line will find out which are the regions this line is draw into 
-    /// 
+    /// <summary>
+    /// given a line will find out which are the regions this line is draw into
+    ///
     /// Will go trhu steps and will find the 3x3 round it, if is doubled wont be added
-    /// to final result 
+    /// to final result
     /// </summary>
     /// <param name="line"></param>
     /// <returns></returns>
-    List<int> ReturnRegionsOfALine(Line line)
+    private List<int> ReturnRegionsOfALine(Line line)
     {
         List<int> re = new List<int>();
 
-        //the step is the size doiagonal of a Region 
-        var step = (CrystalRegions[0].Region.height + CrystalRegions[0].Region.width)/2;
+        //the step is the size doiagonal of a Region
+        var step = (CrystalRegions[0].Region.height + CrystalRegions[0].Region.width) / 2;
         var pointsInTheLine = ReturnPointsAcrossAline(line, step);
 
         for (int i = 0; i < pointsInTheLine.Count; i++)
@@ -787,30 +760,29 @@ public class CrystalManager  {
     /// </summary>
     /// <param name="line"></param>
     /// <returns></returns>
-    List<Vector2> ReturnPointsAcrossAline(Line line, float step = 10f)
+    private List<Vector2> ReturnPointsAcrossAline(Line line, float step = 10f)
     {
         List<Vector2> res = new List<Vector2>() { };
         var dist = Vector2.Distance(line.A1, line.B1);
-        var howManySteps = int.Parse((dist/step).ToString("n0"));
+        var howManySteps = int.Parse((dist / step).ToString("n0"));
 
-        for (int i = 0; i < howManySteps+1; i++)
+        for (int i = 0; i < howManySteps + 1; i++)
         {
-            var v2 = Vector2.MoveTowards(line.A1, line.B1, step*i);
-            res.Add(v2);    
+            var v2 = Vector2.MoveTowards(line.A1, line.B1, step * i);
+            res.Add(v2);
         }
 
         res.Add(line.B1);
         return res;
     }
 
-#endregion
-
+    #endregion CPU too high
 
     /// <summary>
-    /// Will tell u if intersect anyline at all 
-    /// 
+    /// Will tell u if intersect anyline at all
+    ///
     /// will look only at the regions tht were pased in the 'histoRegions'
-    /// 
+    ///
     /// Will evaluate Obstacle and TerraCrsyrstals
     /// </summary>
     /// <param name="line"></param>
@@ -828,7 +800,7 @@ public class CrystalManager  {
                 if (line.IsIntersecting((lineOnCrys)))
                 {
                     //UVisHelp.CreateText(U2D.FromV2ToV3(lineOnCrys.A1), crystals[i].ParentId);
-                    
+
                     lineOnCrys.DebugRender(Color.red);
                     return true;
                 }
@@ -836,7 +808,6 @@ public class CrystalManager  {
         }
         return false;
     }
-
 
     public int CountLinesIIntersect(Line line, List<int> histoRegions, CryRoute cryRoute)
     {
@@ -850,10 +821,10 @@ public class CrystalManager  {
                 var lineOnCrys = crystals[i].Lines[j];
                 if (line.IsIntersecting((lineOnCrys)))
                 {
-//                   //Debug.Log("Intersected: " + crystals[i].ParentId + " tp: " +crystals[i].Type1);
+                    //                   //Debug.Log("Intersected: " + crystals[i].ParentId + " tp: " +crystals[i].Type1);
                     Vector3 intersection = U2D.FromV2ToV3(line.FindIntersection(lineOnCrys));
                     //add key to explorer on the CryRoute
-                    cryRoute.AddKeyToExplorer(crystals[i], intersection);  
+                    cryRoute.AddKeyToExplorer(crystals[i], intersection);
 
                     lineOnCrys.DebugRender(Color.black);
                     res++;
@@ -862,7 +833,6 @@ public class CrystalManager  {
         }
         return res;
     }
-
 
     public List<Line> LinesIIntersect(Line line, List<int> histoRegions)
     {
@@ -883,7 +853,6 @@ public class CrystalManager  {
         }
         return res;
     }
-
 
     /// <summary>
     /// Will return all crsytalls the Rect Lines intersect
@@ -919,13 +888,9 @@ public class CrystalManager  {
         return res;
     }
 
-
-
-
-
     private List<Crystal> GiveMeAllTerraCrystals()
     {
-        //so we only create a list with all once then retun _all for the rest of the times 
+        //so we only create a list with all once then retun _all for the rest of the times
         if (_all.Count > 0)
         {
             return _all;
@@ -941,17 +906,15 @@ public class CrystalManager  {
         return res;
     }
 
-
-
     //Dictionary<List<int> ,List<Crystal> > terraCrystalRegGC = new Dictionary<List<int>, List<Crystal>>();
-    List<Crystal> GiveAllTerraCrystalsInTheseRegions(List<int> regions)
+    private List<Crystal> GiveAllTerraCrystalsInTheseRegions(List<int> regions)
     {
         //if (terraCrystalRegGC.ContainsKey(regions))
         //{
         //    return terraCrystalRegGC[regions];
         //}
 
-        List<Crystal>res = new List<Crystal>();
+        List<Crystal> res = new List<Crystal>();
         for (int i = 0; i < regions.Count; i++)
         {
             var index = regions[i];
@@ -960,7 +923,6 @@ public class CrystalManager  {
         //terraCrystalRegGC.Add(regions,res);
         return res;
     }
-
 
     //todo GC
     public List<Crystal> GiveAllTerraCrystalsInTheseRegionsPlsObsta(List<int> regions)
@@ -975,11 +937,9 @@ public class CrystalManager  {
         return res;
     }
 
-
-
     /// <summary>
     /// Including the Terra Crystals and Building Crystals bz I need to check on all of them
-    /// 
+    ///
     /// </summary>
     /// <param name="regions"></param>
     /// <returns></returns>
@@ -992,7 +952,7 @@ public class CrystalManager  {
 
             res.AddRange(CrystalRegions[index].ObstaCrystals());
 
-            //wont add LinkRects bz they have line all over the plcace 
+            //wont add LinkRects bz they have line all over the plcace
             for (int j = 0; j < CrystalRegions[index].TerraCrystals.Count; j++)
             {
                 var cry = CrystalRegions[index].TerraCrystals[j];
@@ -1014,7 +974,7 @@ public class CrystalManager  {
 
     //    res.AddRange(CrystalRegions[index].ObstaCrystals);
 
-    //    //wont add LinkRects bz they have line all over the plcace 
+    //    //wont add LinkRects bz they have line all over the plcace
     //    for (int j = 0; j < CrystalRegions[index].TerraCrystals.Count; j++)
     //    {
     //        var cry = CrystalRegions[index].TerraCrystals[j];
@@ -1026,24 +986,15 @@ public class CrystalManager  {
 
     //    return res;
     //}
-    
 
-
-
-
-
-
-#endregion
-
-
+    #endregion REGIONS
 
     private int counter;
+
     public void Update()
     {
         if (linkNow)
         {
-
-
             LinkCrystalsNow();
         }
         if (load)
@@ -1052,15 +1003,14 @@ public class CrystalManager  {
         }
     }
 
-
-
-#region Marine Terra Obstacles
+    #region Marine Terra Obstacles
 
     /// <summary>
     /// The crystals need to be added and then Link
     /// </summary>
-    List<Crystal> _bounds = new List<Crystal>();
-    private bool linkNow; 
+    private List<Crystal> _bounds = new List<Crystal>();
+
+    private bool linkNow;
 
     /// <summary>
     /// To add the Marine bounds
@@ -1085,19 +1035,19 @@ public class CrystalManager  {
         linkNow = true;
     }
 
-    void CleanBoundsList()
+    private void CleanBoundsList()
     {
         _bounds.Clear();
     }
 
     public void StopLinking(H type)
     {
-        Debug.Log("StopLinking t:"+type);
+        Debug.Log("StopLinking t:" + type);
         linkNow = false;
         Crystal.ResetAccumNumbers();
         CleanBoundsList();
 
-        //if the one stped was water now Terrain needs to be initiated 
+        //if the one stped was water now Terrain needs to be initiated
         if (type == H.WaterObstacle)
         {
             m.MeshController.WaterBound1.FindVertexAboveTerrainLevel();
@@ -1110,9 +1060,8 @@ public class CrystalManager  {
             Save();
 
             //m.MeshController.WaterBound1.Create();
-
         }
-        else if (type==H.LinkRect)
+        else if (type == H.LinkRect)
         {
             m.MeshController.LandZoneManager1.FirstLinkRectsLinkDone(type);
         }
@@ -1122,7 +1071,6 @@ public class CrystalManager  {
         }
         else if (type == H.Poll)
         {
-            
         }
     }
 
@@ -1154,17 +1102,16 @@ public class CrystalManager  {
         if (_bounds.Count == 0)
         {
             StopLinking(type);
-           //Debug.Log("stopped on manager:" + _bounds.Count);
+            //Debug.Log("stopped on manager:" + _bounds.Count);
         }
 
-       //Debug.Log("count:" + _bounds.Count);
+        //Debug.Log("count:" + _bounds.Count);
     }
-
 
     /// <summary>
     /// Will Link the crystals on _bounds, one by one
     /// </summary>
-    void LinkCrystalsNow()
+    private void LinkCrystalsNow()
     {
         for (int i = 0; i < 100; i++)
         {
@@ -1183,20 +1130,22 @@ public class CrystalManager  {
         }
     }
 
-    void RegularLinking()
+    private void RegularLinking()
     {
-        _bounds[0].Link(_bounds);        
+        _bounds[0].Link(_bounds);
     }
 
     //which count at the same time is making the function of index for 'checks'
     private int count;
-    List<int> checks=new List<int>();
-    private int voltas ;
+
+    private List<int> checks = new List<int>();
+    private int voltas;
+
     /// <summary>
     /// For this linkin I cant remove the used Crystals they all must stay so they get named
     /// correctly
     /// </summary>
-    void RamdonLinking()
+    private void RamdonLinking()
     {
         if (!checks.Contains(count))
         {
@@ -1210,7 +1159,7 @@ public class CrystalManager  {
         else if (checks.Count >= _bounds.Count)
         {
             voltas++;
-            
+
             count = 0;
             checks.Clear();
 
@@ -1219,10 +1168,10 @@ public class CrystalManager  {
         else count = Random.Range(0, _bounds.Count);
     }
 
-    void Voltas()
+    private void Voltas()
     {
         var topVoltas = DefineTopVoltas();
-       //Debug.Log("Voltas:"+voltas);
+        //Debug.Log("Voltas:"+voltas);
 
         if (voltas == topVoltas)
         {
@@ -1235,7 +1184,7 @@ public class CrystalManager  {
         }
     }
 
-    int DefineTopVoltas()
+    private int DefineTopVoltas()
     {
         if (_bounds[0].Type1 == H.LandZone)
         {
@@ -1246,10 +1195,10 @@ public class CrystalManager  {
 
     /// <summary>
     /// So they can relink again
-    /// 
-    /// This is done so they get name it the same 
+    ///
+    /// This is done so they get name it the same
     /// </summary>
-    void CleanAllLines()
+    private void CleanAllLines()
     {
         for (int i = 0; i < _bounds.Count; i++)
         {
@@ -1258,7 +1207,7 @@ public class CrystalManager  {
     }
 
     /// <summary>
-    /// Will add the crystal into its correspoding region 
+    /// Will add the crystal into its correspoding region
     /// </summary>
     public void AddCrystalToItsRegion(Crystal c)
     {
@@ -1274,7 +1223,7 @@ public class CrystalManager  {
         AddToAllObstas(c);
     }
 
-    void AddToAllObstas(Crystal c)
+    private void AddToAllObstas(Crystal c)
     {
         if (c.Type1 == H.Obstacle || c.Type1.ToString().Contains("Way"))
         {
@@ -1282,7 +1231,7 @@ public class CrystalManager  {
         }
     }
 
-    bool IsBrandNewTerrain()
+    private bool IsBrandNewTerrain()
     {
         return _bounds.Count == 0;
     }
@@ -1295,7 +1244,6 @@ public class CrystalManager  {
         //    return;
         //}
 
-
         var firstCry = _bounds[0];
 
         for (int i = 0; i < _bounds.Count; i++)
@@ -1306,18 +1254,17 @@ public class CrystalManager  {
         _bounds = _bounds.OrderBy(a => a.Distance).ToList();
     }
 
-#endregion
+    #endregion Marine Terra Obstacles
 
+    #region SaveLoad
 
-#region SaveLoad
-
-    void Save()
+    private void Save()
     {
         m.SubMesh.CrystalManager1 = this;
         m.MeshController.WriteXML();
     }
 
-    void Load()
+    private void Load()
     {
         if (m.SubMesh == null)
         {
@@ -1328,21 +1275,18 @@ public class CrystalManager  {
         CrystalRegions = m.SubMesh.CrystalManager1.CrystalRegions;
         Program.gameScene.BatchManagerCreate();
 
-
         if (CrystalRegions.Count == 0)
         {
             InitRegions();
         }
         else
         {
-
             AfterLoaded();
             isFullyLoaded = true;
-            
         }
     }
 
-    void AfterLoaded()
+    private void AfterLoaded()
     {
         for (int i = 0; i < CrystalRegions.Count; i++)
         {
@@ -1351,7 +1295,7 @@ public class CrystalManager  {
         HandleLaterAudioRegions();
     }
 
-    void HandleLaterAudioRegions()
+    private void HandleLaterAudioRegions()
     {
         for (int i = 0; i < CrystalRegions.Count; i++)
         {
@@ -1366,10 +1310,10 @@ public class CrystalManager  {
         }
     }
 
-
     private int count1;
-    List<CrystalRegion> _inLands;
-    int _initialRegionIndex;//only used for reporting purposees
+    private List<CrystalRegion> _inLands;
+    private int _initialRegionIndex;//only used for reporting purposees
+
     public int InitialRegionIndex
     {
         get { return _initialRegionIndex; }
@@ -1385,7 +1329,7 @@ public class CrystalManager  {
         var indexA = UMath.GiveRandom(0, _inLands.Count);
         var point = _inLands[indexA].Position();
         var realIndex = _inLands[indexA].Index;
-        
+
         //UVisHelp.CreateHelpers(point, Root.yellowCube);
         var inTerrain = UTerra.IsOnTerrainManipulateTerrainSize(point, -40f);//-1
 
@@ -1406,13 +1350,12 @@ public class CrystalManager  {
         return point;
     }
 
-
     /// <summary>
     /// Will say if the region pass is adjacent to a OceanShore region
     /// </summary>
     /// <param name="regionIndex"></param>
     /// <returns></returns>
-    bool IsAdjacentToShore(int regionIndex)
+    private bool IsAdjacentToShore(int regionIndex)
     {
         var adjacents = ReturnCurrentSurroundIndexRegions(regionIndex, 3);
         var shoresCount = 0;
@@ -1434,12 +1377,9 @@ public class CrystalManager  {
         return false;
     }
 
+    #endregion SaveLoad
 
-
-
-#endregion
-
-#region Find Landing Zone
+    #region Find Landing Zone
 
     private string pollResult;
 
@@ -1483,7 +1423,7 @@ public class CrystalManager  {
     }
 
     /// <summary>
-    /// Will leave only the crystal of 'type' on the result list 
+    /// Will leave only the crystal of 'type' on the result list
     /// </summary>
     /// <param name="crystals"></param>
     /// <param name="h"></param>
@@ -1491,7 +1431,7 @@ public class CrystalManager  {
     private List<Crystal> RefineCrystalsForType(List<Crystal> crystals, H type)
     {
         List<Crystal> res = new List<Crystal>();
-        
+
         for (int i = 0; i < crystals.Count; i++)
         {
             if (crystals[i].Type1 == type)
@@ -1503,15 +1443,15 @@ public class CrystalManager  {
         return res;
     }
 
-    //Dictionary<List<int>, string> regionsLandZoGC = new Dictionary<List<int>, string>(); 
-    string ReturnRegionsLandZones(List<int> regions)
+    //Dictionary<List<int>, string> regionsLandZoGC = new Dictionary<List<int>, string>();
+    private string ReturnRegionsLandZones(List<int> regions)
     {
         //if (regionsLandZoGC.ContainsKey(regions))
         //{
         //    return regionsLandZoGC[regions];
         //}
 
-        var res="";
+        var res = "";
         List<string> lis = new List<string>();
 
         for (int i = 0; i < regions.Count; i++)
@@ -1525,12 +1465,12 @@ public class CrystalManager  {
             }
         }
 
-        //if we only have one around then 
+        //if we only have one around then
         if (lis.Count == 1)
         {
             res = lis[0];
         }
-        
+
         //regionsLandZoGC.Add(regions,res);
         return res;
     }
@@ -1545,9 +1485,9 @@ public class CrystalManager  {
 
         StopLinking(H.Poll);
     }
-    
+
     /// <summary>
-    /// Will find out wht the Crystall Poll Found in its linking 
+    /// Will find out wht the Crystall Poll Found in its linking
     /// </summary>
     private void ExtractPollInfo()
     {
@@ -1557,11 +1497,10 @@ public class CrystalManager  {
         pollResult = mostCommom;
     }
 
-    List<string> ReturnCrystalsLinksLandZones(Crystal c)
+    private List<string> ReturnCrystalsLinksLandZones(Crystal c)
     {
         List<string> lis = new List<string>();
         var links = c.Links();
-
 
         for (int i = 0; i < links.Count; i++)
         {
@@ -1574,11 +1513,10 @@ public class CrystalManager  {
         return lis;
     }
 
-
-#endregion
-
+    #endregion Find Landing Zone
 
     private bool isFullyLoaded;
+
     internal bool IsFullyLoaded()
     {
         return isFullyLoaded;
@@ -1591,32 +1529,31 @@ public class CrystalManager  {
     /// <returns></returns>
     public bool IntersectAnyLine(List<Vector3> points, Vector3 iniPos)
     {
-        //get the indexes of regions the poly is 
+        //get the indexes of regions the poly is
         var indexes = ReturnPolySurroundingRegions(points);
         //lines formed from iniPos to each points elements
         var lines = ReturnAllLines(points, iniPos);
 
         for (int i = 0; i < lines.Count; i++)
         {
-            //means one the lines is intesecting a line 
+            //means one the lines is intesecting a line
             if (DoIIntersectAnyLine(lines[i], indexes, new CryRoute()))
             {
-
                 return true;
             }
         }
         return false;
-    } 
-    
+    }
+
     ///<summary>
-    /// 
+    ///
     /// Final is the final position
     /// </summary>
     public bool IntersectAnyLine(Vector3 final, Vector3 iniPos)
     {
         List<Vector3> points = new List<Vector3>() { final, iniPos };
 
-        //get the indexes of regions the poly is 
+        //get the indexes of regions the poly is
         var indexes = ReturnPolySurroundingRegions(points);
         //lines formed from iniPos to each points elements
         Line line = new Line(final, iniPos, 20f);
@@ -1625,7 +1562,7 @@ public class CrystalManager  {
         {
             return true;
         }
-        
+
         return false;
     }
 
@@ -1635,7 +1572,7 @@ public class CrystalManager  {
     /// <param name="points"></param>
     /// <param name="iniPos"></param>
     /// <returns></returns>
-    List<Line> ReturnAllLines(List<Vector3> points, Vector3 iniPos)
+    private List<Line> ReturnAllLines(List<Vector3> points, Vector3 iniPos)
     {
         List<Line> res = new List<Line>();
 
@@ -1647,12 +1584,12 @@ public class CrystalManager  {
         return res;
     }
 
-        /// <summary>
-    /// Return the regions surrouding each point of the poly 
+    /// <summary>
+    /// Return the regions surrouding each point of the poly
     /// </summary>
     /// <param name="poly"></param>
     /// <returns></returns>
-    List<int> ReturnPolySurroundingRegions(List<Vector3> poly)
+    private List<int> ReturnPolySurroundingRegions(List<Vector3> poly)
     {
         List<int> res = new List<int>();
 
@@ -1660,7 +1597,7 @@ public class CrystalManager  {
         {
             var currRegion = ReturnMyRegion(U2D.FromV3ToV2(poly[i]));
 
-            res.AddRange(ReturnCurrentSurroundIndexRegions(currRegion, 3));    
+            res.AddRange(ReturnCurrentSurroundIndexRegions(currRegion, 3));
         }
 
         return res.Distinct().ToList();
@@ -1689,19 +1626,19 @@ public class CrystalManager  {
     {
         var v2 = U2D.FromV3ToV2(camPos);
         var index = ReturnMyRegion(v2);
-        
+
         if (index == -1)
         {
             return camPos;
         }
 
-        return U2D.FromV2ToV3( CrystalRegions[index].Region.center);
+        return U2D.FromV2ToV3(CrystalRegions[index].Region.center);
     }
 
     /// <summary>
     /// Will return the closest FullOcoean position to param
-    /// 
-    /// 
+    ///
+    ///
     /// </summary>
     /// <param name="iniPosP"></param>
     /// <returns></returns>
@@ -1716,8 +1653,5 @@ public class CrystalManager  {
         fullOcean = fullOcean.OrderBy(a => a.TempDistance).ToList();
 
         return fullOcean[0].Position();
-
     }
 }
-
-

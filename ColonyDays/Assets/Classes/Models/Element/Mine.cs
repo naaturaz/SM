@@ -1,20 +1,13 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class Mine : Explosive {
-
-
-	// Use this for initialization
-	void Start () 
+﻿public class Mine : Explosive
+{
+    // Use this for initialization
+    private void Start()
     {
-	
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    }
+
+    // Update is called once per frame
+    private void Update()
     {
         base.Update();
-
-
-	}
+    }
 }

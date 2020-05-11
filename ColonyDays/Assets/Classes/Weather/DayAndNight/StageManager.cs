@@ -3,44 +3,46 @@ using UnityEngine;
 
 public class StageManager : General
 {
-    List<GameObject> _stages = new List<GameObject>();
-    Light _main;
-    Light _west;
-    Light _east;
+    private List<GameObject> _stages = new List<GameObject>();
+    private Light _main;
+    private Light _west;
+    private Light _east;
 
-    int _currentStage = 2;//_startStage = 2
+    private int _currentStage = 2;//_startStage = 2
 
     /// <summary>
     /// This is the shared material for all AlphaAtlasShake instances . here I change the main
     /// color so at night is not white
     /// </summary>
-    Material _waveMat;
+    private Material _waveMat;
 
     //this speeds both limit how quick they go from point to point. They are a bottle
     //neck if a time is set to 1sec for ex
-    float _daySpeed = .5f;
-    float _nightSpeed = 1f;
+    private float _daySpeed = .5f;
 
-    bool _isOnTransition;
-    Vector3 _center;
+    private float _nightSpeed = 1f;
 
-    ColorManager _colorManager;
-    H _currentCycle = H.Day;//day or night
+    private bool _isOnTransition;
+    private Vector3 _center;
+
+    private ColorManager _colorManager;
+    private H _currentCycle = H.Day;//day or night
 
     /// <summary>
     /// times to move from a stage
     /// Fox ex
     /// in stage 0 will move at 1sec
     /// in stage 1 will move at 20sec
-    /// 
+    ///
     /// At night time is the same but divided / 10
     /// </summary>
-    List<float> _times = new List<float>() { 1, 20, 120, 120, 5, 5 };
+    private List<float> _times = new List<float>() { 1, 20, 120, 120, 5, 5 };
+
     //List<float> _times = new List<float>() { 1, 5, 5, 5, 1, 5 };
 
-    float _startedCycleAt = 0;
+    private float _startedCycleAt = 0;
 
-    void Start()
+    private void Start()
     {
         _stages.Add(GetChildCalled("Stage0"));
         _stages.Add(GetChildCalled("Stage1"));
@@ -66,16 +68,16 @@ public class StageManager : General
         _waveMat.color = _colorManager.DayGrass;
     }
 
-    void Update()
+    private void Update()
     {
         if (!Program.gameScene || Program.gameScene.GameSpeed == 0) return;
 
         //will block further progression if was turned off
         if (_currentStage == 2 && !Settings.ISDay && _currentCycle == H.Day) return;
 
-//#if UNITY_EDITOR
-//        return;
-//#endif
+        //#if UNITY_EDITOR
+        //        return;
+        //#endif
 
         CheckIfMoveStages();
         CheckIfInTrans();
@@ -120,7 +122,7 @@ public class StageManager : General
             _colorManager.GetMeMainIntensity(_currentStage, _currentCycle), step);
         _main.intensity = newMain;
 
-        // 
+        //
         var wCurr = _west.intensity;
         var newW = Mathf.Lerp(wCurr,
             _colorManager.GetMeWestIntensity(_currentStage, _currentCycle), step);
@@ -145,10 +147,10 @@ public class StageManager : General
         var mainAmbience = RenderSettings.ambientLight;
         var newAmbience = Color.Lerp(mainAmbience,
             _colorManager.GetMeAmbienceColor(_currentStage, _currentCycle), step);
-        
+
         RenderSettings.ambientLight = newAmbience;
 
-        if(CamControl.CAMRTS != null)
+        if (CamControl.CAMRTS != null)
         {
             var currentColBack = CamControl.CAMRTS.GetCameraBackColor();
 
@@ -161,14 +163,14 @@ public class StageManager : General
 
     #region Grass Wave
 
-    void ReachNewColorForWaveGrass()
+    private void ReachNewColorForWaveGrass()
     {
         float step = ReturnSpeed() * Time.deltaTime;//bz color doest finish blending
         var newAmbience = Color.Lerp(_waveMat.color, ColorWaveColorTarget(), step);
         _waveMat.color = newAmbience;
     }
 
-    Color ColorWaveColorTarget()
+    private Color ColorWaveColorTarget()
     {
         if (_currentCycle == H.Day && (_currentStage == 2 || _currentStage == 3))
         {
@@ -176,10 +178,11 @@ public class StageManager : General
         }
         return RenderSettings.ambientLight;
     }
-    #endregion
+
+    #endregion Grass Wave
 
     /// <summary>
-    /// Checks if needs to move to next stage 
+    /// Checks if needs to move to next stage
     /// </summary>
     private void CheckIfMoveStages()
     {
@@ -190,8 +193,8 @@ public class StageManager : General
             //Debug.Log("Moving to:" + _currentStage);
         }
     }
-    
-    float ReturnSpeed()
+
+    private float ReturnSpeed()
     {
         if (_currentCycle == H.Day)
             return _daySpeed;
@@ -200,21 +203,21 @@ public class StageManager : General
     }
 
     /// <summary>
-    /// Wait time in current stage 
+    /// Wait time in current stage
     /// </summary>
     /// <returns></returns>
-    float WaitTime()
+    private float WaitTime()
     {
         if (_currentCycle == H.Day)
         {
-            return _times[_currentStage]/1;//1
+            return _times[_currentStage] / 1;//1
         }
         //night time
-        return _times[_currentStage]/10;//10
+        return _times[_currentStage] / 10;//10
     }
 
     /// <summary>
-    /// Moves to next stage 
+    /// Moves to next stage
     /// </summary>
     private void MoveToNextStage()
     {
@@ -240,7 +243,7 @@ public class StageManager : General
     /// ret -1
     /// </summary>
     /// <returns></returns>
-    int FindStateOfLight()
+    private int FindStateOfLight()
     {
         for (int i = 0; i < _stages.Count; i++)
         {
@@ -259,7 +262,7 @@ public class StageManager : General
 
     internal bool IsMidNightOrLater()
     {
-        return _currentCycle == H.Night  && _currentStage > 2;
+        return _currentCycle == H.Night && _currentStage > 2;
     }
 
     internal bool IsDawnOrLater()
@@ -269,7 +272,7 @@ public class StageManager : General
 
     public void OptionsDayCycleWasToggled()
     {
-        if(!Settings.ISDay)
+        if (!Settings.ISDay)
         {
             _isOnTransition = false;
             _currentCycle = H.Day;
@@ -284,7 +287,7 @@ public class StageManager : General
             _main.color = _colorManager.GetMeMainColor(_currentStage, _currentCycle);
             RenderSettings.ambientLight = _colorManager.GetMeAmbienceColor(_currentStage, _currentCycle);
 
-            if(CamControl.CAMRTS != null)
+            if (CamControl.CAMRTS != null)
             {
                 var newColBack = _colorManager.GetMeCameraBackGroundColor(_currentCycle);
                 CamControl.CAMRTS.AssignBackGroundColor(newColBack);

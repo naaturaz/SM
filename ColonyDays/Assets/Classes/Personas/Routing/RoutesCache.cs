@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public class RoutesCache
 {
-
-    Dictionary<string, TheRoute> _items = new Dictionary<string, TheRoute>();
-    TheRoute _current = new TheRoute();//current route we are comparing to
-    List<TheRoute> _itemsLoadSave = new List<TheRoute>();
+    private Dictionary<string, TheRoute> _items = new Dictionary<string, TheRoute>();
+    private TheRoute _current = new TheRoute();//current route we are comparing to
+    private List<TheRoute> _itemsLoadSave = new List<TheRoute>();
 
     //so they are saveLoad
     public List<TheRoute> ItemsLoadSave
@@ -23,14 +21,13 @@ public class RoutesCache
         set { _current = value; }
     }
 
-
     /// <summary>
     /// Needs to be called when saving this. so the List 'ItemsLoadSave' is created and is ready to save
     /// </summary>
     public void CreateSave()
     {
         //so it doestn add the new ones on top of the old ones. in case are old ones
-        //all saved games will have old ones 
+        //all saved games will have old ones
         _itemsLoadSave.Clear();
 
         for (int i = 0; i < _items.Count; i++)
@@ -56,9 +53,8 @@ public class RoutesCache
         }
     }
 
-
     /// <summary>
-    /// Will tell if the cachec contians a newer route that actually is newer thatn the ask so it can be used no proble 
+    /// Will tell if the cachec contians a newer route that actually is newer thatn the ask so it can be used no proble
     /// </summary>
     /// <param name="OriginKey"></param>
     /// <param name="DestinyKey"></param>
@@ -75,7 +71,7 @@ public class RoutesCache
         var haveIt = DoWeHaveThatRoute(OriginKey, DestinyKey);
 
         if (!haveIt)
-        {return false;}
+        { return false; }
 
         return IsNewerOrSame(askDateTime);
     }
@@ -85,15 +81,15 @@ public class RoutesCache
     /// </summary>
     /// <param name="askDateTime"></param>
     /// <returns></returns>
-    bool IsNewerOrSame(DateTime askDateTime)
+    private bool IsNewerOrSame(DateTime askDateTime)
     {
         DateTime date1 = _current.DateTime1;
         DateTime date2 = askDateTime;
 
         int result = DateTime.Compare(date1, date2);
 
-        // _current.DateTime1 is after 
-        if (result > 0 || result == 0 )
+        // _current.DateTime1 is after
+        if (result > 0 || result == 0)
         {
             return true;
         }
@@ -102,12 +98,12 @@ public class RoutesCache
 
     /// <summary>
     /// Says if we have a route with same Oring and Destiyny key
-    /// 
+    ///
     /// sets '_current'
     /// </summary>
     /// <param name="theRoute"></param>
     /// <returns></returns>
-    bool DoWeHaveThatRoute(string OriginKey, string DestinyKey)
+    private bool DoWeHaveThatRoute(string OriginKey, string DestinyKey)
     {
         var key = CreateRouteKey(OriginKey, DestinyKey);
 
@@ -115,7 +111,7 @@ public class RoutesCache
         {
             if (_items[key].CheckPoints.Count > 0)
             {
-                //only if has more than 0 bz they can reference clear the routes 
+                //only if has more than 0 bz they can reference clear the routes
                 _current = new TheRoute(_items[key]);
                 return true;
             }
@@ -147,7 +143,7 @@ public class RoutesCache
         return _current;
     }
 
-    bool OriginDestinyContains(TheRoute theRoute, string word)
+    private bool OriginDestinyContains(TheRoute theRoute, string word)
     {
         return theRoute.OriginKey.Contains(word) || theRoute.DestinyKey.Contains(word);
     }
@@ -156,7 +152,7 @@ public class RoutesCache
     {
         //if _checkOnQueues is b is checking we need to keep pure that revision.
         //after is done this will accept routes again
-        if (_checkOnQueues || theRoute == null || theRoute.CheckPoints.Count == 0 
+        if (_checkOnQueues || theRoute == null || theRoute.CheckPoints.Count == 0
             || theRoute.CheckPoints.Count == 0 || OriginDestinyContains(theRoute, "Dummy"))
         {
             return;
@@ -172,7 +168,7 @@ public class RoutesCache
             {
                 _items[key] = theRoute;
             }
-            //other wise we have the lastest one 
+            //other wise we have the lastest one
         }
         else
         {
@@ -182,7 +178,7 @@ public class RoutesCache
     }
 
     /// <summary>
-    /// Bz a route that was collided for Profession needs to be removed from here 
+    /// Bz a route that was collided for Profession needs to be removed from here
     /// </summary>
     /// <param name="theRoute"></param>
     public void RemoveRoute(TheRoute theRoute, DateTime askTime)
@@ -192,9 +188,9 @@ public class RoutesCache
         {
             return;
         }
-        
+
         var item = _items[key];
-        if (item==null)
+        if (item == null)
         {
             return;
         }
@@ -207,14 +203,13 @@ public class RoutesCache
         {
             return;
         }
-        
+
         var was = _items.Remove(key);
         //Debug.Log("was remove:"+was+"."+key);
     }
 
-    string ReturnKey(TheRoute theRoute)
+    private string ReturnKey(TheRoute theRoute)
     {
-        
         return theRoute.OriginKey + "." + theRoute.DestinyKey;
     }
 
@@ -224,17 +219,15 @@ public class RoutesCache
         CheckIfNewQueues();
     }
 
+    /// <summary>
+    /// Bz routes will stay there forever. really old and not useful
+    /// </summary>
+    private void CheckIfARouteIsTooOld()
+    {
+    }
 
     /// <summary>
-    /// Bz routes will stay there forever. really old and not useful 
-    /// </summary>
-    void CheckIfARouteIsTooOld()
-    {
-        
-    }
-    
-    /// <summary>
-    /// Will remove all RoutesCahched related to this building 
+    /// Will remove all RoutesCahched related to this building
     /// </summary>
     /// <param name="MyId"></param>
     internal void RemoveAllMine(string MyId)
@@ -260,14 +253,13 @@ public class RoutesCache
         return _items.Count + "";
     }
 
-
     #region Queues
 
     private bool _checkOnQueues;
     private int _qCount;
 
     /// <summary>
-    /// So all Routes in cache can be checked to see if one is colliding 
+    /// So all Routes in cache can be checked to see if one is colliding
     /// </summary>
     public void CheckQueuesNow()
     {
@@ -306,6 +298,5 @@ public class RoutesCache
         }
     }
 
-
-#endregion
+    #endregion Queues
 }

@@ -1,7 +1,5 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Runtime.InteropServices;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Family
 {
@@ -10,18 +8,22 @@ public class Family
     private string _mother = "";
     private string _father = "";
     private string _home = "";
+
     //will say wht family is up to. Iniitially created to keep family toghether , marking it as movingToNewHome
-    H _state = H.None;
+    private H _state = H.None;
 
     private string _familyId;
     private Family family;
+
     public string FamilyId
     {
         get { return _familyId; }
         set { _familyId = value; }
     }
 
-    public Family() { }
+    public Family()
+    {
+    }
 
     public Family(int kidsMax, string homeKey, int indexInFamilyArray)
     {
@@ -32,7 +34,7 @@ public class Family
     }
 
     /// <summary>
-    /// Copyng values one by one. to cut refernce 
+    /// Copyng values one by one. to cut refernce
     /// </summary>
     /// <param name="family"></param>
     public Family(Family family)
@@ -42,7 +44,6 @@ public class Family
         for (int i = 0; i < family.Kids.Count; i++)
         {
             Kids.Add(family.Kids[i]);
-            
         }
 
         Mother = family.Mother;
@@ -61,9 +62,9 @@ public class Family
     {
         var bui = Brain.GetBuildingFromKey(homeKey);
 
-        if (bui.Families==null)
+        if (bui.Families == null)
         {
-            _familyId = "Family:" + homeKey + "."+0;
+            _familyId = "Family:" + homeKey + "." + 0;
         }
         else
         {
@@ -79,14 +80,12 @@ public class Family
         }
         set
         {
-
-            if (_kids.Count>0 && value.Count==0)
+            if (_kids.Count > 0 && value.Count == 0)
             {
-               //Debug.Log("who is doing this to Kids ");
+                //Debug.Log("who is doing this to Kids ");
             }
 
             _kids = value;
-            
         }
     }
 
@@ -98,7 +97,7 @@ public class Family
         }
         else
         {
-           //Debug.Log("is here already kid:" + newKid);
+            //Debug.Log("is here already kid:" + newKid);
         }
     }
 
@@ -107,7 +106,7 @@ public class Family
         get { return _home; }
         set
         {
-            _home = value; 
+            _home = value;
         }
     }
 
@@ -142,7 +141,7 @@ public class Family
     }
 
     /// <summary>
-    /// Here will teel u if were successeful at getting a new kid i the famili and will 
+    /// Here will teel u if were successeful at getting a new kid i the famili and will
     /// include it in the family and will take care of adoption and all, transform.parent, etc
     /// </summary>
     public bool CanGetAnotherKid(Person newP)
@@ -155,16 +154,16 @@ public class Family
         if (!string.IsNullOrEmpty(_mother))
         {
             Person mom = FindPerson(_mother);
-            //a pregnant woman wont welcome new kids 
+            //a pregnant woman wont welcome new kids
             if (mom != null && mom.IsPregnant)
             {
                 return false;
             }
         }
 
-        //must have at least a mother or a father to be accepted in family 
-        //unless is loading from file. Bz the order of the Saved list is random 
-        if ((string.IsNullOrEmpty(_mother) && string.IsNullOrEmpty(_father)) && !newP.IsLoading) 
+        //must have at least a mother or a father to be accepted in family
+        //unless is loading from file. Bz the order of the Saved list is random
+        if ((string.IsNullOrEmpty(_mother) && string.IsNullOrEmpty(_father)) && !newP.IsLoading)
         {
             return false;
         }
@@ -176,7 +175,7 @@ public class Family
 
         //if is not contained means the family is moving to a new home. So its not a good time
         //to get  anew kid .
-        //Will restart the Kid on person controller so can check again in another place 
+        //Will restart the Kid on person controller so can check again in another place
         if (!BuildingPot.Control.Registro.AllBuilding.ContainsKey(_home))
         {
             PersonPot.Control.RestartControllerForPerson(newP.MyId);
@@ -187,10 +186,10 @@ public class Family
         return true;
     }
 
-    void AssignNewKidToThisFamily(Person newP)
+    private void AssignNewKidToThisFamily(Person newP)
     {
         AddKids(newP.MyId);
-        newP.transform.SetParent( BuildingPot.Control.Registro.AllBuilding[_home].transform);
+        newP.transform.SetParent(BuildingPot.Control.Registro.AllBuilding[_home].transform);
 
         if (string.IsNullOrEmpty(newP.FamilyId) && !string.IsNullOrEmpty(FamilyId))
         {
@@ -204,12 +203,11 @@ public class Family
         if (string.IsNullOrEmpty(newP.Father))
         {
             newP.Father = _father;
-        } 
+        }
     }
 
-
     /// <summary>
-    /// Will make sure they are still alive 
+    /// Will make sure they are still alive
     /// </summary>
     /// <returns></returns>
     public int Adults()
@@ -217,19 +215,18 @@ public class Family
         int res = 0;
         if (Mother != "")
         {
-           res++;
+            res++;
         }
         if (Father != "")
         {
-           res++;  
+            res++;
         }
         return res;
     }
 
-
-    void Set1stAdult(Person adult)
+    private void Set1stAdult(Person adult)
     {
-        string debug = "M";//mother 
+        string debug = "M";//mother
         if (adult.Gender == H.Male)
         {
             _father = adult.MyId;
@@ -240,8 +237,8 @@ public class Family
             _mother = adult.MyId;
         }
 
-        adult.transform.SetParent( BuildingPot.Control.Registro.AllBuilding[_home].transform);
-        adult.FamilyId = FamilyId;    
+        adult.transform.SetParent(BuildingPot.Control.Registro.AllBuilding[_home].transform);
+        adult.FamilyId = FamilyId;
         //Debug.Log(adult.MyId + " 1st adult inscribed on " + FamilyId + " as " + debug);
     }
 
@@ -252,7 +249,7 @@ public class Family
     /// </summary>
     /// <param name="newPerson"></param>
     /// <returns></returns>
-    bool WasDatingGood(Person newPerson)
+    private bool WasDatingGood(Person newPerson)
     {
         Person inFamily = FindCurrentAdult();
 
@@ -268,13 +265,13 @@ public class Family
             inFamily.Marriage(newPerson.MyId);
             newPerson.Marriage(inFamily.MyId);
 
-            //so they do thing prop. and person in case of reahcing major will try to find something else 
+            //so they do thing prop. and person in case of reahcing major will try to find something else
             inFamily.IsMajor = true;
             newPerson.IsMajor = true;
 
             AddNewPersonToFamily(newPerson);
 
-            Debug.Log(inFamily.MyId + " .famId:" + inFamily.FamilyId + " :accepted: " + newPerson.MyId 
+            Debug.Log(inFamily.MyId + " .famId:" + inFamily.FamilyId + " :accepted: " + newPerson.MyId
                 + " .famId:" + newPerson.FamilyId);
 
             return true;
@@ -282,51 +279,49 @@ public class Family
         return false;
     }
 
-    void AddNewPersonToFamily(Person newPerson)
+    private void AddNewPersonToFamily(Person newPerson)
     {
-        if (newPerson.Gender==H.Male)
+        if (newPerson.Gender == H.Male)
         {
             Father = newPerson.MyId;
         }
-        else if (newPerson.Gender==H.Female)
+        else if (newPerson.Gender == H.Female)
         {
             Mother = newPerson.MyId;
         }
 
-        newPerson.transform.SetParent( BuildingPot.Control.Registro.AllBuilding[_home].transform);
+        newPerson.transform.SetParent(BuildingPot.Control.Registro.AllBuilding[_home].transform);
         newPerson.FamilyId = FamilyId;
-        
     }
-
 
     /// <summary>
     /// To address bugg in where a person died and didnt remove from family
     /// </summary>
-    void ClearAdults()
+    private void ClearAdults()
     {
         Mother = "";
         Father = "";
     }
 
     /// <summary>
-    /// WIll assign the new person to its current role in the family and in the transform.parent 
+    /// WIll assign the new person to its current role in the family and in the transform.parent
     /// </summary>
     /// <param name="newPerson"></param>
-    void AssignNewPersonToCurrentFamilyAndHome(Person newPerson)
+    private void AssignNewPersonToCurrentFamilyAndHome(Person newPerson)
     {
         if (_mother == "") { _mother = newPerson.MyId; }
         else if (_father == "") { _father = newPerson.MyId; }
 
-        newPerson.transform.SetParent( BuildingPot.Control.Registro.AllBuilding[_home].transform);
+        newPerson.transform.SetParent(BuildingPot.Control.Registro.AllBuilding[_home].transform);
         newPerson.FamilyId = FamilyId;
     }
 
-    Person FindCurrentAdult()
+    private Person FindCurrentAdult()
     {
         Person res = null;
         if (_mother != "")
         {
-            res =  PersonPot.Control.All.Find(a => a.MyId == _mother);
+            res = PersonPot.Control.All.Find(a => a.MyId == _mother);
         }
         else if (_father != "")
         {
@@ -337,14 +332,14 @@ public class Family
 
     public bool WouldIFoundLoveHere(Person pers)
     {
-        if (Adults()==0 || Adults()==2)
+        if (Adults() == 0 || Adults() == 2)
         {
             return false;
         }
         var curr = FindCurrentAdult();
 
         //might have just died
-        if (curr==null)
+        if (curr == null)
         {
             return false;
         }
@@ -354,7 +349,7 @@ public class Family
 
     public bool CanGetAnotherAdult(Person newPerson)
     {
-        if (State==H.LockDown)
+        if (State == H.LockDown)
         {
             return false;
         }
@@ -365,7 +360,7 @@ public class Family
             MakeAdultFatherOrMotherOfKids(newPerson);
             return true;
         }
-        if (Adults() >= 2) { return false;}
+        if (Adults() >= 2) { return false; }
 
         if (WasDatingGood(newPerson) || AreTheyMarriedAlready(newPerson))
         {
@@ -383,7 +378,7 @@ public class Family
     /// Will set the mother or father of current kids to 'newP'
     /// </summary>
     /// <param name="newP"></param>
-    void MakeAdultFatherOrMotherOfKids(Person newP)
+    private void MakeAdultFatherOrMotherOfKids(Person newP)
     {
         if (newP.Gender == H.Male)
         {
@@ -396,10 +391,10 @@ public class Family
     }
 
     /// <summary>
-    /// Will set the Adult as a Father or Mother in Family 
+    /// Will set the Adult as a Father or Mother in Family
     /// field and it will set the adult family id to this family
     /// </summary>
-    void SetAdultInFamily(Person adult, string momOrDad)
+    private void SetAdultInFamily(Person adult, string momOrDad)
     {
         if (momOrDad == "M")
         {
@@ -412,7 +407,7 @@ public class Family
 
         adult.FamilyId = FamilyId;
 
-        adult.transform.SetParent( BuildingPot.Control.Registro.AllBuilding[_home].transform);
+        adult.transform.SetParent(BuildingPot.Control.Registro.AllBuilding[_home].transform);
         //Debug.Log(adult.MyId + " inscribed on " + FamilyId +" as " + momOrDad);
     }
 
@@ -424,7 +419,7 @@ public class Family
         {
             var kid = FindPerson(Kids[i]);
 
-            //in case kid die 
+            //in case kid die
             if (kid == null)
             {
                 continue;
@@ -433,7 +428,6 @@ public class Family
             kid.Father = newP.MyId;
             kid.FamilyId = FamilyId;
         }
-        
     }
 
     private void MakeAdultMotherOfKids(Person newP)
@@ -444,7 +438,7 @@ public class Family
         {
             var kid = FindPerson(Kids[i]);
 
-            //in case kid die 
+            //in case kid die
             if (kid == null)
             {
                 continue;
@@ -455,7 +449,6 @@ public class Family
         }
     }
 
-
     public static Person FindPerson(string find)
     {
         return PersonPot.Control.FindPerson(find);
@@ -463,7 +456,7 @@ public class Family
 
     /// <summary>
     /// Will tell u if person living in home is married to new person
-    /// This is created to rejoin maried copuples while moving to new homes 
+    /// This is created to rejoin maried copuples while moving to new homes
     /// </summary>
     /// <param name="newPerson"></param>
     /// <returns></returns>
@@ -499,13 +492,13 @@ public class Family
                 return true;
             }
         }
-        if ((askPerson.MyId == _father || askPerson.MyId == _mother)  && askPerson.FamilyId == FamilyId)
+        if ((askPerson.MyId == _father || askPerson.MyId == _mother) && askPerson.FamilyId == FamilyId)
         {
             return true;
         }
         return false;
-    }  
-    
+    }
+
     public bool DoIBelongToThisFamily(Person askPerson)
     {
         for (int i = 0; i < _kids.Count; i++)
@@ -525,7 +518,7 @@ public class Family
     }
 
     /// <summary>
-    /// Will tell if in the family has more than one member 
+    /// Will tell if in the family has more than one member
     /// </summary>
     /// <param name="askPerson"></param>
     /// <returns></returns>
@@ -541,7 +534,7 @@ public class Family
     }
 
     /// <summary>
-    /// Will tell u if a Family is empty. Has zero members 
+    /// Will tell u if a Family is empty. Has zero members
     /// </summary>
     /// <returns></returns>
     public bool IsFamilyEmpty()
@@ -550,7 +543,7 @@ public class Family
     }
 
     /// <summary>
-    /// Will return how manny members a family has 
+    /// Will return how manny members a family has
     /// </summary>
     /// <returns></returns>
     public int MembersOfAFamily()
@@ -568,11 +561,10 @@ public class Family
         return kids + Adults();
     }
 
-
     public void DeleteFamily()
     {
         //gonna remove it since IsEmptyFamily() doesnt talk abt HomeKey
-        //ask abt the amt of family memenrs 
+        //ask abt the amt of family memenrs
         //Home = "";
         State = H.None;
 
@@ -582,10 +574,10 @@ public class Family
     }
 
     /// <summary>
-    /// Used to move one family booked to the final destination 
-    /// 
+    /// Used to move one family booked to the final destination
+    ///
     /// Or to remove kid tht reach majority
-    /// 
+    ///
     /// Now used too , with person that dies
     /// </summary>
     public void RemovePersonFromFamily(Person personToRemove)
@@ -624,7 +616,7 @@ public class Family
 
     /// <summary>
     /// Will tell u when all members of a Family have been completed. Done so houses with people just married
-    /// are open to accept kids 
+    /// are open to accept kids
     /// </summary>
     /// <returns></returns>
     internal bool AFamilyIsFull()
@@ -633,7 +625,7 @@ public class Family
     }
 
     /// <summary>
-    /// Will tell u if can get a new Kid in the House 
+    /// Will tell u if can get a new Kid in the House
     /// </summary>
     /// <returns></returns>
     public bool QuickQuuestionCanGetAnotherKid()
@@ -647,7 +639,7 @@ public class Family
     }
 
     /// <summary>
-    /// Will return a list of the active members as a person object each 
+    /// Will return a list of the active members as a person object each
     /// </summary>
     /// <returns></returns>
     public List<Person> ReturnFamilyPersonObj()
@@ -670,7 +662,7 @@ public class Family
         {
             res.Add(mom);
         }
-        if (dad!=null)
+        if (dad != null)
         {
             res.Add(dad);
         }
@@ -679,8 +671,8 @@ public class Family
     }
 
     /// <summary>
-    /// Created so a person that could reach majority of age knows if can find a place where to 
-    /// live or not 
+    /// Created so a person that could reach majority of age knows if can find a place where to
+    /// live or not
     /// </summary>
     /// <param name="asker"></param>
     /// <returns></returns>
@@ -692,7 +684,7 @@ public class Family
         {
             return true;
         }
-        //means that a person had to be removed from family bz was dead and not removed 
+        //means that a person had to be removed from family bz was dead and not removed
         if (adults < 0)
         {
             return false;
@@ -701,9 +693,9 @@ public class Family
     }
 
     /// <summary>
-    /// Addressing kids that are major but never found a house 
-    /// 
-    /// Will make the first kid major and head of the house 
+    /// Addressing kids that are major but never found a house
+    ///
+    /// Will make the first kid major and head of the house
     /// </summary>
     public void HandleKids()
     {
@@ -712,12 +704,12 @@ public class Family
             return;
         }
 
-        //u will be able to fit only two kids in the family now as adults 
+        //u will be able to fit only two kids in the family now as adults
         for (int i = 0; i < Kids.Count; i++)
         {
             var kid = FindPerson(Kids[i]);
 
-            if (Adults()==0)
+            if (Adults() == 0)
             {
                 Set1stAdult(kid);
 
@@ -742,8 +734,6 @@ public class Family
         return res;
     }
 
-
-
     public static string GetPersonName(string pass)
     {
         var pers = FindPerson(pass);
@@ -753,7 +743,7 @@ public class Family
         {
             return "";
         }
-        
+
         return pers.Name;
 
         //var spl = pass.Split('.');
@@ -767,7 +757,7 @@ public class Family
     }
 
     /// <summary>
-    /// Based on the family hieracchy will return the personon the inxed 
+    /// Based on the family hieracchy will return the personon the inxed
     /// </summary>
     /// <param name="index"></param>
     /// <returns></returns>
@@ -790,6 +780,5 @@ public class Family
         }
 
         return FindPerson(allIDs[index]);
-
     }
 }

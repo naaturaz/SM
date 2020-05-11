@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 /// <summary>
 /// The Description Window Script
-/// 
+///
 /// When a building  is hover this description windows pop up
 /// </summary>
 public class DescriptionWindow : GUIElement
@@ -13,21 +13,20 @@ public class DescriptionWindow : GUIElement
     private GameObject _description;
     private Image _buildBanner;
 
-
     private Vector3 iniPos;
 
     private H _type = H.None;
     private Sprite _defaultSprite;//the one is loaded withthe game
 
-	// Use this for initialization
-	void Start () 
+    // Use this for initialization
+    private void Start()
     {
-	    InitObj();
+        InitObj();
 
         Hide();
-	}
+    }
 
-    void InitObj()
+    private void InitObj()
     {
         iniPos = transform.position;
 
@@ -35,7 +34,7 @@ public class DescriptionWindow : GUIElement
         _cost = GetChildThatContains(H.Cost);
         _description = GetChildThatContains(H.Description);
 
-        _buildBanner = GetChildCalled("Banner"). GetComponent<Image>();
+        _buildBanner = GetChildCalled("Banner").GetComponent<Image>();
         _defaultSprite = _buildBanner.sprite;
     }
 
@@ -65,7 +64,7 @@ public class DescriptionWindow : GUIElement
     {
         _title.GetComponent<Text>().text = Languages.ReturnString(val + "");
         _cost.GetComponent<Text>().text = BuildCostString(val);
-        _description.GetComponent<Text>().text = Languages.ReturnString(val+".Desc") + HouseDescription(val);
+        _description.GetComponent<Text>().text = Languages.ReturnString(val + ".Desc") + HouseDescription(val);
 
         ////means Im a creating new Towns to be saved as Initial(Templates) towns
         //if (Developer.IsDev && BuildingPot.Control.Registro.AllBuilding.Count == 0)
@@ -75,21 +74,21 @@ public class DescriptionWindow : GUIElement
 
         var state = BuildingPot.UnlockBuilds1.ReturnBuildingState(val);
         Sprite s = null;
-        
+
         if (state == H.Unlock)
         {
-            //load the root of the banner 
+            //load the root of the banner
             var iconRoot = Root.RetBuildingBannerRoot(val);
             s = (Sprite)Resources.Load(iconRoot, typeof(Sprite));
         }
         else if (state == H.Lock)
         {
             s = (Sprite)Resources.Load("Prefab/Building/Lock_Banner", typeof(Sprite));
-        }       
+        }
         else if (state == H.Coming_Soon)
         {
             s = (Sprite)Resources.Load("Prefab/Building/Coming_Soon_Banner", typeof(Sprite));
-        }     
+        }
         else if (state == H.Max_Cap_Reach)
         {
             s = (Sprite)Resources.Load("Prefab/Building/Max_Cap_Reach_Banner", typeof(Sprite));
@@ -121,11 +120,11 @@ public class DescriptionWindow : GUIElement
     }
 
     /// <summary>
-    /// Will build the string to show cost 
+    /// Will build the string to show cost
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    string BuildCostString(H type)
+    private string BuildCostString(H type)
     {
         var state = BuildingPot.UnlockBuilds1.ReturnBuildingState(type);
         if (state == H.Lock)
@@ -152,7 +151,7 @@ public class DescriptionWindow : GUIElement
         return CostOfABuilding(type, 2) + AddPerUnitIfNeeded(type);
     }
 
-    string AddPerUnitIfNeeded(H typeP)
+    private string AddPerUnitIfNeeded(H typeP)
     {
         if (typeP == H.Road || typeP.ToString().Contains("Bridge"))
         {
@@ -162,10 +161,10 @@ public class DescriptionWindow : GUIElement
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="type"></param>
-    /// <param name="returnEvery">When appending every how many lines will do a return, To show in 
+    /// <param name="returnEvery">When appending every how many lines will do a return, To show in
     /// Descriptions window the normal used until now is : 3</param>
     /// <returns></returns>
     public static string CostOfABuilding(H type, int returnEvery)
@@ -259,8 +258,7 @@ public class DescriptionWindow : GUIElement
         return res;
     }
 
-
-    public static string CheckIfAppend3(ref int append , string msg, int returnEvery)
+    public static string CheckIfAppend3(ref int append, string msg, int returnEvery)
     {
         if (append >= returnEvery)
         {
@@ -270,11 +268,10 @@ public class DescriptionWindow : GUIElement
         return msg;
     }
 
-	// Update is called once per frame
-	void Update () 
+    // Update is called once per frame
+    private void Update()
     {
-	
-	}
+    }
 
     internal H CurrentType()
     {

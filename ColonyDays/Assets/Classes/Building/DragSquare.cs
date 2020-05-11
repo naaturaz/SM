@@ -1,18 +1,18 @@
 ﻿using System;
-using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 //this function as a Dragabble square the farming functions are not use at all. used to be the Farm.cs
 public class DragSquare : Trail
 {
     private bool _isFarmOk;//will say if a farm is ok to be built in the position
 
-    List<Vector3> soil = new List<Vector3>();//the initial center point of each tile in the farm soil
-    List<CreatePlane> _planesSoil = new List<CreatePlane>();
-    BigBoxPrev farmPrev;
+    private List<Vector3> soil = new List<Vector3>();//the initial center point of each tile in the farm soil
+    private List<CreatePlane> _planesSoil = new List<CreatePlane>();
+    private BigBoxPrev farmPrev;
 
-    int maxSizeOfFarm = 300;//max size of a farm 
+    private int maxSizeOfFarm = 300;//max size of a farm
     private float minSideLenght = 3.5f;//min side of a farm
 
     private int counter;//this is the counter of enlargements of the PreviewFarm
@@ -21,6 +21,7 @@ public class DragSquare : Trail
 
     //this is the flag will allow CreatePlanesRoutine() executed if true...
     private bool createSoilNow;
+
     //used as index when creating planes for the farm
     private int loopCounter;
 
@@ -43,12 +44,12 @@ public class DragSquare : Trail
     {
         if (ClosestSubMeshVert != ClosestVertOld)
         {
-            counter=0;
+            counter = 0;
         }
 
         base.Drag();
-        
-        if (OnScreenPoly.Count > 0 && counter==0)
+
+        if (OnScreenPoly.Count > 0 && counter == 0)
         {
             UpdateFarmPrev();
         }
@@ -56,20 +57,20 @@ public class DragSquare : Trail
 
     /// <summary>
     /// This method handles and deals with the if is to big or if a side is to small
-    /// Then calls the method that Colors the Preview 
+    /// Then calls the method that Colors the Preview
     /// </summary>
-    void ChecksCollSizeCallsColor()
+    private void ChecksCollSizeCallsColor()
     {
         //doing this bz the poly on X and Z really in real term will collide with next one that why
         //is reduced a bit so it can allow right next ones to be placed
         List<Vector3> localOnScreenPoly = UPoly.ScalePoly(OnScreenPoly, reduceOnXLocalOnScreenPoly);
 
-        List<Vector3> localSoilList = RetuFillPolyRealY(localOnScreenPoly[0], localOnScreenPoly[2], Mathf.Abs(m.SubDivide.XSubStep), 
+        List<Vector3> localSoilList = RetuFillPolyRealY(localOnScreenPoly[0], localOnScreenPoly[2], Mathf.Abs(m.SubDivide.XSubStep),
             Mathf.Abs(m.SubDivide.ZSubStep), true);
-        
+
         //too big
         bool isToBig = false;
-        if (localSoilList.Count > maxSizeOfFarm){isToBig = true;}
+        if (localSoilList.Count > maxSizeOfFarm) { isToBig = true; }
 
         //too small
         bool isToSmall = false;
@@ -80,11 +81,11 @@ public class DragSquare : Trail
             if (xDiff < minSideLenght || zDiff < minSideLenght)
             {
                 if (HType != H.Road)//this means that road can have any small size
-                {isToSmall = true;}
+                { isToSmall = true; }
             }
         }
 
-        //is colliding 
+        //is colliding
         bool isColliding = false;
         if (!isToBig && !isToSmall)
         { isColliding = BuildingPot.Control.Registro.IsCollidingWithExisting(localOnScreenPoly); }
@@ -102,13 +103,13 @@ public class DragSquare : Trail
         SetFarmOkAndHandleColor(isEvenFarm);
     }
 
-
     #region IsOnRange
 
     private Vector3 oldCheckedMousePoint;
+
     /// <summary>
-    /// Will tell if Road is too far from the closest building 
-    /// 
+    /// Will tell if Road is too far from the closest building
+    ///
     /// So user see the Decoration Only aspect of Road
     /// </summary>
     /// <returns></returns>
@@ -120,10 +121,10 @@ public class DragSquare : Trail
         {
             return true;
         }
-        //not include roads . other wise will allow u to keep building small roads forever 
+        //not include roads . other wise will allow u to keep building small roads forever
         var closestBuildList = ReturnClosestBuildings(m.HitMouseOnTerrain.point, 1, H.Road);
         //debug game
-        if (closestBuildList == null ||closestBuildList.Count==0 )
+        if (closestBuildList == null || closestBuildList.Count == 0)
         {
             return false;
         }
@@ -132,17 +133,17 @@ public class DragSquare : Trail
         oldCheckedMousePoint = evalCorner;
 
         var dist = Vector3.Distance(closestBuildList[0].transform.position, evalCorner);
-//        Debug.Log("Dsist:" + dist);
+        //        Debug.Log("Dsist:" + dist);
         return dist < 12f;//how far a road can be built
     }
 
     /// <summary>
-    /// Need to evalute the corner is furtheron the DragSquare with respect to the 
-    /// closest building 
+    /// Need to evalute the corner is furtheron the DragSquare with respect to the
+    /// closest building
     /// </summary>
     /// <param name="closestBuildPos"></param>
     /// <returns></returns>
-    Vector3 ReturnFurthersPolyCorner(Vector3 closestBuildPos)
+    private Vector3 ReturnFurthersPolyCorner(Vector3 closestBuildPos)
     {
         var dist0 = Vector3.Distance(closestBuildPos, OnScreenPoly[0]);
         var dist2 = Vector3.Distance(closestBuildPos, OnScreenPoly[2]);
@@ -156,8 +157,8 @@ public class DragSquare : Trail
 
     /// <summary>
     /// Define the closest build of a type. Will defined in the 'currStructure'
-    /// 
-    /// excluding: tht HType buiding will not be included on the list 
+    ///
+    /// excluding: tht HType buiding will not be included on the list
     /// </summary>
     public static List<Building> ReturnClosestBuildings(Vector3 comparitionPoint, int howMany, H excluding)
     {
@@ -168,10 +169,10 @@ public class DragSquare : Trail
         for (int i = 0; i < size; i++)
         {
             var key = BuildingPot.Control.Registro.AllRegFile[i].MyId;
-            //to address if building was deleted and not updated on the list 
+            //to address if building was deleted and not updated on the list
             Structure building = Brain.GetStructureFromKey(key);
 
-            if (building!=null && building.HType != excluding)
+            if (building != null && building.HType != excluding)
             {
                 Vector3 pos = BuildingPot.Control.Registro.AllBuilding[key].transform.position;
                 loc.Add(new VectorM(pos, comparitionPoint, key));
@@ -179,8 +180,8 @@ public class DragSquare : Trail
         }
         loc = ReturnOrderedByDistance(comparitionPoint, loc);
 
-        //game has not start or is a debuging game 
-        if (loc.Count<howMany)
+        //game has not start or is a debuging game
+        if (loc.Count < howMany)
         {
             return null;
         }
@@ -192,11 +193,12 @@ public class DragSquare : Trail
         }
         return res;
     }
-  
+
     private static float MAXDISTANCE = 5000f;
+
     /// <summary>
-    /// Return an ordered list of places ordered by distance by stone . If the place element is farther then 
-    /// MAXDISTANCE wont be added to the final result 
+    /// Return an ordered list of places ordered by distance by stone . If the place element is farther then
+    /// MAXDISTANCE wont be added to the final result
     /// </summary>
     /// <param name="stone">The initial point from where needs to be ordered</param>
     /// <param name="places">Places to order</param>
@@ -217,15 +219,17 @@ public class DragSquare : Trail
         }
         return anchorOrdered.OrderBy(a => a.Distance).ToList();
     }
-    #endregion
 
-    BuildStat _unitStat;//what a unit stat total is. Used for Road
+    #endregion IsOnRange
+
+    private BuildStat _unitStat;//what a unit stat total is. Used for Road
+
     /// <summary>
-    /// If is a Road for example will find out if we have enough materials to 
-    /// cover this building 
-    /// 
+    /// If is a Road for example will find out if we have enough materials to
+    /// cover this building
+    ///
     /// Only convering now :
-    /// Wood, Stone 
+    /// Wood, Stone
     /// </summary>
     /// <returns></returns>
     protected bool IsUnitBuildCostCovered()
@@ -252,7 +256,7 @@ public class DragSquare : Trail
     }
 
     /// <summary>
-    /// Removign the total cost of a Unit Building... like Road 
+    /// Removign the total cost of a Unit Building... like Road
     /// </summary>
     protected void RemoveTotalUnitCost()
     {
@@ -270,12 +274,10 @@ public class DragSquare : Trail
         GameController.ResumenInventory1.Remove(P.Stone, _unitStat.Stone);
     }
 
-
-
     /// <summary>
     /// Sets the _isFarmOk bool and Handles the color of the preview
     /// </summary>
-    void SetFarmOkAndHandleColor(bool condition)
+    private void SetFarmOkAndHandleColor(bool condition)
     {
         if (IsBuildOk && condition && IsUnitBuildCostCovered()
             )
@@ -291,7 +293,7 @@ public class DragSquare : Trail
     }
 
     /// <summary>
-    /// Called from InputBuilder.cs when the user clicked to set the farm on the spot 
+    /// Called from InputBuilder.cs when the user clicked to set the farm on the spot
     /// </summary>
     public void FinishPlacingFarm()
     {
@@ -313,7 +315,7 @@ public class DragSquare : Trail
         RemoveTotalUnitCost();
     }
 
-    void AfterLoopRoutine()
+    private void AfterLoopRoutine()
     {
         PositionFixed = true;
     }
@@ -332,15 +334,15 @@ public class DragSquare : Trail
     /// <summary>
     /// This is how I send the farm to registro that later if user wants will be saved on file
     /// </summary>
-    void AddFarmToRegistro()
+    private void AddFarmToRegistro()
     {
         //doing this bz the poly on X is a bit off
         List<Vector3> localOnScreenPoly = UPoly.ScalePoly(OnScreenPoly, reduceOnXLocalOnScreenPoly);
         var middleOfGameObj = MiddlePos(localOnScreenPoly);
 
         //this is the call when it add the collider rectangle to the world and save the RegFile in Registro
-        BuildingPot.Control.Registro.AddBuildToAll(this, localOnScreenPoly, Category, middleOfGameObj, 
-            Inventory,  
+        BuildingPot.Control.Registro.AddBuildToAll(this, localOnScreenPoly, Category, middleOfGameObj,
+            Inventory,
             PeopleDict,
             LandZone1,
             planesOnAirPos: soil, tileScale: Program.gameScene.ScaleSmallRoadUnitFarm,
@@ -350,21 +352,21 @@ public class DragSquare : Trail
     /// <summary>
     /// Need to find the middile pos of gameobj so when BoxCollider is added is on center of it
     /// </summary>
-    Vector3 MiddlePos(List<Vector3> polyP)
+    private Vector3 MiddlePos(List<Vector3> polyP)
     {
-        var x = (polyP[0].x + polyP[1].x)/2;
+        var x = (polyP[0].x + polyP[1].x) / 2;
         var z = (polyP[0].z + polyP[3].z) / 2;
         return new Vector3(x, transform.position.y, z);
     }
-    
+
     /// <summary>
     /// defines the initial point of the farm soil which make it the center of the tile
     /// that starts in NW
     /// </summary>
-    Vector3 DefineInitSuchSoilPoint(Vector3 point)
+    private Vector3 DefineInitSuchSoilPoint(Vector3 point)
     {
         Vector3 lo = point;
-        lo.x = lo.x + Mathf.Abs(m.SubDivide.XSubStep) / 3;  //used to be 2 ... put 3 
+        lo.x = lo.x + Mathf.Abs(m.SubDivide.XSubStep) / 3;  //used to be 2 ... put 3
                                                             //to correct bugg that will push the farm tiles to the positive X
                                                             //and neg Z oonce i corrected the tiles to look seamless on terrain
                                                             //i remove and add this values to the initial point
@@ -376,21 +378,16 @@ public class DragSquare : Trail
     /// Creates the initial list points for a farm. The farm tiles are biult based on the initial point
     /// Becauise this tiles have an scale
     /// </summary>
-    void CreateFarmSoil()
+    private void CreateFarmSoil()
     {
-        soil = RetuFillPolyRealY(OnScreenPoly[0], OnScreenPoly[2], 
-            Mathf.Abs( m.SubDivide.XSubStep),
-            Mathf.Abs( m.SubDivide.ZSubStep), 
+        soil = RetuFillPolyRealY(OnScreenPoly[0], OnScreenPoly[2],
+            Mathf.Abs(m.SubDivide.XSubStep),
+            Mathf.Abs(m.SubDivide.ZSubStep),
             true);
 
         createSoilNow = true;
         //UVisHelp.CreateHelpers(soil, Root.blueCube);
     }
-
-
-
-
-
 
     /// <summary>
     /// Called from Update if createSoilNow = true
@@ -398,7 +395,7 @@ public class DragSquare : Trail
     /// </summary>
     /// <param name="pos">The list of initial positions for each tile</param>
     /// <param name="containerP">The container will hold all tiles. Usually is this.transform</param>
-    void CreatePlanesRoutine(List<Vector3> pos, Transform containerP)
+    private void CreatePlanesRoutine(List<Vector3> pos, Transform containerP)
     {
         if (loopCounter < pos.Count)
         {
@@ -415,8 +412,6 @@ public class DragSquare : Trail
                 pos[loopCounter], scale: Program.gameScene.ScaleSmallRoadUnitFarm, container: containerP, hType: HType);
             }
 
-
-
             _planesSoil.Add(temp);
             loopCounter++;
         }
@@ -427,22 +422,21 @@ public class DragSquare : Trail
         }
     }
 
-
     /// <summary>
     /// Return a filed poly with RealYs if  bool findRealY is true. Otherwise the same but the Y is NW.y
     /// </summary>
-    List<Vector3> RetuFillPolyRealY(Vector3 NW, Vector3 SE, float xStep, float zStep, bool findRealY)
+    private List<Vector3> RetuFillPolyRealY(Vector3 NW, Vector3 SE, float xStep, float zStep, bool findRealY)
     {
         List<Vector3> res = new List<Vector3>();
         NW = DefineInitSuchSoilPoint(NW);
 
-        for (float x = NW.x; x < SE.x; x+= xStep)
+        for (float x = NW.x; x < SE.x; x += xStep)
         {
-            for (float z = NW.z; z > SE.z; z-= zStep)
+            for (float z = NW.z; z > SE.z; z -= zStep)
             {
                 //for fill a field we shiyld use the REal Y so tiles look close to ground
                 if (findRealY) { res.Add(m.Vertex.BuildVertexWithXandZ(x, z)); }
-                //for find out how big is gonna be the List we dont need findRealY since that makes it slow and we just 
+                //for find out how big is gonna be the List we dont need findRealY since that makes it slow and we just
                 //need to know a number
                 else if (!findRealY) { res.Add(new Vector3(x, NW.y, z)); }
             }
@@ -465,7 +459,7 @@ public class DragSquare : Trail
     /// <summary>
     /// Updates Farm preview
     /// </summary>
-    void UpdateFarmPrev()
+    private void UpdateFarmPrev()
     {
         float diffY = UMath.ReturnDiffBetwMaxAndMin(OnScreenPoly, H.Y);
         var locPoly = EnlargePolyTowards(Dir.NE, OnScreenPoly, m.SubDivide.XSubStep, m.SubDivide.ZSubStep);
@@ -476,9 +470,9 @@ public class DragSquare : Trail
 
     /// <summary>
     /// Enlarges a poly towards a Direction. Is called from UpdateFarmPrev() because for feel natural and smooth
-    /// a new row and col had to be added to the farm so it looks good 
+    /// a new row and col had to be added to the farm so it looks good
     /// </summary>
-    List<Vector3> EnlargePolyTowards(Dir towards, List<Vector3> poly, float inX, float inZ)
+    private List<Vector3> EnlargePolyTowards(Dir towards, List<Vector3> poly, float inX, float inZ)
     {
         counter++;
 
@@ -516,13 +510,13 @@ public class DragSquare : Trail
         {
             _planesSoil[i].Destroy();
         }
-        
+
         //BuildingPot.Control.Registro.RemoveItem(Category, MyId);
         _isOrderToDestroy = true;
         DestroyOrdered();
     }
 
-	// Use this for initialization
+    // Use this for initialization
     private void Start()
     {
         base.Start();
@@ -542,8 +536,8 @@ public class DragSquare : Trail
     }
 
     // Update is called once per frame
-	void Update ()
-	{
+    private void Update()
+    {
         if (!PositionFixed)
         {
             base.Update();
@@ -552,16 +546,16 @@ public class DragSquare : Trail
                 DestroyPreviews();
             }
         }
-	    if (createSoilNow)
-	    {
-	        CreatePlanesRoutine(soil, transform);
-	    }
+        if (createSoilNow)
+        {
+            CreatePlanesRoutine(soil, transform);
+        }
     }
 
     public new Vector3 MiddlePoint()
     {
         var s = (PlanesSoil.Count / 2).ToString();
-        var i = int.Parse( Math.Round(float.Parse(s)).ToString() );
+        var i = int.Parse(Math.Round(float.Parse(s)).ToString());
 
         return PlanesSoil[i].transform.position;
     }

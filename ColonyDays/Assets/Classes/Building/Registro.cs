@@ -1,7 +1,6 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System;
+using UnityEngine;
 
 //mono only use to print. can be remove
 //this class used to be Rectangle.cs
@@ -9,10 +8,11 @@ public class Registro : MonoBehaviour
 {
     //all bulidings
     private List<RegFile> _allRegFile = new List<RegFile>();
+
     //hovered buildings
     private List<RegFile> _hover = new List<RegFile>();
 
-    private List<Vector3> _locHoverVert = new List<Vector3>(); //poly of the area hovered 
+    private List<Vector3> _locHoverVert = new List<Vector3>(); //poly of the area hovered
     private Rect _hoverVertexRect = new Rect(); //poly of the area hovered , the rect
     public static List<Rect> toDraw = new List<Rect>();
     public static Rect curr = new Rect();
@@ -25,11 +25,10 @@ public class Registro : MonoBehaviour
     private Dictionary<string, Building> _allBuilding = new Dictionary<string, Building>();
     private Building _selectBuilding = new Building();
 
-
     private List<Building> _toDestroyBuilding = new List<Building>();
 
     /// <summary>
-    /// All Buildings are here collected 
+    /// All Buildings are here collected
     /// </summary>
     public Dictionary<string, Building> AllBuilding
     {
@@ -75,12 +74,13 @@ public class Registro : MonoBehaviour
         set { _isFullyLoaded = value; }
     }
 
-
-    public Registro() { }
+    public Registro()
+    {
+    }
 
     /// <summary>
     /// Will return the first Structure that cointains param
-    /// 
+    ///
     /// So if u pass as param 'dock' will try to find the first dock
     /// </summary>
     /// <param name="param"></param>
@@ -110,9 +110,9 @@ public class Registro : MonoBehaviour
         return (float)avg * workers;
     }
 
-
     #region ToDestroyBuilding
-    void AddToDestroyBuilding(Building build)
+
+    private void AddToDestroyBuilding(Building build)
     {
         //was added already
         if (FindFromToDestroyBuildings(build.MyId) != null)
@@ -137,7 +137,8 @@ public class Registro : MonoBehaviour
     {
         return _toDestroyBuilding.Count > 0;
     }
-    #endregion
+
+    #endregion ToDestroyBuilding
 
     /// <summary>
     /// Remove item from All, and its spefic list
@@ -178,7 +179,7 @@ public class Registro : MonoBehaviour
     }
 
     /// <summary>
-    /// Onces is set to be destroy all the Regular orders in Dispatch need to be removed 
+    /// Onces is set to be destroy all the Regular orders in Dispatch need to be removed
     /// </summary>
     /// <param name="myId"></param>
     private void RemoveRegularOrders(string myId)
@@ -188,14 +189,14 @@ public class Registro : MonoBehaviour
 
     /// <summary>
     /// If building has any remaining inventory will add the evacuation order to Dispatch
-    /// So the inventory is not lost 
+    /// So the inventory is not lost
     /// </summary>
     /// <param name="myIdP"></param>
     private void AddEvacutationOrder(string myIdP)
     {
         var build = Brain.GetBuildingFromKey(myIdP);
 
-        //the building was destroy before was fully built 
+        //the building was destroy before was fully built
         if (build == null || build.Category == Ca.Way || build.HType == H.Road)
         {
             return;
@@ -212,7 +213,7 @@ public class Registro : MonoBehaviour
     {
         int index = AllRegFile.FindIndex(a => a.MyId == myId);
 
-        //bz when destroying Way this method is called at least two times. 
+        //bz when destroying Way this method is called at least two times.
         //the 2nd time doesnt find the index bz was removed already
         if (index == -1)
         {
@@ -223,7 +224,7 @@ public class Registro : MonoBehaviour
     }
 
     /// <summary>
-    /// This is intended to save the new material assigned to the building on disk 
+    /// This is intended to save the new material assigned to the building on disk
     /// </summary>
     public void UpdateItemMaterial(Ca cat, string myId, string newMatKey)
     {
@@ -257,7 +258,7 @@ public class Registro : MonoBehaviour
 
         //Poly List that only need a valid NW, NE, and SW
         SMe m = new SMe();
-        //throwing rays so we keep the exact Y values 
+        //throwing rays so we keep the exact Y values
         Vector3 NW = m.Vertex.BuildVertexWithXandZ(minX, maxZ);
         Vector3 NE = m.Vertex.BuildVertexWithXandZ(maxX, maxZ);
         Vector3 SE = m.Vertex.BuildVertexWithXandZ(maxX, minZ);
@@ -284,7 +285,7 @@ public class Registro : MonoBehaviour
 
         //Poly List that only need a valid NW, NE, and SW
         SMe m = new SMe();
-        //throwing rays so we keep the exact Y values 
+        //throwing rays so we keep the exact Y values
         Vector3 NW = new Vector3(minX, m.IniTerr.MathCenter.y, maxZ);
         Vector3 NE = new Vector3(maxX, m.IniTerr.MathCenter.y, maxZ);
         Vector3 SE = new Vector3(maxX, m.IniTerr.MathCenter.y, minZ);
@@ -296,8 +297,8 @@ public class Registro : MonoBehaviour
     /// <summary>
     /// Taken a list of vectors 3 will find NW, NE, and SW and from there will create a new rectangle
     /// Returns a rectangle in our system where North is on the higher Y value always
-    /// 
-    /// Y val flipped at the end 
+    ///
+    /// Y val flipped at the end
     /// </summary>
     public static Rect FromALotOfVertexToRect(List<Vector3> list)
     {
@@ -318,7 +319,7 @@ public class Registro : MonoBehaviour
 
         List<Vector3> poly = new List<Vector3>() { NW, NE, SE, SW };
 
-        //here i find the Rect from this poly and then 
+        //here i find the Rect from this poly and then
         // I invert the Y of the recatangle... other wise this big rectangle
         //is not overlapping anything will be far off in the Cordinates...
         //Due to North(up) is bigger here say 100,, and South(down) less say 0 all this on World Z axis
@@ -343,12 +344,12 @@ public class Registro : MonoBehaviour
         Vector3 max = new Vector3(), H instructionP = H.None, BookedHome BookedHome1 = null,
         Dispatch dispatch = null, Family[] Families = null,
         int dollarsPay = 0,
-        List<Vector3> anchors = null, Dock dock = null, string root = "", 
+        List<Vector3> anchors = null, Dock dock = null, string root = "",
         BuildersManager buildersManager = null
         )
     {
         // 12 hours to find this OMG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // I was creating the recatblgele and not inverting Y.. then I invert Y but didint inverted in 
+        // I was creating the recatblgele and not inverting Y.. then I invert Y but didint inverted in
         //IsColliding() chet !!!! And i knew it bz i inverted the big rectangle...
         //with the rectangles inverted works like a charm... we have to do it bz im using North as bigger
         //and south as less... in the Rect cordinates is the other way around
@@ -395,10 +396,10 @@ public class Registro : MonoBehaviour
     }
 
     /// <summary>
-    /// Will add to the list of buildings needed to be built 
+    /// Will add to the list of buildings needed to be built
     /// </summary>
     /// <param name="b"></param>
-    void AddToBuilderManager(string myId)
+    private void AddToBuilderManager(string myId)
     {
         Building st = Brain.GetBuildingFromKey(myId);
         if (st.IsLoadingFromFile)
@@ -409,13 +410,14 @@ public class Registro : MonoBehaviour
         PersonPot.Control.BuildersManager1.AddNewConstruction(st.MyId, st.HType, 2, st.transform.position);
     }
 
-    //used to hold the current birdge until all Pieces are spawned 
+    //used to hold the current birdge until all Pieces are spawned
     //needed bz we clear BuilderPot.Control.CurrentSpawnBuild
     public static Building oldBridge;
+
     /// <summary>
     /// Created to avoid exception that key exist already
     /// </summary>
-    void AddToAll(RegFile regFile)
+    private void AddToAll(RegFile regFile)
     {
         var key = regFile.MyId;
 
@@ -443,7 +445,7 @@ public class Registro : MonoBehaviour
     }
 
     //will add an new building to it list dependeing on catefory
-    void AddSpecToList(Ca cat)
+    private void AddSpecToList(Ca cat)
     {
         if (cat == Ca.Way)
         {
@@ -466,8 +468,8 @@ public class Registro : MonoBehaviour
     }
 
     /// <summary>
-    /// Will update Propersties on AllRegFile so when is saved is there to be loaded 
-    /// 
+    /// Will update Propersties on AllRegFile so when is saved is there to be loaded
+    ///
     /// Prop that Update so far:
     /// BookedHome1
     /// Instruction
@@ -485,7 +487,7 @@ public class Registro : MonoBehaviour
     /// </summary>
     public void ResaveOnRegistro(string myIdP)
     {
-        //for when Building is loading and writing PeopleDict 
+        //for when Building is loading and writing PeopleDict
         if (!AllBuilding.ContainsKey(myIdP))
         {
             return;
@@ -519,8 +521,8 @@ public class Registro : MonoBehaviour
     }
 
     /// <summary>
-    /// Will update Propersties on AllRegFile so when is saved is there to be loaded 
-    /// 
+    /// Will update Propersties on AllRegFile so when is saved is there to be loaded
+    ///
     /// Prop that Update so far:
     /// BookedHome1
     /// Instruction
@@ -544,7 +546,7 @@ public class Registro : MonoBehaviour
         regFile.Inventory = build.Inventory;
         regFile.PeopleDict = build.PeopleDict;
 
-        //only need to be resave when Loaded Town spanws 
+        //only need to be resave when Loaded Town spanws
         if (anchorsIsOn && !build.MyId.Contains("Bridge"))
         {
             regFile.Anchors = build.Anchors.ToArray();
@@ -564,9 +566,9 @@ public class Registro : MonoBehaviour
     }
 
     /// <summary>
-    /// If the key exist on Dict will add a Zero to the end of the MyId, will check again until it doesnt exist 
+    /// If the key exist on Dict will add a Zero to the end of the MyId, will check again until it doesnt exist
     /// </summary>
-    General CheckIfOnDict<T>(Dictionary<string, T> onDictionary, General checkP)
+    private General CheckIfOnDict<T>(Dictionary<string, T> onDictionary, General checkP)
     {
         if (onDictionary.ContainsKey(checkP.MyId))
         {
@@ -605,7 +607,7 @@ public class Registro : MonoBehaviour
     {
         ///////////////////////////////////////////////////////////**********************************************
         // 12 hours to find this OMG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // I was creating the recatblgele and not inverting Y.. then I invert Y but didint inverted in 
+        // I was creating the recatblgele and not inverting Y.. then I invert Y but didint inverted in
         //IsColliding() cheat !!!! And i knew it bz i inverted the big rectangle...
         //with the rectangles inverted works like a charm... we have to do it bz im using North as bigger
         //and south as leess... in the Rect cordinates is the other way arounds
@@ -651,7 +653,7 @@ public class Registro : MonoBehaviour
 
     /// <summary>
     /// The poly pass shoud be really really small like a point. to this be effcective
-    /// Created to find what is coliiding with a Tile 
+    /// Created to find what is coliiding with a Tile
     /// </summary>
     /// <param name="poly"></param>
     /// <returns></returns>
@@ -659,7 +661,7 @@ public class Registro : MonoBehaviour
     {
         ///////////////////////////////////////////////////////////**********************************************
         // 12 hours to find this OMG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // I was creating the recatblgele and not inverting Y.. then I invert Y but didint inverted in 
+        // I was creating the recatblgele and not inverting Y.. then I invert Y but didint inverted in
         //IsColliding() cheat !!!! And i knew it bz i inverted the big rectangle...
         //with the rectangles inverted works like a charm... we have to do it bz im using North as bigger
         //and south as leess... in the Rect cordinates is the other way arounds
@@ -691,10 +693,10 @@ public class Registro : MonoBehaviour
 
     /// <summary>
     /// Created for GC reasons Im not updating the invetory in buildings as changes anymore
-    /// Call when saving a game 
-    /// 
+    /// Call when saving a game
+    ///
     /// Will get the info from all buildings and will update it into AllRegFiles only Prop specified in ResaveOnRegistro()
-    /// are being resaved 
+    /// are being resaved
     /// </summary>
     internal void ResaveAllBuildings()
     {
@@ -767,20 +769,20 @@ public class Registro : MonoBehaviour
             res.Add(AllBuilding.ElementAt(i).Value.MyId);
         }
         return res;
-    }   
-    
+    }
+
     internal List<string> StringOfAllBuildingsHType()
     {
         List<string> res = new List<string>();
         for (int i = 0; i < AllBuilding.Count; i++)
         {
-            res.Add(AllBuilding.ElementAt(i).Value.HType+"");
+            res.Add(AllBuilding.ElementAt(i).Value.HType + "");
         }
         return res;
     }
 
     /// <summary>
-    /// All the positions in all work buildings 
+    /// All the positions in all work buildings
     /// </summary>
     /// <returns></returns>
     internal int MaxPositions()
@@ -797,7 +799,7 @@ public class Registro : MonoBehaviour
     }
 
     /// <summary>
-    /// a list string of all the building types that are a work 
+    /// a list string of all the building types that are a work
     /// </summary>
     /// <returns></returns>
     internal List<string> StringOfAllBuildingsThatAreAWork()
@@ -820,17 +822,17 @@ public class Registro : MonoBehaviour
         {
             if (BuildingWindow.isAWorkBuilding(AllBuilding.ElementAt(i).Value))
             {
-               AllBuilding.ElementAt(i).Value.DollarsPay = 5;
+                AllBuilding.ElementAt(i).Value.DollarsPay = 5;
             }
         }
     }
 
     /// <summary>
-    /// todo... 
-    /// to be used only when loading a brand new Terra Spawner file 
-    /// 
+    /// todo...
+    /// to be used only when loading a brand new Terra Spawner file
+    ///
     /// if spawnedData is in the closest9 regions will check if needs to remove itself bz
-    /// could fall into a building 
+    /// could fall into a building
     /// </summary>
     /// <param name="spawnedData"></param>
     /// <param name="closest9"></param>
@@ -847,6 +849,5 @@ public class Registro : MonoBehaviour
         {
             AllBuilding.ElementAt(i).Value.CheckOnMarkTerra();
         }
-
     }
 }

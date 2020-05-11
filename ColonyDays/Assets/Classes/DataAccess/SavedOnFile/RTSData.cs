@@ -1,15 +1,10 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Runtime.Serialization;
-using System;
-using System.Collections.Generic;
 
 public class RTSData //: General //,ISerializable
 {
     /// <summary>
     /// Camera Data
     /// </summary>
-
 
     public KeyCode saveKeyC;
     public KeyCode loadKeyC;
@@ -32,7 +27,6 @@ public class RTSData //: General //,ISerializable
         rot = transformCam.rotation;
         FOV = transformCam.transform.GetComponent<Camera>().fieldOfView;
         CenterTargetPos = centerTarget.position;
-
     }
 
     //use for last camera seen on screen
@@ -44,11 +38,7 @@ public class RTSData //: General //,ISerializable
         CenterTargetPos = centerTarget.position;
     }
 
-    public RTSData() { }
-
-
-
-
-
-
+    public RTSData()
+    {
+    }
 }

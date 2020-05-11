@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using UnityEngine;
-
+﻿using UnityEngine;
 
 public class ManagerReport
 {
-    static float _lastFPS;
+    private static float _lastFPS;
     private static FinalReport _finalReport;
 
     public static void Start()
@@ -27,7 +21,7 @@ public class ManagerReport
     }
 
     /// <summary>
-    /// To be called when game is loaded 
+    /// To be called when game is loaded
     /// </summary>
     public static void AddFPS()
     {
@@ -41,7 +35,7 @@ public class ManagerReport
 
     public static void FinishAllReports()
     {
-        //avoiding if was closed game even before loaded a map 
+        //avoiding if was closed game even before loaded a map
         if (!Program.GameFullyLoaded())
         {
             return;
@@ -50,13 +44,13 @@ public class ManagerReport
         _finalReport.FinishReport();
     }
 
-
     internal static void FinishAllReports(string p)
     {
-        //avoiding be sent in the first time 
+        //avoiding be sent in the first time
         if (!Program.GameFullyLoaded())
         {
-            return;        }
+            return;
+        }
 
         _finalReport.FinishReport(p);
     }
@@ -64,7 +58,6 @@ public class ManagerReport
     internal static void AddNewSpeed(int p)
     {
         _finalReport.AddSpeed(p);
-
     }
 
     /// <summary>
@@ -81,13 +74,10 @@ public class ManagerReport
         else if (type == "BugReport")
         {
             _finalReport.AddToBugReport(text);
-            
         }
         else if (type == "Invitation")
         {
             _finalReport.AddToInvitation(text);
-            
         }
     }
 }
-

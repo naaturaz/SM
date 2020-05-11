@@ -1,16 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.AI;
+﻿using UnityEngine;
 
 public class Commandable : UnitT
 {
-    Vector3 _agentDest;
-    Vector3 _oldDest = Vector3.forward;
+    private Vector3 _agentDest;
+    private Vector3 _oldDest = Vector3.forward;
 
-
-    float _distToDisable;
-    MilitarBody _militarBody;
+    private float _distToDisable;
+    private MilitarBody _militarBody;
 
     // Use this for initialization
     protected void Start()
@@ -48,7 +44,6 @@ public class Commandable : UnitT
         {
             if (IsGood)
             {
-
             }
             else if (!IsGood && !CheckOnShortDest())
             {
@@ -74,7 +69,7 @@ public class Commandable : UnitT
         }
     }
 
-    bool CheckOnShortDest()
+    private bool CheckOnShortDest()
     {
         if (UMath.nearEqualByDistance(transform.position, _agentDest, _distToDisable))
         {
@@ -83,5 +78,4 @@ public class Commandable : UnitT
         }
         return false;
     }
-
 }

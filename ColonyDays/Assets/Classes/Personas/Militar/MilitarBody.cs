@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 public class MilitarBody
 {
-    NavMeshAgent _agent;
-    GameObject _go;
+    private NavMeshAgent _agent;
+    private GameObject _go;
 
-    Animator _myAnimator;
+    private Animator _myAnimator;
     private string _currentAni;
     private string savedAnimation;
 
@@ -36,7 +33,6 @@ public class MilitarBody
         SetCurrentAni("isIdle", _currentAni);
         _agent = _go.GetComponent<NavMeshAgent>();
         _initialAgentSpeed = Agent.speed;
-
     }
 
     public void NewSpeed()
@@ -89,7 +85,7 @@ public class MilitarBody
         _currentAni = animationPass;
         _myAnimator.SetBool(animationPass, true);
 
-        //otherwise will stop the one intended to be playing now 
+        //otherwise will stop the one intended to be playing now
         if (_currentAni != oldAnimation)
         {
             _myAnimator.SetBool(oldAnimation, false);
@@ -102,10 +98,9 @@ public class MilitarBody
         Agent.enabled = false;
     }
 
+    private General deb;
 
-    General deb;
-
-    void Debugg(Vector3 pt)
+    private void Debugg(Vector3 pt)
     {
         if (deb != null)
         {
@@ -125,49 +120,42 @@ public class MilitarBody
         }
     }
 
-
-
-
-
-
-
     #region Scale
+
     //the yearly grow for each Gender. For this be effective the GameObj scale must
     // be initiated at 0.26f in all axis
     private float maleGrow = 0.01333f;
-    private float femaleGrow = 0.01111f;
 
+    private float femaleGrow = 0.01111f;
 
     /// <summary>
     /// Will set the body scale by Gender to this be effective the GameObj scale must
     /// be initiated at 0.26f in all axis
     /// </summary>
-    void SetScaleByAge()
+    private void SetScaleByAge()
     {
         var toAdd = 0f;
         var addAmnt = maleGrow;
         int ageHere = 20;
 
-        //starting age is always 2 .. bz thas the calculus i was based on 
+        //starting age is always 2 .. bz thas the calculus i was based on
         for (int i = 2; i < ageHere + 1; i++)
         { toAdd += addAmnt; }
 
         AddToBodyScale(toAdd);
     }
 
-
-
     /// <summary>
     /// Will add the scale phisically to the body
     /// </summary>
     /// <param name="toAdd"></param>
-    void AddToBodyScale(float toAdd)
+    private void AddToBodyScale(float toAdd)
     {
         var localScale = _go.transform.localScale;
         var singleS = localScale.x + toAdd;
         var newScale = new Vector3(singleS, singleS, singleS);
         _go.transform.localScale = newScale;
     }
-    #endregion
 
+    #endregion Scale
 }

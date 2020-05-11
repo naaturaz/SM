@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 
-public class MouseInBorderRTS : GenericCameraComponent {
-
+public class MouseInBorderRTS : GenericCameraComponent
+{
     public static Dir GlobalDir;
     private int gUIsize = 10;
     private int gUIsizeUpDown = 5;//
-
 
     private int cornerSize = 3;
 
@@ -14,7 +13,8 @@ public class MouseInBorderRTS : GenericCameraComponent {
         get { return gUIsize; }
         set { gUIsize = value; }
     }
-    Dir direction;
+
+    private Dir direction;
 
     public Dir Direction
     {
@@ -56,7 +56,7 @@ public class MouseInBorderRTS : GenericCameraComponent {
             {
                 direction = ReturnSingleDirection(recdown, recup, recleft, recright);
 
-                if(UInput.IfCursorKeyIsPressed())
+                if (UInput.IfCursorKeyIsPressed())
                 {
                     direction = ReturnComposeDirectionWithKeyBoard(direction);
                 }
@@ -72,11 +72,11 @@ public class MouseInBorderRTS : GenericCameraComponent {
     /// </summary>
     /// <param name="dir"></param>
     /// <returns></returns>
-    Dir ReturnComposeDirectionWithKeyBoard(Dir dir)
+    private Dir ReturnComposeDirectionWithKeyBoard(Dir dir)
     {
-        if(UInput.IfHorizontalKeysIsPressed() && dir == Dir.Up)
+        if (UInput.IfHorizontalKeysIsPressed() && dir == Dir.Up)
         {
-            if(UInput.HorizVal()> 0)
+            if (UInput.HorizVal() > 0)
             {
                 dir = Dir.UpRight;
             }
@@ -97,9 +97,9 @@ public class MouseInBorderRTS : GenericCameraComponent {
             }
         }
 
-        if(UInput.IfVerticalKeyIsPressed() && dir == Dir.Right)
+        if (UInput.IfVerticalKeyIsPressed() && dir == Dir.Right)
         {
-            if(UInput.VertiVal() > 0)
+            if (UInput.VertiVal() > 0)
             {
                 dir = Dir.UpRight;
             }
@@ -122,7 +122,7 @@ public class MouseInBorderRTS : GenericCameraComponent {
         return dir;
     }
 
-    Dir ReturnComposeDirection(Rect rectDownLeft, Rect rectDownRight,
+    private Dir ReturnComposeDirection(Rect rectDownLeft, Rect rectDownRight,
         Rect rectUpLeft, Rect rectUpRight)
     {
         direction = Dir.None;
@@ -146,7 +146,7 @@ public class MouseInBorderRTS : GenericCameraComponent {
         return direction;
     }
 
-    Dir ReturnSingleDirection(Rect recdown, Rect recup, Rect recleft, Rect recright)
+    private Dir ReturnSingleDirection(Rect recdown, Rect recup, Rect recleft, Rect recright)
     {
         direction = Dir.None;
         if (recdown.Contains(Input.mousePosition))

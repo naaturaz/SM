@@ -19,7 +19,7 @@ public class ShowPathTo
 
     private string rootSpawnObj;//the obj will be spwan and show as the root visual helper
 
-    private float _pointsInLineStep;//how apart are the steps of the points 
+    private float _pointsInLineStep;//how apart are the steps of the points
 
     private GameObject _finalGO;
 
@@ -54,7 +54,7 @@ public class ShowPathTo
         _pointsInLineStep = .5f;
     }
 
-    void PreInitForPerson()
+    private void PreInitForPerson()
     {
         if (DoesNeedToBeStop())
         {
@@ -92,10 +92,10 @@ public class ShowPathTo
     }
 
     /// <summary>
-    /// A null Structure 
+    /// A null Structure
     /// </summary>
     /// <returns></returns>
-    bool DoesNeedToBeStop()
+    private bool DoesNeedToBeStop()
     {
         return (_type == "Work" && _person.Work == null) ||
                (_type == "Home" && _person.Home == null) ||
@@ -114,7 +114,7 @@ public class ShowPathTo
 
     private void SetPrevAndNextIfNeed()
     {
-        if (_type == "Sea" || _spawns.Count < 2)//sometimes needed if is too close to a builidng 
+        if (_type == "Sea" || _spawns.Count < 2)//sometimes needed if is too close to a builidng
         {
             return;
         }
@@ -132,8 +132,6 @@ public class ShowPathTo
         }
     }
 
-
-
     private void SpawnPoints()
     {
         for (int i = 0; i < _listToSpawn.Count; i++)
@@ -150,7 +148,6 @@ public class ShowPathTo
             _spawns.Add(go);
         }
     }
-
 
     /// <summary>
     /// Be aware that from person.cs is called from 64ms courutine
@@ -175,7 +172,7 @@ public class ShowPathTo
                 if (_type != "Sea")
                 {
                     _spawns[_updateIndex].Destroy();
-                    //so it stays in the same one 
+                    //so it stays in the same one
                     _spawns.RemoveAt(_updateIndex);
                     _updateIndex--;
                 }
@@ -184,16 +181,17 @@ public class ShowPathTo
         }
     }
 
-    bool shown;
-    void ShowPath()
+    private bool shown;
+
+    private void ShowPath()
     {
         if (_type != "Sea")
         {
             //_spawns.Clear();
-            //bz they where destroyed when hide it 
+            //bz they where destroyed when hide it
             PreInitForPerson();
         }
-        else if(_type == "Sea" && !shown)
+        else if (_type == "Sea" && !shown)
         {
             shown = true;
             //Program.MouseListener.HelpWindow.ShowSpecificItemDontHideWindows("Sea Path.Help");
@@ -206,7 +204,7 @@ public class ShowPathTo
         _isToHideNow = false;
     }
 
-    void HidePath()
+    private void HidePath()
     {
         _isToHideNow = true;
         _updateIndex = 0;
@@ -225,7 +223,7 @@ public class ShowPathTo
         {
             HidePath();
         }
-        //being hide at call of this 
+        //being hide at call of this
         else if (_isToHideNow)
         {
             ShowPath();
@@ -243,7 +241,7 @@ public class ShowPathTo
     }
 
     /// <summary>
-    /// Will hide the Path 
+    /// Will hide the Path
     /// </summary>
     internal void Hide()
     {
@@ -269,4 +267,3 @@ public class ShowPathTo
         }
     }
 }
-

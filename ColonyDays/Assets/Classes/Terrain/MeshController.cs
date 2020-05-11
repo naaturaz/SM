@@ -7,15 +7,16 @@ public class MeshController : ControllerParent
     /// <summary>
     /// Shared from MeshCrontoller
     /// </summary>
-    public  RaycastHit HitMouseOnTerrain;
+    public RaycastHit HitMouseOnTerrain;
 
     //Mesh classes helpers, these all inherit from General: Monobehaviuor
     public Malla Malla;
-    public  UPoly Poly;
-    public  SubDivider subDivide;
-    public  Vertexer Vertex;
-    public  InitializerTerrain iniTerr;
-    public  SubPolyr SubPolyr;
+
+    public UPoly Poly;
+    public SubDivider subDivide;
+    public Vertexer Vertex;
+    public InitializerTerrain iniTerr;
+    public SubPolyr SubPolyr;
 
     //dont inherit
     public SubMeshData subMesh;
@@ -27,6 +28,7 @@ public class MeshController : ControllerParent
 
     //SubPolygons
     public List<Vector3> SubPolysList = new List<Vector3>();
+
     public Vector3[] Vertices;
     //---------------------------------------------------
 
@@ -34,42 +36,43 @@ public class MeshController : ControllerParent
     private CamControl camera;
 
     private Mesh mesh;
-    List<Vector3> dirs90 = new List<Vector3>();
+    private List<Vector3> dirs90 = new List<Vector3>();
 
     //Lot
     private float lotStepZ;
+
     private float lotStepX;
     private List<Lot> _lots = new List<Lot>();
     public List<Vector3> wholeMalla;
     private Vector3 nextStart;
-    float zLot;
+    private float zLot;
     private int lastRowCounter;
     private bool isTerraScanning;
-    
+
     private bool isToSetRealVerticesOnLots;//after terra scaning is done we want to set the vertices real on all lots
     private int realVertiesDoneCount;//all the lots that the real vertices were defined
 
     //for Lot obj ///Defined in ScanTerra()
-    Vector3 lotStart = new Vector3();
-    Vector3 lotEnd = new Vector3();
+    private Vector3 lotStart = new Vector3();
+
+    private Vector3 lotEnd = new Vector3();
 
     //whole
     public bool IsLoading;
+
     public List<Vector3> AllVertexs = new List<Vector3>();
 
-    WaterBound _waterBound = new WaterBound();
-    LandZoneManager _landZoneManager = new LandZoneManager();
+    private WaterBound _waterBound = new WaterBound();
+    private LandZoneManager _landZoneManager = new LandZoneManager();
 
     private static CrystalManager _crystalManager = new CrystalManager();
     private static BuyRegionManager _buyRegionManager;
-    
+
     public static CrystalManager CrystalManager1
     {
         get { return _crystalManager; }
         set { _crystalManager = value; }
     }
-
-
 
     public List<Lot> Lots
     {
@@ -107,7 +110,7 @@ public class MeshController : ControllerParent
     }
 
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         camera = USearch.FindCurrentCamera();
 
@@ -124,14 +127,14 @@ public class MeshController : ControllerParent
         subMesh = new SubMeshData();
         IsLoading = true;
 
-        //bz is static and if a new game is started needs to clean up and start again 
+        //bz is static and if a new game is started needs to clean up and start again
         CrystalManager1 = new CrystalManager();
     }
 
-    void Update()
+    private void Update()
     {
         int globalInPolyDiv = 5;//how many div ex 5x5 a real poly will have
-        int globalXStep = 5;//real polys in X will cover 
+        int globalXStep = 5;//real polys in X will cover
         int globalZStep = 5;//real polys in Z will cover
 
         int currentVertColAmount = 7;//used to be 3
@@ -140,7 +143,7 @@ public class MeshController : ControllerParent
         UpdateHitMouseOnTerrain();
         DrawDebug90Deg();
 
-        if (_buyRegionManager!=null)
+        if (_buyRegionManager != null)
         {
             _buyRegionManager.Update();
         }
@@ -156,9 +159,8 @@ public class MeshController : ControllerParent
             LoadingVertexMesh(globalInPolyDiv, globalXStep, globalZStep);
         }
 
-
-        //other wise is not needed 
-        if (BuildingPot.Control!=null && BuildingPot.Control.CurrentSpawnBuild!=null)
+        //other wise is not needed
+        if (BuildingPot.Control != null && BuildingPot.Control.CurrentSpawnBuild != null)
         {
             CurrentHoverVertices = Vertex.UpdateCurrentVertices(Malla, currentVertColAmount, currentVertRowAmount, lotStepX, lotStepZ, HitMouseOnTerrain);
         }
@@ -195,7 +197,6 @@ public class MeshController : ControllerParent
                && Malla.Lots.Count > 0 && !IsLoading;
     }
 
-
     /// <summary>
     /// Will try to load from LoadMeshFromFile() if cant will throw ScanProcedure()
     /// then will when the scan is done will WriteXMLMesh()
@@ -203,7 +204,7 @@ public class MeshController : ControllerParent
     /// <param name="inPolyDiv">how many div ex 5x5 a real poly will have</param>
     /// <param name="polyX">real polys in X will cover in each scan pass</param>
     /// <param name="polyZ">real polys in Z will cover in each scan pass</param>
-    void LoadingVertexMesh(int inPolyDiv, int polyX, int polyZ)
+    private void LoadingVertexMesh(int inPolyDiv, int polyX, int polyZ)
     {
         //print(iniTerr.Columns + ".Columns | " + iniTerr.Rows + ".Rows");
         if (IsLoading)
@@ -223,15 +224,15 @@ public class MeshController : ControllerParent
 
         if (!isTerraScanning && !IsLoading && Malla.Lots.Count == 0)
         {
-           //_waterBound.Create();
-           FinalWrite();
+            //_waterBound.Create();
+            FinalWrite();
         }
     }
 
     /// <summary>
     /// If realvertices in lots were not found will flagged. And when all were done will finally write the XML
     /// </summary>
-    void FinalWrite()
+    private void FinalWrite()
     {
         if (!isToSetRealVerticesOnLots && realVertiesDoneCount == 0)
         {
@@ -243,7 +244,7 @@ public class MeshController : ControllerParent
             subMesh.AllSubMeshedLots = Malla.Lots;
             subMesh.amountOfSubVertices = AllVertexs.Count;
             subMesh.mostCommonYValue = UList.FindMostCommonValue(H.Y, Vertices.ToList());
-           
+
             WriteXML();
             //print(subMesh.amountOfSubVertices + " subMesh.amountOfSubVertices ");
             isToSetRealVerticesOnLots = false;
@@ -258,7 +259,7 @@ public class MeshController : ControllerParent
     /// <summary>
     /// Will define real vertices on Lot this method is called from update if isToSetRealVerticesOnLots=true
     /// </summary>
-    void DefineRealVerticesOnLots()
+    private void DefineRealVerticesOnLots()
     {
         if (realVertiesDoneCount < Lots.Count)
         {
@@ -273,7 +274,7 @@ public class MeshController : ControllerParent
     /// <param name="inPolyDiv">how many div ex 5x5 a real poly will have</param>
     /// <param name="polyX">real polys in X will cover in each scan pass</param>
     /// <param name="polyZ">real polys in Z will cover in each scan pass</param>
-    void LoadMeshFromFile(int inPolyDiv, int polyX, int polyZ)
+    private void LoadMeshFromFile(int inPolyDiv, int polyX, int polyZ)
     {
         Debug.Log("LoadMesh:" + Time.time);
         iniTerr.InitializeLotStepVal(ref nextStart, subDivide, wholeMalla, Vertices, ref lotStepX, ref lotStepZ,
@@ -299,7 +300,6 @@ public class MeshController : ControllerParent
         }
         //print(AllVertexs.Count + ".AllVertexs.count. in mshContrl");
         Debug.Log("LoadMesh:" + Time.time);
-
     }
 
     /// <summary>
@@ -308,7 +308,7 @@ public class MeshController : ControllerParent
     /// <param name="inPolyDiv">how many div ex 5x5 a real poly will have</param>
     /// <param name="polyX">real polys in X will cover in each scan pass</param>
     /// <param name="polyZ">real polys in Z will cover in each scan pass</param>
-    void ScanProcedure(int inPolyDiv, int polyX, int polyZ)
+    private void ScanProcedure(int inPolyDiv, int polyX, int polyZ)
     {
         //return;
 
@@ -328,7 +328,7 @@ public class MeshController : ControllerParent
             isTerraScanning = false;
         }
         else
-        {   //starts forced scan terra 
+        {   //starts forced scan terra
             nextStart = wholeMalla[0];
             IsLoading = true;
             isTerraScanning = true;
@@ -336,7 +336,7 @@ public class MeshController : ControllerParent
         }
     }
 
-    void ReinitalizeAllMeshVars()
+    private void ReinitalizeAllMeshVars()
     {
         AllVertexs.Clear();
         Lots.Clear();
@@ -350,9 +350,9 @@ public class MeshController : ControllerParent
     }
 
     /// <summary>
-    /// It shows the abanico on the mouse on the Scene View Windows 
+    /// It shows the abanico on the mouse on the Scene View Windows
     /// </summary>
-    void DrawDebug90Deg()
+    private void DrawDebug90Deg()
     {
         dirs90 = new List<Vector3>();
         dirs90.Add(new Vector3(0, 0, 1));
@@ -395,11 +395,11 @@ public class MeshController : ControllerParent
 
     /// <summary>
     /// Scan all the terrain and will return the lot vertexs.. will do the sequence
-    /// too to scan all the terrain 
+    /// too to scan all the terrain
     /// </summary>
     /// <param name="inPolyDiv">how many div ex 5x5 a real poly will have</param>
     /// <returns>List Vector3 with a Lot full of fake vertices</returns>
-    List<Vector3> ScanTerraRetLotVertex(int inPolyDiv /*ex 5x5 inside the polygon*/, 
+    private List<Vector3> ScanTerraRetLotVertex(int inPolyDiv /*ex 5x5 inside the polygon*/,
         int polyX, int polyZ)
     {
         isTerraScanning = true;
@@ -409,7 +409,7 @@ public class MeshController : ControllerParent
         {
             if (lotStepX == 0)
             {
-                iniTerr.InitializeLotStepVal(ref nextStart, subDivide, wholeMalla, Vertices, 
+                iniTerr.InitializeLotStepVal(ref nextStart, subDivide, wholeMalla, Vertices,
                     ref lotStepX, ref lotStepZ);
             }
             if (nextStart != wholeMalla[0])
@@ -419,12 +419,12 @@ public class MeshController : ControllerParent
             }
 
             lotStart = nextStart;//nextstart get updated once goes into tht method
-            lot = subDivide.SubDivideLot(ref nextStart, polyX, polyZ, 
+            lot = subDivide.SubDivideLot(ref nextStart, polyX, polyZ,
                 iniTerr.StepX, iniTerr.StepZ, inPolyDiv, Vertices);
             lotEnd = nextStart;
             Malla.XLotColumns++;
         }
-        if (nextStart.x  >= wholeMalla[1].x)
+        if (nextStart.x >= wholeMalla[1].x)
         {
             Malla.IsXLotColumnsLocked = true;
             zLot = zLot - lotStepZ;

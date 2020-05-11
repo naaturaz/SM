@@ -1,15 +1,14 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class InputRTS : GenericCameraComponent
 {
-    Vector3 lastClosedPos;
-    List<RTSData> list = new List<RTSData>();
+    private Vector3 lastClosedPos;
+    private List<RTSData> list = new List<RTSData>();
 
-    static bool _isFollowingPersonNow;
-    Vector3 storedPos;
+    private static bool _isFollowingPersonNow;
+    private Vector3 storedPos;
     private Transform personToFollow;
 
     public static bool IsFollowingPersonNow
@@ -19,14 +18,14 @@ public class InputRTS : GenericCameraComponent
     }
 
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         Load();
         InitializeList();
     }
 
     // Update is called once per frame
-    void LateUpdate()
+    private void LateUpdate()
     {
         CenterCam();
         FollowPersonCam();
@@ -35,8 +34,6 @@ public class InputRTS : GenericCameraComponent
             CamFollowAction(personToFollow);
         }
 
-
-
         if (Program.MouseListener.IsAWindowShownNow() || CamControl.IsMainMenuOn())
         {
             return;
@@ -44,15 +41,13 @@ public class InputRTS : GenericCameraComponent
 
         if (!_isFollowingPersonNow && BuildingPot.InputMode == Mode.None)
         { CheckIfKeyWasPressed(); }
-
-  
     }
 
     /// <summary>
     /// When camera is following a personToFollow
     /// </summary>
     /// <param name="personToFollow"></param>
-    void CamFollowAction(Transform personToFollow)
+    private void CamFollowAction(Transform personToFollow)
     {
         if (personToFollow == null)
         {
@@ -70,9 +65,9 @@ public class InputRTS : GenericCameraComponent
     /// the keyCode to save have to be replaced with a new type of class
     /// that could be Comands.cs typeof
     /// </summary>
-    void InitializeList()
+    private void InitializeList()
     {
-        if (list.Count >0)
+        if (list.Count > 0)
         {
             return;
         }
@@ -90,10 +85,10 @@ public class InputRTS : GenericCameraComponent
         list.Add(new RTSData(KeyCode.F, KeyCode.F, TransformCam, CenterTarget));
     }
 
-    void CheckIfKeyWasPressed()
+    private void CheckIfKeyWasPressed()
     {
         //didnt load so one need to be redone
-        if (Program.IsInputLocked || list==null)
+        if (Program.IsInputLocked || list == null)
         {
             return;
         }
@@ -118,17 +113,17 @@ public class InputRTS : GenericCameraComponent
     }
 
     /// <summary>
-    /// if the specific key was pressed will save the cam pos in the coorrespondant 
+    /// if the specific key was pressed will save the cam pos in the coorrespondant
     /// list item
     /// </summary>
     /// <param name="saveKeyC"></param>
     /// <param name="pos"></param>
     /// <param name="rot"></param>
-    void SaveCamPos(KeyCode saveKeyC, Vector3 pos, Quaternion rot)
+    private void SaveCamPos(KeyCode saveKeyC, Vector3 pos, Quaternion rot)
     {
         if (list == null)
         {
-            list= new List<RTSData>();
+            list = new List<RTSData>();
             InitializeList();
         }
 
@@ -144,22 +139,20 @@ public class InputRTS : GenericCameraComponent
         }
     }
 
-
-    void Load()
+    private void Load()
     {
-        //is loading the whole list to 
+        //is loading the whole list to
         list = XMLSerie.ReadXML();
     }
 
-    void Save()
+    private void Save()
     {
         //SaveLoad.Save(list);
         //saving the whole list to ...
         XMLSerie.WriteXML(list);
     }
 
-
-    void OnApplicationQuit()
+    private void OnApplicationQuit()
     {
         Save();
     }
@@ -168,17 +161,15 @@ public class InputRTS : GenericCameraComponent
     /// load a specific camera saved pos if existed
     /// </summary>
     /// <param name="loadKeyC"></param>
-    void LoadCamPos(KeyCode loadKeyC, int listIdx = -1)
+    private void LoadCamPos(KeyCode loadKeyC, int listIdx = -1)
     {
         if (Dialog.IsActive())
         {
             return;
         }
 
-
-
-        //no file was found 
-        if (list==null)
+        //no file was found
+        if (list == null)
         {
             return;
         }
@@ -197,13 +188,13 @@ public class InputRTS : GenericCameraComponent
             }
             else if (list[i].pos != Vector3.zero)
             {
-//                print("Cam pos was saved in this slot ??");
+                //                print("Cam pos was saved in this slot ??");
             }
         }
     }
 
     /// <summary>
-    /// saves camera last position in the last element to the list 
+    /// saves camera last position in the last element to the list
     /// </summary>
     public void SaveLastCamPos()
     {
@@ -211,9 +202,6 @@ public class InputRTS : GenericCameraComponent
         //list.Add(new RTSData(KeyCode.None, KeyCode.None, TransformCam, CenterTarget));
         //list.Add(new RTSData(TransformCam, CenterTarget));
     }    /// <summary>
-   
-    
-
 
     /// <summary>
     /// Load las position of camera, saved in last element of the list
@@ -223,9 +211,8 @@ public class InputRTS : GenericCameraComponent
         LoadCamPos(KeyCode.None);
     }
 
-
     /// <summary>
-    /// Use to reset the camera 
+    /// Use to reset the camera
     /// </summary>
     public void SaveFirstCamPos()
     {
@@ -240,9 +227,8 @@ public class InputRTS : GenericCameraComponent
         LoadCamPos(KeyCode.F);
     }
 
-
     /// <summary>
-    /// centeer the cam to the newTarget position loops to gets the most accurate center 
+    /// centeer the cam to the newTarget position loops to gets the most accurate center
     /// position (due to algorithm is not really accurate)
     /// </summary>
     /// <param name="newTarget"></param>
@@ -292,10 +278,10 @@ public class InputRTS : GenericCameraComponent
     /// <summary>
     /// Camera will follow a person.First will center cam to person and then
     /// will make camera child of the CamControl.CAMRTS.centerOfRotY,
-    /// then once isFollowingPersonNow = true will follow the person until 
-    /// the flag is false. Once flag is up camera cant move or rotate 
+    /// then once isFollowingPersonNow = true will follow the person until
+    /// the flag is false. Once flag is up camera cant move or rotate
     /// </summary>
-    void FollowPersonCam()
+    private void FollowPersonCam()
     {
         if (Dialog.IsActive())
         {
@@ -327,7 +313,7 @@ public class InputRTS : GenericCameraComponent
         }
     }
 
-    Transform GetSelectedPerson()
+    private Transform GetSelectedPerson()
     {
         if (BuildingPot.Control == null || !BuildingPot.Control.Registro.IsFullyLoaded
             || Program.MouseListener.PersonWindow1 == null
@@ -338,7 +324,7 @@ public class InputRTS : GenericCameraComponent
 
         var person = Program.MouseListener.PersonWindow1.Person1;
 
-        if (person==null )
+        if (person == null)
         {
             return null;
         }

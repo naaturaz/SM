@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 
 public class ShipManager
 {
     private MDate _nextVisit;
-    List<Ship> _ships = new List<Ship>();
+    private List<Ship> _ships = new List<Ship>();
     private int _isToLoadShips = -1;
 
-    List<string> _shipsRoot = new List<string>()
-    { "Prefab/Ship/ShipSmall1", //"Prefab/Ship/ShipSmall2", "Prefab/Ship/ShipSmall3" 
-    }; 
+    private List<string> _shipsRoot = new List<string>()
+    { "Prefab/Ship/ShipSmall1", //"Prefab/Ship/ShipSmall2", "Prefab/Ship/ShipSmall3"
+    };
 
     public MDate NextVisit
     {
@@ -23,23 +22,25 @@ public class ShipManager
         set { _ships = value; }
     }
 
-    public ShipManager() { }
+    public ShipManager()
+    {
+    }
 
-    public void Update ()
+    public void Update()
     {
         CheckIfTimeToVisit();
-	    CheckWhenNextVisit();
+        CheckWhenNextVisit();
 
         if (_isToLoadShips == 1 && BuildingPot.Control.Registro.IsFullyLoaded)
         {
             _isToLoadShips = 0;
             LoadShips();
         }
-	}
+    }
 
     private void CheckIfTimeToVisit()
     {
-        if (_nextVisit != null && IsTheVisitPastOrNow() && 
+        if (_nextVisit != null && IsTheVisitPastOrNow() &&
             BuildingPot.Control.DockManager1.AtLeastOneDockHasSpace1More(_ships.Count))
         {
             _nextVisit = null;
@@ -48,7 +49,7 @@ public class ShipManager
     }
 
     /// <summary>
-    /// Instance a gameObject ship 
+    /// Instance a gameObject ship
     /// </summary>
     private void NewShipComingToUs()
     {
@@ -60,11 +61,8 @@ public class ShipManager
         }
 
         //_ships.Add(ShipGO.Create(Root.shipSmall, new Vector3(), build, H.ShipSmall));
-        _ships.Add(new Ship(_shipsRoot[UMath.GiveRandom(0,_shipsRoot.Count)], build, H.ShipSmall));
+        _ships.Add(new Ship(_shipsRoot[UMath.GiveRandom(0, _shipsRoot.Count)], build, H.ShipSmall));
     }
-
-
-
 
     private void CheckWhenNextVisit()
     {
@@ -106,24 +104,23 @@ public class ShipManager
     internal void RemoveMeFromShipsOnIsland(Ship shipGO)
     {
         _ships.Remove(shipGO);
-
     }
 
     internal void MarkToLoadShips()
     {
-        if (_isToLoadShips==-1)
+        if (_isToLoadShips == -1)
         {
             _isToLoadShips = 1;
-           //Debug.Log("_isToLoadShips tru:");
+            //Debug.Log("_isToLoadShips tru:");
         }
     }
 
-    void LoadShips()
+    private void LoadShips()
     {
         for (int i = 0; i < Ships.Count; i++)
         {
             Ships[i].ReCreateShip();
-           //Debug.Log("recreate ship:" + Ships[i].MyId);
+            //Debug.Log("recreate ship:" + Ships[i].MyId);
         }
     }
 }

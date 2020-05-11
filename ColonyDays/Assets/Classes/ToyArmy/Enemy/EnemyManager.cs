@@ -1,25 +1,24 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    float _firtSpawnsAt = 1;
-    float _othersSpawnsAt = 10;//120
-    float _lastSpawn = -1;
+    private float _firtSpawnsAt = 1;
+    private float _othersSpawnsAt = 10;//120
+    private float _lastSpawn = -1;
 
     //every 8 adult will spawn 1 enemy
-    int _personPer1Enemy = 4;//8
+    private int _personPer1Enemy = 4;//8
+
     private Vector3 _iniPoint;
 
     // Use this for initialization
-    void Start()
+    private void Start()
     {
-
     }
 
-    void Update()
+    private void Update()
     {
         return;
 
@@ -58,7 +57,6 @@ public class EnemyManager : MonoBehaviour
             _iniPoint = MeshController.BuyRegionManager1.ReturnCenterPosOfLockedNearbyRegion();
         }
 
-
         _lastSpawn = Time.time;
 
         int howMany = HowManyEnemiesSpawnNow();
@@ -76,44 +74,15 @@ public class EnemyManager : MonoBehaviour
         return adult / _personPer1Enemy;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    List<UnitT> _enemies = new List<UnitT>();
-    List<Transform> _enemiesTransform = new List<Transform>();
-
-
+    private List<UnitT> _enemies = new List<UnitT>();
+    private List<Transform> _enemiesTransform = new List<Transform>();
 
     internal bool ThereIsAnAttackNow()
     {
         return _enemies.Count > 0;
     }
 
-
-
-    void SpawnEnemy()
+    private void SpawnEnemy()
     {
         if (Program.gameScene == null)
         {
@@ -123,7 +92,7 @@ public class EnemyManager : MonoBehaviour
         SpawnEnemy(root, _iniPoint);
     }
 
-    void SpawnEnemy(string rootP, Vector3 spawnPos)
+    private void SpawnEnemy(string rootP, Vector3 spawnPos)
     {
         var ene = UnitT.CreateU(rootP, spawnPos, "Enemy." + rootP, null);
         _enemies.Add(ene);
@@ -135,10 +104,11 @@ public class EnemyManager : MonoBehaviour
         SpawnEnemy("Prefab/TA/Units/Infantry", pos);
     }
 
-    List<string> _attackUnit = new List<string>() {
+    private List<string> _attackUnit = new List<string>() {
         "Prefab/TA/Units/Infantry",
     };
-    string ReturnRandomAttackUnit()
+
+    private string ReturnRandomAttackUnit()
     {
         return _attackUnit[UMath.GiveRandom(0, _attackUnit.Count)];
     }
@@ -148,7 +118,7 @@ public class EnemyManager : MonoBehaviour
         return GetClosestEnemy(_enemiesTransform, from);
     }
 
-    Transform GetClosestEnemy(List<Transform> enemies, Vector3 from)
+    private Transform GetClosestEnemy(List<Transform> enemies, Vector3 from)
     {
         Transform tMin = null;
         float minDist = Mathf.Infinity;

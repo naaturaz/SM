@@ -1,17 +1,18 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-public class InputMeshSpawn : InputParent {
-
-    Vector2 firstCorner = new Vector2();
-    Vector2 secondCorner = new Vector2();
+public class InputMeshSpawn : InputParent
+{
+    private Vector2 firstCorner = new Vector2();
+    private Vector2 secondCorner = new Vector2();
 
     private Rect selectionDimRect;
     public Texture2D tex;
 
     //contains the elements that are selected to be mined
     private List<TerrainRamdonSpawner> toMineSelectList = new List<TerrainRamdonSpawner>();
-    List<SelectionGO> currentMineVisHelp = new List<SelectionGO>();
+
+    private List<SelectionGO> currentMineVisHelp = new List<SelectionGO>();
 
     public List<TerrainRamdonSpawner> ToMineSelectList
     {
@@ -20,20 +21,22 @@ public class InputMeshSpawn : InputParent {
     }
 
     // Use this for initialization
-    void Start()    {    }
+    private void Start()
+    { }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         //CuttingSwitch();
         //Cutter();
     }
 
     #region Mesh Controller
+
     /// <summary>
     /// Changes the current object to be cut
     /// </summary>
-    void CuttingSwitch()
+    private void CuttingSwitch()
     {
         if (BuildingPot.InputMode == Mode.Cutting)
         {
@@ -47,7 +50,7 @@ public class InputMeshSpawn : InputParent {
     /// <summary>
     /// this is the cutter action will fill up the toMineSelectList depending if we adding or removing items to cut/mine
     /// </summary>
-    void Cutter()
+    private void Cutter()
     {
         if (BuildingPot.InputMode == Mode.Cutting)
         {
@@ -77,7 +80,7 @@ public class InputMeshSpawn : InputParent {
     /// </summary>
     /// <param name="typePass">type of object expected (trees, stones, iron)</param>
     /// <returns>a list with the specific type of element passed (trees, stones, iron)</returns>
-    List<TerrainRamdonSpawner> ReturnListOfSpecificObj(H typePass)
+    private List<TerrainRamdonSpawner> ReturnListOfSpecificObj(H typePass)
     {
         StillElement still = null;
         List<TerrainRamdonSpawner> res = new List<TerrainRamdonSpawner>();
@@ -141,7 +144,7 @@ public class InputMeshSpawn : InputParent {
     /// <param name="typePass">H enum type pass</param>
     /// <param name="objPass">obj with will be evaluated to see if is that type of class</param>
     /// <returns>true if is the same, false otherwise</returns>
-    bool CheckIfTypeOfObj(H typePass, General objPass)
+    private bool CheckIfTypeOfObj(H typePass, General objPass)
     {
         bool res = false;
         if (typePass == H.Tree)
@@ -159,9 +162,9 @@ public class InputMeshSpawn : InputParent {
         return res;
     }
 
-    #endregion
+    #endregion Mesh Controller
 
-    void OnGUI()
+    private void OnGUI()
     {
         //Rect mapDimRectDraw = U2D.ReturnDrawRectYInverted(selectionDimRect);
         //GUI.DrawTexture(mapDimRectDraw, tex);

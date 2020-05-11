@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class MenuHandler : General {
-
+public class MenuHandler : General
+{
     public static bool CREATEMENU = true;//use to decide if create new menu
 
     internal Button currentBtn;
@@ -14,23 +13,23 @@ public class MenuHandler : General {
     internal AudioPlayer audioPlayer;
 
     //temporary
-    Vector3 moveToPosTemp;
+    private Vector3 moveToPosTemp;
 
     internal Btn lastAction;
 
-	// Use this for initialization
-	internal void Start ()
+    // Use this for initialization
+    internal void Start()
     {
         //audioPlayer = new AudioPlayer();
-	}
+    }
 
     /// <summary>
     /// Will act for each btn set actiion .. this method is implemented in all child classes too
     /// </summary>
     /// <param name="setOfBtns"></param>
-    internal void ActionableBtnClick(Button[] setOfBtns)//actionable buttons 
+    internal void ActionableBtnClick(Button[] setOfBtns)//actionable buttons
     {
-        //make sure there is not two obj in the array with the same name or contains partial part of the same name 
+        //make sure there is not two obj in the array with the same name or contains partial part of the same name
         currentBtn = USearch.FindBtnInColl(setOfBtns, Program.MOUSEOVERTHIS.name);
 
         if (currentBtn == null) return;
@@ -44,11 +43,11 @@ public class MenuHandler : General {
         }
         else if (currentBtn.btnAction == Btn.PlayNewGame)
         {
-            //needed here other wise would only create menu in next Scene after first left click 
-            MenuHandler.CREATEMENU = true; 
+            //needed here other wise would only create menu in next Scene after first left click
+            MenuHandler.CREATEMENU = true;
             Application.LoadLevel("Test3");
         }
-        else if(currentBtn.btnAction == Btn.ExitGame)
+        else if (currentBtn.btnAction == Btn.ExitGame)
         {
             Application.Quit();
         }
@@ -59,7 +58,7 @@ public class MenuHandler : General {
     /// </summary>
     /// <param name="setOfBtns">The set of buttons passed</param>
     /// <param name="rootP">The obj root will be spawn</param>
-    void SelectPlayerRoutine(Button[] setOfBtns, string rootP)
+    private void SelectPlayerRoutine(Button[] setOfBtns, string rootP)
     {
         int indexOfSingleB = -1;
         Btn3D singleBoard = (Btn3D)USearch.FindBtnInColl(setOfBtns, "SingleBoard", out indexOfSingleB);
@@ -94,13 +93,12 @@ public class MenuHandler : General {
         //}
     }
 
-	// Update is called once per frame
-	internal void Update () 
+    // Update is called once per frame
+    internal void Update()
     {
-        
-	}
+    }
 
-    /// will return object type Menus based on action 
+    /// will return object type Menus based on action
     public static Button CreateBtn(Button menuPass, string rootAction, Vector3 iniPosPass = new Vector3()
         , float speedPass = 0, string newName = "")
     {

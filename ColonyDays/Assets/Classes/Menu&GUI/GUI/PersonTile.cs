@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-
 
 public class PersonTile : GUIElement
 {
@@ -20,7 +15,6 @@ public class PersonTile : GUIElement
         get { return _person; }
         set { _person = value; }
     }
-
 
     internal static PersonTile Create(Transform container, Vector3 iniPos, Person person)
     {
@@ -41,7 +35,7 @@ public class PersonTile : GUIElement
         return obj;
     }
 
-    void Start()
+    private void Start()
     {
         //_showLoc = FindGameObjectInHierarchy("ShowLocation", gameObject).GetComponent<UnityEngine.UI.Button>();
 
@@ -50,10 +44,9 @@ public class PersonTile : GUIElement
         _valText = FindGameObjectInHierarchy("Item_Value", gameObject).GetComponent<Text>();
 
         var goBtnLoc = FindGameObjectInHierarchy("ShowLocation", gameObject);
-
     }
 
-    void Update()
+    private void Update()
     {
         _descText.text = _person.Name;
         _valText.text = _person.Age + "";
@@ -65,7 +58,7 @@ public class PersonTile : GUIElement
         Transform t;
 
         //means is a kids
-        //doing this bz they are in -10 in y.... didnt look for cause, I just fixed  
+        //doing this bz they are in -10 in y.... didnt look for cause, I just fixed
         if (_person.transform.localPosition.y < 0)
         {
             t = _person.Home.transform;
@@ -77,6 +70,4 @@ public class PersonTile : GUIElement
         Program.MouseListener.SelectPerson(_person);
         CamControl.CAMRTS.InputRts.CenterCamTo(t);
     }
-
 }
-

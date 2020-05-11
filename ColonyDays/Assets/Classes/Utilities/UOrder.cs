@@ -1,11 +1,9 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
-public class UOrder : MonoBehaviour {
-
-
+public class UOrder : MonoBehaviour
+{
     public static List<Vector3> ReturnOrderedByDistance(Vector3 stone, List<Vector3> list)
     {
         List<Vector3> res = new List<Vector3>();
@@ -23,7 +21,6 @@ public class UOrder : MonoBehaviour {
         }
         return res;
     }
-
 
     public static List<VectorM> ReturnOrderedByDistance(Vector3 stone, List<VectorM> places)
     {

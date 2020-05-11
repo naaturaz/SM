@@ -5,7 +5,6 @@
 /// </summary>
 
 using UnityEngine;
-using System.Collections;
 
 public class UnitSelect : MonoBehaviour
 {
@@ -19,9 +18,8 @@ public class UnitSelect : MonoBehaviour
 
     public Texture selectionTexture;
 
-
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (Input.GetButtonDown("Fire1"))
         {
@@ -35,12 +33,10 @@ public class UnitSelect : MonoBehaviour
         {
             LMBDownDrag(Input.mousePosition);
         }
-
     }
 
-    void LMBDown(Vector2 screenPosition)
+    private void LMBDown(Vector2 screenPosition)
     {
-
         lmbDown = screenPosition;
 
         RaycastHit hit;
@@ -55,18 +51,15 @@ public class UnitSelect : MonoBehaviour
         }
     }
 
-    void LMBUp(Vector2 screenPosition)
+    private void LMBUp(Vector2 screenPosition)
     {
-
         lmbUp = screenPosition;
         RaycastHit hit;
 
         lmbDrag = false;
-
-
     }
 
-    void LMBDownDrag(Vector2 screenPosition)
+    private void LMBDownDrag(Vector2 screenPosition)
     {
         if (screenPosition != lmbDown)
         {
@@ -82,11 +75,10 @@ public class UnitSelect : MonoBehaviour
         }
     }
 
-    void OnGUI()
+    private void OnGUI()
     {
         if (lmbDrag)
         {
-
             float width = lmbUp.x - lmbDown.x;
             float height = (Screen.height - lmbUp.y) - (Screen.height - lmbDown.y);
             Rect rect = new Rect(lmbDown.x, Screen.height - lmbDown.y, width, height);

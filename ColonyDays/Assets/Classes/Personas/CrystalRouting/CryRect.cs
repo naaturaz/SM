@@ -1,19 +1,19 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class CryRect
 {
     private Rect _theRect;
-    private Vector2 _a;//the start point of the route   
+    private Vector2 _a;//the start point of the route
     private Vector2 _b;//the 2nd farther from final, srahes one axis with 'a'
 
     private Vector2 _c;//the corner closest to the Destiny
     private Vector2 _d;//the corner 2nd closest to the destiny, share one axis value with 'c'
-    private bool _isSquare;//will say if the Rect was converted in a square 
+    private bool _isSquare;//will say if the Rect was converted in a square
 
-    private H _growIn = H.None;//if a rect needs to grow will grow only in 1 axis 
-    private float growFactor=1;
+    private H _growIn = H.None;//if a rect needs to grow will grow only in 1 axis
+    private float growFactor = 1;
 
     private Crystal _aCrystal;
     private Crystal _bCrystal;
@@ -74,20 +74,19 @@ public class CryRect
         set { _dCrystal = value; }
     }
 
-
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="ini"></param>
     /// <param name="end"></param>
     /// <param name="minimuSize">must have one side with a mimunum side like 10f
     /// this is to allow Mountain Routing to happen</param>
     /// <param name="grow">The grow of the rect on scale to make sure contain first and last </param>
-    public CryRect(Vector3 ini, Vector3 end, float grow, bool minimuSize=true, float debugDuration = 20f)
+    public CryRect(Vector3 ini, Vector3 end, float grow, bool minimuSize = true, float debugDuration = 20f)
     {
         _a = U2D.FromV3ToV2(ini);
-        
-        var poly = Registro.FromALotOfVertexToPolyMathCenterY(new List<Vector3>() {ini, end});
+
+        var poly = Registro.FromALotOfVertexToPolyMathCenterY(new List<Vector3>() { ini, end });
         poly = UPoly.ScalePoly(poly, grow);
 
         _theRect = Registro.FromALotOfVertexToRect(poly);
@@ -96,21 +95,21 @@ public class CryRect
         _b = FindB();
         _d = FindD();
 
-        //so Rect Grows 
-        //so way routing works 
+        //so Rect Grows
+        //so way routing works
         //PushThemAway();
 
         if (minimuSize)
         {
             //when calling this is really importat bz this solved the Mountain Routing problem
             //Dec 26 2015
-            ApplyMinimumSize(); 
+            ApplyMinimumSize();
         }
 
-        var newPoly = 
+        var newPoly =
             new List<Vector3>()
             {
-                U2D.FromV2ToV3(_a), U2D.FromV2ToV3(_b), 
+                U2D.FromV2ToV3(_a), U2D.FromV2ToV3(_b),
                 U2D.FromV2ToV3(_c), U2D.FromV2ToV3(_d)
             };
 
@@ -123,14 +122,14 @@ public class CryRect
 
     private void SetCrystals()
     {
-        _cCrystal = new Crystal(U2D.FromV2ToV3(C), H.RectCorner, "", setIdAndName:false);
+        _cCrystal = new Crystal(U2D.FromV2ToV3(C), H.RectCorner, "", setIdAndName: false);
         _dCrystal = new Crystal(U2D.FromV2ToV3(D), H.RectCorner, "", setIdAndName: false);
         _bCrystal = new Crystal(U2D.FromV2ToV3(B), H.RectCorner, "", setIdAndName: false);
     }
 
     /// <summary>
     /// created so when the rect grows will assign the correct point for each dot(a-d)
-    /// Can only grow as a Rectangle uniform scaling 
+    /// Can only grow as a Rectangle uniform scaling
     /// </summary>
     /// <param name="poly"></param>
     private void RectifyCorners(List<Vector3> poly)
@@ -141,9 +140,9 @@ public class CryRect
         _d = FindClosestToMe(_d, poly);
     }
 
-    Vector2 FindClosestToMe(Vector2 dot, List<Vector3> poly)
+    private Vector2 FindClosestToMe(Vector2 dot, List<Vector3> poly)
     {
-        List<VectorM>lis=new List<VectorM>();
+        List<VectorM> lis = new List<VectorM>();
 
         for (int i = 0; i < poly.Count; i++)
         {
@@ -160,10 +159,10 @@ public class CryRect
     /// Will find wht is the other poiunt in the rect tht is closer to LastPoint
     /// </summary>
     /// <returns></returns>
-    Vector2 FindD()
+    private Vector2 FindD()
     {
         Vector2 x = new Vector2(_c.x, _a.y);
-        Vector2 y = new Vector2( _a.x,_c.y);
+        Vector2 y = new Vector2(_a.x, _c.y);
 
         var distX = Vector2.Distance(_c, x);
         var distY = Vector2.Distance(_c, y);
@@ -179,7 +178,7 @@ public class CryRect
     /// Will find wht is the other poiunt in the rect tht is closer to LastPoint
     /// </summary>
     /// <returns></returns>
-    Vector2 FindB()
+    private Vector2 FindB()
     {
         Vector2 y = new Vector2(_c.x, _a.y);
         Vector2 x = new Vector2(_a.x, _c.y);
@@ -195,14 +194,14 @@ public class CryRect
     }
 
     /// <summary>
-    /// Will make the Rect grow in the side he is smaller 
+    /// Will make the Rect grow in the side he is smaller
     /// </summary>
     internal void ApplyMinimumSize()
     {
-//     //Debug.Log("smaller side: " + ReturnSizeOfSmallerSide());
+        //     //Debug.Log("smaller side: " + ReturnSizeOfSmallerSide());
 
         //this is important too other wise some rects that are abt regular size get huge
-        //so if the diff is bigger than 10f minimun size doenst need to be applied 
+        //so if the diff is bigger than 10f minimun size doenst need to be applied
         if (ReturnSizeOfSmallerSide() > 20f)
         {
             return;
@@ -224,8 +223,8 @@ public class CryRect
 
     /// <summary>
     /// Will push the A,B,C,D aaway from center in the 'axis'
-    /// 
-    /// This is how grows, we need to specifically grow this vectors bz thouse are the ones used in the routing 
+    ///
+    /// This is how grows, we need to specifically grow this vectors bz thouse are the ones used in the routing
     /// </summary>
     /// <param name="h"></param>
     private void PushThemAway()
@@ -245,8 +244,8 @@ public class CryRect
     }
 
     /// <summary>
-    /// Move each vector2 pass away from center only in the axis asked for 
-    /// 
+    /// Move each vector2 pass away from center only in the axis asked for
+    ///
     /// If none is 'axis' then will be pushed in both
     /// </summary>
     /// <param name="vector2"></param>
@@ -254,7 +253,7 @@ public class CryRect
     /// <returns></returns>
     private Vector2 MoveAwayFromCenterInAxis(Vector2 vector2, H axis = H.None)
     {
-        var dist = Mathf.Abs(Vector2.Distance(TheRect.center, vector2));//distnace to center of the rect 
+        var dist = Mathf.Abs(Vector2.Distance(TheRect.center, vector2));//distnace to center of the rect
 
         //so its moves away from center
         Vector2 newVal = Vector2.MoveTowards(vector2, TheRect.center, -(dist * growFactor));
@@ -270,8 +269,6 @@ public class CryRect
         //Y case
         return new Vector2(vector2.x, newVal.y);
     }
-
-
 
     private void DefineGrowAxis()
     {
@@ -290,10 +287,8 @@ public class CryRect
     {
         if (_theRect.width > _theRect.height)
         {
-
             return _theRect.height;
         }
         return _theRect.width;
     }
-
 }

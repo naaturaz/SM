@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class MouseAimCamera : MonoBehaviour
 {
-    GameObject target;
+    private GameObject target;
     public float rotateSpeed = 5;
-    Vector3 offset;
+    private Vector3 offset;
 
-    void Start()
+    private void Start()
     {
         if (target != null)
         {
@@ -16,7 +15,7 @@ public class MouseAimCamera : MonoBehaviour
         //target = SmoothFollow.TARGET.gameObject;
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         target = SmoothFollow.TARGET.gameObject;
 

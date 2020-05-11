@@ -529,7 +529,7 @@ public class Dispatch
                 continue;
             }
 
-            if(type == H.None)
+            if (type == H.None)
             {
                 if (currOrders[i].TypeOrder == H.None)
                     return RegularOrderDocker(person, currOrders[i]);
@@ -545,7 +545,6 @@ public class Dispatch
                 if (type == H.Import)
                     return EvacuationOrderDocker(person, currOrders[i]);
             }
-
         }
         return null;
     }
@@ -1413,7 +1412,6 @@ public class Dispatch
         }
         return res;
     }
-
 
     private Order FindOrderByID(string id)
     {

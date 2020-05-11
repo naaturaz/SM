@@ -1,40 +1,42 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class RegFile  {
-
+public class RegFile
+{
     //Structures Propertie
     private string _myId;
+
     private H _hType;
     private Ca _category;
-    Rect _dimOnMap = new Rect();
+    private Rect _dimOnMap = new Rect();
     private Vector3 _min;//min vector3 on a bound used only for stockpile
     private Vector3 _max;//max vector3 on a bound used only for stockpile
     private Vector3 _iniPos = new Vector3();
     private H _startingStage = H.None;
     private int _rotationFacerIndex;
 
-    //Way properties 
+    //Way properties
     private Rect _dimOnMapHor = new Rect();//use to hold the second Rect of a way. The horiz
 
     private List<Vector3> _tilePosVert = new List<Vector3>();//the position for each tile and for a bridege the starting point of a part
     private List<Vector3> _tilePosHor = new List<Vector3>();//the position for each tile and for a bridege the starting point of a part
 
     private Vector3 _tileScale = new Vector3();
-    string _materialKey;//the key of the material of an building
+    private string _materialKey;//the key of the material of an building
 
     //Bridge prop
     private List<int> _partsOnAir = new List<int>(); //the birdge part sequence
+
     private H _dominantSide;
     private List<Vector3> _planeOnAirPos = new List<Vector3>();//the planes position on the air of a bridge
+
     //this are the planes of the bridge that are not in the air
     private List<Vector3> _planesOnSoil = new List<Vector3>();
 
     //contains the shore elements of the bridge
-    //in the seq /-- --\ in the middle of that goes the birdges pieces 
+    //in the seq /-- --\ in the middle of that goes the birdges pieces
     // / represents an 11,,,     // - represents an 12
-    List<int> _partsOnSoil = new List<int>();
-
+    private List<int> _partsOnSoil = new List<int>();
 
     public List<VectorLand> LandZone1 = new List<VectorLand>();
 
@@ -49,7 +51,6 @@ public class RegFile  {
         get { return _planesOnSoil; }
         set { _planesOnSoil = value; }
     }
-
 
     public string MaterialKey
     {
@@ -155,7 +156,6 @@ public class RegFile  {
 
     public List<string> PeopleDict;
 
-
     public Inventory Inventory;
     public H Instruction;
     public BookedHome BookedHome1;//only save and loaded for Structures and Shore Types.
@@ -165,8 +165,9 @@ public class RegFile  {
 
     public int DollarsPay;
 
-    //all ways load this but  is only save it by bridges. 
+    //all ways load this but  is only save it by bridges.
     public Vector3[] Anchors;
+
     public Dock Dock1;
 
     public PlantSave PlantSave1;
@@ -180,17 +181,17 @@ public class RegFile  {
 
     public BuildersManager BuildersManager;
 
-    public RegFile(Building build, Rect dimOnMap, Ca category, Vector3 iniPosition, 
-        Inventory InventoryP, 
+    public RegFile(Building build, Rect dimOnMap, Ca category, Vector3 iniPosition,
+        Inventory InventoryP,
         List<string> peopleDict,
         List<VectorLand> LandZone1,
         Rect dimOnMapHor = new Rect(),
         List<Vector3> tilePosVert = null, List<Vector3> tilePosHor = null, List<Vector3> planesOnAirPos = null,
         Vector3 tileScale = new Vector3(), List<int> partsOnAir = null,
         H dominantSide = H.None, H startingStage = H.None, int rotationFacerIndex = -1, string materialKey = "",
-        List<Vector3> planesOnSoilPos = null, List<int> partsOnSoil = null, Vector3 min = new Vector3(), 
-        Vector3 max = new Vector3(), H instructionP = H.None , BookedHome bookedHome = null, 
-        Dispatch dispatch = null, Family[] familes = null ,
+        List<Vector3> planesOnSoilPos = null, List<int> partsOnSoil = null, Vector3 min = new Vector3(),
+        Vector3 max = new Vector3(), H instructionP = H.None, BookedHome bookedHome = null,
+        Dispatch dispatch = null, Family[] familes = null,
         int dollarsPay = 0,
         List<Vector3> anchors = null, Dock dock = null, string root = "",
         BuildersManager buildersManager = null
@@ -240,7 +241,9 @@ public class RegFile  {
         BuildersManager = buildersManager;
     }
 
-    public RegFile() { }
+    public RegFile()
+    {
+    }
 
     /// <summary>
     /// Returns true if rectPass is overlapping this obj on the _dimOnMap or  _dimOnMapHor
@@ -252,12 +255,12 @@ public class RegFile  {
     {
         //if rect pass overlaps the _dimOnMap or _dimOnMap is not being setup...
         if (rectPass.Overlaps(_dimOnMap) || _dimOnMap == new Rect())
-        { return true;}
+        { return true; }
 
         if (_dimOnMapHor != new Rect())
         {
             if (rectPass.Overlaps(_dimOnMapHor))
-            { return true; } 
+            { return true; }
         }
         return false;
     }

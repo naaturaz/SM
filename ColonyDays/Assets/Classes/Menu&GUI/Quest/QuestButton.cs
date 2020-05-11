@@ -2,19 +2,19 @@
 
 public class QuestButton : GUIElement
 {
-    GameObject _arrow;
-    QuestWindow _questWin;
-    GameObject _redCircle;
-    GameObject _text;
-    bool _shownArrow;
-    bool _wasHidden;
+    private GameObject _arrow;
+    private QuestWindow _questWin;
+    private GameObject _redCircle;
+    private GameObject _text;
+    private bool _shownArrow;
+    private bool _wasHidden;
 
-    void Start()
+    private void Start()
     {
         GatherAllGO();
 
         //_arrow.gameObject.SetActive(false);
-        
+
         SetCircleAndTextTo(false);
 
         _questWin = FindObjectOfType<QuestWindow>();
@@ -25,20 +25,20 @@ public class QuestButton : GUIElement
         }
     }
 
-    void GatherAllGO()
+    private void GatherAllGO()
     {
         _arrow = GetChildCalled("Arrow");
         _text = GetChildCalled("Text");
         _redCircle = GetChildCalled("Red_Circle");
     }
 
-    void SetCircleAndTextTo(bool active)
+    private void SetCircleAndTextTo(bool active)
     {
         _redCircle.SetActive(active);
         //_text.SetActive(active);
     }
 
-    void Update()
+    private void Update()
     {
         if (Program.gameScene.QuestManager.CurrentQuests.Count == 0 && _redCircle.activeSelf)
         {
@@ -87,5 +87,4 @@ public class QuestButton : GUIElement
             _arrow.SetActive(true);
         }
     }
-
 }

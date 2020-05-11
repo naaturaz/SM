@@ -1,17 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
-using System.Collections;
-using System.Linq;
 
-public class UString : MonoBehaviour {
-
+public class UString : MonoBehaviour
+{
     /// <summary>
-    ///     extract names of transform until granpa 
+    ///     extract names of transform until granpa
     ///will check too if the have the format of a MyId property
     /// Good: kaka | hahah | 272
     /// Bad: assvs | as_da | 345645645
-    /// Bad: House2 | House 2 | 82828   //numbers are only allowed on the last part 
+    /// Bad: House2 | House 2 | 82828   //numbers are only allowed on the last part
     /// </summary>
     public static List<string> ExtractNamesUntilGranpa(Transform tra)
     {
@@ -37,7 +36,6 @@ public class UString : MonoBehaviour {
             }
         }
         return res;
-
     }
 
     //Will math this :
@@ -47,9 +45,9 @@ public class UString : MonoBehaviour {
     //kahsdkahskdkasd.as.asd | asda | 345645645
     //s | asda | 345645645
 
-    //not this 
+    //not this
     //s | as_da | 345645645
-    public static  bool IsAValidMyId(string strinP)
+    public static bool IsAValidMyId(string strinP)
     {
         Regex regNot = new Regex(@"([a-zA-Z\.]+) \| (none) \| (\d+)");//if contains ' | None | ' will return false
         Regex regPass = new Regex(@"([a-zA-Z\.]+) \| ([a-zA-Z]+) \| (\d+)");
@@ -65,16 +63,15 @@ public class UString : MonoBehaviour {
         return false;
     }
 
-
     public static string ReturnMostCommonName(List<string> names)
     {
         var groupsWithCounts = from s in names
-            group s by s into g
-            select new
-            {
-                Item = g.Key,
-                Count = g.Count()
-            };
+                               group s by s into g
+                               select new
+                               {
+                                   Item = g.Key,
+                                   Count = g.Count()
+                               };
 
         var groupsSorted = groupsWithCounts.OrderByDescending(g => g.Count).ToList();
         string mostFrequest = groupsSorted[0].Item;
@@ -82,9 +79,8 @@ public class UString : MonoBehaviour {
         return mostFrequest;
     }
 
-
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="pass">pass The string pass</param>
     /// <param name="max">amount of spaces</param>
@@ -108,10 +104,9 @@ public class UString : MonoBehaviour {
         return pass;
     }
 
-
     /// <summary>
     /// Returns only the first part of a String
-    /// 
+    ///
     /// ex in: 'Cuco.Perez' out 'Cuco'
     /// </summary>
     /// <param name="pass"></param>
@@ -121,5 +116,4 @@ public class UString : MonoBehaviour {
         var arr = pass.Split('.');
         return arr[0];
     }
-
 }

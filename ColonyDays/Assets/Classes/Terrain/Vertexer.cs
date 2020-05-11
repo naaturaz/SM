@@ -1,7 +1,7 @@
-﻿/*Handles funtions related to vertex operations 
+﻿/*Handles funtions related to vertex operations
  */
+
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class Vertexer : General//only to use print()
@@ -12,7 +12,7 @@ public class Vertexer : General//only to use print()
     /// Will hold the list of int and corresponendt of Vector 3 for CurrentVertexs asked for MeshController
     /// This is implemented fot GC
     /// </summary>
-    Dictionary<int, List<Vector3>> _vertexBank = new Dictionary<int, List<Vector3>>(); 
+    private Dictionary<int, List<Vector3>> _vertexBank = new Dictionary<int, List<Vector3>>();
 
     public List<int> IndexesHover
     {
@@ -45,7 +45,7 @@ public class Vertexer : General//only to use print()
 
         List<Vector3> objects = new List<Vector3>();
         objects = UMesh.ReturnThePos(hitMouseOnTerrain.point, stepX, stepZ, columns, rows);
-        
+
         _indexesHover = UMesh.ReturnIndexesContain(objects, mallaPass.Lots);
         var res = UMesh.ReturnCurrentLotsVertex(IndexesHover, mallaPass.Lots);
 
@@ -53,29 +53,25 @@ public class Vertexer : General//only to use print()
         return res;
     }
 
-
-    void AddToBank(int indexMiddle, List<Vector3> vertexes)
+    private void AddToBank(int indexMiddle, List<Vector3> vertexes)
     {
         _vertexBank.Add(indexMiddle, vertexes);
     }
 
-    bool IsOnBankAlready(int indexMiddle)
+    private bool IsOnBankAlready(int indexMiddle)
     {
         return _vertexBank.ContainsKey(indexMiddle);
     }
 
-
-
-
-    //Given x and z Build a fake vertex where the terrain hits on Y... 
+    //Given x and z Build a fake vertex where the terrain hits on Y...
     public Vector3 BuildVertexWithXandZ(float x, float z)
     {
-//      //Debug.Log("BlueRay");
+        //      //Debug.Log("BlueRay");
         return new Vector3(x, m.SubDivide.FindYValueOnTerrain(x, z), z);
     }
 
     //given the closest vertex of any polygon to the Vector3 mousePos
-    //will find in wich Quadrant the Vector3 mousePos is 
+    //will find in wich Quadrant the Vector3 mousePos is
     public Dir FindVertexQuadrant(Vector3 vertex, Vector3 mousePos)
     {
         Dir quadrant = Dir.None;
@@ -98,10 +94,9 @@ public class Vertexer : General//only to use print()
         return quadrant;
     }
 
-
     /// Find the top left vertex given the firt vertex of any poly and in which quadrant is
     /// ... with the float stepX, float stepZ will find it in Vector3[] vertices
-    public Vector3 FindTopLeftVertex(Vector3 firstVertex, Dir quadrant, float stepX, float stepZ, 
+    public Vector3 FindTopLeftVertex(Vector3 firstVertex, Dir quadrant, float stepX, float stepZ,
         Vector3[] vertices)
     {
         Vector3 upLeftVertex = new Vector3();

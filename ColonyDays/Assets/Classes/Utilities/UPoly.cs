@@ -1,20 +1,21 @@
 ﻿/*
- * Make sure in the terrain no real vertex is on Vector.zero this will bring 
+ * Make sure in the terrain no real vertex is on Vector.zero this will bring
  * huge bugs
- * 
- * 
+ *
+ *
  */
-using UnityEngine;
+
 using System.Collections.Generic;
+using UnityEngine;
 
 public class UPoly
 {
-    static SMe m = new SMe();
+    private static SMe m = new SMe();
 
     #region Find Other Corner Side Used on Router.cs
 
     /// <summary>
-    /// Give poly, side was hitted and the common corner wichi in the case of person in the closest corner from 
+    /// Give poly, side was hitted and the common corner wichi in the case of person in the closest corner from
     /// the start point of a Route, will tell u the other corner in the poly.
     /// Ex: If common corner is 'SW' and sideHitLanded is 'W' the result is = 'NW'
     /// </summary>
@@ -25,7 +26,7 @@ public class UPoly
         Dir dirH = RemoveDuplicateAndInverseDir(sideHitLanded, commonCornerDir);
         Vector3 res = new Vector3();
 
-        Dir[] dirMap = new Dir[]{Dir.NW, Dir.NE, Dir.SE, Dir.SW};
+        Dir[] dirMap = new Dir[] { Dir.NW, Dir.NE, Dir.SE, Dir.SW };
 
         for (int i = 0; i < dirMap.Length; i++)
         {
@@ -42,7 +43,7 @@ public class UPoly
     /// ex, N + NE should return NW
     /// </summary>
     /// <returns></returns>
-    public static Dir RemoveDuplicateAndInverseDir(Dir sideHitLanded,  Dir commonCornerDir)
+    public static Dir RemoveDuplicateAndInverseDir(Dir sideHitLanded, Dir commonCornerDir)
     {
         char[] corner = commonCornerDir.ToString().ToCharArray();
         char[] side = sideHitLanded.ToString().ToCharArray();
@@ -51,12 +52,12 @@ public class UPoly
         //ex N and NE. We keep N and flip E
         if (side[0] == corner[0])
         {
-            t[0] = side[0]; 
+            t[0] = side[0];
             t[1] = FlipDir(corner[1]);
         }
         else if (side[0] == corner[1])
         {
-            t[0] = side[0]; 
+            t[0] = side[0];
             t[1] = FlipDir(corner[0]);
         }
         //calling here bz for exam iin case of a W side + SW corner the smash will be = WN
@@ -91,7 +92,7 @@ public class UPoly
     public static char FlipDir(char flip)
     {
         if (flip == 'N')
-        {flip = 'S';}
+        { flip = 'S'; }
         else if (flip == 'S')
         { flip = 'N'; }
         else if (flip == 'W')
@@ -123,8 +124,7 @@ public class UPoly
         return res;
     }
 
-    #endregion
-
+    #endregion Find Other Corner Side Used on Router.cs
 
     /// <summary>
     /// Given 2 diagonal points find the other 2 left to create a poly gon
@@ -165,7 +165,7 @@ public class UPoly
         return poly;
     }
 
-    //Creates a Poly given the topLeft, the steps will create it 
+    //Creates a Poly given the topLeft, the steps will create it
     public static List<Vector3> CreatePoly(Vector3 topLeft, float stepX, float stepZ, Vertexer vertex)
     {   //with the creating of the dummy ones is working like a charm.. bz the dummy vector3 is really close
         //to the real one... before in mountains didnt work bz in Y they were to far and the closest vertices
@@ -199,7 +199,7 @@ public class UPoly
     }
 
     public static List<Vector3> ReturnWholeMallaAs1Poly(Vector3[] vertices)
-    {   
+    {
         Vector3 topRight = vertices[0];
         Vector3 botLeft = vertices[vertices.Length - 1];
         Vector3 topLeft = new Vector3(botLeft.x, 0, topRight.z);
@@ -215,8 +215,8 @@ public class UPoly
         polyPass[2] = new Vector3(polyPass[2].x + @by, polyPass[2].y, polyPass[2].z - @by);
         polyPass[3] = new Vector3(polyPass[3].x - @by, polyPass[3].y, polyPass[3].z - @by);
         return polyPass;
-    }   
-    
+    }
+
     ////the Vector3 list must have this order: NW, NE, SE, SW
     //public static List<Vector3> ScalePoly(List<Vector3> polyPass, float by)
     //{
@@ -237,14 +237,14 @@ public class UPoly
     }
 
     //the Vector3 list must have this order: NW, NE, SE, SW
-    //this one is used for instances that dont need to ref the 'list' passed 
+    //this one is used for instances that dont need to ref the 'list' passed
     public static List<Vector3> ScalePolyNewList(List<Vector3> polyPass, float by)
     {
-        List<Vector3> newList= new List<Vector3>();
-        newList.Add( new Vector3(polyPass[0].x - @by, polyPass[0].y, polyPass[0].z + @by));
-        newList.Add( new Vector3(polyPass[1].x + @by, polyPass[1].y, polyPass[1].z + @by));
-        newList.Add(  new Vector3(polyPass[2].x + @by, polyPass[2].y, polyPass[2].z - @by));
-        newList.Add( new Vector3(polyPass[3].x - @by, polyPass[3].y, polyPass[3].z - @by));
+        List<Vector3> newList = new List<Vector3>();
+        newList.Add(new Vector3(polyPass[0].x - @by, polyPass[0].y, polyPass[0].z + @by));
+        newList.Add(new Vector3(polyPass[1].x + @by, polyPass[1].y, polyPass[1].z + @by));
+        newList.Add(new Vector3(polyPass[2].x + @by, polyPass[2].y, polyPass[2].z - @by));
+        newList.Add(new Vector3(polyPass[3].x - @by, polyPass[3].y, polyPass[3].z - @by));
         return newList;
     }
 
@@ -260,7 +260,7 @@ public class UPoly
 
     /// <summary>
     /// will return a poly from the subMesh, starting on top Left...
-    /// 
+    ///
     /// </summary>
     /// <param name="topLeft"></param>
     /// <returns></returns>
@@ -272,15 +272,15 @@ public class UPoly
     }
 
     /// <summary>
-    /// Creates a poly from param pos. with its dimensions. From make pos center and from there adds and removes 
+    /// Creates a poly from param pos. with its dimensions. From make pos center and from there adds and removes
     /// </summary>
     public static List<Vector3> CreatePolyFromVector3(Vector3 pos, float xDim, float zDim)
     {
         List<Vector3> polyPass = new List<Vector3>();
-        polyPass.Add( new Vector3(pos.x - xDim, pos.y, pos.z + zDim));
-        polyPass.Add( new Vector3(pos.x + xDim, pos.y, pos.z + zDim));
-        polyPass.Add(  new Vector3(pos.x + xDim, pos.y, pos.z - zDim));
-        polyPass.Add( new Vector3(pos.x - xDim, pos.y, pos.z - zDim));
+        polyPass.Add(new Vector3(pos.x - xDim, pos.y, pos.z + zDim));
+        polyPass.Add(new Vector3(pos.x + xDim, pos.y, pos.z + zDim));
+        polyPass.Add(new Vector3(pos.x + xDim, pos.y, pos.z - zDim));
+        polyPass.Add(new Vector3(pos.x - xDim, pos.y, pos.z - zDim));
         return polyPass;
     }
 
@@ -292,20 +292,20 @@ public class UPoly
     /// <returns></returns>
     public static List<Vector3> RetOnScreenPoly(Rect selection)
     {
-        //invert Y first 
-       // selection = U2D.ReturnRectYInverted(selection);
+        //invert Y first
+        // selection = U2D.ReturnRectYInverted(selection);
 
-        Vector2 NWview = new Vector2(selection.xMin,  selection.yMax);
-        Vector2 NEview = new Vector2(selection.xMax,  selection.yMax);
-        Vector2 SEview = new Vector2(selection.xMax,  selection.yMin);
-        Vector2 SWview = new Vector2(selection.xMin,  selection.yMin);
+        Vector2 NWview = new Vector2(selection.xMin, selection.yMax);
+        Vector2 NEview = new Vector2(selection.xMax, selection.yMax);
+        Vector2 SEview = new Vector2(selection.xMax, selection.yMin);
+        Vector2 SWview = new Vector2(selection.xMin, selection.yMin);
 
         Vector3 NW = RayCastTerrain(NWview).point;
         Vector3 NE = RayCastTerrain(NEview).point;
         Vector3 SE = RayCastTerrain(SEview).point;
         Vector3 SW = RayCastTerrain(SWview).point;
 
-        return  new List<Vector3>(){NW, NE, SE, SW} ;
+        return new List<Vector3>() { NW, NE, SE, SW };
     }
 
     /// <summary>
@@ -364,10 +364,10 @@ public class UPoly
     {
         //distance X then Z
         List<float> res = new List<float>();
-        
-        res.Add(Mathf.Abs( one.x - two.x ));
-        res.Add(Mathf.Abs(  one.z - two.z));
-       
+
+        res.Add(Mathf.Abs(one.x - two.x));
+        res.Add(Mathf.Abs(one.z - two.z));
+
         return res;
     }
 
@@ -392,7 +392,7 @@ public class UPoly
         }
         else
         {
-           //Debug.Log("Mouse Did not Hit Layer 8: Terrain. UPoly.cs");
+            //Debug.Log("Mouse Did not Hit Layer 8: Terrain. UPoly.cs");
         }
         return HitMouseOnTerrain;
     }
@@ -419,7 +419,6 @@ public class UPoly
         return HitMouse;
     }
 
-
     /// <summary>
     /// Will ray cast to all obj from active camera will ret the raycast
     /// </summary>
@@ -436,12 +435,10 @@ public class UPoly
         }
         else
         {
-           //Debug.Log("Mouse Did not Hit any obj UPoly.cs");
+            //Debug.Log("Mouse Did not Hit any obj UPoly.cs");
         }
         return HitMouse;
     }
-
-    
 
     public static List<Vector3> ReturnARealPoly(Vector3 hitVector3, Vector3[] Vertices, InitializerTerrain iniTerr,
         Vertexer vertex)
@@ -493,13 +490,13 @@ public class UPoly
     //}
 
     /// <summary>
-    /// Will displace polygon on the selected axis as far as the amount is 
+    /// Will displace polygon on the selected axis as far as the amount is
     /// </summary>
     /// <param name="list"></param>
     /// <param name="amount"></param>
     /// <param name="axis"></param>
     /// <returns></returns>
-    List<Vector3> displacePoly(List<Vector3> list, float amount, H axis)
+    private List<Vector3> displacePoly(List<Vector3> list, float amount, H axis)
     {
         Vector3 temp = new Vector3();
         for (int i = 0; i < list.Count; i++)
@@ -514,7 +511,7 @@ public class UPoly
         return list;
     }
 
-    //will even many polys in Y. this Method has a bug that 
+    //will even many polys in Y. this Method has a bug that
     //put all vertices toghether
     public List<Vector3> EvenInYManyPolys(List<Vector3> manyPoly, ref Vector3[] vertices, ref bool isToEven,
         float maxHeightForEven, ref float minY)
@@ -543,7 +540,7 @@ public class UPoly
         {
             for (int j = 0; j < manyPoly.Count; j++)
             {
-                //if this are the same in X and Z we are updating 
+                //if this are the same in X and Z we are updating
                 bool x = UMath.nearlyEqual(vertices[i].x, manyPoly[j].x, epsilon);
                 bool z = UMath.nearlyEqual(vertices[i].z, manyPoly[j].z, epsilon);
                 if (x && z)
@@ -576,7 +573,7 @@ public class UPoly
         {
             for (int j = 0; j < poly.Count; j++)
             {
-                //if this are the same in X and Z we are updating 
+                //if this are the same in X and Z we are updating
                 bool x = UMath.nearlyEqual(vertices[i].x, poly[j].x, epsilon);
                 bool z = UMath.nearlyEqual(vertices[i].z, poly[j].z, epsilon);
                 if (x && z)
@@ -588,7 +585,6 @@ public class UPoly
         return poly;
     }
 
-
     public static Vector3 MiddlePoint(List<Vector3> list)
     {
         var ttl = new Vector3();
@@ -596,6 +592,6 @@ public class UPoly
         {
             ttl += list[i];
         }
-        return ttl/list.Count;
+        return ttl / list.Count;
     }
 }

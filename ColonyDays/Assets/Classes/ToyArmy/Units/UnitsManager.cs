@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitsManager : General
 {
-
-    List<UnitT> _units = new List<UnitT>();
+    private List<UnitT> _units = new List<UnitT>();
 
     public List<UnitT> Units
     {
@@ -22,18 +19,15 @@ public class UnitsManager : General
     }
 
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         base.Start();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-
     }
-
-
 
     public void Create(string buildingPath)
     {
@@ -41,7 +35,6 @@ public class UnitsManager : General
         if (Input.GetKey(KeyCode.LeftShift))
         {
             howMany = 5;
-           
         }
 
         for (int i = 0; i < howMany; i++)
@@ -50,7 +43,7 @@ public class UnitsManager : General
         }
     }
 
-    void SpawnPlayerUnit(string buildingPath)
+    private void SpawnPlayerUnit(string buildingPath)
     {
         //if (!Building.DoWeHavePowerToBuildThis(buildingPath))
         //{
@@ -67,12 +60,6 @@ public class UnitsManager : General
         ////add to cell
         //Units.Add(u);
     }
-
-
-
-
-
-
 
     public void CreateFixed(string buildingPath, Vector3 pos)
     {
@@ -100,8 +87,6 @@ public class UnitsManager : General
         _units.Remove(u);
     }
 
-
-
     public Transform GiveMeClosestUnit(Vector3 from)
     {
         var tMin = GetClosestEnemy(Units, from);
@@ -114,7 +99,7 @@ public class UnitsManager : General
         return tMin;
     }
 
-    Transform GetClosestEnemy(List<UnitT> units, Vector3 from)
+    private Transform GetClosestEnemy(List<UnitT> units, Vector3 from)
     {
         Transform tMin = null;
         float minDist = Mathf.Infinity;
@@ -134,8 +119,6 @@ public class UnitsManager : General
             }
         }
 
-
-
         return tMin;
     }
 
@@ -152,6 +135,5 @@ public class UnitsManager : General
         {
             u.RankUp();
         }
-
     }
 }

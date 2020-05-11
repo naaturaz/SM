@@ -1,17 +1,16 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class Emigrate
+﻿public class Emigrate
 {
     private MDate _deathDate;
     private string _myID;
 
-    public Emigrate() { }
+    public Emigrate()
+    {
+    }
 
     public Emigrate(Person person)
     {
         _myID = person.MyId;
-        DetermineDeathDate(person.LifeLimit-person.Age);
+        DetermineDeathDate(person.LifeLimit - person.Age);
     }
 
     public string MyId
@@ -32,7 +31,7 @@ public class Emigrate
     }
 
     /// <summary>
-    /// Year check that will find if person pass away or is adding POrtReputation 
+    /// Year check that will find if person pass away or is adding POrtReputation
     /// </summary>
     internal void YearCheck()
     {

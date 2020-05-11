@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class Window : GUIElement
 {
     protected Color _initialTabColor;
-    Color _activeTabColor = Color.green;
+    private Color _activeTabColor = Color.green;
 
     protected void ColorTabActive(GameObject go)
     {

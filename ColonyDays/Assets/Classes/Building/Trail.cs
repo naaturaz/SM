@@ -1,12 +1,12 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 //The Trail adnd the Road are obj instanses of this class
-public class Trail : Way 
+public class Trail : Way
 {
     private List<CreatePlane> _planesListVertic = new List<CreatePlane>();
     private List<CreatePlane> _planesListHor = new List<CreatePlane>();
-  
+
     private int scaleCounter;
 
     private int _counter;
@@ -18,9 +18,10 @@ public class Trail : Way
     //Bridges
     //to save on disk data
     private List<Vector3> _tilePosVert = new List<Vector3>();//the position for each tile and for a bridege the starting point of a part
+
     private List<Vector3> _tilePosHor = new List<Vector3>();//the position for each tile and for a bridege the starting point of a part
-    private List<Vector3> _planesOnAirPos = new List<Vector3>();//the planes position on the air of a bridge 
-    
+    private List<Vector3> _planesOnAirPos = new List<Vector3>();//the planes position on the air of a bridge
+
     private Vector3 _tileScale = new Vector3();//the scale of a tile
     private List<int> _partsOnAir = new List<int>(); //the birdge part sequence
 
@@ -28,11 +29,11 @@ public class Trail : Way
 
     //this are the planes of the bridge that are not in the air
     private List<Vector3> _planesOnSoil = new List<Vector3>();
-    
+
     //contains the shore elements of the bridge
-    //in the seq /-- --\ in the middle of that goes the birdges pieces 
+    //in the seq /-- --\ in the middle of that goes the birdges pieces
     // / represents an 11,,,     // - represents an 12
-    List<int> _partsOnSoil = new List<int>();
+    private List<int> _partsOnSoil = new List<int>();
 
     //the starintg stage of each part of a  brdige
     protected H _startingStageForPieces;
@@ -128,7 +129,7 @@ public class Trail : Way
                 _planesListHor[i].Destroy();
             }
         }
-        
+
         BuildingPot.Control.Registro.RemoveItem(Category, MyId);
         MeshController.CrystalManager1.Delete(this);
         //_isOrderToDestroy = true;
@@ -166,12 +167,10 @@ public class Trail : Way
 
             DestroyBigPrevBoxes();
 
-            //so people reroute 
+            //so people reroute
             PersonPot.Control.Queues.AddToNewBuildsQueue(OnScreenPoly, MyId);
-            
-
         }
-        else if(!IsWayOk)
+        else if (!IsWayOk)
         {
             if (!IsWayEven)
             {
@@ -181,7 +180,7 @@ public class Trail : Way
             {
                 GameScene.ScreenPrint("Way collid");
             }
-            else if(!IsWayAboveWater)
+            else if (!IsWayAboveWater)
             {
                 GameScene.ScreenPrint("Way bellow water");
             }
@@ -190,9 +189,9 @@ public class Trail : Way
 
     /// <summary>
     /// This is the routine that is looped with the Update() will change CurrentLoop
-    /// thru all steps  
+    /// thru all steps
     /// </summary>
-    void SetListsRoutine()
+    private void SetListsRoutine()
     {
         if (CurrentLoop == H.TerraSpawn)
         {
@@ -207,7 +206,7 @@ public class Trail : Way
 
             _currentLoop = H.Vertic;
         }
-        else if(CurrentLoop == H.Vertic)
+        else if (CurrentLoop == H.Vertic)
         {
             if (_counter < _verticPathNew.Count)
             {
@@ -242,7 +241,7 @@ public class Trail : Way
     /// <summary>
     /// This is the last thing to do with the Object fixes position and addRectanges to Registro
     /// </summary>
-    void FinishCurrent()
+    private void FinishCurrent()
     {
         PositionFixed = true;
         for (int i = 0; i < PlanesListVertic.Count; i++)
@@ -264,15 +263,13 @@ public class Trail : Way
             }
         }
         BuildingPot.InputU.MouseUp();
-
-
     }
 
     public void AddWayToRegistro()
     {
         BuildingPot.Control.Registro.AddBuildToAll(this, BoundsVertic, Category,
-            transform.position, 
-            Inventory,  
+            transform.position,
+            Inventory,
             PeopleDict,
             LandZone1,
             polyHoriz: BoundsHoriz, tilePosVert: TilePosVert, tilePosHor: TilePosHor, planesOnAirPos: PlanesOnAirPos, tileScale: TileScale, parts: PartsOnAir, dominantSide: _dominantSide,
@@ -282,7 +279,7 @@ public class Trail : Way
             anchors: Anchors);
     }
 
-    List<Vector3> GetActiveBound()
+    private List<Vector3> GetActiveBound()
     {
         List<Vector3> activeBound = new List<Vector3>();
 
@@ -307,38 +304,36 @@ public class Trail : Way
 
         //anchors are resave set on GetAnchors.Bridge
 
-        BuildingPot.Control.Registro.AddBuildToAll(this,  activeBound, Category,
+        BuildingPot.Control.Registro.AddBuildToAll(this, activeBound, Category,
             transform.position,
-            Inventory,  
+            Inventory,
             PeopleDict, LandZone1,
-            polyHoriz: null , tilePosVert: TilePosVert, tilePosHor: TilePosHor, planesOnAirPos: PlanesOnAirPos, 
+            polyHoriz: null, tilePosVert: TilePosVert, tilePosHor: TilePosHor, planesOnAirPos: PlanesOnAirPos,
             tileScale: TileScale, parts: PartsOnAir, dominantSide: _dominantSide,
             startingStage: _startingStageForPieces, materialKey: MaterialKey, planesOnSoilPos: _planesOnSoil, partsOnSoil: _partsOnSoil
-            , min: activeBound[1], max: activeBound[3] ,
+            , min: activeBound[1], max: activeBound[3],
             instructionP: Instruction,
             anchors: Anchors);
-
 
         BuildingPot.Control.AddToQueuesRestartPersonControl(MyId);
     }
 
-	// Use this for initialization
-	protected void Start () 
+    // Use this for initialization
+    protected void Start()
     {
         base.Start();
         _isFakeObj = true;
-	}
-	
-	// Update is called once per frame
-	protected void Update ()
-	{
+    }
+
+    // Update is called once per frame
+    protected void Update()
+    {
         base.Update();
 
-        if (_isOrderToDestroy) { DestroyOrdered();}
+        if (_isOrderToDestroy) { DestroyOrdered(); }
 
         if (!PositionFixed && CurrentLoop != H.Done)
         {
-            
             if (_isToSetList) { SetListsRoutine(); }
             if (_isBuildingWay)
             {
@@ -366,15 +361,12 @@ public class Trail : Way
                 }
             }
         }
-	}
-
-
-    
+    }
 
     /// <summary>
     ///  Creates the trail.
     /// </summary>
-    void BuildWay(string rootPlane, bool makeWayInvisible = false)
+    private void BuildWay(string rootPlane, bool makeWayInvisible = false)
     {
         Material baseMat = Resources.Load<Material>(Root.RetMaterialRoot(MaterialKey));
 
@@ -388,7 +380,7 @@ public class Trail : Way
                 //if is the last one or 1st I will show it even if is set to be not seen like I do in bridges
                 if (_counter == _planesDimVertic.Count - 1 || _counter == 0)
                 {
-                    makeWayInvisible = false; 
+                    makeWayInvisible = false;
                 }
                 PlanesListVertic[_counter].UpdatePos(_planesDimVertic[_counter], makeThisInvisible: makeWayInvisible);
 
@@ -404,11 +396,11 @@ public class Trail : Way
                 _currentLoop = H.PlanesHor;
             }
         }
-        else if(CurrentLoop == H.PlanesHor)
+        else if (CurrentLoop == H.PlanesHor)
         {
             if (_counter < _planesDimHor.Count && _prevWayHor.Count > 0)
             {
-                PlanesListHor.Add((CreatePlane.CreatePlan(rootPlane, Root.matGravilla, m.HitMouseOnTerrain.point, 
+                PlanesListHor.Add((CreatePlane.CreatePlan(rootPlane, Root.matGravilla, m.HitMouseOnTerrain.point,
                     container: transform, mat: baseMat)));
 
                 //if is the last one I will show it even if is set to be not seen like I do in bridges
@@ -433,8 +425,8 @@ public class Trail : Way
 
     /// <summary>
     /// Will add to crystals manager
-    /// 
-    /// Done public static so can be accessed when loading a trail 
+    ///
+    /// Done public static so can be accessed when loading a trail
     /// </summary>
     /// <param name="currentLoop">If is vertic or hor</param>
     /// <param name="counter">The counter of the loop</param>
@@ -463,7 +455,7 @@ public class Trail : Way
         }
     }
 
-    void DoneWithLoop()
+    private void DoneWithLoop()
     {
         //is called here bz if not will leave a few behind on game scene since we remove corners after we ever update those
         ClearPrevWay();
@@ -472,7 +464,5 @@ public class Trail : Way
         _counter = 0;
         _isBuildingWay = false;
         FinishCurrent();
-
-  
     }
 }

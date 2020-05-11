@@ -25,7 +25,9 @@ public class Line
         set { _Id = value; }
     }
 
-    public Line() { }
+    public Line()
+    {
+    }
 
     public Line(Vector2 a, Vector2 b, bool debugRender = true)
     {
@@ -38,10 +40,10 @@ public class Line
         }
     }
 
-    public Line(Vector3 a, Vector3 b, float duration, bool debugRender=true)
+    public Line(Vector3 a, Vector3 b, float duration, bool debugRender = true)
     {
-        _a = U2D.FromV3ToV2( a);
-        _b = U2D.FromV3ToV2( b);
+        _a = U2D.FromV3ToV2(a);
+        _b = U2D.FromV3ToV2(b);
 
         if (debugRender)
         {
@@ -64,7 +66,7 @@ public class Line
 
     /// <summary>
     /// Will tell u if 'line' intersects this line
-    /// 
+    ///
     /// http://gamedev.stackexchange.com/questions/26004/how-to-detect-2d-line-on-line-collision
     /// </summary>
     /// <param name="line"></param>
@@ -92,8 +94,8 @@ public class Line
 
     //http://csharphelper.com/blog/2014/08/determine-where-two-lines-intersect-in-c/
     /// <summary>
-    /// This line and the line two 
-    /// 
+    /// This line and the line two
+    ///
     /// Find the point of intersection between
     /// the lines p1 --> p2 and p3 --> p4.
     /// </summary>
@@ -119,11 +121,11 @@ public class Line
         float dy34 = p4.y - p3.y;
 
         // Solve for t1 and t2
-        float denominator = (dy12*dx34 - dx12*dy34);
+        float denominator = (dy12 * dx34 - dx12 * dy34);
 
         float t1 =
-            ((p1.x - p3.x)*dy34 + (p3.y - p1.y)*dx34)
-            /denominator;
+            ((p1.x - p3.x) * dy34 + (p3.y - p1.y) * dx34)
+            / denominator;
         if (float.IsInfinity(t1))
         {
             // The lines are parallel (or close enough to it).
@@ -134,21 +136,20 @@ public class Line
         lines_intersect = true;
 
         float t2 =
-            ((p3.x - p1.x)*dy12 + (p1.y - p3.y)*dx12)
-            /-denominator;
+            ((p3.x - p1.x) * dy12 + (p1.y - p3.y) * dx12)
+            / -denominator;
 
         // Find the point of intersection.
-        intersection = new Vector2(p1.x + dx12*t1, p1.y + dy12*t1);
+        intersection = new Vector2(p1.x + dx12 * t1, p1.y + dy12 * t1);
         return intersection;
     }
 
-    SMe m = new SMe();
+    private SMe m = new SMe();
+
     public void DebugRender(float duration = 500f)
     {
         var a = new Vector3(A1.x, m.IniTerr.MathCenter.y, A1.y);
-        var b =new Vector3(B1.x, m.IniTerr.MathCenter.y, B1.y);
-
-
+        var b = new Vector3(B1.x, m.IniTerr.MathCenter.y, B1.y);
 
         Debug.DrawLine(a, b, Color.white, duration);
     }
@@ -161,17 +162,17 @@ public class Line
         Debug.DrawLine(a, b, colorH, duration);
     }
 
-
     public void DeleteRender()
     {
-        
     }
 
     #region Return Random Points In Line
+
     private float howFarPoints = .95f;//.8 .55
     private float distanceLeft;
+
     /// <summary>
-    /// Will return random point in line 
+    /// Will return random point in line
     /// </summary>
     /// <returns></returns>
     internal List<Vector3> ReturnRandomPointsInLine()
@@ -183,8 +184,7 @@ public class Line
         distanceLeft = Vector3.Distance(a1Loc, b1Loc);
         var add = AddToLoop();
 
-
-        for (float i = 0; i < distanceLeft; i+= add)
+        for (float i = 0; i < distanceLeft; i += add)
         {
             var point = Vector3.MoveTowards(a1Loc, b1Loc, add);
             res.Add(point);
@@ -195,11 +195,10 @@ public class Line
         return res;
     }
 
-    float AddToLoop()
+    private float AddToLoop()
     {
         return UMath.GiveRandom(howFarPoints - .4f, howFarPoints + .4f);
     }
-
 
     internal List<Vector3> ReturnPointsInLineEvery(float step)
     {
@@ -219,5 +218,5 @@ public class Line
         return res;
     }
 
-    #endregion
+    #endregion Return Random Points In Line
 }

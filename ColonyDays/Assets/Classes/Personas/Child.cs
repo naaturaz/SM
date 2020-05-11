@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
- 
-public class Child : Person
+﻿public class Child : Person
 {
+    private void Play()
+    { }
 
-    void Play(){}
-
-    void GoToSchool()
+    private void GoToSchool()
     {
         //Show(), Walk(Home, School), Hide()
     }
 }
-

@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class Militar
+﻿public class Militar
 {
     private Building _building;
     private MDate _nextDate;
@@ -14,21 +11,20 @@ public class Militar
         _nextDate = Program.gameScene.GameTime1.ReturnCurrentDatePlsAdded(360);
     }
 
-    void YearEffectOnPirateThreat()
+    private void YearEffectOnPirateThreat()
     {
-        //add stuff for multiplier 
+        //add stuff for multiplier
 
-        var amtChange = _building.PeopleDict.Count*-.1f*EffectOfBuildingType();
+        var amtChange = _building.PeopleDict.Count * -.1f * EffectOfBuildingType();
 
         BuildingPot.Control.DockManager1.AddToPirateThreat(amtChange);
     }
 
     private int EffectOfBuildingType()
     {
-        if (_building.HType==H.PostGuard)
+        if (_building.HType == H.PostGuard)
         {
             return 1;
-            
         }
         //if (_building.HType == H.Tower)
         //{
@@ -38,7 +34,6 @@ public class Militar
         if (_building.HType == H.Fort)
         {
             return 10;
-
         }
         if (_building.HType == H.Morro)
         {
@@ -56,5 +51,4 @@ public class Militar
             YearEffectOnPirateThreat();
         }
     }
-
 }

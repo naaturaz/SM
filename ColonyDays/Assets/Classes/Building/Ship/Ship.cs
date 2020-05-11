@@ -8,12 +8,12 @@ public class Ship
     private Building _building;
     private string _buildKey;
 
-    Inventory _inventory = new Inventory();
+    private Inventory _inventory = new Inventory();
     private float _size = 20f;
 
     private bool _didDockImport;
     private bool _didDockExport;
-    
+
     private MDate _leaveDate;
 
     private string _root;
@@ -26,7 +26,6 @@ public class Ship
     private MoveThruPoints _moveThruPoints;
 
     private string _myID;
-
 
     private bool _isToRecreate;
 
@@ -107,10 +106,12 @@ public class Ship
         set { _myID = value; }
     }
 
-    public Ship(){}
+    public Ship()
+    {
+    }
 
     /// <summary>
-    /// Instancing new Object 
+    /// Instancing new Object
     /// </summary>
     /// <param name="root"></param>
     /// <param name="build"></param>
@@ -139,11 +140,11 @@ public class Ship
             MoveThruPoints1.Inverse, MoveThruPoints1.WhichRoute);
     }
 
-    void CheckIfImportOrders()
+    private void CheckIfImportOrders()
     {
         if (_building.Dispatch1.HasImportOrders() && HasInvAvail())
         {
-            _didDockImport =_building.Dispatch1.Import(_building);
+            _didDockImport = _building.Dispatch1.Import(_building);
         }
     }
 
@@ -159,15 +160,15 @@ public class Ship
         }
     }
 
-
     private int random = -1;
+
     /// <summary>
     /// Will randomize if has inventory for this order
     /// </summary>
     /// <returns></returns>
     private bool HasInvAvail()
     {
-        if (random!=-1)
+        if (random != -1)
         {
             return random > 0 && random < 8;
         }
@@ -187,13 +188,11 @@ public class Ship
             lastCheck = Time.time;
         }
 
-        if (_shipGo!=null)
+        if (_shipGo != null)
         {
             Rotation = _shipGo.transform.rotation;
             Position = _shipGo.transform.position;
         }
-
-
 
         if (string.IsNullOrEmpty(MyId))
         {
@@ -219,21 +218,19 @@ public class Ship
         LeaveDate = Program.gameScene.GameTime1.ReturnCurrentDatePlsAdded(daysOnDock);
     }
 
-
     public void Leaving(string myID)
     {
         Building().Dock1.RemoveFromBusySpots(myID);
 
         BuildingPot.Control.DockManager1.AddSurvey(Survey());
         _moveThruPoints.SailUp();
-
     }
 
     /// <summary>
-    /// What will be added to Port reputation for each ship 
+    /// What will be added to Port reputation for each ship
     /// </summary>
     /// <returns></returns>
-    float Survey()
+    private float Survey()
     {
         float expo = -0.1f;
         if (_didDockExport)
@@ -243,11 +240,11 @@ public class Ship
 
         if (Building().HType == H.Shipyard || Building().HType == H.Supplier)
         {
-            return expo*2;
+            return expo * 2;
         }
         if (Building().HType == H.Dock)
         {
-            if(_didDockExport && _didDockImport)
+            if (_didDockExport && _didDockImport)
             {
                 return 0.6f;//0.2
             }
@@ -255,7 +252,7 @@ public class Ship
             {
                 return 0.3f;//0.1
             }
-            else if(_didDockImport)
+            else if (_didDockImport)
             {
                 return 0.3f;//0.1
             }
@@ -266,6 +263,4 @@ public class Ship
         }
         return 0f;
     }
-
-
 }

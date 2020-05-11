@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 
-
-class ThreadPool
+internal class ThreadPool
 {
-    List<Thread> _pool = new List<Thread>();
-
-
-
-
+    private List<Thread> _pool = new List<Thread>();
 
     public static void RunThis(Person p)
     {
@@ -24,4 +17,3 @@ class ThreadPool
         throw new NotImplementedException();
     }
 }
-

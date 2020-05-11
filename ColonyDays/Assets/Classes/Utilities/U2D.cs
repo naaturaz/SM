@@ -1,15 +1,13 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
-using System.Runtime.InteropServices;
 
-public class U2D : MonoBehaviour {
-
-    static SMe m = new SMe();
+public class U2D : MonoBehaviour
+{
+    private static SMe m = new SMe();
 
     /// <summary>
-    /// Due to GUI.DrawTexture start with 0,0 in the top left corner, 
-    /// and Rect 0,0 is the botton left corner we have to invert the values of the 
+    /// Due to GUI.DrawTexture start with 0,0 in the top left corner,
+    /// and Rect 0,0 is the botton left corner we have to invert the values of the
     /// start Y. Only usefull for Screen GUI functions
     /// </summary>
     /// <param name="toBeInversed"></param>
@@ -21,8 +19,8 @@ public class U2D : MonoBehaviour {
 
     /// <summary>
     /// Will inverse Rectangle on Y for a cordinate system where in Y 100 is on top and 0 in bottom.
-    /// Which is the way I have setup the current Cardinal System NW,NE, SE, SW; 
-    /// This is with the concept of substituying giving Y here the Z value in World 
+    /// Which is the way I have setup the current Cardinal System NW,NE, SE, SW;
+    /// This is with the concept of substituying giving Y here the Z value in World
     /// </summary>
     /// <param name="toBeInversed"></param>
     /// <returns></returns>
@@ -97,32 +95,27 @@ public class U2D : MonoBehaviour {
         res.Add(new Line(SW, NW, false));
 
         return res;
-    }   
-    
+    }
 
     public static List<Vector3> FromRectToPoly(Rect rect)
     {
-
         Vector2 NW = new Vector2(rect.xMin, rect.yMin);
         Vector2 NE = new Vector2(rect.xMax, rect.yMin);
         Vector2 SE = new Vector2(rect.xMax, rect.yMax);
         Vector2 SW = new Vector2(rect.xMin, rect.yMax);
 
-
-
         return new List<Vector3>()
         {
-            FromV2ToV3( NW), 
-            FromV2ToV3(NE), 
-            FromV2ToV3(SE), 
+            FromV2ToV3( NW),
+            FromV2ToV3(NE),
+            FromV2ToV3(SE),
             FromV2ToV3(SW)
         };
     }
 
-
     /// <summary>
     /// Will make Y:  m.IniTerr.MathCenter.y. and z: will be vector2.y
-    /// </summary> 
+    /// </summary>
     /// <param name="a"></param>
     /// <returns></returns>
     public static Vector3 FromV2ToV3(Vector2 a)
@@ -143,17 +136,17 @@ public class U2D : MonoBehaviour {
     }
 
     /// <summary>
-    /// return new Vector2(a.x,  a.z) 
+    /// return new Vector2(a.x,  a.z)
     /// </summary>
     /// <param name="a"></param>
     /// <returns></returns>
     public static Vector2 FromV3ToV2(Vector3 a)
     {
-        return new Vector2(a.x,  a.z);
+        return new Vector2(a.x, a.z);
     }
 
+    private static Rect screenRect = new Rect(0, 0, Screen.width, Screen.height);
 
-    static Rect screenRect = new Rect(0, 0, Screen.width, Screen.height);
     public static bool IsMouseOnScreen()
     {
         if (!screenRect.Contains(Input.mousePosition))
@@ -170,5 +163,4 @@ public class U2D : MonoBehaviour {
     {
         screenRect = new Rect(0, 0, Screen.width, Screen.height);
     }
-
 }

@@ -8,7 +8,7 @@ public class DockManager
 
     private int _maxAmountSpots = 3;
 
-    List<string> _dockStructures = new List<string>(); 
+    private List<string> _dockStructures = new List<string>();
 
     public float PortReputation
     {
@@ -30,7 +30,6 @@ public class DockManager
 
     public DockManager()
     {
-
     }
 
     internal bool HasAtLeastOneDockStructure()
@@ -39,7 +38,7 @@ public class DockManager
     }
 
     /// <summary>
-    /// Called from Registro to keep record of Dock structures 
+    /// Called from Registro to keep record of Dock structures
     /// </summary>
     /// <param name="MyIDP"></param>
     /// <param name="hType"></param>
@@ -55,7 +54,7 @@ public class DockManager
     }
 
     /// <summary>
-    /// Called from Registro to keep record of Dock structures 
+    /// Called from Registro to keep record of Dock structures
     /// </summary>
     /// <param name="MyIDP"></param>
     /// <param name="hType"></param>
@@ -70,7 +69,7 @@ public class DockManager
         }
     }
 
-    bool IsDockType(H HType)
+    private bool IsDockType(H HType)
     {
         if (HType == H.Shipyard || HType == H.Supplier || HType == H.Dock)
         {
@@ -81,7 +80,7 @@ public class DockManager
 
     internal bool AtLeastOneDockHasSpace1More(int shipsOnIsland)
     {
-        // how many ships each structure can hold 
+        // how many ships each structure can hold
         if (_dockStructures.Count * _maxAmountSpots <= shipsOnIsland)
         {
             return false;
@@ -90,6 +89,7 @@ public class DockManager
     }
 
     private int recuCount;
+
     internal Building GiveMeRandomBuilding()
     {
         var key = _dockStructures[UMath.GiveRandom(0, _dockStructures.Count)];
@@ -102,12 +102,12 @@ public class DockManager
         }
         recuCount++;
 
-        if (recuCount>1000)
+        if (recuCount > 1000)
         {
             throw new Exception("inf loopp dock manag");
         }
 
-        //will recurse until finds one tht has a free spot 
+        //will recurse until finds one tht has a free spot
         return GiveMeRandomBuilding();
     }
 
@@ -133,6 +133,5 @@ public class DockManager
 
     public void Update()
     {
-        
     }
 }

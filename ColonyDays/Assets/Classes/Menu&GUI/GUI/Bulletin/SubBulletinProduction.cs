@@ -7,7 +7,7 @@ public class SubBulletinProduction
     private ProductionReport _productionReport;
     private ProductionReport _expirationReport;
     private BulletinWindow _bulletinWindow;
-    List<ShowAInventory> _reports = new List<ShowAInventory>();
+    private List<ShowAInventory> _reports = new List<ShowAInventory>();
 
     [XmlIgnore]
     public BulletinWindow BulletinWindow1
@@ -16,7 +16,9 @@ public class SubBulletinProduction
         set { _bulletinWindow = value; }
     }
 
-    public SubBulletinProduction() { }
+    public SubBulletinProduction()
+    {
+    }
 
     public SubBulletinProduction(BulletinWindow bulletinWindow)
     {
@@ -51,8 +53,8 @@ public class SubBulletinProduction
             _productionReport = new ProductionReport();
         }
         _productionReport.AddConsumeThisYear(p, amt);
-    }  
-    
+    }
+
     internal void AddToExpirationThisYear(P p, float amt)
     {
         if (_expirationReport == null)
@@ -63,12 +65,12 @@ public class SubBulletinProduction
     }
 
     /// <summary>
-    /// Created to find how many items are in each report 
-    /// needed to ajust the Scrool View Content height 
+    /// Created to find how many items are in each report
+    /// needed to ajust the Scrool View Content height
     /// </summary>
     /// <param name="list"></param>
     /// <returns></returns>
-    int ItemsOnReport(List<Inventory> list)
+    private int ItemsOnReport(List<Inventory> list)
     {
         var res = 0;
         for (int i = 0; i < list.Count; i++)
@@ -131,7 +133,7 @@ public class SubBulletinProduction
         }
     }
 
-    int ShowLastYears(List<Inventory> list)
+    private int ShowLastYears(List<Inventory> list)
     {
         if (list == null)
             return 0;

@@ -1,13 +1,14 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 /*Class that the only purpose is to tell u if is a Brdige Reacheable from Point 'a'
  * and at the same time will tell u wich end is reacheable
- * 
- * And its Asycn takes a bit to find if is reachable or not sicne if is not 
+ *
+ * And its Asycn takes a bit to find if is reachable or not sicne if is not
  * reachlble directly will try to DeltaRoute it
  */
+
 public class CanIReach : MonoBehaviour
 {
     private Bridge _bridge;
@@ -15,12 +16,13 @@ public class CanIReach : MonoBehaviour
     private Vector3 _endBBot;
     private Vector3 _endATop;
     private Vector3 _endBTop;
-    
+
     private Vector3 _from;
     private Vector3 _to;
 
-    //to try delta routing btw points 
-    DeltaCapsule _deltaCapsule = new DeltaCapsule();
+    //to try delta routing btw points
+    private DeltaCapsule _deltaCapsule = new DeltaCapsule();
+
     private Person _person;
 
     //this is a ASync flag that if is being used will tell if a delta route is routable or not
@@ -30,16 +32,16 @@ public class CanIReach : MonoBehaviour
     private Vector3 _currentTo;//for delta .. this is the bottom of the Bridge
     private Vector3 _currentToTop;//for saving when delta  .. this is the Top of the Bridge
 
-    ReachBean _reachBean = new ReachBean();//final result
+    private ReachBean _reachBean = new ReachBean();//final result
     private bool _isStarted;
 
-    //will keep store temp the pair used to create Routes on Brdiges.. so when asking brdige for 
-    //bot and top always gives the same 
+    //will keep store temp the pair used to create Routes on Brdiges.. so when asking brdige for
+    //bot and top always gives the same
     private int _pairUsed = -1;//restarted only when SetStarttoFalse() called
+
     private static Person oldPerson;//to keep track of last person so if not the same will reset pair usd
 
-    private bool _inverse;//if is being started for the end position of a route 
-    
+    private bool _inverse;//if is being started for the end position of a route
 
     public ReachBean Bean
     {
@@ -59,7 +61,9 @@ public class CanIReach : MonoBehaviour
         set { _pairUsed = value; }
     }
 
-    public CanIReach() { }
+    public CanIReach()
+    {
+    }
 
     private static int debug;
 
@@ -75,21 +79,21 @@ public class CanIReach : MonoBehaviour
         TryDirectBoth();
     }
 
-    void RestartVar()
+    private void RestartVar()
     {
         OldPersonMatters();
 
-        _isRoutable = 0;//is processing 
+        _isRoutable = 0;//is processing
         _isStarted = true;
-        _endABot=new Vector3();
+        _endABot = new Vector3();
         _endBBot = new Vector3();
         _currentTo = new Vector3();
     }
 
     /// <summary>
-    /// Will take care of restart 'PairUsed' of the person used now is diff than last one 
+    /// Will take care of restart 'PairUsed' of the person used now is diff than last one
     /// </summary>
-    void OldPersonMatters()
+    private void OldPersonMatters()
     {
         if (oldPerson == null || oldPerson != _person)
         {
@@ -106,7 +110,7 @@ public class CanIReach : MonoBehaviour
         }
         return true;
     }
-    
+
     /// <summary>
     /// Makes _isDeltaRoutable = -100
     /// </summary>
@@ -122,9 +126,9 @@ public class CanIReach : MonoBehaviour
     }
 
     /// <summary>
-    /// Defines the Two ends of a Brdige 
+    /// Defines the Two ends of a Brdige
     /// </summary>
-    void FindInitPointOnBridge()
+    private void FindInitPointOnBridge()
     {
         List<StructureParent> currentBridgeParts12 = _bridge.GiveTheTwoEndsParts10and12();
         var part12ABotton = currentBridgeParts12[0].BottomTop(this)[0].transform.position;
@@ -136,9 +140,9 @@ public class CanIReach : MonoBehaviour
     }
 
     /// <summary>
-    /// Defines the Two ends of a Brdige 
+    /// Defines the Two ends of a Brdige
     /// </summary>
-    void FindTopPointOnBridge()
+    private void FindTopPointOnBridge()
     {
         List<StructureParent> currentBridgeParts12 = _bridge.GiveTheTwoEndsParts10and12();
         var part12ATop = currentBridgeParts12[0].BottomTop(this)[1].transform.position;
@@ -168,13 +172,13 @@ public class CanIReach : MonoBehaviour
 
     /// <summary>
     /// Address if _inverse is flagged . This is when calling this class an ini point is the end one
-    /// 
-    /// 
-    /// 
-    /// 
-    /// Needs to be called in Router Creation on Bean 
-    /// 
-    /// 
+    ///
+    ///
+    ///
+    ///
+    /// Needs to be called in Router Creation on Bean
+    ///
+    ///
     /// </summary>
     /// <param name="a"></param>
     /// <param name="b"></param>
@@ -188,7 +192,7 @@ public class CanIReach : MonoBehaviour
         }
     }
 
-    void TryDirect(Vector3 fromP, Vector3 toP)
+    private void TryDirect(Vector3 fromP, Vector3 toP)
     {
         if (!RouterManager.IsWaterOrMountainBtw(fromP, toP))
         {
@@ -201,7 +205,7 @@ public class CanIReach : MonoBehaviour
         }
     }
 
-    void TryDeltaRoute(Vector3 fromP, Vector3 toP)
+    private void TryDeltaRoute(Vector3 fromP, Vector3 toP)
     {
         InvertIfNeeded(ref fromP, ref toP, _inverse);
 
@@ -214,15 +218,15 @@ public class CanIReach : MonoBehaviour
     /// <param name="from"></param>
     /// <param name="to">the end from the bridge , the bottom </param>
     /// <param name="deltaCapsule"></param>
-    void ConformValidResult(Vector3 from, Vector3 to, DeltaCapsule deltaCapsule)
+    private void ConformValidResult(Vector3 from, Vector3 to, DeltaCapsule deltaCapsule)
     {
-        Vector3[] f4Points = new Vector3[4]{_endABot, _endATop, _endBTop, _endBBot};
+        Vector3[] f4Points = new Vector3[4] { _endABot, _endATop, _endBTop, _endBBot };
 
         _reachBean = new ReachBean(from, f4Points, deltaCapsule, _person, _inverse);
         Restart();
     }
 
-    void ConformValidResult(Vector3 from, Vector3 to)
+    private void ConformValidResult(Vector3 from, Vector3 to)
     {
         Vector3[] f4Points = new Vector3[4] { _endABot, _endATop, _endBTop, _endBBot };
 
@@ -231,22 +235,22 @@ public class CanIReach : MonoBehaviour
     }
 
     /// <summary>
-    /// Will return the closest top from 'bottom' in the current bridge 
+    /// Will return the closest top from 'bottom' in the current bridge
     /// </summary>
     /// <param name="bottom"></param>
-    Vector3 ClosestTop(Vector3 bottom)
+    private Vector3 ClosestTop(Vector3 bottom)
     {
         List<Vector3> tops = new List<Vector3>() { _endATop, _endBTop };
         return UMath.ReturnClosestVector3(tops, bottom);
     }
 
-	// Update is called once per frame
-	public void Update ()
+    // Update is called once per frame
+    public void Update()
     {
         _deltaCapsule.Update();
         CheckOnDeltaCapsule();
         _reachBean.Update();
-	}
+    }
 
     /// <summary>
     /// If Delta Capsule was initiated will keep checking to see the outcome of it
@@ -264,12 +268,12 @@ public class CanIReach : MonoBehaviour
     /// Will only be executed when _deltaCapsule is Done and then will tell if is routable or not...
     /// then will call RecurseRoutine()
     /// </summary>
-    void DecideOnRouteOfDeltaCapsule()
+    private void DecideOnRouteOfDeltaCapsule()
     {
         if (_deltaCapsule.FinalRouter.IsRouteReady && _deltaCapsule.DeltaRoutingDone)
         {
             _isRoutable = 1;
-            //needs to keep the delta capsule to conform route 
+            //needs to keep the delta capsule to conform route
             ConformValidResult(_from, _currentTo, _deltaCapsule);
         }
         else if (_deltaCapsule.DeltaRoutingDone && !_deltaCapsule.FinalRouter.IsRouteReady)
@@ -279,7 +283,7 @@ public class CanIReach : MonoBehaviour
         }
     }
 
-    void CheckIf1stPointOnBridge()
+    private void CheckIf1stPointOnBridge()
     {
         if (_currentTo == _endABot && _currentTo != new Vector3())
         {
@@ -294,32 +298,36 @@ public class CanIReach : MonoBehaviour
 }
 
 /// <summary>
-/// Will contain the result of CanIReach.cs 
-/// 
+/// Will contain the result of CanIReach.cs
+///
 /// Will conform its partial route too.
-/// 
+///
 /// If has delta route will added with the Brdige points.
 /// If doesnt will Route it with Router.cs and then will add the bridge points
 /// </summary>
 public class ReachBean
 {
     private bool _isReacheable;
-    //here bz if u pass a bridge needs to know which point on the brdige is the accessible one 
+
+    //here bz if u pass a bridge needs to know which point on the brdige is the accessible one
     private Vector3 _validFrom;
+
     private Vector3 _validToBot;
     private Vector3 _validToTop;
     private int _result = -5;//-5 virgin or still proceessing, 1 true, -1 flase
     private int _keepResult;
-    DeltaCapsule _deltaCapsule = new DeltaCapsule();
+    private DeltaCapsule _deltaCapsule = new DeltaCapsule();
 
-    Router _router = new Router();
+    private Router _router = new Router();
 
-    TheRoute _theRoute = new TheRoute();//from '_validFrom' to '_validToBot'
-    //the 4 points on the route in a brdige.. Will only need to gather this in the first pass of a Bridge 
-    //so when conforming route on BridgeRouter this is onlyy needed once out of the first CanIReach Instance 
-    TheRoute _theRouteInBridge = new TheRoute();
+    private TheRoute _theRoute = new TheRoute();//from '_validFrom' to '_validToBot'
+
+    //the 4 points on the route in a brdige.. Will only need to gather this in the first pass of a Bridge
+    //so when conforming route on BridgeRouter this is onlyy needed once out of the first CanIReach Instance
+    private TheRoute _theRouteInBridge = new TheRoute();
+
     private Person _person;
-    List<Structure> _debugList = new List<Structure>();
+    private List<Structure> _debugList = new List<Structure>();
     private Vector3[] _f4Points;
 
     private bool _inverse;
@@ -342,10 +350,12 @@ public class ReachBean
         set { _theRouteInBridge = value; }
     }
 
-    public ReachBean() { }
+    public ReachBean()
+    {
+    }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="from"></param>
     /// <param name="f4Points">The 4 points of a brdige to see orginze pls refer to the caller of constructir</param>
@@ -381,9 +391,9 @@ public class ReachBean
         _theRoute = new TheRoute(checkPoints);
 
         OrderBridgePoints();
-        _theRouteInBridge =  RouteVector3s(_f4Points.ToList());
+        _theRouteInBridge = RouteVector3s(_f4Points.ToList());
 
-        //so the Bean gets reaad it and keeps going on the BrdigeRouter .. 
+        //so the Bean gets reaad it and keeps going on the BrdigeRouter ..
         //so no Async dealing to conform route on BrdigeRouter
         _result = _keepResult;
     }
@@ -399,7 +409,7 @@ public class ReachBean
     }
 
     /// <summary>
-    /// Will create the Route from a ordered list of Vector3s will add the angles too 
+    /// Will create the Route from a ordered list of Vector3s will add the angles too
     /// </summary>
     public static TheRoute RouteVector3s(List<Vector3> Vector3s)
     {
@@ -421,8 +431,8 @@ public class ReachBean
         for (int i = 0; i < checkPoints.Count - 1; i++)
         {
             dumm.transform.position = checkPoints[i].Point;
-            //so it doesnt tilt when going up or down the brdige hill 
-            //im putting in the same height on Y as the next point 
+            //so it doesnt tilt when going up or down the brdige hill
+            //im putting in the same height on Y as the next point
             dumm.transform.position = new Vector3(dumm.transform.position.x, checkPoints[i + 1].Point.y, dumm.transform.position.z);
             dumm.transform.LookAt(checkPoints[i + 1].Point);
 
@@ -438,7 +448,7 @@ public class ReachBean
         _result = -5;
         _validFrom = new Vector3();
         _validToBot = new Vector3();
-        _deltaCapsule=new DeltaCapsule();
+        _deltaCapsule = new DeltaCapsule();
         _router = new Router();
         _theRoute = new TheRoute();
     }
@@ -452,8 +462,8 @@ public class ReachBean
 
     public void Update()
     {
-        //means is done 
-        if (_result ==_keepResult)
+        //means is done
+        if (_result == _keepResult)
         {
             return;
         }
@@ -461,7 +471,6 @@ public class ReachBean
         _router.Update();
         PullRouteOfRouter();
     }
-
 
     private void PullRouteOfRouter()
     {
@@ -472,31 +481,8 @@ public class ReachBean
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ///// <summary>
-///// Will start the delta routing 
+///// Will start the delta routing
 ///// </summary>
 //void StartDeltaRoute(Vector3 iniDelta, Vector3 finDelta)
 //{
@@ -510,21 +496,21 @@ public class ReachBean
 ///// <summary>
 ///// This is a ASycn method bz If has water on the middle I will try to delta Route it
 ///// so if has water on the middle and cant delta route then returns -1 that means false...
-///// 
+/////
 ///// If can see it directly or can delta routed will return 1
-///// 
+/////
 ///// If is processing returns 0
 ///// </summary>
 ///// <returns>returns -1 that means false, 1 means true, 0 is still processing </returns>
 //int CanIWalkToPos(Vector3 from, Vector3 to)
 //{
 //    //can i see it directly?
-//    //if is water on middle will try to delta route 
+//    //if is water on middle will try to delta route
 //    if (RouterManager.IsWaterOrMountainBtw(from, to))
 //    {
 //        StartDeltaRoute(to, from);
 //        return _isRoutable;
 //    }
-//    //otherwise is true... nothing is on midle so I can walk there 
+//    //otherwise is true... nothing is on midle so I can walk there
 //    return 1;
 //}

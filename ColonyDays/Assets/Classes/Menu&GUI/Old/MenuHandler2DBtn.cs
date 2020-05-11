@@ -1,45 +1,48 @@
 ﻿/*
  * WARNINGS:
  * 1 - cant move the order now in the childs of camera BZ We are refencing those pos by index only can add more
- * 
+ *
  * Documentation
- * 
+ *
         //using this ColiU.SetColiState(camChildBtnSlots, H.Disable); because :
         //we need to do tht bz if htey are ignored like we do to the heart and other GUI elements
-        //doesnt work well bz there is places in the screen tht wont spawn a model bz the camera child btn slots 
-        //are blocking them from do it 
+        //doesnt work well bz there is places in the screen tht wont spawn a model bz the camera child btn slots
+        //are blocking them from do it
  */
 
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class MenuHandler2DBtn : MenuHandler
 {
-    int howManyBtns;//holds how many btns are to be use 3 or 5 so far 
-    //holds the dinamic  btns so we can access it any time 
-    Btn2D[] btnArray = new Btn2D[10];
-    //the transform that are childs of the camera will be assigned here 
-    Transform[] setOfBtn;
+    private int howManyBtns;//holds how many btns are to be use 3 or 5 so far
+
+    //holds the dinamic  btns so we can access it any time
+    private Btn2D[] btnArray = new Btn2D[10];
+
+    //the transform that are childs of the camera will be assigned here
+    private Transform[] setOfBtn;
 
     //still buttons
-    Btn2D pauseBtn;
-    List<Btn2D> hearts;
-    Btn2D pauseBackGround;
+    private Btn2D pauseBtn;
 
-    int amountOfCamBtnSlots = 10;
-    int amountOfCamChildObj = 24;
-    Transform[] camChild;
-    Transform[] camChildBtnSlots;
+    private List<Btn2D> hearts;
+    private Btn2D pauseBackGround;
+
+    private int amountOfCamBtnSlots = 10;
+    private int amountOfCamChildObj = 24;
+    private Transform[] camChild;
+    private Transform[] camChildBtnSlots;
 
     //hold all the Btn2d that are on screen
-    List<Btn2D> onScreen = new List<Btn2D>();
-    const int MAX_MODEL_SPAWN = 10;
+    private List<Btn2D> onScreen = new List<Btn2D>();
+
+    private const int MAX_MODEL_SPAWN = 10;
 
     //list to hold the models
     public List<Model> allModels = new List<Model>();
 
-    void GetAllCamChilds()
+    private void GetAllCamChilds()
     {
         camChild = new Transform[amountOfCamChildObj];
         camChildBtnSlots = new Transform[amountOfCamBtnSlots];
@@ -66,7 +69,7 @@ public class MenuHandler2DBtn : MenuHandler
 
         for (int i = 0; i < btnArray.Length; i++)
         {
-            if(btnArray[i] != null)
+            if (btnArray[i] != null)
             {
                 if (!btnArray[i].DestroyNow)
                 {
@@ -100,27 +103,27 @@ public class MenuHandler2DBtn : MenuHandler
         UpdateList();
     }
 
-	// Use this for initialization
-	void Start () 
+    // Use this for initialization
+    private void Start()
     {
-        base.Start(); 
+        base.Start();
         hearts = new List<Btn2D>();
         CheckOnStillBtns();
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    private void Update()
     {
         base.Start();
 
         ActOnRightClick();
-        if(Program.MOUSEOVERTHIS != null )
+        if (Program.MOUSEOVERTHIS != null)
         {
             Hovering(Program.MOUSEOVERTHIS);
         }
         LeftClick();
 
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             ActionOnPauseBtn();
         }
@@ -132,9 +135,9 @@ public class MenuHandler2DBtn : MenuHandler
                 UponLeftClickOnMenu(UKeys.FindBtnKeyUP());
             }
         }
-	}
+    }
 
-    void CheckOnStillBtns()
+    private void CheckOnStillBtns()
     {
         if (Camera.main != null && pauseBtn == null)
         {
@@ -144,9 +147,9 @@ public class MenuHandler2DBtn : MenuHandler
     }
 
     //Creates hearts acoording to lives of player and pause btn
-    void FireUpGUIButtons(float speedFadePass = 50f)
+    private void FireUpGUIButtons(float speedFadePass = 50f)
     {
-        pauseBtn = CreateStillBtn(Root.pauseButton, camChild[amountOfCamBtnSlots+3]);
+        pauseBtn = CreateStillBtn(Root.pauseButton, camChild[amountOfCamBtnSlots + 3]);
         pauseBtn.FadeSpeedProp = speedFadePass;
 
         for (int i = 0; i < Program.THEPlayer.Lives; i++)
@@ -159,21 +162,19 @@ public class MenuHandler2DBtn : MenuHandler
         UpdateList();
     }
 
-
-    
-    //Based ont the paramenter will create geometry... the parameter format always have to be the same 
+    //Based ont the paramenter will create geometry... the parameter format always have to be the same
     //used for Raw and Elements
-    void UponLeftClickOnMenu(string menuClicked)
+    private void UponLeftClickOnMenu(string menuClicked)
     {
         CloseCurrentMenu();
         Model temp = null;
-        //will split the string in '_', 
+        //will split the string in '_',
         //word we are looking for is the second one: "Cone", "Cube", etc
         //the 4th word : "Raw", "Element"
         string[] split = menuClicked.Split('_');
         Vector3 ini = new Vector3();
 
-        //used to store the initial pos of new models if Player is exisitng 
+        //used to store the initial pos of new models if Player is exisitng
         if (Program.THEPlayer != null)
         {
             ini = Vector3.MoveTowards(Program.THEPlayer.transform.position,
@@ -191,7 +192,7 @@ public class MenuHandler2DBtn : MenuHandler
         }
         else if (split[3] == "Element")
         {
-            if(split[1]=="Spring")
+            if (split[1] == "Spring")
             {
                 temp = (Spring)General.Create(Root.ReturnFullPath(split[1]), ini);
             }
@@ -206,17 +207,17 @@ public class MenuHandler2DBtn : MenuHandler
             else
                 temp = (Element)General.Create(Root.ReturnFullPath(split[1]), ini);
         }
-        else if (split[3] == "Main" || split[3] == "NewMenu" || split[3] == "Click" 
+        else if (split[3] == "Main" || split[3] == "NewMenu" || split[3] == "Click"
             || menuClicked == "RightClicked")
         {
-            if(split[4].Contains("PauseMenu"))
+            if (split[4].Contains("PauseMenu"))
             {
                 ActionOnPauseBtn(split[1]);
             }
             else
             {
                 string menuToPull = split[1] + "_Menu_Spawner";
-                SpawnSetMenu(menuToPull); 
+                SpawnSetMenu(menuToPull);
             }
         }
         else print("Error in naming should be: Select_Bomb_Btn_Element_3dMenu");
@@ -224,13 +225,11 @@ public class MenuHandler2DBtn : MenuHandler
         ModelsManager(temp);
     }
 
-
-
     /// <summary>
     /// Manages how many models the player has spwaned
     /// </summary>
     /// <param name="temp"></param>
-    void ModelsManager(Model temp)
+    private void ModelsManager(Model temp)
     {
         if (temp != null)
         {
@@ -247,20 +246,20 @@ public class MenuHandler2DBtn : MenuHandler
         }
     }
 
-    void ActionOnPauseBtn(string action = "")
+    private void ActionOnPauseBtn(string action = "")
     {
         //had to include this one here !Settings.ISPAUSE bz due to fade time will change it
         //back to false and then will disapper the pause menu and the still btns will not be back
-        if((!Settings.ISPAUSED && action == "") || (!Settings.ISPAUSED && action == "Pause"))
+        if ((!Settings.ISPAUSED && action == "") || (!Settings.ISPAUSED && action == "Pause"))
         {
             float tempSpeed = 150f;
             Settings.ISPAUSED = Settings.MecanicSwitcher(Settings.ISPAUSED);
             DestroyStillBtns();
             SpawnSetMenu("Pause_Menu_Spawner", tempSpeed);
-            pauseBackGround = CreateStillBtn(Root.backGroundLabelPauseMenu, camChild[amountOfCamBtnSlots+4]);
+            pauseBackGround = CreateStillBtn(Root.backGroundLabelPauseMenu, camChild[amountOfCamBtnSlots + 4]);
             pauseBackGround.FadeSpeedProp = tempSpeed;
         }
-        else if ((Settings.ISPAUSED && action == "" )||( Settings.ISPAUSED && action == "Resume"))
+        else if ((Settings.ISPAUSED && action == "") || (Settings.ISPAUSED && action == "Resume"))
         {
             Settings.ISPAUSED = Settings.MecanicSwitcher(Settings.ISPAUSED);
             FireUpGUIButtons();
@@ -269,7 +268,7 @@ public class MenuHandler2DBtn : MenuHandler
         }
     }
 
-    void DestroyStillBtns()
+    private void DestroyStillBtns()
     {
         for (int i = 0; i < hearts.Count; i++)
         {
@@ -279,7 +278,7 @@ public class MenuHandler2DBtn : MenuHandler
         UpdateList();
     }
 
-    void LeftClick()
+    private void LeftClick()
     {
         if (Input.GetMouseButtonUp(0))
         {
@@ -302,7 +301,7 @@ public class MenuHandler2DBtn : MenuHandler
             }
             else if (Application.loadedLevelName != "Lobby")
             {
-                 CloseCurrentMenu();
+                CloseCurrentMenu();
             }
         }
     }
@@ -311,7 +310,7 @@ public class MenuHandler2DBtn : MenuHandler
     /// will close current menu .. if was in pause the game will fire up the still btns
     /// </summary>
     /// <param name="forcedP">need to be forced only if the game is paused</param>
-    void CloseCurrentMenu(bool forcedP = false)
+    private void CloseCurrentMenu(bool forcedP = false)
     {
         if (!Settings.ISPAUSED || forcedP)
         {
@@ -331,7 +330,7 @@ public class MenuHandler2DBtn : MenuHandler
     }
 
     //act on right click
-    void ActOnRightClick()
+    private void ActOnRightClick()
     {
         if (Input.GetMouseButtonUp(1) && Application.loadedLevelName != "Lobby")
         {
@@ -339,7 +338,7 @@ public class MenuHandler2DBtn : MenuHandler
         }
     }
 
-    Btn2D CreateStillBtn(string root, Transform slotWhereIsRenderOnScreen)
+    private Btn2D CreateStillBtn(string root, Transform slotWhereIsRenderOnScreen)
     {
         Btn2D temp = null;
         temp = (Btn2D)General.Create(root);
@@ -348,15 +347,15 @@ public class MenuHandler2DBtn : MenuHandler
         return temp;
     }
 
-    new void ActionableBtnClick(Button[] setOfBtns)//actionable buttons 
+    private new void ActionableBtnClick(Button[] setOfBtns)//actionable buttons
     {
         base.ActionableBtnClick(setOfBtns);
 
         //when we click in the back to menu main btn in the pause screen
-        if(currentBtn.btnAction == Btn.BackToMain)
+        if (currentBtn.btnAction == Btn.BackToMain)
         {
             int[] slots = { 6, 8 };//the slots we want to render this obj in the camChild slots
-            CloseCurrentMenu(true);//we force to close current menu 
+            CloseCurrentMenu(true);//we force to close current menu
             SpawnSetMenu(S.Confirm_Menu_Spawner.ToString(), 150f, slotsP: slots);
             Vector3 msgSpawn = USearch.FindTransfInArray(camChild, "Message_Spawner").transform.position;
             SpawnText(Camera.main.WorldToViewportPoint(msgSpawn), "If you exit will lose all the progress.\n"
@@ -376,7 +375,7 @@ public class MenuHandler2DBtn : MenuHandler
             textMessage = null;
         }
         //when we click in the SETTINGS btn in the pause screen
-        else if(currentBtn.btnAction == Btn.SettingsPause)
+        else if (currentBtn.btnAction == Btn.SettingsPause)
         {
             CloseCurrentMenu(true);
             SpawnSetMenu(S.Settings_Pause_Menu_Spawner.ToString());
@@ -407,12 +406,12 @@ public class MenuHandler2DBtn : MenuHandler
     /// <param name="fadeSpeedPass"></param>
     /// <param name="slotsP">if we are sending an array of slotP[] then we will assign it mannually the
     /// slots in the camera to the new 2d Btns</param>
-    void SpawnSetMenu(string whichMenu, float fadeSpeedPass = 25f, int[] slotsP = null)
+    private void SpawnSetMenu(string whichMenu, float fadeSpeedPass = 25f, int[] slotsP = null)
     {
         //we are looking for the a set of obj tht are stored in the list myMenuSets as a list as well
         int listIndex = Root.ReturnListNumber(whichMenu);
         howManyBtns = Root.myMenuSets[listIndex].Count - 1; /*bz last one is spawner*/
-        int max = Root.myMenuSets[listIndex].Count-2;//use it for find the middle one 
+        int max = Root.myMenuSets[listIndex].Count - 2;//use it for find the middle one
 
         SetBtnsAndNameThem(howManyBtns);
 
@@ -428,7 +427,7 @@ public class MenuHandler2DBtn : MenuHandler
                 //if we are sending an array of slotP[] then we will assign it mannually the
                 //slots in the camera to the new 2d Btns
                 else btnArray[i].MyTransform = camChildBtnSlots[slotsP[i]];
-                
+
                 btnArray[i].StartMaterial();
                 btnArray[i].FadeSpeedProp = fadeSpeedPass;
             }
@@ -444,23 +443,23 @@ public class MenuHandler2DBtn : MenuHandler
     /// the obj will use them to render tthem selves
     /// </summary>
     /// <param name="howMany"></param>
-    void SetBtnsAndNameThem(int howMany)
+    private void SetBtnsAndNameThem(int howMany)
     {
         setOfBtn = new Transform[howMany];
         int st = 0;
         int index = 0;
         //print("howMany." + howMany);
         //if is 3 then...
-        if(howMany == 3)
+        if (howMany == 3)
         {
-            //we do this so if is 3 btns will use the 3 central 
+            //we do this so if is 3 btns will use the 3 central
             st = 1;
             howMany = 4;
         }
         for (int i = st; i < howMany; i++)
         {
             setOfBtn[index] = Camera.main.transform.GetChild(i);
-            setOfBtn[index].name = (i+1).ToString();
+            setOfBtn[index].name = (i + 1).ToString();
             index++;
         }
     }
@@ -469,14 +468,14 @@ public class MenuHandler2DBtn : MenuHandler
     /// Will find which obj in onScreen List is hovered at the moment
     /// </summary>
     /// <param name="hovering">The transform the mouse is hovering at the moment</param>
-    void Hovering(Transform hovering)
+    private void Hovering(Transform hovering)
     {
         int counter = 0;
         for (int i = 0; i < onScreen.Count; i++)
-		{
+        {
             if (onScreen[i] != null)
             {
-			    if(hovering == onScreen[i].MyTransform.transform)
+                if (hovering == onScreen[i].MyTransform.transform)
                 {
                     onScreen[i].IsNowHovered = true;
 
@@ -489,10 +488,10 @@ public class MenuHandler2DBtn : MenuHandler
                     counter++;
                 }
             }
-		}
-        //if the counter is being added as many times as the onScreen.Count means tht is nothing hovered at the 
+        }
+        //if the counter is being added as many times as the onScreen.Count means tht is nothing hovered at the
         //moment
-        if(counter == onScreen.Count)
+        if (counter == onScreen.Count)
         {
             DestroyTipMenu();
         }

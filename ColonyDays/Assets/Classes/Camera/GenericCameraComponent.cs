@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class GenericCameraComponent : MonoBehaviour {
-
+public class GenericCameraComponent : MonoBehaviour
+{
     protected Transform TransformCam;
     protected Transform CenterTarget;
 
@@ -17,7 +16,7 @@ public class GenericCameraComponent : MonoBehaviour {
 
         if (classContainer != null)
         {
-            obj.transform.SetParent( classContainer);
+            obj.transform.SetParent(classContainer);
         }
 
         return obj;

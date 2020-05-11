@@ -1,11 +1,10 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-public class UBuilding : MonoBehaviour {
-
+public class UBuilding : MonoBehaviour
+{
     /// <summary>
-    /// Will return a list of buildings with 
+    /// Will return a list of buildings with
     /// </summary>
     /// <param name="list"></param>
     /// <returns></returns>

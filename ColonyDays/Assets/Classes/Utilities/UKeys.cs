@@ -1,18 +1,19 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class UKeys : MonoBehaviour
 {
-	// Use this for initialization
-	void Start () {}
-	
-	// Update is called once per frame
-	void Update () {}
+    // Use this for initialization
+    private void Start()
+    { }
+
+    // Update is called once per frame
+    private void Update()
+    { }
 
     public static string FindBtnKeyUP()
     {
         string t = null;
-        if(Input.GetKeyUp(KeyCode.Alpha1))
+        if (Input.GetKeyUp(KeyCode.Alpha1))
         {
             t = BtnsE.Select_Cube_Btn_Raw_3dMenu.ToString();
         }

@@ -2,7 +2,6 @@
 
 public class CollideWith : MonoBehaviour
 {
-
     private bool _isCollidingNow;
 
     public bool IsCollidingNow
@@ -12,16 +11,16 @@ public class CollideWith : MonoBehaviour
     }
 
     // Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    private void Start()
+    {
+    }
 
-    void OnTriggerEnter(Collider other)
+    // Update is called once per frame
+    private void Update()
+    {
+    }
+
+    private void OnTriggerEnter(Collider other)
     {
         var p = other.transform.GetComponent<CollideWith>();
 

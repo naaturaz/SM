@@ -1,26 +1,23 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.AI;
-using System;
-using UnityStandardAssets.Utility;
 
 public class EnemyGO : Shooter
 {
-    float _speed = 0.04f;
-    NavMeshAgent _agent;
+    private float _speed = 0.04f;
+    private NavMeshAgent _agent;
 
     public bool DebugWalk;
-    int _leftRewards;
+    private int _leftRewards;
 
-    GameObject _marker;
+    private GameObject _marker;
 
-
-    GameObject _base;
-    bool _didTargetRocket;
-    Vector3 _targetPos;
+    private GameObject _base;
+    private bool _didTargetRocket;
+    private Vector3 _targetPos;
 
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         StartCoroutine("OneSecUpdate");
 
@@ -38,7 +35,7 @@ public class EnemyGO : Shooter
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         CheckOnReward();
 
@@ -54,8 +51,8 @@ public class EnemyGO : Shooter
         _agent.destination = _targetPos;
     }
 
+    private int wait = 10;
 
-    int wait = 10;
     private IEnumerator OneSecUpdate()
     {
         while (true)
@@ -73,7 +70,7 @@ public class EnemyGO : Shooter
             return;
         }
 
-        if (_didTargetRocket )
+        if (_didTargetRocket)
         {
             return;
         }
@@ -91,15 +88,15 @@ public class EnemyGO : Shooter
     /// <summary>
     /// 5 % of them will get rocket as Target
     /// </summary>
-    void StartTargetAdquired()
+    private void StartTargetAdquired()
     {
-        if (UMath.GiveRandom(1, 101) > 50)//or 20 % of the time 
+        if (UMath.GiveRandom(1, 101) > 50)//or 20 % of the time
         {
             TargetRocket();
         }
     }
 
-    void TargetRocket()
+    private void TargetRocket()
     {
         _didTargetRocket = true;
         _targetPos = _base.transform.position;
@@ -108,7 +105,8 @@ public class EnemyGO : Shooter
         return;
     }
 
-    int count;
+    private int count;
+
     private void CheckOnReward()
     {
         if (_leftRewards == 0)
@@ -125,7 +123,7 @@ public class EnemyGO : Shooter
         count++;
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
         if (Health == 0 && _agent.enabled)
@@ -133,7 +131,6 @@ public class EnemyGO : Shooter
             Destroy(gameObject);
         }
     }
-
 
     private void Reward()
     {

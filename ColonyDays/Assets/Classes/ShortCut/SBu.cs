@@ -1,8 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-
-//Shpourcut to Builder Functionalietes... Input and Contoller
+﻿//Shpourcut to Builder Functionalietes... Input and Contoller
 public class SBu
 {
     private InputBuilding _inputBuilder;
@@ -36,6 +32,7 @@ public class SBu
         get { return BuildingPot.DoingNow; }
         set { BuildingPot.DoingNow = value; }
     }
+
     public Mode InputMode
     {
         get { return BuildingPot.InputMode; }

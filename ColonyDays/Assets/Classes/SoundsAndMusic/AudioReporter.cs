@@ -29,18 +29,17 @@ public class AudioReporter
 
     /// <summary>
     /// What Im a reporting. A person will report the current animation is playing for ex
-    /// 
-    /// 
+    ///
+    ///
     /// </summary>
     /// <returns></returns>
-    string WhatAmIReporting()
+    private string WhatAmIReporting()
     {
         if (_general.HType == H.Person)
         {
-            Person p = (Person) _general;
+            Person p = (Person)_general;
             return p.Body.CurrentAni;
         }
         return _general.HType + "";
     }
-
 }

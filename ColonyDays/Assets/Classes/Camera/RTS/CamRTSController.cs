@@ -1,65 +1,66 @@
 ﻿/* This is the camRTS class main class
- * 
+ *
  * This camera should always be spawned at 0.0.0 and from there move
- * 
+ *
  * Here is the input for the Keys for the Camera
  */
 
-using System.Collections;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class CamRTSController : CamControl
 {
     //Inital cam val
-    Vector3 initialCamPos = new Vector3(0, 15f, 0);//(0, 20f, 0);
-    Quaternion camIniRot = Quaternion.Euler(45f, 0, 0);
+    private Vector3 initialCamPos = new Vector3(0, 15f, 0);//(0, 20f, 0);
+
+    private Quaternion camIniRot = Quaternion.Euler(45f, 0, 0);
     private bool wasYAligned;
 
-    float cameraXRotation;
+    private float cameraXRotation;
 
     public float camSensivity = 6f;
-    float camDiminigFactor = 0.4f;
-    Transform myForward;
-    Transform myBackward;
-    Transform myRight;
-    Transform myLeft;
+    private float camDiminigFactor = 0.4f;
+    private Transform myForward;
+    private Transform myBackward;
+    private Transform myRight;
+    private Transform myLeft;
 
     //Rotation Vars in Y axis
     public General centerTarget;
-    General helpCam360MainY;
-    General helpCam360GrabPosY;
-    General helpCam360BalanceY;
+
+    private General helpCam360MainY;
+    private General helpCam360GrabPosY;
+    private General helpCam360BalanceY;
 
     public static bool IsMouseMiddle;
 
-    float MIN_FIELD_CAM = 41f;//41    25    5
-    float MAX_FIELD_CAM = 41f;//41     42   48
+    private float MIN_FIELD_CAM = 41f;//41    25    5
+    private float MAX_FIELD_CAM = 41f;//41     42   48
 
     //Target
     public Transform target;
+
     public RaycastHit hitFront;
     public float speed = 15f;
     public float distance;
 
     //Smother cam
-    float smoothTime = 0.3f;
+    private float smoothTime = 0.3f;
+
     private Vector3 velocity = new Vector3();
 
-    Dir mouseInBorderDir;
-    //Classes references.. this clases only work for obj typeof CamRTS.cs 
-    MouseInBorderRTS border;
-    RotateRTS rotateRTS;
-    InputRTS inputRTS;
+    private Dir mouseInBorderDir;
 
-    //the minimap fully functioning. 
-    MiniMapRTS miniMapRTS;
+    //Classes references.. this clases only work for obj typeof CamRTS.cs
+    private MouseInBorderRTS border;
+
+    private RotateRTS rotateRTS;
+    private InputRTS inputRTS;
+
+    //the minimap fully functioning.
+    private MiniMapRTS miniMapRTS;
 
     private Rotate _rotateScript;
-
-
-
-
 
     public MiniMapRTS MiniMapRts
     {
@@ -79,13 +80,11 @@ public class CamRTSController : CamControl
         set { camSensivity = value; }
     }
 
-
-
     /// <summary>
-    /// Create the guides that will grab all the point to the camera move thru when doing the 360 
+    /// Create the guides that will grab all the point to the camera move thru when doing the 360
     /// Rotation
     /// </summary>
-    void CreateRotCam360GuidesY()
+    private void CreateRotCam360GuidesY()
     {
         if (helpCam360MainY != null)
         {
@@ -98,11 +97,11 @@ public class CamRTSController : CamControl
     /// <summary>
     /// This is the one that creates all the helpers that allow the camera rotation
     /// </summary>
-    void CreateAndUpdate360YGuidesPos()
+    private void CreateAndUpdate360YGuidesPos()
     {
         if (helpCam360MainY == null && centerTarget != null)
         {
-            //create the initial pos for the main obj 
+            //create the initial pos for the main obj
             Vector3 main = centerTarget.transform.position;
             main.y = transform.position.y;
             Vector3 difference = main - transform.position;
@@ -110,12 +109,12 @@ public class CamRTSController : CamControl
             helpCam360MainY = General.Create(Root.yellowSphereHelp_ZeroAlpha, main, "helpCam360MainY");
             helpCam360GrabPosY = General.Create(Root.yellowSphereHelp_ZeroAlpha, transform.position, "helpCam360GrabPosY");
             helpCam360BalanceY = General.Create(Root.yellowSphereHelp_ZeroAlpha, main + difference, "helpCam360BalanceY");
-            helpCam360GrabPosY.transform.SetParent( helpCam360MainY.transform);
-            helpCam360BalanceY.transform.SetParent( helpCam360MainY.transform);
+            helpCam360GrabPosY.transform.SetParent(helpCam360MainY.transform);
+            helpCam360BalanceY.transform.SetParent(helpCam360MainY.transform);
         }
     }
 
-    void RotateDealer()
+    private void RotateDealer()
     {
         CreateTargetAndUpdate();
         //if centerOfRotY was not created wont rotate
@@ -128,22 +127,20 @@ public class CamRTSController : CamControl
         }
     }
 
-    void Start()
+    private void Start()
     {
-//        if (Developer.IsDev)
-//        {
-//            MIN_FIELD_CAM = 5f;// 48  5   21   45
-//            MAX_FIELD_CAM = 48f;//50   80  45  60
-//        }
-//#if UNITY_EDITOR
-//        MIN_FIELD_CAM = 5f;// 48  5   21   45
-//        MAX_FIELD_CAM = 48f;//50   80  45  60
-//#endif
-
+        //        if (Developer.IsDev)
+        //        {
+        //            MIN_FIELD_CAM = 5f;// 48  5   21   45
+        //            MAX_FIELD_CAM = 48f;//50   80  45  60
+        //        }
+        //#if UNITY_EDITOR
+        //        MIN_FIELD_CAM = 5f;// 48  5   21   45
+        //        MAX_FIELD_CAM = 48f;//50   80  45  60
+        //#endif
     }
 
-
-    void InitializeObjects()
+    private void InitializeObjects()
     {
         if (transform.position != new Vector3())
         {
@@ -153,13 +150,12 @@ public class CamRTSController : CamControl
         //initial pos and rot
         transform.position = initialCamPos;
         var rot = transform.rotation;
-        transform.rotation = rot*camIniRot;
+        transform.rotation = rot * camIniRot;
 
         CreateTargetAndUpdate();
         FindGuideChildObjs(centerTarget.transform);//if giving u a null exp here in new terrain is bz new terrain is not
         //l;ayer 8
-        transform.SetParent( centerTarget.transform);
-
+        transform.SetParent(centerTarget.transform);
 
         miniMapRTS = (MiniMapRTS)MiniMapRTS.CreateCamComponent(Root.miniMapRTS, transform, classContainer: transform);
         border = (MouseInBorderRTS)MouseInBorderRTS.CreateCamComponent(Root.mouseInBorderRTS, transform,
@@ -172,10 +168,10 @@ public class CamRTSController : CamControl
         _rotateScript = GetComponent<Rotate>();
     }
 
-
-
     #region Audio Reporting
+
     private bool _isAudioReport;
+
     public void ReportAudioNow()
     {
         _isAudioReport = true;
@@ -186,8 +182,7 @@ public class CamRTSController : CamControl
         _isAudioReport = false;
     }
 
-
-    void AudioAmbientPlay()
+    private void AudioAmbientPlay()
     {
         if (!Program.GameFullyLoaded())
         {
@@ -197,7 +192,7 @@ public class CamRTSController : CamControl
         var playThis = MeshController.CrystalManager1.WhatAudioIPlay(transform.position);
         var pos = MeshController.CrystalManager1.CurrentRegionPos(transform.position);
         //if game tht has not started
-        if (string.IsNullOrEmpty(playThis) || AudioCollector.AudioContainers.Count == 0 
+        if (string.IsNullOrEmpty(playThis) || AudioCollector.AudioContainers.Count == 0
             || !_isAudioReport
             )
         {
@@ -208,21 +203,22 @@ public class CamRTSController : CamControl
         //Debug.Log(playThis);
     }
 
-    void OnGUI()
+    private void OnGUI()
     {
         if (Event.current.type == EventType.KeyUp || Event.current.type == EventType.MouseUp)
         {
-        //    Debug.Log("Key/Mouse up event detected");
+            //    Debug.Log("Key/Mouse up event detected");
             AudioAmbientPlay();
         }
     }
-#endregion
+
+    #endregion Audio Reporting
 
     // Update is called once per frame
     //void LateUpdate()
-    void Update()
+    private void Update()
     {
-        if (Program.MouseListener.IsAWindowScrollableShownNow() || CamControl.IsMainMenuOn() 
+        if (Program.MouseListener.IsAWindowScrollableShownNow() || CamControl.IsMainMenuOn()
             || ScrollViewShowInventory.IsMouseOnMe)
         {
             return;
@@ -234,7 +230,7 @@ public class CamRTSController : CamControl
 
         if (!Program.IsInputLocked &&
             U2D.IsMouseOnScreen() &&
-            !MiniMapRTS.isOnTheLimits && BuildingPot.Control != null && BuildingPot.Control.Registro.AllBuilding.Count>0)
+            !MiniMapRTS.isOnTheLimits && BuildingPot.Control != null && BuildingPot.Control.Registro.AllBuilding.Count > 0)
         {
             ControlInput();
             MouseInBorderDealer();
@@ -248,9 +244,8 @@ public class CamRTSController : CamControl
         //CameraFOV();
     }
 
+    private Camera thisCamera;
 
-
-    Camera thisCamera;
     public void CameraFOV(float localMultiplier)
     {
         return;
@@ -281,7 +276,7 @@ public class CamRTSController : CamControl
         //}
 
         float fieldOfView = UMath.changeValSmooth(thisCamera.fieldOfView,
-            localMultiplier , 1,
+            localMultiplier, 1,
             MIN_FIELD_CAM, MAX_FIELD_CAM,
             camSensivity);
         thisCamera.fieldOfView = fieldOfView;
@@ -301,23 +296,22 @@ public class CamRTSController : CamControl
         if (Input.GetKeyUp(KeyCode.X))
         {
             _rotateScript.ToggleOn('X');
-        } 
+        }
         if (Input.GetKeyUp(KeyCode.Y))
         {
             _rotateScript.ToggleOn('Y');
-        } 
+        }
         if (Input.GetKeyUp(KeyCode.Z))
         {
             _rotateScript.ToggleOn('Z');
-        } 
+        }
         if (Input.GetKeyUp(KeyCode.KeypadPlus))
         {
             _rotateScript.ChangeSpeed(0.01f);
-        } 
+        }
         if (Input.GetKeyUp(KeyCode.KeypadMinus))
         {
             _rotateScript.ChangeSpeed(-0.01f);
-
         }
     }
 
@@ -326,23 +320,23 @@ public class CamRTSController : CamControl
     /// value stored in initialCamPos... so the terrain should be even around the 0,0,0
     /// area so the camera is even for all the terrain and looks the same for each terrain
     /// </summary>
-    void AlignYInZero()
+    private void AlignYInZero()
     {
         if (!wasYAligned)
         {
-            transform.SetParent( null);
+            transform.SetParent(null);
             float newYPos = initialCamPos.y + hitFront.point.y;
-            transform.position =new Vector3(0, newYPos, 0);
+            transform.position = new Vector3(0, newYPos, 0);
             CreateTargetAndUpdate();//so the hitFront updates
             centerTarget.transform.position = hitFront.point;
-            transform.SetParent( centerTarget.transform);
+            transform.SetParent(centerTarget.transform);
             wasYAligned = true;
 
             //CAMRTS.InputRts.SaveFirstCamPos();
         }
     }
 
-    void MouseInBorderDealer()
+    private void MouseInBorderDealer()
     {
         mouseInBorderDir = Dir.None;
         mouseInBorderDir = border.ReturnMouseDirection();
@@ -352,7 +346,7 @@ public class CamRTSController : CamControl
         }
     }
 
-    void FindGuideChildObjs(Transform toPickFrom)
+    private void FindGuideChildObjs(Transform toPickFrom)
     {
         for (int i = 0; i < toPickFrom.transform.childCount; i++)
         {
@@ -375,9 +369,8 @@ public class CamRTSController : CamControl
         }
     }
 
-
     /// <summary>
-    /// Creates obj in center of screen on the terrain that is used to 
+    /// Creates obj in center of screen on the terrain that is used to
     /// be the center of camera when rotates
     /// </summary>
     public void CreateTargetAndUpdate()
@@ -449,11 +442,11 @@ public class CamRTSController : CamControl
     }
 
     /// <summary>
-    /// Will filter North and South bz I have menu bars on there 
+    /// Will filter North and South bz I have menu bars on there
     /// </summary>
     /// <param name="dir"></param>
     /// <returns></returns>
-    Dir BlockNorthAndSouth(Dir dir)
+    private Dir BlockNorthAndSouth(Dir dir)
     {
         if (dir == Dir.N || dir == Dir.Up)
         {
@@ -466,12 +459,11 @@ public class CamRTSController : CamControl
         return dir;
     }
 
-    void ScrollMouse()
+    private void ScrollMouse()
     {
         int localMultiplier = 100;
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {
-
             RotateDealer();
             rotateRTS.RotateCamVert(camSensivity, target, -Input.GetAxis("Mouse ScrollWheel") * localMultiplier);
         }
@@ -483,7 +475,7 @@ public class CamRTSController : CamControl
         }
     }
 
-    void MiddleMouse()
+    private void MiddleMouse()
     {
         //if middle mouse btn is pressed
         if (Input.GetMouseButton(2) || Input.GetAxis("Mouse ScrollWheel") != 0 //&& !InputRTS.IsFollowingPersonNow
@@ -501,7 +493,7 @@ public class CamRTSController : CamControl
             IsMouseMiddle = false;
             //Cursor.visible = true;
         }
-        else if(Input.GetKeyUp(KeyCode.End)){}
+        else if (Input.GetKeyUp(KeyCode.End)) { }
     }
 
     /// <summary>
@@ -526,39 +518,37 @@ public class CamRTSController : CamControl
         }
     }
 
-
-
     private float _desiredSpeed = 1f;
+
     public float DesiredSpeed
     {
         get { return _desiredSpeed; }
         set { _desiredSpeed = value; }
     }
 
-
     /// <summary>
-    /// Will decompose a Compose Direction (ex: UpRight), into Up and Right so the 
+    /// Will decompose a Compose Direction (ex: UpRight), into Up and Right so the
     /// mouse direction will be valid if is in a corner, if is a simpel direction
     /// will be send in the first item of the 'List<D> localDirs' , 2nd item will be D.none.
-    /// If composeDir == D.none , both items in the list will be equal to so. 
+    /// If composeDir == D.none , both items in the list will be equal to so.
     /// </summary>
     /// <param name="composeDir">direction that MouseInBorder.cs obj is sending</param>
     /// <returns></returns>
-    List<float> DecomposeDirectionRetValues(Dir composeDir)
+    private List<float> DecomposeDirectionRetValues(Dir composeDir)
     {
         List<Dir> localDirs = new List<Dir>();
-        if(composeDir == Dir.DownRight)
+        if (composeDir == Dir.DownRight)
         {
-            //when decomposing always X axis 1st and then Y axis 
+            //when decomposing always X axis 1st and then Y axis
             localDirs.Add(Dir.Right);
             localDirs.Add(Dir.Down);
         }
-        else if(composeDir == Dir.DownLeft)
+        else if (composeDir == Dir.DownLeft)
         {
             localDirs.Add(Dir.Left);
             localDirs.Add(Dir.Down);
         }
-        else if(composeDir == Dir.UpRight)
+        else if (composeDir == Dir.UpRight)
         {
             localDirs.Add(Dir.Right);
             localDirs.Add(Dir.Up);
@@ -581,32 +571,32 @@ public class CamRTSController : CamControl
         float vertChange = 0;
 
         //if localDirections are none user is not moving the camera with mouse
-        //therefore can use the keyboad to move 
-        if(localDirs[0] == Dir.None)
+        //therefore can use the keyboad to move
+        if (localDirs[0] == Dir.None)
         {
-            horChange=Input.GetAxis("Horizontal");
+            horChange = Input.GetAxis("Horizontal");
             vertChange = Input.GetAxis("Vertical");
         }
         //if user is using mouse horChange and vertChange will remaing at 0 therefore
-        //subsequente method will find where to go based on mouse direction 
+        //subsequente method will find where to go based on mouse direction
 
         float horValue = UMath.ResponsiveInputAxisTo(_desiredSpeed, Dir.Horizontal,
         horChange, localDirs[0]);
         float vertValue = UMath.ResponsiveInputAxisTo(_desiredSpeed, Dir.Vertical,
         vertChange, localDirs[1]);
 
-        return new List<float> {horValue, vertValue};
+        return new List<float> { horValue, vertValue };
     }
 
     /// <summary>
-    /// This is the move dealer will store in list the direction the user is moving to 
+    /// This is the move dealer will store in list the direction the user is moving to
     /// and will decompose it, then will pass all tht as parameter to MoveInLocalDir()
     /// </summary>
     /// <param name="objToBeMoved">objToBeMoved</param>
     /// <param name="direction">direction that MouseInBorder.cs obj is sending</param>
     /// <returns></returns>
-    
-    Vector3 MoveLocalDealer(Transform objToBeMoved, Dir direction = Dir.None)
+
+    private Vector3 MoveLocalDealer(Transform objToBeMoved, Dir direction = Dir.None)
     {
         List<float> valDirection = DecomposeDirectionRetValues(direction);
         int shiftMultiplier = CheckIfShiftKeyIsPressed();
@@ -618,14 +608,13 @@ public class CamRTSController : CamControl
     /// If shift key is pressed will return 5,. othrwise 1, so it will get multiplied
     /// the speed of the cam
     /// </summary>
-    int CheckIfShiftKeyIsPressed()
+    private int CheckIfShiftKeyIsPressed()
     {
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
         {
             if (TutoWindow.IsStepReady("CamMov5x.Tuto"))
             {
                 Program.gameScene.TutoStepCompleted("CamMov5x.Tuto");
-                
             }
 
             return 5;
@@ -641,7 +630,7 @@ public class CamRTSController : CamControl
     /// <param name="vertValue">vertical value</param>
     /// <param name="direction">direction that MouseInBorder.cs obj is sending</param>
     /// <returns></returns>
-    Vector3 MoveInLocalDir(Transform objToBeMoved, float horValue, float vertValue,
+    private Vector3 MoveInLocalDir(Transform objToBeMoved, float horValue, float vertValue,
         Dir direction = Dir.None)
     {
         Vector3 result = objToBeMoved.transform.position;
@@ -665,25 +654,25 @@ public class CamRTSController : CamControl
     }
 
     /// <summary>
-    /// Will return in which Axis the move is happening based on Direction first 
+    /// Will return in which Axis the move is happening based on Direction first
     /// pased from  MouseInBorder.cs obj, then if that is equal D.None will then
-    /// look at the keyboard input 
+    /// look at the keyboard input
     /// </summary>
     /// <param name="horVal">horizontal axis change value </param>
     /// <param name="vertVal">vertical axis change value</param>
     /// <param name="dir">direction pased from  MouseInBorder.cs obj</param>
     /// <returns></returns>
-    Dir ReturnAxisToMove(float horVal, float vertVal, Dir dir = Dir.None)
+    private Dir ReturnAxisToMove(float horVal, float vertVal, Dir dir = Dir.None)
     {
         //VerticHorizo
-        //mouse 
-        if((dir == Dir.UpLeft || dir == Dir.UpRight ||
+        //mouse
+        if ((dir == Dir.UpLeft || dir == Dir.UpRight ||
              dir == Dir.DownLeft || dir == Dir.DownRight) && !IsMouseMiddle)
         {
             dir = Dir.VerticHorizo;
         }
         //keyboard
-        else if((horVal != 0 && vertVal != 0 && UInput.IfCursorKeyIsPressed()) && dir == Dir.None)
+        else if ((horVal != 0 && vertVal != 0 && UInput.IfCursorKeyIsPressed()) && dir == Dir.None)
         {
             dir = Dir.VerticHorizo;
         }
@@ -707,7 +696,7 @@ public class CamRTSController : CamControl
             dir = Dir.Vertical;
         }
         //keyobard
-        else if (vertVal != 0 && dir == Dir.None )
+        else if (vertVal != 0 && dir == Dir.None)
         {
             dir = Dir.Vertical;
         }
@@ -715,12 +704,12 @@ public class CamRTSController : CamControl
     }
 
     /// <summary>
-    /// Move an objetc to a different position 
+    /// Move an objetc to a different position
     /// </summary>
     /// <param name="moveTo"></param>
     /// <param name="multiplier"></param>
     /// <param name="objToBeMoved">Obj to be moved</param>
-    Vector3 MoveToWhere(Vector3 moveTo, float multiplier, Transform objToBeMoved)
+    private Vector3 MoveToWhere(Vector3 moveTo, float multiplier, Transform objToBeMoved)
     {
         //this is created so an obj that is not the camera can use the same
         //local directions that guides the camera
@@ -735,22 +724,14 @@ public class CamRTSController : CamControl
             if (TutoWindow.IsStepReady("CamMov.Tuto"))
             {
                 Program.gameScene.TutoStepCompleted("CamMov.Tuto");
-                
             }
-
         }
         else { print("CamRTS.MoveToWhere() objToBeMoved was null"); };
         return moveTo;
     }
 
-
-
-
-
-
-
-    //Camera visual effects 
-    Camera _camera;
+    //Camera visual effects
+    private Camera _camera;
 
     public void Day()
     {
@@ -767,7 +748,7 @@ public class CamRTSController : CamControl
 
     internal Color GetCameraBackColor()
     {
-        if(_camera == null)
+        if (_camera == null)
             _camera = gameObject.GetComponent<Camera>();
 
         return _camera.backgroundColor;

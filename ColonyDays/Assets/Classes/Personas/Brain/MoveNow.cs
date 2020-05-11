@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// To address the problem in where some people houses are destroyed and they get stuck either in:
-/// IdleSpot, Storage or Old House 
+/// IdleSpot, Storage or Old House
 /// </summary>
 public class MoveNow
 {
+    private Person _person;
 
-    Person _person;
-
-    float _destroyedAtGameTime;
-    MDate _destroyedAt;
-    Vector3 _fiveSecAfterDestroyedPos;
-    CryRouteManager _router;
+    private float _destroyedAtGameTime;
+    private MDate _destroyedAt;
+    private Vector3 _fiveSecAfterDestroyedPos;
+    private CryRouteManager _router;
 
     public MoveNow(Person person)
     {
@@ -36,11 +32,11 @@ public class MoveNow
             _destroyedAt = Program.gameScene.GameTime1.CurrentDate();
             _destroyedAtGameTime = Time.time;
         }
-        else if(_destroyedAt != null && Time.time > _destroyedAtGameTime + 5 && _fiveSecAfterDestroyedPos == new Vector3())
+        else if (_destroyedAt != null && Time.time > _destroyedAtGameTime + 5 && _fiveSecAfterDestroyedPos == new Vector3())
         {
             _fiveSecAfterDestroyedPos = _person.transform.position;
         }
-        else if(_router == null && 
+        else if (_router == null &&
             _destroyedAt != null && Program.gameScene.GameTime1.ElapsedDateInDaysToDate(_destroyedAt) > 90)
         {
             //_person.Brain.Partido = true;
@@ -60,7 +56,7 @@ public class MoveNow
         //}
         //else if(_router != null && _router.IsRouteReady && _person.Body.GoingTo != HPers.NowToNewHome)
         //{
-        //    //reached the house 
+        //    //reached the house
         //    if (_person.Body.GoingTo == HPers.MovingToNewHome)
         //    {
         //        ResetThis();

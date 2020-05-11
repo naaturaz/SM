@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class LineUpHelper : General
 {
-    private float moveSpeed ;
+    private float moveSpeed;
     private H moveInThisAxis;
     private float moveForThisLong;
 
@@ -16,7 +15,6 @@ public class LineUpHelper : General
         get { return _earthPosition; }
         set { _earthPosition = value; }
     }
-
 
     static public LineUpHelper Create(string root, Vector3 origen = new Vector3(), string name = "", Transform container = null,
     H hType = H.None)
@@ -34,22 +32,22 @@ public class LineUpHelper : General
         return obj;
     }
 
-	// Use this for initialization
-	void Start ()
-	{
-	    HideOnSky();
-	}
-
-    void HideOnSky()
+    // Use this for initialization
+    private void Start()
     {
-        _upInSky =new Vector3(transform.position.x, transform.position.y + 30, transform.position.z);
+        HideOnSky();
+    }
+
+    private void HideOnSky()
+    {
+        _upInSky = new Vector3(transform.position.x, transform.position.y + 30, transform.position.z);
         transform.position = _upInSky;
     }
 
-	// Update is called once per frame
-	void Update () {
-	
-	    MoveThis();
+    // Update is called once per frame
+    private void Update()
+    {
+        MoveThis();
     }
 
     public void BringToEarth()
@@ -77,9 +75,9 @@ public class LineUpHelper : General
     }
 
     /// <summary>
-    /// Move this game object 
+    /// Move this game object
     /// </summary>
-    void MoveThis()
+    private void MoveThis()
     {
         //Vector3 tempPos = transform.position;
         moveSpeed *= 1.1f;//so speeds up

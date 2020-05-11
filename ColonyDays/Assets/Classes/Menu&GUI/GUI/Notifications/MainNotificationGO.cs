@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-
-class MainNotificationGO : GUIElement
+internal class MainNotificationGO : GUIElement
 {
     private Text _text;
     private RectTransform _rectTransform;
@@ -10,8 +9,7 @@ class MainNotificationGO : GUIElement
 
     private Image _image;
 
-
-    void Start()
+    private void Start()
     {
         _iniPos = transform.position;
 
@@ -22,7 +20,6 @@ class MainNotificationGO : GUIElement
         _image = image.GetComponent<Image>();
 
         _rectTransform = transform.GetComponent<RectTransform>();
-
 
         Hide();
     }
@@ -37,9 +34,8 @@ class MainNotificationGO : GUIElement
     {
         transform.position = _iniPos;
         _text.text = Languages.ReturnString(which);
-        
-        _image.sprite = LoadIcons(which);
 
+        _image.sprite = LoadIcons(which);
     }
 
     private Sprite LoadIcons(string key)
@@ -58,7 +54,7 @@ class MainNotificationGO : GUIElement
         return sp;
     }
 
-    void OnGUI()
+    private void OnGUI()
     {
         if (Event.current.type == EventType.MouseUp)
         {
@@ -66,4 +62,3 @@ class MainNotificationGO : GUIElement
         }
     }
 }
-

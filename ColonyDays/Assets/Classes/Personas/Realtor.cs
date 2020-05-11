@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 /*
  * SEALED CLASS AS JAN 28 2016
@@ -8,11 +8,11 @@ using System.Linq;
 
 public class Realtor
 {
-    private   int confortWeight = 3;
+    private int confortWeight = 3;
 
-    private   string familyID="";
+    private string familyID = "";
 
-    public   Structure GiveMeTheBetterHome(Person person)
+    public Structure GiveMeTheBetterHome(Person person)
     {
         var key = "";
         if (!string.IsNullOrEmpty(person.IsBooked))
@@ -37,13 +37,13 @@ public class Realtor
     }
 
     /// <summary>
-    /// Will go thru all better homes to see if can find one. 
+    /// Will go thru all better homes to see if can find one.
     /// </summary>
-      string LoopThruAllBetterHomes(Person person)
+    private string LoopThruAllBetterHomes(Person person)
     {
         //list of better hoomes
         var list = DefineBetterHomesList(person);
-        // and if not none dont have to continue any deeper 
+        // and if not none dont have to continue any deeper
         if (!ThereIsABetterHome(person, list))
         {
             return "";
@@ -67,7 +67,7 @@ public class Realtor
     /// It has the logic to deal with the booking of a home
     /// </summary>
     /// <returns></returns>
-      Structure HandleBooking(Person person, Structure newhome)
+    private Structure HandleBooking(Person person, Structure newhome)
     {
         if (newhome == null)
         {
@@ -84,11 +84,11 @@ public class Realtor
     /// </summary>
     /// <param name="person"></param>
     /// <param name="newHome"></param>
-      void BookToNewBuild(Person person, Structure newHome)
+    private void BookToNewBuild(Person person, Structure newHome)
     {
-       //Debug.Log(person.MyId + " BookToNewBuild fID:"+familyID);
+        //Debug.Log(person.MyId + " BookToNewBuild fID:"+familyID);
 
-        if (familyID=="Empty")
+        if (familyID == "Empty")
         {
             BookMyFamilyToNewBuild(person, newHome);
         }
@@ -104,7 +104,7 @@ public class Realtor
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    private   string DefineIfIsABetterHouse(Person person, string homeToEval, List<BuildRank> list)
+    private string DefineIfIsABetterHouse(Person person, string homeToEval, List<BuildRank> list)
     {
         if (ThereIsABetterHome(person, list))
         {
@@ -122,7 +122,7 @@ public class Realtor
         return "";
     }
 
-      string DefineBetterHome4Adult(Person person, string homeToEval)
+    private string DefineBetterHome4Adult(Person person, string homeToEval)
     {
         var newHome = Brain.GetBuildingFromKey(homeToEval);
 
@@ -137,8 +137,7 @@ public class Realtor
         return "";
     }
 
-
-      string DefineBetterHome4Child(Person person, string homeToEval)
+    private string DefineBetterHome4Child(Person person, string homeToEval)
     {
         var newHome = Brain.GetBuildingFromKey(homeToEval);
 
@@ -163,9 +162,9 @@ public class Realtor
     }
 
     /// <summary>
-    /// Will tell u if the person family fits in the new home 
+    /// Will tell u if the person family fits in the new home
     /// </summary>
-      bool DoesFamilyFit(Person person, Building newHome)
+    private bool DoesFamilyFit(Person person, Building newHome)
     {
         var personHasFamily = person.HasFamily();
         //Debug.Log(person.MyId);
@@ -195,7 +194,7 @@ public class Realtor
     /// <summary>
     /// Will tell u if the 'person' is booked in the 'newHome'
     /// </summary>
-      bool AmIBookedInThatBuild(Person person, Building newHome)
+    private bool AmIBookedInThatBuild(Person person, Building newHome)
     {
         if (newHome.BookedHome1 == null)
         {
@@ -205,17 +204,17 @@ public class Realtor
     }
 
     /// <summary>
-    /// Will tell if a person fits in the 'newHome' will look first if the building is booked 
+    /// Will tell if a person fits in the 'newHome' will look first if the building is booked
     /// </summary>
-      bool DoesPersonFit(Person person, Building newHome)
+    private bool DoesPersonFit(Person person, Building newHome)
     {
-        //was removed from there then doesnt fit 
+        //was removed from there then doesnt fit
         if (!BuildingPot.Control.HousesWithSpace.Contains(newHome.MyId))
         {
             return false;
         }
 
-        //and is not booked 
+        //and is not booked
         var isBooked = IsBuildBooked(newHome);
         if (!isBooked)
         {
@@ -226,11 +225,11 @@ public class Realtor
                 familyID = famID;
                 //person.PersonGotMarriedAffairs(newHome);
 
-                //so families are resaved 
+                //so families are resaved
                 BuildingPot.Control.Registro.ResaveOnRegistro(newHome.MyId);
 
-                //if not even have 1 spot avail for a new family and all families formed then    
-                //home can be removed from list 
+                //if not even have 1 spot avail for a new family and all families formed then
+                //home can be removed from list
                 if (newHome.AllFamiliesFull())
                 {
                     BuildingPot.Control.RemoveFromHousesWithSpace(newHome.MyId);
@@ -241,26 +240,26 @@ public class Realtor
         return false;
     }
 
-      Family FindCurrentFamily(Person person)
+    private Family FindCurrentFamily(Person person)
     {
-        if (person.Home==null)
+        if (person.Home == null)
         {
             return null;
         }
         else
         {
-            return  person.Home.FindMyFamilyChecksFamID(person);
+            return person.Home.FindMyFamilyChecksFamID(person);
         }
     }
 
     /// <summary>
-    /// Will book family to new building 
+    /// Will book family to new building
     /// </summary>
-    public   void BookMyFamilyToNewBuild(Person person, Building newHome)
+    public void BookMyFamilyToNewBuild(Person person, Building newHome)
     {
         //if doesnt have at least 1 family empty.//means no booking is needed.
         if (newHome.ReturnEmptyFamily() == null)
-        {return;}
+        { return; }
 
         var famIDInBookedHome = "";
 
@@ -280,7 +279,7 @@ public class Realtor
         }
     }
 
-      void BookMyFamilyToNewBuildTail(Person person, Building newHome, Family myFamily)
+    private void BookMyFamilyToNewBuildTail(Person person, Building newHome, Family myFamily)
     {
         newHome.BookedHome1 = new BookedHome(newHome.MyId, myFamily);
         BuildingPot.Control.Registro.ResaveOnRegistro(newHome.MyId);
@@ -288,7 +287,7 @@ public class Realtor
         RestartControllerForMyFamily(myFamily, person);
     }
 
-    private   Family TransferInToNewFamily(Family curFamily, Building newHome, Person newPerson)
+    private Family TransferInToNewFamily(Family curFamily, Building newHome, Person newPerson)
     {
         var fam = newHome.ReturnEmptyFamily();
 
@@ -310,12 +309,12 @@ public class Realtor
     /// </summary>
     /// <param name="curFamily"></param>
     /// <param name="fam"></param>
-    private   void TransferFromCurrToNewFam(Family curFamily, Family newFam, Person newPerson, Building newHome)
+    private void TransferFromCurrToNewFam(Family curFamily, Family newFam, Person newPerson, Building newHome)
     {
-        if (!string.IsNullOrEmpty( newPerson.Spouse))
+        if (!string.IsNullOrEmpty(newPerson.Spouse))
         {
             var spouse = Family.FindPerson(newPerson.Spouse);
-            if (spouse!= null)
+            if (spouse != null)
             {
                 newFam.CanGetAnotherAdult(spouse);
                 curFamily.RemovePersonFromFamily(spouse);
@@ -325,7 +324,7 @@ public class Realtor
         for (int i = 0; i < curFamily.Kids.Count; i++)
         {
             var kid = Family.FindPerson(curFamily.Kids[i]);
-            kid.transform.SetParent( newHome.transform);
+            kid.transform.SetParent(newHome.transform);
 
             var temp = kid.MyId;
             newFam.AddKids(temp);
@@ -337,8 +336,8 @@ public class Realtor
 
     /// <summary>
     /// Books a a Person that doesnt have any family into a new place
-    /// 
-    /// so far used by Teens moving out of home 
+    ///
+    /// so far used by Teens moving out of home
     /// </summary>
     /// <param name="person"></param>
     /// <param name="newHome"></param>
@@ -346,7 +345,7 @@ public class Realtor
     {
         RemoveFromOldHomeFamily(person);
         var myFamily = newHome.FindFamilyById(familyIDP);
-        
+
         person.FamilyId = myFamily.FamilyId;
         myFamily.CanGetAnotherAdult(person);
 
@@ -367,10 +366,10 @@ public class Realtor
     }
 
     /// <summary>
-    /// In case is being called from In Here Realtor. 
+    /// In case is being called from In Here Realtor.
     /// </summary>
     /// <param name="person"></param>
-      void RemoveFromOldHomeFamily(Person person)
+    private void RemoveFromOldHomeFamily(Person person)
     {
         if (person.Home == null || person.Home.Families == null)
         {
@@ -385,21 +384,19 @@ public class Realtor
 
     /// <summary>
     /// Will uncheck them from the controller so they can see their new Home Booked so theu can move there
-    /// 
-    /// PersonB is the one asking for this. Is theone tht booked and this person doesnt need to check again  
+    ///
+    /// PersonB is the one asking for this. Is theone tht booked and this person doesnt need to check again
     /// </summary>
-      void RestartControllerForMyFamily(Family myFamily, Person personB)
+    private void RestartControllerForMyFamily(Family myFamily, Person personB)
     {
         for (int i = 0; i < myFamily.Kids.Count; i++)
         {
             PersonPot.Control.RestartControllerForPerson(myFamily.Kids[i]);
         }
 
-       
-            PersonPot.Control.RestartControllerForPerson(myFamily.Mother);
-      
-            PersonPot.Control.RestartControllerForPerson(myFamily.Father);
-        
+        PersonPot.Control.RestartControllerForPerson(myFamily.Mother);
+
+        PersonPot.Control.RestartControllerForPerson(myFamily.Father);
     }
 
     /// <summary>
@@ -407,21 +404,20 @@ public class Realtor
     /// </summary>
     /// <param name="newHome"></param>
     /// <returns></returns>
-      bool CanIMoveFamilyToNewHome(Building newHome)
+    private bool CanIMoveFamilyToNewHome(Building newHome)
     {
         bool isBooked = IsBuildBooked(newHome);
 
-        return newHome.ReturnEmptyFamily()!=null && !isBooked;
+        return newHome.ReturnEmptyFamily() != null && !isBooked;
     }
 
     /// <summary>
-    /// Will return true if building is booked 
+    /// Will return true if building is booked
     /// </summary>
     /// <returns></returns>
-      bool IsBuildBooked(Building newHome)
+    private bool IsBuildBooked(Building newHome)
     {
         bool isBooked = false;
-
 
         if (newHome.BookedHome1 != null)
         {
@@ -432,12 +428,12 @@ public class Realtor
     }
 
     /// <summary>
-    /// Score one building 
+    /// Score one building
     /// </summary>
     /// <param name="building"></param>
     /// <param name="person"></param>
     /// <returns></returns>
-      float ScoreABuild(Building building, Vector3 comparePoint,Person person)
+    private float ScoreABuild(Building building, Vector3 comparePoint, Person person)
     {
         var distToNewHome = Vector3.Distance(building.transform.position, comparePoint);
         var confort = building.Comfort * confortWeight;
@@ -449,7 +445,8 @@ public class Realtor
     }
 
     private float MAXDISTANCETOHOME = 200;
-    float ValidateDistanceToHome(float toEval)
+
+    private float ValidateDistanceToHome(float toEval)
     {
         if (toEval > MAXDISTANCETOHOME)
         {
@@ -458,16 +455,14 @@ public class Realtor
         return toEval;
     }
 
-
-
     /// <summary>
-    /// Return a list with the Home rank ordered descending 
-    /// 
+    /// Return a list with the Home rank ordered descending
+    ///
     /// Above: that are above this score
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    List<BuildRank> ScoreAllAvailBuilds(Person person, Vector3 comparePoint, float above)
+    private List<BuildRank> ScoreAllAvailBuilds(Person person, Vector3 comparePoint, float above)
     {
         List<BuildRank> res = new List<BuildRank>();
 
@@ -476,13 +471,13 @@ public class Realtor
             var key = BuildingPot.Control.HousesWithSpace[i];
             var struc = Brain.GetStructureFromKey(key);
 
-            //to avoid struct tht weere recentrly deleted 
+            //to avoid struct tht weere recentrly deleted
             if (struc == null)
             {
                 continue;
             }
 
-            var score = ScoreABuild(struc, comparePoint,person);
+            var score = ScoreABuild(struc, comparePoint, person);
             //a house that is over the Max Distance
             if (score < -5000)
             {
@@ -502,13 +497,13 @@ public class Realtor
     }
 
     /// <summary>
-    /// Will return true if is a better home than the current one 
+    /// Will return true if is a better home than the current one
     /// </summary>
-      bool ThereIsABetterHome(Person person, List<BuildRank> list)
+    private bool ThereIsABetterHome(Person person, List<BuildRank> list)
     {
         var myCurrentHomeScore = ScoreCurrentHome(person);
 
-        //means not Houses are with empty Spaces 
+        //means not Houses are with empty Spaces
         if (list.Count == 0)
         {
             return false;
@@ -527,14 +522,14 @@ public class Realtor
         return false;
     }
 
-    public   bool PublicIsABetterHome(Person person)
+    public bool PublicIsABetterHome(Person person)
     {
         var tempList = DefineBetterHomesList(person);
 
         return ThereIsABetterHome(person, tempList);
     }
 
-    List<BuildRank> DefineBetterHomesList(Person person)
+    private List<BuildRank> DefineBetterHomesList(Person person)
     {
         var myCurrentHomeScore = ScoreCurrentHome(person);
 
@@ -547,22 +542,21 @@ public class Realtor
     {
         //if (_oldHomes != BuildingPot.Control.HousesWithSpace.Count)
         //{
-            _oldHomes = BuildingPot.Control.HousesWithSpace.Count;
+        _oldHomes = BuildingPot.Control.HousesWithSpace.Count;
 
-            //Debug.Log("Check if better home on Realtor");
+        //Debug.Log("Check if better home on Realtor");
 
-            //will return list with all avail building tht have better score than 'myCurrentHomeScore'
-            _allAvailBuild = ScoreAllAvailBuilds(person, person.transform.position, myCurrentHomeScore);
+        //will return list with all avail building tht have better score than 'myCurrentHomeScore'
+        _allAvailBuild = ScoreAllAvailBuilds(person, person.transform.position, myCurrentHomeScore);
         //}
     }
 
-
     //List<string> _oldHomes = new List<string>();
     private int _oldHomes;
-    List<BuildRank> _allAvailBuild = new List<BuildRank>(); 
 
+    private List<BuildRank> _allAvailBuild = new List<BuildRank>();
 
-    float ScoreCurrentHome(Person person)
+    private float ScoreCurrentHome(Person person)
     {
         //to address the case if there is not home currently for the person
         //if will be destroy score will be -10000
@@ -575,11 +569,11 @@ public class Realtor
     }
 
     /// <summary>
-    /// Mark everyone on the Family as booked 
+    /// Mark everyone on the Family as booked
     /// </summary>
     /// <param name="makeIt"></param>
     /// <param name="family"></param>
-      void MarkTheFamilyBooking(string booking, Family family)
+    private void MarkTheFamilyBooking(string booking, Family family)
     {
         for (int i = 0; i < family.Kids.Count; i++)
         {
@@ -589,7 +583,7 @@ public class Realtor
         PersonPot.Control.SetIsBookedToPerson(family.Mother, booking);
     }
 
-      void IdEveryOneOnTheFamily(string newFamId, Family family)
+    private void IdEveryOneOnTheFamily(string newFamId, Family family)
     {
         for (int i = 0; i < family.Kids.Count; i++)
         {

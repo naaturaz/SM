@@ -2,11 +2,11 @@
  *  Contains the controller that controls the input, the control, and the saveLoad functions
  */
 
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 //This class is instantiatedon InputMain and has a real obj on scene so the start and update works
-public class BuildingPot : Pot 
+public class BuildingPot : Pot
 {
     private static InputBuilding _input;
     private static BuildingController _control;
@@ -34,10 +34,10 @@ public class BuildingPot : Pot
     }
 
     /// <summary>
-    /// None, or Building or Placing 
+    /// None, or Building or Placing
     /// </summary>
     public static Mode InputMode { get; set; }
-   
+
     /// <summary>
     /// Current building that is being built. The one is being hovered right now
     /// </summary>
@@ -55,7 +55,6 @@ public class BuildingPot : Pot
         StartCoroutine("OneMinUpdate");
     }
 
-
     private IEnumerator OneMinUpdate()
     {
         while (true)
@@ -64,7 +63,6 @@ public class BuildingPot : Pot
             //UnlockBuilds1.UpdateBuildsStatuses();
         }
     }
-
 
     private void Update()
     {
@@ -93,7 +91,7 @@ public class BuildingPot : Pot
     }
 
     /// <summary>
-    /// will make load buildins 
+    /// will make load buildins
     /// </summary>
     public static void LoadBuildingsNow()
     {

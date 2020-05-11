@@ -53,7 +53,7 @@ public class PersonBuildingDetailTile : GUIElement
         return obj;
     }
 
-    void Start()
+    private void Start()
     {
         _showPath = FindGameObjectInHierarchy("ShowPath", gameObject).GetComponent<UnityEngine.UI.Button>();
         _showLoc = FindGameObjectInHierarchy("ShowLocation", gameObject).GetComponent<UnityEngine.UI.Button>();
@@ -72,7 +72,7 @@ public class PersonBuildingDetailTile : GUIElement
         if (!DoesKeyShowPath() || _val == "-")
         {
             goBtnPath.gameObject.SetActive(false);
-        } 
+        }
         if (!DoesKeyShowLoc() || _val == "-")
         {
             goBtnLoc.gameObject.SetActive(false);
@@ -81,19 +81,19 @@ public class PersonBuildingDetailTile : GUIElement
         SetVal();
     }
 
-    bool DoesKeyShowPath()
-    {
-        return _key == "Home" || _key == "Work" || _key == "Food source" || _key == "Religion" ||
-            _key == "Relax";
-    }  
-    
-    bool DoesKeyShowLoc()
+    private bool DoesKeyShowPath()
     {
         return _key == "Home" || _key == "Work" || _key == "Food source" || _key == "Religion" ||
             _key == "Relax";
     }
 
-    void SetVal()
+    private bool DoesKeyShowLoc()
+    {
+        return _key == "Home" || _key == "Work" || _key == "Food source" || _key == "Religion" ||
+            _key == "Relax";
+    }
+
+    private void SetVal()
     {
         _descText.text = _key;
 
@@ -112,6 +112,4 @@ public class PersonBuildingDetailTile : GUIElement
 
         SetVal();
     }
-
 }
-

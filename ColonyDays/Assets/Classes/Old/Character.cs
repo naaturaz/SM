@@ -1,10 +1,8 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class Character : General {
-
+﻿public class Character : General
+{
     //Properties
     private int _lives;
+
     private bool _showBlockedArea = false;
 
     public int Lives
@@ -19,14 +17,13 @@ public class Character : General {
         set { _showBlockedArea = value; }
     }
 
-	// Use this for initialization
-	void Start () 
+    // Use this for initialization
+    private void Start()
     {
-	
-	}
-	
-	// Update is called once per frame
-    internal new void Update() 
+    }
+
+    // Update is called once per frame
+    internal new void Update()
     {
         //print(ShowBlockedArea);
         base.Update();//execute the update method in base
@@ -39,10 +36,10 @@ public class Character : General {
         {
             ActivateChildObject(false, "Show_Blocked_Area");
         }
-	}
+    }
 
     //activate or deactivae a child gameobject...
-    void ActivateChildObject(bool boolPass, string whichChild)
+    private void ActivateChildObject(bool boolPass, string whichChild)
     {
         for (int i = 0; i < transform.childCount; i++)
         {

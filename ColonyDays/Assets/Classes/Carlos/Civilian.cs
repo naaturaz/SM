@@ -1,18 +1,15 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿public class Civilian : PersonCarlos
+{
+    public int edad = 20;
 
-public class Civilian : PersonCarlos {
+    // Use this for initialization
+    private void Start()
+    {
+    }
 
-
-     public int edad = 20;
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	 print ("civilian!!!");
-	}
+    // Update is called once per frame
+    private void Update()
+    {
+        print("civilian!!!");
+    }
 }

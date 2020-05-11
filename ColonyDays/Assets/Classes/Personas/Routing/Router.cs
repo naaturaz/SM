@@ -1,28 +1,30 @@
-﻿using System.Linq;
-using UnityEngine;
+﻿using System;
 using System.Collections.Generic;
-using System;
+using System.Linq;
+using UnityEngine;
 
 //Will create a root between ini point and destination point.
 //Then the person will keep that root loaded on memory so will use it again
 //and again until a new route is needed
 
-//the objects to be detected with the RayCast need to be on Layer 10 
+//the objects to be detected with the RayCast need to be on Layer 10
 
 /* Second hardedst class ever created after Brain... bz it has a Recursive Algorith
  * that finds the route trhowing Raycast
- * 
+ *
  * If wanna change the class is gonna be hard. Make sure to backup often
- * 
+ *
  * Make sure the object to be detected by the router have the same collider as the gameObject.
- * If gameObject is rotated make sure collision to detect is squeare and not rotated 
+ * If gameObject is rotated make sure collision to detect is squeare and not rotated
  */
+
 public class Router : MonoBehaviour
 {
-    SMe m = new SMe();
+    private SMe m = new SMe();
 
-    //how far rounded center points will go towards end and origin 
+    //how far rounded center points will go towards end and origin
     private float step = 0.2f;//.3f
+
     private Vector3 _current;
 
     private Vector3 nextGoal;
@@ -41,7 +43,7 @@ public class Router : MonoBehaviour
     private Dir[] polyMap = new[] { Dir.NW, Dir.NE, Dir.SE, Dir.SW };
     private int[] polyMapXSing = new[] { -1, 1, 1, -1 };
     private int[] polyMapZSing = new[] { 1, 1, -1, -1 };
-    
+
     public event EventHandler<EventArgs> RoutePlotted;
 
     //The hit Vector 3 position and contains name
@@ -52,21 +54,21 @@ public class Router : MonoBehaviour
 
     ///this is the other anchor on the side the hit landed on building
     private Vector3 anchorOnSideClosestToFin;
-    
+
     //they are set in SetAnchors()
     private Vector3 closestAnchorToOrigin;
+
     private Vector3 closest1stAnchorToFin;
     private Vector3 closest2ndAnchorToFin;
     private Vector3 closest3rdAnchorToFin;
 
-
-
     private Person _person;
-    private bool _isRouteReady;//will tell if route is ready to be used 
+    private bool _isRouteReady;//will tell if route is ready to be used
+
     //created to put the recursive algo PlotRoute() being called from update. so dont block the game FrameRate
     private bool isToPlot;
 
-    private TheRoute _theRoute ;//this is the final product of the work of the router
+    private TheRoute _theRoute;//this is the final product of the work of the router
 
     private string _originKey;//used to create the TheRoute obj
     private string _destinyKey;
@@ -92,7 +94,7 @@ public class Router : MonoBehaviour
 
     public Router(Vector3 iniSpawnPoint, Vector3 finSpawnPoint, Person person,
         Vector3 iniBehinDoor = new Vector3(), Vector3 finBehinDoor = new Vector3(),
-        string originKey ="", string destinyKey = "")
+        string originKey = "", string destinyKey = "")
     {
         _originKey = originKey;
         _destinyKey = destinyKey;
@@ -108,21 +110,20 @@ public class Router : MonoBehaviour
         Init();
     }
 
-    void Init()
+    private void Init()
     {
         AssignInitVars();
         ClearOldVars();
 
         //DebugDestroy();
-        PlotRoute();        
+        PlotRoute();
     }
 
     public void ClearOldVars()
     {
         IsRouteReady = false;
 
-
-        if (TheRoute == null){return;}
+        if (TheRoute == null) { return; }
         TheRoute.BridgeKey = "";
 
         if (TheRoute.CheckPoints.Count > 0)
@@ -131,7 +132,7 @@ public class Router : MonoBehaviour
         }
     }
 
-    void AssignInitVars()
+    private void AssignInitVars()
     {
         _current = _ini;
         nextGoal = _fin;
@@ -146,7 +147,7 @@ public class Router : MonoBehaviour
         _person.DebugList.Clear();
     }
 
-    void DebugRender()
+    private void DebugRender()
     {
         for (int i = 0; i < _checkPoints.Count; i++)
         {
@@ -159,13 +160,13 @@ public class Router : MonoBehaviour
     /// <summary>
     /// Will return the route to follow a Person from point ini to fin
     /// When this is call make sure u validated both points are not insede
-    /// any building 
-    /// 
+    /// any building
+    ///
     /// This is recursive is called and called again from its methods until _fin is reached
     /// </summary>
-    void PlotRoute()
+    private void PlotRoute()
     {
-        if (_checkPoints.Count == 0) { AddFirst();}
+        if (_checkPoints.Count == 0) { AddFirst(); }
         vectorHit = FindGeneralBuildingOnMyWay(_current, _fin);
 
         if (vectorHit == null)
@@ -189,12 +190,12 @@ public class Router : MonoBehaviour
     /// <summary>
     /// The collision handler is called everytime the routerr collides
     /// </summary>
-    void HandleCollision()
+    private void HandleCollision()
     {
         if (IsWayClear(_current, closest1stAnchorToFin))
         {
             AddToRouteCurrent();
-           // _person.DebugList.Add(UVisHelp.CreateText(_current, "1st", 60));
+            // _person.DebugList.Add(UVisHelp.CreateText(_current, "1st", 60));
         }
         else if (IsWayClear(_current, closest2ndAnchorToFin))
         {
@@ -204,7 +205,7 @@ public class Router : MonoBehaviour
         else if (IsWayClear(_current, closest3rdAnchorToFin))
         {
             AddToRouteCurrent();
-           //_person.DebugList.Add(UVisHelp.CreateText(_current, "3rd", 60));
+            //_person.DebugList.Add(UVisHelp.CreateText(_current, "3rd", 60));
         }
         else
         {
@@ -220,15 +221,14 @@ public class Router : MonoBehaviour
         //DestroyCurrentBuildingIfDummy();
     }
 
-    void AddCurrentHitRoutine()
+    private void AddCurrentHitRoutine()
     {
         AddCurrentHit();
         IsWayClear(_current, anchorOnSideClosestToFin);//so the other acnhor is selected to keep moving
         AddToRouteCurrent();
     }
 
-
-    void AddToRouteCurrent()
+    private void AddToRouteCurrent()
     {
         _current = destinyAwayFromBuild;
         //_person.DebugList.Add(UVisHelp.CreateHelpers( _current,Root.redCube));
@@ -237,16 +237,17 @@ public class Router : MonoBehaviour
     }
 
     private int hitCurrentAdded;
+
     /// <summary>
     /// Add Current hit point but first needs to move it away from buiding
     /// </summary>
-    void AddCurrentHit()
+    private void AddCurrentHit()
     {
         Dir[] dirsSimpleMap = new Dir[] { Dir.N, Dir.E, Dir.S, Dir.W };
         float moveBy = _person.PersonDim * 2;
         Vector3[] moveAway = new Vector3[]
         {
-            new Vector3(0, 0, moveBy), new Vector3(moveBy, 0, 0), 
+            new Vector3(0, 0, moveBy), new Vector3(moveBy, 0, 0),
             new Vector3(0, 0, -moveBy), new Vector3(-moveBy, 0, 0)
         };
         Dir buildWasHitOn = UDir.TellMeWhenHitLanded(currBuilding.Anchors, vectorHit.HitPoint);
@@ -273,14 +274,14 @@ public class Router : MonoBehaviour
     }
 
     /// <summary>
-    /// Tells if a point is inside a buildig. 
-    /// 
-    /// Will loop until is out of a building 
-    /// 
+    /// Tells if a point is inside a buildig.
+    ///
+    /// Will loop until is out of a building
+    ///
     /// This will give infinite loop if all building are really close to each other but
-    /// tht should never happen 
+    /// tht should never happen
     /// </summary>
-    Vector3 Sanitize(Vector3 t)
+    private Vector3 Sanitize(Vector3 t)
     {
         while (IAmInsideABuildNow(t))
         {
@@ -291,18 +292,19 @@ public class Router : MonoBehaviour
             return t;
         }
 
-        //means is outside already 
+        //means is outside already
         Program.gameScene.AddToMainScreen("Fixed Router");
         return t;
     }
 
-    private Structure inside;//the structure current point is inside 
+    private Structure inside;//the structure current point is inside
+
     /// <summary>
-    /// Returns true if inside a Registro.Structures... sets 'inside' as the building the 't' is in 
+    /// Returns true if inside a Registro.Structures... sets 'inside' as the building the 't' is in
     /// </summary>
     /// <param name="t"></param>
     /// <returns></returns>
-    bool IAmInsideABuildNow(Vector3 t)
+    private bool IAmInsideABuildNow(Vector3 t)
     {
         var pos = t;
         var p2 = new Vector2(pos.x, pos.z);
@@ -318,7 +320,7 @@ public class Router : MonoBehaviour
                 res = true;
                 Program.gameScene.AddToMainScreen("Router point inside building:" + allBuild[i].Key);
 
-               //Debug.Log("Router point inside building:" + allBuild[i].Key);
+                //Debug.Log("Router point inside building:" + allBuild[i].Key);
                 //throw new Exception("Router point inside building:" + allBuild[i].Key);
             }
         }
@@ -330,24 +332,24 @@ public class Router : MonoBehaviour
     /// and if less than 157.5 degres will smooth ny removing the second point and its place inserting two points
     /// one towards origin other closer destiny
     /// </summary>
-    void CheckAndSmoothCornerIfNeeded()
+    private void CheckAndSmoothCornerIfNeeded()
     {
-        if (_checkPoints.Count < 3) { return;}//needs trhee at least
+        if (_checkPoints.Count < 3) { return; }//needs trhee at least
 
         Vector3 newPoint = _checkPoints[_checkPoints.Count - 1].Point;
         Vector3 centPoint = _checkPoints[_checkPoints.Count - 2].Point;
         Vector3 oldestPoint = _checkPoints[_checkPoints.Count - 3].Point;
         var angle = AngleFrom3PointsInDegrees(oldestPoint, centPoint, newPoint);
         //print(Mathf.Abs((float)angle) + " angle" + (TheRoute.Count - 1) + "." +
-         //   (TheRoute.Count - 2) + "." + (TheRoute.Count - 3));
-        if (Mathf.Abs((float)angle) > 22.5f){SmoothCenterPoint();}
+        //   (TheRoute.Count - 2) + "." + (TheRoute.Count - 3));
+        if (Mathf.Abs((float)angle) > 22.5f) { SmoothCenterPoint(); }
     }
 
     /// <summary>
     /// Will smooth center point of last 3.
     /// Will remove middle one and then will inserrt 2 on its place
     /// </summary>
-    void SmoothCenterPoint()
+    private void SmoothCenterPoint()
     {
         Vector3 newPoint = _checkPoints[_checkPoints.Count - 1].Point;
         Vector3 centPoint = _checkPoints[_checkPoints.Count - 2].Point;
@@ -359,7 +361,7 @@ public class Router : MonoBehaviour
         AddAndRemoveCenterPoint(centerToOld, centerToNew);
     }
 
-    void AddAndRemoveCenterPoint(Vector3 centerToOld, Vector3 centerToNew)
+    private void AddAndRemoveCenterPoint(Vector3 centerToOld, Vector3 centerToNew)
     {
         _checkPoints.Insert(_checkPoints.Count - 2, new CheckPoint(centerToOld));
         _checkPoints.Insert(_checkPoints.Count - 2, new CheckPoint(centerToNew));
@@ -377,16 +379,16 @@ public class Router : MonoBehaviour
         double atanB = Math.Atan2(c, d);
 
         return (atanA - atanB) * (-180 / Math.PI);
-        // if Second line is counterclockwise from 1st line angle is 
+        // if Second line is counterclockwise from 1st line angle is
         // positive, else negative
     }
 
     /// <summary>
-    /// Will tell u if te way btw 2 points is clear. Of buidllings or obj that block, like house, 
+    /// Will tell u if te way btw 2 points is clear. Of buidllings or obj that block, like house,
     /// </summary>
-    bool IsWayClear(Vector3 origin, Vector3 destinyRealAnchor, Building buildP = null)
+    private bool IsWayClear(Vector3 origin, Vector3 destinyRealAnchor, Building buildP = null)
     {
-        if (buildP == null){buildP = currBuilding;}//by default will compare to cuurrentBuilding
+        if (buildP == null) { buildP = currBuilding; }//by default will compare to cuurrentBuilding
 
         float howFar = _person.PersonDim / 4; //* 1.5f;
         destinyAwayFromBuild = MoveAnchorAwayFromBuild(destinyRealAnchor, buildP.Anchors, howFar, howFar);
@@ -399,22 +401,22 @@ public class Router : MonoBehaviour
         return firstStep;
     }
 
-    Vector3[] ReturnFirstAndLast(Vector3 stonePoint, Vector3 p1, Vector3 p2)
+    private Vector3[] ReturnFirstAndLast(Vector3 stonePoint, Vector3 p1, Vector3 p2)
     {
         float dist1 = Vector3.Distance(stonePoint, p1);
         float dist2 = Vector3.Distance(stonePoint, p2);
 
         if (dist1 < dist2)
         {
-            return new [] {p1, p2};
+            return new[] { p1, p2 };
         }
-        return new [] { p2, p1 };
+        return new[] { p2, p1 };
     }
 
     /// <summary>
     /// Set the the closest anchor to origin, then calls SetAnchorsPriorityToFin()
     /// </summary>
-    void SetAnchors()
+    private void SetAnchors()
     {
         //_person.DebugList.AddRange(UVisHelp.CreateHelpers(currBuilding.Anchors, Root.yellowCube));
         VectorM[] anchorOrdered = new VectorM[4];
@@ -431,7 +433,7 @@ public class Router : MonoBehaviour
     /// <summary>
     /// Ordering to be closer to _fin
     /// </summary>
-    void SetAnchorsPriorityToFin(VectorM[] anchorOrdered)
+    private void SetAnchorsPriorityToFin(VectorM[] anchorOrdered)
     {
         //now will need the distances towards the ordered end
         for (int i = 0; i < currBuilding.Anchors.Count; i++)
@@ -444,15 +446,15 @@ public class Router : MonoBehaviour
         closest3rdAnchorToFin = anchorOrdered[2].Point;
     }
 
-    void AddFirst()
+    private void AddFirst()
     {
         _checkPoints.Add(new CheckPoint(_ini));
         //_person.DebugList.Add(UVisHelp.CreateHelpers(_ini, Root.yellowSphereHelp));
     }
 
-    void AddLastAndDone()
+    private void AddLastAndDone()
     {
-        //_fin was reached 
+        //_fin was reached
         _checkPoints.Add(new CheckPoint(_fin));
         //_person.DebugList.Add(UVisHelp.CreateHelpers(_fin, Root.yellowSphereHelp));
         CheckAndSmoothCornerIfNeeded();
@@ -462,15 +464,14 @@ public class Router : MonoBehaviour
         //DebugRender();
         AddAnglesToRoute();
         IsRouteReady = true;
-    
-        
+
         EliminateHelperBuilds();
-       
+
         CreateTheRouteObj();
         //DebugDestroy();
     }
 
-    void AddBehingDoors()
+    private void AddBehingDoors()
     {
         if (_iniBehingDoor != new Vector3())
         {
@@ -482,7 +483,7 @@ public class Router : MonoBehaviour
         }
     }
 
-    void CreateTheRouteObj()
+    private void CreateTheRouteObj()
     {
         TheRoute = new TheRoute(_checkPoints, _originKey, _destinyKey);
     }
@@ -490,7 +491,7 @@ public class Router : MonoBehaviour
     /// <summary>
     /// Eliminates the buildings created for help when collide with Tree
     /// </summary>
-    void EliminateHelperBuilds()
+    private void EliminateHelperBuilds()
     {
         for (int i = 0; i < helperBuilds.Count; i++)
         {
@@ -502,7 +503,7 @@ public class Router : MonoBehaviour
     /// <summary>
     /// Will pass point by point and will find wht is the angle facing the next one
     /// </summary>
-    void AddAnglesToRoute()
+    private void AddAnglesToRoute()
     {
         GameScene.dummyBlue.transform.position = _checkPoints[0].Point;
 
@@ -518,11 +519,11 @@ public class Router : MonoBehaviour
     }
 
     /// <summary>
-    /// Need to elimianted duplicated in rare ocasions will show duplicates 
+    /// Need to elimianted duplicated in rare ocasions will show duplicates
     /// </summary>
-    void EliminateDupConsecutive()
+    private void EliminateDupConsecutive()
     {
-        for (int i = 0; i < _checkPoints.Count -1; i++)
+        for (int i = 0; i < _checkPoints.Count - 1; i++)
         {
             if (UMath.nearEqualByDistance(_checkPoints[i].Point, _checkPoints[i + 1].Point, 0.001f))
             {
@@ -532,24 +533,22 @@ public class Router : MonoBehaviour
         }
     }
 
-
-    void DestroyCurrentBuildingIfDummy()
+    private void DestroyCurrentBuildingIfDummy()
     {
         if (currBuilding != null && currBuilding.MyId.Contains("Dummy"))
         {
             currBuilding.Destroy();
             currBuilding = null;
-
         }
     }
 
     /// <summary>
     /// Set the current currBuilding
     /// </summary>
-    void SetCurrentBuilding()
+    private void SetCurrentBuilding()
     {
         if (BuildingPot.Control.Registro.AllBuilding.ContainsKey(vectorHit.HitMyId))
-        {currBuilding = BuildingPot.Control.Registro.AllBuilding[vectorHit.HitMyId];}
+        { currBuilding = BuildingPot.Control.Registro.AllBuilding[vectorHit.HitMyId]; }
 
         if (currBuilding == null || currBuilding.MyId.Contains("Dummy"))
         {
@@ -558,8 +557,8 @@ public class Router : MonoBehaviour
 
         if (currBuilding == null)
         {
-            throw new Exception("currBuilding null:" + _person.MyId + ".from:" + _originKey + ".to:" + _destinyKey+
-            ".hit:"+vectorHit.HitMyId);
+            throw new Exception("currBuilding null:" + _person.MyId + ".from:" + _originKey + ".to:" + _destinyKey +
+            ".hit:" + vectorHit.HitMyId);
             //RestartRouter();
         }
 
@@ -569,16 +568,16 @@ public class Router : MonoBehaviour
 
     private void RestartRouter()
     {
-       //Debug.Log("Router Restarted:" + _person.MyId+"."+_originKey);
-        GameScene.ScreenMsg = "Router Restarted:" + _person.MyId+"."+_originKey;
+        //Debug.Log("Router Restarted:" + _person.MyId+"."+_originKey);
+        GameScene.ScreenMsg = "Router Restarted:" + _person.MyId + "." + _originKey;
         isToPlot = false;
         Init();
     }
 
-    void SetCurrentBuildingVariations()
+    private void SetCurrentBuildingVariations()
     {
         //called here bz I need to see if current hit obj belongs to a stockPile
-       
+
         //bool isADiffBuild = SetCurrentBuildingOfType(vectorHit.HitMyId, H.StockPile);
 
         //if (currBuilding == null)
@@ -589,29 +588,27 @@ public class Router : MonoBehaviour
 
         //if (!isADiffBuild)
         //{
-            SetCurrentBuildingTerraSpawn(vectorHit.HitMyId);
+        SetCurrentBuildingTerraSpawn(vectorHit.HitMyId);
         //}
     }
 
     //if current Building was created on this class for Terra Spanwer for ex, then it needs to be destroyed
     private List<Building> helperBuilds = new List<Building>(); //this list collect the helpers to be destoyed later
+
     /// <summary>
     /// Created to see if we are colliding with a Teeraa Spawner
     /// </summary>
-    void SetCurrentBuildingTerraSpawn(string myIdP)
+    private void SetCurrentBuildingTerraSpawn(string myIdP)
     {
         if (Program.gameScene.controllerMain.TerraSpawnController.AllRandomObjList.Contains(myIdP))
         {
             TerrainRamdonSpawner t = Program.gameScene.controllerMain.TerraSpawnController.AllRandomObjList[myIdP];
 
             CreateIfInADiffPos(t);
-
-
-
         }
     }
 
-    void CreateIfInADiffPos(TerrainRamdonSpawner t)
+    private void CreateIfInADiffPos(TerrainRamdonSpawner t)
     {
         //var isNull = currBuilding == null;
         //var samePos = false;
@@ -622,17 +619,17 @@ public class Router : MonoBehaviour
         //}
 
         /////if is null or
-        ///// is not null and the position is not the same as the current building 
+        ///// is not null and the position is not the same as the current building
         //if (isNull || (!isNull && !samePos))
         //{
-            currBuilding = Building.CreateBuild(Root.dummyBuild, new Vector3(), H.Dummy);
-            currBuilding.transform.position = t.transform.position;
+        currBuilding = Building.CreateBuild(Root.dummyBuild, new Vector3(), H.Dummy);
+        currBuilding.transform.position = t.transform.position;
 
-            currBuilding.PositionFixed = true;
+        currBuilding.PositionFixed = true;
 
-            AddBoxColliderToCurrent(t);
+        AddBoxColliderToCurrent(t);
 
-            helperBuilds.Add(currBuilding);
+        helperBuilds.Add(currBuilding);
         //}
     }
 
@@ -648,15 +645,15 @@ public class Router : MonoBehaviour
     }
 
     /// <summary>
-    /// True if is colliding with a building of same type 'HTypeP'... 
-    /// 
+    /// True if is colliding with a building of same type 'HTypeP'...
+    ///
     /// I need to do this bz StockPile doesnt have a big collider. has small ones instead
     /// Brdige has the same situation
     /// </summary>
-    bool SetCurrentBuildingOfType(string myIdP, H HTypeP)
+    private bool SetCurrentBuildingOfType(string myIdP, H HTypeP)
     {
         if (_currentHit.transform == null)
-        {return false;}
+        { return false; }
 
         var names = UString.ExtractNamesUntilGranpa(_currentHit.transform);
 
@@ -680,30 +677,30 @@ public class Router : MonoBehaviour
     /// <summary>
     /// Was created so we can descrimanate if a buildings is far or close enougnt that we care,
     /// if is far enought we dont carre
-    /// 
-    /// If builidg is further than end then is false,, if builidg is closer than end 
+    ///
+    /// If builidg is further than end then is false,, if builidg is closer than end
     /// then I called here IsCollidingWithBuildingThatBlock()
     /// </summary>
-    bool IsCollidingWithBuildingThatBlockNear(VectorHit vectorHit, Vector3 start, Vector3 end)
+    private bool IsCollidingWithBuildingThatBlockNear(VectorHit vectorHit, Vector3 start, Vector3 end)
     {
         var distBtwStartAndEnd = Vector3.Distance(start, end);
-        
+
         General g = null;
         if (BuildingPot.Control.Registro.AllBuilding.ContainsKey(vectorHit.HitMyId))
-        {g = BuildingPot.Control.Registro.AllBuilding[vectorHit.HitMyId];}
+        { g = BuildingPot.Control.Registro.AllBuilding[vectorHit.HitMyId]; }
         if (g == null)
         {
             if (Program.gameScene.controllerMain.TerraSpawnController.AllRandomObjList.Contains(vectorHit.HitMyId))
-            {g = Program.gameScene.controllerMain.TerraSpawnController.AllRandomObjList[vectorHit.HitMyId];}
+            { g = Program.gameScene.controllerMain.TerraSpawnController.AllRandomObjList[vectorHit.HitMyId]; }
         }
-        if (g == null) { return false;}
+        if (g == null) { return false; }
 
         //needs to compared with the hit point  of that building.. since if is a big building will cause bugg
         //since transform.position could be further than distBtwStartAndEnd...
         var distBtwStartAndBuild = Vector3.Distance(start, vectorHit.HitPoint);
 
         if (distBtwStartAndBuild > distBtwStartAndEnd)
-        {return false;}
+        { return false; }
 
         return IsCollidingWithBuildingThatBlock(vectorHit.HitMyId, g);
     }
@@ -711,31 +708,31 @@ public class Router : MonoBehaviour
     /// <summary>
     /// Says true if is colliding with a biulding that doesnt let person pass trhu it.
     /// Like a house
-    /// If currentRegFile is not null means we are colliding with something 
+    /// If currentRegFile is not null means we are colliding with something
     /// </summary>
-    bool IsCollidingWithBuildingThatBlock(string myIdP, General gen)
+    private bool IsCollidingWithBuildingThatBlock(string myIdP, General gen)
     {
         if (gen.Category == Ca.Structure || gen.Category == Ca.Shore
             || gen.HType == H.StockPile || gen.HType == H.BridgeTrail || gen.HType == H.BridgeRoad
             || gen.Category == Ca.Spawn)
-        {return true;}
+        { return true; }
         return false;
     }
 
     /// <summary>
     /// Move an vertex of a poly aways from the Poly dependeing on which one is .
-    /// 
+    ///
     /// Needs to be called bz we need to push person away from building other wise
     /// when checking for collisions is always in bz algorith will do it on the edge
-    /// So wehen i call this i push the edge away from Building 
+    /// So wehen i call this i push the edge away from Building
     /// </summary>
-    Vector3 MoveAnchorAwayFromBuild(Vector3 anchorToMoveAndRet, List<Vector3> anchors, float inX, float inZ)
+    private Vector3 MoveAnchorAwayFromBuild(Vector3 anchorToMoveAndRet, List<Vector3> anchors, float inX, float inZ)
     {
         int anchorIndex = -1;
         for (int i = 0; i < anchors.Count; i++)
         {
             if (UMath.nearEqualByDistance(anchors[i], anchorToMoveAndRet, 0.01f))
-            {anchorIndex = i;}
+            { anchorIndex = i; }
         }
 
         //this is to addres when the Anchor was sanitize... will nt be tht close to an anchor anymore
@@ -843,8 +840,9 @@ public class CheckPoint
         set { _speed = value; }
     }
 
-
-    public CheckPoint() { }
+    public CheckPoint()
+    {
+    }
 
     public CheckPoint(Vector3 point)
     {
@@ -863,11 +861,11 @@ public class CheckPoint
     }
 
     /// <summary>
-    /// Sets the speed of the CheckPoint base on the Type of Crystal we are using 
+    /// Sets the speed of the CheckPoint base on the Type of Crystal we are using
     /// </summary>
     /// <param name="_type"></param>
     /// <returns></returns>
-    float SetSpeed(H _type)
+    private float SetSpeed(H _type)
     {
         if (_type == H.Way3)//best way
         {
@@ -880,7 +878,7 @@ public class CheckPoint
         else if (_type == H.Way1)//worst way
         {
             return 1.1f;
-        }       
+        }
 
         return 1f;
     }
@@ -893,7 +891,9 @@ public class VectorM
     private string _locMyId;
     private H _hType;
 
-    public VectorM() { }
+    public VectorM()
+    {
+    }
 
     public VectorM(Vector3 pos, Vector3 comparationPoint)
     {
@@ -907,7 +907,7 @@ public class VectorM
         Distance = Vector3.Distance(pos, comparationPoint);
         _locMyId = locMyId;
     }
-    
+
     public VectorM(Vector3 pos, Vector3 comparationPoint, string locMyId, H hType)
     {
         _hType = hType;

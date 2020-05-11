@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
-using UnityStandardAssets.Utility;
 
 public class UnitT : Shooter
 {
@@ -12,14 +9,12 @@ public class UnitT : Shooter
     private GameObject _rocket;
 
     private Transform enemy;
-    float _enemyDist = 100;
+    private float _enemyDist = 100;
 
     protected Building _building;
 
-    GameObject _selectedGO;
-    float _selectedAt;
-
-
+    private GameObject _selectedGO;
+    private float _selectedAt;
 
     public string Root { get; private set; }
 
@@ -62,7 +57,6 @@ public class UnitT : Shooter
         }
     }
 
-
     // Use this for initialization
     protected void Start()
     {
@@ -85,11 +79,9 @@ public class UnitT : Shooter
         {
             Health = 9;
         }
-
     }
 
-    float nextRand = 2;
-
+    private float nextRand = 2;
 
     private IEnumerator RandomSecUpdate()
     {
@@ -118,8 +110,9 @@ public class UnitT : Shooter
         }
     }
 
-    General grade;
-    SpriteRenderer spRend;
+    private General grade;
+    private SpriteRenderer spRend;
+
     internal void RankUp()
     {
         if (transform == null)
@@ -144,15 +137,12 @@ public class UnitT : Shooter
         }
         if (!WasFixed && Input.GetMouseButtonUp(0))
         {
-
-
         }
 
         if (Input.GetMouseButtonUp(0) && Time.time > _selectedAt + 0.2f)
         {
             _selectedGO.SetActive(false);
         }
-
 
         if (Enemy != null && _enemyDist < 12)
         {
@@ -173,8 +163,6 @@ public class UnitT : Shooter
         //Program.gameScene.SoundManager.PlaySound(3);
     }
 
-
-
     private void RemoveCost()
     {
         //Building.RemoveCost(name);
@@ -187,8 +175,7 @@ public class UnitT : Shooter
         return obj;
     }
 
-
-    bool didDied;
+    private bool didDied;
 
     protected void OnTriggerEnter(Collider other)
     {
@@ -223,12 +210,6 @@ public class UnitT : Shooter
             _selectedAt = Time.time;
         }
     }
-
-
-    #region Enemy Units
-
-
-    #endregion
 
     internal void MaxHealth()
     {

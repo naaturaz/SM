@@ -1,6 +1,4 @@
-﻿
-using UnityEngine;
-using System.Collections;
+﻿using UnityEngine;
 
 public class MouseOrbit : MonoBehaviour
 {
@@ -14,7 +12,7 @@ public class MouseOrbit : MonoBehaviour
     private float x;
     private float y;
 
-    void Awake()
+    private void Awake()
     {
         Vector3 angles = transform.eulerAngles;
         x = angles.x;
@@ -26,7 +24,7 @@ public class MouseOrbit : MonoBehaviour
         }
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         Awake();
 
@@ -35,7 +33,7 @@ public class MouseOrbit : MonoBehaviour
             Target = GameObject.FindGameObjectWithTag("Player").gameObject.transform;
         }
 
-        //if target not null and we hold left mouse click down 
+        //if target not null and we hold left mouse click down
         if (Target != null && Input.GetMouseButton(2))
         {
             x += (float)(Input.GetAxis("Mouse X") * xSpeed * 0.02f);

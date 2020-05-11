@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +10,7 @@ public class RewardsWindow : GUIElement
 
     //assigned on Inspector
     public Text PlayedTime;
+
     public Text TargetTime;
     public Text TimeLeft;
     public GameObject Qualified;
@@ -19,15 +18,14 @@ public class RewardsWindow : GUIElement
     public InputField EmailConfirm;
     public Text Display;
 
-    float _targetTime = 120;//60*60*2
-    float _playedPreviously;
+    private float _targetTime = 120;//60*60*2
+    private float _playedPreviously;
 
-    DateTime _today = new DateTime();
+    private DateTime _today = new DateTime();
     private int _week;
 
-
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         _week = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear
     (DateTime.Now, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
@@ -57,13 +55,10 @@ public class RewardsWindow : GUIElement
             //so even if he submits negative feeedback he will continue to see Rewards window
             PlayerPrefs.SetInt("Reward", 1);
         }
-
     }
 
-
-
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         TimeSpan t = new TimeSpan(ReturnTicks(Time.time + _playedPreviously));
 
@@ -90,12 +85,12 @@ public class RewardsWindow : GUIElement
         }
     }
 
-    long ReturnTicks(float seconds)
+    private long ReturnTicks(float seconds)
     {
         return 10000000 * long.Parse(Math.Truncate(seconds).ToString());
     }
 
-    string AddZeroIfLess10(int pass)
+    private string AddZeroIfLess10(int pass)
     {
         if (pass > 9)
         {
@@ -120,7 +115,7 @@ public class RewardsWindow : GUIElement
     }
 
     /// <summary>
-    /// Called from GUI 
+    /// Called from GUI
     /// </summary>
     public void EnterDraw()
     {
@@ -140,14 +135,13 @@ public class RewardsWindow : GUIElement
         ResetPlayer();
         Program.WeekDraw = true;
 
-
         PlayerPrefs.SetInt("Week", _week);
         Debug.Log("Week " + _week);
 
         Qualified.SetActive(false);
     }
 
-    void ResetPlayer()
+    private void ResetPlayer()
     {
         PlayerPrefs.SetInt("Played", 0);
     }

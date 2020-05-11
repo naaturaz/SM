@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpecTile : GUIElement
 {
     private SpecData _spec;
-    ExportData _export;
+    private ExportData _export;
 
     private Text _prodLbl;
     private Text _input1Lbl;
@@ -16,7 +16,7 @@ public class SpecTile : GUIElement
 
     private Text _priceLbl;
 
-    List<Text> _inputs = new List<Text>();
+    private List<Text> _inputs = new List<Text>();
 
     public string SpecialInfo = "";
 
@@ -39,7 +39,7 @@ public class SpecTile : GUIElement
         }
     }
 
-    void Start()
+    private void Start()
     {
         _prodLbl = GetChildCalled("Prod_Lbl").GetComponent<Text>();
         _prodLbl.text = "-";
@@ -80,7 +80,7 @@ public class SpecTile : GUIElement
         _prodLbl.text = Export.MDate.ToStringFormatMonDayYear();
         _input1Lbl.text = Export.Building;
         _input2Lbl.text = Languages.ReturnString(Export.Prod);
-        _input3Lbl.text = Unit.ConvertFromKGToCurrent(Export.Amt).ToString("N0") + " " 
+        _input3Lbl.text = Unit.ConvertFromKGToCurrent(Export.Amt).ToString("N0") + " "
             + Unit.CurrentWeightUnitsString();
         _priceLbl.text = MyText.DollarFormat(Export.Money);
     }
@@ -114,7 +114,7 @@ public class SpecTile : GUIElement
             _priceLbl.text = Languages.ReturnString("Price");
     }
 
-    void Update()
+    private void Update()
     {
     }
 
@@ -154,4 +154,3 @@ public class SpecTile : GUIElement
         return obj;
     }
 }
-

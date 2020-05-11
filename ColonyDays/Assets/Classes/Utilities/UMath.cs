@@ -1,9 +1,9 @@
 ﻿using System;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class UMath : MonoBehaviour {
-
+public class UMath : MonoBehaviour
+{
     /// <summary>
     /// Min inclusive , Max Exclusive
     /// </summary>
@@ -21,7 +21,7 @@ public class UMath : MonoBehaviour {
     }
 
     /// <summary>
-    /// Return closest Vector3 to 'Stone' must have at least 2 items the list 
+    /// Return closest Vector3 to 'Stone' must have at least 2 items the list
     /// </summary>
     public static Vector3 ReturnClosestVector3(List<Vector3> list, Vector3 stone)
     {
@@ -42,7 +42,7 @@ public class UMath : MonoBehaviour {
     }
 
     /// <summary>
-    /// Return farest Vector3 to 'Stone' must have at least 2 items the list 
+    /// Return farest Vector3 to 'Stone' must have at least 2 items the list
     /// </summary>
     public static Vector3 ReturnFarestVector3(List<Vector3> list, Vector3 stone)
     {
@@ -66,9 +66,6 @@ public class UMath : MonoBehaviour {
     {
         return UnityEngine.Random.Range(min, max);
     }
-
-
-
 
     public static List<float> ReturnTheMinimos(List<float> list, int howMany, float epsilon)
     {
@@ -166,7 +163,7 @@ public class UMath : MonoBehaviour {
         string truncate = "n" + afterComa.ToString();
         string aCont = a.ToString(truncate);
         string bCont = b.ToString(truncate);
-        if (aCont == bCont) {res = true;}
+        if (aCont == bCont) { res = true; }
         return res;
     }
 
@@ -174,7 +171,7 @@ public class UMath : MonoBehaviour {
     {
         bool res = false;
         float distance = Vector3.Distance(a, b);
-        if (distance <= maxDist){res = true;}
+        if (distance <= maxDist) { res = true; }
         return res;
     }
 
@@ -200,7 +197,7 @@ public class UMath : MonoBehaviour {
             }
             else return currentClosest;
         }
-        else if(stoneVal < 0)
+        else if (stoneVal < 0)
         {
             float max = ReturnMax(currentDif, newValDif);
             if (max == newValDif)
@@ -396,7 +393,6 @@ public class UMath : MonoBehaviour {
         return currentValue;
     }
 
-
     public static float ResponsiveInputAxisTo(float normalizeTo, Dir axis, float currentValue, Dir direction)
     {
         if (
@@ -448,11 +444,11 @@ public class UMath : MonoBehaviour {
         float min, float max, float camSensitivity)
     {
         currentVal += changeAmount * Time.deltaTime * camSensitivity * localMult;
-        if(currentVal>max)
+        if (currentVal > max)
         {
             currentVal = max;
         }
-        else if(currentVal<min)
+        else if (currentVal < min)
         {
             currentVal = min;
         }
@@ -461,11 +457,11 @@ public class UMath : MonoBehaviour {
 
     public static float MatchVal(float currentVal, float valToMatch, float changeAmountAbsVal)
     {
-        if(currentVal < valToMatch)
+        if (currentVal < valToMatch)
         {
             currentVal += changeAmountAbsVal;
         }
-        else if(currentVal > valToMatch)
+        else if (currentVal > valToMatch)
         {
             currentVal -= changeAmountAbsVal;
         }
@@ -491,19 +487,19 @@ public class UMath : MonoBehaviour {
         float max = 0;
         if (axis == H.X)
         {
-             max = UMath.ReturnMax(start.x, end.x);
+            max = UMath.ReturnMax(start.x, end.x);
         }
         else if (axis == H.Z)
         {
-             max = UMath.ReturnMax(start.z, end.z);
+            max = UMath.ReturnMax(start.z, end.z);
         }
         return max;
     }
 
     /// <summary>
-    /// Return the diff btw max value and min value 
+    /// Return the diff btw max value and min value
     /// </summary>
-    public static float ReturnDiffBetwMaxAndMin(List<Vector3> list, H axis )
+    public static float ReturnDiffBetwMaxAndMin(List<Vector3> list, H axis)
     {
         float res = 0;
         if (axis == H.Y)
@@ -511,28 +507,24 @@ public class UMath : MonoBehaviour {
             List<float> yS = UList.ReturnAxisList(list, axis);
             float min = ReturnMinimum(yS);
             float max = ReturnMax(yS);
-            res = Mathf.Abs( Mathf.Abs( max )- Mathf.Abs( min) );
-            
+            res = Mathf.Abs(Mathf.Abs(max) - Mathf.Abs(min));
         }
         return res;
     }
 
     /// <summary>
-    /// Scale the val by a percentage.... the sign of the percentage matters 
+    /// Scale the val by a percentage.... the sign of the percentage matters
     /// </summary>
     /// <param name="val"></param>
     /// <param name="percentage"></param>
     /// <returns></returns>
     public static float ScalePercentage(float val, float percentage)
     {
-        return val + (val/100* percentage);
+        return val + (val / 100 * percentage);
     }
 
+    private static List<int> _sign = new List<int>() { -1, 1 };
 
-
-
-
-    static List<int> _sign = new List<int>() { -1, 1 };
     /// <summary>
     /// Will return randomly -1 or 1
     /// </summary>

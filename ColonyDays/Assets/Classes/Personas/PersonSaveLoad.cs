@@ -2,22 +2,21 @@
 
 //cannot remove the start() or update() of a class that has clones on scene.
 //Gives strange results
-public class PersonSaveLoad : PersonPot {
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () 
+public class PersonSaveLoad : PersonPot
+{
+    // Use this for initialization
+    private void Start()
     {
-	   
-	}
+    }
+
+    // Update is called once per frame
+    private void Update()
+    {
+    }
 
     /// <summary>
     /// Save
-    /// 
+    ///
     /// The load is on : PersonControlller.LoadFromFile
     /// </summary>
     public void Save()
@@ -27,7 +26,7 @@ public class PersonSaveLoad : PersonPot {
     }
 
     /// <summary>
-    /// Needed for When GUI is reloaded 
+    /// Needed for When GUI is reloaded
     /// </summary>
     /// <returns></returns>
     public PersonData TempSave()
@@ -35,7 +34,7 @@ public class PersonSaveLoad : PersonPot {
         return new PersonData(GetAllPerson(), GetAllFromPersonController());
     }
 
-    List<PersonFile> GetAllPerson()
+    private List<PersonFile> GetAllPerson()
     {
         List<PersonFile> res = new List<PersonFile>();
         for (int i = 0; i < Control.All.Count; i++)
@@ -49,7 +48,7 @@ public class PersonSaveLoad : PersonPot {
     /// Gathering data to savePerson Controller
     /// </summary>
     /// <returns></returns>
-    PersonControllerSaveLoad GetAllFromPersonController()
+    private PersonControllerSaveLoad GetAllFromPersonController()
     {
         PersonControllerSaveLoad res = new PersonControllerSaveLoad();
 
@@ -76,7 +75,6 @@ public class PersonSaveLoad : PersonPot {
         res.TownName = Program.MyScreen1.TownName;
         res.SubBulletinProduction = BulletinWindow.SubBulletinProduction1;
         res.SubBulletinFinance = BulletinWindow.SubBulletinFinance1;
-
 
         res.IsPirate = Program.IsPirate;
         res.IsFood = Program.IsFood;

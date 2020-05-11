@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Infantry : Commandable
 {
-
     // Use this for initialization
     protected void Start()
     {
@@ -23,7 +20,6 @@ public class Infantry : Commandable
 
     private void WarHandler(object sender, EventArgs e)
     {
-
     }
 
     private void ChangedSpeedHandler(object sender, EventArgs e)
@@ -37,7 +33,7 @@ public class Infantry : Commandable
         base.Update();
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
     }

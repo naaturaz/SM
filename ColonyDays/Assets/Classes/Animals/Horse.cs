@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
-
+﻿using UnityEngine;
 
 public class Horse : Animal
 {
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         base.Start();
 
@@ -34,7 +29,7 @@ public class Horse : Animal
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         base.Update();
 

@@ -5,25 +5,27 @@ using UnityEngine.UI;
 public class WorkerTile : GUIElement
 {
     private string _workType;
+
     public string WorkType
     {
         get { return _workType; }
         set { _workType = value; }
-    } 
+    }
+
     private Text _descText;
     private Text _totalText;
     private Text _currentText;
 
-    List<Structure> _buildings;
-    int _employ = -1;//total employ by this types of works
-    int _oldEmploy = -1;
+    private List<Structure> _buildings;
+    private int _employ = -1;//total employ by this types of works
+    private int _oldEmploy = -1;
 
-    GameObject _plusBtn;
-    GameObject _lessBtn;
+    private GameObject _plusBtn;
+    private GameObject _lessBtn;
 
-    GameObject _hireAllBtn;
-    GameObject _fireAllBtn;
-    string _hireFireAllAction = "";
+    private GameObject _hireAllBtn;
+    private GameObject _fireAllBtn;
+    private string _hireFireAllAction = "";
 
     internal static WorkerTile CreateTile(Transform container,
     string workType, Vector3 iniPos)
@@ -43,7 +45,7 @@ public class WorkerTile : GUIElement
         return obj;
     }
 
-    void Start()
+    private void Start()
     {
         _descText = FindGameObjectInHierarchy("Item_Desc", gameObject).GetComponent<Text>();
         _totalText = FindGameObjectInHierarchy("Total", gameObject).GetComponent<Text>();
@@ -76,7 +78,7 @@ public class WorkerTile : GUIElement
         _oldEmploy = _employ;
 
         _currentText.text = _employ + "";
-        _totalText.text = "" + AbsMaxPeople()+"";
+        _totalText.text = "" + AbsMaxPeople() + "";
     }
 
     private void TakeActionOnNewNumber()
@@ -117,7 +119,7 @@ public class WorkerTile : GUIElement
         ChangeEmployesBy(-firePeople);
     }
 
-    int MaxPeople()
+    private int MaxPeople()
     {
         int res = 0;
         for (int i = 0; i < _buildings.Count; i++)
@@ -127,7 +129,7 @@ public class WorkerTile : GUIElement
         return res;
     }
 
-    int AbsMaxPeople()
+    private int AbsMaxPeople()
     {
         int res = 0;
         for (int i = 0; i < _buildings.Count; i++)
@@ -209,12 +211,12 @@ public class WorkerTile : GUIElement
 
     private void MakeActiveButton(GameObject btn)
     {
-        btn.SetActive( true);
+        btn.SetActive(true);
     }
 
-    void Update()
+    private void Update()
     {
-        if (_buildings==null)
+        if (_buildings == null)
         {
             return;
         }
@@ -223,7 +225,7 @@ public class WorkerTile : GUIElement
         HireFireAll();
     }
 
-    void HireFireAll()
+    private void HireFireAll()
     {
         if (_hireFireAllAction == "Fire All")
         {

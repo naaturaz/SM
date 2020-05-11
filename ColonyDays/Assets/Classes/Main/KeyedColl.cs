@@ -6,7 +6,6 @@ public class RegFileKey : KeyedCollection<string, RegFile>
     protected override string GetKeyForItem(RegFile item)
     {
         return item.MyId;
-
     }
 }
 
@@ -42,15 +41,15 @@ public class WayKey : KeyedCollection<string, Way>
     }
 }
 
-public class KeyedColl : MonoBehaviour {
+public class KeyedColl : MonoBehaviour
+{
+    // Use this for initialization
+    private void Start()
+    {
+    }
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    // Update is called once per frame
+    private void Update()
+    {
+    }
 }

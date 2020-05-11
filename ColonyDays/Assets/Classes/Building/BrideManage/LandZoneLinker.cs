@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 
-public class LandZoneLinker 
+public class LandZoneLinker
 {
     private string _zone1;
     private string _zone2;
     private Vector3 _pos;
     private string _buildMyId;
+
     public string Zone1
     {
         get { return _zone1; }
@@ -30,7 +31,6 @@ public class LandZoneLinker
         set { _buildMyId = value; }
     }
 
-
     public LandZoneLinker(string zone1, string zone2, Vector3 pos = new Vector3(), string MyId = "")
     {
         this._zone1 = zone1;
@@ -38,7 +38,6 @@ public class LandZoneLinker
         this._pos = pos;
         this._buildMyId = MyId;
     }
-
 
     /// <summary>
     /// Will return true if both ends are the same disregardin order

@@ -1,11 +1,10 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
 public class TreeVeget : StillElement
 {
-
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         base.Start();
         StartCoroutine("FiveSecUpdate");
@@ -21,14 +20,9 @@ public class TreeVeget : StillElement
         }
     }
 
-
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         base.Update();
-
-
     }
-
-
 }

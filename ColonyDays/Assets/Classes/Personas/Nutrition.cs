@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-public class Nutrition
+﻿public class Nutrition
 {
     private Person _person;
 
     private float _calNeededNow;
 
-    private float _daysWithoutEat = 1f;//everytime he calls the EatFunction is going to be taken as a 
+    private float _daysWithoutEat = 1f;//everytime he calls the EatFunction is going to be taken as a
     //half a day
     //if he calls the eat and there is not food then 0.5f is added to this
 
@@ -19,16 +14,16 @@ public class Nutrition
         set { _calNeededNow = value; }
     }
 
-
-
-    public Nutrition() { }
+    public Nutrition()
+    {
+    }
 
     public Nutrition(Person person)
     {
         _person = person;
     }
 
-    float CalculateCalNeedNow()
+    private float CalculateCalNeedNow()
     {
         //http://www.globalrph.com/resting_metabolic_rate.cgi
         //was like that from Late 2016 till Dec 2019
@@ -45,7 +40,7 @@ public class Nutrition
         return UMath.Random(1.6f, 1.8f);
     }
 
-    int GenderAdd()
+    private int GenderAdd()
     {
         if (_person.Gender == H.Male)
         {
@@ -66,7 +61,7 @@ public class Nutrition
     //todo table with cal per prod
 
     /// <summary>
-    /// Cal x KG of a product 
+    /// Cal x KG of a product
     /// </summary>
     /// <param name="prod"></param>
     /// <returns></returns>
@@ -98,8 +93,8 @@ public class Nutrition
         {
             kgChanged = ConvertCalIntoKG(_calNeededNow);
         }
-        //if 0 keeps the weight 
-            //
+        //if 0 keeps the weight
+        //
         //if cal are positive then can increase the weight//until a reasonable weight for person
         else if (_calNeededNow > 0)
         {
@@ -115,12 +110,13 @@ public class Nutrition
     }
 
     //Then 500 cal lost in a day = 0.0643KG lost in a day
-    float ConvertCalIntoKG(float cal)
+    private float ConvertCalIntoKG(float cal)
     {
-        return (cal/500f)*0.0643f;
+        return (cal / 500f) * 0.0643f;
     }
 
-    float tempCalNeededNow = 30f;
+    private float tempCalNeededNow = 30f;
+
     internal float CalNeededNowUpdate()
     {
         if (Program.gameScene.GameSpeed == 0)

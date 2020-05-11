@@ -3,17 +3,18 @@ using System.Linq;
 
 public class ProductInfo
 {
-    private int _id;//the id of the product 
+    private int _id;//the id of the product
     private P _product;
-    List<InputElement> _ingredients = new List<InputElement>();
+    private List<InputElement> _ingredients = new List<InputElement>();
     private List<H> _hType = new List<H>();
 
     //the line name of the product will be shown on Building window
     private string _productLine;
+
     //the details of a prduct
     private string _details;
 
-    List<ElementWeight> _randomWeightsOutput = new List<ElementWeight>();
+    private List<ElementWeight> _randomWeightsOutput = new List<ElementWeight>();
 
     public ProductInfo(P product, List<InputElement> ingredients, H buildHType)
     {
@@ -56,7 +57,7 @@ public class ProductInfo
         return res;
     }
 
-    float GetAmount(float weight, float loadKG)
+    private float GetAmount(float weight, float loadKG)
     {
         //decrease 5%
         var five = loadKG * 0.05f;
@@ -74,7 +75,7 @@ public class ProductInfo
     }
 
     /// <summary>
-    /// Builds the details and is called everytime is pulled in case the imperial or metric 
+    /// Builds the details and is called everytime is pulled in case the imperial or metric
     /// </summary>
     public void BuildDetails()
     {
@@ -83,7 +84,7 @@ public class ProductInfo
         var price = Program.gameScene.ExportImport1.ReturnPriceTown(_product);
         var expiration = Program.gameScene.ExportImport1.ReturnExpirationInDays(_product);
 
-        _details = Languages.ReturnString("Selected product: ") + Languages.ReturnString(_product+"") + "\n";
+        _details = Languages.ReturnString("Selected product: ") + Languages.ReturnString(_product + "") + "\n";
 
         // _details = _details + Languages.ReturnString("Density: ") +dens + "\n";
         // _details = _details + Languages.ReturnString("Produce factor: ") + prodF + "\n";
@@ -97,7 +98,7 @@ public class ProductInfo
 
             for (int i = 0; i < Ingredients.Count; i++)
             {
-                _details = _details + "" + (i+1) + ": "+ Languages.ReturnString(Ingredients[i].Element + "") + ": " +
+                _details = _details + "" + (i + 1) + ": " + Languages.ReturnString(Ingredients[i].Element + "") + ": " +
                     Ingredients[i].Units + " " + Unit.CurrentWeightUnitsString() + " \n";
             }
         }
@@ -111,7 +112,7 @@ public class ProductInfo
             _details = Languages.ReturnString("Attention.Production");
     }
 
-    void BuildProductLine()
+    private void BuildProductLine()
     {
         _productLine = _product + " (";
 
@@ -144,7 +145,7 @@ public class ProductInfo
 
     public string ProductLang()
     {
-        return Languages.ReturnString(_product+"");
+        return Languages.ReturnString(_product + "");
     }
 
     public List<InputElement> Ingredients
@@ -195,13 +196,15 @@ public class InputElement
         Units = units;
     }
 
-    public InputElement() { }
+    public InputElement()
+    {
+    }
 }
 
 public class ElementWeight
 {
     public P Element;//the element
-    public float Weight;//the weight of the element 
+    public float Weight;//the weight of the element
 
     public ElementWeight(P element, float weight)
     {
@@ -209,5 +212,7 @@ public class ElementWeight
         Weight = weight;
     }
 
-    public ElementWeight() { }
+    public ElementWeight()
+    {
+    }
 }

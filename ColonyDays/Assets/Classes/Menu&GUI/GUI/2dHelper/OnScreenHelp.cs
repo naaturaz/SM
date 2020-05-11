@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-class OnScreenHelp : MonoBehaviour
+internal class OnScreenHelp : MonoBehaviour
 {
     //Editor Inspector
-    public string Key_Message;//write the key in the 
+    public string Key_Message;//write the key in the
+
     public Transform KeepTransform;
     public Structure MyBuilding;
 
@@ -13,18 +14,18 @@ class OnScreenHelp : MonoBehaviour
     private Text _text;
     private RectTransform _rectTransform;
 
-    //the Key that is showing this. 
+    //the Key that is showing this.
     //needed to pull the string from Languages.cs
     private string _key;
 
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         //for docks that are already in terrain
         if (Program.MouseListener == null || Program.MouseListener.Main == null)
             return;
 
-        //Find canvas and make this child of it 
+        //Find canvas and make this child of it
         GameObject mainGui = Program.MouseListener.Main.gameObject;
         var canvas = General.GetChildCalledOnThis("Canvas", mainGui);
 
@@ -47,13 +48,12 @@ class OnScreenHelp : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (KeepTransform != null && _rectTransform != null)
-        _rectTransform.position = CamControl.RTSCamera().WorldToScreenPoint(KeepTransform.position);
+            _rectTransform.position = CamControl.RTSCamera().WorldToScreenPoint(KeepTransform.position);
 
         if (MyBuilding == null || MyBuilding.PositionFixed)
-            Destroy(gameObject);       
-                
+            Destroy(gameObject);
     }
 }
