@@ -255,6 +255,10 @@ public class Inventory
             return current;
         }
 
+        //Debug Test
+        if (Program.gameScene == null)
+            return null;
+
         var days = Program.gameScene.ExportImport1.ReturnExpireDays(prod);
         if (days == -1)
         {
@@ -986,6 +990,12 @@ public class InvItem
         set
         {
             _amount = value;
+            //Debug Test
+            if (Program.gameScene == null)
+            {
+                Volume = 0;
+                return;
+            }
             Volume = Program.gameScene.ExportImport1.CalculateVolume(Key, Amount);
         }
     }
@@ -1017,6 +1027,11 @@ public class InvItem
     {
         Key = KeyP;
         Amount = amtP;
+        Volume = 0;
+        if (Program.gameScene == null)
+        {
+            return;
+        }
         Volume = Program.gameScene.ExportImport1.CalculateVolume(Key, amtP);
     }
 
