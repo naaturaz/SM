@@ -219,10 +219,8 @@ public class CamRTSController : CamControl
     private void Update()
     {
         if (Program.MouseListener.IsAWindowScrollableShownNow() || CamControl.IsMainMenuOn()
-            || ScrollViewShowInventory.IsMouseOnMe)
-        {
+            || ScrollViewShowInventory.IsMouseOnMe || Program.IsMouseOnScrollableContent)
             return;
-        }
 
         //initiales current obj pos and rot to...
         InitializeObjects();

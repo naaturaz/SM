@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -133,6 +134,14 @@ public class Inventory
             }
         }
         return 0;
+    }
+
+    internal void Add(Inventory inventory)
+    {
+        for (int i = 0; i < inventory.InventItems.Count; i++)
+        {
+            Add(inventory.InventItems[i].Key, inventory.InventItems[i].Amount);
+        }
     }
 
     /// <summary>

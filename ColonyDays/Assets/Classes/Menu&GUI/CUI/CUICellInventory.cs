@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,7 @@ internal class CUICellInventory : MonoBehaviour
 
     private void Start()
     {
+        //Text.GetComponent<TMP_SubMeshUI>().raycastTarget = false;
         StartCoroutine("OneSecUpdate");
     }
 
@@ -21,14 +23,30 @@ internal class CUICellInventory : MonoBehaviour
     public void SetInvItem(InvItem invItem)
     {
         _invItem = invItem;
-        SetTextAndIcon(_invItem.Amount + "", _invItem.Key);
+        SetTextAndIcon(_invItem.Amount, _invItem.Key);
         gameObject.name = _invItem.Key + "";
     }
 
-    private void SetTextAndIcon(string text, P prod)
+    private void SetTextAndIcon(float text, P prod)
     {
-        Text.text = text;
+        Text.text = ShortFormat(text);
         LoadIcon(prod);
+    }
+
+    //String.Format("{0:n}", 1234);  // Output: 1,234.00
+    //String.Format("{0:n0}", 9876); // No digits after the decimal point. Output: 9,876
+    private string ShortFormat(float amt)
+    {
+        if (amt < 10000)
+            //return (amt.ToString("N1"));
+            return String.Format("{0:n1}", amt);
+        if (amt >= 1000000)
+            return (int)(amt / 1000000) + "M";
+        if (amt >= 100000)
+            return (int)(amt / 1000) + "K";
+
+        //return (int)amt + "";
+        return String.Format("{0:n0}", amt);
     }
 
     protected void LoadIcon(P key = P.None)
@@ -37,8 +55,7 @@ internal class CUICellInventory : MonoBehaviour
         var root = "Prefab/GUI/Inventory_Icons/" + key;
         Sprite sp = Resources.Load<Sprite>(root);
 
-        //debug only bz all should have a root
-        if (sp == null)//new Sprite()
+        if (sp == null)
         {
             root = "Prefab/GUI/Inventory_Icons/EmptyPNG";
             sp = Resources.Load<Sprite>(root);
@@ -54,8 +71,16 @@ internal class CUICellInventory : MonoBehaviour
             yield return new WaitForSeconds(1); // wait
             if (_invItem != null)
             {
-                SetTextAndIcon(_invItem.Amount + "", _invItem.Key);
+                SetTextAndIcon(_invItem.Amount, _invItem.Key);
             }
         }
+    }
+
+    /// <summary>
+    /// Called from GUI
+    /// </summary>
+    public void ClickOnIt()
+    {
+        Program.MouseListener.ClickOnAnInvItem(_invItem);
     }
 }

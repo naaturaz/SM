@@ -70,7 +70,7 @@ public class BuildingWindow : Window
     //Image _imageIcon;
 
     //Scrool
-    private ScrollViewShowInventory _scrollInventory;
+    //private ScrollViewShowInventory _scrollInventory;
 
     private GameObject _scrollParent;
 
@@ -140,7 +140,7 @@ public class BuildingWindow : Window
         _stats = GetChildCalled("Stats");
 
         _scrollParent = FindGameObjectInHierarchy("Inventory_Scroll", gameObject);
-        _scrollInventory = FindGameObjectInHierarchy("Scroll_View", gameObject).GetComponent<ScrollViewShowInventory>();
+        //_scrollInventory = FindGameObjectInHierarchy("Scroll_View", gameObject).GetComponent<ScrollViewShowInventory>();
 
         _priorityControls = FindGameObjectInHierarchy("PriorityControl", _general);
         var currRank = FindGameObjectInHierarchy("Current_Rank", _priorityControls);
@@ -443,7 +443,7 @@ public class BuildingWindow : Window
         {
             ShowProductionReport();
             oldBuildID = Building.MyId;
-            _scrollInventory.ReloadNewInventory(Building.Inventory, 0);//pad at 1.7 works fine but it cuts the first item
+            //_scrollInventory.ReloadNewInventory(Building.Inventory, 0);//pad at 1.7 works fine but it cuts the first item
         }
 
         ReloadStatsWhenNeeded();

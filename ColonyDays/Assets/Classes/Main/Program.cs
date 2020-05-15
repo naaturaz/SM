@@ -300,4 +300,6 @@ public class Program : MonoBehaviour
             _debugger = value;
         }
     }
+
+    public static bool IsMouseOnScrollableContent { get; internal set; }
 }
