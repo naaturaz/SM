@@ -8,6 +8,7 @@
     public float AgeKidStartTradeSchool;
     public float DieAgeStart;
     public float DieAgeEnd;
+    public float PeopleAgeFactor;
 
     public PeopleModData()
     {

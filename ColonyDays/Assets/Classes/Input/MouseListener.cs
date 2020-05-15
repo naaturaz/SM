@@ -132,7 +132,7 @@ public class MouseListener : InputMain
         }
     }
 
-    public void ApplyChangeScreenResolution(bool promtToGame = false)
+    public void ApplyChangeScreenResolution()
     {
         if (Program.gameScene.Fustrum1 != null)
             Program.gameScene.Fustrum1.RedoRect();

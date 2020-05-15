@@ -1,18 +1,17 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class ShowInvetoryItem : GUIElement
 {
+    public TextMeshProUGUI _textCol1;
+    public TextMeshProUGUI _textCol2;
+    public TextMeshProUGUI _textCol3;
+    public Transform InitialPositionPoint;
+
     protected GameObject _icon;
-    private GameObject _back;
-    private GameObject _back2;
-    private GameObject _back3;
 
     private InvItem _invItem;
-
-    private Text _textCol1;
-    private Text _textCol2;
-    private Text _textCol3;
 
     protected Image _iconImg;
     private string _invType;
@@ -57,33 +56,6 @@ public class ShowInvetoryItem : GUIElement
         var container = FindGameObjectInHierarchy("Cont", gameObject);
         _icon = FindGameObjectInHierarchy("Icon", gameObject);
 
-        _back = FindGameObjectInHierarchy("Back", gameObject);
-        _back2 = FindGameObjectInHierarchy("Back2", gameObject);
-        _back3 = FindGameObjectInHierarchy("Back3", gameObject);
-
-        var text1Go = FindGameObjectInHierarchy("Text", gameObject);
-        if (text1Go != null)
-        {
-            _textCol1 = text1Go.GetComponent<Text>();
-        }
-
-        var col2 = FindGameObjectInHierarchy("Weight of product", gameObject);
-        if (col2 != null)
-        {
-            _textCol2 = col2.GetComponent<Text>();
-        }
-        else
-        {
-            //bz we change it names and for when needs to be renamed needs to be get it like this
-            _textCol2 = container.gameObject.transform.GetChild(1).GetComponent<Text>();
-        }
-
-        var col3 = FindGameObjectInHierarchy("Volume occupied", gameObject);
-        if (col3 != null)
-        {
-            _textCol3 = col3.GetComponent<Text>();
-        }
-
         _iconImg = _icon.GetComponent<Image>();
     }
 
@@ -113,24 +85,24 @@ public class ShowInvetoryItem : GUIElement
         {
             root = Root.show_Invent_Item_Small_3_Text + " 2";
         }
-        else if (invType == "Building")
-        {
-            root = Root.show_Invent_Item_Small_Med + " 3";
-        }
         else if (invType == "Bulletin.Prod.Report")
         {
-            root = Root.show_Invent_Item_Small_3_Text + " 3";
+            root = Root.show_Invent_Item_Small_3_Text + " 4";
         }
         else
         {
-            //for main
+            //for 
             root = Root.show_Invent_Item_Small_Med + " 2";
         }
-        obj = (ShowInvetoryItem)Resources.Load(root, typeof(ShowInvetoryItem));
-        obj = (ShowInvetoryItem)Instantiate(obj, new Vector3(), Quaternion.identity);
-        obj.transform.SetParent(container);
 
-        obj.transform.localPosition = iniPos;
+        obj = (ShowInvetoryItem)Resources.Load(root, typeof(ShowInvetoryItem));
+        obj = Instantiate(obj, container.transform);
+
+        if (obj.InitialPositionPoint.position != new Vector3())
+        {
+            obj.transform.SetParent(container);
+            obj.transform.localPosition = obj.InitialPositionPoint.localPosition;
+        }
 
         obj.Parent = parent;
         obj.InvItem1 = invItem;
@@ -139,20 +111,11 @@ public class ShowInvetoryItem : GUIElement
         return obj;
     }
 
-    private static void CorrectLocalScaleBasedOnScreenSize(Transform objTransform)
-    {
-        var xCorrect = (float)Screen.width / (float)1920;
-        var yCorrect = (float)Screen.height / (float)900;
-
-        objTransform.localScale = new Vector3(objTransform.localScale.x * xCorrect, objTransform.localScale.y,
-            objTransform.localScale.z);
-    }
-
     private void Update()
     {
         if (InvItem1 == null || (InvItem1.Amount <= 0 && string.IsNullOrEmpty(InvType)))
         {
-            Parent.Destroy(this);
+            //Parent.Destroy(this);
             return;
         }
 
@@ -186,8 +149,6 @@ public class ShowInvetoryItem : GUIElement
         if (_textCol3 != null)
             _textCol3.text = ReturnVol();
 
-        //so hover gets it
-        _back.name = InvItem1.Key + "";
         LoadIcon();
     }
 
@@ -197,10 +158,6 @@ public class ShowInvetoryItem : GUIElement
         _textCol1.text = Languages.ReturnString(InvItem1.Key.ToString()) + ": " + (InvItem1.Amount - 1);
         _textCol2.text = "";
         _textCol3.text = "";
-
-        _back.SetActive(false);
-        _back2.SetActive(false);
-        _back3.SetActive(false);
     }
 
     private string ReturnAmt()
@@ -245,14 +202,11 @@ public class ShowInvetoryItem : GUIElement
         //Main GUI
         if (InvType == "Main")
         {
-            //return StandardFormat();
             return amt.ToString("N0");
-            //return ShortFormat(amt);
         }
 
         return UString.PadThis(InvItem1.Key + "", 14, 'r') + " " + UString.PadThis((int)amt + "", 8, 'l')
             + UString.PadThis(vol.ToString("F1"), 8, 'l');
-        //return InvItem1.Key + " " + (int)amt + BuildStringUnits() + vol.ToString("F1");
     }
 
     private string BuildStringUnits()
@@ -285,17 +239,5 @@ public class ShowInvetoryItem : GUIElement
     public void ClickOnIt()
     {
         Program.MouseListener.ClickOnAnInvItem(_invItem);
-    }
-
-    internal void UpdateToThis(InvItem invItem, Vector3 iniPos)
-    {
-        InvItem1 = invItem;
-        transform.localPosition = iniPos;
-        Set3Text();
-    }
-
-    internal void UpdateToThis(Vector3 iniPos)
-    {
-        transform.localPosition = iniPos;
     }
 }

@@ -59,47 +59,12 @@ public class ShowAInventory
             //> 0 for main so only show items tht have some
             if (Inv.InventItems[i] != null && Inv.InventItems[i].Amount > 0)
             {
-                _allItems.Add(ShowInvetoryItem.Create(_container.transform, Inv.InventItems[i], ReturnIniPos(iForSpwItem),
+                _allItems.Add(ShowInvetoryItem.Create(_container.transform, Inv.InventItems[i], new Vector3(),
                     this, _invType));
 
                 iForSpwItem++;
             }
         }
-    }
-
-    private Vector3 ReturnIniPos(int i)
-    {
-        return new Vector3(ReturnX(i) + _iniPos.x, ReturnY(i) + _iniPos.y, _iniPos.z);
-    }
-
-    private int _mainLines = 18;//24
-
-    private float ReturnX(int i)
-    {
-        return 1;
-    }
-
-    private float ReturnY(int i)
-    {
-        if (_invType == "Main")
-        {
-            return -(ReturnRelativeYSpace(22f, ReturnTileYScale())) * i;
-        }
-        return -(ReturnRelativeYSpace(25, ReturnTileYScale())) * i;
-    }
-
-    private float ReturnTileYScale()
-    {
-        if (_allItems.Count > 0)
-        {
-            return _allItems[0].transform.localScale.y;
-        }
-        return 0;
-    }
-
-    public static float ReturnRelativeYSpace(float relative, float ySpaceOfTile)
-    {
-        return relative * ySpaceOfTile;
     }
 
     public void ManualUpdate()
@@ -175,36 +140,23 @@ public class ShowAInventory
                 //is a brand new item
                 if (_allItems.Count <= i && !DoWeHaveThatKeyAlready(Inv.InventItems[i].Key))
                 {
-                    _allItems.Add(ShowInvetoryItem.Create(_container.transform, Inv.InventItems[i], ReturnIniPos(iForSpwItem),
+                    _allItems.Add(ShowInvetoryItem.Create(_container.transform, Inv.InventItems[i], new Vector3(),
                         this, _invType));
                 }
                 else if (_allItems[i].InvItem1.Key != Inv.InventItems[i].Key)
                 {
-                    //updates the item
-                    _allItems[i].UpdateToThis(Inv.InventItems[i], ReturnIniPos(iForSpwItem));
+                    ////updates the item
+                    //_allItems[i].UpdateToThis(Inv.InventItems[i], new Vector3());
                 }
 
                 iForSpwItem++;
             }
         }
-        FinalReposition();
     }
 
     private bool DoWeHaveThatKeyAlready(P prod)
     {
         var index = _allItems.FindIndex(a => a.InvItem1.Key == prod);
         return index != -1;
-    }
-
-    /// <summary>
-    /// Final position all Tiles
-    /// Bz sometimes overlaps tiles
-    /// </summary>
-    private void FinalReposition()
-    {
-        for (int i = 0; i < _allItems.Count; i++)
-        {
-            _allItems[i].UpdateToThis(ReturnIniPos(i));
-        }
     }
 }

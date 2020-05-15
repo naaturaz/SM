@@ -169,7 +169,7 @@ public class OptionsWindow : GUIElement
         if (resChanged && Time.time > resTimeChanged + .5f)
         {
             resChanged = false;
-            Program.MouseListener.ApplyChangeScreenResolution(true);
+            Program.MouseListener.ApplyChangeScreenResolution();
         }
     }
 
@@ -512,4 +512,15 @@ public class OptionsWindow : GUIElement
     }
 
     #endregion Sliders Sound and Music , Camera
+
+    public void ResetUI()
+    {
+        var windows = FindObjectsOfType<CUIDragWindow>();
+
+        foreach (var item in windows)
+        {
+            item.ResetSavedPos();
+        }
+        Program.MouseListener.ApplyChangeScreenResolution();
+    }
 }

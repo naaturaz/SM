@@ -125,4 +125,15 @@ public class ModController : MonoBehaviour
 
         return 16;
     }
+
+    public static int PeopleAgeFactor()
+    {
+        int age = 0;
+        if (PeopleModData != null)
+            int.TryParse(PeopleModData.PeopleAgeFactor + "", out age);
+
+        if (age > 0) return age;
+
+        return 3;
+    }
 }

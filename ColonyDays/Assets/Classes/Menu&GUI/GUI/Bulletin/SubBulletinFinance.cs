@@ -50,11 +50,8 @@ public class SubBulletinFinance
 
         for (int i = 0; i < list.Count; i++)
         {
-            var iniPosHere = _bulletinWindow.ScrollIniPosGo.transform.localPosition +
-                             new Vector3(0, -4.2f * i, 0);
-
             var a = AcctTile.CreateTile(_bulletinWindow.Content.gameObject.transform, list[i],
-                iniPosHere, this);
+                new Vector3(), this);
 
             _reportsBudget.Add(a);
         }
@@ -88,11 +85,9 @@ public class SubBulletinFinance
 
         for (int i = 0; i < list.Count; i++)
         {
-            var iniPosHere = _bulletinWindow.ScrollIniPosGo.transform.localPosition +
-                             new Vector3(0, -3.5f * i, 0);
 
             var a = PriceTile.CreateTile(_bulletinWindow.Content.gameObject.transform, list[i],
-                iniPosHere);
+                new Vector3());
 
             _reports.Add(a);
         }
@@ -217,13 +212,10 @@ public class SubBulletinFinance
 
         for (int i = 0; i < list.Count; i++)
         {
-            var iniPosHere = _bulletinWindow.ScrollIniPosGo.transform.localPosition +
-                             new Vector3(0, -3.5f * i, 0);
-
             var spec = new SpecData(list[i]);
 
             var a = SpecTile.CreateTile(_bulletinWindow.Content.gameObject.transform, spec,
-                iniPosHere);
+                new Vector3());
 
             _reportsSpec.Add(a);
         }
@@ -291,10 +283,7 @@ public class SubBulletinFinance
 
         for (int i = 0; i < list.Length; i++)
         {
-            var iniPosHere = _bulletinWindow.ScrollIniPosGo.transform.localPosition +
-                             new Vector3(0, -3.5f * i, 0);
-
-            var a = SpecTile.CreateTile(_bulletinWindow.Content.gameObject.transform, list[i], iniPosHere);
+            var a = SpecTile.CreateTile(_bulletinWindow.Content.gameObject.transform, list[i], new Vector3());
 
             report.Add(a);
         }

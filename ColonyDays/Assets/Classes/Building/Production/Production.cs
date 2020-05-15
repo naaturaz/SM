@@ -397,19 +397,26 @@ public class Production
 
     private void BlackSmith()
     {
-        InputElement wood = new InputElement(P.Wood, 3);
-        InputElement iron = new InputElement(P.Iron, 2);
+        InputElement iron02 = new InputElement(P.Iron, 0.2f);
+        InputElement iron04 = new InputElement(P.Iron, 0.4f);
+        InputElement iron2 = new InputElement(P.Iron, 2);
+        InputElement iron3 = new InputElement(P.Iron, 3);
+        InputElement iron4 = new InputElement(P.Iron, 4);
+        InputElement wood1 = new InputElement(P.Wood, 1);
+        InputElement wood3 = new InputElement(P.Wood, 3);
+        InputElement wood4 = new InputElement(P.Wood, 4);
 
-        List<InputElement> tool = new List<InputElement>() { wood, iron };
+        List<InputElement> tool = new List<InputElement>() { wood3, iron2 };
+        List<InputElement> weapon = new List<InputElement>() { wood4, iron3 };
+        List<InputElement> nail = new List<InputElement>() { wood1, iron02 };
+        List<InputElement> utensil = new List<InputElement>() { wood1, iron04 };
+        List<InputElement> machinenery = new List<InputElement>() { wood4, iron4 };
 
         InputProdCheckAndAdd(new ProductInfo(P.Tool, tool, H.BlackSmith));
-        InputProdCheckAndAdd(new ProductInfo(P.Weapon, tool, H.BlackSmith));
-        InputProdCheckAndAdd(new ProductInfo(P.Nail, tool, H.BlackSmith));
-        InputProdCheckAndAdd(new ProductInfo(P.Utensil, tool, H.BlackSmith));
-        InputProdCheckAndAdd(new ProductInfo(P.Machinery, tool, H.BlackSmith));
-
-        //InputProdCheckAndAdd(new ProductInfo(P.Axe, tool, H.BlackSmith));
-        //InputProdCheckAndAdd(new ProductInfo(P.Sword, tool, H.BlackSmith));
+        InputProdCheckAndAdd(new ProductInfo(P.Weapon, weapon, H.BlackSmith));
+        InputProdCheckAndAdd(new ProductInfo(P.Nail, nail, H.BlackSmith));
+        InputProdCheckAndAdd(new ProductInfo(P.Utensil, utensil, H.BlackSmith));
+        InputProdCheckAndAdd(new ProductInfo(P.Machinery, machinenery, H.BlackSmith));
     }
 
     private void Cigar()

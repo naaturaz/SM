@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -50,7 +49,7 @@ internal class CUIMainInventory : MonoBehaviour
             _inv.OrderItemsAlpha();
             var item = _inv.InventItems[i];
             var cell = _cells[i];
-            cell.SetInvItem(item);
+            cell.SetInvItem(item, Which);
             cell.transform.SetSiblingIndex(i);
         }
     }
@@ -74,23 +73,23 @@ internal class CUIMainInventory : MonoBehaviour
         _inv.Add(P.Papaya, 55555);
         _inv.Add(P.Paper, 55555);
     }
-       
+
     private void Start()
     {
         LoadDebug();
 
         if (Which == ScrollItemsWindow.Main)
             _inv = GameController.ResumenInventory1.GameInventory;
-        else if (Which == ScrollItemsWindow.Building)
-            Debug.Log("Building Win CUI");
+        else if (Which == ScrollItemsWindow.Building || Which == ScrollItemsWindow.Person)
+        {
+            //Debug.Log("Building Win CUI");
+        }
         else if (Which == ScrollItemsWindow.ProduceReport)
             _inv = CreateSimpleInv(BulletinWindow.SubBulletinProduction1.ProductionReport1.ProduceReport);
         else if (Which == ScrollItemsWindow.ConsumeReport)
             _inv = CreateSimpleInv(BulletinWindow.SubBulletinProduction1.ProductionReport1.ConsumeReport);
         else if (Which == ScrollItemsWindow.ExpireReport)
             _inv = CreateSimpleInv(BulletinWindow.SubBulletinProduction1.ExpirationReport.ProduceReport);
-        else if (Which == ScrollItemsWindow.OurInventories)
-            _inv = GameController.ResumenInventory1.GameInventory;
         else
             throw new Exception("Which is needed");
 
@@ -110,14 +109,8 @@ internal class CUIMainInventory : MonoBehaviour
 
     private void Update()
     {
-        if(_count > 30)
-        {
-            CheckOnItems();
-            _count = 0;
-        }
-        _count++;
-
-        ShowBuilding();
+        CheckOnItems();
+        ShowBuildingOrPerson();
 
         if (AddDebugProd)
         {
@@ -133,13 +126,16 @@ internal class CUIMainInventory : MonoBehaviour
         }
     }
 
-    private void ShowBuilding()
+    private void ShowBuildingOrPerson()
     {
         if (Which == ScrollItemsWindow.Building)
             if (Program.MouseListener.BuildingWindow1 != null && Program.MouseListener.BuildingWindow1.Building != null)
                 _inv = Program.MouseListener.BuildingWindow1.Building.Inventory;
+        if (Which == ScrollItemsWindow.Person)
+            if (Program.MouseListener.PersonWindow1 != null && Program.MouseListener.PersonWindow1.Person1 != null)
+                _inv = Program.MouseListener.PersonWindow1.Person1.Inventory;
     }
 }
 
 public enum ScrollItemsWindow //to be use for the person class
-{ Main, Building, ProduceReport, ConsumeReport, ExpireReport, OurInventories }
+{ Main, Building, Person, ProduceReport, ConsumeReport, ExpireReport }

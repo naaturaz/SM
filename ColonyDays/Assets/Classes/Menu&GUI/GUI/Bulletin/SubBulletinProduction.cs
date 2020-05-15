@@ -113,20 +113,16 @@ public class SubBulletinProduction
     private void ShowProductionReport(List<Inventory> list)
     {
         Hide();
-        var height = ItemsOnReport(list) * 3.75f + (list.Count - 1) * 4f;
-        _bulletinWindow.AdjustContentHeight(height);
         _bulletinWindow.ShowScrool();
 
-        var lastPos = _bulletinWindow.ScrollIniPosGo.transform.localPosition;
         var pastItems = 0;
         for (int i = 0; i < list.Count; i++)
         {
             var margin = i > 0 ? -4f : 0f;
             var yPos = (pastItems * -3.75f) + margin;
 
-            var a = new ShowAInventory(list[i], _bulletinWindow.Content.gameObject, lastPos + new Vector3(0, yPos, 0), "Bulletin.Prod.Report");
+            var a = new ShowAInventory(list[i], _bulletinWindow.Content.gameObject, new Vector3(), "Bulletin.Prod.Report");
 
-            lastPos = lastPos + new Vector3(0, yPos, 0);
 
             _reports.Add(a);
             pastItems = list[i].InventItems.Count;

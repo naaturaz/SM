@@ -53,11 +53,9 @@ namespace Assets.Classes.Menu_GUI.GUI.Bulletin
 
             for (int i = 0; i < list.Count; i++)
             {
-                var iniPosHere = _bulletinWindow.ScrollIniPosGo.transform.localPosition +
-                                 new Vector3(0, tileHeight * i, 0);
 
                 var a = WorkerTile.CreateTile(_bulletinWindow.Content.gameObject.transform, list[i],
-                    iniPosHere);
+                    new Vector3());
 
                 _reports.Add(a);
             }

@@ -277,7 +277,7 @@ public class GameScene : General
 
         if (GameTimePeople == null)
         {
-            GameTimePeople = new GameTime(3f);
+            GameTimePeople = new GameTime(ModController.PeopleAgeFactor());
         }
 
         _unitsManager = FindObjectOfType<UnitsManager>();

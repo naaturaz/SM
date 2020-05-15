@@ -44,12 +44,6 @@ public class BulletinWindow : GUIElement
         set { _content = value; }
     }
 
-    public GameObject ScrollIniPosGo
-    {
-        get { return _scroll_Ini_PosGO; }
-        set { _scroll_Ini_PosGO = value; }
-    }
-
     private void Start()
     {
         _body = GetChildCalled("Body_Lbl").GetComponent<Text>();

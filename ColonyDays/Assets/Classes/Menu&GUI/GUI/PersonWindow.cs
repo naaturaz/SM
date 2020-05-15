@@ -10,7 +10,6 @@ public class PersonWindow : Window
     private GameObject _invIniPos;
     private GameObject _inv_Ini_Pos_Gen;
 
-    private ShowAInventory _showAInventory;
     private ShowAPersonBuildingDetails _aPersonBuildingDetails;
 
     private GameObject _general;
@@ -61,9 +60,6 @@ public class PersonWindow : Window
                 //so if its a diff person will redo _aPersonBuildingDetails
                 _aPersonBuildingDetails = null;
                 _oldPersonMyId = Person1.MyId;
-
-                _showAInventory.DestroyAll();
-                _showAInventory = null;
             }
         }
 
@@ -88,19 +84,6 @@ public class PersonWindow : Window
             return;
 
         _title.text = Person1.Name + "";
-
-        if (_showAInventory == null)
-        {
-            _showAInventory = new ShowAInventory(Person1.Inventory, _general, _invIniPos.transform.localPosition, "Person");
-        }
-        //diff  person
-        else if (_showAInventory != null && Person1.IsToReloadInventory())
-        {
-            _showAInventory.DestroyAll();
-            _showAInventory = new ShowAInventory(Person1.Inventory, _general, _invIniPos.transform.localPosition, "Person");
-            Person1.InventoryReloaded();
-        }
-        _showAInventory.ManualUpdate();
 
         if (_aPersonBuildingDetails == null)
         {
@@ -128,9 +111,6 @@ public class PersonWindow : Window
                 LoadMenu();
             }
         }
-
-        if (_showAInventory != null)
-            _showAInventory.UpdateToThisInv(Person1.Inventory);
 
         //if click gen
         if (_genBtnRect.Contains(Input.mousePosition) && Input.GetMouseButtonUp(0))
