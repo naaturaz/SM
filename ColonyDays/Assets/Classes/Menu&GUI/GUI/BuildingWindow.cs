@@ -473,6 +473,8 @@ public class BuildingWindow : Window
 
     private void ShowProductionReport()
     {
+        return;
+
         for (int i = 0; i < _reports.Count; i++)
         {
             _reports[i].DestroyAll();

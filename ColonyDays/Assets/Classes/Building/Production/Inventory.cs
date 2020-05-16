@@ -140,7 +140,7 @@ public class Inventory
     {
         for (int i = 0; i < inventory.InventItems.Count; i++)
         {
-            Add(inventory.InventItems[i].Key, inventory.InventItems[i].Amount);
+            InventItems.Add(inventory.InventItems[i]);
         }
     }
 

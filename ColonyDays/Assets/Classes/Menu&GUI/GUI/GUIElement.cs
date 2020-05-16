@@ -143,6 +143,12 @@ public class GUIElement : General
         transform.position = newPos;
     }
 
+    public void Show()
+    {
+        transform.position = iniPos;
+        SelectOkBtn();
+    }
+
     internal void HideArrow()
     {
         var arrowGO = GetChildCalled("Arrow");
@@ -182,11 +188,7 @@ public class GUIElement : General
         _verticScrollbar.value = 1;
     }
 
-    public void Show()
-    {
-        transform.position = iniPos;
-        SelectOkBtn();
-    }
+
 
     private void SelectOkBtn()
     {

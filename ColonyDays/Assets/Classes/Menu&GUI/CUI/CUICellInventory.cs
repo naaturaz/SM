@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,10 +29,23 @@ internal class CUICellInventory : MonoBehaviour
 
     private void HandleWhich()
     {
-        if (_which == ScrollItemsWindow.Building)
+        List<ScrollItemsWindow> longCells = new List<ScrollItemsWindow>()
         {
-            DescText.text = Languages.ReturnString(_invItem.Key + "");
-            Text.text = String.Format("{0:n1}", Unit.WeightConverted(_invItem.Amount));
+            ScrollItemsWindow.Building, ScrollItemsWindow.BuildingStats, ScrollItemsWindow.OurInventories,
+        };
+
+        if (longCells.Contains(_which))
+        {
+            if (_invItem.Key == P.Year)
+            {
+                DescText.text = Languages.ReturnString(_invItem.Key.ToString()) + ": " + (_invItem.Amount - 1);
+                Text.text = "";
+            }
+            else
+            {
+                DescText.text = Languages.ReturnString(_invItem.Key + "");
+                Text.text = String.Format("{0:n1}", Unit.WeightConverted(_invItem.Amount));
+            }
         }
     }
 

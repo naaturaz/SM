@@ -98,7 +98,7 @@ public class ShowInvetoryItem : GUIElement
         obj = (ShowInvetoryItem)Resources.Load(root, typeof(ShowInvetoryItem));
         obj = Instantiate(obj, container.transform);
 
-        if (obj.InitialPositionPoint.position != new Vector3())
+        if (obj.InitialPositionPoint != null && obj.InitialPositionPoint.position != new Vector3())
         {
             obj.transform.SetParent(container);
             obj.transform.localPosition = obj.InitialPositionPoint.localPosition;

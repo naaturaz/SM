@@ -60,6 +60,8 @@ public class HoverWindow : MonoBehaviour
 
     public void Show(string key)
     {
+        _rectTransform.SetAsLastSibling();
+
         AudioCollector.PlayOneShot("ClickWoodSubtle", 0);
         _key = key;
         _msg = Languages.ReturnString(key + ".HoverSmall");
@@ -77,6 +79,8 @@ public class HoverWindow : MonoBehaviour
     /// <param name="msg"></param>
     public void ShowMsg(string msg)
     {
+        _rectTransform.SetAsLastSibling();
+
         AudioCollector.PlayOneShot("ClickWoodSubtle", 0);
 
         _key = "";
@@ -90,6 +94,8 @@ public class HoverWindow : MonoBehaviour
 
     public void ShowExplicitThis(string key)
     {
+        _rectTransform.SetAsLastSibling();
+
         AudioCollector.PlayOneShot("ClickWoodSubtle", 0);
 
         _rectTransform.position = Hoverable.MousePositionTowardsScreenCenter();

@@ -513,14 +513,9 @@ public class OptionsWindow : GUIElement
 
     #endregion Sliders Sound and Music , Camera
 
+    //Called from GUI
     public void ResetUI()
     {
-        var windows = FindObjectsOfType<CUIDragWindow>();
-
-        foreach (var item in windows)
-        {
-            item.ResetSavedPos();
-        }
-        Program.MouseListener.ApplyChangeScreenResolution();
+        PlayerPrefs.SetInt("ResetUI", 1);
     }
 }

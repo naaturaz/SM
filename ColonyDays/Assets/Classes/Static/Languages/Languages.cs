@@ -1009,6 +1009,14 @@ public class Languages
         _en.Add("Hire All.HoverSmall", "Hire All");
         _en.Add("Hauler", "Hauler");
 
+        //May 16
+        _en.Add("CogWheel.HoverSmall", "Settings");
+        _en.Add("Decrease Font Size", "Decrease Font Size");
+        _en.Add("Increase Font Size", "Increase Font Size");
+
+
+
+
         //(rev: Mar 20 2020)
         //has a lot of text to put here
         //ProductStat.cs (rev)

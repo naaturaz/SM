@@ -46,6 +46,8 @@ internal class HoverWindowMed : MonoBehaviour
 
     public void Show(Vector3 pos, string key)
     {
+        _rectTransform.SetAsLastSibling();
+
         AudioCollector.PlayOneShot("ClickWoodSubtle", 0);
 
         _key = key;
