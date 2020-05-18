@@ -46,7 +46,6 @@ public class AddOrderWindow : GUIElement
 
     private void InitObj()
     {
-        iniPos = transform.position;
 
         _title = GetChildThatContains(H.Title).GetComponent<Text>();
 
@@ -72,11 +71,12 @@ public class AddOrderWindow : GUIElement
 
     public void Show(string val)
     {
+        base.Show();
+
         _orderType = val;
         _inputAmt.text = "";
 
         LoadMenu();
-        transform.position = iniPos;
 
         ResetScroolPos();
         Display();

@@ -3,10 +3,13 @@ using UnityEngine.EventSystems;
 
 public class CUIDragWindow : MonoBehaviour, IDragHandler, IPointerDownHandler
 {
+    //must be the object that has possibly a GuiElement
     [SerializeField] private RectTransform dragRectTransform;
+
     [SerializeField] private Canvas canvas;
     private string _name;
     private int _count;
+    private GUIElement _guiEle;
 
     private void Start()
     {
@@ -29,9 +32,15 @@ public class CUIDragWindow : MonoBehaviour, IDragHandler, IPointerDownHandler
         var x = PlayerPrefs.GetFloat(_name + ".x");
         var y = PlayerPrefs.GetFloat(_name + ".y");
 
+        _guiEle = dragRectTransform.gameObject.GetComponent<GUIElement>();
+
         var savedPos = new Vector2(x, y);
-        if (savedPos != new Vector2())
+        //will get loaded right away in one that doesnt have guiElement
+        if (savedPos != new Vector2() && _guiEle == null)
             dragRectTransform.anchoredPosition = savedPos;
+
+        if (_guiEle != null && savedPos != new Vector2() && savedPos.y != -800f)
+            _guiEle.IniPos = savedPos;
     }
 
     private void Update()
@@ -62,13 +71,12 @@ public class CUIDragWindow : MonoBehaviour, IDragHandler, IPointerDownHandler
     public void OnDrag(PointerEventData eventData)
     {
         dragRectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
-    }
 
-    private void OnApplicationQuit()
-    {
-        //Save pos
         PlayerPrefs.SetFloat(_name + ".x", dragRectTransform.anchoredPosition.x);
         PlayerPrefs.SetFloat(_name + ".y", dragRectTransform.anchoredPosition.y);
+
+        if (_guiEle != null)
+            _guiEle.IniPos = dragRectTransform.anchoredPosition;
     }
 
     private void ResetSavedPos()

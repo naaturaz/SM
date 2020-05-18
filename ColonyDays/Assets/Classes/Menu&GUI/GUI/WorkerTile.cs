@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -19,13 +20,14 @@ public class WorkerTile : GUIElement
     private List<Structure> _buildings;
     private int _employ = -1;//total employ by this types of works
     private int _oldEmploy = -1;
-
+    private Guid _idL;
     private GameObject _plusBtn;
     private GameObject _lessBtn;
 
     private GameObject _hireAllBtn;
     private GameObject _fireAllBtn;
     private string _hireFireAllAction = "";
+
 
     internal static WorkerTile CreateTile(Transform container, string workType, Vector3 iniPos, WorkerTile workerTile = null)
     {
@@ -48,6 +50,8 @@ public class WorkerTile : GUIElement
 
     private void Start()
     {
+        _idL = Guid.NewGuid();
+
         _plusBtn = GetChildCalled("More");
         _lessBtn = GetChildCalled("Less");
 
@@ -70,11 +74,32 @@ public class WorkerTile : GUIElement
         {
             TakeActionOnNewNumber();
             _employ = MaxPeople();
+
+            //update _employ and _oldEmply in my sibling
+            UpdateEmploysOnMySibling();
         }
         _oldEmploy = _employ;
 
         _currentText.text = _employ + "";
         _totalText.text = "" + AbsMaxPeople() + "";
+    }
+
+    private void UpdateEmploysOnMySibling()
+    {
+        var workerTiles = FindObjectsOfType<WorkerTile>();
+
+        for (int i = 0; i < workerTiles.Length; i++)
+        {
+            workerTiles[i].UpdateEmploysOnlyOnMyUniqueSibling(_employ, WorkType, _idL);
+        }
+    }
+
+    //used when a user is updating on the bulleting window
+    private void UpdateEmploysOnlyOnMyUniqueSibling(int employ, string workType, Guid idL)
+    {
+        if (_idL == idL || WorkType != workType) return;
+        _employ = employ;
+        _oldEmploy = employ;
     }
 
     private void TakeActionOnNewNumber()
@@ -242,5 +267,4 @@ public class WorkerTile : GUIElement
             else _hireFireAllAction = "";
         }
     }
-
 }

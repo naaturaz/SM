@@ -207,7 +207,7 @@ internal class SaveLoadGameWindow : GUIElement
 
     private void Start()
     {
-        iniPos = transform.position;
+        IniPos = transform.position;
         Hide();
 
         _inputNameGO = GetChildCalled("Input_Name");
@@ -252,7 +252,7 @@ internal class SaveLoadGameWindow : GUIElement
 
     private void Update()
     {
-        if (transform.position == iniPos && Input.GetKeyUp(KeyCode.Return))
+        if (transform.position == IniPos && Input.GetKeyUp(KeyCode.Return))
         {
             MouseListen("Save.OKBtn");
         }

@@ -19,8 +19,6 @@ public class BuildingWindow : Window
         set { _building = value; }
     }
 
-    private Vector3 iniPos;
-
     private Rect _genBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
     private Rect _invBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
     private Rect _ordBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
@@ -67,13 +65,6 @@ public class BuildingWindow : Window
     private Text _currPositionsTxt;
     private Text _maxPositionsTxt;
 
-    //Image _imageIcon;
-
-    //Scrool
-    //private ScrollViewShowInventory _scrollInventory;
-
-    private GameObject _scrollParent;
-
     //Priority Rank
     private GameObject _priorityControls;
 
@@ -111,11 +102,10 @@ public class BuildingWindow : Window
         {
             yield return new WaitForSeconds(0.1f); // wait
 
-            var samePos = UMath.nearEqualByDistance(transform.position, iniPos, 1);
             var buildNull = Building == null;
 
             //means is showing
-            if (samePos && !buildNull && BuildingPot.Control.Registro.SelectBuilding != null)
+            if (!buildNull && BuildingPot.Control.Registro.SelectBuilding != null)
             {
                 LoadMenu();
 
@@ -130,17 +120,12 @@ public class BuildingWindow : Window
 
     private void InitObj()
     {
-        iniPos = transform.position;
-
         _general = GetChildThatContains(H.General);
         _gaveta = GetChildThatContains(H.Gaveta);
         _orders = GetChildThatContains(H.Orders);
         _products = GetChildThatContains(H.Products);
         _upgrades = GetChildCalled(H.Upgrades);
         _stats = GetChildCalled("Stats");
-
-        _scrollParent = FindGameObjectInHierarchy("Inventory_Scroll", gameObject);
-        //_scrollInventory = FindGameObjectInHierarchy("Scroll_View", gameObject).GetComponent<ScrollViewShowInventory>();
 
         _priorityControls = FindGameObjectInHierarchy("PriorityControl", _general);
         var currRank = FindGameObjectInHierarchy("Current_Rank", _priorityControls);
@@ -231,7 +216,7 @@ public class BuildingWindow : Window
 
         LoadInitialTabDependingOnBuilding();
 
-        transform.position = iniPos;
+        base.Show();
         HandleOrdBtn();
         HandlePrdBtn();
 
@@ -441,9 +426,7 @@ public class BuildingWindow : Window
 
         if (oldBuildID != Building.MyId || Building.IsToReloadInv())
         {
-            ShowProductionReport();
             oldBuildID = Building.MyId;
-            //_scrollInventory.ReloadNewInventory(Building.Inventory, 0);//pad at 1.7 works fine but it cuts the first item
         }
 
         ReloadStatsWhenNeeded();
@@ -455,47 +438,14 @@ public class BuildingWindow : Window
     /// </summary>
     private void ReloadStatsWhenNeeded(bool now = false)
     {
-        if (now)
-        {
-            ShowProductionReport();
-            return;
-        }
-
         //only updated when a production happened Building.IsToReloadInv()
         if (Building.IsToReloadInv())
         {
-            ShowProductionReport();
             Building.InvWasReloaded();
         }
     }
 
     private List<ShowAInventory> _reports = new List<ShowAInventory>();
-
-    private void ShowProductionReport()
-    {
-        return;
-
-        for (int i = 0; i < _reports.Count; i++)
-        {
-            _reports[i].DestroyAll();
-        }
-        _reports.Clear();
-
-        var pastItems = 0;
-        var lastPos = _invIniPosSta.transform.localPosition;
-        for (int i = 0; i < ShowLastYears(); i++)
-        {
-            var margin = i > 0 ? -4f : -1f;
-            var yPos = (pastItems * -3.75f) + margin;
-            var a = new ShowAInventory(Building.ProductionReport.ProduceReport[i], _stats.gameObject,
-                lastPos + new Vector3(0, yPos, 0));
-
-            lastPos = lastPos + new Vector3(0, yPos, 0);
-
-            _reports.Add(a);
-            pastItems = Building.ProductionReport.ProduceReport[i].InventItems.Count;
-        }
-    }
 
     /// <summary>
     /// so it only shows the last 5 years or less if less

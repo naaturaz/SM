@@ -1051,7 +1051,7 @@ public class Spanish
 
         _sp.Add("Unemployed", "Desempleados");
         _sp.Add("Notifications", "Notificaciones");
-        _sp.Add("Loading...", "Cargando...");
+        _sp.Add("Loading", "Cargando");
 
         _sp.Add("Attention.Production", "Atención: la producción se detuvo. Para reanudar la producción en este edificio, seleccione un producto");
         _sp.Add("Selected product: ", "Producto seleccionado: ");

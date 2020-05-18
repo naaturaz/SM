@@ -4,13 +4,26 @@ using UnityEngine.UI;
 
 /*
  * This is the menu where u can select Buildings from a specific category
+ *
  */
 
 public class BuildingsMenu : GUIElement
 {
     private Vector3 iniPosition;
 
-    private List<GameObject> builds = new List<GameObject>();
+    private GameObject slot1;
+    private GameObject slot2;
+    private GameObject slot3;
+    private GameObject slot4;
+    private GameObject slot5;
+
+    private GameObject slot6;
+    private GameObject slot7;
+    private GameObject slot8;
+    private GameObject slot9;
+    private GameObject slot10;
+
+    private List<GameObject> slots = new List<GameObject>();
 
     private Sprite _lockedSprite; //the sprite when a Build is locked
 
@@ -18,6 +31,7 @@ public class BuildingsMenu : GUIElement
     private void Start()
     {
         InitObj();
+
         Hide();
     }
 
@@ -25,30 +39,30 @@ public class BuildingsMenu : GUIElement
     {
         iniPosition = transform.position;
 
-        var build1 = FindGameObjectInHierarchy("Build_1", gameObject);
-        var build2 = FindGameObjectInHierarchy("Build_2", gameObject);
-        var build3 = FindGameObjectInHierarchy("Build_3", gameObject);
-        var build4 = FindGameObjectInHierarchy("Build_4", gameObject);
-        var build5 = FindGameObjectInHierarchy("Build_5", gameObject);
+        slot1 = GetChildThatContains(H.Slot1);
+        slot2 = GetChildThatContains(H.Slot2);
+        slot3 = GetChildThatContains(H.Slot3);
+        slot4 = GetChildThatContains(H.Slot4);
+        slot5 = GetChildThatContains(H.Slot5);
 
-        var build6 = FindGameObjectInHierarchy("Build_6", gameObject);
-        var build7 = FindGameObjectInHierarchy("Build_7", gameObject);
-        var build8 = FindGameObjectInHierarchy("Build_8", gameObject);
-        var build9 = FindGameObjectInHierarchy("Build_9", gameObject);
-        var build10 = FindGameObjectInHierarchy("Build_10", gameObject);
+        slot6 = GetChildThatContains(H.Slot6);
+        slot7 = GetChildThatContains(H.Slot7);
+        slot8 = GetChildThatContains(H.Slot8);
+        slot9 = GetChildThatContains(H.Slot9);
+        slot10 = GetChildThatContains(H.Slot10);
 
-        builds = new List<GameObject>()
+        slots = new List<GameObject>()
         {
-            build1,build2,build3,build4,build5,
-            build6,build7,build8,build9,build10
+            slot1,slot2,slot3,slot4,slot5,
+            slot6,slot7,slot8,slot9,slot10
         };
 
-        //for (int i = 0; i < builds.Count; i++)
-        //{
-        //    var hoverBuild = builds[i].GetComponent<HoverBuilding>();
-        //    //so rects are set bz is hidden
-        //    hoverBuild.InitObjects();
-        //}
+        for (int i = 0; i < slots.Count; i++)
+        {
+            var hoverBuild = slots[i].GetComponent<HoverBuilding>();
+            //so rects are set bz is hidden
+            hoverBuild.InitObjects();
+        }
         locked = (Sprite)Resources.Load(Root.lockedBuilding, typeof(Sprite));
     }
 
@@ -64,26 +78,7 @@ public class BuildingsMenu : GUIElement
 
         BuildingPot.UnlockBuilds1.UpdateBuildsStatuses();
         LoadMenu(vals);
-        //transform.position = iniPosition;
-
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            transform.GetChild(i).gameObject.SetActive(true);
-        }
-    }
-
-    public new void Hide()
-    {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            transform.GetChild(i).gameObject.SetActive(false);
-        }
-
-        for (int i = 0; i < builds.Count; i++)
-        {
-            if(builds[i].transform.childCount > 0   )
-                Destroy(builds[i].transform.GetChild(0).gameObject);
-        }
+        transform.position = iniPosition;
     }
 
     /// <summary>
@@ -94,11 +89,11 @@ public class BuildingsMenu : GUIElement
     {
         Program.MouseListener.HidePersonBuildingOrderBulletin();
 
-        for (int i = 0; i < builds.Count; i++)
+        for (int i = 0; i < slots.Count; i++)
         {
             if (i < vals.Count)
             {
-                //MakeAlphaColorMax(builds[i]);
+                MakeAlphaColorMax(slots[i]);
 
                 //find is if locked
                 bool unlocked = H.Unlock == BuildingPot.UnlockBuilds1.ReturnBuildingState(vals[i]);
@@ -106,27 +101,22 @@ public class BuildingsMenu : GUIElement
                 if (unlocked)
                 {
                     //load the root of the ico
-                    //var iconRoot = Root.RetBuildingIconRoot(vals[i]);
-                    var root = Root.RetBuildingRoot(vals[i]);
-                    var load = (GameObject)Resources.Load(root);
+                    var iconRoot = Root.RetBuildingIconRoot(vals[i]);
+                    var s = (Sprite)Resources.Load(iconRoot, typeof(Sprite));
 
-                    var build = Instantiate(load, builds[i].transform);
-                    build.GetComponent<Structure>().enabled = false;
-                    build.transform.position = builds[i].transform.position;
-                    build.transform.localScale = builds[i].transform.localScale;
+                    //didnt found an Icon
+                    if (s == null)//new Sprite()
+                    {
+                        s = (Sprite)Resources.Load("Prefab/Building/gameIcon", typeof(Sprite));
+                    }
 
-                    build.AddComponent<Rotate>();
-                    //build.GetComponent<Rotate>().onY = true;
-                    //build.GetComponent<Rotate>().speed = 0.2f;
-
-                    var main = GetChildThatContains("Main", build);
-                    main.AddComponent<MenuBuildingItemHover>();
+                    slots[i].GetComponent<Image>().sprite = s;
                 }
                 //locked icon
-                //else ShowLockedIcon(builds[i]);
+                else ShowLockedIcon(slots[i]);
             }
-            //so if build is empty
-            //else MakeAlphaColorZero(builds[i]);
+            //so if slot is empty
+            else MakeAlphaColorZero(slots[i]);
         }
     }
 
@@ -147,6 +137,23 @@ public class BuildingsMenu : GUIElement
         Color bl = Color.white;
         bl.a = 255f;
         g.GetComponent<Image>().color = bl;
+    }
+
+    /// <summary>
+    /// Here have to implement the locking and unlocking of buildings
+    /// todo
+    /// </summary>
+    /// <param name="build"></param>
+    /// <returns></returns>
+    private bool IsThisBuildLocked(H build)
+    {
+        //debug
+        if (build == H.Shipyard)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     // Update is called once per frame

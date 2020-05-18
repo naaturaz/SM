@@ -4013,7 +4013,6 @@ public class Building : Hoverable, Iinfo
         {
             if (i < PeopleDict.Count)
             {
-                //var index = PeopleDict.Count - (1 + i);//starting from the last towards the first
                 var person = Family.FindPerson(PeopleDict[i]);
                 person.WasFired = true;
                 person.ShowEmotion("Fired");

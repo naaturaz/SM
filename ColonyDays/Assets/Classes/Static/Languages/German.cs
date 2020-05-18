@@ -1003,7 +1003,7 @@
         _de.Add("Command Keys.Text", "[F1] Hilfe\n[F9] GUI ein- / ausblenden\n[P] Kamera auf das Dorf zentrieren");
         _de.Add("Credits", "Credits");
         _de.Add("Credits.Text", "Übersetzung:\nCédric Gauché (fr)\nKarsten Eidner (de)");
-        _de.Add("Loading...", "Lade...");
+        _de.Add("Loading", "Lade");
 
         //Quest window
 

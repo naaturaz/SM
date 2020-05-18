@@ -47,7 +47,7 @@ public class BulletinWindow : GUIElement
     private void Start()
     {
         _body = GetChildCalled("Body_Lbl").GetComponent<Text>();
-        iniPos = transform.position;
+        IniPos = transform.position;
 
         Hide();
 

@@ -36,7 +36,7 @@ public class RewardsWindow : GUIElement
             return;
         }
 
-        iniPos = transform.position;
+        IniPos = transform.position;
         _today = DateTime.Today;
 
         _isGoodPlayer = PlayerPrefs.GetInt("Rate") > 0;

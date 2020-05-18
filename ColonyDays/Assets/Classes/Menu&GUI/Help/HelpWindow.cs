@@ -47,8 +47,6 @@ public class HelpWindow : GUIElement
 
     private void Start()
     {
-        iniPos = transform.position;
-
         _contentText = GetChildCalled("Content_Text").GetComponent<Text>();
 
         var _scroll = GetChildCalled("Scroll_View");
@@ -64,11 +62,11 @@ public class HelpWindow : GUIElement
 
     public void Show(string val)
     {
+        base.Show();
         HelpSelected("Construction.Help");
 
         Program.gameScene.TutoStepCompleted("ShowHelp.Tuto");
 
-        transform.position = iniPos;
         ResetScroolPos();
         PopulateScrollView();
 

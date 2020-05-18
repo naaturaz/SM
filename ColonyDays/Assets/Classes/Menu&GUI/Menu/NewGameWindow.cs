@@ -32,7 +32,7 @@ public class NewGameWindow : GUIElement
     // Use this for initialization
     private void Start()
     {
-        iniPos = transform.position;
+        IniPos = transform.position;
         Hide();
 
         //var Terra_Size_Btn = GetGrandChildCalled("Terra_Size_Btn");

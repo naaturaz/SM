@@ -12,8 +12,6 @@ public class QuestWindow : GUIElement
 
     private void Start()
     {
-        iniPos = transform.position;
-
         _rewardText = GetChildCalled("Reward_Text").GetComponent<Text>();
         _contentText = GetChildCalled("Content_Text").GetComponent<Text>();
 
@@ -31,7 +29,7 @@ public class QuestWindow : GUIElement
             return;
         }
 
-        transform.position = iniPos;
+        base.Show();
 
         ResetScroolPos();
 

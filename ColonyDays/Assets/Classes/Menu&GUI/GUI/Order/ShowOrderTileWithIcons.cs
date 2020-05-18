@@ -142,7 +142,7 @@ internal class ShowOrderTileWithIcons : ShowInvetoryItem
         Start();
 
         _title.text = Languages.ReturnString(pInfo.ProductLine);
-        transform.position = iniPos;
+        transform.position = IniPos;
         transform.name = _title.text + " | " + pInfo.Id;
     }
 

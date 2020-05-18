@@ -20,7 +20,7 @@ internal class AchieveWindow : GUIElement
 
     private void Start()
     {
-        iniPos = transform.position;
+        IniPos = transform.position;
         Hide();
 
         _steamStatsAndAchievements = FindObjectOfType<SteamStatsAndAchievements>();
@@ -74,7 +74,7 @@ internal class AchieveWindow : GUIElement
 
     private void Update()
     {
-        if (transform.position == iniPos && Input.GetKeyUp(KeyCode.Return))
+        if (transform.position == IniPos && Input.GetKeyUp(KeyCode.Return))
         {
             MouseListen("Achieve.OKBtn");
         }

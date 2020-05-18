@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class GUIElement : General
 {
     //inipos is used for Hide and show
-    protected Vector3 iniPos;
+    private Vector3 iniPos;
 
     protected InputField _titleInputField;
     protected GameObject _titleInputFieldGO;
@@ -16,12 +16,24 @@ public class GUIElement : General
 
     private float speed = .05f;
     protected bool _hideSlideToLeft;
+    private RectTransform _rectTransform;
+
+    public Vector3 IniPos
+    {
+        get
+        {
+            return iniPos;
+        }
+
+        set
+        {
+            iniPos = value;
+        }
+    }
 
     // Use this for initialization
     protected void Start()
     {
-        iniPos = transform.position;
-
         var textGo = FindGameObjectInHierarchy("Text", gameObject);
         if (textGo != null)
             _text = textGo.GetComponent<Text>();
@@ -47,7 +59,7 @@ public class GUIElement : General
             transform.position = newPos;
             speed *= 2.2f;
 
-            if (transform.position.x <= iniPos.x - 400f)
+            if (transform.position.x <= IniPos.x - 400f)
             {
                 _hideSlideToLeft = false;
                 speed = .02f;
@@ -138,14 +150,20 @@ public class GUIElement : General
             Program.gameScene.TutoStepCompleted("CloseDockWindow.Tuto");
         }
 
-        Vector3 newPos = transform.position;
+        if (_rectTransform == null)
+        {
+            _rectTransform = gameObject.GetComponent<RectTransform>();
+            IniPos = _rectTransform.anchoredPosition;
+        }
+
+        Vector3 newPos = _rectTransform.anchoredPosition;
         newPos.y = -800f;
-        transform.position = newPos;
+        _rectTransform.anchoredPosition = newPos;
     }
 
     public void Show()
     {
-        transform.position = iniPos;
+        _rectTransform.anchoredPosition = IniPos;
         SelectOkBtn();
     }
 
@@ -187,8 +205,6 @@ public class GUIElement : General
 
         _verticScrollbar.value = 1;
     }
-
-
 
     private void SelectOkBtn()
     {

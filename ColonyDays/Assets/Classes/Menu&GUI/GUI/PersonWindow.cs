@@ -49,6 +49,8 @@ public class PersonWindow : Window
 
     public void Show(Person val)
     {
+        base.Show();
+
         Program.MouseListener.HideBuildingsMenu();
 
         if (Person1 != null)
@@ -72,7 +74,6 @@ public class PersonWindow : Window
         MakeThisTabActive(oldTabActive);
         LoadMenu();
 
-        transform.position = iniPos;
         Person1.SelectPerson();
 
         LoadOrHideDebuggerTab();
@@ -103,7 +104,7 @@ public class PersonWindow : Window
     {
         updCount++;
         //means is showing
-        if (Vector3.Distance(transform.position, iniPos) < 0.1f)
+        if (Vector3.Distance(transform.position, IniPos) < 0.1f)
         {
             if (updCount > 6)
             {

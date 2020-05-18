@@ -39,7 +39,7 @@ public class OptionsWindow : GUIElement
 
     private void Start()
     {
-        iniPos = transform.position;
+        IniPos = transform.position;
 
         _fullToggle = GetGrandChildCalled("FullScreen_Toggle").GetComponent<Toggle>();
         _dayToggle = GetGrandChildCalled("DayCycle_Toggle").GetComponent<Toggle>();
@@ -517,5 +517,10 @@ public class OptionsWindow : GUIElement
     public void ResetUI()
     {
         PlayerPrefs.SetInt("ResetUI", 1);
+    }
+
+    public void DeletePlayerPref()
+    {
+        PlayerPrefs.DeleteAll();
     }
 }

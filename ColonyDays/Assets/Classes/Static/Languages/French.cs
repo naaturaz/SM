@@ -981,7 +981,7 @@
         _fr.Add("Command Keys.Text", "[F1] Ayuda\n[F9] Esconder/Mostrar GUI\n[P] Centra la cámara al Pueblo\n[F] Salva rápida");
         _fr.Add("Credits", "Créditos");
         _fr.Add("Credits.Text", "Translation:\nCédric Gauché (fr)\nKarsten Eidner (de)");
-        _fr.Add("Loading...", "Loading...");
+        _fr.Add("Loading", "Loading");
 
         //Quest window
 

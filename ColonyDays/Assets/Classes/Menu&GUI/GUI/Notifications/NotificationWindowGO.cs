@@ -29,7 +29,7 @@ public class NotificationWindowGO : GUIElement
 
     private void Start()
     {
-        iniPos = transform.position;
+        IniPos = transform.position;
         Hide();
 
         var scroll = GetChildCalled("Scroll_View");
@@ -78,7 +78,7 @@ public class NotificationWindowGO : GUIElement
     private void Update()
     {
         base.Update();
-        if (transform.position == iniPos && Input.GetKeyUp(KeyCode.Return))
+        if (transform.position == IniPos && Input.GetKeyUp(KeyCode.Return))
         {
             MouseListen("Achieve.OKBtn");
         }

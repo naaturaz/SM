@@ -18,7 +18,7 @@ public class MainMenuWindow : GUIElement
         _saveBtn = GetChildCalled("Save_Game_Btn").GetComponent<UnityEngine.UI.Button>();
 
         //inipos is used for Hide and show
-        iniPos = transform.position;
+        IniPos = transform.position;
 
         MakeButtonsInactiveIfNeeded();
     }

@@ -100,7 +100,7 @@ public class OrderShow : GUIElement
         Start();
 
         _title.text = Languages.ReturnString(pInfo.ProductLine);
-        transform.position = iniPos;
+        transform.position = IniPos;
         transform.name = _title.text + " | " + pInfo.Id;
 
         if (_thisBtn == null)
