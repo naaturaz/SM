@@ -82,7 +82,7 @@ public class MouseListener : InputMain
 
         //can only be one on scene to work
         _buildingsMenu = FindObjectOfType<BuildingsMenu>();
-        _descriptionWindow = FindObjectOfType<DescriptionWindow>();
+        _descriptionWindow = FindObjectOfType<BuildingDescriptionMenu>();
         _personWindow = FindObjectOfType<PersonWindow>();
         _buildingWindow = FindObjectOfType<BuildingWindow>();
         _addOrderWindow = FindObjectOfType<AddOrderWindow>();
@@ -510,7 +510,7 @@ public class MouseListener : InputMain
     private int _dictSelection = -1;
 
     private BuildingsMenu _buildingsMenu;
-    private DescriptionWindow _descriptionWindow;
+    private BuildingDescriptionMenu _descriptionWindow;
 
     private PersonWindow _personWindow;
     private BuildingWindow _buildingWindow;

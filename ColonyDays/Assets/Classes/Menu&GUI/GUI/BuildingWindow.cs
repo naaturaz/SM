@@ -749,7 +749,7 @@ public class BuildingWindow : Window
 
     private string MaterialsGathered()
     {
-        return DescriptionWindow.CostOfABuilding(Building.HType, 1);
+        return BuildingDescriptionMenu.CostOfABuilding(Building.HType, 1);
     }
 
     private string DebugInfo()

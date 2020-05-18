@@ -60,7 +60,7 @@ public class HoverWindow : MonoBehaviour
 
     public void Show(string key)
     {
-        _rectTransform.SetAsLastSibling();
+        //_rectTransform.SetAsLastSibling();
 
         AudioCollector.PlayOneShot("ClickWoodSubtle", 0);
         _key = key;
@@ -79,7 +79,7 @@ public class HoverWindow : MonoBehaviour
     /// <param name="msg"></param>
     public void ShowMsg(string msg)
     {
-        _rectTransform.SetAsLastSibling();
+        //_rectTransform.SetAsLastSibling();
 
         AudioCollector.PlayOneShot("ClickWoodSubtle", 0);
 
@@ -94,7 +94,7 @@ public class HoverWindow : MonoBehaviour
 
     public void ShowExplicitThis(string key)
     {
-        _rectTransform.SetAsLastSibling();
+        //_rectTransform.SetAsLastSibling();
 
         AudioCollector.PlayOneShot("ClickWoodSubtle", 0);
 

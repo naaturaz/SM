@@ -379,7 +379,7 @@ internal class BRequires
             }
         }
 
-        res = DescriptionWindow.CheckIfAppend3(ref appends, res, 1);
+        res = BuildingDescriptionMenu.CheckIfAppend3(ref appends, res, 1);
 
         InfoMsg = res;
     }

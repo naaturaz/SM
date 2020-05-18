@@ -80,6 +80,6 @@ public class CUIDragWindow : MonoBehaviour, IDragHandler, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        dragRectTransform.SetAsLastSibling();
+        //dragRectTransform.SetAsLastSibling();
     }
 }

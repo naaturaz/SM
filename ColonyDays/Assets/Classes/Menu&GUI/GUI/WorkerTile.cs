@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class WorkerTile : GUIElement
 {
@@ -12,9 +12,9 @@ public class WorkerTile : GUIElement
         set { _workType = value; }
     }
 
-    private Text _descText;
-    private Text _totalText;
-    private Text _currentText;
+    public TextMeshProUGUI _descText;
+    public TextMeshProUGUI _totalText;
+    public TextMeshProUGUI _currentText;
 
     private List<Structure> _buildings;
     private int _employ = -1;//total employ by this types of works
@@ -27,12 +27,13 @@ public class WorkerTile : GUIElement
     private GameObject _fireAllBtn;
     private string _hireFireAllAction = "";
 
-    internal static WorkerTile CreateTile(Transform container,
-    string workType, Vector3 iniPos)
+    internal static WorkerTile CreateTile(Transform container, string workType, Vector3 iniPos, WorkerTile workerTile = null)
     {
-        WorkerTile obj = null;
+        WorkerTile obj = workerTile;
 
-        obj = (WorkerTile)Resources.Load(Root.worker_Tile, typeof(WorkerTile));
+        if (workerTile == null)
+            obj = (WorkerTile)Resources.Load(Root.worker_Tile, typeof(WorkerTile));
+
         obj = (WorkerTile)Instantiate(obj, new Vector3(), Quaternion.identity);
 
         var iniScale = obj.transform.localScale;
@@ -47,10 +48,6 @@ public class WorkerTile : GUIElement
 
     private void Start()
     {
-        _descText = FindGameObjectInHierarchy("Item_Desc", gameObject).GetComponent<Text>();
-        _totalText = FindGameObjectInHierarchy("Total", gameObject).GetComponent<Text>();
-        _currentText = FindGameObjectInHierarchy("Current_Amount", gameObject).GetComponent<Text>();
-
         _plusBtn = GetChildCalled("More");
         _lessBtn = GetChildCalled("Less");
 
@@ -64,8 +61,7 @@ public class WorkerTile : GUIElement
 
     private void Init()
     {
-        if (_buildings == null)
-            _buildings = BuildingController.FindAllStructOfThisTypeAndFullyBuilt(_workType);
+        _buildings = BuildingController.FindAllStructOfThisTypeAndFullyBuilt(_workType);
 
         if (_employ == -1)
             _employ = MaxPeople();
@@ -220,6 +216,8 @@ public class WorkerTile : GUIElement
         {
             return;
         }
+        Init();
+
         CheckIfLessIsActive();
         CheckIfPlusIsActive();
         HireFireAll();
@@ -244,4 +242,5 @@ public class WorkerTile : GUIElement
             else _hireFireAllAction = "";
         }
     }
+
 }

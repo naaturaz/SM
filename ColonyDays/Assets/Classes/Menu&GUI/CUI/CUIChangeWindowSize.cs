@@ -11,9 +11,9 @@ public class CUIChangeWindowSize : MonoBehaviour
         _name = dragRectTransform.gameObject.name;
 
         //load
-        var ls = PlayerPrefs.GetFloat(_name + ".localScale");
-        if (ls != 0)
-            dragRectTransform.localScale = new Vector3(ls, ls, ls);
+        //var ls = PlayerPrefs.GetFloat(_name + ".localScale");
+        //if (ls != 0)
+        //    dragRectTransform.localScale = new Vector3(ls, ls, ls);
     }
 
     public void ClickOnIncrease()

@@ -6,7 +6,7 @@
 public class HoverBuilding : MonoBehaviour
 {
     private Rect myRect;//the rect area of my element. Must have attached a BoxCollider2D
-    private DescriptionWindow _descriptionWindow;//the window tht will pop up msg
+    private BuildingDescriptionMenu _descriptionWindow;//the window tht will pop up msg
 
     // Use this for initialization
     private void Start()
@@ -14,7 +14,7 @@ public class HoverBuilding : MonoBehaviour
         //for this to work only one gameObj can have the HoverWindow attached
         if (_descriptionWindow == null)
         {
-            _descriptionWindow = FindObjectOfType<DescriptionWindow>();
+            _descriptionWindow = FindObjectOfType<BuildingDescriptionMenu>();
         }
     }
 
