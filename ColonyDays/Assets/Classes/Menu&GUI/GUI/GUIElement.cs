@@ -31,6 +31,20 @@ public class GUIElement : General
         }
     }
 
+    protected Rect _genBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
+    protected Rect _invBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
+    protected Rect _ordBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
+    protected Rect _prdBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
+    protected Rect _upgBtnRect;
+    protected Rect _staBtnRect;
+
+    protected GameObject _genBtn;//the btn
+    protected GameObject _invBtn;//the btn
+    protected GameObject _ordBtn;//the btn
+    protected GameObject _upgBtn;
+    protected GameObject _prdBtn;//the btn
+    protected GameObject _staBtn;//the btn
+
     // Use this for initialization
     protected void Start()
     {
@@ -89,9 +103,7 @@ public class GUIElement : General
         percentOcup = percentOcup * 100;
 
         if (percentOcup > 100)
-        {
             percentOcup = 100;
-        }
 
         var volOccupied = Unit.VolConverted(obj.Inventory.CurrentVolumeOcuppied());
         var volCap = Unit.VolConverted(obj.Inventory.CapacityVol);
@@ -105,6 +117,37 @@ public class GUIElement : General
             " @ " + percentOcup.ToString("F0") + "%";
 
         return res;
+    }
+
+    internal void MovedTo(Vector2 anchoredPosition)
+    {
+        IniPos = anchoredPosition;
+        ReloadTabsRects();
+    }
+
+    protected void ReloadTabsRects()
+    {
+        _genBtn = GetChildThatContains(H.Gen_Btn);
+        _invBtn = GetChildThatContains(H.Inv_Btn);
+        _ordBtn = GetChildThatContains(H.Ord_Btn);
+
+        _upgBtn = GetChildThatContains(H.Upg_Btn);
+        _prdBtn = GetChildThatContains(H.Prd_Btn);
+        _staBtn = GetChildCalled("Sta_Btn");
+
+        if (_genBtn != null)
+            _genBtnRect = GetRectFromBoxCollider2D(_genBtn.transform);
+        if (_invBtn != null)
+            _invBtnRect = GetRectFromBoxCollider2D(_invBtn.transform);
+        if (_ordBtn != null)
+            _ordBtnRect = GetRectFromBoxCollider2D(_ordBtn.transform);
+
+        if (_upgBtn != null)
+            _upgBtnRect = GetRectFromBoxCollider2D(_upgBtn.transform);
+        if (_prdBtn != null)
+            _prdBtnRect = GetRectFromBoxCollider2D(_prdBtn.transform);
+        if (_staBtn != null)
+            _staBtnRect = GetRectFromBoxCollider2D(_staBtn.transform);
     }
 
     //called from GUI Event Element.
@@ -163,8 +206,10 @@ public class GUIElement : General
 
     public void Show()
     {
+        
         _rectTransform.anchoredPosition = IniPos;
         SelectOkBtn();
+        ReloadTabsRects();
     }
 
     internal void HideArrow()

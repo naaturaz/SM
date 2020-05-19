@@ -517,10 +517,15 @@ public class OptionsWindow : GUIElement
     public void ResetUI()
     {
         PlayerPrefs.SetInt("ResetUI", 1);
+        PlayerPrefs.DeleteAll();
+        resChanged = true;
+        resTimeChanged = Time.time;
     }
 
     public void DeletePlayerPref()
     {
         PlayerPrefs.DeleteAll();
+        resChanged = true;
+        resTimeChanged = Time.time;
     }
 }

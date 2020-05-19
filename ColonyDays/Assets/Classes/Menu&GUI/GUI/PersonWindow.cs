@@ -4,16 +4,10 @@ using UnityEngine.UI;
 public class PersonWindow : Window
 {
     private Text _title;
-    private Rect _genBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
-    private Rect _invBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
-
-    private GameObject _invIniPos;
     private GameObject _inv_Ini_Pos_Gen;
 
     private ShowAPersonBuildingDetails _aPersonBuildingDetails;
-
     private GameObject _general;
-    private GameObject _genBtn;//the btn
 
     public Person Person1 { get; set; }
     private string _oldPersonMyId;
@@ -34,12 +28,11 @@ public class PersonWindow : Window
     {
         _general = GetChildThatContains(H.General);
 
-        _invIniPos = GetGrandChildCalled(H.Inv_Ini_Pos);
         _inv_Ini_Pos_Gen = GetGrandChildCalled("Inv_Ini_Pos_Gen");
         _title = GetChildThatContains(H.Title).GetComponent<Text>();
 
-        _genBtn = GetChildThatContains(H.Gen_Btn);
-        _genBtnRect = GetRectFromBoxCollider2D(_genBtn.transform);
+        ReloadTabsRects();
+
         var img = _genBtn.GetComponent<Image>();
         _initialTabColor = img.color;
 
@@ -75,7 +68,6 @@ public class PersonWindow : Window
         LoadMenu();
 
         Person1.SelectPerson();
-
         LoadOrHideDebuggerTab();
     }
 

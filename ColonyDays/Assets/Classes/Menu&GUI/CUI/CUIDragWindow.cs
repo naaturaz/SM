@@ -40,7 +40,9 @@ public class CUIDragWindow : MonoBehaviour, IDragHandler, IPointerDownHandler
             dragRectTransform.anchoredPosition = savedPos;
 
         if (_guiEle != null && savedPos != new Vector2() && savedPos.y != -800f)
-            _guiEle.IniPos = savedPos;
+        {
+            _guiEle.MovedTo(savedPos);
+        }
     }
 
     private void Update()
@@ -76,7 +78,9 @@ public class CUIDragWindow : MonoBehaviour, IDragHandler, IPointerDownHandler
         PlayerPrefs.SetFloat(_name + ".y", dragRectTransform.anchoredPosition.y);
 
         if (_guiEle != null)
-            _guiEle.IniPos = dragRectTransform.anchoredPosition;
+        {
+            _guiEle.MovedTo(dragRectTransform.anchoredPosition);
+        }
     }
 
     private void ResetSavedPos()

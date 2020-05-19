@@ -19,19 +19,6 @@ public class BuildingWindow : Window
         set { _building = value; }
     }
 
-    private Rect _genBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
-    private Rect _invBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
-    private Rect _ordBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
-    private Rect _prdBtnRect;//the rect area of my Gen_Btn. Must have attached a BoxCollider2D
-    private Rect _upgBtnRect;
-    private Rect _staBtnRect;
-
-    private GameObject _genBtn;//the btn
-    private GameObject _invBtn;//the btn
-    private GameObject _ordBtn;//the btn
-    private GameObject _prdBtn;//the btn
-    private GameObject _staBtn;//the btn
-
     //tabs
     private GameObject _general;
 
@@ -155,23 +142,7 @@ public class BuildingWindow : Window
 
         //_imageIcon = GetChildCalled("Image_Icon").GetComponent<Image>();
 
-        _genBtn = GetChildThatContains(H.Gen_Btn);
-        _invBtn = GetChildThatContains(H.Inv_Btn);
-        _ordBtn = GetChildThatContains(H.Ord_Btn);
-
-        var upgBtn = GetChildCalled(H.Upg_Btn).transform;
-        var prdBtn = GetChildCalled(H.Prd_Btn).transform;
-        _prdBtn = GetChildThatContains(H.Prd_Btn);
-
-        _staBtn = GetChildCalled("Sta_Btn");
-        var staBtn = GetChildCalled("Sta_Btn").transform;
-
-        _genBtnRect = GetRectFromBoxCollider2D(_genBtn.transform);
-        _invBtnRect = GetRectFromBoxCollider2D(_invBtn.transform);
-        _ordBtnRect = GetRectFromBoxCollider2D(_ordBtn.transform);
-        _upgBtnRect = GetRectFromBoxCollider2D(upgBtn.transform);
-        _prdBtnRect = GetRectFromBoxCollider2D(prdBtn.transform);
-        _staBtnRect = GetRectFromBoxCollider2D(staBtn.transform);
+        ReloadTabsRects();
 
         _importIniPos = GetGrandChildCalled(H.IniPos_Import).transform.localPosition;
         _exportIniPos = GetGrandChildCalled(H.IniPos_Export).transform.localPosition;
@@ -216,7 +187,6 @@ public class BuildingWindow : Window
 
         LoadInitialTabDependingOnBuilding();
 
-        base.Show();
         HandleOrdBtn();
         HandlePrdBtn();
 
@@ -224,6 +194,8 @@ public class BuildingWindow : Window
         CheckIfCapMaxOut();
 
         HideStuff();
+
+        base.Show();
     }
 
     private void LoadInitialTabDependingOnBuilding()
