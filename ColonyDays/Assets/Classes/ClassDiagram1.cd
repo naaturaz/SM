@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Game">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EACACAAIAAAAAQAAAEAEAAQAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Classes\BocaBora\Game.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fisher">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAACAAAAAAAAAAAAACAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Classes\BocaBora\Fisher.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WorldMap">
+    <Position X="3.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Classes\BocaBora\WorldMap.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="City">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAoAAAABAAAAAAQGQAAAAAQAAAQAAAAAAAAAAABAA=</HashCode>
+      <FileName>Assets\Classes\BocaBora\City.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fleet">
+    <Position X="2" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACIAAAAFAAAAAAAAAQAAAAAAAAAAAAAAAACACAAAA=</HashCode>
+      <FileName>Assets\Classes\BocaBora\Fleet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShipBB">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IghAsIDAAFAARAQAAAUQCAQAAAAEAAGIBAAACAAAAgA=</HashCode>
+      <FileName>Assets\Classes\BocaBora\ShipBB.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sailor">
+    <Position X="7" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AASAAAAAAEgBAAAAAAAAAgBAAAAAAAACAAAABAAABAA=</HashCode>
+      <FileName>Assets\Classes\BocaBora\Sailor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Immigrant">
+    <Position X="2" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Classes\BocaBora\Sailor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShipRoute">
+    <Position X="2" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAEAAAAAAgAAAAACAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Assets\Classes\BocaBora\ShipRoute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShipPoint">
+    <Position X="3.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAE=</HashCode>
+      <FileName>Assets\Classes\BocaBora\ShipPoint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cannon">
+    <Position X="2.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEgICAAAAAQAgAAAEAAAAAAAAAAAAAAAAAAAAASgA=</HashCode>
+      <FileName>Assets\Classes\BocaBora\Cannon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CommandableBB">
+    <Position X="0.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Assets\Classes\BocaBora\CommandableBB.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DockManagerBB" Collapsed="true">
+    <Position X="5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQCAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Assets\Classes\BocaBora\DockManagerBB.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmallBoat">
+    <Position X="0.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAABAAAgAAgCAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Classes\BocaBora\SmallBoat.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pirate">
+    <Position X="4.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAgAAAAgAAAAAAACAAACgAEAAAAAA=</HashCode>
+      <FileName>Assets\Classes\BocaBora\Pirate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shipyard">
+    <Position X="2.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgQAIAAAEAAAAAEAAAAAAAQACEAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>Assets\Classes\BocaBora\Shipyard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FamilyConquer">
+    <Position X="4.5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAQAAAAEAAAAgAAAAAAAEAAAAAA=</HashCode>
+      <FileName>Assets\Classes\BocaBora\FamilyConquer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Collector">
+    <Position X="0.5" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Classes\BocaBora\Collector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Slave">
+    <Position X="0.5" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAoAAACAAAAAAAAIQAAEAAAAAAAABAAAAAAACAIAAAA=</HashCode>
+      <FileName>Assets\Classes\BocaBora\Slave.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuestBB">
+    <Position X="4.75" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAQAAAAAAAAAIAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Assets\Classes\BocaBora\QuestBB.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TutoStep">
+    <Position X="6.5" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Assets\Classes\BocaBora\TutoStep.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="CrownEnum" Collapsed="true">
+    <Position X="5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAQAAAwEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Classes\BocaBora\CrownEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ShipEnum">
+    <Position X="6.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Classes\BocaBora\CrownEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="PirateEnum">
+    <Position X="6.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAgAAAAAAAAAAAAAAAAAAAABAAAAAAAAAg=</HashCode>
+      <FileName>Assets\Classes\BocaBora\PirateType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MilitarGradeEnum">
+    <Position X="6.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Classes\BocaBora\MilitarGradeEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TaskType">
+    <Position X="2.5" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAAAAAAAAAIRAgAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Classes\BocaBora\TaskType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
