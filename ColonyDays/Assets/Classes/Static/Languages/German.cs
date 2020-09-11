@@ -1106,6 +1106,19 @@
         _de.Add("Danger.Zone", "Achtung");
         _de.Add("Show", "Show");
         _de.Add("Add_Order_Btn.HoverSmall", "Bestellung");
+
+        //Apr 8 2020
+        _de.Add("BuyRegion", "Region Kaufen");
+        _de.Add("Fire All.HoverSmall", "Feuer Alle");
+        _de.Add("Hire All.HoverSmall", "Alle Einstellen");
+        _de.Add("Hauler", "Spediteur");
+
+        //May 16
+        _de.Add("CogWheel.HoverSmall", "Einstellungen");
+        _de.Add("Decrease Font Size", "Verringern");
+        _de.Add("Increase Font Size", "Erhöhen");
+
+
     }
 
     internal static void Clear()

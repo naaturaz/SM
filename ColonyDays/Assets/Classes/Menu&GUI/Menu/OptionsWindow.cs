@@ -333,8 +333,8 @@ public class OptionsWindow : GUIElement
         List<string> names = new List<string>()
         {
             "English",
-            "Español(Beta)",
-            //"Français(Beta)",
+            "Español",
+            "Français",
             "Deutsch",
             //"Português(Beta)"
         };

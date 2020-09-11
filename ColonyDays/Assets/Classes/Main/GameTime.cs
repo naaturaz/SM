@@ -167,7 +167,7 @@ public class GameTime
     private static List<string> _deMonths = new List<string>() { "Keiner", "Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez" };
 
     private static Dictionary<string, List<string>> _months = new Dictionary<string, List<string>>() {
-        { "English", _enMonths }, { "Español(Beta)", _spMonths }, { "Français(Beta)", _frMonths }, { "Deutsch", _deMonths }
+        { "English", _enMonths }, { "Español", _spMonths }, { "Français", _frMonths }, { "Deutsch", _deMonths }
     };
 
     /// <summary>

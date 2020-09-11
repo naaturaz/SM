@@ -273,7 +273,7 @@
         _fr.Add("PauseSpeed.HoverSmall", "Mettre en pause");
         _fr.Add("CurrSpeedBack.HoverSmall", "Vitesse actuelle");
         _fr.Add("ShowNoti.HoverSmall", "Notifications");
-        _fr.Add("Menu.HoverSmall", "Menu principal");
+        _fr.Add("Menu.HoverSmall", "Principal du menu");
         _fr.Add("QuickSave.HoverSmall", "Sauvegarde rapide[Ctrl+S][F]");
         _fr.Add("Bug Report.HoverSmall", "Signaler un bug");
         _fr.Add("Feedback.HoverSmall", "Commentaire");
@@ -938,22 +938,22 @@
         _fr.Add("Bulletin", "Bulletin");
         _fr.Add("Construction", "Construction");
         _fr.Add("Happiness", "Félicité");
-        _fr.Add("Horse Carriages", "Carriages");
+        _fr.Add("Horse Carriages", "Voitures à cheval");
         _fr.Add("Inputs", "Billets");
         _fr.Add("Line production", "La ligne de production");
-        _fr.Add("Our Inventories", "Inventorios");
-        _fr.Add("Inventories Explanation", "Inventorios information");
+        _fr.Add("Our Inventories", "Nos inventaires");
+        _fr.Add("Inventories Explanation", "Explication des inventaires");
         _fr.Add("People Range", "Gamme personnelle");
         _fr.Add("Pirate Threat", "Menace Pirate");
         _fr.Add("Population", "Ville");
         _fr.Add("Port Reputation", "Réputation Port");
-        _fr.Add("Production Tab", "Production Tab");
+        _fr.Add("Production Tab", "Onglet Production");
         _fr.Add("Products Expiration", "Expiration du produit");
         _fr.Add("Sea Path", "Route de la mer");
         _fr.Add("Trading", "Commerce");
         _fr.Add("Usage of goods", "L'utilisation de produits");
         _fr.Add("What is Ft3 and M3?", "M3 est ft3?");
-        _fr.Add("WheelBarrows", "Carretilleros");
+        _fr.Add("WheelBarrows", "Brouettes");
 
         //All Lang Needed for sure
 
@@ -985,85 +985,85 @@
 
         //Quest window
 
-        _fr.Add("ShowQuest.HoverSmall", "Tarea actual");
-        _fr.Add("Have Fun", "Diviértete");
-        _fr.Add("Current Quest:", "Tarea actual:");
-        _fr.Add("Reward: ", "Premio: ");
-        _fr.Add("Reward:", "Premio:");
+        _fr.Add("ShowQuest.HoverSmall", "Quête actuelle");
+        _fr.Add("Have Fun", "S'amuser");
+        _fr.Add("Current Quest:", "Quête actuelle:");
+        _fr.Add("Reward: ", "Récompense: ");
+        _fr.Add("Reward:", "Récompense:");
 
-        _fr.Add("Status: ", "Estado: ");
-        _fr.Add("Status", "Estado");
-        _fr.Add("Active", "Activa");
-        _fr.Add("Done", "Terminada");
+        _fr.Add("Status: ", "Etat: ");
+        _fr.Add("Status", "Etat");
+        _fr.Add("Active", "Actif");
+        _fr.Add("Done", "Terminé");
 
         _fr.Add(" of ", " de ");
 
         //After May 1, 2019
-        _fr.Add("Our inventories:", "Nuestros inventarios:");
-        _fr.Add("Select Product:", "Selecciona un producto:");
-        _fr.Add("Current_Rank.HoverSmall", "Numero en la cola");
+        _fr.Add("Our inventories:", "Nos inventaires:");
+        _fr.Add("Select Product:", "Sélectionner un produit:");
+        _fr.Add("Current_Rank.HoverSmall", "Numéro de file");
 
-        _fr.Add("Construction.Progress", "Progreso de la construcción en: ");
-        _fr.Add("Warning.This.Building", "Atención: Esta construcción no puede ser construida ahora. Falta material(es):\n");
-        _fr.Add("Product.Selected", "Producto seleccionado: ");
-        _fr.Add("Harvest.Date", "\nDia de la recogida: ");
-        _fr.Add("Progress", "\nProgreso: ");
+        _fr.Add("Construction.Progress", "Le Progrès: ");
+        _fr.Add("Warning.This.Building", "Attention: Cette construction ne peut pas être construite maintenant. Matériel manquant:\n");
+        _fr.Add("Product.Selected", "Produit sélectionné: ");
+        _fr.Add("Harvest.Date", "\nJour de ramassage: ");
+        _fr.Add("Progress", "\nLe Progrès: ");
 
         //AddOrderWindow.cs
-        _fr.Add("Add.New", "Añade Nueva ");
-        _fr.Add("Order", " Orden");
-        _fr.Add("Import", "Importa");
-        _fr.Add("Export", "Exporta");
+        _fr.Add("Add.New", "Ajouter nouveau ");
+        _fr.Add("Order", " Ordre");
+        _fr.Add("Import", "Importer");
+        _fr.Add("Export", "Exportation");
         //AddOrderWindow GUI
-        _fr.Add("Enter Amount:", "Escribe cantidad:");
-        _fr.Add("Enter amount...", "Escribe cantidad...");
-        _fr.Add("New Order:", "Orden Nueva:");
-        _fr.Add("Product:", "Producto:");
-        _fr.Add("Amount:", "Cantidad:");
-        _fr.Add("Order total price:", "Precio total de la orden:");
-        _fr.Add("Add", "Add");
+        _fr.Add("Enter Amount:", "Entrer le montant:");
+        _fr.Add("Enter amount...", "Entrer le montant...");
+        _fr.Add("New Order:", "Nouvelle commande:");
+        _fr.Add("Product:", "Produit:");
+        _fr.Add("Amount:", "Quantité:");
+        _fr.Add("Order total price:", "Prix ​​total de la commande:");
+        _fr.Add("Add", "Ajouter");
 
         //BuildingWindow GUI
-        _fr.Add("Product Description:", "Descripción del producto:");
-        _fr.Add("Production report by years:", "Reporte productivo:");
-        _fr.Add("Import Orders", "Importación");
-        _fr.Add("Export Orders", "Exportación");
-        _fr.Add("Orders in progress:", "Ordenes actuales:");
+        _fr.Add("Product Description:", "Description du produit:");
+        _fr.Add("Production report by years:", "Rapport productif:");
+        _fr.Add("Import Orders", "Importer");
+        _fr.Add("Export Orders", "Exportation");
+        _fr.Add("Orders in progress:", "Commandes en cours:");
 
-        _fr.Add("Notifications", "Notificaciones");
+        _fr.Add("Notifications", "Notifications");
 
-        _fr.Add("Attention.Production", "Atención: la producción se detuvo. Para reanudar la producción en este edificio, seleccione un producto");
-        _fr.Add("Selected product: ", "Producto seleccionado: ");
-        _fr.Add("Price: ", "Precio: ");
-        _fr.Add(" per ", " por ");
-        _fr.Add("Inputs needed per ", "Insumos necesarios por ");
-        _fr.Add("Inventory:", "Inventario:");
+        _fr.Add("Attention.Production", "Attention: la production est arrêtée. Pour reprendre la production dans ce bâtiment, veuillez sélectionner un produit");
+        _fr.Add("Selected product: ", "Produit sélectionné: ");
+        _fr.Add("Price: ", "Prix: ");
+        _fr.Add(" per ", " pour ");
+        _fr.Add("Inputs needed per ", "Fournitures requises par ");
+        _fr.Add("Inventory:", "Inventaire:");
 
-        _fr.Add("CornMeal", "Harina de maíz");
-        _fr.Add("PalmLeaf", "Hojas de Palma");
-        _fr.Add("Rubber", "Caucho");
+        _fr.Add("CornMeal", "Farine de maïs");
+        _fr.Add("PalmLeaf", "Feuilles de palmier");
+        _fr.Add("Rubber", "Caoutchouc");
 
         //Dec 9, 2019
-        _fr.Add("Barrel", "Barril");
-        _fr.Add("Years of school", "Escolaridad");
-        _fr.Add("House comfort", "Calidad de Vivienda");
-        _fr.Add("Food source", "Bodega");
-        _fr.Add("Relax", "Relajamiento");
-        _fr.Add("Male", "Masculino");
-        _fr.Add("Female", "Femenino");
-        _fr.Add("Quenched", "Saciada");
+        _fr.Add("Barrel", "Baril");
+        _fr.Add("Years of school", "Bourse d'études");
+        _fr.Add("House comfort", "Qualité du logement");
+        _fr.Add("Food source", "Espace de rangement");
+        _fr.Add("Relax", "Relaxation");
+        _fr.Add("Male", "Masculin");
+        _fr.Add("Female", "Femme");
+        _fr.Add("Quenched", "Repu");
 
-        _fr.Add("Sand", "Arena");
-        _fr.Add("Machinery", "Maquinaria");
-        _fr.Add("Cassava", "Yuca");
-        _fr.Add("Candy", "Caramelo");
+        _fr.Add("Sand", "Arène");
+        _fr.Add("Machinery", "Machinerie");
+        _fr.Add("Cassava", "Manioc");
+        _fr.Add("Candy", "Bonbons");
 
         //After Dec 28, 2018
-        _fr.Add("Down.HoverSmall", "Increase Priority");
-        _fr.Add("Up.HoverSmall", "Decrease Priority");
-        _fr.Add("Trash.HoverSmall", "Borrar Orden");
-        _fr.Add("Counting...", "Contando...");
-        _fr.Add("Ten Orders Limit", "Diez ordenes es el límite");
+        _fr.Add("Down.HoverSmall", "Augmenter la priorité");
+        _fr.Add("Up.HoverSmall", "Diminuer la priorité");
+        _fr.Add("Trash.HoverSmall", "Supprimer la commande");
+        _fr.Add("Counting...", "Compte...");
+        _fr.Add("Ten Orders Limit", "Dix ordres est la limite");
 
         _fr.Add("Français", "Français");
         _fr.Add("Français(Beta)", "Français(Beta)");
@@ -1089,8 +1089,19 @@
         _fr.Add("Import.Precedence", "Les commandes d'importation ont priorité");
         _fr.Add("Reset.Achievements", "Réinitialiser les réalisations");
         _fr.Add("Danger.Zone", "Danger Zone");
-        _fr.Add("Show", "Show");
+        _fr.Add("Show", "Montrer");
         _fr.Add("Add_Order_Btn.HoverSmall", "Ajouter");
+
+        //Apr 8 2020
+        _fr.Add("BuyRegion", "Acheter Région");
+        _fr.Add("Fire All.HoverSmall", "Tout feu");
+        _fr.Add("Hire All.HoverSmall", "Embaucher tout");
+        _fr.Add("Hauler", "Transporteur");
+
+        //May 16
+        _fr.Add("CogWheel.HoverSmall", "Paramètres");
+        _fr.Add("Decrease Font Size", "Diminuer");
+        _fr.Add("Increase Font Size", "Augmenter");
     }
 
     internal static void Clear()

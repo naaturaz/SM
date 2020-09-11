@@ -1197,7 +1197,7 @@ public class Languages
             // return "en:" + key;
             return key;
         }
-        else if (_currentLang == "Español(Beta)")
+        else if (_currentLang == "Español")
         {
             if (Spanish.ContainsKey(key))
             {
@@ -1213,7 +1213,7 @@ public class Languages
             }
             return "pt:" + key;
         }
-        else if (_currentLang == "Français(Beta)")
+        else if (_currentLang == "Français")
         {
             if (French.ContainsKey(key))
             {
@@ -1286,12 +1286,12 @@ public class Languages
 
     private static Dictionary<string, string> ReturnCurrentDict()
     {
-        if (_currentLang == "Español(Beta)")
+        if (_currentLang == "Español")
         {
             return _sp.Dictionary;
         }
         if (_currentLang == "Português(Beta)") return _portuguese;
-        if (_currentLang == "Français(Beta)") return _fr.Dictionary;
+        if (_currentLang == "Français") return _fr.Dictionary;
         if (_currentLang == "Deutsch") return _de.Dictionary;
 
         return _en.Dictionary;

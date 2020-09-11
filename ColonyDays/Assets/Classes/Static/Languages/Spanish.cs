@@ -969,7 +969,7 @@ public class Spanish
 
         //help
         _sp.Add("Construction.Help", "Para la construcción de cualquier edificio necesita tener trabajadores en la Casa de Albañiles." +
-                    "Haga clic en la Casa de Albañiles, luego en el signo '+' en la pestaña general. Asegúrese de tener suficientes recursos");
+                    " Haga clic en la Casa de Albañiles, luego en el signo '+' en la pestaña general. Asegúrese de tener suficientes recursos");
         _sp.Add("Camera.Help", "Cámara: use [WASD] o el cursor para moverse. " +
                         "Presione la rueda de desplazamiento del mouse, manténgala presionada para girar, o [Q] y [E]");
         _sp.Add("Sea Path.Help", "Haga clic en la esquina inferior izquierda 'Mostrar / ocultar ruta marítima' " +
@@ -1031,7 +1031,7 @@ public class Spanish
         _sp.Add("Help.Bulletin/General/Buildings", "Este es un resumen de cuántos edificios hay de cada tipo.");
 
         _sp.Add("Help.Bulletin/General/Workers", "En esta ventana, puede asignar trabajadores para trabajar en varios edificios."
-    + "Para que un edificio permita que más personas trabajen, debe ser inferior a la capacidad y debe encontrar al menos una persona desempleada.");
+    + " Para que un edificio permita que más personas trabajen, debe ser inferior a la capacidad y debe encontrar al menos una persona desempleada.");
 
         _sp.Add("Help.Bulletin/Finance/Ledger", "Aquí se muestra su libro mayor. El salario es la cantidad de dinero pagada a un trabajador. Cuanta más gente trabaje, más salario se pagará.");
         _sp.Add("Help.Bulletin/Finance/Exports", "Detalles de sus exportaciones");
@@ -1137,6 +1137,19 @@ public class Spanish
         _sp.Add("Danger.Zone", "Peligro");
         _sp.Add("Show", "Muestra");
         _sp.Add("Add_Order_Btn.HoverSmall", "Añadir orden");
+
+        //Apr 8 2020
+        _sp.Add("BuyRegion", "Compra Region");
+        _sp.Add("Fire All.HoverSmall", "Despide Todos");
+        _sp.Add("Hire All.HoverSmall", "Contrata Todos");
+        _sp.Add("Hauler", "Transportador");
+
+        //May 16
+        _sp.Add("CogWheel.HoverSmall", "Preferencias");
+        _sp.Add("Decrease Font Size", "Disminuye Fuente");
+        _sp.Add("Increase Font Size", "Incrementa Fuente");
+
+
     }
 
     internal static void Clear()
